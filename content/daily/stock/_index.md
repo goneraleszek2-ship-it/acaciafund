@@ -1,4 +1,3 @@
 ---
 title: "Market Analysis"
-tags: []
 ---

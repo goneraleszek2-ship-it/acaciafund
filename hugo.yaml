@@ -5,8 +5,9 @@ publishDir: "public"
 canonifyURLs: true
 relativeURLs: false
 
+
 permalinks:
-  daily: /:section/:contentbasename/
+  daily: /daily/:section/:contentbasename/
 
 
 menus:
