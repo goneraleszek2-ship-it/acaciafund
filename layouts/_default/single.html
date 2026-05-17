@@ -17,7 +17,7 @@
     <header>
         <nav><a href="/">← Powrót do głównych filarów</a></nav>
         <h1>{{ .Title }}</h1>
-        <div class="meta">Data publikacji: {{ .Date.Format "2006-01-02" }} | Tagi: {{ delimit .Params.tags ", " }}</div>
+        <div class="meta">Data publikacji: {{ .Date.Format "2006-01-02" }} | Tagi: {{ delimit (default slice .Params.tags) ", " }}</div>
     </header>
     <main>
         {{ .Content }}
