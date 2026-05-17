@@ -1,0 +1,21 @@
+baseURL: "https://acaciafund.org/"
+locale: "pl-pl"
+title: "AcaciaFund | Daily Research Portfolio"
+
+permalinks:
+  posts: /daily/:section/:contentbasename/
+
+menus:
+  main:
+    - name: "Home"
+      url: "/"
+      weight: 1
+    - name: "AML"
+      url: "/daily/aml/"
+      weight: 2
+    - name: "Markets"
+      url: "/daily/stock/"
+      weight: 3
+    - name: "Science"
+      url: "/daily/science/"
+      weight: 4
