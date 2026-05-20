@@ -38,7 +38,7 @@ def svg_pipeline() -> str:
   <text x="{centers[2][0]}" y="{centers[2][1]+4}" text-anchor="middle" font-size="12" fill="#1a1a2e">Ingest.py</text>
 
   <polygon points="{bx(centers[3][0], centers[3][1])}" fill="#fde8c8" stroke="#F18F01"/>
-  <text x="{centers[3][0]}" y="{centers[3][1]+4}" text-anchor="middle" font-size="12" fill="#1a1a2e">Radar Gen</text>
+  <text x="{centers[3][0]}" y="{centers[3][1]+4}" text-anchor="middle" font-size="12" fill="#1a1a2e">Notebook/Diag</text>
 
   <!-- Bottom row: classification → output -->
   <polygon points="{bx(centers[4][0], centers[4][1])}" fill="#d5f5e3" stroke="#27ae60"/>
@@ -71,7 +71,7 @@ def svg_pipeline() -> str:
 
   <!-- labels -->
   <text x="180" y="120" text-anchor="middle" font-size="9" fill="#888">Algolia API</text>
-  <text x="535" y="120" text-anchor="middle" font-size="9" fill="#888">generate_radar.py</text>
+  <text x="535" y="120" text-anchor="middle" font-size="9" fill="#888">generate_notebook.py</text>
 </svg>'''
 
 
@@ -164,7 +164,7 @@ layout: "diagrams"
 
 ## 🏗️ Architektura systemu
 
-Potok danych: źródła (HN + arXiv) → ingest.py (klasyfikacja NLP) → generacja Radar → Hugo (SSG) → Cloudflare Pages.
+Potok danych: źródła (HN + arXiv) → ingest.py (klasyfikacja NLP) → Notebook/Diagramy → Hugo (SSG) → Cloudflare Pages.
 
 {svg_pipeline()}
 
@@ -186,7 +186,6 @@ Wykrywanie połączeń między filarami na podstawie wspólnych słów kluczowyc
 acaciafund/
 ├── .github/workflows/daily-synthesis.yml   # CI/CD cron (08:00 UTC)
 ├── ingest.py                                # Źródła + klasyfikacja
-├── generate_radar.py                        # Dashboard trendów
 ├── generate_diagrams.py                     # Ten generator
 ├── hugo.yaml                                # Konfiguracja Hugo
 ├── wrangler.jsonc                           # Cloudflare Pages
@@ -195,7 +194,7 @@ acaciafund/
 ├── layouts/
 │   ├── _default/{{single,list}}.html          # Szablony Hugo
 │   ├── partials/{{head,style}}.html           # Współdzielone partiale
-│   └── radar/, diagrams/                      # Niestandardowe layouty
+│   └── notebook/, diagrams/                   # Niestandardowe layouty
 ├── static/
 │   ├── manifest.json                        # PWA manifest
 │   ├── sw.js                                # Service Worker

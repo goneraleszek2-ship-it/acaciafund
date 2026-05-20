@@ -6,7 +6,7 @@ layout: "diagrams"
 
 ## 🏗️ Architektura systemu
 
-Potok danych: źródła (HN + arXiv) → ingest.py (klasyfikacja NLP) → generacja Radar → Hugo (SSG) → Cloudflare Pages.
+Potok danych: źródła (HN + arXiv) → ingest.py (klasyfikacja NLP) → Notebook/Diagramy → Hugo (SSG) → Cloudflare Pages.
 
 <svg viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;background:#fafafa;border-radius:8px;font-family:system-ui,sans-serif">
   <defs>
@@ -27,7 +27,7 @@ Potok danych: źródła (HN + arXiv) → ingest.py (klasyfikacja NLP) → genera
   <text x="460" y="84" text-anchor="middle" font-size="12" fill="#1a1a2e">Ingest.py</text>
 
   <polygon points="540,58 700,58 700,102 540,102" fill="#fde8c8" stroke="#F18F01"/>
-  <text x="620" y="84" text-anchor="middle" font-size="12" fill="#1a1a2e">Radar Gen</text>
+  <text x="620" y="84" text-anchor="middle" font-size="12" fill="#1a1a2e">Notebook/Diag</text>
 
   <!-- Bottom row: classification → output -->
   <polygon points="20,168 180,168 180,212 20,212" fill="#d5f5e3" stroke="#27ae60"/>
@@ -60,7 +60,7 @@ Potok danych: źródła (HN + arXiv) → ingest.py (klasyfikacja NLP) → genera
 
   <!-- labels -->
   <text x="180" y="120" text-anchor="middle" font-size="9" fill="#888">Algolia API</text>
-  <text x="535" y="120" text-anchor="middle" font-size="9" fill="#888">generate_radar.py</text>
+  <text x="535" y="120" text-anchor="middle" font-size="9" fill="#888">generate_notebook.py</text>
 </svg>
 
 ## 🔄 Przepływ klasyfikacji
@@ -151,7 +151,6 @@ Wykrywanie połączeń między filarami na podstawie wspólnych słów kluczowyc
 acaciafund/
 ├── .github/workflows/daily-synthesis.yml   # CI/CD cron (08:00 UTC)
 ├── ingest.py                                # Źródła + klasyfikacja
-├── generate_radar.py                        # Dashboard trendów
 ├── generate_diagrams.py                     # Ten generator
 ├── hugo.yaml                                # Konfiguracja Hugo
 ├── wrangler.jsonc                           # Cloudflare Pages
@@ -160,7 +159,7 @@ acaciafund/
 ├── layouts/
 │   ├── _default/{single,list}.html          # Szablony Hugo
 │   ├── partials/{head,style}.html           # Współdzielone partiale
-│   └── radar/, diagrams/                      # Niestandardowe layouty
+│   └── notebook/, diagrams/                   # Niestandardowe layouty
 ├── static/
 │   ├── manifest.json                        # PWA manifest
 │   ├── sw.js                                # Service Worker

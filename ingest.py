@@ -162,7 +162,7 @@ def fetch_top_stories(since_hours: int = 48, min_points: int = 2) -> list[dict]:
     params = {
         "query": "",
         "tags": "story",
-        "hitsPerPage": 200,
+        "hitsPerPage": 1000,
         "numericFilters": f"created_at_i>{since_ts}",
     }
     url = f"{ALGOLIA_URL}?{urllib.parse.urlencode(params)}"
@@ -430,7 +430,7 @@ ARXIV_KEYWORDS = {
 }
 
 
-def fetch_arxiv(since_hours: int = 72, max_results: int = 30) -> list[dict]:
+def fetch_arxiv(since_hours: int = 72, max_results: int = 100) -> list[dict]:
     """Fetch recent papers from arXiv API and classify into pillars."""
     since = datetime.now(timezone.utc) - timedelta(hours=since_hours)
     date_from = since.strftime("%Y%m%d%H%M%S")
@@ -548,12 +548,12 @@ def main():
     # 2b. inject arXiv papers
     inject_arxiv(pillar_stories)
 
-    # 3. sort each pillar by points, reserve 2 slots for arXiv (0-point)
+    # 3. sort each pillar by points, reserve 5 slots for arXiv (0-point)
     for p in pillar_stories:
         hn = [s for s in pillar_stories[p] if s.get("points", 0) > 0]
         arx = [s for s in pillar_stories[p] if s.get("points", 0) == 0]
         hn.sort(key=lambda s: s["points"], reverse=True)
-        pillar_stories[p] = hn[:6] + arx[:2]
+        pillar_stories[p] = hn[:25] + arx[:5]
 
     # 4. generate posts
     generated = 0
