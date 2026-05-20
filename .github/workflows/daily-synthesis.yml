@@ -42,11 +42,11 @@ jobs:
           git commit -m "daily: automatyczna synteza $(date +%Y-%m-%d)"
           git push
 
-      - name: Deploy to Cloudflare Workers
+      - name: Deploy to Cloudflare Pages
         if: github.ref == 'refs/heads/main'
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy
+          command: pages deploy public --project-name=acaciafund
           workingDirectory: .

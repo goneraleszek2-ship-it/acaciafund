@@ -2,15 +2,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "acaciafund",
   "compatibility_date": "2026-05-17",
-  "observability": {
-    "enabled": true
-  },
-  "assets": {
-    "directory": "public",
-    "browserTtl": 3600,
-    "serveSinglePageApp": false
-  },
-  "main": "src/worker.js",
+  "pages_build_output_dir": "public",
   "compatibility_flags": [
     "nodejs_compat"
   ]
