@@ -6,4 +6,4 @@
 <link rel="icon" type="image/svg+xml" href="/icons/icon.svg">
 <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
 <title>{{ .Title }} | {{ .Site.Title }}</title>
-<style>{{ partialCached "style.html" . }}</style>
+<style>{{ readFile "layouts/partials/style.html" | safeCSS }}</style>

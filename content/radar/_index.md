@@ -4,7 +4,7 @@ date: 2026-05-20
 layout: "radar"
 ---
 
-<p style='color:#6b7280;font-size:.85rem;margin-bottom:24px'>Ostatnia aktualizacja: 2026-05-20 20:43 UTC</p>
+<p style='color:#6b7280;font-size:.85rem;margin-bottom:24px'>Ostatnia aktualizacja: 2026-05-20 20:51 UTC</p>
 
 ## 📋 Podsumowanie
 
@@ -79,12 +79,12 @@ layout: "radar"
 
 <table>
 <tr><th>Data</th><th>Połączenie</th><th>Wspólne tematy</th></tr>
-<tr><td>2026-05-17</td><td>🛡️ + 📈</td><td>skor, obserwujemy, systems, metaanalysis</td></tr>
-<tr><td>2026-05-17</td><td>🛡️ + 🧬</td><td>skor, obserwujemy, systems, metaanalysis</td></tr>
-<tr><td>2026-05-17</td><td>📈 + 🧬</td><td>skor, obserwujemy, systems, metaanalysis</td></tr>
-<tr><td>2026-05-20</td><td>🛡️ + 📈</td><td>atlas, cross, thinking, algolia</td></tr>
-<tr><td>2026-05-20</td><td>🛡️ + 🧬</td><td>atlas, cross, thinking, algolia</td></tr>
-<tr><td>2026-05-20</td><td>📈 + 🧬</td><td>atlas, cross, thinking, algolia</td></tr>
+<tr><td>2026-05-17</td><td>🛡️ + 📈</td><td>antifragility, trending, connections, cybernetics</td></tr>
+<tr><td>2026-05-17</td><td>🛡️ + 🧬</td><td>antifragility, trending, connections, cybernetics</td></tr>
+<tr><td>2026-05-17</td><td>📈 + 🧬</td><td>antifragility, trending, connections, cybernetics</td></tr>
+<tr><td>2026-05-20</td><td>🛡️ + 📈</td><td>linki, raport, thinking, klasyfikacja</td></tr>
+<tr><td>2026-05-20</td><td>🛡️ + 🧬</td><td>linki, raport, thinking, klasyfikacja</td></tr>
+<tr><td>2026-05-20</td><td>📈 + 🧬</td><td>linki, raport, thinking, klasyfikacja</td></tr>
 </table>
 
 <div class="insight">
