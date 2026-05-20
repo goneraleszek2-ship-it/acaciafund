@@ -23,6 +23,9 @@ jobs:
       - name: Ingest & generate
         run: python ingest.py
 
+      - name: Generate Radar
+        run: python generate_radar.py
+
       - uses: peaceiris/actions-hugo@v3
         with:
           hugo-version: "0.161.1"

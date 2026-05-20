@@ -5,13 +5,14 @@
     <header>
         <nav>
             <a href="/">🏠 Home</a>
-            <a href="{{ .Parent.RelPermalink }}">↑ {{ .Parent.Title }}</a>
+            <a href="/daily/aml/">🛡️ AML</a>
+            <a href="/daily/stock/">📈 Markets</a>
+            <a href="/daily/science/">🧬 Science</a>
         </nav>
         <h1>{{ .Title }}</h1>
-        <div class="meta">📅 {{ .Date.Format "2006-01-02" }} · {{ range .Params.tags }}<span class="tag">{{ . }}</span> {{ end }}</div>
     </header>
     <main>{{ .Content }}</main>
-    <footer>&copy; 2026 Leszek Gonera · AcaciaFund · <a href="/">Home</a></footer>
+    <footer>&copy; 2026 Leszek Gonera · AcaciaFund · <a href="/api/radar.json">API JSON</a></footer>
     <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
 </body>
 </html>

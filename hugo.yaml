@@ -8,6 +8,16 @@ relativeURLs: true
 permalinks:
   daily: /:sections/:contentbasename/
 
+outputs:
+  home: [html]
+  page: [html, json]
+  section: [html, rss]
+
+markup:
+  goldmark:
+    renderer:
+      unsafe: true
+
 menus:
   main:
     - name: "Home"
@@ -22,3 +32,6 @@ menus:
     - name: "Science"
       url: "/daily/science/"
       weight: 4
+    - name: "Radar"
+      url: "/radar/"
+      weight: 5

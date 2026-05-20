@@ -1,0 +1,9 @@
+{
+  "title": {{ .Title | jsonify }},
+  "date": {{ .Date.Format "2006-01-02" | jsonify }},
+  "url": {{ .Permalink | jsonify }},
+  "tags": {{ .Params.tags | jsonify }},
+  "pillar": {{ index (split (path.Dir .File.Path) "/") 1 | jsonify }},
+  "summary": {{ .Summary | plainify | jsonify }},
+  "content": {{ .Plain | jsonify }}
+}

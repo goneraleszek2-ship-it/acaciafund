@@ -1,35 +1,24 @@
 <!DOCTYPE html>
 <html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ .Title }} | {{ .Site.Title }}</title>
-    <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; max-width: 750px; margin: 40px auto; padding: 0 20px; background: #fdfdfd; color: #222; }
-        header { border-bottom: 1px solid #ddd; padding-bottom: 10px; margin-bottom: 20px; }
-        nav a { margin-right: 15px; color: #222; text-decoration: none; }
-        ul { list-style: none; padding: 0; }
-        li { margin-bottom: 15px; padding: 10px; border-left: 3px solid #222; background: #f9f9f9; }
-        li a { color: #222; font-weight: bold; text-decoration: none; display: block; }
-        li span { color: #666; font-size: 0.85em; }
-    </style>
-</head>
+<head>{{ partial "head.html" . }}</head>
 <body>
     <header>
-        <nav><a href="/">← Home</a></nav>
-        <h1>Archiwum syntez: {{ .Title }}</h1>
+        <nav>
+            <a href="/">🏠 Home</a>
+            <a href="{{ .Parent.RelPermalink }}">↑ {{ .Parent.Title }}</a>
+        </nav>
+        <h1>Archiwum: {{ .Title }}</h1>
     </header>
     <main>
         <ul>
             {{ range .Pages }}
-            <li>
-                <a href="{{ .Permalink }}">{{ .Title }}</a>
-                <span>Z dnia: {{ .Date.Format "2006-01-02" }}</span>
-            </li>
+            <li><a href="{{ .RelPermalink }}">{{ .Title }}</a><span style="display:block;color:var(--muted);font-size:.8rem;margin-top:4px">📅 {{ .Date.Format "2006-01-02" }}</span></li>
             {{ else }}
-                <li>Brak wpisów na dzisiaj. Skraper uruchomi się automatycznie w kolejnym oknie serwisowym.</li>
+            <li>Brak wpisów. Skraper uruchomi się o 08:00 UTC.</li>
             {{ end }}
         </ul>
     </main>
+    <footer>&copy; 2026 Leszek Gonera · AcaciaFund · <a href="/">Home</a></footer>
+    <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
 </body>
 </html>

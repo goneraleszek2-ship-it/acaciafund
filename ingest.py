@@ -393,6 +393,110 @@ def generate_post(pillar_name: str, config: dict, pillar_stories: list[dict]) ->
     return filepath
 
 
+# ── arXiv ingestion ──────────────────────────────────────────────────────────
+
+ARXIV_CATEGORIES = {
+    "aml": ["q-fin.GN", "q-fin.RM", "cs.CY", "cs.CR"],
+    "stock": ["q-fin.ST", "q-fin.PM", "cs.AR", "cs.ET"],
+    "science": ["q-bio.MN", "cs.NE", "cs.CC", "nlin.AO", "nlin.CG"],
+}
+
+ARXIV_KEYWORDS = {
+    "aml": ["money laundering", "compliance", "financial regulation", "fraud detection",
+            "blockchain", "cryptocurrency", "financial crime", "risk management"],
+    "stock": ["semiconductor", "supply chain", "market microstructure", "asset pricing",
+              "volatility", "portfolio", "valuation", "chip"],
+    "science": ["mitochondria", "cybernetics", "complex systems", "network theory",
+                "emergence", "self-organization", "bioenergetics", "cognitive"],
+}
+
+
+def fetch_arxiv(since_hours: int = 72, max_results: int = 30) -> list[dict]:
+    """Fetch recent papers from arXiv API and classify into pillars."""
+    since = datetime.now(timezone.utc) - timedelta(hours=since_hours)
+    date_from = since.strftime("%Y%m%d%H%M%S")
+
+    all_cats = [c for cats in ARXIV_CATEGORIES.values() for c in cats]
+    query = " OR cat:".join(all_cats)
+    url = (
+        "http://export.arxiv.org/api/query?"
+        f"search_query=cat:{query}"
+        "&sortBy=submittedDate&sortOrder=descending"
+        f"&max_results={max_results}"
+    )
+    req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+
+    try:
+        with urllib.request.urlopen(req, timeout=20) as resp:
+            xml = resp.read().decode("utf-8")
+    except Exception as e:
+        log(f"Błąd arXiv API: {e}", ok=False)
+        return []
+
+    entries = re.findall(r"<entry>(.*?)</entry>", xml, re.DOTALL)
+    papers = []
+    for entry in entries:
+        title = re.search(r"<title>(.*?)</title>", entry, re.DOTALL)
+        abstract = re.search(r"<summary>(.*?)</summary>", entry, re.DOTALL)
+        link = re.search(r"<id>(.*?)</id>", entry)
+        published = re.search(r"<published>(.*?)</published>", entry)
+        cats = re.findall(r'term="(.*?)"', entry)
+
+        if not (title and link):
+            continue
+
+        title_text = title.group(1).strip()
+        abstract_text = abstract.group(1).strip() if abstract else ""
+        full_text = (title_text + " " + abstract_text[:500]).lower()
+
+        # classify into pillars
+        paper_scores: list[tuple[str, int]] = []
+        for pillar, kws in ARXIV_KEYWORDS.items():
+            score = sum(3 for kw in kws if kw in full_text)
+            for cat in cats:
+                if cat in ARXIV_CATEGORIES.get(pillar, []):
+                    score += 5
+            if score > 0:
+                paper_scores.append((pillar, score))
+
+        if not paper_scores:
+            continue
+
+        best = max(paper_scores, key=lambda x: x[1])
+        papers.append({
+            "title": re.sub(r"\s+", " ", title_text),
+            "url": link.group(1).strip().rstrip("/"),
+            "abstract": re.sub(r"\s+", " ", abstract_text)[:200],
+            "pillar": best[0],
+            "score": best[1],
+            "published": published.group(1).strip() if published else "",
+            "categories": cats,
+        })
+
+    papers.sort(key=lambda p: p["score"], reverse=True)
+    return papers
+
+
+def inject_arxiv(pillar_stories: dict[str, list[dict]]) -> None:
+    """Fetch arXiv papers and append them to pillar stories."""
+    log("Pobieranie z arXiv API...")
+    papers = fetch_arxiv(since_hours=72)
+    log(f"Pobrano {len(papers)} pasujących prac z arXiv")
+
+    for paper in papers:
+        p = paper["pillar"]
+        pillar_stories[p].append({
+            "title": paper["title"],
+            "url": paper["url"],
+            "hn_url": "",
+            "points": 0,
+            "created_at": paper["published"],
+            "author": "arXiv",
+            "object_id": "",
+        })
+        log(f"  → {p}: {paper['title'][:70]}")
+
+
 # ── entry ────────────────────────────────────────────────────────────────────
 
 def main():
@@ -427,10 +531,15 @@ def main():
         f"SCIENCE={len(pillar_stories['science'])}, "
         f"nieskategoryzowane={unclassified}")
 
-    # 3. sort each pillar by points, cap at 8
+    # 2b. inject arXiv papers
+    inject_arxiv(pillar_stories)
+
+    # 3. sort each pillar by points, reserve 2 slots for arXiv (0-point)
     for p in pillar_stories:
-        pillar_stories[p].sort(key=lambda s: s["points"], reverse=True)
-        pillar_stories[p] = pillar_stories[p][:8]
+        hn = [s for s in pillar_stories[p] if s.get("points", 0) > 0]
+        arx = [s for s in pillar_stories[p] if s.get("points", 0) == 0]
+        hn.sort(key=lambda s: s["points"], reverse=True)
+        pillar_stories[p] = hn[:6] + arx[:2]
 
     # 4. generate posts
     generated = 0

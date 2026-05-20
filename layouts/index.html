@@ -1,52 +1,43 @@
 <!DOCTYPE html>
 <html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ .Site.Title }}</title>
-    <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; max-width: 800px; margin: 40px auto; padding: 0 20px; background: #fdfdfd; color: #222; }
-        header { border-bottom: 2px solid #222; padding-bottom: 20px; margin-bottom: 30px; }
-        nav a { margin-right: 15px; color: #222; font-weight: bold; text-decoration: none; }
-        nav a:hover { text-decoration: underline; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 30px; }
-        .card { border: 1px solid #ddd; padding: 15px; background: #fff; }
-        .card h3 { margin-top: 0; border-bottom: 1px solid #eee; padding-bottom: 5px; }
-    </style>
-</head>
+<head>{{ partial "head.html" . }}</head>
 <body>
     <header>
         <h1>{{ .Site.Title }}</h1>
         <nav>
             <a href="/">Home</a>
-            <a href="/daily/aml/">AML</a>
-            <a href="/daily/stock/">Markets</a>
-            <a href="/daily/science/">Science</a>
+            <a href="/daily/aml/">🛡️ AML</a>
+            <a href="/daily/stock/">📈 Markets</a>
+            <a href="/daily/science/">🧬 Science</a>
+            <a href="/radar/">📊 Radar</a>
         </nav>
     </header>
     <main>
-        <p>Codzienna, zautomatyzowana synteza wiedzy filtrowana przez pryzmat myślenia systemowego, cybernetyki i teorii antykruchości.</p>
-        
+        <p style="margin:20px 0;font-size:1.1rem">Codzienna, zautomatyzowana synteza wiedzy — AML, rynki kapitałowe i nauka przez pryzmat myślenia systemowego.</p>
         <div class="grid">
             <div class="card">
                 <h3>🛡️ AML & RegTech</h3>
-                <p>Ewolucja systemów odpornościowych w sektorze finansowym, topologia przepływów, ryzyko i zgodność.</p>
-                <a href="/daily/aml/">Przeglądaj syntezy →</a>
+                <p style="font-size:.9rem;color:#444;margin:8px 0">Ewolucja systemów odpornościowych w sektorze finansowym.</p>
+                <a href="/daily/aml/">Przeglądaj →</a>
             </div>
             <div class="card">
                 <h3>📈 Capital Markets</h3>
-                <p>Analiza fundamentalna ze szczególnym uwzględnieniem sektora półprzewodników (NVIDIA, TSMC, ASML).</p>
-                <a href="/daily/stock/">Przeglądaj syntezy →</a>
+                <p style="font-size:.9rem;color:#444;margin:8px 0">Półprzewodniki, wyceny, makro.</p>
+                <a href="/daily/stock/">Przeglądaj →</a>
             </div>
             <div class="card">
                 <h3>🧬 Science & Systems</h3>
-                <p>Mitochondria, bioenergetyka, ewolucja poznawcza i ograniczenia systemów złożonych.</p>
-                <a href="/daily/science/">Przeglądaj syntezy →</a>
+                <p style="font-size:.9rem;color:#444;margin:8px 0">Bioenergetyka, cybernetyka, systemy złożone.</p>
+                <a href="/daily/science/">Przeglądaj →</a>
+            </div>
+            <div class="card" style="border-color:var(--accent)">
+                <h3>📊 Acacia Radar</h3>
+                <p style="font-size:.9rem;color:#444;margin:8px 0">Trendy, połączenia między filarami, dashboard tygodniowy.</p>
+                <a href="/radar/">Explore →</a>
             </div>
         </div>
     </main>
-    <footer style="margin-top: 50px; font-size: 0.8em; color: #666;">
-        &copy; 2026 Leszek Gonera. Projekt Acacia. Built with Hugo.
-    </footer>
+    <footer>&copy; 2026 Leszek Gonera · AcaciaFund · <a href="/radar/">Radar</a></footer>
+    <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
 </body>
 </html>
