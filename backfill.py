@@ -107,6 +107,283 @@ STOP_WORDS = {
     "after", "into", "than", "then", "also", "just", "more",
 }
 
+DOMAIN_TAXONOMY = {
+    "nauka": {"nature.com", "science.org", "cell.com", "pnas.org", "biorxiv.org", "arxiv.org", "quantamagazine.org", "sciencedirect.com", "scientificamerican.com"},
+    "finanse": {"bloomberg.com", "reuters.com", "wsj.com", "ft.com", "seekingalpha.com", "marketwatch.com", "investopedia.com"},
+    "regulacje": {"fincen.gov", "fatf-gafi.org", "fca.org.uk", "sec.gov", "occ.gov", "bis.org", "ec.europa.eu"},
+    "technologia": {"arstechnica.com", "techcrunch.com", "theverge.com", "wired.com", "anandtech.com", "tomshardware.com", "semiengineering.com"},
+    "media": {"nytimes.com", "theguardian.com", "bbc.com", "apnews.com", "gizmodo.com", "cnn.com", "npr.org"},
+}
+
+KNOWN_ENTITIES = {
+    "aml": {
+        "FinCEN", "FATF", "SEC", "FCA", "ECB", "Fed", "OCC", "EBA",
+        "Binance", "Coinbase", "Circle", "PayPal", "Stripe", "Block",
+        "JPMorgan", "Goldman Sachs", "HSBC", "Deutsche Bank", "Citi",
+        "Visa", "Mastercard", "SWIFT", "Pix", "FedNow",
+    },
+    "stock": {
+        "NVIDIA", "AMD", "TSMC", "Intel", "ASML", "Apple", "Microsoft",
+        "Samsung", "Qualcomm", "ARM", "Broadcom", "Micron", "Amazon",
+        "Google", "Meta", "Tesla", "OpenAI", "SoftBank",
+    },
+    "science": {
+        "OpenAI", "DeepMind", "Google AI", "Meta AI", "Anthropic", "xAI",
+        "MIT", "Stanford", "Harvard", "Oxford", "Cambridge", "Caltech",
+        "DARPA", "NIH", "CERN", "NASA", "ESA", "WHO",
+    },
+}
+ALL_ENTITIES = set().union(*KNOWN_ENTITIES.values())
+
+def categorize_domain(domain: str) -> str:
+    for cat, domains in DOMAIN_TAXONOMY.items():
+        if any(d in domain for d in domains):
+            return cat
+    return "inne"
+
+def extract_entities(text: str) -> list[str]:
+    text_lower = text.lower()
+    found = []
+    for ent in sorted(ALL_ENTITIES, key=len, reverse=True):
+        if ent.lower() in text_lower:
+            found.append(ent)
+    return found[:5]
+
+def build_pillar_signals(stories: list[dict], pillar_name: str) -> dict:
+    if not stories:
+        return {}
+    scores = [s["points"] for s in stories]
+    avg = sum(scores) / len(scores)
+    max_s = max(scores)
+    domains = [categorize_domain(extract_domain(s.get("url", ""))) for s in stories]
+    domain_counts = Counter(domains)
+    all_entities = []
+    for s in stories:
+        all_entities.extend(extract_entities(s["title"]))
+    entity_counts = Counter(all_entities)
+    return {
+        "count": len(stories),
+        "avg_score": avg,
+        "max_score": max_s,
+        "total_score": sum(scores),
+        "has_outlier": max_s > 3 * avg if avg > 0 else False,
+        "outlier_ratio": max_s / (avg or 1),
+        "score_skew": "outlier" if max_s > 3 * avg and avg > 0 else "balanced",
+        "domain_diversity": len(domain_counts),
+        "top_domain": domain_counts.most_common(1)[0][0] if domain_counts else "nieznane",
+        "top_domain_share": domain_counts.most_common(1)[0][1] / len(stories) if stories else 0,
+        "top_entities": [e for e, _ in entity_counts.most_common(5)],
+        "entity_coherence": "high" if entity_counts and len(entity_counts) < max(2, len(stories) * 0.4) else "low",
+    }
+
+def extract_themes_from_post(text: str) -> list[str]:
+    m = re.search(r"Dominujące wątki: \*\*(.+?)\*\*", text)
+    if m:
+        return [t.strip() for t in m.group(1).split(",")]
+    return []
+
+RULES_META = [
+    {
+        "name": "outlier_dominance",
+        "match": lambda s: s.get("has_outlier") and s.get("score_skew") == "outlier",
+        "generate": lambda s, stories, pname: (
+            f"Uwagę społeczności zdominował jeden sygnał: "
+            f"„**{stories[0]['title']}**” ({stories[0]['points']}⭐) — "
+            f"to {s['outlier_ratio']:.1f}x więcej niż średnia pozostałych. "
+            f"Dominująca kategoria źródła: **{s['top_domain']}**. "
+            f"Z perspektywy systemowej to klasyczny efekt kaskady informacyjnej: "
+            f"wysoka gęstość sprzężenia zwrotnego wokół jednego bodźca wywołuje "
+            f"nieliniową amplifikację sygnału."
+        )
+    },
+    {
+        "name": "high_diversity",
+        "match": lambda s: s.get("domain_diversity", 0) >= 4 and s.get("count", 0) >= 10,
+        "generate": lambda s, stories, pname: (
+            f"Zarejestrowano {s['count']} sygnałów z **{s['domain_diversity']} różnych kategorii źródeł** "
+            f"({', '.join(k for k, v in Counter([categorize_domain(extract_domain(x.get('url',''))) for x in stories]).most_common(3))}), "
+            f"co wskazuje na wysoką entropię informacyjną. "
+            f"Topowe encje: {', '.join(s['top_entities'][:4]) or 'brak rozpoznawalnych'}. "
+            f"Taka dyfuzja źródeł sugeruje, że zjawisko ma charakter systemowy, "
+            f"a nie lokalny — rezonuje w różnych warstwach ekosystemu."
+        )
+    },
+    {
+        "name": "entity_cluster",
+        "match": lambda s: s.get("entity_coherence") == "high" and s.get("count", 0) >= 5,
+        "generate": lambda s, stories, pname: (
+            f"Wysoka spójność encji ({', '.join(s['top_entities'][:3])}) przy "
+            f"{s['count']} artykułach świadczy o krystalizacji narracji wokół "
+            f"konkretnych podmiotów. System osiąga punkt krytyczny, w którym "
+            f"lokalne fluktuacje synchronizują się w emergentny wzorzec. "
+            f"To faza przejściowa — kolejne okno pokaże, czy trend się ustabilizuje."
+        )
+    },
+    {
+        "name": "low_volume",
+        "match": lambda s: s.get("count", 0) <= 3 and s.get("count", 0) > 0,
+        "generate": lambda s, stories, pname: (
+            f"Niska gęstość sygnałów ({s['count']} artykułów) przy "
+            f"{'wysokiej' if s['max_score'] > 100 else 'niskiej'} punktacji "
+            f"(max {s['max_score']}⭐) sugeruje niszowy, ale "
+            f"{'potencjalnie znaczący' if s['max_score'] > 100 else 'wyspecjalizowany'} "
+            f"obszar dyskusji. W teorii systemów to okres ciszy przed "
+            f"ewentualną kaskadą — mała liczba agentów, wysoka energia sygnału."
+        )
+    },
+    {
+        "name": "balanced_activity",
+        "match": lambda s: s.get("score_skew") == "balanced" and s.get("count", 0) > 3,
+        "generate": lambda s, stories, pname: (
+            f"Zrównoważony rozkład punktacji ({s['count']} artykułów, "
+            f"średnia {s['avg_score']:.0f}⭐, max {s['max_score']}⭐) wskazuje na "
+            f"dojrzałą dyskusję bez dominującego sygnału. "
+            f"Topowe encje: {', '.join(s['top_entities'][:3]) or 'różnorodne'}. "
+            f"Źródła z domeny **{s['top_domain']}** stanowią "
+            f"{s['top_domain_share']*100:.0f}% wszystkich. "
+            f"To ekosystem o wysokiej różnorodności — stabilny, ale podatny na "
+            f"zakłócenia zewnętrzne."
+        )
+    },
+    {
+        "name": "generic_high",
+        "match": lambda s: s.get("count", 0) > 0,
+        "generate": lambda s, stories, pname: (
+            f"W obszarze {PILLARS[pname]['description'].lower()} odnotowano "
+            f"{s['count']} artykułów (łączna pula {s['total_score']}⭐, "
+            f"średnia {s['avg_score']:.0f}⭐). "
+            f"Najwyżej oceniony: „**{stories[0]['title']}**” ({stories[0]['points']}⭐). "
+            f"Dominująca kategoria źródła: **{s['top_domain']}**. "
+            f"Tematy wiodące: {', '.join(s['top_entities'][:3]) or 'różnorodne'}."
+        )
+    },
+]
+
+RULES_SYSTEMS = [
+    {
+        "name": "outlier_cascade",
+        "match": lambda s: s.get("has_outlier") and s.get("max_score", 0) > 300,
+        "generate": lambda s, stories, pname: (
+            f"Mechanizm kaskady informacyjnej: sygnał outlierowy ({stories[0]['points']}⭐) "
+            f"uruchomił pętlę dodatniego sprzężenia zwrotnego — im więcej osób "
+            f"interagowało z treścią, tym wyżej algorytm HN ją wyniósł, "
+            f"generując dalszą ekspozycję. Z perspektywy cybernetycznej to "
+            f"przykład eskalacji bez homeostazy: system nie miał wbudowanego "
+            f"tłumika, który zrównoważyłby tę pętlę w czasie rzeczywistym. "
+            f"Konsekwencje: {', '.join(s['top_entities'][:2]) or 'temat'} "
+            f"może podlegać przeszacowaniu w kolejnych cyklach."
+        )
+    },
+    {
+        "name": "entropy_diversity",
+        "match": lambda s: s.get("domain_diversity", 0) >= 4,
+        "generate": lambda s, stories, pname: (
+            f"Wysoka różnorodność źródeł ({s['domain_diversity']} kategorii) "
+            f"świadczy o rozproszonej generacji informacji — system nie ma "
+            f"centralnego agregatora, a emergentne wzorce powstają "
+            f"z lokalnych interakcji na peryferiach sieci. "
+            f"Zgodnie z drugą zasadą termodynamiki, wzrost entropii "
+            f"informacyjnej zmniejsza zdolność systemu do predykcji — "
+            f"ale zwiększa jego antykruchość poprzez redundancję "
+            f"ścieżek sygnałowych."
+        )
+    },
+    {
+        "name": "coherence_phase",
+        "match": lambda s: s.get("entity_coherence") == "high",
+        "generate": lambda s, stories, pname: (
+            f"Krystalizacja narracji wokół {', '.join(s['top_entities'][:3])} "
+            f"to klasyczny obraz przejścia fazowego w systemie złożonym: "
+            f"lokalne fluktuacje (pojedyncze artykuły) osiągają masę krytyczną, "
+            f"po czym następuje synchronizacja faz. W tym momencie system "
+            f"znajduje się w stanie krytycznym — drobny impuls może "
+            f"przechylić równowagę w kierunku nowego attractora."
+        )
+    },
+    {
+        "name": "low_signal",
+        "match": lambda s: s.get("count", 0) <= 3 and s.get("count", 0) > 0,
+        "generate": lambda s, stories, pname: (
+            f"Niska gęstość sygnałów przy jednoczesnej obecności tematów "
+            f"({', '.join(s['top_entities'][:3]) or 'różnorodne'}) sugeruje "
+            f"stan przed-krytyczny: system kumuluje energię potencjalną, "
+            f"która może zostać uwolniona w kolejnym oknie obserwacji. "
+            f"W cybernetyce nazywamy to histerezą — opóźnioną odpowiedzią "
+            f"na bodziec poniżej progu aktywacji."
+        )
+    },
+    {
+        "name": "balanced_stable",
+        "match": lambda s: s.get("score_skew") == "balanced" and s.get("count", 4) >= 4,
+        "generate": lambda s, stories, pname: (
+            f"Zrównoważony przepływ informacji ({s['count']} artykułów, "
+            f"skew ratio {s['outlier_ratio']:.1f}) wskazuje na stan "
+            f"homeostazy systemu. Pętle ujemnego sprzężenia zwrotnego "
+            f"skutecznie tłumią odchylenia, utrzymując system w basenie "
+            f"attractora. Z punktu widzenia antykruchości jest to "
+            f"oznaka zdrowej redundancji — wiele słabych sygnałów "
+            f"zamiast jednego dominującego."
+        )
+    },
+    {
+        "name": "generic_systems",
+        "match": lambda s: s.get("count", 0) > 0,
+        "generate": lambda s, stories, pname: (
+            f"Analiza {s['count']} sygnałów w filarze {pname.upper()} "
+            f"ujawnia strukturę sieci o gęstości "
+            f"{'wysokiej' if s['count'] > 15 else 'średniej' if s['count'] > 5 else 'niskiej'}. "
+            f"Najsilniejszy węzeł: „{stories[0]['title']}” ({stories[0]['points']}⭐) "
+            f"z domeny {categorize_domain(extract_domain(stories[0].get('url','')))}. "
+            f"Rozkład przypomina sieć bezskalową — kilka węzłów skupia "
+            f"większość połączeń, reszta tworzy długi ogon dystrybucji."
+        )
+    },
+]
+
+RULES_CONN = [
+    {
+        "name": "shared_entities",
+        "match": lambda cp: cp is not None and len(cp.get("shared_entities", [])) > 0,
+        "generate": lambda cp, all_stories, pname: (
+            f"Encja **{cp['shared_entities'][0]}** pojawiła się dziś zarówno w "
+            f"filarze **{cp['pair'][0].upper()}** jak i **{cp['pair'][1].upper()}** "
+            f"— realne cross-pillar połączenie. "
+            f"W filarze {pname.upper()} dotyczy to artykułu "
+            f"„{cp['article_a'][:80]}”. "
+            f"Z punktu widzenia teorii systemów, obecność tej samej encji "
+            f"w dwóch niezależnych domenach świadczy o istnieniu ukrytego "
+            f"połączenia strukturalnego — być może wspólnego źródła zakłóceń "
+            f"lub globalnego trendu, który manifestuje się lokalnie "
+            f"w różnych subsystemach."
+        )
+    },
+    {
+        "name": "pillar_synergy",
+        "match": lambda cp: cp is not None and cp.get("strength", 0) > 0,
+        "generate": lambda cp, all_stories, pname: (
+            f"Przekrój tematyczny łączy filary {cp['pair'][0].upper()} i "
+            f"{cp['pair'][1].upper()} poprzez wspólne wątki "
+            f"({' — '.join(cp['shared_entities'][:2])}). "
+            f"Z perspektywy multi-domenowej AcaciaFund, te same sygnały "
+            f"przetwarzane są przez różne warstwy abstrakcji — regulacyjną "
+            f"(AML), kapitałową (Markets) i poznawczą (Science). "
+            f"Rezonans między nimi amplifikuje znaczenie sygnału."
+        )
+    },
+    {
+        "name": "no_connection",
+        "match": lambda cp: True,
+        "generate": lambda cp, all_stories, pname: (
+            f"W tym oknie czasowym nie wykryto silnych korelacji między "
+            f"filarami na poziomie encji. Z perspektywy multi-domenowej "
+            f"AcaciaFund, niezależność domen jest równie wartościowa — "
+            f"oznacza, że systemy peryferyjne nie są nadmiernie "
+            f"sprzężone, co zwiększa ogólną antykruchość portfela "
+            f"informacyjnego."
+        )
+    },
+]
+
 
 def log(msg: str, ok: bool = True) -> None:
     prefix = "[+]" if ok else "[-]"
@@ -187,21 +464,28 @@ def extract_themes(titles: list[str]) -> list[str]:
     return [w.capitalize() for w, _ in counts.most_common(5)]
 
 
-def build_analysis(stories: list[dict], pillar_name: str) -> dict[str, str]:
+def apply_rules(rules: list[dict], signals: dict, stories: list[dict], pname: str, extra: any = None) -> str:
+    for rule in rules:
+        if rule["match"](signals if extra is None else extra):
+            return rule["generate"](signals if extra is None else extra, stories, pname)
+    return ""
+
+def extract_themes_from_post(text: str) -> list[str]:
+    m = re.search(r"Dominujące wątki: \*\*(.+?)\*\*", text)
+    if m:
+        return [t.strip() for t in m.group(1).split(",")]
+    return []
+
+def build_analysis(stories: list[dict], pillar_name: str,
+                   all_pillar_stories: dict[str, list[dict]] | None = None) -> dict[str, str]:
     if not stories:
-        date_str = "(unknown)"
         return {
             "trending": f"*Brak doniesień z tego okresu dla tego obszaru.*\n\n*Pipeline AcaciaFund kontynuuje skanowanie.*",
             "metaanalysis": "Brak danych do analizy w tym oknie czasowym.",
             "systems_lens": "Brak sygnałów. Z punktu widzenia teorii systemów, brak informacji to również informacja.",
             "connections": "Brak korelacji w tym oknie czasowym.",
         }
-    titles = [s["title"] for s in stories]
-    scores = [s["points"] for s in stories]
-    avg_score = sum(scores) / len(scores)
-    top = max(stories, key=lambda s: s["points"])
-    top3 = sorted(stories, key=lambda s: s["points"], reverse=True)[:3]
-    themes = extract_themes([s["title"] for s in top3])
+
     trending_lines = []
     for i, s in enumerate(stories[:7]):
         link_text = s["title"]
@@ -210,53 +494,59 @@ def build_analysis(stories: list[dict], pillar_name: str) -> dict[str, str]:
             extra = f" ([dyskusja]({s['hn_url']}))"
         trending_lines.append(f"{i+1}. [{link_text}]({s['url']}){extra} (⭐{s['points']})")
     trending = "\n".join(trending_lines)
-    pillar_desc = PILLARS[pillar_name]["description"].lower()
-    if avg_score > 300:
-        intensity = "silne zainteresowanie społeczności"
-    elif avg_score > 80:
-        intensity = "umiarkowane zainteresowanie"
-    else:
-        intensity = "niski, ale wyspecjalizowany ruch"
-    themes_str = ", ".join(themes[:3]) if themes else "różnorodne tematy"
-    top3_titles = "; ".join(f"_{s['title']}_" for s in top3)
-    metaanalysis = (
-        f"W tym oknie w obszarze {pillar_desc} obserwujemy **{intensity}**. "
-        f"Top 3 najwyżej ocenione:\n\n{top3_titles}\n\n"
-        f"Dominujące wątki: **{themes_str}**. "
-        f"Średnia punktacja: {avg_score:.0f} ⭐, "
-        f"najwyższa: {top['points']} ⭐."
-    )
-    systems_lens_templates = [
-        "Z punktu widzenia sprzężeń zwrotnych, dominujące narracje w tym oknie wskazują na dążenie do redukcji entropii wewnątrzsystemowej kosztem delegowania ryzyk na warstwy peryferyjne. Wyraźnie widać to w wątkach dotyczących **{themes}**.",
-        "Analizowane trendy ujawniają mechanizmy antykruchości: systemy adaptują się przez zwiększanie redundancji kosztem efektywności krótkoterminowej. Najbardziej wyraziste w: _{top}_.",
-        "Perspektywa cybernetyczna uwidacznia pętle sprzężenia zwrotnego między innowacją a regulacją. W filarze **{pillar}** obserwujemy wzmacnianie się pętli stabilizujących przy jednoczesnym wzroście szumów informacyjnych w obszarze {themes}.",
-        "Systemy złożone w domenie {pillar} wykazują cechy samoorganizacji: lokalne interakcje ({themes}) prowadzą do emergencji globalnych wzorców bez centralnego sterowania.",
-    ]
-    idx = hash(frozenset(s["title"] for s in stories)) % len(systems_lens_templates)
-    systems_lens = systems_lens_templates[idx].format(themes=themes_str, top=top["title"], pillar=pillar_name.upper())
-    conn_templates = [
-        "Ewolucja struktur technologicznych ({themes}) determinuje możliwości adaptacyjne modeli poznawczych. Synergia z pozostałymi domenami AcaciaFund widoczna w warstwie systemowej.",
-        "Przekrój tematyczny wskazuje na korelację między rozwojem w obszarze {themes} a zmianami w architekturze ryzyka systemowego. Wątek rezonuje z analizami w pozostałych filarach.",
-        "Przepływy informacji w tym oknie czasowym ujawniają ukryte powiązania między domenami: {themes}. Z perspektywy multi-domenowej AcaciaFund, są to przejawy tego samego zjawiska na różnych warstwach abstrakcji.",
-    ]
-    idx = hash(frozenset(s["url"] for s in stories)) % len(conn_templates)
-    connections = conn_templates[idx].format(themes=themes_str)
+
+    signals = build_pillar_signals(stories, pillar_name)
+
+    meta = apply_rules(RULES_META, signals, stories, pillar_name)
+    if not meta:
+        meta = apply_rules([RULES_META[-1]], signals, stories, pillar_name)
+
+    systems = apply_rules(RULES_SYSTEMS, signals, stories, pillar_name)
+    if not systems:
+        systems = apply_rules([RULES_SYSTEMS[-1]], signals, stories, pillar_name)
+
+    cp_signal = None
+    if all_pillar_stories:
+        for p in all_pillar_stories:
+            if p == pillar_name:
+                continue
+            p_stories = all_pillar_stories.get(p, [])
+            if not p_stories:
+                continue
+            p_signals = build_pillar_signals(p_stories, p)
+            shared = set(signals.get("top_entities", [])) & set(p_signals.get("top_entities", []))
+            if shared:
+                a_in_p = next((s["title"] for s in all_pillar_stories[pillar_name]
+                              if any(e.lower() in s["title"].lower() for e in shared)), "")
+                cp_signal = {
+                    "pair": (pillar_name, p),
+                    "shared_entities": list(shared),
+                    "strength": len(shared),
+                    "article_a": a_in_p,
+                }
+                break
+
+    conn = apply_rules(RULES_CONN, signals, stories, pillar_name, cp_signal)
+    if not conn:
+        conn = apply_rules([RULES_CONN[-1]], signals, stories, pillar_name, cp_signal)
+
     return {
         "trending": trending,
-        "metaanalysis": metaanalysis,
-        "systems_lens": systems_lens,
-        "connections": connections,
+        "metaanalysis": meta,
+        "systems_lens": systems,
+        "connections": conn,
     }
 
 
-def generate_post(pillar_name: str, config: dict, pillar_stories: list[dict], date: datetime) -> Path | None:
+def generate_post(pillar_name: str, config: dict, pillar_stories: list[dict], date: datetime,
+                  all_pillar_stories: dict[str, list[dict]] | None = None) -> Path | None:
     date_str = date.strftime("%Y-%m-%d")
     filename = f"{date_str}.md"
     filepath = config["folder"] / filename
     if filepath.exists():
         log(f"Post już istnieje: {filename} dla {pillar_name} — pomijam")
         return None
-    analysis = build_analysis(pillar_stories, pillar_name)
+    analysis = build_analysis(pillar_stories, pillar_name, all_pillar_stories)
     total_score = sum(s["points"] for s in pillar_stories)
     avg_score = round(total_score / len(pillar_stories), 1) if pillar_stories else 0
     max_score = max((s["points"] for s in pillar_stories), default=0)
@@ -348,7 +638,10 @@ def main():
             ps = pillar_stories[pillar]
             ps.sort(key=lambda s: s["points"], reverse=True)
             pillar_stories[pillar] = ps[:30]
-            result = generate_post(pillar, config, pillar_stories[pillar], target_date)
+
+        for pillar, config in PILLARS.items():
+            result = generate_post(pillar, config, pillar_stories[pillar], target_date,
+                                   all_pillar_stories=pillar_stories)
             if result:
                 total_generated += 1
 
