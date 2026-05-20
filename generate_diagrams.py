@@ -166,19 +166,19 @@ layout: "diagrams"
 
 Potok danych: źródła (HN + arXiv) → ingest.py (klasyfikacja NLP) → Notebook/Diagramy → Hugo (SSG) → Cloudflare Pages.
 
-{svg_pipeline()}
+<div>{svg_pipeline()}</div>
 
 ## 🔄 Przepływ klasyfikacji
 
 Jak pojedyncza historia jest klasyfikowana do jednego z trzech filarów.
 
-{svg_classify_flow()}
+<div>{svg_classify_flow()}</div>
 
 ## 🔗 Cross-Pillar Atlas
 
 Wykrywanie połączeń między filarami na podstawie wspólnych słów kluczowych w tym samym dniu.
 
-{svg_atlas()}
+<div>{svg_atlas()}</div>
 
 ## 📁 Struktura repozytorium
 

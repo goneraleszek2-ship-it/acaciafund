@@ -19,7 +19,7 @@
   {{- $desc = printf "%s — %s" $title $site }}
 {{- end }}
 {{- $desc = replaceRE "\n" " " (substr $desc 0 160) }}
-{{- $image := "https://www.acaciafund.org/icons/icon-512x512.png" }}
+{{- $image := printf "%sicons/icon-512x512.png" .Site.BaseURL }}
 <title>{{ if .IsHome }}{{ $site }}{{ else }}{{ $title }} | {{ $site }}{{ end }}</title>
 <meta name="description" content="{{ $desc }}">
 <meta property="og:title" content="{{ $title }}">

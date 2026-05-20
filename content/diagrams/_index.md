@@ -8,7 +8,7 @@ layout: "diagrams"
 
 Potok danych: źródła (HN + arXiv) → ingest.py (klasyfikacja NLP) → Notebook/Diagramy → Hugo (SSG) → Cloudflare Pages.
 
-<svg viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;background:#fafafa;border-radius:8px;font-family:system-ui,sans-serif">
+<div><svg viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;background:#fafafa;border-radius:8px;font-family:system-ui,sans-serif">
   <defs>
     <marker id="a" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#555"/></marker>
     <marker id="ac" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#2E86AB"/></marker>
@@ -61,13 +61,13 @@ Potok danych: źródła (HN + arXiv) → ingest.py (klasyfikacja NLP) → Notebo
   <!-- labels -->
   <text x="180" y="120" text-anchor="middle" font-size="9" fill="#888">Algolia API</text>
   <text x="535" y="120" text-anchor="middle" font-size="9" fill="#888">generate_notebook.py</text>
-</svg>
+</svg></div>
 
 ## 🔄 Przepływ klasyfikacji
 
 Jak pojedyncza historia jest klasyfikowana do jednego z trzech filarów.
 
-<svg viewBox="0 0 520 320" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;background:#fafafa;border-radius:8px;font-family:system-ui,sans-serif">
+<div><svg viewBox="0 0 520 320" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;background:#fafafa;border-radius:8px;font-family:system-ui,sans-serif">
   <defs>
     <marker id="b" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#555"/></marker>
   </defs>
@@ -105,13 +105,13 @@ Jak pojedyncza historia jest klasyfikowana do jednego z trzech filarów.
   <text x="260" y="288" text-anchor="middle" font-size="10" fill="#1a1a2e">📈 Markets</text>
   <rect x="330" y="270" width="100" height="28" rx="4" fill="#d4e6f1" stroke="#2E86AB"/>
   <text x="380" y="288" text-anchor="middle" font-size="10" fill="#1a1a2e">🧬 Science</text>
-</svg>
+</svg></div>
 
 ## 🔗 Cross-Pillar Atlas
 
 Wykrywanie połączeń między filarami na podstawie wspólnych słów kluczowych w tym samym dniu.
 
-<svg viewBox="0 0 520 280" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;background:#fafafa;border-radius:8px;font-family:system-ui,sans-serif">
+<div><svg viewBox="0 0 520 280" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;background:#fafafa;border-radius:8px;font-family:system-ui,sans-serif">
   <text x="260" y="24" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a1a2e">Cross-Pillar Atlas — wykrywanie połączeń</text>
 
   <!-- three pillars as circles -->
@@ -143,7 +143,7 @@ Wykrywanie połączeń między filarami na podstawie wspólnych słów kluczowyc
 
   <!-- legend -->
   <text x="260" y="240" text-anchor="middle" font-size="10" fill="#555">Te same słowa kluczowe pojawiające się tego samego dnia w ≥2 filarach → wpis w Atlas</text>
-</svg>
+</svg></div>
 
 ## 📁 Struktura repozytorium
 

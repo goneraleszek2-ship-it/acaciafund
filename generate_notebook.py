@@ -325,6 +325,20 @@ def main():
     OUTPUT_FILE.write_text(build_page(data), encoding="utf-8")
     print(f"[+] Notebook: {OUTPUT_FILE}")
 
+    # update API JSON
+    api_dir = BASE_DIR / "static" / "api"
+    api_dir.mkdir(parents=True, exist_ok=True)
+    api_data = {
+        "generated": datetime.now().isoformat(),
+        "pillars": {
+            p: [{"date": post["date"], "score_total": post["score_total"],
+                 "score_avg": post["score_avg"], "link_count": post["link_count"]}
+                for post in posts] for p, posts in data.items()
+        },
+    }
+    (api_dir / "radar.json").write_text(json.dumps(api_data, indent=2, ensure_ascii=False), encoding="utf-8")
+    print(f"[+] API JSON: static/api/radar.json")
+
 
 if __name__ == "__main__":
     main()
