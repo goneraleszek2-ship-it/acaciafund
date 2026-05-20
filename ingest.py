@@ -354,6 +354,11 @@ def generate_post(pillar_name: str, config: dict, pillar_stories: list[dict]) ->
 
     analysis = build_analysis(pillar_stories, pillar_name)
 
+    total_score = sum(s["points"] for s in pillar_stories)
+    avg_score = round(total_score / len(pillar_stories), 1) if pillar_stories else 0
+    max_score = max((s["points"] for s in pillar_stories), default=0)
+    link_count = len(pillar_stories)
+
     lines = [
         "---",
         f'title: "Synteza {config["emoji"]} {config["label"]} — {date_str}"',
@@ -362,23 +367,37 @@ def generate_post(pillar_name: str, config: dict, pillar_stories: list[dict]) ->
         f'theme: "AcaciaFund — {config["description"]}"',
         "---",
         "",
+        '<div class="metrics">',
+        f'<div class="metric gold"><div class="value">{total_score}</div><div class="label">⭐ Suma</div></div>',
+        f'<div class="metric"><div class="value">{avg_score}</div><div class="label">📊 Średnia</div></div>',
+        f'<div class="metric"><div class="value">{max_score}</div><div class="label">🏆 Max</div></div>',
+        f'<div class="metric"><div class="value">{link_count}</div><div class="label">🔗 Linki</div></div>',
+        "</div>",
+        "",
         f"## 🔍 Trending (HackerNews, ostatnie 48h)",
         "",
         analysis["trending"],
         "",
-        "---",
+        '<div class="insight" style="border-left-color:var(--gold)">',
+        '<span class="label">⚡ Kluczowe</span>',
+        f"<p>{max_score} ⭐ to najwyższa ocena w tym oknie. Średnia: {avg_score} ⭐. Łącznie {total_score} ⭐ z {link_count} linków.</p>",
+        "</div>",
         "",
-        "## 📊 Metaanaliza",
         "",
+        '<div class="insight" style="border-left-color:#3B6999">',
+        '<span class="label">📊 Metaanaliza</span>',
         analysis["metaanalysis"],
+        "</div>",
         "",
-        "## 🧠 Systems Lens (Antifragility & Cybernetics)",
-        "",
+        '<div class="insight">',
+        '<span class="label">🧠 Systems Thinking</span>',
         analysis["systems_lens"],
+        "</div>",
         "",
-        "## ↔️ Cross-Domain Connections",
-        "",
+        '<div class="insight" style="border-left-color:var(--navy-mid)">',
+        '<span class="label">🔗 Cross-Pillar Atlas</span>',
         analysis["connections"],
+        "</div>",
         "",
         "---",
         f"*Raport wygenerowano {date_str} o {today.strftime('%H:%M')} UTC. "

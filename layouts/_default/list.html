@@ -5,20 +5,25 @@
     <header>
         <nav>
             <a href="/">🏠 Home</a>
-            <a href="{{ .Parent.RelPermalink }}">↑ {{ .Parent.Title }}</a>
         </nav>
         <h1>Archiwum: {{ .Title }}</h1>
     </header>
     <main>
         <ul>
             {{ range .Pages }}
-            <li><a href="{{ .RelPermalink }}">{{ .Title }}</a><span style="display:block;color:var(--muted);font-size:.8rem;margin-top:4px">📅 {{ .Date.Format "2006-01-02" }}</span></li>
+            <li>
+                <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+                <span style="display:block;color:var(--muted);font-size:.78rem;margin-top:4px">📅 {{ .Date.Format "2006-01-02" }}</span>
+            </li>
             {{ else }}
             <li>Brak wpisów. Skraper uruchomi się o 08:00 UTC.</li>
             {{ end }}
         </ul>
     </main>
-    <footer>&copy; 2026 Leszek Gonera · AcaciaFund · <a href="/">Home</a></footer>
+    <footer>
+        &copy; 2026 Leszek Gonera · AcaciaFund ·
+        <a href="/radar/">Radar</a>
+    </footer>
     <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
 </body>
 </html>

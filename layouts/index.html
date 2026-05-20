@@ -10,34 +10,59 @@
             <a href="/daily/stock/">📈 Markets</a>
             <a href="/daily/science/">🧬 Science</a>
             <a href="/radar/">📊 Radar</a>
+            <a href="/diagrams/">🏗️ Diagramy</a>
         </nav>
     </header>
     <main>
-        <p style="margin:20px 0;font-size:1.1rem">Codzienna, zautomatyzowana synteza wiedzy — AML, rynki kapitałowe i nauka przez pryzmat myślenia systemowego.</p>
+        <p style="margin-bottom:24px;font-size:1.05rem;color:#374151">
+            Codzienna, zautomatyzowana synteza wiedzy — AML, rynki kapitałowe i nauka przez pryzmat myślenia systemowego.
+        </p>
+
+        <div class="metrics">
+            <div class="metric gold"><div class="value">3</div><div class="label">🛡️ Filary</div></div>
+            <div class="metric"><div class="value">2</div><div class="label">📡 Źródła</div></div>
+            <div class="metric"><div class="value">08:00</div><div class="label">⏰ Cron UTC</div></div>
+        </div>
+
         <div class="grid">
             <div class="card">
                 <h3>🛡️ AML & RegTech</h3>
-                <p style="font-size:.9rem;color:#444;margin:8px 0">Ewolucja systemów odpornościowych w sektorze finansowym.</p>
+                <p>Ewolucja systemów odpornościowych w sektorze finansowym.</p>
                 <a href="/daily/aml/">Przeglądaj →</a>
             </div>
             <div class="card">
                 <h3>📈 Capital Markets</h3>
-                <p style="font-size:.9rem;color:#444;margin:8px 0">Półprzewodniki, wyceny, makro.</p>
+                <p>Półprzewodniki, wyceny, makro, geopolityka.</p>
                 <a href="/daily/stock/">Przeglądaj →</a>
             </div>
             <div class="card">
                 <h3>🧬 Science & Systems</h3>
-                <p style="font-size:.9rem;color:#444;margin:8px 0">Bioenergetyka, cybernetyka, systemy złożone.</p>
+                <p>Bioenergetyka, cybernetyka, systemy złożone.</p>
                 <a href="/daily/science/">Przeglądaj →</a>
             </div>
-            <div class="card" style="border-color:var(--accent)">
+            <div class="card" style="border-color:var(--gold)">
                 <h3>📊 Acacia Radar</h3>
-                <p style="font-size:.9rem;color:#444;margin:8px 0">Trendy, połączenia między filarami, dashboard tygodniowy.</p>
+                <p>Dashboard trendów, Atlas cross-pillar, wizualizacje.</p>
                 <a href="/radar/">Explore →</a>
             </div>
         </div>
+
+        <div class="insight">
+            <span class="label">💡 O projekcie</span>
+            <p>
+                <strong>AcaciaFund</strong> to dzienny portfel badawczy — systemowa synteza informacji 
+                z HackerNews i arXiv, klasyfikowana do trzech filarów. Każda synteza zawiera 
+                analizę <em>Systems Lens</em> (antifragility &amp; cybernetics) oraz mapowanie 
+                <em>Cross-Domain Connections</em>.
+            </p>
+        </div>
     </main>
-    <footer>&copy; 2026 Leszek Gonera · AcaciaFund · <a href="/radar/">Radar</a></footer>
+    <footer>
+        &copy; 2026 Leszek Gonera · AcaciaFund ·
+        <a href="/radar/">Radar</a> ·
+        <a href="/diagrams/">Diagramy</a> ·
+        <a href="/api/radar.json">API</a>
+    </footer>
     <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
 </body>
 </html>

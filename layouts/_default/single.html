@@ -8,10 +8,16 @@
             <a href="{{ .Parent.RelPermalink }}">↑ {{ .Parent.Title }}</a>
         </nav>
         <h1>{{ .Title }}</h1>
-        <div class="meta">📅 {{ .Date.Format "2006-01-02" }} · {{ range .Params.tags }}<span class="tag">{{ . }}</span> {{ end }}</div>
+        <div class="meta">
+            📅 {{ .Date.Format "2006-01-02" }}
+            {{ range .Params.tags }}<span>{{ . }}</span>{{ end }}
+        </div>
     </header>
     <main>{{ .Content }}</main>
-    <footer>&copy; 2026 Leszek Gonera · AcaciaFund · <a href="/">Home</a></footer>
+    <footer>
+        &copy; 2026 Leszek Gonera · AcaciaFund ·
+        <a href="/radar/">Radar</a>
+    </footer>
     <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
 </body>
 </html>
