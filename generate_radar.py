@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""AcaciaFund Radar — McKinsey dashboard + Biecek-style SVG charts."""
+"""AcaciaFund Radar — dashboard + SVG charts."""
 
 import json
 import re
@@ -89,10 +89,10 @@ def find_connections(data: dict) -> list[dict]:
     return connections
 
 
-# ── SVG chart helpers (Biecek/ggplot2 aesthetic) ──
+# ── SVG chart helpers ──
 
 def svg_trend_chart(data: dict) -> str:
-    """Biecek-style line chart: small multiples for each pillar."""
+    """Small-multiples line chart: one panel per pillar."""
     all_dates = sorted({p["date"] for posts in data.values() for p in posts})
     if not all_dates:
         return ""
@@ -162,7 +162,7 @@ def svg_trend_chart(data: dict) -> str:
 
 
 def svg_score_bars(data: dict) -> str:
-    """Biecek-style horizontal bar chart: total score per pillar."""
+    """Horizontal bar chart: total score per pillar."""
     totals = {}
     for p in ["aml", "stock", "science"]:
         totals[p] = max(sum(post["score_total"] for post in data.get(p, [])), 0)
@@ -262,7 +262,7 @@ def build_html(data: dict) -> str:
         f'<div class="metric"><div class="value">{total_connections}</div><div class="label">🔗 Połączenia</div></div>',
         "</div>",
         "",
-        "## 📈 Trend aktywności (facet Biecek)",
+        "## 📈 Trend aktywności",
         "",
         "<p style='color:#6b7280;font-size:.85rem'>Całkowita suma punktów (⭐) dziennie w podziale na filary. Każdy panel to osobny filar — skala dostosowana do maksimum.</p>",
         f'<div class="chart-wrap"><h4>📈 Trend dzienny — suma punktów</h4>{svg_trend_chart(data)}</div>',
@@ -319,9 +319,7 @@ def build_html(data: dict) -> str:
         "---",
         "",
         "<p style='color:#999;font-size:.78rem'>"
-        "Radar generowany automatycznie przez <code>generate_radar.py</code>. "
-        "Styl wizualizacji: Biecek / ggplot2. "
-        "UX: McKinsey.</p>",
+        "Radar generowany automatycznie przez <code>generate_radar.py</code>.</p>",
     ])
 
     return "\n".join(lines) + "\n"

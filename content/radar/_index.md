@@ -4,7 +4,7 @@ date: 2026-05-20
 layout: "radar"
 ---
 
-<p style='color:#6b7280;font-size:.85rem;margin-bottom:24px'>Ostatnia aktualizacja: 2026-05-20 20:51 UTC</p>
+<p style='color:#6b7280;font-size:.85rem;margin-bottom:24px'>Ostatnia aktualizacja: 2026-05-20 20:59 UTC</p>
 
 ## 📋 Podsumowanie
 
@@ -15,7 +15,7 @@ layout: "radar"
 <div class="metric"><div class="value">6</div><div class="label">🔗 Połączenia</div></div>
 </div>
 
-## 📈 Trend aktywności (facet Biecek)
+## 📈 Trend aktywności
 
 <p style='color:#6b7280;font-size:.85rem'>Całkowita suma punktów (⭐) dziennie w podziale na filary. Każdy panel to osobny filar — skala dostosowana do maksimum.</p>
 <div class="chart-wrap"><h4>📈 Trend dzienny — suma punktów</h4><svg viewBox="0 0 800 216" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:Inter,system-ui,sans-serif">
@@ -79,12 +79,12 @@ layout: "radar"
 
 <table>
 <tr><th>Data</th><th>Połączenie</th><th>Wspólne tematy</th></tr>
-<tr><td>2026-05-17</td><td>🛡️ + 📈</td><td>antifragility, trending, connections, cybernetics</td></tr>
-<tr><td>2026-05-17</td><td>🛡️ + 🧬</td><td>antifragility, trending, connections, cybernetics</td></tr>
-<tr><td>2026-05-17</td><td>📈 + 🧬</td><td>antifragility, trending, connections, cybernetics</td></tr>
-<tr><td>2026-05-20</td><td>🛡️ + 📈</td><td>linki, raport, thinking, klasyfikacja</td></tr>
-<tr><td>2026-05-20</td><td>🛡️ + 🧬</td><td>linki, raport, thinking, klasyfikacja</td></tr>
-<tr><td>2026-05-20</td><td>📈 + 🧬</td><td>linki, raport, thinking, klasyfikacja</td></tr>
+<tr><td>2026-05-17</td><td>🛡️ + 📈</td><td>skor, synergia, trending, systems</td></tr>
+<tr><td>2026-05-17</td><td>🛡️ + 🧬</td><td>skor, synergia, trending, systems</td></tr>
+<tr><td>2026-05-17</td><td>📈 + 🧬</td><td>skor, synergia, trending, systems</td></tr>
+<tr><td>2026-05-20</td><td>🛡️ + 📈</td><td>thinking, atlas, kluczowe, algolia</td></tr>
+<tr><td>2026-05-20</td><td>🛡️ + 🧬</td><td>thinking, atlas, kluczowe, algolia</td></tr>
+<tr><td>2026-05-20</td><td>📈 + 🧬</td><td>thinking, atlas, kluczowe, algolia</td></tr>
 </table>
 
 <div class="insight">
@@ -125,4 +125,4 @@ layout: "radar"
 
 ---
 
-<p style='color:#999;font-size:.78rem'>Radar generowany automatycznie przez <code>generate_radar.py</code>. Styl wizualizacji: Biecek / ggplot2. UX: McKinsey.</p>
+<p style='color:#999;font-size:.78rem'>Radar generowany automatycznie przez <code>generate_radar.py</code>.</p>
