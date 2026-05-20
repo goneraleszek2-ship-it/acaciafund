@@ -14,7 +14,7 @@ layout: "notebook"
 
 *Analiza danych z HackerNews i arXiv — kod źródłowy wizualizacji i przetwarzania.*
 
-Ostatnia aktualizacja: `2026-05-20 21:20 UTC`  •  Posty: `6`  •  Punkty: `1903⭐`  •  Linki: `44`</div>
+Ostatnia aktualizacja: `2026-05-20 21:23 UTC`  •  Posty: `6`  •  Punkty: `2054⭐`  •  Linki: `57`</div>
 </div>
 <div class="cell">
   <div class="cell-header">
@@ -40,9 +40,9 @@ data = parse_content_files()  # ← reads content/daily/*/*.md
 
 # Sample: latest entries
 latest = [
-  {"date": "2026-05-20", "score": 1028, "links": 8},
-  {"date": "2026-05-20", "score": 723, "links": 13},
-  {"date": "2026-05-20", "score": 152, "links": 8}
+  {"date": "2026-05-20", "score": 1090, "links": 14},
+  {"date": "2026-05-20", "score": 775, "links": 14},
+  {"date": "2026-05-20", "score": 189, "links": 14}
 ]
 print(f'Total posts: {len(data)}')</code></pre>
 </div>
@@ -51,7 +51,7 @@ print(f'Total posts: {len(data)}')</code></pre>
     <span class="exec">[4]</span>
     <span class="tag output">Output</span>
   </div>
-  <div class="cell-content"><table style='font-size:.82rem'><tr><th>Pillar</th><th>Posts</th><th>Total ⭐</th><th>Links</th><th>Avg ⭐</th></tr><tr><td>🛡️ AML</td><td>2</td><td>1028</td><td>13</td><td>102.8</td></tr><tr><td>📈 Markets</td><td>2</td><td>723</td><td>18</td><td>51.6</td></tr><tr><td>🧬 Science</td><td>2</td><td>152</td><td>13</td><td>15.2</td></tr></table></div>
+  <div class="cell-content"><table style='font-size:.82rem'><tr><th>Pillar</th><th>Posts</th><th>Total ⭐</th><th>Links</th><th>Avg ⭐</th></tr><tr><td>🛡️ AML</td><td>2</td><td>1090</td><td>19</td><td>77.8</td></tr><tr><td>📈 Markets</td><td>2</td><td>775</td><td>19</td><td>55.4</td></tr><tr><td>🧬 Science</td><td>2</td><td>189</td><td>19</td><td>13.5</td></tr></table></div>
 </div>
 <div class="cell">
   <div class="cell-header">
@@ -90,14 +90,14 @@ donut_chart(totals)  # → SVG rendered below</code></pre>
     <span class="exec">[7]</span>
     <span class="tag output">Output</span>
   </div>
-  <div class="cell-content"><div class="chart-wrap" style="text-align:center"><h4>Rozkład punktów ⭐</h4><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:Inter,system-ui,sans-serif"><path d="M120,90 L120.0,20.0 A70,70 0 1,1 102.5,157.8 Z" fill="#3B6999" opacity=".85"/>
-<text x="214" y="102" text-anchor="middle" font-size="10" font-weight="600" fill="#3B6999">1028⭐</text>
-<path d="M120,90 L102.5,157.8 A70,70 0 0,1 86.3,28.6 Z" fill="#C47F58" opacity=".85"/>
-<text x="26" y="102" text-anchor="middle" font-size="10" font-weight="600" fill="#C47F58">723⭐</text>
-<path d="M120,90 L86.3,28.6 A70,70 0 0,1 120.0,20.0 Z" fill="#9C6B8E" opacity=".85"/>
-<text x="97" y="-2" text-anchor="middle" font-size="10" font-weight="600" fill="#9C6B8E">152⭐</text>
+  <div class="cell-content"><div class="chart-wrap" style="text-align:center"><h4>Rozkład punktów ⭐</h4><svg viewBox="0 0 240 180" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;font-family:Inter,system-ui,sans-serif"><path d="M120,90 L120.0,20.0 A70,70 0 1,1 106.6,158.7 Z" fill="#3B6999" opacity=".85"/>
+<text x="214" y="99" text-anchor="middle" font-size="10" font-weight="600" fill="#3B6999">1090⭐</text>
+<path d="M120,90 L106.6,158.7 A70,70 0 0,1 81.7,31.4 Z" fill="#C47F58" opacity=".85"/>
+<text x="27" y="108" text-anchor="middle" font-size="10" font-weight="600" fill="#C47F58">775⭐</text>
+<path d="M120,90 L81.7,31.4 A70,70 0 0,1 120.0,20.0 Z" fill="#9C6B8E" opacity=".85"/>
+<text x="93" y="-1" text-anchor="middle" font-size="10" font-weight="600" fill="#9C6B8E">189⭐</text>
 <circle cx="120" cy="90" r="35.0" fill="#fff"/>
-<text x="120" y="94" text-anchor="middle" font-size="13" font-weight="700" fill="#0d1b2a">1903</text></svg></div></div>
+<text x="120" y="94" text-anchor="middle" font-size="13" font-weight="700" fill="#0d1b2a">2054</text></svg></div></div>
 </div>
 <div class="cell">
   <div class="cell-header">
@@ -133,9 +133,9 @@ topic_bars(themes)  # → SVG rendered below</code></pre>
 <text x="8" y="103" font-size="9" fill="#374151">europeans</text>
 <rect x="100" y="92" width="228" height="14" rx="2" fill="#3B6999" opacity=".7"/>
 <text x="104" y="103" font-size="8" font-weight="500" fill="#fff">3</text>
-<text x="8" y="121" font-size="9" fill="#374151">trending</text>
-<rect x="100" y="110" width="152" height="14" rx="2" fill="#3B6999" opacity=".7"/>
-<text x="104" y="121" font-size="8" font-weight="500" fill="#fff">2</text>
+<text x="8" y="121" font-size="9" fill="#374151">cybersecurity</text>
+<rect x="100" y="110" width="228" height="14" rx="2" fill="#3B6999" opacity=".7"/>
+<text x="104" y="121" font-size="8" font-weight="500" fill="#fff">3</text>
 <text x="4" y="170" font-size="11" font-weight="600" fill="#C47F58">📈 Markets</text>
 <text x="8" y="189" font-size="9" fill="#374151">skor</text>
 <rect x="100" y="178" width="380" height="14" rx="2" fill="#C47F58" opacity=".7"/>
@@ -184,7 +184,7 @@ topic_bars(themes)  # → SVG rendered below</code></pre>
 
 Z analizy danych wyłaniają się następujące wzorce:
 
-1. **Dominacja AML** — 1028⭐ to najwyższa suma, co odzwierciedla intensywność dyskursu regulacyjnego.
+1. **Dominacja AML** — 1090⭐ to najwyższa suma, co odzwierciedla intensywność dyskursu regulacyjnego.
 2. **Keywords cross-pillar** — tematy takie jak *cybernetics*, *systems*, *trending* pojawiają się we wszystkich trzech filarach, sugerując emergencję wspólnego języka systemowego.
 3. **Rozkład aktywności** — większość punktów pochodzi z HackerNews; arXiv stanowi uzupełnienie o głębsze prace badawcze.</div>
 </div>
