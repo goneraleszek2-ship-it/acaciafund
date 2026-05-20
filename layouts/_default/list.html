@@ -12,16 +12,19 @@
     <main>
         <div class="metrics">
             <div class="metric"><div class="value">{{ len .Pages }}</div><div class="label">📄 Posty</div></div>
-            <div class="metric"><div class="value">{{ range .Pages }}{{ if .Date }}{{ .Date.Format "2006" }}{{ end }}{{ end }}2026</div><div class="label">📅 Rok</div></div>
+        </div>
+
+        <div style="margin-bottom:16px">
+            <input id="searchInput" type="text" placeholder="Szukaj w tytułach..." style="width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:var(--radius);font-family:inherit;font-size:.9rem;background:var(--card-bg);color:var(--fg);outline:none;transition:border-color .2s" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--border)'">
         </div>
 
         {{ $pages := .Pages }}
         {{ $grouped := $pages.GroupByDate "2006-01" }}
         {{ range $grouped }}
-            <h3>{{ .Key }}</h3>
+            <h3 data-month="{{ .Key }}">{{ .Key }}</h3>
             <ul>
             {{ range .Pages }}
-            <li>
+            <li class="post-item" data-title="{{ .Title | lower }}">
                 <a href="{{ .RelPermalink }}">{{ .Title }}</a>
                 <span style="display:block;color:var(--muted);font-size:.78rem;margin-top:4px">📅 {{ .Date.Format "2006-01-02" }}</span>
             </li>
@@ -32,11 +35,32 @@
         {{ if not $pages }}
         <p>Brak wpisów. Skraper uruchomi się o 08:00 UTC.</p>
         {{ end }}
+
+        <p id="noResults" style="display:none;color:var(--muted);text-align:center;padding:24px">Brak wyników.</p>
     </main>
     <footer>
         &copy; 2026 Leszek Gonera · AcaciaFund ·
         <a href="/notebook/">Notebook</a>
     </footer>
-    <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
+    <script>
+    if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}
+    document.getElementById('searchInput').addEventListener('input',function(){
+        var q=this.value.toLowerCase().trim(),items=document.querySelectorAll('.post-item'),any=false;
+        items.forEach(function(el){
+            var match=!q||el.getAttribute('data-title').includes(q);
+            el.style.display=match?'':'none';
+            if(match)any=true;
+        });
+        document.querySelectorAll('[data-month]').forEach(function(h){
+            var ul=h.nextElementSibling;
+            if(ul&&ul.tagName==='UL'){
+                var vis=Array.from(ul.children).some(function(li){return li.style.display!='none'});
+                h.style.display=vis||!q?'':'none';
+                if(vis||!q)any=true;
+            }
+        });
+        document.getElementById('noResults').style.display=any||!q?'none':'block';
+    });
+    </script>
 </body>
 </html>

@@ -15,6 +15,14 @@
         </div>
     </header>
     <main>{{ .Content }}</main>
+    <nav style="display:flex;justify-content:space-between;margin-top:32px;gap:12px;flex-wrap:wrap">
+        {{ with .PrevInSection }}
+        <a href="{{ .RelPermalink }}" style="font-size:.85rem;color:var(--navy-mid);text-decoration:none;padding:8px 14px;border:1px solid var(--border);border-radius:var(--radius);transition:.2s;flex:1;text-align:left" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">← {{ .Title | truncate 40 }}</a>
+        {{ end }}
+        {{ with .NextInSection }}
+        <a href="{{ .RelPermalink }}" style="font-size:.85rem;color:var(--navy-mid);text-decoration:none;padding:8px 14px;border:1px solid var(--border);border-radius:var(--radius);transition:.2s;flex:1;text-align:right" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">{{ .Title | truncate 40 }} →</a>
+        {{ end }}
+    </nav>
     <footer>
         &copy; 2026 Leszek Gonera · AcaciaFund
     </footer>
