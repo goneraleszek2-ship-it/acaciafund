@@ -9,7 +9,7 @@ permalinks:
   daily: /:sections/:contentbasename/
 
 outputs:
-  home: [html]
+  home: [html, rss]
   page: [html, json]
   section: [html, rss]
 
