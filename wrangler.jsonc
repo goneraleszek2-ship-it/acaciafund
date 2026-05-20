@@ -6,7 +6,9 @@
     "enabled": true
   },
   "assets": {
-    "directory": "layouts"
+    "directory": "public",
+    "browserTtl": 3600,
+    "serveSinglePageApp": false
   },
   "compatibility_flags": [
     "nodejs_compat"
