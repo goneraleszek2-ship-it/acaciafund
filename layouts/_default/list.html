@@ -24,9 +24,28 @@
             <h3 data-month="{{ .Key }}">{{ .Key }}</h3>
             <ul>
             {{ range .Pages }}
-            <li class="post-item" data-title="{{ .Title | lower }}">
-                <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-                <span style="display:block;color:var(--muted);font-size:.78rem;margin-top:4px">📅 {{ .Date.Format "2006-01-02" }}</span>
+            {{- $raw := .RawContent -}}
+            {{- $maxScore := index (findRE `(\d+) ⭐ to najwyższa` $raw) 0 | replaceRE ` ⭐ to najwyższa` "" | int -}}
+            {{- $totalScore := index (findRE `Łącznie (\d+) ⭐` $raw) 0 | replaceRE `Łącznie | ⭐` "" | int -}}
+            {{- $linkCount := index (findRE `z (\d+) linków` $raw) 0 | replaceRE `z | linków` "" | int -}}
+            {{- $themesRaw := index (findRE `Dominujące wątki: \*\*(.+?)\*\*` $raw) 0 -}}
+            {{- $themesStr := $themesRaw | replaceRE `Dominujące wątki: \*\*|\*\*` "" -}}
+            {{- $themes := split $themesStr ", " -}}
+            {{- $barColor := "var(--gold)" -}}
+            {{- if lt $maxScore 100 }}{{ $barColor = "var(--muted)" }}{{ else if lt $maxScore 400 }}{{ $barColor = "var(--c1)" }}{{ end -}}
+            <li class="post-item" data-title="{{ .Title | lower }}" style="border-left-color:{{ $barColor | safeCSS }}">
+                <div style="display:flex;flex-wrap:wrap;align-items:center;gap:6px">
+                    <a href="{{ .RelPermalink }}" style="flex:1;min-width:200px">{{ .Title }}</a>
+                    {{ if $maxScore }}<span class="tag alt" title="Najwyższa ocena">⭐{{ $maxScore }}</span>{{ end }}
+                    {{ if $totalScore }}<span class="tag" title="Suma punktów">Σ{{ $totalScore }}</span>{{ end }}
+                    {{ if $linkCount }}<span class="tag" title="Liczba linków">🔗{{ $linkCount }}</span>{{ end }}
+                </div>
+                <div style="display:flex;flex-wrap:wrap;gap:4px;margin-top:6px">
+                    <span style="color:var(--muted);font-size:.72rem;margin-right:4px">📅 {{ .Date.Format "2006-01-02" }}</span>
+                    {{ range $themes }}
+                        {{ if . }}<span class="tag" style="font-size:.65rem;background:var(--navy-mid);color:#fff">{{ . }}</span>{{ end }}
+                    {{ end }}
+                </div>
             </li>
             {{ end }}
             </ul>
