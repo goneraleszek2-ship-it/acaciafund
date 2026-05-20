@@ -26,6 +26,9 @@ jobs:
       - name: Generate Radar
         run: python generate_radar.py
 
+      - name: Generate Diagrams
+        run: python generate_diagrams.py
+
       - uses: peaceiris/actions-hugo@v3
         with:
           hugo-version: "0.161.1"

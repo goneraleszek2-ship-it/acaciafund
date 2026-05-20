@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>{{ partial "head.html" . }}</head>
+<body>
+    <header>
+        <nav>
+            <a href="/">🏠 Home</a>
+            <a href="/daily/aml/">🛡️ AML</a>
+            <a href="/daily/stock/">📈 Markets</a>
+            <a href="/daily/science/">🧬 Science</a>
+            <a href="/radar/">📊 Radar</a>
+        </nav>
+        <h1>{{ .Title }}</h1>
+    </header>
+    <main>{{ .Content }}</main>
+    <footer>&copy; 2026 Leszek Gonera · AcaciaFund</footer>
+    <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
+</body>
+</html>
