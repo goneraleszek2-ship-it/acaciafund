@@ -5,24 +5,38 @@
     <header>
         <nav>
             <a href="/">🏠 Home</a>
+            <button data-toggle-dark style="background:none;border:none;cursor:pointer;font-size:1rem;padding:4px 8px;line-height:1;border-radius:20px;transition:.2s" aria-label="Przełącz tryb ciemny">🌙</button>
         </nav>
         <h1>Archiwum: {{ .Title }}</h1>
     </header>
     <main>
-        <ul>
+        <div class="metrics">
+            <div class="metric"><div class="value">{{ len .Pages }}</div><div class="label">📄 Posty</div></div>
+            <div class="metric"><div class="value">{{ range .Pages }}{{ if .Date }}{{ .Date.Format "2006" }}{{ end }}{{ end }}2026</div><div class="label">📅 Rok</div></div>
+        </div>
+
+        {{ $pages := .Pages }}
+        {{ $grouped := $pages.GroupByDate "2006-01" }}
+        {{ range $grouped }}
+            <h3>{{ .Key }}</h3>
+            <ul>
             {{ range .Pages }}
             <li>
                 <a href="{{ .RelPermalink }}">{{ .Title }}</a>
                 <span style="display:block;color:var(--muted);font-size:.78rem;margin-top:4px">📅 {{ .Date.Format "2006-01-02" }}</span>
             </li>
-            {{ else }}
-            <li>Brak wpisów. Skraper uruchomi się o 08:00 UTC.</li>
             {{ end }}
-        </ul>
+            </ul>
+        {{ end }}
+
+        {{ if not $pages }}
+        <p>Brak wpisów. Skraper uruchomi się o 08:00 UTC.</p>
+        {{ end }}
     </main>
     <footer>
         &copy; 2026 Leszek Gonera · AcaciaFund ·
-        <a href="/radar/">Radar</a>
+        <a href="/radar/">Radar</a> ·
+        <a href="/notebook/">Notebook</a>
     </footer>
     <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
 </body>

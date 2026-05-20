@@ -1,9 +1,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#0d1b2a">
 <meta name="description" content="AcaciaFund — codzienna synteza wiedzy z obszaru AML, rynków kapitałowych i nauki.">
+<meta name="theme-color" media="(prefers-color-scheme:light)" content="#0d1b2a">
+<meta name="theme-color" media="(prefers-color-scheme:dark)" content="#0f1117">
 <link rel="manifest" href="/manifest.json">
 <link rel="icon" type="image/svg+xml" href="/icons/icon.svg">
 <link rel="apple-touch-icon" href="/icons/icon-192x192.png">
+<link rel="alternate" type="application/rss+xml" title="AcaciaFund RSS" href="/index.xml">
 <title>{{ .Title }} | {{ .Site.Title }}</title>
 <style>{{ readFile "layouts/partials/style.html" | safeCSS }}</style>
+<script>
+(function(){const k='ac-fund-dark';const m=window.matchMedia('(prefers-color-scheme:dark)');let d=localStorage.getItem(k);if(d===null)d=m.matches?'1':'0';if(d==='1')document.documentElement.classList.add('dark');document.addEventListener('click',function(e){const t=e.target.closest('[data-toggle-dark]');if(!t)return;d=document.documentElement.classList.toggle('dark')?'1':'0';localStorage.setItem(k,d);t.textContent=d==='1'?'☀️':'🌙'})})()
+</script>

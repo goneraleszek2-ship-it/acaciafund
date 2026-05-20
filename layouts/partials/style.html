@@ -14,6 +14,20 @@
   --glass:rgba(255,255,255,.7);
   --gradient:linear-gradient(135deg,#0d1b2a,#2c3e6b);
   --font-mono:'JetBrains Mono','Fira Code','Cascadia Code',monospace;
+  --inset-shadow:inset 0 1px 3px rgba(0,0,0,.06);
+  --code-bg:#1e1e2e; --code-fg:#cdd6f4;
+}
+.dark{
+  --navy:#1e293b; --navy-light:#334155; --navy-mid:#475569;
+  --gold:#f0c96a; --gold-light:#d4a76a;
+  --bg:#0f1117; --card-bg:#1a1d28;
+  --fg:#e2e8f0; --muted:#94a3b8; --border:#2d3140;
+  --shadow:0 1px 4px rgba(0,0,0,.3);
+  --chart-bg:#1a1d28;
+  --glass:rgba(26,29,40,.85);
+  --gradient:linear-gradient(135deg,#0f1117,#1e293b);
+  --inset-shadow:inset 0 1px 3px rgba(0,0,0,.3);
+  --code-bg:#0f1117; --code-fg:#e2e8f0;
 }
 
 @keyframes fadeSlide{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
@@ -91,10 +105,10 @@ hr{border:none;border-top:1px solid var(--border);margin:32px 0}
 /* ── code ── */
 code{
   background:var(--border);padding:2px 6px;border-radius:4px;
-  font-size:.875em;font-family:var(--font-mono)
+  font-size:.875em;font-family:var(--font-mono);color:var(--fg)
 }
 pre{
-  background:#1e1e2e;color:#cdd6f4;padding:16px 20px;
+  background:var(--code-bg);color:var(--code-fg);padding:16px 20px;
   border-radius:var(--radius);overflow-x:auto;font-size:.82rem;
   margin:16px 0;line-height:1.6;font-family:var(--font-mono);
   border-left:3px solid var(--gold);position:relative
@@ -190,7 +204,7 @@ footer a{color:var(--navy-mid);font-weight:500}
 .cell-header{
   display:flex;align-items:center;gap:8px;padding:6px 14px;
   font-size:.72rem;color:var(--muted);font-weight:500;font-family:var(--font-mono);
-  border-bottom:1px solid var(--border);background:#fafafa
+  border-bottom:1px solid var(--border);background:var(--card-bg)
 }
 .cell-header .exec{color:var(--navy);font-weight:600}
 .cell-header .tag{font-size:.65rem;padding:0 8px;border-radius:4px;background:var(--navy-mid);color:#fff}
