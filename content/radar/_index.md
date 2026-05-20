@@ -4,7 +4,7 @@ date: 2026-05-20
 layout: "radar"
 ---
 
-*Ostatnia aktualizacja: 2026-05-20 20:16 UTC*
+*Ostatnia aktualizacja: 2026-05-20 20:35 UTC*
 
 ## 📈 Aktywność w czasie
 
@@ -18,12 +18,12 @@ Dni, w których ten sam temat pojawił się w dwóch lub trzech filarach jednocz
 
 <table style="width:100%;border-collapse:collapse">
 <tr><th style='text-align:left;padding:8px;border-bottom:2px solid #1a1a2e'>Data</th><th style='text-align:left;padding:8px;border-bottom:2px solid #1a1a2e'>Połączenie</th><th style='text-align:left;padding:8px;border-bottom:2px solid #1a1a2e'>Wspólne tematy</th></tr>
-<tr><td style='padding:8px;border-bottom:1px solid #ddd'>2026-05-17</td><td style='padding:8px;border-bottom:1px solid #ddd'>🛡️ + 📈</td><td style='padding:8px;border-bottom:1px solid #ddd'>trending, connections, skor, metaanalysis</td></tr>
-<tr><td style='padding:8px;border-bottom:1px solid #ddd'>2026-05-17</td><td style='padding:8px;border-bottom:1px solid #ddd'>🛡️ + 🧬</td><td style='padding:8px;border-bottom:1px solid #ddd'>trending, connections, skor, metaanalysis</td></tr>
-<tr><td style='padding:8px;border-bottom:1px solid #ddd'>2026-05-17</td><td style='padding:8px;border-bottom:1px solid #ddd'>📈 + 🧬</td><td style='padding:8px;border-bottom:1px solid #ddd'>trending, connections, skor, metaanalysis</td></tr>
-<tr><td style='padding:8px;border-bottom:1px solid #ddd'>2026-05-20</td><td style='padding:8px;border-bottom:1px solid #ddd'>🛡️ + 📈</td><td style='padding:8px;border-bottom:1px solid #ddd'>domain, metaanaliza, raport, trending</td></tr>
-<tr><td style='padding:8px;border-bottom:1px solid #ddd'>2026-05-20</td><td style='padding:8px;border-bottom:1px solid #ddd'>🛡️ + 🧬</td><td style='padding:8px;border-bottom:1px solid #ddd'>domain, metaanaliza, raport, trending</td></tr>
-<tr><td style='padding:8px;border-bottom:1px solid #ddd'>2026-05-20</td><td style='padding:8px;border-bottom:1px solid #ddd'>📈 + 🧬</td><td style='padding:8px;border-bottom:1px solid #ddd'>domain, metaanaliza, raport, trending</td></tr>
+<tr><td style='padding:8px;border-bottom:1px solid #ddd'>2026-05-17</td><td style='padding:8px;border-bottom:1px solid #ddd'>🛡️ + 📈</td><td style='padding:8px;border-bottom:1px solid #ddd'>znaleziska, synergia, skor, trending</td></tr>
+<tr><td style='padding:8px;border-bottom:1px solid #ddd'>2026-05-17</td><td style='padding:8px;border-bottom:1px solid #ddd'>🛡️ + 🧬</td><td style='padding:8px;border-bottom:1px solid #ddd'>synergia, znaleziska, skor, trending</td></tr>
+<tr><td style='padding:8px;border-bottom:1px solid #ddd'>2026-05-17</td><td style='padding:8px;border-bottom:1px solid #ddd'>📈 + 🧬</td><td style='padding:8px;border-bottom:1px solid #ddd'>synergia, znaleziska, skor, trending</td></tr>
+<tr><td style='padding:8px;border-bottom:1px solid #ddd'>2026-05-20</td><td style='padding:8px;border-bottom:1px solid #ddd'>🛡️ + 📈</td><td style='padding:8px;border-bottom:1px solid #ddd'>systems, trending, algolia, klasyfikacja</td></tr>
+<tr><td style='padding:8px;border-bottom:1px solid #ddd'>2026-05-20</td><td style='padding:8px;border-bottom:1px solid #ddd'>🛡️ + 🧬</td><td style='padding:8px;border-bottom:1px solid #ddd'>systems, trending, algolia, klasyfikacja</td></tr>
+<tr><td style='padding:8px;border-bottom:1px solid #ddd'>2026-05-20</td><td style='padding:8px;border-bottom:1px solid #ddd'>📈 + 🧬</td><td style='padding:8px;border-bottom:1px solid #ddd'>systems, trending, algolia, klasyfikacja</td></tr>
 </table>
 
 ## 🏷️ Dominujące tematy (ostatnie 30 dni)

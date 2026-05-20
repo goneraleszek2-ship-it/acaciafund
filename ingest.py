@@ -417,13 +417,8 @@ def fetch_arxiv(since_hours: int = 72, max_results: int = 30) -> list[dict]:
     date_from = since.strftime("%Y%m%d%H%M%S")
 
     all_cats = [c for cats in ARXIV_CATEGORIES.values() for c in cats]
-    query = " OR cat:".join(all_cats)
-    url = (
-        "http://export.arxiv.org/api/query?"
-        f"search_query=cat:{query}"
-        "&sortBy=submittedDate&sortOrder=descending"
-        f"&max_results={max_results}"
-    )
+    query_str = "cat:" + "+OR+cat:".join(urllib.parse.quote(c, safe="") for c in all_cats)
+    url = f"http://export.arxiv.org/api/query?search_query={query_str}&sortBy=submittedDate&sortOrder=descending&max_results={max_results}"
     req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
 
     try:
