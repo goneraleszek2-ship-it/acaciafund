@@ -1,0 +1,43 @@
+name: Daily Synthesis
+
+on:
+  schedule:
+    - cron: "0 8 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  synthesize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Ingest & generate
+        run: python ingest.py
+
+      - uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: "0.161.1"
+
+      - name: Build site
+        run: hugo --cleanDestinationDir
+
+      - name: Commit & push new content
+        run: |
+          git config user.name "AcaciaFund Bot"
+          git config user.email "bot@acaciafund.org"
+          git add content/daily/ public/
+          if git diff --cached --quiet; then
+            echo "No new content — exiting"
+            exit 0
+          fi
+          git commit -m "daily: automatyczna synteza $(date +%Y-%m-%d)"
+          git push
