@@ -442,7 +442,7 @@ def main():
     print("=" * 55, file=sys.stderr)
     log(f"Koniec potoku. Wygenerowano {generated} nowych postów.")
     print("=" * 55, file=sys.stderr)
-    return 0 if generated > 0 else 1
+    return 0
 
 
 if __name__ == "__main__":
