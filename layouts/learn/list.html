@@ -45,6 +45,11 @@
             <div id="recommendationContent" class="insight"></div>
         </div>
 
+        <div id="learningPaths" style="display:none;margin-top:24px">
+            <h2>🧭 Ścieżki nauki</h2>
+            <div id="pathsContainer"></div>
+        </div>
+
         <div id="recentActivity" style="display:none;margin-top:24px">
             <h2>⏱️ Ostatnia aktywność</h2>
             <div id="activityList"></div>
@@ -69,6 +74,42 @@
         aml:{emoji:'🛡️',label:'AML',color:'#2c3e6b'},
         stock:{emoji:'📈',label:'Markets',color:'#C47F58'},
         science:{emoji:'🧬',label:'Science',color:'#9C6B8E'}
+    };
+
+    var LEARNING_PATHS = {
+        aml:{
+            label:'Ścieżka AML: Od podstaw do strategii',
+            steps:[
+                {bloom:'remember',label:'Podstawy: słownik AML'},
+                {bloom:'understand',label:'Zrozumienie: mechanizmy'},
+                {bloom:'apply',label:'Praktyka: case studies'},
+                {bloom:'analyze',label:'Analiza: schematy'},
+                {bloom:'evaluate',label:'Ewaluacja: systemy'},
+                {bloom:'create',label:'Tworzenie: strategia'},
+            ]
+        },
+        stock:{
+            label:'Ścieżka Markets: Od instrumentów do strategii',
+            steps:[
+                {bloom:'remember',label:'Podstawy: instrumenty'},
+                {bloom:'understand',label:'Zrozumienie: wycena'},
+                {bloom:'apply',label:'Praktyka: analiza'},
+                {bloom:'analyze',label:'Analiza: trendy'},
+                {bloom:'evaluate',label:'Ewaluacja: ryzyko'},
+                {bloom:'create',label:'Tworzenie: strategia'},
+            ]
+        },
+        science:{
+            label:'Ścieżka Science: Od pojęć do syntezy',
+            steps:[
+                {bloom:'remember',label:'Podstawy: słownik'},
+                {bloom:'understand',label:'Zrozumienie: emergencja'},
+                {bloom:'apply',label:'Praktyka: modele'},
+                {bloom:'analyze',label:'Analiza: sieci'},
+                {bloom:'evaluate',label:'Ewaluacja: teorie'},
+                {bloom:'create',label:'Tworzenie: synteza'},
+            ]
+        }
     };
 
     var totalQuiz = 0, totalCards = 0, totalPosts = 0;
@@ -183,6 +224,7 @@
 
         renderBloomBars(bloomScores);
         renderPillarBars(posts, readPosts, cardProgress);
+        renderPaths(bloomScores, posts, readPosts);
         renderRecommendation(posts, readPosts, bloomScores, quizResults);
         renderActivity(quizResults, readPosts);
 
@@ -341,6 +383,57 @@
         });
         if(!html) html = '<p style="color:var(--muted);text-align:center">Brak aktywności. Rozwiąż quiz lub przeczytaj post.</p>';
         document.getElementById('activityList').innerHTML = html;
+    }
+
+    function renderPaths(bloomScores, posts, readPosts){
+        document.getElementById('learningPaths').style.display='';
+        var html = '';
+        var pillars = ['aml','stock','science'];
+        pillars.forEach(function(p){
+            var path = LEARNING_PATHS[p];
+            if(!path) return;
+            var meta = PILLAR_META[p]||{emoji:'📄',label:p,color:'var(--navy-mid)'};
+            var steps = path.steps;
+            var doneCount = 0, currentStepIdx = -1;
+            steps.forEach(function(s, i){
+                var score = bloomScores[s.bloom]||{done:0,total:0};
+                // A step is "done" if the user has done at least 3 things at this level
+                if((score.done||0) >= 3) doneCount++;
+            });
+            // Current step = first not-done, or last if all done
+            for(var i=0; i<steps.length; i++){
+                var score = bloomScores[steps[i].bloom]||{done:0,total:0};
+                if((score.done||0) < 3){ currentStepIdx = i; break; }
+            }
+            if(currentStepIdx === -1) currentStepIdx = steps.length - 1;
+            var pct = Math.round(doneCount / steps.length * 100);
+
+            html += '<div style="margin-bottom:20px;padding:16px;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius)">';
+            html += '<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">';
+            html += '<span style="font-size:1.4rem">'+meta.emoji+'</span>';
+            html += '<div style="flex:1;font-weight:600;font-size:.9rem">'+path.label+'</div>';
+            html += '<span style="font-size:.78rem;color:var(--muted)">'+doneCount+'/'+steps.length+' kroków</span>';
+            html += '</div>';
+            // Progress bar
+            html += '<div class="bloom-bar-track" style="margin-bottom:12px"><div class="bloom-bar-fill" style="width:'+pct+'%;background:'+meta.color+'"></div></div>';
+            // Steps timeline
+            html += '<div style="display:flex;gap:6px;flex-wrap:wrap">';
+            steps.forEach(function(s, i){
+                var score = bloomScores[s.bloom]||{done:0,total:0};
+                var isDone = (score.done||0) >= 3;
+                var isCurrent = i === currentStepIdx;
+                var cls = isDone ? 'path-step done' : (isCurrent ? 'path-step current' : 'path-step');
+                html += '<div class="'+cls+'">';
+                if(isDone) html += '✅ ';
+                else if(isCurrent) html += '📍 ';
+                html += '<span style="font-size:.78rem">'+s.bloom.charAt(0).toUpperCase()+s.bloom.slice(1)+'</span>';
+                html += '<span style="font-size:.7rem;color:var(--muted);display:block">'+s.label+'</span>';
+                html += '</div>';
+            });
+            html += '</div>';
+            html += '</div>';
+        });
+        document.getElementById('pathsContainer').innerHTML = html;
     }
 
     function showEmpty(){

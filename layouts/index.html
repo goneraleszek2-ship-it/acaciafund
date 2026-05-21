@@ -108,6 +108,13 @@
             {{ end }}
         </div>
 
+        <div id="continueLearning" style="display:none;margin-top:32px">
+            <div class="insight" style="border-left-color:var(--gold)">
+                <span class="label">🎯 Kontynuuj naukę</span>
+                <div id="continueContent" style="margin-top:8px;font-size:.85rem;color:var(--muted)"></div>
+            </div>
+        </div>
+
         <div class="insight" style="margin-top:32px">
             <span class="label">📊 DataOps — pipeline metrics</span>
             <div class="metrics" style="margin:12px 0 0">
@@ -126,5 +133,133 @@
         <a href="/index.xml">RSS</a>
     </footer>
     <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
+    <script>
+(function(){
+    var BLOOM_ORDER = ['remember','understand','apply','analyze','evaluate','create'];
+    var BLOOM_LABELS = {
+        remember:'Zapamiętywanie', understand:'Rozumienie',
+        apply:'Stosowanie', analyze:'Analiza',
+        evaluate:'Ewaluacja', create:'Tworzenie'
+    };
+    var PILLAR_META = {
+        aml:{emoji:'🛡️',label:'AML',color:'#2c3e6b'},
+        stock:{emoji:'📈',label:'Markets',color:'#C47F58'},
+        science:{emoji:'🧬',label:'Science',color:'#9C6B8E'}
+    };
+
+    var totalQuiz = 0, totalCards = 0, totalPosts = 0;
+
+    Promise.all([
+        fetch('/api/articles.json').then(function(r){return r.json();}),
+    ]).then(function(results){
+        var articlesData = results[0];
+        if(!articlesData || !articlesData.posts) return;
+
+        var posts = articlesData.posts;
+
+        // Collect localStorage data
+        var quizResults = {};
+        var cardProgress = {};
+        var readPosts = {};
+
+        for(var i=0; i<localStorage.length; i++){
+            var key = localStorage.key(i);
+            if(key.indexOf('ac-quiz-') === 0){
+                try{
+                    var val = JSON.parse(localStorage.getItem(key));
+                    if(val && val.done) quizResults[key.replace('ac-quiz-','')] = val;
+                }catch(e){}
+            }
+            if(key.indexOf('ac-flashcards-') === 0){
+                try{
+                    var val = JSON.parse(localStorage.getItem(key));
+                    if(val) cardProgress[key.replace('ac-flashcards-','')] = val;
+                }catch(e){}
+            }
+            if(key.indexOf('ac-read-') === 0){
+                try{
+                    var val = JSON.parse(localStorage.getItem(key));
+                    if(val && val.read) readPosts[key.replace('ac-read-','')] = val;
+                }catch(e){}
+            }
+        }
+
+        totalQuiz = Object.keys(quizResults).length;
+        Object.keys(cardProgress).forEach(function(p){
+            totalCards += Object.keys(cardProgress[p]||{}).length;
+        });
+        totalPosts = Object.keys(readPosts).length;
+
+        if(totalQuiz === 0 && totalCards === 0 && totalPosts === 0) return;
+
+        // Bloom scores from quiz
+        var bloomScores = {};
+        BLOOM_ORDER.forEach(function(l){ bloomScores[l]={done:0,total:0}; });
+        Object.keys(quizResults).forEach(function(k){
+            var val = quizResults[k];
+            if(val.breakdown){
+                Object.keys(val.breakdown).forEach(function(l){
+                    if(bloomScores[l]){
+                        bloomScores[l].done += val.breakdown[l].c || 0;
+                        bloomScores[l].total += val.breakdown[l].t || 0;
+                    }
+                });
+            }
+        });
+        // Flashcards → Remember
+        Object.keys(cardProgress).forEach(function(pillar){
+            Object.keys(cardProgress[pillar]||{}).forEach(function(term){
+                if(bloomScores.remember){
+                    bloomScores.remember.total++;
+                    if((cardProgress[pillar][term].correct||0) >= 3) bloomScores.remember.done++;
+                }
+            });
+        });
+        // Read posts
+        posts.forEach(function(post){
+            if(readPosts[post.pillar+'-'+post.date]){
+                var lvl = post.primary_bloom_level || 'understand';
+                if(bloomScores[lvl]){ bloomScores[lvl].total++; bloomScores[lvl].done++; }
+            }
+        });
+
+        // Find weakest bloom level with some total
+        var weakest = null, weakestPct = 100;
+        BLOOM_ORDER.forEach(function(l){
+            var s = bloomScores[l];
+            if(s.total > 1 && s.done/s.total < weakestPct){ weakestPct = s.done/s.total; weakest = l; }
+        });
+        if(!weakest) return;
+
+        // Find unread post at that level
+        var rec = null;
+        for(var i=posts.length-1; i>=0; i--){
+            if(!readPosts[posts[i].pillar+'-'+posts[i].date] && posts[i].bloom_levels && posts[i].bloom_levels.indexOf(weakest) !== -1){
+                rec = posts[i]; break;
+            }
+        }
+        if(!rec && totalPosts > 0) return; // Don't show if nothing to recommend
+        if(!rec){
+            for(var i=posts.length-1; i>=0; i--){
+                if(!readPosts[posts[i].pillar+'-'+posts[i].date]){ rec = posts[i]; break; }
+            }
+        }
+        if(!rec) return;
+
+        var meta = PILLAR_META[rec.pillar]||{emoji:'📄',label:rec.pillar};
+        document.getElementById('continueLearning').style.display = '';
+        document.getElementById('continueContent').innerHTML =
+            '<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">' +
+            '<span style="font-size:1.4rem">'+meta.emoji+'</span>' +
+            '<div style="flex:1;min-width:120px">' +
+            '<div style="font-size:.72rem;opacity:.7">'+meta.label+' · '+rec.date+' · 🎯 '+BLOOM_LABELS[weakest]+'</div>' +
+            '<a href="'+rec.url+'" style="font-size:.88rem;font-weight:600;color:var(--navy);text-decoration:none">'+rec.title+'</a>' +
+            '</div>' +
+            '<a href="'+rec.url+'" style="padding:6px 16px;background:var(--gold);color:var(--navy);border-radius:20px;text-decoration:none;font-weight:600;font-size:.8rem;white-space:nowrap">📖 Czytaj</a>' +
+            '<a href="/learn/" style="padding:6px 16px;background:var(--border);color:var(--fg);border-radius:20px;text-decoration:none;font-size:.8rem">📊 Panel</a>' +
+            '</div>';
+    }).catch(function(){});
+})();
+    </script>
 </body>
 </html>

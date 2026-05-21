@@ -314,6 +314,68 @@
     searchEl.value = state.search;
     renderTagFilters();
     render();
+
+    // ── Recommendation badges (after render) ──
+    fetch('/api/articles.json').then(function(r){return r.json();}).then(function(data){
+        if(!data||!data.posts) return;
+        var allPosts = data.posts;
+        var order = ['remember','understand','apply','analyze','evaluate','create'];
+        var readP = {};
+        for(var i=0; i<localStorage.length; i++){
+            var key = localStorage.key(i);
+            if(key.indexOf('ac-read-')===0) readP[key.replace('ac-read-','')]=true;
+            if(key.indexOf('ac-quiz-')===0) readP[key.replace('ac-quiz-','')]=true;
+        }
+        var bScores = {};
+        order.forEach(function(l){ bScores[l]=0; });
+        allPosts.forEach(function(p){
+            if(readP[p.pillar+'-'+p.date]){
+                var lvl = p.primary_bloom_level||'understand';
+                if(bScores[lvl]!==undefined) bScores[lvl]++;
+            }
+        });
+        // Find min count among levels with total > 0
+        // Count posts per level
+        var countPerLevel = {};
+        order.forEach(function(l){ countPerLevel[l]=0; });
+        allPosts.forEach(function(p){
+            if(p.bloom_levels) p.bloom_levels.forEach(function(l){
+                if(countPerLevel[l]!==undefined) countPerLevel[l]++;
+            });
+        });
+        var weakest = null, weakestPct = 1;
+        order.forEach(function(l){
+            if(countPerLevel[l] > 0){
+                var pct = bScores[l]/countPerLevel[l];
+                if(pct < weakestPct){ weakestPct = pct; weakest = l; }
+            }
+        });
+        if(!weakest) return;
+
+        // Find posts matching weakest level, not read, and add badge
+        var recUrls = {};
+        allPosts.forEach(function(p){
+            if(!readP[p.pillar+'-'+p.date] && p.bloom_levels && p.bloom_levels.indexOf(weakest)!==-1){
+                recUrls[p.url] = true;
+            }
+        });
+        if(Object.keys(recUrls).length === 0) return;
+
+        // Add badge to matching cards
+        document.querySelectorAll('.post-card').forEach(function(card){
+            var link = card.querySelector('.post-title');
+            if(link && recUrls[link.getAttribute('href')]){
+                var head = card.querySelector('.post-card-head');
+                if(head){
+                    var badge = document.createElement('span');
+                    badge.className = 'pillar-badge';
+                    badge.style.cssText = 'background:var(--gold);color:var(--navy);margin-left:auto;font-size:.7rem;padding:2px 8px;border-radius:12px';
+                    badge.textContent = '🎯 Następny krok';
+                    head.appendChild(badge);
+                }
+            }
+        });
+    }).catch(function(){});
 })();
     </script>
 </body>

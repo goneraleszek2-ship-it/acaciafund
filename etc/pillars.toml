@@ -75,6 +75,39 @@ values = ["NVIDIA", "AMD", "TSMC", "Intel", "ASML", "Apple", "Microsoft", "Samsu
 [entities.science]
 values = ["OpenAI", "DeepMind", "Google AI", "Meta AI", "Anthropic", "xAI", "MIT", "Stanford", "Harvard", "Oxford", "Cambridge", "Caltech", "DARPA", "NIH", "CERN", "NASA", "ESA", "WHO"]
 
+[learning_paths.aml]
+label = "Ścieżka AML: Od podstaw do strategii"
+steps = [
+  { bloom = "remember", label = "Podstawy: słownik AML i compliance" },
+  { bloom = "understand", label = "Zrozumienie: mechanizmy prania pieniędzy" },
+  { bloom = "apply", label = "Praktyka: case studies i narzędzia" },
+  { bloom = "analyze", label = "Analiza: schematy i sieci powiązań" },
+  { bloom = "evaluate", label = "Ewaluacja: systemy regulacyjne" },
+  { bloom = "create", label = "Tworzenie: strategia compliance" },
+]
+
+[learning_paths.stock]
+label = "Ścieżka Markets: Od instrumentów do strategii"
+steps = [
+  { bloom = "remember", label = "Podstawy: instrumenty finansowe" },
+  { bloom = "understand", label = "Zrozumienie: wycena i kapitalizacja" },
+  { bloom = "apply", label = "Praktyka: analiza techniczna" },
+  { bloom = "analyze", label = "Analiza: trendy rynkowe i łańcuchy dostaw" },
+  { bloom = "evaluate", label = "Ewaluacja: ryzyko i dywersyfikacja" },
+  { bloom = "create", label = "Tworzenie: strategia inwestycyjna" },
+]
+
+[learning_paths.science]
+label = "Ścieżka Science: Od pojęć do syntezy"
+steps = [
+  { bloom = "remember", label = "Podstawy: słownik systemowy" },
+  { bloom = "understand", label = "Zrozumienie: emergencja i złożoność" },
+  { bloom = "apply", label = "Praktyka: modele systemowe" },
+  { bloom = "analyze", label = "Analiza: sieci i sprzężenia zwrotne" },
+  { bloom = "evaluate", label = "Ewaluacja: krytyka teorii" },
+  { bloom = "create", label = "Tworzenie: synteza interdyscyplinarna" },
+]
+
 [source_tiers]
 high = ["\\.gov$", "\\.edu$", "\\.mil$", "nature\\.com", "science\\.org", "cell\\.com", "pnas\\.org", "biorxiv\\.org", "arxiv\\.org", "quantamagazine\\.org", "scientificamerican\\.com", "fincen\\.gov", "fatf-gafi\\.org", "fca\\.org\\.uk", "sec\\.gov", "occ\\.gov", "bis\\.org", "ec\\.europa\\.eu"]
 medium_high = ["bloomberg\\.com", "reuters\\.com", "wsj\\.com", "ft\\.com", "economist\\.com", "nytimes\\.com", "washingtonpost\\.com", "theguardian\\.com", "bbc\\.com", "apnews\\.com", "anandtech\\.com", "tomshardware\\.com", "semiengineering\\.com", "arstechnica\\.com", "techcrunch\\.com", "theverge\\.com", "wired\\.com", "nvidia\\.com", "tsmc\\.com", "asml\\.com", "intel\\.com", "amd\\.com"]
