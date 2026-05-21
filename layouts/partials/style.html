@@ -278,6 +278,11 @@ footer a{color:var(--navy-mid);font-weight:500}
 .post-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:2px}
 .mini-tag{font-size:.65rem;color:var(--muted);background:var(--border);padding:1px 8px;border-radius:8px;font-weight:500}
 
+/* ── achievements ── */
+.ach-card{padding:16px 12px;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);text-align:center;opacity:.5;transition:.2s;filter:grayscale(.6)}
+.ach-card.unlocked{opacity:1;filter:grayscale(0);border-color:var(--gold);box-shadow:0 2px 8px rgba(255,215,0,.1)}
+.ach-card .ach-icon{font-size:1.6rem}
+
 /* ── learning paths ── */
 .path-step{padding:8px 10px;border:1px solid var(--border);border-radius:var(--radius);flex:1;min-width:100px;background:var(--card-bg);transition:.2s}
 .path-step.done{background:rgba(76,175,80,.08);border-color:#4CAF50}

@@ -45,6 +45,11 @@
             <div id="recommendationContent" class="insight"></div>
         </div>
 
+        <div id="achievements" style="display:none;margin-top:24px">
+            <h2>🏆 Osiągnięcia</h2>
+            <div id="achievementsGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px"></div>
+        </div>
+
         <div id="learningPaths" style="display:none;margin-top:24px">
             <h2>🧭 Ścieżki nauki</h2>
             <div id="pathsContainer"></div>
@@ -111,6 +116,23 @@
             ]
         }
     };
+
+    var ACHIEVEMENTS = [
+        {id:'first_quiz',label:'Pierwszy quiz',desc:'Rozwiąż pierwszy quiz',icon:'✅',check:function(c){return c.totalQuiz>=1;}},
+        {id:'quiz_5',label:'Piątka',desc:'Rozwiąż 5 quizów',icon:'🏅',check:function(c){return c.totalQuiz>=5;}},
+        {id:'quiz_master',label:'Mistrz quizów',desc:'Rozwiąż 10 quizów',icon:'🏆',check:function(c){return c.totalQuiz>=10;}},
+        {id:'perfect',label:'Perfect score',desc:'Zdobyć 100% w quizie',icon:'💯',check:function(c){return c.hasPerfect;}},
+        {id:'streak_3',label:'Konsekwentny',desc:'3-dniowa passa',icon:'🔥',check:function(c){return c.streak>=3;}},
+        {id:'streak_7',label:'Tydzień nauki',desc:'7-dniowa passa',icon:'🔥',check:function(c){return c.streak>=7;}},
+        {id:'streak_14',label:'Dwa tygodnie',desc:'14-dniowa passa',icon:'🔥',check:function(c){return c.streak>=14;}},
+        {id:'streak_30',label:'Miesiąc nauki',desc:'30-dniowa passa',icon:'🔥',check:function(c){return c.streak>=30;}},
+        {id:'flashcard_10',label:'Fiszker',desc:'Opanuj 10 fiszek',icon:'📚',check:function(c){return c.totalCards>=10;}},
+        {id:'flashcard_50',label:'Kolekcjoner',desc:'Opanuj 50 fiszek',icon:'📚',check:function(c){return c.totalCards>=50;}},
+        {id:'posts_10',label:'Czytelnik',desc:'Przeczytaj 10 postów',icon:'📖',check:function(c){return c.totalPosts>=10;}},
+        {id:'posts_50',label:'Houston',desc:'Przeczytaj 50 postów',icon:'📖',check:function(c){return c.totalPosts>=50;}},
+        {id:'all_bloom',label:'Mistrz Blooma',desc:'Aktywność na 6 poziomach',icon:'🧠',check:function(c){return c.activeBloomCount>=6;}},
+        {id:'all_pillars',label:'Eksplorator',desc:'Posty w każdym filarze',icon:'🌍',check:function(c){return c.pillarsRead>=3;}},
+    ];
 
     var totalQuiz = 0, totalCards = 0, totalPosts = 0;
 
@@ -219,9 +241,33 @@
             }
         });
 
+        // ── Achievements evaluation ──
+        var hasPerfect = false;
+        Object.keys(quizResults).forEach(function(k){
+            var v = quizResults[k];
+            if(v.total > 0 && v.correct === v.total) hasPerfect = true;
+        });
+        var activeBloomCount = 0;
+        BLOOM_ORDER.forEach(function(l){
+            if((bloomScores[l]||{done:0,total:0}).done >= 1) activeBloomCount++;
+        });
+        var pillarsRead = {};
+        Object.keys(readPosts).forEach(function(k){
+            var p = readPosts[k];
+            if(p.pillar) pillarsRead[p.pillar] = true;
+        });
+        var achCtx = {
+            totalQuiz: totalQuiz, totalCards: totalCards, totalPosts: totalPosts,
+            streak: streak, hasPerfect: hasPerfect,
+            activeBloomCount: activeBloomCount,
+            pillarsRead: Object.keys(pillarsRead).length,
+        };
+        var unlocked = evaluateAchievements(achCtx);
+
         // ── Render dashboard ──
         showMetrics(streak);
 
+        renderAchievements(unlocked);
         renderBloomBars(bloomScores);
         renderPillarBars(posts, readPosts, cardProgress);
         renderPaths(bloomScores, posts, readPosts);
@@ -434,6 +480,56 @@
             html += '</div>';
         });
         document.getElementById('pathsContainer').innerHTML = html;
+    }
+
+    function evaluateAchievements(ctx){
+        var unlocked = [];
+        var stored = {};
+        try{ stored = JSON.parse(localStorage.getItem('ac-achievements')||'{}'); }catch(e){}
+        ACHIEVEMENTS.forEach(function(a){
+            if(stored[a.id]) return; // Already unlocked
+            if(a.check(ctx)){
+                stored[a.id] = {unlockedAt:Date.now()};
+                unlocked.push(a);
+            }
+        });
+        localStorage.setItem('ac-achievements', JSON.stringify(stored));
+        return unlocked;
+    }
+
+    function renderAchievements(unlocked){
+        document.getElementById('achievements').style.display='';
+        var grid = document.getElementById('achievementsGrid');
+
+        // Show locked & unlocked
+        var html = '';
+        ACHIEVEMENTS.forEach(function(a){
+            var isUnlocked = false;
+            unlocked.forEach(function(u){ if(u.id === a.id) isUnlocked = true; });
+            // Also check already stored
+            try{
+                var stored = JSON.parse(localStorage.getItem('ac-achievements')||'{}');
+                if(stored[a.id]) isUnlocked = true;
+            }catch(e){}
+            html += '<div class="ach-card'+(isUnlocked?' unlocked':'')+'">';
+            html += '<div style="font-size:1.6rem;margin-bottom:4px">'+a.icon+'</div>';
+            html += '<div style="font-weight:600;font-size:.82rem">'+a.label+'</div>';
+            html += '<div style="font-size:.7rem;color:var(--muted);margin-top:2px">'+a.desc+'</div>';
+            html += '</div>';
+        });
+        grid.innerHTML = html;
+
+        // Animate newly unlocked
+        unlocked.forEach(function(a){
+            var cards = grid.querySelectorAll('.ach-card');
+            cards.forEach(function(c){
+                if(c.textContent.indexOf(a.label) !== -1){
+                    c.style.transition = 'all .4s ease';
+                    c.style.transform = 'scale(1.05)';
+                    setTimeout(function(){ c.style.transform = 'scale(1)'; }, 400);
+                }
+            });
+        });
     }
 
     function showEmpty(){
