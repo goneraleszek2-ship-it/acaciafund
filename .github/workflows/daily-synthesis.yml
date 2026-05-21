@@ -32,6 +32,12 @@ jobs:
       - name: Generate Metadata API
         run: python generate_metadata.py
 
+      - name: Generate Quiz Data
+        run: python generate_quiz.py
+
+      - name: Generate Flashcard Data
+        run: python generate_flashcards.py
+
       - name: LLM Enhancement (optional)
         run: python generate_llm.py
         env:
@@ -50,7 +56,7 @@ jobs:
         run: |
           git config user.name "AcaciaFund Bot"
           git config user.email "bot@acaciafund.org"
-          git add content/daily/
+          git add content/daily/ static/api/
           if git diff --cached --quiet; then
             echo "No new content — exiting"
             exit 0
