@@ -73,6 +73,15 @@ var BLOOM_CONFIG = [
 var levelSet = {};
 bloomLevels.forEach(function(l){ levelSet[l] = true; });
 
+// ── Mark as read ──
+(function(){
+    var readKey = 'ac-read-' + pillar + '-' + postDate;
+    var stored = localStorage.getItem(readKey);
+    if(!stored){
+        localStorage.setItem(readKey, JSON.stringify({read:true, pillar:pillar, date:postDate, ts:Date.now()}));
+    }
+})();
+
 // ── Bloom Navigator ──
 (function(){
     var nav = document.getElementById('bloomNav');
@@ -162,9 +171,21 @@ bloomLevels.forEach(function(l){ levelSet[l] = true; });
 
         window.answer = function(qidx, ok){
             if(qidx !== idx) return;
+            var q = questions[idx];
+            var feedback = ok === true ? '✅ Rozumiesz!' : (ok === null ? '🤔 Do powtórki' : '❌ Warto wrócić');
             if(ok === true){ correct++; if(breakdown[q.bloom_level]) breakdown[q.bloom_level].c++; }
+
+            // Show feedback briefly
+            container.innerHTML =
+                '<div class="quiz-progress">Pytanie '+(idx+1)+'/'+questions.length+'</div>'+
+                '<div class="quiz-question" style="border-left-color:'+
+                (ok === true ? '#22c55e' : (ok === null ? 'var(--gold)' : '#ef4444'))+'">'+
+                q.question+'</div>'+
+                '<div style="text-align:center;padding:12px;font-size:1rem;font-weight:600;color:'+
+                (ok === true ? '#22c55e' : (ok === null ? 'var(--gold)' : '#ef4444'))+'">'+feedback+'</div>';
+
             idx++;
-            render();
+            setTimeout(render, ok === true ? 600 : 1000);
         };
 
         render();
@@ -224,11 +245,19 @@ bloomLevels.forEach(function(l){ levelSet[l] = true; });
         }
 
         var pct = Math.round(Object.keys(progress).length / cardData.length * 100);
+        var mastered = (p.correct||0);
+        var masteryDots = '';
+        for(var di=0; di<5; di++){
+            masteryDots += di < mastered ? '<span style="color:var(--gold)">●</span>' : '<span style="color:var(--border)">○</span>';
+        }
         container.innerHTML =
-            '<div class="fc-progress">📊 Postęp: '+(Object.keys(progress).length)+'/'+cardData.length+' fiszek</div>'+
-            '<div class="fc-card'+(flipped?' flipped':'')+'" onclick="flipCard()">'+
+            '<div class="fc-progress">📊 '+(Object.keys(progress).length)+'/'+cardData.length+
+            ' · Opanowanie: '+masteryDots+'</div>'+
+            '<div class="fc-card'+(flipped?' flipped':'')+'" onclick="flipCard()" style="cursor:pointer">'+
             '<div class="fc-inner">'+
-            '<div class="fc-front"><strong>'+card.term+'</strong></div>'+
+            '<div class="fc-front"><strong>'+card.term+'</strong>'+
+            '<span style="display:block;font-size:.68rem;color:var(--muted);margin-top:6px;font-weight:400">👆 kliknij, aby odkryć</span>'+
+            '</div>'+
             '<div class="fc-back">'+card.definition+'</div>'+
             '</div>'+
             '</div>'+

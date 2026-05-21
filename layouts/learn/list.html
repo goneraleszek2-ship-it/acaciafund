@@ -20,7 +20,25 @@
         </p>
 
         <div id="dashboardRoot">
-            <div style="text-align:center;padding:40px;color:var(--muted)">Ładowanie danych...</div>
+            <div class="skeleton" style="padding:20px">
+                <div class="skeleton-row" style="display:flex;gap:16px;margin-bottom:24px">
+                    <div class="skeleton-block" style="flex:1;height:70px"></div>
+                    <div class="skeleton-block" style="flex:1;height:70px"></div>
+                    <div class="skeleton-block" style="flex:1;height:70px"></div>
+                    <div class="skeleton-block" style="flex:1;height:70px"></div>
+                </div>
+                <div class="skeleton-row" style="margin-bottom:16px">
+                    <div class="skeleton-block" style="height:20px;width:180px;margin-bottom:12px"></div>
+                    <div class="skeleton-block" style="height:16px;width:100%"></div>
+                    <div class="skeleton-block" style="height:16px;width:80%;margin-top:8px"></div>
+                    <div class="skeleton-block" style="height:16px;width:70%;margin-top:8px"></div>
+                </div>
+                <div class="skeleton-row">
+                    <div class="skeleton-block" style="height:20px;width:180px;margin-bottom:12px"></div>
+                    <div class="skeleton-block" style="height:16px;width:100%"></div>
+                    <div class="skeleton-block" style="height:16px;width:60%;margin-top:8px"></div>
+                </div>
+            </div>
         </div>
 
         <div class="metrics" id="dashboardMetrics" style="display:none">
@@ -60,6 +78,7 @@
             <div id="activityList"></div>
         </div>
     </main>
+    <div class="toast-container" id="toastContainer"></div>
     <footer>
         &copy; 2026 Leszek Gonera · AcaciaFund ·
         <a href="/api/articles.json">Articles API</a> ·
@@ -519,8 +538,9 @@
         });
         grid.innerHTML = html;
 
-        // Animate newly unlocked
+        // Animate + toast newly unlocked
         unlocked.forEach(function(a){
+            showToast(a.icon+' '+a.label, a.desc);
             var cards = grid.querySelectorAll('.ach-card');
             cards.forEach(function(c){
                 if(c.textContent.indexOf(a.label) !== -1){
@@ -530,6 +550,16 @@
                 }
             });
         });
+    }
+
+    function showToast(title, desc){
+        var container = document.getElementById('toastContainer');
+        if(!container) return;
+        var el = document.createElement('div');
+        el.className = 'toast';
+        el.innerHTML = '<span class="toast-icon">🏆</span><div class="toast-text"><strong>'+title+'</strong><small>'+desc+'</small></div>';
+        container.appendChild(el);
+        setTimeout(function(){ el.remove(); }, 4200);
     }
 
     function showEmpty(){
