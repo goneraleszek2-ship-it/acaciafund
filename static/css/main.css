@@ -446,7 +446,7 @@ footer a{color:var(--navy-mid);font-weight:500}
   .post-row{grid-template-columns:1fr}
   table{font-size:.78rem}
   th,td{padding:6px 8px}
-  .controls-bar select,.controls-bar input{font-size:.75rem;padding:6px 8px}
+  .controls-bar select,.controls-bar input{font-size:.75rem;padding:10px 8px;min-height:44px}
 }
 
 /* ── 320px tiny screens (Android, small phones) ── */
@@ -455,7 +455,7 @@ footer a{color:var(--navy-mid);font-weight:500}
   header{margin:0 -8px 16px;padding:10px}
   header h1{font-size:.82rem}
   nav{gap:1px}
-  nav a{font-size:.6rem;padding:2px 5px;letter-spacing:-.01em}
+  nav a{font-size:.6rem;padding:6px 5px;letter-spacing:-.01em;min-height:36px;display:inline-flex;align-items:center}
   .bloom-pyramid{min-width:400px;gap:1px}
   .bloom-level{padding:3px 5px;font-size:.55rem}
   .bloom-level .blm-icon{font-size:.65rem}
@@ -467,7 +467,7 @@ footer a{color:var(--navy-mid);font-weight:500}
   .quiz-btn{font-size:.72rem;padding:5px 10px;min-width:60px}
   .quiz-badge{font-size:.58rem;padding:1px 6px}
   .mc-grid{grid-template-columns:1fr;gap:4px}
-  .quiz-btn.mc-opt{font-size:.72rem;padding:6px 10px}
+  .quiz-btn.mc-opt{font-size:.72rem;padding:10px 8px;min-height:44px;min-width:44px}
   .post-card{padding:10px 12px}
   .post-title{font-size:.85rem}
   .group-header{font-size:.85rem}
@@ -491,7 +491,10 @@ footer a{color:var(--navy-mid);font-weight:500}
   h2{font-size:.95rem}
   .toast{max-width:260px;font-size:.78rem;padding:8px 12px}
   #achievementsGrid{grid-template-columns:repeat(2,1fr)!important;gap:6px}
-  .tag-btn{font-size:.7rem;padding:3px 8px}
+  /* minimum touch targets */
+  button,.btn,.quiz-btn,.tag-btn,[role=button]{min-height:44px;min-width:44px}
+  a{min-height:36px}
+  .tag-btn{font-size:.7rem;padding:6px 8px;min-height:36px}
   /* single-post nav links */
   nav[style*="justify-content:space-between"]{flex-direction:column;gap:6px}
   nav[style*="justify-content:space-between"] a{text-align:center!important;font-size:.78rem}
