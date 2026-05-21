@@ -1,0 +1,82 @@
+[pillars.aml]
+label = "AML"
+emoji = "🛡️"
+folder = "content/daily/aml"
+tags = ["aml", "compliance", "regtech", "financial-crime"]
+description = "Ewolucja systemów odpornościowych w sektorze finansowym"
+keywords = [
+  "aml", "anti-money laundering", "compliance", "regtech",
+  "financial crime", "sanctions", "money laundering",
+  "know your customer", "kyc", "counter-terrorism financing",
+  "ctf", "financial action task force", "fatf", "beneficial ownership",
+  "shell company", "offshore", "fraud detection", "transaction monitoring",
+  "sar", "suspicious activity", "banking regulation", "basel",
+  "fintech", "psd2", "gdpr", "data privacy", "data breach",
+  "cybersecurity", "cyber security", "ransomware", "phishing",
+  "payment", "payment system", "central bank digital currency",
+  "cbdc", "sovereign payment", "digital euro", "open banking",
+  "financial inclusion", "anti-fraud", "identity theft",
+  "credit card fraud", "bank fraud", "insider trading",
+  "market manipulation", "securities fraud", "crypto regulation",
+  "cryptocurrency regulation", "digital asset regulation",
+  "sec", "financial conduct", "consumer financial protection",
+  "bank secrecy", "patriot act", "trade surveillance",
+]
+domain_scores = { "fincen.gov" = 10, "fatf-gafi.org" = 10, "fca.org.uk" = 8, "occ.gov" = 8, "bis.org" = 7, "ec.europa.eu" = 6, "cointelegraph.com" = 4, "coindesk.com" = 4 }
+
+[pillars.stock]
+label = "STOCK"
+emoji = "📈"
+folder = "content/daily/stock"
+tags = ["markets", "stocks", "semiconductors", "hardware"]
+description = "Analiza rynków kapitałowych i półprzewodników"
+keywords = [
+  "semiconductor", "nvidia", "tsmc", "asml", "intel", "amd",
+  "chip", "chips", "microchip", "foundry", "fab",
+  "valuation", "earnings", "stock market", "nasdaq", "s&p 500",
+  "supply chain", "hardware", "processor", "gpu", "asic",
+  "arm", "risc-v", "apple silicon", "quantum computing",
+  "venture capital", "startup funding", "ipo", "spac",
+  "institutional investor", "hedge fund", "activist investor",
+]
+domain_scores = { "nvidia.com" = 10, "tsmc.com" = 10, "asml.com" = 10, "intel.com" = 8, "amd.com" = 8, "semiengineering.com" = 9, "anandtech.com" = 7, "tomshardware.com" = 7, "bloomberg.com" = 5, "reuters.com" = 5, "wsj.com" = 5, "ft.com" = 5, "seekingalpha.com" = 6 }
+
+[pillars.science]
+label = "SCIENCE"
+emoji = "🧬"
+folder = "content/daily/science"
+tags = ["science", "systems", "cybernetics", "complexity"]
+description = "Nauka, systemy złożone i ewolucja poznawcza"
+keywords = [
+  "cybernetics", "mitochondria", "bioenergetics", "systems theory",
+  "complexity", "emergence", "self-organization", "autopoiesis",
+  "antifragile", "antifragility", "black swan", "taleb",
+  "cognitive science", "neuroscience", "consciousness",
+  "artificial life", "origin of life", "evolutionary biology",
+  "epigenetics", "crispr", "gene therapy", "longevity",
+  "mitochondrial", "cellular metabolism", "biohacking",
+  "network theory", "graph theory", "scale-free",
+]
+domain_scores = { "nature.com" = 10, "science.org" = 10, "cell.com" = 9, "pnas.org" = 9, "biorxiv.org" = 8, "arxiv.org" = 7, "sciencedirect.com" = 7, "scientificamerican.com" = 8, "quantamagazine.org" = 9, "nautil.us" = 7, "aeon.co" = 6 }
+
+[domain_taxonomy]
+nauka = ["nature.com", "science.org", "cell.com", "pnas.org", "biorxiv.org", "arxiv.org", "quantamagazine.org", "sciencedirect.com", "scientificamerican.com"]
+finanse = ["bloomberg.com", "reuters.com", "wsj.com", "ft.com", "seekingalpha.com", "marketwatch.com", "investopedia.com"]
+regulacje = ["fincen.gov", "fatf-gafi.org", "fca.org.uk", "sec.gov", "occ.gov", "bis.org", "ec.europa.eu"]
+technologia = ["arstechnica.com", "techcrunch.com", "theverge.com", "wired.com", "anandtech.com", "tomshardware.com", "semiengineering.com"]
+media = ["nytimes.com", "theguardian.com", "bbc.com", "apnews.com", "gizmodo.com", "cnn.com", "npr.org"]
+
+[entities.aml]
+values = ["FinCEN", "FATF", "SEC", "FCA", "ECB", "Fed", "OCC", "EBA", "Binance", "Coinbase", "Circle", "PayPal", "Stripe", "Block", "JPMorgan", "Goldman Sachs", "HSBC", "Deutsche Bank", "Citi", "Visa", "Mastercard", "SWIFT", "Pix", "FedNow"]
+
+[entities.stock]
+values = ["NVIDIA", "AMD", "TSMC", "Intel", "ASML", "Apple", "Microsoft", "Samsung", "Qualcomm", "ARM", "Broadcom", "Micron", "Amazon", "Google", "Meta", "Tesla", "OpenAI", "SoftBank"]
+
+[entities.science]
+values = ["OpenAI", "DeepMind", "Google AI", "Meta AI", "Anthropic", "xAI", "MIT", "Stanford", "Harvard", "Oxford", "Cambridge", "Caltech", "DARPA", "NIH", "CERN", "NASA", "ESA", "WHO"]
+
+[source_tiers]
+high = ["\\.gov$", "\\.edu$", "\\.mil$", "nature\\.com", "science\\.org", "cell\\.com", "pnas\\.org", "biorxiv\\.org", "arxiv\\.org", "quantamagazine\\.org", "scientificamerican\\.com", "fincen\\.gov", "fatf-gafi\\.org", "fca\\.org\\.uk", "sec\\.gov", "occ\\.gov", "bis\\.org", "ec\\.europa\\.eu"]
+medium_high = ["bloomberg\\.com", "reuters\\.com", "wsj\\.com", "ft\\.com", "economist\\.com", "nytimes\\.com", "washingtonpost\\.com", "theguardian\\.com", "bbc\\.com", "apnews\\.com", "anandtech\\.com", "tomshardware\\.com", "semiengineering\\.com", "arstechnica\\.com", "techcrunch\\.com", "theverge\\.com", "wired\\.com", "nvidia\\.com", "tsmc\\.com", "asml\\.com", "intel\\.com", "amd\\.com"]
+medium = ["github\\.com", "gitlab\\.com", "stackoverflow\\.com", "seekingalpha\\.com", "marketwatch\\.com", "investopedia\\.com", "coindesk\\.com", "cointelegraph\\.com"]
+low = ["medium\\.com", "substack\\.com", "wordpress\\.com", "blogspot\\.com", "twitter\\.com", "x\\.com", "reddit\\.com", "youtube\\.com"]

@@ -2,7 +2,7 @@ name: Daily Synthesis
 
 on:
   schedule:
-    - cron: "0 8 * * *"
+    - cron: "0 */6 * * *"
   workflow_dispatch:
 
 permissions:
@@ -28,6 +28,9 @@ jobs:
 
       - name: Generate Notebook
         run: python generate_notebook.py
+
+      - name: Generate Metadata API
+        run: python generate_metadata.py
 
       - uses: peaceiris/actions-hugo@v3
         with:

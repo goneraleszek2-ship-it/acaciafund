@@ -30,11 +30,38 @@
 <meta property="og:locale" content="pl_PL">
 <meta name="twitter:card" content="summary">
 <script type="application/ld+json">
-{{ if .IsPage -}}
-{{ dict "@context" "https://schema.org" "@type" "Article" "headline" $title "description" $desc "datePublished" (.Date.Format "2006-01-02T15:04:05Z") "author" (dict "@type" "Person" "name" "Leszek Gonera") "publisher" (dict "@type" "Organization" "name" "AcaciaFund") | jsonify | safeJS }}
+{{- if .IsPage -}}
+{{- $tags := .Params.tags -}}
+{{- $pillar := index (split (path.Dir .File.Path) "/") 1 -}}
+{{- $wordCount := .Plain | plainify | countwords -}}
+{{- $image := printf "%sicons/icon-512x512.png" .Site.BaseURL -}}
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": {{ $title | jsonify }},
+  "description": {{ $desc | jsonify }},
+  "datePublished": {{ (.Date.Format "2006-01-02T15:04:05Z") | jsonify }},
+  "dateModified": {{ (.Date.Format "2006-01-02T15:04:05Z") | jsonify }},
+  "wordCount": {{ $wordCount }},
+  "image": {{ $image | jsonify }},
+  "inLanguage": "pl",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": {{ .Permalink | jsonify }} },
+  "keywords": {{ $tags | jsonify }},
+  "articleSection": {{ $pillar | jsonify }},
+  "author": { "@type": "Person", "name": "Leszek Gonera", "url": "https://acaciafund.org" },
+  "publisher": { "@type": "Organization", "name": "AcaciaFund", "logo": { "@type": "ImageObject", "url": {{ $image | jsonify }} } }
+}
 {{- else -}}
-{{ dict "@context" "https://schema.org" "@type" "WebSite" "name" "AcaciaFund" "description" $desc "url" .Site.BaseURL | jsonify | safeJS }}
-{{- end }}
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "AcaciaFund",
+  "description": {{ $desc | jsonify }},
+  "url": {{ .Site.BaseURL | jsonify }},
+  "inLanguage": "pl",
+  "publisher": { "@type": "Organization", "name": "AcaciaFund" }
+}
+{{- end -}}
 </script>
 <style>{{ readFile "layouts/partials/style.html" | safeCSS }}</style>
 <script>
