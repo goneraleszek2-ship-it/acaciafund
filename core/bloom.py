@@ -115,3 +115,124 @@ def level_label_pl(level: str) -> str:
         "create": "Tworzenie",
     }
     return labels.get(level, level.capitalize())
+
+
+def _extract_key_terms(articles: list[dict]) -> list[str]:
+    """Wyciąga kluczowe terminy z tytułów artykułów."""
+    words: list[str] = []
+    for a in articles:
+        cleaned = re.sub(r"[^a-z\s]", " ", a.get("title", "").lower())
+        words.extend(
+            w for w in cleaned.split()
+            if len(w) > 4 and w not in {"this", "that", "with", "from", "what", "how", "why", "about", "their", "these", "those", "which", "there", "would", "could", "should", "after", "still", "into", "than", "then", "also", "just", "more", "very", "been", "over", "such", "only"}
+        )
+    seen: set[str] = set()
+    unique: list[str] = []
+    for w in words:
+        if w not in seen:
+            seen.add(w)
+            unique.append(w)
+    return unique[:8]
+
+
+_QUESTION_TEMPLATES: dict[str, list[str]] = {
+    "remember": [
+        "Jakie kluczowe fakty dotyczące {topic} zostały przedstawione w artykule?",
+        "Wymień najważniejsze dane liczbowe związane z {topic}.",
+    ],
+    "understand": [
+        "Wyjaśnij własnymi słowami, czym jest {topic} i dlaczego jest istotne.",
+        "Jak {topic} wpływa na szerszy kontekst w swojej dziedzinie?",
+    ],
+    "apply": [
+        "Jak można zastosować {topic} w praktyce w obszarze {pillar}?",
+        "Opisz scenariusz, w którym {topic} rozwiązałby rzeczywisty problem.",
+    ],
+    "analyze": [
+        "Jakie są kluczowe różnice między {topic} a alternatywnymi podejściami?",
+        "Przeanalizuj, jakie czynniki stoją za {topic} i jakie mają implikacje.",
+    ],
+    "evaluate": [
+        "Oceń wiarygodność i znaczenie {topic}. Jakie są mocne i słabe strony?",
+        "Czy {topic} to dobry kierunek? Uzasadnij swoją opinię.",
+    ],
+    "create": [
+        "Jakie nowe rozwiązanie mógłbyś zaproponować, opierając się na {topic}?",
+        "Zaprojektuj eksperyment myślowy, który łączy {topic} z innym obszarem wiedzy.",
+    ],
+}
+
+
+def generate_quiz_questions(articles: list[dict], pillar_name: str = "") -> list[dict]:
+    """Generuje pytania Bloom na podstawie artykułów. 1 pytanie na poziom."""
+    from .data import KNOWN_ENTITIES
+
+    levels_present: list[str] = []
+    seen: set[str] = set()
+    for a in articles:
+        lvl = classify_bloom_level(a)
+        if lvl not in seen:
+            seen.add(lvl)
+            levels_present.append(lvl)
+    levels_present.sort(key=level_index)
+
+    key_terms = _extract_key_terms(articles)
+    questions: list[dict] = []
+    for lvl in levels_present:
+        templates = _QUESTION_TEMPLATES.get(lvl, ["Opowiedz o {topic}."])
+        template = templates[levels_present.index(lvl) % len(templates)]
+
+        if key_terms:
+            topic = key_terms[levels_present.index(lvl) % len(key_terms)]
+        else:
+            topic = articles[0].get("title", "temacie")[:50] if articles else "temacie"
+
+        question = template.format(topic=topic, pillar=pillar_name or "tej dziedzinie")
+        questions.append({
+            "bloom_level": lvl,
+            "question": question,
+            "type": "open-ended",
+        })
+    return questions
+
+
+def generate_flashcards(articles: list[dict], pillar_name: str = "") -> list[dict]:
+    """Generuje fiszki (term → definition) z encji i tytułów artykułów."""
+    from .data import KNOWN_ENTITIES
+
+    entity_defs: dict[str, str] = {
+        "FinCEN": "Financial Crimes Enforcement Network — agencja USA ds. przestępczości finansowej",
+        "FATF": "Financial Action Task Force — międzynarodowa organizacja ds. przeciwdziałania praniu pieniędzy",
+        "SEC": "Securities and Exchange Commission — amerykański regulator rynku papierów wartościowych",
+        "FCA": "Financial Conduct Authority — brytyjski regulator finansowy",
+        "ECB": "European Central Bank — Europejski Bank Centralny",
+        "GDPR": "General Data Protection Regulation — unijne rozporządzenie o ochronie danych osobowych",
+        "KYC": "Know Your Customer — procedura weryfikacji tożsamości klienta",
+        "AML": "Anti-Money Laundering — przeciwdziałanie praniu pieniędzy",
+        "CBDC": "Central Bank Digital Currency — cyfrowa waluta banku centralnego",
+        "PSD2": "Payment Services Directive 2 — unijna dyrektywa o usługach płatniczych",
+        "SAR": "Suspicious Activity Report — zgłoszenie podejrzanej aktywności",
+        "CTF": "Counter-Terrorism Financing — przeciwdziałanie finansowaniu terroryzmu",
+        "SQI": "Signal Quality Index — miara jakości sygnału w 6 wymiarach (AcaciaFund)",
+        "NLP": "Natural Language Processing — przetwarzanie języka naturalnego",
+        "API": "Application Programming Interface — interfejs programistyczny aplikacji",
+        "LLM": "Large Language Model — duży model językowy",
+        "HN": "Hacker News — platforma społecznościowa dla branży technologicznej",
+        "arXiv": "Open-access repozytorium preprintów naukowych",
+        "KYC": "Know Your Customer — proces weryfikacji tożsamości klienta",
+    }
+
+    seen_terms: set[str] = set()
+    flashcards: list[dict] = []
+
+    title_text = " ".join(a.get("title", "") for a in articles).lower()
+    for ent, definition in entity_defs.items():
+        if ent.lower() in title_text and ent not in seen_terms:
+            seen_terms.add(ent)
+            flashcards.append({
+                "term": ent,
+                "definition": definition,
+                "pillar": pillar_name,
+            })
+
+    return flashcards[:10]

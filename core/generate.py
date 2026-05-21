@@ -4,6 +4,9 @@ from pathlib import Path
 
 from .data import PILLARS, BASE_DIR, log
 from .analyze import build_analysis
+from .bloom import (
+    classify_bloom_level, level_label_pl, generate_quiz_questions, generate_flashcards,
+)
 
 
 def generate_post(pillar_name: str, config: dict, pillar_stories: list[dict],
@@ -31,12 +34,21 @@ def generate_post(pillar_name: str, config: dict, pillar_stories: list[dict],
         page_title = f"Synteza {config['emoji']} {config['label']} — {date_str}"
 
     trending_header = f"## 🔍 Trending (HackerNews, {date_str})"
+    bloom_levels = sorted(
+        {classify_bloom_level(s) for s in pillar_stories},
+        key=lambda l: ["remember", "understand", "apply", "analyze", "evaluate", "create"].index(l),
+    )
+
+    edu_questions = generate_quiz_questions(pillar_stories, config["label"])
+    edu_flashcards = generate_flashcards(pillar_stories, config["label"])
+
     lines = [
         "---",
         f"title: {json.dumps(page_title, ensure_ascii=False)}",
         f"date: {date_str}",
         f'tags: {json.dumps(config["tags"])}',
         f'theme: "AcaciaFund — {config["description"]}"',
+        f'bloom_levels: {json.dumps(bloom_levels)}',
         "---",
         "",
         trending_header,
@@ -48,6 +60,21 @@ def generate_post(pillar_name: str, config: dict, pillar_stories: list[dict],
         analysis["metaanalysis"],
         "</div>",
         "",
+    ]
+
+    if edu_questions:
+        lines.append("## 🧠 Pytania do refleksji")
+        for i, q in enumerate(edu_questions, 1):
+            lines.append(f"{i}. **{level_label_pl(q['bloom_level'])}**: {q['question']}")
+        lines.append("")
+
+    if edu_flashcards:
+        lines.append("## 📚 Fiszki")
+        for fcard in edu_flashcards:
+            lines.append(f"- **{fcard['term']}**: {fcard['definition']}")
+        lines.append("")
+
+    lines += [
         "---",
         f"*Raport wygenerowano {date_str}. Źródło: Algolia HN API. Klasyfikacja: AcaciaFund NLP.*",
     ]

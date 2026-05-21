@@ -141,10 +141,6 @@ tr:hover td{background:#f1f5f9}
 .card:nth-child(3){animation-delay:.16s}
 .card:nth-child(4){animation-delay:.24s}
 .card:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(0,0,0,.1)}
-.card.featured{
-  border-color:var(--gold);
-  background:linear-gradient(135deg,var(--card-bg),#fdf9ed)
-}
 .card h3{margin:0 0 8px;font-size:1rem;color:var(--navy)}
 .card p{font-size:.85rem;color:var(--muted);margin-bottom:10px}
 .card a{color:var(--gold);font-weight:600;font-size:.85rem;text-decoration:none}
@@ -225,11 +221,75 @@ footer a{color:var(--navy-mid);font-weight:500}
 ::selection{background:var(--gold);color:var(--navy)}
 
 /* ── responsive ── */
+/* ── archive controls ── */
+.controls-bar{display:flex;gap:12px;flex-wrap:wrap;margin:16px 0;align-items:end}
+.control-group{flex:1;min-width:160px}
+.control-group label{display:block;font-size:.68rem;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);font-weight:600;margin-bottom:4px}
+.control-group select,.control-group input[type="text"]{
+  width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);
+  font-family:inherit;font-size:.85rem;background:var(--card-bg);color:var(--fg);
+  outline:none;transition:border-color .2s;cursor:pointer
+}
+.control-group select:focus,.control-group input[type="text"]:focus{border-color:var(--gold)}
+.control-group input[type="text"]{cursor:text}
+
+/* ── tag filter pills ── */
+.tag-filters{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 16px}
+.tag-btn{
+  padding:4px 14px;border:1px solid var(--border);border-radius:20px;
+  background:var(--card-bg);color:var(--fg);font-family:inherit;font-size:.78rem;
+  cursor:pointer;transition:all .15s;font-weight:500
+}
+.tag-btn:hover{border-color:var(--gold);background:var(--gold);color:var(--navy)}
+.tag-btn.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+.tag-btn.clear{color:var(--muted);font-size:.72rem;border-color:transparent;background:transparent}
+.tag-btn.clear:hover{color:var(--fg);background:var(--border)}
+
+/* ── post grid (cards) ── */
+.post-grid{}
+.group-header{
+  font-size:.95rem;font-weight:600;color:var(--navy-light);margin:24px 0 10px;
+  display:flex;align-items:center;gap:10px
+}
+.group-header::before{content:'';flex:1;height:1px;background:var(--border)}
+.group-count{font-size:.72rem;font-weight:400;color:var(--muted);background:var(--card-bg);padding:2px 10px;border-radius:12px;border:1px solid var(--border)}
+.post-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;margin-bottom:16px}
+.post-card{
+  border:1px solid var(--border);border-radius:var(--radius);padding:14px 16px;
+  background:var(--card-bg);box-shadow:var(--shadow);
+  transition:transform .2s,box-shadow .2s,border-color .2s;
+  animation:fadeSlide .35s ease-out both;
+  border-left:3px solid var(--pillar-color,var(--navy-mid));
+  display:flex;flex-direction:column;gap:6px
+}
+.post-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.08);border-color:var(--pillar-color,var(--navy-mid))}
+.post-card-head{display:flex;align-items:center;gap:8px;margin-bottom:2px}
+.pillar-badge{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:6px;font-size:.78rem;color:#fff;flex-shrink:0}
+.post-date{font-size:.72rem;color:var(--muted);font-weight:500}
+.post-title{font-size:.92rem;font-weight:600;color:var(--navy);text-decoration:none;line-height:1.4;display:block}
+.post-title:hover{color:var(--gold)}
+.post-card-meta{display:flex;gap:6px;flex-wrap:wrap}
+.post-card-meta .stat{font-size:.72rem;color:var(--muted);font-weight:500;padding:1px 8px;background:var(--bg);border-radius:8px}
+.post-card-meta .stat.gold{color:var(--gold);font-weight:700}
+.post-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:2px}
+.mini-tag{font-size:.65rem;color:var(--muted);background:var(--border);padding:1px 8px;border-radius:8px;font-weight:500}
+
+/* ── featured card polish ── */
+.card.featured{
+  border-color:var(--gold);
+  background:linear-gradient(135deg,var(--card-bg),#fdf9ed);
+  transition:all .25s ease
+}
+.card.featured:hover{transform:translateY(-4px);box-shadow:0 12px 28px rgba(0,0,0,.1)}
+
 @media(max-width:600px){
   body{padding:0 16px 32px}
   header{margin:0 -16px 24px;padding:16px;position:static}
   header h1{font-size:1.1rem}
   .grid{grid-template-columns:1fr}
   .metrics{flex-direction:column}
+  .controls-bar{flex-direction:column}
+  .control-group{min-width:100%}
+  .post-row{grid-template-columns:1fr}
   li{padding:10px 12px}
 }

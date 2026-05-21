@@ -11,6 +11,9 @@ sys.path.insert(0, str(Path(__file__).parent))
 from core.data import PILLARS, BASE_DIR, log, KNOWN_ENTITIES, ALL_ENTITIES, extract_domain
 from core.analyze import build_analysis, build_pillar_signals
 from core.score import build_history
+from core.bloom import (
+    classify_bloom_level, level_label_pl, generate_quiz_questions, generate_flashcards,
+)
 
 CONTENT_DIR = BASE_DIR / "content" / "daily"
 
@@ -18,6 +21,7 @@ TRENDING_RE = re.compile(
     r"^\d+\.\s+\[(.+?)\]\((https?://[^\s)]+)\)"
     r"(?:\s+\(\[dyskusja\]\((https?://[^\s)]+)\)\))?"
     r"\s+\(⭐(\d+)\)"
+    r"(?:\s+[🟢🟡🔴](\d+\.\d+))?"
 )
 
 
@@ -50,7 +54,7 @@ def parse_trending(body: str) -> list[dict]:
             continue
         m = TRENDING_RE.match(stripped)
         if m:
-            title, url, hn_url, points_str = m.groups()
+            title, url, hn_url, points_str, _ = m.groups()
             stories.append({
                 "title": title,
                 "url": url,
@@ -68,15 +72,10 @@ def parse_trending(body: str) -> list[dict]:
 def rebuild_post(filepath: Path) -> bool:
     content = filepath.read_text(encoding="utf-8")
 
-    title_line = re.search(r'^title: (.+)$', content, re.MULTILINE)
-    if title_line:
-        val = title_line.group(1).strip()
-        if val.startswith('"') and val.endswith('"') and '"' in val[1:-1]:
-            pass
-        elif "Synteza" not in val:
-            return False
-
     fm, body = parse_frontmatter(content)
+
+    if "bloom_levels" in fm:
+        return False
     stories = parse_trending(body)
 
     if not stories:
@@ -116,12 +115,20 @@ def rebuild_post(filepath: Path) -> bool:
     else:
         page_title = f"Synteza {config['emoji']} {config['label']} — {date_str}"
 
+    bloom_levels = sorted(
+        {classify_bloom_level(s) for s in stories},
+        key=lambda l: ["remember", "understand", "apply", "analyze", "evaluate", "create"].index(l),
+    )
+    edu_questions = generate_quiz_questions(stories, config["label"])
+    edu_flashcards = generate_flashcards(stories, config["label"])
+
     lines = [
         "---",
         f"title: {json.dumps(page_title, ensure_ascii=False)}",
         f"date: {date_str}",
         f"tags: {json.dumps(config['tags'])}",
         f'theme: "AcaciaFund — {config["description"]}"',
+        f"bloom_levels: {json.dumps(bloom_levels)}",
         "---",
         "",
         f"## 🔍 Trending (HackerNews, {date_str})",
@@ -133,6 +140,21 @@ def rebuild_post(filepath: Path) -> bool:
         analysis["metaanalysis"],
         "</div>",
         "",
+    ]
+
+    if edu_questions:
+        lines.append("## 🧠 Pytania do refleksji")
+        for i, q in enumerate(edu_questions, 1):
+            lines.append(f"{i}. **{level_label_pl(q['bloom_level'])}**: {q['question']}")
+        lines.append("")
+
+    if edu_flashcards:
+        lines.append("## 📚 Fiszki")
+        for fcard in edu_flashcards:
+            lines.append(f"- **{fcard['term']}**: {fcard['definition']}")
+        lines.append("")
+
+    lines += [
         "---",
         f"*Raport wygenerowano {date_str}. Źródło: Algolia HN API. Klasyfikacja: AcaciaFund NLP.*",
     ]
