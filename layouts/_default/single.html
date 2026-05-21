@@ -14,18 +14,250 @@
             {{ range .Params.tags }}<span>{{ . }}</span>{{ end }}
         </div>
     </header>
-    <main>{{ .Content }}</main>
-    <nav style="display:flex;justify-content:space-between;margin-top:32px;gap:12px;flex-wrap:wrap">
-        {{ with .PrevInSection }}
-        <a href="{{ .RelPermalink }}" style="font-size:.85rem;color:var(--navy-mid);text-decoration:none;padding:8px 14px;border:1px solid var(--border);border-radius:var(--radius);transition:.2s;flex:1;text-align:left" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">← {{ .Title | truncate 40 }}</a>
-        {{ end }}
-        {{ with .NextInSection }}
-        <a href="{{ .RelPermalink }}" style="font-size:.85rem;color:var(--navy-mid);text-decoration:none;padding:8px 14px;border:1px solid var(--border);border-radius:var(--radius);transition:.2s;flex:1;text-align:right" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">{{ .Title | truncate 40 }} →</a>
-        {{ end }}
-    </nav>
+    <div class="post-layout">
+        <aside class="bloom-sidebar" id="bloomSidebar">
+            <div class="bloom-nav" id="bloomNav"></div>
+        </aside>
+        <main>
+            <div style="display:none" id="postMeta"
+                 data-bloom-levels='{{ with .Params.bloom_levels }}{{ . | jsonify | safeHTML }}{{ end }}'
+                 data-pillar="{{ index (split .File.Dir "/") 1 }}"
+                 data-date="{{ .Date.Format "2006-01-02" }}"></div>
+            {{ .Content }}
+
+            <div id="quizWidget" class="edu-widget" style="display:none">
+                <h3>🧠 Quiz — sprawdź swoją wiedzę</h3>
+                <div id="quizContainer"></div>
+            </div>
+
+            <div id="flashcardWidget" class="edu-widget" style="display:none">
+                <h3>📚 Fiszki — powtórka</h3>
+                <div id="flashcardContainer"></div>
+            </div>
+
+            <nav style="display:flex;justify-content:space-between;margin-top:32px;gap:12px;flex-wrap:wrap">
+                {{ with .PrevInSection }}
+                <a href="{{ .RelPermalink }}" style="font-size:.85rem;color:var(--navy-mid);text-decoration:none;padding:8px 14px;border:1px solid var(--border);border-radius:var(--radius);transition:.2s;flex:1;text-align:left" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">← {{ .Title | truncate 40 }}</a>
+                {{ end }}
+                {{ with .NextInSection }}
+                <a href="{{ .RelPermalink }}" style="font-size:.85rem;color:var(--navy-mid);text-decoration:none;padding:8px 14px;border:1px solid var(--border);border-radius:var(--radius);transition:.2s;flex:1;text-align:right" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">{{ .Title | truncate 40 }} →</a>
+                {{ end }}
+            </nav>
+        </main>
+    </div>
     <footer>
         &copy; 2026 Leszek Gonera · AcaciaFund
     </footer>
-    <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
+    <script>
+(function(){
+if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js');
+
+var postMeta = document.getElementById('postMeta');
+var rawLevels = postMeta.getAttribute('data-bloom-levels');
+var pillar = postMeta.getAttribute('data-pillar');
+var postDate = postMeta.getAttribute('data-date');
+
+var bloomLevels = [];
+try{ bloomLevels = JSON.parse(rawLevels) || []; }catch(e){}
+
+var BLOOM_CONFIG = [
+    { id:'remember', label:'Zapamiętywanie', color:'#3B6999', icon:'📝' },
+    { id:'understand', label:'Rozumienie', color:'#88B0D3', icon:'🧠' },
+    { id:'apply', label:'Stosowanie', color:'#C47F58', icon:'🔧' },
+    { id:'analyze', label:'Analiza', color:'#D4A76A', icon:'🔍' },
+    { id:'evaluate', label:'Ewaluacja', color:'#c9a84c', icon:'⚖️' },
+    { id:'create', label:'Tworzenie', color:'#9C6B8E', icon:'🚀' },
+];
+
+var levelSet = {};
+bloomLevels.forEach(function(l){ levelSet[l] = true; });
+
+// ── Bloom Navigator ──
+(function(){
+    var nav = document.getElementById('bloomNav');
+    if(!bloomLevels.length){ nav.parentElement.style.display='none'; return; }
+
+    var activeIdx = -1;
+    BLOOM_CONFIG.forEach(function(b, i){
+        if(levelSet[b.id]) activeIdx = Math.max(activeIdx, i);
+    });
+
+    var html = '<div class="bloom-pyramid">';
+    BLOOM_CONFIG.forEach(function(b, i){
+        var active = levelSet[b.id] ? ' active' : '';
+        var top = i === activeIdx ? ' top' : '';
+        html += '<div class="bloom-level'+active+top+'" style="--blm-color:'+b.color+'">';
+        html += '<span class="blm-icon">'+b.icon+'</span>';
+        html += '<span class="blm-label">'+b.label+'</span>';
+        if(levelSet[b.id]) html += '<span class="blm-dot"></span>';
+        html += '</div>';
+    });
+    html += '</div>';
+    nav.innerHTML = html;
+
+    nav.addEventListener('click', function(e){
+        var lvl = e.target.closest('.bloom-level');
+        if(!lvl) return;
+        var idx = Array.from(lvl.parentElement.children).indexOf(lvl);
+        if(idx < 0) return;
+        var id = BLOOM_CONFIG[idx].id;
+        var el = document.querySelector('[data-bloom-'+id+']');
+        if(el) el.scrollIntoView({behavior:'smooth', block:'center'});
+    });
+})();
+
+// ── Quiz Widget ──
+(function(){
+    var widget = document.getElementById('quizWidget');
+    var container = document.getElementById('quizContainer');
+    var POST_KEY = 'ac-quiz-' + pillar + '-' + postDate;
+    var data;
+
+    var stored = localStorage.getItem(POST_KEY);
+    var completed = stored ? JSON.parse(stored) : null;
+
+    fetch('/api/quiz.json').then(function(r){ return r.json(); }).then(function(d){
+        data = d;
+        var questions = (data.questions||[]).filter(function(q){
+            return q.post_url && q.post_url.indexOf('/'+pillar+'/'+postDate+'/') !== -1;
+        });
+        if(!questions.length){ widget.style.display='none'; return; }
+        widget.style.display='';
+
+        if(completed && completed.done){
+            var pct = Math.round(completed.correct / completed.total * 100);
+            container.innerHTML =
+                '<div class="quiz-done">✅ Quiz już rozwiązany! Wynik: '+completed.correct+'/'+completed.total+' ('+pct+'%)</div>'+
+                '<button class="quiz-restart" onclick="location.reload()">🔁 Rozwiąż ponownie</button>';
+            return;
+        }
+
+        var idx = 0, correct = 0;
+        var breakdown = {};
+
+        function render(){
+            if(idx >= questions.length){
+                var total = questions.length;
+                localStorage.setItem(POST_KEY, JSON.stringify({done:true, correct:correct, total:total, breakdown:breakdown, ts:Date.now()}));
+                var pct = Math.round(correct/total*100);
+                container.innerHTML =
+                    '<div class="quiz-done">🎉 Ukończono! Wynik: '+correct+'/'+total+' ('+pct+'%)</div>';
+                return;
+            }
+            var q = questions[idx];
+            if(!breakdown[q.bloom_level]) breakdown[q.bloom_level] = {c:0,t:0};
+            breakdown[q.bloom_level].t++;
+
+            container.innerHTML =
+                '<div class="quiz-progress">Pytanie '+(idx+1)+'/'+questions.length+'</div>'+
+                '<div class="quiz-question"><span class="quiz-badge" style="background:'+(BLOOM_CONFIG.find(function(b){return b.id===q.bloom_level})||{}).color+'">'+
+                (q.bloom_level||'')+'</span> '+q.question+'</div>'+
+                '<div class="quiz-actions">'+
+                '<button class="quiz-btn easy" onclick="answer('+idx+',true)">✅ Rozumiem</button>'+
+                '<button class="quiz-btn medium" onclick="answer('+idx+',null)">🤔 Średnio</button>'+
+                '<button class="quiz-btn hard" onclick="answer('+idx+',false)">❌ Nie wiem</button>'+
+                '</div>';
+        }
+
+        window.answer = function(qidx, ok){
+            if(qidx !== idx) return;
+            if(ok === true){ correct++; if(breakdown[q.bloom_level]) breakdown[q.bloom_level].c++; }
+            idx++;
+            render();
+        };
+
+        render();
+    }).catch(function(){
+        widget.style.display='none';
+    });
+})();
+
+// ── Flashcard Deck ──
+(function(){
+    var widget = document.getElementById('flashcardWidget');
+    var container = document.getElementById('flashcardContainer');
+    var STORAGE_KEY = 'ac-flashcards-' + pillar;
+
+    var cardData = [];
+    var cardIdx = 0;
+    var flipped = false;
+
+    var stored = localStorage.getItem(STORAGE_KEY);
+    var progress = stored ? JSON.parse(stored) : {};
+
+    fetch('/api/flashcards.json').then(function(r){ return r.json(); }).then(function(d){
+        cardData = (d.cards||[]).filter(function(c){ return c.pillar === pillar; });
+        if(!cardData.length){ widget.style.display='none'; return; }
+
+        // Sort: due first, then by progress
+        var now = Date.now();
+        cardData.sort(function(a,b){
+            var pa = progress[a.term]||{};
+            var pb = progress[b.term]||{};
+            var da = pa.nextReview || 0;
+            var db = pb.nextReview || 0;
+            if(da <= now && db > now) return -1;
+            if(db <= now && da > now) return 1;
+            return (pa.correct||0) - (pb.correct||0);
+        });
+
+        widget.style.display='';
+        render();
+    }).catch(function(){
+        widget.style.display='none';
+    });
+
+    function render(){
+        if(cardIdx >= cardData.length){
+            container.innerHTML =
+                '<div class="quiz-done">🎉 Wszystkie fiszki przejrzane! Wróć jutro po nowe powtórki.</div>';
+            return;
+        }
+        var card = cardData[cardIdx];
+        var p = progress[card.term] || {correct:0, level:0, nextReview:0};
+        var mastered = p.correct >= 5;
+        if(mastered){
+            cardIdx++;
+            render();
+            return;
+        }
+
+        var pct = Math.round(Object.keys(progress).length / cardData.length * 100);
+        container.innerHTML =
+            '<div class="fc-progress">📊 Postęp: '+(Object.keys(progress).length)+'/'+cardData.length+' fiszek</div>'+
+            '<div class="fc-card'+(flipped?' flipped':'')+'" onclick="flipCard()">'+
+            '<div class="fc-inner">'+
+            '<div class="fc-front"><strong>'+card.term+'</strong></div>'+
+            '<div class="fc-back">'+card.definition+'</div>'+
+            '</div>'+
+            '</div>'+
+            '<div class="fc-actions"'+(flipped?'':' style="visibility:hidden"')+'>'+
+            '<button class="quiz-btn easy" onclick="rateCard(\'easy\')">✅ Łatwe (7d)</button>'+
+            '<button class="quiz-btn medium" onclick="rateCard(\'medium\')">🔄 Średnie (3d)</button>'+
+            '<button class="quiz-btn hard" onclick="rateCard(\'hard\')">❌ Trudne (1d)</button>'+
+            '</div>';
+    }
+
+    window.flipCard = function(){
+        flipped = !flipped;
+        render();
+    };
+
+    window.rateCard = function(level){
+        var card = cardData[cardIdx];
+        var p = progress[card.term] || {correct:0, level:0, nextReview:0};
+        var intervals = {easy:7, medium:3, hard:1};
+        p.correct = (p.correct || 0) + 1;
+        p.level = {easy:2, medium:1, hard:0}[level] || 0;
+        p.nextReview = Date.now() + (intervals[level] || 1) * 86400000;
+        progress[card.term] = p;
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+        cardIdx++;
+        flipped = false;
+        render();
+    };
+})();
+})();
+    </script>
 </body>
 </html>
