@@ -47,6 +47,10 @@ def parse_articles_from_post(content: str) -> list[dict]:
 
 def main():
     all_questions = []
+    all_urls: list[str] = []
+    posts: list[dict] = []
+
+    # First pass: collect all articles and their URLs
     for pillar_dir in sorted(CONTENT_DIR.iterdir()):
         if not pillar_dir.is_dir():
             continue
@@ -72,12 +76,29 @@ def main():
             if not articles:
                 continue
 
-            questions = generate_quiz_questions(articles, pillar)
-            for q in questions:
-                q["post_url"] = f"/daily/{pillar}/{date_str}/"
-                q["pillar"] = pillar
-                q["date"] = date_str
-                all_questions.append(q)
+            posts.append({"pillar": pillar, "date": date_str, "articles": articles})
+            for a in articles:
+                all_urls.append(a.get("url", ""))
+
+    # Scrape article content (with cache)
+    scraped_data: dict[str, dict] = {}
+    if all_urls:
+        from core.scraper import scrape_articles
+        print(f"[~] Scraping {len(all_urls)} unique articles...")
+        scraped_data = scrape_articles(all_urls)
+        print(f"[+] Scraped {len(scraped_data)} articles successfully")
+
+    # Second pass: generate questions with content
+    for post in posts:
+        pillar = post["pillar"]
+        date_str = post["date"]
+        articles = post["articles"]
+        questions = generate_quiz_questions(articles, pillar, scraped_data)
+        for q in questions:
+            q["post_url"] = f"/daily/{pillar}/{date_str}/"
+            q["pillar"] = pillar
+            q["date"] = date_str
+            all_questions.append(q)
 
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT.write_text(

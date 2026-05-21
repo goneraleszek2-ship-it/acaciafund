@@ -1,3 +1,4 @@
+import hashlib
 import random
 import re
 
@@ -135,7 +136,7 @@ def _distractors(correct: str, pool: list[str], n: int = 3) -> list[str]:
 # ── Article-aware quiz generation ──
 
 
-def _build_source_question(article: dict, pool: list[str]) -> dict | None:
+def _build_source_question(article: dict, pool: list[dict]) -> dict | None:
     domain = _extract_domain(article.get("url", ""))
     if not domain or not pool:
         return None
@@ -153,45 +154,34 @@ def _build_source_question(article: dict, pool: list[str]) -> dict | None:
     }
 
 
-def _build_points_question(article: dict, pool: list[str]) -> dict | None:
-    pts = article.get("points", 0)
-    if pts == 0:
-        return None
-    ranges = [
-        (0, 10, "0–10"),
-        (11, 50, "11–50"),
-        (51, 100, "51–100"),
-        (101, 300, "101–300"),
-        (301, 999, "301–999"),
-        (1000, 99999, "1000+"),
-    ]
-    correct_range = next((r[2] for r in ranges if r[0] <= pts <= r[1]), "1000+")
-    opts = [r[2] for r in ranges]
-    others = [r for r in opts if r != correct_range]
-    random.shuffle(others)
-    return {
-        "bloom_level": "remember",
-        "type": "mc",
-        "question": f"Ile punktów na Hacker News zdobył artykuł \"{_format_title(article['title'])}\"?",
-        "options": [correct_range] + others[:3],
-        "correct": correct_range,
-    }
-
-
 def _build_top_article_question(articles: list[dict]) -> dict | None:
-    scored = [a for a in articles if a.get("points", 0) > 0]
-    if len(scored) < 4:
+    """Choose the article most relevant to the pillar topic."""
+    if len(articles) < 2:
         return None
-    scored.sort(key=lambda a: a["points"], reverse=True)
-    best = scored[0]
-    opts = [a["title"][:40] for a in scored[:4]]
-    random.shuffle(opts)
+    relevant = [a for a in articles if a.get("url")]
+    if len(relevant) < 2:
+        return None
+    random.shuffle(relevant)
+    # Pick one article, ask about its source category
+    a = relevant[0]
+    domain = _extract_domain(a.get("url", ""))
+    if not domain:
+        return None
+    # Categorize domain
+    edu = bool(re.search(r"\.(edu|gov|mil|org)$", domain))
+    news = bool(re.search(r"(reuters|bloomberg|ft\.com|wsj|nature|science)\.", domain))
+    tech = bool(re.search(r"(techcrunch|theverge|arstechnica|wired|zdnet|github)\.", domain))
+    cat = "edukacyjne/rządowe" if edu else "newsowe" if news else "technologiczne" if tech else "inne"
+    other_articles = [x for x in relevant if x != a]
+    random.shuffle(other_articles)
+    titles = [a["title"][:50]] + [x["title"][:50] for x in other_articles[:3]]
+    random.shuffle(titles)
     return {
         "bloom_level": "analyze",
         "type": "mc",
-        "question": "Który z tych artykułów zdobył najwięcej punktów na HN?",
-        "options": [t + ("…" if len(t) == 40 else "") for t in opts],
-        "correct": best["title"][:40] + ("…" if len(best["title"]) > 40 else ""),
+        "question": f"Który z tych artykułów pochodzi ze źródła {cat}?",
+        "options": [t + ("…" if len(t) == 50 else "") for t in titles],
+        "correct": a["title"][:50] + ("…" if len(a["title"]) > 50 else ""),
     }
 
 
@@ -287,17 +277,6 @@ def _build_application_question(article: dict, pillar_name: str) -> dict:
     }
 
 
-def _build_evaluate_question(article: dict) -> dict | None:
-    pts = article.get("points", 0)
-    if pts == 0:
-        return None
-    return {
-        "bloom_level": "evaluate",
-        "type": "open-ended",
-        "question": f"Czy artykuł \"{_format_title(article['title'])}\" ({pts} pkt na HN) zasługuje na uwagę? Uzasadnij.",
-    }
-
-
 def _build_create_question(articles: list[dict], pillar_name: str) -> dict:
     themes = list(set(
         a.get("title", "").split()[0] for a in articles if a.get("title")
@@ -310,69 +289,149 @@ def _build_create_question(articles: list[dict], pillar_name: str) -> dict:
     }
 
 
-def generate_quiz_questions(articles: list[dict], pillar_name: str = "") -> list[dict]:
+def _build_content_question(article_title: str, names: list[str], pillar_name: str,
+                           article_url: str = "") -> dict | None:
+    """Ask about the main entity/organization described in an article."""
+    title_lower = article_title.lower()
+
+    def _is_good_name(n: str) -> bool:
+        tokens = n.split()
+        if len(tokens) < 2 or len(tokens) > 4:
+            return False
+        # Skip if it looks like an article title fragment
+        if n.lower() in title_lower and len(n) > 20:
+            return False
+        if any(w.lower() in {"the", "this", "that", "these", "those", "what", "which",
+                             "where", "when", "how", "why", "there", "here",
+                             "they", "them", "their", "its", "our", "all", "each",
+                             "some", "any", "most", "many", "much", "new", "now",
+                             "first", "last", "next", "also", "just", "more", "such",
+                             "every", "after", "before", "into", "over", "between"}
+               for w in tokens):
+            return False
+        if tokens[0][0].islower():
+            return False
+        return True
+
+    good_names = [n for n in names if _is_good_name(n)]
+    if len(good_names) < 2:
+        return None
+
+    from collections import Counter
+    name_counts = Counter(good_names)
+    primary = name_counts.most_common(1)[0][0]
+    others = [n for n in good_names if n != primary]
+    random.shuffle(others)
+    options = ([primary] + others[:3])[:4]
+    random.shuffle(options)
+
+    # Alternate question templates for variety
+    template = random.choice([
+        'Jaka organizacja/instytucja jest głównym tematem artykułu "{title}"?',
+        'Która z tych instytucji jest opisana w artykule "{title}"?',
+    ])
+
+    return {
+        "bloom_level": "remember",
+        "type": "mc",
+        "question": template.format(title=_format_title(article_title)),
+        "options": options,
+        "correct": primary,
+    }
+
+
+def _build_factoid_question(sentence: str, article_title: str) -> dict | None:
+    """Turn a factual sentence into a true/false question."""
+    sentence = sentence.strip()
+    if len(sentence) < 50 or len(sentence) > 200:
+        return None
+    words = sentence.split()
+    if len(words) < 8:
+        return None
+    # Find a number to make a plausible T/F
+    nums = re.findall(r"\b(\d+)\b", sentence)
+    if not nums:
+        return None
+    num = nums[0]
+    # Make a flipped version
+    try:
+        flipped_num = str(int(num) * 2)
+    except ValueError:
+        return None
+    if flipped_num not in sentence:
+        return None
+    return {
+        "bloom_level": "understand",
+        "type": "tf",
+        "question": f'Czy poniższe zdanie jest prawdziwe według artykułu "{_format_title(article_title)}"?',
+        "statement": sentence[:180],
+        "correct": True,
+    }
+
+
+def generate_quiz_questions(articles: list[dict], pillar_name: str = "",
+                            scraped: dict[str, dict] | None = None) -> list[dict]:
     from .data import PILLARS
 
     pillar_label = PILLARS.get(pillar_name, {}).get("label", pillar_name) if pillar_name else pillar_name
     questions: list[dict] = []
-    seen_topics: set[str] = set()
     pool = articles[:]
-
-    # Select diverse articles for questions
     random.shuffle(pool)
     high_score = [a for a in pool if a.get("points", 0) >= 50]
     all_articles = pool
-
-    # Build question pool with variety
     candidates = []
 
-    # Source identification (remember, MC)
-    for a in pool[:8]:
+    # ── Content-based questions (from scraped text) ──
+    content_used = 0
+    if scraped:
+        for a in all_articles[:20]:
+            key = hashlib.md5(a.get("url", "").encode()).hexdigest()[:12]
+            cached = scraped.get(key, {})
+            facts = cached.get("facts", {})
+            names = facts.get("names", [])
+            sentences = facts.get("sentences", [])
+            # Entity question
+            if names:
+                q = _build_content_question(a.get("title", ""), names, pillar_label)
+                if q:
+                    candidates.append(q)
+                    content_used += 1
+            # Factoid question using text sentence
+            if sentences:
+                for s in sentences[:3]:
+                    q = _build_factoid_question(s, a.get("title", ""))
+                    if q:
+                        candidates.append(q)
+                        content_used += 1
+                        break
+            if content_used >= 6:
+                break
+            if content_used >= 4:
+                break
+
+    # ── Metadata-based questions (fallback) ──
+    for a in pool[:6]:
         q = _build_source_question(a, all_articles)
         if q:
             candidates.append(q)
-
-    # Points estimation (remember, MC)
-    for a in high_score[:6]:
-        q = _build_points_question(a, all_articles)
-        if q:
-            candidates.append(q)
-
-    # Top article (analyze, MC)
     q = _build_top_article_question(all_articles)
     if q:
         candidates.append(q)
-
-    # Source tier (evaluate, MC)
-    for a in pool[:6]:
+    for a in pool[:4]:
         q = _build_source_tier_question(a)
         if q:
             candidates.append(q)
-
-    # Domain type (understand, MC)
-    for a in pool[:4]:
+    for a in pool[:3]:
         q = _build_domain_type_question(a)
         if q:
             candidates.append(q)
-
-    # Pillar relevance (understand, open)
-    for a in pool[:4]:
+    for a in pool[:3]:
         candidates.append(_build_pillar_question(a, pillar_label))
-
-    # Application (apply, open)
-    for a in pool[:4]:
+    for a in pool[:3]:
         candidates.append(_build_application_question(a, pillar_label))
-
-    # Evaluate (evaluate, open)
-    for a in high_score[:4]:
-        q = _build_evaluate_question(a)
-        if q:
-            candidates.append(q)
-
-    # Create (create, open)
     candidates.append(_build_create_question(all_articles, pillar_label))
 
-    # Filter to one question per Bloom level per post (existing logic)
+    # Filter to one question per Bloom level per post
     levels_present: list[str] = []
     seen: set[str] = set()
     for a in articles:
@@ -382,7 +441,6 @@ def generate_quiz_questions(articles: list[dict], pillar_name: str = "") -> list
             levels_present.append(lvl)
     levels_present.sort(key=level_index)
 
-    # Pick best question per level: prefer MC, then article-specific
     for lvl in levels_present:
         lvl_candidates = [c for c in candidates if c.get("bloom_level") == lvl]
         if lvl_candidates:

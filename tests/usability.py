@@ -60,6 +60,9 @@ mc_qs = [q for q in quiz["questions"] if q.get("type") == "mc"]
 check(len(mc_qs) > 50, f"  {len(mc_qs)} multiple-choice questions (article-aware)")
 mc_with_options = all("options" in q and "correct" in q for q in mc_qs)
 check(mc_with_options, "  MC questions have options and correct answer")
+tf_qs = [q for q in quiz["questions"] if q.get("type") == "tf"]
+tf_valid = all("statement" in q and "correct" in q for q in tf_qs)
+check(len(tf_qs) == 0 or tf_valid, f"  {len(tf_qs)} TF questions (valid)" if tf_qs else "  No TF questions yet (scraping in progress)")
 
 flashcards = read_json("flashcards.json")
 check("cards" in flashcards, "/api/flashcards.json has 'cards'")
@@ -160,7 +163,7 @@ if post_files:
     check("quizWidget" in post, "Single post has quiz widget")
     check("flashcardWidget" in post, "Single post has flashcard widget")
     check("class=\"edu-widget\"" in post, "Single post has edu-widget class")
-    for fn_name in ["selfAnswer", "mcAnswer", "flipCard", "rateCard"]:
+    for fn_name in ["selfAnswer", "mcAnswer", "tfAnswer", "flipCard", "rateCard"]:
         check(f"window.{fn_name}" in post or f"function {fn_name}" in post,
               f"Single post has {fn_name}()")
     check("/learn/" in post, "Single post has link to /learn/")
