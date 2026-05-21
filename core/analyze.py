@@ -2,7 +2,6 @@ from collections import Counter
 
 from .data import (
     PILLARS, DOMAIN_PATTERNS, KEYWORD_PATTERNS,
-    RULES_META, RULES_SYSTEMS, RULES_CONN,
     extract_domain, categorize_domain, extract_entities, extract_themes, log,
 )
 from .score import compute_signal_score, build_history
@@ -78,14 +77,6 @@ def build_pillar_signals(stories: list[dict], pillar_name: str) -> dict:
     }
 
 
-def apply_rules(rules: list[dict], signals: dict, stories: list[dict],
-                 pname: str, extra: any = None) -> str:
-    for rule in rules:
-        if rule["match"](signals if extra is None else extra):
-            return rule["generate"](signals if extra is None else extra, stories, pname)
-    return ""
-
-
 def _sqi_badge(sqi: dict) -> str:
     score = sqi.get("sqi", 0)
     if score >= 0.6:
@@ -95,15 +86,83 @@ def _sqi_badge(sqi: dict) -> str:
     return f" 🔴{score:.2f}"
 
 
+def _cap(text: str, n: int = 100) -> str:
+    if len(text) <= n:
+        return text
+    return text[:n].rsplit(" ", 1)[0] + "…"
+
+
+def generate_popular_summary(stories: list[dict], signals: dict,
+                              pillar_name: str, config: dict) -> str:
+    top = stories[0]
+    label = config["label"]
+    desc = config["description"]
+
+    opening = (
+        f"Dzisiaj w obszarze {desc} uwagę przykuwa przede wszystkim "
+        f"„**{top['title']}**”, który zebrał {top['points']}⭐ na Hacker News"
+    )
+
+    if signals.get("has_outlier") and signals.get("outlier_ratio", 0) > 3:
+        opening += (
+            f" — wynik blisko {signals['outlier_ratio']:.0f}× wyższy od średniej "
+            f"pozostałych artykułów w tym filarze. To nie przypadek: taki sygnał "
+            f"oznacza, że społeczność technologiczną poruszył temat o dużym potencjale "
+            f"kaskadowym."
+        )
+    else:
+        opening += "."
+
+    midsection = ""
+    if signals.get("domain_diversity", 0) >= 3:
+        midsection += (
+            f" Co ciekawe, źródła są tu wyjątkowo zróżnicowane "
+            f"({signals['domain_diversity']} różnych kategorii) — "
+            f"temat rezonuje w wielu kręgach jednocześnie."
+        )
+    elif signals.get("domain_diversity", 0) == 1:
+        midsection += (
+            f" Dyskusja koncentruje się głównie wokół źródła z kategorii "
+            f"**{signals['top_domain']}**."
+        )
+
+    entities = signals.get("top_entities", [])
+    if entities:
+        midsection += (
+            f" Wśród kluczowych podmiotów pojawiają się "
+            f"{', '.join(f'**{e}**' for e in entities[:3])}."
+        )
+
+    other = ""
+    if len(stories) > 1:
+        others = [s for s in stories[1:4] if s.get("points", 0) > 0]
+        if others:
+            other = (
+                f" W tle przewijają się też: „{_cap(others[0]['title'], 70)}”"
+                + (f" i „{_cap(others[1]['title'], 70)}”" if len(others) > 1 else "")
+                + "."
+            )
+
+    closer = ""
+    total = signals.get("total_score", 0)
+    count = signals.get("count", 0)
+    closer = (
+        f" Łącznie w dzisiejszej syntezie {label} znalazło się {count} artykułów "
+        f"o łącznej wartości {total}⭐. To tyle na dziś — więcej jutro."
+    )
+
+    return opening + midsection + other + closer
+
+
 def build_analysis(stories: list[dict], pillar_name: str,
-                   all_pillar_stories: dict[str, list[dict]] | None = None) -> dict[str, str]:
+                   all_pillar_stories: dict[str, list[dict]] | None = None) -> dict:
     if not stories:
         return {
             "trending": "*Brak doniesień z tego okresu.*\n\n*Pipeline AcaciaFund kontynuuje skanowanie.*",
             "metaanalysis": "Brak danych do analizy w tym oknie czasowym.",
-            "systems_lens": "Brak sygnałów. Z punktu widzenia teorii systemów, brak informacji to również informacja.",
-            "connections": "Brak korelacji w tym oknie czasowym.",
         }
+
+    config = PILLARS[pillar_name]
 
     history = _get_history()
     story_sqis = {s.get("url", ""): compute_signal_score(s, history) for s in stories[:7]}
@@ -116,57 +175,9 @@ def build_analysis(stories: list[dict], pillar_name: str,
     )
 
     signals = build_pillar_signals(stories, pillar_name)
-
-    meta = apply_rules(RULES_META, signals, stories, pillar_name)
-    if not meta:
-        meta = apply_rules([RULES_META[-1]], signals, stories, pillar_name)
-
-    systems = apply_rules(RULES_SYSTEMS, signals, stories, pillar_name)
-    if not systems:
-        systems = apply_rules([RULES_SYSTEMS[-1]], signals, stories, pillar_name)
-
-    # cross-pillar
-    cp_signal = None
-    if all_pillar_stories:
-        for p in all_pillar_stories:
-            if p == pillar_name:
-                continue
-            p_stories = all_pillar_stories.get(p, [])
-            if not p_stories:
-                continue
-            p_signals = build_pillar_signals(p_stories, p)
-            shared = set(signals.get("top_entities", [])) & set(p_signals.get("top_entities", []))
-            if shared:
-                a_in_p = next((s["title"] for s in all_pillar_stories[pillar_name]
-                              if any(e.lower() in s["title"].lower() for e in shared)), "")
-                cp_signal = {
-                    "pair": (pillar_name, p),
-                    "shared_entities": list(shared),
-                    "strength": len(shared),
-                    "article_a": a_in_p,
-                }
-                break
-
-    conn = apply_rules(RULES_CONN, signals, stories, pillar_name, cp_signal)
-    if not conn:
-        conn = apply_rules([RULES_CONN[-1]], signals, stories, pillar_name, cp_signal)
-
-    sqi = signals.get("avg_sqi", 0)
-    sqi_label = "wysoka" if sqi >= 0.6 else "średnia" if sqi >= 0.35 else "niska"
-    top_sqi_items = signals.get("top_sqi_articles", [])
-    signal_quality = (
-        f"**SQI (Signal Quality Index)**: {sqi:.2f} — jakość sygnału w tym oknie: **{sqi_label}**. "
-        f"Średnia ważona 6 wymiarów: zaangażowanie społeczności, autorytet źródła, "
-        f"nowość tematu, aktualność, gęstość encji i znaczenie cross-pillar. "
-        + (f"Najwyżej punktowane: „{top_sqi_items[0][0]}” ({top_sqi_items[0][1]['sqi']:.2f})"
-           if top_sqi_items else "")
-    )
+    meta = generate_popular_summary(stories, signals, pillar_name, config)
 
     return {
         "trending": trending,
         "metaanalysis": meta,
-        "systems_lens": systems,
-        "connections": conn,
-        "signal_quality": signal_quality,
-        "avg_sqi": signals.get("avg_sqi", 0),
     }
