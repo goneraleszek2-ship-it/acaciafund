@@ -3,9 +3,11 @@
   <img src="https://img.shields.io/badge/python-3.14+-3776AB?logo=python&logoColor=fff&style=flat-square" alt="Python">
   <img src="https://img.shields.io/badge/hugo-0.161+-FF4088?logo=hugo&logoColor=fff&style=flat-square" alt="Hugo">
   <img src="https://img.shields.io/badge/cloudflare-pages-F38020?logo=cloudflare&logoColor=fff&style=flat-square" alt="Cloudflare">
+  <img src="https://img.shields.io/badge/tests-137%2F137-22c55e?style=flat-square" alt="Tests">
   <img src="https://img.shields.io/badge/license-MIT-6366f1?style=flat-square" alt="License">
   <br>
   <img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Facaciafund.pages.dev%2Fapi%2Farticles.json&query=%24.count&style=flat-square&label=syntezy&color=c9a84c" alt="Syntezy">
+  <img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Facaciafund.pages.dev%2Fapi%2Fquiz.json&query=%24.count&style=flat-square&label=quiz&color=c47f58" alt="Quiz">
   <img src="https://img.shields.io/badge/Bloom-Taxonomy-c9a84c?style=flat-square" alt="Bloom">
   <img src="https://img.shields.io/badge/edu-widgets-2c3e6b?style=flat-square" alt="Edu Widgets">
 </div>
@@ -152,6 +154,48 @@ hugo serve
 
 ---
 
+## 👷 CI / Deploy
+
+Workflow: `.github/workflows/daily-synthesis.yml`
+
+```
+cron: 0 */6 * * *  →  ingest → diagrams → notebook → metadata
+                       → quiz → flashcards → (LLM) → hugo → commit → deploy
+```
+
+| Trigger | Action |
+|---------|--------|
+| `schedule: 0 */6 * * *` | Full pipeline + deploy |
+| `workflow_dispatch` | Manual run |
+| `git push` (no auto-CI) | Run `gh workflow run "Daily Synthesis"` manually |
+
+**Secrets needed for LLM enhancement** (optional):
+- `LLM_API_KEY` — OpenAI-compatible key
+- `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID` — for Pages deploy
+
+---
+
+## 🧪 Tests
+
+```bash
+python tests/usability.py
+```
+
+137 synthetic use tests in 8 categories: data integrity, page structure, navigation flow, localStorage consistency, responsive CSS, user journeys, edge cases, accessibility. All client-side behavior verified on built HTML.
+
+| Category | Tests |
+|----------|-------|
+| Data Integrity | 8 |
+| Page Structure | 50 |
+| Navigation Flow | 22 |
+| localStorage Keys | 6 |
+| Responsive & CSS | 12 |
+| User Journeys | 21 |
+| Edge Cases | 8 |
+| Accessibility | 10 |
+
+---
+
 ## 📂 Project Structure
 
 ```
@@ -164,6 +208,9 @@ hugo serve
 ├── static/api/            # Generated JSON APIs
 ├── generate_*.py          # CLI generators
 ├── ingest.py              # Main pipeline entry point
+├── migrate_posts.py       # Bulk post migration (format + bloom)
+├── tests/
+│   └── usability.py       # 137 synthetic use tests
 └── .github/workflows/     # CI — daily-synthesis.yml
 ```
 
