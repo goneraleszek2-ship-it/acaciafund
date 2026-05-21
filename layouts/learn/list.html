@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>{{ partial "head.html" . }}</head>
+<body>
+    <header>
+        <nav>
+            <a href="/">🏠 Home</a>
+            <a href="/daily/aml/">🛡️ AML</a>
+            <a href="/daily/stock/">📈 Markets</a>
+            <a href="/daily/science/">🧬 Science</a>
+            <a href="/diagrams/">🏗️ Diagramy</a>
+            <a href="/notebook/">📓 Notebook</a>
+            <button data-toggle-dark style="background:none;border:none;cursor:pointer;font-size:1rem;padding:4px 8px;line-height:1;border-radius:20px;transition:.2s" aria-label="Przełącz tryb ciemny">🌙</button>
+        </nav>
+        <h1>📊 Panel nauki</h1>
+    </header>
+    <main>
+        <p style="color:var(--muted);font-size:.85rem;margin-bottom:20px">
+            Śledź swoje postępy w taksonomii Blooma. Wyniki zapisywane są lokalnie w przeglądarce.
+        </p>
+
+        <div id="dashboardRoot">
+            <div style="text-align:center;padding:40px;color:var(--muted)">Ładowanie danych...</div>
+        </div>
+
+        <div class="metrics" id="dashboardMetrics" style="display:none">
+            <div class="metric gold"><div class="value" id="streakCount">0</div><div class="label">🔥 Dni z rzędu</div></div>
+            <div class="metric"><div class="value" id="quizTotal">0</div><div class="label">✅ Quizy</div></div>
+            <div class="metric"><div class="value" id="cardsTotal">0</div><div class="label">📚 Fiszki</div></div>
+            <div class="metric"><div class="value" id="postsRead">0</div><div class="label">📖 Posty</div></div>
+        </div>
+
+        <div id="bloomProgress" style="display:none;margin-top:24px">
+            <h2>🧠 Postęp Bloom</h2>
+            <div id="bloomBars" class="bloom-bars"></div>
+        </div>
+
+        <div id="pillarProgress" style="display:none;margin-top:24px">
+            <h2>📂 Postęp według filaru</h2>
+            <div id="pillarBars" class="bloom-bars"></div>
+        </div>
+
+        <div id="recommendationBox" style="display:none;margin-top:24px">
+            <h2>🎯 Rekomendowany następny krok</h2>
+            <div id="recommendationContent" class="insight"></div>
+        </div>
+
+        <div id="recentActivity" style="display:none;margin-top:24px">
+            <h2>⏱️ Ostatnia aktywność</h2>
+            <div id="activityList"></div>
+        </div>
+    </main>
+    <footer>
+        &copy; 2026 Leszek Gonera · AcaciaFund ·
+        <a href="/api/articles.json">Articles API</a> ·
+        <a href="/api/bloom.json">Bloom API</a>
+    </footer>
+    <script>
+(function(){
+    if('serviceWorker' in navigator)navigator.serviceWorker.register('/sw.js');
+
+    var BLOOM_ORDER = ['remember','understand','apply','analyze','evaluate','create'];
+    var BLOOM_LABELS = {
+        remember:'📝 Zapamiętywanie', understand:'🧠 Rozumienie',
+        apply:'🔧 Stosowanie', analyze:'🔍 Analiza',
+        evaluate:'⚖️ Ewaluacja', create:'🚀 Tworzenie'
+    };
+    var PILLAR_META = {
+        aml:{emoji:'🛡️',label:'AML',color:'#2c3e6b'},
+        stock:{emoji:'📈',label:'Markets',color:'#C47F58'},
+        science:{emoji:'🧬',label:'Science',color:'#9C6B8E'}
+    };
+
+    var totalQuiz = 0, totalCards = 0, totalPosts = 0;
+
+    Promise.all([
+        fetch('/api/articles.json').then(function(r){return r.json();}),
+        fetch('/api/bloom.json').then(function(r){return r.json();}),
+    ]).then(function(results){
+        var articlesData = results[0];
+        var bloomData = results[1];
+        if(!articlesData || !articlesData.posts){ showEmpty(); return; }
+
+        var posts = articlesData.posts;
+
+        // ── Collect localStorage data ──
+        var quizResults = {};   // { pillar-date: { correct, total, ts } }
+        var cardProgress = {};  // { pillar: { term: { correct, nextReview } } }
+        var readPosts = {};    // { pillar-date: true }
+
+        // Scan localStorage
+        for(var i=0; i<localStorage.length; i++){
+            var key = localStorage.key(i);
+            if(key.indexOf('ac-quiz-') === 0){
+                try{
+                    var val = JSON.parse(localStorage.getItem(key));
+                    if(val && val.done){
+                        quizResults[key.replace('ac-quiz-','')] = val;
+                        var parts = key.replace('ac-quiz-','').split('-');
+                        var pKey = parts[0]+'-'+parts.slice(1).join('-');
+                        if(!readPosts[pKey]) readPosts[pKey]={pillar:parts[0],date:parts.slice(1).join('-')};
+                    }
+                }catch(e){}
+            }
+            if(key.indexOf('ac-flashcards-') === 0){
+                try{
+                    var val = JSON.parse(localStorage.getItem(key));
+                    if(val) cardProgress[key.replace('ac-flashcards-','')] = val;
+                }catch(e){}
+            }
+            if(key.indexOf('ac-read-') === 0){
+                try{
+                    var val = JSON.parse(localStorage.getItem(key));
+                    if(val && val.read) readPosts[key.replace('ac-read-','')] = val;
+                }catch(e){}
+            }
+        }
+
+        totalQuiz = Object.keys(quizResults).length;
+        totalCards = Object.keys(cardProgress).reduce(function(s,p){
+            return s + Object.keys(cardProgress[p]||{}).length;
+        }, 0);
+        totalPosts = Object.keys(readPosts).length;
+
+        // ── Streak ──
+        var allDates = [];
+        Object.keys(quizResults).forEach(function(k){
+            var val = quizResults[k];
+            if(val.ts) allDates.push(new Date(val.ts));
+        });
+        Object.keys(readPosts).forEach(function(k){
+            var p = readPosts[k];
+            if(p.date){
+                var d = new Date(p.date+'T12:00:00Z');
+                allDates.push(d);
+            }
+        });
+
+        var streak = computeStreak(allDates);
+
+        // ── Bloom progress ──
+        var bloomScores = {};
+        BLOOM_ORDER.forEach(function(l){ bloomScores[l]={done:0,total:0}; });
+
+        // From quiz results
+        Object.keys(quizResults).forEach(function(k){
+            var val = quizResults[k];
+            if(val.breakdown){
+                Object.keys(val.breakdown).forEach(function(l){
+                    if(bloomScores[l]){
+                        bloomScores[l].done += val.breakdown[l].c || 0;
+                        bloomScores[l].total += val.breakdown[l].t || 0;
+                    }
+                });
+            }
+        });
+
+        // From flashcard mastery
+        Object.keys(cardProgress).forEach(function(pillar){
+            var cards = cardProgress[pillar];
+            Object.keys(cards).forEach(function(term){
+                // Map to Remember (flashcards = remember level)
+                if(bloomScores.remember){
+                    bloomScores.remember.total++;
+                    if((cards[term].correct||0) >= 3) bloomScores.remember.done++;
+                }
+            });
+        });
+
+        // From read posts (Create level: posts with primary_bloom_level=create)
+        posts.forEach(function(post){
+            if(readPosts[post.pillar+'-'+post.date]){
+                var lvl = post.primary_bloom_level || 'understand';
+                if(bloomScores[lvl]){
+                    bloomScores[lvl].total++;
+                    bloomScores[lvl].done++;
+                }
+            }
+        });
+
+        // ── Render dashboard ──
+        showMetrics(streak);
+
+        renderBloomBars(bloomScores);
+        renderPillarBars(posts, readPosts, cardProgress);
+        renderRecommendation(posts, readPosts, bloomScores, quizResults);
+        renderActivity(quizResults, readPosts);
+
+    }).catch(function(err){
+        document.getElementById('dashboardRoot').innerHTML =
+            '<div style="text-align:center;padding:40px;color:var(--muted)">⚠️ Błąd ładowania danych: '+err.message+'</div>';
+    });
+
+    function computeStreak(dates){
+        if(!dates.length) return 0;
+        var daySet = {};
+        dates.forEach(function(d){
+            var key = d.getUTCFullYear()+'-'+(d.getUTCMonth()+1)+'-'+d.getUTCDate();
+            daySet[key] = true;
+        });
+        var today = new Date();
+        var streak = 0, d = new Date(today);
+        while(true){
+            var key = d.getUTCFullYear()+'-'+(d.getUTCMonth()+1)+'-'+d.getUTCDate();
+            if(daySet[key]){ streak++; d.setUTCDate(d.getUTCDate()-1); }
+            else break;
+        }
+        return streak;
+    }
+
+    function showMetrics(streak){
+        document.getElementById('dashboardMetrics').style.display='';
+        document.getElementById('streakCount').textContent = streak;
+        document.getElementById('quizTotal').textContent = totalQuiz;
+        document.getElementById('cardsTotal').textContent = totalCards;
+        document.getElementById('postsRead').textContent = totalPosts;
+    }
+
+    function renderBloomBars(scores){
+        document.getElementById('bloomProgress').style.display='';
+        var html = '';
+        BLOOM_ORDER.forEach(function(l){
+            var s = scores[l]||{done:0,total:0};
+            var pct = s.total > 0 ? Math.round(s.done/s.total*100) : 0;
+            var colors = ['#3B6999','#88B0D3','#C47F58','#D4A76A','#c9a84c','#9C6B8E'];
+            var color = colors[BLOOM_ORDER.indexOf(l)];
+            html += '<div class="bloom-bar-row">';
+            html += '<span class="bloom-bar-label">'+BLOOM_LABELS[l]+'</span>';
+            html += '<div class="bloom-bar-track"><div class="bloom-bar-fill" style="width:'+pct+'%;background:'+color+'"></div></div>';
+            html += '<span class="bloom-bar-pct">'+pct+'%</span>';
+            html += '<span class="bloom-bar-count">'+s.done+'/'+s.total+'</span>';
+            html += '</div>';
+        });
+        document.getElementById('bloomBars').innerHTML = html;
+    }
+
+    function renderPillarBars(posts, readPosts, cardProgress){
+        document.getElementById('pillarProgress').style.display='';
+        var html = '';
+        var pillars = ['aml','stock','science'];
+        pillars.forEach(function(p){
+            var meta = PILLAR_META[p]||{emoji:'📄',label:p,color:'var(--navy-mid)'};
+            var total = 0, done = 0;
+            posts.forEach(function(post){
+                if(post.pillar === p){
+                    total++;
+                    if(readPosts[post.pillar+'-'+post.date]) done++;
+                }
+            });
+            var cardCount = cardProgress[p] ? Object.keys(cardProgress[p]).length : 0;
+            done = Math.min(done + Math.round(cardCount/2), total);
+            var pct = total > 0 ? Math.round(done/total*100) : 0;
+
+            html += '<div class="bloom-bar-row">';
+            html += '<span class="bloom-bar-label">'+meta.emoji+' '+meta.label+'</span>';
+            html += '<div class="bloom-bar-track"><div class="bloom-bar-fill" style="width:'+pct+'%;background:'+meta.color+'"></div></div>';
+            html += '<span class="bloom-bar-pct">'+pct+'%</span>';
+            html += '<span class="bloom-bar-count">'+done+'/'+total+'</span>';
+            html += '</div>';
+        });
+        document.getElementById('pillarBars').innerHTML = html;
+    }
+
+    function renderRecommendation(posts, readPosts, bloomScores, quizResults){
+        document.getElementById('recommendationBox').style.display='';
+
+        // Find weakest bloom level
+        var weakest = 'remember', weakestPct = 100;
+        BLOOM_ORDER.forEach(function(l){
+            var s = bloomScores[l]||{done:0,total:0};
+            var pct = s.total > 0 ? s.done/s.total : 0;
+            if(pct < weakestPct && s.total > 0){ weakestPct = pct; weakest = l; }
+        });
+
+        // Find unread post with that level
+        var rec = null;
+        for(var i=posts.length-1; i>=0; i--){
+            var post = posts[i];
+            if(!readPosts[post.pillar+'-'+post.date] && post.bloom_levels && post.bloom_levels.indexOf(weakest) !== -1){
+                rec = post;
+                break;
+            }
+        }
+        if(!rec){
+            // Fallback: any unread post
+            for(var i=posts.length-1; i>=0; i--){
+                if(!readPosts[posts[i].pillar+'-'+posts[i].date]){ rec = posts[i]; break; }
+            }
+        }
+
+        if(rec){
+            var meta = PILLAR_META[rec.pillar]||{emoji:'📄',label:rec.pillar};
+            var html = '<div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">';
+            html += '<span style="font-size:1.6rem">'+meta.emoji+'</span>';
+            html += '<div style="flex:1;min-width:150px">';
+            html += '<div style="font-size:.78rem;color:var(--muted)">'+meta.label+' · '+rec.date+' · 🎯 '+BLOOM_LABELS[weakest]+'</div>';
+            html += '<a href="'+rec.url+'" style="font-size:.95rem;font-weight:600;color:var(--navy);text-decoration:none">'+rec.title+'</a>';
+            html += '</div>';
+            html += '<a href="'+rec.url+'" style="padding:8px 20px;background:var(--gold);color:var(--navy);border-radius:20px;text-decoration:none;font-weight:600;font-size:.85rem;white-space:nowrap">📖 Czytaj</a>';
+            html += '</div>';
+            document.getElementById('recommendationContent').innerHTML = html;
+        } else {
+            document.getElementById('recommendationContent').innerHTML =
+                '<p style="color:var(--muted);text-align:center">🎉 Wszystkie posty przeczytane! Wróć po nową syntezę.</p>';
+        }
+    }
+
+    function renderActivity(quizResults, readPosts){
+        document.getElementById('recentActivity').style.display='';
+        var activities = [];
+
+        Object.keys(quizResults).forEach(function(k){
+            var val = quizResults[k];
+            activities.push({
+                ts: val.ts || 0,
+                type: 'quiz',
+                label: '✅ Quiz: '+k,
+                detail: val.correct+'/'+val.total+' poprawnych',
+            });
+        });
+
+        Object.keys(readPosts).forEach(function(k){
+            var p = readPosts[k];
+            activities.push({
+                ts: p.date ? new Date(p.date+'T12:00:00Z').getTime() : 0,
+                type: 'read',
+                label: '📖 Przeczytano: '+k,
+                detail: p.pillar,
+            });
+        });
+
+        activities.sort(function(a,b){ return b.ts - a.ts; });
+
+        var html = '';
+        activities.slice(0, 10).forEach(function(a){
+            html += '<div class="activity-item">';
+            html += '<span class="activity-icon">'+(a.type==='quiz'?'✅':'📖')+'</span>';
+            html += '<span class="activity-label">'+a.label+'</span>';
+            html += '<span class="activity-detail">'+a.detail+'</span>';
+            html += '</div>';
+        });
+        if(!html) html = '<p style="color:var(--muted);text-align:center">Brak aktywności. Rozwiąż quiz lub przeczytaj post.</p>';
+        document.getElementById('activityList').innerHTML = html;
+    }
+
+    function showEmpty(){
+        document.getElementById('dashboardRoot').innerHTML =
+            '<div style="text-align:center;padding:40px;color:var(--muted)">Brak danych do wyświetlenia.</div>';
+    }
+})();
+    </script>
+</body>
+</html>
