@@ -5,7 +5,7 @@
     <header>
         <h1>{{ .Site.Title }}</h1>
         <nav>
-            <a href="/">Home</a>
+            <a href="/">🏠 Home</a>
             <a href="/daily/aml/">🛡️ AML</a>
             <a href="/daily/stock/">📈 Markets</a>
             <a href="/daily/science/">🧬 Science</a>
@@ -15,42 +15,114 @@
         </nav>
     </header>
     <main>
-        <p style="margin-bottom:24px;font-size:1.05rem;color:#374151">
-            Codzienna, zautomatyzowana synteza wiedzy — AML, rynki kapitałowe i nauka przez pryzmat myślenia systemowego.
-        </p>
+        {{ $daily := where .Site.RegularPages "Section" "daily" }}
+        {{ $pillarDirs := dict "aml" "daily/aml/" "stock" "daily/stock/" "science" "daily/science/" }}
+        {{ $pillarMeta := dict "aml" (dict "emoji" "🛡️" "label" "AML" "desc" "Systemy odpornościowe w finansach") "stock" (dict "emoji" "📈" "label" "Markets" "desc" "Rynki kapitałowe i półprzewodniki") "science" (dict "emoji" "🧬" "label" "Science" "desc" "Nauka, systemy, cybernetyka") }}
 
-        <div class="grid">
-            <div class="card">
-                <h3>🛡️ AML & RegTech</h3>
-                <p>Ewolucja systemów odpornościowych w sektorze finansowym.</p>
-                <a href="/daily/aml/">Przeglądaj →</a>
+        {{ $latest := dict }}
+        {{ range $pname, $pdir := $pillarDirs }}
+            {{ $pages := where $daily ".File.Dir" $pdir }}
+            {{ with $pages.ByDate.Reverse | first 1 }}
+                {{ $latest = merge $latest (dict $pname (index . 0)) }}
+            {{ end }}
+        {{ end }}
+
+        {{ $allLatest := slice }}
+        {{ range $pname, $page := $latest }}
+            {{ $allLatest = $allLatest | append $page }}
+        {{ end }}
+        {{ $allLatest = sort $allLatest "Date" "desc" }}
+
+        {{ $allPages := $daily.ByDate.Reverse }}
+        {{ $today := $allPages | first 3 }}
+
+        <section style="margin-bottom:28px">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+                <span class="live">Pipeline aktywny</span>
+                <span style="color:var(--muted);font-size:.78rem">{{ now.Format "2006-01-02 15:04" }} UTC</span>
             </div>
-            <div class="card">
-                <h3>📈 Capital Markets</h3>
-                <p>Półprzewodniki, wyceny, makro, geopolityka.</p>
-                <a href="/daily/stock/">Przeglądaj →</a>
+            <h2 style="margin:0 0 4px;font-size:1.3rem">Przegląd dnia</h2>
+            <p style="color:var(--muted);font-size:.85rem;margin-bottom:16px">
+                {{ len $daily }} dziennych syntez · {{ len (where $daily "Date" (now.Format "2006-01-02")) }} dzisiaj
+            </p>
+        </section>
+
+        <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(280px,1fr))">
+            {{ range $allLatest }}
+            {{ $pname := index (split .File.Dir "/") 1 }}
+            {{ $meta := index $pillarMeta $pname }}
+            {{ $raw := .RawContent }}
+            {{ $topTitle := index (findRE `1\.\s+\[(.+?)\]\(` $raw) 0 | replaceRE `1\.\s+\[|\(` "" }}
+            {{ $topUrl := index (findRE `\]\((https?://[^\s)]+)\)` $raw) 0 | replaceRE `\]\(|\)` "" }}
+            {{ $topPoints := index (findRE `\(⭐(\d+)\)` $raw) 0 | replaceRE `\(⭐|\)` "" | int }}
+            {{ $topDomain := "" }}
+            {{ if $topUrl }}
+                {{ $topDomain = index (findRE `https?://([^/]+)` $topUrl) 0 | replaceRE `https?://` "" }}
+            {{ end }}
+            {{ $favicon := printf "https://www.google.com/s2/favicons?domain=%s&sz=32" $topDomain }}
+            <div class="card featured" style="position:relative">
+                <div style="display:flex;gap:12px;align-items:flex-start;margin-bottom:10px">
+                    <div style="font-size:1.8rem;line-height:1;min-width:36px;text-align:center">{{ $meta.emoji }}</div>
+                    <div style="flex:1;min-width:0">
+                        <div style="font-size:.72rem;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-weight:600;margin-bottom:2px">{{ $meta.label }} · {{ .Date.Format "2006-01-02" }}</div>
+                        <h3 style="margin:0;font-size:.95rem;line-height:1.4">
+                            <a href="{{ .RelPermalink }}" style="color:var(--navy);text-decoration:none">{{ .Title | truncate 60 }}</a>
+                        </h3>
+                    </div>
+                </div>
+                {{ if $topTitle }}
+                <a href="{{ $topUrl }}" style="display:flex;gap:10px;align-items:center;padding:10px 12px;background:var(--bg);border-radius:var(--radius);text-decoration:none;transition:.15s;margin-bottom:8px" onmouseover="this.style.background='var(--border)'" onmouseout="this.style.background='var(--bg)'">
+                    <img src="{{ $favicon }}" alt="" width="20" height="20" style="border-radius:4px;flex-shrink:0" loading="lazy" onerror="this.style.display='none'">
+                    <span style="flex:1;font-size:.82rem;color:var(--fg);line-height:1.3;word-break:break-word">{{ $topTitle | truncate 70 }}</span>
+                    <span style="font-size:.78rem;color:var(--gold);font-weight:700;white-space:nowrap">⭐{{ $topPoints }}</span>
+                </a>
+                {{ end }}
+                <a href="{{ .RelPermalink }}" style="font-size:.78rem;color:var(--navy-mid);font-weight:600;text-decoration:none">Przeglądaj syntezę →</a>
             </div>
-            <div class="card">
-                <h3>🧬 Science & Systems</h3>
-                <p>Bioenergetyka, cybernetyka, systemy złożone.</p>
-                <a href="/daily/science/">Przeglądaj →</a>
-            </div>
+            {{ end }}
         </div>
 
-        <div class="insight">
-            <span class="label">💡 O projekcie</span>
-            <p>
-                <strong>AcaciaFund</strong> to dzienny portfel badawczy — systemowa synteza informacji 
-                z HackerNews i arXiv, klasyfikowana do trzech filarów. Każda synteza zawiera 
-                analizę <em>Systems Lens</em> (antifragility &amp; cybernetics) oraz mapowanie 
-                <em>Cross-Domain Connections</em>.
-            </p>
+        <h2 style="margin-top:36px">Ostatnie artykuły</h2>
+        <div style="display:flex;flex-direction:column;gap:8px">
+            {{ range $allPages | first 12 }}
+            {{ $pname := index (split .File.Dir "/") 1 }}
+            {{ $meta := index $pillarMeta $pname }}
+            {{ $raw := .RawContent }}
+            {{ $articles := findRE `\d+\.\s+\[(.+?)\]\((https?://[^\s)]+)\).*?\(⭐(\d+)\)` $raw }}
+            {{ range $articles | first 3 }}
+            {{ $parts := findRE `\[(.+?)\]` . | first 1 }}
+            {{ $title := index $parts 0 | replaceRE `\[|\]` "" }}
+            {{ $url := index (findRE `\((https?://[^\s)]+)\)` .) 0 | replaceRE `\(|\)` "" }}
+            {{ $pts := index (findRE `\d+` . | last 1) 0 | int }}
+            {{ $domain := "" }}
+            {{ if $url }}{{ $domain = index (findRE `https?://([^/]+)` $url) 0 | replaceRE `https?://` "" }}{{ end }}
+            {{ $favicon := printf "https://www.google.com/s2/favicons?domain=%s&sz=32" $domain }}
+            <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);transition:.15s" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">
+                <img src="{{ $favicon }}" alt="" width="18" height="18" style="border-radius:3px;flex-shrink:0" loading="lazy" onerror="this.style.display='none'">
+                <span style="font-size:.72rem;color:var(--muted);font-weight:600;min-width:28px">{{ $meta.emoji }}</span>
+                <a href="{{ $url }}" style="flex:1;font-size:.82rem;color:var(--fg);text-decoration:none;line-height:1.3;min-width:0;word-break:break-word" target="_blank" rel="noopener">{{ $title | truncate 80 }}</a>
+                <span style="font-size:.75rem;color:var(--gold);font-weight:700;white-space:nowrap">⭐{{ $pts }}</span>
+            </div>
+            {{ end }}
+            {{ end }}
+        </div>
+
+        <div class="insight" style="margin-top:32px">
+            <span class="label">📊 DataOps — pipeline metrics</span>
+            <div class="metrics" style="margin:12px 0 0">
+                <div class="metric"><div class="value">{{ len $daily }}</div><div class="label">📄 Syntez</div></div>
+                <div class="metric"><div class="value">{{ len (where $daily "Date" (now.Format "2006-01-02")) }}</div><div class="label">📡 Dzisiaj</div></div>
+                <div class="metric"><div class="value">{{ len $allPages | mul 7 }}</div><div class="label">🔗 Artykułów</div></div>
+                <div class="metric"><div class="value">{{ $allPages | first 1 | len }}</div><div class="label">⏱️ Ostatnia</div></div>
+            </div>
         </div>
     </main>
     <footer>
         &copy; 2026 Leszek Gonera · AcaciaFund ·
         <a href="/diagrams/">Diagramy</a> ·
-        <a href="/api/radar.json">API</a>
+        <a href="/api/radar.json">Radar API</a> ·
+        <a href="/api/articles.json">Articles API</a> ·
+        <a href="/index.xml">RSS</a>
     </footer>
     <script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/sw.js')}</script>
 </body>

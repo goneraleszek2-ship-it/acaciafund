@@ -68,8 +68,13 @@ def parse_trending(body: str) -> list[dict]:
 def rebuild_post(filepath: Path) -> bool:
     content = filepath.read_text(encoding="utf-8")
 
-    if "🔗 Cross-Pillar Atlas" not in content and "🧠 Systems Thinking" not in content:
-        return False
+    title_line = re.search(r'^title: (.+)$', content, re.MULTILINE)
+    if title_line:
+        val = title_line.group(1).strip()
+        if val.startswith('"') and val.endswith('"') and '"' in val[1:-1]:
+            pass
+        elif "Synteza" not in val:
+            return False
 
     fm, body = parse_frontmatter(content)
     stories = parse_trending(body)
@@ -103,9 +108,17 @@ def rebuild_post(filepath: Path) -> bool:
     config = PILLARS[pillar_name]
     analysis = build_analysis(stories, pillar_name, None)
 
+    top = stories[0] if stories else None
+    if top:
+        raw = top["title"]
+        short = raw[:80].rsplit(" ", 1)[0] if len(raw) > 80 else raw
+        page_title = f"{short} — {config['emoji']} {config['label']} {date_str}"
+    else:
+        page_title = f"Synteza {config['emoji']} {config['label']} — {date_str}"
+
     lines = [
         "---",
-        f'title: "{fm.get("title", f"Synteza {config["emoji"]} {config["label"]} — {date_str}")}"',
+        f"title: {json.dumps(page_title, ensure_ascii=False)}",
         f"date: {date_str}",
         f"tags: {json.dumps(config['tags'])}",
         f'theme: "AcaciaFund — {config["description"]}"',

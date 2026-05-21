@@ -22,10 +22,18 @@ def generate_post(pillar_name: str, config: dict, pillar_stories: list[dict],
 
     link_count = len(pillar_stories)
 
+    top_story = pillar_stories[0] if pillar_stories else None
+    if top_story:
+        raw = top_story["title"]
+        short = raw[:80].rsplit(" ", 1)[0] if len(raw) > 80 else raw
+        page_title = f"{short} — {config['emoji']} {config['label']} {date_str}"
+    else:
+        page_title = f"Synteza {config['emoji']} {config['label']} — {date_str}"
+
     trending_header = f"## 🔍 Trending (HackerNews, {date_str})"
     lines = [
         "---",
-        f'title: "Synteza {config["emoji"]} {config["label"]} — {date_str}"',
+        f"title: {json.dumps(page_title, ensure_ascii=False)}",
         f"date: {date_str}",
         f'tags: {json.dumps(config["tags"])}',
         f'theme: "AcaciaFund — {config["description"]}"',
