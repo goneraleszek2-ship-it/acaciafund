@@ -367,6 +367,9 @@ footer a{color:var(--navy-mid);font-weight:500}
 .quiz-btn.easy:hover{background:#22c55e;color:#fff;border-color:#22c55e}
 .quiz-btn.medium:hover{background:var(--gold);color:var(--navy);border-color:var(--gold)}
 .quiz-btn.hard:hover{background:#ef4444;color:#fff;border-color:#ef4444}
+.quiz-btn.mc-opt{flex:0 1 auto;padding:8px 14px;font-size:.8rem;border-radius:10px}
+.quiz-btn.mc-opt:hover{background:var(--navy);color:#fff;border-color:var(--navy)}
+.mc-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .quiz-done{font-size:.9rem;padding:16px;text-align:center;color:var(--muted)}
 .quiz-restart{display:block;margin:12px auto 0;padding:8px 20px;border:1px solid var(--border);border-radius:20px;background:var(--card-bg);color:var(--fg);font-family:inherit;font-size:.82rem;cursor:pointer;transition:.15s}
 .quiz-restart:hover{background:var(--gold);color:var(--navy)}
@@ -421,6 +424,7 @@ footer a{color:var(--navy-mid);font-weight:500}
   .edu-widget{padding:14px}
   .quiz-question{font-size:.88rem;padding:10px 12px}
   .quiz-btn{min-width:80px;padding:6px 12px;font-size:.78rem}
+  .mc-grid{grid-template-columns:1fr}
 }
 
 @media(max-width:480px){

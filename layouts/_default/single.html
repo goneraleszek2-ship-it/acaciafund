@@ -157,18 +157,49 @@ bloomLevels.forEach(function(l){ levelSet[l] = true; });
                 if(!breakdown[q.bloom_level]) breakdown[q.bloom_level] = {c:0,t:0};
                 breakdown[q.bloom_level].t++;
 
-                container.innerHTML =
-                    '<div class="quiz-progress">Pytanie '+(idx+1)+'/'+questions.length+'</div>'+
-                    '<div class="quiz-question"><span class="quiz-badge" style="background:'+(BLOOM_CONFIG.find(function(b){return b.id===q.bloom_level})||{}).color+'">'+
-                    (q.bloom_level||'')+'</span> '+q.question+'</div>'+
-                    '<div class="quiz-actions">'+
-                    '<button class="quiz-btn easy" onclick="answer('+idx+',true)">✅ Rozumiem</button>'+
-                    '<button class="quiz-btn medium" onclick="answer('+idx+',null)">🤔 Średnio</button>'+
-                    '<button class="quiz-btn hard" onclick="answer('+idx+',false)">❌ Nie wiem</button>'+
-                    '</div>';
+                var badge = '<span class="quiz-badge" style="background:'+(BLOOM_CONFIG.find(function(b){return b.id===q.bloom_level})||{}).color+'">'+
+                    (q.bloom_level||'')+'</span>';
+
+                if(q.type === 'mc' && q.options){
+                    var optsHtml = q.options.map(function(o, oi){
+                        return '<button class="quiz-btn mc-opt" onclick="mcAnswer('+idx+','+oi+')">'+
+                            o+'</button>';
+                    }).join('');
+                    container.innerHTML =
+                        '<div class="quiz-progress">Pytanie '+(idx+1)+'/'+questions.length+'</div>'+
+                        '<div class="quiz-question">'+badge+' '+q.question+'</div>'+
+                        '<div class="quiz-actions mc-grid">'+optsHtml+'</div>';
+                } else {
+                    container.innerHTML =
+                        '<div class="quiz-progress">Pytanie '+(idx+1)+'/'+questions.length+'</div>'+
+                        '<div class="quiz-question">'+badge+' '+q.question+'</div>'+
+                        '<div class="quiz-actions">'+
+                        '<button class="quiz-btn easy" onclick="selfAnswer('+idx+',true)">✅ Rozumiem</button>'+
+                        '<button class="quiz-btn medium" onclick="selfAnswer('+idx+',null)">🤔 Średnio</button>'+
+                        '<button class="quiz-btn hard" onclick="selfAnswer('+idx+',false)">❌ Nie wiem</button>'+
+                        '</div>';
+                }
             }
 
-            window.answer = function(qidx, ok){
+            window.mcAnswer = function(qidx, oi){
+                if(qidx !== idx) return;
+                var q = questions[idx];
+                var chosen = q.options[oi];
+                var ok = chosen === q.correct;
+                if(ok){ correct++; if(breakdown[q.bloom_level]) breakdown[q.bloom_level].c++; }
+                var icon = ok ? '✅' : '❌';
+                var feedback = ok ? 'Poprawna odpowiedź!' : 'Niepoprawna. Odpowiedź: '+q.correct;
+                container.innerHTML =
+                    '<div class="quiz-progress">Pytanie '+(idx+1)+'/'+questions.length+'</div>'+
+                    '<div class="quiz-question" style="border-left-color:'+(ok?'#22c55e':'#ef4444')+'">'+
+                    q.question+'</div>'+
+                    '<div style="text-align:center;padding:12px;font-size:1rem;font-weight:600;color:'+
+                    (ok?'#22c55e':'#ef4444')+'">'+icon+' '+feedback+'</div>';
+                idx++;
+                setTimeout(render, 800);
+            };
+
+            window.selfAnswer = function(qidx, ok){
                 if(qidx !== idx) return;
                 var q = questions[idx];
                 var feedback = ok === true ? '✅ Rozumiesz!' : (ok === null ? '🤔 Do powtórki' : '❌ Warto wrócić');

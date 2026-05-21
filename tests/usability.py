@@ -56,10 +56,18 @@ check(len(articles["posts"]) > 0, f"  {len(articles['posts'])} posts")
 quiz = read_json("quiz.json")
 check("questions" in quiz, "/api/quiz.json has 'questions'")
 check(quiz["count"] > 0, f"  {quiz['count']} questions")
+mc_qs = [q for q in quiz["questions"] if q.get("type") == "mc"]
+check(len(mc_qs) > 50, f"  {len(mc_qs)} multiple-choice questions (article-aware)")
+mc_with_options = all("options" in q and "correct" in q for q in mc_qs)
+check(mc_with_options, "  MC questions have options and correct answer")
 
 flashcards = read_json("flashcards.json")
 check("cards" in flashcards, "/api/flashcards.json has 'cards'")
 check(flashcards["count"] > 0, f"  {flashcards['count']} cards")
+src_types = set(c.get("source_type", "") for c in flashcards["cards"])
+check("entity" in src_types and "bigram" in src_types, f"  Cards have entity+bigram source types ({src_types})")
+has_source = all("source" in c and "definition" in c for c in flashcards["cards"][:50])
+check(has_source, "  Cards have source and definition fields")
 
 bloom = read_json("bloom.json")
 check("overview" in bloom, "/api/bloom.json has 'overview'")
@@ -152,7 +160,7 @@ if post_files:
     check("quizWidget" in post, "Single post has quiz widget")
     check("flashcardWidget" in post, "Single post has flashcard widget")
     check("class=\"edu-widget\"" in post, "Single post has edu-widget class")
-    for fn_name in ["answer", "flipCard", "rateCard"]:
+    for fn_name in ["selfAnswer", "mcAnswer", "flipCard", "rateCard"]:
         check(f"window.{fn_name}" in post or f"function {fn_name}" in post,
               f"Single post has {fn_name}()")
     check("/learn/" in post, "Single post has link to /learn/")

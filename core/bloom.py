@@ -1,3 +1,4 @@
+import random
 import re
 
 _VERBS = {
@@ -64,7 +65,6 @@ _KEYWORD_LEVELS = [
 
 
 def classify_bloom_level(article: dict) -> str:
-    """Zwraca poziom Blooma dla artykułu na podstawie tytułu, źródła i punktów."""
     title = article.get("title", "")
     url = article.get("url", "")
     points = article.get("points", 0) or 0
@@ -117,68 +117,262 @@ def level_label_pl(level: str) -> str:
     return labels.get(level, level.capitalize())
 
 
-def _extract_key_terms(articles: list[dict]) -> list[str]:
-    """Wyciąga kluczowe terminy z tytułów artykułów."""
-    words: list[str] = []
+def _extract_domain(url: str) -> str:
+    m = re.search(r"https?://([^/]+)", url)
+    return m.group(1).lower().replace("www.", "") if m else ""
+
+
+def _format_title(t: str, maxlen: int = 60) -> str:
+    return t[:maxlen] + "…" if len(t) > maxlen else t
+
+
+def _distractors(correct: str, pool: list[str], n: int = 3) -> list[str]:
+    pool = [x for x in pool if x != correct]
+    random.shuffle(pool)
+    return pool[:n]
+
+
+# ── Article-aware quiz generation ──
+
+
+def _build_source_question(article: dict, pool: list[str]) -> dict | None:
+    domain = _extract_domain(article.get("url", ""))
+    if not domain or not pool:
+        return None
+    pool_domains = list({_extract_domain(a.get("url", "")) for a in pool if a.get("url")})
+    if len(pool_domains) < 4:
+        return None
+    opts = [domain] + _distractors(domain, pool_domains, 3)
+    random.shuffle(opts)
+    return {
+        "bloom_level": "remember",
+        "type": "mc",
+        "question": f"Z jakiej domeny pochodzi artykuł \"{_format_title(article['title'])}\"?",
+        "options": opts,
+        "correct": domain,
+    }
+
+
+def _build_points_question(article: dict, pool: list[str]) -> dict | None:
+    pts = article.get("points", 0)
+    if pts == 0:
+        return None
+    ranges = [
+        (0, 10, "0–10"),
+        (11, 50, "11–50"),
+        (51, 100, "51–100"),
+        (101, 300, "101–300"),
+        (301, 999, "301–999"),
+        (1000, 99999, "1000+"),
+    ]
+    correct_range = next((r[2] for r in ranges if r[0] <= pts <= r[1]), "1000+")
+    opts = [r[2] for r in ranges]
+    others = [r for r in opts if r != correct_range]
+    random.shuffle(others)
+    return {
+        "bloom_level": "remember",
+        "type": "mc",
+        "question": f"Ile punktów na Hacker News zdobył artykuł \"{_format_title(article['title'])}\"?",
+        "options": [correct_range] + others[:3],
+        "correct": correct_range,
+    }
+
+
+def _build_top_article_question(articles: list[dict]) -> dict | None:
+    scored = [a for a in articles if a.get("points", 0) > 0]
+    if len(scored) < 4:
+        return None
+    scored.sort(key=lambda a: a["points"], reverse=True)
+    best = scored[0]
+    opts = [a["title"][:40] for a in scored[:4]]
+    random.shuffle(opts)
+    return {
+        "bloom_level": "analyze",
+        "type": "mc",
+        "question": "Który z tych artykułów zdobył najwięcej punktów na HN?",
+        "options": [t + ("…" if len(t) == 40 else "") for t in opts],
+        "correct": best["title"][:40] + ("…" if len(best["title"]) > 40 else ""),
+    }
+
+
+def _build_source_tier_question(article: dict) -> dict | None:
+    domain = _extract_domain(article.get("url", ""))
+    if not domain:
+        return None
+    tiers = {
+        r"arxiv\.org|\.edu|scholar\.google": "Wysoki – źródło naukowe",
+        r"reuters\.com|bloomberg\.com|ft\.com|wsj\.com|nature\.com|science\.org":
+            "Wysoki – renomowane medium",
+        r"techcrunch\.com|theverge\.com|arstechnica\.com|wired\.com|zdnet\.com":
+            "Średni – branżowe medium",
+        r"github\.com|stackoverflow\.com|medium\.com|reddit\.com":
+            "Niski – społecznościowe",
+    }
+    correct = "Nieznany"
+    for pat, label in tiers.items():
+        if re.search(pat, domain, re.I):
+            correct = label
+            break
+    opts = [correct.replace(" –", " – ").strip()]
+    all_labels = list(tiers.values()) + ["Niski – społecznościowe"]
+    others = [l for l in all_labels if l != correct]
+    random.shuffle(others)
+    return {
+        "bloom_level": "evaluate",
+        "type": "mc",
+        "question": f"Jaki jest poziom wiarygodności źródła {domain}?",
+        "options": [correct] + others[:3],
+        "correct": correct,
+    }
+
+
+def _build_domain_type_question(article: dict) -> dict | None:
+    domain = _extract_domain(article.get("url", ""))
+    m = re.search(r"\.([a-z]+)$", domain)
+    tld = m.group(1) if m else ""
+    cats = {
+        "com": "Komercyjna",
+        "org": "Organizacja non-profit",
+        "edu": "Edukacyjna",
+        "gov": "Rządowa",
+        "mil": "Wojskowa",
+        "io": "Technologiczna (startup)",
+        "ai": "Technologiczna (AI)",
+    }
+    correct = cats.get(tld, "Inna")
+    return {
+        "bloom_level": "understand",
+        "type": "mc",
+        "question": f"Jakiego typu jest domena {domain}?",
+        "options": list(cats.values()),
+        "correct": correct,
+    }
+
+
+def _build_which_source_question(articles: list[dict]) -> dict | None:
+    details = []
     for a in articles:
-        cleaned = re.sub(r"[^a-z\s]", " ", a.get("title", "").lower())
-        words.extend(
-            w for w in cleaned.split()
-            if len(w) > 4 and w not in {"this", "that", "with", "from", "what", "how", "why", "about", "their", "these", "those", "which", "there", "would", "could", "should", "after", "still", "into", "than", "then", "also", "just", "more", "very", "been", "over", "such", "only"}
-        )
-    seen: set[str] = set()
-    unique: list[str] = []
-    for w in words:
-        if w not in seen:
-            seen.add(w)
-            unique.append(w)
-    return unique[:8]
+        domain = _extract_domain(a.get("url", ""))
+        if domain:
+            details.append((domain, _format_title(a["title"], 40)))
+    if len(set(d[0] for d in details)) < 2:
+        return None
+    random.shuffle(details)
+    questions = [
+        {
+            "bloom_level": "remember",
+            "type": "mc",
+            "question": f"Z której domeny pochodzi artykuł \"{fmt_title}\"?",
+            "options": [d[0] for d in details[:4]],
+            "correct": domain,
+        }
+        for domain, fmt_title in details[:2]
+    ]
+    return questions[0] if questions else None
 
 
-_QUESTION_TEMPLATES: dict[str, list[str]] = {
-    "remember": [
-        "Jakie kluczowe fakty dotyczące {topic} zostały przedstawione w artykule?",
-        "Wymień najważniejsze dane liczbowe związane z {topic}.",
-        "Kto opisał {topic} i jakie były główne tezy?",
-        "Zidentyfikuj daty i wydarzenia kluczowe dla {topic}.",
-    ],
-    "understand": [
-        "Wyjaśnij własnymi słowami, czym jest {topic} i dlaczego jest istotne.",
-        "Jak {topic} wpływa na szerszy kontekst w swojej dziedzinie?",
-        "Opisz główną ideę stojącą za {topic} — jak byś ją wytłumaczył laikowi?",
-        "Dlaczego {topic} budzi zainteresowanie w obszarze {pillar}?",
-    ],
-    "apply": [
-        "Jak można zastosować {topic} w praktyce w obszarze {pillar}?",
-        "Opisz scenariusz, w którym {topic} rozwiązałby rzeczywisty problem.",
-        "Jakie narzędzia lub metody są potrzebne, aby wdrożyć {topic}?",
-        "Zaproponuj praktyczne wykorzystanie {topic} w swoim projekcie.",
-    ],
-    "analyze": [
-        "Jakie są kluczowe różnice między {topic} a alternatywnymi podejściami?",
-        "Przeanalizuj, jakie czynniki stoją za {topic} i jakie mają implikacje.",
-        "Jakie wzorce lub trendy można zidentyfikować w kontekście {topic}?",
-        "Rozbij {topic} na części składowe i opisz relacje między nimi.",
-    ],
-    "evaluate": [
-        "Oceń wiarygodność i znaczenie {topic}. Jakie są mocne i słabe strony?",
-        "Czy {topic} to dobry kierunek? Uzasadnij swoją opinię.",
-        "Jakie argumenty przemawiają za i przeciw {topic}?",
-        "Porównaj {topic} z alternatywami — które rozwiązanie jest lepsze i dlaczego?",
-    ],
-    "create": [
-        "Jakie nowe rozwiązanie mógłbyś zaproponować, opierając się na {topic}?",
-        "Zaprojektuj eksperyment myślowy, który łączy {topic} z innym obszarem wiedzy.",
-        "Sformułuj hipotezę badawczą dotyczącą {topic}.",
-        "Jak wyglądałby twój autorski framework lub model inspirowany {topic}?",
-    ],
-}
+def _build_pillar_question(article: dict, pillar_name: str) -> dict:
+    return {
+        "bloom_level": "understand",
+        "type": "open-ended",
+        "question": f"Dlaczego artykuł \"{_format_title(article['title'])}\" jest istotny w obszarze {pillar_name}?",
+    }
+
+
+def _build_application_question(article: dict, pillar_name: str) -> dict:
+    return {
+        "bloom_level": "apply",
+        "type": "open-ended",
+        "question": f"Jak koncepcje z artykułu \"{_format_title(article['title'])}\" można zastosować w praktyce w {pillar_name}?",
+    }
+
+
+def _build_evaluate_question(article: dict) -> dict | None:
+    pts = article.get("points", 0)
+    if pts == 0:
+        return None
+    return {
+        "bloom_level": "evaluate",
+        "type": "open-ended",
+        "question": f"Czy artykuł \"{_format_title(article['title'])}\" ({pts} pkt na HN) zasługuje na uwagę? Uzasadnij.",
+    }
+
+
+def _build_create_question(articles: list[dict], pillar_name: str) -> dict:
+    themes = list(set(
+        a.get("title", "").split()[0] for a in articles if a.get("title")
+    ))
+    theme = random.choice(themes[:5]) if themes else pillar_name
+    return {
+        "bloom_level": "create",
+        "type": "open-ended",
+        "question": f"Na podstawie artykułów z {pillar_name}, zaproponuj nowy kierunek badań lub projekt inspirowany tematem \"{theme}\".",
+    }
 
 
 def generate_quiz_questions(articles: list[dict], pillar_name: str = "") -> list[dict]:
-    """Generuje pytania Bloom na podstawie artykułów. 1 pytanie na poziom."""
-    from .data import KNOWN_ENTITIES
+    from .data import PILLARS
 
+    pillar_label = PILLARS.get(pillar_name, {}).get("label", pillar_name) if pillar_name else pillar_name
+    questions: list[dict] = []
+    seen_topics: set[str] = set()
+    pool = articles[:]
+
+    # Select diverse articles for questions
+    random.shuffle(pool)
+    high_score = [a for a in pool if a.get("points", 0) >= 50]
+    all_articles = pool
+
+    # Build question pool with variety
+    candidates = []
+
+    # Source identification (remember, MC)
+    for a in pool[:8]:
+        q = _build_source_question(a, all_articles)
+        if q:
+            candidates.append(q)
+
+    # Points estimation (remember, MC)
+    for a in high_score[:6]:
+        q = _build_points_question(a, all_articles)
+        if q:
+            candidates.append(q)
+
+    # Top article (analyze, MC)
+    q = _build_top_article_question(all_articles)
+    if q:
+        candidates.append(q)
+
+    # Source tier (evaluate, MC)
+    for a in pool[:6]:
+        q = _build_source_tier_question(a)
+        if q:
+            candidates.append(q)
+
+    # Domain type (understand, MC)
+    for a in pool[:4]:
+        q = _build_domain_type_question(a)
+        if q:
+            candidates.append(q)
+
+    # Pillar relevance (understand, open)
+    for a in pool[:4]:
+        candidates.append(_build_pillar_question(a, pillar_label))
+
+    # Application (apply, open)
+    for a in pool[:4]:
+        candidates.append(_build_application_question(a, pillar_label))
+
+    # Evaluate (evaluate, open)
+    for a in high_score[:4]:
+        q = _build_evaluate_question(a)
+        if q:
+            candidates.append(q)
+
+    # Create (create, open)
+    candidates.append(_build_create_question(all_articles, pillar_label))
+
+    # Filter to one question per Bloom level per post (existing logic)
     levels_present: list[str] = []
     seen: set[str] = set()
     for a in articles:
@@ -188,25 +382,23 @@ def generate_quiz_questions(articles: list[dict], pillar_name: str = "") -> list
             levels_present.append(lvl)
     levels_present.sort(key=level_index)
 
-    key_terms = _extract_key_terms(articles)
-    questions: list[dict] = []
+    # Pick best question per level: prefer MC, then article-specific
     for lvl in levels_present:
-        templates = _QUESTION_TEMPLATES.get(lvl, ["Opowiedz o {topic}."])
-        template = templates[levels_present.index(lvl) % len(templates)]
-
-        if key_terms:
-            topic = key_terms[levels_present.index(lvl) % len(key_terms)]
+        lvl_candidates = [c for c in candidates if c.get("bloom_level") == lvl]
+        if lvl_candidates:
+            chosen = random.choice(lvl_candidates)
         else:
-            topic = articles[0].get("title", "temacie")[:50] if articles else "temacie"
+            chosen = {
+                "bloom_level": lvl,
+                "type": "open-ended",
+                "question": f"Opowiedz o kluczowych aspektach w obszarze {pillar_label} związanych z poziomem {level_label_pl(lvl)}.",
+            }
+        questions.append(chosen)
 
-        question = template.format(topic=topic, pillar=pillar_name or "tej dziedzinie")
-        questions.append({
-            "bloom_level": lvl,
-            "question": question,
-            "type": "open-ended",
-        })
     return questions
 
+
+# ── Rich flashcards ──
 
 _BIGRAM_SKIP_WORDS = {
     "after", "ahead", "amid", "among", "before", "behind", "below", "despite",
@@ -230,7 +422,6 @@ _BIGRAM_SKIP_WORDS = {
 
 
 def _extract_bigrams(title: str) -> list[str]:
-    """Wyciąga istotne 2-wyrazowe frazy z tytułu."""
     cleaned = re.sub(r"[^a-zA-Z\s]", " ", title)
     tokens = cleaned.split()
     bigrams: list[str] = []
@@ -246,7 +437,6 @@ def _extract_bigrams(title: str) -> list[str]:
         w1l, w2l = w1.lower(), w2.lower()
         if w1l in _BIGRAM_SKIP_WORDS or w2l in _BIGRAM_SKIP_WORDS:
             continue
-        # Skip email-like patterns (word@word)
         if "@" in phrase or "." in phrase:
             continue
         bigrams.append(phrase)
@@ -254,10 +444,8 @@ def _extract_bigrams(title: str) -> list[str]:
 
 
 def generate_flashcards(articles: list[dict], pillar_name: str = "") -> list[dict]:
-    """Generuje fiszki (term → definition) z encji, tytułów i bigramów."""
     from .data import KNOWN_ENTITIES, ALL_ENTITIES
 
-    # Comprehensive definitions (hardcoded + loaded from config entities)
     entity_defs: dict[str, str] = {
         # ── AML ──
         "FinCEN": "Financial Crimes Enforcement Network — agencja USA ds. przestępczości finansowej",
@@ -340,23 +528,45 @@ def generate_flashcards(articles: list[dict], pillar_name: str = "") -> list[dic
     for ent, definition in entity_defs.items():
         if ent.lower() in title_lower and ent not in seen_terms:
             seen_terms.add(ent)
+            source = next((a["title"] for a in articles if ent.lower() in a.get("title", "").lower()), "")
             flashcards.append({
                 "term": ent,
                 "definition": definition,
                 "pillar": pillar_name,
+                "source": source,
+                "source_type": "entity",
             })
 
-    # 2. Extract meaningful bigrams (proper noun phrases) from titles
+    # 2. Extract meaningful bigrams with article context
     for a in articles:
         bigrams = _extract_bigrams(a.get("title", ""))
         for bg in bigrams:
-            if bg not in seen_terms and len(seen_terms) < 50:
+            if bg not in seen_terms and len(seen_terms) < 80:
                 seen_terms.add(bg)
-                definition = f"Termin z dziedziny {pillar_name or 'tej dziedziny'}: {bg}"
                 flashcards.append({
                     "term": bg,
-                    "definition": definition,
+                    "definition": next(
+                        (f"Temat z artykułu: {a['title']}" for a in articles if bg.lower() in a.get("title", "").lower()),
+                        f"Termin z dziedziny {pillar_name or 'tej dziedziny'}"
+                    ),
                     "pillar": pillar_name,
+                    "source": a.get("title", ""),
+                    "source_type": "bigram",
                 })
 
-    return flashcards[:100]
+    # 3. Cross-pillar concept cards: find terms mentioned across pillars
+    from .data import PILLARS, ALL_ENTITIES
+    cross_terms = [e for e in ALL_ENTITIES if title_lower.count(e.lower()) >= 2]
+    for ct in cross_terms:
+        if ct not in seen_terms:
+            seen_terms.add(ct)
+            defn = entity_defs.get(ct, f"Ważne pojęcie: {ct}")
+            flashcards.append({
+                "term": ct,
+                "definition": defn,
+                "pillar": "cross-domain",
+                "source": f"Pojawia się w wielu artykułach",
+                "source_type": "cross",
+            })
+
+    return flashcards[:120]
