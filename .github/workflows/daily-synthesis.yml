@@ -32,6 +32,13 @@ jobs:
       - name: Generate Metadata API
         run: python generate_metadata.py
 
+      - name: LLM Enhancement (optional)
+        run: python generate_llm.py
+        env:
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_MODEL: ${{ vars.LLM_MODEL || 'gpt-4o-mini' }}
+          LLM_MAX_POSTS: ${{ vars.LLM_MAX_POSTS || '50' }}
+
       - uses: peaceiris/actions-hugo@v3
         with:
           hugo-version: "0.161.1"
