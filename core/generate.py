@@ -8,13 +8,15 @@ from .bloom import (
     classify_bloom_level, level_label_pl, generate_quiz_questions, generate_flashcards,
 )
 
+PILLAR_CATEGORY = {"aml": "AML", "stock": "Markets", "science": "Science"}
+
 
 def generate_post(pillar_name: str, config: dict, pillar_stories: list[dict],
                   date: datetime | None = None,
                   all_pillar_stories: dict[str, list[dict]] | None = None) -> Path | None:
     date = date or datetime.now()
     date_str = date.strftime("%Y-%m-%d")
-    filename = f"{date_str}.md"
+    filename = f"{date_str}-{pillar_name}.md"
     filepath = config["folder"] / filename
 
     if filepath.exists():
@@ -33,6 +35,9 @@ def generate_post(pillar_name: str, config: dict, pillar_stories: list[dict],
     else:
         page_title = f"Synteza {config['emoji']} {config['label']} — {date_str}"
 
+    # Sanitize title for YAML
+    page_title = page_title.replace('"', '').replace("'", '').replace('\\', '')
+
     trending_header = f"## 🔍 Trending (HackerNews, {date_str})"
     bloom_levels = sorted(
         {classify_bloom_level(s) for s in pillar_stories},
@@ -42,23 +47,26 @@ def generate_post(pillar_name: str, config: dict, pillar_stories: list[dict],
     edu_questions = generate_quiz_questions(pillar_stories, config["label"])
     edu_flashcards = generate_flashcards(pillar_stories, config["label"])
 
+    category = PILLAR_CATEGORY.get(pillar_name, pillar_name.upper())
+
     lines = [
         "---",
-        f"title: {json.dumps(page_title, ensure_ascii=False)}",
+        f"title: \"{page_title}\"",
         f"date: {date_str}",
-        f'tags: {json.dumps(config["tags"])}',
-        f'theme: "AcaciaFund — {config["description"]}"',
-        f'bloom_levels: {json.dumps(bloom_levels)}',
+        "draft: false",
+        "image: \"\"",
+        "author: \"AcaciaFund\"",
+        f"categories: [\"{category}\"]",
+        f"tags: {json.dumps(config['tags'])}",
+        "type: \"post\"",
         "---",
         "",
         trending_header,
         "",
         analysis["trending"],
         "",
-        '<div class="insight" style="border-left-color:#3B6999">',
-        '<h3 style="font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:#3B6999;margin:0 0 8px">📊 Podsumowanie</h3>',
-        analysis["metaanalysis"],
-        "</div>",
+        "> 📊 **Podsumowanie**",
+        f">{analysis['metaanalysis'].replace(chr(10), chr(10)+'>')}",
         "",
     ]
 

@@ -1,0 +1,75 @@
+
+theme = "educenter"
+baseURL = "https://acaciafund.org/"
+title = "AcaciaFund | Daily Research Portfolio"
+timeZone = "Europe/Warsaw"
+pagination.pagerSize = 10
+summaryLength = 20
+hasCJKLanguage = false
+
+[outputs]
+home = ["HTML", "RSS"]
+
+[imaging]
+quality = 90
+resampleFilter = "lanczos"
+
+[caches]
+[caches.images]
+dir = ":resourceDir/_gen"
+maxAge = "720h"
+[caches.assets]
+dir = ":resourceDir/_gen"
+maxAge = "720h"
+
+[markup]
+[markup.goldmark.renderer]
+unsafe = true
+
+[params]
+logo = ""
+description = "Codzienna synteza badań — AML, rynki, nauka"
+author = "AcaciaFund"
+address = ""
+mobile = ""
+email = "contact@acaciafund.org"
+contact_form_action = "#"
+top_header = false
+google_analitycs_id = ""
+
+[params.preloader]
+enable = false
+
+[params.subscription]
+enable = false
+
+[params.map]
+enable = false
+
+[params.cookies]
+enable = false
+expire_days = 2
+
+[[params.plugins.css]]
+link = "plugins/bootstrap/bootstrap.min.css"
+[[params.plugins.css]]
+link = "plugins/slick/slick.css"
+[[params.plugins.css]]
+link = "plugins/animate/animate.css"
+[[params.plugins.css]]
+link = "plugins/venobox/venobox.css"
+[[params.plugins.css]]
+link = "plugins/themify-icons/themify-icons.css"
+
+[[params.plugins.js]]
+link = "plugins/jQuery/jquery.min.js"
+[[params.plugins.js]]
+link = "plugins/bootstrap/bootstrap.min.js"
+[[params.plugins.js]]
+link = "plugins/slick/slick.min.js"
+[[params.plugins.js]]
+link = "plugins/venobox/venobox.min.js"
+[[params.plugins.js]]
+link = "plugins/filterizr/jquery.filterizr.min.js"
+[[params.plugins.js]]
+link = "plugins/google-map/gmap.js"

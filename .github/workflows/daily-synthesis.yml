@@ -23,31 +23,10 @@ jobs:
       - name: Ingest & generate
         run: python ingest.py
 
-      - name: Generate Diagrams
-        run: python generate_diagrams.py
-
-      - name: Generate Notebook
-        run: python generate_notebook.py
-
-      - name: Generate Metadata API
-        run: python generate_metadata.py
-
-      - name: Generate Quiz Data
-        run: python generate_quiz.py
-
-      - name: Generate Flashcard Data
-        run: python generate_flashcards.py
-
-      - name: LLM Enhancement (optional)
-        run: python generate_llm.py
-        env:
-          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
-          LLM_MODEL: ${{ vars.LLM_MODEL || 'gpt-4o-mini' }}
-          LLM_MAX_POSTS: ${{ vars.LLM_MAX_POSTS || '50' }}
-
       - uses: peaceiris/actions-hugo@v3
         with:
           hugo-version: "0.161.1"
+          extended: true
 
       - name: Build site
         run: hugo --cleanDestinationDir
@@ -56,7 +35,7 @@ jobs:
         run: |
           git config user.name "AcaciaFund Bot"
           git config user.email "bot@acaciafund.org"
-          git add content/daily/ static/api/
+          git add content/pl/blog/
           if git diff --cached --quiet; then
             echo "No new content — exiting"
             exit 0
