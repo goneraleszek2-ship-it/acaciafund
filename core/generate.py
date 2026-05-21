@@ -25,6 +25,8 @@ def generate_post(pillar_name: str, config: dict, pillar_stories: list[dict],
     max_score = max((s["points"] for s in pillar_stories), default=0)
     link_count = len(pillar_stories)
 
+    sqi_val = analysis.get("avg_sqi", 0)
+
     trending_header = f"## 🔍 Trending (HackerNews, {date_str})"
     lines = [
         "---",
@@ -39,6 +41,7 @@ def generate_post(pillar_name: str, config: dict, pillar_stories: list[dict],
         f'<div class="metric"><div class="value">{avg_score}</div><div class="label">📊 Średnia</div></div>',
         f'<div class="metric"><div class="value">{max_score}</div><div class="label">🏆 Max</div></div>',
         f'<div class="metric"><div class="value">{link_count}</div><div class="label">🔗 Linki</div></div>',
+        f'<div class="metric"><div class="value">{sqi_val:.2f}</div><div class="label">📡 SQI</div></div>',
         "</div>",
         "",
         trending_header,
@@ -63,6 +66,11 @@ def generate_post(pillar_name: str, config: dict, pillar_stories: list[dict],
         '<div class="insight" style="border-left-color:var(--navy-mid)">',
         '<h3 style="font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--navy-mid);margin:0 0 8px">🔗 Cross-Pillar Atlas</h3>',
         analysis["connections"],
+        "</div>",
+        "",
+        '<div class="insight" style="border-left-color:var(--gold)">',
+        '<h3 style="font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;color:var(--gold);margin:0 0 8px">📡 Signal Quality Index</h3>',
+        analysis["signal_quality"],
         "</div>",
         "",
         "---",

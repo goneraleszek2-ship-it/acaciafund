@@ -5,6 +5,7 @@ from .data import (
     RULES_META, RULES_SYSTEMS, RULES_CONN,
     extract_domain, categorize_domain, extract_entities, extract_themes, log,
 )
+from .score import compute_signal_score, build_history
 
 
 def classify_story(story: dict) -> list[tuple[str, int]]:
@@ -28,6 +29,16 @@ def classify_story(story: dict) -> list[tuple[str, int]]:
     return scores
 
 
+_SQI_HISTORY_CACHE: dict | None = None
+
+
+def _get_history() -> dict:
+    global _SQI_HISTORY_CACHE
+    if _SQI_HISTORY_CACHE is None:
+        _SQI_HISTORY_CACHE = build_history()
+    return _SQI_HISTORY_CACHE
+
+
 def build_pillar_signals(stories: list[dict], pillar_name: str) -> dict:
     if not stories:
         return {}
@@ -40,6 +51,15 @@ def build_pillar_signals(stories: list[dict], pillar_name: str) -> dict:
     for s in stories:
         all_entities.extend(extract_entities(s["title"]))
     entity_counts = Counter(all_entities)
+
+    history = _get_history()
+    sqi_scores = [compute_signal_score(s, history) for s in stories]
+    avg_sqi = sum(s["sqi"] for s in sqi_scores) / len(sqi_scores) if sqi_scores else 0
+    top_sqi = sorted(
+        [(s, q) for s, q in zip(stories, sqi_scores)],
+        key=lambda x: x[1]["sqi"], reverse=True
+    )[:3]
+
     return {
         "count": len(stories),
         "avg_score": avg,
@@ -53,6 +73,8 @@ def build_pillar_signals(stories: list[dict], pillar_name: str) -> dict:
         "top_domain_share": domain_counts.most_common(1)[0][1] / len(stories) if stories else 0,
         "top_entities": [e for e, _ in entity_counts.most_common(5)],
         "entity_coherence": "high" if entity_counts and len(entity_counts) < max(2, len(stories) * 0.4) else "low",
+        "avg_sqi": round(avg_sqi, 3),
+        "top_sqi_articles": [(s["title"], q) for s, q in top_sqi],
     }
 
 
@@ -62,6 +84,15 @@ def apply_rules(rules: list[dict], signals: dict, stories: list[dict],
         if rule["match"](signals if extra is None else extra):
             return rule["generate"](signals if extra is None else extra, stories, pname)
     return ""
+
+
+def _sqi_badge(sqi: dict) -> str:
+    score = sqi.get("sqi", 0)
+    if score >= 0.6:
+        return f" 🟢{score:.2f}"
+    if score >= 0.35:
+        return f" 🟡{score:.2f}"
+    return f" 🔴{score:.2f}"
 
 
 def build_analysis(stories: list[dict], pillar_name: str,
@@ -74,10 +105,13 @@ def build_analysis(stories: list[dict], pillar_name: str,
             "connections": "Brak korelacji w tym oknie czasowym.",
         }
 
+    history = _get_history()
+    story_sqis = {s.get("url", ""): compute_signal_score(s, history) for s in stories[:7]}
     trending = "\n".join(
         f"{i+1}. [{s['title']}]({s['url']})"
         + (f" ([dyskusja]({s['hn_url']}))" if s.get("hn_url") and s["hn_url"] != s["url"] else "")
         + f" (⭐{s['points']})"
+        + _sqi_badge(story_sqis.get(s.get("url", ""), {}))
         for i, s in enumerate(stories[:7])
     )
 
@@ -117,4 +151,22 @@ def build_analysis(stories: list[dict], pillar_name: str,
     if not conn:
         conn = apply_rules([RULES_CONN[-1]], signals, stories, pillar_name, cp_signal)
 
-    return {"trending": trending, "metaanalysis": meta, "systems_lens": systems, "connections": conn}
+    sqi = signals.get("avg_sqi", 0)
+    sqi_label = "wysoka" if sqi >= 0.6 else "średnia" if sqi >= 0.35 else "niska"
+    top_sqi_items = signals.get("top_sqi_articles", [])
+    signal_quality = (
+        f"**SQI (Signal Quality Index)**: {sqi:.2f} — jakość sygnału w tym oknie: **{sqi_label}**. "
+        f"Średnia ważona 6 wymiarów: zaangażowanie społeczności, autorytet źródła, "
+        f"nowość tematu, aktualność, gęstość encji i znaczenie cross-pillar. "
+        + (f"Najwyżej punktowane: „{top_sqi_items[0][0]}” ({top_sqi_items[0][1]['sqi']:.2f})"
+           if top_sqi_items else "")
+    )
+
+    return {
+        "trending": trending,
+        "metaanalysis": meta,
+        "systems_lens": systems,
+        "connections": conn,
+        "signal_quality": signal_quality,
+        "avg_sqi": signals.get("avg_sqi", 0),
+    }

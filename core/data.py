@@ -111,6 +111,19 @@ KNOWN_ENTITIES = {
 }
 ALL_ENTITIES = set().union(*KNOWN_ENTITIES.values())
 
+SOURCE_TIERS: list[tuple[re.Pattern, float]] = [
+    (re.compile(r"(\.gov|\.edu|\.mil)$"), 1.0),
+    (re.compile(r"(nature\.com|science\.org|cell\.com|pnas\.org|biorxiv\.org|arxiv\.org|quantamagazine\.org|scientificamerican\.com)"), 1.0),
+    (re.compile(r"(bloomberg\.com|reuters\.com|wsj\.com|ft\.com|economist\.com|nytimes\.com|washingtonpost\.com|theguardian\.com|bbc\.com|apnews\.com)"), 0.9),
+    (re.compile(r"(fincen\.gov|fatf-gafi\.org|fca\.org\.uk|sec\.gov|occ\.gov|bis\.org|ec\.europa\.eu)"), 1.0),
+    (re.compile(r"(anandtech\.com|tomshardware\.com|semiengineering\.com|arstechnica\.com|techcrunch\.com|theverge\.com|wired\.com)"), 0.8),
+    (re.compile(r"(seekingalpha\.com|marketwatch\.com|investopedia\.com|coindesk\.com|cointelegraph\.com)"), 0.6),
+    (re.compile(r"(github\.com|gitlab\.com|stackoverflow\.com)"), 0.7),
+    (re.compile(r"(medium\.com|substack\.com|wordpress\.com|blogspot\.com)"), 0.4),
+    (re.compile(r"(twitter\.com|x\.com|reddit\.com|youtube\.com)"), 0.3),
+    (re.compile(r"(nvidia\.com|tsmc\.com|asml\.com|intel\.com|amd\.com)"), 0.8),
+]
+
 # ── prekompilowane regexy dla classify_story ──
 DOMAIN_PATTERNS = {}
 for pname, config in PILLARS.items():
