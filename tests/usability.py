@@ -224,6 +224,7 @@ css_file = (PUBLIC / "css" / "main.css").read_text(encoding="utf-8")
 # Check for responsive breakpoints in external CSS
 check("@media(max-width:640px)" in css_file, "Has 640px responsive breakpoint")
 check("@media(max-width:480px)" in css_file, "Has 480px responsive breakpoint")
+check("@media(max-width:360px)" in css_file, "Has 360px (Android) responsive breakpoint")
 
 # Check dark mode variables exist
 check(".dark" in css_file, "Has .dark CSS class for dark mode")

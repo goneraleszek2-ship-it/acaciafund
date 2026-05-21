@@ -428,17 +428,78 @@ footer a{color:var(--navy-mid);font-weight:500}
 }
 
 @media(max-width:480px){
-  header h1{font-size:.95rem}
-  nav a{font-size:.7rem;padding:2px 8px}
-  .ach-card{font-size:.78rem}
-  .ach-card .ach-icon{font-size:1.2rem}
-  .bloom-bar-row{flex-wrap:wrap;gap:4px}
-  .bloom-bar-label{width:auto;flex:1}
-  .bloom-bar-pct{width:30px;font-size:.7rem}
+  header h1{font-size:.9rem}
+  nav{gap:2px}
+  nav a{font-size:.65rem;padding:2px 6px}
+  .ach-card{font-size:.75rem}
+  .ach-card .ach-icon{font-size:1.1rem}
+  .bloom-bar-row{flex-wrap:wrap;gap:3px}
+  .bloom-bar-label{width:auto;flex:1;font-size:.7rem}
+  .bloom-bar-pct{width:26px;font-size:.65rem}
   .bloom-bar-count{display:none}
   .path-step{min-width:60px;padding:4px 6px}
-  .path-step span{font-size:.65rem}
+  .path-step span{font-size:.62rem}
   #achievementsGrid{grid-template-columns:repeat(2,1fr)!important}
+  .metrics{flex-direction:column;gap:6px}
+  .metric{padding:8px 10px}
+  .metric .value{font-size:1.1rem}
+  .post-row{grid-template-columns:1fr}
+  table{font-size:.78rem}
+  th,td{padding:6px 8px}
+  .controls-bar select,.controls-bar input{font-size:.75rem;padding:6px 8px}
+}
+
+/* ── 320px tiny screens (Android, small phones) ── */
+@media(max-width:360px){
+  body{padding:0 8px 20px}
+  header{margin:0 -8px 16px;padding:10px}
+  header h1{font-size:.82rem}
+  nav{gap:1px}
+  nav a{font-size:.6rem;padding:2px 5px;letter-spacing:-.01em}
+  .bloom-pyramid{min-width:400px;gap:1px}
+  .bloom-level{padding:3px 5px;font-size:.55rem}
+  .bloom-level .blm-icon{font-size:.65rem}
+  .bloom-level .blm-label{font-size:.55rem}
+  .fc-card{height:80px}
+  .fc-front,.fc-back{font-size:.82rem;padding:10px 12px}
+  .edu-widget{padding:10px}
+  .quiz-question{font-size:.82rem;padding:8px 10px}
+  .quiz-btn{font-size:.72rem;padding:5px 10px;min-width:60px}
+  .quiz-badge{font-size:.58rem;padding:1px 6px}
+  .mc-grid{grid-template-columns:1fr;gap:4px}
+  .quiz-btn.mc-opt{font-size:.72rem;padding:6px 10px}
+  .post-card{padding:10px 12px}
+  .post-title{font-size:.85rem}
+  .group-header{font-size:.85rem}
+  .bloom-bar-row{gap:2px}
+  .bloom-bar-label{font-size:.65rem;width:70px}
+  .bloom-bar-track{height:10px}
+  .bloom-bar-fill{height:10px}
+  .bloom-bar-count{display:none}
+  .bloom-bar-pct{display:none}
+  .activity-item{font-size:.72rem;padding:4px 6px;gap:4px}
+  .activity-detail{display:none}
+  .activity-icon{width:18px;font-size:.85rem}
+  .ach-card{padding:8px 6px;min-width:auto}
+  .ach-card .ach-icon{font-size:.95rem}
+  .path-step{min-width:50px;padding:3px 5px}
+  .path-step span{font-size:.55rem}
+  .card{padding:12px}
+  .card h3{font-size:.9rem}
+  .card p{font-size:.78rem}
+  li{padding:6px 8px;font-size:.8rem}
+  h2{font-size:.95rem}
+  .toast{max-width:260px;font-size:.78rem;padding:8px 12px}
+  #achievementsGrid{grid-template-columns:repeat(2,1fr)!important;gap:6px}
+  .tag-btn{font-size:.7rem;padding:3px 8px}
+  /* single-post nav links */
+  nav[style*="justify-content:space-between"]{flex-direction:column;gap:6px}
+  nav[style*="justify-content:space-between"] a{text-align:center!important;font-size:.78rem}
+  /* table horizontal scroll */
+  table{display:block;overflow-x:auto;white-space:nowrap}
+  /* dashboard skeleton */
+  .skeleton-row{flex-direction:column;gap:8px!important}
+  .skeleton-block{height:50px!important}
 }
 
 /* ── dark mode overrides for new components ── */
