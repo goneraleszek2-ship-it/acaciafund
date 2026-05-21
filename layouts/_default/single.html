@@ -116,85 +116,93 @@ bloomLevels.forEach(function(l){ levelSet[l] = true; });
     });
 })();
 
-// ── Quiz Widget ──
+// ── Quiz Widget (lazy) ──
 (function(){
     var widget = document.getElementById('quizWidget');
     var container = document.getElementById('quizContainer');
     var POST_KEY = 'ac-quiz-' + pillar + '-' + postDate;
-    var data;
 
     var stored = localStorage.getItem(POST_KEY);
     var completed = stored ? JSON.parse(stored) : null;
 
-    fetch('/api/quiz.json').then(function(r){ return r.json(); }).then(function(d){
-        data = d;
-        var questions = (data.questions||[]).filter(function(q){
-            return q.post_url && q.post_url.indexOf('/'+pillar+'/'+postDate+'/') !== -1;
-        });
-        if(!questions.length){ widget.style.display='none'; return; }
-        widget.style.display='';
+    function loadQuiz(){
+        fetch('/api/quiz.json').then(function(r){ return r.json(); }).then(function(d){
+            var questions = (d.questions||[]).filter(function(q){
+                return q.post_url && q.post_url.indexOf('/'+pillar+'/'+postDate+'/') !== -1;
+            });
+            if(!questions.length){ widget.style.display='none'; return; }
+            widget.style.display='';
 
-        if(completed && completed.done){
-            var pct = Math.round(completed.correct / completed.total * 100);
-            container.innerHTML =
-                '<div class="quiz-done">✅ Quiz już rozwiązany! Wynik: '+completed.correct+'/'+completed.total+' ('+pct+'%)</div>'+
-                '<button class="quiz-restart" onclick="location.reload()">🔁 Rozwiąż ponownie</button>';
-            return;
-        }
-
-        var idx = 0, correct = 0;
-        var breakdown = {};
-
-        function render(){
-            if(idx >= questions.length){
-                var total = questions.length;
-                localStorage.setItem(POST_KEY, JSON.stringify({done:true, correct:correct, total:total, breakdown:breakdown, ts:Date.now()}));
-                var pct = Math.round(correct/total*100);
+            if(completed && completed.done){
+                var pct = Math.round(completed.correct / completed.total * 100);
                 container.innerHTML =
-                    '<div class="quiz-done">🎉 Ukończono! Wynik: '+correct+'/'+total+' ('+pct+'%)</div>';
+                    '<div class="quiz-done">✅ Quiz już rozwiązany! Wynik: '+completed.correct+'/'+completed.total+' ('+pct+'%)</div>'+
+                    '<button class="quiz-restart" onclick="location.reload()">🔁 Rozwiąż ponownie</button>';
                 return;
             }
-            var q = questions[idx];
-            if(!breakdown[q.bloom_level]) breakdown[q.bloom_level] = {c:0,t:0};
-            breakdown[q.bloom_level].t++;
 
-            container.innerHTML =
-                '<div class="quiz-progress">Pytanie '+(idx+1)+'/'+questions.length+'</div>'+
-                '<div class="quiz-question"><span class="quiz-badge" style="background:'+(BLOOM_CONFIG.find(function(b){return b.id===q.bloom_level})||{}).color+'">'+
-                (q.bloom_level||'')+'</span> '+q.question+'</div>'+
-                '<div class="quiz-actions">'+
-                '<button class="quiz-btn easy" onclick="answer('+idx+',true)">✅ Rozumiem</button>'+
-                '<button class="quiz-btn medium" onclick="answer('+idx+',null)">🤔 Średnio</button>'+
-                '<button class="quiz-btn hard" onclick="answer('+idx+',false)">❌ Nie wiem</button>'+
-                '</div>';
-        }
+            var idx = 0, correct = 0;
+            var breakdown = {};
 
-        window.answer = function(qidx, ok){
-            if(qidx !== idx) return;
-            var q = questions[idx];
-            var feedback = ok === true ? '✅ Rozumiesz!' : (ok === null ? '🤔 Do powtórki' : '❌ Warto wrócić');
-            if(ok === true){ correct++; if(breakdown[q.bloom_level]) breakdown[q.bloom_level].c++; }
+            function render(){
+                if(idx >= questions.length){
+                    var total = questions.length;
+                    localStorage.setItem(POST_KEY, JSON.stringify({done:true, correct:correct, total:total, breakdown:breakdown, ts:Date.now()}));
+                    var pct = Math.round(correct/total*100);
+                    container.innerHTML =
+                        '<div class="quiz-done">🎉 Ukończono! Wynik: '+correct+'/'+total+' ('+pct+'%)</div>';
+                    return;
+                }
+                var q = questions[idx];
+                if(!breakdown[q.bloom_level]) breakdown[q.bloom_level] = {c:0,t:0};
+                breakdown[q.bloom_level].t++;
 
-            // Show feedback briefly
-            container.innerHTML =
-                '<div class="quiz-progress">Pytanie '+(idx+1)+'/'+questions.length+'</div>'+
-                '<div class="quiz-question" style="border-left-color:'+
-                (ok === true ? '#22c55e' : (ok === null ? 'var(--gold)' : '#ef4444'))+'">'+
-                q.question+'</div>'+
-                '<div style="text-align:center;padding:12px;font-size:1rem;font-weight:600;color:'+
-                (ok === true ? '#22c55e' : (ok === null ? 'var(--gold)' : '#ef4444'))+'">'+feedback+'</div>';
+                container.innerHTML =
+                    '<div class="quiz-progress">Pytanie '+(idx+1)+'/'+questions.length+'</div>'+
+                    '<div class="quiz-question"><span class="quiz-badge" style="background:'+(BLOOM_CONFIG.find(function(b){return b.id===q.bloom_level})||{}).color+'">'+
+                    (q.bloom_level||'')+'</span> '+q.question+'</div>'+
+                    '<div class="quiz-actions">'+
+                    '<button class="quiz-btn easy" onclick="answer('+idx+',true)">✅ Rozumiem</button>'+
+                    '<button class="quiz-btn medium" onclick="answer('+idx+',null)">🤔 Średnio</button>'+
+                    '<button class="quiz-btn hard" onclick="answer('+idx+',false)">❌ Nie wiem</button>'+
+                    '</div>';
+            }
 
-            idx++;
-            setTimeout(render, ok === true ? 600 : 1000);
-        };
+            window.answer = function(qidx, ok){
+                if(qidx !== idx) return;
+                var q = questions[idx];
+                var feedback = ok === true ? '✅ Rozumiesz!' : (ok === null ? '🤔 Do powtórki' : '❌ Warto wrócić');
+                if(ok === true){ correct++; if(breakdown[q.bloom_level]) breakdown[q.bloom_level].c++; }
+                container.innerHTML =
+                    '<div class="quiz-progress">Pytanie '+(idx+1)+'/'+questions.length+'</div>'+
+                    '<div class="quiz-question" style="border-left-color:'+
+                    (ok === true ? '#22c55e' : (ok === null ? 'var(--gold)' : '#ef4444'))+'">'+
+                    q.question+'</div>'+
+                    '<div style="text-align:center;padding:12px;font-size:1rem;font-weight:600;color:'+
+                    (ok === true ? '#22c55e' : (ok === null ? 'var(--gold)' : '#ef4444'))+'">'+feedback+'</div>';
+                idx++;
+                setTimeout(render, ok === true ? 600 : 1000);
+            };
+            render();
+        }).catch(function(){
+            widget.style.display='none';
+        });
+    }
 
-        render();
-    }).catch(function(){
-        widget.style.display='none';
-    });
+    if(widget && 'IntersectionObserver' in window){
+        var obs = new IntersectionObserver(function(entries){
+            if(entries[0].isIntersecting){
+                obs.disconnect();
+                loadQuiz();
+            }
+        }, {rootMargin:'200px'});
+        obs.observe(widget);
+    } else if(widget){
+        loadQuiz();
+    }
 })();
 
-// ── Flashcard Deck ──
+// ── Flashcard Deck (lazy) ──
 (function(){
     var widget = document.getElementById('flashcardWidget');
     var container = document.getElementById('flashcardContainer');
@@ -207,27 +215,40 @@ bloomLevels.forEach(function(l){ levelSet[l] = true; });
     var stored = localStorage.getItem(STORAGE_KEY);
     var progress = stored ? JSON.parse(stored) : {};
 
-    fetch('/api/flashcards.json').then(function(r){ return r.json(); }).then(function(d){
-        cardData = (d.cards||[]).filter(function(c){ return c.pillar === pillar; });
-        if(!cardData.length){ widget.style.display='none'; return; }
+    function loadFlashcards(){
+        fetch('/api/flashcards.json').then(function(r){ return r.json(); }).then(function(d){
+            cardData = (d.cards||[]).filter(function(c){ return c.pillar === pillar; });
+            if(!cardData.length){ widget.style.display='none'; return; }
 
-        // Sort: due first, then by progress
-        var now = Date.now();
-        cardData.sort(function(a,b){
-            var pa = progress[a.term]||{};
-            var pb = progress[b.term]||{};
-            var da = pa.nextReview || 0;
-            var db = pb.nextReview || 0;
-            if(da <= now && db > now) return -1;
-            if(db <= now && da > now) return 1;
-            return (pa.correct||0) - (pb.correct||0);
+            var now = Date.now();
+            cardData.sort(function(a,b){
+                var pa = progress[a.term]||{};
+                var pb = progress[b.term]||{};
+                var da = pa.nextReview || 0;
+                var db = pb.nextReview || 0;
+                if(da <= now && db > now) return -1;
+                if(db <= now && da > now) return 1;
+                return (pa.correct||0) - (pb.correct||0);
+            });
+
+            widget.style.display='';
+            render();
+        }).catch(function(){
+            widget.style.display='none';
         });
+    }
 
-        widget.style.display='';
-        render();
-    }).catch(function(){
-        widget.style.display='none';
-    });
+    if(widget && 'IntersectionObserver' in window){
+        var obs = new IntersectionObserver(function(entries){
+            if(entries[0].isIntersecting){
+                obs.disconnect();
+                loadFlashcards();
+            }
+        }, {rootMargin:'200px'});
+        obs.observe(widget);
+    } else if(widget){
+        loadFlashcards();
+    }
 
     function render(){
         if(cardIdx >= cardData.length){
@@ -243,12 +264,9 @@ bloomLevels.forEach(function(l){ levelSet[l] = true; });
             render();
             return;
         }
-
-        var pct = Math.round(Object.keys(progress).length / cardData.length * 100);
-        var mastered = (p.correct||0);
         var masteryDots = '';
         for(var di=0; di<5; di++){
-            masteryDots += di < mastered ? '<span style="color:var(--gold)">●</span>' : '<span style="color:var(--border)">○</span>';
+            masteryDots += di < (p.correct||0) ? '<span style="color:var(--gold)">●</span>' : '<span style="color:var(--border)">○</span>';
         }
         container.innerHTML =
             '<div class="fc-progress">📊 '+(Object.keys(progress).length)+'/'+cardData.length+
@@ -286,7 +304,6 @@ bloomLevels.forEach(function(l){ levelSet[l] = true; });
         flipped = false;
         render();
     };
-})();
 })();
     </script>
 </body>

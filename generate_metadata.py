@@ -132,20 +132,40 @@ def build_bloom_overview(articles: list[dict]) -> dict:
     }
 
 
+def _pillars_from(articles: list[dict]) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for a in articles:
+        pillar = a.get("pillar", "unknown")
+        counts[pillar] = counts.get(pillar, 0) + 1
+    return counts
+
+
 def main():
     articles = parse_posts()
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
-
+    posts_data = [
+        {"date": p["date"], "pillar": p["pillar"], "title": p["title"],
+         "url": p["url"], "tags": p["tags"],
+         "bloom_levels": p["bloom_levels"],
+         "primary_bloom_level": p["primary_bloom_level"]}
+        for p in articles
+    ]
     OUTPUT.write_text(
-        json.dumps({"generated": datetime.now(timezone.utc).isoformat(), "count": len(articles), "posts": articles}, indent=2, ensure_ascii=False),
+        json.dumps({
+            "generated": datetime.now(timezone.utc).isoformat(),
+            "count": len(articles),
+            "posts": posts_data,
+            "pillars": _pillars_from(articles),
+        }, ensure_ascii=False, separators=(",", ":")),
         encoding="utf-8",
     )
-    print(f"[+] Metadata: {OUTPUT} ({len(articles)} postów, {sum(len(p['articles']) for p in articles)} artykułów)")
+    total_articles = sum(len(p["articles"]) for p in articles)
+    print(f"[+] Metadata: {OUTPUT} ({len(articles)} postów, {total_articles} artykułów)")
 
     bloom_data = build_bloom_overview(articles)
     BLOOM_OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     BLOOM_OUTPUT.write_text(
-        json.dumps(bloom_data, indent=2, ensure_ascii=False),
+        json.dumps(bloom_data, ensure_ascii=False, separators=(",", ":")),
         encoding="utf-8",
     )
     print(f"[+] Bloom overview: {BLOOM_OUTPUT}")

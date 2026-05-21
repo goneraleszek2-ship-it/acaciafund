@@ -85,7 +85,7 @@ def main():
             "generated": datetime.now(timezone.utc).isoformat(),
             "count": len(all_questions),
             "questions": all_questions,
-        }, indent=2, ensure_ascii=False),
+        }, ensure_ascii=False, separators=(",", ":")),
         encoding="utf-8",
     )
     print(f"[+] Quiz: {OUTPUT} ({len(all_questions)} pytań)")

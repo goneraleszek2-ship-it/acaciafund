@@ -86,7 +86,7 @@ def main():
             "generated": datetime.now(timezone.utc).isoformat(),
             "count": len(all_cards),
             "cards": all_cards,
-        }, indent=2, ensure_ascii=False),
+        }, ensure_ascii=False, separators=(",", ":")),
         encoding="utf-8",
     )
     print(f"[+] Flashcards: {OUTPUT} ({len(all_cards)} kart)")

@@ -209,24 +209,24 @@ check("ac-last-visit" in all_source, "Last-visit key 'ac-last-visit' used")
 # ── 5. RESPONSIVE / CSS ──
 print("\n── 5. RESPONSIVE & CSS ──")
 
-css = read_html("index.html")  # style is inlined via partial
-# Check for responsive breakpoints
-check("@media(max-width:640px)" in css, "Has 640px responsive breakpoint")
-check("@media(max-width:480px)" in css, "Has 480px responsive breakpoint")
+css_file = (PUBLIC / "css" / "main.css").read_text(encoding="utf-8")
+# Check for responsive breakpoints in external CSS
+check("@media(max-width:640px)" in css_file, "Has 640px responsive breakpoint")
+check("@media(max-width:480px)" in css_file, "Has 480px responsive breakpoint")
 
 # Check dark mode variables exist
-check(".dark" in css, "Has .dark CSS class for dark mode")
-check("--bg:" in css, "Has CSS variables defined")
+check(".dark" in css_file, "Has .dark CSS class for dark mode")
+check("--bg:" in css_file, "Has CSS variables defined")
 
 # Check new components have styles
-check("ach-card" in css, "Has ach-card CSS class")
-check("path-step" in css, "Has path-step CSS class")
-check("bloom-bars" in css, "Has bloom-bars CSS class")
-check("bloom-bar-row" in css, "Has bloom-bar-row CSS class")
-check("activity-item" in css, "Has activity-item CSS class")
-check("new-posts-badge" in css, "Has new-posts-badge CSS class")
-check("post-layout" in css, "Has post-layout CSS (sidebar)")
-check("fc-card" in css, "Has flashcard CSS (fc-card)")
+check("ach-card" in css_file, "Has ach-card CSS class")
+check("path-step" in css_file, "Has path-step CSS class")
+check("bloom-bars" in css_file, "Has bloom-bars CSS class")
+check("bloom-bar-row" in css_file, "Has bloom-bar-row CSS class")
+check("activity-item" in css_file, "Has activity-item CSS class")
+check("new-posts-badge" in css_file, "Has new-posts-badge CSS class")
+check("post-layout" in css_file, "Has post-layout CSS (sidebar)")
+check("fc-card" in css_file, "Has flashcard CSS (fc-card)")
 
 # ── 6. USER JOURNEY SIMULATIONS ──
 print("\n── 6. USER JOURNEY SIMULATIONS ──")
@@ -267,7 +267,7 @@ print("\n  Journey 4: Achievement system")
 check("ACHIEVEMENTS" in dash, "  4a. Achievements defined in JS")
 check("evaluateAchievements" in dash, "  4b. Achievement evaluation function exists")
 check("ac-achievements" in dash, "  4c. Achievements saved to localStorage")
-check("ach-card" in dash and ".unlocked" in dash, "  4d. Achievement cards with locked/unlocked states")
+check("ach-card" in dash and ".unlocked" in css_file, "  4d. Achievement cards with locked/unlocked states")
 
 # Journey 5: Dark mode
 print("\n  Journey 5: Dark mode")

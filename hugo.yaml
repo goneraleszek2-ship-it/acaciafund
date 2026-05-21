@@ -4,6 +4,17 @@ title: "AcaciaFund | Daily Research Portfolio"
 publishDir: "public"
 relativeURLs: true
 
+minify:
+  disableHTML: true
+  disableXML: true
+  minifyOutput: true
+  tdewolff:
+    css:
+      version: 2
+    js:
+      keepVarNames: false
+      precision: 0
+
 
 permalinks:
   daily: /:sections/:contentbasename/

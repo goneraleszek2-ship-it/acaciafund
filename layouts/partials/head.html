@@ -63,7 +63,7 @@
 }
 {{- end -}}
 </script>
-<style>{{ readFile "layouts/partials/style.html" | safeCSS }}</style>
+<link rel="stylesheet" href="/css/main.css">
 <script>
 (function(){const k='ac-fund-dark';const m=window.matchMedia('(prefers-color-scheme:dark)');let d=localStorage.getItem(k);if(d===null)d=m.matches?'1':'0';if(d==='1')document.documentElement.classList.add('dark');document.addEventListener('click',function(e){const t=e.target.closest('[data-toggle-dark]');if(!t)return;d=document.documentElement.classList.toggle('dark')?'1':'0';localStorage.setItem(k,d);t.textContent=d==='1'?'☀️':'🌙'})})()
 </script>
