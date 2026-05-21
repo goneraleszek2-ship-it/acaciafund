@@ -449,16 +449,18 @@ footer a{color:var(--navy-mid);font-weight:500}
 
 @media(max-width:640px){
   body{padding:0 14px 28px}
-  header{margin:0 -14px 24px;padding:16px;position:static}
-  header h1{font-size:1.1rem}
-  nav{gap:4px}
-  nav a{font-size:.78rem;padding:5px 12px}
+  header{margin:0 -14px 24px;padding:18px 14px;position:static}
+  header h1{font-size:1.15rem}
+  nav{gap:6px}
+  nav a{font-size:.85rem;padding:8px 14px;min-height:44px}
   .grid{grid-template-columns:1fr}
-  .metrics{flex-direction:column;gap:12px}
-  .metric{padding:14px 16px;min-width:auto}
-  .metric .value{font-size:1.4rem}
+  .metrics{flex-direction:column;gap:14px}
+  .metric{padding:16px 18px;min-width:auto}
+  .metric .value{font-size:1.5rem}
+  .metric .label{font-size:.78rem}
   .controls-bar{flex-direction:column}
   .control-group{min-width:100%}
+  .controls-bar select,.controls-bar input{min-height:48px;padding:12px 14px;font-size:.9rem}
   .post-row{grid-template-columns:1fr}
   .post-layout{flex-direction:column}
   .bloom-sidebar{width:100%;position:static;overflow-x:auto;-webkit-overflow-scrolling:touch}
@@ -467,97 +469,164 @@ footer a{color:var(--navy-mid);font-weight:500}
   .bloom-level.active{border-left:none;border-bottom-color:var(--blm-color)}
   .bloom-level .blm-label{font-size:.62rem;min-width:0}
   .bloom-level .blm-icon{font-size:.72rem}
-  .fc-card{height:100px}
-  li{padding:10px 14px;font-size:.88rem}
-  h2{font-size:1.1rem}
-  .ach-card{padding:14px 10px;min-width:0}
-  .path-step{min-width:80px;padding:8px;font-size:.8rem}
-  .bloom-bar-label{width:100px;font-size:.75rem}
-  .activity-item{font-size:.8rem;gap:6px;padding:8px 10px}
+  .fc-card{height:110px}
+  .fc-front,.fc-back{font-size:1rem}
+  .fc-back{font-size:.9rem}
+  li{padding:12px 16px;font-size:.9rem}
+  p{font-size:.95rem;line-height:1.65}
+  h2{font-size:1.15rem}
+  .ach-card{padding:16px 12px;min-width:0}
+  .path-step{min-width:80px;padding:10px;font-size:.85rem}
+  .bloom-bar-label{width:120px;font-size:.82rem}
+  .bloom-bar-track{height:14px}
+  .bloom-bar-fill{height:14px}
+  .activity-item{font-size:.85rem;gap:8px;padding:10px 12px}
   .activity-detail{display:none}
-  .edu-widget{padding:16px}
-  .quiz-question{font-size:.92rem;padding:12px 14px}
-  .quiz-btn{min-width:90px;padding:10px 16px;font-size:.82rem}
-  .mc-grid{grid-template-columns:1fr}
-  .metric .value{font-size:1.4rem}
+  .activity-icon{font-size:1.1rem}
+  .edu-widget{padding:20px}
+  .edu-widget h3{font-size:1.05rem}
+  .quiz-question{font-size:1rem;padding:14px 16px}
+  .quiz-btn{font-size:.9rem;padding:14px 20px;min-height:50px;min-width:110px}
+  .quiz-btn.mc-opt{font-size:.88rem;padding:14px 16px;min-height:50px;min-width:50px}
+  .quiz-badge{font-size:.7rem;padding:4px 12px}
+  .mc-grid{grid-template-columns:1fr;gap:8px}
+  .tag-btn{font-size:.85rem;padding:8px 16px;min-height:44px}
+  .tag{font-size:.8rem;padding:5px 14px}
+  .post-title{font-size:1rem}
+  .post-card{padding:16px}
+  .card{padding:20px}
+  .card h3{font-size:1rem}
+  .card p{font-size:.88rem}
+  table{font-size:.85rem}
+  th,td{padding:10px 12px}
   .toast{max-width:300px}
+  .new-posts-badge{font-size:.78rem;padding:4px 12px}
 }
 
 @media(max-width:480px){
-  header h1{font-size:.95rem}
-  nav{gap:3px}
-  nav a{font-size:.7rem;padding:4px 10px;min-height:40px}
-  .ach-card{font-size:.78rem}
-  .ach-card .ach-icon{font-size:1.3rem}
+  body{font-size:15px}
+  header h1{font-size:1rem}
+  header{padding:14px 14px 12px}
+  nav{gap:4px}
+  nav a{font-size:.8rem;padding:8px 14px;min-height:44px}
+  p{font-size:15px;line-height:1.6}
+  li{font-size:.92rem;padding:12px 14px}
+  .post-title{font-size:1rem}
+  .group-header{font-size:.95rem}
+  .card h3{font-size:1rem}
+  .card p{font-size:.88rem}
+  .quiz-question{font-size:1rem;padding:14px 16px}
+  .quiz-btn{font-size:.92rem;padding:14px 20px;min-height:50px;min-width:120px}
+  .quiz-btn.mc-opt{font-size:.88rem;padding:14px 14px;min-height:50px;min-width:50px}
+  .quiz-badge{font-size:.7rem;padding:4px 12px}
+  .quiz-done{font-size:1rem}
+  .quiz-restart{font-size:.92rem;padding:14px 28px;min-height:50px}
+  .fc-front,.fc-back{font-size:1rem}
+  .fc-back{font-size:.92rem;line-height:1.5}
+  .fc-progress{font-size:.82rem}
+  .edu-widget h3{font-size:1.05rem}
+  .edu-widget{padding:18px}
+  .ach-card{font-size:.85rem}
+  .ach-card .ach-icon{font-size:1.4rem}
   .bloom-bar-row{flex-wrap:wrap;gap:4px}
-  .bloom-bar-label{width:auto;flex:1;font-size:.72rem}
-  .bloom-bar-pct{width:28px;font-size:.68rem}
+  .bloom-bar-label{width:auto;flex:1;font-size:.82rem}
+  .bloom-bar-pct{width:28px;font-size:.75rem}
   .bloom-bar-count{display:none}
-  .path-step{min-width:60px;padding:6px;font-size:.7rem}
-  .path-step span{font-size:.65rem}
+  .bloom-bar-track{height:14px}
+  .bloom-bar-fill{height:14px}
+  .path-step{min-width:60px;padding:8px;font-size:.82rem}
+  .path-step span{font-size:.75rem}
   #achievementsGrid{grid-template-columns:repeat(2,1fr)!important}
-  .metrics{flex-direction:column;gap:8px}
-  .metric{padding:10px 12px}
-  .metric .value{font-size:1.2rem}
+  .metrics{flex-direction:column;gap:10px}
+  .metric{padding:14px 16px}
+  .metric .value{font-size:1.4rem}
+  .metric .label{font-size:.78rem}
   .post-row{grid-template-columns:1fr}
-  table{font-size:.8rem}
-  th,td{padding:8px 10px}
-  .controls-bar select,.controls-bar input{font-size:.78rem;padding:8px 10px;min-height:44px}
-  .quiz-btn{min-height:44px}
-  .tag-btn{min-height:40px}
+  table{font-size:.85rem}
+  th,td{padding:10px 12px}
+  .controls-bar select,.controls-bar input{font-size:.85rem;padding:12px 12px;min-height:48px}
+  .tag-btn{font-size:.82rem;padding:8px 16px;min-height:44px}
+  .tag{font-size:.78rem;padding:5px 14px}
+  .insight{padding:14px 16px;font-size:.92rem}
+  .chart-wrap{padding:14px}
+  .chart-wrap h4{font-size:.9rem}
+  .activity-item{font-size:.85rem;padding:10px 12px}
+  .activity-icon{font-size:1.1rem}
+  .activity-detail{font-size:.82rem}
+  .new-posts-badge{font-size:.78rem;padding:4px 14px}
+  .mini-tag{font-size:.7rem;padding:3px 10px}
+  .post-card-meta .stat{font-size:.78rem}
+  h2{font-size:1.1rem}
+  h3{font-size:1rem}
+  .skeleton-block{height:60px!important}
 }
 
 /* ── 360px tiny screens ── */
 @media(max-width:360px){
-  body{padding:0 8px 20px}
-  header{margin:0 -8px 16px;padding:10px}
-  header h1{font-size:.82rem}
-  nav{gap:2px}
-  nav a{font-size:.62rem;padding:6px 8px;min-height:40px;display:inline-flex;align-items:center;letter-spacing:-.01em}
+  body{padding:0 10px 24px;font-size:15px}
+  header{margin:0 -10px 16px;padding:12px 10px}
+  header h1{font-size:.92rem}
+  nav{gap:3px}
+  nav a{font-size:.72rem;padding:7px 10px;min-height:44px}
+  p,li,.insight{font-size:.9rem}
+  li{padding:10px 12px}
+  .post-title{font-size:.95rem}
+  .group-header{font-size:.9rem}
+  .card h3{font-size:.95rem}
+  .card p{font-size:.85rem}
+  .quiz-question{font-size:.95rem;padding:12px 14px}
+  .quiz-btn{font-size:.88rem;padding:12px 16px;min-width:80px;min-height:50px}
+  .quiz-badge{font-size:.65rem;padding:3px 10px}
+  .mc-grid{gap:8px}
+  .quiz-btn.mc-opt{font-size:.85rem;padding:12px 12px;min-height:50px;min-width:50px}
+  .fc-card{height:100px}
+  .fc-front,.fc-back{font-size:.92rem;padding:14px 16px}
+  .fc-back{font-size:.85rem}
+  .fc-progress{font-size:.8rem}
+  .edu-widget{padding:14px}
+  .edu-widget h3{font-size:1rem}
   .bloom-pyramid{min-width:400px;gap:1px}
-  .bloom-level{padding:3px 5px;font-size:.55rem}
-  .bloom-level .blm-icon{font-size:.65rem}
-  .bloom-level .blm-label{font-size:.55rem}
-  .fc-card{height:85px}
-  .fc-front,.fc-back{font-size:.85rem;padding:12px 14px}
-  .edu-widget{padding:12px}
-  .quiz-question{font-size:.85rem;padding:10px 12px}
-  .quiz-btn{font-size:.75rem;padding:8px 12px;min-width:60px;min-height:44px}
-  .quiz-badge{font-size:.6rem;padding:2px 8px}
-  .mc-grid{grid-template-columns:1fr;gap:6px}
-  .quiz-btn.mc-opt{font-size:.75rem;padding:10px 10px;min-height:44px;min-width:44px}
+  .bloom-level{padding:4px 6px;font-size:.6rem}
+  .bloom-level .blm-icon{font-size:.7rem}
+  .bloom-level .blm-label{font-size:.58rem}
   .post-card{padding:12px 14px}
-  .post-title{font-size:.88rem}
-  .group-header{font-size:.85rem}
-  .bloom-bar-row{gap:3px}
-  .bloom-bar-label{font-size:.65rem;width:70px}
-  .bloom-bar-track{height:12px}
-  .bloom-bar-fill{height:12px}
+  .bloom-bar-row{gap:4px}
+  .bloom-bar-label{font-size:.75rem;width:80px}
+  .bloom-bar-track{height:14px}
+  .bloom-bar-fill{height:14px}
   .bloom-bar-count{display:none}
   .bloom-bar-pct{display:none}
-  .activity-item{font-size:.75rem;padding:6px 8px;gap:4px}
-  .activity-icon{width:18px;font-size:.85rem}
+  .activity-item{font-size:.82rem;padding:8px 10px;gap:6px}
+  .activity-icon{width:20px;font-size:.95rem}
   .activity-detail{display:none}
-  .ach-card{padding:10px 8px;min-width:auto}
-  .ach-card .ach-icon{font-size:1rem}
-  .path-step{min-width:50px;padding:4px 6px}
-  .path-step span{font-size:.58rem}
+  .ach-card{padding:12px 8px}
+  .ach-card .ach-icon{font-size:1.2rem}
+  .path-step{min-width:55px;padding:6px 8px}
+  .path-step span{font-size:.65rem}
   .card{padding:16px;border-radius:var(--radius-sm)}
-  .card h3{font-size:.9rem}
-  .card p{font-size:.8rem}
-  li{padding:8px 10px;font-size:.82rem}
-  h2{font-size:.95rem}
-  .toast{max-width:240px;font-size:.8rem;padding:10px 14px}
-  #achievementsGrid{grid-template-columns:repeat(2,1fr)!important;gap:6px}
-  .tag-btn{font-size:.7rem;padding:6px 10px;min-height:40px}
+  h2{font-size:1rem}
+  h3{font-size:.92rem}
+  .toast{max-width:260px;font-size:.85rem;padding:12px 16px}
+  #achievementsGrid{gap:8px}
+  .tag-btn{font-size:.78rem;padding:8px 12px;min-height:44px}
+  .tag{font-size:.75rem;padding:5px 12px}
   nav[style*="justify-content:space-between"]{flex-direction:column;gap:8px}
-  nav[style*="justify-content:space-between"] a{text-align:center!important;font-size:.8rem;padding:8px}
-  table{display:block;overflow-x:auto;white-space:nowrap}
+  nav[style*="justify-content:space-between"] a{text-align:center!important;font-size:.85rem;padding:10px}
+  table{display:block;overflow-x:auto;white-space:nowrap;font-size:.82rem}
+  th,td{padding:8px 10px}
   .skeleton-row{flex-direction:column;gap:10px!important}
-  .skeleton-block{height:50px!important}
-  button,.btn,.quiz-btn,.tag-btn,[role=button]{min-height:44px;min-width:44px}
-  a{min-height:40px;display:inline-flex;align-items:center}
-  .metric{padding:10px;min-height:60px}
+  .skeleton-block{height:55px!important}
+  .controls-bar select,.controls-bar input{font-size:.82rem;padding:10px 10px;min-height:48px}
+  button,.btn,.quiz-btn,.tag-btn,[role=button]{min-height:48px;min-width:48px}
+  a{min-height:44px}
+  .metric{padding:12px;min-height:64px;font-size:.9rem}
+  .metric .value{font-size:1.3rem}
+  .metric .label{font-size:.75rem}
+  .chart-wrap{padding:12px}
+  .chart-wrap h4{font-size:.85rem}
+  .mini-tag{font-size:.68rem;padding:2px 8px}
+  .post-card-meta .stat{font-size:.75rem}
+  .new-posts-badge{font-size:.75rem;padding:3px 10px}
 }
 
 .dark .ach-card{border-color:var(--border);background:var(--card-bg)}
