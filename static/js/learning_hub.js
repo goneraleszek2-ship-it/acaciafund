@@ -1,13 +1,22 @@
 // Learning hub: local progress, simple calibration, quiz renderer
 (function(){
   var STORAGE_KEY = 'acacia_progress_v1';
+  var API_ENDPOINT = window.location.origin.replace(/\/+$/,'') + ':8000';
 
   function loadProgress(){
     try{ return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); }catch(e){return {};}
   }
   function saveProgress(p){ localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); }
 
-  function markDone(url){ var p = loadProgress(); p[url] = {done:true, ts:Date.now()}; saveProgress(p); renderProgress(); }
+  function markDone(url){ var p = loadProgress(); p[url] = {done:true, ts:Date.now()}; saveProgress(p); renderProgress(); trySync(url); }
+
+  function trySync(url){
+    // attempt to POST to API if available
+    try{
+      var p = loadProgress(); var entry = p[url]; if(!entry) return;
+      fetch(API_ENDPOINT + '/progress', {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({url:url,done:entry.done,score:entry.score||0,ts:entry.ts||Date.now()})}).catch(function(){/*ignore*/});
+    }catch(e){}
+  }
 
   function renderProgress(){
     var p = loadProgress();
