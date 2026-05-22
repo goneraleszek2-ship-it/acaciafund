@@ -8,9 +8,9 @@
     <span class="category-badge" style="background:{{ if eq (index .Params.categories 0) "AML" }}#1e3a5f{{ else if eq (index .Params.categories 0) "Markets" }}#166534{{ else }}#7e22ce{{ end }};color:#fff;">
       {{ index .Params.categories 0 }}
     </span>
-    <h3 class="card-title"><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
+    <h3 class="card-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
     <div class="d-flex align-items-center gap-2 justify-content-between">
-      <a href="{{ .Permalink }}" class="btn btn-primary btn-sm" aria-label="{{ i18n "read_more" }}: {{ .Title }}">{{ i18n "read_more" }}</a>
+      <a href="{{ .RelPermalink }}" class="btn btn-primary btn-sm" aria-label="{{ i18n "read_more" }}: {{ .Title }}">{{ i18n "read_more" }}</a>
       <span class="badge rounded-pill px-2" style="font-size:10px;background:rgba(217,119,6,0.15);color:#d97706;border:1px solid rgba(217,119,6,0.2);">AI</span>
     </div>
   </div>

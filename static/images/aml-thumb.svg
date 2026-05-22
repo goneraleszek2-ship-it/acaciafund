@@ -1,42 +1,31 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 225" width="400" height="225">
   <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="bg-aml" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#1e3a5f"/>
       <stop offset="100%" stop-color="#0f172a"/>
     </linearGradient>
-    <linearGradient id="glow" cx="50%" cy="40%">
-      <stop offset="0%" stop-color="#d97706" stop-opacity="0.12"/>
+    <linearGradient id="aml-glow" x1="50%" y1="40%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d97706" stop-opacity="0.08"/>
       <stop offset="100%" stop-color="#0f172a" stop-opacity="0"/>
     </linearGradient>
   </defs>
-  <rect width="400" height="225" fill="url(#bg)"/>
-  <rect width="400" height="225" fill="url(#glow)"/>
-
-  <!-- Grid -->
-  <g stroke="#2d5a8e" stroke-width="0.5" opacity="0.2">
-    <line x1="0" y1="50" x2="400" y2="50"/><line x1="0" y1="100" x2="400" y2="100"/>
-    <line x1="0" y1="150" x2="400" y2="150"/><line x1="0" y1="200" x2="400" y2="200"/>
-    <line x1="100" y1="0" x2="100" y2="225"/><line x1="200" y1="0" x2="200" y2="225"/>
-    <line x1="300" y1="0" x2="300" y2="225"/>
+  <rect width="400" height="225" fill="url(#bg-aml)"/>
+  <rect width="400" height="225" fill="url(#aml-glow)"/>
+  <g transform="translate(30, 8) scale(0.32)">
+    <rect x="116.14" y="107.75" width="950.33" height="538.33" rx="12.49" fill="#162240"/>
+    <rect x="117.65" y="115.32" width="947.42" height="528.97" rx="12.49" fill="#1e3a5f"/>
+    <path d="M1087.23,149.29H149.43a4.81,4.81,0,0,0-4.81,4.81v20.33H1092V154.1A4.81,4.81,0,0,0,1087.23,149.29Z" fill="#2d5a8e"/>
+    <circle cx="136.57" cy="121.82" r="6.5" fill="#3a6a9e"/>
+    <circle cx="154.07" cy="121.82" r="6.5" fill="#3a6a9e"/>
+    <circle cx="171.57" cy="121.82" r="6.5" fill="#3a6a9e"/>
+    <rect x="195.68" y="181.67" width="254.25" height="21.58" fill="#d97706" opacity="0.3"/>
+    <rect x="195.68" y="268.2" width="791.36" height="331.96" fill="#2a4a7a" opacity="0.2"/>
+    <path d="M686,327.89H672.45V301.57c0-29.7-23.68-54.39-53.38-54.84a54.28,54.28,0,0,0-54.85,54.11v27.05H550.7a22.62,22.62,0,0,0-22.55,22.55V460.66a22.62,22.62,0,0,0,22.55,22.55H686a22.61,22.61,0,0,0,22.54-22.55V352.44A22.61,22.61,0,0,0,686,327.89Z" fill="#d97706" opacity="0.85"/>
+    <polygon points="955.13,351.67 945.53,522.62 893.38,511.67 883.05,443.14 893.28,351.15 900.98,352.13 914.56,353.86 928.01,354.69 942.59,353.07 955.13,351.67" fill="#d97706" opacity="0.85"/>
+    <path d="M100.41,545.17c33.08,23.93,46.86,61.37,46.86,61.37s-39.87-1.37-73-25.3-46.86-61.37-46.86-61.37S67.32,521.24,100.41,545.17Z" fill="#d97706" opacity="0.25"/>
+    <path d="M121.76,497c18,13,25.51,33.4,25.51,33.4s-21.7-.74-39.71-13.77-25.5-33.4-25.5-33.4S103.76,483.92,121.76,497Z" fill="#d97706" opacity="0.4"/>
+    <path d="M173.44,529.32c-20.69,22.73-25.06,52.43-25.06,52.43s29.16-7.15,49.84-29.88,25.06-52.44,25.06-52.44S194.12,506.58,173.44,529.32Z" fill="#d97706" opacity="0.3"/>
   </g>
-
-  <!-- Shield icon -->
-  <g transform="translate(160, 35) scale(1.3)">
-    <path d="M20 2 L3 10 L3 18 Q3 30 20 36 Q37 30 37 18 L37 10 Z" fill="none" stroke="#d97706" stroke-width="2" opacity="0.8"/>
-    <path d="M13 18 L18 23 L27 14" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-  </g>
-
-  <!-- Data lines -->
-  <line x1="50" y1="170" x2="350" y2="170" stroke="#2d5a8e" stroke-width="1" opacity="0.4"/>
-  <polyline points="50,170 100,155 150,160 200,140 250,145 300,130 350,135"
-    fill="none" stroke="#f59e0b" stroke-width="1.5" opacity="0.6" stroke-linecap="round"/>
-  <polygon points="50,170 100,155 150,160 200,140 250,145 300,130 350,135 350,170"
-    fill="#d97706" opacity="0.06"/>
-
-  <!-- Dots on line -->
-  <circle cx="100" cy="155" r="2.5" fill="#f59e0b" opacity="0.8"/>
-  <circle cx="200" cy="140" r="2.5" fill="#f59e0b" opacity="0.8"/>
-  <circle cx="300" cy="130" r="2.5" fill="#f59e0b" opacity="0.8"/>
-
-  <text x="200" y="210" font-family="system-ui, sans-serif" font-size="22" font-weight="700" text-anchor="middle" fill="#e2e8f0" letter-spacing="4">AML</text>
+  <rect x="0" y="185" width="400" height="40" fill="url(#bg-aml)" opacity="0.9"/>
+  <text x="200" y="211" font-family="system-ui, sans-serif" font-size="22" font-weight="700" text-anchor="middle" fill="#e2e8f0" letter-spacing="4">AML</text>
 </svg>
