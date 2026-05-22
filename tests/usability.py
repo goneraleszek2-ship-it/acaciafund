@@ -80,7 +80,7 @@ home = read_html("index.html")
 check("AcaciaFund" in home, "Homepage has title 'AcaciaFund'")
 check("Najnowsze syntezy" in home, "Homepage shows 'Najnowsze syntezy'")
 check("Blog" in home, "Homepage has Blog in navigation")
-check("Kursy" in home, "Homepage has Kursy in navigation")
+check("Panel nauki" in home, "Homepage has Panel nauki in navigation")
 check("Kontakt" in home, "Homepage has Kontakt in navigation")
 check("bootstrap" in home, "Homepage loads Bootstrap CSS")
 check("themify-icons" in home, "Homepage loads Themify icons")
@@ -94,7 +94,7 @@ check("AML" in blog or "Markets" in blog or "Science" in blog,
       "Blog list shows category references")
 check("Czytaj dalej" in blog, "Blog list has read-more buttons")
 check("ti-calendar" in blog, "Blog list shows date icons")
-check("ti-user" in blog, "Blog list shows author icons")
+check("ti-timer" in blog, "Blog list shows reading time")
 check("Strona" in blog or "Page" in blog or "Previous" in blog or "Next" in blog or "pagination" in blog,
       "Blog has pagination")
 
@@ -125,7 +125,7 @@ for section in ["/blog/", "/course/", "/research/", "/notice/", "/contact/"]:
 
 # Footer links
 check("footer" in home, "Homepage has footer")
-check("Blog" in home and "Kursy" in home and "Kontakt" in home,
+check("Blog" in home and "Panel nauki" in home and "Kontakt" in home,
       "Footer has main links")
 
 # ── 6. RESPONSIVE ──

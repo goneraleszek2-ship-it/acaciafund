@@ -1,6 +1,6 @@
 {{ define "main" }}
 
-<section class="section">
+<section id="main-content" class="section">
   <div class="container">
     <div class="row">
       <div class="col-lg-8 order-2 order-lg-1">
@@ -15,10 +15,12 @@
                 <ul class="list-inline mb-3">
                   <li class="list-inline-item mr-3 ml-0"><i class="ti-calendar"></i>
                     {{ .PublishDate.Format "02 Jan, 2006" }}</li>
-                  <li class="list-inline-item mr-3 ml-0"><i class="ti-user"></i> <a
-                      href="{{ `author/` | relLangURL }}{{ .Params.Author | urlize }}">{{ .Params.Author | title }}</a>
-                  </li>
+                  <li class="list-inline-item mr-3 ml-0"><i class="ti-timer"></i>
+                    {{ div .WordCount 200 | add 1 }} min czytania</li>
                 </ul>
+                <span class="category-badge" style="background:{{ if eq (index .Params.categories 0) "AML" }}#1e3a5f{{ else if eq (index .Params.categories 0) "Markets" }}#166534{{ else }}#7e22ce{{ end }};color:#fff;">
+                  {{ index .Params.categories 0 }}
+                </span>
                 <h3 class="card-title"><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
                 <a href="{{ .Permalink }}" class="btn btn-primary btn-sm">{{ i18n "read_more" }}</a>
               </div>

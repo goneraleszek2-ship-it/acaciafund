@@ -1,0 +1,8 @@
+<div class="card rounded-0 hover-shadow border-bottom border-primary border-top-0 border-left-0 border-right-0">
+  <div class="card-body">
+    <div class="mb-3"><i class="ti-calendar text-primary mr-2"></i>{{ .PublishDate.Format "02 Jan, 2006" }}</div>
+    <h4 class="card-title"><a href="{{ .Permalink }}">{{ .Title }}</a></h4>
+    <p class="card-text">{{ .Params.description }}</p>
+    <a href="{{ .Permalink }}" class="btn btn-primary btn-sm">{{ i18n "apply_now" }}</a>
+  </div>
+</div>

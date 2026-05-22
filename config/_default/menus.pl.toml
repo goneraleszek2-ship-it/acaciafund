@@ -9,7 +9,7 @@ url = "blog/"
 weight = 2
 
 [[main]]
-name = "Kursy"
+name = "Panel nauki"
 url = "course/"
 weight = 3
 
@@ -28,6 +28,16 @@ name = "Kontakt"
 url = "contact/"
 weight = 6
 
+[[main]]
+name = "System"
+url = "teacher/"
+weight = 7
+
+[[main]]
+name = "Diagramy"
+url = "diagrams/"
+weight = 8
+
 [[footer]]
 name = "O nas"
 url = "about/"
@@ -37,7 +47,7 @@ name = "Blog"
 url = "blog/"
 
 [[footer]]
-name = "Kursy"
+name = "Panel nauki"
 url = "course/"
 
 [[footer]]
@@ -45,8 +55,16 @@ name = "Badania"
 url = "research/"
 
 [[footer]]
+name = "System"
+url = "teacher/"
+
+[[footer]]
 name = "Ogłoszenia"
 url = "notice/"
+
+[[footer]]
+name = "Diagramy"
+url = "diagrams/"
 
 [[footer]]
 name = "Kontakt"

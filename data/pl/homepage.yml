@@ -15,10 +15,23 @@ about:
     link: "about/"
 
 course:
-  enable: false
+  enable: true
+  title: "Panel nauki"
+  image: ""
+  content: "Śledź postępy z Bloom Taxonomy. Każda synteza zawiera pytania na 6 poziomach — od zapamiętywania po tworzenie."
+  button:
+    enable: true
+    label: "Przejdź do panelu"
+    link: "course/"
 
 cta:
-  enable: false
+  enable: true
+  title: "Open Source"
+  content: "Kod źródłowy AcaciaFund jest w pełni otwarty. Zgłaszaj pomysły, przeglądaj architekturę i przyczyniaj się do rozwoju."
+  button:
+    enable: true
+    label: "GitHub →"
+    link: "https://github.com/anomalyco/acaciafund"
 
 success_story:
   enable: false
@@ -27,7 +40,17 @@ event:
   enable: false
 
 funfacts:
-  enable: false
+  enable: true
+  title: "Statystyki"
+  funfact_item:
+  - count: "232"
+    name: "Syntez opublikowanych"
+  - count: "3"
+    name: "Filary badawcze"
+  - count: "2"
+    name: "Źródła danych"
+  - count: "6"
+    name: "Poziomów Bloom"
 
 blog:
   enable: true

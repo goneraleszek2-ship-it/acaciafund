@@ -1,6 +1,7 @@
 {{ define "main" }}
 
-<section class="section-sm">
+<div class="reading-progress" id="readingProgress"></div>
+<section id="main-content" class="section-sm">
   <div class="container">
     <div class="row">
       <div class="col-lg-8 order-2 order-lg-1">
@@ -11,26 +12,54 @@
           </div>
           {{ end }}
           <div class="col-12">
-            <ul class="list-inline">
-              <li class="list-inline-item mr-4 mb-3 mb-md-0 text-light"><span class="font-weight-bold mr-2">{{ i18n "posted_by" }}
-                  :</span><a
-                  href="{{ `author/` | relLangURL }}{{ .Params.Author | urlize }}">{{ .Params.Author | title }}</a></li>
-              <li class="list-inline-item mr-4 mb-3 mb-md-0 text-light"><span class="font-weight-bold mr-2">{{ i18n "date" }}
-                  :</span>{{ .PublishDate.Format "02 Jan, 2006" }}</li>
-              <li class="list-inline-item mr-4 mb-3 mb-md-0 text-light"><span class="font-weight-bold mr-2">{{ i18n "category" }}
-                  :</span>{{ range $index, $elements:= .Params.Categories }}<a
-                  href="{{ `categories/` | relLangURL }}{{ . | urlize | lower }}"> {{ if ne $index 0 }}, {{ end }}
-                  {{ . | title }}</a> {{ end}}</li>
+            <ul class="list-inline d-flex flex-wrap align-items-center gap-3 mb-3">
+              <li class="list-inline-item mr-4 text-light"><i class="ti-calendar mr-1"></i>{{ .PublishDate.Format "02 Jan, 2006" }}</li>
+              <li class="list-inline-item mr-4 text-light"><i class="ti-timer mr-1"></i>{{ div .WordCount 200 | add 1 }} min czytania</li>
+              <li class="list-inline-item mr-4 text-light"><span class="font-weight-bold mr-1">{{ i18n "category" }}:</span>{{ range $index, $elements:= .Params.Categories }}<a href="{{ `categories/` | relLangURL }}{{ . | urlize | lower }}">{{ if ne $index 0 }}, {{ end }}{{ . | title }}</a>{{ end }}</li>
             </ul>
+            <p class="text-light mb-0"><span class="font-weight-bold mr-1">{{ i18n "posted_by" }}:</span><a href="{{ `author/` | relLangURL }}{{ .Params.Author | urlize }}">{{ .Params.Author | title }}</a></p>
           </div>
           <div class="col-12 my-4">
             <div class="border-bottom"></div>
           </div>
-          <div class="col-12 mb-5">
+          {{ if .WordCount | ge 400 }}
+          <div class="col-12 mb-4">
+            <details class="toc" open>
+              <summary class="toc-summary">Spis treści</summary>
+              {{ .TableOfContents }}
+            </details>
+          </div>
+          {{ end }}
+          <div class="col-12 mb-5 post-content">
             {{ .Content }}
           </div>
+          {{ if .Params.tags }}
+          <div class="col-12 mb-4">
+            <div class="border-bottom mb-4"></div>
+            <div class="d-flex flex-wrap gap-2">
+              {{ range .Params.Tags }}
+              <a href="{{ `tags/` | relLangURL }}{{ . | urlize | lower }}" class="badge badge-light mr-2 mb-2 px-3 py-2 text-dark" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none;">#{{ . }}</a>
+              {{ end }}
+            </div>
+          </div>
+          {{ end }}
+          <div class="col-12">
+            <div class="border-bottom mb-4"></div>
+            <div class="d-flex justify-content-between">
+              <div>
+                {{ with .NextInSection }}
+                <a href="{{ .Permalink }}" class="btn btn-outline-primary btn-sm">← {{ .Title }}</a>
+                {{ end }}
+              </div>
+              <div>
+                {{ with .PrevInSection }}
+                <a href="{{ .Permalink }}" class="btn btn-outline-primary btn-sm">{{ .Title }} →</a>
+                {{ end }}
+              </div>
+            </div>
+          </div>
           {{ if site.Config.Services.Disqus.Shortname }}
-          <div class="mt-20">
+          <div class="col-12 mt-4">
             {{ template "_internal/disqus.html" . }}
           </div>
           {{ end }}

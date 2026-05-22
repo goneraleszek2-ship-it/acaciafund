@@ -1,0 +1,11 @@
+<li class="d-md-table mb-4 w-100 border-bottom hover-shadow">
+  <div class="d-md-table-cell text-center px-0 px-md-5 py-4" style="min-width:100px;">
+    <span class="h5 d-block">{{ .PublishDate.Format "02" }}</span>
+    <span class="h6 d-block text-color text-uppercase">{{ .PublishDate.Format "Jan" }}</span>
+    <span class="d-block">{{ .PublishDate.Format "2006" }}</span>
+  </div>
+  <div class="d-md-table-cell px-0 px-md-5 py-4">
+    <a href="{{ .Permalink }}" class="h4 d-block mb-3">{{ .Title }}</a>
+    <p class="mb-0">{{ .Params.description }}</p>
+  </div>
+</li>
