@@ -1,27 +1,36 @@
 [[main]]
+name = "O nas"
+url = "about/"
+weight = 1
+
+[[main]]
 name = "Blog"
 url = "blog/"
-weight = 1
+weight = 2
 
 [[main]]
 name = "Kursy"
 url = "course/"
-weight = 2
+weight = 3
 
 [[main]]
 name = "Badania"
 url = "research/"
-weight = 3
+weight = 4
 
 [[main]]
 name = "Ogłoszenia"
 url = "notice/"
-weight = 4
+weight = 5
 
 [[main]]
 name = "Kontakt"
 url = "contact/"
-weight = 5
+weight = 6
+
+[[footer]]
+name = "O nas"
+url = "about/"
 
 [[footer]]
 name = "Blog"

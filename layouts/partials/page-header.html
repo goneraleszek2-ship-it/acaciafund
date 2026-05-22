@@ -1,0 +1,20 @@
+{{ $bg := "" }}
+{{ if .Params.Bg_image }}
+  {{ $bg = .Params.Bg_image }}
+{{ else }}
+  {{ $bg = "images/backgrounds/page-title.jpg" }}
+{{ end }}
+<section class="page-title-section overlay" style="background-image: url('{{ $bg | relURL }}');">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <ul class="list-inline custom-breadcrumb">
+          <li class="list-inline-item h2"><a class="text-primary font-secondary" href="{{ site.BaseURL | relLangURL }}">{{ i18n "home" }}</a></li>
+          <li class="list-inline-item h5"><i class="ti-angle-right text-white"></i></li>
+          <li class="list-inline-item text-white h3 font-secondary">{{ .Title }}</li>
+        </ul>
+        <p class="text-lighten">{{ .Params.Description }}</p>
+      </div>
+    </div>
+  </div>
+</section>
