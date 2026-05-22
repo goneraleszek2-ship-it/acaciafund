@@ -7,7 +7,16 @@
         <h1 class="display-1 font-weight-bold text-primary" style="font-size:clamp(4rem,10vw,8rem);">404</h1>
         <h2 class="mb-4">Strona nie znaleziona</h2>
         <p class="text-muted mb-5">Ta strona nie istnieje lub została przeniesiona.</p>
-        <a href="{{ "/" | relLangURL }}" class="btn btn-primary btn-lg">Strona główna</a>
+        <a href="{{ "/" | relLangURL }}" class="btn btn-primary btn-lg mb-4">Strona główna</a>
+        <div class="mt-4">
+          <p class="font-weight-bold mb-3">Popularne kategorie:</p>
+          <div class="d-flex justify-content-center flex-wrap gap-2">
+            <a href="{{ "/categories/aml/" | relLangURL }}" class="btn btn-sm rounded-pill px-3" style="background:#1e3a5f;color:#fff;border:none;">🛡️ AML</a>
+            <a href="{{ "/categories/markets/" | relLangURL }}" class="btn btn-sm rounded-pill px-3" style="background:#166534;color:#fff;border:none;">📈 Markets</a>
+            <a href="{{ "/categories/science/" | relLangURL }}" class="btn btn-sm rounded-pill px-3" style="background:#7e22ce;color:#fff;border:none;">🧬 Science</a>
+            <a href="{{ "/blog/" | relLangURL }}" class="btn btn-sm rounded-pill px-3" style="background:#d97706;color:#fff;border:none;">📋 Wszystkie syntezy</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>

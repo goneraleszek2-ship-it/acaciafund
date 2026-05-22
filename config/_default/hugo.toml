@@ -13,9 +13,17 @@ baseName = "search"
 mediaType = "application/json"
 isPlainText = true
 notAlternative = true
+[outputFormats.STATS]
+baseName = "stats"
+mediaType = "application/json"
+isPlainText = true
+notAlternative = true
 
 [outputs]
 home = ["HTML", "RSS", "SEARCH"]
+section = ["HTML", "RSS"]
+taxonomy = ["HTML", "RSS"]
+term = ["HTML", "RSS"]
 
 [imaging]
 quality = 90
@@ -37,20 +45,13 @@ unsafe = true
 logo = "/images/logo.svg"
 description = "Codzienna synteza badań — AML, rynki, nauka"
 author = "AcaciaFund"
-address = ""
-mobile = ""
 email = "contact@acaciafund.org"
-contact_form_action = "#"
-top_header = false
-google_analitycs_id = ""
+google_analytics_id = ""
 
 [params.preloader]
 enable = false
 
 [params.subscription]
-enable = false
-
-[params.map]
 enable = false
 
 [params.cookies]

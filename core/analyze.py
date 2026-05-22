@@ -121,47 +121,20 @@ def classify_story(story: dict) -> list[tuple[str, float]]:
 
 def classify_bloom_level_enhanced(story: dict, scraped_text: str | None = None) -> str:
     """Enhanced Bloom classification using title + optional scraped text."""
+    from .bloom_keywords import CREATE_KW, EVALUATE_KW, ANALYZE_KW, APPLY_KW, UNDERSTAND_KW, REMEMBER_KW
+
     title = story.get("title", "")
     url = story.get("url", "")
     points = story.get("points", 0) or 0
     text = (title + " " + (scraped_text or "")).lower()
 
     # High-signal patterns
-    create_signals = re.compile(
-        r"\b(novel|breakthrough|discover(?:y|ies|ed)|invent(?:s|ed|ion)|first-ever|"
-        r"pioneer(?:s|ed|ing)|revolutionary|paradigm.shift|new.approach|"
-        r"generat(?:e|es|ing|ed|ive)|synthes(?:is|ize|izes|ized)|introduc(?:e|es|ed|ing)|"
-        r"propos(?:e|es|ed|ing)|present(?:s|ed|ing))\b", re.I
-    )
-    evaluate_signals = re.compile(
-        r"\b(regulat(?:e|es|ing|ion|ory|ions?)|compliance|compliant|risk(?:s|y)?|"
-        r"secur(?:e|ity|ing)|privacy|should|must|need.to|ethical|ethic(?:s)?|"
-        r"law(?:s)?|legal|policy|standard(?:s)?|audit(?:s|ing|ed)?|oversight|"
-        r"governance|warn(?:s|ed|ing)?|danger|threat(?:s)?|crisis|crash|"
-        r"ban(?:s|ned|ning)?|prohibi(?:t|ted|tion)|fine(?:s|d)?|penalt(?:y|ies))\b", re.I
-    )
-    analyze_signals = re.compile(
-        r"\b(analys(is|e|es|ing)|comparison|benchmark(?:s|ing)?|survey|review(?:s|ed|ing)?|"
-        r"evaluat(?:e|es|ing|ion)|measur(?:e|es|ing|ement)|assessment|stud(?:y|ies)|"
-        r"investigat(?:e|es|ing|ion)|pattern(?:s)?|trend(?:s)?|correlation|"
-        r"relationship|impact|effect(?:s)?|cause|factor(?:s)?|implication(?:s)?)\b", re.I
-    )
-    apply_signals = re.compile(
-        r"\b(implement(?:s|ed|ing|ation)?|deploy(?:s|ed|ing|ment)?|framework|tool(?:s|ing)?|"
-        r"system(?:s)?|pipeline|workflow|building|build\b|practical|hands.on|"
-        r"applica(?:tion|tions)|us(?:e|es|ed|ing)|using|utiliz(?:e|es|ed|ing))\b", re.I
-    )
-    understand_signals = re.compile(
-        r"\b(explain(?:s|ed|ing)?|guide|introduction|primer|overview|basics?|fundamentals?|"
-        r"what.is|how.to|understand(?:ing)?|tutorial|lesson|walkthrough|"
-        r"demonstrat(?:e|es|ed|ing)|illustrat(?:e|es|ed|ing))\b", re.I
-    )
-    remember_signals = re.compile(
-        r"\b(announce(?:s|d)?|launch(?:es|ed)?|release(?:s|d)?|"
-        r"introduc(?:es|ed)|unveil(?:s|ed|ing)?|publish(?:es|ed)?|"
-        r"report(?:s|ed|ing)?|statement|say(?:s)?|said|according.to|"
-        r"announc(?:es|ed|ing|ement))\b", re.I
-    )
+    create_signals = CREATE_KW
+    evaluate_signals = EVALUATE_KW
+    analyze_signals = ANALYZE_KW
+    apply_signals = APPLY_KW
+    understand_signals = UNDERSTAND_KW
+    remember_signals = REMEMBER_KW
 
     signals = [
         ("create", create_signals),

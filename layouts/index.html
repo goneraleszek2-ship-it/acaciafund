@@ -3,23 +3,54 @@
 {{ $data := index site.Data site.Language.Lang }}
 
 <!-- hero -->
-<section class="hero-section">
-  <div class="container">
+<section id="main-content" class="hero-section">
+  <div class="hero-bg" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;">
+    <img src="/images/banner/hero-banner.svg" alt="" style="width:100%;height:100%;object-fit:cover;opacity:0.8;">
+  </div>
+  <div class="container" style="position:relative;z-index:1;">
     <div class="row">
       <div class="col-lg-8">
         <h1 class="hero-title mb-4">Codzienna synteza badań<br>AML · Rynki · Nauka</h1>
         <p class="hero-subtitle mb-5">Automatyczny system NLP agreguje i klasyfikuje treści z HackerNews i arXiv. Każdego dnia — zwięzła synteza z insightami i pytaniami Bloom Taxonomy.</p>
-        <div class="hero-stats">
-          <div><div class="hero-stat-value">{{ len (where site.RegularPages "Type" "post") }}</div><div class="hero-stat-label">Syntez</div></div>
-          <div><div class="hero-stat-value">3</div><div class="hero-stat-label">Filary</div></div>
-          <div><div class="hero-stat-value">2</div><div class="hero-stat-label">Źródła</div></div>
-          <div><div class="hero-stat-value">6</div><div class="hero-stat-label">Poziomów Bloom</div></div>
-        </div>
+        
       </div>
     </div>
   </div>
 </section>
 <!-- /hero -->
+
+<!-- banner-feature -->
+{{ if $data.homepage.banner_feature.enable }}
+{{ with $data.homepage.banner_feature }}
+<section class="section pb-0">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-5 mb-4 mb-lg-0">
+        {{ partial "image.html" (dict "Src" .image "Alt" "banner-feature" "Class" "img-fluid") }}
+      </div>
+      <div class="col-lg-7">
+        <div class="row">
+          {{ range .feature_item }}
+          <div class="col-sm-6 mb-4">
+            <div class="d-flex">
+              <div class="mr-3">
+                <i class="{{ .icon }}" style="font-size:1.5rem;color:var(--color-accent);"></i>
+              </div>
+              <div>
+                <h5>{{ .name | markdownify }}</h5>
+                <p class="text-muted small">{{ .content | markdownify }}</p>
+              </div>
+            </div>
+          </div>
+          {{ end }}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{{ end }}
+{{ end }}
+<!-- /banner-feature -->
 
 <!-- about -->
 {{ if $data.homepage.about.enable }}
@@ -47,6 +78,22 @@
 {{ end }}
 {{ end }}
 <!-- /about -->
+
+<section class="section pb-0 bg-gray">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 order-2 order-lg-1">
+        <h2 class="section-title">Panel nauki</h2>
+        <p>Śledź postępy z Bloom Taxonomy. Każda synteza zawiera pytania na 6 poziomach — od zapamiętywania po tworzenie.</p>
+        <a href="{{ `course` | relLangURL }}" class="btn btn-outline-primary">Przejdź do panelu</a>
+      </div>
+      <div class="col-lg-6 order-1 order-lg-2 mb-4 mb-lg-0">
+        <img src="/images/course-panel.svg" alt="Panel nauki" class="img-fluid" style="max-height:400px;width:auto;">
+      </div>
+    </div>
+  </div>
+</section>
+<!-- /course-panel -->
 
 <!-- funfacts -->
 {{ if $data.homepage.funfacts.enable }}
@@ -98,11 +145,11 @@
 <!-- cta -->
 {{ if $data.homepage.cta.enable }}
 {{ with $data.homepage.cta }}
-<section class="section bg-gray">
+<section class="section overlay" style="background:linear-gradient(135deg, #0f172a 0%, #1e293b 100%);">
   <div class="container">
     <div class="row">
       <div class="col-12 text-center">
-        <h2 class="section-title">{{ .title | markdownify }}</h2>
+        <h2 class="section-title text-white">{{ .title | markdownify }}</h2>
         <p>{{ .content | markdownify }}</p>
         {{ if .button.enable }}
         {{ with .button }}

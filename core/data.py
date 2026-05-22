@@ -8,6 +8,8 @@ from pathlib import Path
 BASE_DIR = Path(__file__).parent.parent
 CONFIG_PATH = BASE_DIR / "etc" / "pillars.toml"
 CONTENT_DIR = BASE_DIR / "content" / "pl" / "blog"
+STATIC_DIR = BASE_DIR / "static" / "images"
+THUMB_DIR = STATIC_DIR / "thumbs"
 
 ALGOLIA_URL = "https://hn.algolia.com/api/v1/search"
 USER_AGENT = "AcaciaFund/3.0"
@@ -36,6 +38,8 @@ KNOWN_ENTITIES: dict[str, set[str]] = {}
 for _pname, _e in _cfg["entities"].items():
     KNOWN_ENTITIES[_pname] = set(_e["values"])
 ALL_ENTITIES = set().union(*KNOWN_ENTITIES.values())
+
+ENTITY_DEFS: dict[str, str] = _cfg.get("entity_defs", {})
 
 _SOURCE_TIER_SCORES = {
     "high": 1.0,

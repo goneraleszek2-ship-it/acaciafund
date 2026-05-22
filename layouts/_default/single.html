@@ -6,14 +6,14 @@
     <div class="row">
       <div class="col-lg-8 order-2 order-lg-1">
         <div class="row">
-          {{ if .Params.image }}
+          {{ if or .Params.image .Params.thumbnail }}
           <div class="col-12 mb-4">
-            {{ partial "image.html" (dict "Src" .Params.image "Alt" "blog-thumb" "Class" "img-fluid w-100" "Category" (index .Params.categories 0)) }}
+            {{ partial "image.html" (dict "Src" .Params.image "Alt" "blog-thumb" "Class" "img-fluid w-100" "Category" (index .Params.categories 0) "Context" .) }}
           </div>
           {{ end }}
           <div class="col-12">
             <ul class="list-inline d-flex flex-wrap align-items-center gap-3 mb-3">
-              <li class="list-inline-item mr-4 text-light"><i class="ti-calendar mr-1"></i>{{ .PublishDate.Format "02 Jan, 2006" }}</li>
+              <li class="list-inline-item mr-4 text-light"><i class="ti-calendar mr-1"></i><span data-relative="{{ .PublishDate.Format "2006-01-02T15:04:05Z07:00" }}">{{ .PublishDate.Format "02 Jan, 2006" }}</span></li>
               <li class="list-inline-item mr-4 text-light"><i class="ti-timer mr-1"></i>{{ div .WordCount 200 | add 1 }} min czytania</li>
               <li class="list-inline-item mr-4 text-light"><span class="font-weight-bold mr-1">{{ i18n "category" }}:</span>{{ range $index, $elements:= .Params.Categories }}<a href="{{ `categories/` | relLangURL }}{{ . | urlize | lower }}">{{ if ne $index 0 }}, {{ end }}{{ . | title }}</a>{{ end }}</li>
             </ul>
@@ -30,9 +30,25 @@
             </details>
           </div>
           {{ end }}
-          <div class="col-12 mb-5 post-content">
+          <div class="col-12 mb-5 post-content fade-in">
             {{ .Content }}
           </div>
+          <!-- social share -->
+          <div class="col-12 mb-4">
+            <div class="d-flex align-items-center gap-3 flex-wrap">
+              <span class="font-weight-bold mr-2" style="font-size:0.9rem;color:var(--color-text-muted);">Udostępnij:</span>
+              <a href="https://twitter.com/intent/tweet?text={{ .Title | urlquery }}&url={{ .Permalink | urlquery }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm rounded-pill px-3" style="background:#1DA1F2;color:#fff;border:none;" aria-label="Udostępnij na Twitter/X">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+              </a>
+              <a href="https://www.linkedin.com/shareArticle?mini=true&url={{ .Permalink | urlquery }}&title={{ .Title | urlquery }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm rounded-pill px-3" style="background:#0A66C2;color:#fff;border:none;" aria-label="Udostępnij na LinkedIn">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+              </a>
+              <a href="mailto:?subject={{ .Title | urlquery }}&body={{ .Permalink | urlquery }}" class="btn btn-sm rounded-pill px-3" style="background:#6b7280;color:#fff;border:none;" aria-label="Udostępnij przez email">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+              </a>
+            </div>
+          </div>
+          <!-- /social share -->
           {{ if .Params.tags }}
           <div class="col-12 mb-4">
             <div class="border-bottom mb-4"></div>
@@ -43,6 +59,40 @@
             </div>
           </div>
           {{ end }}
+          {{ $related := where (site.RegularPages.Related .) "Type" "post" | first 3 }}
+          {{ if $related }}
+          <div class="col-12 mb-4">
+            <div class="border-bottom mb-4"></div>
+            <h4 class="mb-3">Powiązane syntezy</h4>
+            <div class="row">
+              {{ range $related }}
+              <div class="col-md-4 col-sm-6 mb-3">
+                <div class="card border-0 h-100" style="background:var(--color-card-bg);border:1px solid var(--color-border);">
+                  <div class="card-body p-3">
+                    <span class="category-badge" style="background:{{ if eq (index .Params.categories 0) "AML" }}#1e3a5f{{ else if eq (index .Params.categories 0) "Markets" }}#166534{{ else }}#7e22ce{{ end }};color:#fff;font-size:10px;">
+                      {{ index .Params.categories 0 }}
+                    </span>
+                    <h5 class="card-title h6 mb-0" style="font-size:0.9rem;"><a href="{{ .Permalink }}">{{ .Title }}</a></h5>
+                  </div>
+                </div>
+              </div>
+              {{ end }}
+            </div>
+          </div>
+          {{ end }}
+          <!-- Author profile -->
+          <div class="col-12 mb-4">
+            <div class="border-bottom mb-4"></div>
+            <div class="d-flex align-items-start gap-4 p-4 rounded" style="background:var(--color-card-bg);border:1px solid var(--color-border);">
+              <div style="flex-shrink:0;width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,#1e3a5f,#d97706);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:1.25rem;">{{ .Params.Author | title | truncate 1 "" }}</div>
+              <div style="flex:1;min-width:0;">
+                <h5 class="mb-1" style="font-size:1rem;">{{ .Params.Author | title }}</h5>
+                <p class="mb-2 small" style="color:var(--color-text-muted);">Automatyczny system NLP agregujący i klasyfikujący treści z HackerNews i arXiv. Każdego dnia — zwięzła synteza z insightami i pytaniami Bloom Taxonomy.</p>
+                <a href="{{ `/author/` | relLangURL }}{{ .Params.Author | urlize }}" class="btn btn-sm btn-outline-primary">Zobacz wszystkie syntezy</a>
+              </div>
+            </div>
+          </div>
+          <!-- /Author profile -->
           <div class="col-12">
             <div class="border-bottom mb-4"></div>
             <div class="d-flex justify-content-between">

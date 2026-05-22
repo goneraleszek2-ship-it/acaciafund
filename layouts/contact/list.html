@@ -1,0 +1,29 @@
+{{ define "main" }}
+
+<section class="section bg-gray">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-12">
+        <h2 class="section-title">{{ i18n "contact_us" }}</h2>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-7 mb-4 mb-lg-0">
+        <form action="{{ site.Params.contact_form_action | safeURL }}" method="POST">
+          <input type="text" class="form-control mb-3" id="name" name="name" placeholder="Imię i nazwisko" aria-label="Imię i nazwisko" required>
+          <input type="email" class="form-control mb-3" id="mail" name="mail" placeholder="Adres email" aria-label="Adres email" required>
+          <input type="text" class="form-control mb-3" id="subject" name="subject" placeholder="Temat" aria-label="Temat">
+          <textarea name="message" id="message" class="form-control mb-3" placeholder="Twoja wiadomość" aria-label="Twoja wiadomość" rows="5" required></textarea>
+          <button type="submit" value="send" class="btn btn-primary">{{ i18n "send" }}</button>
+        </form>
+      </div>
+      <div class="col-lg-5 content">
+        {{ .Content }}
+        {{ with site.Params.mobile }}<a href="tel:{{ . }}" class="text-color h5 d-block">{{ . }}</a>{{ end }}
+        <a href="mailto:{{ site.Params.email }}" class="mb-5 text-color h5 d-block">{{ site.Params.email }}</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{{ end }}

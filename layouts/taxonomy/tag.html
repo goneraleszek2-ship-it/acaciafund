@@ -1,0 +1,41 @@
+{{ define "main" }}
+
+{{ "<!-- Fix title capitalization for acronym tags -->" | safeHTML }}
+{{ .Scratch.Set "title" (.Title | upper) }}
+
+<section id="main-content" class="section">
+  <div class="container">
+    <nav aria-label="Breadcrumbs" class="mb-4" style="font-size:0.85rem;color:var(--color-text-muted);">
+      <a href="/" style="color:inherit;text-decoration:none;">Strona główna</a>
+      <span class="mx-2">/</span>
+      <a href="/blog/" style="color:inherit;text-decoration:none;">Blog</a>
+      <span class="mx-2">/</span>
+      <a href="/tags/" style="color:inherit;text-decoration:none;">Tagi</a>
+      <span class="mx-2">/</span>
+      <span style="color:var(--color-accent);">#{{ .Title | upper }}</span>
+    </nav>
+
+    <div class="row mb-4">
+      <div class="col-12">
+        <h1 class="section-title">#{{ .Title | upper }}</h1>
+        <p class="text-muted">{{ len .Pages }} syntez</p>
+      </div>
+    </div>
+
+    <div class="row">
+      {{ range .Paginator.Pages }}
+      <div class="col-lg-4 col-sm-6 mb-5">
+        {{ .Render "post" }}
+      </div>
+      {{ end }}
+    </div>
+
+    <div class="row">
+      <div class="col-12 mt-4">
+        {{ template "_internal/pagination.html" . }}
+      </div>
+    </div>
+  </div>
+</section>
+
+{{ end }}

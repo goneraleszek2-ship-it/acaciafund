@@ -3,13 +3,28 @@
 {{- $class := .Class -}}
 {{- $height := .Height -}}
 {{- $width := .Width -}}
-{{- if not $src -}}
-  {{- $cat := index . "Category" | default "" -}}
-  {{- $thumb := cond (eq $cat "AML") "/images/aml-thumb.svg" (cond (eq $cat "Markets") "/images/markets-thumb.svg" (cond (eq $cat "Science") "/images/science-thumb.svg" "")) -}}
-  {{- $src = $thumb -}}
-{{- end -}}
+{{- $category := index . "Category" | default "" -}}
+
+{{- /* Priority: post-specific thumbnail from frontmatter */ -}}
+{{- $thumb := "" -}}
 {{- if $src -}}
-<img loading="lazy" decoding="async" src="{{ $src | relURL }}" alt="{{ $alt }}" class="{{ $class }} img"{{ with $height }} height="{{ . }}"{{ end }}{{ with $width }} width="{{ . }}"{{ end }} />
+  {{- $thumb = $src -}}
+{{- else -}}
+  {{- $ctx := .Context -}}
+  {{- if $ctx -}}
+    {{- with $ctx.Params.thumbnail -}}
+      {{- $thumb = . | relURL -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+
+{{- /* Fallback: category-based SVG */ -}}
+{{- if not $thumb -}}
+  {{- $thumb = cond (eq $category "AML") "/images/aml-thumb.svg" (cond (eq $category "Markets") "/images/markets-thumb.svg" (cond (eq $category "Science") "/images/science-thumb.svg" "")) -}}
+{{- end -}}
+
+{{- if $thumb -}}
+<img loading="lazy" decoding="async" src="{{ $thumb | relURL }}" alt="{{ $alt }}" class="{{ $class }} img"{{ with $height }} height="{{ . }}"{{ end }}{{ with $width }} width="{{ . }}"{{ end }} />
 {{- else -}}
 <div class="img-placeholder"></div>
 {{- end -}}

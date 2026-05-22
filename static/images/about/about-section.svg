@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 450" width="600" height="450">
+  <!-- Network/interconnection — transparent bg -->
+  <g stroke="#d97706" stroke-width="1" opacity="0.3">
+    <line x1="200" y1="150" x2="300" y2="100"/>
+    <line x1="200" y1="150" x2="150" y2="250"/>
+    <line x1="200" y1="150" x2="300" y2="200"/>
+    <line x1="300" y1="100" x2="400" y2="150"/>
+    <line x1="300" y1="100" x2="450" y2="80"/>
+    <line x1="150" y1="250" x2="300" y2="200"/>
+    <line x1="300" y1="200" x2="400" y2="300"/>
+    <line x1="400" y1="150" x2="300" y2="200"/>
+    <line x1="450" y1="80" x2="400" y2="150"/>
+    <line x1="400" y1="300" x2="250" y2="350"/>
+    <line x1="300" y1="200" x2="200" y2="320"/>
+    <line x1="200" y1="320" x2="250" y2="350"/>
+  </g>
+
+  <!-- Nodes — pillar colors, visible on any bg -->
+  <circle cx="200" cy="150" r="12" fill="#1e3a5f" stroke="#2d5a8e" stroke-width="2" opacity="0.85"/>
+  <circle cx="300" cy="100" r="14" fill="#166534" stroke="#22c55e" stroke-width="2" opacity="0.85"/>
+  <circle cx="150" cy="250" r="10" fill="#7e22ce" stroke="#a855f7" stroke-width="2" opacity="0.85"/>
+  <circle cx="300" cy="200" r="16" fill="#d97706" stroke="#f59e0b" stroke-width="2" opacity="0.9"/>
+  <circle cx="400" cy="150" r="11" fill="#1e3a5f" stroke="#2d5a8e" stroke-width="2" opacity="0.8"/>
+  <circle cx="450" cy="80" r="9" fill="#166534" stroke="#22c55e" stroke-width="2" opacity="0.75"/>
+  <circle cx="400" cy="300" r="12" fill="#7e22ce" stroke="#a855f7" stroke-width="2" opacity="0.85"/>
+  <circle cx="250" cy="350" r="10" fill="#1e3a5f" stroke="#2d5a8e" stroke-width="2" opacity="0.8"/>
+  <circle cx="200" cy="320" r="8" fill="#166534" stroke="#22c55e" stroke-width="2" opacity="0.75"/>
+
+  <!-- Central glow -->
+  <circle cx="300" cy="200" r="24" fill="none" stroke="#d97706" stroke-width="1" opacity="0.25"/>
+  <circle cx="300" cy="200" r="34" fill="none" stroke="#d97706" stroke-width="0.5" opacity="0.1"/>
+
+  <!-- Dots -->
+  <g fill="currentColor" opacity="0.15">
+    <circle cx="100" cy="100" r="2"/>
+    <circle cx="500" cy="200" r="2"/>
+    <circle cx="100" cy="400" r="2"/>
+    <circle cx="500" cy="380" r="2"/>
+    <circle cx="350" cy="420" r="2"/>
+  </g>
+</svg>

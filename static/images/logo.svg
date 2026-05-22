@@ -1,3 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 36">
-  <text x="0" y="28" font-family="system-ui, -apple-system, sans-serif" font-size="22" font-weight="700" fill="white" letter-spacing="1">AcaciaFund</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 40" width="200" height="40">
+  <defs>
+    <linearGradient id="lg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d97706"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+  </defs>
+  <!-- Acacia tree icon -->
+  <g transform="translate(2, 4)">
+    <!-- Trunk -->
+    <path d="M16 28 L16 18 Q16 16 15 15" stroke="#d97706" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <path d="M16 28 L16 18 Q16 16 17 15" stroke="#d97706" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <!-- Canopy - umbrella shape -->
+    <path d="M4 16 Q8 4 16 2 Q24 4 28 16" fill="url(#lg)" opacity="0.9"/>
+    <path d="M8 14 Q12 8 16 7 Q20 8 24 14" fill="none" stroke="#fbbf24" stroke-width="0.8" opacity="0.5"/>
+    <!-- Small branches -->
+    <line x1="16" y1="14" x2="12" y2="8" stroke="#d97706" stroke-width="0.8" opacity="0.6"/>
+    <line x1="16" y1="12" x2="20" y2="7" stroke="#d97706" stroke-width="0.8" opacity="0.6"/>
+  </g>
+  <text x="38" y="26" font-family="system-ui, -apple-system, sans-serif" font-size="18" font-weight="700" fill="white" letter-spacing="0.5">AcaciaFund</text>
 </svg>

@@ -1,5 +1,5 @@
 const CACHE = "acaciafund-v1";
-const ASSETS = ["/", "/offline/"];
+const ASSETS = ["/"];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(
@@ -18,6 +18,6 @@ self.addEventListener("fetch", (e) => {
   e.respondWith(
     fetch(e.request)
       .then((r) => (caches.open(CACHE).then((c) => c.put(e.request, r.clone())), r))
-      .catch(() => caches.match(e.request).then((r) => r || caches.match("/offline/")))
+      .catch(() => caches.match(e.request).then((r) => r || caches.match("/")))
   );
 });

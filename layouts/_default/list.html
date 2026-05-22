@@ -4,27 +4,19 @@
   <div class="container">
     <div class="row">
       <div class="col-lg-8 order-2 order-lg-1">
-        <div class="row">
+        {{ .Content }}
+        <!-- Category filter -->
+        <div class="mb-4 category-filter d-flex flex-wrap gap-2" role="tablist" aria-label="Filtruj kategorie">
+          <button type="button" class="btn btn-sm rounded-pill filter-btn active" data-filter="all" role="tab" aria-selected="true" style="background:var(--color-primary);color:#fff;border:none;cursor:pointer;">Wszystkie</button>
+          <button type="button" class="btn btn-sm rounded-pill filter-btn" data-filter="AML" role="tab" aria-selected="false" style="background:#1e3a5f;color:#fff;border:none;cursor:pointer;">🛡️ AML</button>
+          <button type="button" class="btn btn-sm rounded-pill filter-btn" data-filter="Markets" role="tab" aria-selected="false" style="background:#166534;color:#fff;border:none;cursor:pointer;">📈 Markets</button>
+          <button type="button" class="btn btn-sm rounded-pill filter-btn" data-filter="Science" role="tab" aria-selected="false" style="background:#7e22ce;color:#fff;border:none;cursor:pointer;">🧬 Science</button>
+        </div>
+        <div class="row" id="blogGrid" aria-live="polite">
           {{ $paginator := .Paginate ( where .Data.Pages "Type" "post") }}
           {{ range $paginator.Pages }}
-          <div class="col-sm-6 mb-5">
-            <article
-              class="card rounded-0 border-bottom border-primary border-top-0 border-left-0 border-right-0 hover-shadow">
-              {{ partial "image.html" (dict "Src" .Params.image "Alt" .Title "Class" "card-img-top rounded-0" "Category" (index .Params.categories 0)) }}
-              <div class="card-body">
-                <ul class="list-inline mb-3">
-                  <li class="list-inline-item mr-3 ml-0"><i class="ti-calendar"></i>
-                    {{ .PublishDate.Format "02 Jan, 2006" }}</li>
-                  <li class="list-inline-item mr-3 ml-0"><i class="ti-timer"></i>
-                    {{ div .WordCount 200 | add 1 }} min czytania</li>
-                </ul>
-                <span class="category-badge" style="background:{{ if eq (index .Params.categories 0) "AML" }}#1e3a5f{{ else if eq (index .Params.categories 0) "Markets" }}#166534{{ else }}#7e22ce{{ end }};color:#fff;">
-                  {{ index .Params.categories 0 }}
-                </span>
-                <h3 class="card-title"><a href="{{ .Permalink }}">{{ .Title }}</a></h3>
-                <a href="{{ .Permalink }}" class="btn btn-primary btn-sm">{{ i18n "read_more" }}</a>
-              </div>
-            </article>
+          <div class="col-sm-6 mb-5 blog-card" data-category="{{ index .Params.categories 0 }}">
+            {{ .Render "post" }}
           </div>
           {{ end }}
           <div class="col-12 mt-4">
@@ -32,6 +24,30 @@
           </div>
         </div>
       </div>
+      <script>
+      (function(){
+        var btns = document.querySelectorAll('.filter-btn');
+        var cards = document.querySelectorAll('.blog-card');
+        btns.forEach(function(btn){
+          btn.addEventListener('click', function(){
+            btns.forEach(function(b){
+              b.style.opacity = '0.6'; b.style.transform = 'scale(0.95)';
+              b.setAttribute('aria-selected', 'false');
+            });
+            this.style.opacity = '1'; this.style.transform = 'scale(1)';
+            this.setAttribute('aria-selected', 'true');
+            var filter = this.getAttribute('data-filter');
+            cards.forEach(function(card){
+              if(filter === 'all' || card.getAttribute('data-category') === filter){
+                card.style.display = '';
+              } else {
+                card.style.display = 'none';
+              }
+            });
+          });
+        });
+      })();
+      </script>
       {{ partial "blog-sidebar.html" . }}
     </div>
   </div>

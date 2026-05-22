@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 450" width="600" height="450">
+  <!-- Chart area — transparent bg -->
+  <g transform="translate(40, 40)">
+    <!-- Grid -->
+    <line x1="0" y1="0" x2="520" y2="0" stroke="currentColor" stroke-width="0.5" opacity="0.1"/>
+    <line x1="0" y1="60" x2="520" y2="60" stroke="currentColor" stroke-width="0.5" opacity="0.1"/>
+    <line x1="0" y1="120" x2="520" y2="120" stroke="currentColor" stroke-width="0.5" opacity="0.1"/>
+    <line x1="0" y1="180" x2="520" y2="180" stroke="currentColor" stroke-width="0.5" opacity="0.1"/>
+    <line x1="0" y1="240" x2="520" y2="240" stroke="currentColor" stroke-width="0.5" opacity="0.1"/>
+
+    <!-- AML line -->
+    <polyline points="0,200 60,180 120,190 180,150 240,160 300,120 360,130 420,90"
+      fill="none" stroke="#d97706" stroke-width="2.5" opacity="0.7" stroke-linecap="round"/>
+    <!-- Markets line -->
+    <polyline points="0,220 60,190 120,200 180,170 240,180 300,140 360,150 420,110"
+      fill="none" stroke="#22c55e" stroke-width="2" opacity="0.6" stroke-linecap="round"/>
+    <!-- Science line -->
+    <polyline points="0,230 60,210 120,220 180,190 240,200 300,170 360,180 420,150"
+      fill="none" stroke="#a855f7" stroke-width="2" opacity="0.5" stroke-linecap="round"/>
+
+    <!-- Data dots -->
+    <circle cx="180" cy="150" r="4" fill="#d97706" opacity="0.8"/>
+    <circle cx="300" cy="120" r="3" fill="#d97706" opacity="0.6"/>
+    <circle cx="420" cy="90" r="5" fill="#d97706" opacity="0.8"/>
+    <circle cx="300" cy="140" r="3" fill="#22c55e" opacity="0.6"/>
+
+    <!-- X labels -->
+    <text x="0" y="265" fill="currentColor" font-family="system-ui,sans-serif" font-size="10" opacity="0.3">pon.</text>
+    <text x="120" y="265" fill="currentColor" font-family="system-ui,sans-serif" font-size="10" opacity="0.3">wt.</text>
+    <text x="240" y="265" fill="currentColor" font-family="system-ui,sans-serif" font-size="10" opacity="0.3">śr.</text>
+    <text x="360" y="265" fill="currentColor" font-family="system-ui,sans-serif" font-size="10" opacity="0.3">czw.</text>
+    <text x="480" y="265" fill="currentColor" font-family="system-ui,sans-serif" font-size="10" opacity="0.3">pt.</text>
+  </g>
+
+  <!-- Legend -->
+  <g transform="translate(40, 340)">
+    <circle cx="0" cy="0" r="4" fill="#d97706"/>
+    <text x="12" y="4" fill="currentColor" font-family="system-ui,sans-serif" font-size="12" opacity="0.5">AML</text>
+    <circle cx="80" cy="0" r="4" fill="#22c55e"/>
+    <text x="92" y="4" fill="currentColor" font-family="system-ui,sans-serif" font-size="12" opacity="0.5">Markets</text>
+    <circle cx="180" cy="0" r="4" fill="#a855f7"/>
+    <text x="192" y="4" fill="currentColor" font-family="system-ui,sans-serif" font-size="12" opacity="0.5">Science</text>
+  </g>
+
+  <!-- Mini bar chart -->
+  <g transform="translate(440, 320)" opacity="0.3">
+    <rect x="0" y="28" width="18" height="38" rx="2" fill="#d97706"/>
+    <rect x="23" y="12" width="18" height="54" rx="2" fill="#22c55e"/>
+    <rect x="46" y="22" width="18" height="44" rx="2" fill="#a855f7"/>
+    <rect x="69" y="4" width="18" height="62" rx="2" fill="#d97706"/>
+    <rect x="92" y="18" width="18" height="48" rx="2" fill="#22c55e"/>
+  </g>
+</svg>

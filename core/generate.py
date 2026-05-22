@@ -1,9 +1,10 @@
 import json
+import hashlib
 from datetime import datetime
 from pathlib import Path
 from collections import Counter
 
-from .data import PILLARS, BASE_DIR, log
+from .data import PILLARS, BASE_DIR, log, STATIC_DIR
 from .analyze import (
     build_analysis, classify_bloom_level_enhanced, detect_trending_topics,
     build_pillar_signals, compute_cross_pillar_scores,
@@ -12,6 +13,10 @@ from .bloom import (
     level_label_pl, generate_quiz_questions, generate_flashcards,
 )
 from .scraper import scrape_articles, _url_key
+from .visuals import (
+    generate_thumbnail_svg, generate_og_image, generate_signal_meter,
+    _pick_subtopic, TOPIC_ICONS, PILLAR_COLORS,
+)
 
 PILLAR_CATEGORY = {"aml": "AML", "stock": "Markets", "science": "Science"}
 
@@ -157,6 +162,32 @@ def generate_post(pillar_name: str, config: dict, pillar_stories: list[dict],
         _all_stories or [], pillar_name, pillar_stories, _unclassified
     )
 
+    # Generate visuals (before frontmatter so we can reference the thumbnail path)
+    thumb_filename = ""
+    og_filename = ""
+    try:
+        avg_sqi = signals.get("avg_sqi", 0.5)
+        thumb_title = top_story["title"] if top_story else page_title
+        # Thumbnail SVG
+        thumb_svg = generate_thumbnail_svg(thumb_title, pillar_name, {"sqi": avg_sqi})
+        thumb_key = hashlib.md5(thumb_title.encode()).hexdigest()[:12]
+        thumb_filename = f"thumb_{thumb_key}.svg"
+        thumb_path = STATIC_DIR / thumb_filename
+        thumb_path.parent.mkdir(parents=True, exist_ok=True)
+        thumb_path.write_text(thumb_svg, encoding="utf-8")
+        # OG Image SVG
+        og_svg = generate_og_image(thumb_title, pillar_name, {"sqi": avg_sqi}, date_str)
+        og_key = hashlib.md5(f"og_{thumb_title}".encode()).hexdigest()[:12]
+        og_filename = f"og_{og_key}.svg"
+        og_path = STATIC_DIR / og_filename
+        og_path.write_text(og_svg, encoding="utf-8")
+        log(f"Wizualizacje: {thumb_filename}, {og_filename}")
+    except Exception as e:
+        log(f"Blad generowania wizualizacji: {e}", ok=False)
+        avg_sqi = signals.get("avg_sqi", 0.5)
+
+    thumbnail_url = f"/images/{thumb_filename}" if thumb_filename else ""
+
     lines = [
         "---",
         f'title: "{page_title}"',
@@ -166,6 +197,12 @@ def generate_post(pillar_name: str, config: dict, pillar_stories: list[dict],
         f"categories: [\"{category}\"]",
         f"tags: {json.dumps(config['tags'])}",
         "type: \"post\"",
+    ]
+    if thumbnail_url:
+        lines.append(f'thumbnail: "{thumbnail_url}"')
+    if og_filename:
+        lines.append(f'og_image: "/images/{og_filename}"')
+    lines += [
         "---",
         "",
         f"## \U0001f50d Trending (HackerNews, {date_str})",
@@ -213,6 +250,13 @@ def generate_post(pillar_name: str, config: dict, pillar_stories: list[dict],
         for fcard in edu_flashcards[:8]:
             lines.append(f"- **{fcard['term']}**: {fcard['definition']}")
         lines.append("")
+
+    # Embedded thumbnail in post body
+    if thumbnail_url:
+        lines.extend([
+            "> ![](" + thumbnail_url + ")",
+            "",
+        ])
 
     # Classification info
     if confidence:

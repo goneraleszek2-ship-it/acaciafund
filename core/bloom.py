@@ -2,6 +2,10 @@ import hashlib
 import random
 import re
 
+from .bloom_keywords import (
+    REMEMBER_KW, UNDERSTAND_KW, APPLY_KW, ANALYZE_KW, EVALUATE_KW, CREATE_KW,
+)
+
 _VERBS = {
     "remember": "recalling",
     "understand": "explaining",
@@ -13,51 +17,18 @@ _VERBS = {
 
 _LEVEL_ORDER = ["remember", "understand", "apply", "analyze", "evaluate", "create"]
 
-_REMEMBER_KW = re.compile(
-    r"\b(announce(?:s|d)?|launch(?:es|ed)?|release(?:s|d)?|"
-    r"introduc(?:es|ed)|unveil(?:s|ed|ing)?|publish(?:es|ed)?)\b", re.I
-)
-_UNDERSTAND_KW = re.compile(
-    r"\b(explain(?:s|ed|ing)?|guide|introduction|"
-    r"primer|overview|basics?|fundamentals?|"
-    r"what is|how to|understand(?:ing)?|tutorial)\b", re.I
-)
-_APPLY_KW = re.compile(
-    r"\b(implement(?:s|ed|ing|ation)?|deploy(?:s|ed|ing|ment)?|"
-    r"framework|tool(?:s|ing)?|system(?:s)?|"
-    r"pipeline|workflow|building|build\b|"
-    r"practical|hands.on)\b", re.I
-)
-_ANALYZE_KW = re.compile(
-    r"\b(analys(is|e|es|ing)|comparison|benchmark(?:s|ing)?|"
-    r"survey|review(?:s|ed|ing)?|evaluat(?:e|es|ing|ion)|"
-    r"measur(?:e|es|ing|ement)|assessment|"
-    r"stud(?:y|ies)|investigat(?:e|es|ing|ion)|"
-    r"pattern(?:s)?|trend(?:s)?)\b", re.I
-)
-_EVALUATE_KW = re.compile(
-    r"\b(regulat(?:e|es|ing|ion|ory|ions?)|"
-    r"compliance|compliant|risk(?:s|y)?|"
-    r"secur(?:e|ity|ing)|privacy|"
-    r"should|must|need to|ethical|ethic(?:s)?|"
-    r"law(?:s)?|legal|policy|standard(?:s)?|"
-    r"audit(?:s|ing|ed)?|oversight|governance)\b", re.I
-)
-_CREATE_KW = re.compile(
-    r"\b(novel|breakthrough|discover(?:y|ies|ed)?|"
-    r"invent(?:s|ed|ion)?|first.ever|"
-    r"pioneer(?:s|ed|ing)?|revolutionary|"
-    r"paradigm.shift|new approach|"
-    r"generat(?:e|es|ing|ed|ive)|synthes(?:is|ize|izes|ized))\b", re.I
-)
+_REMEMBER_KW = REMEMBER_KW
+_UNDERSTAND_KW = UNDERSTAND_KW
+_APPLY_KW = APPLY_KW
+_ANALYZE_KW = ANALYZE_KW
+_EVALUATE_KW = EVALUATE_KW
+_CREATE_KW = CREATE_KW
 
 _GOV_ORG_DOMAIN = re.compile(r"\.(gov|mil|edu|org)$", re.I)
 _ARXIV_DOMAIN = re.compile(r"arxiv\.org", re.I)
 
 
 _KEYWORD_LEVELS = [
-    ("create", _CREATE_KW),
-    ("evaluate", _EVALUATE_KW),
     ("analyze", _ANALYZE_KW),
     ("apply", _APPLY_KW),
     ("understand", _UNDERSTAND_KW),
@@ -348,17 +319,8 @@ def _build_factoid_question(sentence: str, article_title: str) -> dict | None:
     words = sentence.split()
     if len(words) < 8:
         return None
-    # Find a number to make a plausible T/F
     nums = re.findall(r"\b(\d+)\b", sentence)
     if not nums:
-        return None
-    num = nums[0]
-    # Make a flipped version
-    try:
-        flipped_num = str(int(num) * 2)
-    except ValueError:
-        return None
-    if flipped_num not in sentence:
         return None
     return {
         "bloom_level": "understand",
@@ -502,80 +464,9 @@ def _extract_bigrams(title: str) -> list[str]:
 
 
 def generate_flashcards(articles: list[dict], pillar_name: str = "") -> list[dict]:
-    from .data import KNOWN_ENTITIES, ALL_ENTITIES
+    from .data import KNOWN_ENTITIES, ALL_ENTITIES, ENTITY_DEFS
 
-    entity_defs: dict[str, str] = {
-        # ── AML ──
-        "FinCEN": "Financial Crimes Enforcement Network — agencja USA ds. przestępczości finansowej",
-        "FATF": "Financial Action Task Force — międzynarodowa organizacja ds. przeciwdziałania praniu pieniędzy",
-        "SEC": "Securities and Exchange Commission — amerykański regulator rynku papierów wartościowych",
-        "FCA": "Financial Conduct Authority — brytyjski regulator finansowy",
-        "ECB": "European Central Bank — Europejski Bank Centralny",
-        "Fed": "Federal Reserve System — bank centralny Stanów Zjednoczonych",
-        "OCC": "Office of the Comptroller of the Currency — amerykański nadzór bankowy",
-        "EBA": "European Banking Authority — Europejski Urząd Nadzoru Bankowego",
-        "Binance": "Największa giełda kryptowalut na świecie",
-        "Coinbase": "Amerykańska giełda kryptowalut notowana na Nasdaq",
-        "Circle": "Emiter stablecoina USDC",
-        "PayPal": "Globalna platforma płatności cyfrowych",
-        "Stripe": "Platforma obsługi płatności internetowych",
-        "JPMorgan": "Największy bank w USA pod względem aktywów",
-        "HSBC": "Międzynarodowy bank z siedzibą w Londynie",
-        "Visa": "Globalna sieć kart płatniczych",
-        "Mastercard": "Globalna sieć kart płatniczych",
-        "SWIFT": "Society for Worldwide Interbank Financial Telecommunication — system komunikacji międzybankowej",
-        "FedNow": "System natychmiastowych płatności amerykańskiego Fed",
-        "KYC": "Know Your Customer — procedura weryfikacji tożsamości klienta",
-        "AML": "Anti-Money Laundering — przeciwdziałanie praniu pieniędzy",
-        "CBDC": "Central Bank Digital Currency — cyfrowa waluta banku centralnego",
-        "PSD2": "Payment Services Directive 2 — unijna dyrektywa o usługach płatniczych",
-        "SAR": "Suspicious Activity Report — zgłoszenie podejrzanej aktywności",
-        "CTF": "Counter-Terrorism Financing — przeciwdziałanie finansowaniu terroryzmu",
-        # ── Markets ──
-        "NVIDIA": "Producent procesorów graficznych (GPU) i lider w AI computing",
-        "AMD": "Advanced Micro Devices — producent CPU i GPU, konkurent Intel/NVIDIA",
-        "TSMC": "Taiwan Semiconductor Manufacturing Company — największy producent układów scalonych",
-        "Intel": "Największy producent procesorów x86 na świecie",
-        "ASML": "Holenderski producent maszyn litograficznych dla przemysłu półprzewodnikowego",
-        "ARM": "Architektura procesorów o niskim poborze energii, własność SoftBank",
-        "Qualcomm": "Producent układów Snapdragon dla urządzeń mobilnych",
-        "Broadcom": "Producent układów scalonych i infrastruktury sieciowej",
-        "Micron": "Amerykański producent pamięci DRAM i NAND",
-        "Samsung": "Konglomerat technologiczny, największy producent pamięci",
-        "SoftBank": "Japoński konglomerat inwestycyjny, właściciel ARM i Vision Fund",
-        "S&P 500": "Indeks giełdowy 500 największych spółek USA",
-        "Nasdaq": "Amerykańska giełda technologiczna",
-        "GPU": "Graphics Processing Unit — procesor graficzny",
-        "CPU": "Central Processing Unit — procesor główny",
-        "ASIC": "Application-Specific Integrated Circuit — układ scalony dedykowanego zastosowania",
-        "RISC-V": "Otwarta architektura procesorów",
-        # ── Science ──
-        "DeepMind": "Laboratorium AI należące do Alphabet/Google",
-        "Anthropic": "Firma AI tworząca model Claude",
-        "MIT": "Massachusetts Institute of Technology",
-        "Stanford": "Stanford University — lider w badaniach AI",
-        "Harvard": "Harvard University — najstarsza uczelnia USA",
-        "Oxford": "University of Oxford — wiodący brytyjski uniwersytet badawczy",
-        "Cambridge": "University of Cambridge — brytyjski uniwersytet badawczy",
-        "Caltech": "California Institute of Technology",
-        "DARPA": "Defense Advanced Research Projects Agency — agencja badawcza USA",
-        "NIH": "National Institutes of Health — amerykański instytut zdrowia",
-        "CERN": "Europejska Organizacja Badań Jądrowych",
-        "NASA": "National Aeronautics and Space Administration — amerykańska agencja kosmiczna",
-        "WHO": "World Health Organization — Światowa Organizacja Zdrowia",
-        # ── Cross-domain ──
-        "GDPR": "General Data Protection Regulation — unijne rozporządzenie o ochronie danych osobowych",
-        "SQI": "Signal Quality Index — miara jakości sygnału w 6 wymiarach (AcaciaFund)",
-        "NLP": "Natural Language Processing — przetwarzanie języka naturalnego",
-        "API": "Application Programming Interface — interfejs programistyczny aplikacji",
-        "LLM": "Large Language Model — duży model językowy",
-        "HN": "Hacker News — platforma społecznościowa dla branży technologicznej",
-        "arXiv": "Open-access repozytorium preprintów naukowych",
-        "PoC": "Proof of Concept — dowód koncepcji",
-        "GDP": "Gross Domestic Product — produkt krajowy brutto",
-        "IPO": "Initial Public Offering — pierwsza oferta publiczna akcji",
-        "SPAC": "Special Purpose Acquisition Company — spółka celowa przejęć",
-    }
+    entity_defs = ENTITY_DEFS
 
     seen_terms: set[str] = set()
     flashcards: list[dict] = []

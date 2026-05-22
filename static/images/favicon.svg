@@ -1,4 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="4" fill="#1e3a5f"/>
-  <text x="16" y="23" font-family="system-ui, sans-serif" font-size="20" text-anchor="middle" fill="#e2e8f0" font-weight="bold">A</text>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <defs>
+    <linearGradient id="fg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#d97706"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" rx="6" fill="#0f172a"/>
+  <!-- Stylized acacia tree -->
+  <path d="M10 24 L10 16 Q10 14 9 13" stroke="#d97706" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M10 24 L10 16 Q10 14 11 13" stroke="#d97706" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+  <path d="M2 14 Q6 4 10 2 Q14 4 18 14" fill="url(#fg)" opacity="0.9"/>
 </svg>

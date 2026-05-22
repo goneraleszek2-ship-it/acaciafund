@@ -2,12 +2,26 @@ slider:
   enable: false
 
 banner_feature:
-  enable: false
+  enable: true
+  image: "/images/banner/banner-feature.svg"
+  feature_item:
+  - name: "Synteza AI"
+    icon: "ti-stats-up"
+    content: "Automatyczna klasyfikacja i analiza źródeł z HackerNews i arXiv przy użyciu NLP."
+  - name: "3 filary"
+    icon: "ti-layers-alt"
+    content: "AML, rynki kapitałowe i nauka — międzyfilarowe powiązania wykrywane przez TF-IDF."
+  - name: "Bloom Taxonomy"
+    icon: "ti-pencil-alt"
+    content: "Pytania na 6 poziomach — od pamięci po tworzenie. Fiszki i quizy do każdej syntezy."
+  - name: "Open Source"
+    icon: "ti-github"
+    content: "W pełni otwarty kod. Zgłaszaj pomysły i przeglądaj architekturę na GitHub."
 
 about:
   enable: true
   title: "O AcaciaFund"
-  image: ""
+  image: "/images/about/about-section.svg"
   content: "Codzienna, zautomatyzowana synteza wiedzy — AML, rynki kapitałowe i nauka przez pryzmat myślenia systemowego. Źródła: HackerNews i arXiv."
   button:
     enable: true
@@ -17,7 +31,7 @@ about:
 course:
   enable: true
   title: "Panel nauki"
-  image: ""
+  image: "/images/course-panel.svg"
   content: "Śledź postępy z Bloom Taxonomy. Każda synteza zawiera pytania na 6 poziomach — od zapamiętywania po tworzenie."
   button:
     enable: true
@@ -40,7 +54,7 @@ event:
   enable: false
 
 funfacts:
-  enable: true
+  enable: false
   title: "Statystyki"
   funfact_item:
   - count: "232"

@@ -26,7 +26,7 @@ def _request(url: str, timeout: int = 20, max_retries: int = 3) -> str | None:
             if not data:
                 raise OSError("Empty response")
             return data
-        except (urllib.error.URLError, urllib.error.HTTPError, OSError, json.JSONDecodeError) as e:
+        except (urllib.error.URLError, urllib.error.HTTPError, OSError) as e:
             last_err = e
             if attempt < max_retries:
                 wait = 2 ** attempt

@@ -4,7 +4,7 @@ from datetime import datetime, timezone, timedelta
 from pathlib import Path
 
 from .data import (
-    PILLARS, ALL_ENTITIES, SOURCE_TIERS,
+    PILLARS, ALL_ENTITIES, SOURCE_TIERS, DOMAIN_PATTERNS, KEYWORD_PATTERNS,
     extract_domain, log, CONTENT_DIR,
 )
 
@@ -84,11 +84,9 @@ def novelty_score(title: str, history: dict[str, set[str]]) -> float:
 
 def cross_pillar_count(title: str, url: str) -> int:
     title_lower = title.lower()
-    url_lower = url.lower()
     domain = extract_domain(url)
     count = 0
     for pname in PILLARS:
-        from .data import DOMAIN_PATTERNS, KEYWORD_PATTERNS
         score = 0
         for pat, s in DOMAIN_PATTERNS[pname]:
             if pat.search(domain):

@@ -5,7 +5,7 @@
         <div class="col-lg-8">
           <div class="d-flex mb-4">
             <input type="search" id="searchInput" class="form-control form-control-lg" placeholder="Szukaj w syntezach..." autocomplete="off" aria-label="Szukaj">
-            <button class="btn btn-outline-secondary ml-2" id="searchClose" aria-label="Zamknij wyszukiwarkę">✕</button>
+            <button type="button" class="btn btn-outline-secondary ml-2" id="searchClose" aria-label="Zamknij wyszukiwarkę" aria-controls="searchOverlay">✕</button>
           </div>
           <div id="searchResults" class="search-results"></div>
         </div>
@@ -56,17 +56,46 @@
     }).slice(0, 20);
 
     if (matches.length === 0) {
-      results.innerHTML = '<p class="text-muted">Brak wyników</p>';
+      results.textContent = '';
+      var p = document.createElement('p');
+      p.className = 'text-muted';
+      p.textContent = 'Brak wyników';
+      results.appendChild(p);
       return;
     }
-    results.innerHTML = matches.map(function(item) {
-      return '<a href="' + item.url + '" class="search-result-item" onclick="document.getElementById(\'searchOverlay\').classList.remove(\'active\')">' +
-        '<small class="search-result-category" style="background:' + (item.category === 'AML' ? '#1e3a5f' : item.category === 'Markets' ? '#166534' : '#7e22ce') + ';color:#fff;padding:1px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;">' + item.category + '</small>' +
-        '<span class="search-result-title">' + item.title + '</span>' +
-        '<span class="search-result-date">' + item.date + '</span>' +
-        (item.description ? '<span class="search-result-desc">' + item.description.substring(0, 120) + '</span>' : '') +
-        '</a>';
-    }).join('');
+    results.textContent = '';
+    matches.forEach(function(item) {
+      var a = document.createElement('a');
+      a.href = item.url;
+      a.className = 'search-result-item';
+      a.onclick = function() { document.getElementById('searchOverlay').classList.remove('active'); };
+
+      var cat = document.createElement('small');
+      cat.className = 'search-result-category';
+      cat.style.cssText = 'background:' + (item.category === 'AML' ? '#1e3a5f' : item.category === 'Markets' ? '#166534' : '#7e22ce') + ';color:#fff;padding:1px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;';
+      cat.textContent = item.category;
+
+      var title = document.createElement('span');
+      title.className = 'search-result-title';
+      title.textContent = item.title;
+
+      var date = document.createElement('span');
+      date.className = 'search-result-date';
+      date.textContent = item.date;
+
+      a.appendChild(cat);
+      a.appendChild(title);
+      a.appendChild(date);
+
+      if (item.description) {
+        var desc = document.createElement('span');
+        desc.className = 'search-result-desc';
+        desc.textContent = item.description.substring(0, 120);
+        a.appendChild(desc);
+      }
+
+      results.appendChild(a);
+    });
   }
 
   searchTriggers.forEach(function(el) {

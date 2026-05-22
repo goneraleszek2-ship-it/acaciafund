@@ -1,6 +1,6 @@
 <head>
   <meta charset="utf-8">
-  <title>{{ .Title }}</title>
+  <title>{{ if .Data.Singular }}{{ .Title | upper }}{{ else }}{{ .Title }}{{ end }}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
   <meta name="description"
     content="{{ with .Params.Description }}{{ . }}{{ else }}{{ with site.Params.description }}{{ . }}{{ end }}{{ end }}">
@@ -15,14 +15,26 @@
   {{ end }}
 
   {{ "<!-- OG tags -->" | safeHTML }}
-  <meta property="og:title" content="{{ .Title }}">
+  <meta property="og:title" content="{{ if .Data.Singular }}{{ .Title | upper }}{{ else }}{{ .Title }}{{ end }}">
   <meta property="og:description" content="{{ with .Params.Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}">
   <meta property="og:url" content="{{ .Permalink }}">
   <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
   <meta property="og:site_name" content="{{ site.Title }}">
+  {{ with .Params.og_image }}<meta property="og:image" content="{{ . | absURL }}">{{ end }}
+  {{ if .IsPage }}<meta property="article:published_time" content="{{ .PublishDate.Format "2006-01-02T15:04:05Z07:00" }}">{{ end }}
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="{{ .Title }}">
+  <meta name="twitter:title" content="{{ if .Data.Singular }}{{ .Title | upper }}{{ else }}{{ .Title }}{{ end }}">
   <meta name="twitter:description" content="{{ with .Params.Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}">
+  {{ with .Params.og_image }}<meta name="twitter:image" content="{{ . | absURL }}">{{ end }}
+
+  {{ "<!-- Blocking dark mode script to prevent flash -->" | safeHTML }}
+  <script>
+    (function(){var t=localStorage.getItem('theme');if(!t)t=window.matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);})();
+  </script>
+  {{ "<!-- Inline critical CSS -->" | safeHTML }}
+  <style>
+    :root{--color-primary:#1e3a5f;--color-accent:#d97706;--color-bg:#fff;--color-text:#0f172a;--color-text-muted:#64748b;--color-nav-bg:#1e3a5f}[data-theme="dark"]{--color-bg:#0f172a;--color-text:#f1f5f9;--color-text-muted:#94a3b8;--color-nav-bg:#0f172a}*,*::before,*::after{box-sizing:border-box}body{margin:0;font-family:'Inter',system-ui,-apple-system,sans-serif;background:var(--color-bg);color:var(--color-text);line-height:1.5}.skip-link{position:absolute;top:-100%;left:50%;z-index:10000;padding:8px 16px;background:var(--color-primary);color:#fff;border-radius:0 0 6px 6px}.skip-link:focus{top:0}.navbar{background:var(--color-nav-bg)!important;padding:8px 16px;display:flex;align-items:center;position:sticky;top:0;z-index:1000}.container{max-width:1200px;margin:0 auto;padding:0 16px;width:100%}.row{display:flex;flex-wrap:wrap}.d-flex{display:flex}.align-items-center{align-items:center}.justify-content-between{justify-content:space-between}.gap-2{gap:8px}.gap-3{gap:12px}.mb-0{margin-bottom:0}.mb-4{margin-bottom:24px}.mb-5{margin-bottom:48px}.mt-4{margin-top:24px}.p-0{padding:0}.text-white{color:#fff}.text-center{text-align:center}.btn{display:inline-block;padding:8px 20px;border-radius:6px;text-decoration:none;font-weight:500;cursor:pointer;border:1px solid transparent;font-size:14px;line-height:1.5}.btn-primary{background:var(--color-primary);color:#fff;border-color:var(--color-primary)}.btn-outline-primary{color:var(--color-primary);border-color:var(--color-primary);background:transparent}.btn-sm{padding:4px 12px;font-size:12px}.badge{display:inline-block;padding:4px 10px;font-size:11px;font-weight:600;border-radius:4px;text-transform:uppercase;letter-spacing:.5px}.list-unstyled{list-style:none;padding-left:0}img{max-width:100%;height:auto}.section-title{font-size:1.75rem;font-weight:700;margin-bottom:24px}.text-muted{color:var(--color-text-muted)}.section{padding:80px 0}.reading-progress{position:fixed;top:0;left:0;width:0%;height:3px;background:linear-gradient(90deg,var(--color-accent),#f59e0b);z-index:9999}
+  </style>
 
   {{ "<!-- Preconnect for fonts -->" | safeHTML }}
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -44,5 +56,4 @@
 
   {{ "<!--Favicon-->" | safeHTML }}
   <link rel="icon" href="{{ `images/favicon.svg` | absURL }}" type="image/svg+xml">
-  <link rel="alternate icon" href="{{ `images/favicon.png` | absURL }}" type="image/png">
 </head>

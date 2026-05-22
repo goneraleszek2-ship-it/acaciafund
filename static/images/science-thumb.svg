@@ -4,11 +4,46 @@
       <stop offset="0%" stop-color="#7e22ce"/>
       <stop offset="100%" stop-color="#3b0764"/>
     </linearGradient>
+    <linearGradient id="glow" cx="50%" cy="40%">
+      <stop offset="0%" stop-color="#c084fc" stop-opacity="0.1"/>
+      <stop offset="100%" stop-color="#3b0764" stop-opacity="0"/>
+    </linearGradient>
   </defs>
   <rect width="400" height="225" fill="url(#bg)"/>
-  <circle cx="175" cy="90" r="28" fill="none" stroke="#e2e8f0" stroke-width="2"/>
-  <circle cx="218" cy="105" r="18" fill="none" stroke="#94a3b8" stroke-width="2"/>
-  <line x1="195" y1="78" x2="208" y2="95" stroke="#e2e8f0" stroke-width="2" stroke-linecap="round"/>
-  <text x="200" y="165" font-family="system-ui, sans-serif" font-size="22" font-weight="700" text-anchor="middle" fill="#e2e8f0" letter-spacing="4">SCIENCE</text>
-  <text x="200" y="188" font-family="system-ui, sans-serif" font-size="10" text-anchor="middle" fill="#64748b" letter-spacing="2">RESEARCH &amp; DISCOVERY</text>
+  <rect width="400" height="225" fill="url(#glow)"/>
+
+  <!-- Grid -->
+  <g stroke="#a855f7" stroke-width="0.5" opacity="0.15">
+    <line x1="0" y1="50" x2="400" y2="50"/><line x1="0" y1="100" x2="400" y2="100"/>
+    <line x1="0" y1="150" x2="400" y2="150"/><line x1="0" y1="200" x2="400" y2="200"/>
+    <line x1="100" y1="0" x2="100" y2="225"/><line x1="200" y1="0" x2="200" y2="225"/>
+    <line x1="300" y1="0" x2="300" y2="225"/>
+  </g>
+
+  <!-- DNA helix / atom icon -->
+  <g transform="translate(160, 40) scale(1.1)">
+    <!-- Helix back bones -->
+    <path d="M20 5 C35 15, 35 35, 20 45 C5 55, 5 75, 20 85" fill="none" stroke="#c084fc" stroke-width="1.5" opacity="0.6"/>
+    <path d="M40 5 C25 15, 25 35, 40 45 C55 55, 55 75, 40 85" fill="none" stroke="#c084fc" stroke-width="1.5" opacity="0.6"/>
+    <!-- Rungs -->
+    <line x1="22" y1="15" x2="38" y2="15" stroke="#e2e8f0" stroke-width="1" opacity="0.4"/>
+    <line x1="24" y1="25" x2="36" y2="25" stroke="#e2e8f0" stroke-width="1" opacity="0.4"/>
+    <line x1="30" y1="35" x2="30" y2="35" stroke="#e2e8f0" stroke-width="1" opacity="0.4"/>
+    <line x1="36" y1="45" x2="24" y2="45" stroke="#e2e8f0" stroke-width="1" opacity="0.4"/>
+    <line x1="38" y1="55" x2="22" y2="55" stroke="#e2e8f0" stroke-width="1" opacity="0.4"/>
+    <line x1="35" y1="65" x2="25" y2="65" stroke="#e2e8f0" stroke-width="1" opacity="0.4"/>
+    <line x1="28" y1="75" x2="32" y2="75" stroke="#e2e8f0" stroke-width="1" opacity="0.4"/>
+  </g>
+
+  <!-- Orbit paths around the helix -->
+  <ellipse cx="200" cy="85" rx="55" ry="8" fill="none" stroke="#a855f7" stroke-width="0.5" opacity="0.2" transform="rotate(-15, 200, 85)"/>
+  <ellipse cx="200" cy="85" rx="60" ry="10" fill="none" stroke="#c084fc" stroke-width="0.5" opacity="0.15" transform="rotate(10, 200, 85)"/>
+
+  <!-- Floating particles -->
+  <circle cx="145" cy="70" r="1.5" fill="#c084fc" opacity="0.5"/>
+  <circle cx="255" cy="95" r="1" fill="#e2e8f0" opacity="0.4"/>
+  <circle cx="140" cy="100" r="1" fill="#a855f7" opacity="0.4"/>
+  <circle cx="260" cy="65" r="1.5" fill="#c084fc" opacity="0.3"/>
+
+  <text x="200" y="210" font-family="system-ui, sans-serif" font-size="22" font-weight="700" text-anchor="middle" fill="#e2e8f0" letter-spacing="4">SCIENCE</text>
 </svg>

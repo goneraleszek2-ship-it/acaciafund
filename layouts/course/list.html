@@ -1,10 +1,95 @@
 {{ define "main" }}
 
-<section class="section">
+{{ $allPosts := where .Site.RegularPages "Section" "blog" }}
+{{ $amlPosts := where $allPosts "Params.categories" "intersect" (slice "AML") }}
+{{ $marketsPosts := where $allPosts "Params.categories" "intersect" (slice "Markets") }}
+{{ $sciencePosts := where $allPosts "Params.categories" "intersect" (slice "Science") }}
+
+{{ $pillars := slice
+  (dict "id" "aml" "name" "AML" "label" "Przeciwdziałanie praniu pieniędzy" "color" "#d97706" "bg" "#1e3a5f" "icon" "🛡️" "posts" $amlPosts "image" "/images/aml-thumb.svg")
+  (dict "id" "markets" "name" "Markets" "label" "Analiza rynków kapitałowych" "color" "#22c55e" "bg" "#166534" "icon" "📈" "posts" $marketsPosts "image" "/images/markets-thumb.svg")
+  (dict "id" "science" "name" "Science" "label" "Systemy złożone i cybernetyka" "color" "#a855f7" "bg" "#7e22ce" "icon" "🧬" "posts" $sciencePosts "image" "/images/science-thumb.svg")
+}}
+
+<section id="main-content" class="section">
   <div class="container">
     <div class="row">
       <div class="col-12 content">
         {{ .Content }}
+      </div>
+    </div>
+
+    <div class="row mt-4" style="row-gap:2rem;">
+      {{ range $pillars }}
+      {{ $count := len .posts }}
+      {{ $latest := index .posts 0 }}
+      <div class="col-lg-4 col-md-6">
+        <div class="card border-0 h-100" style="background:#0f172a;border:1px solid rgba(255,255,255,0.06);">
+          <div class="card-body p-4">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+              <h3 class="h4 mb-0 text-white">{{ .icon }} {{ .name }}</h3>
+              <span class="badge rounded-pill" style="background:{{ .color }}20;color:{{ .color }};">{{ $count }} postów</span>
+            </div>
+            <p class="small mb-3" style="color:rgba(255,255,255,0.5);">{{ .label }}</p>
+            <a href="{{ "blog/" | relLangURL }}" class="btn btn-sm btn-outline-warning mr-2">Archiwum</a>
+            <a href="{{ printf "categories/%s/index.xml" .id | relLangURL }}" class="btn btn-sm btn-outline-secondary">RSS</a>
+            <hr style="border-color:rgba(255,255,255,0.06);">
+            <div style="max-height:180px;overflow:hidden;border-radius:8px;margin-top:8px;">
+              <img src="{{ .image }}" alt="{{ .name }}" style="width:100%;height:auto;display:block;">
+            </div>
+          </div>
+        </div>
+      </div>
+      {{ end }}
+    </div>
+
+    {{ $learningPaths := slice
+      (dict "pillar" "AML" "label" "Ścieżka AML: Od podstaw do strategii" "color" "#d97706" "steps" (slice "Podstawy: słownik AML" "Mechanizmy prania pieniędzy" "Case studies i narzędzia" "Schematy i sieci" "Systemy regulacyjne" "Strategia compliance"))
+      (dict "pillar" "Markets" "label" "Ścieżka Markets: Od instrumentów do strategii" "color" "#22c55e" "steps" (slice "Instrumenty finansowe" "Wycena i kapitalizacja" "Analiza techniczna" "Trendy rynkowe" "Ryzyko i dywersyfikacja" "Strategia inwestycyjna"))
+      (dict "pillar" "Science" "label" "Ścieżka Science: Od pojęć do syntezy" "color" "#a855f7" "steps" (slice "Słownik systemowy" "Emergencja i złożoność" "Modele systemowe" "Sieci i sprzężenia" "Krytyka teorii" "Synteza interdyscyplinarna"))
+    }}
+
+    <div class="row mt-5">
+      <div class="col-12">
+        <h2 class="h3 mb-4" style="color:#d97706;">Ścieżki nauki</h2>
+        <p class="mb-4" style="color:rgba(255,255,255,0.5);">Każdy filar ma 6 poziomów Bloom Taxonomy — od pamięci po tworzenie.</p>
+      </div>
+    </div>
+
+    <div class="row" style="row-gap:2rem;">
+      {{ range $learningPaths }}
+      <div class="col-lg-4 col-md-6">
+        <div class="card border-0 h-100" style="background:#0f172a;border:1px solid rgba(255,255,255,0.06);">
+          <div class="card-body p-4">
+            <h4 class="h5 mb-3 text-white">{{ .pillar }}</h4>
+            <p class="small mb-3" style="color:rgba(255,255,255,0.5);">{{ .label }}</p>
+            <div style="display:flex;flex-direction:column;gap:6px;">
+              {{ range $i, $step := .steps }}
+              {{ $bloomLevels := slice "Pamięć" "Rozumienie" "Stosowanie" "Analiza" "Ewaluacja" "Tworzenie" }}
+              {{ $bloomColors := slice "#15803d" "#166534" "#ea580c" "#d97706" "#9333ea" "#7e22ce" }}
+              <div class="d-flex align-items-center gap-2 p-2 rounded" style="background:rgba(255,255,255,0.03);">
+                <span class="badge rounded-pill" style="width:28px;height:28px;display:flex;align-items:center;justify-content:center;background:{{ index $bloomColors $i }};color:#fff;font-size:11px;">{{ add $i 1 }}</span>
+                <span style="color:rgba(255,255,255,0.7);font-size:13px;">{{ . }}</span>
+              </div>
+              {{ end }}
+            </div>
+          </div>
+        </div>
+      </div>
+      {{ end }}
+    </div>
+
+    <div class="row mt-5">
+      <div class="col-12">
+        <div class="card border-0" style="background:#0f172a;border:1px solid rgba(255,255,255,0.06);">
+          <div class="card-body p-4">
+            <h3 class="h4 mb-3 text-white">📊 Taksonomia Blooma</h3>
+            <p class="small mb-4" style="color:rgba(255,255,255,0.5);">6 poziomów przyswajania wiedzy — od podstawowej pamięci po twórczą syntezę.</p>
+            <div style="max-width:500px;margin:0 auto;">
+              <img src="/images/course-panel.svg" alt="Bloom Taxonomy" style="width:100%;height:auto;display:block;">
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
