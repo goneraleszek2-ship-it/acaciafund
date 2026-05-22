@@ -9,7 +9,7 @@
   {{- $src = $thumb -}}
 {{- end -}}
 {{- if $src -}}
-<img loading="lazy" decoding="async" src="{{ $src | relURL }}" alt="{{ $alt }}" class="{{ $class }} img" height="{{ $height }}" width="{{ $width }}" />
+<img loading="lazy" decoding="async" src="{{ $src | relURL }}" alt="{{ $alt }}" class="{{ $class }} img"{{ with $height }} height="{{ . }}"{{ end }}{{ with $width }} width="{{ . }}"{{ end }} />
 {{- else -}}
 <div class="img-placeholder"></div>
 {{- end -}}
