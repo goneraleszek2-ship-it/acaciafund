@@ -143,6 +143,17 @@ print("\n\u2500\u2500 7. ACCESSIBILITY \u2500\u2500")
 check("lang=\"pl-pl\"" in home or "lang=\"pl\"" in home, "Homepage has lang attribute")
 check("aria-label" in home, "Homepage has aria-labels")
 check("alt=" in home or "img-placeholder" in home, "Images handled gracefully")
+# Ensure at least one image uses an inline LQIP data URI somewhere in the site
+def any_lqip() -> bool:
+    for f in PUBLIC.rglob("*.html"):
+        try:
+            if "data:image" in f.read_text(encoding="utf-8"):
+                return True
+        except Exception:
+            continue
+    return False
+
+check(any_lqip(), "Site includes at least one inline LQIP data URI")
 check("viewport" in home, "Has viewport meta tag for mobile")
 
 # ── 8. STATIC ASSETS ──

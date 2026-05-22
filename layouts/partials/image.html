@@ -11,9 +11,9 @@
   {{- $thumb = $src -}}
 {{- else -}}
   {{- $ctx := .Context -}}
-  {{- if $ctx -}}
+    {{- if $ctx -}}
     {{- with $ctx.Params.thumbnail -}}
-      {{- $thumb = . | relURL -}}
+      {{- $thumb = . -}}
     {{- end -}}
   {{- end -}}
 {{- end -}}
@@ -24,7 +24,47 @@
 {{- end -}}
 
 {{- if $thumb -}}
-<img loading="lazy" decoding="async" src="{{ $thumb | relURL }}" alt="{{ $alt }}" class="{{ $class }} img"{{ with $height }} height="{{ . }}"{{ end }}{{ with $width }} width="{{ . }}"{{ end }} />
+  {{- $srcset := "" -}}
+  {{- $phData := "" -}}
+  {{- /* If thumbnail is a bare filename and the current page has resources, try to resolve as Page Resource */ -}}
+  {{- $resolved := $thumb -}}
+  {{- with .Context }}
+    {{- $page := . -}}
+    {{- if and (not (hasPrefix $thumb "/")) (len $page.Resources) -}}
+      {{- $res := $page.Resources.GetMatch (printf "*%s" $thumb) -}}
+      {{- if $res -}}
+        {{- /* Create multiple sizes for responsive srcset: 400w, 800w, 1200w */ -}}
+        {{- $img400 := $res.Fit "400x" -}}
+        {{- $img800 := $res.Fit "800x" -}}
+        {{- $img1200 := $res.Fit "1200x" -}}
+        {{- $resolved = $img800.RelPermalink -}}
+        {{- $srcset = printf "%s 400w, %s 800w, %s 1200w" $img400.RelPermalink $img800.RelPermalink $img1200.RelPermalink -}}
+        {{- /* Create a tiny low-quality placeholder (LQIP) and base64-encode it for inline use */ -}}
+        {{- /* Try to build a tiny raster placeholder; if not possible (e.g., SVG resource), leave phData empty for now */ -}}
+        {{- with $res -}}
+          {{- $ok := false -}}
+          {{- if (and (isset . "MediaType") (ne .MediaType.Type "image/svg+xml")) -}}
+            {{- $phRes := .Fit "20x" -}}
+            {{- $phB64 := $phRes.Content | base64Encode -}}
+            {{- $phData = printf "data:%s;base64,%s" $phRes.MediaType.Type $phB64 -}}
+            {{- $ok = true -}}
+          {{- end -}}
+          {{- if not $ok -}}
+            {{- /* leave phData empty and we'll generate an inline SVG fallback below */ -}}
+          {{- end -}}
+        {{- end -}}
+      {{- end -}}
+    {{- end -}}
+  {{- end -}}
+  {{- /* If phData still empty, generate a tiny inline SVG placeholder using category color */ -}}
+  {{- if not $phData -}}
+    {{- $color := "#cccccc" -}}
+    {{- if eq $category "AML" -}}{{- $color = "#ffdd57" -}}{{- else if eq $category "Markets" -}}{{- $color = "#57c7ff" -}}{{- else if eq $category "Science" -}}{{- $color = "#a57cff" -}}{{- end -}}
+    {{- $svg := printf "<svg xmlns='http://www.w3.org/2000/svg' width='20' height='12'><rect width='100%%' height='100%%' fill='%s'/></svg>" $color -}}
+    {{- $b64 := $svg | base64Encode -}}
+    {{- $phData = printf "data:image/svg+xml;base64,%s" $b64 -}}
+  {{- end -}}
+  <img loading="lazy" decoding="async" src="{{ $resolved | relURL }}" alt="{{ $alt }}" class="{{ $class }} img"{{ with $height }} height="{{ . }}"{{ end }}{{ with $width }} width="{{ . }}"{{ end }}{{ if $srcset }} srcset="{{ $srcset }}" sizes="(max-width: 800px) 100vw, 800px"{{ end }} data-lqip="{{ $phData }}" style="background-size:cover;background-repeat:no-repeat;" />
 {{- else -}}
-<div class="img-placeholder"></div>
+  <div class="img-placeholder"></div>
 {{- end -}}

@@ -1,0 +1,9 @@
+<article class="lesson-card" style="border:1px solid #e6e9ee;padding:12px;border-radius:8px;max-width:360px;">
+  <h3 style="margin:0 0 8px 0;"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h3>
+  <div style="color:#64748b;font-size:13px;margin-bottom:8px;">Difficulty: {{ with .Params.difficulty }}{{ . }}{{ end }}</div>
+  <p style="margin:0 0 12px 0;">{{ .Summary }}</p>
+  <div style="display:flex;gap:8px;align-items:center;">
+    <a class="btn btn-outline-primary" href="{{ .RelPermalink }}">Open Lesson</a>
+    <button class="btn btn-primary" data-track-lesson="{{ .RelPermalink }}">Mark Done</button>
+  </div>
+</article>

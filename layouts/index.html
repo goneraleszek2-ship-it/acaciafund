@@ -7,12 +7,15 @@
   <div class="hero-bg" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;">
     <img src="/images/banner/hero-banner.svg" alt="" style="width:100%;height:100%;object-fit:cover;opacity:0.8;">
   </div>
-  <div class="container" style="position:relative;z-index:1;">
-    <div class="row">
-      <div class="col-lg-8">
-        <h1 class="hero-title mb-4">Codzienna synteza badań<br>AML · Rynki · Nauka</h1>
-        <p class="hero-subtitle mb-5">Automatyczny system NLP agreguje i klasyfikuje treści z HackerNews i arXiv. Każdego dnia — zwięzła synteza z insightami i pytaniami Bloom Taxonomy.</p>
-        
+  <div class="container" style="position:relative;z-index:1;"> 
+    <div class="row align-items-center" style="min-height:360px;">
+      <div class="col-lg-7 mx-auto text-center">
+        <h1 class="hero-title mb-3" style="font-size:2.6rem;line-height:1.05;">Codzienna synteza badań</h1>
+        <p class="hero-subtitle mb-4" style="font-size:1.05rem;max-width:760px;margin:0 auto;color:var(--color-text-muted);">Automatyczny system NLP agreguje i klasyfikuje treści z HackerNews i arXiv — zwięzła, krytyczna synteza zorientowana na rozwój osądu.</p>
+        <div style="margin-top:22px;display:flex;gap:12px;justify-content:center;">
+          <a class="btn btn-primary" href="/pl/learn/">Rozpocznij naukę</a>
+          <a class="btn btn-outline-primary" href="/pl/blog/">Przeglądaj syntezy</a>
+        </div>
       </div>
     </div>
   </div>
@@ -88,7 +91,9 @@
         <a href="{{ `course` | relLangURL }}" class="btn btn-outline-primary">Przejdź do panelu</a>
       </div>
       <div class="col-lg-6 order-1 order-lg-2 mb-4 mb-lg-0">
-        <img src="/images/course-panel.svg" alt="Panel nauki" class="img-fluid" style="max-height:400px;width:auto;">
+        <div class="feature-card" style="display:flex;align-items:center;justify-content:center;height:320px;">
+          <img src="/images/course-panel.svg" alt="Panel nauki" style="max-height:280px;width:auto;display:block;">
+        </div>
       </div>
     </div>
   </div>
@@ -120,15 +125,15 @@
 {{ if $data.homepage.blog.enable }}
 <section class="section">
   <div class="container">
-    <div class="row">
+    <div class="row align-items-start">
       <div class="col-12">
         <h2 class="section-title">{{ $data.homepage.blog.title }}</h2>
       </div>
     </div>
-    <div class="row justify-content-center">
+    <div class="row gy-4">
       {{ range first 6 (where site.RegularPages "Type" "post")}}
-      <article class="col-lg-4 col-sm-6 mb-5">
-        {{ .Render "post" }}
+      <article class="col-lg-4 col-sm-6">
+        <div class="feature-card" style="height:100%">{{ .Render "post" }}</div>
       </article>
       {{ end }}
     </div>

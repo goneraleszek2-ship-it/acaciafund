@@ -54,6 +54,13 @@ class _TextExtractor(HTMLParser):
             return
         if self._in_p:
             self._p_text.append(data.strip())
+        # Collect first image src if present in loose HTML (best-effort)
+        if not getattr(self, "_first_img", None):
+            if data and "<img" in data:
+                # crude attempt: find src="..."
+                m = re.search(r'src\s*=\s*"([^"]+)"', data)
+                if m:
+                    self._first_img = m.group(1)
 
     def text(self) -> str:
         if not self._text:
@@ -94,9 +101,25 @@ def _fetch_article(url: str) -> str | None:
         extractor = _TextExtractor()
         extractor.feed(html)
         text = extractor.text()
-        if len(text) < 100:
+        # Try to extract og:image or first <img>
+        image_url = None
+        # og:image
+        m = re.search(r'<meta\s+property="og:image"\s+content="([^"]+)"', html, flags=re.I)
+        if m:
+            image_url = m.group(1)
+        else:
+            m = re.search(r'<meta\s+name="twitter:image"\s+content="([^"]+)"', html, flags=re.I)
+            if m:
+                image_url = m.group(1)
+        if not image_url:
+            # fallback to first <img> tag
+            m = re.search(r'<img[^>]+src\s*=\s*"([^"]+)"', html, flags=re.I)
+            if m:
+                image_url = m.group(1)
+        if len(text) < 100 and not image_url:
             return None
-        return text[:MAX_TEXT_LEN]
+        result = text[:MAX_TEXT_LEN]
+        return (result, image_url) if image_url else (result, None)
     except (urllib.error.HTTPError, urllib.error.URLError, OSError, ValueError):
         return None
 
@@ -180,8 +203,9 @@ def scrape_articles(urls: list[str], max_scrape: int = 120) -> dict[str, dict]:
         for fut in as_completed(fut_map):
             key, url = fut_map[fut]
             try:
-                text = fut.result(timeout=20)
-                if text:
+                res = fut.result(timeout=20)
+                if res:
+                    text, img = res if isinstance(res, tuple) else (res, None)
                     facts = _extract_facts(text)
                     entry = {
                         "url": url,
@@ -189,6 +213,8 @@ def scrape_articles(urls: list[str], max_scrape: int = 120) -> dict[str, dict]:
                         "facts": facts,
                         "ts": now,
                     }
+                    if img:
+                        entry["image"] = img
                     fresh[key] = entry
                     cache[key] = entry
             except Exception:

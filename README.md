@@ -162,6 +162,23 @@ python tests/usability.py
 
 ---
 
+## 🖼️ Images and Page Bundles (new)
+
+AcaciaFund now uses Hugo Page Bundles for posts. Each post is a folder under
+`content/pl/blog/` with an `index.md` file and any images placed alongside it.
+
+Conventions:
+- Post bundle: `content/pl/blog/YYYY-MM-DD-pillar/index.md`
+- Featured/top image: save as `featured.jpg|png|webp` inside the bundle and set `featured_image: "featured.jpg"` in frontmatter (the generator does this automatically when it can download a source image).
+- Generated visuals (thumbnails/og) are written into the bundle as `thumb_*.svg` and `og_*.svg`.
+
+Why bundles?
+- Keeps content and media together; Hugo treats images as Page Resources and can generate responsive variants and placeholders without extra Python deps.
+
+Migration
+- A helper script is provided at `scripts/migrate_posts_to_bundles.py`.
+- Run `python scripts/migrate_posts_to_bundles.py --dry-run` to preview changes and `--apply` to perform migration.
+
 ## 📜 License
 
 MIT — Leszek Gonera · AcaciaFund

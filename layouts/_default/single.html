@@ -6,9 +6,10 @@
     <div class="row">
       <div class="col-lg-8 order-2 order-lg-1">
         <div class="row">
-          {{ if or .Params.image .Params.thumbnail }}
+          {{ if or .Params.featured_image .Params.image .Params.thumbnail }}
           <div class="col-12 mb-4">
-            {{ partial "image.html" (dict "Src" .Params.image "Alt" "blog-thumb" "Class" "img-fluid w-100" "Category" (index .Params.categories 0) "Context" .) }}
+            {{ $src := cond .Params.featured_image .Params.featured_image .Params.image }}
+            {{ partial "image.html" (dict "Src" $src "Alt" "blog-thumb" "Class" "img-fluid w-100" "Category" (index .Params.categories 0) "Context" .) }}
           </div>
           {{ end }}
           <div class="col-12">

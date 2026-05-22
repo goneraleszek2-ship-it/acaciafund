@@ -62,12 +62,23 @@
 {{ $script := resources.Get "js/script.js" | minify}}
 <script src="{{ $script.Permalink }}"></script>
 
+{{ "<!-- GLightbox JS -->" | safeHTML }}
+<script src="https://cdn.jsdelivr.net/npm/glightbox/dist/js/glightbox.min.js"></script>
+<script>
+  // Initialize GLightbox if available
+  (function(){
+    if (typeof GLightbox === 'function' || typeof GLightbox === 'object') {
+      try { const lightbox = GLightbox(); } catch(e) { /* ignore */ }
+    }
+  })();
+</script>
+
 <button type="button" class="back-to-top" id="backToTop" aria-label="Powrót na górę">↑</button>
 
 {{ partial "search-overlay.html" . }}
 
 <script>
-(function() {
+  (function() {
   var btn = document.getElementById('backToTop');
   window.addEventListener('scroll', function() {
     btn.classList.toggle('visible', window.scrollY > 500);
@@ -111,12 +122,49 @@
 })();
 </script>
 
+{{ "<!-- Learning JS (Bayes demo) -->" | safeHTML }}
+<script src="/js/learning.js"></script>
+<script src="/js/learning_hub.js"></script>
+
 {{ with site.Params.google_analytics_id}}
 <script async src="https://www.googletagmanager.com/gtag/js?id={{ . }}"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
+  function gtag(){dataLayer.push(arguments);} 
   gtag('js', new Date());
   gtag('config', '{{ . }}');
 </script>
 {{ end }}
+
+<!-- LQIP initializer: apply placeholder background and swap classes on load -->
+<script>
+  (function(){
+    function initLQIP() {
+      var imgs = document.querySelectorAll('img[data-lqip]');
+      imgs.forEach(function(img){
+        try {
+          var data = img.getAttribute('data-lqip');
+          if (!data) return;
+          img.classList.add('lqip-loading');
+          img.style.backgroundImage = 'url("' + data + '")';
+          if (img.complete && img.naturalWidth) {
+            img.classList.remove('lqip-loading');
+            img.classList.add('lqip-loaded');
+          } else {
+            img.addEventListener('load', function(){
+              img.classList.remove('lqip-loading');
+              img.classList.add('lqip-loaded');
+              // remove background to avoid layering artifacts
+              setTimeout(function(){ img.style.backgroundImage = ''; }, 400);
+            });
+          }
+        } catch(e) { /* ignore */ }
+      });
+    }
+    if (document.readyState === 'complete' || document.readyState === 'interactive') {
+      initLQIP();
+    } else {
+      document.addEventListener('DOMContentLoaded', initLQIP);
+    }
+  })();
+</script>
