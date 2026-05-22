@@ -3,13 +3,10 @@
   <img src="https://img.shields.io/badge/python-3.14+-3776AB?logo=python&logoColor=fff&style=flat-square" alt="Python">
   <img src="https://img.shields.io/badge/hugo-0.161+-FF4088?logo=hugo&logoColor=fff&style=flat-square" alt="Hugo">
   <img src="https://img.shields.io/badge/cloudflare-pages-F38020?logo=cloudflare&logoColor=fff&style=flat-square" alt="Cloudflare">
-  <img src="https://img.shields.io/badge/tests-137%2F137-22c55e?style=flat-square" alt="Tests">
-  <img src="https://img.shields.io/badge/license-MIT-6366f1?style=flat-square" alt="License">
+  <img src="https://img.shields.io/badge/tests-63%2F63-22c55e?style=flat-square" alt="Tests">
   <br>
-  <img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Facaciafund.pages.dev%2Fapi%2Farticles.json&query=%24.count&style=flat-square&label=syntezy&color=c9a84c" alt="Syntezy">
-  <img src="https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Facaciafund.pages.dev%2Fapi%2Fquiz.json&query=%24.count&style=flat-square&label=quiz&color=c47f58" alt="Quiz">
   <img src="https://img.shields.io/badge/Bloom-Taxonomy-c9a84c?style=flat-square" alt="Bloom">
-  <img src="https://img.shields.io/badge/edu-widgets-2c3e6b?style=flat-square" alt="Edu Widgets">
+  <img src="https://img.shields.io/badge/theme-Educenter-2c3e6b?style=flat-square" alt="Theme">
 </div>
 
 <h1 align="center">
@@ -33,29 +30,23 @@
 
 ## 📡 Architecture
 
+Zobacz [Diagramy — architektura](https://acaciafund.org/diagrams/) dla wizualizacji. Generowane automatycznie przez `python generate_diagrams.py`.
+
 ```
-┌──────────┐   ┌──────────┐   ┌───────────┐   ┌──────────┐   ┌────────────┐
-│  Hacker   │   │  ArXiv   │   │  Python   │   │   Hugo   │   │ Cloudflare │
-│   News    │──▶│  OAI-PMH │──▶│ Pipeline  │──▶│   SSG    │──▶│   Pages    │
-│  (REST)   │   │  (API)   │   │  stdlib   │   │ 0.161+   │   │   (CDN)    │
-└──────────┘   └──────────┘   └───────────┘   └──────────┘   └────────────┘
-                                   │
-                                   ▼
-                            ┌──────────────┐
-                            │  Static API  │
-                            │  JSON files  │
-                            └──────────────┘
+HackerNews + arXiv → core/{fetch,analyze,generate}.py → content/pl/blog/ (Markdown)
+                                                       → Hugo (Educenter theme)  
+                                                       → Cloudflare Pages (CDN)
 ```
 
-Zero external Python dependencies. Zero runtime backend. Fully deterministic (or LLM-enhanced on demand).
+Zero external Python dependencies. Zero runtime backend.
 
 ### Pillars
 
-| 📁 | Pillar | Topics | Articles |
-|----|--------|--------|----------|
-| 🛡️ | **AML** | Financial crime, compliance, regtech, sanctions | ~480 |
-| 📈 | **Markets** | Semiconductors, valuation, supply chains | ~470 |
-| 🧬 | **Science** | Cybernetics, complexity, systems theory | ~470 |
+| 📁 | Pillar | Topics | Posts |
+|----|--------|--------|-------|
+| 🛡️ | **AML** | Financial crime, compliance, regtech, sanctions | ~77 |
+| 📈 | **Markets** | Semiconductors, valuation, supply chains | ~77 |
+| 🧬 | **Science** | Cybernetics, complexity, systems theory | ~78 |
 
 ---
 
@@ -64,17 +55,13 @@ Zero external Python dependencies. Zero runtime backend. Fully deterministic (or
 Every 6 hours (cron `0 */6 * * *`):
 
 ```
-ingest.py         → fetch HN + ArXiv, parse, classify Bloom
-generate_diagrams → mind maps (Graphviz)
-generate_notebook → Jupyter-style notebooks
-generate_metadata → /api/articles.json + /api/bloom.json
-generate_quiz     → /api/quiz.json (591 questions)
-generate_flashcards → /api/flashcards.json
-┬ generate_llm    → LLM-enhanced quiz/flashcards (optional)
-hugo build        → static site → deploy to Cloudflare
+ingest.py          → fetch HN + ArXiv, classify, generate Markdown
+core/bloom.py      → Bloom Taxonomy classification
+generate_diagrams  → SVG diagrams dla /diagrams/
+hugo build         → Educenter SSG → Cloudflare Pages deploy
 ```
 
-**Stack**: Python 3.14+ stdlib (`urllib`, `tomllib`, `re`) · Hugo · Cloudflare Pages · GitHub Actions
+**Stack**: Python 3.14+ stdlib (`urllib`, `tomllib`, `re`) · Hugo 0.161+ (Educenter theme) · Cloudflare Pages · GitHub Actions
 
 ---
 
@@ -97,60 +84,30 @@ Classification uses keyword regex, source domain reputation, and HN points thres
 
 ---
 
-## 🎓 Learning Platform
+## 🌐 Live Site
 
-Built into the static site — all client-side JavaScript + localStorage:
+Strona dostępna pod [acaciafund.org](https://acaciafund.org/).
 
-### Widgets
-
-| Widget | What | Tracks |
-|--------|------|--------|
-| 🧭 **Bloom Navigator** | Vertical pyramid sidebar per post | Active level highlighting |
-| ✅ **Quiz Widget** | Self-assessment per Bloom level | Scores stored in `ac-quiz-*` |
-| 📚 **Flashcard Deck** | Spaced repetition (7d/3d/1d) | Mastery in `ac-flashcards-*` |
-| 📊 **Progress Dashboard** | `/learn/` — metrics, streak, bars | Aggregates all localStorage |
-| 🧭 **Learning Paths** | 3 curated paths (AML/Markets/Science) | Step completion tracking |
-| 🏆 **Achievements** | 14 unlockable badges | First quiz → 30-day streak |
-
-### APIs
-
-| Endpoint | Content |
-|----------|---------|
-| `/api/articles.json` | 231 posts, 1417 articles with Bloom metadata |
-| `/api/bloom.json` | Aggregated stats per pillar |
-| `/api/quiz.json` | 591 Bloom-level quiz questions |
-| `/api/flashcards.json` | 11 entity-term flashcards |
+Educenter theme z Bootstrap 4, blog grid, kategorie, tagi, paginacja, i18n (pl), responsywny navbar.
 
 ---
 
 ## 🚀 Quick Start
 
 ```bash
-# Clone
-git clone https://github.com/goneraleszek2-ship-it/acaciafund.git
+git clone --recurse-submodules https://github.com/goneraleszek2-ship-it/acaciafund.git
 cd acaciafund
 
-# Generate content
-python ingest.py
-python generate_quiz.py
-python generate_flashcards.py
-python generate_metadata.py
-
-# Optional LLM enhancement
-LLM_API_KEY=sk-... python3 generate_llm.py
-
-# Build & serve
-hugo serve
+python ingest.py        # fetch + analyze + generate
+hugo serve              # local dev server
 ```
 
-### Environment
+### Build for production
 
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `LLM_API_KEY` | — | OpenAI-compatible API key (optional) |
-| `LLM_MODEL` | `gpt-4o-mini` | Model for LLM generation |
-| `LLM_MAX_POSTS` | `50` | Max posts to process with LLM |
-| `LLM_API_URL` | OpenAI endpoint | Custom API endpoint |
+```bash
+hugo --cleanDestinationDir
+python tests/usability.py
+```
 
 ---
 
@@ -159,18 +116,16 @@ hugo serve
 Workflow: `.github/workflows/daily-synthesis.yml`
 
 ```
-cron: 0 */6 * * *  →  ingest → diagrams → notebook → metadata
-                       → quiz → flashcards → (LLM) → hugo → commit → deploy
+cron: 0 */6 * * *  →  ingest → hugo build → commit → deploy (Cloudflare Pages)
 ```
 
 | Trigger | Action |
 |---------|--------|
 | `schedule: 0 */6 * * *` | Full pipeline + deploy |
 | `workflow_dispatch` | Manual run |
-| `git push` (no auto-CI) | Run `gh workflow run "Daily Synthesis"` manually |
+| `git push` | Trigger manual run |
 
-**Secrets needed for LLM enhancement** (optional):
-- `LLM_API_KEY` — OpenAI-compatible key
+**Secrets**:
 - `CLOUDFLARE_API_TOKEN` + `CLOUDFLARE_ACCOUNT_ID` — for Pages deploy
 
 ---
@@ -181,36 +136,27 @@ cron: 0 */6 * * *  →  ingest → diagrams → notebook → metadata
 python tests/usability.py
 ```
 
-137 synthetic use tests in 8 categories: data integrity, page structure, navigation flow, localStorage consistency, responsive CSS, user journeys, edge cases, accessibility. All client-side behavior verified on built HTML.
-
-| Category | Tests |
-|----------|-------|
-| Data Integrity | 8 |
-| Page Structure | 50 |
-| Navigation Flow | 22 |
-| localStorage Keys | 6 |
-| Responsive & CSS | 12 |
-| User Journeys | 21 |
-| Edge Cases | 8 |
-| Accessibility | 10 |
+63 testy integracyjne sprawdzające strukturę strony, działanie tematów, kategorii, tagów, paginacji, stopki.
 
 ---
 
 ## 📂 Project Structure
 
 ```
-├── core/                  # Python library (fetch, analyze, bloom, score, data)
-├── etc/
-│   └── pillars.toml       # Pillars, domains, entities, source tiers, learning paths
-├── content/
-│   └── daily/{aml,stock,science}/  # Generated markdown posts
-├── layouts/               # Hugo templates (index, list, single, partials)
-├── static/api/            # Generated JSON APIs
-├── generate_*.py          # CLI generators
+├── core/                  # Python library (fetch, analyze, bloom, score, generate, data)
+├── config/_default/       # Hugo config (hugo, languages, menus.pl, module)
+├── content/pl/blog/       # 232 generated Markdown posts with Educenter frontmatter
+├── layouts/               # Layout overrides (post, list, single, partials)
+├── static/images/         # SVG thumbnails per category, logo, favicon
+├── assets/scss/           # Custom SCSS overrides
+├── data/pl/               # Homepage YAML data
+├── i18n/                  # Polish translations
 ├── ingest.py              # Main pipeline entry point
-├── migrate_posts.py       # Bulk post migration (format + bloom)
+├── generate_diagrams.py   # SVG diagram generator
 ├── tests/
-│   └── usability.py       # 137 synthetic use tests
+│   └── usability.py       # 63 integration tests
+├── themes/educenter/      # Git submodule
+├── _vendor/               # Vendored Hugo modules
 └── .github/workflows/     # CI — daily-synthesis.yml
 ```
 

@@ -1,19 +1,15 @@
-#!/usr/bin/env python3
-"""AcaciaFund — generates SVG architecture/UML diagrams and a Hugo content page."""
+---
+title: "Diagramy — architektura AcaciaFund"
+date: 2026-05-22
+draft: false
+type: "about"
+---
 
-from pathlib import Path
+## 🏗️ Architektura systemu
 
-BASE_DIR = Path(__file__).parent
-OUTPUT_DIR = BASE_DIR / "content" / "pl" / "diagrams"
-OUTPUT_FILE = OUTPUT_DIR / "_index.md"
+Potok danych: źródła (HN + arXiv) → ingest.py (klasyfikacja NLP + Bloom Taxonomy) → Markdown posty → Hugo (Educenter theme) → Cloudflare Pages z domeną niestandardową.
 
-
-def svg_pipeline() -> str:
-    """Component diagram: data pipeline architecture (current state)."""
-    w, h = 820, 360
-    def bx(x, y, w=160, h=44): return f"{x-w//2},{y-h//2} {x+w//2},{y-h//2} {x+w//2},{y+h//2} {x-w//2},{y+h//2}"
-
-    return f'''<svg viewBox="0 0 {w} {h}" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;background:#fafafa;border-radius:8px;font-family:system-ui,sans-serif">
+<div><svg viewBox="0 0 820 360" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;background:#fafafa;border-radius:8px;font-family:system-ui,sans-serif">
   <defs>
     <marker id="a" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#555"/></marker>
     <marker id="ac" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#2E86AB"/></marker>
@@ -21,34 +17,34 @@ def svg_pipeline() -> str:
   <rect x="10" y="10" width="800" height="340" rx="8" fill="none" stroke="#ccc" stroke-dasharray="4"/>
   <text x="410" y="34" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a1a2e">AcaciaFund — Architecture &amp; Data Pipeline</text>
 
-  <polygon points="{bx(90, 80)}" fill="#d4e6f1" stroke="#2E86AB"/>
+  <polygon points="10,58 170,58 170,102 10,102" fill="#d4e6f1" stroke="#2E86AB"/>
   <text x="90" y="84" text-anchor="middle" font-size="11" fill="#1a1a2e">HackerNews</text>
 
-  <polygon points="{bx(260, 80)}" fill="#d4e6f1" stroke="#2E86AB"/>
+  <polygon points="180,58 340,58 340,102 180,102" fill="#d4e6f1" stroke="#2E86AB"/>
   <text x="260" y="84" text-anchor="middle" font-size="11" fill="#1a1a2e">arXiv API</text>
 
-  <polygon points="{bx(440, 80)}" fill="#e8d4f0" stroke="#A23B72"/>
+  <polygon points="360,58 520,58 520,102 360,102" fill="#e8d4f0" stroke="#A23B72"/>
   <text x="440" y="84" text-anchor="middle" font-size="11" fill="#1a1a2e">core/fetch.py</text>
 
-  <polygon points="{bx(620, 80)}" fill="#e8d4f0" stroke="#A23B72"/>
+  <polygon points="540,58 700,58 700,102 540,102" fill="#e8d4f0" stroke="#A23B72"/>
   <text x="620" y="84" text-anchor="middle" font-size="11" fill="#1a1a2e">core/analyze.py</text>
 
-  <polygon points="{bx(140, 180)}" fill="#d5f5e3" stroke="#27ae60"/>
+  <polygon points="60,158 220,158 220,202 60,202" fill="#d5f5e3" stroke="#27ae60"/>
   <text x="140" y="184" text-anchor="middle" font-size="11" fill="#1a1a2e">Klasyfikacja NLP</text>
 
-  <polygon points="{bx(320, 180)}" fill="#d5f5e3" stroke="#27ae60"/>
+  <polygon points="240,158 400,158 400,202 240,202" fill="#d5f5e3" stroke="#27ae60"/>
   <text x="320" y="184" text-anchor="middle" font-size="11" fill="#1a1a2e">Bloom Taxonomy</text>
 
-  <polygon points="{bx(510, 180)}" fill="#d5f5e3" stroke="#27ae60"/>
+  <polygon points="430,158 590,158 590,202 430,202" fill="#d5f5e3" stroke="#27ae60"/>
   <text x="510" y="184" text-anchor="middle" font-size="11" fill="#1a1a2e">3× Markdown posty</text>
 
-  <polygon points="{bx(700, 180)}" fill="#f9e79f" stroke="#f39c12"/>
+  <polygon points="620,158 780,158 780,202 620,202" fill="#f9e79f" stroke="#f39c12"/>
   <text x="700" y="184" text-anchor="middle" font-size="11" fill="#1a1a2e">Hugo SSG</text>
 
-  <polygon points="{bx(290, 280)}" fill="#f5b7b1" stroke="#c0392b"/>
+  <polygon points="210,258 370,258 370,302 210,302" fill="#f5b7b1" stroke="#c0392b"/>
   <text x="290" y="284" text-anchor="middle" font-size="11" fill="#1a1a2e">Git push → main</text>
 
-  <polygon points="{bx(500, 280)}" fill="#f5b7b1" stroke="#c0392b"/>
+  <polygon points="420,258 580,258 580,302 420,302" fill="#f5b7b1" stroke="#c0392b"/>
   <text x="500" y="284" text-anchor="middle" font-size="11" fill="#1a1a2e">Cloudflare Pages</text>
 
   <line x1="170" y1="102" x2="360" y2="102" stroke="#555" stroke-width="1.5" marker-end="url(#a)"/>
@@ -74,12 +70,13 @@ def svg_pipeline() -> str:
   <text x="275" y="155" text-anchor="middle" font-size="8" fill="#888">JSON</text>
   <text x="700" y="220" text-anchor="middle" font-size="9" fill="#888">public/</text>
   <text x="400" y="278" text-anchor="middle" font-size="9" fill="#888">trigger CI</text>
-</svg>'''
+</svg></div>
 
+## 🔄 Przepływ klasyfikacji
 
-def svg_classify_flow() -> str:
-    """UML activity diagram: how a story gets classified."""
-    return '''<svg viewBox="0 0 520 340" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;background:#fafafa;border-radius:8px;font-family:system-ui,sans-serif">
+Jak pojedyncza historia jest klasyfikowana do jednego z trzech filarów z frontmatterem Educenter.
+
+<div><svg viewBox="0 0 520 340" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;background:#fafafa;border-radius:8px;font-family:system-ui,sans-serif">
   <defs>
     <marker id="b" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#555"/></marker>
   </defs>
@@ -115,12 +112,13 @@ def svg_classify_flow() -> str:
 
   <rect x="80" y="310" width="360" height="22" rx="4" fill="#f9e79f" stroke="#f39c12"/>
   <text x="260" y="325" text-anchor="middle" font-size="9" fill="#1a1a2e">content/pl/blog/ — Educenter frontmatter (category, tags, type: post)</text>
-</svg>'''
+</svg></div>
 
+## 🔗 Cross-Pillar Atlas
 
-def svg_atlas() -> str:
-    """Cross-pillar Atlas: how connections are detected."""
-    return '''<svg viewBox="0 0 520 280" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;background:#fafafa;border-radius:8px;font-family:system-ui,sans-serif">
+Wykrywanie połączeń między filarami na podstawie wspólnych słów kluczowych w tym samym dniu.
+
+<div><svg viewBox="0 0 520 280" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;background:#fafafa;border-radius:8px;font-family:system-ui,sans-serif">
   <text x="260" y="24" text-anchor="middle" font-size="14" font-weight="bold" fill="#1a1a2e">Cross-Pillar Atlas — wykrywanie połączeń</text>
 
   <circle cx="130" cy="130" r="68" fill="#2E86AB20" stroke="#2E86AB" stroke-width="2"/>
@@ -148,12 +146,13 @@ def svg_atlas() -> str:
   <text x="260" y="131" text-anchor="middle" font-size="7" fill="#1a1a2e">All</text>
 
   <text x="260" y="240" text-anchor="middle" font-size="10" fill="#555">Te same słowa kluczowe pojawiające się tego samego dnia w ≥2 filarach → wpis w Atlas</text>
-</svg>'''
+</svg></div>
 
+## 🎨 Struktura nadpisów Educenter
 
-def svg_theme_arch() -> str:
-    """Educenter theme architecture: layouts, modules, config."""
-    return '''<svg viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;background:#fafafa;border-radius:8px;font-family:system-ui,sans-serif">
+Jak działają nadpisy (layout overrides) względem motywu i modułów Hugo.
+
+<div><svg viewBox="0 0 720 280" xmlns="http://www.w3.org/2000/svg" style="max-width:100%;height:auto;background:#fafafa;border-radius:8px;font-family:system-ui,sans-serif">
   <defs>
     <marker id="c" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#555"/></marker>
   </defs>
@@ -185,10 +184,11 @@ def svg_theme_arch() -> str:
 
   <rect x="30" y="245" width="660" height="28" rx="4" fill="#fadbd8" stroke="#e74c3c"/>
   <text x="360" y="263" text-anchor="middle" font-size="11" fill="#1a1a2e">i18n/pl.yaml · data/pl/homepage.yml · content/pl/{blog,about,contact,course,research,notice}</text>
-</svg>'''
+</svg></div>
 
+## 📁 Struktura repozytorium
 
-DIR_TREE = """```
+```
 acaciafund/
 ├── .github/workflows/daily-synthesis.yml   # CI/CD cron co 6h + deploy
 ├── ingest.py                                # Entrypoint: fetch → analyze → generate
@@ -226,56 +226,8 @@ acaciafund/
 ├── tests/usability.py                       # 63 testy E2E
 ├── themes/educenter/                        # Submoduł GIT
 └── _vendor/                                 # Vendor Hugo Modules
-```"""
-
-
-def build_page() -> str:
-    return f'''---
-title: "Diagramy — architektura AcaciaFund"
-date: 2026-05-22
-draft: false
-type: "about"
----
-
-## 🏗️ Architektura systemu
-
-Potok danych: źródła (HN + arXiv) → ingest.py (klasyfikacja NLP + Bloom Taxonomy) → Markdown posty → Hugo (Educenter theme) → Cloudflare Pages z domeną niestandardową.
-
-<div>{svg_pipeline()}</div>
-
-## 🔄 Przepływ klasyfikacji
-
-Jak pojedyncza historia jest klasyfikowana do jednego z trzech filarów z frontmatterem Educenter.
-
-<div>{svg_classify_flow()}</div>
-
-## 🔗 Cross-Pillar Atlas
-
-Wykrywanie połączeń między filarami na podstawie wspólnych słów kluczowych w tym samym dniu.
-
-<div>{svg_atlas()}</div>
-
-## 🎨 Struktura nadpisów Educenter
-
-Jak działają nadpisy (layout overrides) względem motywu i modułów Hugo.
-
-<div>{svg_theme_arch()}</div>
-
-## 📁 Struktura repozytorium
-
-{DIR_TREE}
+```
 
 ---
 
 *Diagramy generowane automatycznie przez `generate_diagrams.py`.*
-'''
-
-
-def main():
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    OUTPUT_FILE.write_text(build_page(), encoding="utf-8")
-    print(f"[+] Diagrams: {OUTPUT_FILE}")
-
-
-if __name__ == "__main__":
-    main()
