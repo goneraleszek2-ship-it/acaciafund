@@ -10,6 +10,9 @@
     "browserTtl": 3600,
     "serveSinglePageApp": false
   },
+  "build": {
+    "command": "hugo --cleanDestinationDir"
+  },
   "compatibility_flags": [
     "nodejs_compat"
   ]
