@@ -7,8 +7,15 @@ pagination.pagerSize = 10
 summaryLength = 20
 hasCJKLanguage = false
 
+[outputFormats]
+[outputFormats.SEARCH]
+baseName = "search"
+mediaType = "application/json"
+isPlainText = true
+notAlternative = true
+
 [outputs]
-home = ["HTML", "RSS"]
+home = ["HTML", "RSS", "SEARCH"]
 
 [imaging]
 quality = 90

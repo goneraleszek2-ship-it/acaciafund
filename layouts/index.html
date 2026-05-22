@@ -2,6 +2,25 @@
 
 {{ $data := index site.Data site.Language.Lang }}
 
+<!-- hero -->
+<section class="hero-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-8">
+        <h1 class="hero-title mb-4">Codzienna synteza badań<br>AML · Rynki · Nauka</h1>
+        <p class="hero-subtitle mb-5">Automatyczny system NLP agreguje i klasyfikuje treści z HackerNews i arXiv. Każdego dnia — zwięzła synteza z insightami i pytaniami Bloom Taxonomy.</p>
+        <div class="hero-stats">
+          <div><div class="hero-stat-value">{{ len (where site.RegularPages "Type" "post") }}</div><div class="hero-stat-label">Syntez</div></div>
+          <div><div class="hero-stat-value">3</div><div class="hero-stat-label">Filary</div></div>
+          <div><div class="hero-stat-value">2</div><div class="hero-stat-label">Źródła</div></div>
+          <div><div class="hero-stat-value">6</div><div class="hero-stat-label">Poziomów Bloom</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- /hero -->
+
 <!-- about -->
 {{ if $data.homepage.about.enable }}
 {{ with $data.homepage.about }}
@@ -50,28 +69,6 @@
 {{ end }}
 <!-- /funfacts -->
 
-<!-- cta -->
-{{ if $data.homepage.cta.enable }}
-{{ with $data.homepage.cta }}
-<section class="section bg-gray">
-  <div class="container">
-    <div class="row">
-      <div class="col-12 text-center">
-        <h2 class="section-title">{{ .title | markdownify }}</h2>
-        <p>{{ .content | markdownify }}</p>
-        {{ if .button.enable }}
-        {{ with .button }}
-        <a href="{{ .link | absLangURL }}" class="btn btn-primary">{{ .label }}</a>
-        {{ end }}
-        {{ end }}
-      </div>
-    </div>
-  </div>
-</section>
-{{ end }}
-{{ end }}
-<!-- /cta -->
-
 <!-- blog -->
 {{ if $data.homepage.blog.enable }}
 <section class="section">
@@ -97,5 +94,27 @@
 </section>
 {{ end }}
 <!-- /blog -->
+
+<!-- cta -->
+{{ if $data.homepage.cta.enable }}
+{{ with $data.homepage.cta }}
+<section class="section bg-gray">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 text-center">
+        <h2 class="section-title">{{ .title | markdownify }}</h2>
+        <p>{{ .content | markdownify }}</p>
+        {{ if .button.enable }}
+        {{ with .button }}
+        <a href="{{ .link | absLangURL }}" class="btn btn-primary">{{ .label }}</a>
+        {{ end }}
+        {{ end }}
+      </div>
+    </div>
+  </div>
+</section>
+{{ end }}
+{{ end }}
+<!-- /cta -->
 
 {{ end }}

@@ -1,0 +1,47 @@
+<aside class="col-lg-4 order-1 order-lg-2">
+  {{ "<!-- categories -->" | safeHTML }}
+  <div class="mb-5">
+    <h4 class="mb-4" style="font-size:1rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--color-text-muted);">{{ i18n "categories" }}</h4>
+    {{- if isset site.Taxonomies "categories" }}
+    {{- if not (eq (len site.Taxonomies.categories) 0) }}
+    <div class="d-flex flex-wrap gap-2">
+      {{- range $name, $items := site.Taxonomies.categories }}
+      <a href="{{ `categories/` | relLangURL }}{{ $name | urlize | lower }}/" class="badge px-3 py-2 mb-1" style="background:{{ if eq $name "AML" }}#1e3a5f{{ else if eq $name "Markets" }}#166534{{ else }}#7e22ce{{ end }};color:#fff;text-decoration:none;font-weight:500;">{{ $name | title }}</a>
+      {{- end }}
+    </div>
+    {{- end }}
+    {{- end }}
+  </div>
+
+  {{ "<!-- latest post -->" | safeHTML }}
+  <div class="mb-5">
+    <h4 class="mb-4" style="font-size:1rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--color-text-muted);">{{ i18n "latest_article" }}</h4>
+    {{ range first 5 ( where site.Pages "Type" "post" )}}
+    <div class="d-flex mb-3 pb-3" style="border-bottom:1px solid var(--color-border);">
+      <div class="mr-3" style="min-width:60px;">
+        <a href="{{ .Permalink }}">
+          {{ partial "image.html" (dict "Src" .Params.image "Alt" "Image" "Class" "img-fluid rounded") }}
+        </a>
+      </div>
+      <div>
+        <a href="{{ .Permalink }}" style="font-size:0.85rem;font-weight:600;color:var(--color-text);text-decoration:none;line-height:1.3;">{{ .Title }}</a>
+        <div style="font-size:0.75rem;color:var(--color-text-muted);margin-top:4px;">{{ .PublishDate.Format "02 Jan 2006" }}</div>
+      </div>
+    </div>
+    {{ end }}
+  </div>
+
+  {{ "<!-- tags -->" | safeHTML }}
+  <div>
+    <h4 class="mb-4" style="font-size:1rem;text-transform:uppercase;letter-spacing:0.5px;color:var(--color-text-muted);">{{ i18n "tags" }}</h4>
+    {{- if isset site.Taxonomies "tags" }}
+    {{- if not (eq (len site.Taxonomies.tags) 0) }}
+    <div class="d-flex flex-wrap gap-2">
+      {{- range $name, $items := site.Taxonomies.tags }}
+      <a href="{{ `tags/` | relLangURL }}{{ $name | urlize | lower }}/" class="btn btn-sm btn-outline-secondary m-1" style="font-size:0.8rem;border-radius:12px;border-color:var(--color-border);color:var(--color-text-muted);">{{ $name | humanize }}</a>
+      {{- end }}
+    </div>
+    {{- end }}
+    {{- end }}
+  </div>
+</aside>

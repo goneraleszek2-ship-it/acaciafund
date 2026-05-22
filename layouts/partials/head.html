@@ -1,7 +1,7 @@
 <head>
   <meta charset="utf-8">
   <title>{{ .Title }}</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
   <meta name="description"
     content="{{ with .Params.Description }}{{ . }}{{ else }}{{ with site.Params.description }}{{ . }}{{ end }}{{ end }}">
   {{ with site.Params.author }}
@@ -13,6 +13,21 @@
   <link rel="alternate" hreflang="{{ .Lang }}" href="{{ .Permalink }}">
   {{ end }}
   {{ end }}
+
+  {{ "<!-- OG tags -->" | safeHTML }}
+  <meta property="og:title" content="{{ .Title }}">
+  <meta property="og:description" content="{{ with .Params.Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}">
+  <meta property="og:url" content="{{ .Permalink }}">
+  <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+  <meta property="og:site_name" content="{{ site.Title }}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ .Title }}">
+  <meta name="twitter:description" content="{{ with .Params.Description }}{{ . }}{{ else }}{{ site.Params.description }}{{ end }}">
+
+  {{ "<!-- Preconnect for fonts -->" | safeHTML }}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
   {{ "<!-- plugins -->" | safeHTML }}
   {{ range site.Params.plugins.css }}

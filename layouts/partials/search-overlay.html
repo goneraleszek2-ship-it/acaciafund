@@ -1,0 +1,92 @@
+<div id="searchOverlay" class="search-overlay" role="dialog" aria-modal="true" aria-label="Szukaj">
+  <div class="search-overlay-content">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <div class="d-flex mb-4">
+            <input type="search" id="searchInput" class="form-control form-control-lg" placeholder="Szukaj w syntezach..." autocomplete="off" aria-label="Szukaj">
+            <button class="btn btn-outline-secondary ml-2" id="searchClose" aria-label="Zamknij wyszukiwarkę">✕</button>
+          </div>
+          <div id="searchResults" class="search-results"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var index = [];
+  var overlay = document.getElementById('searchOverlay');
+  var input = document.getElementById('searchInput');
+  var results = document.getElementById('searchResults');
+  var closeBtn = document.getElementById('searchClose');
+  var searchTriggers = document.querySelectorAll('[data-search-toggle]');
+
+  function loadIndex() {
+    if (index.length > 0) return Promise.resolve(index);
+    return fetch('/search.json').then(function(r) { return r.json(); }).then(function(data) {
+      index = data;
+      return index;
+    });
+  }
+
+  function openSearch() {
+    overlay.classList.add('active');
+    loadIndex();
+    setTimeout(function() { input.focus(); }, 100);
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeSearch() {
+    overlay.classList.remove('active');
+    input.value = '';
+    results.innerHTML = '';
+    document.body.style.overflow = '';
+  }
+
+  function search(query) {
+    if (!query || query.length < 2) { results.innerHTML = '<p class="text-muted">Wpisz co najmniej 2 znaki</p>'; return; }
+    var q = query.toLowerCase();
+    var matches = index.filter(function(item) {
+      return item.title.toLowerCase().indexOf(q) !== -1 ||
+             (item.description && item.description.toLowerCase().indexOf(q) !== -1) ||
+             (item.content && item.content.toLowerCase().indexOf(q) !== -1) ||
+             (item.category && item.category.toLowerCase().indexOf(q) !== -1);
+    }).slice(0, 20);
+
+    if (matches.length === 0) {
+      results.innerHTML = '<p class="text-muted">Brak wyników</p>';
+      return;
+    }
+    results.innerHTML = matches.map(function(item) {
+      return '<a href="' + item.url + '" class="search-result-item" onclick="document.getElementById(\'searchOverlay\').classList.remove(\'active\')">' +
+        '<small class="search-result-category" style="background:' + (item.category === 'AML' ? '#1e3a5f' : item.category === 'Markets' ? '#166534' : '#7e22ce') + ';color:#fff;padding:1px 8px;border-radius:4px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;">' + item.category + '</small>' +
+        '<span class="search-result-title">' + item.title + '</span>' +
+        '<span class="search-result-date">' + item.date + '</span>' +
+        (item.description ? '<span class="search-result-desc">' + item.description.substring(0, 120) + '</span>' : '') +
+        '</a>';
+    }).join('');
+  }
+
+  searchTriggers.forEach(function(el) {
+    el.addEventListener('click', openSearch);
+  });
+
+  closeBtn.addEventListener('click', closeSearch);
+
+  input.addEventListener('input', function() { search(this.value); });
+
+  input.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeSearch();
+  });
+
+  overlay.addEventListener('click', function(e) {
+    if (e.target === overlay) closeSearch();
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); openSearch(); }
+  });
+})();
+</script>

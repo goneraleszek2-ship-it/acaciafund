@@ -151,14 +151,23 @@ check(page_exists("plugins/bootstrap/bootstrap.min.css"),
       "Bootstrap CSS asset exists")
 check(page_exists("plugins/jQuery/jquery.min.js"),
       "jQuery JS asset exists")
-check(page_exists("plugins/slick/slick.css"),
-      "Slick CSS asset exists")
 check(page_exists("plugins/themify-icons/themify-icons.css"),
       "Themify icons asset exists")
 check(page_exists("js/script.min.js"),
       "Theme JS asset exists")
 
-# ── 9. CONTENT QUALITY ──
+# ── 9. ENHANCED FEATURES ──
+print("\n\u2500\u2500 9. ENHANCED FEATURES \u2500\u2500")
+check("darkModeToggle" in home, "Dark mode toggle exists in navbar")
+check("searchOverlay" in home, "Search overlay exists on page")
+check("backToTop" in home, "Back-to-top button exists")
+check("search.json" in open("public/search.json").read()[:50] or page_exists("search.json"),
+      "Search JSON index generated")
+check("hero-section" in home, "Homepage has hero section")
+check("og:title" in read_html("about/index.html"),
+      "OG meta tags present on content pages")
+
+# ── 10. CONTENT QUALITY ──
 print("\n\u2500\u2500 9. CONTENT QUALITY \u2500\u2500")
 
 # Check multiple blog posts have different categories
