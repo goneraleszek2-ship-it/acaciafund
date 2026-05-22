@@ -54,7 +54,7 @@ def generate_post(pillar_name: str, config: dict, pillar_stories: list[dict],
         f"title: \"{page_title}\"",
         f"date: {date_str}",
         "draft: false",
-        "image: \"\"",
+        # image omitted — handled by template placeholder
         "author: \"AcaciaFund\"",
         f"categories: [\"{category}\"]",
         f"tags: {json.dumps(config['tags'])}",

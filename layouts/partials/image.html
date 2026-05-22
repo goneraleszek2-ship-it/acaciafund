@@ -1,0 +1,5 @@
+{{- if .Src -}}
+<img loading="lazy" decoding="async" src="{{ .Src | relURL }}" alt="{{ .Alt }}" class="{{ .Class }} img" height="{{ .Height }}" width="{{ .Width }}" />
+{{- else -}}
+<div class="img-placeholder"></div>
+{{- end -}}

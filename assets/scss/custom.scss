@@ -1,0 +1,83 @@
+.img-placeholder {
+  min-height: 150px;
+  background: #e5e7eb;
+  display: block;
+  border-radius: 0;
+}
+
+.card-title {
+  line-height: 1.4;
+  margin-bottom: 8px;
+}
+
+.card-title a {
+  color: var(--navy, #0d1b2a);
+  font-weight: 600;
+}
+
+.card-body .btn {
+  margin-top: 12px;
+}
+
+.card-text {
+  margin-bottom: 0;
+}
+
+/* Blog detail page */
+.section-sm .container .row .col-lg-8 .row .col-12 ul.list-inline {
+  margin-bottom: 0;
+}
+
+.section-sm .container .row .col-lg-8 .row .col-12 ul.list-inline li {
+  padding: 0;
+  margin-bottom: 0;
+  border: none;
+  background: none;
+  box-shadow: none;
+  animation: none;
+}
+
+/* Footer improvements */
+.footer ul.list-unstyled li {
+  padding: 0;
+  margin-bottom: 0;
+  border: none;
+  background: none;
+  box-shadow: none;
+  animation: none;
+}
+
+/* Fix content list items to not interfere with blog cards */
+.card li,
+section.section .container .row li,
+.section-sm .container .row li {
+  border: none;
+  background: none;
+  box-shadow: none;
+  animation: none;
+  padding: 0;
+}
+
+/* Ensure list items inside blog post content still look like lists */
+.post-content li,
+.section-sm .container .col-12.mb-5 li {
+  border: 1px solid var(--border, #e0ddd7);
+  background: var(--card-bg, #fff);
+  box-shadow: var(--shadow, 0 1px 4px rgba(0,0,0,.06));
+  animation: fadeSlide .35s ease-out both;
+  padding: 10px 14px;
+  margin-bottom: 8px;
+  border-left: 3px solid var(--navy-mid, #475569);
+  border-radius: 0 var(--radius, 8px) var(--radius, 8px) 0;
+}
+
+/* Responsive image fallback */
+img[src=""],
+img:not([src]) {
+  display: none;
+}
+
+img[src=""] + .img-placeholder,
+img:not([src]) + .img-placeholder {
+  display: block;
+}

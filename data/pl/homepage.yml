@@ -5,11 +5,17 @@ banner_feature:
   enable: false
 
 about:
-  enable: false
+  enable: true
+  title: "O AcaciaFund"
+  image: ""
+  content: "Codzienna, zautomatyzowana synteza wiedzy — AML, rynki kapitałowe i nauka przez pryzmat myślenia systemowego. Źródła: HackerNews i arXiv."
+  button:
+    enable: true
+    label: "Dowiedz się więcej"
+    link: "about/"
 
 course:
-  enable: true
-  title: "Ścieżki nauki"
+  enable: false
 
 cta:
   enable: false
