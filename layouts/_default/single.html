@@ -7,7 +7,7 @@
         <div class="row">
           {{ if .Params.image }}
           <div class="col-12 mb-4">
-            {{ partial "image.html" (dict "Src" .Params.image "Alt" "blog-thumb" "Class" "img-fluid w-100") }}
+            {{ partial "image.html" (dict "Src" .Params.image "Alt" "blog-thumb" "Class" "img-fluid w-100" "Category" (index .Params.categories 0)) }}
           </div>
           {{ end }}
           <div class="col-12">

@@ -1,5 +1,15 @@
-{{- if .Src -}}
-<img loading="lazy" decoding="async" src="{{ .Src | relURL }}" alt="{{ .Alt }}" class="{{ .Class }} img" height="{{ .Height }}" width="{{ .Width }}" />
+{{- $src := .Src -}}
+{{- $alt := .Alt -}}
+{{- $class := .Class -}}
+{{- $height := .Height -}}
+{{- $width := .Width -}}
+{{- if not $src -}}
+  {{- $cat := index . "Category" | default "" -}}
+  {{- $thumb := cond (eq $cat "AML") "/images/aml-thumb.svg" (cond (eq $cat "Markets") "/images/markets-thumb.svg" (cond (eq $cat "Science") "/images/science-thumb.svg" "")) -}}
+  {{- $src = $thumb -}}
+{{- end -}}
+{{- if $src -}}
+<img loading="lazy" decoding="async" src="{{ $src | relURL }}" alt="{{ $alt }}" class="{{ $class }} img" height="{{ $height }}" width="{{ $width }}" />
 {{- else -}}
 <div class="img-placeholder"></div>
 {{- end -}}
