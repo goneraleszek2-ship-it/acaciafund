@@ -36,7 +36,7 @@ jobs:
           extended: true
 
       - name: Build site
-        run: hugo --cleanDestinationDir
+        run: python scripts/preflight.py --build-site
 
       - name: Run integration tests
         run: python tests/usability.py
@@ -45,7 +45,7 @@ jobs:
         run: |
           git config user.name "AcaciaFund Bot"
           git config user.email "bot@acaciafund.org"
-          git add content/pl/blog/
+          git add content/pl/blog/ registry/
           if git diff --cached --quiet; then
             echo "No new content — exiting"
             exit 0

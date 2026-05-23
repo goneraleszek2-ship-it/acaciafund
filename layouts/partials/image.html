@@ -33,24 +33,20 @@
     {{- if and (not (hasPrefix $thumb "/")) (len $page.Resources) -}}
       {{- $res := $page.Resources.GetMatch (printf "*%s" $thumb) -}}
       {{- if $res -}}
-        {{- /* Create multiple sizes for responsive srcset: 400w, 800w, 1200w */ -}}
-        {{- $img400 := $res.Fit "400x" -}}
-        {{- $img800 := $res.Fit "800x" -}}
-        {{- $img1200 := $res.Fit "1200x" -}}
-        {{- $resolved = $img800.RelPermalink -}}
-        {{- $srcset = printf "%s 400w, %s 800w, %s 1200w" $img400.RelPermalink $img800.RelPermalink $img1200.RelPermalink -}}
-        {{- /* Create a tiny low-quality placeholder (LQIP) and base64-encode it for inline use */ -}}
-        {{- /* Try to build a tiny raster placeholder; if not possible (e.g., SVG resource), leave phData empty for now */ -}}
-        {{- with $res -}}
-          {{- $ok := false -}}
-          {{- if (and (isset . "MediaType") (ne .MediaType.Type "image/svg+xml")) -}}
-            {{- $phRes := .Fit "20x" -}}
+        {{- if eq $res.MediaType.Type "image/svg+xml" -}}
+          {{- $resolved = $res.RelPermalink -}}
+        {{- else -}}
+          {{- /* Create multiple sizes for responsive srcset: 400w, 800w, 1200w */ -}}
+          {{- $img400 := $res.Resize "400x" -}}
+          {{- $img800 := $res.Resize "800x" -}}
+          {{- $img1200 := $res.Resize "1200x" -}}
+          {{- $resolved = $img800.RelPermalink -}}
+          {{- $srcset = printf "%s 400w, %s 800w, %s 1200w" $img400.RelPermalink $img800.RelPermalink $img1200.RelPermalink -}}
+          {{- /* Create a tiny low-quality placeholder (LQIP) and base64-encode it for inline use */ -}}
+          {{- with $res -}}
+            {{- $phRes := .Resize "20x" -}}
             {{- $phB64 := $phRes.Content | base64Encode -}}
             {{- $phData = printf "data:%s;base64,%s" $phRes.MediaType.Type $phB64 -}}
-            {{- $ok = true -}}
-          {{- end -}}
-          {{- if not $ok -}}
-            {{- /* leave phData empty and we'll generate an inline SVG fallback below */ -}}
           {{- end -}}
         {{- end -}}
       {{- end -}}

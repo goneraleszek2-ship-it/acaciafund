@@ -2,12 +2,14 @@ import json
 import hashlib
 from datetime import datetime
 from pathlib import Path
-from collections import Counter
 
 from .data import PILLARS, BASE_DIR, log, STATIC_DIR
 from .analyze import (
     build_analysis, classify_bloom_level_enhanced, detect_trending_topics,
     build_pillar_signals, compute_cross_pillar_scores,
+)
+from .metadata import (
+    build_asset_manifest, build_story_manifest, write_json, iso_utc,
 )
 from .bloom import (
     level_label_pl, generate_quiz_questions, generate_flashcards,
@@ -116,7 +118,8 @@ def generate_post(pillar_name: str, config: dict, pillar_stories: list[dict],
                   date: datetime | None = None,
                   all_pillar_stories: dict[str, list[dict]] | None = None,
                   _all_stories: list[dict] | None = None,
-                  _unclassified: int = 0) -> Path | None:
+                  _unclassified: int = 0,
+                  run_id: str | None = None) -> Path | None:
     """Generate an enhanced post with deep analysis sections."""
     date = date or datetime.now()
     date_str = date.strftime("%Y-%m-%d")
@@ -124,6 +127,7 @@ def generate_post(pillar_name: str, config: dict, pillar_stories: list[dict],
     bundle_name = f"{date_str}-{pillar_name}"
     post_dir = config["folder"] / bundle_name
     filepath = post_dir / "index.md"
+    manifest_path = post_dir / "manifest.json"
 
     if filepath.exists() or post_dir.exists():
         log(f"Post juz istnieje: {bundle_name} dla {pillar_name} -- pomijam")
@@ -302,6 +306,53 @@ def generate_post(pillar_name: str, config: dict, pillar_stories: list[dict],
                 if second_idx:
                     lines.insert(second_idx, f'featured_image: "{feat_name}"')
 
+    # Emit metadata alongside the page bundle.
+    assets = []
+    content_id = bundle_name
+    source_urls = [s.get("url", "") for s in pillar_stories if s.get("url")]
+    if thumb_filename:
+        assets.append(build_asset_manifest(content_id, "thumbnail", post_dir / thumb_filename, top_story.get("url", "") if top_story else ""))
+    if og_filename:
+        assets.append(build_asset_manifest(content_id, "og_image", post_dir / og_filename, top_story.get("url", "") if top_story else ""))
+    if top_story:
+        key = _url_key(top_story.get("url", ""))
+        scraped_entry = scraped.get(key, {})
+        img_url = scraped_entry.get("image") if scraped_entry else None
+        if img_url:
+            ext = ".jpg"
+            if img_url.lower().endswith(".png"):
+                ext = ".png"
+            elif img_url.lower().endswith(".webp"):
+                ext = ".webp"
+            elif img_url.lower().endswith(".gif"):
+                ext = ".gif"
+            feat_name = f"featured{ext}"
+            feat_path = post_dir / feat_name
+            if feat_path.exists():
+                assets.append(build_asset_manifest(content_id, "featured_image", feat_path, img_url))
+
+    story_manifest = build_story_manifest(
+        content_id=content_id,
+        pillar=pillar_name,
+        title=page_title,
+        date=date_str,
+        source_urls=source_urls,
+        story_count=len(pillar_stories),
+        signals=signals,
+        bloom_levels=bloom_levels,
+        questions_count=len(edu_questions),
+        flashcards_count=len(edu_flashcards),
+        assets=assets,
+        lineage={
+            "run_id": run_id or "",
+            "top_story_url": top_story.get("url", "") if top_story else "",
+            "source_count": len(_all_stories or []),
+            "unclassified": _unclassified,
+        },
+        quality_flags=["has_trending" if signals.get("trending_topics") else "no_trending"],
+        published_at=iso_utc(),
+    )
+
     # Classification info
     if confidence:
         lines.extend([
@@ -319,5 +370,6 @@ def generate_post(pillar_name: str, config: dict, pillar_stories: list[dict],
     # Ensure folder exists (post_dir already created when writing images)
     config["folder"].mkdir(parents=True, exist_ok=True)
     filepath.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    write_json(manifest_path, story_manifest)
     log(f"Wygenerowano: {filepath.relative_to(BASE_DIR)} ({link_count} linkow, SQI={signals.get('avg_sqi', 0):.3f})")
     return filepath

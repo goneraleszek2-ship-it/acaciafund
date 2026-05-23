@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AcaciaFund Run Manifest",
+  "type": "object",
+  "required": [
+    "manifest_type",
+    "run_id",
+    "started_at",
+    "ended_at",
+    "status",
+    "source_counts",
+    "generated_pages",
+    "output_count",
+    "notes",
+    "created_at",
+    "version"
+  ],
+  "properties": {
+    "manifest_type": {"const": "run"},
+    "run_id": {"type": "string"},
+    "started_at": {"type": "string"},
+    "ended_at": {"type": "string"},
+    "status": {"type": "string"},
+    "source_counts": {"type": "object"},
+    "generated_pages": {"type": "array"},
+    "output_count": {"type": "integer"},
+    "notes": {"type": "array"},
+    "created_at": {"type": "string"},
+    "version": {"type": "integer"},
+    "checksum": {"type": "string"}
+  }
+}

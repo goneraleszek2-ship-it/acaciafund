@@ -3,14 +3,16 @@
 
 import sys
 from datetime import datetime, timezone
+from pathlib import Path
 
 from core.data import PILLARS, log
 from core.fetch import fetch_hn_stories, fetch_arxiv
 from core.analyze import classify_story
 from core.generate import generate_post
+from core.metadata import build_run_manifest, write_json, iso_utc, write_registry_index
 
 
-def inject_arxiv(pillar_stories: dict[str, list[dict]]) -> None:
+def inject_arxiv(pillar_stories: dict[str, list[dict]]) -> int:
     log("Pobieranie z arXiv API...")
     papers = fetch_arxiv(since_hours=72)
     log(f"Pobrano {len(papers)} pasujacych prac")
@@ -26,11 +28,14 @@ def inject_arxiv(pillar_stories: dict[str, list[dict]]) -> None:
             "object_id": "",
         })
         log(f"  -> {p}: {paper['title'][:70]}")
+    return len(papers)
 
 
 def main():
     print("=" * 55, file=sys.stderr)
-    log(f"AcaciaFund -- start: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} UTC")
+    started_at = datetime.now(timezone.utc)
+    run_id = started_at.strftime("%Y%m%dT%H%M%SZ")
+    log(f"AcaciaFund -- start: {started_at.strftime('%Y-%m-%d %H:%M:%S')} UTC")
     print("=" * 55, file=sys.stderr)
 
     all_stories = fetch_hn_stories(since_hours=48, min_points=2)
@@ -53,7 +58,7 @@ def main():
     log(f"AML={len(pillar_stories['aml'])}, STOCK={len(pillar_stories['stock'])}, "
         f"SCIENCE={len(pillar_stories['science'])}, unclassified={unclassified}")
 
-    inject_arxiv(pillar_stories)
+    arxiv_count = inject_arxiv(pillar_stories)
 
     for p in PILLARS:
         hn = [s for s in pillar_stories[p] if s.get("points", 0) > 0]
@@ -62,14 +67,41 @@ def main():
         pillar_stories[p] = hn[:25] + arx[:5]
 
     generated = 0
+    generated_pages: list[dict] = []
     for pillar, config in PILLARS.items():
-        if generate_post(
+        result = generate_post(
             pillar, config, pillar_stories[pillar],
             all_pillar_stories=pillar_stories,
             _all_stories=all_stories,
             _unclassified=unclassified,
-        ):
+            run_id=run_id,
+        )
+        if result:
             generated += 1
+            bundle_name = result.parent.name
+            generated_pages.append({
+                "pillar": pillar,
+                "path": str(result.relative_to(Path(__file__).parent)),
+                "content_id": bundle_name,
+                "manifest": str((result.parent / "manifest.json").relative_to(Path(__file__).parent)),
+            })
+
+    ended_at = datetime.now(timezone.utc)
+    run_manifest = build_run_manifest(
+        run_id=run_id,
+        started_at=iso_utc(started_at),
+        ended_at=iso_utc(ended_at),
+        status="ok" if generated else "noop",
+        source_counts={
+            "hn": len(all_stories),
+            "arxiv": arxiv_count,
+        },
+        generated_pages=generated_pages,
+        output_count=generated,
+        notes=[],
+    )
+    write_json(Path(__file__).parent / "registry" / "runs" / f"{run_id}.json", run_manifest)
+    write_registry_index()
 
     print("=" * 55, file=sys.stderr)
     log(f"Koniec potoku. Wygenerowano {generated} postow.")

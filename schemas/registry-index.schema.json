@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AcaciaFund Registry Index",
+  "type": "object",
+  "required": [
+    "manifest_type",
+    "generated_at",
+    "latest_run_id",
+    "counts",
+    "latest_by_pillar",
+    "runs",
+    "pages",
+    "by_content_id",
+    "by_run_id",
+    "checksum"
+  ],
+  "properties": {
+    "manifest_type": {"const": "registry-index"},
+    "generated_at": {"type": "string"},
+    "latest_run_id": {"type": "string"},
+    "counts": {"type": "object"},
+    "latest_by_pillar": {"type": "object"},
+    "runs": {"type": "array"},
+    "pages": {"type": "array"},
+    "by_content_id": {"type": "object"},
+    "by_run_id": {"type": "object"},
+    "checksum": {"type": "string"}
+  }
+}

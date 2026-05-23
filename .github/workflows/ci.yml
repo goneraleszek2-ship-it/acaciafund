@@ -33,7 +33,7 @@ jobs:
           pip install pytest
       - name: Build site
         run: |
-          hugo --minify --cleanDestinationDir
+          python scripts/preflight.py --build-site
       - name: Run usability tests
         run: |
           python tests/test_usability.py

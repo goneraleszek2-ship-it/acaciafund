@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AcaciaFund Asset Manifest",
+  "type": "object",
+  "required": [
+    "manifest_type",
+    "asset_id",
+    "content_id",
+    "asset_type",
+    "path",
+    "source_url",
+    "mime_type",
+    "bytes",
+    "checksum",
+    "created_at",
+    "version"
+  ],
+  "properties": {
+    "manifest_type": {"const": "asset"},
+    "asset_id": {"type": "string"},
+    "content_id": {"type": "string"},
+    "asset_type": {"type": "string"},
+    "path": {"type": "string"},
+    "source_url": {"type": "string"},
+    "mime_type": {"type": "string"},
+    "bytes": {"type": "integer"},
+    "checksum": {"type": "string"},
+    "created_at": {"type": "string"},
+    "version": {"type": "integer"}
+  }
+}
