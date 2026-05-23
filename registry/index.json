@@ -85,9 +85,23 @@
       },
       "started_at": "2026-05-23T12:49:23Z",
       "status": "ok"
+    },
+    "20260523T140435Z": {
+      "checksum": "db7c01205086e44a83ae34dbad0d40acea0204f9b1464b54b2ba46e62b38c078",
+      "created_at": "2026-05-23T14:04:36Z",
+      "ended_at": "2026-05-23T14:04:36Z",
+      "output_count": 0,
+      "path": "registry/runs/20260523T140435Z.json",
+      "run_id": "20260523T140435Z",
+      "source_counts": {
+        "arxiv": 100,
+        "hn": 1000
+      },
+      "started_at": "2026-05-23T14:04:35Z",
+      "status": "noop"
     }
   },
-  "checksum": "a407dae77f87478fc2106c62a3978f014c0d54cab71fc989ceda704ee746c8a0",
+  "checksum": "6e07230eb4f72b4a4052d4c5f6881003263d444a96a84f6b500bba86b70d40ef",
   "counts": {
     "pages": 3,
     "pillars": {
@@ -95,15 +109,15 @@
       "science": 1,
       "stock": 1
     },
-    "runs": 1
+    "runs": 2
   },
-  "generated_at": "2026-05-23T13:36:29Z",
+  "generated_at": "2026-05-23T14:04:38Z",
   "latest_by_pillar": {
     "aml": "2026-05-23-aml",
     "science": "2026-05-23-science",
     "stock": "2026-05-23-stock"
   },
-  "latest_run_id": "20260523T124923Z",
+  "latest_run_id": "20260523T140435Z",
   "manifest_type": "registry-index",
   "pages": [
     {
@@ -191,6 +205,20 @@
       },
       "started_at": "2026-05-23T12:49:23Z",
       "status": "ok"
+    },
+    {
+      "checksum": "db7c01205086e44a83ae34dbad0d40acea0204f9b1464b54b2ba46e62b38c078",
+      "created_at": "2026-05-23T14:04:36Z",
+      "ended_at": "2026-05-23T14:04:36Z",
+      "output_count": 0,
+      "path": "registry/runs/20260523T140435Z.json",
+      "run_id": "20260523T140435Z",
+      "source_counts": {
+        "arxiv": 100,
+        "hn": 1000
+      },
+      "started_at": "2026-05-23T14:04:35Z",
+      "status": "noop"
     }
   ]
 }
