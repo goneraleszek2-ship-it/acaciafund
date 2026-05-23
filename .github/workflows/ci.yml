@@ -38,5 +38,7 @@ jobs:
         run: |
           python tests/test_usability.py
       - name: Run tests
+        env:
+          PYTHONPATH: services/api
         run: |
           pytest -q
