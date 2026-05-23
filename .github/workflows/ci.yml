@@ -36,7 +36,7 @@ jobs:
           hugo --minify --cleanDestinationDir
       - name: Run usability tests
         run: |
-          pytest tests/test_usability.py -q
+          python tests/test_usability.py
       - name: Run tests
         run: |
           pytest -q
