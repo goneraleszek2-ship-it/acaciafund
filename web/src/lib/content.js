@@ -37,14 +37,28 @@ function stripMarkdown(text) {
     .trim();
 }
 
+function extractBayesDemo(content) {
+  const match = content.match(/{{<\s*bayes\s+([^>]+?)\s*>}}/i);
+  if (!match) return null;
+  const attrs = Object.fromEntries(
+    [...match[1].matchAll(/([a-zA-Z0-9_-]+)="([^"]+)"/g)].map((m) => [m[1], m[2]])
+  );
+  return {
+    prior: attrs.prior || '0.5',
+    like: attrs.like || '0.7',
+  };
+}
+
 function parseMarkdown(filePath) {
   const raw = fs.readFileSync(filePath, 'utf8');
   const parsed = matter(raw);
-  const html = marked.parse(parsed.content);
+  const bayesDemo = extractBayesDemo(parsed.content);
+  const cleanedContent = parsed.content.replace(/{{<\s*bayes\s+[^>]+\s*>}}/gi, '').trim();
+  const html = marked.parse(cleanedContent);
   const slug = path.basename(path.dirname(filePath));
   const baseName = path.basename(filePath);
   const section = path.basename(path.dirname(path.dirname(filePath)));
-  return { filePath, slug, baseName, section, data: parsed.data || {}, html, raw: parsed.content, excerpt: stripMarkdown(parsed.content).slice(0, 220) };
+  return { filePath, slug, baseName, section, data: parsed.data || {}, html, raw: parsed.content, excerpt: stripMarkdown(cleanedContent).slice(0, 220), bayesDemo };
 }
 
 export function loadRegistry() {
@@ -97,6 +111,7 @@ export function loadLessons() {
         difficulty: data.difficulty || '',
         tags: Array.isArray(data.tags) ? data.tags : [],
         summary: data.description || parsed.excerpt,
+        bayesDemo: parsed.bayesDemo,
       };
     })
     .sort((a, b) => a.slug.localeCompare(b.slug));

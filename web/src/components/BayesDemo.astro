@@ -1,9 +1,12 @@
+---
+const { prior = '0.5', like = '0.7' } = Astro.props;
+---
 <section class="card">
   <div class="kicker">Interactive</div>
   <h3>Bayesian update</h3>
   <div class="stacked">
-    <label>Prior <input id="priorVal" type="range" min="0" max="1" step="0.01" value="0.5" /></label>
-    <label>Likelihood <input id="likeVal" type="range" min="0" max="1" step="0.01" value="0.7" /></label>
+    <label>Prior <input id="priorVal" type="range" min="0" max="1" step="0.01" value={prior} /></label>
+    <label>Likelihood <input id="likeVal" type="range" min="0" max="1" step="0.01" value={like} /></label>
     <div class="badge">Posterior: <strong id="posteriorVal">0.5</strong></div>
     <svg width="100%" height="120" viewBox="0 0 260 110" aria-hidden="true">
       <g transform="translate(20,10)">
