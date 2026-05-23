@@ -150,12 +150,28 @@
           if (img.complete && img.naturalWidth) {
             img.classList.remove('lqip-loading');
             img.classList.add('lqip-loaded');
+            setTimeout(function(){ img.style.backgroundImage = ''; }, 400);
           } else {
             img.addEventListener('load', function(){
               img.classList.remove('lqip-loading');
               img.classList.add('lqip-loaded');
               // remove background to avoid layering artifacts
               setTimeout(function(){ img.style.backgroundImage = ''; }, 400);
+            });
+            // If image errors (missing file / bad URL), fallback to placeholder
+            img.addEventListener('error', function(){
+              try {
+                img.classList.remove('lqip-loading');
+                img.classList.add('lqip-loaded');
+                // hide the broken image to avoid the browser's broken icon
+                img.style.visibility = 'hidden';
+                // optionally set a placeholder background
+                var data = img.getAttribute('data-lqip');
+                if (data) {
+                  img.style.backgroundImage = 'url("' + data + '")';
+                  img.style.visibility = 'visible';
+                }
+              } catch(e) {}
             });
           }
         } catch(e) { /* ignore */ }

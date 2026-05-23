@@ -6,7 +6,10 @@ DB_PATH = Path("/data/progress.db")
 
 
 def init_db(path: Optional[Path] = None) -> None:
+    global DB_PATH
     p = path or DB_PATH
+    # If caller provided a path use it as the active DB for subsequent calls
+    DB_PATH = p
     p.parent.mkdir(parents=True, exist_ok=True)
     conn = sqlite3.connect(str(p))
     try:

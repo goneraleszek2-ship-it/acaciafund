@@ -98,18 +98,18 @@ check("ti-timer" in blog, "Blog list shows reading time")
 check("Strona" in blog or "Page" in blog or "Previous" in blog or "Next" in blog or "pagination" in blog,
       "Blog has pagination")
 
-    if first_post:
-        post_path = first_post.relative_to(PUBLIC)
-        post_html = read_html(str(post_path))
-        check("Czytaj dalej" not in post_html or True,
-              "Single blog post renders content")
-        check("2026" in post_html or "2025" in post_html, "Single post shows date")
-        check("AcaciaFund" in post_html, "Single post shows author")
-        check("categories" in post_html or "Categories" in post_html or "AML" in post_html or "Markets" in post_html or "Science" in post_html,
-              "Single post shows categories")
-        # Ensure images render on single post pages (either inline or as featured)
-        check("<img" in post_html or "class=\"img-placeholder\"" in post_html,
-              "Single post includes an image or placeholder")
+if first_post:
+    post_path = first_post.relative_to(PUBLIC)
+    post_html = read_html(str(post_path))
+    check("Czytaj dalej" not in post_html or True,
+          "Single blog post renders content")
+    check("2026" in post_html or "2025" in post_html, "Single post shows date")
+    check("AcaciaFund" in post_html, "Single post shows author")
+    check("categories" in post_html or "Categories" in post_html or "AML" in post_html or "Markets" in post_html or "Science" in post_html,
+          "Single post shows categories")
+    # Ensure images render on single post pages (either inline or as featured)
+    check("<img" in post_html or "class=\"img-placeholder\"" in post_html,
+          "Single post includes an image or placeholder")
 
 # ── 4. CATEGORY AND TAG PAGES ──
 print("\n\u2500\u2500 4. TAXONOMIES \u2500\u2500")

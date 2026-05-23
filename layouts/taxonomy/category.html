@@ -24,7 +24,7 @@
         <div class="p-4 rounded" style="background:{{ index $info "bg" }};border:1px solid {{ index $info "color" }}33;">
           <div class="d-flex align-items-start gap-4 flex-wrap">
             <div style="flex-shrink:0;width:120px;">
-              <img src="{{ index $info "image" }}" alt="{{ $category }}" style="width:100%;height:auto;display:block;border-radius:8px;">
+              {{ partial "image.html" (dict "Src" (index $info "image") "Alt" $category "Class" "" "Width" "100%") }}
             </div>
             <div style="flex:1;min-width:200px;">
               <div class="d-flex align-items-center gap-2 mb-2">

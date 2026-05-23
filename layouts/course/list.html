@@ -34,9 +34,9 @@
             <a href="{{ "blog/" | relLangURL }}" class="btn btn-sm btn-outline-warning mr-2">Archiwum</a>
             <a href="{{ printf "categories/%s/index.xml" .id | relLangURL }}" class="btn btn-sm btn-outline-secondary">RSS</a>
             <hr style="border-color:rgba(255,255,255,0.06);">
-            <div style="max-height:180px;overflow:hidden;border-radius:8px;margin-top:8px;">
-              <img src="{{ .image }}" alt="{{ .name }}" style="width:100%;height:auto;display:block;">
-            </div>
+              <div style="max-height:180px;overflow:hidden;border-radius:8px;margin-top:8px;">
+                {{ partial "image.html" (dict "Src" .image "Alt" .name "Class" "w-100" ) }}
+              </div>
           </div>
         </div>
       </div>
@@ -86,7 +86,7 @@
             <h3 class="h4 mb-3 text-white">📊 Taksonomia Blooma</h3>
             <p class="small mb-4" style="color:rgba(255,255,255,0.5);">6 poziomów przyswajania wiedzy — od podstawowej pamięci po twórczą syntezę.</p>
             <div style="max-width:500px;margin:0 auto;">
-              <img src="/images/course-panel.svg" alt="Bloom Taxonomy" style="width:100%;height:auto;display:block;">
+              {{ partial "image.html" (dict "Src" "/images/course-panel.svg" "Alt" "Bloom Taxonomy" "Class" "w-100") }}
             </div>
           </div>
         </div>

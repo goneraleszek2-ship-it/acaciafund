@@ -5,16 +5,16 @@
 <!-- hero -->
 <section id="main-content" class="hero-section">
   <div class="hero-bg" style="position:absolute;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;">
-    <img src="/images/banner/hero-banner.svg" alt="" style="width:100%;height:100%;object-fit:cover;opacity:0.8;">
+    {{ partial "image.html" (dict "Src" "/images/banner/hero-banner.svg" "Alt" "" "Class" "w-100" "Height" "100%") }}
   </div>
   <div class="container" style="position:relative;z-index:1;"> 
-    <div class="row align-items-center" style="min-height:360px;">
-      <div class="col-lg-7 mx-auto text-center">
-        <h1 class="hero-title mb-3" style="font-size:2.6rem;line-height:1.05;">Codzienna synteza badań</h1>
-        <p class="hero-subtitle mb-4" style="font-size:1.05rem;max-width:760px;margin:0 auto;color:var(--color-text-muted);">Automatyczny system NLP agreguje i klasyfikuje treści z HackerNews i arXiv — zwięzła, krytyczna synteza zorientowana na rozwój osądu.</p>
-        <div style="margin-top:22px;display:flex;gap:12px;justify-content:center;">
-          <a class="btn btn-primary" href="/pl/learn/">Rozpocznij naukę</a>
-          <a class="btn btn-outline-primary" href="/pl/blog/">Przeglądaj syntezy</a>
+    <div class="flex items-center justify-center" style="min-height:360px;">
+      <div class="text-center max-w-3xl">
+        <h1 class="text-4xl font-extrabold text-primary leading-tight">Codzienna synteza badań</h1>
+        <p class="mt-4 text-lg text-gray-600">Automatyczny system NLP agreguje i klasyfikuje treści z HackerNews i arXiv — zwięzła, krytyczna synteza zorientowana na rozwój osądu.</p>
+        <div class="mt-6 flex gap-3 justify-center">
+          <a class="inline-block bg-gradient-to-r from-primary to-blue-700 text-white px-6 py-2 rounded-lg font-medium" href="/pl/learn/">Rozpocznij naukę</a>
+          <a class="inline-block border border-primary text-primary px-5 py-2 rounded-lg" href="/pl/blog/">Przeglądaj syntezy</a>
         </div>
       </div>
     </div>
@@ -92,7 +92,7 @@
       </div>
       <div class="col-lg-6 order-1 order-lg-2 mb-4 mb-lg-0">
         <div class="feature-card" style="display:flex;align-items:center;justify-content:center;height:320px;">
-          <img src="/images/course-panel.svg" alt="Panel nauki" style="max-height:280px;width:auto;display:block;">
+          {{ partial "image.html" (dict "Src" "/images/course-panel.svg" "Alt" "Panel nauki" "Class" "img-fluid" "Width" "auto" "Height" "280") }}
         </div>
       </div>
     </div>
