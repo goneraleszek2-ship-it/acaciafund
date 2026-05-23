@@ -1,0 +1,27 @@
+---
+import SiteLayout from '../../../components/SiteLayout.astro';
+import LessonCard from '../../../components/LessonCard.astro';
+import { loadLessons } from '../../../lib/content.js';
+
+const lessons = loadLessons();
+---
+<SiteLayout title="Panel nauki | AcaciaFund" description="Interaktywne lekcje i quizy dla głębszego zrozumienia." lang="pl">
+  <section class="section">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-6 order-2 order-md-1">
+          <h2 class="section-title">Twój osobisty przewodnik po wiedzy</h2>
+          <p class="lead">
+            Zanurz się głębiej w tematy, które Cię fascynują. Nasz interaktywny panel nauki prowadzi Cię przez sześć poziomów zrozumienia — od podstawowego przypominania faktów po twórcze zastosowanie wiedzy w nowych kontekstach. Każda synteza staje się punktem wyjścia do Twojej własnej eksploracji.
+          </p>
+          <a href="/pl/course/" class="btn btn-primary btn-lg px-5 py-3">Rozpocznij eksplorację</a>
+        </div>
+        <div class="col-md-6 order-1 order-md-2 mb-4 mb-md-0">
+          <div class="feature-card" style="display:flex;align-items:center;justify-content:center;height:340px;">
+            <!-- Keep visual element -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</SiteLayout>

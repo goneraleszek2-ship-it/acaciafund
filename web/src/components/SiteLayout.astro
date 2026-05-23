@@ -1,7 +1,10 @@
 ---
 import '../styles/global.css';
 
-const { title = 'AcaciaFund', description = 'Daily research portfolio', section = '', lang = 'pl' } = Astro.props;
+const { title = 'AcaciaFund', description = 'Daily research portfolio', section = '' } = Astro.props;
+// Detect language from URL path: if first segment is 'pl' or 'en', use that, else default to 'pl'
+const pathSegments = Astro.url.pathname.split('/').filter(Boolean);
+const lang = pathSegments.length > 0 && ['pl', 'en'].includes(pathSegments[0]) ? pathSegments[0] : 'pl';
 ---
 <html lang={lang}>
   <head>

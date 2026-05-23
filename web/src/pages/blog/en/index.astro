@@ -1,0 +1,29 @@
+---
+import SiteLayout from '../../../components/SiteLayout.astro';
+import PostCard from '../../../components/PostCard.astro';
+import { loadBlogPosts } from '../../../lib/content.js';
+
+const posts = loadBlogPosts();
+---
+<SiteLayout title="Latest Discoveries | AcaciaFund" description="Explore recent insights from the knowledge frontier." lang="en">
+  <section class="section">
+    <div class="container">
+      <div class="row align-items-start">
+        <div class="col-12">
+          <h2 class="section-title">Latest Insights from the Knowledge Frontier</h2>
+          <p class="text-center text-muted mb-5">
+            Explore the most recent syntheses that connect insights across disciplines into a coherent narrative about how our world is evolving.
+          </p>
+        </div>
+      </div>
+      <div class="row gy-4">
+        {posts.slice(0, 3).map((post) => <PostCard post={post} />)}
+      </div>
+      <div class="row">
+        <div class="col-12 text-center">
+          <a href="/en/blog/" class="btn btn-outline-primary btn-lg px-5 py-3">View All Discoveries</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</SiteLayout>
