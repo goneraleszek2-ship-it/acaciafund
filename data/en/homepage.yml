@@ -1,0 +1,71 @@
+slider:
+  enable: false
+
+banner_feature:
+  enable: true
+  image: "/images/banner/banner-feature.svg"
+  feature_item:
+  - name: "AI Synthesis"
+    icon: "ti-stats-up"
+    content: "Automated classification and analysis of sources from HackerNews and arXiv using NLP."
+  - name: "Three Pillars"
+    icon: "ti-layers-alt"
+    content: "AML, capital markets, and science — cross-pillar connections detected through TF-IDF."
+  - name: "Bloom Taxonomy"
+    icon: "ti-pencil-alt"
+    content: "Questions at six levels — from memory to creation. Flashcards and quizzes for each synthesis."
+  - name: "Open Source"
+    icon: "ti-github"
+    content: "Fully open source code. Submit ideas and explore architecture on GitHub."
+
+about:
+  enable: true
+  title: "About AcaciaFund"
+  image: "/images/about/about-section.svg"
+  content: "Daily, automated knowledge synthesis — AML, capital markets, and science through the lens of systems thinking. Sources: HackerNews and arXiv."
+  button:
+    enable: true
+    label: "Learn More"
+    link: "about/"
+
+course:
+  enable: true
+  title: "Learning Panel"
+  image: "/images/course-panel.svg"
+  content: "Track progress through Bloom Taxonomy. Each synthesis includes questions at six levels — from memorization to creation."
+  button:
+    enable: true
+    label: "Go to Panel"
+    link: "course/"
+
+cta:
+  enable: true
+  title: "Open Source"
+  content: "AcaciaFund's source code is fully open. Submit ideas, review architecture, and contribute to development."
+  button:
+    enable: true
+    label: "GitHub →"
+    link: "https://github.com/anomalyco/acaciafund"
+
+success_story:
+  enable: false
+
+event:
+  enable: false
+
+funfacts:
+  enable: false
+  title: "Statistics"
+  funfact_item:
+  - count: "232"
+    name: "Syntheses published"
+  - count: "3"
+    name: "Research pillars"
+  - count: "2"
+    name: "Data sources"
+  - count: "6"
+    name: "Bloom levels"
+
+blog:
+  enable: true
+  title: "Latest syntheses"

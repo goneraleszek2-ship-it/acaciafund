@@ -10,11 +10,14 @@
   <div class="container" style="position:relative;z-index:1;"> 
     <div class="flex items-center justify-center" style="min-height:360px;">
       <div class="text-center max-w-3xl">
-        <h1 class="text-4xl font-extrabold text-primary leading-tight">Codzienna synteza badań</h1>
-        <p class="mt-4 text-lg text-gray-600">Automatyczny system NLP agreguje i klasyfikuje treści z HackerNews i arXiv — zwięzła, krytyczna synteza zorientowana na rozwój osądu.</p>
-        <div class="mt-6 flex gap-3 justify-center">
-          <a class="inline-block bg-gradient-to-r from-primary to-blue-700 text-white px-6 py-2 rounded-lg font-medium" href="/pl/learn/">Rozpocznij naukę</a>
-          <a class="inline-block border border-primary text-primary px-5 py-2 rounded-lg" href="/pl/blog/">Przeglądaj syntezy</a>
+        <h1 class="text-4xl font-extrabold text-primary leading-tight">Twoja codzienna podróż przez wiedzę</h1>
+        <p class="mt-4 text-lg text-gray-600 max-w-xl">
+          Zanurz się w świecie odkryć, gdzie codziennie przetwarzamy tysiące wiadomości z HackerNews i arXiv, 
+          przekształcając je w przystępne lekcje, które rozbudzają ciekawość i inspirują do działania.
+        </p>
+        <div class="mt-8 flex gap-4 justify-center flex-wrap">
+          <a href="/pl/learn/" class="btn btn-primary btn-lg px-8 py-3">Rozpocznij przygodę</a>
+          <a href="/pl/blog/" class="btn btn-outline-primary btn-lg px-8 py-3">Zobacz najnowsze odkrycia</a>
         </div>
       </div>
     </div>
@@ -34,14 +37,16 @@
       <div class="col-lg-7">
         <div class="row">
           {{ range .feature_item }}
-          <div class="col-sm-6 mb-4">
-            <div class="d-flex">
-              <div class="mr-3">
-                <i class="{{ .icon }}" style="font-size:1.5rem;color:var(--color-accent);"></i>
+          <div class="col-sm-6 mb-5">
+            <div class="d-flex align-items-start">
+              <div class="flex-shrink-0 me-4">
+                <div class="feature-icon">
+                  <i class="{{ .icon }}" style="font-size:2rem;color:var(--color-accent);"></i>
+                </div>
               </div>
-              <div>
-                <h5>{{ .name | markdownify }}</h5>
-                <p class="text-muted small">{{ .content | markdownify }}</p>
+              <div class="flex-grow-1">
+                <h4>{{ .name | markdownify }}</h4>
+                <p>{{ .content | markdownify }}</p>
               </div>
             </div>
           </div>
@@ -62,11 +67,15 @@
   <div class="container">
     <div class="row align-items-center">
       <div class="col-md-6 order-2 order-md-1">
-        <h2 class="section-title">{{ .title | markdownify }}</h2>
-        <p>{{ .content | markdownify }}</p>
+        <h2 class="section-title">Wyrusz w podróż odkrywcy wiedzy</h2>
+        <p class="lead">
+          AcaciaFund to nie tylko system analizy – to twoja osobista ekspedycja przez krajobrazy wiedzy. 
+          Codziennie przemierzamy obszary sztucznej inteligencji, rynków finansowych i nauki odkrywczej, 
+          wyciągając z nich najcenniejsze spostrzeżenia i prezentując je w formie, która inspirować będzie do działania.
+        </p>
         {{ if .button.enable }}
         {{ with .button }}
-        <a href="{{ .link | absLangURL }}" class="btn btn-outline-primary">{{ .label }}</a>
+        <a href="{{ .link | absLangURL }}" class="btn btn-primary btn-lg px-5 py-3">Rozpocznij ekspedycję</a>
         {{ end }}
         {{ end }}
       </div>
@@ -86,13 +95,16 @@
   <div class="container">
     <div class="row align-items-center">
       <div class="col-lg-6 order-2 order-lg-1">
-        <h2 class="section-title">Panel nauki</h2>
-        <p>Śledź postępy z Bloom Taxonomy. Każda synteza zawiera pytania na 6 poziomach — od zapamiętywania po tworzenie.</p>
-        <a href="{{ `course` | relLangURL }}" class="btn btn-outline-primary">Przejdź do panelu</a>
+        <h2 class="section-title">Twój osobisty przewodnik po wiedzy</h2>
+        <p class="lead">
+          Zanurz się głębiej w tematy, które Cię fascynują. Nasz interaktywny panel nauki prowadzi Cię przez sześć poziomów zrozumienia — 
+          od podstawowego przypominania faktów po twórcze zastosowanie wiedzy w nowych kontekstach. Każda synteza staje się punktem wyjścia do Twojej własnej eksploracji.
+        </p>
+        <a href="{{ `course` | relLangURL }}" class="btn btn-primary btn-lg px-5 py-3">Rozpocznij eksplorację</a>
       </div>
       <div class="col-lg-6 order-1 order-lg-2 mb-4 mb-lg-0">
-        <div class="feature-card" style="display:flex;align-items:center;justify-content:center;height:320px;">
-          {{ partial "image.html" (dict "Src" "/images/course-panel.svg" "Alt" "Panel nauki" "Class" "img-fluid" "Width" "auto" "Height" "280") }}
+        <div class="feature-card" style="display:flex;align-items:center;justify-content:center;height:340px;">
+          {{ partial "image.html" (dict "Src" "/images/course-panel.svg" "Alt" "Panel nauki" "Class" "img-fluid" "Width" "auto" "Height" "300") }}
         </div>
       </div>
     </div>
@@ -127,7 +139,10 @@
   <div class="container">
     <div class="row align-items-start">
       <div class="col-12">
-        <h2 class="section-title">{{ $data.homepage.blog.title }}</h2>
+        <h2 class="section-title">Ostatnie odkrycia z pogranicza wiedzy</h2>
+        <p class="text-center text-muted mb-5">
+          Przeglądaj najnowsze syntezy, które łączą wiedzę z różnych dziedzin w spójną narrację o tym, jak świat się zmienia.
+        </p>
       </div>
     </div>
     <div class="row gy-4">
@@ -139,7 +154,7 @@
     </div>
     <div class="row">
       <div class="col-12 text-center">
-        <a href="{{ `blog` | relLangURL }}" class="btn btn-outline-primary">{{ i18n "see_all" }}</a>
+        <a href="{{ `blog` | relLangURL }}" class="btn btn-outline-primary btn-lg px-5 py-3">Zobacz wszystkie odkrycia</a>
       </div>
     </div>
   </div>
@@ -154,11 +169,14 @@
   <div class="container">
     <div class="row">
       <div class="col-12 text-center">
-        <h2 class="section-title text-white">{{ .title | markdownify }}</h2>
-        <p>{{ .content | markdownify }}</p>
+        <h2 class="section-title text-white">Dołącz do społeczności odkrywców</h2>
+        <p class="text-white">
+          AcaciaFund to projekt open source, który rozwija się dzięki pasji i zaangażowaniu osób jak ty. 
+          Jeśli wierzysz, że wiedza powinna być dostępna, przystępna i inspirująca – dołącz do naszej misji.
+        </p>
         {{ if .button.enable }}
         {{ with .button }}
-        <a href="{{ .link | absLangURL }}" class="btn btn-primary">{{ .label }}</a>
+        <a href="{{ .link | absLangURL }}" class="btn btn-primary btn-lg px-6 py-3">Zobacz kod na GitHub</a>
         {{ end }}
         {{ end }}
       </div>

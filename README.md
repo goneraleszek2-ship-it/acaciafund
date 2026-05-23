@@ -13,56 +13,62 @@ HackerNews + arXiv → deterministic classification (Bloom taxonomy) → static 
 
 ---
 
-## What’s new (summary)
+## What's New (Summary)
 
-- Learning Hub: interactive lessons, quizzes, and an in-browser Bayes demo (content/pl/learn/).
-- Local-first learning UX: client-side quizzes and progress saved in localStorage (static/js/learning_hub.js).
-- Shortcode for interactive Bayes demos: layouts/shortcodes/bayes.html + static/js/learning.js.
-- Homepage UX polish: refined hero, call-to-action, pictograms and software stack diagram.
-- FastAPI scaffold for future dynamic features: services/api/
-
----
-
-## Quick Overview — Purpose & Structure
-
-This project is built as a layered system that follows MOSA (Modular Open Systems Architecture):
-
-1. Content Synthesis (Static-first)
-   - Python ingestion and analysis produce markdown page bundles under content/pl/blog/.
-   - Deterministic Bloom classification and SQI scoring make content educational and sortable.
-
-2. Learning Layer (Interactive, privacy-first)
-   - content/pl/learn/ contains lessons, demos and quizzes.
-   - Client-side scripts render quizzes and track progress locally; server persistence is optional.
-
-3. Service Scaffold & DevOps
-   - services/api/ contains a minimal FastAPI service and Dockerfile for future features (user persistence, auth).
-   - .devcontainer/ and docker-compose.yml provide a reproducible developer environment (Codespaces friendly).
+- **Learning Hub**: Interactive lessons, quizzes, and an in-browser Bayes demo (content/pl/learn/)
+- **Local-first Learning UX**: Client-side quizzes with progress saved in localStorage (static/js/learning_hub.js)
+- **Interactive Bayes Demo Shortcode**: layouts/shortcodes/bayes.html + static/js/learning.js
+- **Homepage UX Enhancement**: Refined hero section, call-to-action, pictograms and software stack diagram
+- **FastAPI Scaffold**: services/api/ for future dynamic features
 
 ---
 
-## Project layout (essential)
+## Overview — Purpose & Structure
+
+AcaciaFund follows a Modular Open Systems Architecture (MOSA) with three core layers:
+
+### 1. Content Synthesis (Static-first)
+- Python ingestion engine processes HackerNews and arXiv content
+- Deterministic Bloom taxonomy classification and SQI scoring create educational, sortable content
+- Generated as markdown page bundles under content/pl/blog/
+
+### 2. Learning Layer (Interactive, Privacy-first)
+- Located in content/pl/learn/: lessons, demonstrations, and quizzes
+- Client-side rendering with localStorage progress tracking (optional server persistence)
+- Privacy-focused design: data remains local by default
+
+### 3. Service Infrastructure & DevOps
+- services/api/: Minimal FastAPI service with Dockerfile for future features
+- .devcontainer/ and docker-compose.yml: Reproducible development environment (Codespaces compatible)
+- .github/workflows/: CI/CD pipeline for automated synthesis and deployment
+
+---
+
+## Project Structure
 
 ```
 ./
-├── services/api/          # FastAPI scaffold & Dockerfile
-├── content/pl/blog/       # Static post bundles (Hugo Page Resources)
-├── content/pl/learn/      # Learning Hub: lessons, demos, quizzes
-├── layouts/               # Hugo layout overrides, shortcodes, partials
-├── static/                # images, js (learning.js, learning_hub.js)
-├── scripts/               # helper scripts (migration etc.)
-├── .devcontainer/         # Codespaces devcontainer
-├── docker-compose.yml     # local dev orchestration
-└── .github/workflows/     # CI and scheduled pipeline
+├── services/api/          # FastAPI backend & Docker configuration
+├── content/pl/blog/       # Hugo page bundles (research syntheses)
+├── content/pl/learn/      # Learning Hub: lessons, demos, assessments
+├── layouts/               # Custom Hugo layouts, shortcodes, partials
+├── static/                # Assets: images, JavaScript (learning.js, learning_hub.js)
+├── scripts/               # Utility scripts (migration, maintenance)
+├── .devcontainer/         # Development container configuration
+├── docker-compose.yml     # Local development orchestration
+└── .github/workflows/     # GitHub Actions: CI/CD and scheduled pipelines
 ```
 
 ---
 
-## Getting started (developer)
+## Developer Guide
 
-Prerequisites: Hugo (>=0.161), Python 3.11+, Docker (optional)
+### Prerequisites
+- Hugo (version 0.161 or newer)
+- Python 3.11+
+- Docker (optional, for API service)
 
-Local dev (fast):
+### Local Development (Quick Start)
 
 ```bash
 git clone https://github.com/goneraleszek2-ship-it/acaciafund.git
@@ -70,14 +76,14 @@ cd acaciafund
 hugo serve
 ```
 
-Run synthesis pipeline (full):
+### Full Synthesis Pipeline
 
 ```bash
-python ingest.py   # fetch + analyze + generate content
+python ingest.py   # Execute: fetch → analyze → generate content
 hugo --cleanDestinationDir
 ```
 
-Run tests (site-level synthetic checks):
+### Testing
 
 ```bash
 hugo --cleanDestinationDir
@@ -86,28 +92,28 @@ python tests/usability.py
 
 ---
 
-## Learning Hub — design intent
+## Learning Hub — Design Principles
 
-- Teach judgment over prediction: interactive Bayes demo to internalize belief updating.
-- Privacy-first default: local-only progress and quizzes; opt-in server persistence later.
-- Modular lessons: each lesson is a simple markdown file with optional quiz JSON embedded.
-
----
-
-## Assessment & next steps
-
-Current status: a working static site with an experimental, privacy-preserving learning layer and a clear path to a dynamic backend.
-
-Recommended immediate work:
-
-1. Implement server-side persistence (FastAPI + SQLite) and link to user identity (DIDs / key management) for sovereignty.
-2. Expand the lesson catalogue and add authoring tools (simple admin UI or markdown frontmatter templates).
-3. Add DP-enabled telemetry for aggregate learning analytics.
-
-If you want, I can implement step 1 as the next PR (FastAPI endpoints + simple SQLite persistence and API calls from learning_hub.js).
+- **Judgment Over Prediction**: Interactive Bayes demo develops belief updating intuition
+- **Privacy-First Approach**: Default local-only storage; server persistence available as opt-in
+- **Modular Lessons**: Each lesson is a standalone markdown file with optional embedded quiz JSON
 
 ---
 
-## License
+## Strategic Assessment & Recommended Priorities
 
-MIT — Leszek Gonera · AcaciaFund
+**Current State**: Production-ready static site featuring an experimental, privacy-preserving learning layer with a defined path toward dynamic backend capabilities.
+
+**Immediate Focus Areas**:
+
+1. **Server-Side Persistence**: Implement FastAPI + SQLite backend with user identity management (DIDs/key management) for data sovereignty
+2. **Learning Content Expansion**: Broaden lesson catalog and create authoring tools (admin interface or markdown templates)
+3. **Analytics Framework**: Deploy differential privacy-enabled telemetry for aggregated learning insights
+
+**Next PR Recommendation**: I can deliver the server-side persistence layer (FastAPI endpoints with SQLite storage and corresponding learning_hub.js API integration) as the immediate next step.
+
+---
+
+## Licensing
+
+MIT License — Leszek Gonera · AcaciaFund
