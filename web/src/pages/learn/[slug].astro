@@ -1,0 +1,23 @@
+---
+import SiteLayout from '../../components/SiteLayout.astro';
+import QuizEnhancer from '../../components/QuizEnhancer.astro';
+import { loadLessons } from '../../lib/content.js';
+
+export async function getStaticPaths() {
+  return loadLessons().map((lesson) => ({ params: { slug: lesson.slug }, props: { lesson } }));
+}
+
+const { lesson } = Astro.props;
+---
+<SiteLayout title={`${lesson.title} | AcaciaFund`} description={lesson.summary}>
+  <article class="section article card">
+    <div class="eyebrow">Lesson</div>
+    <h1 class="title" style="font-size: clamp(2rem, 4vw, 3.5rem); max-width: 18ch;">{lesson.title}</h1>
+    <div class="meta">
+      {lesson.difficulty ? <span>{lesson.difficulty}</span> : null}
+      {lesson.tags?.length ? <span>{lesson.tags.join(' · ')}</span> : null}
+    </div>
+    <div class="prose" set:html={lesson.html} />
+  </article>
+  <QuizEnhancer />
+</SiteLayout>

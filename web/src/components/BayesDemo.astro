@@ -1,0 +1,44 @@
+<section class="card">
+  <div class="kicker">Interactive</div>
+  <h3>Bayesian update</h3>
+  <div class="stacked">
+    <label>Prior <input id="priorVal" type="range" min="0" max="1" step="0.01" value="0.5" /></label>
+    <label>Likelihood <input id="likeVal" type="range" min="0" max="1" step="0.01" value="0.7" /></label>
+    <div class="badge">Posterior: <strong id="posteriorVal">0.5</strong></div>
+    <svg width="100%" height="120" viewBox="0 0 260 110" aria-hidden="true">
+      <g transform="translate(20,10)">
+        <path id="priorPath" d="M0,70 Q30,10 60,70" stroke="#38bdf8" stroke-width="3" fill="none" opacity="0.5"/>
+        <path id="likePath" d="M40,70 Q70,5 100,70" stroke="#fb7185" stroke-width="3" fill="none" opacity="0.5"/>
+        <path id="postPath" d="M20,70 Q55,2 92,70" stroke="#34d399" stroke-width="4" fill="none"/>
+      </g>
+    </svg>
+  </div>
+  <script>
+    (() => {
+      const prior = document.getElementById('priorVal');
+      const like = document.getElementById('likeVal');
+      const post = document.getElementById('posteriorVal');
+      const priorPath = document.getElementById('priorPath');
+      const likePath = document.getElementById('likePath');
+      const postPath = document.getElementById('postPath');
+      if (!prior || !like || !post || !priorPath || !likePath || !postPath) return;
+      const qPath = (x0, y0, cx, cy, x1, y1) => `M ${x0},${y0} Q ${cx},${cy} ${x1},${y1}`;
+      const update = () => {
+        const p = parseFloat(prior.value);
+        const l = parseFloat(like.value);
+        const priorH = Math.max(6, 70 - p * 60);
+        const likeH = Math.max(6, 70 - l * 60);
+        priorPath.setAttribute('d', qPath(0, 70, 30, priorH, 80, 70));
+        likePath.setAttribute('d', qPath(40, 70, 160, likeH, 200, 70));
+        const postPeak = (p * 40 + l * 160) / Math.max(1e-6, (p + l));
+        const postH = Math.max(6, 70 - ((p + l) / 2) * 60);
+        postPath.setAttribute('d', qPath(20, 70, postPeak, postH, 220, 70));
+        const posterior = (p * l) / Math.max(1e-6, (p * l + (1 - p) * (1 - l)));
+        post.textContent = posterior.toFixed(3);
+      };
+      prior.addEventListener('input', update);
+      like.addEventListener('input', update);
+      update();
+    })();
+  </script>
+</section>

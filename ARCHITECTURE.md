@@ -21,13 +21,15 @@ This document defines the fundamentals-first target architecture for a 2026-read
 
 ## Target Stack
 
-- Hugo for the public site.
+- Astro for the public site.
 - Python for ingestion, classification, and content generation.
 - GitHub Actions for scheduled runs, validation, and deployment.
 - Cloudflare Pages for static hosting.
 - Cloudflare Workers for lightweight API and edge logic.
 - Cloudflare D1 for progress, run state, and metadata registry.
 - Cloudflare R2 for snapshots, archives, and generated assets.
+
+Legacy Hugo content generation remains available during migration, but Astro is the cutover target.
 
 ## System Shape
 
@@ -74,7 +76,7 @@ Every generated object should carry explicit metadata.
 - Fetch layer: pulls HN and arXiv, caches requests, and records source state.
 - Analysis layer: classifies pillar, computes SQI, extracts entities, and detects trends.
 - Generation layer: emits Hugo bundles, SVG assets, and structured metadata.
-- Public site: serves static pages and search.
+- Public site: Astro renders static pages and search.
 - Learning layer: renders lessons, quizzes, and Bayes demo.
 - Sync layer: stores optional progress and future learner state.
 
@@ -125,7 +127,7 @@ Every generated object should carry explicit metadata.
 ├── schemas/             # JSON or TOML schemas for content contracts
 ├── registry/            # run manifests and metadata index
 ├── content/             # authored and generated Hugo content
-├── layouts/             # presentation layer
+├── web/                 # Astro app and edge-ready frontend
 ├── static/              # generated assets, search, client JS
 ├── services/api/        # optional stateful service boundary
 ├── infra/               # deployment and environment docs

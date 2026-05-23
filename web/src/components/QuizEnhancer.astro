@@ -1,0 +1,57 @@
+<script>
+  (() => {
+    const render = () => {
+      document.querySelectorAll('.quiz[data-quiz]').forEach((el) => {
+        if (el.dataset.rendered) return;
+        el.dataset.rendered = '1';
+        let data;
+        try { data = JSON.parse(el.getAttribute('data-quiz')); } catch { return; }
+        const questions = Array.isArray(data.questions) ? data.questions : [];
+        const wrap = document.createElement('div');
+        wrap.className = 'stacked';
+        questions.forEach((q, i) => {
+          const qWrap = document.createElement('div');
+          qWrap.className = 'list-item';
+          const title = document.createElement('div');
+          title.innerHTML = `<strong>${i + 1}.</strong> ${q.q || q.question || ''}`;
+          qWrap.appendChild(title);
+          (q.options || []).forEach((opt, j) => {
+            const label = document.createElement('label');
+            label.style.display = 'block';
+            label.style.marginTop = '8px';
+            const input = document.createElement('input');
+            input.type = 'radio';
+            input.name = `q_${i}`;
+            input.value = j;
+            label.appendChild(input);
+            label.appendChild(document.createTextNode(` ${opt}`));
+            qWrap.appendChild(label);
+          });
+          wrap.appendChild(qWrap);
+        });
+        const btn = document.createElement('button');
+        btn.className = 'button primary';
+        btn.type = 'button';
+        btn.textContent = 'Check';
+        const result = document.createElement('div');
+        result.className = 'badge';
+        result.style.marginTop = '12px';
+        btn.addEventListener('click', () => {
+          let score = 0;
+          questions.forEach((q, i) => {
+            const chosen = el.querySelector(`input[name=q_${i}]:checked`);
+            const answer = typeof q.a === 'number' ? q.a : q.correct;
+            if (chosen && String(chosen.value) === String(answer)) score += 1;
+          });
+          result.textContent = `Score ${score}/${questions.length}`;
+        });
+        el.innerHTML = '';
+        el.appendChild(wrap);
+        el.appendChild(btn);
+        el.appendChild(result);
+      });
+    };
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', render);
+    else render();
+  })();
+</script>

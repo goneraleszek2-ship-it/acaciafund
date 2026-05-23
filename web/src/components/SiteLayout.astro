@@ -1,0 +1,43 @@
+---
+import '../styles/global.css';
+
+const { title = 'AcaciaFund', description = 'Daily research portfolio', section = '' } = Astro.props;
+---
+<html lang="pl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="/images/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="shell page">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="AcaciaFund home">
+          <span class="brand-mark"></span>
+          <span>AcaciaFund</span>
+        </a>
+        <nav class="nav" aria-label="Primary">
+          <a href="/blog/">Blog</a>
+          <a href="/course/">Course</a>
+          <a href="/learn/">Learn</a>
+          <a href="/research/">Research</a>
+          <a href="/about/">About</a>
+        </nav>
+      </header>
+      <main>
+        <slot />
+      </main>
+      <footer class="footer">
+        <div>AcaciaFund · static-first research and learning platform</div>
+      </footer>
+    </div>
+  </body>
+</html>

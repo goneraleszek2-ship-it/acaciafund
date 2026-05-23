@@ -1,0 +1,24 @@
+---
+import SiteLayout from '../../components/SiteLayout.astro';
+import LessonCard from '../../components/LessonCard.astro';
+import BayesDemo from '../../components/BayesDemo.astro';
+import { loadLessons } from '../../lib/content.js';
+
+const lessons = loadLessons();
+---
+<SiteLayout title="AcaciaFund Learning" description="Local-first learning hub with lessons, quizzes and Bayesian reasoning.">
+  <section class="hero">
+    <div class="eyebrow">Learning hub</div>
+    <h1 class="title">Learn judgment, not just prediction.</h1>
+    <p class="lede">The learning layer stays local-first. Quizzes run in the browser, progress can sync later, and the Bayes demo makes belief updates visible.</p>
+  </section>
+  <section class="section grid cols-2">
+    <div class="card">
+      <div class="kicker">Lessons</div>
+      <div class="grid" style="margin-top: 16px;">
+        {lessons.map((lesson) => <LessonCard lesson={lesson} />)}
+      </div>
+    </div>
+    <BayesDemo />
+  </section>
+</SiteLayout>

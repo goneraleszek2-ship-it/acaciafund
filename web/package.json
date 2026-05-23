@@ -1,0 +1,16 @@
+{
+  "name": "acaciafund-web",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "prebuild": "node scripts/sync-assets.mjs",
+    "build": "astro build",
+    "dev": "astro dev",
+    "preview": "astro preview"
+  },
+  "dependencies": {
+    "astro": "^5.10.0",
+    "gray-matter": "^4.0.3",
+    "marked": "^14.1.1"
+  }
+}

@@ -1,0 +1,15 @@
+---
+const { post } = Astro.props;
+---
+<article class="card pillar-card">
+  {post.imageUrl ? <img src={post.imageUrl} alt={post.title} loading="lazy" /> : null}
+  <div style="margin-top: 14px;">
+    <div class="meta">
+      <span>{post.date}</span>
+      <span>{post.category}</span>
+    </div>
+    <h3><a href={`/blog/${post.slug}/`}>{post.title}</a></h3>
+    <p class="muted">{post.summary}</p>
+    <a class="button" href={`/blog/${post.slug}/`}>Read synthesis</a>
+  </div>
+</article>

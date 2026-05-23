@@ -1,0 +1,16 @@
+---
+import SiteLayout from '../components/SiteLayout.astro';
+import SectionPage from '../components/SectionPage.astro';
+import { loadSectionPage } from '../lib/content.js';
+
+export async function getStaticPaths() {
+  return ['about', 'contact', 'research', 'notice', 'event', 'teacher', 'diagrams', 'course'].map((section) => ({ params: { section }, props: { section } }));
+}
+
+const { section } = Astro.props;
+const page = loadSectionPage(section);
+const title = page?.title || section;
+---
+<SiteLayout title={`${title} | AcaciaFund`} description={page?.summary || ''}>
+  <SectionPage page={page} title={title} />
+</SiteLayout>

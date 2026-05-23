@@ -1,0 +1,10 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "acaciafund-next",
+  "compatibility_date": "2026-05-23",
+  "pages_build_output_dir": "dist",
+  "build_command": "npm run build",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ]
+}

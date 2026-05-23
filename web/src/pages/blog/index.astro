@@ -1,0 +1,17 @@
+---
+import SiteLayout from '../../components/SiteLayout.astro';
+import PostCard from '../../components/PostCard.astro';
+import { loadBlogPosts } from '../../lib/content.js';
+
+const posts = loadBlogPosts();
+---
+<SiteLayout title="AcaciaFund Blog" description="Daily research synthesis archives.">
+  <section class="hero">
+    <div class="eyebrow">Archive</div>
+    <h1 class="title">All syntheses.</h1>
+    <p class="lede">Deterministic daily posts generated from HN and arXiv, grouped by pillar and enriched with metadata.</p>
+  </section>
+  <section class="section grid cols-3">
+    {posts.map((post) => <PostCard post={post} />)}
+  </section>
+</SiteLayout>
