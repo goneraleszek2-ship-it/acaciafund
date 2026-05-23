@@ -1,9 +1,9 @@
 ---
 import '../styles/global.css';
 
-const { title = 'AcaciaFund', description = 'Daily research portfolio', section = '' } = Astro.props;
+const { title = 'AcaciaFund', description = 'Daily research portfolio', section = '', lang = 'pl' } = Astro.props;
 ---
-<html lang="pl">
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -20,17 +20,17 @@ const { title = 'AcaciaFund', description = 'Daily research portfolio', section 
   <body>
     <div class="shell page">
       <header class="topbar">
-        <a class="brand" href="/" aria-label="AcaciaFund home">
+        <a class="brand" href={`/${lang}/`} aria-label="AcaciaFund home">
           <span class="brand-mark"></span>
           <span>AcaciaFund</span>
         </a>
         <nav class="nav" aria-label="Primary">
-          <a href="/blog/">Blog</a>
-          <a href="/course/">Course</a>
-          <a href="/learn/">Learn</a>
-          <a href="/scholarship/">Scholarship</a>
-          <a href="/research/">Research</a>
-          <a href="/about/">About</a>
+          <a href={`/${lang}/blog/`}>Blog</a>
+          <a href={`/${lang}/course/`}>Course</a>
+          <a href={`/${lang}/learn/`}>Learn</a>
+          <a href={`/${lang}/scholarship/`}>Scholarship</a>
+          <a href={`/${lang}/research/`}>Research</a>
+          <a href={`/${lang}/about/`}>About</a>
         </nav>
       </header>
       <main>
