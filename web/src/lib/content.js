@@ -5,7 +5,7 @@ import matter from 'gray-matter';
 import { marked } from 'marked';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
-const CONTENT_ROOT = path.join(ROOT, 'content', 'pl');
+const CONTENT_ROOT = path.join(ROOT, 'content');
 const REGISTRY_PATH = path.join(ROOT, 'registry', 'index.json');
 
 marked.setOptions({ breaks: true });
@@ -69,28 +69,41 @@ export function loadRegistry() {
 }
 
 export function loadBlogPosts() {
-  const blogRoot = path.join(CONTENT_ROOT, 'blog');
-  const posts = walk(blogRoot)
-    .filter((filePath) => path.basename(filePath) === 'index.md' && !path.basename(path.dirname(filePath)).startsWith('_'))
-    .map((filePath) => {
-      const parsed = parseMarkdown(filePath);
-      const slug = path.basename(path.dirname(filePath));
-      const data = parsed.data;
-      const thumbnail = data.thumbnail || data.featured_image || data.og_image || '';
-      return {
-        ...parsed,
-        slug,
-        title: data.title || slug,
-        date: data.date || slug.slice(0, 10),
-        category: Array.isArray(data.categories) ? data.categories[0] || 'Post' : (data.categories || 'Post'),
-        tags: Array.isArray(data.tags) ? data.tags : [],
-        thumbnail,
-        imageUrl: thumbnail ? `/blog/${slug}/${thumbnail}` : (data.image || ''),
-        summary: data.description || parsed.excerpt,
-      };
-    })
+  const posts = [];
+  
+  // Check both language directories for blog posts
+  const languageDirs = ['pl', 'en'];
+  
+  for (const lang of languageDirs) {
+    const blogRoot = path.join(CONTENT_ROOT, lang, 'blog');
+    if (!exists(blogRoot)) continue;
+    
+    const langPosts = walk(blogRoot)
+      .filter((filePath) => path.basename(filePath) === 'index.md' && !path.basename(path.dirname(filePath)).startsWith('_'))
+      .map((filePath) => {
+        const parsed = parseMarkdown(filePath);
+        const slug = path.basename(path.dirname(filePath));
+        const data = parsed.data;
+        const thumbnail = data.thumbnail || data.featured_image || data.og_image || '';
+        return {
+          ...parsed,
+          slug,
+          title: data.title || slug,
+          date: data.date || slug.slice(0, 10),
+          category: Array.isArray(data.categories) ? data.categories[0] || 'Post' : (data.categories || 'Post'),
+          tags: Array.isArray(data.tags) ? data.tags : [],
+          thumbnail,
+          imageUrl: thumbnail ? `/${lang}/blog/${slug}/${thumbnail}` : (data.image || ''),
+          summary: data.description || parsed.excerpt,
+          lang: lang
+        };
+      });
+    
+    posts.push(...langPosts);
+  }
+  
+  return posts
     .sort((a, b) => String(b.date).localeCompare(String(a.date)) || a.slug.localeCompare(b.slug));
-  return posts;
 }
 
 export function getBlogPost(slug) {
@@ -98,23 +111,37 @@ export function getBlogPost(slug) {
 }
 
 export function loadLessons() {
-  const lessonsRoot = path.join(CONTENT_ROOT, 'learn');
-  return walk(lessonsRoot)
-    .filter((filePath) => filePath.endsWith('.md') && !path.basename(filePath).startsWith('_'))
-    .map((filePath) => {
-      const parsed = parseMarkdown(filePath);
-      const data = parsed.data;
-      return {
-        ...parsed,
-        slug: path.basename(filePath, '.md'),
-        title: data.title || path.basename(filePath, '.md'),
-        difficulty: data.difficulty || '',
-        tags: Array.isArray(data.tags) ? data.tags : [],
-        sqi: data.sqi || 0,
-        summary: data.description || parsed.excerpt,
-        bayesDemo: parsed.bayesDemo,
-      };
-    })
+  const lessons = [];
+  
+  // Check both language directories for lessons
+  const languageDirs = ['pl', 'en'];
+  
+  for (const lang of languageDirs) {
+    const lessonsRoot = path.join(CONTENT_ROOT, lang, 'learn');
+    if (!exists(lessonsRoot)) continue;
+    
+    const langLessons = walk(lessonsRoot)
+      .filter((filePath) => filePath.endsWith('.md') && !path.basename(filePath).startsWith('_'))
+      .map((filePath) => {
+        const parsed = parseMarkdown(filePath);
+        const data = parsed.data;
+        return {
+          ...parsed,
+          slug: path.basename(filePath, '.md'),
+          title: data.title || path.basename(filePath, '.md'),
+          difficulty: data.difficulty || '',
+          tags: Array.isArray(data.tags) ? data.tags : [],
+          sqi: data.sqi || 0,
+          summary: data.description || parsed.excerpt,
+          bayesDemo: parsed.bayesDemo,
+          lang: lang
+        };
+      });
+    
+    lessons.push(...langLessons);
+  }
+  
+  return lessons
     .sort((a, b) => a.slug.localeCompare(b.slug));
 }
 

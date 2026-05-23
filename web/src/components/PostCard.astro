@@ -8,8 +8,8 @@ const { post } = Astro.props;
       <span>{post.date}</span>
       <span>{post.category}</span>
     </div>
-    <h3><a href={`/blog/${post.slug}/`}>{post.title}</a></h3>
+    <h3><a href={`/${post.lang}/blog/${post.slug}/`}>{post.title}</a></h3>
     <p class="muted">{post.summary}</p>
-    <a class="button" href={`/blog/${post.slug}/`}>Read synthesis</a>
+    <a class="button" href={`/${post.lang}/blog/${post.slug}/`}>Read synthesis</a>
   </div>
 </article>

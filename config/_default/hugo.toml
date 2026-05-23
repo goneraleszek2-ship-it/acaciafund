@@ -9,6 +9,13 @@ pagination.pagerSize = 10
 summaryLength = 20
 hasCJKLanguage = false
 
+[languages]
+  [languages.en]
+    languageName = "English"
+    weight = 1
+    title = "AcaciaFund | Daily Research Synthesis"
+    languageCode = "en-us"
+
 [outputFormats]
 [outputFormats.SEARCH]
 baseName = "search"
