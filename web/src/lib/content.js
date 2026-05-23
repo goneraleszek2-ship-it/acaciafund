@@ -110,6 +110,7 @@ export function loadLessons() {
         title: data.title || path.basename(filePath, '.md'),
         difficulty: data.difficulty || '',
         tags: Array.isArray(data.tags) ? data.tags : [],
+        sqi: data.sqi || 0,
         summary: data.description || parsed.excerpt,
         bayesDemo: parsed.bayesDemo,
       };

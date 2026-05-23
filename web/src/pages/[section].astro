@@ -4,7 +4,7 @@ import SectionPage from '../components/SectionPage.astro';
 import { loadSectionPage } from '../lib/content.js';
 
 export async function getStaticPaths() {
-  return ['about', 'contact', 'research', 'notice', 'event', 'teacher', 'diagrams', 'course'].map((section) => ({ params: { section }, props: { section } }));
+  return ['about', 'contact', 'research', 'notice', 'event', 'teacher', 'diagrams', 'course', 'scholarship'].map((section) => ({ params: { section }, props: { section } }));
 }
 
 const { section } = Astro.props;
