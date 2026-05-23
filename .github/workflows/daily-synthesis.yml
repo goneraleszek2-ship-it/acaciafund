@@ -49,17 +49,18 @@ jobs:
         run: |
           python tests/astro_smoke.py
           python -m pytest tests/test_metadata.py tests/test_core.py -q
+          hugo --cleanDestinationDir
 
       - name: Commit & push new content
         run: |
           git config user.name "AcaciaFund Bot"
           git config user.email "bot@acaciafund.org"
-          git add content/pl/blog/ registry/
+          git add content/**/blog/ registry/
           if git diff --cached --quiet; then
             echo "No new content — exiting"
             exit 0
           fi
-          git commit -m "daily: automatyczna synteza $(date +%Y-%m-%d)"
+          git commit -m "daily: automated synthesis $(date +%Y-%m-%d)"
           git push
 
       - name: Deploy to Cloudflare Pages
@@ -68,5 +69,4 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name=acaciafund
           workingDirectory: web
