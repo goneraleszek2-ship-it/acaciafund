@@ -5,12 +5,39 @@ import BayesDemo from '../../components/BayesDemo.astro';
 import { loadLessons } from '../../lib/content.js';
 
 const lessons = loadLessons();
+const visuals = [
+  { src: '/images/bayes.svg', alt: 'Bayesian reasoning', title: 'Bayesian Reasoning' },
+  { src: '/images/dp.svg', alt: 'Differential privacy', title: 'Differential Privacy' },
+  { src: '/images/crypto.svg', alt: 'Cryptography', title: 'Cryptography & Signatures' },
+  { src: '/images/mosa.svg', alt: 'MOSA modular graph', title: 'MOSA - Modular Graph' },
+];
 ---
 <SiteLayout title="AcaciaFund Learning" description="Local-first learning hub with lessons, quizzes and Bayesian reasoning.">
   <section class="hero">
     <div class="eyebrow">Learning hub</div>
     <h1 class="title">Learn judgment, not just prediction.</h1>
     <p class="lede">The learning layer stays local-first. Quizzes run in the browser, progress can sync later, and the Bayes demo makes belief updates visible.</p>
+  </section>
+  <section class="section grid cols-2">
+    <div class="card">
+      <div class="kicker">Open-source visuals</div>
+      <h2>Shared image set</h2>
+      <p class="muted">These assets were shipped with the Hugo site and are now deployed directly from the Astro build.</p>
+      <div class="visual-grid" style="grid-template-columns: repeat(2, minmax(0, 1fr)); margin-top: 16px;">
+        {visuals.map((visual) => (
+          <figure class="visual-item">
+            <img src={visual.src} alt={visual.alt} loading="lazy" />
+            <figcaption class="visual-caption">{visual.title}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+    <div class="card">
+      <div class="kicker">System stack</div>
+      <h2>Reusable diagram</h2>
+      <p class="muted">A lightweight stack graphic for explaining the learning and deployment layers.</p>
+      <img src="/images/stack.svg" alt="Software stack diagram" style="margin-top: 16px;" />
+    </div>
   </section>
   <section class="section grid cols-2">
     <div class="card">
