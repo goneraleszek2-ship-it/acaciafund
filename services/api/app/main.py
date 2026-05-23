@@ -3,6 +3,7 @@ from pydantic import BaseSettings, BaseModel, Field, validator
 from fastapi.middleware.cors import CORSMiddleware
 from . import db
 import time
+import sys
 from typing import List, Optional
 
 
@@ -22,6 +23,7 @@ settings = Settings()
 
 
 app = FastAPI(title=settings.app_name, version="0.1.0")
+main = sys.modules[__name__]
 
 # Allow cross-origin requests from configured origins
 app.add_middleware(
