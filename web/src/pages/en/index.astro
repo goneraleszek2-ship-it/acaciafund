@@ -1,7 +1,7 @@
 ---
-import SiteLayout from '../components/SiteLayout.astro';
-import PostCard from '../components/PostCard.astro';
-import LessonCard from '../components/LessonCard.astro';
+import SiteLayout from '../../components/SiteLayout.astro'
+import PostCard from '../../components/PostCard.astro'
+import LessonCard from '../../components/LessonCard.astro'
 import { loadHomepageData } from '../../lib/content.js';
 
 const { registry, latestPosts, lessons } = loadHomepageData();
@@ -38,7 +38,7 @@ const pillarCards = [
 
   <section class="section">
     <div class="card">
-      <div class="kicker">Latest Insights from the Knowledge Frontier</h2>
+      <div class="kicker"><h2>Latest Insights from the Knowledge Frontier</h2></div>
       <p class="text-center text-muted mb-5">
         Explore the most recent syntheses that connect insights across disciplines into a coherent narrative about how our world is evolving.
       </p>
