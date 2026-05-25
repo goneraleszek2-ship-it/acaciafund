@@ -3,5 +3,5 @@ export const generateStaticParams = async () => {
 };
 
 export default function BlogPost({ params }: { params: { slug: string } }) {
-  return <div>Test: {params.slug}</div>;
+  return <div>BlogPost: {params.slug}</div>;
 }
