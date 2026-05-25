@@ -3,7 +3,7 @@ import { readdirSync, statSync } from 'node:fs';
 import { join } from 'node:path';
 import { readFile } from 'node:fs/promises';
 
-const CONTENT_DIR = join(process.cwd(), '../content/pl/blog');
+const CONTENT_DIR = join(process.cwd(), '../content/pl/learn');
 
 export const generateStaticParams = () => {
   const dirs = readdirSync(CONTENT_DIR);
@@ -12,9 +12,7 @@ export const generateStaticParams = () => {
     .map(dirName => ({ slug: dirName }));
 };
 
-export default async function BlogPost({ params }: { params: { slug: string } }) {
-  // Note: In Next.js 13 App Router with generateStaticParams, params is a promise.
-  // We need to await it.
+export default async function LearnPost({ params }: { params: { slug: string } }) {
   const { slug } = await params;
   const filePath = join(CONTENT_DIR, slug, 'index.md');
   const content = await readFile(filePath, 'utf8');
