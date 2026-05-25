@@ -1,0 +1,22 @@
+
+> nextjs@0.1.0 build
+> next build
+
+▲ Next.js 16.2.6 (Turbopack)
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 6.7s
+  Running TypeScript ...
+  Finished TypeScript in 6.3s ...
+  Collecting page data using 6 workers ...
+  Generating static pages using 6 workers (0/5) ...
+process.cwd(): /root/projekty/test-ai/acaciafund/web-next
+params.slug: undefined
+Error occurred prerendering page "/blog/2026-03-06-aml". Read more: https://nextjs.org/docs/messages/prerender-error
+TypeError: The "path" argument must be of type string. Received undefined
+    at d (.next/server/chunks/ssr/[root-of-the-server]__0803fts._.js:1:652) {
+  code: 'ERR_INVALID_ARG_TYPE',
+  digest: '459445158'
+}
+Export encountered an error on /blog/[slug]/page: /blog/2026-03-06-aml, exiting the build.
+⨯ Next.js build worker exited with code: 1 and signal: null

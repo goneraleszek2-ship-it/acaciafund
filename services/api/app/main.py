@@ -58,7 +58,6 @@ def startup():
     db.init_db()
 
 
-@app.post("/progress")
 class ProgressPayload(BaseModel):
     url: str
     done: Optional[bool] = False

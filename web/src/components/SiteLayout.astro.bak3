@@ -1,0 +1,47 @@
+---
+import '../styles/global.css';
+
+const { title = 'AcaciaFund', description = 'Daily research portfolio', section = '' } = Astro.props;
+// Detect language from URL path: if first segment is 'pl' or 'en', use that, else default to 'pl'
+const pathSegments = Astro.url.pathname.split('/').filter(Boolean);
+const lang = pathSegments.length > 0 && ['pl', 'en'].includes(pathSegments[0]) ? pathSegments[0] : 'pl';
+---
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="/images/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="shell page">
+      <header class="topbar">
+        <a class="brand" href={`/${lang}/`} aria-label="AcaciaFund home">
+          <span class="brand-mark"></span>
+          <span>AcaciaFund</span>
+        </a>
+        <nav class="nav" aria-label="Primary">
+          <a href={`/${lang}/blog/`}>Blog</a>
+          <a href={`/${lang}/course/`}>Course</a>
+          <a href={`/${lang}/learn/`}>Learn</a>
+          <a href={`/${lang}/scholarship/`}>Scholarship</a>
+          <a href={`/${lang}/research/`}>Research</a>
+          <a href={`/${lang}/about/`}>About</a>
+        </nav>
+      </header>
+      <main>
+        <slot />
+      </main>
+      <footer class="footer">
+        <div>AcaciaFund · static-first research and learning platform</div>
+      </footer>
+    </div>
+  </body>
+</html>

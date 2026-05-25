@@ -1,0 +1,22 @@
+import { getBlogPosts } from '@/scripts/getBlogPosts';
+import { marked } from 'marked';
+
+export const generateStaticParams = async () => {
+  const posts = await getBlogPosts();
+  // Return all posts, but we can limit for testing if needed
+  return posts.map(post => ({ slug: post.slug }));
+};
+
+export default async function BlogPost({ params }: { params: { slug: string } }) {
+  const posts = await getBlogPosts();
+  const post = posts.find(p => p.slug === params.slug);
+  if (!post) {
+    return <div>Post not found</div>;
+  }
+
+  return (
+    <article className="prose lg:prose-xl mx-auto py-8">
+      <div dangerouslySetInnerHTML={{ __html: marked(post.content) }} />
+    </article>
+  );
+}

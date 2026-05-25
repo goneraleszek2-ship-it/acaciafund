@@ -2,7 +2,7 @@
 title: "College students drown out AI-praising commencement speeches with boos — 📈 STOCK 2026-05-22"
 date: 2026-05-22
 draft: false
-image: ""
+image: "/pl/blog/blog/featured.jpg"
 author: "AcaciaFund"
 categories: ["Markets"]
 tags: ["markets", "stocks", "semiconductors", "hardware"]

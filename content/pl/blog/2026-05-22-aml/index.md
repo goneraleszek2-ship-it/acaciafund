@@ -2,7 +2,7 @@
 title: "Goodbye Visa and Mastercard: 130M Europeans switching to sovereign payment — 🛡️ AML 2026-05-22"
 date: 2026-05-22
 draft: false
-image: ""
+image: "/pl/blog/blog/featured.jpg"
 author: "AcaciaFund"
 categories: ["AML"]
 tags: ["aml", "compliance", "regtech", "financial-crime"]

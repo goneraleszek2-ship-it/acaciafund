@@ -1,10 +1,12 @@
 ---
 import '../styles/global.css';
 
-const { title = 'AcaciaFund', description = 'Daily research portfolio', section = '' } = Astro.props;
+const { title = 'AcaciaFund', description = 'Daily research portfolio', section = '', image = '' } = Astro.props;
 // Detect language from URL path: if first segment is 'pl' or 'en', use that, else default to 'pl'
 const pathSegments = Astro.url.pathname.split('/').filter(Boolean);
 const lang = pathSegments.length > 0 && ['pl', 'en'].includes(pathSegments[0]) ? pathSegments[0] : 'pl';
+const siteUrl = 'https://acaciafund.org';
+const ogImage = image ? `${siteUrl}${image}` : `${siteUrl}/images/default-og.jpg`;
 ---
 <html lang={lang}>
   <head>
@@ -15,6 +17,13 @@ const lang = pathSegments.length > 0 && ['pl', 'en'].includes(pathSegments[0]) ?
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:url" content={`${siteUrl}${Astro.url.pathname}${Astro.url.search}`} />
+    <meta property="og:site_name" content="AcaciaFund" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
     <link rel="icon" href="/images/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
