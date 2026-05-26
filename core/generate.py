@@ -1,6 +1,6 @@
 import json
 import hashlib
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 from .data import PILLARS, BASE_DIR, log, STATIC_DIR
@@ -284,27 +284,41 @@ def generate_post(pillar_name: str, config: dict, pillar_stories: list[dict],
         scraped_entry = scraped.get(key, {})
         img_url = scraped_entry.get("image") if scraped_entry else None
         if img_url:
-            # determine extension
-            ext = ".jpg"
-            if img_url.lower().endswith(".png"):
-                ext = ".png"
-            elif img_url.lower().endswith(".webp"):
-                ext = ".webp"
-            elif img_url.lower().endswith(".gif"):
-                ext = ".gif"
-            feat_name = f"featured{ext}"
-            feat_path = post_dir / feat_name
-            ok = _download_image(img_url, feat_path)
-            if ok:
-                # insert featured_image into frontmatter before the closing '---'
-                # find the second '---' which marks end of frontmatter
-                try:
-                    # skip the first '---' at index 0
-                    second_idx = next(i for i, v in enumerate(lines) if v == '---' and i != 0)
-                except StopIteration:
-                    second_idx = 0
-                if second_idx:
-                    lines.insert(second_idx, f'featured_image: "{feat_name}"')
+            # Handle relative URLs by making them absolute using the article's domain
+            if img_url.startswith('/'):
+                from urllib.parse import urlparse
+                article_url = top_story.get("url", "")
+                if article_url:
+                    parsed = urlparse(article_url)
+                    base_url = f"{parsed.scheme}://{parsed.netloc}"
+                    img_url = base_url + img_url
+                else:
+                    # If we can't determine the base URL, skip the download
+                    log(f"Skipping image download: no base URL for relative path {img_url}", ok=False)
+                    img_url = None
+            
+            if img_url:  # Only proceed if we have a valid URL
+                # determine extension
+                ext = ".jpg"
+                if img_url.lower().endswith(".png"):
+                    ext = ".png"
+                elif img_url.lower().endswith(".webp"):
+                    ext = ".webp"
+                elif img_url.lower().endswith(".gif"):
+                    ext = ".gif"
+                feat_name = f"featured{ext}"
+                feat_path = post_dir / feat_name
+                ok = _download_image(img_url, feat_path)
+                if ok:
+                    # insert featured_image into frontmatter before the closing '---'
+                    # find the second '---' which marks end of frontmatter
+                    try:
+                        # skip the first '---' at index 0
+                        second_idx = next(i for i, v in enumerate(lines) if v == '---' and i != 0)
+                    except StopIteration:
+                        second_idx = 0
+                    if second_idx:
+                        lines.insert(second_idx, f'featured_image: "{feat_name}"')
 
     # Emit metadata alongside the page bundle.
     assets = []
