@@ -4,7 +4,14 @@ date: 2026-05-22
 type: "lesson"
 difficulty: "easy"
 tags: ["bayes","judgment"]
+tldr: "Focus on improving judgment rather than predicting precise outcomes. Good judgment means updating beliefs with evidence, not ignoring it or relying on gut feelings."
+takeaways: 
+  - "Judgment under uncertainty is more valuable than precise predictions"
+  - "Updating beliefs with evidence is a core judgment practice"
+  - "Ignoring new evidence or relying only on gut feelings impairs judgment"
 ---
+
+![Judgment illustration](/images/next.svg)
 
 ## Introduction
 

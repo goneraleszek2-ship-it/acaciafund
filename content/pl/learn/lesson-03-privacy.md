@@ -4,12 +4,9 @@ date: 2026-05-22
 type: "lesson"
 difficulty: "medium"
 tags: ["privacy","dp"]
+tldr: "Differential privacy adds noise to protect individual data while allowing useful aggregate analysis. ε (epsilon) is the privacy budget - lower means more privacy."
+takeaways: 
+  - "Differential privacy guarantees that removing or changing one record doesn't significantly affect outcomes"
+  - "The privacy budget ε controls the trade-off between privacy and accuracy"
+  - "Acacia uses differential privacy to protect contributors while providing useful aggregates"
 ---
-
-## Differential Privacy (High level)
-
-This lesson explains why differential privacy matters and how Acacia uses it to protect contributors.
-
-### Quiz
-
-<div class="quiz" data-quiz='{"questions":[{"q":"What does ε represent in DP?","options":["A privacy budget","A learning rate","A portfolio weight"],"a":0}] }'></div>

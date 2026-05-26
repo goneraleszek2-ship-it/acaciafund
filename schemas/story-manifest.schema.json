@@ -39,6 +39,21 @@
     "published_at": {"type": "string"},
     "version": {"type": "integer"},
     "quality_flags": {"type": "array"},
-    "checksum": {"type": "string"}
+    "checksum": {"type": "string"},
+    "source_breakdown": {
+      "type": "object",
+      "description": "Count of stories from each source (hn, arxiv, pubmed, etc.)",
+      "additionalProperties": {"type": "integer"}
+    },
+    "quality_metrics": {
+      "type": "object",
+      "description": "Quality metrics for the content",
+      "properties": {
+        "avg_source_score": {"type": "number"},
+        "source_diversity": {"type": "number"},
+        "recency_score": {"type": "number"}
+      }
+    }
   }
+}
 }

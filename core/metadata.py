@@ -124,6 +124,8 @@ def build_story_manifest(**kwargs: Any) -> dict[str, Any]:
         "published_at": kwargs.get("published_at", kwargs.get("date", iso_utc())),
         "version": 1,
         "quality_flags": kwargs.get("quality_flags", []),
+        "source_breakdown": kwargs.get("source_breakdown", {}),
+        "quality_metrics": kwargs.get("quality_metrics", {}),
         "checksum": "",
     }
     manifest["checksum"] = payload_checksum({k: v for k, v in manifest.items() if k != "checksum"})

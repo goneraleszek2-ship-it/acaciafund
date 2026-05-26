@@ -7,6 +7,7 @@ import urllib.request
 import time
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
+from xml.etree import ElementTree as ET
 
 from .data import ALGOLIA_URL, USER_AGENT, HN_DISCUSSION_URL, log, extract_domain
 
@@ -112,18 +113,24 @@ def fetch_hn_stories(target_date: datetime | None = None,
 # ── arXiv ──
 
 ARXIV_CATEGORIES = {
-    "aml": ["q-fin.GN", "q-fin.RM", "cs.CY", "cs.CR"],
-    "stock": ["q-fin.ST", "q-fin.PM", "cs.AR", "cs.ET"],
-    "science": ["q-bio.MN", "cs.NE", "cs.CC", "nlin.AO", "nlin.CG"],
+    "aml": ["q-fin.GN", "q-fin.RM", "cs.CY", "cs.CR", "q-fin.PM", "q-fin.EC"],
+    "stock": ["q-fin.ST", "q-fin.PM", "cs.AR", "cs.ET", "cs.CE", "eess.SP"],
+    "science": ["q-bio.MN", "cs.NE", "cs.CC", "nlin.AO", "nlin.CG", 
+                "q-bio.NC", "q-bio.QM", "physics.soc-ph", "physics.pop-ph",
+                "stat.AP", "stat.ML", "cs.LG", "cs.AI", "cs.CY", "cs.ET"]
 }
 
 ARXIV_KEYWORDS = {
     "aml": ["money laundering", "compliance", "financial regulation", "fraud detection",
-            "blockchain", "cryptocurrency", "financial crime", "risk management"],
+            "blockchain", "cryptocurrency", "financial crime", "risk management",
+            "aml", "kyc", "sanctions", "transaction monitoring", "suspicious activity"],
     "stock": ["semiconductor", "supply chain", "market microstructure", "asset pricing",
-              "volatility", "portfolio", "valuation", "chip"],
+              "volatility", "portfolio", "valuation", "chip", "supply chain resilience",
+              "inventory management", "logistics", "procurement", "operations research"],
     "science": ["mitochondria", "cybernetics", "complex systems", "network theory",
-                "emergence", "self-organization", "bioenergetics", "cognitive"],
+                "emergence", "self-organization", "bioenergetics", "cognitive",
+                "complexity", "systems biology", "network science", "agent-based modeling",
+                "game theory", "evolutionary computation", "swarm intelligence"],
 }
 
 
@@ -195,3 +202,193 @@ def fetch_arxiv(since_hours: int = 72, max_results: int = 100) -> list[dict]:
         })
     papers.sort(key=lambda p: p["score"], reverse=True)
     return papers
+
+
+def fetch_pubmed(since_hours: int = 168, max_results: int = 50) -> list[dict]:
+    """Fetch recent biomedical papers from PubMed (free, no key required).
+    
+    NCBI Policy: Max 3 requests per second, delay between requests.
+    """
+    import time
+    
+    # Calculate date range
+    end_date = datetime.now(timezone.utc)
+    start_date = end_date - timedelta(hours=since_hours)
+    date_str = f"{start_date.strftime('%Y/%m/%d')}:{end_date.strftime('%Y/%m/%d')}[dp]"
+    
+    # Base URL for E-utilities
+    base_url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/esearch.fcgi"
+    
+    # Search for general biomedical topics relevant to our pillars
+    # Using broad terms to capture interdisciplinary work
+    query_terms = [
+        "mitochondria", "cybernetics", "complex systems", "network theory",
+        "emergence", "self-organization", "bioenergetics", "cognitive",
+        "neuroscience", "artificial intelligence", "machine learning",
+        "financial technology", "blockchain", "risk management"
+    ]
+    
+    # Take a subset to avoid overly long queries
+    query = " OR ".join(query_terms[:8])
+    
+    params = {
+        "db": "pubmed",
+        "term": f"({query}) AND ({date_str})",
+        "retmax": max_results,
+        "retmode": "json",
+        "sort": "relevance"
+    }
+    
+    # Respect NCBI rate limit: max 3 requests per second
+    time.sleep(0.34)  # ~3 requests per second
+    
+    url = f"{base_url}?{urllib.parse.urlencode(params)}"
+    raw = _request(url, timeout=30)
+    
+    if raw is None:
+        return []
+    
+    try:
+        data = json.loads(raw)
+        id_list = data.get("esearchresult", {}).get("idlist", [])
+        
+        if not id_list:
+            return []
+        
+        # Fetch details for the IDs
+        return _fetch_pubmed_details(id_list)
+    except (json.JSONDecodeError, KeyError):
+        return []
+
+
+def _fetch_pubmed_details(id_list: list[str]) -> list[dict]:
+    """Fetch detailed records for PubMed IDs."""
+    import time
+    
+    if not id_list:
+        return []
+    
+    base_url = "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi"
+    
+    # Process in batches to avoid URL length limits
+    batch_size = 200
+    all_papers = []
+    
+    for i in range(0, len(id_list), batch_size):
+        batch_ids = id_list[i:i+batch_size]
+        
+        params = {
+            "db": "pubmed",
+            "id": ",".join(batch_ids),
+            "retmode": "xml"
+        }
+        
+        # Rate limiting
+        time.sleep(0.34)
+        
+        url = f"{base_url}?{urllib.parse.urlencode(params)}"
+        xml_data = _request(url, timeout=30)
+        
+        if xml_data:
+            papers = _parse_pubmed_xml(xml_data)
+            all_papers.extend(papers)
+    
+    return all_papers
+
+
+def _parse_pubmed_xml(xml: str) -> list[dict]:
+    """Parse PubMed XML into standardized format."""
+    try:
+        root = ET.fromstring(xml)
+    except ET.ParseError:
+        return []
+    
+    papers = []
+    
+    for article in root.findall(".//PubmedArticle"):
+        try:
+            # Extract basic info
+            title_elem = article.find(".//ArticleTitle")
+            title = " ".join(title_elem.itertext()).strip() if title_elem is not None else ""
+            
+            # Get PMID for URL
+            pmid_elem = article.find(".//PMID")
+            pmid = pmid_elem.text if pmid_elem is not None else ""
+            url = f"https://pubmed.ncbi.nlm.nih.gov/{pmid}/" if pmid else ""
+            
+            # Get abstract
+            abstract_elem = article.find(".//AbstractText")
+            abstract = " ".join(abstract_elem.itertext()).strip() if abstract_elem is not None else ""
+            
+            # Get publication date
+            pub_date_elem = article.find(".//PubDate")
+            published = ""
+            if pub_date_elem is not None:
+                year_elem = pub_date_elem.find("Year")
+                month_elem = pub_date_elem.find("Month")
+                day_elem = pub_date_elem.find("Day")
+                
+                year = year_elem.text if year_elem is not None else "1900"
+                month = month_elem.text if month_elem is not None else "01"
+                day = day_elem.text if day_elem is not None else "01"
+                
+                # Handle month names
+                month_map = {
+                    "Jan": "01", "Feb": "02", "Mar": "03", "Apr": "04",
+                    "May": "05", "Jun": "06", "Jul": "07", "Aug": "08",
+                    "Sep": "09", "Oct": "10", "Nov": "11", "Dec": "12"
+                }
+                month = month_map.get(month, month.zfill(2))
+                
+                published = f"{year}-{month}-{day}"
+            
+            # Get authors
+            authors = []
+            for author in article.findall(".//Author"):
+                lastname = author.find("LastName")
+                firstname = author.find("ForeName") or author.find("Initials")
+                if lastname is not None and firstname is not None:
+                    authors.append(f"{firstname.text} {lastname.text}")
+            
+            author_str = ", ".join(authors[:3])  # Limit to first 3 authors
+            if len(authors) > 3:
+                author_str += " et al."
+            
+            if not title or not url:
+                continue
+            
+            papers.append({
+                "title": title,
+                "url": url,
+                "abstract": abstract[:500],  # Limit abstract length
+                "published": published,
+                "author": author_str,
+                "source": "pubmed"
+            })
+        except Exception:
+            # Skip malformed entries
+            continue
+    
+    return papers
+
+
+def fetch_semantic_scholar(since_hours: int = 168, max_results: int = 50) -> list[dict]:
+    """Fetch papers from Semantic Scholar (requires API key for full functionality).
+    
+    Free tier: 100 requests/day per IP with registration.
+    Without an API key, returns empty list (placeholder for future implementation).
+    """
+    # Check for API key in environment
+    api_key = os.environ.get("SEMANTIC_SCHOLAR_API_KEY")
+    if not api_key:
+        log("Semantic Scholar fetch disabled - API key not configured (set SEMANTIC_SCHOLAR_API_KEY)", ok=False)
+        return []
+    
+    # TODO: Implement actual Semantic Scholar API call when key is available
+    # This is a placeholder for future development
+    log("Semantic Scholar fetch not yet implemented - returning empty list", ok=False)
+    return []
+
+
+# Update ARXIV_CATEGORIES to include more relevant sections
+# Expanding beyond current categories to capture more interdisciplinary work

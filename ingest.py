@@ -6,17 +6,22 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from core.data import PILLARS, log
-from core.fetch import fetch_hn_stories, fetch_arxiv
+from core.fetch import fetch_hn_stories, fetch_arxiv, fetch_pubmed
 from core.analyze import classify_story
 from core.generate import generate_post
 from core.metadata import build_run_manifest, write_json, iso_utc, write_registry_index
 
 
-def inject_arxiv(pillar_stories: dict[str, list[dict]]) -> int:
+def inject_external_sources(pillar_stories: dict[str, list[dict]]) -> dict[str, int]:
+    """Fetch from external sources (arXiv, PubMed, etc.) and distribute by pillar."""
+    counts = {"arxiv": 0, "pubmed": 0}
+    
+    # Fetch arXiv papers
     log("Pobieranie z arXiv API...")
-    papers = fetch_arxiv(since_hours=72)
-    log(f"Pobrano {len(papers)} pasujacych prac")
-    for paper in papers:
+    arxiv_papers = fetch_arxiv(since_hours=72)
+    counts["arxiv"] = len(arxiv_papers)
+    log(f"Pobrano {len(arxiv_papers)} pasujacych prac z arXiv")
+    for paper in arxiv_papers:
         p = paper["pillar"]
         pillar_stories[p].append({
             "title": paper["title"],
@@ -26,9 +31,45 @@ def inject_arxiv(pillar_stories: dict[str, list[dict]]) -> int:
             "created_at": paper["published"],
             "author": "arXiv",
             "object_id": "",
+            "source": "arxiv"
         })
-        log(f"  -> {p}: {paper['title'][:70]}")
-    return len(papers)
+        log(f"  -> {p} [arXiv]: {paper['title'][:50]}")
+    
+    # Fetch PubMed papers
+    log("Pobieranie z PubMed...")
+    pubmed_papers = fetch_pubmed(since_hours=168)  # Last week for PubMed
+    counts["pubmed"] = len(pubmed_papers)
+    log(f"Pobrano {len(pubmed_papers)} pasujacych prac z PubMed")
+    for paper in pubmed_papers:
+        # Classify PubMed papers using existing logic
+        classifications = classify_story({
+            "title": paper["title"],
+            "url": paper["url"],
+            "points": 0,  # PubMed doesn't have points
+            "created_at": paper["published"],
+            "author": paper.get("author", ""),
+            "object_id": ""
+        })
+        if classifications:
+            best = max(classifications, key=lambda x: x[1])
+            p = best[0]
+        else:
+            # Default to science if unclassified
+            p = "science"
+        
+        pillar_stories[p].append({
+            "title": paper["title"],
+            "url": paper["url"],
+            "hn_url": "",
+            "points": 0,
+            "created_at": paper["published"],
+            "author": paper.get("author", "PubMed"),
+            "object_id": "",
+            "source": "pubmed"
+        })
+        log(f"  -> {p} [PubMed]: {paper['title'][:50]}")
+    
+    return counts
 
 
 def main():
@@ -58,7 +99,7 @@ def main():
     log(f"AML={len(pillar_stories['aml'])}, STOCK={len(pillar_stories['stock'])}, "
         f"SCIENCE={len(pillar_stories['science'])}, unclassified={unclassified}")
 
-    arxiv_count = inject_arxiv(pillar_stories)
+    source_counts = inject_external_sources(pillar_stories)
 
     for p in PILLARS:
         hn = [s for s in pillar_stories[p] if s.get("points", 0) > 0]
@@ -94,7 +135,8 @@ def main():
         status="ok" if generated else "noop",
         source_counts={
             "hn": len(all_stories),
-            "arxiv": arxiv_count,
+            "arxiv": source_counts.get("arxiv", 0),
+            "pubmed": source_counts.get("pubmed", 0),
         },
         generated_pages=generated_pages,
         output_count=generated,

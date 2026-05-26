@@ -310,6 +310,72 @@ def generate_post(pillar_name: str, config: dict, pillar_stories: list[dict],
     assets = []
     content_id = bundle_name
     source_urls = [s.get("url", "") for s in pillar_stories if s.get("url")]
+    
+    # Calculate source breakdown
+    source_breakdown = {"hn": 0, "arxiv": 0, "pubmed": 0}
+    for story in pillar_stories:
+        source = story.get("source", "hn")  # Default to HN for backward compatibility
+        if source in source_breakdown:
+            source_breakdown[source] += 1
+        else:
+            # Handle any unexpected sources
+            source_breakdown[source] = source_breakdown.get(source, 0) + 1
+    
+    # Calculate quality metrics
+    quality_metrics = {}
+    if pillar_stories:
+        # Calculate average source score (simplified)
+        source_scores = []
+        for story in pillar_stories:
+            source = story.get("source", "hn")
+            # Simple scoring: HN points normalized, arXiv/PubMed get base scores
+            if source == "hn":
+                points = story.get("points", 0)
+                score = min(points / 50.0, 2.0)  # Normalize HN points to 0-2 range
+            elif source == "arxiv":
+                score = 1.5  # arXiv gets high base score
+            elif source == "pubmed":
+                score = 1.8  # PubMed gets highest base score (peer-reviewed)
+            else:
+                score = 1.0
+            source_scores.append(score)
+        quality_metrics["avg_source_score"] = sum(source_scores) / len(source_scores) if source_scores else 0
+        
+        # Source diversity (entropy-like measure)
+        total = len(pillar_stories)
+        if total > 0:
+            proportions = [count/total for count in source_breakdown.values() if count > 0]
+            # Simple diversity: 1 - (sum of squares) - ranges 0 to ~0.67 for 3 sources
+            sum_squares = sum(p*p for p in proportions)
+            quality_metrics["source_diversity"] = 1.0 - sum_squares
+        else:
+            quality_metrics["source_diversity"] = 0.0
+            
+        # Recency score (how recent are the sources)
+        now = datetime.now(timezone.utc)
+        recency_scores = []
+        for story in pillar_stories:
+            try:
+                # Parse the date string (assuming YYYY-MM-DD format)
+                story_date = datetime.strptime(story.get("created_at", ""), "%Y-%m-%d")
+                story_date = story_date.replace(tzinfo=timezone.utc)
+                hours_old = (now - story_date).total_seconds() / 3600
+                # Score: 1.0 for <6h, 0.5 for 6-24h, 0.1 for 24-72h, 0.0 for >72h
+                if hours_old < 6:
+                    recency_scores.append(1.0)
+                elif hours_old < 24:
+                    recency_scores.append(0.5)
+                elif hours_old < 72:
+                    recency_scores.append(0.1)
+                else:
+                    recency_scores.append(0.0)
+            except:
+                recency_scores.append(0.0)  # Default if date parsing fails
+        
+        quality_metrics["recency_score"] = sum(recency_scores) / len(recency_scores) if recency_scores else 0
+    else:
+        quality_metrics = {"avg_source_score": 0, "source_diversity": 0, "recency_score": 0}
+    
     if thumb_filename:
         assets.append(build_asset_manifest(content_id, "thumbnail", post_dir / thumb_filename, top_story.get("url", "") if top_story else ""))
     if og_filename:
@@ -351,6 +417,8 @@ def generate_post(pillar_name: str, config: dict, pillar_stories: list[dict],
         },
         quality_flags=["has_trending" if signals.get("trending_topics") else "no_trending"],
         published_at=iso_utc(),
+        source_breakdown=source_breakdown,
+        quality_metrics=quality_metrics,
     )
 
     # Classification info

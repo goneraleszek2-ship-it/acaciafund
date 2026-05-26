@@ -1,19 +1,12 @@
 ---
-title: "Lesson 2 — Bayesian Basics"
-date: 2026-05-22
+title: "Lesson 2 — Bayesian Thinking"
+date: 2026-05-23
 type: "lesson"
 difficulty: "medium"
-tags: ["bayes"]
+tags: ["bayes","probability","decision-making"]
+tldr: "Bayesian thinking updates beliefs with new evidence using prior probabilities and likelihoods to form posterior probabilities."
+takeaways: 
+  - "Start with prior beliefs based on existing knowledge"
+  - "Update beliefs when new evidence arrives using Bayes' theorem"
+  - "Focus on likelihood ratios, not just raw probabilities"
 ---
-
-## Bayesian Basics
-
-This lesson explains priors, likelihoods, and how observing evidence updates posterior beliefs.
-
-### Interactive
-
-{{< bayes prior="0.5" like="0.7" >}}
-
-### Quiz
-
-<div class="quiz" data-quiz='{"questions":[{"q":"P(H|E) is called?","options":["Likelihood","Posterior","Prior"],"a":1}] }'></div>
