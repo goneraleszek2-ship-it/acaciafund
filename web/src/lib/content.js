@@ -37,6 +37,12 @@ function stripMarkdown(text) {
     .trim();
 }
 
+export function estimateReadingTime(text) {
+  const wordsPerMinute = 200;
+  const wordCount = text.trim().split(/\s+/).length;
+  return Math.ceil(wordCount / wordsPerMinute);
+}
+
 function extractBayesDemo(content) {
   const match = content.match(/{{<\s*bayes\s+([^>]+?)\s*>}}/i);
   if (!match) return null;

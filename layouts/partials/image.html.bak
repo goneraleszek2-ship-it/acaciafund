@@ -11,7 +11,7 @@
   {{- $thumb = $src -}}
 {{- else -}}
   {{- $ctx := .Context -}}
-  {{- if $ctx -}}
+    {{- if $ctx -}}
     {{- with $ctx.Params.thumbnail -}}
       {{- $thumb = . -}}
     {{- end -}}
@@ -24,44 +24,34 @@
 {{- end -}}
 
 {{- if $thumb -}}
-  {{- /* If thumbnail is a bare filename and the current page has resources, try to resolve as Page Resource */ -}}
-  {{- $resolved := $thumb -}}
   {{- $srcset := "" -}}
   {{- $phData := "" -}}
+  {{- /* If thumbnail is a bare filename and the current page has resources, try to resolve as Page Resource */ -}}
+  {{- $resolved := $thumb -}}
   {{- with .Context }}
     {{- $page := . -}}
     {{- if and (not (hasPrefix $thumb "/")) (len $page.Resources) -}}
       {{- $res := $page.Resources.GetMatch (printf "*%s" $thumb) -}}
-      {{- if $res -}}
-        {{- /* Check if the resource is an SVG */ -}}
-        {{- $isSVG := false -}}
-        {{- if or (eq $res.MediaType.Type "image/svg+xml") (hasSuffix $res.RelPermalink ".svg") -}}
-          {{- $isSVG = true -}}
-        {{- else -}}
-          {{- with $res.Content -}}
-            {{- if (in . "<svg") -}}
-              {{- $isSVG = true -}}
-            {{- end -}}
-          {{- end -}}
-        {{- end -}}
-        {{- if $isSVG -}}
-          {{- /* For SVG, just use it directly - no resizing needed */ -}}
-          {{- $resolved = $res.RelPermalink -}}
-        {{- else -}}
-          {{- /* Create multiple sizes for responsive srcset: 400w, 800w, 1200w */ -}}
-          {{- $img400 := $res.Resize "400x" -}}
-          {{- $img800 := $res.Resize "800x" -}}
-          {{- $img1200 := $res.Resize "1200x" -}}
-          {{- $resolved = $img800.RelPermalink -}}
-          {{- $srcset = printf "%s 400w, %s 800w, %s 1200w" $img400.RelPermalink $img800.RelPermalink $img1200.RelPermalink -}}
-          {{- /* Create a tiny low-quality placeholder (LQIP) and base64-encode it for inline use */ -}}
-          {{- with $res -}}
-            {{- $phRes := .Resize "20x" -}}
-            {{- $phB64 := $phRes.Content | base64Encode -}}
-            {{- $phData = printf "data:%s;base64,%s" $res.MediaType.Type $phB64 -}}
-          {{- end -}}
-        {{- end -}}
-      {{- end -}}
+{{- if $res -}}
+  {{- if hasSuffix $res.RelPermalink ".svg" -}}
+    {{- $resolved = $res.RelPermalink -}}
+  {{- else -}}
+    {{- /* Create multiple sizes for responsive srcset: 400w, 800w, 1200w */ -}}
+    {{- $img400 := $res.Resize "400x" -}}
+    {{- $img800 := $res.Resize "800x" -}}
+    {{- $img1200 := $res.Resize "1200x" -}}
+    {{- $resolved = $img800.RelPermalink -}}
+    {{- $srcset = printf "%s 400w, %s 800w, %s 1200w" $img400.RelPermalink $img800.RelPermalink $img1200.RelPermalink -}}
+    {{- /* Create a tiny low-quality placeholder (LQIP) and base64-encode it for inline use */ -}}
+    {{- with $res -}}
+      {{- $phRes := .Resize "20x" -}}
+      {{- $phB64 := $phRes.Content | base64Encode -}}
+      {{- $phData = printf "data:%s;base64,%s" $phRes.MediaType.Type $phB64 -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+  {{- end -}}
+{{- end -}}
     {{- end -}}
   {{- end -}}
   {{- /* If phData still empty, generate a tiny inline SVG placeholder using category color */ -}}

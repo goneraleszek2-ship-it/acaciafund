@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="340" viewBox="0 0 600 340">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset="1" stop-color="#1e3a5f"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="52%" cy="59%">
+      <stop offset="0" stop-color="#d97706" stop-opacity="0.15"/>
+      <stop offset="1" stop-color="#0f172a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="600" height="340" fill="url(#bg)"/>
+  <rect width="600" height="340" fill="url(#glow)"/>
+
+  <!-- Decorative grid dots -->
+  <circle cx="62" cy="402" r="1.5" fill="#d97706" opacity="0.05"/>
+  <circle cx="248" cy="444" r="1.5" fill="#d97706" opacity="0.08"/>
+  <circle cx="434" cy="486" r="1.5" fill="#d97706" opacity="0.11"/>
+  <circle cx="20" cy="528" r="1.5" fill="#d97706" opacity="0.14"/>
+  <circle cx="206" cy="570" r="1.5" fill="#d97706" opacity="0.16999999999999998"/>
+  <circle cx="164" cy="540" r="1.5" fill="#d97706" opacity="0.08"/>
+  <circle cx="350" cy="582" r="1.5" fill="#d97706" opacity="0.11"/>
+  <circle cx="536" cy="624" r="1.5" fill="#d97706" opacity="0.14"/>
+  <circle cx="122" cy="66" r="1.5" fill="#d97706" opacity="0.16999999999999998"/>
+  <circle cx="308" cy="108" r="1.5" fill="#d97706" opacity="0.05"/>
+  <circle cx="266" cy="78" r="1.5" fill="#d97706" opacity="0.11"/>
+  <circle cx="452" cy="120" r="1.5" fill="#d97706" opacity="0.14"/>
+  <circle cx="38" cy="162" r="1.5" fill="#d97706" opacity="0.16999999999999998"/>
+  <circle cx="224" cy="204" r="1.5" fill="#d97706" opacity="0.05"/>
+  <circle cx="410" cy="246" r="1.5" fill="#d97706" opacity="0.08"/>
+  <circle cx="368" cy="216" r="1.5" fill="#d97706" opacity="0.14"/>
+  <circle cx="554" cy="258" r="1.5" fill="#d97706" opacity="0.16999999999999998"/>
+  <circle cx="140" cy="300" r="1.5" fill="#d97706" opacity="0.05"/>
+  <circle cx="326" cy="342" r="1.5" fill="#d97706" opacity="0.08"/>
+  <circle cx="512" cy="384" r="1.5" fill="#d97706" opacity="0.11"/>
+  <circle cx="470" cy="354" r="1.5" fill="#d97706" opacity="0.16999999999999998"/>
+  <circle cx="56" cy="396" r="1.5" fill="#d97706" opacity="0.05"/>
+  <circle cx="242" cy="438" r="1.5" fill="#d97706" opacity="0.08"/>
+  <circle cx="428" cy="480" r="1.5" fill="#d97706" opacity="0.11"/>
+  <circle cx="614" cy="522" r="1.5" fill="#d97706" opacity="0.14"/>
+  <circle cx="572" cy="492" r="1.5" fill="#d97706" opacity="0.05"/>
+  <circle cx="158" cy="534" r="1.5" fill="#d97706" opacity="0.08"/>
+  <circle cx="344" cy="576" r="1.5" fill="#d97706" opacity="0.11"/>
+  <circle cx="530" cy="618" r="1.5" fill="#d97706" opacity="0.14"/>
+  <circle cx="116" cy="60" r="1.5" fill="#d97706" opacity="0.16999999999999998"/>
+  <circle cx="74" cy="30" r="1.5" fill="#d97706" opacity="0.08"/>
+  <circle cx="260" cy="72" r="1.5" fill="#d97706" opacity="0.11"/>
+  <circle cx="446" cy="114" r="1.5" fill="#d97706" opacity="0.14"/>
+  <circle cx="32" cy="156" r="1.5" fill="#d97706" opacity="0.16999999999999998"/>
+  <circle cx="218" cy="198" r="1.5" fill="#d97706" opacity="0.05"/>
+  <circle cx="176" cy="168" r="1.5" fill="#d97706" opacity="0.11"/>
+  <circle cx="362" cy="210" r="1.5" fill="#d97706" opacity="0.14"/>
+  <circle cx="548" cy="252" r="1.5" fill="#d97706" opacity="0.16999999999999998"/>
+  <circle cx="134" cy="294" r="1.5" fill="#d97706" opacity="0.05"/>
+  <circle cx="320" cy="336" r="1.5" fill="#d97706" opacity="0.08"/>
+
+  <!-- Topic icon -->
+  <g transform="translate(40, 50) scale(1.4)" stroke="#d97706" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+  </g>
+
+  <!-- Topic words as floating tags -->
+  <text x="69" y="200" fill="#d97706" font-family="system-ui,sans-serif" font-size="14" font-weight="600" opacity="0.4">Spain</text>
+  <text x="106" y="240" fill="#d97706" font-family="system-ui,sans-serif" font-size="14" font-weight="600" opacity="0.4">Polymarket</text>
+  <text x="143" y="280" fill="#d97706" font-family="system-ui,sans-serif" font-size="14" font-weight="600" opacity="0.4">Kalshi</text>
+
+  <!-- SQI bar -->
+  <text x="40" y="260" fill="#d97706" font-family="system-ui,sans-serif" font-size="11" font-weight="600" opacity="0.6">SIGNAL QUALITY</text>
+  <rect x="40" y="270" width="200" height="4" rx="2" fill="#f8fafc" opacity="0.1"/>
+  <rect x="40" y="270" width="106" height="4" rx="2" fill="#d97706" opacity="0.8"/>
+  <text x="250" y="274" fill="#d97706" font-family="system-ui,sans-serif" font-size="12" font-weight="700">0.53</text>
+
+  <!-- Category badge -->
+  <rect x="40" y="290" width="80" height="24" rx="4" fill="#d97706" opacity="0.2"/>
+  <text x="80" y="306" text-anchor="middle" fill="#d97706" font-family="system-ui,sans-serif" font-size="11" font-weight="700" text-transform="uppercase">AML</text>
+</svg>

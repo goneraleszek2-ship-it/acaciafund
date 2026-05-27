@@ -20,6 +20,16 @@ HackerNews + arXiv → deterministic classification (Bloom taxonomy) → static 
 - **Interactive Bayes Demo Shortcode**: layouts/shortcodes/bayes.html + static/js/learning.js
 - **Homepage UX Enhancement**: Refined hero section, call-to-action, pictograms and software stack diagram
 - **FastAPI Scaffold**: services/api/ for future dynamic features
+- **UX 2026 Improvements**: Dark mode toggle, skip‑to‑content link, AI transparency note, category badges + reading time, hover/button micro‑interactions, fade‑in scroll animations, client‑side search (JSON API + overlay) – all deployed via Cloudflare Pages.
+
+## Further Steps
+
+1. **Performance & Accessibility**: Run Lighthouse, optimize images (WebP), improve contrast, add reading‑progress bar.
+2. **Navigation Enhancements**: Sticky header that hides on scroll down, breadcrumbs on category/tag pages.
+3. **Content Enrichment**: Generate lightweight SVG graphics based on post tags/metadata (e.g., decorative badges, sparklines) to increase visual richness without extra weight.
+4. **Search Refinement**: Implement fuzzy matching, boost recent content, and add keyboard navigation.
+5. **Analytics Framework**: Deploy differential privacy‑enabled telemetry for aggregated learning insights (per strategic assessment).
+6. **Server‑Side Persistence**: Implement FastAPI + SQLite backend for learning progress (as recommended in the strategic assessment).
 
 ---
 

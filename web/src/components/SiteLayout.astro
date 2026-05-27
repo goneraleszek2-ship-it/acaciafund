@@ -30,27 +30,212 @@ const ogImage = image ? `${siteUrl}${image}` : `${siteUrl}/images/default-og.jpg
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   </head>
   <body>
+    <!-- Skip to content link -->
+    <a href="#main-content" class="skip-to-content">Skip to main content</a>
     <div class="shell page">
       <header class="topbar">
+        <div class="theme-toggle">
+          <button id="theme-toggle" aria-label="Toggle dark/light mode" class="theme-button">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-moon" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <path d="M12 3c0 1.8 1.4 3.2 3 3.6a8.015 8.015 0 0 1 3.4 5.8l-1.2 .6c-.3 .2 -.7 .2 -1 0l-.6 -1.2a8.015 8.015 0 0 1 5.8 -3.4a8.008 8.008 0 0 1 3.6 -3c-1.8 -.1 -3.2 -1.4 -3.6 -3a8.016 8.016 0 0 0 -5.8 3.4l-.6 1.2c-.2 .3 -.2 .7 0 1l1.2 .6c.4 .2 .6 .6 .4 1z" />
+            </svg>
+          </button>
+        </div>
         <a class="brand" href={`/${lang}/`} aria-label="AcaciaFund home">
           <span class="brand-mark"></span>
           <span>AcaciaFund</span>
         </a>
         <nav class="nav" aria-label="Primary">
-          <a href={`/${lang}/blog/`}>Blog</a>
-          <a href={`/${lang}/course/`}>Course</a>
-          <a href={`/${lang}/learn/`}>Learn</a>
-          <a href={`/${lang}/scholarship/`}>Scholarship</a>
-          <a href={`/${lang}/research/`}>Research</a>
-          <a href={`/${lang}/about/`}>About</a>
+          {/*
+            Different sections have different language path structures:
+            - Blog: /blog/{lang}/
+            - Learn: /learn/{lang}/
+            - Course, About, Research, Scholarship: /section/ (no language prefix in path)
+          */}
+          <a href={lang === 'pl' ? '/blog/pl/' : '/blog/en/'}>Blog</a>
+          <a href={`/${lang === 'pl' ? 'course' : 'course'}`}>Course</a>
+          <a href={lang === 'pl' ? '/learn/pl/' : '/learn/en/'}>Learn</a>
+          <a href={`/${lang === 'pl' ? 'scholarship' : 'scholarship'}`}>Scholarship</a>
+          <a href={`/${lang === 'pl' ? 'research' : 'research'}`}>Research</a>
+          <a href={`/${lang === 'pl' ? 'about' : 'about'}`}>About</a>
+          <!-- Search button -->
+          <button id="search-toggle" aria-label="Search" class="nav-item">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+              <circle cx="10.5" cy="10.5" r="7.5"/>
+              <line x1="21" y1="21" x2="15" y2="15"/>
+            </svg>
+          </button>
         </nav>
       </header>
-      <main>
+      <main id="main-content">
         <slot />
       </main>
       <footer class="footer">
         <div>AcaciaFund · static-first research and learning platform</div>
+        <div class="ai-transparency">Treści generowane przez system NLP AcaciaFund</div>
       </footer>
     </div>
+
+    <!-- Search Overlay -->
+    <div id="search-overlay" class="search-overlay" aria-hidden="true">
+      <div class="search-overlay-content">
+        <button id="search-close" aria-label="Close search" class="search-close">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <line x1="18" y1="6" x2="6" y2="18"/>
+            <line x1="6" y1="6" x2="18" y2="18"/>
+          </svg>
+        </button>
+        <div class="search-box">
+          <input type="text" id="search-input" placeholder="Search posts..." autocomplete="off" />
+        </div>
+        <div id="search-results" class="search-results">
+          <!-- Results will be injected here -->
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const toggle = document.getElementById('theme-toggle');
+      const root = document.documentElement;
+
+      // Check for saved theme or use system preference
+      const currentTheme = localStorage.getItem('theme');
+      const systemTheme = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+
+      const setTheme = (theme) => {
+        if (theme === 'light') {
+          root.classList.add('light-theme');
+        } else {
+          root.classList.remove('light-theme');
+        }
+        localStorage.setItem('theme', theme);
+      };
+
+      // Initialize
+      const initialTheme = currentTheme || systemTheme;
+      setTheme(initialTheme);
+
+      // Toggle event
+      toggle.addEventListener('click', () => {
+        const newTheme = root.classList.contains('light-theme') ? 'dark' : 'light';
+        setTheme(newTheme);
+      });
+    </script>
+    <script>
+      // Fade-in on scroll
+      const fadeElements = document.querySelectorAll('.fade-in');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
+        });
+      }, { threshold: 0.1 });
+      fadeElements.forEach(el => observer.observe(el));
+    </script>
+    <script>
+      // Search functionality
+      const searchToggle = document.getElementById('search-toggle');
+      const searchOverlay = document.getElementById('search-overlay');
+      const searchClose = document.getElementById('search-close');
+      const searchInput = document.getElementById('search-input');
+      const searchResults = document.getElementById('search-results');
+
+      let searchIndex = [];
+
+      // Load search index
+      async function loadSearchIndex() {
+        try {
+          const response = await fetch('/api/search.json');
+          searchIndex = await response.json();
+        } catch (e) {
+          console.error('Failed to load search index:', e);
+          searchIndex = [];
+        }
+      }
+
+      // Show overlay
+      function openSearch() {
+        searchOverlay.setAttribute('aria-hidden', 'false');
+        searchInput.value = '';
+        searchResults.innerHTML = '';
+        searchInput.focus();
+        loadSearchIndex(); // Load index when opening (could be cached)
+      }
+
+      // Hide overlay
+      function closeSearch() {
+        searchOverlay.setAttribute('aria-hidden', 'true');
+      }
+
+      // Perform search
+      function performSearch() {
+        const query = searchInput.value.trim().toLowerCase();
+        if (query.length < 2) {
+          searchResults.innerHTML = '<p class="muted">Type at least 2 characters to search</p>';
+          return;
+        }
+
+        const results = searchIndex.filter(post => {
+          const titleMatch = post.title.toLowerCase().includes(query);
+          const tagsMatch = post.tags.some(tag => tag.toLowerCase().includes(query));
+          const categoryMatch = post.category.toLowerCase().includes(query);
+          return titleMatch || tagsMatch || categoryMatch;
+        });
+
+        if (results.length === 0) {
+          searchResults.innerHTML = '<p class="muted">No results found</p>';
+          return;
+        }
+
+        // Build results HTML
+        let html = '';
+        results.forEach(post => {
+          html += `
+            <a href="${post.url}" class="search-result-item">
+              <div class="search-result-title">${post.title}</div>
+              <div class="search-result-meta">
+                <span>${post.category}</span>
+                <span>${post.lang.toUpperCase()}</span>
+              </div>
+              <div class="search-result-summary">${post.summary}</div>
+            </a>
+          `;
+        });
+        searchResults.innerHTML = html;
+      }
+
+      // Event listeners
+      searchToggle.addEventListener('click', (e) => {
+        e.preventDefault();
+        openSearch();
+      });
+
+      searchClose.addEventListener('click', closeSearch);
+      searchOverlay.addEventListener('click', (e) => {
+        if (e.target === searchOverlay) {
+          closeSearch();
+        }
+      });
+
+      // Close on ESC key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && searchOverlay.getAttribute('aria-hidden') === 'false') {
+          closeSearch();
+        }
+      });
+
+      // Search input debounce
+      let debounceTimer;
+      searchInput.addEventListener('input', (e) => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+          performSearch();
+        }, 300);
+      });
+    </script>
   </body>
 </html>

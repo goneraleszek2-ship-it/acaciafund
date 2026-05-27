@@ -1,0 +1,193 @@
+{
+  "assets": [
+    {
+      "asset_id": "2026-05-26-aml:thumbnail:thumb_9c62161fe605.svg",
+      "asset_type": "thumbnail",
+      "bytes": 4845,
+      "checksum": "cf6888e3078568dd8c93b850725d3ee3980ae862d15e9688215247ebd36e711b",
+      "content_id": "2026-05-26-aml",
+      "created_at": "2026-05-26T15:49:26Z",
+      "manifest_type": "asset",
+      "mime_type": "image/svg+xml",
+      "path": "content/pl/blog/2026-05-26-aml/thumb_9c62161fe605.svg",
+      "source_url": "https://ente.com/blog/how-shamirs-secret-sharing-works/",
+      "version": 1
+    },
+    {
+      "asset_id": "2026-05-26-aml:og_image:og_18e2955fbb5f.svg",
+      "asset_type": "og_image",
+      "bytes": 1688,
+      "checksum": "9d212b005f90f12b5fbf924458cc5cbb65815ed4707a5c4347f440ac6c06e99b",
+      "content_id": "2026-05-26-aml",
+      "created_at": "2026-05-26T15:49:26Z",
+      "manifest_type": "asset",
+      "mime_type": "image/svg+xml",
+      "path": "content/pl/blog/2026-05-26-aml/og_18e2955fbb5f.svg",
+      "source_url": "https://ente.com/blog/how-shamirs-secret-sharing-works/",
+      "version": 1
+    },
+    {
+      "asset_id": "2026-05-26-aml:featured_image:featured.jpg",
+      "asset_type": "featured_image",
+      "bytes": 9860,
+      "checksum": "7759cbf1a70a5ac14d2e1b8e577148d0a9bdc6e0ad8b31ea896f0f21953223ed",
+      "content_id": "2026-05-26-aml",
+      "created_at": "2026-05-26T15:49:26Z",
+      "manifest_type": "asset",
+      "mime_type": "image/jpeg",
+      "path": "content/pl/blog/2026-05-26-aml/featured.jpg",
+      "source_url": "/how-shamirs-secret-sharing-works/images/01-two-points-one-line.svg",
+      "version": 1
+    }
+  ],
+  "bloom_levels": [
+    "understand",
+    "analyze",
+    "evaluate"
+  ],
+  "checksum": "905a0e3fd228e31a261c2c1928b3b65182a1ec9633c906afb58c845c6a76ee5f",
+  "content_id": "2026-05-26-aml",
+  "created_at": "2026-05-26T15:49:26Z",
+  "date": "2026-05-26",
+  "flashcards_count": 20,
+  "lineage": {
+    "run_id": "20260526T154858Z",
+    "source_count": 1000,
+    "top_story_url": "https://ente.com/blog/how-shamirs-secret-sharing-works/",
+    "unclassified": 759
+  },
+  "manifest_type": "story",
+  "pillar": "aml",
+  "published_at": "2026-05-26T15:49:26Z",
+  "quality_flags": [
+    "no_trending"
+  ],
+  "quality_metrics": {
+    "avg_source_score": 0.7215384615384616,
+    "recency_score": 0.0,
+    "source_diversity": 0.07396449704142016
+  },
+  "questions_count": 4,
+  "signals": {
+    "avg_score": 53.92307692307692,
+    "avg_sqi": 0.511,
+    "count": 26,
+    "domain_diversity": 3,
+    "entity_coherence": "low",
+    "has_outlier": true,
+    "key_numbers": [
+      [
+        "1979.",
+        "AdiShamir (theSin RSA), published a way to do this in 1979."
+      ],
+      [
+        "1.",
+        "In general, a threshold ofkuses a polynomial of degreek - 1."
+      ],
+      [
+        "60",
+        "Your router sends an update, your hostname resolves correctly worldwide within ~60 seconds."
+      ],
+      [
+        "2136",
+        "TTL · NOTIFY-driven · Multi-region nameservers RFC 2136 TSIG means your FortiGate, MikroTik, OPNsens"
+      ],
+      [
+        "6",
+        "Modern ISPs increasingly give you native IPv6 alongside CGNATed IPv4."
+      ]
+    ],
+    "max_score": 307,
+    "outlier_ratio": 5.693295292439372,
+    "score_skew": "outlier",
+    "sentences_count": 137,
+    "top_domain": "inne",
+    "top_domain_share": 0.8461538461538461,
+    "top_entities": [
+      "SEC",
+      "Citi",
+      "Block",
+      "EBA",
+      "State Secretary",
+      "Digital Economy Willemijn Aerdts",
+      "European Commission",
+      "The Office"
+    ],
+    "top_sqi_articles": [
+      [
+        "Spain blocks prediction markets Polymarket, Kalshi over lack of gambling licence",
+        {
+          "authority": 0.8,
+          "cross_pillar": 1,
+          "engagement": 0.816,
+          "entity_density": 0.333,
+          "novelty": 1.0,
+          "sqi": 0.768,
+          "timeliness": 0.963
+        }
+      ],
+      [
+        "Netherlands blocks US takeover of vital digital supplier",
+        {
+          "authority": 0.2,
+          "cross_pillar": 0,
+          "engagement": 0.908,
+          "entity_density": 0.333,
+          "novelty": 1.0,
+          "sqi": 0.64,
+          "timeliness": 0.944
+        }
+      ],
+      [
+        "DynIP – Dynamic DNS with RFC 2136, IPv6, DNSSEC, and BYOD",
+        {
+          "authority": 0.2,
+          "cross_pillar": 0,
+          "engagement": 0.867,
+          "entity_density": 0.333,
+          "novelty": 1.0,
+          "sqi": 0.622,
+          "timeliness": 0.886
+        }
+      ]
+    ],
+    "total_score": 1402,
+    "trending_topics": []
+  },
+  "source_breakdown": {
+    "arxiv": 0,
+    "hn": 25,
+    "pubmed": 1
+  },
+  "source_urls": [
+    "https://ente.com/blog/how-shamirs-secret-sharing-works/",
+    "https://www.politico.eu/article/netherlands-blocks-us-takeover-vital-digital-supplier/",
+    "https://dynip.dev/",
+    "https://www.reuters.com/business/spain-blocks-prediction-markets-polymarket-kalshi-over-lack-gambling-licences-2026-05-26/",
+    "https://medcurity.com/hipaa-security-rule-2026-update/",
+    "https://cmarmitage.substack.com/p/donald-trump-jr-and-eric-trump-are",
+    "https://www.ms.now/ali-velshi/watch/hawaii-just-found-a-way-around-citizens-united-other-states-are-following-2501173315542",
+    "https://www.theurbanist.org/west-coast-cities-turn-to-vacancy-taxes-to-grapple-with-housing-crisis/",
+    "https://blog.ericgoldman.org/archives/2026/05/ninth-circuit-panel-goes-out-of-its-way-to-question-section-230-doe-v-meta.htm",
+    "https://robertsspaceindustries.com/en/funding-goals",
+    "https://www.nytimes.com/2026/05/22/opinion/ai-job-crisis-goldman-sachs.html",
+    "https://opensource.posit.co/blog/2026-05-21_in-defense-of-yaml/",
+    "https://nltimes.nl/2026/05/26/netherlands-blocks-us-takeover-digid-operator-solvinity-security-concerns",
+    "https://nos.nl/artikel/2615885-staatssecretaris-verbiedt-overname-solvinity-bedrijf-achter-digid",
+    "https://unsung.aresluna.org/a-few-interesting-modern-pixel-fonts/",
+    "https://github.com/WebAssembly/spec/blob/main/proposals/simd/SIMD.md",
+    "https://pilcrowonpaper.com/blog/16",
+    "https://www.theglobeandmail.com/politics/article-google-lawful-access-bill-c-22-cybersecurity-risks/",
+    "https://www.theguardian.com/culture/2026/may/24/riz-ahmed-says-uk-spies-tried-to-recruit-him-on-three-occasions",
+    "https://www.bbc.com/news/articles/c2e2vjl2ry8o",
+    "https://www.bleepingcomputer.com/news/security/7-eleven-data-breach-exposes-personal-information-of-185-000-people/",
+    "https://world.hey.com/dhh/basecamp-five-8fcfd2ef",
+    "https://riot.ml",
+    "https://variety.com/2026/gaming/news/star-citizen-1-billion-funding-squadron-42-release-update-1236757420/",
+    "https://www.thejournal.ie/eu-digital-id-wallet-ireland-plans-online-verification-explainer-factcheck-vaccines-misinformation-7045802-May2026/",
+    "https://pubmed.ncbi.nlm.nih.gov/42175434/"
+  ],
+  "story_count": 26,
+  "title": "How Shamirs Secret Sharing Works -- 🛡️ AML 2026-05-26",
+  "version": 1
+}

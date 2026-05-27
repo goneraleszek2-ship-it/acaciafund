@@ -1,12 +1,25 @@
 ---
+import { estimateReadingTime } from '../lib/content.js';
 const { post } = Astro.props;
+// Determine badge color based on category
+const categoryColors = {
+  aml: '--accent-2', // blue
+  stock: '--accent', // amber/gold
+  science: '#9333ea', // violet (not in CSS vars, using direct)
+};
+const badgeColor = categoryColors[post.category.toLowerCase()] || '--muted';
+// Estimate reading time from summary or full content? We'll use summary for card.
+const readingTime = estimateReadingTime(post.summary);
 ---
 <article class="card pillar-card">
   {post.imageUrl ? <img src={post.imageUrl} alt={post.title} loading="lazy" /> : null}
   <div style="margin-top: 14px;">
-    <div class="meta">
+    <div class="meta" style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 12px;">
       <span>{post.date}</span>
-      <span>{post.category}</span>
+      <span class="badge" style="background: var(--badge-color); color: var(--text);">
+        {post.category}
+      </span>
+      <span class="reading-time">~{readingTime} min czytania</span>
     </div>
     <h3><a href={`/${post.lang}/blog/${post.slug}/`}>{post.title}</a></h3>
     <p class="muted">{post.summary}</p>

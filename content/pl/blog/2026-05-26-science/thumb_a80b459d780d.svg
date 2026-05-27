@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="340" viewBox="0 0 600 340">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#3b0764"/>
+      <stop offset="1" stop-color="#7e22ce"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="49%" cy="51%">
+      <stop offset="0" stop-color="#c084fc" stop-opacity="0.15"/>
+      <stop offset="1" stop-color="#3b0764" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="600" height="340" fill="url(#bg)"/>
+  <rect width="600" height="340" fill="url(#glow)"/>
+
+  <!-- Decorative grid dots -->
+  <circle cx="218" cy="144" r="1.5" fill="#c084fc" opacity="0.05"/>
+  <circle cx="404" cy="186" r="1.5" fill="#c084fc" opacity="0.08"/>
+  <circle cx="590" cy="228" r="1.5" fill="#c084fc" opacity="0.11"/>
+  <circle cx="176" cy="270" r="1.5" fill="#c084fc" opacity="0.14"/>
+  <circle cx="362" cy="312" r="1.5" fill="#c084fc" opacity="0.16999999999999998"/>
+  <circle cx="320" cy="282" r="1.5" fill="#c084fc" opacity="0.08"/>
+  <circle cx="506" cy="324" r="1.5" fill="#c084fc" opacity="0.11"/>
+  <circle cx="92" cy="366" r="1.5" fill="#c084fc" opacity="0.14"/>
+  <circle cx="278" cy="408" r="1.5" fill="#c084fc" opacity="0.16999999999999998"/>
+  <circle cx="464" cy="450" r="1.5" fill="#c084fc" opacity="0.05"/>
+  <circle cx="422" cy="420" r="1.5" fill="#c084fc" opacity="0.11"/>
+  <circle cx="608" cy="462" r="1.5" fill="#c084fc" opacity="0.14"/>
+  <circle cx="194" cy="504" r="1.5" fill="#c084fc" opacity="0.16999999999999998"/>
+  <circle cx="380" cy="546" r="1.5" fill="#c084fc" opacity="0.05"/>
+  <circle cx="566" cy="588" r="1.5" fill="#c084fc" opacity="0.08"/>
+  <circle cx="524" cy="558" r="1.5" fill="#c084fc" opacity="0.14"/>
+  <circle cx="110" cy="600" r="1.5" fill="#c084fc" opacity="0.16999999999999998"/>
+  <circle cx="296" cy="42" r="1.5" fill="#c084fc" opacity="0.05"/>
+  <circle cx="482" cy="84" r="1.5" fill="#c084fc" opacity="0.08"/>
+  <circle cx="68" cy="126" r="1.5" fill="#c084fc" opacity="0.11"/>
+  <circle cx="26" cy="96" r="1.5" fill="#c084fc" opacity="0.16999999999999998"/>
+  <circle cx="212" cy="138" r="1.5" fill="#c084fc" opacity="0.05"/>
+  <circle cx="398" cy="180" r="1.5" fill="#c084fc" opacity="0.08"/>
+  <circle cx="584" cy="222" r="1.5" fill="#c084fc" opacity="0.11"/>
+  <circle cx="170" cy="264" r="1.5" fill="#c084fc" opacity="0.14"/>
+  <circle cx="128" cy="234" r="1.5" fill="#c084fc" opacity="0.05"/>
+  <circle cx="314" cy="276" r="1.5" fill="#c084fc" opacity="0.08"/>
+  <circle cx="500" cy="318" r="1.5" fill="#c084fc" opacity="0.11"/>
+  <circle cx="86" cy="360" r="1.5" fill="#c084fc" opacity="0.14"/>
+  <circle cx="272" cy="402" r="1.5" fill="#c084fc" opacity="0.16999999999999998"/>
+  <circle cx="230" cy="372" r="1.5" fill="#c084fc" opacity="0.08"/>
+  <circle cx="416" cy="414" r="1.5" fill="#c084fc" opacity="0.11"/>
+  <circle cx="602" cy="456" r="1.5" fill="#c084fc" opacity="0.14"/>
+  <circle cx="188" cy="498" r="1.5" fill="#c084fc" opacity="0.16999999999999998"/>
+  <circle cx="374" cy="540" r="1.5" fill="#c084fc" opacity="0.05"/>
+  <circle cx="332" cy="510" r="1.5" fill="#c084fc" opacity="0.11"/>
+  <circle cx="518" cy="552" r="1.5" fill="#c084fc" opacity="0.14"/>
+  <circle cx="104" cy="594" r="1.5" fill="#c084fc" opacity="0.16999999999999998"/>
+  <circle cx="290" cy="36" r="1.5" fill="#c084fc" opacity="0.05"/>
+  <circle cx="476" cy="78" r="1.5" fill="#c084fc" opacity="0.08"/>
+
+  <!-- Topic icon -->
+  <g transform="translate(40, 50) scale(1.4)" stroke="#c084fc" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 2c0 0 0 20 8 20M16 2c0 0 0 20-8 20M8 12h8" fill="none" stroke-width="1.5"/>
+  </g>
+
+  <!-- Topic words as floating tags -->
+  <text x="61" y="200" fill="#c084fc" font-family="system-ui,sans-serif" font-size="14" font-weight="600" opacity="0.4">Exit</text>
+
+  <!-- SQI bar -->
+  <text x="40" y="260" fill="#c084fc" font-family="system-ui,sans-serif" font-size="11" font-weight="600" opacity="0.6">SIGNAL QUALITY</text>
+  <rect x="40" y="270" width="200" height="4" rx="2" fill="#faf5ff" opacity="0.1"/>
+  <rect x="40" y="270" width="101" height="4" rx="2" fill="#c084fc" opacity="0.8"/>
+  <text x="250" y="274" fill="#c084fc" font-family="system-ui,sans-serif" font-size="12" font-weight="700">0.51</text>
+
+  <!-- Category badge -->
+  <rect x="40" y="290" width="80" height="24" rx="4" fill="#c084fc" opacity="0.2"/>
+  <text x="80" y="306" text-anchor="middle" fill="#c084fc" font-family="system-ui,sans-serif" font-size="11" font-weight="700" text-transform="uppercase">SCIENCE</text>
+</svg>
