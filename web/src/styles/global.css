@@ -76,6 +76,28 @@ button:focus,
 .topbar {
   display: flex; justify-content: space-between; align-items: center; gap: 16px;
   padding: 16px 0 28px;
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: var(--bg);
+  transition: transform 0.3s ease;
+}
+.topbar.hidden {
+  transform: translateY(-100%);
+}
+
+/* Reading progress bar */
+#progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  background: var(--accent);
+  width: 0%;
+  z-index: 1001;
+  transition: width 0.1s ease;
 }
 .brand { display: flex; align-items: center; gap: 12px; font-weight: 700; letter-spacing: -0.03em; }
 .brand-mark { width: 28px; height: 28px; border-radius: 10px; background: linear-gradient(135deg, var(--accent), var(--accent-2)); box-shadow: 0 10px 30px rgba(56,189,248,.18); }

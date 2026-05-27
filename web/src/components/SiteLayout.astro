@@ -30,8 +30,10 @@ const ogImage = image ? `${siteUrl}${image}` : `${siteUrl}/images/default-og.jpg
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   </head>
   <body>
-    <!-- Skip to content link -->
+<!-- Skip to content link -->
     <a href="#main-content" class="skip-to-content">Skip to main content</a>
+    <!-- Reading progress bar -->
+    <div id="progress-bar"></div>
     <div class="shell page">
       <header class="topbar">
         <div class="theme-toggle">
@@ -42,6 +44,41 @@ const ogImage = image ? `${siteUrl}${image}` : `${siteUrl}/images/default-og.jpg
             </svg>
           </button>
         </div>
+        <a class="brand" href={`/${lang}/`} aria-label="AcaciaFund home">
+          <span class="brand-mark"></span>
+          <span>AcaciaFund</span>
+        </a>
+        <nav class="nav" aria-label="Primary">
+          {/*
+            Different sections have different language path structures:
+            - Blog: /blog/{lang}/
+            - Learn: /learn/{lang}/
+            - Course, About, Research, Scholarship: /section/ (no language prefix in path)
+          */}
+          <a href={lang === 'pl' ? '/blog/pl/' : '/blog/en/'}>Blog</a>
+          <a href={`/${lang === 'pl' ? 'course' : 'course'}`}>Course</a>
+          <a href={lang === 'pl' ? '/learn/pl/' : '/learn/en/'}>Learn</a>
+          <a href={`/${lang === 'pl' ? 'scholarship' : 'scholarship'}`}>Scholarship</a>
+          <a href={`/${lang === 'pl' ? 'research' : 'research'}`}>Research</a>
+          <a href={`/${lang === 'pl' ? 'about' : 'about'}`}>About</a>
+        </nav>
+        <!-- Search button -->
+        <button id="search-toggle" aria-label="Search" class="nav-item">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <circle cx="10.5" cy="10.5" r="7.5"/>
+            <line x1="21" y1="21" x2="15" y2="15"/>
+          </svg>
+        </button>
+      </header>
+      <main id="main-content">
+        <slot />
+      </main>
+      <footer class="footer">
+        <div>AcaciaFund · static-first research and learning platform</div>
+        <div class="ai-transparency">Treści generowane przez system NLP AcaciaFund</div>
+      </footer>
+    </div>
         <a class="brand" href={`/${lang}/`} aria-label="AcaciaFund home">
           <span class="brand-mark"></span>
           <span>AcaciaFund</span>
@@ -228,7 +265,7 @@ const ogImage = image ? `${siteUrl}${image}` : `${siteUrl}/images/default-og.jpg
         }
       });
 
-      // Search input debounce
+       // Search input debounce
       let debounceTimer;
       searchInput.addEventListener('input', (e) => {
         clearTimeout(debounceTimer);
@@ -236,6 +273,32 @@ const ogImage = image ? `${siteUrl}${image}` : `${siteUrl}/images/default-og.jpg
           performSearch();
         }, 300);
       });
+    </script>
+    <script>
+      // Sticky header hide on scroll down & progress bar
+      const topbar = document.querySelector('.topbar');
+      const progressBar = document.getElementById('progress-bar');
+      let lastScrollY = window.pageYOffset;
+
+      function updateScroll() {
+        const scrollY = window.pageYOffset;
+        const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrolled = (scrollY / windowHeight) * 100;
+        progressBar.style.width = scrolled + '%';
+
+        if (scrollY > lastScrollY && scrollY > 100) {
+          // scrolling down
+          topbar.classList.add('hidden');
+        } else {
+          // scrolling up or at top
+          topbar.classList.remove('hidden');
+        }
+        lastScrollY = scrollY;
+      }
+
+      window.addEventListener('scroll', updateScroll);
+      // Initialize progress bar on load
+      updateScroll();
     </script>
   </body>
 </html>
