@@ -192,3 +192,52 @@ button:focus,
   margin: 2px;
   border: 1px solid var(--card-border);
 }
+
+/* Responsive typography and layout adjustments */
+@media (max-width: 1200px) {
+  .shell { padding: 0 16px; }
+}
+
+@media (max-width: 992px) {
+  .hero { gap: 16px; padding: 30px 0 20px; }
+  .title { font-size: clamp(2.2rem, 6vw, 4.5rem); }
+  .lede { font-size: clamp(1rem, 1.8vw, 1.15rem); }
+  .grid.cols-3 { grid-template-columns: repeat(2, 1fr); }
+  .pillars { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .topbar { padding: 12px 0 20px; gap: 12px; }
+  .brand { gap: 10px; }
+  .brand-mark { width: 24px; height: 24px; }
+  .nav { gap: 10px; font-size: 0.9rem; flex-wrap: wrap; }
+  .actions { gap: 10px; }
+  .button { padding: 10px 16px; font-size: 0.9rem; }
+  .hero { padding: 24px 0 16px; }
+  .title { font-size: clamp(2rem, 7vw, 4rem); }
+  .lede { font-size: clamp(0.95rem, 2vw, 1.1rem); margin-top: 6px; }
+  .grid.cols-2, .grid.cols-3 { grid-template-columns: 1fr; }
+  .pillars { grid-template-columns: 1fr; }
+  .page { padding: 24px 0 60px; }
+  .section { padding: 20px 0 0; }
+  .card { padding: 16px; }
+  .visual-item { padding: 12px; }
+  .visual-caption { font-size: 0.88rem; }
+  .footer { font-size: 0.88rem; padding-top: 20px; }
+}
+
+@media (max-width: 480px) {
+  .shell { padding: 0 12px; }
+  .topbar { flex-direction: column; align-items: stretch; }
+  .nav { justify-content: center; width: 100%; }
+  .brand { justify-content: center; }
+  .actions { width: 100%; justify-content: center; }
+  .button { width: 100%; max-width: 280px; margin: 0 auto; }
+  .hero { text-align: center; }
+  .title { font-size: clamp(1.8rem, 8vw, 3.5rem); }
+  .lede { font-size: clamp(0.9rem, 2.5vw, 1rem); }
+  .fade-in { transform: translateY(10px); }
+  .fade-in.visible { transform: translateY(0); }
+  .prose { font-size: 0.95rem; }
+  .article { padding: 0 10px; }
+}

@@ -1,0 +1,53 @@
+---
+const { headings } = Astro.props; // Array of { level: number, text: string }
+// If no headings, render an empty element to avoid null
+if (!headings || headings.length === 0) {
+  return <></>;
+}
+---
+<nav class="table-of-contents" aria-label="Table of contents">
+  <h2>Spis treści</h2>
+  <ol class="toc">
+    {headings.map((heading, index) => {
+      const slug = heading.text.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+      const indent = (heading.level - 1) * 16; // 16px per level
+      return (
+        <li key={index} style={{ textIndent: `${indent}px` }}>
+          <a href={`#${slug}`}>{heading.text}</a>
+        </li>
+      );
+    })}
+  </ol>
+</nav>
+
+<style>
+  .table-of-contents {
+    background: var(--bg-elev);
+    border: 1px solid var(--card-border);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    font-size: 0.95rem;
+  }
+  .table-of-contents h2 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    color: var(--text);
+  }
+  .toc {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+  }
+  .toc li {
+    margin-bottom: 0.25rem;
+  }
+  .toc a {
+    color: var(--accent-2);
+    text-decoration: none;
+  }
+  .toc a:hover {
+    text-decoration: underline;
+  }
+</style>

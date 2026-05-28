@@ -36,21 +36,129 @@
         const result = document.createElement('div');
         result.className = 'badge';
         result.style.marginTop = '12px';
+        const explainBtn = document.createElement('button');
+        explainBtn.className = 'button';
+        explainBtn.type = 'button';
+        explainBtn.textContent = 'Explain Answer';
+        explainBtn.style.marginLeft = '8px';
+        explainBtn.style.display = 'none'; // Hidden initially
+        const explanation = document.createElement('div');
+        explanation.className = 'explanation';
+        explanation.style.marginTop = '12px';
+        explanation.style.display = 'none'; // Hidden initially
+        explanation.style.padding = '12px';
+        explanation.style.backgroundColor = 'var(--bg-elev)';
+        explanation.style.borderRadius = 'var(--radius)';
+        explanation.style.border = '1px solid var(--card-border)';
         btn.addEventListener('click', () => {
           let score = 0;
           questions.forEach((q, i) => {
             const chosen = el.querySelector(`input[name=q_${i}]:checked`);
             const answer = typeof q.a === 'number' ? q.a : q.correct;
-            if (chosen && String(chosen.value) === String(answer)) score += 1;
+            let correct = false;
+            if (chosen && String(chosen.value) === String(answer)) {
+              score += 1;
+              correct = true;
+            }
+            // Log attempt
+            logQuizAttempt(i, correct);
           });
           result.textContent = `Score ${score}/${questions.length}`;
+          // Optionally highlight correct answers
+          questions.forEach((q, i) => {
+            const chosen = el.querySelector(`input[name=q_${i}]:checked`);
+            const answer = typeof q.a === 'number' ? q.a : q.correct;
+            const labels = el.querySelectorAll(`label input[name=q_${i}]`);
+            labels.forEach((labelInput, idx) => {
+              const label = labelInput.parentElement;
+              if (String(idx) === String(answer)) {
+                label.style.fontWeight = 'bold';
+                label.style.color = 'var(--success)';
+              } else if (labelInput.checked && String(idx) !== String(answer)) {
+                label.style.color = 'var(--error)';
+              }
+            });
+          });
+          // Show explanation button if any question has explanation
+          const hasExplanation = questions.some(q => q.explanation);
+          if (hasExplanation) {
+            explainBtn.style.display = 'inline-block';
+          }
+        });
+        explainBtn.addEventListener('click', () => {
+          // Build explanation text
+          let explanationText = '<strong>Explanations:</strong><br><br>';
+          questions.forEach((q, i) => {
+            explanationText += `<strong>${i + 1}.</strong> ${q.explanation || 'No explanation available.'}<br><br>`;
+            if (q.aiExplanation) {
+              explanationText += `<em>AI-powered insight:</em> ${q.aiExplanation}<br><br>`;
+            }
+          });
+          explanation.innerHTML = explanationText;
+          explanation.style.display = 'block';
+          explainBtn.style.display = 'none'; // Hide button after showing explanation
         });
         el.innerHTML = '';
         el.appendChild(wrap);
         el.appendChild(btn);
+        el.appendChild(explainBtn);
         el.appendChild(result);
+        el.appendChild(explanation);
+        // Log quiz impression (optional)
+        logQuizImpression();
       });
     };
+
+    // Helper to extract lesson slug from pathname
+    function getLessonSlug() {
+      const path = window.location.pathname;
+      // Expected format: /{lang}/learn/{slug}/ or /{lang}/learn/{slug}
+      const parts = path.split('/').filter(Boolean);
+      if (parts.length >= 3 && parts[1] === 'learn') {
+        return parts[2];
+      }
+      return null;
+    }
+
+    function getLogKey() {
+      return 'acfQuizLog';
+    }
+
+    function getQuizLog() {
+      const raw = localStorage.getItem(getLogKey());
+      try {
+        return raw ? JSON.parse(raw) : [];
+      } catch {
+        return [];
+      }
+    }
+
+    function saveQuizLog(logArray) {
+      localStorage.setItem(getLogKey(), JSON.stringify(logArray));
+    }
+
+    function logQuizImpression() {
+      const log = getQuizLog();
+      log.push({
+        type: 'impression',
+        lessonSlug: getLessonSlug(),
+        timestamp: new Date().toISOString()
+      });
+      saveQuizLog(log);
+    }
+
+    function logQuizAttempt(questionIndex, correct) {
+      const log = getQuizLog();
+      log.push({
+        type: 'attempt',
+        lessonSlug: getLessonSlug(),
+        questionIndex: questionIndex,
+        correct: correct,
+        timestamp: new Date().toISOString()
+      });
+      saveQuizLog(log);
+    }
+
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', render);
     else render();
   })();

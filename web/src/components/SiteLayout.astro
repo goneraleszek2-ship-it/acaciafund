@@ -2,9 +2,9 @@
 import '../styles/global.css';
 
 const { title = 'AcaciaFund', description = 'Daily research portfolio', section = '', image = '' } = Astro.props;
-// Detect language from URL path: if first segment is 'pl' or 'en', use that, else default to 'pl'
+// Detect language from URL path: if first segment is 'pl' or 'en', use that, else default to 'en'
 const pathSegments = Astro.url.pathname.split('/').filter(Boolean);
-const lang = pathSegments.length > 0 && ['pl', 'en'].includes(pathSegments[0]) ? pathSegments[0] : 'pl';
+const lang = pathSegments.length > 0 && ['pl', 'en'].includes(pathSegments[0]) ? pathSegments[0] : 'en';
 const siteUrl = 'https://acaciafund.org';
 const ogImage = image ? `${siteUrl}${image}` : `${siteUrl}/images/default-og.jpg`;
 ---
@@ -28,9 +28,11 @@ const ogImage = image ? `${siteUrl}${image}` : `${siteUrl}/images/default-og.jpg
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <!-- Fuse.js for fuzzy search -->
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js@6.6.2/dist/fuse.min.js"></script>
   </head>
   <body>
-<!-- Skip to content link -->
+    <!-- Skip to content link -->
     <a href="#main-content" class="skip-to-content">Skip to main content</a>
     <!-- Reading progress bar -->
     <div id="progress-bar"></div>
@@ -51,16 +53,16 @@ const ogImage = image ? `${siteUrl}${image}` : `${siteUrl}/images/default-og.jpg
         <nav class="nav" aria-label="Primary">
           {/*
             Different sections have different language path structures:
-            - Blog: /blog/{lang}/
-            - Learn: /learn/{lang}/
+            - Blog: /{lang}/blog/
+            - Learn: /{lang}/learn/
             - Course, About, Research, Scholarship: /section/ (no language prefix in path)
           */}
-          <a href={lang === 'pl' ? '/blog/pl/' : '/blog/en/'}>Blog</a>
-          <a href={`/${lang === 'pl' ? 'course' : 'course'}`}>Course</a>
-          <a href={lang === 'pl' ? '/learn/pl/' : '/learn/en/'}>Learn</a>
-          <a href={`/${lang === 'pl' ? 'scholarship' : 'scholarship'}`}>Scholarship</a>
-          <a href={`/${lang === 'pl' ? 'research' : 'research'}`}>Research</a>
-          <a href={`/${lang === 'pl' ? 'about' : 'about'}`}>About</a>
+          <a href={`/${lang}/blog/`}>Blog</a>
+          <a href={`/${lang}/course/`}>Course</a>
+          <a href={`/${lang}/learn/`}>Learn</a>
+          <a href={`/${lang}/scholarship/`}>Scholarship</a>
+          <a href={`/${lang}/research/`}>Research</a>
+          <a href={`/${lang}/about/`}>About</a>
         </nav>
         <!-- Search button -->
         <button id="search-toggle" aria-label="Search" class="nav-item">
@@ -76,42 +78,7 @@ const ogImage = image ? `${siteUrl}${image}` : `${siteUrl}/images/default-og.jpg
       </main>
       <footer class="footer">
         <div>AcaciaFund · static-first research and learning platform</div>
-        <div class="ai-transparency">Treści generowane przez system NLP AcaciaFund</div>
-      </footer>
-    </div>
-        <a class="brand" href={`/${lang}/`} aria-label="AcaciaFund home">
-          <span class="brand-mark"></span>
-          <span>AcaciaFund</span>
-        </a>
-        <nav class="nav" aria-label="Primary">
-          {/*
-            Different sections have different language path structures:
-            - Blog: /blog/{lang}/
-            - Learn: /learn/{lang}/
-            - Course, About, Research, Scholarship: /section/ (no language prefix in path)
-          */}
-          <a href={lang === 'pl' ? '/blog/pl/' : '/blog/en/'}>Blog</a>
-          <a href={`/${lang === 'pl' ? 'course' : 'course'}`}>Course</a>
-          <a href={lang === 'pl' ? '/learn/pl/' : '/learn/en/'}>Learn</a>
-          <a href={`/${lang === 'pl' ? 'scholarship' : 'scholarship'}`}>Scholarship</a>
-          <a href={`/${lang === 'pl' ? 'research' : 'research'}`}>Research</a>
-          <a href={`/${lang === 'pl' ? 'about' : 'about'}`}>About</a>
-          <!-- Search button -->
-          <button id="search-toggle" aria-label="Search" class="nav-item">
-            <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
-              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-              <circle cx="10.5" cy="10.5" r="7.5"/>
-              <line x1="21" y1="21" x2="15" y2="15"/>
-            </svg>
-          </button>
-        </nav>
-      </header>
-      <main id="main-content">
-        <slot />
-      </main>
-      <footer class="footer">
-        <div>AcaciaFund · static-first research and learning platform</div>
-        <div class="ai-transparency">Treści generowane przez system NLP AcaciaFund</div>
+        <div class="ai-transparency">Content generated by AcaciaFund NLP system</div>
       </footer>
     </div>
 
@@ -174,23 +141,38 @@ const ogImage = image ? `${siteUrl}${image}` : `${siteUrl}/images/default-og.jpg
       fadeElements.forEach(el => observer.observe(el));
     </script>
     <script>
-      // Search functionality
+      // Search functionality with Fuse.js
       const searchToggle = document.getElementById('search-toggle');
       const searchOverlay = document.getElementById('search-overlay');
       const searchClose = document.getElementById('search-close');
       const searchInput = document.getElementById('search-input');
       const searchResults = document.getElementById('search-results');
 
-      let searchIndex = [];
+      let fuse;
 
-      // Load search index
+      // Load search index and initialize Fuse
       async function loadSearchIndex() {
         try {
           const response = await fetch('/api/search.json');
-          searchIndex = await response.json();
+          const searchIndex = await response.json();
+          
+          // Configure Fuse.js with weighted keys
+          const fuseOptions = {
+            keys: [
+              { name: 'title', weight: 0.4 },
+              { name: 'tags', weight: 0.3 },
+              { name: 'summary', weight: 0.2 },
+              { name: 'category', weight: 0.1 }
+            ],
+            includeScore: true,
+            threshold: 0.4, // Adjust for fuzziness (0.0 - exact match, 1.0 - match everything)
+            ignoreLocation: true
+          };
+          
+          fuse = new Fuse(searchIndex, fuseOptions);
         } catch (e) {
           console.error('Failed to load search index:', e);
-          searchIndex = [];
+          fuse = null;
         }
       }
 
@@ -208,21 +190,21 @@ const ogImage = image ? `${siteUrl}${image}` : `${siteUrl}/images/default-og.jpg
         searchOverlay.setAttribute('aria-hidden', 'true');
       }
 
-      // Perform search
+      // Perform search using Fuse
       function performSearch() {
-        const query = searchInput.value.trim().toLowerCase();
+        const query = searchInput.value.trim();
         if (query.length < 2) {
           searchResults.innerHTML = '<p class="muted">Type at least 2 characters to search</p>';
           return;
         }
 
-        const results = searchIndex.filter(post => {
-          const titleMatch = post.title.toLowerCase().includes(query);
-          const tagsMatch = post.tags.some(tag => tag.toLowerCase().includes(query));
-          const categoryMatch = post.category.toLowerCase().includes(query);
-          return titleMatch || tagsMatch || categoryMatch;
-        });
+        if (!fuse) {
+          searchResults.innerHTML = '<p class="muted">Loading search index...</p>';
+          return;
+        }
 
+        const results = fuse.search(query);
+        
         if (results.length === 0) {
           searchResults.innerHTML = '<p class="muted">No results found</p>';
           return;
@@ -230,17 +212,16 @@ const ogImage = image ? `${siteUrl}${image}` : `${siteUrl}/images/default-og.jpg
 
         // Build results HTML
         let html = '';
-        results.forEach(post => {
-          html += `
-            <a href="${post.url}" class="search-result-item">
-              <div class="search-result-title">${post.title}</div>
-              <div class="search-result-meta">
-                <span>${post.category}</span>
-                <span>${post.lang.toUpperCase()}</span>
-              </div>
-              <div class="search-result-summary">${post.summary}</div>
-            </a>
-          `;
+        results.forEach(result => {
+          const post = result.item;
+          html += '<a href="' + post.url + '" class="search-result-item">' +
+            '<div class="search-result-title">' + post.title + '</div>' +
+            '<div class="search-result-meta">' +
+              '<span>' + post.category + '</span>' +
+              '<span>' + post.lang.toUpperCase() + '</span>' +
+            '</div>' +
+            '<div class="search-result-summary">' + post.summary + '</div>' +
+          '</a>';
         });
         searchResults.innerHTML = html;
       }
@@ -265,7 +246,7 @@ const ogImage = image ? `${siteUrl}${image}` : `${siteUrl}/images/default-og.jpg
         }
       });
 
-       // Search input debounce
+      // Search input debounce
       let debounceTimer;
       searchInput.addEventListener('input', (e) => {
         clearTimeout(debounceTimer);

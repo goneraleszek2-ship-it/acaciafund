@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="ogbg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f172a"/>
+      <stop offset=".5" stop-color="#1e3a5f"/>
+      <stop offset="1" stop-color="#0f172a"/>
+    </linearGradient>
+    <radialGradient id="ogglow" cx="70%" cy="50%">
+      <stop offset="0" stop-color="#d97706" stop-opacity=".08"/>
+      <stop offset="1" stop-color="#000" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#ogbg)"/>
+  <rect width="1200" height="630" fill="url(#ogglow)"/>
+
+  <!-- Decorative circles -->
+  <circle cx="1000" cy="150" r="300" fill="#d97706" opacity=".03"/>
+  <circle cx="200" cy="500" r="200" fill="#d97706" opacity=".02"/>
+  <circle cx="1100" cy="400" r="150" fill="#d97706" opacity=".04"/>
+
+  <!-- Icon -->
+  <g transform="translate(50, 50) scale(1.8)" stroke="#d97706" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+  </g>
+  <text x="50" y="260" fill="#f8fafc" font-family="system-ui,sans-serif" font-size="44" font-weight="700">Spain blocks prediction markets</text>
+  <text x="50" y="312" fill="#f8fafc" font-family="system-ui,sans-serif" font-size="36" font-weight="700">Polymarket, Kalshi over lack of gambling</text>
+  <text x="50" y="364" fill="#f8fafc" font-family="system-ui,sans-serif" font-size="44" font-weight="700">licence</text>
+
+  <!-- Meta -->
+  <text x="50" y="500" fill="#d97706" font-family="system-ui,sans-serif" font-size="18" font-weight="600">AcaciaFund &nbsp;·&nbsp; AML
+ &nbsp;·&nbsp; 2026-05-28</text>
+  <text x="50" y="540" fill="#f8fafc" font-family="system-ui,sans-serif" font-size="14" opacity="0.5">Codzienna synteza badan — AML, rynki, nauka</text>
+  <rect x="50" y="570" width="103" height="4" rx="2" fill="#d97706" opacity="0.8"/>
+</svg>

@@ -43,6 +43,62 @@ export function estimateReadingTime(text) {
   return Math.ceil(wordCount / wordsPerMinute);
 }
 
+export function generateTagBadgeSVG(tag) {
+  // Simple color mapping for common tags
+  const colorMap = {
+    aml: '#38bdf8',
+    stock: '#fbbf24',
+    science: '#a855f7',
+    compliance: '#60a5fa',
+    regtech: '#34d399',
+    'financial-crime': '#f87171',
+    technology: '#fdba74',
+    'ai-artificial-intelligence': '#f472b6',
+    blockchain: '#8b5cf6',
+    'machine-learning': '#ec4899'
+  };
+  
+  const color = colorMap[tag.toLowerCase().replace(/\s+/g, '-')] || '#6b7280';
+  
+  return `
+    <svg width="60" height="20" xmlns="http://www.w3.org/2000/svg">
+      <rect width="60" height="20" rx="3" fill="${color}" fill-opacity="0.1" stroke="${color}" stroke-opacity="0.2"/>
+      <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" fill="${color}" font-size="10" font-weight="500">
+        ${tag}
+      </text>
+    </svg>
+  `;
+}
+
+export function generateSimpleSparkline(dataPoints) {
+  if (!dataPoints || dataPoints.length === 0) return '';
+  
+  const width = 60;
+  const height = 20;
+  const padding = 2;
+  const plotWidth = width - 2 * padding;
+  const plotHeight = height - 2 * padding;
+  
+  // Normalize data points to 0-1 range
+  const minVal = Math.min(...dataPoints);
+  const maxVal = Math.max(...dataPoints);
+  const range = maxVal - minVal || 1;
+  const normalized = dataPoints.map(val => (val - minVal) / range);
+  
+  // Create SVG path for line
+  const points = normalized.map((val, idx) => {
+    const x = padding + (idx / (normalized.length - 1)) * plotWidth;
+    const y = height - padding - val * plotHeight;
+    return `${x},${y}`;
+  }).join(' ');
+  
+  return `
+    <svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
+      <polyline fill="none" stroke="var(--accent-2)" stroke-width="1.5" points="${points}" />
+    </svg>
+  `;
+}
+
 function extractBayesDemo(content) {
   const match = content.match(/{{<\s*bayes\s+([^>]+?)\s*>}}/i);
   if (!match) return null;
@@ -64,7 +120,16 @@ function parseMarkdown(filePath) {
   const slug = path.basename(path.dirname(filePath));
   const baseName = path.basename(filePath);
   const section = path.basename(path.dirname(path.dirname(filePath)));
-  return { filePath, slug, baseName, section, data: parsed.data || {}, html, raw: parsed.content, excerpt: stripMarkdown(cleanedContent).slice(0, 220), bayesDemo };
+  // Extract headings (h1-h3) from raw markdown for table of contents
+  const headingRegex = /^(#{1,3})\s+(.+)$/gm;
+  const headings = [];
+  let match;
+  while ((match = headingRegex.exec(raw)) !== null) {
+    const level = match[1].length;
+    const text = match[2].trim();
+    headings.push({ level, text });
+  }
+  return { filePath, slug, baseName, section, data: parsed.data || {}, html, raw: parsed.content, excerpt: stripMarkdown(cleanedContent).slice(0, 220), bayesDemo, headings };
 }
 
 export function loadRegistry() {

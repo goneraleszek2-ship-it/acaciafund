@@ -1,0 +1,76 @@
+---
+import SiteLayout from '../../components/SiteLayout.astro';
+import { loadSectionPage } from '../../lib/content.js';
+
+export async function getStaticPaths() {
+  return [{ params: {} }];
+}
+
+const section = loadSectionPage('diagrams');
+---
+<SiteLayout title="Diagrams | AcaciaFund" description="Visualizations illustrating key concepts" section="diagrams">
+  <section class="section">
+    <h1 class="title">Diagrams</h1>
+    <p class="lede">Visualizations illustrating key concepts in AI, finance, and complexity science.</p>
+    
+    <style>
+      .visual-grid {
+        display: grid;
+        gap: 2rem;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        margin-top: 2rem;
+      }
+      .visual-item {
+        position: relative;
+        text-align: center;
+      }
+      .visual-item img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        transition: transform 0.2s;
+      }
+      .visual-item img:hover {
+        transform: scale(1.05);
+      }
+      .tooltip {
+        position: absolute;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #333;
+        color: #fff;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        white-space: nowrap;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s;
+        z-index: 10;
+      }
+      .visual-item:hover .tooltip {
+        opacity: 0.9;
+      }
+    </style>
+    
+    <!-- Diagram grid -->
+    <div class="visual-grid">
+      <div class="visual-item fade-in">
+        <img src="/diagrams/research-process.svg" alt="Research Process Diagram" />
+        <div class="tooltip">Research Process: Shows the workflow from data collection to reporting</div>
+      </div>
+       
+      <div class="visual-item fade-in">
+        <img src="/diagrams/knowledge-base.svg" alt="Knowledge Base Diagram" />
+        <div class="tooltip">Knowledge Base: Illustrates how information is structured and connected</div>
+      </div>
+       
+      <div class="visual-item fade-in">
+        <img src="/diagrams/risk-analysis.svg" alt="Risk Analysis Diagram" />
+        <div class="tooltip">Risk Analysis: Framework for identifying, assessing, and mitigating risks</div>
+      </div>
+    </div>
+  </section>
+</SiteLayout>

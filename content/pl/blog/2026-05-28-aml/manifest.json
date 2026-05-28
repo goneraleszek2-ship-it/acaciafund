@@ -1,0 +1,178 @@
+{
+  "assets": [
+    {
+      "asset_id": "2026-05-28-aml:thumbnail:thumb_1cc25b212ee7.svg",
+      "asset_type": "thumbnail",
+      "bytes": 4848,
+      "checksum": "21896631dde9593a83bab6949eb00abca521265b88d72a68be3c5f8d8d07ef36",
+      "content_id": "2026-05-28-aml",
+      "created_at": "2026-05-28T08:19:07Z",
+      "manifest_type": "asset",
+      "mime_type": "image/svg+xml",
+      "path": "content/pl/blog/2026-05-28-aml/thumb_1cc25b212ee7.svg",
+      "source_url": "https://www.reuters.com/business/spain-blocks-prediction-markets-polymarket-kalshi-over-lack-gambling-licences-2026-05-26/",
+      "version": 1
+    },
+    {
+      "asset_id": "2026-05-28-aml:og_image:og_6efaf86581f4.svg",
+      "asset_type": "og_image",
+      "bytes": 1961,
+      "checksum": "c3c8b95c48d952bbf34b10212629bc4aa7aedb8599de801660196fb79e80f368",
+      "content_id": "2026-05-28-aml",
+      "created_at": "2026-05-28T08:19:07Z",
+      "manifest_type": "asset",
+      "mime_type": "image/svg+xml",
+      "path": "content/pl/blog/2026-05-28-aml/og_6efaf86581f4.svg",
+      "source_url": "https://www.reuters.com/business/spain-blocks-prediction-markets-polymarket-kalshi-over-lack-gambling-licences-2026-05-26/",
+      "version": 1
+    }
+  ],
+  "bloom_levels": [
+    "understand",
+    "apply",
+    "analyze",
+    "evaluate",
+    "create"
+  ],
+  "checksum": "7c90af5287b2350ec4e3ca6147c5a5297c32a6b40f883d821b4459716db4a698",
+  "content_id": "2026-05-28-aml",
+  "created_at": "2026-05-28T08:19:07Z",
+  "date": "2026-05-28",
+  "flashcards_count": 31,
+  "lineage": {
+    "run_id": "20260528T081735Z",
+    "source_count": 1000,
+    "top_story_url": "https://www.reuters.com/business/spain-blocks-prediction-markets-polymarket-kalshi-over-lack-gambling-licences-2026-05-26/",
+    "unclassified": 748
+  },
+  "manifest_type": "story",
+  "pillar": "aml",
+  "published_at": "2026-05-28T08:19:07Z",
+  "quality_flags": [
+    "no_trending"
+  ],
+  "quality_metrics": {
+    "avg_source_score": 0.7446666666666667,
+    "recency_score": 0.0,
+    "source_diversity": 0.2777777777777777
+  },
+  "questions_count": 5,
+  "signals": {
+    "avg_score": 83.76666666666667,
+    "avg_sqi": 0.517,
+    "count": 30,
+    "domain_diversity": 5,
+    "entity_coherence": "low",
+    "has_outlier": true,
+    "key_numbers": [
+      [
+        "2025.",
+        "The National Design Studio was created by executive order in August 2025."
+      ],
+      [
+        "3161,",
+        "Staff are hired under a federal authority called Section 3161, written for temporary advisory bodies"
+      ],
+      [
+        "10,000",
+        "The AI applications team within Global Marketing was asked to scale a video\n      assembly prototype"
+      ]
+    ],
+    "max_score": 1071,
+    "outlier_ratio": 12.785515320334262,
+    "score_skew": "outlier",
+    "sentences_count": 128,
+    "top_domain": "inne",
+    "top_domain_share": 0.5666666666666667,
+    "top_entities": [
+      "Block",
+      "SEC",
+      "Global Marketing",
+      "The National Design Studio",
+      "National Design Studio",
+      "Citi",
+      "State Secretary",
+      "Digital Economy Willemijn Aerdts"
+    ],
+    "top_sqi_articles": [
+      [
+        "Spain blocks prediction markets Polymarket, Kalshi over lack of gambling licence",
+        {
+          "authority": 0.8,
+          "cross_pillar": 1,
+          "engagement": 1.0,
+          "entity_density": 0.333,
+          "novelty": 1.0,
+          "sqi": 0.767,
+          "timeliness": 0.4
+        }
+      ],
+      [
+        "I found a second vote.gov – and it's registered to the White House",
+        {
+          "authority": 0.4,
+          "cross_pillar": 0,
+          "engagement": 0.823,
+          "entity_density": 0.333,
+          "novelty": 1.0,
+          "sqi": 0.642,
+          "timeliness": 0.812
+        }
+      ],
+      [
+        "Dutch block US takeover of Solvinity as against public interest",
+        {
+          "authority": 0.8,
+          "cross_pillar": 1,
+          "engagement": 0.366,
+          "entity_density": 0.333,
+          "novelty": 1.0,
+          "sqi": 0.625,
+          "timeliness": 0.881
+        }
+      ]
+    ],
+    "total_score": 2513,
+    "trending_topics": []
+  },
+  "source_breakdown": {
+    "arxiv": 5,
+    "hn": 25,
+    "pubmed": 0
+  },
+  "source_urls": [
+    "https://www.reuters.com/business/spain-blocks-prediction-markets-polymarket-kalshi-over-lack-gambling-licences-2026-05-26/",
+    "https://www.politico.eu/article/netherlands-blocks-us-takeover-vital-digital-supplier/",
+    "https://www.gingerlime.com/2026/stripe-seem-friendly-to-friendly-fraud/",
+    "https://thedreydossier.substack.com/p/i-found-a-second-votegov-and-its",
+    "https://martinfowler.com/articles/vibesec-reckoning.html",
+    "https://coalton-lang.github.io/",
+    "https://www.politico.com/news/2026/05/27/cuba-us-military-attack-00938740",
+    "https://blog.packagist.com/an-update-on-composer-packagist-supply-chain-security/",
+    "https://apps.npr.org/jan-6-archive/",
+    "https://nltimes.nl/2026/05/26/netherlands-blocks-us-takeover-digid-operator-solvinity-security-concerns",
+    "https://apnews.com/article/cholesterol-merck-enlicitide-ldl-statin-pcsk9-f7383ce62b2e406841fbe6303fac6b20",
+    "https://www.theguardian.com/us-news/2026/may/27/dhs-international-flights-sanctuary-cities",
+    "https://arstechnica.com/health/2026/05/us-walls-itself-off-from-ebola-beefed-up-travel-ban-no-citizen-repatriation/",
+    "https://opensource.posit.co/blog/2026-05-21_in-defense-of-yaml/",
+    "https://www.nbcnews.com/world/asia/chinas-huawei-touts-chip-design-breakthrough-bid-defy-us-sanctions-rcna346783",
+    "https://www.youtube.com/watch?v=WnZeiw8q4Wk",
+    "https://www.reuters.com/world/us/trump-administration-proposes-non-disclosure-agreements-us-federal-workers-2026-05-26/",
+    "https://pixelpipeline.xyz",
+    "https://www.reuters.com/technology/dutch-government-block-takeover-cloud-services-company-solvinity-by-us-based-2026-05-26/",
+    "https://theins.press/en/corruption/291857",
+    "https://epic.org/the-33-data-brokers-selling-us-data-to-foreign-actors-according-to-california/",
+    "https://nos.nl/artikel/2615885-staatssecretaris-verbiedt-overname-solvinity-bedrijf-achter-digid",
+    "https://www.nbcnews.com/world/asia/chinas-huawei-touts-chip-design-breakthrough-bid-defy-us-sanctions-rcna346783",
+    "https://thenextweb.com/news/the-netherlands-just-blocked-a-us-company-from-buying-the-cloud-provider-that-runs-dutch-digital-identity",
+    "https://www.nytimes.com/2026/05/26/us/politics/trump-justice-department-grand-juries.html",
+    "http://arxiv.org/abs/2605.28647v1",
+    "http://arxiv.org/abs/2605.28734v1",
+    "http://arxiv.org/abs/2605.28725v1",
+    "http://arxiv.org/abs/2605.28660v1",
+    "http://arxiv.org/abs/2605.28646v1"
+  ],
+  "story_count": 30,
+  "title": "Spain blocks prediction markets Polymarket, Kalshi over lack of gambling licence -- 🛡️ AML 2026-05-28",
+  "version": 1
+}

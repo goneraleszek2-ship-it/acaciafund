@@ -1,0 +1,98 @@
+---
+const { url, title } = Astro.props;
+// Default to current page if not provided
+const shareUrl = url || encodeURIComponent(location.href);
+const shareTitle = title || encodeURIComponent(document.title);
+---
+<div class="social-share">
+  <h3>Udostępnij:</h3>
+  <div class="share-icons">
+    <!-- Twitter -->
+    <a href={`https://twitter.com/intent/tweet?text=${shareTitle}&url=${shareUrl}`} 
+       target="_blank" 
+       rel="noopener noreferrer"
+       aria-label="Udostępnij na Twitterze"
+       class="share-icon twitter">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M22.46 6c-.77.35-1.6.58-2.46.69a4.3 4.3 0 001.88-2.37 8.56 8.56 0 01-2.7 1.04 4.3 4.3 0 00-7.3 3.92A12.08 12.08 0 012 4.72c-.38.05-.76.07-1.14.07a6.06 6.06 0 004.4 7.49 6.06 6.06 0 01-2.74-.93v.06a6.06 6.06 0 004.83 5.94 6.06 6.06 0 01-2.75.2 6.06 6.06 0 005.59 4.2c6.83 5.15 14.96 4.44 20.88-2.35a6.09 6.09 0 001.56-6" fill="currentColor"/>
+      </svg>
+    </a>
+    <!-- LinkedIn -->
+    <a href={`https://www.linkedin.com/shareArticle?mini=true&url=${shareUrl}&title=${shareTitle}`} 
+       target="_blank" 
+       rel="noopener noreferrer"
+       aria-label="Udostępnij na LinkedIn"
+       class="share-icon linkedin">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.851 0-2.136 1.445-2.136 2.939v5.621H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.062-2.062c0-1.138.924-2.062 2.062-2.062s2.062.924 2.062 2.062c0 1.138-.924 2.062-2.062 2.062zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.226.792 24 1.771 24h20.451C23.227 24 24 23.226 24 22.271V1.729C24 .774 23.227 0 22.225 0z" fill="currentColor"/>
+      </svg>
+    </a>
+    <!-- Facebook -->
+    <a href={`https://www.facebook.com/sharer/sharer.php?u=${shareUrl}`} 
+       target="_blank" 
+       rel="noopener noreferrer"
+       aria-label="Udostępnij na Facebooku"
+       class="share-icon facebook">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M22.675 0H1.325c-.724 0-1.31.586-1.31 1.31v21.374c0 .724.586 1.31 1.31 1.31h12.126V14.806h-3.373v-3.613h3.373V9.706c0-3.1 1.893-4.788 4.66-4.788 1.325 0 2.463.099 2.653.118v3.24h-2.05c-1.416 0-1.715.88-1.715 1.947v2.223h3.55l-.478 3.613h-3.08v6.208h4.19c.724 0 1.31-.586 1.31-1.31V1.313c0-.724-.586-1.31-1.31-1.31z" fill="currentColor"/>
+      </svg>
+    </a>
+    <!-- Mastodon (if applicable) -->
+    <a href={`https://mamot.fr/share?text=${shareTitle}&url=${shareUrl}`} 
+       target="_blank" 
+       rel="noopener noreferrer"
+       aria-label="Udostępnij na Mastodon"
+       class="share-icon mastodon">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M23.042 4.958a8.992 8.992 0 00-3.136-1.484 4.496 4.496 0 00-3.175 1.206l-.829-.829a4.5 4.5 0 00-6.364 0l-.829.829a4.496 4.496 0 00-3.175-1.206 8.992 8.992 0 00-3.136 1.484A8.992 8.992 0 004.958 23.042c0 .618.05 1.224.144 1.81.298 1.862.854 3.563 1.484 5.136a4.496 4.496 0 001.206 3.175l.829.829a4.5 4.5 0 000 6.364l.829-.829a4.496 4.496 0 003.175 1.206 8.992 8.992 0 001.484 3.136c.618 0 1.224-.05 1.81-.144 1.862-.298 3.563-.854 5.136-1.484a4.496 4.496 0 003.175-1.206l.829-.829a4.5 4.5 0 006.364 0l.829.829a4.496 4.496 0 001.206 3.175 8.992 8.992 0 003.136 1.484 8.992 8.992 0 003.136-1.484 8.992 8.992 0 001.484-3.136 4.496 4.496 0 00-1.206-3.175l-.829-.829a4.5 4.5 0 00-6.364 0l-.829.829a4.496 4.496 0 00-3.175 1.206 8.992 8.992 0 00-5.136 1.484c-.298 1.862-.854 3.563-1.484 5.136a4.496 4.496 0 00-1.206 3.175l-.829.829a4.5 4.5 0 000 6.364l.829-.829a4.496 4.496 0 003.175 1.206 8.992 8.992 0 005.136-1.484c1.862-.298 3.563-.854 5.136-1.484a4.496 4.496 0 003.175-1.206l.829-.829a4.5 4.5 0 006.364 0l.829.829a4.496 4.496 0 001.206 3.175 8.992 8.992 0 001.484 3.136c.618 0 1.224-.05 1.81-.144 1.862-.298 3.563-.854 5.136-1.484z" fill="currentColor"/>
+      </svg>
+    </a>
+  </div>
+</div>
+
+<style>
+  .social-share {
+    background: var(--bg-elev);
+    border: 1px solid var(--card-border);
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    margin-top: 2rem;
+    font-size: 0.95rem;
+  }
+  .social-share h3 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    font-size: 1.125rem;
+    color: var(--text);
+  }
+  .share-icons {
+    display: flex;
+    gap: 1rem;
+  }
+  .share-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 0.5rem;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+  }
+  .share-icon:hover {
+    background-color: var(--muted);
+  }
+  .share-icon.twitter:hover { background-color: #1da1f222; }
+  .share-icon.linkedin:hover { background-color: #0a66c222; }
+  .share-icon.facebook:hover { background-color: #1877f222; }
+  .share-icon.mastodon:hover { background-color: #6364ff22; }
+  .share-icon svg {
+    width: 1.5rem;
+    height: 1.5rem;
+    fill: var(--accent-2);
+    transition: fill 0.2s ease;
+  }
+  .share-icon:hover svg {
+    fill: var(--accent);
+  }
+</style>

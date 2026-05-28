@@ -7,7 +7,7 @@ const WEB_ROOT = path.resolve(HERE, '..');
 const REPO_ROOT = path.resolve(WEB_ROOT, '..');
 const PUBLIC_DIR = path.join(WEB_ROOT, 'public');
 const STATIC_DIR = path.join(REPO_ROOT, 'static');
-const BLOG_DIR = path.join(REPO_ROOT, 'content', 'pl', 'blog');
+const CONTENT_ROOT = path.join(REPO_ROOT, 'content');
 
 function copyDir(src, dest) {
   if (!fs.existsSync(src)) return;
@@ -17,18 +17,22 @@ function copyDir(src, dest) {
 }
 
 function syncBlogAssets() {
-  if (!fs.existsSync(BLOG_DIR)) return;
-  for (const entry of fs.readdirSync(BLOG_DIR, { withFileTypes: true })) {
-    if (!entry.isDirectory()) continue;
-    const srcDir = path.join(BLOG_DIR, entry.name);
-    const destDir = path.join(PUBLIC_DIR, 'blog', entry.name);
-    const files = fs.readdirSync(srcDir, { withFileTypes: true })
-      .filter((file) => file.isFile() && file.name !== 'index.md')
-      .map((file) => file.name);
-    if (!files.length) continue;
-    fs.mkdirSync(destDir, { recursive: true });
-    for (const fileName of files) {
-      fs.copyFileSync(path.join(srcDir, fileName), path.join(destDir, fileName));
+  const languageDirs = ['pl', 'en'];
+  for (const lang of languageDirs) {
+    const blogDir = path.join(CONTENT_ROOT, lang, 'blog');
+    if (!fs.existsSync(blogDir)) continue;
+    for (const entry of fs.readdirSync(blogDir, { withFileTypes: true })) {
+      if (!entry.isDirectory()) continue;
+      const srcDir = path.join(blogDir, entry.name);
+      const destDir = path.join(PUBLIC_DIR, 'blog', lang, entry.name);
+      const files = fs.readdirSync(srcDir, { withFileTypes: true })
+        .filter((file) => file.isFile() && file.name !== 'index.md')
+        .map((file) => file.name);
+      if (!files.length) continue;
+      fs.mkdirSync(destDir, { recursive: true });
+      for (const fileName of files) {
+        fs.copyFileSync(path.join(srcDir, fileName), path.join(destDir, fileName));
+      }
     }
   }
 }
