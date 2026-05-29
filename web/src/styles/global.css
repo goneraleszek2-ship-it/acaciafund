@@ -1,5 +1,10 @@
+@import "./tokens.css";
+
+@import "./tokens.css";
+
 :root {
   color-scheme: light dark;
+  /* Theme-dependent properties */
   --bg: #07111f;
   --bg-elev: rgba(12, 20, 34, 0.82);
   --card: rgba(14, 23, 39, 0.88);
@@ -8,7 +13,8 @@
   --muted: #93a4be;
   --accent: #d97706;
   --accent-2: #38bdf8;
-  --radius: 20px;
+  /* Theme-independent properties from tokens */
+  --radius: var(--radius-xl);
 }
 
 .light-theme {

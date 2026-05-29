@@ -1,0 +1,135 @@
+---
+import SiteLayout from '../../../components/SiteLayout.astro';
+import LessonCard from '../../../components/LessonCard.astro';
+import BayesDemo from '../../../components/BayesDemo.astro';
+import QuizEnhancer from '../../../components/QuizEnhancer.astro';
+import PostCard from '../../../components/PostCard.astro';
+import { loadLessons, loadBlogPosts } from '../../../lib/content.js';
+import { getLesson } from '../../../lib/content.js';
+
+export async function getStaticPaths() {
+  return loadLessons().map((lesson) => ({ params: { lang: lesson.lang, slug: lesson.slug }, props: { lesson } }));
+}
+
+const { lesson, lang } = Astro.props;
+
+// Compute related content at build time
+const allLessons = loadLessons();
+const allBlogPosts = loadBlogPosts();
+
+const lessonTags = new Set(lesson.tags);
+const relatedBlogPosts = allBlogPosts
+  .filter(post => 
+    // Exclude the current item if it's a blog post (unlikely, but safe)
+    post.slug !== lesson.slug &&
+    post.lang === lang && // Only show related content in the same language
+    post.tags && 
+    post.tags.some(tag => lessonTags.has(tag))
+  )
+  .slice(0, 3); // Limit to 3 related posts
+
+// For diagrams, we don't have tagging, so we'll always show the link
+const relatedDiagrams = [{}] ; // dummy array to trigger the section
+---
+
+<SiteLayout title={`${lesson.title} | AcaciaFund`} description={lesson.summary}>
+  <article class="section article card">
+    <div class="eyebrow">Lesson</div>
+    <h1 class="title" style="font-size: clamp(2rem, 4vw, 3.5rem); max-width: 18ch;">{lesson.title}</h1>
+    <div class="meta">
+      {lesson.difficulty ? <span>{lesson.difficulty}</span> : null}
+      {lesson.tags?.length ? <span>{lesson.tags.join(' · ')}</span> : null}
+      <div class="audio-controls">
+        <button id="audio-play" class="button" aria-label="Play lesson audio">
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <path d="M12 4a9 9 0 0 1 9 9v4a4 4 0 0 1-4 4h-2a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h2a4 4 0 0 1 4 4v4a9 9 0 0 1-9-9V4z"></path>
+            <path d="M9 18h3"></path>
+            <path d="M9 12h3"></path>
+          </svg>
+        </button>
+        <button id="audio-stop" class="button" aria-label="Stop lesson audio" hidden>
+          <svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+            <rect x="6" y="6" width="12" height="12" rx="2" />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <div class="prose" set:html={lesson.html} />
+    {lesson.bayesDemo ? <BayesDemo prior={lesson.bayesDemo.prior} like={lesson.bayesDemo.like} /> : null}
+  </article>
+  <QuizEnhancer />
+  
+  {/*
+  Related content sections
+  */}
+  <section class="section">
+    <div class="card">
+      <div class="kicker">Related content</div>
+      <h2>Explore further</h2>
+      <div class="grid" style="margin-top: 16px; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px;">
+        {/* Related blog posts */}
+        {relatedBlogPosts.map((post) => (
+          <PostCard key={post.slug} post={post} class="related-item" />
+        ))}
+        
+        {/* Related diagrams if any */}
+        {relatedDiagrams.length > 0 && (
+          <>
+            <div class="card related-item">
+              <div class="kicker">Diagrams</div>
+              <h3>Visual explanations</h3>
+              <p class="muted">See visual representations of concepts covered in this lesson.</p>
+              <a href="/diagrams/" class="button">View all diagrams</a>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  </section>
+</SiteLayout>
+
+<script>
+  // Audio narration script (client-side)
+  if ('speechSynthesis' in window) {
+    const playButton = document.getElementById('audio-play');
+    const stopButton = document.getElementById('audio-stop');
+    let utterance;
+
+    const textToSpeak = `${lesson.title}. ${lesson.summary}`;
+
+    playButton.addEventListener('click', () => {
+      if (utterance) {
+        window.speechSynthesis.cancel();
+      }
+      utterance = new SpeechSynthesisUtterance(textToSpeak);
+      utterance.onend = () => {
+        playButton.hidden = false;
+        stopButton.hidden = true;
+      };
+      utterance.onerror = (event) => {
+        console.error('Speech synthesis error', event);
+        playButton.hidden = false;
+        stopButton.hidden = true;
+      };
+      window.speechSynthesis.speak(utterance);
+      playButton.hidden = true;
+      stopButton.hidden = false;
+    });
+
+    stopButton.addEventListener('click', () => {
+      window.speechSynthesis.cancel();
+      playButton.hidden = false;
+      stopButton.hidden = true;
+    });
+  } else {
+    // Hide the controls if not supported
+    const audioControls = document.querySelector('.audio-controls');
+    if (audioControls) {
+      audioControls.style.display = 'none';
+    }
+    // Optionally, show a message
+    console.warn('SpeechSynthesis not supported');
+  }
+</script>
