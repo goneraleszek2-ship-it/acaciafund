@@ -1,0 +1,44 @@
+---
+export interface Props {
+  columns?: string; // CSS grid-template-columns value (e.g., "repeat(3, 1fr)", "1fr", "2fr 1fr")
+  gap?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl' | '3xl' | '4xl';
+  children: any;
+  class?: string;
+}
+const {
+  columns = '1fr',
+  gap = 'md',
+  children,
+  class: className = '',
+} = Astro.props;
+
+// Map gap values to CSS variables
+const gapMap: Record<string, string> = {
+  xs: 'var(--spacing-xs)',
+  sm: 'var(--spacing-sm)',
+  md: 'var(--spacing-md)',
+  lg: 'var(--spacing-lg)',
+  xl: 'var(--spacing-xl)',
+  '2xl': 'var(--spacing-2xl)',
+  '3xl': 'var(--spacing-3xl)',
+  '4xl': 'var(--spacing-4xl)',
+};
+const gapValue = gapMap[gap] || gapMap['md'];
+---
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: var(--grid-columns, 1fr);
+    gap: var(--grid-gap, 16px);
+  }
+</style>
+
+<div
+  class:grid={true}
+  class={className}
+  style:--grid-columns={columns}
+  style:--grid-gap={gapValue}
+>
+  {children}
+</div>

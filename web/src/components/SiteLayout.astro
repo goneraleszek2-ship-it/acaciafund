@@ -3,9 +3,7 @@ import '../styles/global.css';
 import ThemeToggle from './ThemeToggle.astro';
 
 const { title = 'AcaciaFund', description = 'Daily research portfolio', section = '', image = '' } = Astro.props;
-// Detect language from URL path: if first segment is 'pl' or 'en', use that, else default to 'en'
-const pathSegments = Astro.url.pathname.split('/').filter(Boolean);
-const lang = pathSegments.length > 0 && ['pl', 'en'].includes(pathSegments[0]) ? pathSegments[0] : 'en';
+const lang = 'en';
 const siteUrl = 'https://acaciafund.org';
 const ogImage = image ? `${siteUrl}${image}` : `${siteUrl}/images/default-og.jpg`;
 ---
@@ -46,20 +44,14 @@ const ogImage = image ? `${siteUrl}${image}` : `${siteUrl}/images/default-og.jpg
           <span class="brand-mark"></span>
           <span>AcaciaFund</span>
         </a>
-        <nav class="nav" aria-label="Primary">
-          {/*
-            Different sections have different language path structures:
-            - Blog: /{lang}/blog/
-            - Learn: /{lang}/learn/
-            - Course, About, Research, Scholarship: /section/ (no language prefix in path)
-          */}
-          <a href={`/${lang}/blog/`}>Blog</a>
-          <a href={`/${lang}/course/`}>Course</a>
-          <a href={`/${lang}/learn/`}>Learn</a>
-          <a href={`/${lang}/scholarship/`}>Scholarship</a>
-          <a href={`/${lang}/research/`}>Research</a>
-          <a href={`/${lang}/about/`}>About</a>
-        </nav>
+	<nav class="nav" aria-label="Primary">
+			<a href="/blog/">Blog</a>
+			<a href="/course/">Course</a>
+			<a href="/learn/">Learn</a>
+			<a href="/scholarship/">Scholarship</a>
+			<a href="/research/">Research</a>
+			<a href="/about/">About</a>
+		</nav>
         <!-- Search button -->
         <button id="search-toggle" aria-label="Search" class="nav-item">
           <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-search" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -251,31 +243,63 @@ const ogImage = image ? `${siteUrl}${image}` : `${siteUrl}/images/default-og.jpg
         }, 300);
       });
     </script>
-    <script>
-      // Sticky header hide on scroll down & progress bar
-      const topbar = document.querySelector('.topbar');
-      const progressBar = document.getElementById('progress-bar');
-      let lastScrollY = window.pageYOffset;
+     <script>
+       // Sticky header hide on scroll down & progress bar
+       const topbar = document.querySelector('.topbar');
+       const progressBar = document.getElementById('progress-bar');
+       let lastScrollY = window.pageYOffset;
 
-      function updateScroll() {
-        const scrollY = window.pageYOffset;
-        const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        const scrolled = (scrollY / windowHeight) * 100;
-        progressBar.style.width = scrolled + '%';
+       function updateScroll() {
+         const scrollY = window.pageYOffset;
+         const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+         const scrolled = (scrollY / windowHeight) * 100;
+         progressBar.style.width = scrolled + '%';
 
-        if (scrollY > lastScrollY && scrollY > 100) {
-          // scrolling down
-          topbar.classList.add('hidden');
-        } else {
-          // scrolling up or at top
-          topbar.classList.remove('hidden');
-        }
-        lastScrollY = scrollY;
-      }
+         if (scrollY > lastScrollY && scrollY > 100) {
+           // scrolling down
+           topbar.classList.add('hidden');
+         } else {
+           // scrolling up or at top
+           topbar.classList.remove('hidden');
+         }
+         lastScrollY = scrollY;
+       }
 
-      window.addEventListener('scroll', updateScroll);
-      // Initialize progress bar on load
-      updateScroll();
-    </script>
-  </body>
-</html>
+       window.addEventListener('scroll', updateScroll);
+       // Initialize progress bar on load
+       updateScroll();
+     </script>
+     <!-- Web Vitals for Real User Monitoring -->
+     <script type="module">
+       import { getCLS, getFID, getLCP, getTTFB } from 'https://unpkg.com/web-vitals@3.0.1/dist/web-vitals.attribution.js';
+       
+       // Function to send metrics to our endpoint
+       function sendToAnalytics(metric) {
+         // Only send if we have an endpoint configured
+         const analyticsEndpoint = '/api/performance';
+         if (!analyticsEndpoint) return;
+         
+         navigator.sendBeacon && navigator.sendBeacon(analyticsEndpoint, JSON.stringify({
+           ...metric,
+           url: window.location.href,
+           timestamp: Date.now(),
+           lang: document.documentElement.lang
+         }));
+       }
+       
+       // Measure and send all Core Web Vitals
+       getCLS(sendToAnalytics);
+       getFID(sendToAnalytics);
+       getLCP(sendToAnalytics);
+       getTTFB(sendToAnalytics);
+       
+       // Also log to console in development
+       if (import.meta.env.DEV) {
+         getCLS(console.log);
+         getFID(console.log);
+         getLCP(console.log);
+         getTTFB(console.log);
+       }
+     </script>
+   </body>
+ </html>

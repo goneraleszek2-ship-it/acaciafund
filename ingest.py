@@ -17,10 +17,10 @@ def inject_external_sources(pillar_stories: dict[str, list[dict]]) -> dict[str, 
     counts = {"arxiv": 0, "pubmed": 0}
     
     # Fetch arXiv papers
-    log("Pobieranie z arXiv API...")
+    log("Fetching from arXiv API...")
     arxiv_papers = fetch_arxiv(since_hours=72)
     counts["arxiv"] = len(arxiv_papers)
-    log(f"Pobrano {len(arxiv_papers)} pasujacych prac z arXiv")
+    log(f"Fetched {len(arxiv_papers)} matching papers from arXiv")
     for paper in arxiv_papers:
         p = paper["pillar"]
         pillar_stories[p].append({
@@ -36,10 +36,10 @@ def inject_external_sources(pillar_stories: dict[str, list[dict]]) -> dict[str, 
         log(f"  -> {p} [arXiv]: {paper['title'][:50]}")
     
     # Fetch PubMed papers
-    log("Pobieranie z PubMed...")
-    pubmed_papers = fetch_pubmed(since_hours=168)  # Last week for PubMed
+    log("Fetching from PubMed...")
+    pubmed_papers = fetch_pubmed(since_hours=168)
     counts["pubmed"] = len(pubmed_papers)
-    log(f"Pobrano {len(pubmed_papers)} pasujacych prac z PubMed")
+    log(f"Fetched {len(pubmed_papers)} matching papers from PubMed")
     for paper in pubmed_papers:
         # Classify PubMed papers using existing logic
         classifications = classify_story({
@@ -80,10 +80,10 @@ def main():
     print("=" * 55, file=sys.stderr)
 
     all_stories = fetch_hn_stories(since_hours=48, min_points=2)
-    log(f"Pobrano {len(all_stories)} stories z HN")
+    log(f"Fetched {len(all_stories)} stories from HN")
 
     if not all_stories:
-        log("Brak danych z HN -- koncze", ok=False)
+        log("No data from HN -- exiting", ok=False)
         return 1
 
     pillar_stories: dict[str, list[dict]] = {p: [] for p in PILLARS}
@@ -146,7 +146,7 @@ def main():
     write_registry_index()
 
     print("=" * 55, file=sys.stderr)
-    log(f"Koniec potoku. Wygenerowano {generated} postow.")
+    log(f"Pipeline complete. Generated {generated} posts.")
     print("=" * 55, file=sys.stderr)
     return 0
 

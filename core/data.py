@@ -7,7 +7,7 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).parent.parent
 CONFIG_PATH = BASE_DIR / "etc" / "pillars.toml"
-CONTENT_DIR = BASE_DIR / "content" / "pl" / "blog"
+CONTENT_DIR = BASE_DIR / "content" / "en" / "blog"
 STATIC_DIR = BASE_DIR / "static" / "images"
 THUMB_DIR = STATIC_DIR / "thumbs"
 
@@ -87,7 +87,7 @@ def categorize_domain(domain: str) -> str:
     for cat, domains in DOMAIN_TAXONOMY.items():
         if any(d in domain for d in domains):
             return cat
-    return "inne"
+    return "other"
 
 def extract_entities(text: str) -> list[str]:
     text_lower = text.lower()

@@ -8,7 +8,7 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 ---
-<SiteLayout title={`${post.title} | AcaciaFund`} description={post.summary} lang={post.lang}>
+<SiteLayout title={`${post.title} | AcaciaFund`} description={post.summary}>
   <article class="section article card">
     <div class="eyebrow">{post.category}</div>
     <h1 class="title" style="font-size: clamp(2.2rem, 4vw, 4rem); max-width: 20ch;">{post.title}</h1>

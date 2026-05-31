@@ -12,8 +12,8 @@ const badgeColor = categoryColors[post.category.toLowerCase()] || '--muted';
 const readingTime = estimateReadingTime(post.summary);
 // Build thumbnail URL: if post.thumbnail exists, use /blog/{lang}/{slug}/{thumbnail}
 const thumbnailUrl = post.thumbnail
-  ? `/blog/${post.lang}/${post.slug}/${post.thumbnail}`
-  : '';
+? `/blog/en/${post.slug}/${post.thumbnail}`
+: '';
 // Fallback placeholder SVG (simple colored circle) if no thumbnail
 const placeholderSvg = `
   <svg width="120" height="120" xmlns="http://www.w3.org/2000/svg">
@@ -42,12 +42,12 @@ const tagBadgeSvg = generateTagBadgeSVG(tagForBadge);
       <span class="badge" style="background: var(--badge-color); color: var(--text);">
         {post.category}
       </span>
-      <span class="reading-time">~{readingTime} min czytania</span>
+      <span class="reading-time">~{readingTime} min read</span>
       {tagBadgeSvg && <span dangerouslySetInnerHTML={{ __html: tagBadgeSvg }} />}
       {sparklineSvg && <span dangerouslySetInnerHTML={{ __html: sparklineSvg }} style={{ display: 'inline-block', marginLeft: '8px' }} />}
     </div>
-    <h3><a href={`/${post.lang}/blog/${post.slug}/`}>{post.title}</a></h3>
-    <p class="muted">{post.summary}</p>
-    <a class="button" href={`/${post.lang}/blog/${post.slug}/`}>Read synthesis</a>
+<h3><a href={`/blog/${post.slug}/`}>{post.title}</a></h3>
+	<p class="muted">{post.summary}</p>
+	<a class="button" href={`/blog/${post.slug}/`}>Read synthesis</a>
   </div>
 </article>

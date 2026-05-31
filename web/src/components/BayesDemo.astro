@@ -1,4 +1,5 @@
 ---
+import { calculatePosterior } from '../stores/bayesStore.js';
 const { prior = '0.5', like = '0.7' } = Astro.props;
 ---
 <section class="card">
@@ -7,7 +8,7 @@ const { prior = '0.5', like = '0.7' } = Astro.props;
   <div class="stacked">
     <label>Prior <input id="priorVal" type="range" min="0" max="1" step="0.01" value={prior} /></label>
     <label>Likelihood <input id="likeVal" type="range" min="0" max="1" step="0.01" value={like} /></label>
-    <div class="badge">Posterior: <strong id="posteriorVal">0.5</strong></div>
+    <div class="badge">Posterior: <strong id="posteriorVal">{((parseFloat(prior) * parseFloat(like)) / (parseFloat(prior) * parseFloat(like) + (1 - parseFloat(prior)) * (1 - parseFloat(like)))).toFixed(3)}</strong></div>
     <svg width="100%" height="120" viewBox="0 0 260 110" aria-hidden="true">
       <g transform="translate(20,10)">
         <path id="priorPath" d="M0,70 Q30,10 60,70" stroke="#38bdf8" stroke-width="3" fill="none" opacity="0.5"/>
@@ -17,18 +18,23 @@ const { prior = '0.5', like = '0.7' } = Astro.props;
     </svg>
   </div>
   <script>
+	import { bayesState, calculatePosterior } from '../stores/bayesStore.js';
+    
     (() => {
-      const prior = document.getElementById('priorVal');
-      const like = document.getElementById('likeVal');
-      const post = document.getElementById('posteriorVal');
+      const priorInput = document.getElementById('priorVal');
+      const likeInput = document.getElementById('likeVal');
+      const posteriorDisplay = document.getElementById('posteriorVal');
       const priorPath = document.getElementById('priorPath');
       const likePath = document.getElementById('likePath');
       const postPath = document.getElementById('postPath');
-      if (!prior || !like || !post || !priorPath || !likePath || !postPath) return;
+      
+      if (!priorInput || !likeInput || !posteriorDisplay || !priorPath || !likePath || !postPath) return;
+      
       const qPath = (x0, y0, cx, cy, x1, y1) => `M ${x0},${y0} Q ${cx},${cy} ${x1},${y1}`;
-      const update = () => {
-        const p = parseFloat(prior.value);
-        const l = parseFloat(like.value);
+      
+      const updateVisuals = () => {
+        const p = parseFloat(priorInput.value);
+        const l = parseFloat(likeInput.value);
         const priorH = Math.max(6, 70 - p * 60);
         const likeH = Math.max(6, 70 - l * 60);
         priorPath.setAttribute('d', qPath(0, 70, 30, priorH, 80, 70));
@@ -37,11 +43,40 @@ const { prior = '0.5', like = '0.7' } = Astro.props;
         const postH = Math.max(6, 70 - ((p + l) / 2) * 60);
         postPath.setAttribute('d', qPath(20, 70, postPeak, postH, 220, 70));
         const posterior = (p * l) / Math.max(1e-6, (p * l + (1 - p) * (1 - l)));
-        post.textContent = posterior.toFixed(3);
+        posteriorDisplay.textContent = posterior.toFixed(3);
       };
-      prior.addEventListener('input', update);
-      like.addEventListener('input', update);
-      update();
+      
+      // Sync with nano store when inputs change
+      const syncToStore = () => {
+        const p = parseFloat(priorInput.value);
+        const l = parseFloat(likeInput.value);
+        bayesState.set({ prior: p, likelihood: l, posterior: calculatePosterior(p, l) });
+        updateVisuals();
+      };
+      
+      // Update UI when store changes (from other components)
+      const unsubscribe = bayesState.subscribe((state) => {
+        priorInput.value = state.prior.toString();
+        likeInput.value = state.likelihood.toString();
+        posteriorDisplay.textContent = state.posterior.toFixed(3);
+        const priorH = Math.max(6, 70 - state.prior * 60);
+        const likeH = Math.max(6, 70 - state.likelihood * 60);
+        priorPath.setAttribute('d', `M0,70 Q30,${priorH} 60,70`);
+        likePath.setAttribute('d', `M40,70 Q160,${likeH} 200,70`);
+        const postPeak = (state.prior * 40 + state.likelihood * 160) / Math.max(1e-6, (state.prior + state.likelihood));
+        const postH = Math.max(6, 70 - ((state.prior + state.likelihood) / 2) * 60);
+        postPath.setAttribute('d', `M20,70 Q${postPeak},${postH} 220,70`);
+      });
+      
+      // Event listeners
+      priorInput.addEventListener('input', syncToStore);
+      likeInput.addEventListener('input', syncToStore);
+      
+      // Initialize
+      syncToStore();
+      
+      // Cleanup on unmount
+      return () => unsubscribe();
     })();
   </script>
 </section>

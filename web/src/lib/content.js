@@ -3,6 +3,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import matter from 'gray-matter';
 import { marked } from 'marked';
+import { validateFrontmatter } from '../schemas/contentSchema.js';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../..');
 const CONTENT_ROOT = path.join(ROOT, 'content');
@@ -114,6 +115,17 @@ function extractBayesDemo(content) {
 function parseMarkdown(filePath) {
   const raw = fs.readFileSync(filePath, 'utf8');
   const parsed = matter(raw);
+  
+  // Validate frontmatter using Zod schema
+  let validatedData = {};
+  try {
+    validatedData = validateFrontmatter(parsed.data);
+  } catch (error) {
+    console.warn(`Frontmatter validation failed for ${filePath}: ${error.message}`);
+    // Fallback to raw data if validation fails, but log warning
+    validatedData = parsed.data || {};
+  }
+  
   const bayesDemo = extractBayesDemo(parsed.content);
   const cleanedContent = parsed.content.replace(/{{<\s*bayes\s+[^>]+\s*>}}/gi, '').trim();
   const html = marked.parse(cleanedContent);
@@ -129,7 +141,7 @@ function parseMarkdown(filePath) {
     const text = match[2].trim();
     headings.push({ level, text });
   }
-  return { filePath, slug, baseName, section, data: parsed.data || {}, html, raw: parsed.content, excerpt: stripMarkdown(cleanedContent).slice(0, 220), bayesDemo, headings };
+  return { filePath, slug, baseName, section, data: validatedData, html, raw: parsed.content, excerpt: stripMarkdown(cleanedContent).slice(0, 220), bayesDemo, headings };
 }
 
 export function loadRegistry() {
@@ -142,8 +154,7 @@ export function loadRegistry() {
 export function loadBlogPosts() {
   const posts = [];
   
-  // Check both language directories for blog posts
-  const languageDirs = ['pl', 'en'];
+	const languageDirs = ['en'];
   
   for (const lang of languageDirs) {
     const blogRoot = path.join(CONTENT_ROOT, lang, 'blog');
@@ -184,8 +195,7 @@ export function getBlogPost(slug) {
 export function loadLessons() {
   const lessons = [];
   
-  // Check both language directories for lessons
-  const languageDirs = ['pl', 'en'];
+	const languageDirs = ['en'];
   
   for (const lang of languageDirs) {
     const lessonsRoot = path.join(CONTENT_ROOT, lang, 'learn');

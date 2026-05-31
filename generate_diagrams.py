@@ -194,7 +194,7 @@ acaciafund/
 ├── ingest.py                                # Entrypoint: fetch → analyze → generate
 ├── generate_diagrams.py                     # Ten generator
 ├── config/_default/
-│   ├── hugo.toml                            # Konfiguracja główna
+│ ├── hugo.toml # Main configuration
 │   ├── languages.toml                       # i18n (pl)
 │   ├── menus.pl.toml                        # Menu główne + footer
 │   └── module.toml                          # Hugo Modules (hugo-modules/images)
@@ -214,15 +214,15 @@ acaciafund/
 │   ├── science-thumb.svg                    # Miniaturka Science
 │   ├── logo.svg                             # Logo AcaciaFund
 │   └── favicon.svg                          # Favicon
-├── data/pl/homepage.yml                     # Konfiguracja strony głównej
-├── i18n/pl.yaml                             # Tłumaczenia
+├── data/en/homepage.yml # Homepage configuration
+├── i18n/en.yaml # Translations
 ├── core/
-│   ├── fetch.py                             # Pobieranie z HN + arXiv
-│   ├── analyze.py                           # Analiza NLP
-│   ├── generate.py                          # Generowanie postów
+	│ ├── fetch.py # Fetching from HN + arXiv
+│ ├── analyze.py # NLP Analysis
+│ ├── generate.py # Post generation
 │   ├── bloom.py                             # Bloom Taxonomy
-│   ├── score.py                             # Scoring artykułów
-│   └── data.py                              # Konfiguracja ścieżek
+│ ├── score.py # Article scoring
+│ └── data.py # Path configuration
 ├── tests/usability.py                       # 63 testy E2E
 ├── themes/educenter/                        # Submoduł GIT
 └── _vendor/                                 # Vendor Hugo Modules

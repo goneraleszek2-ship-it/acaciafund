@@ -318,21 +318,21 @@ def generate_popular_summary(stories: list[dict], signals: dict,
                               pillar_name: str, config: dict) -> str:
     """Enhanced meta-analysis with trend data and key statistics."""
     if not stories:
-        return "Brak danych do analizy w tym oknie czasowym."
+        return "No data to analyze in this time window."
 
     top = stories[0]
     label = config["label"]
     desc = config["description"]
 
     opening = (
-        f"Dzisiaj w obszarze {desc} uwagę przykuwa przede wszystkim "
-        f"\"**{top['title']}**\", który zebrał {top['points']} pkt na Hacker News"
+            f"Today in {desc}, the top story is "
+            f"\"**{top['title']}**\", which gathered {top['points']} points on Hacker News"
     )
 
     if signals.get("has_outlier") and signals.get("outlier_ratio", 0) > 3:
         opening += (
-            f" -- wynik blisko {signals['outlier_ratio']:.0f}x wyższy od średniej "
-            f"pozostałych artykułów. To silny sygnał, że temat rezonuje szerzej."
+                f" -- nearly {signals['outlier_ratio']:.0f}x higher than the average "
+                f"of other articles. This is a strong signal that the topic resonates broadly."
         )
     else:
         opening += "."
@@ -340,21 +340,21 @@ def generate_popular_summary(stories: list[dict], signals: dict,
     midsection = ""
     if signals.get("domain_diversity", 0) >= 3:
         midsection += (
-            f" Źródła są zróżnicowane ({signals['domain_diversity']} kategorii) -- "
-            f"temat przebija się przez różne kręgi."
+                f" Sources are diverse ({signals['domain_diversity']} categories) -- "
+                f"the topic cuts across different circles."
         )
     elif signals.get("domain_diversity", 0) == 1:
         midsection += (
-            f" Dyskusja koncentruje się głównie wokół źródła z kategorii "
-            f"**{signals['top_domain']}**."
+                f" Discussion centers mainly on a source from the "
+                f"**{signals['top_domain']}** category."
         )
 
     # Trending topics
     trending = signals.get("trending_topics", [])
     if trending:
         midsection += (
-            f" W dzisiejszych artykułach wyraźnie wybijają się tematy: "
-            + ", ".join(f"**{t['word']}** ({t['ratio']}x więcej niż średnia)" for t in trending[:3])
+                f" In today's articles, trending topics include: "
+                + ", ".join(f"**{t['word']}** ({t['ratio']}x above average)" for t in trending[:3])
             + "."
         )
 
@@ -362,7 +362,7 @@ def generate_popular_summary(stories: list[dict], signals: dict,
     key_nums = signals.get("key_numbers", [])
     if key_nums:
         midsection += (
-            f" Wśród kluczowych liczb pojawiają się: "
+                f" Key numbers include: "
             + "; ".join(f"{n[0]}" for n in key_nums[:3])
             + "."
         )
@@ -370,7 +370,7 @@ def generate_popular_summary(stories: list[dict], signals: dict,
     entities = signals.get("top_entities", [])
     if entities:
         midsection += (
-            f" Główne podmioty: "
+                f" Key entities: "
             + ", ".join(f"**{e}**" for e in entities[:4])
             + "."
         )
@@ -380,7 +380,7 @@ def generate_popular_summary(stories: list[dict], signals: dict,
         others = [s for s in stories[1:4] if s.get("points", 0) > 0]
         if others:
             other = (
-                f" W tle: \"{_cap(others[0]['title'], 70)}\""
+                f" In the background: \"{_cap(others[0]['title'], 70)}\""
                 + (f", \"{_cap(others[1]['title'], 70)}\"" if len(others) > 1 else "")
                 + "."
             )
@@ -390,9 +390,9 @@ def generate_popular_summary(stories: list[dict], signals: dict,
     count = signals.get("count", 0)
     avg_sqi = signals.get("avg_sqi", 0)
     closer = (
-        f" Łącznie {count} artykułów o wartości {total} pkt. "
-        f"Średni SQI (Signal Quality Index): {avg_sqi:.3f}. "
-        f"To tyle na dziś -- więcej jutro."
+            f" Total: {count} articles with {total} points. "
+            f"Average SQI (Signal Quality Index): {avg_sqi:.3f}. "
+            f"That's all for today -- more tomorrow."
     )
 
     return opening + midsection + other + closer
@@ -404,8 +404,8 @@ def build_analysis(stories: list[dict], pillar_name: str,
     """Build complete analysis with enhanced signals."""
     if not stories:
         return {
-            "trending": "*Brak doniesień z tego okresu.*\n\n*Pipeline AcaciaFund kontynuuje skanowanie.*",
-            "metaanalysis": "Brak danych do analizy w tym oknie czasowym.",
+        "trending": "*No reports for this period.*\n\n*AcaciaFund pipeline continues scanning.*",
+        "metaanalysis": "No data to analyze in this time window.",
             "signals": {},
         }
 
@@ -415,8 +415,8 @@ def build_analysis(stories: list[dict], pillar_name: str,
 
     trending = "\n".join(
         f"{i+1}. [{s['title']}]({s['url']})"
-        + (f" ([dyskusja]({s['hn_url']}))" if s.get("hn_url") and s["hn_url"] != s["url"] else "")
-        + f" (pkt {s['points']})"
+            + (f" ([discussion]({s['hn_url']}))" if s.get("hn_url") and s["hn_url"] != s["url"] else "")
+            + f" ({s['points']} pts)"
         + _sqi_badge(story_sqis.get(s.get("url", ""), {}))
         for i, s in enumerate(stories[:7])
     )

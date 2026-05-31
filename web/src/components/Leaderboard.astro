@@ -1,0 +1,338 @@
+---
+// Leaderboard for anonymized quiz scores
+const STORAGE_KEY = 'acfQuizLog';
+const LEADERBOARD_OPTOUT_KEY = 'acfLeaderboardOptOut';
+
+// Lesson name mapping
+const lessonNames = {
+  'lesson-01-intro': 'Introduction to Judgment',
+  'lesson-02-bayes': 'Bayesian Thinking',
+  'lesson-03-privacy': 'Privacy & Security',
+  'lesson-04-aml': 'Anti-Money Laundering',
+  'lesson-05-stock': 'Stock Market Analysis'
+};
+
+// Helper functions
+function getLessonSlugFromPath() {
+  if (typeof window === 'undefined') return null;
+  const path = window.location.pathname;
+  const parts = path.split('/').filter(Boolean);
+  if (parts.length >= 3 && parts[1] === 'learn') {
+    return parts[2];
+  }
+  return null;
+}
+---
+<div class="leaderboard">
+  <h2>Anonymous Quiz Leaderboard</h2>
+  <p class="leaderboard-description">
+    See how you're doing compared to other learners. Your data is completely anonymous.
+    <button id="leaderboard-toggle" class="button">
+      {hasOptedOut() ? 'Opt In' : 'Opt Out'}
+    </button>
+  </p>
+  
+  <div id="leaderboard-content">
+    <!-- Content will be injected by script -->
+  </div>
+  
+  {hasOptedIn() && (
+    <div class="leaderboard-footer">
+      <p class="privacy-note">
+        <small>
+          Leaderboard shows anonymized data. Your identity is not stored or shared.
+          <br>
+          Scores are based on percentage correct across all attempts for each lesson.
+        </small>
+      </p>
+    </div>
+  )}
+</div>
+
+<script>
+  // Leaderboard for anonymized quiz scores
+  const STORAGE_KEY = 'acfQuizLog';
+  const LEADERBOARD_OPTOUT_KEY = 'acfLeaderboardOptOut';
+  
+  // Check if user has opted out of leaderboard
+  function hasOptedOut() {
+    return typeof localStorage !== 'undefined' && localStorage.getItem(LEADERBOARD_OPTOUT_KEY) === 'true';
+  }
+  
+  // Opt out of leaderboard
+  function optOut() {
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem(LEADERBOARD_OPTOUT_KEY, 'true');
+    }
+  }
+  
+  // Opt in to leaderboard
+  function optIn() {
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem(LEADERBOARD_OPTOUT_KEY);
+    }
+  }
+  
+  // Get quiz log and calculate scores per lesson
+  function getLessonScores() {
+    if (typeof localStorage === 'undefined') return [];
+    
+    const log = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    const lessonScores = {};
+    
+    // Group attempts by lesson
+    log.forEach(entry => {
+      if (entry.type === 'attempt' && entry.lessonSlug) {
+        if (!lessonScores[entry.lessonSlug]) {
+          lessonScores[entry.lessonSlug] = {
+            correct: 0,
+            total: 0,
+            lastAttempt: entry.timestamp
+          };
+        }
+        
+        lessonScores[entry.lessonSlug].total++;
+        if (entry.correct) {
+          lessonScores[entry.lessonSlug].correct++;
+        }
+        
+        // Keep track of most recent attempt
+        if (entry.timestamp > lessonScores[entry.lessonSlug].lastAttempt) {
+          lessonScores[entry.lessonSlug].lastAttempt = entry.timestamp;
+        }
+      }
+    });
+    
+    // Calculate percentages and prepare for sorting
+    return Object.entries(lessonScores)
+      .filter(([slug, data]) => data.total > 0) // Only include lessons with attempts
+      .map(([slug, data]) => ({
+        slug,
+        score: Math.round((data.correct / data.total) * 100),
+        correct: data.correct,
+        total: data.total,
+        lastAttempt: data.lastAttempt
+      }))
+      .sort((a, b) => b.score - a.score); // Sort by score descending
+  }
+  
+  // Get anonymized user ID (based on localStorage + timestamp to prevent easy tracking)
+  function getAnonId() {
+    if (typeof localStorage === 'undefined') return 'anonymous';
+    
+    let anonId = localStorage.getItem('acfAnonId');
+    if (!anonId) {
+      // Generate a pseudo-anonymous ID based on time and random values
+      const timestamp = Date.now().toString(36);
+      const random = Math.random().toString(36).substr(2, 9);
+      anonId = `${timestamp}-${random}`;
+      localStorage.setItem('acfAnonId', anonId);
+    }
+    return anonId;
+  }
+  
+  // Check if current user has opted in
+  function isOptedIn() {
+    return !hasOptedOut();
+  }
+  
+  // Get lesson slug from current path for highlighting user's position
+  function getLessonSlugFromPath() {
+    if (typeof window === 'undefined') return null;
+    const path = window.location.pathname;
+    const parts = path.split('/').filter(Boolean);
+    if (parts.length >= 3 && parts[1] === 'learn') {
+      return parts[2];
+    }
+    return null;
+  }
+  
+  // Lesson name mapping
+  const lessonNames = {
+    'lesson-01-intro': 'Introduction to Judgment',
+    'lesson-02-bayes': 'Bayesian Thinking',
+    'lesson-03-privacy': 'Privacy & Security',
+    'lesson-04-aml': 'Anti-Money Laundering',
+    'lesson-05-stock': 'Stock Market Analysis'
+  };
+  
+  // Initialize leaderboard
+  function initLeaderboard() {
+    const lessonScores = getLessonScores();
+    const contentDiv = document.getElementById('leaderboard-content');
+    const toggleBtn = document.getElementById('leaderboard-toggle');
+    
+    if (!contentDiv || !toggleBtn) return;
+    
+    // Set initial button text
+    toggleBtn.textContent = hasOptedOut() ? 'Opt In' : 'Opt Out';
+    
+    // Handle opt-in/opt-out toggle
+    toggleBtn.addEventListener('click', () => {
+      if (hasOptedOut()) {
+        optIn();
+        toggleBtn.textContent = 'Opt Out';
+      } else {
+        optOut();
+        toggleBtn.textContent = 'Opt In';
+      }
+      // Reload to update display
+      location.reload();
+    });
+    
+    // Render leaderboard content
+    if (lessonScores.length === 0) {
+      contentDiv.innerHTML = '<p class="empty-state">No quiz data yet. Take some quizzes to appear on the leaderboard!</p>';
+    } else {
+      let html = `
+        <div class="leaderboard-table">
+          <div class="leaderboard-header">
+            <div class="lb-rank">Rank</div>
+            <div class="lb-lesson">Lesson</div>
+            <div class="lb-score">Score</div>
+            <div class="lb-details">Details</div>
+          </div>
+          <div class="leaderboard-rows">
+      `;
+      
+      lessonScores.forEach((score, index) => {
+        const lessonName = lessonNames[score.slug] || 
+          score.slug.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+        const isCurrentLesson = score.slug === getLessonSlugFromPath() && isOptedIn();
+        
+        html += `
+          <div class="leaderboard-row">
+            <div class="lb-rank">${index < 3 ? index + 1 : ''}</div>
+            <div class="lb-lesson">
+              ${lessonName}
+              ${isCurrentLesson ? ' (You)' : ''}
+            </div>
+            <div class="lb-score">${score.score}%</div>
+            <div class="lb-details">
+              ${score.correct}/${score.total} correct • 
+              <span class="lb-date">${new Date(score.lastAttempt).toLocaleDateString()}</span>
+            </div>
+          </div>
+        `;
+      });
+      
+      html += `
+          </div>
+        </div>
+      `;
+      
+      contentDiv.innerHTML = html;
+    }
+  }
+  
+  // Initialize on DOM load
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLeaderboard);
+  } else {
+    initLeaderboard();
+  }
+</script>
+
+<style>
+  .leaderboard {
+    background: var(--bg-elev);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    border: 1px solid var(--card-border);
+    margin: 1rem 0;
+  }
+  
+  .leaderboard h2 {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: var(--fg);
+  }
+  
+  .leaderboard-description {
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+    color: var(--muted);
+    font-size: 0.9rem;
+  }
+  
+  .leaderboard-table {
+    width: 100%;
+  }
+  
+  .leaderboard-header,
+  .leaderboard-row {
+    display: grid;
+    grid-template-columns: 60px 1fr 100px 1fr;
+    gap: 1rem;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid var(--muted-light);
+  }
+  
+  .leaderboard-header {
+    font-weight: 600;
+    color: var(--fg);
+    border-bottom: 2px solid var(--accent-2);
+    padding-bottom: 0.5rem;
+  }
+  
+  .leaderboard-row:last-child {
+    border-bottom: none;
+  }
+  
+  .lb-rank {
+    font-weight: bold;
+    text-align: center;
+    color: var(--accent-2);
+  }
+  
+  .lb-lesson {
+    font-weight: 500;
+  }
+  
+  .lb-score {
+    font-weight: 600;
+    text-align: center;
+    background: var(--bg);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    border: 1px solid var(--muted);
+  }
+  
+  .lb-details {
+    font-size: 0.9rem;
+    color: var(--muted);
+  }
+  
+  .lb-date {
+    font-weight: normal;
+  }
+  
+  .empty-state {
+    text-align: center;
+    padding: 2rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+  
+  .privacy-note {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--muted-light);
+    font-size: 0.85rem;
+    color: var(--muted);
+    text-align: center;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 640px) {
+    .leaderboard-header,
+    .leaderboard-row {
+      grid-template-columns: 50px 1fr 80px 1fr;
+      gap: 0.5rem;
+    }
+    
+    .lb-rank {
+      font-size: 0.9rem;
+    }
+  }
+</style>

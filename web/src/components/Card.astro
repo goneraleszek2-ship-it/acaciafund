@@ -1,0 +1,74 @@
+---
+export interface Props {
+  title?: string;
+  subtitle?: string;
+  image?: {
+    src: string;
+    alt: string;
+  };
+  children: any;
+  class?: string;
+}
+const {
+  title,
+  subtitle,
+  image,
+  children,
+  class: className = '',
+} = Astro.props;
+---
+
+<style>
+  .card {
+    background: var(--color-background-card);
+    border: 1px solid var(--color-border-default);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-md);
+    box-shadow: var(--elevation-level2);
+    transition: transform var(--motion-duration-faster) ease, box-shadow var(--motion-duration-fast) ease;
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--elevation-level3);
+  }
+
+  .card-image {
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    margin-bottom: var(--spacing-sm);
+  }
+
+  .card-title {
+    margin: 0 0 var(--spacing-xs) 0;
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text-default);
+    line-height: var(--line-height-normal);
+  }
+
+  .card-subtitle {
+    margin: 0 0 var(--spacing-sm) 0;
+    font-size: var(--font-size-md);
+    color: var(--color-text-muted);
+  }
+
+  .card-content {
+    /* Default styling for children */
+  }
+</style>
+
+<div class="card {className}">
+  {image && (
+    <div class="card-image">
+      <img src={image.src} alt={image.alt} loading="lazy" />
+    </div>
+  )}
+  {title && <h2 class="card-title">{title}</h2>}
+  {subtitle && <p class="card-subtitle">{subtitle}</p>}
+  <div class="card-content">
+    {children}
+  </div>
+</div>

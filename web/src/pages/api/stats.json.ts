@@ -15,7 +15,7 @@ export async function GET() {
     site: {
       title: 'AcaciaFund',
       url: 'https://acaciafund.org/',
-      language: 'pl',
+		language: 'en',
       buildDate: new Date().toISOString(),
     },
     stats: {

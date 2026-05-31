@@ -77,14 +77,14 @@ def level_index(level: str) -> int:
         return -1
 
 
-def level_label_pl(level: str) -> str:
+def level_label_en(level: str) -> str:
     labels = {
-        "remember": "Zapamiętywanie",
-        "understand": "Rozumienie",
-        "apply": "Stosowanie",
-        "analyze": "Analiza",
-        "evaluate": "Ewaluacja",
-        "create": "Tworzenie",
+        "remember": "Remembering",
+        "understand": "Understanding",
+        "apply": "Applying",
+        "analyze": "Analyzing",
+        "evaluate": "Evaluating",
+        "create": "Creating",
     }
     return labels.get(level, level.capitalize())
 
@@ -119,7 +119,7 @@ def _build_source_question(article: dict, pool: list[dict]) -> dict | None:
     return {
         "bloom_level": "remember",
         "type": "mc",
-        "question": f"Z jakiej domeny pochodzi artykuł \"{_format_title(article['title'])}\"?",
+        "question": f"Which domain does the article \"{_format_title(article['title'])}\" come from?",
         "options": opts,
         "correct": domain,
     }
@@ -142,7 +142,7 @@ def _build_top_article_question(articles: list[dict]) -> dict | None:
     edu = bool(re.search(r"\.(edu|gov|mil|org)$", domain))
     news = bool(re.search(r"(reuters|bloomberg|ft\.com|wsj|nature|science)\.", domain))
     tech = bool(re.search(r"(techcrunch|theverge|arstechnica|wired|zdnet|github)\.", domain))
-    cat = "edukacyjne/rządowe" if edu else "newsowe" if news else "technologiczne" if tech else "inne"
+    cat = "educational/government" if edu else "news" if news else "technology" if tech else "other"
     other_articles = [x for x in relevant if x != a]
     random.shuffle(other_articles)
     titles = [a["title"][:50]] + [x["title"][:50] for x in other_articles[:3]]
@@ -150,7 +150,7 @@ def _build_top_article_question(articles: list[dict]) -> dict | None:
     return {
         "bloom_level": "analyze",
         "type": "mc",
-        "question": f"Który z tych artykułów pochodzi ze źródła {cat}?",
+        "question": f"Which of these articles comes from a {cat} source?",
         "options": [t + ("…" if len(t) == 50 else "") for t in titles],
         "correct": a["title"][:50] + ("…" if len(a["title"]) > 50 else ""),
     }
@@ -161,27 +161,27 @@ def _build_source_tier_question(article: dict) -> dict | None:
     if not domain:
         return None
     tiers = {
-        r"arxiv\.org|\.edu|scholar\.google": "Wysoki – źródło naukowe",
-        r"reuters\.com|bloomberg\.com|ft\.com|wsj\.com|nature\.com|science\.org":
-            "Wysoki – renomowane medium",
-        r"techcrunch\.com|theverge\.com|arstechnica\.com|wired\.com|zdnet\.com":
-            "Średni – branżowe medium",
-        r"github\.com|stackoverflow\.com|medium\.com|reddit\.com":
-            "Niski – społecznościowe",
+            r"arxiv\.org|\.edu|scholar\.google": "High – academic source",
+            r"reuters\.com|bloomberg\.com|ft\.com|wsj\.com|nature\.com|science\.org":
+            "High – reputable media",
+            r"techcrunch\.com|theverge\.com|arstechnica\.com|wired\.com|zdnet\.com":
+            "Medium – industry media",
+            r"github\.com|stackoverflow\.com|medium\.com|reddit\.com":
+            "Low – community source",
     }
-    correct = "Nieznany"
+    correct = "Unknown"
     for pat, label in tiers.items():
         if re.search(pat, domain, re.I):
             correct = label
             break
     opts = [correct.replace(" –", " – ").strip()]
-    all_labels = list(tiers.values()) + ["Niski – społecznościowe"]
+    all_labels = list(tiers.values()) + ["Low – community source"]
     others = [l for l in all_labels if l != correct]
     random.shuffle(others)
     return {
         "bloom_level": "evaluate",
         "type": "mc",
-        "question": f"Jaki jest poziom wiarygodności źródła {domain}?",
+        "question": f"What is the credibility level of the source {domain}?",
         "options": [correct] + others[:3],
         "correct": correct,
     }
@@ -192,19 +192,19 @@ def _build_domain_type_question(article: dict) -> dict | None:
     m = re.search(r"\.([a-z]+)$", domain)
     tld = m.group(1) if m else ""
     cats = {
-        "com": "Komercyjna",
-        "org": "Organizacja non-profit",
-        "edu": "Edukacyjna",
-        "gov": "Rządowa",
-        "mil": "Wojskowa",
-        "io": "Technologiczna (startup)",
-        "ai": "Technologiczna (AI)",
+        "com": "Commercial",
+        "org": "Non-profit organization",
+        "edu": "Educational",
+        "gov": "Government",
+        "mil": "Military",
+        "io": "Technology (startup)",
+        "ai": "Technology (AI)",
     }
-    correct = cats.get(tld, "Inna")
+    correct = cats.get(tld, "Other")
     return {
         "bloom_level": "understand",
         "type": "mc",
-        "question": f"Jakiego typu jest domena {domain}?",
+        "question": f"What type of domain is {domain}?",
         "options": list(cats.values()),
         "correct": correct,
     }
@@ -223,7 +223,7 @@ def _build_which_source_question(articles: list[dict]) -> dict | None:
         {
             "bloom_level": "remember",
             "type": "mc",
-            "question": f"Z której domeny pochodzi artykuł \"{fmt_title}\"?",
+            "question": f"Which domain does the article \"{fmt_title}\" come from?",
             "options": [d[0] for d in details[:4]],
             "correct": domain,
         }
@@ -236,7 +236,7 @@ def _build_pillar_question(article: dict, pillar_name: str) -> dict:
     return {
         "bloom_level": "understand",
         "type": "open-ended",
-        "question": f"Dlaczego artykuł \"{_format_title(article['title'])}\" jest istotny w obszarze {pillar_name}?",
+        "question": f"Why is the article \"{_format_title(article['title'])}\" relevant to {pillar_name}?",
     }
 
 
@@ -244,7 +244,7 @@ def _build_application_question(article: dict, pillar_name: str) -> dict:
     return {
         "bloom_level": "apply",
         "type": "open-ended",
-        "question": f"Jak koncepcje z artykułu \"{_format_title(article['title'])}\" można zastosować w praktyce w {pillar_name}?",
+        "question": f"How can concepts from the article \"{_format_title(article['title'])}\" be applied in practice in {pillar_name}?",
     }
 
 
@@ -256,7 +256,7 @@ def _build_create_question(articles: list[dict], pillar_name: str) -> dict:
     return {
         "bloom_level": "create",
         "type": "open-ended",
-        "question": f"Na podstawie artykułów z {pillar_name}, zaproponuj nowy kierunek badań lub projekt inspirowany tematem \"{theme}\".",
+        "question": f"Based on articles from {pillar_name}, propose a new research direction or project inspired by the topic \"{theme}\".",
     }
 
 
@@ -298,8 +298,8 @@ def _build_content_question(article_title: str, names: list[str], pillar_name: s
 
     # Alternate question templates for variety
     template = random.choice([
-        'Jaka organizacja/instytucja jest głównym tematem artykułu "{title}"?',
-        'Która z tych instytucji jest opisana w artykule "{title}"?',
+        'What organization/institution is the main subject of the article "{title}"?',
+        'Which of these institutions is described in the article "{title}"?',
     ])
 
     return {
@@ -325,7 +325,7 @@ def _build_factoid_question(sentence: str, article_title: str) -> dict | None:
     return {
         "bloom_level": "understand",
         "type": "tf",
-        "question": f'Czy poniższe zdanie jest prawdziwe według artykułu "{_format_title(article_title)}"?',
+        "question": f'Is the following statement true according to the article "{_format_title(article_title)}"?',
         "statement": sentence[:180],
         "correct": True,
     }
@@ -411,7 +411,7 @@ def generate_quiz_questions(articles: list[dict], pillar_name: str = "",
             chosen = {
                 "bloom_level": lvl,
                 "type": "open-ended",
-                "question": f"Opowiedz o kluczowych aspektach w obszarze {pillar_label} związanych z poziomem {level_label_pl(lvl)}.",
+                "question": f"Discuss key aspects of {pillar_label} related to the {level_label_en(lvl)} level.",
             }
         questions.append(chosen)
 
@@ -495,8 +495,8 @@ def generate_flashcards(articles: list[dict], pillar_name: str = "") -> list[dic
                 flashcards.append({
                     "term": bg,
                     "definition": next(
-                        (f"Temat z artykułu: {a['title']}" for a in articles if bg.lower() in a.get("title", "").lower()),
-                        f"Termin z dziedziny {pillar_name or 'tej dziedziny'}"
+            (f"Topic from article: {a['title']}" for a in articles if bg.lower() in a.get("title", "").lower()),
+            f"Term from the field of {pillar_name or 'this field'}"
                     ),
                     "pillar": pillar_name,
                     "source": a.get("title", ""),
@@ -509,12 +509,12 @@ def generate_flashcards(articles: list[dict], pillar_name: str = "") -> list[dic
     for ct in cross_terms:
         if ct not in seen_terms:
             seen_terms.add(ct)
-            defn = entity_defs.get(ct, f"Ważne pojęcie: {ct}")
+            defn = entity_defs.get(ct, f"Important concept: {ct}")
             flashcards.append({
                 "term": ct,
                 "definition": defn,
                 "pillar": "cross-domain",
-                "source": f"Pojawia się w wielu artykułach",
+                "source": f"Appears across multiple articles",
                 "source_type": "cross",
             })
 

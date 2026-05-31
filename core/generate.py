@@ -12,7 +12,7 @@ from .metadata import (
     build_asset_manifest, build_story_manifest, write_json, iso_utc,
 )
 from .bloom import (
-    level_label_pl, generate_quiz_questions, generate_flashcards,
+    level_label_en, generate_quiz_questions, generate_flashcards,
 )
 from .scraper import scrape_articles, _url_key
 from .visuals import (
@@ -37,13 +37,13 @@ def _build_content_deep_analysis(pillar_stories: list[dict],
 
     if entities:
         ent_str = " \u00b7 ".join(f"`{e}`" for e in entities[:6])
-        lines.append(f"**Kluczowe podmioty:** {ent_str}")
+        lines.append(f"**Key entities:** {ent_str}")
     if key_nums:
         num_str = " \u00b7 ".join(f"{n[0]}" for n in key_nums[:4])
-        lines.append(f"**Kluczowe liczby:** {num_str}")
+        lines.append(f"**Key numbers:** {num_str}")
     if trending:
         tr_str = " \u00b7 ".join(f"{t['word']} ({t['ratio']}x)" for t in trending[:4])
-        lines.append(f"**Trendy:** {tr_str}")
+        lines.append(f"**Trends:** {tr_str}")
 
     # Scraped insights from top stories
     content_sentences: list[str] = []
@@ -61,7 +61,7 @@ def _build_content_deep_analysis(pillar_stories: list[dict],
                 pass
 
     if content_sentences:
-        lines.append("**Z artykułów:**")
+        lines.append("**From articles:**")
         lines.extend(content_sentences[:3])
 
     return "\n".join(lines) if lines else ""
@@ -82,10 +82,10 @@ def _build_cross_pillar_section(pillar_name: str,
         for p, score in cross.items():
             if score >= 4:
                 label = PILLARS[p]["label"]
-                connections.append(f"- \"{s['title'][:60]}\" ma powiązania z **{label}** (punkty: {score})")
+                connections.append(f"- \"{s['title'][:60]}\" has connections to **{label}** (score: {score})")
 
     if connections:
-        return "### 🔗 Połączenia międzyfilarowe\n" + "\n".join(connections[:4])
+        return "### 🔗 Cross-pillar connections\n" + "\n".join(connections[:4])
     return ""
 
 
@@ -99,7 +99,7 @@ def _build_classification_confidence(stories: list[dict], pillar_name: str,
     classified = total - unclassified
     rate = classified / total * 100 if total > 0 else 0
     pillar_share = len(pillar_stories) / max(1, classified) * 100
-    return f"Klasyfikacja: {rate:.0f}% ({classified}/{total}) | Udział filara: {pillar_share:.0f}%"
+    return f"Classification: {rate:.0f}% ({classified}/{total}) | Pillar share: {pillar_share:.0f}%"
 
 
 def _build_trending_section(pillar_stories: list[dict], signals: dict) -> str:
@@ -108,8 +108,8 @@ def _build_trending_section(pillar_stories: list[dict], signals: dict) -> str:
     for i, s in enumerate(pillar_stories[:7]):
         line = f"{i+1}. [{s['title']}]({s['url']})"
         if s.get("hn_url") and s["hn_url"] != s["url"]:
-            line += f" ([dyskusja]({s['hn_url']}))"
-        line += f" (pkt {s['points']})"
+            line += f" ([discussion]({s['hn_url']}))"
+        line += f" ({s['points']} pts)"
         lines.append(line)
     return "\n".join(lines)
 
@@ -130,7 +130,7 @@ def generate_post(pillar_name: str, config: dict, pillar_stories: list[dict],
     manifest_path = post_dir / "manifest.json"
 
     if filepath.exists() or post_dir.exists():
-        log(f"Post juz istnieje: {bundle_name} dla {pillar_name} -- pomijam")
+        log(f"Post already exists: {bundle_name} for {pillar_name} -- skipping")
         return None
 
     # Scrape top articles for deep analysis
@@ -148,7 +148,7 @@ def generate_post(pillar_name: str, config: dict, pillar_stories: list[dict],
         short = raw[:80].rsplit(" ", 1)[0] if len(raw) > 80 else raw
         page_title = f"{short} -- {config['emoji']} {config['label']} {date_str}"
     else:
-        page_title = f"Synteza {config['emoji']} {config['label']} -- {date_str}"
+        page_title = f"Synthesis {config['emoji']} {config['label']} -- {date_str}"
 
     page_title = page_title.replace('"', '').replace("'", '').replace("\\", '')
 
@@ -190,9 +190,9 @@ def generate_post(pillar_name: str, config: dict, pillar_stories: list[dict],
         og_filename = f"og_{og_key}.svg"
         og_path = post_dir / og_filename
         og_path.write_text(og_svg, encoding="utf-8")
-        log(f"Wizualizacje (bundle): {post_dir}/{thumb_filename}, {og_filename}")
+        log(f"Visuals (bundle): {post_dir}/{thumb_filename}, {og_filename}")
     except Exception as e:
-        log(f"Blad generowania wizualizacji: {e}", ok=False)
+        log(f"Error generating visuals: {e}", ok=False)
         avg_sqi = signals.get("avg_sqi", 0.5)
 
     # When using page bundles, reference the resource by filename (Hugo Page Resource)
@@ -229,7 +229,7 @@ def generate_post(pillar_name: str, config: dict, pillar_stories: list[dict],
         "",
         trending_section,
         "",
-        "> **Podsumowanie**",
+        "> **Summary**",
         f">{meta.replace(chr(10), chr(10)+'>')}",
         "",
     ]
@@ -238,7 +238,7 @@ def generate_post(pillar_name: str, config: dict, pillar_stories: list[dict],
     deep = _build_content_deep_analysis(pillar_stories, scraped, pillar_name, signals)
     if deep:
         lines.extend([
-            "## \U0001f4ca Analiza",
+            "## \U0001f4ca Analysis",
             "",
             deep,
             "",
@@ -252,21 +252,21 @@ def generate_post(pillar_name: str, config: dict, pillar_stories: list[dict],
     # Trending topics
     trending = signals.get("trending_topics", [])
     if trending:
-        lines.append("## \U0001f4c8 Trendy")
+        lines.append("## \U0001f4c8 Trends")
         for t in trending:
-            lines.append(f"- **{t['word']}**: {t['ratio']}x wiecej niz srednia ({t['avg_daily']}/dzien)")
+            lines.append(f"- **{t['word']}**: {t['ratio']}x above average ({t['avg_daily']}/day)")
         lines.append("")
 
     # Bloom taxonomy questions
     if edu_questions:
-        lines.append("## \U0001f9e0 Pytania Bloom Taxonomy")
+        lines.append("## \U0001f9e0 Bloom Taxonomy Questions")
         for i, q in enumerate(edu_questions, 1):
-            lines.append(f"{i}. **{level_label_pl(q['bloom_level'])}**: {q['question']}")
+            lines.append(f"{i}. **{level_label_en(q['bloom_level'])}**: {q['question']}")
         lines.append("")
 
     # Flashcards
     if edu_flashcards:
-        lines.append("## \U0001f4da Fiszki")
+        lines.append("## \U0001f4da Flashcards")
         for fcard in edu_flashcards[:8]:
             lines.append(f"- **{fcard['term']}**: {fcard['definition']}")
         lines.append("")
@@ -438,7 +438,7 @@ def generate_post(pillar_name: str, config: dict, pillar_stories: list[dict],
     # Classification info
     if confidence:
         lines.extend([
-            "## \U0001f9ea Jakosc klasyfikacji",
+            "## \U0001f9ea Classification quality",
             "",
             confidence,
             "",
@@ -446,12 +446,12 @@ def generate_post(pillar_name: str, config: dict, pillar_stories: list[dict],
 
     lines += [
         "---",
-        f"*Raport wygenerowano {date_str}. Zrodlo: Algolia HN API. Klasyfikacja: AcaciaFund NLP. SQI: {signals.get('avg_sqi', 0):.3f}.*",
+        f"*Report generated {date_str}. Source: Algolia HN API. Classification: AcaciaFund NLP. SQI: {signals.get('avg_sqi', 0):.3f}.*",
     ]
 
     # Ensure folder exists (post_dir already created when writing images)
     config["folder"].mkdir(parents=True, exist_ok=True)
     filepath.write_text("\n".join(lines) + "\n", encoding="utf-8")
     write_json(manifest_path, story_manifest)
-    log(f"Wygenerowano: {filepath.relative_to(BASE_DIR)} ({link_count} linkow, SQI={signals.get('avg_sqi', 0):.3f})")
+    log(f"Generated: {filepath.relative_to(BASE_DIR)} ({link_count} links, SQI={signals.get('avg_sqi', 0):.3f})")
     return filepath

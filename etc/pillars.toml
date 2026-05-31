@@ -1,9 +1,9 @@
 [pillars.aml]
 label = "AML"
 emoji = "🛡️"
-folder = "content/pl/blog"
+folder = "content/en/blog"
 tags = ["aml", "compliance", "regtech", "financial-crime"]
-description = "Ewolucja systemów odpornościowych w sektorze finansowym"
+description = "Evolution of resilience systems in the financial sector"
 keywords = [
   "aml", "anti-money laundering", "compliance", "regtech",
   "financial crime", "sanctions", "money laundering",
@@ -27,9 +27,9 @@ domain_scores = { "fincen.gov" = 10, "fatf-gafi.org" = 10, "fca.org.uk" = 8, "oc
 [pillars.stock]
 label = "STOCK"
 emoji = "📈"
-folder = "content/pl/blog"
+folder = "content/en/blog"
 tags = ["markets", "stocks", "semiconductors", "hardware"]
-description = "Analiza rynków kapitałowych i półprzewodników"
+description = "Capital markets and semiconductor analysis"
 keywords = [
   "semiconductor", "nvidia", "tsmc", "asml", "intel", "amd",
   "chip", "chips", "microchip", "foundry", "fab",
@@ -44,9 +44,9 @@ domain_scores = { "nvidia.com" = 10, "tsmc.com" = 10, "asml.com" = 10, "intel.co
 [pillars.science]
 label = "SCIENCE"
 emoji = "🧬"
-folder = "content/pl/blog"
+folder = "content/en/blog"
 tags = ["science", "systems", "cybernetics", "complexity"]
-description = "Nauka, systemy złożone i ewolucja poznawcza"
+description = "Science, complex systems, and cognitive evolution"
 keywords = [
   "cybernetics", "mitochondria", "bioenergetics", "systems theory",
   "complexity", "emergence", "self-organization", "autopoiesis",
@@ -60,10 +60,10 @@ keywords = [
 domain_scores = { "nature.com" = 10, "science.org" = 10, "cell.com" = 9, "pnas.org" = 9, "biorxiv.org" = 8, "arxiv.org" = 7, "sciencedirect.com" = 7, "scientificamerican.com" = 8, "quantamagazine.org" = 9, "nautil.us" = 7, "aeon.co" = 6 }
 
 [domain_taxonomy]
-nauka = ["nature.com", "science.org", "cell.com", "pnas.org", "biorxiv.org", "arxiv.org", "quantamagazine.org", "sciencedirect.com", "scientificamerican.com"]
-finanse = ["bloomberg.com", "reuters.com", "wsj.com", "ft.com", "seekingalpha.com", "marketwatch.com", "investopedia.com"]
-regulacje = ["fincen.gov", "fatf-gafi.org", "fca.org.uk", "sec.gov", "occ.gov", "bis.org", "ec.europa.eu"]
-technologia = ["arstechnica.com", "techcrunch.com", "theverge.com", "wired.com", "anandtech.com", "tomshardware.com", "semiengineering.com"]
+science = ["nature.com", "science.org", "cell.com", "pnas.org", "biorxiv.org", "arxiv.org", "quantamagazine.org", "sciencedirect.com", "scientificamerican.com"]
+finance = ["bloomberg.com", "reuters.com", "wsj.com", "ft.com", "seekingalpha.com", "marketwatch.com", "investopedia.com"]
+regulation = ["fincen.gov", "fatf-gafi.org", "fca.org.uk", "sec.gov", "occ.gov", "bis.org", "ec.europa.eu"]
+technology = ["arstechnica.com", "techcrunch.com", "theverge.com", "wired.com", "anandtech.com", "tomshardware.com", "semiengineering.com"]
 media = ["nytimes.com", "theguardian.com", "bbc.com", "apnews.com", "gizmodo.com", "cnn.com", "npr.org"]
 
 [entities.aml]
@@ -76,104 +76,104 @@ values = ["NVIDIA", "AMD", "TSMC", "Intel", "ASML", "Apple", "Microsoft", "Samsu
 values = ["OpenAI", "DeepMind", "Google AI", "Meta AI", "Anthropic", "xAI", "MIT", "Stanford", "Harvard", "Oxford", "Cambridge", "Caltech", "DARPA", "NIH", "CERN", "NASA", "ESA", "WHO"]
 
 [entity_defs]
-AML = "Anti-Money Laundering — przeciwdziałanie praniu pieniędzy"
-Anthropic = "Firma AI tworząca model Claude"
-API = "Application Programming Interface — interfejs programistyczny aplikacji"
-ARM = "Architektura procesorów o niskim poborze energii, własność SoftBank"
-arXiv = "Open-access repozytorium preprintów naukowych"
-ASIC = "Application-Specific Integrated Circuit — układ scalony dedykowanego zastosowania"
-ASML = "Holenderski producent maszyn litograficznych dla przemysłu półprzewodnikowego"
-Binance = "Największa giełda kryptowalut na świecie"
-Broadcom = "Producent układów scalonych i infrastruktury sieciowej"
+AML = "Anti-Money Laundering"
+Anthropic = "AI company building the Claude model"
+API = "Application Programming Interface"
+ARM = "Low-power processor architecture owned by SoftBank"
+arXiv = "Open-access scientific preprint repository"
+ASIC = "Application-Specific Integrated Circuit"
+ASML = "Dutch lithography machine manufacturer for the semiconductor industry"
+Binance = "World's largest cryptocurrency exchange"
+Broadcom = "Chipmaker and networking infrastructure provider"
 Caltech = "California Institute of Technology"
-Cambridge = "University of Cambridge — brytyjski uniwersytet badawczy"
-CBDC = "Central Bank Digital Currency — cyfrowa waluta banku centralnego"
-CERN = "Europejska Organizacja Badań Jądrowych"
-Circle = "Emiter stablecoina USDC"
-Coinbase = "Amerykańska giełda kryptowalut notowana na Nasdaq"
-CPU = "Central Processing Unit — procesor główny"
-CTF = "Counter-Terrorism Financing — przeciwdziałanie finansowaniu terroryzmu"
-DARPA = "Defense Advanced Research Projects Agency — agencja badawcza USA"
-DeepMind = "Laboratorium AI należące do Alphabet/Google"
-EBA = "European Banking Authority — Europejski Urząd Nadzoru Bankowego"
-ECB = "European Central Bank — Europejski Bank Centralny"
-FATF = "Financial Action Task Force — międzynarodowa organizacja ds. przeciwdziałania praniu pieniędzy"
-FCA = "Financial Conduct Authority — brytyjski regulator finansowy"
-Fed = "Federal Reserve System — bank centralny Stanów Zjednoczonych"
-FedNow = "System natychmiastowych płatności amerykańskiego Fed"
-FinCEN = "Financial Crimes Enforcement Network — agencja USA ds. przestępczości finansowej"
-GDP = "Gross Domestic Product — produkt krajowy brutto"
-GDPR = "General Data Protection Regulation — unijne rozporządzenie o ochronie danych"
-GPU = "Graphics Processing Unit — procesor graficzny"
-Harvard = "Harvard University — najstarsza uczelnia USA"
-HN = "Hacker News — platforma społecznościowa dla branży technologicznej"
-HSBC = "Międzynarodowy bank z siedzibą w Londynie"
-Intel = "Największy producent procesorów x86 na świecie"
-IPO = "Initial Public Offering — pierwsza oferta publiczna akcji"
-JPMorgan = "Największy bank w USA pod względem aktywów"
-KYC = "Know Your Customer — procedura weryfikacji tożsamości klienta"
-LLM = "Large Language Model — duży model językowy"
-Mastercard = "Globalna sieć kart płatniczych"
-Micron = "Amerykański producent pamięci DRAM i NAND"
+Cambridge = "University of Cambridge — leading UK research university"
+CBDC = "Central Bank Digital Currency"
+CERN = "European Organization for Nuclear Research"
+Circle = "Issuer of the USDC stablecoin"
+Coinbase = "US cryptocurrency exchange listed on Nasdaq"
+CPU = "Central Processing Unit"
+CTF = "Counter-Terrorism Financing"
+DARPA = "Defense Advanced Research Projects Agency — US research agency"
+DeepMind = "AI lab owned by Alphabet/Google"
+EBA = "European Banking Authority"
+ECB = "European Central Bank"
+FATF = "Financial Action Task Force — international AML body"
+FCA = "Financial Conduct Authority — UK financial regulator"
+Fed = "Federal Reserve System — US central bank"
+FedNow = "US Fed instant payment system"
+FinCEN = "Financial Crimes Enforcement Network — US financial crime agency"
+GDP = "Gross Domestic Product"
+GDPR = "General Data Protection Regulation — EU data protection law"
+GPU = "Graphics Processing Unit"
+Harvard = "Harvard University — oldest US university"
+HN = "Hacker News — tech industry social platform"
+HSBC = "International bank headquartered in London"
+Intel = "World's largest x86 processor manufacturer"
+IPO = "Initial Public Offering"
+JPMorgan = "Largest US bank by assets"
+KYC = "Know Your Customer — identity verification procedure"
+LLM = "Large Language Model"
+Mastercard = "Global payment card network"
+Micron = "US DRAM and NAND memory manufacturer"
 MIT = "Massachusetts Institute of Technology"
-NASA = "National Aeronautics and Space Administration — amerykańska agencja kosmiczna"
-Nasdaq = "Amerykańska giełda technologiczna"
-NIH = "National Institutes of Health — amerykański instytut zdrowia"
-NLP = "Natural Language Processing — przetwarzanie języka naturalnego"
-NVIDIA = "Producent procesorów graficznych (GPU) i lider w AI computing"
-OCC = "Office of the Comptroller of the Currency — amerykański nadzór bankowy"
-OpenAI = "OpenAI — organizacja badawcza AI, twórca GPT"
-Oxford = "University of Oxford — wiodący brytyjski uniwersytet badawczy"
-PayPal = "Globalna platforma płatności cyfrowych"
-PoC = "Proof of Concept — dowód koncepcji"
-PSD2 = "Payment Services Directive 2 — unijna dyrektywa o usługach płatniczych"
-Qualcomm = "Producent układów Snapdragon dla urządzeń mobilnych"
-RISC-V = "Otwarta architektura procesorów"
-"S&P 500" = "Indeks giełdowy 500 największych spółek USA"
-Samsung = "Konglomerat technologiczny, największy producent pamięci"
-SAR = "Suspicious Activity Report — zgłoszenie podejrzanej aktywności"
-SEC = "Securities and Exchange Commission — amerykański regulator rynku papierów wartościowych"
-SoftBank = "Japoński konglomerat inwestycyjny, właściciel ARM i Vision Fund"
-SPAC = "Special Purpose Acquisition Company — spółka celowa przejęć"
-SQI = "Signal Quality Index — miara jakości sygnału w 6 wymiarach (AcaciaFund)"
-Stanford = "Stanford University — lider w badaniach AI"
-Stripe = "Platforma obsługi płatności internetowych"
-SWIFT = "Society for Worldwide Interbank Financial Telecommunication — system komunikacji międzybankowej"
-TSMC = "Taiwan Semiconductor Manufacturing Company — największy producent układów scalonych"
-Visa = "Globalna sieć kart płatniczych"
-WHO = "World Health Organization — Światowa Organizacja Zdrowia"
+NASA = "National Aeronautics and Space Administration — US space agency"
+Nasdaq = "US technology stock exchange"
+NIH = "National Institutes of Health — US health institute"
+NLP = "Natural Language Processing"
+NVIDIA = "GPU manufacturer and AI computing leader"
+OCC = "Office of the Comptroller of the Currency — US bank supervisor"
+OpenAI = "AI research organization, creator of GPT"
+Oxford = "University of Oxford — leading UK research university"
+PayPal = "Global digital payments platform"
+PoC = "Proof of Concept"
+PSD2 = "Payment Services Directive 2 — EU payment services directive"
+Qualcomm = "Maker of Snapdragon mobile chipsets"
+RISC-V = "Open processor architecture"
+"S&P 500" = "Stock index of 500 largest US companies"
+Samsung = "Technology conglomerate, largest memory producer"
+SAR = "Suspicious Activity Report"
+SEC = "Securities and Exchange Commission — US securities regulator"
+SoftBank = "Japanese investment conglomerate, owner of ARM and Vision Fund"
+SPAC = "Special Purpose Acquisition Company"
+SQI = "Signal Quality Index — AcaciaFund's 6-dimension signal quality measure"
+Stanford = "Stanford University — leader in AI research"
+Stripe = "Internet payment processing platform"
+SWIFT = "Society for Worldwide Interbank Financial Telecommunication — interbank messaging system"
+TSMC = "Taiwan Semiconductor Manufacturing Company — largest chip foundry"
+Visa = "Global payment card network"
+WHO = "World Health Organization"
 
 [learning_paths.aml]
-label = "Ścieżka AML: Od podstaw do strategii"
+label = "AML Path: From fundamentals to strategy"
 steps = [
-  { bloom = "remember", label = "Podstawy: słownik AML i compliance" },
-  { bloom = "understand", label = "Zrozumienie: mechanizmy prania pieniędzy" },
-  { bloom = "apply", label = "Praktyka: case studies i narzędzia" },
-  { bloom = "analyze", label = "Analiza: schematy i sieci powiązań" },
-  { bloom = "evaluate", label = "Ewaluacja: systemy regulacyjne" },
-  { bloom = "create", label = "Tworzenie: strategia compliance" },
+  { bloom = "remember", label = "Basics: AML and compliance glossary" },
+  { bloom = "understand", label = "Understanding: money laundering mechanisms" },
+  { bloom = "apply", label = "Practice: case studies and tools" },
+  { bloom = "analyze", label = "Analysis: schemes and connection networks" },
+  { bloom = "evaluate", label = "Evaluation: regulatory systems" },
+  { bloom = "create", label = "Creation: compliance strategy" },
 ]
 
 [learning_paths.stock]
-label = "Ścieżka Markets: Od instrumentów do strategii"
+label = "Markets Path: From instruments to strategy"
 steps = [
-  { bloom = "remember", label = "Podstawy: instrumenty finansowe" },
-  { bloom = "understand", label = "Zrozumienie: wycena i kapitalizacja" },
-  { bloom = "apply", label = "Praktyka: analiza techniczna" },
-  { bloom = "analyze", label = "Analiza: trendy rynkowe i łańcuchy dostaw" },
-  { bloom = "evaluate", label = "Ewaluacja: ryzyko i dywersyfikacja" },
-  { bloom = "create", label = "Tworzenie: strategia inwestycyjna" },
+  { bloom = "remember", label = "Basics: financial instruments" },
+  { bloom = "understand", label = "Understanding: valuation and capitalization" },
+  { bloom = "apply", label = "Practice: technical analysis" },
+  { bloom = "analyze", label = "Analysis: market trends and supply chains" },
+  { bloom = "evaluate", label = "Evaluation: risk and diversification" },
+  { bloom = "create", label = "Creation: investment strategy" },
 ]
 
 [learning_paths.science]
-label = "Ścieżka Science: Od pojęć do syntezy"
+label = "Science Path: From concepts to synthesis"
 steps = [
-  { bloom = "remember", label = "Podstawy: słownik systemowy" },
-  { bloom = "understand", label = "Zrozumienie: emergencja i złożoność" },
-  { bloom = "apply", label = "Praktyka: modele systemowe" },
-  { bloom = "analyze", label = "Analiza: sieci i sprzężenia zwrotne" },
-  { bloom = "evaluate", label = "Ewaluacja: krytyka teorii" },
-  { bloom = "create", label = "Tworzenie: synteza interdyscyplinarna" },
+  { bloom = "remember", label = "Basics: systems glossary" },
+  { bloom = "understand", label = "Understanding: emergence and complexity" },
+  { bloom = "apply", label = "Practice: systems models" },
+  { bloom = "analyze", label = "Analysis: networks and feedback loops" },
+  { bloom = "evaluate", label = "Evaluation: theory critique" },
+  { bloom = "create", label = "Creation: interdisciplinary synthesis" },
 ]
 
 [source_tiers]

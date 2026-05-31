@@ -65,6 +65,8 @@ Even though the test is very accurate, due to the rarity of the disease most pos
 
 This example shows why it is important to take the prior probability into account.
 
+{{< bayes prior="0.001" like="0.99" >}}
+
 ### Applications in Practice
 
 1. **Medical diagnosis** – as above, combining test results with knowledge of disease prevalence.

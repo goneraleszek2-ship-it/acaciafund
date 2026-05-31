@@ -3,11 +3,11 @@ const { lesson } = Astro.props;
 ---
 <article class="card">
   <div class="kicker">Lesson</div>
-  <h3><a href={`/${lesson.lang}/learn/${lesson.slug}/`}>{lesson.title}</a></h3>
+  <h3><a href={`/learn/${lesson.slug}/`}>{lesson.title}</a></h3>
   <p class="muted">{lesson.summary}</p>
   <div class="meta">
     {lesson.difficulty ? <span>{lesson.difficulty}</span> : null}
     {lesson.tags?.length ? <span>{lesson.tags.join(' · ')}</span> : null}
   </div>
-  <a class="button" href={`/${lesson.lang}/learn/${lesson.slug}/`}>Open lesson</a>
+  <a class="button" href={`/learn/${lesson.slug}/`}>Open lesson</a>
 </article>

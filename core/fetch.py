@@ -23,7 +23,7 @@ def _request(url: str, timeout: int = 20, max_retries: int = 3) -> str | None:
             req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
             with urllib.request.urlopen(req, timeout=timeout) as resp:
                 data = resp.read().decode("utf-8", errors="replace")
-            # slow-read guard: jeśli w 20s nie dostaliśmy całego body → timeout
+            # slow-read guard: if we don't get the full body in 20s → timeout
             if not data:
                 raise OSError("Empty response")
             return data
@@ -31,9 +31,9 @@ def _request(url: str, timeout: int = 20, max_retries: int = 3) -> str | None:
             last_err = e
             if attempt < max_retries:
                 wait = 2 ** attempt
-                log(f"Retry {attempt}/{max_retries} za {wait}s: {e}", ok=False)
+                log(f"Retry {attempt}/{max_retries} in {wait}s: {e}", ok=False)
                 time.sleep(wait)
-    log(f"Błąd po {max_retries} próbach: {last_err}", ok=False)
+        log(f"Error after {max_retries} attempts: {last_err}", ok=False)
     return None
 
 
@@ -42,7 +42,7 @@ def _cached_request(url: str, cache_key: str, ttl_hours: int = 24) -> str | None
     cache_path = CACHE_DIR / f"{cache_key}.json"
     now = time.time()
 
-    # sprawdź cache
+    # check cache
     if cache_path.exists():
         age_hours = (now - cache_path.stat().st_mtime) / 3600
         if age_hours < ttl_hours:
@@ -135,7 +135,7 @@ ARXIV_KEYWORDS = {
 
 
 def _parse_arxiv_xml(xml: str) -> list[dict]:
-    """Parse arXiv XML na słowniki używając xml.etree (nie regex)."""
+    """Parse arXiv XML into dicts using xml.etree (not regex)."""
     import xml.etree.ElementTree as ET
     ns = {"atom": "http://www.w3.org/2005/Atom",
           "arxiv": "http://arxiv.org/schemas/atom"}
@@ -163,8 +163,8 @@ def _parse_arxiv_xml(xml: str) -> list[dict]:
 
 
 def fetch_arxiv(since_hours: int = 72, max_results: int = 100) -> list[dict]:
-    """Fetch recent papers z arXiv API."""
-    # ARXIV_CATEGORIES i ARXIV_KEYWORDS zdefiniowane w tym module poniżej
+    """Fetch recent papers from arXiv API."""
+    # ARXIV_CATEGORIES and ARXIV_KEYWORDS defined in this module below
     since = datetime.now(timezone.utc) - timedelta(hours=since_hours)
     all_cats = [c for cats in ARXIV_CATEGORIES.values() for c in cats]
     query_str = "cat:" + "+OR+cat:".join(urllib.parse.quote(c, safe="") for c in all_cats)
@@ -176,7 +176,7 @@ def fetch_arxiv(since_hours: int = 72, max_results: int = 100) -> list[dict]:
 
     parsed = _parse_arxiv_xml(xml)
 
-    # klasyfikuj
+    # classify
     papers = []
     for p in parsed:
         full_text = (p["title"] + " " + p["abstract"][:500]).lower()

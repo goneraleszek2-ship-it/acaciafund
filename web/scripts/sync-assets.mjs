@@ -17,7 +17,7 @@ function copyDir(src, dest) {
 }
 
 function syncBlogAssets() {
-  const languageDirs = ['pl', 'en'];
+	const languageDirs = ['en'];
   for (const lang of languageDirs) {
     const blogDir = path.join(CONTENT_ROOT, lang, 'blog');
     if (!fs.existsSync(blogDir)) continue;
