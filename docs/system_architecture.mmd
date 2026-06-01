@@ -1,0 +1,8 @@
+flowchart TD
+    A[Browser] --> B[Cloudflare CDN]
+    B --> C[AcaciaFund Hugo Site]
+    C --> D[GitHub Repository]
+    D --> E[CI/CD Pipeline]
+    E --> F[Hugo Build]
+    F --> G[Deploy to Cloudflare Pages]
+    G --> B
