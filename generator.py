@@ -1,27 +1,37 @@
 #!/usr/bin/env python3.13
 """
 Generator for AcaciaFund: converts registry.json to static HTML using Jinja2 template.
+Produces: index.html, content pages, sitemap.xml, robots.txt, 404.html
 """
 import json
-import os
+import re
 import shutil
+from datetime import datetime, timezone
 from pathlib import Path
+
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from schemas import RegistryData
 
-# Configuration
 REGISTRY_PATH = Path("registry.json")
 TEMPLATE_DIR = Path("templates")
 OUTPUT_DIR = Path("dist")
-STATIC_SRC_DIR = Path("public")  # Directory for static assets (images, favicon, etc.)
+STATIC_SRC_DIR = Path("public")
 STATIC_DST_DIR = OUTPUT_DIR / "static"
+SITE_URL = "https://acaciafund.org"
+
+
+def add_lazy_loading(html: str) -> str:
+    return re.sub(
+        r'<img(?![^>]*loading=)',
+        '<img loading="lazy" decoding="async"',
+        html,
+    )
+
 
 def main():
-    """Main function to run the generator."""
     print("Starting AcaciaFund generator...")
 
-    # Load registry
     if not REGISTRY_PATH.exists():
         print(f"Error: {REGISTRY_PATH} not found. Run orchestrator.py first.")
         return 1
@@ -34,18 +44,15 @@ def main():
         print(f"Error loading registry: {e}")
         return 1
 
-    # Setup Jinja2 environment
     env = Environment(
         loader=FileSystemLoader(TEMPLATE_DIR),
-        autoescape=select_autoescape(['html', 'xml'])
+        autoescape=select_autoescape(['html', 'xml']),
     )
     template = env.get_template("layout.j2")
 
-    # Ensure output directory exists
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     STATIC_DST_DIR.mkdir(parents=True, exist_ok=True)
 
-    # Copy static assets from public/ to dist/static/
     if STATIC_SRC_DIR.exists():
         for item in STATIC_SRC_DIR.rglob("*"):
             if item.is_file():
@@ -54,44 +61,85 @@ def main():
                 dest_path.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(item, dest_path)
         print(f"Copied static assets from {STATIC_SRC_DIR} to {STATIC_DST_DIR}")
-    else:
-        print(f"Warning: Static source directory {STATIC_SRC_DIR} does not exist.")
 
-    # Generate pages for each content item
+    year = datetime.now(timezone.utc).year
+    recent_posts = [c for c in registry.content if c.category == "blog"][:6]
+    lessons = [c for c in registry.content if c.category == "learn"][:6]
+
+    ctx_base = {
+        "year": year,
+        "recent_posts": recent_posts,
+        "lessons": lessons,
+        "plausible_domain": "",
+    }
+
+    # --- Index page ---
+    index_html = template.render(
+        content=type("obj", (object,), {"title": "AcaciaFund", "language": "en", "category": "index", "body_html": "", "created_at": None, "updated_at": None, "tags": []}),
+        is_index=True,
+        **ctx_base,
+    )
+    (OUTPUT_DIR / "index.html").write_text(index_html, encoding="utf-8")
+    print("Generated: index.html")
+
+    # --- 404 page ---
+    page_404 = template.render(
+        content=type("obj", (object,), {"title": "Page Not Found", "language": "en", "category": "error", "body_html": "<p>The page you requested does not exist. <a href=\"/\">Return home</a></p>", "created_at": None, "updated_at": None, "tags": []}),
+        is_index=False,
+        **ctx_base,
+    )
+    (OUTPUT_DIR / "404.html").write_text(page_404, encoding="utf-8")
+    print("Generated: 404.html")
+
+    # --- Content pages ---
     for content in registry.content:
-        # Determine the output path: dist/{slug}/index.html for sections, or dist/{slug}.html for pages?
-        # We'll use a simple approach: for slugs that contain a slash, we treat as nested.
-        # For simplicity, we'll output to dist/{slug}.html (if slug has no slash) or dist/{slug}/index.html (if slug has slash).
-        # But note: we want to avoid duplicate index.html in nested directories? We'll follow common practice.
         slug = content.slug
         if '/' in slug:
-            # Nested path: create a directory and put index.html inside
             output_dir = OUTPUT_DIR / slug
             output_dir.mkdir(parents=True, exist_ok=True)
             output_file = output_dir / "index.html"
         else:
-            # Top-level file: output as {slug}.html
             output_file = OUTPUT_DIR / f"{slug}.html"
 
-        # Render the template
+        body_enhanced = add_lazy_loading(content.body_html)
+        content.body_html = body_enhanced
+
         try:
-            html = template.render(content=content)
+            html = template.render(content=content, is_index=False, **ctx_base)
         except Exception as e:
             print(f"Error rendering template for {content.slug}: {e}")
             continue
 
-        # Write the file
         try:
             output_file.write_text(html, encoding="utf-8")
             print(f"Generated: {output_file.relative_to(OUTPUT_DIR)}")
         except Exception as e:
             print(f"Error writing {output_file}: {e}")
-            continue
 
-    # Generate a sitemap.xml? Optional, but we can skip for now.
+    # --- sitemap.xml ---
+    urls = []
+    urls.append(f"{SITE_URL}/")
+    for content in registry.content:
+        slug = content.slug
+        path = f"{slug}/" if '/' in slug else f"{slug}.html"
+        urls.append(f"{SITE_URL}/{path}")
+
+    sitemap_lines = ['<?xml version="1.0" encoding="UTF-8"?>',
+                     '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
+    for url in urls:
+        sitemap_lines.append(f"  <url><loc>{url}</loc></url>")
+    sitemap_lines.append("</urlset>")
+    (OUTPUT_DIR / "sitemap.xml").write_text("\n".join(sitemap_lines), encoding="utf-8")
+    print("Generated: sitemap.xml")
+
+    # --- robots.txt ---
+    robots_txt = f"User-agent: *\nAllow: /\nSitemap: {SITE_URL}/sitemap.xml\n"
+    (OUTPUT_DIR / "robots.txt").write_text(robots_txt, encoding="utf-8")
+    print("Generated: robots.txt")
 
     print("Generation complete.")
     return 0
+
 
 if __name__ == "__main__":
     exit(main())

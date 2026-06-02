@@ -1,36 +1,163 @@
 <!DOCTYPE html>
 <html lang="{{ content.language | default('en') }}">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{{ content.title }} | AcaciaFund</title>
-    <meta name="description" content="{{ content.body_html | striptags | truncate(160) }}">
-    <!-- Tailwind CSS via CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Optional: custom CSS -->
-    <style>
-        /* Add any custom styles here if needed */
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ content.title | striptags }} | AcaciaFund</title>
+  <meta name="description" content="{{ content.body_html | striptags | truncate(160) }}">
+  <meta name="generator" content="AcaciaFund Python-native Pipeline">
+
+  {%- if content.category == "blog" %}
+  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="{{ content.created_at.isoformat() if content.created_at else '' }}">
+  {%- endif %}
+  <meta property="og:title" content="{{ content.title | striptags }}">
+  <meta property="og:site_name" content="AcaciaFund">
+
+  {%- if content.category == "blog" %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": {{ content.title | striptags | tojson }},
+    "datePublished": "{{ content.created_at.isoformat() if content.created_at else '' }}",
+    "author": { "@type": "Organization", "name": "AcaciaFund" },
+    "publisher": { "@type": "Organization", "name": "AcaciaFund" }
+  }
+  </script>
+  {%- elif content.category == "learn" %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LearningResource",
+    "name": {{ content.title | striptags | tojson }},
+    "learningResourceType": "Lesson",
+    "educationalLevel": "Intermediate"
+  }
+  </script>
+  {%- endif %}
+
+  <link rel="stylesheet" href="https://cdn.tailwindcss.com">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>tailwind.config={theme:{extend:{typography:{DEFAULT:{css:{maxWidth:'72ch'}}}}}}</script>
+
+  <style>
+    .skip-link{position:absolute;left:-9999px;z-index:100;padding:.5rem 1rem;background:#1e293b;color:#fff;font-weight:600;text-decoration:none;border-radius:0 0 .25rem 0}
+    .skip-link:focus{left:0;top:0}
+    img[loading="lazy"]{background:#f1f5f9}
+    .nav-link{transition:color .15s}
+    .nav-link:hover{color:#2563eb}
+    .prose h2{scroll-margin-top:4rem}
+    .prose h3{scroll-margin-top:4rem}
+  </style>
+
+  {%- if plausible_domain %}
+  <script defer data-domain="{{ plausible_domain }}" src="https://plausible.io/js/script.js"></script>
+  {%- endif %}
 </head>
 <body class="bg-gray-50 text-gray-900 antialiased">
-    <div class="max-w-4xl mx-auto px-4 py-8">
-        <!-- Header -->
-        <header class="mb-8">
-            <h1 class="text-3xl font-bold text-gray-800">{{ content.title }}</h1>
-            {% if content.updated_at %}
-            <p class="text-sm text-gray-500">Last updated: {{ content.updated_at.strftime('%Y-%m-%d') }}</p>
-            {% endif %}
-        </header>
+  <a href="#main" class="skip-link">Skip to content</a>
 
-        <!-- Main Content -->
-        <main class="prose prose-lg mx-auto">
-            {{ content.body_html | safe }}
-        </main>
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-gray-200">
+    <nav class="max-w-4xl mx-auto px-4 h-14 flex items-center justify-between" aria-label="Main navigation">
+      <a href="/" class="text-lg font-bold tracking-tight text-gray-900">Acacia<span class="text-blue-600">Fund</span></a>
+      <ul class="flex gap-6 text-sm font-medium text-gray-600" role="list">
+        <li><a href="/about.html" class="nav-link">About</a></li>
+        <li><a href="/research.html" class="nav-link">Research</a></li>
+        <li><a href="/scholarship.html" class="nav-link">Scholarship</a></li>
+        <li><a href="/blog/2026-06-01-science/index.html" class="nav-link">Blog</a></li>
+        <li><a href="/contact.html" class="nav-link">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
 
-        <!-- Footer -->
-        <footer class="mt-12 pt-8 border-t border-gray-200 text-center text-sm text-gray-500">
-            AcaciaFund &copy; {{ content.created_at.year }}. All rights reserved.
-        </footer>
+  <main id="main" class="max-w-4xl mx-auto px-4 py-8" tabindex="-1">
+    {%- if is_index %}
+    <section class="text-center py-16" aria-labelledby="hero-heading">
+      <h1 id="hero-heading" class="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl">
+        Research Synthesis &amp;<br>Experimental Learning
+      </h1>
+      <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+        Automated classification of HackerNews + arXiv content using Bloom taxonomy.
+        Static-first, privacy-preserving, zero client-side JavaScript required.
+      </p>
+      <div class="mt-8 flex justify-center gap-4">
+        <a href="/research.html" class="inline-block px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition">Explore Research</a>
+        <a href="/blog/2026-06-01-science/index.html" class="inline-block px-6 py-3 border border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-50 transition">Read Blog</a>
+      </div>
+    </section>
+
+    <section class="mt-12" aria-labelledby="latest-heading">
+      <h2 id="latest-heading" class="text-2xl font-bold text-gray-900 mb-6">Latest Content</h2>
+      <div class="grid gap-6 md:grid-cols-2">
+        {%- for item in recent_posts[:6] %}
+        <article class="bg-white rounded-lg border border-gray-200 p-5 hover:shadow-md transition">
+          <span class="inline-block px-2 py-0.5 text-xs font-medium rounded bg-blue-100 text-blue-700 mb-2">{{ item.category }}</span>
+          <h3 class="text-lg font-semibold text-gray-900 leading-snug">
+            <a href="/{{ item.slug }}{{ '/index.html' if '/' in item.slug else '.html' }}" class="hover:text-blue-600 transition">{{ item.title | striptags }}</a>
+          </h3>
+          <p class="mt-2 text-sm text-gray-500">{{ item.created_at.strftime('%Y-%m-%d') if item.created_at else '' }}</p>
+        </article>
+        {%- endfor %}
+      </div>
+    </section>
+
+    <section class="mt-16" aria-labelledby="learn-heading">
+      <h2 id="learn-heading" class="text-2xl font-bold text-gray-900 mb-6">Learning Hub</h2>
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {%- for item in lessons[:6] %}
+        <a href="/{{ item.slug }}{{ '/index.html' if '/' in item.slug else '.html' }}" class="block bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition">
+          <h3 class="font-semibold text-gray-900">{{ item.title | striptags }}</h3>
+          <p class="mt-1 text-sm text-gray-500 capitalize">{{ item.category }}</p>
+        </a>
+        {%- endfor %}
+      </div>
+    </section>
+
+    <section class="mt-16 text-center" aria-labelledby="stack-heading">
+      <h2 id="stack-heading" class="text-2xl font-bold text-gray-900 mb-4">Stack</h2>
+      <div class="flex flex-wrap justify-center gap-3 text-sm text-gray-600">
+        <span class="px-3 py-1 bg-white border rounded-full">Python 3.13</span>
+        <span class="px-3 py-1 bg-white border rounded-full">Pydantic</span>
+        <span class="px-3 py-1 bg-white border rounded-full">Jinja2</span>
+        <span class="px-3 py-1 bg-white border rounded-full">Markdown2</span>
+        <span class="px-3 py-1 bg-white border rounded-full">Tailwind CSS</span>
+        <span class="px-3 py-1 bg-white border rounded-full">Cloudflare Pages</span>
+      </div>
+    </section>
+    {%- else %}
+    <header class="mb-8">
+      <p class="text-sm text-gray-500 uppercase tracking-wide mb-1">{{ content.category }}</p>
+      <h1 class="text-3xl font-bold text-gray-900">{{ content.title | striptags }}</h1>
+      {%- if content.created_at %}
+      <time class="text-sm text-gray-500" datetime="{{ content.created_at.isoformat() }}">{{ content.created_at.strftime('%B %d, %Y') }}</time>
+      {%- endif %}
+      {%- if content.tags and content.tags | length > 0 %}
+      <div class="mt-2 flex flex-wrap gap-2">
+        {%- for tag in content.tags %}
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded bg-gray-100 text-gray-700">{{ tag }}</span>
+        {%- endfor %}
+      </div>
+      {%- endif %}
+    </header>
+
+    <article class="prose prose-lg prose-blue mx-auto">
+      {{ content.body_html | safe }}
+    </article>
+    {%- endif %}
+  </main>
+
+  <footer class="mt-16 border-t border-gray-200 bg-white">
+    <div class="max-w-4xl mx-auto px-4 py-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-gray-500">
+      <p>&copy; {{ year }} AcaciaFund. All rights reserved.</p>
+      <nav aria-label="Footer navigation">
+        <ul class="flex gap-4" role="list">
+          <li><a href="/about.html" class="hover:text-gray-900 transition">About</a></li>
+          <li><a href="/contact.html" class="hover:text-gray-900 transition">Contact</a></li>
+          <li><a href="/research.html" class="hover:text-gray-900 transition">Research</a></li>
+        </ul>
+      </nav>
     </div>
+  </footer>
 </body>
 </html>
