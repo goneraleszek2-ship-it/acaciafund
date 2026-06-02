@@ -8,8 +8,8 @@
 # Options:
 #   --skip-ingest   Skip content ingestion step (use existing content)
 #   --project-name  Cloudflare Pages project name (default: acaciafund)
-
-set -euo pipefail
+#
+# set -euo pipefail
 
 # Default values
 SKIP_INGEST=false
@@ -60,7 +60,7 @@ echo "Starting AcaciaFund deployment..."
 echo "Account ID: $CLOUDFLARE_ACCOUNT_ID"
 echo "Project: $PROJECT_NAME"
 
-# Step 1: Run content ingestion (unless skipped)
+# Step 1: Run content ingestion (existing script)
 if [[ "$SKIP_INGEST" == false ]]; then
   echo ""
   echo "Step 1: Running content ingestion..."
@@ -71,19 +71,22 @@ else
   echo "Step 1: Skipping content ingestion (--skip-ingest flag used)"
 fi
 
-# Step 2: Build the Astro site (includes syncing assets)
+# Step 2: Convert content to registry (our orchestrator)
 echo ""
-echo "Step 2: Building Astro site..."
-cd web
-npm ci
-npm run build
-cd ..
-echo "Astro site build completed."
+echo "Step 2: Converting content to registry..."
+python orchestrator.py
+echo "Content conversion completed."
 
-# Step 3: Deploy to Cloudflare Pages
+# Step 3: Generate static site (our generator)
 echo ""
-echo "Step 3: Deploying to Cloudflare Pages..."
-wrangler pages deploy web/dist \
+echo "Step 3: Generating static site..."
+python generator.py
+echo "Static site generation completed."
+
+# Step 4: Deploy to Cloudflare Pages
+echo ""
+echo "Step 4: Deploying to Cloudflare Pages..."
+wrangler pages deploy dist \
   --project-name="$PROJECT_NAME" \
   --commit-hash=$(git rev-parse --short HEAD) \
   --commit-message="Deploy via deploy.sh: $(date +%Y-%m-%d)" \

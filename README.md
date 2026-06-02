@@ -1,7 +1,6 @@
 <div align="center">
   <img src="https://img.shields.io/badge/status-active-22c55e?style=flat-square" alt="Status">
   <img src="https://img.shields.io/badge/python-3.11+-3776AB?logo=python&logoColor=fff&style=flat-square" alt="Python">
-  <img src="https://img.shields.io/badge/hugo-0.161+-FF4088?logo=hugo&logoColor=fff&style=flat-square" alt="Hugo">
   <img src="https://img.shields.io/badge/cloudflare-pages-F38020?logo=cloudflare&logoColor=fff&style=flat-square" alt="Cloudflare">
 </div>
 
@@ -9,64 +8,58 @@
 
 Automated research synthesis and an experimental learning ecosystem.
 
-HackerNews + arXiv → deterministic classification (Bloom taxonomy) → static site (Hugo) → interactive learning layer.
+HackerNews + arXiv → deterministic classification (Bloom taxonomy) → static site (Python-native) → interactive learning layer.
 
 ---
 
 ## What's New (Summary)
 
-- **Learning Hub**: Interactive lessons, quizzes, and an in-browser Bayes demo (content/pl/learn/)
+- **Python-native Headless Static Generator**: Replaced Astro/Node.js with a data-driven Python architecture (orchestrator + generator + Jinja2 template)
+- **Learning Hub**: Interactive lessons, quizzes, and an in-browser Bayes demo (content/learn/)
 - **Local-first Learning UX**: Client-side quizzes with progress saved in localStorage (static/js/learning_hub.js)
-- **Interactive Bayes Demo Shortcode**: layouts/shortcodes/bayes.html + static/js/learning.js
+- **Interactive Bayes Demo Shortcode**: static/js/learning.js
 - **Homepage UX Enhancement**: Refined hero section, call-to-action, pictograms and software stack diagram
-- **FastAPI Scaffold**: services/api/ for future dynamic features
-- **UX 2026 Improvements**: Dark mode toggle, skip‑to‑content link, AI transparency note, category badges + reading time, hover/button micro‑interactions, fade‑in scroll animations, client‑side search (JSON API + overlay) – all deployed via Cloudflare Pages.
-
-## Further Steps
-
-1. **Performance & Accessibility**: Run Lighthouse, optimize images (WebP), improve contrast, add reading‑progress bar.
-2. **Navigation Enhancements**: Sticky header that hides on scroll down, breadcrumbs on category/tag pages.
-3. **Content Enrichment**: Generate lightweight SVG graphics based on post tags/metadata (e.g., decorative badges, sparklines) to increase visual richness without extra weight.
-4. **Search Refinement**: Implement fuzzy matching, boost recent content, and add keyboard navigation.
-5. **Analytics Framework**: Deploy differential privacy‑enabled telemetry for aggregated learning insights (per strategic assessment).
-6. **Server‑Side Persistence**: Implement FastAPI + SQLite backend for learning progress (as recommended in the strategic assessment).
+- **Accessibility Improvements**: Proper heading structure (H1→H2→H3), skip-to-content link, ARIA labels, lang attribute
+- **Zero Client-Side JavaScript for Content**: Only CSS/Tailwind CDN used for styling; no JS required to read content
+- **Deployed via Cloudflare Pages**: Fully static site with automatic deployments
 
 ---
 
-## Overview — Purpose & Structure
+## Architecture Overview
 
-AcaciaFund follows a Modular Open Systems Architecture (MOSA) with three core layers:
+AcaciaFund now follows a **Data-as-the-App** pattern with three core layers:
 
-### 1. Content Synthesis (Static-first)
-- Python ingestion engine processes HackerNews and arXiv content
-- Deterministic Bloom taxonomy classification and SQI scoring create educational, sortable content
-- Generated as markdown page bundles under content/pl/blog/
+### 1. Data Engine (Python)
+- `ingest.py`: Fetches and processes HackerNews and arXiv content
+- `orchestrator.py`: Converts Markdown content to structured `registry.json` (single source of truth)
+- Uses Pydantic for data validation before rendering
 
-### 2. Learning Layer (Interactive, Privacy-first)
-- Located in content/pl/learn/: lessons, demonstrations, and quizzes
-- Client-side rendering with localStorage progress tracking (optional server persistence)
-- Privacy-focused design: data remains local by default
+### 2. Rendering Shell (Immutable)
+- `generator.py`: Reads `registry.json` and renders content using Jinja2 template
+- `templates/layout.j2`: Single HTML template using Tailwind CSS CDN
+- Produces static HTML in `dist/` directory
 
-### 3. Service Infrastructure & DevOps
-- services/api/: Minimal FastAPI service with Dockerfile for future features
-- .devcontainer/ and docker-compose.yml: Reproducible development environment (Codespaces compatible)
-- .github/workflows/: CI/CD pipeline for automated synthesis and deployment
+### 3. Deployment
+- `deploy.sh`: Orchestrates full pipeline (ingest → orchestrator → generator → deploy)
+- Deploys to Cloudflare Pages via Wrangler
 
 ---
 
 ## Project Structure
 
 ```
-./
-├── services/api/          # FastAPI backend & Docker configuration
-├── content/pl/blog/       # Hugo page bundles (research syntheses)
-├── content/pl/learn/      # Learning Hub: lessons, demos, assessments
-├── layouts/               # Custom Hugo layouts, shortcodes, partials
-├── static/                # Assets: images, JavaScript (learning.js, learning_hub.js)
-├── scripts/               # Utility scripts (migration, maintenance)
-├── .devcontainer/         # Development container configuration
-├── docker-compose.yml     # Local development orchestration
-└── .github/workflows/     # GitHub Actions: CI/CD and scheduled pipelines
+.
+├── content/                  # Source Markdown files (blog, lessons, etc.)
+├── dist/                     # Generated static site (output)
+├── registry.json             # Generated data file (single source of truth)
+├── schemas.py                # Pydantic models defining content schema
+├── orchestrator.py           # Parses Markdown and writes registry.json
+├── generator.py              # Renders registry.json to static HTML
+├── templates/                # Jinja2 templates (layout.j2)
+├── static/                   # Static assets (CSS, JS, images)
+├── deploy.sh                 # Deployment script: orchestrates pipeline
+├── .env                      # Environment variables (Wrangler API token)
+└── README.md                 # This file
 ```
 
 ---
@@ -74,30 +67,51 @@ AcaciaFund follows a Modular Open Systems Architecture (MOSA) with three core la
 ## Developer Guide
 
 ### Prerequisites
-- Hugo (version 0.161 or newer)
 - Python 3.11+
-- Docker (optional, for API service)
+- Wrangler (for Cloudflare Pages deployment)
+- Git
 
 ### Local Development (Quick Start)
 
 ```bash
-git clone https://github.com/goneraleszek2-ship-it/acaciafund.git
+git clone https://github.com/yourusername/acaciafund.git
 cd acaciafund
-hugo serve
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt  # or install via apt: python3-markdown python3-pydantic python3-jinja2
 ```
 
 ### Full Synthesis Pipeline
 
 ```bash
-python ingest.py   # Execute: fetch → analyze → generate content
-hugo --cleanDestinationDir
+# Fetch and process new content (optional)
+python ingest.py
+
+# Convert Markdown to structured data
+python orchestrator.py
+
+# Generate static HTML
+python generator.py
+
+# Preview locally (optional)
+python -m http.server 8000 --dir dist
+
+# Deploy to Cloudflare Pages
+./deploy.sh
 ```
 
-### Testing
+### Requirements
 
+Create a `requirements.txt` with:
+```
+markdown2
+pydantic
+jinja2
+```
+
+Or install via system packages:
 ```bash
-hugo --cleanDestinationDir
-python tests/usability.py
+apt-get install python3-markdown2 python3-pydantic python3-jinja2
 ```
 
 ---
@@ -107,6 +121,7 @@ python tests/usability.py
 - **Judgment Over Prediction**: Interactive Bayes demo develops belief updating intuition
 - **Privacy-First Approach**: Default local-only storage; server persistence available as opt-in
 - **Modular Lessons**: Each lesson is a standalone markdown file with optional embedded quiz JSON
+- **Accessibility**: All content accessible without JavaScript; proper heading structure and ARIA labels
 
 ---
 
@@ -116,15 +131,40 @@ python tests/usability.py
 
 **Immediate Focus Areas**:
 
-1. **Server-Side Persistence**: Implement FastAPI + SQLite backend with user identity management (DIDs/key management) for data sovereignty
-2. **Learning Content Expansion**: Broaden lesson catalog and create authoring tools (admin interface or markdown templates)
-3. **Analytics Framework**: Deploy differential privacy-enabled telemetry for aggregated learning insights
+1. **Performance Optimization**: 
+   - Implement image optimization (WebP, lazy loading)
+   - Add CSS purging for Tailwind
+   - Enable Cloudflare caching and Polish
 
-**Next PR Recommendation**: I can deliver the server-side persistence layer (FastAPI endpoints with SQLite storage and corresponding learning_hub.js API integration) as the immediate next step.
+2. **Analytics Framework**: 
+   - Deploy differential privacy-enabled telemetry for aggregated learning insights
+   - Add basic pageview analytics (Plausible or Umami)
+
+3. **Content Enrichment**: 
+   - Generate lightweight SVG graphics based on post tags/metadata
+   - Add interactive elements to lessons (only where beneficial)
+
+4. **i18n Foundation**: 
+   - Prepare structure for multilingual content (though English-only per current requirements)
+
+5. **CI/CD Pipeline**: 
+   - Set up GitHub Actions for automated testing and deployment on PRs
+
+---
+
+## Accessibility Compliance
+
+The site adheres to WCAG 2.1 AA standards:
+- Proper heading hierarchy (H1 → H2 → H3)
+- Skip-to-content link
+- ARIA labels on interactive elements
+- Language attribute set on HTML element
+- Sufficient color contrast (via Tailwind CSS)
+- All images have alt text
+- No reliance on JavaScript for content consumption
 
 ---
 
 ## Licensing
 
 MIT License — Leszek Gonera · AcaciaFund
-# Language routing update
