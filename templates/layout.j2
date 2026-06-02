@@ -6,26 +6,32 @@
   <title>{{ content.title | striptags }} | AcaciaFund</title>
   <meta name="description" content="{{ content.description | default(content.body_html | striptags | truncate(160)) }}">
   <meta name="generator" content="AcaciaFund Python-native Pipeline">
+  <meta name="theme-color" content="#2563eb">
+  <link rel="canonical" href="{{ site_url }}/{{ page_path }}">
+  <link rel="icon" href="/static/images/favicon.svg" type="image/svg+xml">
+  <link rel="alternate" type="application/atom+xml" title="AcaciaFund Blog" href="/feed.xml">
+
+  <meta property="og:title" content="{{ content.title | striptags }}">
+  <meta property="og:site_name" content="AcaciaFund">
+  <meta property="og:url" content="{{ site_url }}/{{ page_path }}">
+  <meta property="og:image" content="{{ site_url }}/static/images/og-card.png">
 
   {%- if content.category == "blog" %}
   <meta property="og:type" content="article">
   <meta property="article:published_time" content="{{ content.created_at.isoformat() if content.created_at else '' }}">
-  {%- endif %}
-  <meta property="og:title" content="{{ content.title | striptags }}">
-  <meta property="og:site_name" content="AcaciaFund">
-
-  {%- if content.category == "blog" %}
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "headline": {{ content.title | striptags | tojson }},
     "datePublished": "{{ content.created_at.isoformat() if content.created_at else '' }}",
+    "image": "{{ site_url }}/static/images/og-card.png",
     "author": { "@type": "Organization", "name": "AcaciaFund" },
     "publisher": { "@type": "Organization", "name": "AcaciaFund" }
   }
   </script>
   {%- elif content.category == "learn" %}
+  <meta property="og:type" content="website">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -35,11 +41,20 @@
     "educationalLevel": "Intermediate"
   }
   </script>
+  {%- elif is_index %}
+  <meta property="og:type" content="website">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "AcaciaFund",
+    "url": "{{ site_url }}",
+    "publisher": { "@type": "Organization", "name": "AcaciaFund", "url": "{{ site_url }}" }
+  }
+  </script>
   {%- endif %}
 
-  <link rel="stylesheet" href="https://cdn.tailwindcss.com">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>tailwind.config={theme:{extend:{typography:{DEFAULT:{css:{maxWidth:'72ch'}}}}}}</script>
+  <link rel="stylesheet" href="/static/css/tailwind.min.css">
 
   <style>
     .skip-link{position:absolute;left:-9999px;z-index:100;padding:.5rem 1rem;background:#1e293b;color:#fff;font-weight:600;text-decoration:none;border-radius:0 0 .25rem 0}
@@ -72,7 +87,7 @@
   </header>
 
   <main id="main" class="max-w-4xl mx-auto px-4 py-8" tabindex="-1">
-    {%- if is_index %}
+  {%- if is_index %}
     <section class="text-center py-16" aria-labelledby="hero-heading">
       <h1 id="hero-heading" class="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl">
         Research Synthesis &amp;<br>Experimental Learning
@@ -90,7 +105,7 @@
     <section class="mt-12" aria-labelledby="latest-heading">
       <h2 id="latest-heading" class="text-2xl font-bold text-gray-900 mb-6">Latest Content</h2>
       <div class="grid gap-6 md:grid-cols-2">
-        {%- for item in recent_posts[:6] %}
+      {%- for item in recent_posts[:6] %}
         <article class="bg-white rounded-lg border border-gray-200 p-5 hover:shadow-md transition">
           <span class="inline-block px-2 py-0.5 text-xs font-medium rounded bg-blue-100 text-blue-700 mb-2">{{ item.category }}</span>
           <h3 class="text-lg font-semibold text-gray-900 leading-snug">
@@ -98,19 +113,19 @@
           </h3>
           <p class="mt-2 text-sm text-gray-500">{{ item.created_at.strftime('%Y-%m-%d') if item.created_at else '' }}</p>
         </article>
-        {%- endfor %}
+      {%- endfor %}
       </div>
     </section>
 
     <section class="mt-16" aria-labelledby="learn-heading">
       <h2 id="learn-heading" class="text-2xl font-bold text-gray-900 mb-6">Learning Hub</h2>
       <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {%- for item in lessons[:6] %}
+      {%- for item in lessons[:6] %}
         <a href="/{{ item.slug }}{{ '/index.html' if '/' in item.slug else '.html' }}" class="block bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md transition">
           <h3 class="font-semibold text-gray-900">{{ item.title | striptags }}</h3>
           <p class="mt-1 text-sm text-gray-500 capitalize">{{ item.category }}</p>
         </a>
-        {%- endfor %}
+      {%- endfor %}
       </div>
     </section>
 
@@ -125,7 +140,7 @@
         <span class="px-3 py-1 bg-white border rounded-full">Cloudflare Pages</span>
       </div>
     </section>
-    {%- else %}
+  {%- else %}
     <header class="mb-8">
       <p class="text-sm text-gray-500 uppercase tracking-wide mb-1">{{ content.category }}</p>
       <h1 class="text-3xl font-bold text-gray-900">{{ content.title | striptags }}</h1>
@@ -144,7 +159,17 @@
     <article class="prose prose-lg prose-blue mx-auto">
       {{ content.body_html | safe }}
     </article>
-    {%- endif %}
+
+    <nav class="mt-12 pt-6 border-t border-gray-200" aria-label="Post navigation">
+      {%- if prev_post %}
+      <a href="/{{ prev_post.slug }}{{ '/index.html' if '/' in prev_post.slug else '.html' }}" class="block mb-2 text-sm text-gray-500 hover:text-blue-600">&larr; Previous: {{ prev_post.title | striptags }}</a>
+      {%- endif %}
+      {%- if next_post %}
+      <a href="/{{ next_post.slug }}{{ '/index.html' if '/' in next_post.slug else '.html' }}" class="block text-sm text-gray-500 hover:text-blue-600">Next: {{ next_post.title | striptags }} &rarr;</a>
+      {%- endif %}
+      <a href="/" class="block mt-4 text-sm text-blue-600 hover:underline">Back to Home</a>
+    </nav>
+  {%- endif %}
   </main>
 
   <footer class="mt-16 border-t border-gray-200 bg-white">
@@ -155,6 +180,7 @@
           <li><a href="/about.html" class="hover:text-gray-900 transition">About</a></li>
           <li><a href="/contact.html" class="hover:text-gray-900 transition">Contact</a></li>
           <li><a href="/research.html" class="hover:text-gray-900 transition">Research</a></li>
+          <li><a href="/feed.xml" class="hover:text-gray-900 transition">RSS</a></li>
         </ul>
       </nav>
     </div>
