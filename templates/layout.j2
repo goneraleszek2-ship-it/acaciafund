@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="{{ content.language | default('en') }}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ content.title }} | AcaciaFund</title>
+    <meta name="description" content="{{ content.body_html | striptags | truncate(160) }}">
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Optional: custom CSS -->
+    <style>
+        /* Add any custom styles here if needed */
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-900 antialiased">
+    <div class="max-w-4xl mx-auto px-4 py-8">
+        <!-- Header -->
+        <header class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-800">{{ content.title }}</h1>
+            {% if content.updated_at %}
+            <p class="text-sm text-gray-500">Last updated: {{ content.updated_at.strftime('%Y-%m-%d') }}</p>
+            {% endif %}
+        </header>
+
+        <!-- Main Content -->
+        <main class="prose prose-lg mx-auto">
+            {{ content.body_html | safe }}
+        </main>
+
+        <!-- Footer -->
+        <footer class="mt-12 pt-8 border-t border-gray-200 text-center text-sm text-gray-500">
+            AcaciaFund &copy; {{ content.created_at.year }}. All rights reserved.
+        </footer>
+    </div>
+</body>
+</html>

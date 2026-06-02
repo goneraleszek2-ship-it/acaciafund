@@ -64,7 +64,7 @@ echo "Project: $PROJECT_NAME"
 if [[ "$SKIP_INGEST" == false ]]; then
   echo ""
   echo "Step 1: Running content ingestion..."
-  python ingest.py
+  python3.13 ingest.py
   echo "Content ingestion completed."
 else
   echo ""
@@ -74,13 +74,13 @@ fi
 # Step 2: Convert content to registry (our orchestrator)
 echo ""
 echo "Step 2: Converting content to registry..."
-python orchestrator.py
+python3.13 orchestrator.py
 echo "Content conversion completed."
 
 # Step 3: Generate static site (our generator)
 echo ""
 echo "Step 3: Generating static site..."
-python generator.py
+python3.13 generator.py
 echo "Static site generation completed."
 
 # Step 4: Deploy to Cloudflare Pages

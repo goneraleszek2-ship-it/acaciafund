@@ -1,14 +1,14 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.13
 """
 Orchestrator for AcaciaFund: converts Markdown content to structured registry.json.
 """
 import json
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import List, Optional
 
-import markdown
+import markdown2
 from pydantic import ValidationError
 
 from schemas import AcaciaContent, PipelineStage, MCPIntegration, PlannedFeature, RegistryData
@@ -64,7 +64,7 @@ def parse_markdown_file(file_path: Path) -> dict:
 
     # Convert body to HTML
     try:
-        html = markdown.markdown(body, extensions=['fenced_code', 'tables'])
+        html = markdown2.markdown(body, extras=['fenced-code-blocks', 'tables'])
     except Exception as e:
         print(f"Error converting Markdown to HTML in {file_path}: {e}")
         html = ""
@@ -158,7 +158,7 @@ def create_acacia_content(md_file: Path, parsed: dict) -> Optional[AcaciaContent
         "body_html": parsed["body_html"],
         "category": category,
         "tags": tags,
-        "created_at": datetime.utcnow(),  # We'll use the file's modified time or the date from frontmatter if available
+        "created_at": datetime.now(timezone.utc),
         "updated_at": None,
     }
 
@@ -195,7 +195,7 @@ def main():
 
     # Build the registry
     registry = RegistryData(
-        last_run=datetime.utcnow(),
+        last_run=datetime.now(timezone.utc),
         content=content_list,
         pipeline_stages=PIPELINE_STAGES,
         mcp_integrations=MCP_INTEGRATIONS,

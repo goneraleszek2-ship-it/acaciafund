@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python3.13
 """
 Generator for AcaciaFund: converts registry.json to static HTML using Jinja2 template.
 """
