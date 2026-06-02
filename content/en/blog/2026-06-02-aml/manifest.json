@@ -1,0 +1,198 @@
+{
+  "assets": [
+    {
+      "asset_id": "2026-06-02-aml:thumbnail:thumb_2b95a3ba6ab0.svg",
+      "asset_type": "thumbnail",
+      "bytes": 4839,
+      "checksum": "80d0f4f3831976ca17919e3711d13895cc16dbac91fb5e5b95e02287cf006170",
+      "content_id": "2026-06-02-aml",
+      "created_at": "2026-06-02T14:52:55Z",
+      "manifest_type": "asset",
+      "mime_type": "image/svg+xml",
+      "path": "content/en/blog/2026-06-02-aml/thumb_2b95a3ba6ab0.svg",
+      "source_url": "https://www.cnbc.com/2026/06/01/iran-us-negotiations-strait-of-hormuz.html",
+      "version": 1
+    },
+    {
+      "asset_id": "2026-06-02-aml:og_image:og_78f4bc438c3f.svg",
+      "asset_type": "og_image",
+      "bytes": 1845,
+      "checksum": "7a8397c332ff53c75764bcfa6c05dc5dcc36383aa8ff427c367d99cf026d0f1b",
+      "content_id": "2026-06-02-aml",
+      "created_at": "2026-06-02T14:52:55Z",
+      "manifest_type": "asset",
+      "mime_type": "image/svg+xml",
+      "path": "content/en/blog/2026-06-02-aml/og_78f4bc438c3f.svg",
+      "source_url": "https://www.cnbc.com/2026/06/01/iran-us-negotiations-strait-of-hormuz.html",
+      "version": 1
+    },
+    {
+      "asset_id": "2026-06-02-aml:featured_image:featured.jpg",
+      "asset_type": "featured_image",
+      "bytes": 960658,
+      "checksum": "42d70788e7fdd6ac9685364f304c118c6c82ed42480202c689971753f10ae00d",
+      "content_id": "2026-06-02-aml",
+      "created_at": "2026-06-02T14:52:55Z",
+      "manifest_type": "asset",
+      "mime_type": "image/jpeg",
+      "path": "content/en/blog/2026-06-02-aml/featured.jpg",
+      "source_url": "https://image.cnbcfm.com/api/v1/image/108313148-1779975426440-gettyimages-2277901418-AFP_B49H7EL.jpeg?v=1779975458&amp;w=1920&amp;h=1080",
+      "version": 1
+    }
+  ],
+  "bloom_levels": [
+    "understand",
+    "apply",
+    "evaluate",
+    "create"
+  ],
+  "checksum": "16ab2bb34c6f1e2eb269aa1728db410c040516b75f1201cf798048b649c4c19b",
+  "content_id": "2026-06-02-aml",
+  "created_at": "2026-06-02T14:52:55Z",
+  "date": "2026-06-02",
+  "flashcards_count": 46,
+  "lineage": {
+    "run_id": "20260602T145238Z",
+    "source_count": 1000,
+    "top_story_url": "https://www.cnbc.com/2026/06/01/iran-us-negotiations-strait-of-hormuz.html",
+    "unclassified": 712
+  },
+  "manifest_type": "story",
+  "pillar": "aml",
+  "published_at": "2026-06-02T14:52:55Z",
+  "quality_flags": [
+    "no_trending"
+  ],
+  "quality_metrics": {
+    "avg_source_score": 0.49600000000000005,
+    "recency_score": 0.0,
+    "source_diversity": 0.2777777777777777
+  },
+  "questions_count": 3,
+  "signals": {
+    "avg_score": 12.333333333333334,
+    "avg_sqi": 0.489,
+    "count": 30,
+    "domain_diversity": 5,
+    "entity_coherence": "low",
+    "has_outlier": true,
+    "key_numbers": [
+      [
+        "7%",
+        "Oil pricesleapt more than 7% higher following Tasnim's report, which signaled a breakdown in efforts"
+      ],
+      [
+        "100",
+        "While a trickle of vessels have been able to transit the waterway, traffic has remained far below pr"
+      ],
+      [
+        "1,000",
+        "Visa added that more than 1,000 of its employees have been using Replit for prototyping and developm"
+      ],
+      [
+        "200,000",
+        "Replit is also launching self-serve enterprise access, allowing companies to sign contracts worth up"
+      ],
+      [
+        "3billion",
+        "In September of last year, Replit hit the$3 billionvaluation mark."
+      ]
+    ],
+    "max_score": 101,
+    "outlier_ratio": 8.18918918918919,
+    "score_skew": "outlier",
+    "sentences_count": 137,
+    "top_domain": "other",
+    "top_domain_share": 0.6,
+    "top_entities": [
+      "SEC",
+      "EBA",
+      "Block",
+      "OCC",
+      "Fed",
+      "Microsoft",
+      "Visa",
+      "Trusted Agent Protocol"
+    ],
+    "top_sqi_articles": [
+      [
+        "Anthropic files for blockbuster initial public offering",
+        {
+          "authority": 0.8,
+          "cross_pillar": 1,
+          "engagement": 0.224,
+          "entity_density": 0.667,
+          "novelty": 1.0,
+          "sqi": 0.607,
+          "timeliness": 0.802
+        }
+      ],
+      [
+        "Visa invests in Replit to power agentic payments for developers",
+        {
+          "authority": 0.8,
+          "cross_pillar": 0,
+          "engagement": 0.433,
+          "entity_density": 0.333,
+          "novelty": 1.0,
+          "sqi": 0.593,
+          "timeliness": 0.701
+        }
+      ],
+      [
+        "Hegseth Blocks Eight Navy Senior Officer Promotions",
+        {
+          "authority": 0.8,
+          "cross_pillar": 1,
+          "engagement": 0.262,
+          "entity_density": 0.333,
+          "novelty": 1.0,
+          "sqi": 0.592,
+          "timeliness": 0.869
+        }
+      ]
+    ],
+    "total_score": 370,
+    "trending_topics": []
+  },
+  "source_breakdown": {
+    "arxiv": 5,
+    "hn": 25,
+    "pubmed": 0
+  },
+  "source_urls": [
+    "https://www.cnbc.com/2026/06/01/iran-us-negotiations-strait-of-hormuz.html",
+    "https://eyeball.rory.codes/",
+    "https://nesbitt.io/2026/06/01/the-infosec-phrasebook.html",
+    "https://techcrunch.com/2026/05/28/visa-invests-in-replit-to-power-agentic-payments-for-developers/",
+    "https://om.co/2026/05/25/we-are-living-in-pinocchios-world/",
+    "https://www.commondreams.org/news/israel-lebanon-war",
+    "https://www.youtube.com/watch?v=St_kJZXZ_nE",
+    "https://www.theatlantic.com/ideas/2026/06/trumps-intimidation-whistleblowers-nda/687377/",
+    "https://archestra.ai/blog/archestra-announces-10m-seed",
+    "https://www.elidedbranches.com/",
+    "https://www.swift.org/blog/bringing-goodnotes-to-web-with-swift/",
+    "https://gizmodo.com/crypto-security-pioneer-i-now-consider-all-of-defi-unsafe-2000764097",
+    "https://tochnyi.info/2026/05/logistics-lockdown-disrupting-the-road-logistics-network-of-russia-in-the-occupied-territories-of-ukraine/",
+    "https://www.axios.com/2026/06/01/trump-netanyahu-israel-lebanon-call",
+    "https://cryptobriefing.com/agent-payments-growth-x402/",
+    "https://newatlas.com/energy/china-underwater-data-center-opens/",
+    "https://therecord.media/microsoft-says-it-will-not-pursue-security-researchers-disclosure",
+    "https://www.funnel.fyi",
+    "https://deadeclipse666.blogspot.com/2026/05/announcing-bitskrieg.html",
+    "https://techcrunch.com/2026/05/31/erin-brockovich-takes-aim-at-data-center-secrecy/",
+    "https://www.wsj.com/politics/national-security/hegseth-blocks-eight-navy-senior-officer-promotions-aa536aa2",
+    "https://www.bbc.com/future/article/20260527-plots-love-letters-and-diplomacy-the-medieval-secrets-being-revealed-by-ai",
+    "https://www.theguardian.com/technology/2026/jun/01/fcas-palantir-deal-could-expose-uk-financial-data-to-trumps-us-critics-fear",
+    "https://www.ft.com/content/4f82f41c-24e7-4323-899a-17a04badd29e",
+    "https://www.databricks.com/blog/enabling-evolutionary-database-development-database-branching-lakebase",
+    "http://arxiv.org/abs/2606.02528v1",
+    "http://arxiv.org/abs/2606.02348v1",
+    "http://arxiv.org/abs/2606.02563v1",
+    "http://arxiv.org/abs/2606.02523v1",
+    "http://arxiv.org/abs/2606.02483v1"
+  ],
+  "story_count": 30,
+  "title": "Iran stops negotiations with U.S., vows to completely block Strait of Hormuz -- 🛡️ AML 2026-06-02",
+  "version": 1
+}
