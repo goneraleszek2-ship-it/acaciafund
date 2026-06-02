@@ -9,6 +9,7 @@ from pathlib import Path
 from typing import List, Optional
 
 import markdown2
+import yaml
 from pydantic import ValidationError
 
 from schemas import AcaciaContent, PipelineStage, MCPIntegration, PlannedFeature, RegistryData
@@ -55,12 +56,20 @@ def parse_markdown_file(file_path: Path) -> dict:
         frontmatter_text = ""
         body = content
 
-    # Parse frontmatter (simple key: value)
-    metadata = {}
-    for line in frontmatter_text.splitlines():
-        if ":" in line:
-            key, value = line.split(":", 1)
-            metadata[key.strip()] = value.strip()
+    # Parse frontmatter using YAML for proper list/quote handling
+    try:
+        metadata = yaml.safe_load(frontmatter_text) or {}
+    except yaml.YAMLError:
+        metadata = {}
+    if not isinstance(metadata, dict):
+        metadata = {}
+
+    # Strip quotes from string values (handle YAML-quoted titles)
+    for k, v in list(metadata.items()):
+        if isinstance(v, str):
+            stripped = v.strip().strip('"').strip("'").strip()
+            if stripped != v.strip():
+                metadata[k] = stripped
 
     # Convert body to HTML
     try:
@@ -143,18 +152,41 @@ def create_acacia_content(md_file: Path, parsed: dict) -> Optional[AcaciaContent
     if not category:
         category = "post"
 
-    # Extract tags from metadata (if present) or from frontmatter tags
+    # Extract tags from metadata - YAML should give us a list now
     tags = metadata.get("tags", [])
     if isinstance(tags, str):
-        tags = [tag.strip() for tag in tags.split(",")]
+        tags = [tags]
     elif not isinstance(tags, list):
         tags = []
+    # Flatten any nested lists and clean tags
+    clean_tags = []
+    for tag in tags:
+        if isinstance(tag, str):
+            tag = tag.strip().strip('"').strip("'")
+            if tag:
+                clean_tags.append(tag)
+    tags = clean_tags
+
+    # Clean title - strip quotes if present
+    title = metadata.get("title", "")
+    if isinstance(title, str):
+        title = title.strip().strip('"').strip("'").strip()
+
+    # Generate description from frontmatter or body excerpt
+    description = metadata.get("description", "")
+    if isinstance(description, str):
+        description = description.strip().strip('"').strip("'").strip()
+    if not description:
+        import re
+        plain = re.sub(r'<[^>]+>', '', parsed["body_html"])
+        description = plain.strip()[:160].rsplit(' ', 1)[0] + '...' if len(plain.strip()) > 160 else plain.strip()
 
     # Prepare the data for AcaciaContent
     content_data = {
         "slug": slug,
         "language": language,
-        "title": metadata.get("title", ""),
+        "title": title,
+        "description": description,
         "body_html": parsed["body_html"],
         "category": category,
         "tags": tags,
@@ -162,14 +194,18 @@ def create_acacia_content(md_file: Path, parsed: dict) -> Optional[AcaciaContent
         "updated_at": None,
     }
 
-    # Try to parse the date from metadata
-    date_str = metadata.get("date")
-    if date_str:
+# Try to parse the date from metadata
+    date_val = metadata.get("date")
+    if date_val:
         try:
-            # Expected format: YYYY-MM-DD
-            content_data["created_at"] = datetime.strptime(date_str, "%Y-%m-%d")
-        except ValueError:
-            pass  # Keep the default
+            if isinstance(date_val, datetime):
+                content_data["created_at"] = date_val
+            elif hasattr(date_val, 'year'):
+                content_data["created_at"] = datetime(date_val.year, date_val.month, date_val.day)
+            elif isinstance(date_val, str):
+                content_data["created_at"] = datetime.strptime(date_val, "%Y-%m-%d")
+        except (ValueError, TypeError):
+            pass
 
     try:
         return AcaciaContent(**content_data)

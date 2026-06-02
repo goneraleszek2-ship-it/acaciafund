@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ content.title | striptags }} | AcaciaFund</title>
-  <meta name="description" content="{{ content.body_html | striptags | truncate(160) }}">
+  <meta name="description" content="{{ content.description | default(content.body_html | striptags | truncate(160)) }}">
   <meta name="generator" content="AcaciaFund Python-native Pipeline">
 
   {%- if content.category == "blog" %}
