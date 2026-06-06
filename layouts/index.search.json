@@ -1,9 +1,0 @@
-[{{ range $i, $p := (where site.RegularPages "Type" "post") }}{{ if $i }},{{ end }}
-{
-  "title": {{ $p.Title | jsonify }},
-  "url": {{ $p.Permalink | jsonify }},
-  "date": {{ $p.PublishDate.Format "2006-01-02" | jsonify }},
-  "category": {{ with $p.Params.categories }}{{ (index . 0) | jsonify }}{{ else }}""{{ end }},
-  "description": {{ $p.Params.description | default "" | jsonify }},
-  "content": {{ $p.Plain | replaceRE "&[a-zA-Z]+;" "" | replaceRE "&#[0-9]+;" "" | truncate 500 | jsonify }}
-}{{ end }}]

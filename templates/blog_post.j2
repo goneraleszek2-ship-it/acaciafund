@@ -1,0 +1,147 @@
+{% extends "layout.j2" %}
+{% block main_content %}
+<article>
+  <header class="mb-8">
+    <div class="flex items-center gap-3 mb-3">
+      {%- set pillar_key = content.pillar or "aml" %}
+      {%- set pc = pillar_config.get(pillar_key, pillar_config["aml"]) %}
+      <span class="inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-full {{ pc.badge_color }}">
+        {{ pc.emoji }} {{ pc.label }}
+      </span>
+      {%- if content.signals and content.signals.get("avg_sqi") is defined %}
+      <span class="text-xs text-gray-400 font-mono" title="Signal Quality Index">
+        SQI {{ "%.3f"|format(content.signals.get("avg_sqi", 0)) }}
+      </span>
+      {%- endif %}
+      {%- if content.source_breakdown %}
+      <span class="text-xs text-gray-400">
+        {{ content.source_breakdown.get("hn", 0) }} HN
+        {%- if content.source_breakdown.get("arxiv", 0) > 0 %} · {{ content.source_breakdown["arxiv"] }} arXiv{% endif %}
+        {%- if content.source_breakdown.get("pubmed", 0) > 0 %} · {{ content.source_breakdown["pubmed"] }} PubMed{% endif %}
+      </span>
+      {%- endif %}
+    </div>
+    <h1 class="text-3xl font-extrabold text-gray-900 leading-tight">{{ content.title | striptags }}</h1>
+    {%- if content.date_str %}
+    <time class="mt-2 block text-sm text-gray-500" datetime="{{ content.date_str }}">{{ content.date_str }}</time>
+    {%- endif %}
+    {%- if content.tags and content.tags | length > 0 %}
+    <div class="mt-3 flex flex-wrap gap-2">
+      {%- for tag in content.tags %}
+      <span class="inline-block px-2 py-0.5 text-xs font-medium rounded bg-gray-100 text-gray-700">{{ tag }}</span>
+      {%- endfor %}
+    </div>
+    {%- endif %}
+  </header>
+
+  {%- if content.quality_metrics and content.quality_metrics.get("avg_source_score") is defined %}
+  <div class="mb-8 grid grid-cols-3 gap-4 text-center text-sm">
+    <div class="bg-white rounded-lg border border-gray-200 p-3">
+      <div class="text-lg font-bold text-gray-900">{{ "%.2f"|format(content.quality_metrics.get("avg_source_score", 0)) }}</div>
+      <div class="text-gray-500 text-xs">Avg Source Score</div>
+    </div>
+    <div class="bg-white rounded-lg border border-gray-200 p-3">
+      <div class="text-lg font-bold text-gray-900">{{ "%.2f"|format(content.quality_metrics.get("source_diversity", 0)) }}</div>
+      <div class="text-gray-500 text-xs">Source Diversity</div>
+    </div>
+    <div class="bg-white rounded-lg border border-gray-200 p-3">
+      <div class="text-lg font-bold text-gray-900">{{ "%.0f"|format(content.quality_metrics.get("recency_score", 0) * 100) }}%</div>
+      <div class="text-gray-500 text-xs">Recency</div>
+    </div>
+  </div>
+  {%- endif %}
+
+  <div class="prose prose-lg prose-blue max-w-none">
+    {{ content.body_html | safe }}
+  </div>
+
+  {%- if content.bloom_questions and content.bloom_questions | length > 0 %}
+  <section class="mt-12 pt-8 border-t border-gray-200">
+    <h2 class="text-2xl font-bold text-gray-900 mb-6">Bloom Taxonomy Questions</h2>
+    <div class="space-y-4">
+      {%- for q in content.bloom_questions %}
+      <div class="bg-white rounded-lg border border-gray-200 p-4">
+        <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded 
+          {%- if q.bloom_level == "remember" %} bg-blue-100 text-blue-700
+          {%- elif q.bloom_level == "understand" %} bg-green-100 text-green-700
+          {%- elif q.bloom_level == "apply" %} bg-amber-100 text-amber-700
+          {%- elif q.bloom_level == "analyze" %} bg-purple-100 text-purple-700
+          {%- elif q.bloom_level == "evaluate" %} bg-red-100 text-red-700
+          {%- elif q.bloom_level == "create" %} bg-indigo-100 text-indigo-700
+          {%- else %} bg-gray-100 text-gray-700{% endif %}">
+          {{ q.bloom_level | capitalize }}
+        </span>
+        <p class="mt-2 text-gray-800">{{ q.question }}</p>
+      </div>
+      {%- endfor %}
+    </div>
+  </section>
+  {%- endif %}
+
+  {%- if content.flashcards and content.flashcards | length > 0 %}
+  <section class="mt-12 pt-8 border-t border-gray-200">
+    <h2 class="text-2xl font-bold text-gray-900 mb-6">Flashcards</h2>
+    <div class="flashcard-grid">
+      {%- for fc in content.flashcards[:12] %}
+      <div class="flashcard-card">
+        <div class="font-semibold text-gray-900 text-sm">{{ fc.term }}</div>
+        <div class="mt-1 text-xs text-gray-600">{{ fc.definition[:120] }}</div>
+      </div>
+      {%- endfor %}
+    </div>
+  </section>
+  {%- endif %}
+
+  {%- if content.signals %}
+  <section class="mt-12 pt-8 border-t border-gray-200">
+    <h2 class="text-2xl font-bold text-gray-900 mb-4">Signal Analysis</h2>
+    {%- set s = content.signals %}
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+      <div class="bg-white rounded-lg border p-3">
+        <div class="text-xl font-bold text-gray-900">{{ s.get("count", 0) }}</div>
+        <div class="text-xs text-gray-500">Articles</div>
+      </div>
+      <div class="bg-white rounded-lg border p-3">
+        <div class="text-xl font-bold text-gray-900">{{ s.get("total_score", 0) }}</div>
+        <div class="text-xs text-gray-500">Total Points</div>
+      </div>
+      <div class="bg-white rounded-lg border p-3">
+        <div class="text-xl font-bold text-gray-900">{{ "%.2f"|format(s.get("avg_score", 0)) }}</div>
+        <div class="text-xs text-gray-500">Avg Points</div>
+      </div>
+      <div class="bg-white rounded-lg border p-3">
+        <div class="text-xl font-bold text-gray-900">{{ s.get("domain_diversity", 0) }}</div>
+        <div class="text-xs text-gray-500">Domains</div>
+      </div>
+    </div>
+    {%- if s.get("top_entities") %}
+    <div class="mt-4">
+      <span class="text-sm font-medium text-gray-700">Entities:</span>
+      <div class="mt-1 flex flex-wrap gap-2">
+        {%- for e in s["top_entities"] %}
+        <span class="inline-block px-2 py-0.5 text-xs font-mono bg-gray-100 text-gray-700 rounded">{{ e }}</span>
+        {%- endfor %}
+      </div>
+    </div>
+    {%- endif %}
+  </section>
+  {%- endif %}
+
+  {%- if prev_post or next_post %}
+  <nav class="mt-12 pt-6 border-t border-gray-200 grid grid-cols-2 gap-4" aria-label="Post navigation">
+    {%- if prev_post %}
+    <a href="/{{ prev_post.slug }}/" class="group">
+      <span class="text-xs text-gray-500">&larr; Previous</span>
+      <span class="block text-sm font-medium text-gray-900 group-hover:text-blue-600 truncate">{{ prev_post.title | striptags }}</span>
+    </a>
+    {%- endif %}
+    {%- if next_post %}
+    <a href="/{{ next_post.slug }}/" class="group text-right">
+      <span class="text-xs text-gray-500">Next &rarr;</span>
+      <span class="block text-sm font-medium text-gray-900 group-hover:text-blue-600 truncate">{{ next_post.title | striptags }}</span>
+    </a>
+    {%- endif %}
+  </nav>
+  {%- endif %}
+</article>
+{% endblock %}

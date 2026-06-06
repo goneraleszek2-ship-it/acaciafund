@@ -1,0 +1,47 @@
+{% extends "layout.j2" %}
+{% block main_content %}
+<section>
+  <div class="mb-8">
+    <span class="inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-full {{ pconf.badge_color }}">
+      {{ pconf.emoji }} {{ pconf.label }}
+    </span>
+    <h1 class="text-3xl font-extrabold text-gray-900 mt-2">{{ pconf.heading }}</h1>
+    <p class="mt-2 text-gray-600">{{ pconf.description }}</p>
+    <p class="mt-1 text-sm text-gray-400">{{ posts | length }} posts</p>
+  </div>
+
+  <div class="space-y-6">
+    {%- for post in posts %}
+    <article class="bg-white rounded-lg border border-gray-200 p-5 hover:shadow-md transition">
+      <div class="flex items-start justify-between gap-4">
+        <div class="min-w-0">
+          <h2 class="text-lg font-semibold text-gray-900 leading-snug">
+            <a href="/{{ post.slug }}/" class="hover:text-blue-600 transition">{{ post.title | striptags }}</a>
+          </h2>
+          {%- if post.description %}
+          <p class="mt-1 text-sm text-gray-600 line-clamp-2">{{ post.description[:200] }}</p>
+          {%- endif %}
+          <div class="mt-2 flex items-center gap-3 text-xs text-gray-400">
+            {%- if post.date_str %}
+            <time datetime="{{ post.date_str }}">{{ post.date_str }}</time>
+            {%- endif %}
+            {%- if post.signals and post.signals.get("avg_sqi") is defined %}
+            <span class="font-mono">SQI {{ "%.3f"|format(post.signals.get("avg_sqi", 0)) }}</span>
+            {%- endif %}
+            {%- if post.source_breakdown %}
+            <span>{{ post.source_breakdown.get("hn", 0) }} HN · {{ post.source_breakdown.get("arxiv", 0) }} arXiv</span>
+            {%- endif %}
+          </div>
+        </div>
+        {%- if post.quality_metrics and post.quality_metrics.get("avg_source_score") is defined %}
+        <div class="hidden sm:flex flex-col items-end gap-1 text-xs text-gray-500">
+          <span>Quality {{ "%.2f"|format(post.quality_metrics.get("avg_source_score", 0)) }}</span>
+          <span>Diversity {{ "%.2f"|format(post.quality_metrics.get("source_diversity", 0)) }}</span>
+        </div>
+        {%- endif %}
+      </div>
+    </article>
+    {%- endfor %}
+  </div>
+</section>
+{% endblock %}
