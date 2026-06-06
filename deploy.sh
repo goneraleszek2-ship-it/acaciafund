@@ -69,3 +69,4 @@ else
   echo "Step 3: Skipping deploy (set CLOUDFLARE_ACCOUNT_ID and CLOUDFLARE_API_TOKEN)"
   echo "Preview your site: python3 -m http.server 8000 --dir dist"
 fi
+
