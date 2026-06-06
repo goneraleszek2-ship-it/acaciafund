@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 225" width="400" height="225">
+  <defs>
+    <linearGradient id="bg-mkt" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#166534"/>
+      <stop offset="100%" stop-color="#052e16"/>
+    </linearGradient>
+    <linearGradient id="mkt-glow" x1="50%" y1="40%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22c55e" stop-opacity="0.08"/>
+      <stop offset="100%" stop-color="#052e16" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="400" height="225" fill="url(#bg-mkt)"/>
+  <rect width="400" height="225" fill="url(#mkt-glow)"/>
+  <g transform="translate(-80, -40) scale(0.7)">
+    <rect x="472.7" y="131" width="263.45" height="222.9" rx="12.49" fill="#0a3d1a"/>
+    <rect x="488.7" y="161.6" width="235" height="155" rx="0" fill="#0d4d22"/>
+    <path d="M505.1,217.56h-11a2.26,2.26,0,0,1-2.26-2.26V204.27a2.26,2.26,0,0,1,2.26-2.26h11a2.26,2.26,0,0,1,2.26,2.26v11A2.26,2.26,0,0,1,505.1,217.56Z" fill="#22c55e"/>
+    <path d="M505.1,246.16h-11a2.26,2.26,0,0,1-2.26-2.26v-11a2.26,2.26,0,0,1,2.26-2.26h11a2.26,2.26,0,0,1,2.26,2.26v11A2.26,2.26,0,0,1,505.1,246.16Z" fill="#22c55e" opacity="0.6"/>
+    <path d="M505.1,274.75h-11a2.26,2.26,0,0,1-2.26-2.26v-11a2.26,2.26,0,0,1,2.26-2.26h11a2.26,2.26,0,0,1,2.26,2.26v11A2.26,2.26,0,0,1,505.1,274.75Z" fill="#22c55e" opacity="0.3"/>
+    <path d="M577.33,212.04H524.16a2.26,2.26,0,1,1,0-4.51h53.17a2.26,2.26,0,1,1,0,4.51Z" fill="#22c55e" opacity="0.4"/>
+    <path d="M577.33,240.64H524.16a2.26,2.26,0,1,1,0-4.51h53.17a2.26,2.26,0,1,1,0,4.51Z" fill="#22c55e" opacity="0.3"/>
+    <path d="M577.33,269.23H524.16a2.26,2.26,0,1,1,0-4.51h53.17a2.26,2.26,0,1,1,0,4.51Z" fill="#22c55e" opacity="0.2"/>
+    <path d="M708.34,239.1a47.32,47.32,0,0,0-47.32-47.32v47.32Z" fill="#22c55e"/>
+    <path d="M657.53,243.4v-50.19a47.32,47.32,0,1,0,47.23,50.19Z" fill="#22c55e" opacity="0.5"/>
+    <path d="M804.11,563.1l-42.55-1.34a4.56,4.56,0,0,1-4.4-4.02c-5.4-43.67,9.4-55.36,16.01-58.37a3.52,3.52,0,0,0,2.05-2.79l.57-4.58a4.56,4.56,0,0,1,.9-2.22c10.37-13.43,24.52-17.73,32.04-19.1a4.57,4.57,0,0,1,5.34,3.92l.86,6.57a3.62,3.62,0,0,0,.72,1.72c21.62,28.26-2.46,69.99-7.51,78.06A4.58,4.58,0,0,1,804.11,563.1Z" fill="#22c55e" opacity="0.15"/>
+  </g>
+  <rect x="0" y="185" width="400" height="40" fill="url(#bg-mkt)" opacity="0.9"/>
+  <text x="200" y="211" font-family="system-ui, sans-serif" font-size="22" font-weight="700" text-anchor="middle" fill="#e2e8f0" letter-spacing="4">MARKETS</text>
+</svg>

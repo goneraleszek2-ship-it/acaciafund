@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 500" width="600" height="500">
+  <!-- Bloom Taxonomy pyramid — transparent bg -->
+
+  <!-- Background rings -->
+  <circle cx="300" cy="250" r="220" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.04"/>
+  <circle cx="300" cy="250" r="180" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.04"/>
+  <circle cx="300" cy="250" r="140" fill="none" stroke="currentColor" stroke-width="0.5" opacity="0.04"/>
+
+  <!-- Pyramid -->
+  <g transform="translate(300, 260)">
+    <!-- Level 1: Create (top) -->
+    <polygon points="0,-145 -40,-105 40,-105" fill="#7e22ce" opacity="0.8" stroke="#a855f7" stroke-width="1.5"/>
+    <text x="0" y="-113" text-anchor="middle" fill="#fff" font-family="system-ui,sans-serif" font-size="9" font-weight="700">TWORZENIE</text>
+    <!-- Level 2: Evaluate -->
+    <polygon points="-53,-95 -80,-55 80,-55 53,-95" fill="#9333ea" opacity="0.8" stroke="#a855f7" stroke-width="1.5"/>
+    <text x="0" y="-62" text-anchor="middle" fill="#fff" font-family="system-ui,sans-serif" font-size="9" font-weight="700">OCENA</text>
+    <!-- Level 3: Analyze -->
+    <polygon points="-90,-45 -120,-5 120,-5 90,-45" fill="#d97706" opacity="0.85" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="0" y="-12" text-anchor="middle" fill="#fff" font-family="system-ui,sans-serif" font-size="9" font-weight="700">ANALIZA</text>
+    <!-- Level 4: Apply -->
+    <polygon points="-128,5 -158,45 158,45 128,5" fill="#ea580c" opacity="0.85" stroke="#f59e0b" stroke-width="1.5"/>
+    <text x="0" y="38" text-anchor="middle" fill="#fff" font-family="system-ui,sans-serif" font-size="9" font-weight="700">ZASTOSOWANIE</text>
+    <!-- Level 5: Understand -->
+    <polygon points="-166,55 -190,95 190,95 166,55" fill="#166534" opacity="0.85" stroke="#22c55e" stroke-width="1.5"/>
+    <text x="0" y="88" text-anchor="middle" fill="#fff" font-family="system-ui,sans-serif" font-size="9" font-weight="700">ROZUMIENIE</text>
+    <!-- Level 6: Remember -->
+    <polygon points="-198,105 -225,145 225,145 198,105" fill="#15803d" opacity="0.85" stroke="#22c55e" stroke-width="1.5"/>
+    <text x="0" y="138" text-anchor="middle" fill="#fff" font-family="system-ui,sans-serif" font-size="9" font-weight="700">PAMIĘĆ</text>
+  </g>
+
+  <!-- Sparkle dots -->
+  <g fill="#d97706" opacity="0.3">
+    <circle cx="120" cy="80" r="2"/><circle cx="480" cy="60" r="2"/>
+    <circle cx="100" cy="220" r="2"/><circle cx="500" cy="200" r="2"/>
+    <circle cx="130" cy="170" r="1.5"/><circle cx="470" cy="150" r="1.5"/>
+  </g>
+
+  <text x="300" y="460" text-anchor="middle" fill="currentColor" font-family="system-ui,sans-serif" font-size="11" opacity="0.3">
+    Bloom Taxonomy — 6 poziomów przyswajania wiedzy
+  </text>
+</svg>
