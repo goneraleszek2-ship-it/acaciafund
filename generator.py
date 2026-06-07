@@ -202,7 +202,9 @@ def main():
     env.filters["reading_time"] = reading_time_minutes
     env.filters["urlencode"] = lambda s: urlquote(s or '', safe='')
 
-    year = datetime.now(timezone.utc).year
+    now = datetime.now(timezone.utc)
+    year = now.year
+    build_hash = now.strftime("%Y%m%d%H%M%S")
     all_content = registry.content
 
     research_items = [c for c in all_content if c.content_type == "research"]
@@ -212,6 +214,7 @@ def main():
     pillar_groups = group_by_pillar(research_items)
 
     ctx_base = {
+        "build_hash": build_hash,
         "year": year,
         "site_url": SITE_URL,
         "plausible_domain": "",

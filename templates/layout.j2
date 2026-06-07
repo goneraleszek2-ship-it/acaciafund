@@ -65,8 +65,8 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="/static/css/tailwind.min.css">
-  <link rel="stylesheet" href="/static/css/custom.css">
+  <link rel="stylesheet" href="/static/css/tailwind.min.css{{ "?v=" + build_hash if build_hash else "" }}">
+  <link rel="stylesheet" href="/static/css/custom.css{{ "?v=" + build_hash if build_hash else "" }}">
   <link rel="preload" href="/static/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/static/fonts/Inter-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/static/fonts/Inter-Bold.woff2" as="font" type="font/woff2" crossorigin>
