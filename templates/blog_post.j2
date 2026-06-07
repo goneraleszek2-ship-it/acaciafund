@@ -71,22 +71,22 @@
     </header>
 
     {%- if content.quality_metrics and content.quality_metrics.get("avg_source_score") is defined %}
-    <div class="mb-8 flex flex-wrap gap-6 items-start justify-center">
-      <div class="rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
-        <h3 class="text-xs font-semibold mb-2 text-center" style="color:var(--color-text-muted)">Quality Radar</h3>
-        {{ chart_radar | safe }}
+    <div class="mb-6 grid grid-cols-2 gap-2">
+      <div class="rounded-lg p-2.5" style="background:var(--color-surface);border:1px solid var(--color-border)">
+        <h3 class="text-[11px] font-semibold mb-1 text-center" style="color:var(--color-text-secondary)">Quality Radar</h3>
+        <div class="flex justify-center">{{ chart_radar | safe }}</div>
       </div>
-      <div class="rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
-        <h3 class="text-xs font-semibold mb-2 text-center" style="color:var(--color-text-muted)">Source Mix</h3>
-        {{ chart_donut | safe }}
+      <div class="rounded-lg p-2.5" style="background:var(--color-surface);border:1px solid var(--color-border)">
+        <h3 class="text-[11px] font-semibold mb-1 text-center" style="color:var(--color-text-secondary)">Source Mix</h3>
+        <div class="flex justify-center">{{ chart_donut | safe }}</div>
       </div>
-      <div class="rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
-        <h3 class="text-xs font-semibold mb-2 text-center" style="color:var(--color-text-muted)">SQI Trend</h3>
-        {{ chart_sparkline | safe }}
+      <div class="rounded-lg p-2.5" style="background:var(--color-surface);border:1px solid var(--color-border)">
+        <h3 class="text-[11px] font-semibold mb-1 text-center" style="color:var(--color-text-secondary)">SQI Trend</h3>
+        <div class="flex justify-center">{{ chart_sparkline | safe }}</div>
       </div>
-      <div class="rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
-        <h3 class="text-xs font-semibold mb-2 text-center" style="color:var(--color-text-muted)">Quality Checks</h3>
-        {{ chart_heatmap | safe }}
+      <div class="rounded-lg p-2.5" style="background:var(--color-surface);border:1px solid var(--color-border)">
+        <h3 class="text-[11px] font-semibold mb-1 text-center" style="color:var(--color-text-secondary)">Quality Checks</h3>
+        <div class="flex justify-center">{{ chart_heatmap | safe }}</div>
       </div>
     </div>
     {%- endif %}

@@ -288,10 +288,10 @@ def generate_signal_meter(sqi: float, width: int = 200) -> str:
     color = "#22c55e" if sqi >= 0.6 else "#d97706" if sqi >= 0.35 else "#ef4444"
     return (
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="16" viewBox="0 0 {width} 16">'
-        f'  <rect width="{width}" height="6" y="5" rx="3" fill="#e2e8f0"/>'
+        f'  <rect width="{width}" height="6" y="5" rx="3" fill="var(--color-border, #e2e8f0)"/>'
         f'  <rect width="{bar_w}" height="6" y="5" rx="3" fill="{color}"/>'
         f'  <circle cx="{max(6, bar_w)}" cy="8" r="5" fill="{color}"/>'
-        f'  <text x="{width + 8}" y="13" fill="#64748b" font-family="system-ui,sans-serif" font-size="11">{sqi:.2f}</text>'
+        f'  <text x="{width + 8}" y="13" fill="var(--color-text-secondary, #475569)" font-family="system-ui,sans-serif" font-size="11">{sqi:.2f}</text>'
         f'</svg>'
     )
 
@@ -360,8 +360,8 @@ def source_bar_svg(breakdown: dict, width: int = 280, height: int = 80) -> str:
     # Scale ticks
     for pct in (0, 25, 50, 75, 100):
         tx = bar_x + int(pct / 100 * bar_w)
-        parts.append(f'<line x1="{tx}" y1="{y + bar_h + 2}" x2="{tx}" y2="{y + bar_h + 6}" stroke="#94a3b8" stroke-width="0.5"/>')
-        parts.append(f'<text x="{tx}" y="{y + bar_h + 16}" text-anchor="middle" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="7">{pct}%</text>')
+        parts.append(f'<line x1="{tx}" y1="{y + bar_h + 2}" x2="{tx}" y2="{y + bar_h + 6}" stroke="var(--color-text-muted, #94a3b8)" stroke-width="0.5"/>')
+        parts.append(f'<text x="{tx}" y="{y + bar_h + 16}" text-anchor="middle" fill="var(--color-text-secondary, #475569)" font-family="system-ui,sans-serif" font-size="7">{pct}%</text>')
     parts.append('</svg>')
     return "\n".join(parts)
 
@@ -417,7 +417,7 @@ def bloom_chart_svg(questions: list, width: int = 280, height: int = 180) -> str
         c = BLOOM_COLORS.get(level, "#94a3b8")
         cnt = counts[level]
         bar_w = max(2, int(cnt / max_count * bar_max_w))
-        parts.append(f'<text x="{label_w - 4}" y="{y + bar_h - 4}" text-anchor="end" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="9" font-weight="500">{level}</text>')
+        parts.append(f'<text x="{label_w - 4}" y="{y + bar_h - 4}" text-anchor="end" fill="var(--color-text-secondary, #475569)" font-family="system-ui,sans-serif" font-size="9" font-weight="500">{level}</text>')
         parts.append(f'<rect x="{label_w}" y="{y}" width="{bar_w}" height="{bar_h}" rx="3" fill="{c}" opacity="0.85"/>')
         if bar_w > 20:
             parts.append(f'<text x="{label_w + 6}" y="{y + bar_h - 4}" fill="#fff" font-family="system-ui,sans-serif" font-size="9" font-weight="600">{cnt}</text>')
@@ -466,7 +466,7 @@ def radar_svg(metrics: dict, width: int = 180, height: int = 180) -> str:
         lx = cx + (radius + 14) * math.cos(math.radians(a))
         ly = cy + (radius + 14) * math.sin(math.radians(a))
         parts.append(f'<line x1="{cx}" y1="{cy}" x2="{x2:.1f}" y2="{y2:.1f}" stroke="#2d2d4a" stroke-width="0.5" opacity="0.4"/>')
-        parts.append(f'<text x="{lx:.1f}" y="{ly:.1f}" text-anchor="middle" dominant-baseline="middle" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="8">{lbl}</text>')
+        parts.append(f'<text x="{lx:.1f}" y="{ly:.1f}" text-anchor="middle" dominant-baseline="middle" fill="var(--color-text-secondary, #475569)" font-family="system-ui,sans-serif" font-size="8">{lbl}</text>')
     # Data triangle
     pts = []
     for a, v in zip(angles, vals):
@@ -518,11 +518,11 @@ def heatmap_svg(data: list[list[float]], row_labels: list[str] | None = None,
     if row_labels:
         for i, lbl in enumerate(row_labels):
             y = header_h + i * (cell_size + gap) + cell_size // 2 + 1
-            parts.append(f'<text x="{label_w - 4}" y="{y}" text-anchor="end" dominant-baseline="middle" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="8">{lbl}</text>')
+            parts.append(f'<text x="{label_w - 4}" y="{y}" text-anchor="end" dominant-baseline="middle" fill="var(--color-text-secondary, #475569)" font-family="system-ui,sans-serif" font-size="8">{lbl}</text>')
     if col_labels:
         for j, lbl in enumerate(col_labels):
             x = label_w + j * (cell_size + gap) + cell_size // 2
-            parts.append(f'<text x="{x}" y="{header_h - 4}" text-anchor="middle" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="8">{lbl}</text>')
+            parts.append(f'<text x="{x}" y="{header_h - 4}" text-anchor="middle" fill="var(--color-text-secondary, #475569)" font-family="system-ui,sans-serif" font-size="8">{lbl}</text>')
     parts.append('</svg>')
     return "\n".join(parts)
 
@@ -559,14 +559,12 @@ def donut_svg(breakdown: dict, width: int = 140, height: int = 140) -> str:
         end = start + angle
         if angle > 0.5:
             parts.append(f'<path d="{arc_path(cx, cy, r, start, end)}" fill="{c}" opacity="0.85"/>')
-        # Inner cutout
-        clr = c
         start = end
 
     # Inner circle (creates donut hole) with legend
     parts.append(f'<circle cx="{cx}" cy="{cy}" r="{inner_r}" fill="var(--color-bg, #0f172a)"/>')
-    parts.append(f'<text x="{cx}" y="{cy - 2}" text-anchor="middle" dominant-baseline="middle" fill="#e8e6e3" font-family="system-ui,sans-serif" font-size="14" font-weight="700">{total}</text>')
-    parts.append(f'<text x="{cx}" y="{cy + 12}" text-anchor="middle" dominant-baseline="middle" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="7">sources</text>')
+    parts.append(f'<text x="{cx}" y="{cy - 2}" text-anchor="middle" dominant-baseline="middle" fill="var(--color-text, #e8e6e3)" font-family="system-ui,sans-serif" font-size="14" font-weight="700">{total}</text>')
+    parts.append(f'<text x="{cx}" y="{cy + 12}" text-anchor="middle" dominant-baseline="middle" fill="var(--color-text-secondary, #475569)" font-family="system-ui,sans-serif" font-size="7">sources</text>')
     # Legend below
     ly = height - 12
     lx_start = 10
@@ -577,7 +575,7 @@ def donut_svg(breakdown: dict, width: int = 140, height: int = 140) -> str:
             continue
         c = SOURCE_COLORS.get(key, "#94a3b8")
         parts.append(f'<rect x="{lx}" y="{ly - 4}" width="8" height="8" rx="1" fill="{c}"/>')
-        parts.append(f'<text x="{lx + 10}" y="{ly + 2}" fill="#94a3b8" font-family="system-ui,sans-serif" font-size="8">{SOURCE_LABELS.get(key, key)}</text>')
+        parts.append(f'<text x="{lx + 10}" y="{ly + 2}" fill="var(--color-text-secondary, #475569)" font-family="system-ui,sans-serif" font-size="8">{SOURCE_LABELS.get(key, key)}</text>')
         lx += 50
     parts.append('</svg>')
     return "\n".join(parts)
