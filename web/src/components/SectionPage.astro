@@ -1,8 +1,0 @@
----
-const { page, title } = Astro.props;
----
-<section class="section article">
-  <div class="eyebrow">Section</div>
-  <h1 class="title" style="font-size: clamp(2rem, 4vw, 3.6rem); max-width: 18ch;">{title}</h1>
-  {page ? <div class="prose" set:html={page.html} /> : <div class="card">Content coming soon.</div>}
-</section>
