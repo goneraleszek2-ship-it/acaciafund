@@ -21,7 +21,7 @@ This document defines the fundamentals-first target architecture for a 2026-read
 
 ## Target Stack
 
-- Astro for the public site.
+- Python + Jinja2 for the public site (no build framework).
 - Python for ingestion, classification, and content generation.
 - GitHub Actions for scheduled runs, validation, and deployment.
 - Cloudflare Pages for static hosting.
@@ -29,7 +29,7 @@ This document defines the fundamentals-first target architecture for a 2026-read
 - Cloudflare D1 for progress, run state, and metadata registry.
 - Cloudflare R2 for snapshots, archives, and generated assets.
 
-Legacy Hugo content generation remains available during migration, but Astro is the cutover target.
+Content is generated entirely by Python — no Hugo, no Astro, no build framework. The output is ready-to-serve static HTML.
 
 ## System Shape
 
@@ -39,7 +39,7 @@ raw sources -> bronze -> silver -> gold -> publish
 
 - Bronze: raw fetches from Hacker News, arXiv, and any future sources.
 - Silver: normalized stories, lessons, entities, scores, and lineage records.
-- Gold: Hugo bundles, images, search index, and user-facing artifacts.
+- Gold: static HTML pages, SVG images, search index, and user-facing artifacts.
 
 ## Data Contracts
 
@@ -75,8 +75,8 @@ Every generated object should carry explicit metadata.
 - Scheduler: triggers synthesis on a cadence and on demand.
 - Fetch layer: pulls HN and arXiv, caches requests, and records source state.
 - Analysis layer: classifies pillar, computes SQI, extracts entities, and detects trends.
-- Generation layer: emits Hugo bundles, SVG assets, and structured metadata.
-- Public site: Astro renders static pages and search.
+- Generation layer: `generator.py` emits static HTML, SVG assets (fractal thumbnails, chart SVGs, OG images), and search index.
+- Public site: Jinja2 renders static pages and vanilla JS handles search.
 - Learning layer: renders lessons, quizzes, and Bayes demo.
 - Sync layer: stores optional progress and future learner state.
 
@@ -123,15 +123,16 @@ Every generated object should carry explicit metadata.
 
 ```text
 ./
-├── core/               # deterministic pipeline logic
-├── schemas/             # JSON or TOML schemas for content contracts
-├── registry/            # run manifests and metadata index
-├── content/             # authored and generated Hugo content
-├── web/                 # Astro app and edge-ready frontend
-├── static/              # generated assets, search, client JS
-├── services/api/        # optional stateful service boundary
-├── infra/               # deployment and environment docs
-└── .github/workflows/   # scheduled build and release jobs
+├── core/               # visual engine (fractal, chart, topic overlays)
+├── schemas.py          # Pydantic models for content contracts
+├── registry.json       # content metadata catalog (51 entries)
+├── generator.py        # main build pipeline: Jinja2 → static HTML
+├── templates/          # Jinja2 templates (11 files)
+├── static/             # CSS, JS, fonts (self-hosted)
+├── content/            # source markdown for static pages
+├── services/api/       # optional stateful service boundary
+├── .github/workflows/  # CI/CD for API deployment
+└── dist/               # generated output (60+ pages)
 ```
 
 ## Quality Gates

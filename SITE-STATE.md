@@ -4,6 +4,7 @@
 > **Deployed URL:** https://www.acaciafund.org  
 > **Repo:** https://github.com/goneraleszek2-ship-it/acaciafund  
 > **Generator:** `python3.13 generator.py`  
+> **Build output:** 60+ HTML pages, 51 fractal thumbnails, 36 OG images  
 > **Host:** Cloudflare Pages (static)
 
 ---
@@ -13,13 +14,13 @@
 | Layer | Technology | Notes |
 |-------|-----------|-------|
 | Data source | `registry.json` | Pydantic-validated, single source of truth |
-| Template engine | Jinja2 | 4 templates: `layout.j2`, `blog_post.j2`, `pillar_index.j2`, `index.j2` |
+| Template engine | Jinja2 | 11 templates: `layout.j2`, `blog_post.j2`, `pillar_index.j2`, `index.j2`, `category_index.j2`, `learn.j2`, `learn_index.j2`, `knowledge.j2`, `knowledge_index.j2`, `search.j2`, `404.j2` |
 | Markdown rendering | `markdown2` | With `fenced-code-blocks` and `tables` extras |
 | CSS framework | Tailwind 3.4.19 (28KB local) | No CDN — self-hosted `tailwind.min.css` |
-| Custom styles | `static/css/custom.css` | ~270 lines — font-face, CSS variables, dark mode, TOC, dropdown, mobile nav, print styles |
+| Custom styles | `static/css/custom.css` | ~350 lines — font-face, CSS variables, dark mode, TOC, dropdown, mobile drawer (fixed), flashcard flip (3D), accordion, print styles |
 | Fonts | Inter (self-hosted) | Regular, SemiBold, Bold WOFF2 (~340KB total) |
-| Client JS | Inline `<script>` in templates | Dark mode toggle, dropdown, mobile nav, reading progress bar, TOC highlighting, focus mode |
-| Output | `dist/` (21 HTML pages) | Cleaned and rebuilt on each generator run |
+| Client JS | Inline `<script>` in templates + `static/js/search.js`, `learning.js`, `learning_hub.js` | Dark mode toggle, dropdown, mobile nav, flashcard flip, accordion, reading progress bar, TOC highlighting, focus mode, search, surprise me |
+| Output | `dist/` (60+ HTML pages) | Cleaned and rebuilt on each generator run |
 
 ### Pipeline
 
@@ -35,21 +36,26 @@ No build framework (no Astro, no Hugo). The output is ready-to-serve static HTML
 
 | Page | Route | Template | Content Source |
 |------|-------|----------|----------------|
-| Home | `/` | `index.j2` | First 8 posts + first 6 lessons |
-| Blog post (×12) | `/blog/YYYY-MM-DD-slug/` | `blog_post.j2` | `registry.json` |
-| AML pillar | `/aml/` | `pillar_index.j2` | Filtered posts |
-| Markets pillar | `/stock/` | `pillar_index.j2` | Filtered posts |
-| Science pillar | `/science/` | `pillar_index.j2` | Filtered posts |
-| About | `/about.html` | `layout.j2` | `content/en/about/index.md` |
-| Research | `/research.html` | `layout.j2` | `content/en/research/index.md` |
-| Scholarship | `/scholarship.html` | `layout.j2` | `content/en/scholarship/index.md` |
-| Contact | `/contact.html` | `layout.j2` | `content/contact/index.md` |
-| 404 | `/404.html` | `layout.j2` | Hardcoded in generator |
+| Home | `/` | `index.j2` | Featured + latest research + learn + knowledge cards |
+| Research article (×33) | `/YYYY-MM-DD-slug/` | `blog_post.j2` | `registry.json` |
+| Learn lesson (×8) | `/learn/slug/` | `learn.j2` | `registry.json` |
+| Learn index | `/learn/` | `learn_index.j2` | All lessons, difficulty-grouped |
+| Knowledge article (×10) | `/knowledge/slug/` | `knowledge.j2` | `registry.json` |
+| Knowledge index | `/knowledge/` | `knowledge_index.j2` | All references, sub-category grouped |
+| Research index | `/research/` | `category_index.j2` | All research articles |
+| AML pillar | `/aml/` | `pillar_index.j2` | Filtered entries |
+| Markets pillar | `/market/` (redirect) + `/stock/` | `pillar_index.j2` | Filtered entries |
+| Science pillar | `/science/` | `pillar_index.j2` | Filtered entries |
+| Search | `/search/` | `search.j2` | Vanilla JS fuzzy search |
+| 404 | `/404.html` | `404.j2` | Deterministic suggestions |
+| About | `/about/` | `layout.j2` | `content/en/about/index.md` |
+| Contact | `/contact/` | `layout.j2` | `content/contact/index.md` |
+| Research (static) | `/research.html` | `layout.j2` | `content/en/research/index.md` |
 | Feed | `/feed.xml` | — | Atom feed, last 20 posts |
 | Sitemap | `/sitemap.xml` | — | All pages |
 | Robots | `/robots.txt` | — | Allow all, sitemap link |
 
-**Total: 21 HTML pages** (12 blog posts + 3 pillar indices + 4 static pages + 1 index + 1 404)
+**Total: 60+ HTML pages** (33 research + 8 learn + 10 knowledge + 5 indices + 4 static + 1 search + 1 404 + 1 home)
 
 ---
 
@@ -108,7 +114,9 @@ All colors live in `:root` CSS variables in `custom.css`, overridden by `.dark` 
 
 ### Mobile Nav (<640px)
 - Hamburger button with `aria-expanded`
-- Slide-down panel with pillar sub-links
+- Fixed full-viewport drawer (`position: fixed; top: 3.5rem; bottom: 0`) — never overlaps hero/headings
+- Box-shadow backdrop (`0 0 0 9999px rgba(0,0,0,0.3)`)
+- `slideDown` animation with `prefers-reduced-motion` respect
 - Auto-closes on link click
 - `aria-label="Toggle navigation menu"`
 
@@ -130,20 +138,22 @@ All colors live in `:root` CSS variables in `custom.css`, overridden by `.dark` 
 
 ## 5. Post Features (blog_post.j2)
 
-### Per-Post Elements
+### Per-Post Elements (Research)
 - Fixed reading progress bar (3px, top of viewport, accent color)
 - Breadcrumb: Home / Pillar / Post Title
 - Pillar badge (colored, with emoji)
-- SQI score (Signal Quality Index, 3 decimal places)
+- SQI score (Signal Quality Index)
 - Source breakdown (HN / arXiv / PubMed counts)
-- Title, date, reading time ("N min read")
+- Title, date with calendar SVG icon, reading time with clock SVG icon
 - Tags as pills
 - Quality metrics grid (Avg Source Score, Source Diversity, Recency) — when available
 - Body content with auto-generated heading IDs and anchor links
 - Bloom Taxonomy Questions section (with colored level badges)
-- Flashcards grid (up to 12, term + definition preview)
+- **Interactive flip flashcards** (CSS 3D flip: term on front, definition on back, tap to reveal)
+- Zero-JS static chart grid (2×2 layout: donut, radar, heatmap, bloom/bars — WCAG AA contrast)
 - Signal Analysis section (article count, total points, avg score, domains, entities)
 - Related posts (top 3 by tag overlap, with pillar badges)
+- Cross-type cross-references (related learn + related knowledge sections)
 - Previous/Next post navigation
 
 ### TOC Sidebar
@@ -160,7 +170,8 @@ All colors live in `:root` CSS variables in `custom.css`, overridden by `.dark` 
 
 ### OG Images
 - Per-post SVG generated via MD5 hash of title
-- Unique `og_{hash}.svg` per post
+- Fractal mist background + decorative ellipses + dynamic radial gradient
+- Unique `og_{hash}.svg` per post (36 total)
 - Rendered in `<meta property="og:image">`
 
 ---
@@ -224,15 +235,15 @@ Dependencies: `jinja2`, `markdown2`, `pydantic`
 
 ## 9. Content
 
-| Pillar | Posts | Topics |
-|--------|-------|--------|
-| AML | 8 | Financial crime, compliance, regulation, risk, crypto, DeFi |
-| Markets | 9 | Semiconductors, AI industry, manufacturing, EV, quantum |
-| Science | 9 | Biology, quantum, neuroscience, space, climate, gene therapy |
+| Pillar | Research | Learn | Knowledge | Topics |
+|--------|----------|-------|-----------|--------|
+| AML | 11 | 2 | 3 | Financial crime, compliance, regulation, risk, crypto, DeFi |
+| Markets | 10 | 2 | 3 | Semiconductors, AI industry, manufacturing, EV, quantum |
+| Science | 12 | 4 | 4 | Biology, quantum, neuroscience, space, climate, gene therapy |
 
-Total: 27 blog posts (Jan 2026 — present)
+Total: 51 entries (33 research + 8 learn + 10 knowledge)
 
-All posts are auto-synthesized from HackerNews + arXiv sources.
+All content is auto-synthesized from HackerNews + arXiv sources.
 
 ---
 
@@ -263,24 +274,13 @@ All posts are auto-synthesized from HackerNews + arXiv sources.
 
 ## 11. Known Gaps & Next Steps
 
-### Planned (Week 4)
-- [ ] Client-side search (Pagefind or JSON index + Fuse.js)
-- [ ] "Surprise Me" serendipity button
-- [ ] Trending by pillar (reader count)
-- [ ] Custom 404 with post suggestions
-- [ ] Full responsive nav polish
-
-### Post-Week 4
+### Planned
 - [ ] Bookmarks / "continue reading" (localStorage)
 - [ ] Reading streaks + progress rings
 - [ ] Citation popover on hover
 - [ ] Inline retrieval prompts after sections
 - [ ] Social share buttons
-- [ ] SVG sprite sheet
 - [ ] Fluid typography with `clamp()`
-
-### Accessibility
-- [ ] WCAG 2.1 AA audit
 - [ ] Focus trap in mobile nav when open
 - [ ] Announce dropdown state changes to screen readers
 
@@ -290,7 +290,6 @@ All posts are auto-synthesized from HackerNews + arXiv sources.
 - [ ] Preload hero image
 
 ### Content
-- [ ] Add Learning Hub lessons (currently empty)
 - [ ] Author pages
 - [ ] Tag archive pages
 
@@ -300,31 +299,45 @@ All posts are auto-synthesized from HackerNews + arXiv sources.
 
 ```
 .
-├── generator.py              # Main generator (478 lines)
+├── generator.py              # Main generator — 51 thumbnails, 36 OG images, 60+ pages
 ├── schemas.py                # Pydantic models (AcaciaContent, RegistryData)
-├── registry.json             # Content registry (12 blog posts)
+├── registry.json             # Content registry (51 entries: 33 research, 8 learn, 10 knowledge)
 ├── requirements.txt          # Dependencies
+├── core/
+│   └── visuals.py            # Visual engine: fractal (7 types), chart (6 functions), topic overlays
+├── seed_articles.py          # Article seeding (legacy thumbnail gen — superseded by core/visuals.py)
+├── seed_dataops.py           # DataOps/Engineering article seeder
+├── migrate_categories.py     # Content type migration scripts
 ├── SITE-STATE.md             # This file
-├── ARCHITECTURE.md           # Target architecture blueprint
+├── ARCHITECTURE.md           # Architecture blueprint
 ├── UX-PLAN.md                # UX evolution roadmap
 ├── deploy.sh                 # Legacy deployment script
 │
 ├── templates/
-│   ├── layout.j2             # Base layout (213 lines)
-│   ├── blog_post.j2          # Blog post page (245 lines)
-│   ├── pillar_index.j2       # Pillar listing (59 lines)
-│   └── index.j2              # Homepage (81 lines)
+│   ├── layout.j2             # Base layout — nav, dark mode, mobile drawer, footer
+│   ├── blog_post.j2          # Research article — TOC, progress bar, 2×2 charts, flip flashcards
+│   ├── index.j2              # Homepage — featured, 2×2 CTA grid, learn/knowledge cards
+│   ├── category_index.j2     # Category listing (research/learn/knowledge)
+│   ├── pillar_index.j2       # Pillar pages (AML/Markets/Science)
+│   ├── learn.j2              # Learn lesson — accordion key concepts, flip flashcards
+│   ├── learn_index.j2        # Learn index — difficulty-grouped with badges
+│   ├── knowledge.j2          # Knowledge article — kcat badge, cross-references
+│   ├── knowledge_index.j2    # Knowledge index — sub-category grouped
+│   ├── search.j2             # Search — vanilla JS fuzzy scoring
+│   └── 404.j2                # Custom 404 — deterministic suggestions
 │
 ├── static/
 │   ├── css/
-│   │   ├── custom.css        # Custom styles (~270 lines)
+│   │   ├── custom.css        # ~350 lines — CSS vars, dark mode, flashcard flip, accordion, mobile drawer, TOC
 │   │   └── tailwind.min.css  # Tailwind 3.4.19 (28KB)
-│   ├── fonts/
-│   │   ├── Inter-Regular.woff2
-│   │   ├── Inter-SemiBold.woff2
-│   │   └── Inter-Bold.woff2
-│   └── js/
-│       └── (reserved for future enhancements)
+│   ├── js/
+│   │   ├── search.js         # Client-side search
+│   │   ├── learning.js       # Interactive Bayes demo
+│   │   └── learning_hub.js   # Quiz engine
+│   └── fonts/
+│       ├── Inter-Regular.woff2
+│       ├── Inter-SemiBold.woff2
+│       └── Inter-Bold.woff2
 │
 ├── content/
 │   ├── en/
@@ -333,17 +346,16 @@ All posts are auto-synthesized from HackerNews + arXiv sources.
 │   │   └── scholarship/index.md
 │   └── contact/index.md
 │
-├── public/                   # Legacy static assets (images, icons)
-│   └── images/
-│       └── favicon.svg
-│
-├── dist/                     # Generated output
+├── dist/                     # Generated output (60+ pages)
 │   ├── index.html
 │   ├── 404.html
-│   ├── about.html
+│   ├── search/index.html
+│   ├── learn/index.html
+│   ├── knowledge/index.html
+│   ├── research/index.html
+│   ├── about/index.html
+│   ├── contact/index.html
 │   ├── research.html
-│   ├── scholarship.html
-│   ├── contact.html
 │   ├── feed.xml
 │   ├── sitemap.xml
 │   ├── robots.txt
@@ -351,8 +363,9 @@ All posts are auto-synthesized from HackerNews + arXiv sources.
 │   ├── aml/index.html
 │   ├── stock/index.html
 │   ├── science/index.html
-│   ├── blog/
-│   │   └── YYYY-MM-DD-slug/index.html (×12)
+│   ├── YYYY-MM-DD-slug/index.html (×33)
+│   ├── learn/slug/index.html (×8)
+│   ├── knowledge/slug/index.html (×10)
 │   └── static/ (copied from static/)
 │
 ├── railway.json              # Railway deployment config

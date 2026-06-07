@@ -10,7 +10,7 @@
 
 Automated research synthesis platform — a **DataOps pipeline** that ingests, transforms, quality-gates, and serves content as a static data product.
 
-HackerNews + arXiv → deterministic classification (Bloom taxonomy) → quality metrics (SQI) → Python-native static generator → warm, accessible, dark-mode-capable site.
+HackerNews + arXiv → deterministic classification (Bloom taxonomy) → quality metrics (SQI) → Python-native static generator → warm, accessible, dark-mode-capable site with 33 research articles, 8 learn lessons, and 10 knowledge references.
 
 **Site:** https://www.acaciafund.org
 
@@ -61,7 +61,7 @@ AcaciaFund applies **DataOps principles** across its entire content lifecycle �
 │  • SQI per article (0–1)    • Source diversity score    │
 │  • Quality flags            • Cross-pillar connections  │
 │  • Source breakdown (HN/arXiv/PubMed)                   │
-│  • Build output: 54+ pages, validated                   │
+│  • Build output: 60+ pages, validated                   │
 └────────────────────────────────────────────────────────┘
 ```
 
@@ -98,16 +98,16 @@ AcaciaFund applies **DataOps principles** across its entire content lifecycle �
 ### Content Taxonomy (DataOps-aligned)
 | Type | Count | Description |
 |------|-------|-------------|
-| Research | 30 | Bloom-classified articles with SQI, signals, flashcards |
-| Learn | 8 | Structured lessons with flashcards and code examples |
-| Knowledge | 8 | Reference pages: glossary, tools landscape, system architecture |
+| Research | 33 | Bloom-classified articles with SQI, signals, flashcards, charts |
+| Learn | 8 | Structured lessons with flashcards (CSS 3D flip) and accordion key concepts |
+| Knowledge | 10 | Reference pages: glossary, tools landscape, system architecture, DataOps |
 
 ### Pillar Coverage
 | Pillar | Label | Badge Color | Research Articles |
 |--------|-------|-------------|-------------------|
-| AML | Shield | Amber | 8 |
-| Markets | Chart | Green | 8 |
-| Science | Microscope | Purple | 8 |
+| AML | Shield | Amber | 11 |
+| Markets | Chart | Green | 10 |
+| Science | Microscope | Purple | 12 |
 
 ### Per-Article Content (Research)
 - Bloom Taxonomy questions with colored level badges
@@ -115,8 +115,10 @@ AcaciaFund applies **DataOps principles** across its entire content lifecycle �
 - Signal Analysis dashboard (article count, scores, domain diversity, entities)
 - Quality metrics (source score, diversity, recency)
 - Source breakdown (HN / arXiv / PubMed)
-- Per-article unique fractal-thumbnail SVG (seed-based L-system tree)
-- Per-article unique OG image
+- Per-article unique fractal-thumbnail SVG (hash-seeded engine: 7 types — L-tree, Sierpinski, Koch, Dragon, Fern, Spiral, Hilbert)
+- Mirror reflections (none/h/v/both) for diversified compositions
+- Dynamic color gradients, `stroke-linecap="round"`, atmospheric mist layers
+- Per-article unique OG image with fractal mist + decorative ellipses
 
 ### Accessibility
 - Skip-to-content link, `lang="en"`, ARIA labels, `role` attributes
@@ -125,6 +127,23 @@ AcaciaFund applies **DataOps principles** across its entire content lifecycle �
 - Proper heading hierarchy (H1 → H2 → H3)
 - Breadcrumbs with `aria-label` and `aria-current="page"`
 - Accessible dropdown (`aria-expanded`, `aria-haspopup`, Escape key, click-outside)
+
+### Navigation & UI
+- Fixed full-viewport mobile drawer with backdrop — never overlaps content
+- Accessible dropdown (`aria-expanded`, `aria-haspopup`, Escape key, click-outside)
+- Client-side search with vanilla JS fuzzy scoring (title > tag > description priority)
+- "Surprise Me" button — picks random article from index on click
+- Custom 404 page with deterministic article suggestions (hash-stable per build)
+
+### Interactive Content
+- CSS 3D flip flashcards (term → definition with tap/reveal animation)
+- Accordion key concepts (click-to-expand with animated chevron in learn lessons)
+- Metadata icons (clock SVG for reading time, calendar SVG for dates)
+
+### Charts & Visuals
+- Zero-JS static charts (donut, radar, heatmap, bloom, source bar) — 2x2 grid layout
+- WCAG AA contrast (4.5:1+) enforced on all chart labels and indicators
+- Hash-seeded fractal thumbnails with 7 types + mirror reflections + color gradients
 
 ### Infrastructure
 - Zero client-side JS for content reading (JS only for UI enhancements)
@@ -139,14 +158,19 @@ AcaciaFund applies **DataOps principles** across its entire content lifecycle �
 ## Application Stack
 
 ### Core Pipeline
-- **Python 3.13** — generator
+- **Python 3.13** — generator + visual engine
 - **Pydantic** — schema validation (`schemas.py`)
-- **Jinja2** — 6 templates (`layout.j2`, `blog_post.j2`, `pillar_index.j2`, `index.j2`, `category_index.j2`, `learn.j2`)
+- **Jinja2** — 11 templates (`layout.j2`, `blog_post.j2`, `pillar_index.j2`, `index.j2`, `category_index.j2`, `learn.j2`, `learn_index.j2`, `knowledge.j2`, `knowledge_index.j2`, `search.j2`, `404.j2`)
 - **Markdown2** — Markdown → HTML rendering
 - **Tailwind CSS 3.4.19** — utility classes (self-hosted)
-- **Custom CSS** — `static/css/custom.css`
+- **Custom CSS** — `static/css/custom.css` (flashcard flip, accordion, mobile drawer, TOC, focus mode, dark mode)
 - **Inter** — self-hosted font (3 WOFF2 files)
 - **Cloudflare Pages** — static hosting
+
+### Visual Engine (`core/visuals.py`)
+- **Fractal engine** — 7 types (L-tree, Sierpinski, Koch, Dragon, Fern, Spiral, Hilbert) + mirror + mist + color lerp
+- **Chart engine** — 6 functions (donut, radar, heatmap, bloom, source bar, scaffold) with WCAG AA contrast
+- **Topic-aware overlays** — PILLAR_PALETTES, TOPIC_ICONS, keyword tags per article
 
 ### Service Layer
 - **FastAPI** (Python 3.11) — `services/api/`
@@ -182,11 +206,10 @@ python3 -m http.server 8000 --dir dist
 
 Then open http://localhost:8000.
 
-### Regenerate Thumbnails / Seed New Articles
+### Regenerate Everything
 
 ```bash
-python3.13 seed_articles.py      # Regenerate all thumbnails + OG images
-python3.13 seed_dataops.py       # Add DataOps/Engineering articles
+python3.13 generator.py          # Rebuild all 60+ pages, 51 fractal thumbnails, 36 OG images
 ```
 
 ---
@@ -194,27 +217,37 @@ python3.13 seed_dataops.py       # Add DataOps/Engineering articles
 ## Project Structure
 
 ```
-├── generator.py                 # Main generator (Jinja2 → static HTML)
+├── generator.py                 # Main generator (Jinja2 → static HTML, 51 thumbnails, 36 OG images)
 ├── schemas.py                   # Pydantic models (AcaciaContent, RegistryData)
-├── registry.json                # Content registry (data catalog)
-├── seed_articles.py             # Article seeding + fractal thumbnail generator
+├── registry.json                # Content registry (data catalog — 51 entries)
+├── core/
+│   └── visuals.py               # Visual engine: fractal (7 types), chart (6 functions), topic overlays
+├── seed_articles.py             # Article seeding (legacy thumbnail generator)
 ├── seed_dataops.py              # DataOps/Engineering article seeder
 ├── migrate_categories.py        # Content type migration scripts
-├── templates/                   # Jinja2 templates
-│   ├── layout.j2                # Base layout with nav, dark mode, footer
-│   ├── blog_post.j2             # Research (TOC, progress bar, flashcards, signals)
-│   ├── index.j2                 # Homepage (featured, categories, stack)
+├── templates/                   # Jinja2 templates (11 total)
+│   ├── layout.j2                # Base layout: nav, dark mode, mobile drawer, footer
+│   ├── blog_post.j2             # Research: TOC, progress bar, 2x2 charts, flip flashcards
+│   ├── index.j2                 # Homepage: featured, 2x2 CTA grid, learn/knowledge cards
 │   ├── category_index.j2        # Category listing (research/learn/knowledge)
 │   ├── pillar_index.j2          # Pillar pages (AML/Markets/Science)
-│   └── learn.j2                 # Learning hub content
+│   ├── learn.j2                 # Learn lesson: accordion key concepts, flip flashcards
+│   ├── learn_index.j2           # Learn index: difficulty-grouped with badges
+│   ├── knowledge.j2             # Knowledge article: category badge, cross-references
+│   ├── knowledge_index.j2       # Knowledge index: grouped by sub-category
+│   ├── search.j2                # Search: input + JSON index + vanilla JS scoring
+│   └── 404.j2                   # Custom 404: deterministic suggestions
 ├── static/
 │   ├── css/
-│   │   ├── custom.css           # Custom styles (colors, dark mode, a11y)
+│   │   ├── custom.css           # Custom styles (colors, dark mode, flashcard flip, accordion, mobile drawer, TOC)
 │   │   └── tailwind.min.css     # Tailwind utility classes (28KB)
+│   ├── js/
+│   │   ├── search.js            # Client-side search (vanilla JS, fuzzy scoring)
+│   │   ├── learning.js          # Interactive Bayes demo
+│   │   └── learning_hub.js      # Quiz engine
 │   └── fonts/
 │       └── Inter-*.woff2        # Self-hosted font files
 ├── content/                     # Source markdown for static pages
-├── public/                      # Additional static assets (images, icons)
 ├── services/api/                # FastAPI service (Railway-deployed)
 │   ├── app/
 │   │   ├── main.py              # API endpoints
@@ -222,13 +255,13 @@ python3.13 seed_dataops.py       # Add DataOps/Engineering articles
 │   ├── Dockerfile
 │   ├── requirements.txt
 │   └── tests/
-├── dist/                        # Generated output (gitignored items)
+├── dist/                        # Generated output (60+ pages, gitignored items)
 ├── .github/workflows/
 │   └── deploy-api.yml           # Railway API deployment
 ├── railway.json                 # Railway config
 ├── SITE-STATE.md                # Full feature inventory
 ├── UX-PLAN.md                   # UX evolution roadmap
-└── ARCHITECTURE.md              # Target architecture blueprint
+└── ARCHITECTURE.md              # Architecture blueprint
 ```
 
 ---
