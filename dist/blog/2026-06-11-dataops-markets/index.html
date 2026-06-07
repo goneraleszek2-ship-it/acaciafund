@@ -217,7 +217,7 @@
 <path d="M 70,70 L 93.7,12.7 A 62,62 0 0,1 132.0,70.0 Z" fill="#22c55e" opacity="0.85"/>
 <circle cx="70" cy="70" r="37.199999999999996" fill="var(--color-bg, #0f172a)"/>
 <text x="70" y="68" text-anchor="middle" dominant-baseline="middle" fill="var(--color-text, #e8e6e3)" font-family="system-ui,sans-serif" font-size="14" font-weight="700">16</text>
-<text x="70" y="82" text-anchor="middle" dominant-baseline="middle" fill="var(--color-text-secondary, #64748b)" font-family="system-ui,sans-serif" font-size="7">sources</text>
+<text x="70" y="82" text-anchor="middle" dominant-baseline="middle" fill="var(--color-text-secondary, #475569)" font-family="system-ui,sans-serif" font-size="7">sources</text>
 <rect x="10" y="124" width="8" height="8" rx="1" fill="#f59e0b"/>
 <text x="20" y="130" fill="var(--color-text-secondary, #475569)" font-family="system-ui,sans-serif" font-size="8">HN</text>
 <rect x="60" y="124" width="8" height="8" rx="1" fill="#3b82f6"/>
@@ -370,28 +370,96 @@
         </div>
       </div>
     </section>
-    <section class="mt-12 pt-8 border-t border-gray-200">
-      <h2 class="text-2xl font-bold text-gray-900 mb-6">Flashcards</h2>
-      <div class="flashcard-grid">
-        <div class="flashcard-card">
-          <div class="font-semibold text-gray-900 text-sm">Signal Quality Index</div>
-          <div class="mt-1 text-xs text-gray-600">Composite metric measuring source authority, freshness, consensus, and relevance of synthesized content.</div>
+    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
+      <h2 class="text-2xl font-bold mb-6 inline-flex items-center gap-2" style="color:var(--color-text)">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+        Flashcards
+      </h2>
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Signal Quality Index" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border);box-shadow:0 1px 3px rgba(0,0,0,0.06)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Signal Quality Index</span>
+              </div>
+              <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
+            </div>
+            <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);border:1px solid var(--color-accent);box-shadow:0 2px 8px rgba(29,78,216,0.15)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm" style="color:#fff">Composite metric measuring source authority, freshness, consensus, and relevance of synthesized content.</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="flashcard-card">
-          <div class="font-semibold text-gray-900 text-sm">Bloom Taxonomy</div>
-          <div class="mt-1 text-xs text-gray-600">Classification system for levels of intellectual behavior in learning: remember, understand, apply, analyze, evaluate, c</div>
+        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Bloom Taxonomy" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border);box-shadow:0 1px 3px rgba(0,0,0,0.06)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Bloom Taxonomy</span>
+              </div>
+              <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
+            </div>
+            <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);border:1px solid var(--color-accent);box-shadow:0 2px 8px rgba(29,78,216,0.15)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm" style="color:#fff">Classification system for levels of intellectual behavior in learning: remember, understand, apply, analyze, evaluate, create.</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="flashcard-card">
-          <div class="font-semibold text-gray-900 text-sm">Cross-Pillar Analysis</div>
-          <div class="mt-1 text-xs text-gray-600">Identification of connections and shared sources across AML, Markets, and Science domains.</div>
+        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Cross-Pillar Analysis" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border);box-shadow:0 1px 3px rgba(0,0,0,0.06)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Cross-Pillar Analysis</span>
+              </div>
+              <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
+            </div>
+            <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);border:1px solid var(--color-accent);box-shadow:0 2px 8px rgba(29,78,216,0.15)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm" style="color:#fff">Identification of connections and shared sources across AML, Markets, and Science domains.</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="flashcard-card">
-          <div class="font-semibold text-gray-900 text-sm">Semiconductor Node</div>
-          <div class="mt-1 text-xs text-gray-600">The manufacturing process size for transistors, with smaller nodes (e.g., 2nm) enabling more powerful and efficient chip</div>
+        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Semiconductor Node" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border);box-shadow:0 1px 3px rgba(0,0,0,0.06)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Semiconductor Node</span>
+              </div>
+              <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
+            </div>
+            <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);border:1px solid var(--color-accent);box-shadow:0 2px 8px rgba(29,78,216,0.15)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm" style="color:#fff">The manufacturing process size for transistors, with smaller nodes (e.g., 2nm) enabling more powerful and efficient chips.</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="flashcard-card">
-          <div class="font-semibold text-gray-900 text-sm">Supply Chain Diversification</div>
-          <div class="mt-1 text-xs text-gray-600">Strategy of spreading production across multiple geographic regions to reduce dependency on single sources.</div>
+        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Supply Chain Diversification" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border);box-shadow:0 1px 3px rgba(0,0,0,0.06)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Supply Chain Diversification</span>
+              </div>
+              <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
+            </div>
+            <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);border:1px solid var(--color-accent);box-shadow:0 2px 8px rgba(29,78,216,0.15)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm" style="color:#fff">Strategy of spreading production across multiple geographic regions to reduce dependency on single sources.</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

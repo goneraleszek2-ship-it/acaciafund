@@ -218,7 +218,7 @@ Today in STOCK, the top story is **"Meta confirms 1000s of Instagram accounts we
 <path d="M 70,70 L 101.0,16.3 A 62,62 0 0,1 132.0,70.0 Z" fill="#3b82f6" opacity="0.85"/>
 <circle cx="70" cy="70" r="37.199999999999996" fill="var(--color-bg, #0f172a)"/>
 <text x="70" y="68" text-anchor="middle" dominant-baseline="middle" fill="var(--color-text, #e8e6e3)" font-family="system-ui,sans-serif" font-size="14" font-weight="700">30</text>
-<text x="70" y="82" text-anchor="middle" dominant-baseline="middle" fill="var(--color-text-secondary, #64748b)" font-family="system-ui,sans-serif" font-size="7">sources</text>
+<text x="70" y="82" text-anchor="middle" dominant-baseline="middle" fill="var(--color-text-secondary, #475569)" font-family="system-ui,sans-serif" font-size="7">sources</text>
 <rect x="10" y="124" width="8" height="8" rx="1" fill="#f59e0b"/>
 <text x="20" y="130" fill="var(--color-text-secondary, #475569)" font-family="system-ui,sans-serif" font-size="8">HN</text>
 <rect x="60" y="124" width="8" height="8" rx="1" fill="#3b82f6"/>
@@ -387,56 +387,215 @@ Today in STOCK, the top story is **"Meta confirms 1000s of Instagram accounts we
         </div>
       </div>
     </section>
-    <section class="mt-12 pt-8 border-t border-gray-200">
-      <h2 class="text-2xl font-bold text-gray-900 mb-6">Flashcards</h2>
-      <div class="flashcard-grid">
-        <div class="flashcard-card">
-          <div class="font-semibold text-gray-900 text-sm">ARM</div>
-          <div class="mt-1 text-xs text-gray-600">Low-power processor architecture owned by SoftBank</div>
+    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
+      <h2 class="text-2xl font-bold mb-6 inline-flex items-center gap-2" style="color:var(--color-text)">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+        Flashcards
+      </h2>
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: ARM" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border);box-shadow:0 1px 3px rgba(0,0,0,0.06)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">ARM</span>
+              </div>
+              <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
+            </div>
+            <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);border:1px solid var(--color-accent);box-shadow:0 2px 8px rgba(29,78,216,0.15)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm" style="color:#fff">Low-power processor architecture owned by SoftBank</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="flashcard-card">
-          <div class="font-semibold text-gray-900 text-sm">ASML</div>
-          <div class="mt-1 text-xs text-gray-600">Dutch lithography machine manufacturer for the semiconductor industry</div>
+        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: ASML" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border);box-shadow:0 1px 3px rgba(0,0,0,0.06)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">ASML</span>
+              </div>
+              <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
+            </div>
+            <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);border:1px solid var(--color-accent);box-shadow:0 2px 8px rgba(29,78,216,0.15)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm" style="color:#fff">Dutch lithography machine manufacturer for the semiconductor industry</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="flashcard-card">
-          <div class="font-semibold text-gray-900 text-sm">CPU</div>
-          <div class="mt-1 text-xs text-gray-600">Central Processing Unit</div>
+        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: CPU" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border);box-shadow:0 1px 3px rgba(0,0,0,0.06)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">CPU</span>
+              </div>
+              <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
+            </div>
+            <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);border:1px solid var(--color-accent);box-shadow:0 2px 8px rgba(29,78,216,0.15)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm" style="color:#fff">Central Processing Unit</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="flashcard-card">
-          <div class="font-semibold text-gray-900 text-sm">Nasdaq</div>
-          <div class="mt-1 text-xs text-gray-600">US technology stock exchange</div>
+        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Nasdaq" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border);box-shadow:0 1px 3px rgba(0,0,0,0.06)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Nasdaq</span>
+              </div>
+              <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
+            </div>
+            <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);border:1px solid var(--color-accent);box-shadow:0 2px 8px rgba(29,78,216,0.15)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm" style="color:#fff">US technology stock exchange</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="flashcard-card">
-          <div class="font-semibold text-gray-900 text-sm">NVIDIA</div>
-          <div class="mt-1 text-xs text-gray-600">GPU manufacturer and AI computing leader</div>
+        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: NVIDIA" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border);box-shadow:0 1px 3px rgba(0,0,0,0.06)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">NVIDIA</span>
+              </div>
+              <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
+            </div>
+            <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);border:1px solid var(--color-accent);box-shadow:0 2px 8px rgba(29,78,216,0.15)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm" style="color:#fff">GPU manufacturer and AI computing leader</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="flashcard-card">
-          <div class="font-semibold text-gray-900 text-sm">Qualcomm</div>
-          <div class="mt-1 text-xs text-gray-600">Maker of Snapdragon mobile chipsets</div>
+        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Qualcomm" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border);box-shadow:0 1px 3px rgba(0,0,0,0.06)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Qualcomm</span>
+              </div>
+              <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
+            </div>
+            <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);border:1px solid var(--color-accent);box-shadow:0 2px 8px rgba(29,78,216,0.15)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm" style="color:#fff">Maker of Snapdragon mobile chipsets</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="flashcard-card">
-          <div class="font-semibold text-gray-900 text-sm">SPAC</div>
-          <div class="mt-1 text-xs text-gray-600">Special Purpose Acquisition Company</div>
+        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: SPAC" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border);box-shadow:0 1px 3px rgba(0,0,0,0.06)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">SPAC</span>
+              </div>
+              <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
+            </div>
+            <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);border:1px solid var(--color-accent);box-shadow:0 2px 8px rgba(29,78,216,0.15)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm" style="color:#fff">Special Purpose Acquisition Company</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="flashcard-card">
-          <div class="font-semibold text-gray-900 text-sm">Hardware Hacking</div>
-          <div class="mt-1 text-xs text-gray-600">Topic from article: ESP32 Bit Pirate, a Hardware Hacking Tool with WebCLI That Speaks Every Protocol</div>
+        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Hardware Hacking" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border);box-shadow:0 1px 3px rgba(0,0,0,0.06)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Hardware Hacking</span>
+              </div>
+              <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
+            </div>
+            <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);border:1px solid var(--color-accent);box-shadow:0 2px 8px rgba(29,78,216,0.15)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm" style="color:#fff">Topic from article: ESP32 Bit Pirate, a Hardware Hacking Tool with WebCLI That Speaks Every Protocol</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="flashcard-card">
-          <div class="font-semibold text-gray-900 text-sm">Entanglement Builds</div>
-          <div class="mt-1 text-xs text-gray-600">Topic from article: Entanglement Builds Space-Time. Now "Magic" Gives It Gravity</div>
+        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Entanglement Builds" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border);box-shadow:0 1px 3px rgba(0,0,0,0.06)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Entanglement Builds</span>
+              </div>
+              <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
+            </div>
+            <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);border:1px solid var(--color-accent);box-shadow:0 2px 8px rgba(29,78,216,0.15)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm" style="color:#fff">Topic from article: Entanglement Builds Space-Time. Now "Magic" Gives It Gravity</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="flashcard-card">
-          <div class="font-semibold text-gray-900 text-sm">Worldbuilders Part</div>
-          <div class="mt-1 text-xs text-gray-600">Term from the field of STOCK</div>
+        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Worldbuilders Part" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border);box-shadow:0 1px 3px rgba(0,0,0,0.06)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Worldbuilders Part</span>
+              </div>
+              <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
+            </div>
+            <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);border:1px solid var(--color-accent);box-shadow:0 2px 8px rgba(29,78,216,0.15)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm" style="color:#fff">Term from the field of STOCK</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="flashcard-card">
-          <div class="font-semibold text-gray-900 text-sm">Reveals Microsoft</div>
-          <div class="mt-1 text-xs text-gray-600">Topic from article: Leak Reveals Microsoft Wants Its AI to Be 'Addictive'</div>
+        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Reveals Microsoft" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border);box-shadow:0 1px 3px rgba(0,0,0,0.06)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Reveals Microsoft</span>
+              </div>
+              <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
+            </div>
+            <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);border:1px solid var(--color-accent);box-shadow:0 2px 8px rgba(29,78,216,0.15)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm" style="color:#fff">Topic from article: Leak Reveals Microsoft Wants Its AI to Be 'Addictive'</span>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="flashcard-card">
-          <div class="font-semibold text-gray-900 text-sm">Keeps Delaying</div>
-          <div class="mt-1 text-xs text-gray-600">Topic from article: Meta Keeps Delaying the Release of Its New AI Model to Developers</div>
+        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Keeps Delaying" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border);box-shadow:0 1px 3px rgba(0,0,0,0.06)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Keeps Delaying</span>
+              </div>
+              <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
+            </div>
+            <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);border:1px solid var(--color-accent);box-shadow:0 2px 8px rgba(29,78,216,0.15)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm" style="color:#fff">Topic from article: Meta Keeps Delaying the Release of Its New AI Model to Developers</span>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>

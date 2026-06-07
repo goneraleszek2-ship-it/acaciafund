@@ -234,6 +234,8 @@ def main():
 
         body = add_lazy_loading(item.body_html)
         body, toc_items = extract_headings(body)
+        # Strip first h2 if it matches the article title (avoids duplicate heading)
+        body = re.sub(r'<h2[^>]*>\s*' + re.escape(item.title.strip()) + r'\s*</h2>\s*', '', body, count=1)
         item.body_html = body
 
         kcat = KNOWLEDGE_CATEGORIES.get(item.knowledge_category, {})
@@ -293,6 +295,7 @@ def main():
             out_file = OUTPUT_DIR / f"{slug}.html"
         body = add_lazy_loading(item.body_html)
         body, toc_items = extract_headings(body)
+        body = re.sub(r'<h2[^>]*>\s*' + re.escape(item.title.strip()) + r'\s*</h2>\s*', '', body, count=1)
         item.body_html = body
 
         pillar = item.pillar or ""
@@ -349,6 +352,7 @@ def main():
 
         body = add_lazy_loading(item.body_html)
         body, toc_items = extract_headings(body)
+        body = re.sub(r'<h2[^>]*>\s*' + re.escape(item.title.strip()) + r'\s*</h2>\s*', '', body, count=1)
         item.body_html = body
 
         prev_post = research_items[i + 1] if i + 1 < len(research_items) else None

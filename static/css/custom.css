@@ -105,6 +105,31 @@ img[loading="lazy"] { background: var(--color-border); }
 }
 .flashcard-card:hover { border-color: var(--color-text-muted); }
 
+.flashcard-card-flip {
+  perspective: 800px;
+  height: 140px;
+}
+.flashcard-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.4s ease;
+  transform-style: preserve-3d;
+}
+.flashcard-card-flip.flipped .flashcard-inner {
+  transform: rotateY(180deg);
+}
+.flashcard-front,
+.flashcard-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.flashcard-back {
+  transform: rotateY(180deg);
+}
+
 .dropdown-menu {
   display: none;
   position: absolute;
