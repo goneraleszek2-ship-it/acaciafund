@@ -102,15 +102,18 @@
 
   <div class="mb-8">
     <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">Learning Hub</h1>
-    <p class="mt-2 text-sm" style="color:var(--color-text-muted)">8 lessons — structured learning across all pillars</p>
+    <p class="mt-2 text-sm" style="color:var(--color-text-muted)" id="progress-summary">8 lessons — structured learning across all pillars</p>
   </div>
     <div class="mb-12 scroll-mt-20" id="beginner">
-      <h2 class="text-2xl font-bold mb-1" style="color:var(--color-text)">Beginner</h2>
+      <div class="flex items-center justify-between mb-1">
+        <h2 class="text-2xl font-bold" style="color:var(--color-text)">Beginner</h2>
+        <span class="text-xs group-progress" data-group="beginner" style="color:var(--color-text-muted)">0/4</span>
+      </div>
       <p class="text-sm mb-4" style="color:var(--color-text-muted)">
         Foundational concepts — no prior knowledge required.
       </p>
       <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <a href="/learn/aml-basics/" class="block rounded-lg overflow-hidden transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+        <a href="/learn/aml-basics/" class="learn-card block rounded-lg overflow-hidden transition hover:shadow-md" data-learn-slug="/learn/aml-basics/" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
           <div class="aspect-[600/340] overflow-hidden" style="background:var(--color-bg)">
             <img src="https://acaciafund.org/static/images/thumb_c9b442ff42d1.svg" alt="" class="w-full h-full object-cover" loading="lazy">
           </div>
@@ -120,6 +123,7 @@
                 shield AML
               </span>
               <span class="text-xs" style="color:var(--color-text-muted)">🌱 Beginner</span>
+              <span class="ml-auto text-xs lesson-status" data-slug="/learn/aml-basics/" style="color:var(--color-text-muted)">⬜</span>
             </div>
             <h3 class="font-semibold" style="color:var(--color-text)">AML Fundamentals — A Beginner's Guide</h3>
             <p class="mt-1 text-xs" style="color:var(--color-text-secondary)">Interactive lesson covering the basics of Anti-Money Laundering: regulations, red flags, and real-world cases.</p>
@@ -128,7 +132,7 @@
             </div>
           </div>
         </a>
-        <a href="/learn/quiz-aml/" class="block rounded-lg overflow-hidden transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+        <a href="/learn/quiz-aml/" class="learn-card block rounded-lg overflow-hidden transition hover:shadow-md" data-learn-slug="/learn/quiz-aml/" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
           <div class="aspect-[600/340] overflow-hidden" style="background:var(--color-bg)">
             <img src="https://acaciafund.org/static/images/thumb_649c91e5b8af.svg" alt="" class="w-full h-full object-cover" loading="lazy">
           </div>
@@ -138,6 +142,7 @@
                 shield AML
               </span>
               <span class="text-xs" style="color:var(--color-text-muted)">🌱 Beginner</span>
+              <span class="ml-auto text-xs lesson-status" data-slug="/learn/quiz-aml/" style="color:var(--color-text-muted)">⬜</span>
             </div>
             <h3 class="font-semibold" style="color:var(--color-text)">AML Knowledge Check — Interactive Quiz</h3>
             <p class="mt-1 text-xs" style="color:var(--color-text-secondary)">Test your understanding of AML concepts with 10 interactive quiz questions covering regulations, enforcement, and emerging risks.</p>
@@ -146,7 +151,7 @@
             </div>
           </div>
         </a>
-        <a href="/learn/dataops-introduction/" class="block rounded-lg overflow-hidden transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+        <a href="/learn/dataops-introduction/" class="learn-card block rounded-lg overflow-hidden transition hover:shadow-md" data-learn-slug="/learn/dataops-introduction/" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
           <div class="aspect-[600/340] overflow-hidden" style="background:var(--color-bg)">
             <img src="https://acaciafund.org/static/images/thumb_9180cb405d83.svg" alt="" class="w-full h-full object-cover" loading="lazy">
           </div>
@@ -156,6 +161,7 @@
                 chart Markets
               </span>
               <span class="text-xs" style="color:var(--color-text-muted)">🌱 Beginner</span>
+              <span class="ml-auto text-xs lesson-status" data-slug="/learn/dataops-introduction/" style="color:var(--color-text-muted)">⬜</span>
             </div>
             <h3 class="font-semibold" style="color:var(--color-text)">Introduction to DataOps: Principles, Practices, and Pipeline Architecture</h3>
             <div class="mt-3 flex items-center gap-3 text-xs" style="color:var(--color-text-muted)">
@@ -164,9 +170,13 @@
             </div>
           </div>
         </a>
-        <a href="/learn/" class="block rounded-lg overflow-hidden transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+        <a href="/learn/" class="learn-card block rounded-lg overflow-hidden transition hover:shadow-md" data-learn-slug="/learn/" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+          <div class="aspect-[600/340] overflow-hidden" style="background:var(--color-bg)">
+            <img src="https://acaciafund.org/static/images/thumb_1aea92e4f8a5.svg" alt="" class="w-full h-full object-cover" loading="lazy">
+          </div>
           <div class="p-4">
             <div class="flex items-center gap-2 mb-2">
+              <span class="ml-auto text-xs lesson-status" data-slug="/learn/" style="color:var(--color-text-muted)">⬜</span>
             </div>
             <h3 class="font-semibold" style="color:var(--color-text)">Learning Hub</h3>
             <p class="mt-1 text-xs" style="color:var(--color-text-secondary)">Interactive lessons, quizzes, and tutorials on AML, financial markets, and science.</p>
@@ -178,12 +188,15 @@
       </div>
     </div>
     <div class="mb-12 scroll-mt-20" id="intermediate">
-      <h2 class="text-2xl font-bold mb-1" style="color:var(--color-text)">Intermediate</h2>
+      <div class="flex items-center justify-between mb-1">
+        <h2 class="text-2xl font-bold" style="color:var(--color-text)">Intermediate</h2>
+        <span class="text-xs group-progress" data-group="intermediate" style="color:var(--color-text-muted)">0/4</span>
+      </div>
       <p class="text-sm mb-4" style="color:var(--color-text-muted)">
         Deeper dives for those with basic familiarity.
       </p>
       <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <a href="/learn/open-source-data-stack/" class="block rounded-lg overflow-hidden transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+        <a href="/learn/open-source-data-stack/" class="learn-card block rounded-lg overflow-hidden transition hover:shadow-md" data-learn-slug="/learn/open-source-data-stack/" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
           <div class="aspect-[600/340] overflow-hidden" style="background:var(--color-bg)">
             <img src="https://acaciafund.org/static/images/thumb_383f95f01064.svg" alt="" class="w-full h-full object-cover" loading="lazy">
           </div>
@@ -193,6 +206,7 @@
                 chart Markets
               </span>
               <span class="text-xs" style="color:var(--color-text-muted)">📘 Intermediate</span>
+              <span class="ml-auto text-xs lesson-status" data-slug="/learn/open-source-data-stack/" style="color:var(--color-text-muted)">⬜</span>
             </div>
             <h3 class="font-semibold" style="color:var(--color-text)">Building an Open Source Data Stack: From Ingestion to Analytics</h3>
             <div class="mt-3 flex items-center gap-3 text-xs" style="color:var(--color-text-muted)">
@@ -201,7 +215,7 @@
             </div>
           </div>
         </a>
-        <a href="/learn/data-quality-engineering/" class="block rounded-lg overflow-hidden transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+        <a href="/learn/data-quality-engineering/" class="learn-card block rounded-lg overflow-hidden transition hover:shadow-md" data-learn-slug="/learn/data-quality-engineering/" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
           <div class="aspect-[600/340] overflow-hidden" style="background:var(--color-bg)">
             <img src="https://acaciafund.org/static/images/thumb_22119071aa66.svg" alt="" class="w-full h-full object-cover" loading="lazy">
           </div>
@@ -211,6 +225,7 @@
                 chart Markets
               </span>
               <span class="text-xs" style="color:var(--color-text-muted)">📘 Intermediate</span>
+              <span class="ml-auto text-xs lesson-status" data-slug="/learn/data-quality-engineering/" style="color:var(--color-text-muted)">⬜</span>
             </div>
             <h3 class="font-semibold" style="color:var(--color-text)">Data Quality Engineering: Testing, Monitoring, and Expectations at Scale</h3>
             <div class="mt-3 flex items-center gap-3 text-xs" style="color:var(--color-text-muted)">
@@ -219,7 +234,7 @@
             </div>
           </div>
         </a>
-        <a href="/learn/market-analysis/" class="block rounded-lg overflow-hidden transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+        <a href="/learn/market-analysis/" class="learn-card block rounded-lg overflow-hidden transition hover:shadow-md" data-learn-slug="/learn/market-analysis/" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
           <div class="aspect-[600/340] overflow-hidden" style="background:var(--color-bg)">
             <img src="https://acaciafund.org/static/images/thumb_f873dc277c02.svg" alt="" class="w-full h-full object-cover" loading="lazy">
           </div>
@@ -229,6 +244,7 @@
                 chart Markets
               </span>
               <span class="text-xs" style="color:var(--color-text-muted)">📘 Intermediate</span>
+              <span class="ml-auto text-xs lesson-status" data-slug="/learn/market-analysis/" style="color:var(--color-text-muted)">⬜</span>
             </div>
             <h3 class="font-semibold" style="color:var(--color-text)">How to Analyse Market Signals — Interactive Tutorial</h3>
             <p class="mt-1 text-xs" style="color:var(--color-text-secondary)">Step-by-step tutorial on reading market signals, understanding supply chain dynamics, and evaluating industry trends.</p>
@@ -237,7 +253,7 @@
             </div>
           </div>
         </a>
-        <a href="/learn/science-method/" class="block rounded-lg overflow-hidden transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+        <a href="/learn/science-method/" class="learn-card block rounded-lg overflow-hidden transition hover:shadow-md" data-learn-slug="/learn/science-method/" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
           <div class="aspect-[600/340] overflow-hidden" style="background:var(--color-bg)">
             <img src="https://acaciafund.org/static/images/thumb_78b27536a6a9.svg" alt="" class="w-full h-full object-cover" loading="lazy">
           </div>
@@ -247,6 +263,7 @@
                 microscope Science
               </span>
               <span class="text-xs" style="color:var(--color-text-muted)">📘 Intermediate</span>
+              <span class="ml-auto text-xs lesson-status" data-slug="/learn/science-method/" style="color:var(--color-text-muted)">⬜</span>
             </div>
             <h3 class="font-semibold" style="color:var(--color-text)">Scientific Reasoning in Research Synthesis</h3>
             <p class="mt-1 text-xs" style="color:var(--color-text-secondary)">Lesson on evaluating scientific claims, understanding replication crises, and applying Bloom taxonomy to research analysis.</p>
@@ -258,6 +275,45 @@
       </div>
     </div>
 </section>
+
+<script>
+(function(){
+  var PROGRESS_KEY = 'acacia_progress_v1';
+  function loadProgress(){
+    try{ return JSON.parse(localStorage.getItem(PROGRESS_KEY) || '{}'); }catch(e){return {};}
+  }
+  var p = loadProgress();
+  document.querySelectorAll('.lesson-status').forEach(function(el){
+    var slug = el.getAttribute('data-slug');
+    if(p[slug] && p[slug].done){
+      el.textContent = '✅';
+      el.style.color = '#22c55e';
+    }
+  });
+  document.querySelectorAll('.group-progress').forEach(function(el){
+    var cards = el.closest('.mb-12').querySelectorAll('.lesson-status');
+    var done = 0;
+    cards.forEach(function(s){
+      var slug = s.getAttribute('data-slug');
+      if(p[slug] && p[slug].done) done++;
+    });
+    el.textContent = done + '/' + cards.length;
+    if(done === cards.length && cards.length > 0){
+      el.style.color = '#22c55e';
+    }
+  });
+  var total = document.querySelectorAll('.lesson-status').length;
+  var completed = 0;
+  document.querySelectorAll('.lesson-status').forEach(function(el){
+    var slug = el.getAttribute('data-slug');
+    if(p[slug] && p[slug].done) completed++;
+  });
+  var summary = document.getElementById('progress-summary');
+  if(summary && total > 0){
+    summary.textContent = completed + '/' + total + ' completed — ' + (total - completed) + ' remaining';
+  }
+})();
+</script>
 
   </main>
 

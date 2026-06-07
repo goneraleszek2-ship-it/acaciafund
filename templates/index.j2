@@ -30,6 +30,63 @@
   </script>
 </section>
 
+<section id="continue-learning" class="mt-8 hidden" aria-labelledby="continue-heading">
+  <h2 id="continue-heading" class="text-2xl font-bold mb-4" style="color:var(--color-text)">Continue Learning</h2>
+  <div class="flex items-center gap-3 mb-4 text-sm" style="color:var(--color-text-secondary)">
+    <span id="continue-progress">0/0 completed</span>
+    <button id="reset-progress-btn" class="text-xs underline hover:no-underline" style="color:var(--color-text-muted)">Reset progress</button>
+  </div>
+  <div id="continue-list" class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3"></div>
+</section>
+
+<script>
+(function(){
+  var PROGRESS_KEY = 'acacia_progress_v1';
+  function loadProgress(){
+    try{ return JSON.parse(localStorage.getItem(PROGRESS_KEY) || '{}'); }catch(e){return {};}
+  }
+  var p = loadProgress();
+  var totalItems = [{%- for item in learn_items %}{slug:"/{{ item.slug }}/",title:"{{ item.title | striptags | e }}",pillar:"{{ item.pillar or "" }}",diff:"{{ item.difficulty or "beginner" }}"}{% if not loop.last %},{% endif %}{%- endfor %}];
+  var done = 0;
+  var incomplete = [];
+  totalItems.forEach(function(it){
+    if(p[it.slug] && p[it.slug].done){
+      done++;
+    } else {
+      incomplete.push(it);
+    }
+  });
+  if(totalItems.length > 0){
+    var contSec = document.getElementById('continue-learning');
+    var contProg = document.getElementById('continue-progress');
+    var contList = document.getElementById('continue-list');
+    if(contSec){
+      contSec.classList.remove('hidden');
+      if(contProg) contProg.textContent = done + '/' + totalItems.length + ' completed';
+      if(incomplete.length > 0){
+        incomplete.slice(0,6).forEach(function(it){
+          var a = document.createElement('a');
+          a.href = it.slug + '/';
+          a.className = 'block rounded-xl p-4 transition hover:-translate-y-0.5 hover:shadow-md';
+          a.style.cssText = 'background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none';
+          a.innerHTML = '<div class="flex items-center gap-2 mb-2"><span class="text-xs px-2 py-0.5 font-medium rounded" style="background:var(--color-bg);color:var(--color-text-muted)">' + it.pillar + '</span><span class="text-xs" style="color:var(--color-text-muted)">' + it.diff.charAt(0).toUpperCase() + it.diff.slice(1) + '</span></div><span class="font-semibold text-sm" style="color:var(--color-text)">' + it.title + '</span>';
+          contList.appendChild(a);
+        });
+      }
+    }
+  }
+  var resetBtn = document.getElementById('reset-progress-btn');
+  if(resetBtn){
+    resetBtn.addEventListener('click', function(){
+      if(confirm('Reset all learning progress?')){
+        localStorage.removeItem(PROGRESS_KEY);
+        window.location.reload();
+      }
+    });
+  }
+})();
+</script>
+
 {%- if featured_posts %}
 <section class="mt-8" aria-labelledby="featured-heading">
   <h2 id="featured-heading" class="sr-only">Featured Articles</h2>

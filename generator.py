@@ -291,7 +291,20 @@ def main():
     print("  category: knowledge/index.html")
 
     # --- LEARN PAGES ---
-    for item in learn_items:
+    learn_lessons = [li for li in learn_items if li.slug != "learn"]
+    for i, item in enumerate(learn_items):
+        # Determine prev/next only among actual lessons (exclude meta "learn" page)
+        li = None
+        for j, lli in enumerate(learn_lessons):
+            if lli.slug == item.slug:
+                li = j
+                break
+        if li is not None:
+            prev_lesson = learn_lessons[li - 1] if li > 0 else None
+            next_lesson = learn_lessons[li + 1] if li + 1 < len(learn_lessons) else None
+        else:
+            prev_lesson = None
+            next_lesson = None
         slug = item.slug
         page_path = slug_to_path(slug)
         if "/" in slug:
@@ -314,13 +327,26 @@ def main():
         thumb_base = f"{SITE_URL}/static/images"
         og_image_url = f"{SITE_URL}/static/images/og_{og_key}.svg"
 
+        # Serialize quiz data for learning_hub.js
+        quiz_json = ""
+        if item.bloom_questions:
+            quiz_data = {"questions": []}
+            for bq in item.bloom_questions[:10]:
+                if isinstance(bq, dict) and "question" in bq:
+                    opts = bq.get("options", [])
+                    answer = bq.get("answer", 0)
+                    quiz_data["questions"].append({"q": bq["question"], "options": opts, "a": answer})
+            if quiz_data["questions"]:
+                quiz_json = json.dumps(quiz_data, ensure_ascii=False)
+
         html = render_template("learn.j2",
             content=item, page_path=page_path,
             toc_items=toc_items, pconf=pconf,
+            prev_lesson=prev_lesson, next_lesson=next_lesson,
             related_research=related_research,
             related_knowledge=related_knowledge,
             thumbnail_base=thumb_base, thumbnail_key=thumbnail_key,
-            og_image_url=og_image_url,
+            og_image_url=og_image_url, quiz_json=quiz_json,
             is_index=False, **ctx_base)
         out_file.write_text(html, encoding="utf-8")
         print(f"  learn: {out_file.relative_to(OUTPUT_DIR)}")

@@ -273,6 +273,25 @@
         </a>
       </div>
     </section>
+
+    <div class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
+      <div class="flex items-center justify-between">
+        <a href="/learn/market-analysis/" class="inline-flex items-center gap-2 text-sm font-medium transition hover:text-[var(--color-accent)]" style="color:var(--color-text-secondary)">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          <span class="hidden sm:inline">Previous:</span> How to Analyse Market Signals — Interactive Tutorial
+        </a>
+        <div>
+          <button id="mark-complete-btn" data-track-lesson="learn/science-method/index.html" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition" style="background:var(--color-accent);color:#fff">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span id="complete-btn-text">Mark Complete</span>
+          </button>
+        </div>
+        <a href="/learn/quiz-aml/" class="inline-flex items-center gap-2 text-sm font-medium transition hover:text-[var(--color-accent)]" style="color:var(--color-text-secondary)">
+          <span class="hidden sm:inline">Next:</span> AML Knowledge Check — Interactive Quiz
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
   </article>
 </div>
 
@@ -346,6 +365,91 @@
       }
     });
   });
+
+  // Mark Complete button
+  var completeBtn = document.getElementById('mark-complete-btn');
+  if (completeBtn) {
+    var PROGRESS_KEY = 'acacia_progress_v1';
+    var slug = completeBtn.getAttribute('data-track-lesson');
+    var textEl = document.getElementById('complete-btn-text');
+    function loadProgress(){
+      try{ return JSON.parse(localStorage.getItem(PROGRESS_KEY) || '{}'); }catch(e){return {};}
+    }
+    function saveProgress(p){
+      try{ localStorage.setItem(PROGRESS_KEY, JSON.stringify(p)); }catch(e){}
+    }
+    var p = loadProgress();
+    if (p[slug] && p[slug].done) {
+      textEl.textContent = 'Completed ✓';
+      completeBtn.style.background = 'var(--color-text-muted)';
+    }
+    completeBtn.addEventListener('click', function() {
+      var p = loadProgress();
+      if (!p[slug]) p[slug] = {};
+      if (p[slug].done) {
+        delete p[slug].done;
+        textEl.textContent = 'Mark Complete';
+        completeBtn.style.background = 'var(--color-accent)';
+      } else {
+        p[slug].done = true;
+        p[slug].date = new Date().toISOString();
+        textEl.textContent = 'Completed ✓';
+        completeBtn.style.background = 'var(--color-text-muted)';
+      }
+      saveProgress(p);
+    });
+  }
+
+  // Quiz engine
+  var quizSection = document.getElementById('quiz-section');
+  if (quizSection) {
+    try {
+      var quizData = JSON.parse(quizSection.getAttribute('data-quiz') || '{}');
+      if (quizData.questions && quizData.questions.length) {
+        var container = document.getElementById('quiz-container');
+        quizData.questions.forEach(function(q, i) {
+          var div = document.createElement('div');
+          div.className = 'mb-6 p-4 rounded-lg';
+          div.style.background = 'var(--color-bg)';
+          div.style.border = '1px solid var(--color-border)';
+          var qP = document.createElement('p');
+          qP.className = 'text-sm font-semibold mb-3';
+          qP.style.color = 'var(--color-text)';
+          qP.textContent = (i + 1) + '. ' + q.q;
+          div.appendChild(qP);
+          if (q.options && q.options.length) {
+            q.options.forEach(function(opt, oi) {
+              var label = document.createElement('label');
+              label.className = 'flex items-center gap-2 py-1.5 px-2 rounded cursor-pointer text-sm transition';
+              label.style.color = 'var(--color-text-secondary)';
+              label.addEventListener('mouseenter', function(){ label.style.background = 'var(--color-surface)'; });
+              label.addEventListener('mouseleave', function(){ label.style.background = ''; });
+              var radio = document.createElement('input');
+              radio.type = 'radio';
+              radio.name = 'quiz-' + i;
+              radio.value = oi;
+              radio.className = 'shrink-0';
+              radio.addEventListener('change', function() {
+                var parent = this.closest('.mb-6');
+                parent.querySelectorAll('label').forEach(function(l){ l.style.color = 'var(--color-text-secondary)'; });
+                parent.querySelectorAll('input').forEach(function(r){ r.style.outline = 'none'; });
+                if (oi === q.a) {
+                  label.style.color = '#22c55e';
+                  label.style.fontWeight = '600';
+                } else {
+                  label.style.color = '#ef4444';
+                }
+              });
+              label.appendChild(radio);
+              label.appendChild(document.createTextNode(' ' + opt));
+              div.appendChild(label);
+            });
+          }
+          container.appendChild(div);
+        });
+      }
+    } catch(e){}
+  }
 })();
 </script>
 

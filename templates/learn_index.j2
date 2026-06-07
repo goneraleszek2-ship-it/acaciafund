@@ -11,13 +11,16 @@
 
   <div class="mb-8">
     <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">Learning Hub</h1>
-    <p class="mt-2 text-sm" style="color:var(--color-text-muted)">{{ items | length }} lessons — structured learning across all pillars</p>
+    <p class="mt-2 text-sm" style="color:var(--color-text-muted)" id="progress-summary">{{ items | length }} lessons — structured learning across all pillars</p>
   </div>
 
   {%- if grouped and grouped | length > 0 %}
     {%- for group_name, group_items in grouped.items() %}
     <div class="mb-12 scroll-mt-20" id="{{ group_name | lower | replace(' ', '-') }}">
-      <h2 class="text-2xl font-bold mb-1" style="color:var(--color-text)">{{ group_name }}</h2>
+      <div class="flex items-center justify-between mb-1">
+        <h2 class="text-2xl font-bold" style="color:var(--color-text)">{{ group_name }}</h2>
+        <span class="text-xs group-progress" data-group="{{ group_name | lower }}" style="color:var(--color-text-muted)">0/{{ group_items | length }}</span>
+      </div>
       <p class="text-sm mb-4" style="color:var(--color-text-muted)">
         {%- set group_descriptions = {
           "Beginner": "Foundational concepts — no prior knowledge required.",
@@ -32,12 +35,10 @@
         {%- set pc = pillar_config.get(p, none) %}
         {%- set tkey = thumbnail_key(item.title) %}
         {%- set d_emoji = {"beginner": "🌱", "intermediate": "📘", "advanced": "🔥"} %}
-        <a href="/{{ item.slug }}/" class="block rounded-lg overflow-hidden transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
-          {%- if item.thumbnail_svg and tkey %}
+        <a href="/{{ item.slug }}/" class="learn-card block rounded-lg overflow-hidden transition hover:shadow-md" data-learn-slug="/{{ item.slug }}/" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
           <div class="aspect-[600/340] overflow-hidden" style="background:var(--color-bg)">
             <img src="{{ thumbnail_base }}/thumb_{{ tkey }}.svg" alt="" class="w-full h-full object-cover" loading="lazy">
           </div>
-          {%- endif %}
           <div class="p-4">
             <div class="flex items-center gap-2 mb-2">
               {%- if pc %}
@@ -48,6 +49,7 @@
               {%- if item.difficulty %}
               <span class="text-xs" style="color:var(--color-text-muted)">{{ d_emoji.get(item.difficulty, "📘") }} {{ item.difficulty | capitalize }}</span>
               {%- endif %}
+              <span class="ml-auto text-xs lesson-status" data-slug="/{{ item.slug }}/" style="color:var(--color-text-muted)">⬜</span>
             </div>
             <h3 class="font-semibold" style="color:var(--color-text)">{{ item.title | striptags }}</h3>
             {%- if item.description %}
@@ -67,31 +69,45 @@
       </div>
     </div>
     {%- endfor %}
-  {%- else %}
-  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-    {%- for item in items %}
-    {%- set p = item.pillar or "" %}
-    {%- set pc = pillar_config.get(p, none) %}
-    {%- set tkey = thumbnail_key(item.title) %}
-    <a href="/{{ item.slug }}/" class="block rounded-lg p-4 transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
-      {%- if pc %}
-      <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded {{ pc.badge_color }}">{{ pc.emoji }} {{ pc.label }}</span>
-      {%- endif %}
-      <h2 class="font-semibold mt-2" style="color:var(--color-text)">{{ item.title | striptags }}</h2>
-      {%- if item.description %}
-      <p class="mt-1 text-xs" style="color:var(--color-text-secondary)">{{ item.description[:200] }}</p>
-      {%- endif %}
-      <div class="mt-3 flex items-center gap-3 text-xs" style="color:var(--color-text-muted)">
-        {%- if item.date_str %}
-        <time datetime="{{ item.date_str }}">{{ item.date_str }}</time>
-        {%- endif %}
-        {%- if item.body_html %}
-        <span>{{ item.body_html | reading_time }} min</span>
-        {%- endif %}
-      </div>
-    </a>
-    {%- endfor %}
-  </div>
   {%- endif %}
 </section>
+
+<script>
+(function(){
+  var PROGRESS_KEY = 'acacia_progress_v1';
+  function loadProgress(){
+    try{ return JSON.parse(localStorage.getItem(PROGRESS_KEY) || '{}'); }catch(e){return {};}
+  }
+  var p = loadProgress();
+  document.querySelectorAll('.lesson-status').forEach(function(el){
+    var slug = el.getAttribute('data-slug');
+    if(p[slug] && p[slug].done){
+      el.textContent = '✅';
+      el.style.color = '#22c55e';
+    }
+  });
+  document.querySelectorAll('.group-progress').forEach(function(el){
+    var cards = el.closest('.mb-12').querySelectorAll('.lesson-status');
+    var done = 0;
+    cards.forEach(function(s){
+      var slug = s.getAttribute('data-slug');
+      if(p[slug] && p[slug].done) done++;
+    });
+    el.textContent = done + '/' + cards.length;
+    if(done === cards.length && cards.length > 0){
+      el.style.color = '#22c55e';
+    }
+  });
+  var total = document.querySelectorAll('.lesson-status').length;
+  var completed = 0;
+  document.querySelectorAll('.lesson-status').forEach(function(el){
+    var slug = el.getAttribute('data-slug');
+    if(p[slug] && p[slug].done) completed++;
+  });
+  var summary = document.getElementById('progress-summary');
+  if(summary && total > 0){
+    summary.textContent = completed + '/' + total + ' completed — ' + (total - completed) + ' remaining';
+  }
+})();
+</script>
 {% endblock %}
