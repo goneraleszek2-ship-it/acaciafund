@@ -4,8 +4,29 @@
   <link href="https://acaciafund.org/feed.xml" rel="self" type="application/atom+xml"/>
   <link href="https://acaciafund.org/" rel="alternate" type="text/html"/>
   <id>https://acaciafund.org/feed.xml</id>
-  <updated>2026-06-07T09:42:37.321944+00:00</updated>
+  <updated>2026-06-07T10:17:35.946292+00:00</updated>
   <author><name>AcaciaFund</name></author>
+  <entry>
+    <title>Data Pipeline Patterns for High-Throughput Genomics: Orchestrating Bioinformatics Workflows with Dagster</title>
+    <link href="https://acaciafund.org/blog/2026-06-16-science-dataeng/index.html" rel="alternate" type="text/html"/>
+    <id>https://acaciafund.org/blog/2026-06-16-science-dataeng/index.html</id>
+    <updated>2026-06-16T08:00:00+00:00</updated>
+    <summary>Applying modern DataOps orchestration to genomics: Dagster assets for sequencing pipeline stages, Great Expectations for quality gates on base-call accuracy, and dbt for cohort-level analytical transformations.</summary>
+  </entry>
+  <entry>
+    <title>Feature Engineering at Scale: Building ML-Ready Market Data Pipelines with dbt and Iceberg</title>
+    <link href="https://acaciafund.org/blog/2026-06-15-stock-dataeng/index.html" rel="alternate" type="text/html"/>
+    <id>https://acaciafund.org/blog/2026-06-15-stock-dataeng/index.html</id>
+    <updated>2026-06-15T08:00:00+00:00</updated>
+    <summary>Production feature engineering pipelines for quantitative finance: transforming raw tick data into ML-ready feature sets using dbt for SQL transformations, Iceberg for time-travel access, and Dagster for asset orchestration.</summary>
+  </entry>
+  <entry>
+    <title>Streaming ETL for Suspicious Activity Reports: Real-Time AML Data Pipelines with Kafka and Flink</title>
+    <link href="https://acaciafund.org/blog/2026-06-14-aml-dataeng/index.html" rel="alternate" type="text/html"/>
+    <id>https://acaciafund.org/blog/2026-06-14-aml-dataeng/index.html</id>
+    <updated>2026-06-14T08:00:00+00:00</updated>
+    <summary>Architecture patterns for building real-time AML surveillance data pipelines using Apache Kafka for transaction ingestion, Flink for stream processing, and Iceberg for immutable audit storage — with DataOps quality gates at every stage.</summary>
+  </entry>
   <entry>
     <title>Reproducible ML Pipelines in Computational Biology: MLOps for CRISPR Target Discovery</title>
     <link href="https://acaciafund.org/blog/2026-06-12-dataops-science/index.html" rel="alternate" type="text/html"/>
@@ -172,31 +193,5 @@ Retail investors pour money into AI ETFs despite warnings (di</summary>
     <id>https://acaciafund.org/blog/2026-05-09-stock/index.html</id>
     <updated>2026-05-09T08:00:00+00:00</updated>
     <summary>Quantum computing venture funding reaches $4.2B in Q1 2026, analyzing the major rounds, technology approaches (superconducting, trapped ion, photonic), and the path toward commercial quantum advantage.</summary>
-  </entry>
-  <entry>
-    <title>JWST detects unexpected atmospheric chemistry on temperate exoplanet in habitable zone</title>
-    <link href="https://acaciafund.org/blog/2026-04-22-science/index.html" rel="alternate" type="text/html"/>
-    <id>https://acaciafund.org/blog/2026-04-22-science/index.html</id>
-    <updated>2026-04-22T08:00:00+00:00</updated>
-    <summary>JWST reveals unexpected atmospheric composition on a temperate exoplanet in the habitable zone, including potential biosignature gases and unusual chemical disequilibrium that challenges current atmospheric models.</summary>
-  </entry>
-  <entry>
-    <title>EV battery supply chain diversification accelerates with 12 new gigafactories</title>
-    <link href="https://acaciafund.org/blog/2026-04-19-stock/index.html" rel="alternate" type="text/html"/>
-    <id>https://acaciafund.org/blog/2026-04-19-stock/index.html</id>
-    <updated>2026-04-19T08:00:00+00:00</updated>
-    <summary>Mapping the global EV battery supply chain as 12 new gigafactories break ground across North America, Europe, and Southeast Asia, reducing dependence on Chinese battery supply chains.</summary>
-  </entry>
-  <entry>
-    <title>EU AI Act Enters Force — Global Implications for Tech</title>
-    <link href="https://acaciafund.org/blog/2026-04-15-ai-regulation/index.html" rel="alternate" type="text/html"/>
-    <id>https://acaciafund.org/blog/2026-04-15-ai-regulation/index.html</id>
-    <updated>2026-06-07T07:01:01.923872+00:00</updated>
-    <summary>🔍 Trending Topics (HackerNews, 2026-04-15)
-
-
-EU AI Act officially enters into force (discussion) (620 points)
-OpenAI releases GPT-5 with improved reasoning (discussion) (580 points)
-Google's new AI se</summary>
   </entry>
 </feed>

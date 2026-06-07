@@ -155,6 +155,31 @@ NEW_ARTICLES = [
         "tags": ["science", "crispr", "gene-therapy", "fda", "biotech", "medicine"],
         "sqi": 0.84, "hn_pts": 834, "source_count": 17, "domains": 7,
     },
+    # --- New batch: Data Engineering meets Pillars ---
+    {
+        "slug": "blog/2026-06-14-aml-dataeng",
+        "title": "Streaming ETL for Suspicious Activity Reports: Real-Time AML Data Pipelines with Kafka and Flink",
+        "description": "Architecture patterns for building real-time AML surveillance data pipelines using Apache Kafka for transaction ingestion, Flink for stream processing, and Iceberg for immutable audit storage — with DataOps quality gates at every stage.",
+        "date": "2026-06-14", "pillar": "aml",
+        "tags": ["aml", "data-engineering", "kafka", "flink", "streaming", "real-time", "dataops"],
+        "sqi": 0.86, "hn_pts": 445, "source_count": 13, "domains": 6,
+    },
+    {
+        "slug": "blog/2026-06-15-stock-dataeng",
+        "title": "Feature Engineering at Scale: Building ML-Ready Market Data Pipelines with dbt and Iceberg",
+        "description": "Production feature engineering pipelines for quantitative finance: transforming raw tick data into ML-ready feature sets using dbt for SQL transformations, Iceberg for time-travel access, and Dagster for asset orchestration.",
+        "date": "2026-06-15", "pillar": "stock",
+        "tags": ["markets", "data-engineering", "dbt", "iceberg", "features", "ml", "dataops"],
+        "sqi": 0.88, "hn_pts": 567, "source_count": 15, "domains": 7,
+    },
+    {
+        "slug": "blog/2026-06-16-science-dataeng",
+        "title": "Data Pipeline Patterns for High-Throughput Genomics: Orchestrating Bioinformatics Workflows with Dagster",
+        "description": "Applying modern DataOps orchestration to genomics: Dagster assets for sequencing pipeline stages, Great Expectations for quality gates on base-call accuracy, and dbt for cohort-level analytical transformations.",
+        "date": "2026-06-16", "pillar": "science",
+        "tags": ["science", "data-engineering", "genomics", "dagster", "bioinformatics", "pipeline", "dataops"],
+        "sqi": 0.85, "hn_pts": 389, "source_count": 14, "domains": 6,
+    },
 ]
 
 
@@ -186,11 +211,11 @@ def seeded_rand(seed: int):
 
 def fractal_tree(slug: str, meta: dict, w: int, h: int,
                  base_x: float, base_y: float, trunk_len: float,
-                 trunk_angle: float = -90) -> list[str]:
+                 trunk_angle: float = -90) -> tuple[list[str], list[tuple]]:
     """
-    Generate a fractal tree as SVG <path> elements.
+    Generate a fractal tree as SVG <path> elements + returns path data for bloom.
     Branch angles, lengths, depth vary by slug hash.
-    Returns list of SVG path strings.
+    Returns (svg_lines, branch_endpoints_for_bloom).
     """
     hsh = compute_hash(slug)
     rng = seeded_rand(hsh)
@@ -203,18 +228,18 @@ def fractal_tree(slug: str, meta: dict, w: int, h: int,
     lean = 0.0 if symmetry == 0 else (-8 if symmetry == 1 else 8)
 
     paths = []
+    endpoints = []  # (x, y, depth) for bloom
 
     def _branch(x, y, angle, length, depth):
         if depth <= 0 or length < 2:
             return
-        # Calculate end point
         import math
         rad = math.radians(angle)
         ex = x + length * math.cos(rad)
         ey = y + length * math.sin(rad)
         paths.append((x, y, ex, ey, depth))
+        endpoints.append((ex, ey, depth))
 
-        # Sub-branches
         n = 2 + (next(rng) % 2)  # 2-3 branches
         spread = branch_angle + (next(rng) % 10) - 5
         for i in range(n):
@@ -231,12 +256,113 @@ def fractal_tree(slug: str, meta: dict, w: int, h: int,
     for x1, y1, x2, y2, d in paths:
         t = 1.0 - (d - min_depth) / (max_depth - min_depth + 1)
         sw = max(0.5, 2.5 * t)
-        opacity = 0.15 + 0.35 * t
-        color = lerp_color(meta["color"], "#ffffff", 1 - t * 0.5)
+        opacity = 0.2 + 0.4 * t
+        color = lerp_color(meta["color"], "#ffffff", 1 - t * 0.6)
         elems.append(
             f'<line x1="{x1:.1f}" y1="{y1:.1f}" x2="{x2:.1f}" y2="{y2:.1f}" '
             f'stroke="{color}" stroke-width="{sw:.1f}" opacity="{opacity:.2f}" '
             f'stroke-linecap="round"/>'
+        )
+
+    return elems, endpoints
+
+
+def fractal_bloom(endpoints: list[tuple], meta: dict, slug: str,
+                  w: int, h: int) -> list[str]:
+    """
+    Generate glowing bloom circles at branch endpoints.
+    Creates a 'flooding of colors' effect by radiating pillar color from tips.
+    """
+    hsh = compute_hash(f"bloom_{slug}")
+    rng = seeded_rand(hsh)
+    elems = []
+
+    if not endpoints:
+        return elems
+
+    max_d = max(d for _, _, d in endpoints)
+    min_d = min(d for _, _, d in endpoints)
+    dr = max_d - min_d if max_d != min_d else 1
+
+    for x, y, d in endpoints:
+        t = 1.0 - (d - min_d) / dr
+        # Deep tips get smaller brighter blooms, deep branches get larger softer blooms
+        r = 2 + int(t * 18) + (next(rng) % 6)
+        op = 0.05 + 0.25 * (1 - t)
+        glow = lerp_color(meta["color"], "#ffffff", t * 0.3)
+        elems.append(
+            f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{r}" '
+            f'fill="{glow}" opacity="{op:.2f}" />'
+        )
+        # Secondary wider bloom
+        r2 = r * (1.5 + (next(rng) % 10) * 0.1)
+        elems.append(
+            f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{r2:.0f}" '
+            f'fill="{glow}" opacity="{op * 0.3:.2f}" />'
+        )
+
+    return elems
+
+
+def color_flood(slug: str, meta: dict, tree_x: float, tree_y: float,
+                w: int, h: int) -> list[str]:
+    """
+    Generate radial color flood gradients that radiate from the tree base,
+    flooding the canvas with pillar color.
+    """
+    hsh = compute_hash(f"flood_{slug}")
+    rng = seeded_rand(hsh)
+    elems = []
+
+    n_floods = 2 + (next(rng) % 2)
+    for i in range(n_floods):
+        offset_x = (next(rng) % 60) - 30
+        offset_y = (next(rng) % 40) - 20
+        cx = tree_x + offset_x
+        cy = tree_y + offset_y
+        r = 150 + (next(rng) % 200)
+        op = 0.03 + (next(rng) % 10) * 0.01
+        c = lerp_color(meta["color"], meta["bg1"], 0.1 + (next(rng) % 20) * 0.01)
+        gid = f"flood-{slug[:8]}-{i}"
+        elems.append(f'<defs><radialGradient id="{gid}" cx="50%" cy="50%">'
+                     f'<stop offset="0" stop-color="{c}" stop-opacity="{op:.2f}"/>'
+                     f'<stop offset="1" stop-color="{c}" stop-opacity="0"/>'
+                     f'</radialGradient></defs>')
+        elems.append(
+            f'<circle cx="{cx:.0f}" cy="{cy:.0f}" r="{r}" '
+            f'fill="url(#{gid})" />'
+        )
+
+    return elems
+
+
+def fractal_mist(slug: str, meta: dict, tree_x: float, tree_y: float,
+                 w: int, h: int, count: int = 40) -> list[str]:
+    """
+    Generate fine mist particles that spread outward from the tree,
+    creating a color flooding atmosphere.
+    """
+    hsh = compute_hash(f"mist_{slug}")
+    rng = seeded_rand(hsh)
+    elems = []
+
+    for _ in range(count):
+        import math
+        angle = (next(rng) % 3600) / 10.0
+        dist = 30 + (next(rng) % 250)
+        x = tree_x + dist * math.cos(math.radians(angle))
+        y = tree_y + dist * math.sin(math.radians(angle))
+        # Clamp to canvas
+        x = max(0, min(w, x))
+        y = max(0, min(h, y))
+        r = 1 + (next(rng) % 4)
+        op = 0.01 + (next(rng) % 15) * 0.005
+        # Mist gets lighter as it spreads
+        t = min(1.0, dist / 250)
+        c = lerp_color(meta["color"], "#ffffff", t * 0.5)
+        elems.append(
+            f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{r}" '
+            f'fill="{c}" opacity="{op:.2f}" />'
         )
 
     return elems
@@ -245,36 +371,38 @@ def fractal_tree(slug: str, meta: dict, w: int, h: int,
 def fractal_dust(slug: str, meta: dict, w: int, h: int, count: int = 30) -> list[str]:
     """
     Generate fractal dust (power-law distributed dots) as SVG circles.
-    Creates a clustered pattern that looks like a fractal point set.
+    Creates clustered patterns that echo the fractal theme.
     """
     hsh = compute_hash(f"dust_{slug}")
     rng = seeded_rand(hsh)
     elems = []
 
-    # Generate clusters
     n_clusters = 2 + (next(rng) % 2)
     clusters = []
     for _ in range(n_clusters):
         cx = next(rng) % w
         cy = next(rng) % h
-        cr = 20 + (next(rng) % 60)
+        cr = 30 + (next(rng) % 80)
         clusters.append((cx, cy, cr))
 
-    for _ in range(min(count, 20)):
-        # Pick a cluster
+    for _ in range(min(count, 25)):
         ci = next(rng) % n_clusters
         cx, cy, cr = clusters[ci]
-        # Power-law-like distribution within cluster
         import math
         angle = (next(rng) % 3600) / 10.0
         dist = cr * ((next(rng) % 1000) / 1000.0) ** 2
         x = cx + dist * math.cos(math.radians(angle))
         y = cy + dist * math.sin(math.radians(angle))
-        r = 1 + (next(rng) % 3)
-        op = 0.02 + (next(rng) % 8) * 0.01
+        r = 1 + (next(rng) % 4)
+        op = 0.01 + (next(rng) % 10) * 0.01
+        # Some dust in white, some in pillar color
+        if next(rng) % 3 == 0:
+            fill = "#ffffff"
+        else:
+            fill = meta["color"]
         elems.append(
             f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{r}" '
-            f'fill="{meta["color"]}" opacity="{op:.2f}"/>'
+            f'fill="{fill}" opacity="{op:.2f}"/>'
         )
 
     return elems
@@ -309,56 +437,70 @@ def make_title_lines(title: str, max_chars: int, font_size: int,
 def generate_thumbnail_svg(slug: str, title: str, pillar: str) -> str:
     meta = PILLAR_META[pillar]
     h = compute_hash(slug)
-    bg_variant = h % 4
+    bg_variant = h % 5
 
-    # Background gradient
+    # Enhanced background — deeper pillar color flooding
+    color_tint = lerp_color(meta["bg1"], meta["color"], 0.08 + (h % 10) * 0.01)
     if bg_variant == 0:
         bg = (
             f'<linearGradient id="bg-{slug[:8]}" x1="0" y1="0" x2="1" y2="1">'
             f'<stop offset="0" stop-color="{meta["bg1"]}"/>'
-            f'<stop offset="1" stop-color="{lerp_color(meta["bg1"], meta["bg2"], 0.3)}"/>'
+            f'<stop offset="0.5" stop-color="{color_tint}"/>'
+            f'<stop offset="1" stop-color="{meta["bg2"]}"/>'
             f'</linearGradient>'
         )
     elif bg_variant == 1:
-        alt = lerp_color(meta["bg1"], meta["color"], 0.12)
         bg = (
-            f'<radialGradient id="bg-{slug[:8]}" cx="50%" cy="40%">'
-            f'<stop offset="0" stop-color="{alt}"/>'
+            f'<radialGradient id="bg-{slug[:8]}" cx="40%" cy="30%">'
+            f'<stop offset="0" stop-color="{color_tint}"/>'
             f'<stop offset="1" stop-color="{meta["bg1"]}"/>'
             f'</radialGradient>'
         )
-    else:
-        alt = lerp_color(meta["bg1"], meta["color"], 0.15)
+    elif bg_variant == 2:
+        c2 = lerp_color(meta["bg1"], meta["color"], 0.18)
         bg = (
-            f'<linearGradient id="bg-{slug[:8]}" x1="0" y1="0" x2="0" y2="1">'
+            f'<linearGradient id="bg-{slug[:8]}" x1="0" y1="1" x2="1" y2="0">'
             f'<stop offset="0" stop-color="{meta["bg1"]}"/>'
-            f'<stop offset="0.5" stop-color="{alt}"/>'
+            f'<stop offset="0.4" stop-color="{color_tint}"/>'
+            f'<stop offset="0.7" stop-color="{c2}"/>'
             f'<stop offset="1" stop-color="{meta["bg1"]}"/>'
             f'</linearGradient>'
+        )
+    else:
+        bg = (
+            f'<radialGradient id="bg-{slug[:8]}" cx="50%" cy="80%">'
+            f'<stop offset="0" stop-color="{lerp_color(meta["color"], meta["bg1"], 0.3)}"/>'
+            f'<stop offset="1" stop-color="{meta["bg1"]}"/>'
+            f'</radialGradient>'
         )
 
     # Fractal tree — grows from bottom-center
     tree_x = 300 + ((h % 40) - 20)
     tree_y = 300
     trunk = 90 + (h % 60)
-    tree = fractal_tree(slug, meta, 600, 340, tree_x, tree_y, trunk)
+    tree_lines, endpoints = fractal_tree(slug, meta, 600, 340, tree_x, tree_y, trunk)
+
+    # Color flooding effects
+    flood = color_flood(slug, meta, tree_x, tree_y, 600, 340)
+    mist = fractal_mist(slug, meta, tree_x, tree_y, 600, 340, 30 + (h % 20))
+    bloom = fractal_bloom(endpoints, meta, slug, 600, 340)
 
     # Fractal dust background
-    dust = fractal_dust(slug, meta, 600, 340, 25 + (h % 15))
+    dust = fractal_dust(slug, meta, 600, 340, 20 + (h % 15))
 
     # Icon at top-left area
     icon_x = 30 + (h % 40)
     icon_y = 30 + (h % 10)
     icon = (
-        f'<g transform="translate({icon_x}, {icon_y}) scale(1.0)" '
+        f'<g transform="translate({icon_x}, {icon_y}) scale(1.2)" '
         f'stroke="{meta["color"]}" fill="none" stroke-linecap="round" '
         f'stroke-linejoin="round" stroke-width="1.5" opacity="0.6">'
         f'{meta["icon_path"]}'
         f'</g>'
     )
 
-    # Title lines — positioned in upper-right area
-    title_elems = make_title_lines(title, 26, 20, 300, 50, 600)
+    # Title lines
+    title_elems = make_title_lines(title, 28, 20, 300, 50, 600)
 
     # Accent bar at bottom
     bar_color = lerp_color(meta["color"], "#ffffff", 0.3)
@@ -370,7 +512,10 @@ def generate_thumbnail_svg(slug: str, title: str, pillar: str) -> str:
         f'<defs>{bg}</defs>\n'
         f'<rect width="600" height="340" fill="url(#bg-{slug[:8]})"/>\n'
         f'{"".join(dust)}\n'
-        f'{"".join(tree)}\n'
+        f'{"".join(flood)}\n'
+        f'{"".join(mist)}\n'
+        f'{"".join(tree_lines)}\n'
+        f'{"".join(bloom)}\n'
         f'{icon}\n'
         f'{"".join(title_elems)}\n'
         f'<rect x="{(600 - bar_w) // 2}" y="310" width="{bar_w}" height="2" '
@@ -387,30 +532,40 @@ def generate_og_svg(slug: str, title: str, pillar: str, date_str: str) -> str:
     meta = PILLAR_META[pillar]
     h = compute_hash(f"og_{slug}")
 
-    # Background gradient
+    # Background with color flooding
+    color_mid = lerp_color(meta["bg1"], meta["color"], 0.15 + (h % 15) * 0.01)
     bg_grad = (
-        f'<linearGradient id="ogbg-{slug[:8]}" x1="0" y1="0" x2="1" y2="1">\n'
-        f'<stop offset="0" stop-color="{meta["bg1"]}"/>\n'
-        f'<stop offset=".5" stop-color="{lerp_color(meta["bg1"], meta["color"], 0.2)}"/>\n'
+        f'<radialGradient id="ogbg-{slug[:8]}" cx="60%" cy="80%">\n'
+        f'<stop offset="0" stop-color="{lerp_color(meta["color"], meta["bg1"], 0.2)}"/>\n'
+        f'<stop offset="0.4" stop-color="{color_mid}"/>\n'
         f'<stop offset="1" stop-color="{meta["bg1"]}"/>\n'
-        f'</linearGradient>'
+        f'</radialGradient>'
     )
 
     # Larger fractal tree
-    tree = fractal_tree(f"og_{slug}", meta, 1200, 630, 1000, 600, 180 + (h % 80))
+    tree_x = 1000
+    tree_y = 580
+    trunk_len = 180 + (h % 80)
+    tree_lines, endpoints = fractal_tree(f"og_{slug}", meta, 1200, 630,
+                                          tree_x, tree_y, trunk_len)
 
-    # Fractal dust scattered widely
-    import math
+    # Color flooding for OG
+    flood = color_flood(f"og_{slug}", meta, tree_x, tree_y, 1200, 630)
+    mist = fractal_mist(f"og_{slug}", meta, tree_x, tree_y, 1200, 630, 35)
+    bloom = fractal_bloom(endpoints, meta, f"og_{slug}", 1200, 630)
+
+    # Dust scattered widely
     rng = seeded_rand(h)
     dust = []
-    for _ in range(25):
+    for _ in range(30):
         x = next(rng) % 1200
         y = next(rng) % 630
-        r = 2 + (next(rng) % 5)
-        op = 0.01 + (next(rng) % 5) * 0.01
+        r = 2 + (next(rng) % 6)
+        op = 0.01 + (next(rng) % 6) * 0.01
+        fill = meta["color"] if next(rng) % 3 else "#ffffff"
         dust.append(
             f'<circle cx="{x}" cy="{y}" r="{r}" '
-            f'fill="{meta["color"]}" opacity="{op:.2f}"/>'
+            f'fill="{fill}" opacity="{op:.2f}"/>'
         )
 
     # Title
@@ -431,7 +586,10 @@ def generate_og_svg(slug: str, title: str, pillar: str, date_str: str) -> str:
         f'<defs>\n{bg_grad}\n</defs>\n'
         f'<rect width="1200" height="630" fill="url(#ogbg-{slug[:8]})"/>\n'
         f'{"".join(dust)}\n'
-        f'{"".join(tree)}\n'
+        f'{"".join(flood)}\n'
+        f'{"".join(mist)}\n'
+        f'{"".join(tree_lines)}\n'
+        f'{"".join(bloom)}\n'
         f'{icon}\n'
         f'{"".join(title_elems)}\n'
         f'<text x="80" y="520" fill="{meta["color"]}" '
