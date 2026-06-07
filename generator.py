@@ -15,7 +15,7 @@ from typing import Any
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from schemas import RegistryData
-from core.visuals import source_bar_svg, sparkline_svg, bloom_chart_svg, radar_svg, heatmap_svg, donut_svg, generate_thumbnail_svg
+from core.visuals import source_bar_svg, sparkline_svg, bloom_chart_svg, radar_svg, heatmap_svg, donut_svg, generate_thumbnail_svg, generate_og_image
 
 REGISTRY_PATH = Path("registry.json")
 TEMPLATE_DIR = Path("templates")
@@ -246,7 +246,9 @@ def main():
         related_learn = find_related(learn_items, item, 3)
 
         thumb_key = hashlib.md5(item.title.encode()).hexdigest()[:12]
+        og_key = hashlib.md5(f"og_{item.title}".encode()).hexdigest()[:12]
         thumb_base = f"{SITE_URL}/static/images"
+        og_image_url = f"{SITE_URL}/static/images/og_{og_key}.svg"
 
         html = render_template("knowledge.j2",
             content=item, page_path=page_path,
@@ -254,17 +256,20 @@ def main():
             related_research=related_research,
             related_learn=related_learn,
             thumbnail_base=thumb_base, thumbnail_key=thumbnail_key,
+            og_image_url=og_image_url,
             is_index=False, page_type="knowledge", **ctx_base)
         out_file.write_text(html, encoding="utf-8")
         print(f"  knowledge: {out_file.relative_to(OUTPUT_DIR)}")
 
-        # Write knowledge thumbnail SVGs (fractal engine)
+        # Write knowledge thumbnail SVGs + OG images (fractal engine)
         out_static = STATIC_DST_DIR / "images"
         out_static.mkdir(parents=True, exist_ok=True)
         pillar_k = item.pillar or "aml"
         scores_k = {"sqi": 0.5}
         svg_k = generate_thumbnail_svg(item.title, pillar_k, scores_k, width=600, height=340)
         (out_static / f"thumb_{thumb_key}.svg").write_text(svg_k, encoding="utf-8")
+        og_svg = generate_og_image(item.title, pillar_k, scores_k)
+        (out_static / f"og_{og_key}.svg").write_text(og_svg, encoding="utf-8")
 
     # --- KNOWLEDGE INDEX (sub-category grouped) ---
     knowledge_dir = OUTPUT_DIR / "knowledge"
@@ -305,7 +310,9 @@ def main():
         related_research = find_related(research_items, item, 3)
         related_knowledge = find_related(knowledge_items, item, 3)
         thumb_key = hashlib.md5(item.title.encode()).hexdigest()[:12]
+        og_key = hashlib.md5(f"og_{item.title}".encode()).hexdigest()[:12]
         thumb_base = f"{SITE_URL}/static/images"
+        og_image_url = f"{SITE_URL}/static/images/og_{og_key}.svg"
 
         html = render_template("learn.j2",
             content=item, page_path=page_path,
@@ -313,17 +320,20 @@ def main():
             related_research=related_research,
             related_knowledge=related_knowledge,
             thumbnail_base=thumb_base, thumbnail_key=thumbnail_key,
+            og_image_url=og_image_url,
             is_index=False, **ctx_base)
         out_file.write_text(html, encoding="utf-8")
         print(f"  learn: {out_file.relative_to(OUTPUT_DIR)}")
 
-        # Write learn thumbnail SVGs (fractal engine)
+        # Write learn thumbnail SVGs + OG images (fractal engine)
         out_static = STATIC_DST_DIR / "images"
         out_static.mkdir(parents=True, exist_ok=True)
         pillar_l = item.pillar or "aml"
         scores_l = {"sqi": 0.5}
         svg_l = generate_thumbnail_svg(item.title, pillar_l, scores_l, width=600, height=340)
         (out_static / f"thumb_{thumb_key}.svg").write_text(svg_l, encoding="utf-8")
+        og_svg = generate_og_image(item.title, pillar_l, scores_l)
+        (out_static / f"og_{og_key}.svg").write_text(og_svg, encoding="utf-8")
 
     # --- LEARN INDEX (difficulty-grouped) ---
     learn_dir = OUTPUT_DIR / "learn"
@@ -402,7 +412,7 @@ def main():
         out_file.write_text(html, encoding="utf-8")
         print(f"  research: {out_file.relative_to(OUTPUT_DIR)}")
 
-        # Write SVGs (fractal engine)
+        # Write SVGs (fractal engine — thumbnail + OG image)
         out_static = STATIC_DST_DIR / "images"
         out_static.mkdir(parents=True, exist_ok=True)
         key = hashlib.md5(item.title.encode()).hexdigest()[:12]
@@ -411,9 +421,8 @@ def main():
             scores_r = {"sqi": 0.5}
         svg_r = generate_thumbnail_svg(item.title, pillar, scores_r, width=600, height=340)
         (out_static / f"thumb_{key}.svg").write_text(svg_r, encoding="utf-8")
-        if item.og_svg:
-            key_og = hashlib.md5(f"og_{item.title}".encode()).hexdigest()[:12]
-            (out_static / f"og_{key_og}.svg").write_text(item.og_svg, encoding="utf-8")
+        og_svg = generate_og_image(item.title, pillar, scores_r)
+        (out_static / f"og_{og_key}.svg").write_text(og_svg, encoding="utf-8")
 
     # --- RESEARCH INDEX (/research/) ---
     research_dir = OUTPUT_DIR / "research"
