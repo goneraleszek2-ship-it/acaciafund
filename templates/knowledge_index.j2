@@ -9,9 +9,12 @@
     </ol>
   </nav>
 
-  <div class="mb-8">
-    <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">Knowledge Base</h1>
-    <p class="mt-2 text-sm" style="color:var(--color-text-muted)">{{ items | length }} entries across {{ categories | length }} categories</p>
+  <div class="mb-8 flex items-center gap-4">
+    <img src="/static/images/icon-knowledge.svg" alt="" class="w-10 h-10 shrink-0">
+    <div>
+      <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">Knowledge Base</h1>
+      <p class="mt-2 text-sm" style="color:var(--color-text-muted)">{{ items | length }} entries across {{ categories | length }} categories</p>
+    </div>
   </div>
 
   {%- for cat_id, cat_data in categories.items() %}

@@ -69,6 +69,7 @@
           </div>
         </li>
         <li><a href="/knowledge/about/" class="nav-link">About</a></li>
+        <li><a href="/search/" class="nav-link" aria-label="Search">🔍</a></li>
       </ul>
 
       <div class="flex items-center gap-2">
@@ -94,6 +95,7 @@
           <a href="/science/" class="block py-1.5 text-sm hover:text-[var(--color-accent)]">Science</a>
         </div>
         <a href="/knowledge/about/" class="block px-3 py-2 rounded hover:bg-[var(--color-bg)] transition">About</a>
+        <a href="/search/" class="block px-3 py-2 rounded hover:bg-[var(--color-bg)] transition">Search</a>
       </div>
     </nav>
   </header>
@@ -206,6 +208,7 @@
 <p>AcaciaFund is not just a static site — it is a <strong>data product</strong> produced by an automated DataOps pipeline. Every component from source ingestion to final HTML rendering follows DataOps principles: version control, quality gates, observability, and reproducible builds.</p>
 
 <h2 id="pipeline-architecture">Pipeline Architecture</h2>
+<figure style="margin:1.5rem 0"><img loading="lazy" decoding="async" src="/static/images/pipeline-diagram.svg" alt="AcaciaFund DataOps Content Pipeline Diagram" style="width:100%;max-width:900px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.3)"></figure>
 <pre style="background:var(--color-bg);padding:16px;border-radius:8px;overflow-x:auto;font-size:0.85em;line-height:1.6">
 ┌────────────────────────────────────────────────────────┐
 │                    INGESTION LAYER                      │

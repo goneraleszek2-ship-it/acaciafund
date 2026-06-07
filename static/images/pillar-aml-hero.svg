@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="300" viewBox="0 0 600 300">
+  <defs>
+    <linearGradient id="aml-hero-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1c1917"/>
+      <stop offset="1" stop-color="#0f0f23"/>
+    </linearGradient>
+    <radialGradient id="aml-hero-glow" cx="50%" cy="50%">
+      <stop offset="0" stop-color="#d97706" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#d97706" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="aml-hero-line" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#d97706" stop-opacity="0"/>
+      <stop offset="0.3" stop-color="#d97706" stop-opacity="0.3"/>
+      <stop offset="0.7" stop-color="#d97706" stop-opacity="0.3"/>
+      <stop offset="1" stop-color="#d97706" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="300" fill="url(#aml-hero-bg)" rx="8"/>
+  <rect width="600" height="300" fill="url(#aml-hero-glow)"/>
+
+  <!-- Shield outline shape -->
+  <path d="M300 30L180 80v70c0 60 50 110 120 140 70-30 120-80 120-140V80z" fill="none" stroke="#d97706" stroke-width="1" opacity="0.15"/>
+  <path d="M300 50L200 90v60c0 50 40 90 100 115 60-25 100-65 100-115V90z" fill="none" stroke="#d97706" stroke-width="0.8" opacity="0.12"/>
+
+  <!-- Shield hexagon tessellation -->
+  <g opacity="0.2">
+    <polygon points="300,30 320,42 320,66 300,78 280,66 280,42" fill="none" stroke="#d97706" stroke-width="0.8"/>
+    <polygon points="340,66 360,78 360,102 340,114 320,102 320,78" fill="none" stroke="#d97706" stroke-width="0.6"/>
+    <polygon points="260,66 280,78 280,102 260,114 240,102 240,78" fill="none" stroke="#d97706" stroke-width="0.6"/>
+    <polygon points="360,102 380,114 380,138 360,150 340,138 340,114" fill="none" stroke="#d97706" stroke-width="0.5"/>
+    <polygon points="240,102 260,114 260,138 240,150 220,138 220,114" fill="none" stroke="#d97706" stroke-width="0.5"/>
+    <polygon points="320,138 340,150 340,174 320,186 300,174 300,150" fill="none" stroke="#d97706" stroke-width="0.4"/>
+    <polygon points="280,138 300,150 300,174 280,186 260,174 260,150" fill="none" stroke="#d97706" stroke-width="0.4"/>
+    <polygon points="340,174 360,186 360,210 340,222 320,210 320,186" fill="none" stroke="#d97706" stroke-width="0.3"/>
+    <polygon points="260,174 280,186 280,210 260,222 240,210 240,186" fill="none" stroke="#d97706" stroke-width="0.3"/>
+    <polygon points="300,210 320,222 320,246 300,258 280,246 280,222" fill="none" stroke="#d97706" stroke-width="0.2"/>
+  </g>
+
+  <!-- Vertical accent lines -->
+  <line x1="100" y1="50" x2="100" y2="250" stroke="url(#aml-hero-line)" stroke-width="0.5"/>
+  <line x1="500" y1="50" x2="500" y2="250" stroke="url(#aml-hero-line)" stroke-width="0.5"/>
+  <line x1="550" y1="60" x2="550" y2="240" stroke="url(#aml-hero-line)" stroke-width="0.3"/>
+  <line x1="50" y1="60" x2="50" y2="240" stroke="url(#aml-hero-line)" stroke-width="0.3"/>
+
+  <!-- Bottom accent bar -->
+  <rect x="200" y="270" width="200" height="3" rx="1.5" fill="#d97706" opacity="0.4"/>
+  <circle cx="300" cy="271.5" r="3" fill="#d97706" opacity="0.6"/>
+</svg>

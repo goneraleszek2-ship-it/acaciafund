@@ -12,7 +12,22 @@
     <a href="/research/" class="inline-block px-6 py-3 font-semibold rounded-lg transition hover:opacity-90" style="background:var(--color-accent);color:white">Research</a>
     <a href="/learn/" class="inline-block px-6 py-3 font-semibold rounded-lg transition hover:opacity-80" style="border:1px solid var(--color-border);color:var(--color-text)">Learn</a>
     <a href="/knowledge/" class="inline-block px-6 py-3 font-semibold rounded-lg transition hover:opacity-80" style="border:1px solid var(--color-border);color:var(--color-text)">Knowledge</a>
+    <button id="surprise-btn" class="inline-block px-6 py-3 font-semibold rounded-lg transition hover:opacity-80" style="border:1px solid var(--color-border);color:var(--color-text);cursor:pointer" onclick="surpriseMe()">🎲 Surprise Me</button>
   </div>
+  <script>
+  function surpriseMe(){
+    var x=new XMLHttpRequest();
+    x.open('GET','/static/search-index.json',true);
+    x.onload=function(){
+      if(x.status===200){
+        var idx=JSON.parse(x.responseText);
+        var pick=idx[Math.floor(Math.random()*idx.length)];
+        window.location.href='/'+pick.slug+'/';
+      }
+    };
+    x.send();
+  }
+  </script>
 </section>
 
 {%- if featured_posts %}
@@ -156,13 +171,25 @@
 
 <section class="mt-16 text-center" aria-labelledby="stack-heading">
   <h2 id="stack-heading" class="text-2xl font-bold mb-4" style="color:var(--color-text)">Stack</h2>
-  <div class="flex flex-wrap justify-center gap-3 text-sm" style="color:var(--color-text-secondary)">
-    <span class="px-3 py-1 rounded-full" style="background:var(--color-surface);border:1px solid var(--color-border)">Python 3.13</span>
-    <span class="px-3 py-1 rounded-full" style="background:var(--color-surface);border:1px solid var(--color-border)">Pydantic</span>
-    <span class="px-3 py-1 rounded-full" style="background:var(--color-surface);border:1px solid var(--color-border)">Jinja2</span>
-    <span class="px-3 py-1 rounded-full" style="background:var(--color-surface);border:1px solid var(--color-border)">Markdown2</span>
-    <span class="px-3 py-1 rounded-full" style="background:var(--color-surface);border:1px solid var(--color-border)">Tailwind CSS</span>
-    <span class="px-3 py-1 rounded-full" style="background:var(--color-surface);border:1px solid var(--color-border)">Cloudflare Pages</span>
+  <div class="flex flex-wrap justify-center gap-4 text-sm" style="color:var(--color-text-secondary)">
+    <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full" style="background:var(--color-surface);border:1px solid var(--color-border)">
+      <img src="/static/images/tech/python.svg" alt="" class="w-5 h-5"> Python 3.13
+    </span>
+    <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full" style="background:var(--color-surface);border:1px solid var(--color-border)">
+      <img src="/static/images/tech/pydantic.svg" alt="" class="w-5 h-5"> Pydantic
+    </span>
+    <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full" style="background:var(--color-surface);border:1px solid var(--color-border)">
+      <img src="/static/images/tech/jinja2.svg" alt="" class="w-5 h-5"> Jinja2
+    </span>
+    <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full" style="background:var(--color-surface);border:1px solid var(--color-border)">
+      <img src="/static/images/tech/markdown2.svg" alt="" class="w-5 h-5"> Markdown2
+    </span>
+    <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full" style="background:var(--color-surface);border:1px solid var(--color-border)">
+      <img src="/static/images/tech/tailwind.svg" alt="" class="w-5 h-5"> Tailwind CSS
+    </span>
+    <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full" style="background:var(--color-surface);border:1px solid var(--color-border)">
+      <img src="/static/images/tech/cloudflare.svg" alt="" class="w-5 h-5"> Cloudflare Pages
+    </span>
   </div>
 </section>
 {% endblock %}

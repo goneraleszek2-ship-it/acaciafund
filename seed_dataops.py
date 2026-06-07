@@ -320,6 +320,8 @@ NEW_KNOWLEDGE = [
         "body_html": """<h2>AcaciaFund as a DataOps Pipeline</h2>
 <p>AcaciaFund is not just a static site — it is a <strong>data product</strong> produced by an automated DataOps pipeline. Every component from source ingestion to final HTML rendering follows DataOps principles: version control, quality gates, observability, and reproducible builds.</p>
 
+<figure style="margin:1.5rem 0"><img src="/static/images/pipeline-diagram.svg" alt="AcaciaFund DataOps Content Pipeline Diagram" style="width:100%;max-width:900px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.3)"></figure>
+
 <h2>Pipeline Architecture</h2>
 <pre style="background:var(--color-bg);padding:16px;border-radius:8px;overflow-x:auto;font-size:0.85em;line-height:1.6">
 ┌────────────────────────────────────────────────────────┐

@@ -10,6 +10,13 @@
       <li aria-current="page">{{ pconf.heading }}</li>
     </ol>
   </nav>
+
+  {%- set hero_map = {"aml": "pillar-aml-hero", "stock": "pillar-stock-hero", "science": "pillar-science-hero"} %}
+  {%- set hero = hero_map.get(pillar, "pillar-aml-hero") %}
+  <div class="mb-8 rounded-xl overflow-hidden">
+    <img src="/static/images/{{ hero }}.svg" alt="{{ pconf.heading }} illustration" class="w-full h-auto" loading="lazy">
+  </div>
+
   <div class="mb-8">
     <span class="inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-full {{ pconf.badge_color }}">
       {{ pconf.emoji }} {{ pconf.label }}

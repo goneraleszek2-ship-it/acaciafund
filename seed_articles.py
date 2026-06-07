@@ -8,6 +8,8 @@ import re
 from datetime import datetime, timezone
 from pathlib import Path
 
+from core.visuals import _pick_subtopic, _extract_topic_words, TOPIC_ICONS
+
 REGISTRY_PATH = Path("registry.json")
 
 PILLAR_META = {
@@ -506,6 +508,28 @@ def generate_thumbnail_svg(slug: str, title: str, pillar: str) -> str:
     bar_color = lerp_color(meta["color"], "#ffffff", 0.3)
     bar_w = 120 + (h % 200)
 
+    # Phase 3: Topic overlay — subtopic icon + keyword tags
+    sub = _pick_subtopic([title], pillar)
+    icon_path_topic = TOPIC_ICONS.get(sub, TOPIC_ICONS.get("regulation", ""))
+    words = _extract_topic_words([title], 2)
+    overlay = ""
+    if icon_path_topic:
+        overlay += (
+            f'<g transform="translate(16, 274) scale(0.6)" '
+            f'stroke="{meta["color"]}" fill="none" stroke-linecap="round" '
+            f'stroke-linejoin="round" stroke-width="1.5" opacity="0.3">'
+            f'{icon_path_topic}'
+            f'</g>\n'
+        )
+    for i, w in enumerate(words[:2]):
+        off_x = (h % 20) * (1 if i == 0 else -1)
+        off_y = i * 16
+        overlay += (
+            f'<text x="{500 + off_x}" y="{310 + off_y}" '
+            f'fill="{meta["color"]}" font-family="system-ui,sans-serif" '
+            f'font-size="10" font-weight="600" opacity="0.2">{w}</text>\n'
+        )
+
     svg = (
         f'<svg xmlns="http://www.w3.org/2000/svg" width="600" height="340" '
         f'viewBox="0 0 600 340">\n'
@@ -523,6 +547,7 @@ def generate_thumbnail_svg(slug: str, title: str, pillar: str) -> str:
         f'<text x="300" y="328" fill="{meta["color"]}" '
         f'font-family="system-ui,sans-serif" font-size="10" font-weight="600" '
         f'text-anchor="middle" opacity="0.5">{meta["label"].upper()}</text>\n'
+        f'{overlay}'
         f'</svg>'
     )
     return svg

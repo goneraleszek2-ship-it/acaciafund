@@ -15,6 +15,7 @@ from typing import Any
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from schemas import RegistryData
+from core.visuals import source_bar_svg, sparkline_svg, bloom_chart_svg, radar_svg, heatmap_svg, donut_svg
 
 REGISTRY_PATH = Path("registry.json")
 TEMPLATE_DIR = Path("templates")
@@ -361,13 +362,35 @@ def main():
         og_image_url = f"{SITE_URL}/static/images/og_{og_key}.svg"
         thumb_base = f"{SITE_URL}/static/images"
 
+        # Phase 2: Generate chart SVGs
+        chart_source_bar = source_bar_svg(item.source_breakdown or {})
+        chart_donut = donut_svg(item.source_breakdown or {})
+        chart_bloom = bloom_chart_svg(item.bloom_questions or [])
+        chart_radar = radar_svg(item.quality_metrics or {})
+        sqi_trend = [0.3, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7]
+        chart_sparkline = sparkline_svg(sqi_trend, color="#a855f7")
+        qf = item.quality_flags or []
+        chart_heatmap = heatmap_svg(
+            [[1.0 if f in qf else 0.0 for f in ["validated", "diverse", "recent"]]]
+            if qf else [[0.0, 0.0, 0.0]],
+            row_labels=["Quality"],
+            col_labels=["Validated", "Diverse", "Recent"],
+        )
+
         html = render_template("blog_post.j2",
             content=item, page_path=page_path,
             prev_post=prev_post, next_post=next_post,
             pconf=pconf, sqi_svg=sqi_svg,
             og_image_url=og_image_url,
             thumbnail_base=thumb_base, thumbnail_key=thumbnail_key,
-            toc_items=toc_items, related_posts=related, **ctx_base)
+            toc_items=toc_items, related_posts=related,
+            chart_source_bar=chart_source_bar,
+            chart_donut=chart_donut,
+            chart_bloom=chart_bloom,
+            chart_radar=chart_radar,
+            chart_sparkline=chart_sparkline,
+            chart_heatmap=chart_heatmap,
+            **ctx_base)
         out_file.write_text(html, encoding="utf-8")
         print(f"  research: {out_file.relative_to(OUTPUT_DIR)}")
 
@@ -418,12 +441,38 @@ def main():
     print("  index: index.html")
 
     # --- 404 ---
-    html = render_template("layout.j2",
-        content=_dummy("Page Not Found", "error",
-            '<p>The page you requested does not exist. <a href="/">Return home</a></p>'),
-        is_index=False, page_path="404.html", page_type="error", **ctx_base)
+    _suggestions = sorted(all_content, key=lambda c: hashlib.md5(c.slug.encode()).hexdigest())[:3]
+    html = render_template("404.j2",
+        content=_dummy("Page Not Found — AcaciaFund", "error"),
+        is_index=False, page_path="404.html", page_type="error",
+        suggestions=_suggestions, **ctx_base)
     (OUTPUT_DIR / "404.html").write_text(html, encoding="utf-8")
     print("  error: 404.html")
+
+    # --- SEARCH INDEX ---
+    search_index = []
+    for c in all_content:
+        search_index.append({
+            "title": c.title,
+            "description": (c.description or "")[:300],
+            "slug": c.slug,
+            "pillar": c.pillar or "",
+            "content_type": c.content_type or "",
+            "tags": c.tags or [],
+            "date_str": c.date_str or "",
+        })
+    (STATIC_DST_DIR / "search-index.json").write_text(
+        json.dumps(search_index, ensure_ascii=False), encoding="utf-8")
+    print("  search: search-index.json (" + str(len(search_index)) + " entries)")
+
+    # --- SEARCH PAGE ---
+    search_dir = OUTPUT_DIR / "search"
+    search_dir.mkdir(parents=True, exist_ok=True)
+    html = render_template("search.j2",
+        content=_dummy("Search — AcaciaFund", "search"),
+        is_index=False, page_path="search/", **ctx_base)
+    (search_dir / "index.html").write_text(html, encoding="utf-8")
+    print("  search: search/index.html")
 
     # --- FEED ---
     feed_items = []
@@ -454,7 +503,7 @@ def main():
     urls = [f"{SITE_URL}/"]
     for c in all_content:
         urls.append(slug_to_url(c.slug))
-    for p in list(pillar_groups) + ["research", "learn", "knowledge"]:
+    for p in list(pillar_groups) + ["research", "learn", "knowledge", "search"]:
         urls.append(f"{SITE_URL}/{p}/")
     sm = ['<?xml version="1.0" encoding="UTF-8"?>',
           '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
