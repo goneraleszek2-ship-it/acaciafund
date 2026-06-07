@@ -10,7 +10,7 @@
 
 Automated research synthesis platform — a **DataOps pipeline** that ingests, transforms, quality-gates, and serves content as a static data product.
 
-HackerNews + arXiv → deterministic classification (Bloom taxonomy) → quality metrics (SQI) → Python-native static generator → warm, accessible, dark-mode-capable site with 33 research articles, 8 learn lessons, and 10 knowledge references.
+HackerNews + arXiv → deterministic classification (Bloom taxonomy) → quality metrics (SQI) → Python-native static generator → warm, accessible, dark-mode-capable site with 33 research articles, 15 learn lessons (+ hub), and 10 knowledge references.
 
 **Site:** https://www.acaciafund.org
 
@@ -99,15 +99,15 @@ AcaciaFund applies **DataOps principles** across its entire content lifecycle �
 | Type | Count | Description |
 |------|-------|-------------|
 | Research | 33 | Bloom-classified articles with SQI, signals, flashcards, charts |
-| Learn | 8 | Structured lessons with flashcards (CSS 3D flip) and accordion key concepts |
+| Learn | 16 | 15 structured lessons + hub index — flashcards (CSS 3D flip), quizzes (Bloom taxonomy), progress tracking, spaced repetition |
 | Knowledge | 10 | Reference pages: glossary, tools landscape, system architecture, DataOps |
 
 ### Pillar Coverage
-| Pillar | Label | Badge Color | Research Articles |
-|--------|-------|-------------|-------------------|
-| AML | Shield | Amber | 11 |
-| Markets | Chart | Green | 10 |
-| Science | Microscope | Purple | 12 |
+| Pillar | Label | Badge Color | Research Articles | Learn Lessons |
+|--------|-------|-------------|-------------------|---------------|
+| AML | Shield | Amber | 11 | 5 |
+| Markets | Chart | Green | 10 | 6 |
+| Science | Microscope | Purple | 12 | 4 |
 
 ### Per-Article Content (Research)
 - Bloom Taxonomy questions with colored level badges
@@ -209,7 +209,7 @@ Then open http://localhost:8000.
 ### Regenerate Everything
 
 ```bash
-python3.13 generator.py          # Rebuild all 60+ pages, 51 fractal thumbnails, 36 OG images
+python3.13 generator.py          # Rebuild all 233 pages, fractal thumbnails, OG images, search index, feed
 ```
 
 ---
@@ -217,48 +217,44 @@ python3.13 generator.py          # Rebuild all 60+ pages, 51 fractal thumbnails,
 ## Project Structure
 
 ```
-├── generator.py                 # Main generator (Jinja2 → static HTML, 51 thumbnails, 36 OG images)
-├── schemas.py                   # Pydantic models (AcaciaContent, RegistryData)
-├── registry.json                # Content registry (data catalog — 51 entries)
+├── config.py                   # Single source of truth: SITE_URL, paths, env config
+├── generator.py                # Main generator (Jinja2 → 233 HTML pages)
+├── schemas.py                  # Pydantic models (AcaciaContent, RegistryData)
+├── registry.json               # Content registry (data catalog — 59 entries)
 ├── core/
-│   └── visuals.py               # Visual engine: fractal (7 types), chart (6 functions), topic overlays
-├── seed_articles.py             # Article seeding (legacy thumbnail generator)
-├── seed_dataops.py              # DataOps/Engineering article seeder
-├── migrate_categories.py        # Content type migration scripts
-├── templates/                   # Jinja2 templates (11 total)
-│   ├── layout.j2                # Base layout: nav, dark mode, mobile drawer, footer
-│   ├── blog_post.j2             # Research: TOC, progress bar, 2x2 charts, flip flashcards
-│   ├── index.j2                 # Homepage: featured, 2x2 CTA grid, learn/knowledge cards
-│   ├── category_index.j2        # Category listing (research/learn/knowledge)
-│   ├── pillar_index.j2          # Pillar pages (AML/Markets/Science)
-│   ├── learn.j2                 # Learn lesson: accordion key concepts, flip flashcards
-│   ├── learn_index.j2           # Learn index: difficulty-grouped with badges
-│   ├── knowledge.j2             # Knowledge article: category badge, cross-references
-│   ├── knowledge_index.j2       # Knowledge index: grouped by sub-category
-│   ├── search.j2                # Search: input + JSON index + vanilla JS scoring
-│   └── 404.j2                   # Custom 404: deterministic suggestions
+│   └── visuals.py              # Visual engine: fractal (7 types), chart (6 functions), topic overlays
+├── seed_articles.py            # Article seeding (legacy thumbnail generator)
+├── seed_dataops.py             # DataOps/Engineering article seeder
+├── migrate_categories.py       # Content type migration scripts
+├── templates/                  # Jinja2 templates (11 total)
+│   ├── layout.j2               # Base layout: nav, dark mode, mobile drawer, footer
+│   ├── blog_post.j2            # Research: TOC, progress bar, 2x2 charts, flip flashcards
+│   ├── index.j2                # Homepage: featured, 2x2 CTA grid, learn/knowledge cards
+│   ├── category_index.j2       # Category listing (research/learn/knowledge)
+│   ├── pillar_index.j2         # Pillar pages (AML/Markets/Science)
+│   ├── learn.j2                # Learn lesson: quizzes (Bloom), flashcards (3D flip), progress
+│   ├── learn_index.j2          # Learn index: difficulty-grouped, pillar progress bars, review due
+│   ├── knowledge.j2            # Knowledge article: category badge, cross-references
+│   ├── knowledge_index.j2      # Knowledge index: grouped by sub-category
+│   ├── search.j2               # Search: input + JSON index + vanilla JS scoring
+│   └── 404.j2                  # Custom 404: deterministic suggestions
 ├── static/
 │   ├── css/
-│   │   ├── custom.css           # Custom styles (colors, dark mode, flashcard flip, accordion, mobile drawer, TOC)
-│   │   └── tailwind.min.css     # Tailwind utility classes (28KB)
+│   │   ├── custom.css          # Custom styles (colors, dark mode, flashcard flip, mobile drawer, TOC)
+│   │   └── tailwind.min.css    # Tailwind utility classes (28KB)
 │   ├── js/
-│   │   ├── search.js            # Client-side search (vanilla JS, fuzzy scoring)
-│   │   ├── learning.js          # Interactive Bayes demo
-│   │   └── learning_hub.js      # Quiz engine
+│   │   └── search.js           # Client-side search (vanilla JS, fuzzy scoring)
 │   └── fonts/
-│       └── Inter-*.woff2        # Self-hosted font files
+│       └── Inter-*.woff2       # Self-hosted font files
 ├── content/                     # Source markdown for static pages
 ├── services/api/                # FastAPI service (Railway-deployed)
-│   ├── app/
-│   │   ├── main.py              # API endpoints
-│   │   └── db.py                # SQLite database
-│   ├── Dockerfile
-│   ├── requirements.txt
-│   └── tests/
-├── dist/                        # Generated output (60+ pages, gitignored items)
+├── tests/
+│   └── astro_smoke.py           # Build output smoke tests
+├── dist/                        # Generated output (233 pages, gitignored)
 ├── .github/workflows/
 │   └── deploy-api.yml           # Railway API deployment
 ├── railway.json                 # Railway config
+├── wrangler.toml                # Cloudflare Pages build config
 ├── SITE-STATE.md                # Full feature inventory
 ├── UX-PLAN.md                   # UX evolution roadmap
 └── ARCHITECTURE.md              # Architecture blueprint

@@ -1,0 +1,29 @@
+"""Single source of truth for AcaciaFund environment configuration.
+
+All paths are relative to this file's directory (project root).
+Import this from generator.py and anywhere else config values are needed.
+"""
+from pathlib import Path
+
+PROJECT_ROOT = Path(__file__).parent
+
+# Site identity
+SITE_URL = "https://acaciafund.org"
+SITE_NAME = "AcaciaFund"
+SITE_DESCRIPTION = (
+    "AcaciaFund — research synthesis & experimental learning platform. "
+    "Automated classification of HackerNews + arXiv content using Bloom taxonomy. "
+    "Static-first, privacy-preserving."
+)
+PLAUSIBLE_DOMAIN = ""
+
+# Paths (source)
+REGISTRY_PATH = PROJECT_ROOT / "registry.json"
+TEMPLATE_DIR = PROJECT_ROOT / "templates"
+STATIC_SRC_DIR = PROJECT_ROOT / "public"
+PIPELINE_STATIC_DIR = PROJECT_ROOT / "static"
+CONTENT_DIR = PROJECT_ROOT / "content"
+
+# Paths (build output)
+OUTPUT_DIR = PROJECT_ROOT / "dist"
+STATIC_DST_DIR = OUTPUT_DIR / "static"

@@ -15,7 +15,7 @@ This document defines the fundamentals-first target architecture for a 2026-read
 - `ingest.py` is the correct entry point for scheduled synthesis.
 - `core/analyze.py` and `core/score.py` are the right place for deterministic ranking and quality signals.
 - `core/generate.py` should remain the final publish stage, not a mixed orchestration layer.
-- `learning_hub.js` is a good local-first progress model.
+- Inline `<script>` in templates handles quiz engine, progress tracking, and flashcard interactions — no external JS dependencies for learning features.
 - `layouts/` should stay thin and mostly presentational.
 - `services/api/` is useful, but it must stay a separate runtime boundary.
 
@@ -77,7 +77,7 @@ Every generated object should carry explicit metadata.
 - Analysis layer: classifies pillar, computes SQI, extracts entities, and detects trends.
 - Generation layer: `generator.py` emits static HTML, SVG assets (fractal thumbnails, chart SVGs, OG images), and search index.
 - Public site: Jinja2 renders static pages and vanilla JS handles search.
-- Learning layer: renders lessons, quizzes, and Bayes demo.
+- Learning layer: renders lessons (difficulty-grouped), quizzes (Bloom taxonomy with live scoring), flashcards (CSS 3D flip), progress tracking (localStorage), spaced repetition tracking, and interleaved practice (shuffle).
 - Sync layer: stores optional progress and future learner state.
 
 ## Deployment Topology
@@ -123,16 +123,19 @@ Every generated object should carry explicit metadata.
 
 ```text
 ./
+├── config.py           # Single source of truth: SITE_URL, paths, env constants
 ├── core/               # visual engine (fractal, chart, topic overlays)
 ├── schemas.py          # Pydantic models for content contracts
-├── registry.json       # content metadata catalog (51 entries)
-├── generator.py        # main build pipeline: Jinja2 → static HTML
+├── registry.json       # content metadata catalog (59 entries)
+├── generator.py        # main build pipeline: Jinja2 → static HTML (233 pages)
 ├── templates/          # Jinja2 templates (11 files)
 ├── static/             # CSS, JS, fonts (self-hosted)
 ├── content/            # source markdown for static pages
+├── tests/              # smoke tests for build output
 ├── services/api/       # optional stateful service boundary
 ├── .github/workflows/  # CI/CD for API deployment
-└── dist/               # generated output (60+ pages)
+├── wrangler.toml       # Cloudflare Pages config
+└── dist/               # generated output (233 pages, gitignored)
 ```
 
 ## Quality Gates

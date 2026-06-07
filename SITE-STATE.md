@@ -4,7 +4,7 @@
 > **Deployed URL:** https://www.acaciafund.org  
 > **Repo:** https://github.com/goneraleszek2-ship-it/acaciafund  
 > **Generator:** `python3.13 generator.py`  
-> **Build output:** 60+ HTML pages, 51 fractal thumbnails, 36 OG images  
+> **Build output:** 233 HTML pages + fractal thumbnails + OG images + search index + Atom feed  
 > **Host:** Cloudflare Pages (static)
 
 ---
@@ -17,9 +17,9 @@
 | Template engine | Jinja2 | 11 templates: `layout.j2`, `blog_post.j2`, `pillar_index.j2`, `index.j2`, `category_index.j2`, `learn.j2`, `learn_index.j2`, `knowledge.j2`, `knowledge_index.j2`, `search.j2`, `404.j2` |
 | Markdown rendering | `markdown2` | With `fenced-code-blocks` and `tables` extras |
 | CSS framework | Tailwind 3.4.19 (28KB local) | No CDN — self-hosted `tailwind.min.css` |
-| Custom styles | `static/css/custom.css` | ~350 lines — font-face, CSS variables, dark mode, TOC, dropdown, mobile drawer (fixed), flashcard flip (3D), accordion, print styles |
+| Custom styles | `static/css/custom.css` | ~360 lines — font-face, CSS variables, dark mode, TOC, dropdown, mobile drawer (fixed), flashcard flip (3D), accordion, print styles |
 | Fonts | Inter (self-hosted) | Regular, SemiBold, Bold WOFF2 (~340KB total) |
-| Client JS | Inline `<script>` in templates + `static/js/search.js`, `learning.js`, `learning_hub.js` | Dark mode toggle, dropdown, mobile nav, flashcard flip, accordion, reading progress bar, TOC highlighting, focus mode, search, surprise me |
+| Client JS | Inline `<script>` in templates + `static/js/search.js` | Quiz engine (score/grade/retry), flashcard shuffle, progress tracking, spaced repetition, dark mode toggle, dropdown, mobile nav, reading progress bar, TOC highlighting, focus mode (persisted), search, Surprise Me |
 | Output | `dist/` (60+ HTML pages) | Cleaned and rebuilt on each generator run |
 
 ### Pipeline
@@ -38,8 +38,8 @@ No build framework (no Astro, no Hugo). The output is ready-to-serve static HTML
 |------|-------|----------|----------------|
 | Home | `/` | `index.j2` | Featured + latest research + learn + knowledge cards |
 | Research article (×33) | `/YYYY-MM-DD-slug/` | `blog_post.j2` | `registry.json` |
-| Learn lesson (×8) | `/learn/slug/` | `learn.j2` | `registry.json` |
-| Learn index | `/learn/` | `learn_index.j2` | All lessons, difficulty-grouped |
+| Learn lesson (×15) | `/learn/slug/` | `learn.j2` | `registry.json` |
+| Learn index | `/learn/` | `learn_index.j2` | All 15 lessons (+ hub), difficulty-grouped, pillar progress bars, due-for-review |
 | Knowledge article (×10) | `/knowledge/slug/` | `knowledge.j2` | `registry.json` |
 | Knowledge index | `/knowledge/` | `knowledge_index.j2` | All references, sub-category grouped |
 | Research index | `/research/` | `category_index.j2` | All research articles |
@@ -55,7 +55,7 @@ No build framework (no Astro, no Hugo). The output is ready-to-serve static HTML
 | Sitemap | `/sitemap.xml` | — | All pages |
 | Robots | `/robots.txt` | — | Allow all, sitemap link |
 
-**Total: 60+ HTML pages** (33 research + 8 learn + 10 knowledge + 5 indices + 4 static + 1 search + 1 404 + 1 home)
+**Total: 233 HTML pages** (33 research + 16 learn + 10 knowledge + 5 indices + 4 static + 1 search + 1 404 + 1 home + 162 tag archives)
 
 ---
 
@@ -237,11 +237,11 @@ Dependencies: `jinja2`, `markdown2`, `pydantic`
 
 | Pillar | Research | Learn | Knowledge | Topics |
 |--------|----------|-------|-----------|--------|
-| AML | 11 | 2 | 3 | Financial crime, compliance, regulation, risk, crypto, DeFi |
-| Markets | 10 | 2 | 3 | Semiconductors, AI industry, manufacturing, EV, quantum |
+| AML | 11 | 5 | 2 | Financial crime, compliance, regulation, risk, crypto, DeFi |
+| Markets | 10 | 6 | 4 | Semiconductors, AI industry, manufacturing, EV, quantum |
 | Science | 12 | 4 | 4 | Biology, quantum, neuroscience, space, climate, gene therapy |
 
-Total: 51 entries (33 research + 8 learn + 10 knowledge)
+Total: 59 entries (33 research + 16 learn + 10 knowledge)
 
 All content is auto-synthesized from HackerNews + arXiv sources.
 
@@ -299,9 +299,10 @@ All content is auto-synthesized from HackerNews + arXiv sources.
 
 ```
 .
-├── generator.py              # Main generator — 51 thumbnails, 36 OG images, 60+ pages
+├── config.py                 # Single source of truth: SITE_URL, paths, env constants
+├── generator.py              # Main generator — 233 pages, thumbnails, OG images
 ├── schemas.py                # Pydantic models (AcaciaContent, RegistryData)
-├── registry.json             # Content registry (51 entries: 33 research, 8 learn, 10 knowledge)
+├── registry.json             # Content registry (59 entries: 33 research, 16 learn, 10 knowledge)
 ├── requirements.txt          # Dependencies
 ├── core/
 │   └── visuals.py            # Visual engine: fractal (7 types), chart (6 functions), topic overlays
@@ -328,12 +329,10 @@ All content is auto-synthesized from HackerNews + arXiv sources.
 │
 ├── static/
 │   ├── css/
-│   │   ├── custom.css        # ~350 lines — CSS vars, dark mode, flashcard flip, accordion, mobile drawer, TOC
+│   │   ├── custom.css        # ~360 lines — CSS vars, dark mode, flashcard flip, mobile drawer, TOC
 │   │   └── tailwind.min.css  # Tailwind 3.4.19 (28KB)
 │   ├── js/
-│   │   ├── search.js         # Client-side search
-│   │   ├── learning.js       # Interactive Bayes demo
-│   │   └── learning_hub.js   # Quiz engine
+│   │   └── search.js         # Client-side search
 │   └── fonts/
 │       ├── Inter-Regular.woff2
 │       ├── Inter-SemiBold.woff2

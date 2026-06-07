@@ -39,7 +39,7 @@
     "@type": "LearningResource",
     "name": {{ content.title | striptags | tojson }},
     "learningResourceType": "Lesson",
-    "educationalLevel": "Intermediate"
+    "educationalLevel": "{{ (content.difficulty or 'intermediate') | capitalize }}"
   }
   </script>
   {%- elif content.content_type == "knowledge" or page_type == "index" %}

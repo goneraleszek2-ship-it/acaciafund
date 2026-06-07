@@ -5,7 +5,7 @@ from pathlib import Path
 import sys
 
 
-BASE = Path(__file__).parent.parent / "web" / "dist"
+BASE = Path(__file__).parent.parent / "dist"
 
 
 def check(cond: bool, msg: str) -> None:
@@ -22,26 +22,19 @@ def read(path: str) -> str:
 
 def main() -> int:
     check((BASE / "index.html").is_file(), "Home page exists")
-    check((BASE / "blog/index.html").is_file(), "Blog index exists")
-    check((BASE / "course/index.html").is_file(), "Course page exists")
+    check((BASE / "research/index.html").is_file(), "Research index exists")
     check((BASE / "learn/index.html").is_file(), "Learn page exists")
-    check((BASE / "scholarship/index.html").is_file(), "Scholarship page exists")
-    check((BASE / "about/index.html").is_file(), "About page exists")
-    check((BASE / "contact/index.html").is_file(), "Contact page exists")
-    check((BASE / "api/stats.json").is_file(), "API stats exists")
+    check((BASE / "knowledge/index.html").is_file(), "Knowledge page exists")
+    check((BASE / "search/index.html").is_file(), "Search page exists")
     home = read("index.html")
     check("AcaciaFund" in home, "Home page has brand")
-    check("Daily research portfolio" in home or "Daily synthesis" in home, "Home page has product copy")
-    check("Latest syntheses" in home or "Latest synthesis" in home, "Home page has latest section")
+    check("Continue Learning" in home, "Home page has continue learning section")
+    check("Research" in home, "Home page has research section")
     learn = read("learn/index.html")
-    check("Bayesian update" in learn, "Learn page includes Bayes demo")
-    check("/images/bayes.svg" in learn, "Learn page includes open-source visuals")
-    check("/images/stack.svg" in learn, "Learn page includes stack diagram")
-    check("lesson-01-intro" in learn, "Learn index lists lessons")
-    api_stats = read("api/stats.json")
-    check('"totalPosts":' in api_stats, "API stats includes total posts")
-    check('"recentPosts":' in api_stats, "API stats includes recent posts")
-    check("registry" in home.lower(), "Home page references registry metadata")
+    check("Learning Hub" in learn, "Learn page has title")
+    check("pillar-progress-section" in learn, "Learn page has pillar progress")
+    check("review-due" in learn, "Learn page has review due section")
+    check("Flashcards" in learn or "Knowledge Check" in learn or "lesson-status" in learn, "Learn page lists lessons")
     return 0
 
 

@@ -50,6 +50,10 @@
       html += '<div class="flex items-center gap-2 mb-1">';
       html += '<span class="inline-block w-2 h-2 rounded-full" style="background:' + pc + '"></span>';
       html += '<span class="text-xs font-medium" style="color:' + pc + '">' + tl + '</span>';
+      if (item.content_type === 'learn' && item.difficulty) {
+        var dEmoji = {beginner:'🌱', intermediate:'📘', advanced:'🔥'};
+        html += '<span class="text-xs" style="color:var(--color-text-muted)">' + (dEmoji[item.difficulty] || '') + ' ' + item.difficulty.charAt(0).toUpperCase() + item.difficulty.slice(1) + '</span>';
+      }
       if (item.date_str) html += '<span class="text-xs" style="color:var(--color-text-muted)">' + item.date_str + '</span>';
       html += '</div>';
       html += '<h3 class="font-semibold" style="color:var(--color-text)">' + item.title + '</h3>';

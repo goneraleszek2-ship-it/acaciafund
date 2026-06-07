@@ -20,11 +20,16 @@
     x.open('GET','/static/search-index.json',true);
     x.onload=function(){
       if(x.status===200){
-        var idx=JSON.parse(x.responseText);
-        var pick=idx[Math.floor(Math.random()*idx.length)];
-        window.location.href='/'+pick.slug+'/';
+        try {
+          var idx=JSON.parse(x.responseText);
+          if(idx.length>0){
+            var pick=idx[Math.floor(Math.random()*idx.length)];
+            window.location.href='/'+pick.slug+'/';
+          }
+        } catch(e){}
       }
     };
+    x.onerror=function(){};
     x.send();
   }
   </script>
@@ -76,7 +81,7 @@
   }
 
   var p = loadProgress();
-  var totalItems = [{%- for item in learn_items %}{slug:"/{{ item.slug }}/",title:"{{ item.title | striptags | e }}",pillar:"{{ item.pillar or "" }}",diff:"{{ item.difficulty or "beginner" }}"}{% if not loop.last %},{% endif %}{%- endfor %}];
+  var totalItems = [{%- for item in learn_items %}{% if item.slug != "learn" %}{slug:"/{{ item.slug }}/",title:"{{ item.title | striptags | e }}",pillar:"{{ item.pillar or "" }}",diff:"{{ item.difficulty or "beginner" }}"}{% if not loop.last %},{% endif %}{% endif %}{%- endfor %}];
   var done = 0;
   var incomplete = [];
   totalItems.forEach(function(it){
@@ -101,12 +106,15 @@
         streakEl.innerHTML = fire + ' ' + streak + ' day' + (streak !== 1 ? 's' : '') + ' streak';
       }
       if(incomplete.length > 0){
+        var pillarBadgeColors = {aml:{bg:'#fef3c7',text:'#92400e'},stock:{bg:'#dcfce7',text:'#166534'},science:{bg:'#f3e8ff',text:'#6b21a8'}};
+        var dEmoji = {beginner:'🌱', intermediate:'📘', advanced:'🔥'};
         incomplete.slice(0,6).forEach(function(it){
+          var bc = pillarBadgeColors[it.pillar] || {bg:'var(--color-bg)',text:'var(--color-text-muted)'};
           var a = document.createElement('a');
           a.href = it.slug + '/';
           a.className = 'block rounded-xl p-4 transition hover:-translate-y-0.5 hover:shadow-md';
           a.style.cssText = 'background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none';
-          a.innerHTML = '<div class="flex items-center gap-2 mb-2"><span class="text-xs px-2 py-0.5 font-medium rounded" style="background:var(--color-bg);color:var(--color-text-muted)">' + it.pillar + '</span><span class="text-xs" style="color:var(--color-text-muted)">' + it.diff.charAt(0).toUpperCase() + it.diff.slice(1) + '</span></div><span class="font-semibold text-sm" style="color:var(--color-text)">' + it.title + '</span>';
+          a.innerHTML = '<div class="flex items-center gap-2 mb-2"><span class="text-xs px-2 py-0.5 font-medium rounded" style="background:' + bc.bg + ';color:' + bc.text + '">' + (it.pillar ? it.pillar.charAt(0).toUpperCase() + it.pillar.slice(1) : '') + '</span><span class="text-xs" style="color:var(--color-text-muted)">' + (dEmoji[it.diff] || '') + ' ' + it.diff.charAt(0).toUpperCase() + it.diff.slice(1) + '</span></div><span class="font-semibold text-sm" style="color:var(--color-text)">' + it.title + '</span>';
           contList.appendChild(a);
         });
       }
@@ -213,11 +221,9 @@
     {%- set pc = pillar_config.get(p, none) %}
     {%- set tkey = thumbnail_key(item.title) %}
     <a href="/{{ item.slug }}/" class="block rounded-lg overflow-hidden transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
-      {%- if item.thumbnail_svg and tkey %}
       <div class="aspect-[600/340] overflow-hidden" style="background:var(--color-bg)">
         <img src="{{ thumbnail_base }}/thumb_{{ tkey }}.svg" alt="" class="w-full h-full object-cover" loading="lazy">
       </div>
-      {%- endif %}
       <div class="p-4">
         <div class="flex items-center gap-2 mb-2">
           {%- if pc %}

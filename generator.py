@@ -18,15 +18,11 @@ from urllib.parse import quote as urlquote
 
 from schemas import RegistryData
 from core.visuals import source_bar_svg, sparkline_svg, bloom_chart_svg, radar_svg, heatmap_svg, donut_svg, generate_thumbnail_svg, generate_og_image
-
-REGISTRY_PATH = Path("registry.json")
-TEMPLATE_DIR = Path("templates")
-OUTPUT_DIR = Path("dist")
-STATIC_SRC_DIR = Path("public")
-STATIC_DST_DIR = OUTPUT_DIR / "static"
-PIPELINE_STATIC_DIR = Path("static")
-CONTENT_DIR = Path("content")
-SITE_URL = "https://acaciafund.org"
+from config import (
+    SITE_URL, SITE_NAME, SITE_DESCRIPTION, PLAUSIBLE_DOMAIN,
+    REGISTRY_PATH, TEMPLATE_DIR, OUTPUT_DIR, STATIC_SRC_DIR,
+    STATIC_DST_DIR, PIPELINE_STATIC_DIR, CONTENT_DIR,
+)
 
 PILLAR_CONFIG = {
     "aml": {
@@ -53,6 +49,7 @@ PILLAR_CONFIG = {
 }
 PILLAR_EMOJIS = {"aml": "shield", "stock": "chart", "science": "microscope"}
 PILLAR_NAMES = {"aml": "AML", "stock": "Markets", "science": "Science"}
+DIFFICULTY_ORDER = {"beginner": 0, "intermediate": 1, "advanced": 2}
 
 KNOWLEDGE_CATEGORIES = {
     "platform": {
@@ -244,7 +241,8 @@ def main():
 
     now = datetime.now(timezone.utc)
     year = now.year
-    build_hash = now.strftime("%Y%m%d%H%M%S")
+    registry_bytes = REGISTRY_PATH.read_bytes() if REGISTRY_PATH.exists() else b""
+    build_hash = hashlib.md5(registry_bytes).hexdigest()[:12]
     all_content = registry.content
 
     research_items = [c for c in all_content if c.content_type == "research"]
@@ -257,15 +255,11 @@ def main():
         "build_hash": build_hash,
         "year": year,
         "site_url": SITE_URL,
-        "plausible_domain": "",
+        "plausible_domain": PLAUSIBLE_DOMAIN,
         "pillar_config": PILLAR_CONFIG,
         "pillar_emojis": PILLAR_EMOJIS,
         "pillar_names": PILLAR_NAMES,
-        "site_description": (
-            "AcaciaFund — research synthesis & experimental learning platform. "
-            "Automated classification of HackerNews + arXiv content using Bloom taxonomy. "
-            "Static-first, privacy-preserving."
-        ),
+        "site_description": SITE_DESCRIPTION,
     }
 
     def render_template(template_name, **kw):
@@ -343,7 +337,10 @@ def main():
     print("  category: knowledge/index.html")
 
     # --- LEARN PAGES ---
-    learn_lessons = [li for li in learn_items if li.slug != "learn"]
+    learn_lessons = sorted(
+        [li for li in learn_items if li.slug != "learn"],
+        key=lambda x: (DIFFICULTY_ORDER.get(x.difficulty or "beginner", 0), x.pillar or "", x.title or ""),
+    )
     for i, item in enumerate(learn_items):
         # Determine prev/next only among actual lessons (exclude meta "learn" page)
         li = None
@@ -602,6 +599,7 @@ def main():
             "content_type": c.content_type or "",
             "tags": c.tags or [],
             "date_str": c.date_str or "",
+            "difficulty": c.difficulty or "",
         })
     (STATIC_DST_DIR / "search-index.json").write_text(
         json.dumps(search_index, ensure_ascii=False), encoding="utf-8")
@@ -617,15 +615,18 @@ def main():
     print("  search: search/index.html")
 
     # --- FEED ---
+    feed_candidates = [p.created_at for p in research_items[:20] if p.created_at]
+    feed_updated = max(feed_candidates).isoformat() if feed_candidates else now.isoformat()
     feed_items = []
     for post in research_items[:20]:
         path = slug_to_path(post.slug)
         desc = (post.description or post.body_html[:200])[:300]
+        post_updated = (post.created_at or now).isoformat()
         feed_items.append(f"""  <entry>
     <title>{post.title}</title>
     <link href="{SITE_URL}/{path}" rel="alternate" type="text/html"/>
     <id>{SITE_URL}/{path}</id>
-    <updated>{(post.created_at or datetime.now(timezone.utc)).isoformat()}</updated>
+    <updated>{post_updated}</updated>
     <summary>{desc}</summary>
   </entry>""")
     feed = f"""<?xml version="1.0" encoding="UTF-8"?>
@@ -634,8 +635,8 @@ def main():
   <link href="{SITE_URL}/feed.xml" rel="self" type="application/atom+xml"/>
   <link href="{SITE_URL}/" rel="alternate" type="text/html"/>
   <id>{SITE_URL}/feed.xml</id>
-  <updated>{datetime.now(timezone.utc).isoformat()}</updated>
-  <author><name>AcaciaFund</name></author>
+  <updated>{feed_updated}</updated>
+  <author><name>{SITE_NAME}</name></author>
 {chr(10).join(feed_items)}
 </feed>"""
     (OUTPUT_DIR / "feed.xml").write_text(feed, encoding="utf-8")

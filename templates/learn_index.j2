@@ -12,6 +12,30 @@
   <div class="mb-8">
     <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">Learning Hub</h1>
     <p class="mt-2 text-sm" style="color:var(--color-text-muted)" id="progress-summary">{{ items | length }} lessons — structured learning across all pillars</p>
+    <p class="mt-1 text-xs" style="color:var(--color-text-muted)" id="review-due"></p>
+  </div>
+
+  <div class="mb-10 p-4 rounded-lg" style="background:var(--color-surface);border:1px solid var(--color-border)" id="pillar-progress-section">
+    <h2 class="text-sm font-semibold mb-3" style="color:var(--color-text)">Progress by Pillar</h2>
+    <div class="space-y-3" id="pillar-progress-bars">
+      {%- set pillar_icons = {"aml": "🛡️", "stock": "📈", "science": "🔬"} %}
+      {%- set pillar_names = {"aml": "AML", "stock": "Markets", "science": "Science"} %}
+      {%- set pillar_bar_colors = {"aml": "#c97d3e", "stock": "#3a7d5c", "science": "#5b5ea6"} %}
+      {%- for pkey, pinfo in pillar_config.items() %}
+      {%- set pcount = items | selectattr("pillar", "equalto", pkey) | list | length %}
+      {%- if pcount > 0 %}
+      <div class="pillar-progress" data-pillar="{{ pkey }}">
+        <div class="flex items-center justify-between text-xs mb-1">
+          <span style="color:var(--color-text)">{{ pillar_icons.get(pkey, "") }} {{ pillar_names.get(pkey, pkey | capitalize) }}</span>
+          <span class="pillar-count" style="color:var(--color-text-muted)">0/{{ pcount }}</span>
+        </div>
+        <div class="sqi-bar">
+          <div class="sqi-bar-fill pillar-bar-fill" style="width:0%;background:{{ pillar_bar_colors.get(pkey, '#6366f1') }}"></div>
+        </div>
+      </div>
+      {%- endif %}
+      {%- endfor %}
+    </div>
   </div>
 
   {%- if grouped and grouped | length > 0 %}
@@ -75,22 +99,56 @@
 <script>
 (function(){
   var PROGRESS_KEY = 'acacia_progress_v1';
+  var REVIEW_KEY = 'acacia_reviews_v1';
   function loadProgress(){
     try{ return JSON.parse(localStorage.getItem(PROGRESS_KEY) || '{}'); }catch(e){return {};}
   }
+  function loadReviews(){
+    try{ return JSON.parse(localStorage.getItem(REVIEW_KEY) || '{}'); }catch(e){return {};}
+  }
   var p = loadProgress();
+  var r = loadReviews();
+
+  function progressKey(dataSlug) {
+    return dataSlug.replace(/^\//, '').replace(/\/$/, '') + '/index.html';
+  }
+
+  // Lesson completion status
   document.querySelectorAll('.lesson-status').forEach(function(el){
-    var slug = el.getAttribute('data-slug');
+    var slug = progressKey(el.getAttribute('data-slug'));
     if(p[slug] && p[slug].done){
       el.textContent = '✅';
       el.style.color = '#22c55e';
     }
   });
+
+  // Due-for-review badge
+  var reviewDue = document.getElementById('review-due');
+  if (reviewDue) {
+    var now = Date.now();
+    var DAY_MS = 86400000;
+    var dueCount = 0;
+    document.querySelectorAll('.lesson-status').forEach(function(el){
+      var dSlug = el.getAttribute('data-slug');
+      var slug = progressKey(dSlug);
+      if (r[dSlug] && p[slug] && p[slug].done) {
+        var elapsed = now - (r[dSlug].lastReview || 0);
+        if (elapsed > DAY_MS) dueCount++;
+      }
+    });
+    if (dueCount > 0) {
+      reviewDue.innerHTML = '🔄 <strong>' + dueCount + '</strong> lesson' + (dueCount > 1 ? 's' : '') + ' due for review (last studied >24h ago)';
+    } else {
+      reviewDue.textContent = '✅ All reviewed recently';
+    }
+  }
+
+  // Group progress
   document.querySelectorAll('.group-progress').forEach(function(el){
     var cards = el.closest('.mb-12').querySelectorAll('.lesson-status');
     var done = 0;
     cards.forEach(function(s){
-      var slug = s.getAttribute('data-slug');
+      var slug = progressKey(s.getAttribute('data-slug'));
       if(p[slug] && p[slug].done) done++;
     });
     el.textContent = done + '/' + cards.length;
@@ -98,10 +156,36 @@
       el.style.color = '#22c55e';
     }
   });
+
+  // Pillar progress bars
+  document.querySelectorAll('.pillar-progress').forEach(function(pp){
+    var pillar = pp.getAttribute('data-pillar');
+    var totalInPillar = 0;
+    var doneInPillar = 0;
+    document.querySelectorAll('.lesson-status').forEach(function(el){
+      var card = el.closest('.learn-card');
+      if (card) {
+        var pillarEl = card.querySelector('[class*="inline-flex"]');
+        if (pillarEl && pillarEl.textContent.indexOf(pillar) > -1) {
+          totalInPillar++;
+          var slug = progressKey(el.getAttribute('data-slug'));
+          if(p[slug] && p[slug].done) doneInPillar++;
+        }
+      }
+    });
+    var countEl = pp.querySelector('.pillar-count');
+    if (countEl) countEl.textContent = doneInPillar + '/' + totalInPillar;
+    var barEl = pp.querySelector('.pillar-bar-fill');
+    if (barEl && totalInPillar > 0) {
+      barEl.style.width = Math.round(doneInPillar / totalInPillar * 100) + '%';
+    }
+  });
+
+  // Overall summary
   var total = document.querySelectorAll('.lesson-status').length;
   var completed = 0;
   document.querySelectorAll('.lesson-status').forEach(function(el){
-    var slug = el.getAttribute('data-slug');
+    var slug = progressKey(el.getAttribute('data-slug'));
     if(p[slug] && p[slug].done) completed++;
   });
   var summary = document.getElementById('progress-summary');
