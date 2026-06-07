@@ -175,48 +175,157 @@ def lerp_color(c1, c2, t):
     return f"#{r:02x}{g:02x}{b:02x}"
 
 
+# --- Fractal generators ---
+
+def seeded_rand(seed: int):
+    """Simple LCG RNG that yields (value, next_seed)."""
+    while True:
+        seed = (seed * 1103515245 + 12345) & 0x7fffffff
+        yield seed
+
+
+def fractal_tree(slug: str, meta: dict, w: int, h: int,
+                 base_x: float, base_y: float, trunk_len: float,
+                 trunk_angle: float = -90) -> list[str]:
+    """
+    Generate a fractal tree as SVG <path> elements.
+    Branch angles, lengths, depth vary by slug hash.
+    Returns list of SVG path strings.
+    """
+    hsh = compute_hash(slug)
+    rng = seeded_rand(hsh)
+    elems = []
+
+    branch_depth = 4 + (next(rng) % 3)  # 4-6 levels
+    branch_angle = 20 + (next(rng) % 25)  # 20-45 degrees
+    length_ratio = 0.62 + (next(rng) % 20) * 0.01  # 0.62-0.81
+    symmetry = next(rng) % 3  # 0=symmetric, 1=biased left, 2=biased right
+    lean = 0.0 if symmetry == 0 else (-8 if symmetry == 1 else 8)
+
+    paths = []
+
+    def _branch(x, y, angle, length, depth):
+        if depth <= 0 or length < 2:
+            return
+        # Calculate end point
+        import math
+        rad = math.radians(angle)
+        ex = x + length * math.cos(rad)
+        ey = y + length * math.sin(rad)
+        paths.append((x, y, ex, ey, depth))
+
+        # Sub-branches
+        n = 2 + (next(rng) % 2)  # 2-3 branches
+        spread = branch_angle + (next(rng) % 10) - 5
+        for i in range(n):
+            off = (i - (n - 1) / 2) * spread / (n - 1) if n > 1 else 0
+            a = angle + off + lean * (1 - depth / branch_depth)
+            l = length * (length_ratio + (next(rng) % 10) * 0.01 - 0.05)
+            _branch(ex, ey, a, l, depth - 1)
+
+    _branch(base_x, base_y, trunk_angle, trunk_len, branch_depth)
+
+    # Render paths as SVG, thicker near trunk, thinner at tips
+    max_depth = max(d for _, _, _, _, d in paths) if paths else 1
+    min_depth = min(d for _, _, _, _, d in paths) if paths else 0
+    for x1, y1, x2, y2, d in paths:
+        t = 1.0 - (d - min_depth) / (max_depth - min_depth + 1)
+        sw = max(0.5, 2.5 * t)
+        opacity = 0.15 + 0.35 * t
+        color = lerp_color(meta["color"], "#ffffff", 1 - t * 0.5)
+        elems.append(
+            f'<line x1="{x1:.1f}" y1="{y1:.1f}" x2="{x2:.1f}" y2="{y2:.1f}" '
+            f'stroke="{color}" stroke-width="{sw:.1f}" opacity="{opacity:.2f}" '
+            f'stroke-linecap="round"/>'
+        )
+
+    return elems
+
+
+def fractal_dust(slug: str, meta: dict, w: int, h: int, count: int = 30) -> list[str]:
+    """
+    Generate fractal dust (power-law distributed dots) as SVG circles.
+    Creates a clustered pattern that looks like a fractal point set.
+    """
+    hsh = compute_hash(f"dust_{slug}")
+    rng = seeded_rand(hsh)
+    elems = []
+
+    # Generate clusters
+    n_clusters = 2 + (next(rng) % 2)
+    clusters = []
+    for _ in range(n_clusters):
+        cx = next(rng) % w
+        cy = next(rng) % h
+        cr = 20 + (next(rng) % 60)
+        clusters.append((cx, cy, cr))
+
+    for _ in range(min(count, 20)):
+        # Pick a cluster
+        ci = next(rng) % n_clusters
+        cx, cy, cr = clusters[ci]
+        # Power-law-like distribution within cluster
+        import math
+        angle = (next(rng) % 3600) / 10.0
+        dist = cr * ((next(rng) % 1000) / 1000.0) ** 2
+        x = cx + dist * math.cos(math.radians(angle))
+        y = cy + dist * math.sin(math.radians(angle))
+        r = 1 + (next(rng) % 3)
+        op = 0.02 + (next(rng) % 8) * 0.01
+        elems.append(
+            f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{r}" '
+            f'fill="{meta["color"]}" opacity="{op:.2f}"/>'
+        )
+
+    return elems
+
+
+def make_title_lines(title: str, max_chars: int, font_size: int,
+                     x: float, y: float, w: float = 600) -> list[str]:
+    words = title.split()
+    lines = []
+    current = ""
+    for w in words:
+        test = f"{current} {w}".strip()
+        if len(test) > max_chars:
+            lines.append(current)
+            current = w
+        else:
+            current = test
+    if current:
+        lines.append(current)
+    if len(lines) > 3:
+        lines = lines[:3]
+        lines[-1] += "..."
+
+    return [
+        f'<text x="{x}" y="{y + i * (font_size + 8)}" fill="#f8fafc" '
+        f'font-family="system-ui,sans-serif" font-size="{font_size}" font-weight="700" '
+        f'text-anchor="{"middle" if w == 600 else "start"}">{l}</text>'
+        for i, l in enumerate(lines)
+    ]
+
+
 def generate_thumbnail_svg(slug: str, title: str, pillar: str) -> str:
     meta = PILLAR_META[pillar]
     h = compute_hash(slug)
     bg_variant = h % 4
 
-    # Decorative elements
-    deco_colors = ["#ffffff", meta["color"], "#ffffff"]
-    deco_opacity = [0.03, 0.06, 0.02]
-    deco_elems = []
-
-    # Dots in a pattern based on hash
-    seed_rng = h
-    for i in range(16):
-        seed_rng = (seed_rng * 1103515245 + 12345) & 0x7fffffff
-        cx = 30 + (i % 4) * 140 + (seed_rng % 40)
-        seed_rng = (seed_rng * 1103515245 + 12345) & 0x7fffffff
-        cy = 40 + (i // 4) * 70 + (seed_rng % 30)
-        seed_rng = (seed_rng * 1103515245 + 12345) & 0x7fffffff
-        r = 1 + (seed_rng % 3)
-        seed_rng = (seed_rng * 1103515245 + 12345) & 0x7fffffff
-        col = deco_colors[seed_rng % 3]
-        op = deco_opacity[seed_rng % 3]
-        deco_elems.append(f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="{col}" opacity="{op:.2f}"/>')
-
-    # Lines across the card
-    for i in range(3):
-        seed_rng = (seed_rng * 1103515245 + 12345) & 0x7fffffff
-        y = 80 + i * 90 + (seed_rng % 30)
-        seed_rng = (seed_rng * 1103515245 + 12345) & 0x7fffffff
-        w = 60 + (seed_rng % 120)
-        deco_elems.append(
-            f'<line x1="10" y1="{y}" x2="{10 + w}" y2="{y}" stroke="{meta["color"]}" '
-            f'stroke-width="0.5" opacity="0.08"/>'
-        )
-
-    # Background gradient variant
+    # Background gradient
     if bg_variant == 0:
         bg = (
             f'<linearGradient id="bg-{slug[:8]}" x1="0" y1="0" x2="1" y2="1">'
             f'<stop offset="0" stop-color="{meta["bg1"]}"/>'
-            f'<stop offset="1" stop-color="{meta["bg2"]}"/>'
+            f'<stop offset="1" stop-color="{lerp_color(meta["bg1"], meta["bg2"], 0.3)}"/>'
             f'</linearGradient>'
+        )
+    elif bg_variant == 1:
+        alt = lerp_color(meta["bg1"], meta["color"], 0.12)
+        bg = (
+            f'<radialGradient id="bg-{slug[:8]}" cx="50%" cy="40%">'
+            f'<stop offset="0" stop-color="{alt}"/>'
+            f'<stop offset="1" stop-color="{meta["bg1"]}"/>'
+            f'</radialGradient>'
         )
     else:
         alt = lerp_color(meta["bg1"], meta["color"], 0.15)
@@ -228,43 +337,31 @@ def generate_thumbnail_svg(slug: str, title: str, pillar: str) -> str:
             f'</linearGradient>'
         )
 
-    # Title wrapping
-    words = title.split()
-    lines = []
-    current = ""
-    for w in words:
-        test = f"{current} {w}".strip()
-        if len(test) > 28:
-            lines.append(current)
-            current = w
-        else:
-            current = test
-    if current:
-        lines.append(current)
-    if len(lines) > 3:
-        lines = lines[:3]
-        lines[-1] += "..."
+    # Fractal tree — grows from bottom-center
+    tree_x = 300 + ((h % 40) - 20)
+    tree_y = 300
+    trunk = 90 + (h % 60)
+    tree = fractal_tree(slug, meta, 600, 340, tree_x, tree_y, trunk)
 
-    title_y = 170
-    title_lines = "\n".join(
-        f'<text x="300" y="{title_y + i * 36}" fill="#f8fafc" '
-        f'font-family="system-ui,sans-serif" font-size="22" font-weight="700" '
-        f'text-anchor="middle">{l}</text>'
-        for i, l in enumerate(lines)
-    )
+    # Fractal dust background
+    dust = fractal_dust(slug, meta, 600, 340, 25 + (h % 15))
 
-    # Icon at top
+    # Icon at top-left area
+    icon_x = 30 + (h % 40)
+    icon_y = 30 + (h % 10)
     icon = (
-        f'<g transform="translate(260, 30) scale(1.2)" '
+        f'<g transform="translate({icon_x}, {icon_y}) scale(1.0)" '
         f'stroke="{meta["color"]}" fill="none" stroke-linecap="round" '
-        f'stroke-linejoin="round" stroke-width="1.5">'
+        f'stroke-linejoin="round" stroke-width="1.5" opacity="0.6">'
         f'{meta["icon_path"]}'
         f'</g>'
     )
 
+    # Title lines — positioned in upper-right area
+    title_elems = make_title_lines(title, 26, 20, 300, 50, 600)
+
     # Accent bar at bottom
     bar_color = lerp_color(meta["color"], "#ffffff", 0.3)
-    # Spread the bar width based on hash
     bar_w = 120 + (h % 200)
 
     svg = (
@@ -272,14 +369,15 @@ def generate_thumbnail_svg(slug: str, title: str, pillar: str) -> str:
         f'viewBox="0 0 600 340">\n'
         f'<defs>{bg}</defs>\n'
         f'<rect width="600" height="340" fill="url(#bg-{slug[:8]})"/>\n'
-        f'{"".join(deco_elems)}\n'
+        f'{"".join(dust)}\n'
+        f'{"".join(tree)}\n'
         f'{icon}\n'
-        f'{title_lines}\n'
-        f'<rect x="{(600 - bar_w) // 2}" y="290" width="{bar_w}" height="3" '
-        f'rx="1.5" fill="{bar_color}" opacity="0.3"/>\n'
-        f'<text x="300" y="318" fill="{meta["color"]}" '
-        f'font-family="system-ui,sans-serif" font-size="11" font-weight="600" '
-        f'text-anchor="middle" opacity="0.6">{meta["label"].upper()}</text>\n'
+        f'{"".join(title_elems)}\n'
+        f'<rect x="{(600 - bar_w) // 2}" y="310" width="{bar_w}" height="2" '
+        f'rx="1" fill="{bar_color}" opacity="0.4"/>\n'
+        f'<text x="300" y="328" fill="{meta["color"]}" '
+        f'font-family="system-ui,sans-serif" font-size="10" font-weight="600" '
+        f'text-anchor="middle" opacity="0.5">{meta["label"].upper()}</text>\n'
         f'</svg>'
     )
     return svg
@@ -289,44 +387,40 @@ def generate_og_svg(slug: str, title: str, pillar: str, date_str: str) -> str:
     meta = PILLAR_META[pillar]
     h = compute_hash(f"og_{slug}")
 
-    # Title lines for OG (wider)
-    words = title.split()
-    lines = []
-    current = ""
-    for w in words:
-        test = f"{current} {w}".strip()
-        if len(test) > 50:
-            lines.append(current)
-            current = w
-        else:
-            current = test
-    if current:
-        lines.append(current)
-    if len(lines) > 3:
-        lines = lines[:3]
-        lines[-1] += "..."
-
-    title_lines = "\n".join(
-        f'<text x="60" y="{280 + i * 55}" fill="#f8fafc" '
-        f'font-family="system-ui,sans-serif" font-size="36" font-weight="700">'
-        f'{l}</text>'
-        for i, l in enumerate(lines)
+    # Background gradient
+    bg_grad = (
+        f'<linearGradient id="ogbg-{slug[:8]}" x1="0" y1="0" x2="1" y2="1">\n'
+        f'<stop offset="0" stop-color="{meta["bg1"]}"/>\n'
+        f'<stop offset=".5" stop-color="{lerp_color(meta["bg1"], meta["color"], 0.2)}"/>\n'
+        f'<stop offset="1" stop-color="{meta["bg1"]}"/>\n'
+        f'</linearGradient>'
     )
 
-    # Larger decorative circles
-    circles = [
-        f'<circle cx="{900 + (h % 200)}" cy="{150 + (h % 100)}" r="{200 + (h % 100)}" '
-        f'fill="{meta["color"]}" opacity=".03"/>',
-        f'<circle cx="{200 + (h % 150)}" cy="{500}" r="150" '
-        f'fill="{meta["color"]}" opacity=".02"/>',
-    ]
+    # Larger fractal tree
+    tree = fractal_tree(f"og_{slug}", meta, 1200, 630, 1000, 600, 180 + (h % 80))
+
+    # Fractal dust scattered widely
+    import math
+    rng = seeded_rand(h)
+    dust = []
+    for _ in range(25):
+        x = next(rng) % 1200
+        y = next(rng) % 630
+        r = 2 + (next(rng) % 5)
+        op = 0.01 + (next(rng) % 5) * 0.01
+        dust.append(
+            f'<circle cx="{x}" cy="{y}" r="{r}" '
+            f'fill="{meta["color"]}" opacity="{op:.2f}"/>'
+        )
+
+    # Title
+    title_elems = make_title_lines(title, 48, 34, 80, 240, 1200)
 
     # Icon
-    icon_transform = 60 + (h % 20)
     icon = (
-        f'<g transform="translate(50, {icon_transform}) scale(1.8)" '
+        f'<g transform="translate(60, 60) scale(1.6)" '
         f'stroke="{meta["color"]}" fill="none" stroke-linecap="round" '
-        f'stroke-linejoin="round" stroke-width="1.5">'
+        f'stroke-linejoin="round" stroke-width="1.5" opacity="0.7">'
         f'{meta["icon_path"]}'
         f'</g>'
     )
@@ -334,22 +428,17 @@ def generate_og_svg(slug: str, title: str, pillar: str, date_str: str) -> str:
     return (
         f'<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" '
         f'viewBox="0 0 1200 630">\n'
-        f'<defs>\n'
-        f'<linearGradient id="ogbg-{slug[:8]}" x1="0" y1="0" x2="1" y2="1">\n'
-        f'<stop offset="0" stop-color="{meta["bg1"]}"/>\n'
-        f'<stop offset=".5" stop-color="{lerp_color(meta["bg1"], meta["color"], 0.2)}"/>\n'
-        f'<stop offset="1" stop-color="{meta["bg1"]}"/>\n'
-        f'</linearGradient>\n'
-        f'</defs>\n'
+        f'<defs>\n{bg_grad}\n</defs>\n'
         f'<rect width="1200" height="630" fill="url(#ogbg-{slug[:8]})"/>\n'
-        f'{"".join(circles)}\n'
+        f'{"".join(dust)}\n'
+        f'{"".join(tree)}\n'
         f'{icon}\n'
-        f'{title_lines}\n'
-        f'<text x="60" y="500" fill="{meta["color"]}" '
-        f'font-family="system-ui,sans-serif" font-size="18" font-weight="600">'
+        f'{"".join(title_elems)}\n'
+        f'<text x="80" y="520" fill="{meta["color"]}" '
+        f'font-family="system-ui,sans-serif" font-size="20" font-weight="600">'
         f'AcaciaFund &nbsp;·&nbsp; {meta["label"]} &nbsp;·&nbsp; {date_str}</text>\n'
-        f'<rect x="60" y="570" width="{80 + (h % 60)}" height="4" rx="2" '
-        f'fill="{meta["color"]}" opacity="0.5"/>\n'
+        f'<rect x="80" y="560" width="{100 + (h % 80)}" height="4" rx="2" '
+        f'fill="{meta["color"]}" opacity="0.4"/>\n'
         f'</svg>'
     )
 
