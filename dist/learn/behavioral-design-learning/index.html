@@ -3,25 +3,25 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Building an Open Source Data Stack: From Ingestion to Analytics | AcaciaFund</title>
-  <meta name="description" content="">
+  <title>Behavioral Design for Learning — Psychology Behind Effective Education Platforms | AcaciaFund</title>
+  <meta name="description" content="Explore the behavioral psychology principles that make learning platforms like Duolingo, Khan Academy, and Brilliant effective — and how you can apply Fogg's Behavior Model, habit loops, and gamification to your own learning practice.">
   <meta name="generator" content="AcaciaFund Python-native Pipeline">
   <meta name="theme-color" content="#f5f0eb" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#1a1a2e" media="(prefers-color-scheme: dark)">
-  <link rel="canonical" href="https://acaciafund.org/learn/open-source-data-stack/index.html">
+  <link rel="canonical" href="https://acaciafund.org/learn/behavioral-design-learning/index.html">
   <link rel="icon" href="/static/images/favicon.svg" type="image/svg+xml">
   <link rel="alternate" type="application/atom+xml" title="AcaciaFund Research" href="/feed.xml">
 
-  <meta property="og:title" content="Building an Open Source Data Stack: From Ingestion to Analytics">
+  <meta property="og:title" content="Behavioral Design for Learning — Psychology Behind Effective Education Platforms">
   <meta property="og:site_name" content="AcaciaFund">
-  <meta property="og:url" content="https://acaciafund.org/learn/open-source-data-stack/index.html">
-  <meta property="og:image" content="https://acaciafund.org/static/images/og_f85c08dff895.svg">
+  <meta property="og:url" content="https://acaciafund.org/learn/behavioral-design-learning/index.html">
+  <meta property="og:image" content="https://acaciafund.org/static/images/og_381baed42591.svg">
   <meta property="og:type" content="website">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "LearningResource",
-    "name": "Building an Open Source Data Stack: From Ingestion to Analytics",
+    "name": "Behavioral Design for Learning \u2014 Psychology Behind Effective Education Platforms",
     "learningResourceType": "Lesson",
     "educationalLevel": "Intermediate"
   }
@@ -114,43 +114,28 @@
     <nav aria-label="Table of contents">
       <ul class="space-y-1 text-sm">
         <li>
-          <a href="#the-modern-open-source-data-stack" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
-            The Modern Open Source Data Stack
+          <a href="#fogg-s-behavior-model" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Fogg's Behavior Model
           </a>
         </li>
         <li>
-          <a href="#layer-1-ingestion" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
-            Layer 1: Ingestion
+          <a href="#the-hook-model" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            The Hook Model
           </a>
         </li>
         <li>
-          <a href="#layer-2-storage" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
-            Layer 2: Storage
+          <a href="#gamification-mechanics" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Gamification Mechanics
           </a>
         </li>
         <li>
-          <a href="#layer-3-transformation" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
-            Layer 3: Transformation
+          <a href="#learning-from-the-best" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Learning from the Best
           </a>
         </li>
         <li>
-          <a href="#layer-4-orchestration" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
-            Layer 4: Orchestration
-          </a>
-        </li>
-        <li>
-          <a href="#layer-5-quality-observability" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
-            Layer 5: Quality & Observability
-          </a>
-        </li>
-        <li>
-          <a href="#layer-6-analytics-serving" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
-            Layer 6: Analytics & Serving
-          </a>
-        </li>
-        <li>
-          <a href="#putting-it-together" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
-            Putting It Together
+          <a href="#applying-this-to-your-learning" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Applying This to Your Learning
           </a>
         </li>
       </ul>
@@ -164,67 +149,83 @@
         <li aria-hidden="true">/</li>
         <li><a href="/learn/" class="hover:text-[var(--color-accent)] transition">Learn</a></li>
         <li aria-hidden="true">/</li>
-        <li aria-current="page" class="truncate max-w-[200px]">Building an Open Source Data Stack: From Ingestion to Analytics</li>
+        <li aria-current="page" class="truncate max-w-[200px]">Behavioral Design for Learning — Psychology Behind Effective Education Platforms</li>
       </ol>
     </nav>
 
     <header class="mb-8">
       <div class="flex items-center gap-3 mb-3">
-        <span class="inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
-          chart Markets
+        <span class="inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-full bg-purple-100 text-purple-800">
+          microscope Science
         </span>
         <span class="inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-full" style="background:var(--color-bg);color:var(--color-text-secondary)">
           📘 Intermediate
         </span>
       </div>
-      <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">Building an Open Source Data Stack: From Ingestion to Analytics</h1>
+      <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">Behavioral Design for Learning — Psychology Behind Effective Education Platforms</h1>
       <div class="mt-2 flex items-center gap-3 text-sm" style="color:var(--color-text-muted)">
-        <time datetime="2026-06-12" class="inline-flex items-center gap-1">
+        <time datetime="2026-06-07" class="inline-flex items-center gap-1">
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-          2026-06-12
+          2026-06-07
         </time>
         <span class="inline-flex items-center gap-1">
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          1 min read
+          3 min read
         </span>
       </div>
       <div class="mt-3 flex flex-wrap gap-2">
-        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">architecture</span>
-        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">open-source</span>
-        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">data-stack</span>
-        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">stock</span>
-        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">dataops</span>
-        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">lakehouse</span>
-        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">ingestion</span>
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">psychology</span>
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">behavioral-design</span>
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">learning</span>
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">gamification</span>
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">habits</span>
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">education</span>
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">ux</span>
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">meta</span>
       </div>
     </header>
 
     <div class="prose prose-lg max-w-none lesson-body">
-      <h2 id="the-modern-open-source-data-stack">The Modern Open Source Data Stack</h2>
-<p>The 2026 open source data stack is modular, composable, and cloud-agnostic. Teams assemble best-in-class tools for each layer rather than buying monolithic platforms. This lesson walks through a complete production stack.</p>
+      <p>Why do millions of people voluntarily practice French at 7 AM on Duolingo? Why do Brilliant users spend hours solving math problems for fun? The answer is not the content — it is the behavioral design surrounding the content. The most effective learning platforms are not just educational tools; they are habit-forming systems built on well-understood psychological principles.</p>
 
-<h2 id="layer-1-ingestion">Layer 1: Ingestion</h2>
-<p><strong>Airbyte</strong> (open source, MIT) provides 600+ connectors for APIs, databases, and file stores. It handles schema detection, incremental syncs, and normalization. Deploy via Docker Compose or Kubernetes.</p>
-<p>Alternatives: Meltano (Singer taps), Apache NiFi (visual flow), Debezium (CDC from databases).</p>
+<h2 id="fogg-s-behavior-model">Fogg's Behavior Model</h2>
+<p>Stanford psychologist BJ Fogg's Behavior Model states that for a behavior to occur, three elements must converge: <strong>Motivation</strong>, <strong>Ability</strong>, and a <strong>Prompt</strong> (also called a trigger). Learning platforms apply this systematically:</p>
+<ul>
+<li><strong>Motivation:</strong> Show real-world relevance, connect to learner goals, use progress streaks to create commitment. Duolingo's streak count leverages loss aversion — you do not want to break the chain.</li>
+<li><strong>Ability:</strong> Make the first lesson absurdly easy (2 minutes, one question). Reduce friction — no login wall, instant start. Khan Academy's mastery-based progression lets learners move at their own pace, removing the anxiety of keeping up.</li>
+<li><strong>Prompt:</strong> Push notifications, email reminders, the "Continue Learning" section on this very homepage. The most effective prompts are <em>contextual</em> — appearing when motivation and ability are already high.</li>
+</ul>
 
-<h2 id="layer-2-storage">Layer 2: Storage</h2>
-<p>The <strong>lakehouse</strong> paradigm dominates: object storage (S3/MinIO) + table format (Apache Iceberg/Delta Lake) + query engine (Trino/Spark). Iceberg provides ACID transactions, time travel, and schema evolution on object storage.</p>
+<h2 id="the-hook-model">The Hook Model</h2>
+<p>Nir Eyal's Hook Model describes a four-step cycle for habit formation: <strong>Trigger → Action → Variable Reward → Investment</strong>. Top learning platforms embed this cycle:</p>
+<ul>
+<li><strong>Trigger:</strong> External (notification: "Your daily lesson is ready!") or internal (feeling bored, opening the app habitually).</li>
+<li><strong>Action:</strong> The simplest possible behavior — answer one question, flip one flashcard. Duolingo's lessons are designed to take fewer than 5 minutes.</li>
+<li><strong>Variable Reward:</strong> This is the key. Fixed rewards (always the same prize) stop being interesting. <em>Variable</em> rewards — surprise bonus XP, unlocking a new level, a funny animation — keep the brain engaged because dopamine peaks during <em>anticipation</em>, not receipt. This is why Duolingo's "chest" with random XP amounts is more engaging than a fixed daily bonus.</li>
+<li><strong>Investment:</strong> The user puts something into the system — time, effort, or data — that makes the service more valuable and increases the likelihood of returning. Writing flashcards, building a profile, maintaining a streak.</li>
+</ul>
 
-<h2 id="layer-3-transformation">Layer 3: Transformation</h2>
-<p><strong>dbt</strong> is the standard for SQL transformations. Define models as SELECT statements; dbt handles dependency resolution, incremental materialization, testing, and documentation generation. Models are organized into layers (sources → staging → intermediate → marts).</p>
+<h2 id="gamification-mechanics">Gamification Mechanics</h2>
+<p>Common gamification elements backed by behavioral psychology:</p>
+<ul>
+<li><strong>Progress bars & mastery tracking:</strong> The <em>goal gradient effect</em> shows that people work harder as they approach a goal. The reading progress bar on every AcaciaFund article uses this principle.</li>
+<li><strong>Spaced repetition:</strong> Reviewing material at increasing intervals exploits the <em>spacing effect</em> — one of the most robust findings in cognitive psychology. Flashcards with flip interaction implement this.</li>
+<li><strong>Completion bias:</strong> People are disproportionately motivated to finish what they've started. Lesson completion checkmarks and progress counters tap into this.</li>
+<li><strong>Social comparison:</strong> Leaderboards create motivation through social proof. (AcaciaFund does not use leaderboards to preserve privacy and reduce anxiety.)</li>
+</ul>
 
-<h2 id="layer-4-orchestration">Layer 4: Orchestration</h2>
-<p><strong>Dagster</strong> has become the preferred orchestrator for data teams who value asset-centric design. Unlike Airflow's DAG-of-tasks approach, Dagster treats datasets as assets with explicit lineage. Prefect remains strong for teams wanting Python-native flow control.</p>
+<h2 id="learning-from-the-best">Learning from the Best</h2>
+<p>What makes top platforms effective is not any single feature but the <em>integration</em> of these principles into a coherent system. Duolingo combines streak (motivation) + bite-sized lessons (ability) + notifications (prompt) + variable XP (reward). Khan Academy combines mastery-based progression (ability) + energy points (reward) + skill trees (investment). Each platform aligns all elements of Fogg's model toward the single goal of daily practice.</p>
 
-<h2 id="layer-5-quality-observability">Layer 5: Quality & Observability</h2>
-<p><strong>Great Expectations</strong> + <strong>Soda</strong> for quality. <strong>OpenMetadata</strong> for catalog + lineage. Custom dashboards via Prometheus + Grafana for pipeline metrics. dbt-external-tables for freshness monitoring.</p>
+<h2 id="applying-this-to-your-learning">Applying This to Your Learning</h2>
+<ul>
+<li><strong>Lower the barrier:</strong> Commit to just 2 minutes per day. The hardest part is starting.</li>
+<li><strong>Use implementation intentions:</strong> "I will study at [time] in [location] for [duration]." This turns a vague goal into a concrete trigger.</li>
+<li><strong>Track your streak:</strong> Consistency matters more than duration. Mark a lesson complete every day, even if you only review one flashcard.</li>
+<li><strong>Embrace variable rewards:</strong> Alternate between different subjects and lesson types. The novelty itself reinforces the habit.</li>
+</ul>
 
-<h2 id="layer-6-analytics-serving">Layer 6: Analytics & Serving</h2>
-<p><strong>Evidence</strong> (markdown-driven BI), <strong>Metabase</strong> (self-service), or <strong>Apache Superset</strong> (enterprise dashboards). For ML serving: <strong>MLflow</strong> for model registry, <strong>BentoML</strong> for serving, <strong>Feast</strong> for feature stores.</p>
-
-<h2 id="putting-it-together">Putting It Together</h2>
-<p>This entire stack runs on a single `docker-compose.yml` for development and scales to production on Kubernetes. The total infrastructure cost for a mid-size data team: roughly $500-2000/month in cloud compute, zero licensing fees.</p>
-<p>AcaciaFund itself follows this philosophy: Python-native, open source tools only, static output, zero vendor lock-in.</p>
+<p>This lesson itself is an example of behavioral design: it uses cross-references (social proof), a reading progress bar (goal gradient), and flashcards (spaced repetition). To explore the scientific reasoning behind evaluating claims about learning techniques, see <a href="/learn/science-method/">Scientific Reasoning in Research Synthesis</a>.</p>
     </div>
     <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
       <h2 class="text-2xl font-bold mb-6 inline-flex items-center gap-2" style="color:var(--color-text)">
@@ -232,187 +233,114 @@
         Flashcards
       </h2>
       <div class="grid gap-4 sm:grid-cols-2" id="flashcard-grid">
-        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Lakehouse" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Fogg's Behavior Model" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
           <div class="flashcard-inner">
             <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border);box-shadow:0 1px 3px rgba(0,0,0,0.06)">
               <div class="flex items-start gap-2">
                 <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-                <span class="font-semibold text-sm" style="color:var(--color-text)">Lakehouse</span>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Fogg's Behavior Model</span>
               </div>
               <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
             </div>
             <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);border:1px solid var(--color-accent);box-shadow:0 2px 8px rgba(29,78,216,0.15)">
               <div class="flex items-start gap-2">
                 <svg class="w-4 h-4 mt-0.5 shrink-0 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                <span class="text-sm text-white" style="color:#fff">Data architecture combining data lake flexibility with warehouse ACID guarantees, using table formats like Apache Iceberg or Delta Lake.</span>
+                <span class="text-sm text-white" style="color:#fff">B=MAP — Behavior occurs when Motivation, Ability, and a Prompt converge simultaneously. All three must be present for a behavior to happen.</span>
               </div>
             </div>
           </div>
         </div>
-        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Dagster" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Hook Model" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
           <div class="flashcard-inner">
             <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border);box-shadow:0 1px 3px rgba(0,0,0,0.06)">
               <div class="flex items-start gap-2">
                 <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-                <span class="font-semibold text-sm" style="color:var(--color-text)">Dagster</span>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Hook Model</span>
               </div>
               <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
             </div>
             <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);border:1px solid var(--color-accent);box-shadow:0 2px 8px rgba(29,78,216,0.15)">
               <div class="flex items-start gap-2">
                 <svg class="w-4 h-4 mt-0.5 shrink-0 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                <span class="text-sm text-white" style="color:#fff">Asset-centric data orchestrator treating datasets as first-class assets with explicit lineage and metadata.</span>
+                <span class="text-sm text-white" style="color:#fff">Nir Eyal's four-step habit loop: Trigger → Action → Variable Reward → Investment. Creates repeated engagement cycles that form habits.</span>
               </div>
             </div>
           </div>
         </div>
-        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Airbyte" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Variable Reward" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
           <div class="flashcard-inner">
             <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border);box-shadow:0 1px 3px rgba(0,0,0,0.06)">
               <div class="flex items-start gap-2">
                 <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-                <span class="font-semibold text-sm" style="color:var(--color-text)">Airbyte</span>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Variable Reward</span>
               </div>
               <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
             </div>
             <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);border:1px solid var(--color-accent);box-shadow:0 2px 8px rgba(29,78,216,0.15)">
               <div class="flex items-start gap-2">
                 <svg class="w-4 h-4 mt-0.5 shrink-0 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                <span class="text-sm text-white" style="color:#fff">Open-source data integration platform with 600+ connectors for EL(T) pipelines.</span>
+                <span class="text-sm text-white" style="color:#fff">A reward that varies unpredictably in size or type — more engaging than fixed rewards because dopamine peaks during anticipation, not receipt.</span>
               </div>
             </div>
           </div>
         </div>
-        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Apache Iceberg" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Goal Gradient Effect" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
           <div class="flashcard-inner">
             <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border);box-shadow:0 1px 3px rgba(0,0,0,0.06)">
               <div class="flex items-start gap-2">
                 <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-                <span class="font-semibold text-sm" style="color:var(--color-text)">Apache Iceberg</span>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Goal Gradient Effect</span>
               </div>
               <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
             </div>
             <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);border:1px solid var(--color-accent);box-shadow:0 2px 8px rgba(29,78,216,0.15)">
               <div class="flex items-start gap-2">
                 <svg class="w-4 h-4 mt-0.5 shrink-0 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                <span class="text-sm text-white" style="color:#fff">Open table format for huge analytic datasets, providing ACID transactions, time travel, and schema evolution on object storage.</span>
+                <span class="text-sm text-white" style="color:#fff">The psychological phenomenon where people work harder and faster as they approach a goal — exploited by progress bars and completion trackers.</span>
               </div>
             </div>
           </div>
         </div>
-        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: dbt" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Spacing Effect" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
           <div class="flashcard-inner">
             <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border);box-shadow:0 1px 3px rgba(0,0,0,0.06)">
               <div class="flex items-start gap-2">
                 <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-                <span class="font-semibold text-sm" style="color:var(--color-text)">dbt</span>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Spacing Effect</span>
               </div>
               <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
             </div>
             <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);border:1px solid var(--color-accent);box-shadow:0 2px 8px rgba(29,78,216,0.15)">
               <div class="flex items-start gap-2">
                 <svg class="w-4 h-4 mt-0.5 shrink-0 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                <span class="text-sm text-white" style="color:#fff">Data build tool — SQL transformation framework enabling version-controlled, tested, and documented analytics pipelines.</span>
+                <span class="text-sm text-white" style="color:#fff">The robust finding that information is better retained when reviewed at increasing intervals over time, rather than massed in a single session.</span>
               </div>
             </div>
           </div>
         </div>
       </div>
     </section>
-    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
-      <h2 class="text-xl font-bold mb-4 inline-flex items-center gap-2" style="color:var(--color-text)">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-        Related Research
-      </h2>
-      <div class="grid gap-3 sm:grid-cols-2">
-        <a href="/blog/2026-06-16-science-dataeng/" class="block rounded-xl p-3 transition hover:-translate-y-0.5" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
-          <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded bg-purple-100 text-purple-800">microscope Science</span>
-          <span class="block mt-1 text-sm font-semibold" style="color:var(--color-text)">Data Pipeline Patterns for High-Throughput Genomics: Orchestrating Bioinformatics Workflows with Dagster</span>
-          <span class="block mt-1.5 text-xs inline-flex items-center gap-2" style="color:var(--color-text-muted)">
-            <span class="inline-flex items-center gap-1">
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-              2026-06-16
-            </span>
-            <span class="inline-flex items-center gap-1">
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-              1 min
-            </span>
-          </span>
-        </a>
-        <a href="/blog/2026-06-15-stock-dataeng/" class="block rounded-xl p-3 transition hover:-translate-y-0.5" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
-          <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded bg-green-100 text-green-800">chart Markets</span>
-          <span class="block mt-1 text-sm font-semibold" style="color:var(--color-text)">Feature Engineering at Scale: Building ML-Ready Market Data Pipelines with dbt and Iceberg</span>
-          <span class="block mt-1.5 text-xs inline-flex items-center gap-2" style="color:var(--color-text-muted)">
-            <span class="inline-flex items-center gap-1">
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-              2026-06-15
-            </span>
-            <span class="inline-flex items-center gap-1">
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-              1 min
-            </span>
-          </span>
-        </a>
-        <a href="/blog/2026-06-14-aml-dataeng/" class="block rounded-xl p-3 transition hover:-translate-y-0.5" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
-          <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded bg-amber-100 text-amber-800">shield AML</span>
-          <span class="block mt-1 text-sm font-semibold" style="color:var(--color-text)">Streaming ETL for Suspicious Activity Reports: Real-Time AML Data Pipelines with Kafka and Flink</span>
-          <span class="block mt-1.5 text-xs inline-flex items-center gap-2" style="color:var(--color-text-muted)">
-            <span class="inline-flex items-center gap-1">
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-              2026-06-14
-            </span>
-            <span class="inline-flex items-center gap-1">
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-              1 min
-            </span>
-          </span>
-        </a>
-      </div>
-    </section>
-    <section class="mt-12 pt-8 border-t" id="quiz-section" style="border-color:var(--color-border)" data-quiz='{"questions": [{"q": "Which layer of the open source data stack does Apache Iceberg belong to?", "options": ["Ingestion", "Storage", "Transformation", "Orchestration"], "a": 1}, {"q": "What distinguishes Dagster from Airflow in data pipeline orchestration?", "options": ["Dagster uses Python; Airflow uses SQL", "Dagster treats datasets as assets with explicit lineage; Airflow focuses on task DAGs", "Airflow is open source; Dagster is proprietary", "Dagster cannot run on Kubernetes"], "a": 1}, {"q": "A team needs to migrate from a monolithic data warehouse to a lakehouse architecture. Which two tools form the core of the new stack?", "options": ["dbt + Airbyte", "Iceberg + Trino", "Kafka + Flink", "Metabase + Superset"], "a": 1}, {"q": "Why is a lakehouse architecture preferred over a traditional data warehouse for modern data teams?", "options": ["Lakehouses are cheaper but slower", "Lakehouses combine data lake flexibility with warehouse ACID guarantees", "Lakehouses require less engineering talent", "Lakehouses only work with structured data"], "a": 1}, {"q": "Your VP asks for a 'zero licensing fee' production data stack serving 50 analysts. What is the most critical cost not captured by tool licensing?", "options": ["Cloud compute and storage costs", "Engineering time for integration and maintenance", "Both cloud infrastructure and engineering time", "Data quality tool costs"], "a": 2}]}'>
+    <section class="mt-12 pt-8 border-t" id="quiz-section" style="border-color:var(--color-border)" data-quiz='{"questions": [{"q": "According to Fogg's Behavior Model, which three elements must converge for a behavior to occur?", "options": ["Habit, Reward, and Consistency", "Motivation, Ability, and Prompt", "Trigger, Action, and Investment", "Knowledge, Practice, and Feedback"], "a": 1}, {"q": "Why are variable rewards more engaging than fixed rewards?", "options": ["They are bigger", "Dopamine peaks during anticipation of unpredictable outcomes", "Fixed rewards are always boring", "Variable rewards are easier to implement"], "a": 1}, {"q": "A learning app sends a push notification at 8 AM, the user opens it and answers one question, receives a random XP bonus, and the app tracks their streak. Which Hook Model stages are being activated?", "options": ["Investment → Trigger → Action", "Trigger → Action → Variable Reward → Investment", "Motivation → Ability → Prompt", "Reward → Habit → Trigger"], "a": 1}, {"q": "Why does the goal gradient effect make a progress bar showing 85% more motivating than one showing 15%, even if the absolute remaining work is the same?", "options": ["85% is closer to completion", "The perceived effort-to-reward ratio shifts — each unit of work feels more impactful near the goal", "Progress bars only work above 50%", "People cannot read progress under 50%"], "a": 1}, {"q": "A platform adds badges, leaderboards, and streak counters but sees only short-term engagement gains. What is the most likely explanation?", "options": ["Users do not like gamification", "The system relies only on extrinsic motivation without building intrinsic interest in the content", "Badges are ineffective", "The platform needs more game mechanics"], "a": 1}]}'>
       <h2 class="text-2xl font-bold mb-6 inline-flex items-center gap-2" style="color:var(--color-text)">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         Knowledge Check
       </h2>
       <div id="quiz-container"></div>
     </section>
-    <section class="mt-8 pt-8 border-t" style="border-color:var(--color-border)">
-      <h2 class="text-xl font-bold mb-4 inline-flex items-center gap-2" style="color:var(--color-text)">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
-        Related Knowledge
-      </h2>
-      <div class="grid gap-3 sm:grid-cols-2">
-        <a href="/knowledge/open-source-tools/" class="block rounded-xl p-3 transition hover:-translate-y-0.5" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
-          <span class="block text-sm font-semibold" style="color:var(--color-text)">Open Source Data Engineering Tool Landscape</span>
-          <p class="mt-1 text-xs" style="color:var(--color-text-secondary)">Curated reference of open source tools for modern data platforms.</p>
-        </a>
-        <a href="/knowledge/system-architecture/" class="block rounded-xl p-3 transition hover:-translate-y-0.5" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
-          <span class="block text-sm font-semibold" style="color:var(--color-text)">AcaciaFund System Architecture: A DataOps Perspective</span>
-          <p class="mt-1 text-xs" style="color:var(--color-text-secondary)">AcaciaFund as a DataOps pipeline — architecture, principles, and metrics.</p>
-        </a>
-        <a href="/knowledge/dataops-glossary/" class="block rounded-xl p-3 transition hover:-translate-y-0.5" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
-          <span class="block text-sm font-semibold" style="color:var(--color-text)">DataOps Glossary</span>
-          <p class="mt-1 text-xs" style="color:var(--color-text-secondary)">Key DataOps, data engineering, and data science terminology.</p>
-        </a>
-      </div>
-    </section>
 
     <div class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
       <div class="flex items-center justify-between">
-        <a href="/learn/data-quality-engineering/" class="inline-flex items-center gap-2 text-sm font-medium transition hover:text-[var(--color-accent)]" style="color:var(--color-text-secondary)">
+        <a href="/learn/crispr-gene-editing/" class="inline-flex items-center gap-2 text-sm font-medium transition hover:text-[var(--color-accent)]" style="color:var(--color-text-secondary)">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-          <span class="hidden sm:inline">Previous:</span> Data Quality Engineering: Testing, Monitoring, and Expectations at Scale
+          <span class="hidden sm:inline">Previous:</span> Gene Editing & CRISPR — From Lab Bench to Approved Medicine
         </a>
         <div>
-          <button id="mark-complete-btn" data-track-lesson="learn/open-source-data-stack/index.html" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition" style="background:var(--color-accent);color:#fff">
+          <button id="mark-complete-btn" data-track-lesson="learn/behavioral-design-learning/index.html" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition" style="background:var(--color-accent);color:#fff">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             <span id="complete-btn-text">Mark Complete</span>
           </button>
         </div>
-        <a href="/learn/crypto-aml/" class="inline-flex items-center gap-2 text-sm font-medium transition hover:text-[var(--color-accent)]" style="color:var(--color-text-secondary)">
-          <span class="hidden sm:inline">Next:</span> Crypto AML & Digital Assets — Compliance in the Age of DeFi
-          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        </a>
+        <div></div>
       </div>
     </div>
   </article>

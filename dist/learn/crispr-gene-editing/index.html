@@ -3,25 +3,25 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Building an Open Source Data Stack: From Ingestion to Analytics | AcaciaFund</title>
-  <meta name="description" content="">
+  <title>Gene Editing & CRISPR — From Lab Bench to Approved Medicine | AcaciaFund</title>
+  <meta name="description" content="Trace the journey of CRISPR gene editing from a bacterial defense system to FDA-approved therapies, exploring the science, 2026 clinical trial landscape, ethical frameworks, and what comes next.">
   <meta name="generator" content="AcaciaFund Python-native Pipeline">
   <meta name="theme-color" content="#f5f0eb" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#1a1a2e" media="(prefers-color-scheme: dark)">
-  <link rel="canonical" href="https://acaciafund.org/learn/open-source-data-stack/index.html">
+  <link rel="canonical" href="https://acaciafund.org/learn/crispr-gene-editing/index.html">
   <link rel="icon" href="/static/images/favicon.svg" type="image/svg+xml">
   <link rel="alternate" type="application/atom+xml" title="AcaciaFund Research" href="/feed.xml">
 
-  <meta property="og:title" content="Building an Open Source Data Stack: From Ingestion to Analytics">
+  <meta property="og:title" content="Gene Editing & CRISPR — From Lab Bench to Approved Medicine">
   <meta property="og:site_name" content="AcaciaFund">
-  <meta property="og:url" content="https://acaciafund.org/learn/open-source-data-stack/index.html">
-  <meta property="og:image" content="https://acaciafund.org/static/images/og_f85c08dff895.svg">
+  <meta property="og:url" content="https://acaciafund.org/learn/crispr-gene-editing/index.html">
+  <meta property="og:image" content="https://acaciafund.org/static/images/og_f96a1d285b8f.svg">
   <meta property="og:type" content="website">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "LearningResource",
-    "name": "Building an Open Source Data Stack: From Ingestion to Analytics",
+    "name": "Gene Editing \u0026 CRISPR \u2014 From Lab Bench to Approved Medicine",
     "learningResourceType": "Lesson",
     "educationalLevel": "Intermediate"
   }
@@ -114,43 +114,23 @@
     <nav aria-label="Table of contents">
       <ul class="space-y-1 text-sm">
         <li>
-          <a href="#the-modern-open-source-data-stack" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
-            The Modern Open Source Data Stack
+          <a href="#how-crispr-cas9-works" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            How CRISPR-Cas9 Works
           </a>
         </li>
         <li>
-          <a href="#layer-1-ingestion" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
-            Layer 1: Ingestion
+          <a href="#next-generation-editing" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Next-Generation Editing
           </a>
         </li>
         <li>
-          <a href="#layer-2-storage" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
-            Layer 2: Storage
+          <a href="#clinical-landscape-2026" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Clinical Landscape 2026
           </a>
         </li>
         <li>
-          <a href="#layer-3-transformation" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
-            Layer 3: Transformation
-          </a>
-        </li>
-        <li>
-          <a href="#layer-4-orchestration" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
-            Layer 4: Orchestration
-          </a>
-        </li>
-        <li>
-          <a href="#layer-5-quality-observability" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
-            Layer 5: Quality & Observability
-          </a>
-        </li>
-        <li>
-          <a href="#layer-6-analytics-serving" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
-            Layer 6: Analytics & Serving
-          </a>
-        </li>
-        <li>
-          <a href="#putting-it-together" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
-            Putting It Together
+          <a href="#ethical-regulatory-frameworks" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Ethical & Regulatory Frameworks
           </a>
         </li>
       </ul>
@@ -164,67 +144,67 @@
         <li aria-hidden="true">/</li>
         <li><a href="/learn/" class="hover:text-[var(--color-accent)] transition">Learn</a></li>
         <li aria-hidden="true">/</li>
-        <li aria-current="page" class="truncate max-w-[200px]">Building an Open Source Data Stack: From Ingestion to Analytics</li>
+        <li aria-current="page" class="truncate max-w-[200px]">Gene Editing & CRISPR — From Lab Bench to Approved Medicine</li>
       </ol>
     </nav>
 
     <header class="mb-8">
       <div class="flex items-center gap-3 mb-3">
-        <span class="inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
-          chart Markets
+        <span class="inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-full bg-purple-100 text-purple-800">
+          microscope Science
         </span>
         <span class="inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-full" style="background:var(--color-bg);color:var(--color-text-secondary)">
           📘 Intermediate
         </span>
       </div>
-      <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">Building an Open Source Data Stack: From Ingestion to Analytics</h1>
+      <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">Gene Editing & CRISPR — From Lab Bench to Approved Medicine</h1>
       <div class="mt-2 flex items-center gap-3 text-sm" style="color:var(--color-text-muted)">
-        <time datetime="2026-06-12" class="inline-flex items-center gap-1">
+        <time datetime="2026-06-07" class="inline-flex items-center gap-1">
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-          2026-06-12
+          2026-06-07
         </time>
         <span class="inline-flex items-center gap-1">
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          1 min read
+          2 min read
         </span>
       </div>
       <div class="mt-3 flex flex-wrap gap-2">
-        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">architecture</span>
-        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">open-source</span>
-        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">data-stack</span>
-        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">stock</span>
-        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">dataops</span>
-        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">lakehouse</span>
-        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">ingestion</span>
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">science</span>
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">crispr</span>
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">gene-editing</span>
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">biotech</span>
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">genomics</span>
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">medicine</span>
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">bioethics</span>
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">fda</span>
       </div>
     </header>
 
     <div class="prose prose-lg max-w-none lesson-body">
-      <h2 id="the-modern-open-source-data-stack">The Modern Open Source Data Stack</h2>
-<p>The 2026 open source data stack is modular, composable, and cloud-agnostic. Teams assemble best-in-class tools for each layer rather than buying monolithic platforms. This lesson walks through a complete production stack.</p>
+      <p>In December 2023, the FDA approved Casgevy (exagamglogene autotemcel) — the first therapy built on CRISPR-Cas9 gene editing — for sickle cell disease. By 2026, approximately 250 clinical trials involving gene-editing therapeutics are active worldwide, spanning oncology, cardiovascular disease, autoimmune conditions, and rare genetic disorders. Gene editing has moved from laboratory breakthrough to approved medicine.</p>
 
-<h2 id="layer-1-ingestion">Layer 1: Ingestion</h2>
-<p><strong>Airbyte</strong> (open source, MIT) provides 600+ connectors for APIs, databases, and file stores. It handles schema detection, incremental syncs, and normalization. Deploy via Docker Compose or Kubernetes.</p>
-<p>Alternatives: Meltano (Singer taps), Apache NiFi (visual flow), Debezium (CDC from databases).</p>
+<h2 id="how-crispr-cas9-works">How CRISPR-Cas9 Works</h2>
+<p>CRISPR-Cas9 is a bacterial immune system repurposed for precise DNA editing. The system has two components: a <strong>guide RNA (gRNA)</strong> that matches a target DNA sequence, and the <strong>Cas9 enzyme</strong> that cuts both strands of DNA at that location. The cell's natural repair mechanisms then kick in:</p>
+<ul>
+<li><strong>Non-homologous end joining (NHEJ):</strong> The cell stitches the break back together, often disrupting the target gene by introducing small insertions or deletions (indels). Useful for <em>knocking out</em> genes.</li>
+<li><strong>Homology-directed repair (HDR):</strong> If a repair template is provided, the cell uses it to precisely replace the DNA sequence. Useful for <em>correcting</em> mutations.</li>
+</ul>
 
-<h2 id="layer-2-storage">Layer 2: Storage</h2>
-<p>The <strong>lakehouse</strong> paradigm dominates: object storage (S3/MinIO) + table format (Apache Iceberg/Delta Lake) + query engine (Trino/Spark). Iceberg provides ACID transactions, time travel, and schema evolution on object storage.</p>
+<h2 id="next-generation-editing">Next-Generation Editing</h2>
+<p>CRISPR-Cas9 was just the beginning. By 2026, several refinements have matured:</p>
+<ul>
+<li><strong>Base editing:</strong> Converts one DNA base pair into another without making a double-strand break. For example, C•G to T•A. Useful for correcting point mutations that cause ~60% of human genetic diseases.</li>
+<li><strong>Prime editing:</strong> A "search-and-replace" approach that directly writes new genetic information into a target site. Offers greater precision and fewer off-target effects than Cas9.</li>
+<li><strong>Epigenetic editing:</strong> Modifies gene <em>expression</em> without changing the underlying DNA sequence — turning genes on or off reversibly.</li>
+</ul>
 
-<h2 id="layer-3-transformation">Layer 3: Transformation</h2>
-<p><strong>dbt</strong> is the standard for SQL transformations. Define models as SELECT statements; dbt handles dependency resolution, incremental materialization, testing, and documentation generation. Models are organized into layers (sources → staging → intermediate → marts).</p>
+<h2 id="clinical-landscape-2026">Clinical Landscape 2026</h2>
+<p>The ~250 active clinical trials break down approximately as: 80 in oncology/CAR-T therapies, 50 in blood disorders, 30 in cardiovascular disease, 25 in autoimmune conditions, 25 in rare genetic diseases, 20 in infectious disease. Casgevy's success in sickle cell disease — 29 of 31 patients achieving complete freedom from vaso-occlusive crises — proved the model. The next frontier is <em>in vivo</em> delivery: editing cells inside the body rather than extracting, editing, and reinfusing them.</p>
 
-<h2 id="layer-4-orchestration">Layer 4: Orchestration</h2>
-<p><strong>Dagster</strong> has become the preferred orchestrator for data teams who value asset-centric design. Unlike Airflow's DAG-of-tasks approach, Dagster treats datasets as assets with explicit lineage. Prefect remains strong for teams wanting Python-native flow control.</p>
+<h2 id="ethical-regulatory-frameworks">Ethical & Regulatory Frameworks</h2>
+<p>Key governance questions include: <strong>germline editing</strong> (heritable changes to embryos — banned or strictly controlled in most countries), <strong>equity of access</strong> (Casgevy's list price is $2.2M per patient), <strong>off-target effects</strong> (unintended edits that could cause cancer), and <strong>informed consent</strong> for permanent genetic modifications. The FDA and EMA have established dedicated gene therapy frameworks, and the International Commission on the Clinical Use of Human Germline Genome Editing provides global guidance.</p>
 
-<h2 id="layer-5-quality-observability">Layer 5: Quality & Observability</h2>
-<p><strong>Great Expectations</strong> + <strong>Soda</strong> for quality. <strong>OpenMetadata</strong> for catalog + lineage. Custom dashboards via Prometheus + Grafana for pipeline metrics. dbt-external-tables for freshness monitoring.</p>
-
-<h2 id="layer-6-analytics-serving">Layer 6: Analytics & Serving</h2>
-<p><strong>Evidence</strong> (markdown-driven BI), <strong>Metabase</strong> (self-service), or <strong>Apache Superset</strong> (enterprise dashboards). For ML serving: <strong>MLflow</strong> for model registry, <strong>BentoML</strong> for serving, <strong>Feast</strong> for feature stores.</p>
-
-<h2 id="putting-it-together">Putting It Together</h2>
-<p>This entire stack runs on a single `docker-compose.yml` for development and scales to production on Kubernetes. The total infrastructure cost for a mid-size data team: roughly $500-2000/month in cloud compute, zero licensing fees.</p>
-<p>AcaciaFund itself follows this philosophy: Python-native, open source tools only, static output, zero vendor lock-in.</p>
+<p>For the methodological foundations of evaluating scientific claims like those in CRISPR research, see <a href="/learn/science-method/">Scientific Reasoning in Research Synthesis</a>. To understand the data pipelines powering genomics research, explore <a href="/learn/data-quality-engineering/">Data Quality Engineering</a>.</p>
     </div>
     <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
       <h2 class="text-2xl font-bold mb-6 inline-flex items-center gap-2" style="color:var(--color-text)">
@@ -232,87 +212,87 @@
         Flashcards
       </h2>
       <div class="grid gap-4 sm:grid-cols-2" id="flashcard-grid">
-        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Lakehouse" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Cas9" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
           <div class="flashcard-inner">
             <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border);box-shadow:0 1px 3px rgba(0,0,0,0.06)">
               <div class="flex items-start gap-2">
                 <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-                <span class="font-semibold text-sm" style="color:var(--color-text)">Lakehouse</span>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Cas9</span>
               </div>
               <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
             </div>
             <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);border:1px solid var(--color-accent);box-shadow:0 2px 8px rgba(29,78,216,0.15)">
               <div class="flex items-start gap-2">
                 <svg class="w-4 h-4 mt-0.5 shrink-0 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                <span class="text-sm text-white" style="color:#fff">Data architecture combining data lake flexibility with warehouse ACID guarantees, using table formats like Apache Iceberg or Delta Lake.</span>
+                <span class="text-sm text-white" style="color:#fff">CRISPR-associated protein 9 — an endonuclease enzyme that cuts DNA at a location specified by a guide RNA, forming the core of the CRISPR gene-editing system.</span>
               </div>
             </div>
           </div>
         </div>
-        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Dagster" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Base Editing" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
           <div class="flashcard-inner">
             <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border);box-shadow:0 1px 3px rgba(0,0,0,0.06)">
               <div class="flex items-start gap-2">
                 <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-                <span class="font-semibold text-sm" style="color:var(--color-text)">Dagster</span>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Base Editing</span>
               </div>
               <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
             </div>
             <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);border:1px solid var(--color-accent);box-shadow:0 2px 8px rgba(29,78,216,0.15)">
               <div class="flex items-start gap-2">
                 <svg class="w-4 h-4 mt-0.5 shrink-0 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                <span class="text-sm text-white" style="color:#fff">Asset-centric data orchestrator treating datasets as first-class assets with explicit lineage and metadata.</span>
+                <span class="text-sm text-white" style="color:#fff">A precision gene-editing technique that converts one DNA base pair to another without creating a double-strand break — useful for correcting point mutations.</span>
               </div>
             </div>
           </div>
         </div>
-        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Airbyte" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Casgevy" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
           <div class="flashcard-inner">
             <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border);box-shadow:0 1px 3px rgba(0,0,0,0.06)">
               <div class="flex items-start gap-2">
                 <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-                <span class="font-semibold text-sm" style="color:var(--color-text)">Airbyte</span>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Casgevy</span>
               </div>
               <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
             </div>
             <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);border:1px solid var(--color-accent);box-shadow:0 2px 8px rgba(29,78,216,0.15)">
               <div class="flex items-start gap-2">
                 <svg class="w-4 h-4 mt-0.5 shrink-0 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                <span class="text-sm text-white" style="color:#fff">Open-source data integration platform with 600+ connectors for EL(T) pipelines.</span>
+                <span class="text-sm text-white" style="color:#fff">The first FDA-approved CRISPR-based therapy (Dec 2023), treating sickle cell disease by editing patients' own stem cells to produce healthy hemoglobin.</span>
               </div>
             </div>
           </div>
         </div>
-        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Apache Iceberg" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: NHEJ vs HDR" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
           <div class="flashcard-inner">
             <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border);box-shadow:0 1px 3px rgba(0,0,0,0.06)">
               <div class="flex items-start gap-2">
                 <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-                <span class="font-semibold text-sm" style="color:var(--color-text)">Apache Iceberg</span>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">NHEJ vs HDR</span>
               </div>
               <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
             </div>
             <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);border:1px solid var(--color-accent);box-shadow:0 2px 8px rgba(29,78,216,0.15)">
               <div class="flex items-start gap-2">
                 <svg class="w-4 h-4 mt-0.5 shrink-0 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                <span class="text-sm text-white" style="color:#fff">Open table format for huge analytic datasets, providing ACID transactions, time travel, and schema evolution on object storage.</span>
+                <span class="text-sm text-white" style="color:#fff">Non-homologous end joining (disrupts genes by introducing indels) vs homology-directed repair (precise replacement using a template) — the two DNA repair pathways after Cas9 cutting.</span>
               </div>
             </div>
           </div>
         </div>
-        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: dbt" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: In Vivo Delivery" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
           <div class="flashcard-inner">
             <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border);box-shadow:0 1px 3px rgba(0,0,0,0.06)">
               <div class="flex items-start gap-2">
                 <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-                <span class="font-semibold text-sm" style="color:var(--color-text)">dbt</span>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">In Vivo Delivery</span>
               </div>
               <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
             </div>
             <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);border:1px solid var(--color-accent);box-shadow:0 2px 8px rgba(29,78,216,0.15)">
               <div class="flex items-start gap-2">
                 <svg class="w-4 h-4 mt-0.5 shrink-0 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                <span class="text-sm text-white" style="color:#fff">Data build tool — SQL transformation framework enabling version-controlled, tested, and documented analytics pipelines.</span>
+                <span class="text-sm text-white" style="color:#fff">Editing genes inside the living body using viral vectors or lipid nanoparticles — the next frontier, eliminating the need to extract, edit, and reinfuse cells.</span>
               </div>
             </div>
           </div>
@@ -325,6 +305,20 @@
         Related Research
       </h2>
       <div class="grid gap-3 sm:grid-cols-2">
+        <a href="/blog/2026-05-27-science/" class="block rounded-xl p-3 transition hover:-translate-y-0.5" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
+          <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded bg-purple-100 text-purple-800">microscope Science</span>
+          <span class="block mt-1 text-sm font-semibold" style="color:var(--color-text)">CRISPR-based gene therapy receives expanded FDA approval for five genetic disorders</span>
+          <span class="block mt-1.5 text-xs inline-flex items-center gap-2" style="color:var(--color-text-muted)">
+            <span class="inline-flex items-center gap-1">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              2026-05-27
+            </span>
+            <span class="inline-flex items-center gap-1">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              1 min
+            </span>
+          </span>
+        </a>
         <a href="/blog/2026-06-16-science-dataeng/" class="block rounded-xl p-3 transition hover:-translate-y-0.5" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
           <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded bg-purple-100 text-purple-800">microscope Science</span>
           <span class="block mt-1 text-sm font-semibold" style="color:var(--color-text)">Data Pipeline Patterns for High-Throughput Genomics: Orchestrating Bioinformatics Workflows with Dagster</span>
@@ -339,27 +333,13 @@
             </span>
           </span>
         </a>
-        <a href="/blog/2026-06-15-stock-dataeng/" class="block rounded-xl p-3 transition hover:-translate-y-0.5" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
-          <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded bg-green-100 text-green-800">chart Markets</span>
-          <span class="block mt-1 text-sm font-semibold" style="color:var(--color-text)">Feature Engineering at Scale: Building ML-Ready Market Data Pipelines with dbt and Iceberg</span>
+        <a href="/blog/2026-06-12-dataops-science/" class="block rounded-xl p-3 transition hover:-translate-y-0.5" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
+          <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded bg-purple-100 text-purple-800">microscope Science</span>
+          <span class="block mt-1 text-sm font-semibold" style="color:var(--color-text)">Reproducible ML Pipelines in Computational Biology: MLOps for CRISPR Target Discovery</span>
           <span class="block mt-1.5 text-xs inline-flex items-center gap-2" style="color:var(--color-text-muted)">
             <span class="inline-flex items-center gap-1">
               <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-              2026-06-15
-            </span>
-            <span class="inline-flex items-center gap-1">
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-              1 min
-            </span>
-          </span>
-        </a>
-        <a href="/blog/2026-06-14-aml-dataeng/" class="block rounded-xl p-3 transition hover:-translate-y-0.5" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
-          <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded bg-amber-100 text-amber-800">shield AML</span>
-          <span class="block mt-1 text-sm font-semibold" style="color:var(--color-text)">Streaming ETL for Suspicious Activity Reports: Real-Time AML Data Pipelines with Kafka and Flink</span>
-          <span class="block mt-1.5 text-xs inline-flex items-center gap-2" style="color:var(--color-text-muted)">
-            <span class="inline-flex items-center gap-1">
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-              2026-06-14
+              2026-06-12
             </span>
             <span class="inline-flex items-center gap-1">
               <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -369,7 +349,7 @@
         </a>
       </div>
     </section>
-    <section class="mt-12 pt-8 border-t" id="quiz-section" style="border-color:var(--color-border)" data-quiz='{"questions": [{"q": "Which layer of the open source data stack does Apache Iceberg belong to?", "options": ["Ingestion", "Storage", "Transformation", "Orchestration"], "a": 1}, {"q": "What distinguishes Dagster from Airflow in data pipeline orchestration?", "options": ["Dagster uses Python; Airflow uses SQL", "Dagster treats datasets as assets with explicit lineage; Airflow focuses on task DAGs", "Airflow is open source; Dagster is proprietary", "Dagster cannot run on Kubernetes"], "a": 1}, {"q": "A team needs to migrate from a monolithic data warehouse to a lakehouse architecture. Which two tools form the core of the new stack?", "options": ["dbt + Airbyte", "Iceberg + Trino", "Kafka + Flink", "Metabase + Superset"], "a": 1}, {"q": "Why is a lakehouse architecture preferred over a traditional data warehouse for modern data teams?", "options": ["Lakehouses are cheaper but slower", "Lakehouses combine data lake flexibility with warehouse ACID guarantees", "Lakehouses require less engineering talent", "Lakehouses only work with structured data"], "a": 1}, {"q": "Your VP asks for a 'zero licensing fee' production data stack serving 50 analysts. What is the most critical cost not captured by tool licensing?", "options": ["Cloud compute and storage costs", "Engineering time for integration and maintenance", "Both cloud infrastructure and engineering time", "Data quality tool costs"], "a": 2}]}'>
+    <section class="mt-12 pt-8 border-t" id="quiz-section" style="border-color:var(--color-border)" data-quiz='{"questions": [{"q": "What is the role of the guide RNA (gRNA) in CRISPR-Cas9?", "options": ["It cuts the DNA", "It matches and binds to the target DNA sequence", "It repairs the DNA break", "It delivers the Cas9 protein to the nucleus"], "a": 1}, {"q": "A scientist wants to correct a single point mutation in a patient's DNA without creating a double-strand break. Which technique should they use?", "options": ["CRISPR-Cas9 with NHEJ", "Base editing", "Standard gene therapy using a viral vector", "RNA interference"], "a": 1}, {"q": "Why might Casgevy's $2.2M price tag create ethical concerns beyond typical drug pricing debates?", "options": ["The drug does not work", "It represents a permanent genetic modification, raising questions about long-term value and equity of access", "Insurance never covers gene therapies", "The price is lower than comparable drugs"], "a": 1}, {"q": "Most current CRISPR clinical trials require extracting cells, editing them in a lab, and reinfusing them. What is the key advantage of in vivo delivery?", "options": ["Lower cost", "Ability to edit cells that cannot be extracted (e.g., brain, heart)", "Higher precision", "FDA approval is faster"], "a": 1}, {"q": "How does prime editing differ from base editing?", "options": ["Prime editing is slower", "Prime editing writes new genetic information via a search-and-replace mechanism, while base editing only converts one base pair to another", "Base editing works only in bacteria", "Prime editing does not use Cas proteins"], "a": 1}]}'>
       <h2 class="text-2xl font-bold mb-6 inline-flex items-center gap-2" style="color:var(--color-text)">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         Knowledge Check
@@ -382,35 +362,27 @@
         Related Knowledge
       </h2>
       <div class="grid gap-3 sm:grid-cols-2">
-        <a href="/knowledge/open-source-tools/" class="block rounded-xl p-3 transition hover:-translate-y-0.5" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
-          <span class="block text-sm font-semibold" style="color:var(--color-text)">Open Source Data Engineering Tool Landscape</span>
-          <p class="mt-1 text-xs" style="color:var(--color-text-secondary)">Curated reference of open source tools for modern data platforms.</p>
-        </a>
-        <a href="/knowledge/system-architecture/" class="block rounded-xl p-3 transition hover:-translate-y-0.5" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
-          <span class="block text-sm font-semibold" style="color:var(--color-text)">AcaciaFund System Architecture: A DataOps Perspective</span>
-          <p class="mt-1 text-xs" style="color:var(--color-text-secondary)">AcaciaFund as a DataOps pipeline — architecture, principles, and metrics.</p>
-        </a>
-        <a href="/knowledge/dataops-glossary/" class="block rounded-xl p-3 transition hover:-translate-y-0.5" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
-          <span class="block text-sm font-semibold" style="color:var(--color-text)">DataOps Glossary</span>
-          <p class="mt-1 text-xs" style="color:var(--color-text-secondary)">Key DataOps, data engineering, and data science terminology.</p>
+        <a href="/knowledge/pillar-taxonomy/" class="block rounded-xl p-3 transition hover:-translate-y-0.5" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
+          <span class="block text-sm font-semibold" style="color:var(--color-text)">Pillar Taxonomy Guide</span>
+          <p class="mt-1 text-xs" style="color:var(--color-text-secondary)">Detailed guide to the AML, Markets, and Science pillars with scope criteria and examples.</p>
         </a>
       </div>
     </section>
 
     <div class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
       <div class="flex items-center justify-between">
-        <a href="/learn/data-quality-engineering/" class="inline-flex items-center gap-2 text-sm font-medium transition hover:text-[var(--color-accent)]" style="color:var(--color-text-secondary)">
+        <a href="/learn/semiconductor-supply-chain/" class="inline-flex items-center gap-2 text-sm font-medium transition hover:text-[var(--color-accent)]" style="color:var(--color-text-secondary)">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-          <span class="hidden sm:inline">Previous:</span> Data Quality Engineering: Testing, Monitoring, and Expectations at Scale
+          <span class="hidden sm:inline">Previous:</span> Semiconductor Supply Chain — Geopolitics, Markets, and the $1T Chip Industry
         </a>
         <div>
-          <button id="mark-complete-btn" data-track-lesson="learn/open-source-data-stack/index.html" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition" style="background:var(--color-accent);color:#fff">
+          <button id="mark-complete-btn" data-track-lesson="learn/crispr-gene-editing/index.html" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition" style="background:var(--color-accent);color:#fff">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             <span id="complete-btn-text">Mark Complete</span>
           </button>
         </div>
-        <a href="/learn/crypto-aml/" class="inline-flex items-center gap-2 text-sm font-medium transition hover:text-[var(--color-accent)]" style="color:var(--color-text-secondary)">
-          <span class="hidden sm:inline">Next:</span> Crypto AML & Digital Assets — Compliance in the Age of DeFi
+        <a href="/learn/behavioral-design-learning/" class="inline-flex items-center gap-2 text-sm font-medium transition hover:text-[var(--color-accent)]" style="color:var(--color-text-secondary)">
+          <span class="hidden sm:inline">Next:</span> Behavioral Design for Learning — Psychology Behind Effective Education Platforms
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
         </a>
       </div>

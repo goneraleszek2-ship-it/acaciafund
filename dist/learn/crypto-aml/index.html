@@ -3,25 +3,25 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Building an Open Source Data Stack: From Ingestion to Analytics | AcaciaFund</title>
-  <meta name="description" content="">
+  <title>Crypto AML & Digital Assets — Compliance in the Age of DeFi | AcaciaFund</title>
+  <meta name="description" content="Understand how anti-money laundering regulations apply to cryptocurrencies, stablecoins, DeFi protocols, and digital asset ecosystems — including blockchain analytics, the Travel Rule, and 2026 regulatory developments.">
   <meta name="generator" content="AcaciaFund Python-native Pipeline">
   <meta name="theme-color" content="#f5f0eb" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#1a1a2e" media="(prefers-color-scheme: dark)">
-  <link rel="canonical" href="https://acaciafund.org/learn/open-source-data-stack/index.html">
+  <link rel="canonical" href="https://acaciafund.org/learn/crypto-aml/index.html">
   <link rel="icon" href="/static/images/favicon.svg" type="image/svg+xml">
   <link rel="alternate" type="application/atom+xml" title="AcaciaFund Research" href="/feed.xml">
 
-  <meta property="og:title" content="Building an Open Source Data Stack: From Ingestion to Analytics">
+  <meta property="og:title" content="Crypto AML & Digital Assets — Compliance in the Age of DeFi">
   <meta property="og:site_name" content="AcaciaFund">
-  <meta property="og:url" content="https://acaciafund.org/learn/open-source-data-stack/index.html">
-  <meta property="og:image" content="https://acaciafund.org/static/images/og_f85c08dff895.svg">
+  <meta property="og:url" content="https://acaciafund.org/learn/crypto-aml/index.html">
+  <meta property="og:image" content="https://acaciafund.org/static/images/og_a8f3ad3a6dbe.svg">
   <meta property="og:type" content="website">
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "LearningResource",
-    "name": "Building an Open Source Data Stack: From Ingestion to Analytics",
+    "name": "Crypto AML \u0026 Digital Assets \u2014 Compliance in the Age of DeFi",
     "learningResourceType": "Lesson",
     "educationalLevel": "Intermediate"
   }
@@ -114,43 +114,28 @@
     <nav aria-label="Table of contents">
       <ul class="space-y-1 text-sm">
         <li>
-          <a href="#the-modern-open-source-data-stack" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
-            The Modern Open Source Data Stack
+          <a href="#why-crypto-aml-matters" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Why Crypto AML Matters
           </a>
         </li>
         <li>
-          <a href="#layer-1-ingestion" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
-            Layer 1: Ingestion
+          <a href="#the-travel-rule-for-crypto" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            The Travel Rule for Crypto
           </a>
         </li>
         <li>
-          <a href="#layer-2-storage" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
-            Layer 2: Storage
+          <a href="#blockchain-analytics-forensics" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Blockchain Analytics & Forensics
           </a>
         </li>
         <li>
-          <a href="#layer-3-transformation" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
-            Layer 3: Transformation
+          <a href="#defi-compliance" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            DeFi Compliance
           </a>
         </li>
         <li>
-          <a href="#layer-4-orchestration" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
-            Layer 4: Orchestration
-          </a>
-        </li>
-        <li>
-          <a href="#layer-5-quality-observability" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
-            Layer 5: Quality & Observability
-          </a>
-        </li>
-        <li>
-          <a href="#layer-6-analytics-serving" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
-            Layer 6: Analytics & Serving
-          </a>
-        </li>
-        <li>
-          <a href="#putting-it-together" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
-            Putting It Together
+          <a href="#2026-landscape" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            2026 Landscape
           </a>
         </li>
       </ul>
@@ -164,67 +149,73 @@
         <li aria-hidden="true">/</li>
         <li><a href="/learn/" class="hover:text-[var(--color-accent)] transition">Learn</a></li>
         <li aria-hidden="true">/</li>
-        <li aria-current="page" class="truncate max-w-[200px]">Building an Open Source Data Stack: From Ingestion to Analytics</li>
+        <li aria-current="page" class="truncate max-w-[200px]">Crypto AML & Digital Assets — Compliance in the Age of DeFi</li>
       </ol>
     </nav>
 
     <header class="mb-8">
       <div class="flex items-center gap-3 mb-3">
-        <span class="inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
-          chart Markets
+        <span class="inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-full bg-amber-100 text-amber-800">
+          shield AML
         </span>
         <span class="inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-full" style="background:var(--color-bg);color:var(--color-text-secondary)">
           📘 Intermediate
         </span>
       </div>
-      <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">Building an Open Source Data Stack: From Ingestion to Analytics</h1>
+      <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">Crypto AML & Digital Assets — Compliance in the Age of DeFi</h1>
       <div class="mt-2 flex items-center gap-3 text-sm" style="color:var(--color-text-muted)">
-        <time datetime="2026-06-12" class="inline-flex items-center gap-1">
+        <time datetime="2026-06-07" class="inline-flex items-center gap-1">
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-          2026-06-12
+          2026-06-07
         </time>
         <span class="inline-flex items-center gap-1">
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          1 min read
+          2 min read
         </span>
       </div>
       <div class="mt-3 flex flex-wrap gap-2">
-        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">architecture</span>
-        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">open-source</span>
-        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">data-stack</span>
-        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">stock</span>
-        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">dataops</span>
-        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">lakehouse</span>
-        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">ingestion</span>
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">aml</span>
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">crypto</span>
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">defi</span>
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">stablecoins</span>
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">blockchain</span>
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">compliance</span>
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">travel-rule</span>
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">fintech</span>
       </div>
     </header>
 
     <div class="prose prose-lg max-w-none lesson-body">
-      <h2 id="the-modern-open-source-data-stack">The Modern Open Source Data Stack</h2>
-<p>The 2026 open source data stack is modular, composable, and cloud-agnostic. Teams assemble best-in-class tools for each layer rather than buying monolithic platforms. This lesson walks through a complete production stack.</p>
+      <p>By 2026, stablecoin transaction volumes have reached $9.8 trillion annually, and 61% of financial institutions now prioritize real-time AML/CFT monitoring for crypto-asset transactions. The era of crypto operating outside regulatory frameworks is over — compliance is now a first-class requirement for any digital asset business.</p>
 
-<h2 id="layer-1-ingestion">Layer 1: Ingestion</h2>
-<p><strong>Airbyte</strong> (open source, MIT) provides 600+ connectors for APIs, databases, and file stores. It handles schema detection, incremental syncs, and normalization. Deploy via Docker Compose or Kubernetes.</p>
-<p>Alternatives: Meltano (Singer taps), Apache NiFi (visual flow), Debezium (CDC from databases).</p>
+<h2 id="why-crypto-aml-matters">Why Crypto AML Matters</h2>
+<p>Cryptocurrencies present unique AML challenges: pseudonymous transactions, instant cross-border movement, decentralized finance (DeFi) protocols with no central intermediary, and privacy-enhancing technologies like mixers and zero-knowledge proofs. Criminal organizations exploit these features for ransomware payments, darknet market transactions, and laundering proceeds through decentralized exchanges.</p>
+<p>The <strong>Financial Action Task Force (FATF)</strong> has updated its Recommendations to cover virtual asset service providers (VASPs), requiring them to implement the same AML/CFT measures as traditional financial institutions. By 2026, 128 jurisdictions have introduced or are introducing crypto-specific regulations.</p>
 
-<h2 id="layer-2-storage">Layer 2: Storage</h2>
-<p>The <strong>lakehouse</strong> paradigm dominates: object storage (S3/MinIO) + table format (Apache Iceberg/Delta Lake) + query engine (Trino/Spark). Iceberg provides ACID transactions, time travel, and schema evolution on object storage.</p>
+<h2 id="the-travel-rule-for-crypto">The Travel Rule for Crypto</h2>
+<p>FATF Recommendation 16 (the "Travel Rule") requires VASPs to share originator and beneficiary information for transactions above a threshold (typically $1,000). This applies to all virtual asset transfers. Implementation uses specialized travel rule protocols like <strong>OpenVASP</strong>, <strong>TRISA</strong>, and the <strong>IVMS 101</strong> data standard. As of 2026, the Travel Rule is enforced in the EU (MiCA), US (FinCEN guidance), Singapore, Japan, and UAE.</p>
 
-<h2 id="layer-3-transformation">Layer 3: Transformation</h2>
-<p><strong>dbt</strong> is the standard for SQL transformations. Define models as SELECT statements; dbt handles dependency resolution, incremental materialization, testing, and documentation generation. Models are organized into layers (sources → staging → intermediate → marts).</p>
+<h2 id="blockchain-analytics-forensics">Blockchain Analytics & Forensics</h2>
+<p>Blockchain analytics tools — Chainalysis, TRM Labs, Elliptic — trace transaction flows across public ledgers. Key techniques include:</p>
+<ul>
+<li><strong>Cluster analysis:</strong> Grouping addresses controlled by the same entity using heuristic rules (common input, change address detection).</li>
+<li><strong>Attribution tagging:</strong> Labeling addresses associated with known services, exchanges, mixers, or criminal entities.</li>
+<li><strong>Risk scoring:</strong> Assigning risk scores to addresses based on their transaction history and proximity to known illicit activity.</li>
+<li><strong>Graph analysis:</strong> Visualizing complex transaction networks to uncover layering patterns and fund movement across hundreds of hops.</li>
+</ul>
 
-<h2 id="layer-4-orchestration">Layer 4: Orchestration</h2>
-<p><strong>Dagster</strong> has become the preferred orchestrator for data teams who value asset-centric design. Unlike Airflow's DAG-of-tasks approach, Dagster treats datasets as assets with explicit lineage. Prefect remains strong for teams wanting Python-native flow control.</p>
+<h2 id="defi-compliance">DeFi Compliance</h2>
+<p>Decentralized finance poses the hardest challenge: no central operator, no KYC, instant composability. The 2026 regulatory approach focuses on:</p>
+<ul>
+<li><strong>Front-end accountability:</strong> Requiring DeFi interfaces and dApp front-ends to implement geoblocking and access controls.</li>
+<li><strong>Wallet-level screening:</strong> Mandating that wallet providers screen addresses before processing transactions.</li>
+<li><strong>Stablecoin regulation:</strong> The EU's MiCA framework and US stablecoin bills require issuers to hold reserves, register as e-money institutions, and comply with AML obligations.</li>
+<li><strong>On-chain analytics obligations:</strong> Some jurisdictions now require DeFi protocols to integrate real-time screening at the smart contract level.</li>
+</ul>
 
-<h2 id="layer-5-quality-observability">Layer 5: Quality & Observability</h2>
-<p><strong>Great Expectations</strong> + <strong>Soda</strong> for quality. <strong>OpenMetadata</strong> for catalog + lineage. Custom dashboards via Prometheus + Grafana for pipeline metrics. dbt-external-tables for freshness monitoring.</p>
-
-<h2 id="layer-6-analytics-serving">Layer 6: Analytics & Serving</h2>
-<p><strong>Evidence</strong> (markdown-driven BI), <strong>Metabase</strong> (self-service), or <strong>Apache Superset</strong> (enterprise dashboards). For ML serving: <strong>MLflow</strong> for model registry, <strong>BentoML</strong> for serving, <strong>Feast</strong> for feature stores.</p>
-
-<h2 id="putting-it-together">Putting It Together</h2>
-<p>This entire stack runs on a single `docker-compose.yml` for development and scales to production on Kubernetes. The total infrastructure cost for a mid-size data team: roughly $500-2000/month in cloud compute, zero licensing fees.</p>
-<p>AcaciaFund itself follows this philosophy: Python-native, open source tools only, static output, zero vendor lock-in.</p>
+<h2 id="2026-landscape">2026 Landscape</h2>
+<p>The convergence of AI and blockchain analytics is accelerating. Machine learning models now detect suspicious patterns in real-time across multiple blockchains simultaneously. The AI-native AML platforms emerging in 2026 combine transaction monitoring, sanctions screening, and fraud detection into unified systems — the same convergence happening in traditional finance.</p>
+<p>For a refresher on AML fundamentals, revisit <a href="/learn/aml-basics/">AML Fundamentals</a>. To understand the data infrastructure needed for real-time screening, see <a href="/learn/dataops-introduction/">Introduction to DataOps</a>.</p>
     </div>
     <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
       <h2 class="text-2xl font-bold mb-6 inline-flex items-center gap-2" style="color:var(--color-text)">
@@ -232,87 +223,87 @@
         Flashcards
       </h2>
       <div class="grid gap-4 sm:grid-cols-2" id="flashcard-grid">
-        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Lakehouse" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Travel Rule" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
           <div class="flashcard-inner">
             <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border);box-shadow:0 1px 3px rgba(0,0,0,0.06)">
               <div class="flex items-start gap-2">
                 <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-                <span class="font-semibold text-sm" style="color:var(--color-text)">Lakehouse</span>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Travel Rule</span>
               </div>
               <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
             </div>
             <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);border:1px solid var(--color-accent);box-shadow:0 2px 8px rgba(29,78,216,0.15)">
               <div class="flex items-start gap-2">
                 <svg class="w-4 h-4 mt-0.5 shrink-0 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                <span class="text-sm text-white" style="color:#fff">Data architecture combining data lake flexibility with warehouse ACID guarantees, using table formats like Apache Iceberg or Delta Lake.</span>
+                <span class="text-sm text-white" style="color:#fff">FATF Recommendation 16 requiring VASPs to share originator and beneficiary information for virtual asset transactions above a threshold.</span>
               </div>
             </div>
           </div>
         </div>
-        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Dagster" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: DeFi" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
           <div class="flashcard-inner">
             <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border);box-shadow:0 1px 3px rgba(0,0,0,0.06)">
               <div class="flex items-start gap-2">
                 <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-                <span class="font-semibold text-sm" style="color:var(--color-text)">Dagster</span>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">DeFi</span>
               </div>
               <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
             </div>
             <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);border:1px solid var(--color-accent);box-shadow:0 2px 8px rgba(29,78,216,0.15)">
               <div class="flex items-start gap-2">
                 <svg class="w-4 h-4 mt-0.5 shrink-0 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                <span class="text-sm text-white" style="color:#fff">Asset-centric data orchestrator treating datasets as first-class assets with explicit lineage and metadata.</span>
+                <span class="text-sm text-white" style="color:#fff">Decentralized Finance — blockchain-based financial services operating without traditional intermediaries, using smart contracts for automated execution.</span>
               </div>
             </div>
           </div>
         </div>
-        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Airbyte" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Blockchain Analytics" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
           <div class="flashcard-inner">
             <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border);box-shadow:0 1px 3px rgba(0,0,0,0.06)">
               <div class="flex items-start gap-2">
                 <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-                <span class="font-semibold text-sm" style="color:var(--color-text)">Airbyte</span>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Blockchain Analytics</span>
               </div>
               <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
             </div>
             <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);border:1px solid var(--color-accent);box-shadow:0 2px 8px rgba(29,78,216,0.15)">
               <div class="flex items-start gap-2">
                 <svg class="w-4 h-4 mt-0.5 shrink-0 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                <span class="text-sm text-white" style="color:#fff">Open-source data integration platform with 600+ connectors for EL(T) pipelines.</span>
+                <span class="text-sm text-white" style="color:#fff">Techniques for tracing and attributing cryptocurrency transactions on public ledgers using cluster analysis, graph analysis, and risk scoring.</span>
               </div>
             </div>
           </div>
         </div>
-        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Apache Iceberg" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: MiCA" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
           <div class="flashcard-inner">
             <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border);box-shadow:0 1px 3px rgba(0,0,0,0.06)">
               <div class="flex items-start gap-2">
                 <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-                <span class="font-semibold text-sm" style="color:var(--color-text)">Apache Iceberg</span>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">MiCA</span>
               </div>
               <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
             </div>
             <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);border:1px solid var(--color-accent);box-shadow:0 2px 8px rgba(29,78,216,0.15)">
               <div class="flex items-start gap-2">
                 <svg class="w-4 h-4 mt-0.5 shrink-0 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                <span class="text-sm text-white" style="color:#fff">Open table format for huge analytic datasets, providing ACID transactions, time travel, and schema evolution on object storage.</span>
+                <span class="text-sm text-white" style="color:#fff">Markets in Crypto-Assets Regulation — the EU's comprehensive regulatory framework for digital assets, stablecoins, and crypto service providers.</span>
               </div>
             </div>
           </div>
         </div>
-        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: dbt" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: VASP" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
           <div class="flashcard-inner">
             <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border);box-shadow:0 1px 3px rgba(0,0,0,0.06)">
               <div class="flex items-start gap-2">
                 <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-                <span class="font-semibold text-sm" style="color:var(--color-text)">dbt</span>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">VASP</span>
               </div>
               <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
             </div>
             <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);border:1px solid var(--color-accent);box-shadow:0 2px 8px rgba(29,78,216,0.15)">
               <div class="flex items-start gap-2">
                 <svg class="w-4 h-4 mt-0.5 shrink-0 text-white/80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                <span class="text-sm text-white" style="color:#fff">Data build tool — SQL transformation framework enabling version-controlled, tested, and documented analytics pipelines.</span>
+                <span class="text-sm text-white" style="color:#fff">Virtual Asset Service Provider — any entity that exchanges, transfers, or safekeeps virtual assets on behalf of customers, subject to AML obligations.</span>
               </div>
             </div>
           </div>
@@ -325,41 +316,41 @@
         Related Research
       </h2>
       <div class="grid gap-3 sm:grid-cols-2">
-        <a href="/blog/2026-06-16-science-dataeng/" class="block rounded-xl p-3 transition hover:-translate-y-0.5" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
-          <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded bg-purple-100 text-purple-800">microscope Science</span>
-          <span class="block mt-1 text-sm font-semibold" style="color:var(--color-text)">Data Pipeline Patterns for High-Throughput Genomics: Orchestrating Bioinformatics Workflows with Dagster</span>
-          <span class="block mt-1.5 text-xs inline-flex items-center gap-2" style="color:var(--color-text-muted)">
-            <span class="inline-flex items-center gap-1">
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-              2026-06-16
-            </span>
-            <span class="inline-flex items-center gap-1">
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-              1 min
-            </span>
-          </span>
-        </a>
-        <a href="/blog/2026-06-15-stock-dataeng/" class="block rounded-xl p-3 transition hover:-translate-y-0.5" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
-          <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded bg-green-100 text-green-800">chart Markets</span>
-          <span class="block mt-1 text-sm font-semibold" style="color:var(--color-text)">Feature Engineering at Scale: Building ML-Ready Market Data Pipelines with dbt and Iceberg</span>
-          <span class="block mt-1.5 text-xs inline-flex items-center gap-2" style="color:var(--color-text-muted)">
-            <span class="inline-flex items-center gap-1">
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-              2026-06-15
-            </span>
-            <span class="inline-flex items-center gap-1">
-              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-              1 min
-            </span>
-          </span>
-        </a>
-        <a href="/blog/2026-06-14-aml-dataeng/" class="block rounded-xl p-3 transition hover:-translate-y-0.5" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
+        <a href="/blog/2026-05-18-aml/" class="block rounded-xl p-3 transition hover:-translate-y-0.5" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
           <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded bg-amber-100 text-amber-800">shield AML</span>
-          <span class="block mt-1 text-sm font-semibold" style="color:var(--color-text)">Streaming ETL for Suspicious Activity Reports: Real-Time AML Data Pipelines with Kafka and Flink</span>
+          <span class="block mt-1 text-sm font-semibold" style="color:var(--color-text)">Cryptocurrency mixers under global regulatory spotlight after latest sanctions</span>
           <span class="block mt-1.5 text-xs inline-flex items-center gap-2" style="color:var(--color-text-muted)">
             <span class="inline-flex items-center gap-1">
               <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-              2026-06-14
+              2026-05-18
+            </span>
+            <span class="inline-flex items-center gap-1">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              1 min
+            </span>
+          </span>
+        </a>
+        <a href="/blog/2026-03-10-aml/" class="block rounded-xl p-3 transition hover:-translate-y-0.5" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
+          <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded bg-amber-100 text-amber-800">shield AML</span>
+          <span class="block mt-1 text-sm font-semibold" style="color:var(--color-text)">DeFi platforms face unprecedented AML enforcement actions globally</span>
+          <span class="block mt-1.5 text-xs inline-flex items-center gap-2" style="color:var(--color-text-muted)">
+            <span class="inline-flex items-center gap-1">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              2026-03-10
+            </span>
+            <span class="inline-flex items-center gap-1">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+              1 min
+            </span>
+          </span>
+        </a>
+        <a href="/blog/2026-06-10-dataops-aml/" class="block rounded-xl p-3 transition hover:-translate-y-0.5" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
+          <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded bg-amber-100 text-amber-800">shield AML</span>
+          <span class="block mt-1 text-sm font-semibold" style="color:var(--color-text)">Data Pipeline Observability in Financial Crime Compliance: Real-Time AML Monitoring at Scale</span>
+          <span class="block mt-1.5 text-xs inline-flex items-center gap-2" style="color:var(--color-text-muted)">
+            <span class="inline-flex items-center gap-1">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+              2026-06-10
             </span>
             <span class="inline-flex items-center gap-1">
               <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -369,7 +360,7 @@
         </a>
       </div>
     </section>
-    <section class="mt-12 pt-8 border-t" id="quiz-section" style="border-color:var(--color-border)" data-quiz='{"questions": [{"q": "Which layer of the open source data stack does Apache Iceberg belong to?", "options": ["Ingestion", "Storage", "Transformation", "Orchestration"], "a": 1}, {"q": "What distinguishes Dagster from Airflow in data pipeline orchestration?", "options": ["Dagster uses Python; Airflow uses SQL", "Dagster treats datasets as assets with explicit lineage; Airflow focuses on task DAGs", "Airflow is open source; Dagster is proprietary", "Dagster cannot run on Kubernetes"], "a": 1}, {"q": "A team needs to migrate from a monolithic data warehouse to a lakehouse architecture. Which two tools form the core of the new stack?", "options": ["dbt + Airbyte", "Iceberg + Trino", "Kafka + Flink", "Metabase + Superset"], "a": 1}, {"q": "Why is a lakehouse architecture preferred over a traditional data warehouse for modern data teams?", "options": ["Lakehouses are cheaper but slower", "Lakehouses combine data lake flexibility with warehouse ACID guarantees", "Lakehouses require less engineering talent", "Lakehouses only work with structured data"], "a": 1}, {"q": "Your VP asks for a 'zero licensing fee' production data stack serving 50 analysts. What is the most critical cost not captured by tool licensing?", "options": ["Cloud compute and storage costs", "Engineering time for integration and maintenance", "Both cloud infrastructure and engineering time", "Data quality tool costs"], "a": 2}]}'>
+    <section class="mt-12 pt-8 border-t" id="quiz-section" style="border-color:var(--color-border)" data-quiz='{"questions": [{"q": "Which FATF Recommendation requires VASPs to share customer information for crypto transactions?", "options": ["Recommendation 10 (Record Keeping)", "Recommendation 16 (Travel Rule)", "Recommendation 22 (DNFBPs)", "Recommendation 29 (Financial Intelligence Units)"], "a": 1}, {"q": "A crypto exchange detects a wallet cluster with high-risk scores based on proximity to known ransomware addresses. This is an example of:", "options": ["Travel Rule compliance", "On-chain analytics and risk scoring", "KYC verification", "Smart contract auditing"], "a": 1}, {"q": "A DeFi protocol has no central operator and no KYC process. Under 2026 regulations, which compliance approach is most applicable?", "options": ["No regulation applies to DeFi", "Front-end geoblocking and wallet-level screening", "The protocol must shut down", "Only stablecoin transactions are regulated"], "a": 1}, {"q": "Why does the pseudonymous nature of cryptocurrency create a gap in traditional AML frameworks?", "options": ["Cryptocurrency is not real money", "Transactions occur without a trusted intermediary who can identify the parties", "Blockchain transactions cannot be monitored", "All crypto is already compliant"], "a": 1}, {"q": "An institution processes $50M in stablecoin transactions monthly. What is the most critical compliance investment for 2026?", "options": ["A new marketing website", "Real-time blockchain transaction monitoring and Travel Rule solution", "More customer service staff", "Office expansion"], "a": 1}]}'>
       <h2 class="text-2xl font-bold mb-6 inline-flex items-center gap-2" style="color:var(--color-text)">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         Knowledge Check
@@ -382,35 +373,27 @@
         Related Knowledge
       </h2>
       <div class="grid gap-3 sm:grid-cols-2">
-        <a href="/knowledge/open-source-tools/" class="block rounded-xl p-3 transition hover:-translate-y-0.5" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
-          <span class="block text-sm font-semibold" style="color:var(--color-text)">Open Source Data Engineering Tool Landscape</span>
-          <p class="mt-1 text-xs" style="color:var(--color-text-secondary)">Curated reference of open source tools for modern data platforms.</p>
-        </a>
-        <a href="/knowledge/system-architecture/" class="block rounded-xl p-3 transition hover:-translate-y-0.5" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
-          <span class="block text-sm font-semibold" style="color:var(--color-text)">AcaciaFund System Architecture: A DataOps Perspective</span>
-          <p class="mt-1 text-xs" style="color:var(--color-text-secondary)">AcaciaFund as a DataOps pipeline — architecture, principles, and metrics.</p>
-        </a>
-        <a href="/knowledge/dataops-glossary/" class="block rounded-xl p-3 transition hover:-translate-y-0.5" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
-          <span class="block text-sm font-semibold" style="color:var(--color-text)">DataOps Glossary</span>
-          <p class="mt-1 text-xs" style="color:var(--color-text-secondary)">Key DataOps, data engineering, and data science terminology.</p>
+        <a href="/knowledge/pillar-taxonomy/" class="block rounded-xl p-3 transition hover:-translate-y-0.5" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
+          <span class="block text-sm font-semibold" style="color:var(--color-text)">Pillar Taxonomy Guide</span>
+          <p class="mt-1 text-xs" style="color:var(--color-text-secondary)">Detailed guide to the AML, Markets, and Science pillars with scope criteria and examples.</p>
         </a>
       </div>
     </section>
 
     <div class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
       <div class="flex items-center justify-between">
-        <a href="/learn/data-quality-engineering/" class="inline-flex items-center gap-2 text-sm font-medium transition hover:text-[var(--color-accent)]" style="color:var(--color-text-secondary)">
+        <a href="/learn/open-source-data-stack/" class="inline-flex items-center gap-2 text-sm font-medium transition hover:text-[var(--color-accent)]" style="color:var(--color-text-secondary)">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-          <span class="hidden sm:inline">Previous:</span> Data Quality Engineering: Testing, Monitoring, and Expectations at Scale
+          <span class="hidden sm:inline">Previous:</span> Building an Open Source Data Stack: From Ingestion to Analytics
         </a>
         <div>
-          <button id="mark-complete-btn" data-track-lesson="learn/open-source-data-stack/index.html" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition" style="background:var(--color-accent);color:#fff">
+          <button id="mark-complete-btn" data-track-lesson="learn/crypto-aml/index.html" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition" style="background:var(--color-accent);color:#fff">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             <span id="complete-btn-text">Mark Complete</span>
           </button>
         </div>
-        <a href="/learn/crypto-aml/" class="inline-flex items-center gap-2 text-sm font-medium transition hover:text-[var(--color-accent)]" style="color:var(--color-text-secondary)">
-          <span class="hidden sm:inline">Next:</span> Crypto AML & Digital Assets — Compliance in the Age of DeFi
+        <a href="/learn/semiconductor-supply-chain/" class="inline-flex items-center gap-2 text-sm font-medium transition hover:text-[var(--color-accent)]" style="color:var(--color-text-secondary)">
+          <span class="hidden sm:inline">Next:</span> Semiconductor Supply Chain — Geopolitics, Markets, and the $1T Chip Industry
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
         </a>
       </div>
