@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>AcaciaFund System Architecture: A DataOps Perspective | AcaciaFund</title>
-  <meta name="description" content="How AcaciaFund applies DataOps principles across its content pipeline: from ingestion through transformation, quality, and serving.">
+  <meta name="description" content="AcaciaFund as a DataOps pipeline — architecture, principles, and metrics.">
   <meta name="generator" content="AcaciaFund Python-native Pipeline">
   <meta name="theme-color" content="#f5f0eb" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#1a1a2e" media="(prefers-color-scheme: dark)">
@@ -68,7 +68,7 @@
             <a href="/science/" class="dropdown-item" role="menuitem">Science</a>
           </div>
         </li>
-        <li><a href="/about.html" class="nav-link">About</a></li>
+        <li><a href="/knowledge/about/" class="nav-link">About</a></li>
       </ul>
 
       <div class="flex items-center gap-2">
@@ -93,15 +93,119 @@
           <a href="/stock/" class="block py-1.5 text-sm hover:text-[var(--color-accent)]">Markets</a>
           <a href="/science/" class="block py-1.5 text-sm hover:text-[var(--color-accent)]">Science</a>
         </div>
-        <a href="/about.html" class="block px-3 py-2 rounded hover:bg-[var(--color-bg)] transition">About</a>
+        <a href="/knowledge/about/" class="block px-3 py-2 rounded hover:bg-[var(--color-bg)] transition">About</a>
       </div>
     </nav>
   </header>
 
-  <main id="main" class="max-w-5xl mx-auto px-4 py-8" tabindex="-1"><h2>AcaciaFund as a DataOps Pipeline</h2>
+  <main id="main" class="max-w-5xl mx-auto px-4 py-8" tabindex="-1">
+<div id="reading-progress" style="position:fixed;top:0;left:0;height:3px;z-index:9999;width:0%;background:var(--color-accent)"></div>
+
+<div class="flex gap-8 lg:flex-row flex-col">
+  <aside class="toc-sidebar shrink-0 lg:sticky lg:top-20 lg:self-start lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto lg:w-56">
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="text-xs font-semibold uppercase tracking-wide" style="color:var(--color-text-muted)">On this page</h2>
+      <button id="focus-toggle" class="text-xs px-2 py-1 rounded" style="color:var(--color-text-muted);background:var(--color-bg)" title="Focus mode" aria-label="Toggle focus mode">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 4h4M6 20h4M18 4h-4M18 20h-4M4 6v4M4 18v4M20 6v4M20 18v4"/></svg>
+      </button>
+    </div>
+    <nav aria-label="Table of contents">
+      <ul class="space-y-1 text-sm">
+        <li>
+          <a href="#acaciafund-as-a-dataops-pipeline" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            AcaciaFund as a DataOps Pipeline
+          </a>
+        </li>
+        <li>
+          <a href="#pipeline-architecture" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Pipeline Architecture
+          </a>
+        </li>
+        <li>
+          <a href="#dataops-principles-applied" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            DataOps Principles Applied
+          </a>
+        </li>
+        <li>
+          <a href="#1-version-control-everything" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            1. Version Control Everything
+          </a>
+        </li>
+        <li>
+          <a href="#2-data-quality-as-code" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            2. Data Quality as Code
+          </a>
+        </li>
+        <li>
+          <a href="#3-ci-cd-for-data" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            3. CI/CD for Data
+          </a>
+        </li>
+        <li>
+          <a href="#4-declarative-pipeline" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            4. Declarative Pipeline
+          </a>
+        </li>
+        <li>
+          <a href="#5-observability" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            5. Observability
+          </a>
+        </li>
+        <li>
+          <a href="#6-separation-of-concerns" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            6. Separation of Concerns
+          </a>
+        </li>
+        <li>
+          <a href="#pipeline-metrics-dashboard" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Pipeline Metrics Dashboard
+          </a>
+        </li>
+        <li>
+          <a href="#future-service-layer" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Future: Service Layer
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+
+  <article class="min-w-0 flex-1">
+    <nav aria-label="Breadcrumb" class="mb-4 text-xs" style="color:var(--color-text-muted)">
+      <ol class="flex flex-wrap items-center gap-1.5">
+        <li><a href="/" class="hover:text-[var(--color-accent)] transition">Home</a></li>
+        <li aria-hidden="true">/</li>
+        <li><a href="/knowledge/" class="hover:text-[var(--color-accent)] transition">Knowledge</a></li>
+        <li aria-hidden="true">/</li>
+        <li><a href="/knowledge/#architecture" class="hover:text-[var(--color-accent)] transition">Architecture</a></li>
+        <li aria-hidden="true">/</li>
+        <li aria-current="page" class="truncate max-w-[200px]">AcaciaFund System Architecture: A DataOps Perspective</li>
+      </ol>
+    </nav>
+
+    <header class="mb-8">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-full" style="background:#a855f720;color:#a855f7">
+          🔗 Architecture
+        </span>
+      </div>
+      <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">AcaciaFund System Architecture: A DataOps Perspective</h1>
+      <time class="mt-2 block text-sm" style="color:var(--color-text-muted)" datetime="2026-06-14">
+        Last updated 2026-06-14 · 3 min read
+      </time>
+      <div class="mt-3 flex flex-wrap gap-2">
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">dataops</span>
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">architecture</span>
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">system</span>
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">pipeline</span>
+      </div>
+    </header>
+
+    <div class="prose prose-lg max-w-none">
+      <h2 id="acaciafund-as-a-dataops-pipeline">AcaciaFund as a DataOps Pipeline</h2>
 <p>AcaciaFund is not just a static site — it is a <strong>data product</strong> produced by an automated DataOps pipeline. Every component from source ingestion to final HTML rendering follows DataOps principles: version control, quality gates, observability, and reproducible builds.</p>
 
-<h2>Pipeline Architecture</h2>
+<h2 id="pipeline-architecture">Pipeline Architecture</h2>
 <pre style="background:var(--color-bg);padding:16px;border-radius:8px;overflow-x:auto;font-size:0.85em;line-height:1.6">
 ┌────────────────────────────────────────────────────────┐
 │                    INGESTION LAYER                      │
@@ -147,24 +251,24 @@
 └────────────────────────────────────────────────────────┘
 </pre>
 
-<h2>DataOps Principles Applied</h2>
+<h2 id="dataops-principles-applied">DataOps Principles Applied</h2>
 
-<h3>1. Version Control Everything</h3>
+<h3 id="1-version-control-everything">1. Version Control Everything</h3>
 <p><strong>registry.json</strong> — the content catalog — is under Git version control alongside pipeline code (<code>generator.py</code>, <code>schemas.py</code>). Every content change is a Git commit with a full audit trail. Rolling back is a <code>git revert</code> away.</p>
 
-<h3>2. Data Quality as Code</h3>
+<h3 id="2-data-quality-as-code">2. Data Quality as Code</h3>
 <p>Each content entry carries structured <strong>quality metrics</strong> (source score, diversity, recency) and <strong>quality flags</strong>. The <strong>Signal Quality Index (SQI)</strong> is a composable metric computed from source authority, freshness, consensus, and relevance — evaluated programmatically, not manually.</p>
 
-<h3>3. CI/CD for Data</h3>
+<h3 id="3-ci-cd-for-data">3. CI/CD for Data</h3>
 <p>On push to <code>main</code>, <strong>Cloudflare Pages</strong> runs <code>python3.13 generator.py</code> — an automated build that transforms raw registry data into static HTML. Failed builds (e.g., schema validation errors) prevent deployment, acting as a quality gate.</p>
 
-<h3>4. Declarative Pipeline</h3>
+<h3 id="4-declarative-pipeline">4. Declarative Pipeline</h3>
 <p>The pipeline is <strong>deterministic</strong>: same <code>registry.json</code> → identical output. No side effects, no external state at build time. This makes builds reproducible and debuggable.</p>
 
-<h3>5. Observability</h3>
+<h3 id="5-observability">5. Observability</h3>
 <p>Every article exposes structured signal data: source breakdown (HN vs arXiv vs PubMed counts), domain diversity, top entities, and SQI score. These serve as <strong>pipeline metrics</strong> for monitoring content quality over time.</p>
 
-<h3>6. Separation of Concerns</h3>
+<h3 id="6-separation-of-concerns">6. Separation of Concerns</h3>
 <table style="width:100%;border-collapse:collapse;font-size:0.9em">
 <tr style="background:var(--color-bg)"><th style="padding:8px;border:1px solid var(--color-border);text-align:left">Layer</th><th style="padding:8px;border:1px solid var(--color-border);text-align:left">Tool</th><th style="padding:8px;border:1px solid var(--color-border);text-align:left">DataOps Equivalent</th></tr>
 <tr><td style="padding:8px;border:1px solid var(--color-border)">Ingestion</td><td style="padding:8px;border:1px solid var(--color-border)">HackerNews API / arXiv API</td><td style="padding:8px;border:1px solid var(--color-border)">Source connectors</td></tr>
@@ -175,7 +279,7 @@
 <tr><td style="padding:8px;border:1px solid var(--color-border)">CI/CD</td><td style="padding:8px;border:1px solid var(--color-border)">Git → Cloudflare Pages</td><td style="padding:8px;border:1px solid var(--color-border)">dbt Cloud / Airflow CI</td></tr>
 </table>
 
-<h2>Pipeline Metrics Dashboard</h2>
+<h2 id="pipeline-metrics-dashboard">Pipeline Metrics Dashboard</h2>
 <ul>
 <li><strong>Content volume:</strong> 45+ pages across research (27 entries), learn (5 → 8 entries), knowledge (6 → 9 entries)</li>
 <li><strong>Pillar coverage:</strong> AML (8 entries), Markets (8 entries), Science (8 entries)</li>
@@ -185,7 +289,7 @@
 <li><strong>Source diversity:</strong> HN, arXiv, PubMed — avg 5-7 domains per article</li>
 </ul>
 
-<h2>Future: Service Layer</h2>
+<h2 id="future-service-layer">Future: Service Layer</h2>
 <p>A separate <strong>FastAPI service</strong> (deployed on Railway) adds real-time capabilities:</p>
 <ul>
 <li>Progress tracking across articles (POST/GET progress)</li>
@@ -193,6 +297,89 @@
 <li>Reader engagement metrics</li>
 </ul>
 <p>This follows the <strong>lambda architecture</strong> pattern: batch (static site) + speed (API) layers.</p>
+    </div>
+    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
+      <h2 class="text-xl font-bold mb-4" style="color:var(--color-text)">Related Research</h2>
+      <div class="grid gap-3 sm:grid-cols-2">
+        <a href="/blog/2026-06-16-science-dataeng/" class="block rounded-lg p-3 transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+          <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded bg-purple-100 text-purple-800">microscope Science</span>
+          <span class="block mt-1 text-sm font-semibold" style="color:var(--color-text)">Data Pipeline Patterns for High-Throughput Genomics: Orchestrating Bioinformatics Workflows with Dagster</span>
+          <span class="block mt-1 text-xs" style="color:var(--color-text-muted)">2026-06-16 · 1 min</span>
+        </a>
+        <a href="/blog/2026-06-10-dataops-aml/" class="block rounded-lg p-3 transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+          <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded bg-amber-100 text-amber-800">shield AML</span>
+          <span class="block mt-1 text-sm font-semibold" style="color:var(--color-text)">Data Pipeline Observability in Financial Crime Compliance: Real-Time AML Monitoring at Scale</span>
+          <span class="block mt-1 text-xs" style="color:var(--color-text-muted)">2026-06-10 · 1 min</span>
+        </a>
+        <a href="/blog/2026-06-15-stock-dataeng/" class="block rounded-lg p-3 transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+          <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded bg-green-100 text-green-800">chart Markets</span>
+          <span class="block mt-1 text-sm font-semibold" style="color:var(--color-text)">Feature Engineering at Scale: Building ML-Ready Market Data Pipelines with dbt and Iceberg</span>
+          <span class="block mt-1 text-xs" style="color:var(--color-text-muted)">2026-06-15 · 1 min</span>
+        </a>
+      </div>
+    </section>
+    <section class="mt-8 pt-8 border-t" style="border-color:var(--color-border)">
+      <h2 class="text-xl font-bold mb-4" style="color:var(--color-text)">Related Lessons</h2>
+      <div class="grid gap-3 sm:grid-cols-2">
+        <a href="/learn/dataops-introduction/" class="block rounded-lg p-3 transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+          <span class="block text-sm font-semibold" style="color:var(--color-text)">Introduction to DataOps: Principles, Practices, and Pipeline Architecture</span>
+          <span class="block mt-1 text-xs" style="color:var(--color-text-muted)">2026-06-10</span>
+        </a>
+        <a href="/learn/open-source-data-stack/" class="block rounded-lg p-3 transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+          <span class="block text-sm font-semibold" style="color:var(--color-text)">Building an Open Source Data Stack: From Ingestion to Analytics</span>
+          <span class="block mt-1 text-xs" style="color:var(--color-text-muted)">2026-06-12</span>
+        </a>
+        <a href="/learn/data-quality-engineering/" class="block rounded-lg p-3 transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+          <span class="block text-sm font-semibold" style="color:var(--color-text)">Data Quality Engineering: Testing, Monitoring, and Expectations at Scale</span>
+          <span class="block mt-1 text-xs" style="color:var(--color-text-muted)">2026-06-11</span>
+        </a>
+      </div>
+    </section>
+  </article>
+</div>
+
+<script>
+(function(){
+  var bar = document.getElementById('reading-progress');
+  if (bar) {
+    window.addEventListener('scroll', function() {
+      var h = document.documentElement;
+      var pct = (h.scrollTop || document.body.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+      bar.style.width = Math.min(pct, 100) + '%';
+    }, {passive: true});
+  }
+
+  var tocLinks = document.querySelectorAll('.toc-link');
+  if (tocLinks.length) {
+    var headings = [];
+    tocLinks.forEach(function(link) {
+      var id = link.getAttribute('href').slice(1);
+      var el = document.getElementById(id);
+      if (el) headings.push({el: el, link: link});
+    });
+    window.addEventListener('scroll', function() {
+      var scrollY = window.scrollY + 120;
+      var current = null;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        if (headings[i].el.offsetTop <= scrollY) { current = headings[i]; break; }
+      }
+      tocLinks.forEach(function(l) { l.style.background = ''; l.style.color = ''; });
+      if (current) {
+        current.link.style.background = 'var(--color-bg)';
+        current.link.style.color = 'var(--color-accent)';
+      }
+    }, {passive: true});
+  }
+
+  var focusBtn = document.getElementById('focus-toggle');
+  if (focusBtn) {
+    focusBtn.addEventListener('click', function() {
+      document.body.classList.toggle('focus-mode');
+    });
+  }
+})();
+</script>
+
   </main>
 
   <footer class="mt-16 border-t" style="border-color:var(--color-border);background:var(--color-surface)">
@@ -206,7 +393,7 @@
           <li><a href="/research/" class="hover:opacity-70 transition">Research</a></li>
           <li><a href="/learn/" class="hover:opacity-70 transition">Learn</a></li>
           <li><a href="/knowledge/" class="hover:opacity-70 transition">Knowledge</a></li>
-          <li><a href="/about.html" class="hover:opacity-70 transition">About</a></li>
+          <li><a href="/knowledge/about/" class="hover:opacity-70 transition">About</a></li>
           <li><a href="/feed.xml" class="hover:opacity-70 transition">RSS</a></li>
         </ul>
       </nav>

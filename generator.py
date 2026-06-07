@@ -51,6 +51,25 @@ PILLAR_CONFIG = {
 PILLAR_EMOJIS = {"aml": "shield", "stock": "chart", "science": "microscope"}
 PILLAR_NAMES = {"aml": "AML", "stock": "Markets", "science": "Science"}
 
+KNOWLEDGE_CATEGORIES = {
+    "platform": {
+        "label": "Platform", "icon": "⚙️", "color": "#6366f1", "bg_color": "#6366f1",
+        "description": "About AcaciaFund — mission, team, contact, and site operations.",
+    },
+    "guide": {
+        "label": "Guides", "icon": "🧭", "color": "#22c55e", "bg_color": "#22c55e",
+        "description": "Methodology, taxonomy, and how-to guides for using the platform.",
+    },
+    "reference": {
+        "label": "Reference", "icon": "📖", "color": "#d97706", "bg_color": "#d97706",
+        "description": "Glossaries, tool landscapes, and technical terminology across all pillars.",
+    },
+    "architecture": {
+        "label": "Architecture", "icon": "🔗", "color": "#a855f7", "bg_color": "#a855f7",
+        "description": "System design, pipeline architecture, and DataOps implementation details.",
+    },
+}
+
 
 def add_lazy_loading(html: str) -> str:
     return re.sub(r'<img(?![^>]*loading=)', '<img loading="lazy" decoding="async"', html)
@@ -211,18 +230,53 @@ def main():
             out_file = out_dir / "index.html"
         else:
             out_file = OUTPUT_DIR / f"{slug}.html"
-        html = render_template("layout.j2", content=item, is_index=False,
-                                page_path=page_path, page_type="knowledge", **ctx_base)
+
+        body = add_lazy_loading(item.body_html)
+        body, toc_items = extract_headings(body)
+        item.body_html = body
+
+        kcat = KNOWLEDGE_CATEGORIES.get(item.knowledge_category, {})
+        if kcat:
+            kcat["slug"] = item.knowledge_category
+
+        related_research = find_related(research_items, item, 3)
+        related_learn = find_related(learn_items, item, 3)
+
+        thumb_key = hashlib.md5(item.title.encode()).hexdigest()[:12]
+        thumb_base = f"{SITE_URL}/static/images"
+
+        html = render_template("knowledge.j2",
+            content=item, page_path=page_path,
+            toc_items=toc_items, kcat=kcat,
+            related_research=related_research,
+            related_learn=related_learn,
+            thumbnail_base=thumb_base, thumbnail_key=thumbnail_key,
+            is_index=False, page_type="knowledge", **ctx_base)
         out_file.write_text(html, encoding="utf-8")
         print(f"  knowledge: {out_file.relative_to(OUTPUT_DIR)}")
 
-    # --- KNOWLEDGE INDEX ---
+        # Write knowledge thumbnail SVGs
+        out_static = STATIC_DST_DIR / "images"
+        out_static.mkdir(parents=True, exist_ok=True)
+        if item.thumbnail_svg:
+            (out_static / f"thumb_{thumb_key}.svg").write_text(item.thumbnail_svg, encoding="utf-8")
+
+    # --- KNOWLEDGE INDEX (sub-category grouped) ---
     knowledge_dir = OUTPUT_DIR / "knowledge"
     knowledge_dir.mkdir(parents=True, exist_ok=True)
-    ctx_k = dict(ctx_base, content_type="knowledge", items=knowledge_items)
-    html = render_template("category_index.j2", content=_dummy("Knowledge Base", "knowledge"),
-                            category="knowledge", items=knowledge_items,
-                            is_index=False, page_path="knowledge/", **ctx_base)
+    grouped: dict[str, list] = defaultdict(list)
+    for k in knowledge_items:
+        cat = k.knowledge_category or "reference"
+        grouped[cat].append(k)
+    for g in grouped.values():
+        g.sort(key=lambda x: x.title or "")
+    thumb_base = f"{SITE_URL}/static/images"
+    html = render_template("knowledge_index.j2",
+        content=_dummy("Knowledge Base", "knowledge"),
+        items=knowledge_items, grouped=dict(grouped),
+        categories=KNOWLEDGE_CATEGORIES,
+        thumbnail_base=thumb_base, thumbnail_key=thumbnail_key,
+        is_index=False, page_path="knowledge/", **ctx_base)
     (knowledge_dir / "index.html").write_text(html, encoding="utf-8")
     print("  category: knowledge/index.html")
 
@@ -418,7 +472,7 @@ def _dummy(title="", category="post", body_html=""):
         "thumbnail_svg": "", "og_svg": "", "signals": {}, "source_breakdown": {},
         "quality_metrics": {}, "bloom_questions": [], "flashcards": [],
         "trending_html": "", "analysis_html": "", "cross_pillar_html": "",
-        "quality_flags": [],
+        "quality_flags": [], "knowledge_category": "",
     })
 
 
