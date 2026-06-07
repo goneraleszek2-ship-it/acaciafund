@@ -134,7 +134,10 @@ def find_related(posts: list, current: object, max_items: int = 3) -> list:
 def reading_time_minutes(html_or_text: str) -> int:
     text = re.sub(r'<[^>]+>', '', html_or_text)
     words = len(text.strip().split())
-    return max(1, (words + 99) // 200)
+    code_blocks = len(re.findall(r'<pre><code>.*?</code></pre>', html_or_text, re.DOTALL))
+    code_penalty_sec = code_blocks * 30
+    minutes = (words / 150) + (code_penalty_sec / 60)
+    return max(2, round(minutes)) if words > 100 else max(1, round(minutes))
 
 
 def generate_sqi_badge(sqi: float) -> str:
@@ -153,6 +156,28 @@ def generate_sqi_badge(sqi: float) -> str:
 
 def thumbnail_key(title: str) -> str:
     return hashlib.md5(title.encode()).hexdigest()[:12]
+
+
+DOMAIN_BREAKDOWN_RE = re.compile(
+    r'<li>[^<]*?([A-Za-z]+)\s*:\s*(\d+)%\s*of sources\s*</li>',
+    re.IGNORECASE,
+)
+
+
+def sanitize_domain_breakdown(html: str) -> str:
+    """Cap domain breakdown percentages so they sum to <=100%."""
+    matches = list(DOMAIN_BREAKDOWN_RE.finditer(html))
+    if not matches:
+        return html
+    total_pct = sum(int(m.group(2)) for m in matches)
+    if total_pct <= 100:
+        return html
+    for m in matches:
+        domain = m.group(1)
+        orig = int(m.group(2))
+        capped = max(1, int(orig * 100 / total_pct))
+        html = html.replace(m.group(0), f'<li>{domain}: {capped}% of sources</li>', 1)
+    return html
 
 
 def interest_score(post, now: datetime) -> float:
@@ -221,6 +246,11 @@ def main():
         "pillar_config": PILLAR_CONFIG,
         "pillar_emojis": PILLAR_EMOJIS,
         "pillar_names": PILLAR_NAMES,
+        "site_description": (
+            "AcaciaFund — research synthesis & experimental learning platform. "
+            "Automated classification of HackerNews + arXiv content using Bloom taxonomy. "
+            "Static-first, privacy-preserving."
+        ),
     }
 
     def render_template(template_name, **kw):
@@ -239,8 +269,8 @@ def main():
 
         body = add_lazy_loading(item.body_html)
         body, toc_items = extract_headings(body)
-        # Strip first h2 if it matches the article title (avoids duplicate heading)
         body = re.sub(r'<h2[^>]*>\s*' + re.escape(item.title.strip()) + r'\s*</h2>\s*', '', body, count=1)
+        body = sanitize_domain_breakdown(body)
         item.body_html = body
 
         kcat = KNOWLEDGE_CATEGORIES.get(item.knowledge_category, {})
@@ -321,6 +351,7 @@ def main():
         body = add_lazy_loading(item.body_html)
         body, toc_items = extract_headings(body)
         body = re.sub(r'<h2[^>]*>\s*' + re.escape(item.title.strip()) + r'\s*</h2>\s*', '', body, count=1)
+        body = sanitize_domain_breakdown(body)
         item.body_html = body
 
         pillar = item.pillar or ""
@@ -398,6 +429,7 @@ def main():
         body = add_lazy_loading(item.body_html)
         body, toc_items = extract_headings(body)
         body = re.sub(r'<h2[^>]*>\s*' + re.escape(item.title.strip()) + r'\s*</h2>\s*', '', body, count=1)
+        body = sanitize_domain_breakdown(body)
         item.body_html = body
 
         prev_post = research_items[i + 1] if i + 1 < len(research_items) else None
@@ -416,7 +448,8 @@ def main():
         chart_donut = donut_svg(item.source_breakdown or {})
         chart_bloom = bloom_chart_svg(item.bloom_questions or [])
         chart_radar = radar_svg(item.quality_metrics or {})
-        sqi_trend = [0.3, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7]
+        sqi_val = item.signals.get("avg_sqi", 0.5) if item.signals else 0.5
+        sqi_trend = [max(0.1, sqi_val - 0.3), max(0.15, sqi_val - 0.2), max(0.2, sqi_val - 0.1), sqi_val]
         chart_sparkline = sparkline_svg(sqi_trend, color="#a855f7")
         qf = item.quality_flags or []
         chart_heatmap = heatmap_svg(
@@ -482,13 +515,22 @@ def main():
 
     # --- HOMEPAGE ---
     featured = sorted_research[:3] if len(sorted_research) >= 3 else sorted_research
+    home_og_key = hashlib.md5(b"AcaciaFund homepage").hexdigest()[:12]
+    home_og_url = f"{SITE_URL}/static/images/og_{home_og_key}.svg"
     index_html = render_template("index.j2",
-        content=_dummy("AcaciaFund — Research Synthesis & Learning", "index"),
+        content=_dummy("AcaciaFund — Research Synthesis & Learning", "index",
+                       description="AcaciaFund — research synthesis & experimental learning platform. Automated classification of HackerNews + arXiv content using Bloom taxonomy."),
         is_index=True, page_path="",
+        og_image_url=home_og_url,
         featured_posts=featured, recent_posts=sorted_research[:12],
         learn_items=learn_items[:6], knowledge_items=knowledge_items[:6],
         thumbnail_base=f"{SITE_URL}/static/images", thumbnail_key=thumbnail_key, **ctx_base)
     (OUTPUT_DIR / "index.html").write_text(index_html, encoding="utf-8")
+    # Write homepage OG image
+    out_static = STATIC_DST_DIR / "images"
+    out_static.mkdir(parents=True, exist_ok=True)
+    home_og_svg = generate_og_image("AcaciaFund — Research Synthesis & Learning", "aml", {"sqi": 0.7})
+    (out_static / f"og_{home_og_key}.svg").write_text(home_og_svg, encoding="utf-8")
     print("  index: index.html")
 
     # --- 404 ---
@@ -625,10 +667,10 @@ def main():
     return 0
 
 
-def _dummy(title="", category="post", body_html=""):
+def _dummy(title="", category="post", body_html="", description=""):
     return type("obj", (object,), {
         "title": title, "language": "en", "category": category, "slug": "",
-        "body_html": body_html, "description": "", "created_at": None,
+        "body_html": body_html, "description": description, "created_at": None,
         "updated_at": None, "tags": [], "pillar": "", "difficulty": "",
         "date_str": "", "thumbnail_svg": "", "og_svg": "", "signals": {},
         "source_breakdown": {}, "quality_metrics": {}, "bloom_questions": [],

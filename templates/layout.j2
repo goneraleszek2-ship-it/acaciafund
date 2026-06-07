@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ content.title | striptags }} | AcaciaFund</title>
-  <meta name="description" content="{{ content.description | default(content.body_html | striptags | truncate(160)) }}">
+  <meta name="description" content="{{ content.description | default(site_description | default(content.body_html | striptags | truncate(160))) }}">
   <meta name="generator" content="AcaciaFund Python-native Pipeline">
   <meta name="theme-color" content="#f5f0eb" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#1a1a2e" media="(prefers-color-scheme: dark)">
