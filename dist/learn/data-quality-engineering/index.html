@@ -37,8 +37,8 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="/static/css/tailwind.min.css?v=20260607172151">
-  <link rel="stylesheet" href="/static/css/custom.css?v=20260607172151">
+  <link rel="stylesheet" href="/static/css/tailwind.min.css?v=20260607173333">
+  <link rel="stylesheet" href="/static/css/custom.css?v=20260607173333">
   <link rel="preload" href="/static/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/static/fonts/Inter-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/static/fonts/Inter-Bold.woff2" as="font" type="font/woff2" crossorigin>
@@ -198,43 +198,15 @@
     </header>
 
     <div class="prose prose-lg max-w-none lesson-body">
-      <h2 id="why-data-quality-engineering-matters">Why Data Quality Engineering Matters</h2>
-<p>In a DataOps culture, data quality is not discovered after the fact — it is engineered into the pipeline from day one. Every time data moves between stages, there is a risk of corruption, drift, or silent failure. Data quality engineering applies software testing principles to data.</p>
-
-<h2 id="three-layers-of-data-quality">Three Layers of Data Quality</h2>
-
-<h3 id="1-freshness">1. Freshness</h3>
-<p>Is the data current? A pipeline SLO might state: "All source data must be ingested within 5 minutes of production." Violations trigger alerts and page the on-call data engineer. Freshness checks compare the max timestamp of incoming records against the current time.</p>
-
-<h3 id="2-completeness">2. Completeness</h3>
-<p>Are all expected records present? Row count checks compare expected vs actual counts. A sudden drop of 30% in event volume usually means a source connector failed or schema changed.</p>
-
-<h3 id="3-accuracy">3. Accuracy</h3>
-<p>Do the values make sense? Accuracy checks include: NULL ratio thresholds, reference integrity (every foreign key has a matching primary key), domain constraints (age between 0 and 120), and statistical distribution checks (z-score outlier detection).</p>
-
-<h2 id="expectations-as-code">Expectations as Code</h2>
-<p>Great Expectations lets you define expectations as Python objects:</p>
-<pre style="background:var(--color-bg);padding:16px;border-radius:8px;overflow-x:auto;font-size:0.85em">
+      <h2 id="why-data-quality-engineering-matters">Why Data Quality Engineering Matters</h2><p>In a DataOps culture, data quality is not discovered after the fact — it is engineered into the pipeline from day one. Every time data moves between stages, there is a risk of corruption, drift, or silent failure. Data quality engineering applies software testing principles to data.</p><h2 id="three-layers-of-data-quality">Three Layers of Data Quality</h2><h3 id="1-freshness">1. Freshness</h3><p>Is the data current? A pipeline SLO might state: "All source data must be ingested within 5 minutes of production." Violations trigger alerts and page the on-call data engineer. Freshness checks compare the max timestamp of incoming records against the current time.</p><h3 id="2-completeness">2. Completeness</h3><p>Are all expected records present? Row count checks compare expected vs actual counts. A sudden drop of 30% in event volume usually means a source connector failed or schema changed.</p><h3 id="3-accuracy">3. Accuracy</h3><p>Do the values make sense? Accuracy checks include: NULL ratio thresholds, reference integrity (every foreign key has a matching primary key), domain constraints (age between 0 and 120), and statistical distribution checks (z-score outlier detection).</p><h2 id="expectations-as-code">Expectations as Code</h2><p>Great Expectations lets you define expectations as Python objects:</p><pre style="background:var(--color-bg);padding:16px;border-radius:8px;overflow-x:auto;font-size:0.85em">
 expectation_suite = ExpectationSuite("transactions_clean")
 expectation_suite.add_expectation(
-    ExpectColumnValuesToBeBetween("amount", 0, 1000000)
+ ExpectColumnValuesToBeBetween("amount", 0, 1000000)
 )
 expectation_suite.add_expectation(
-    ExpectColumnValuesToNotBeNull("transaction_id")
+ ExpectColumnValuesToNotBeNull("transaction_id")
 )
-</pre>
-<p>These expectations run on every pipeline execution. If they fail, the pipeline either halts (hard gate) or proceeds with a warning (soft gate) depending on severity.</p>
-
-<h2 id="monitoring-dashboard">Monitoring Dashboard</h2>
-<p>A production data quality dashboard tracks:</p>
-<ul>
-<li>Pass/fail rate per expectation over time</li>
-<li>Data freshness (minutes since last successful ingestion) per source</li>
-<li>Row count trends with anomaly detection (sudden drops/spikes)</li>
-<li>Schema change events (new columns, dropped columns, type changes)</li>
-<li>Pipeline DAG health (success rate, duration, backlog)</li>
-</ul>
-<p>The AcaciaFund SQI (Signal Quality Index) is itself a data quality metric — combining source authority, freshness, consensus, and relevance into a single composable score.</p>
+</pre><p>These expectations run on every pipeline execution. If they fail, the pipeline either halts (hard gate) or proceeds with a warning (soft gate) depending on severity.</p><h2 id="monitoring-dashboard">Monitoring Dashboard</h2><p>A production data quality dashboard tracks:</p><ul><li>Pass/fail rate per expectation over time</li><li>Data freshness (minutes since last successful ingestion) per source</li><li>Row count trends with anomaly detection (sudden drops/spikes)</li><li>Schema change events (new columns, dropped columns, type changes)</li><li>Pipeline DAG health (success rate, duration, backlog)</li></ul><p>The AcaciaFund SQI (Signal Quality Index) is itself a data quality metric — combining source authority, freshness, consensus, and relevance into a single composable score.</p>
     </div>
     <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
       <h2 class="text-2xl font-bold mb-6 inline-flex items-center gap-2" style="color:var(--color-text)">

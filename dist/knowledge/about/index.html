@@ -37,8 +37,8 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="/static/css/tailwind.min.css?v=20260607172151">
-  <link rel="stylesheet" href="/static/css/custom.css?v=20260607172151">
+  <link rel="stylesheet" href="/static/css/tailwind.min.css?v=20260607173333">
+  <link rel="stylesheet" href="/static/css/custom.css?v=20260607173333">
   <link rel="preload" href="/static/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/static/fonts/Inter-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/static/fonts/Inter-Bold.woff2" as="font" type="font/woff2" crossorigin>
@@ -176,36 +176,7 @@
     </header>
 
     <div class="prose prose-lg max-w-none">
-      <p>AcaciaFund is an automated research synthesis platform that applies <strong>DataOps principles</strong> to the content lifecycle: ingesting from HackerNews and arXiv, classifying via Bloom taxonomy, scoring with the Signal Quality Index (SQI), and serving as a static data product.</p>
-
-<h3 id="mission">Mission</h3>
-<p>To make high-quality, multi-perspective research synthesis accessible — bridging anti-money laundering (AML), financial markets, and scientific discovery through automated classification and transparent quality metrics.</p>
-
-<h3 id="how-it-works">How It Works</h3>
-<ul>
-<li><strong>Ingestion:</strong> Daily stories from HackerNews, academic preprints from arXiv, and biomedical research from PubMed are collected and analyzed.</li>
-<li><strong>Classification:</strong> Each article is classified using Bloom taxonomy (remember → create) to determine its cognitive depth and learning value.</li>
-<li><strong>Scoring:</strong> The Signal Quality Index (SQI) combines source authority, freshness, consensus, and relevance into a composable [0,1] metric.</li>
-<li><strong>Serving:</strong> A deterministic Python-native generator (Jinja2 + Pydantic) transforms structured data into static HTML, deployed via Cloudflare Pages.</li>
-</ul>
-
-<h3 id="content-taxonomy">Content Taxonomy</h3>
-<ul>
-<li><strong>Research:</strong> Bloom-classified articles with SQI, signals, flashcards, and source breakdowns. Organized by pillar (AML, Markets, Science).</li>
-<li><strong>Learn:</strong> Structured lessons with flashcards, code examples, and practical exercises for self-directed study.</li>
-<li><strong>Knowledge:</strong> Reference documentation — glossaries, architecture, tools landscape, methodology guides, and platform information.</li>
-</ul>
-
-<h3 id="tech-stack">Tech Stack</h3>
-<ul>
-<li><strong>Generator:</strong> Python 3.13, Pydantic, Jinja2, Markdown2</li>
-<li><strong>Styling:</strong> Tailwind CSS 3.4.19 (self-hosted, 28KB), custom CSS with CSS variables for dark mode</li>
-<li><strong>Fonts:</strong> Inter (Regular/SemiBold/Bold — self-hosted WOFF2, zero external requests)</li>
-<li><strong>Hosting:</strong> Cloudflare Pages (static) + Railway (FastAPI service for progress tracking)</li>
-<li><strong>CI/CD:</strong> GitHub → Cloudflare Pages auto-deploy from <code>main</code></li>
-</ul>
-
-<p><em>Last updated: 2026-06-14</em></p>
+      <p>AcaciaFund is an automated research synthesis platform that applies <strong>DataOps principles</strong> to the content lifecycle: ingesting from HackerNews and arXiv, classifying via Bloom taxonomy, scoring with the Signal Quality Index (SQI), and serving as a static data product.</p><h3 id="mission">Mission</h3><p>To make high-quality, multi-perspective research synthesis accessible — bridging anti-money laundering (AML), financial markets, and scientific discovery through automated classification and transparent quality metrics.</p><h3 id="how-it-works">How It Works</h3><ul><li><strong>Ingestion:</strong> Daily stories from HackerNews, academic preprints from arXiv, and biomedical research from PubMed are collected and analyzed.</li><li><strong>Classification:</strong> Each article is classified using Bloom taxonomy (remember → create) to determine its cognitive depth and learning value.</li><li><strong>Scoring:</strong> The Signal Quality Index (SQI) combines source authority, freshness, consensus, and relevance into a composable [0,1] metric.</li><li><strong>Serving:</strong> A deterministic Python-native generator (Jinja2 + Pydantic) transforms structured data into static HTML, deployed via Cloudflare Pages.</li></ul><h3 id="content-taxonomy">Content Taxonomy</h3><ul><li><strong>Research:</strong> Bloom-classified articles with SQI, signals, flashcards, and source breakdowns. Organized by pillar (AML, Markets, Science).</li><li><strong>Learn:</strong> Structured lessons with flashcards, code examples, and practical exercises for self-directed study.</li><li><strong>Knowledge:</strong> Reference documentation — glossaries, architecture, tools landscape, methodology guides, and platform information.</li></ul><h3 id="tech-stack">Tech Stack</h3><ul><li><strong>Generator:</strong> Python 3.13, Pydantic, Jinja2, Markdown2</li><li><strong>Styling:</strong> Tailwind CSS 3.4.19 (self-hosted, 28KB), custom CSS with CSS variables for dark mode</li><li><strong>Fonts:</strong> Inter (Regular/SemiBold/Bold — self-hosted WOFF2, zero external requests)</li><li><strong>Hosting:</strong> Cloudflare Pages (static) + Railway (FastAPI service for progress tracking)</li><li><strong>CI/CD:</strong> GitHub → Cloudflare Pages auto-deploy from <code>main</code></li></ul><p><em>Last updated: 2026-06-14</em></p>
     </div>
   </article>
 </div>

@@ -37,8 +37,8 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="/static/css/tailwind.min.css?v=20260607172151">
-  <link rel="stylesheet" href="/static/css/custom.css?v=20260607172151">
+  <link rel="stylesheet" href="/static/css/tailwind.min.css?v=20260607173333">
+  <link rel="stylesheet" href="/static/css/custom.css?v=20260607173333">
   <link rel="preload" href="/static/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/static/fonts/Inter-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/static/fonts/Inter-Bold.woff2" as="font" type="font/woff2" crossorigin>
@@ -203,31 +203,7 @@
     </header>
 
     <div class="prose prose-lg max-w-none lesson-body">
-      <h2 id="the-modern-open-source-data-stack">The Modern Open Source Data Stack</h2>
-<p>The 2026 open source data stack is modular, composable, and cloud-agnostic. Teams assemble best-in-class tools for each layer rather than buying monolithic platforms. This lesson walks through a complete production stack.</p>
-
-<h2 id="layer-1-ingestion">Layer 1: Ingestion</h2>
-<p><strong>Airbyte</strong> (open source, MIT) provides 600+ connectors for APIs, databases, and file stores. It handles schema detection, incremental syncs, and normalization. Deploy via Docker Compose or Kubernetes.</p>
-<p>Alternatives: Meltano (Singer taps), Apache NiFi (visual flow), Debezium (CDC from databases).</p>
-
-<h2 id="layer-2-storage">Layer 2: Storage</h2>
-<p>The <strong>lakehouse</strong> paradigm dominates: object storage (S3/MinIO) + table format (Apache Iceberg/Delta Lake) + query engine (Trino/Spark). Iceberg provides ACID transactions, time travel, and schema evolution on object storage.</p>
-
-<h2 id="layer-3-transformation">Layer 3: Transformation</h2>
-<p><strong>dbt</strong> is the standard for SQL transformations. Define models as SELECT statements; dbt handles dependency resolution, incremental materialization, testing, and documentation generation. Models are organized into layers (sources → staging → intermediate → marts).</p>
-
-<h2 id="layer-4-orchestration">Layer 4: Orchestration</h2>
-<p><strong>Dagster</strong> has become the preferred orchestrator for data teams who value asset-centric design. Unlike Airflow's DAG-of-tasks approach, Dagster treats datasets as assets with explicit lineage. Prefect remains strong for teams wanting Python-native flow control.</p>
-
-<h2 id="layer-5-quality-observability">Layer 5: Quality & Observability</h2>
-<p><strong>Great Expectations</strong> + <strong>Soda</strong> for quality. <strong>OpenMetadata</strong> for catalog + lineage. Custom dashboards via Prometheus + Grafana for pipeline metrics. dbt-external-tables for freshness monitoring.</p>
-
-<h2 id="layer-6-analytics-serving">Layer 6: Analytics & Serving</h2>
-<p><strong>Evidence</strong> (markdown-driven BI), <strong>Metabase</strong> (self-service), or <strong>Apache Superset</strong> (enterprise dashboards). For ML serving: <strong>MLflow</strong> for model registry, <strong>BentoML</strong> for serving, <strong>Feast</strong> for feature stores.</p>
-
-<h2 id="putting-it-together">Putting It Together</h2>
-<p>This entire stack runs on a single `docker-compose.yml` for development and scales to production on Kubernetes. The total infrastructure cost for a mid-size data team: roughly $500-2000/month in cloud compute, zero licensing fees.</p>
-<p>AcaciaFund itself follows this philosophy: Python-native, open source tools only, static output, zero vendor lock-in.</p>
+      <h2 id="the-modern-open-source-data-stack">The Modern Open Source Data Stack</h2><p>The 2026 open source data stack is modular, composable, and cloud-agnostic. Teams assemble best-in-class tools for each layer rather than buying monolithic platforms. This lesson walks through a complete production stack.</p><h2 id="layer-1-ingestion">Layer 1: Ingestion</h2><p><strong>Airbyte</strong> (open source, MIT) provides 600+ connectors for APIs, databases, and file stores. It handles schema detection, incremental syncs, and normalization. Deploy via Docker Compose or Kubernetes.</p><p>Alternatives: Meltano (Singer taps), Apache NiFi (visual flow), Debezium (CDC from databases).</p><h2 id="layer-2-storage">Layer 2: Storage</h2><p>The <strong>lakehouse</strong> paradigm dominates: object storage (S3/MinIO) + table format (Apache Iceberg/Delta Lake) + query engine (Trino/Spark). Iceberg provides ACID transactions, time travel, and schema evolution on object storage.</p><h2 id="layer-3-transformation">Layer 3: Transformation</h2><p><strong>dbt</strong> is the standard for SQL transformations. Define models as SELECT statements; dbt handles dependency resolution, incremental materialization, testing, and documentation generation. Models are organized into layers (sources → staging → intermediate → marts).</p><h2 id="layer-4-orchestration">Layer 4: Orchestration</h2><p><strong>Dagster</strong> has become the preferred orchestrator for data teams who value asset-centric design. Unlike Airflow's DAG-of-tasks approach, Dagster treats datasets as assets with explicit lineage. Prefect remains strong for teams wanting Python-native flow control.</p><h2 id="layer-5-quality-observability">Layer 5: Quality & Observability</h2><p><strong>Great Expectations</strong> + <strong>Soda</strong> for quality. <strong>OpenMetadata</strong> for catalog + lineage. Custom dashboards via Prometheus + Grafana for pipeline metrics. dbt-external-tables for freshness monitoring.</p><h2 id="layer-6-analytics-serving">Layer 6: Analytics & Serving</h2><p><strong>Evidence</strong> (markdown-driven BI), <strong>Metabase</strong> (self-service), or <strong>Apache Superset</strong> (enterprise dashboards). For ML serving: <strong>MLflow</strong> for model registry, <strong>BentoML</strong> for serving, <strong>Feast</strong> for feature stores.</p><h2 id="putting-it-together">Putting It Together</h2><p>This entire stack runs on a single `docker-compose.yml` for development and scales to production on Kubernetes. The total infrastructure cost for a mid-size data team: roughly $500-2000/month in cloud compute, zero licensing fees.</p><p>AcaciaFund itself follows this philosophy: Python-native, open source tools only, static output, zero vendor lock-in.</p>
     </div>
     <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
       <h2 class="text-2xl font-bold mb-6 inline-flex items-center gap-2" style="color:var(--color-text)">

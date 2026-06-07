@@ -37,8 +37,8 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="/static/css/tailwind.min.css?v=20260607172151">
-  <link rel="stylesheet" href="/static/css/custom.css?v=20260607172151">
+  <link rel="stylesheet" href="/static/css/tailwind.min.css?v=20260607173333">
+  <link rel="stylesheet" href="/static/css/custom.css?v=20260607173333">
   <link rel="preload" href="/static/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/static/fonts/Inter-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/static/fonts/Inter-Bold.woff2" as="font" type="font/woff2" crossorigin>
@@ -168,7 +168,7 @@
         </time>
         <span class="inline-flex items-center gap-1">
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          4 min read
+          3 min read
         </span>
       </div>
       <div class="mt-3 flex flex-wrap gap-2">
@@ -185,33 +185,7 @@
     </header>
 
     <div class="prose prose-lg max-w-none lesson-body">
-      <p>In 2026, 75% of the world's population lives in a jurisdiction with a comprehensive data protection law. AI regulation — the EU AI Act, US executive orders, China's AI regulations — is creating binding requirements for algorithmic transparency, fairness, and accountability. Data ethics is no longer a philosophical exercise; it is a compliance and engineering discipline.</p>
-
-<h2 id="the-ethical-data-lifecycle">The Ethical Data Lifecycle</h2>
-<p>Every stage of the data lifecycle carries ethical obligations:</p>
-<ul>
-<li><strong>Collection:</strong> Consent must be informed, specific, and revocable. Purpose limitation — data collected for one use cannot be arbitrarily repurposed. Minimization — collect only what is necessary.</li>
-<li><strong>Storage:</strong> Encryption at rest and in transit. Access controls based on least privilege. Retention limits — delete data when the purpose is fulfilled.</li>
-<li><strong>Processing:</strong> Fairness — algorithms must not discriminate based on protected characteristics. Transparency — subjects should know how their data is being used. Explainability — automated decisions must be explainable on request.</li>
-<li><strong>Sharing:</strong> Data sharing agreements with clear use restrictions. Anonymization or pseudonymization before sharing. Audit trails for all data access and transfers.</li>
-<li><strong>Deletion:</strong> Right to erasure (GDPR Article 17) — individuals can request deletion of their data. The engineering challenge is implementing deletion across distributed systems, backups, and ML training datasets.</li>
-</ul>
-
-<h2 id="privacy-enhancing-technologies-pets">Privacy-Enhancing Technologies (PETs)</h2>
-<ul>
-<li><strong>Differential Privacy:</strong> Adds calibrated noise to query results so that the presence or absence of any single individual's data does not meaningfully affect the output. Used by Apple (iOS analytics), Google (RAPPOR), and the US Census Bureau (2020 Census). The privacy parameter ε (epsilon) controls the trade-off: lower ε = more privacy, more noise, less accuracy.</li>
-<li><strong>Federated Learning:</strong> ML models are trained across decentralized data sources without raw data leaving each source. Only model updates (gradients) are shared, not the underlying data. Used by Google (Gboard keyboard suggestions), Apple (Siri), and healthcare consortia.</li>
-<li><strong>Synthetic Data:</strong> Artificially generated data that preserves the statistical properties of the original dataset without containing identifiable records. Increasingly used for ML training, testing, and sharing when real data cannot be distributed.</li>
-<li><strong>Homomorphic Encryption:</strong> Computation on encrypted data — the data never needs to be decrypted for processing. Computationally expensive but rapidly improving; used in healthcare and financial services for secure multi-party computation.</li>
-</ul>
-
-<h2 id="ai-ethics-regulation-in-2026">AI Ethics & Regulation in 2026</h2>
-<p>The EU AI Act (effective 2025-2026) classifies AI systems by risk level: unacceptable (banned), high-risk (conformity assessment required), limited (transparency obligations), and minimal (voluntary codes). High-risk systems include credit scoring, hiring, law enforcement, and biometric identification. Requirements include: risk management, data governance, transparency, human oversight, and accuracy/robustness standards. The US has taken a sectoral approach with executive orders on AI safety and agency-specific guidance, while China requires algorithm filing and approval for recommendation and synthesis algorithms.</p>
-
-<h2 id="consent-management">Consent Management</h2>
-<p>Consent is the legal basis for most data processing, but the 2026 standard has moved beyond the "cookie banner" era. Key principles: <strong>granularity</strong> (separate consents for different purposes), <strong>affirmative action</strong> (pre-ticked boxes are illegal under GDPR), <strong>easy withdrawal</strong> (revocation must be as easy as granting), and <strong>continuous consent</strong> (consent expires and must be refreshed periodically). Consent Management Platforms (CMPs) have become standard infrastructure, integrated via the IAB Transparency & Consent Framework.</p>
-
-<p>For the data pipeline infrastructure that must implement these privacy controls, see <a href="/learn/dataops-introduction/">Introduction to DataOps</a> and <a href="/learn/open-source-data-stack/">Building an Open Source Data Stack</a>.</p>
+      <p>In 2026, 75% of the world's population lives in a jurisdiction with a comprehensive data protection law. AI regulation — the EU AI Act, US executive orders, China's AI regulations — is creating binding requirements for algorithmic transparency, fairness, and accountability. Data ethics is no longer a philosophical exercise; it is a compliance and engineering discipline.</p><h2 id="the-ethical-data-lifecycle">The Ethical Data Lifecycle</h2><p>Every stage of the data lifecycle carries ethical obligations:</p><ul><li><strong>Collection:</strong> Consent must be informed, specific, and revocable. Purpose limitation — data collected for one use cannot be arbitrarily repurposed. Minimization — collect only what is necessary.</li><li><strong>Storage:</strong> Encryption at rest and in transit. Access controls based on least privilege. Retention limits — delete data when the purpose is fulfilled.</li><li><strong>Processing:</strong> Fairness — algorithms must not discriminate based on protected characteristics. Transparency — subjects should know how their data is being used. Explainability — automated decisions must be explainable on request.</li><li><strong>Sharing:</strong> Data sharing agreements with clear use restrictions. Anonymization or pseudonymization before sharing. Audit trails for all data access and transfers.</li><li><strong>Deletion:</strong> Right to erasure (GDPR Article 17) — individuals can request deletion of their data. The engineering challenge is implementing deletion across distributed systems, backups, and ML training datasets.</li></ul><h2 id="privacy-enhancing-technologies-pets">Privacy-Enhancing Technologies (PETs)</h2><ul><li><strong>Differential Privacy:</strong> Adds calibrated noise to query results so that the presence or absence of any single individual's data does not meaningfully affect the output. Used by Apple (iOS analytics), Google (RAPPOR), and the US Census Bureau (2020 Census). The privacy parameter ε (epsilon) controls the trade-off: lower ε = more privacy, more noise, less accuracy.</li><li><strong>Federated Learning:</strong> ML models are trained across decentralized data sources without raw data leaving each source. Only model updates (gradients) are shared, not the underlying data. Used by Google (Gboard keyboard suggestions), Apple (Siri), and healthcare consortia.</li><li><strong>Synthetic Data:</strong> Artificially generated data that preserves the statistical properties of the original dataset without containing identifiable records. Increasingly used for ML training, testing, and sharing when real data cannot be distributed.</li><li><strong>Homomorphic Encryption:</strong> Computation on encrypted data — the data never needs to be decrypted for processing. Computationally expensive but rapidly improving; used in healthcare and financial services for secure multi-party computation.</li></ul><h2 id="ai-ethics-regulation-in-2026">AI Ethics & Regulation in 2026</h2><p>The EU AI Act (effective 2025-2026) classifies AI systems by risk level: unacceptable (banned), high-risk (conformity assessment required), limited (transparency obligations), and minimal (voluntary codes). High-risk systems include credit scoring, hiring, law enforcement, and biometric identification. Requirements include: risk management, data governance, transparency, human oversight, and accuracy/robustness standards. The US has taken a sectoral approach with executive orders on AI safety and agency-specific guidance, while China requires algorithm filing and approval for recommendation and synthesis algorithms.</p><h2 id="consent-management">Consent Management</h2><p>Consent is the legal basis for most data processing, but the 2026 standard has moved beyond the "cookie banner" era. Key principles: <strong>granularity</strong> (separate consents for different purposes), <strong>affirmative action</strong> (pre-ticked boxes are illegal under GDPR), <strong>easy withdrawal</strong> (revocation must be as easy as granting), and <strong>continuous consent</strong> (consent expires and must be refreshed periodically). Consent Management Platforms (CMPs) have become standard infrastructure, integrated via the IAB Transparency & Consent Framework.</p><p>For the data pipeline infrastructure that must implement these privacy controls, see <a href="/learn/dataops-introduction/">Introduction to DataOps</a> and <a href="/learn/open-source-data-stack/">Building an Open Source Data Stack</a>.</p>
     </div>
     <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
       <h2 class="text-2xl font-bold mb-6 inline-flex items-center gap-2" style="color:var(--color-text)">

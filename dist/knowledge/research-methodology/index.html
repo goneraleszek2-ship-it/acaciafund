@@ -37,8 +37,8 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="/static/css/tailwind.min.css?v=20260607172151">
-  <link rel="stylesheet" href="/static/css/custom.css?v=20260607172151">
+  <link rel="stylesheet" href="/static/css/tailwind.min.css?v=20260607173333">
+  <link rel="stylesheet" href="/static/css/custom.css?v=20260607173333">
   <link rel="preload" href="/static/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/static/fonts/Inter-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/static/fonts/Inter-Bold.woff2" as="font" type="font/woff2" crossorigin>
@@ -151,7 +151,7 @@
       </div>
       <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">Research Methodology</h1>
       <time class="mt-2 block text-sm" style="color:var(--color-text-muted)" datetime="2026-06-14">
-        Last updated 2026-06-14 · 3 min read
+        Last updated 2026-06-14 · 2 min read
       </time>
       <div class="mt-3 flex flex-wrap gap-2">
         <a href="/tags/methodology/" class="inline-block px-2 py-0.5 text-xs font-medium rounded transition" style="background:var(--color-bg);color:var(--color-text-secondary);text-decoration:none;border:1px solid transparent" onmouseover="this.style.borderColor='var(--color-accent)'" onmouseout="this.style.borderColor='transparent'">methodology</a>
@@ -163,72 +163,17 @@
     </header>
 
     <div class="prose prose-lg max-w-none">
-      <p>How AcaciaFund transforms raw signals into structured, quality-scored research articles.</p>
-
-<h3 id="pipeline-stages">Pipeline Stages</h3>
-
-<h4>1. Source Ingestion</h4>
-<p>Content is drawn from three primary feeds:</p>
-<ul>
-<li><strong>HackerNews API</strong> (news.ycombinator.com) — technology, business, and science stories ranked by community engagement (points, comments). Top ~30 stories per day are analyzed.</li>
-<li><strong>arXiv API</strong> (arxiv.org) — academic preprints across computer science, physics, mathematics, quantitative biology, and finance. Filtered by relevance to pillar topics.</li>
-<li><strong>PubMed</strong> — biomedical literature for science-pillar articles, particularly genetics, neuroscience, and biotechnology.</li>
-</ul>
-
-<h4>2. Entity Extraction &amp; Summarization</h4>
-<p>Each source is processed through NLP pipelines for:</p>
-<ul>
-<li><strong>Named Entity Recognition (NER)</strong> — extracting organizations, people, technologies, regulations, and financial instruments.</li>
-<li><strong>Automatic Summarization</strong> — extractive summarization identifying key claims, numerical data, and conclusions.</li>
-<li><strong>Topic Modeling</strong> — LDA-based classification into pillar-relevant topics and subtopics.</li>
-</ul>
-
-<h4>3. Bloom Taxonomy Classification</h4>
-<p>Every article is assessed across six cognitive levels:</p>
-<table style="width:100%;border-collapse:collapse;font-size:0.9em">
-<tr style="background:var(--color-bg)"><th style="padding:8px;border:1px solid var(--color-border);text-align:left">Level</th><th style="padding:8px;border:1px solid var(--color-border);text-align:left">Description</th><th style="padding:8px;border:1px solid var(--color-border);text-align:left">Example Question</th></tr>
-<tr><td style="padding:8px;border:1px solid var(--color-border)">Remember</td><td style="padding:8px;border:1px solid var(--color-border)">Recall facts and basic concepts</td><td style="padding:8px;border:1px solid var(--color-border)">Which pillar does this article belong to?</td></tr>
-<tr><td style="padding:8px;border:1px solid var(--color-border)">Understand</td><td style="padding:8px;border:1px solid var(--color-border)">Explain ideas and concepts</td><td style="padding:8px;border:1px solid var(--color-border)">What is the primary domain of this article?</td></tr>
-<tr><td style="padding:8px;border:1px solid var(--color-border)">Apply</td><td style="padding:8px;border:1px solid var(--color-border)">Use information in new situations</td><td style="padding:8px;border:1px solid var(--color-border)">How can these findings be applied in practice?</td></tr>
-<tr><td style="padding:8px;border:1px solid var(--color-border)">Analyze</td><td style="padding:8px;border:1px solid var(--color-border)">Draw connections among ideas</td><td style="padding:8px;border:1px solid var(--color-border)">What assumptions underlie this analysis?</td></tr>
-<tr><td style="padding:8px;border:1px solid var(--color-border)">Evaluate</td><td style="padding:8px;border:1px solid var(--color-border)">Justify a stand or decision</td><td style="padding:8px;border:1px solid var(--color-border)">How strong is the evidence presented?</td></tr>
-<tr><td style="padding:8px;border:1px solid var(--color-border)">Create</td><td style="padding:8px;border:1px solid var(--color-border)">Produce new or original work</td><td style="padding:8px;border:1px solid var(--color-border)">Design an experiment to test this hypothesis.</td></tr>
-</table>
-
-<h4>4. Signal Quality Index (SQI) Computation</h4>
-<p>SQI is a composable metric computed per article as a weighted combination:</p>
-<pre style="background:var(--color-bg);padding:16px;border-radius:8px;font-size:0.85em">
-SQI = w₁ · Authority + w₂ · Freshness + w₃ · Consensus + w₄ · Relevance
+      <p>How AcaciaFund transforms raw signals into structured, quality-scored research articles.</p><h3 id="pipeline-stages">Pipeline Stages</h3><h4>1. Source Ingestion</h4><p>Content is drawn from three primary feeds:</p><ul><li><strong>HackerNews API</strong> (news.ycombinator.com) — technology, business, and science stories ranked by community engagement (points, comments). Top ~30 stories per day are analyzed.</li><li><strong>arXiv API</strong> (arxiv.org) — academic preprints across computer science, physics, mathematics, quantitative biology, and finance. Filtered by relevance to pillar topics.</li><li><strong>PubMed</strong> — biomedical literature for science-pillar articles, particularly genetics, neuroscience, and biotechnology.</li></ul><h4>2. Entity Extraction &amp; Summarization</h4><p>Each source is processed through NLP pipelines for:</p><ul><li><strong>Named Entity Recognition (NER)</strong> — extracting organizations, people, technologies, regulations, and financial instruments.</li><li><strong>Automatic Summarization</strong> — extractive summarization identifying key claims, numerical data, and conclusions.</li><li><strong>Topic Modeling</strong> — LDA-based classification into pillar-relevant topics and subtopics.</li></ul><h4>3. Bloom Taxonomy Classification</h4><p>Every article is assessed across six cognitive levels:</p><table style="width:100%;border-collapse:collapse;font-size:0.9em"><tr style="background:var(--color-bg)"><th style="padding:8px;border:1px solid var(--color-border);text-align:left">Level</th><th style="padding:8px;border:1px solid var(--color-border);text-align:left">Description</th><th style="padding:8px;border:1px solid var(--color-border);text-align:left">Example Question</th></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Remember</td><td style="padding:8px;border:1px solid var(--color-border)">Recall facts and basic concepts</td><td style="padding:8px;border:1px solid var(--color-border)">Which pillar does this article belong to?</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Understand</td><td style="padding:8px;border:1px solid var(--color-border)">Explain ideas and concepts</td><td style="padding:8px;border:1px solid var(--color-border)">What is the primary domain of this article?</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Apply</td><td style="padding:8px;border:1px solid var(--color-border)">Use information in new situations</td><td style="padding:8px;border:1px solid var(--color-border)">How can these findings be applied in practice?</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Analyze</td><td style="padding:8px;border:1px solid var(--color-border)">Draw connections among ideas</td><td style="padding:8px;border:1px solid var(--color-border)">What assumptions underlie this analysis?</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Evaluate</td><td style="padding:8px;border:1px solid var(--color-border)">Justify a stand or decision</td><td style="padding:8px;border:1px solid var(--color-border)">How strong is the evidence presented?</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Create</td><td style="padding:8px;border:1px solid var(--color-border)">Produce new or original work</td><td style="padding:8px;border:1px solid var(--color-border)">Design an experiment to test this hypothesis.</td></tr></table><h4>4. Signal Quality Index (SQI) Computation</h4><p>SQI is a composable metric computed per article as a weighted combination:</p><pre style="background:var(--color-bg);padding:16px;border-radius:8px;font-size:0.85em">
+SQI = w1 · Authority + w2 · Freshness + w3 · Consensus + w4 · Relevance
 
 where:
-  Authority    = domain reputation score (0–1)
-  Freshness    = 1 - (days_since_publication / freshness_window)
-  Consensus    = cross-source agreement rate
-  Relevance    = keyword overlap with pillar taxonomy
+ Authority = domain reputation score (0–1)
+ Freshness = 1 - (days_since_publication / freshness_window)
+ Consensus = cross-source agreement rate
+ Relevance = keyword overlap with pillar taxonomy
 
-Default weights: w₁=0.35, w₂=0.25, w₃=0.25, w₄=0.15
-</pre>
-<p>Weights are adjustable per pillar to prioritize different quality dimensions (e.g., AML favors authority, Science favors freshness).</p>
-
-<h4>5. Cross-Pillar Analysis</h4>
-<p>Each article is analyzed for connections to other pillars via:</p>
-<ul>
-<li><strong>Shared entity references</strong> — organizations, regulations, or technologies that appear across pillars</li>
-<li><strong>Source overlap</strong> — articles from different pillars citing the same source</li>
-<li><strong>Topic bridging</strong> — latent topic modeling revealing cross-domain themes</li>
-</ul>
-
-<h4>6. Quality Gates &amp; Serving</h4>
-<p>Before publication, each article passes through quality gates:</p>
-<ul>
-<li><strong>Schema validation</strong> — Pydantic ensures all required fields are present and correctly typed</li>
-<li><strong>Source diversity check</strong> — minimum source count and domain diversity thresholds</li>
-<li><strong>SQI threshold</strong> — minimum SQI of 0.35 for publication</li>
-<li><strong>Deterministic build</strong> — same registry.json always produces identical output</li>
-</ul>
-<p>The final artifact is static HTML deployed to Cloudflare Pages via <code>python3.13 generator.py</code>.</p>
-
-<p><em>Last updated: 2026-06-14</em></p>
+Default weights: w1=0.35, w2=0.25, w3=0.25, w4=0.15
+</pre><p>Weights are adjustable per pillar to prioritize different quality dimensions (e.g., AML favors authority, Science favors freshness).</p><h4>5. Cross-Pillar Analysis</h4><p>Each article is analyzed for connections to other pillars via:</p><ul><li><strong>Shared entity references</strong> — organizations, regulations, or technologies that appear across pillars</li><li><strong>Source overlap</strong> — articles from different pillars citing the same source</li><li><strong>Topic bridging</strong> — latent topic modeling revealing cross-domain themes</li></ul><h4>6. Quality Gates &amp; Serving</h4><p>Before publication, each article passes through quality gates:</p><ul><li><strong>Schema validation</strong> — Pydantic ensures all required fields are present and correctly typed</li><li><strong>Source diversity check</strong> — minimum source count and domain diversity thresholds</li><li><strong>SQI threshold</strong> — minimum SQI of 0.35 for publication</li><li><strong>Deterministic build</strong> — same registry.json always produces identical output</li></ul><p>The final artifact is static HTML deployed to Cloudflare Pages via <code>python3.13 generator.py</code>.</p><p><em>Last updated: 2026-06-14</em></p>
     </div>
     <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
       <h2 class="text-xl font-bold mb-4" style="color:var(--color-text)">Related Research</h2>

@@ -37,8 +37,8 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="/static/css/tailwind.min.css?v=20260607172151">
-  <link rel="stylesheet" href="/static/css/custom.css?v=20260607172151">
+  <link rel="stylesheet" href="/static/css/tailwind.min.css?v=20260607173333">
+  <link rel="stylesheet" href="/static/css/custom.css?v=20260607173333">
   <link rel="preload" href="/static/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/static/fonts/Inter-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/static/fonts/Inter-Bold.woff2" as="font" type="font/woff2" crossorigin>
@@ -188,48 +188,7 @@
     </header>
 
     <div class="prose prose-lg max-w-none lesson-body">
-      <h2 id="what-is-dataops">What is DataOps?</h2>
-<p>DataOps is an automated, process-oriented methodology used by data teams to improve the quality and reduce the cycle time of data analytics. It applies agile software development, DevOps, and statistical process control (SPC) principles to the data pipeline lifecycle.</p>
-
-<h2 id="core-principles">Core Principles</h2>
-<ul>
-<li><strong>Continuous Integration & Delivery:</strong> Changes to data pipelines, schemas, and transformations are automatically tested and deployed — just like application code.</li>
-<li><strong>Pipeline Observability:</strong> Every stage of the data pipeline emits metrics: row counts, schema drift, null rates, latency percentiles. Teams monitor these in real-time dashboards.</li>
-<li><strong>Data Quality as Code:</strong> Expectations and quality checks are defined programmatically (Great Expectations, Soda, dbt tests) and run on every pipeline execution.</li>
-<li><strong>Version Everything:</strong> Data schemas, transformation logic, pipeline definitions, training datasets — all under version control with semantic versioning.</li>
-<li><strong>Reproducibility:</strong> Given the same input data and pipeline version, the output must be identical. This requires deterministic transforms, immutable data layers, and full lineage tracking.</li>
-</ul>
-
-<h2 id="dataops-vs-devops-vs-mlops">DataOps vs DevOps vs MLOps</h2>
-<table style="width:100%;border-collapse:collapse;font-size:0.9em">
-<tr style="background:var(--color-bg)"><th style="padding:8px;border:1px solid var(--color-border);text-align:left">Dimension</th><th style="padding:8px;border:1px solid var(--color-border);text-align:left">DevOps</th><th style="padding:8px;border:1px solid var(--color-border);text-align:left">DataOps</th><th style="padding:8px;border:1px solid var(--color-border);text-align:left">MLOps</th></tr>
-<tr><td style="padding:8px;border:1px solid var(--color-border)">Unit of work</td><td style="padding:8px;border:1px solid var(--color-border)">Code commit</td><td style="padding:8px;border:1px solid var(--color-border)">Data pipeline run</td><td style="padding:8px;border:1px solid var(--color-border)">Model training run</td></tr>
-<tr><td style="padding:8px;border:1px solid var(--color-border)">Quality gate</td><td style="padding:8px;border:1px solid var(--color-border)">Tests pass</td><td style="padding:8px;border:1px solid var(--color-border)">Expectations pass</td><td style="padding:8px;border:1px solid var(--color-border)">Metrics threshold met</td></tr>
-<tr><td style="padding:8px;border:1px solid var(--color-border)">Artifact</td><td style="padding:8px;border:1px solid var(--color-border)">Deployable binary</td><td style="padding:8px;border:1px solid var(--color-border)">Cleaned dataset</td><td style="padding:8px;border:1px solid var(--color-border)">Trained model</td></tr>
-<tr><td style="padding:8px;border:1px solid var(--color-border)">Orchestration</td><td style="padding:8px;border:1px solid var(--color-border)">CI/CD pipeline</td><td style="padding:8px;border:1px solid var(--color-border)">Airflow/Dagster DAG</td><td style="padding:8px;border:1px solid var(--color-border)">MLflow/Kubeflow</td></tr>
-</table>
-
-<h2 id="key-tools-by-category">Key Tools by Category</h2>
-<ul>
-<li><strong>Orchestration:</strong> Apache Airflow, Dagster, Prefect</li>
-<li><strong>Data Integration:</strong> Airbyte, Meltano, Apache NiFi</li>
-<li><strong>Transformation:</strong> dbt, SQLMesh</li>
-<li><strong>Quality:</strong> Great Expectations, Soda, dbt tests</li>
-<li><strong>Catalog & Lineage:</strong> OpenMetadata, DataHub, Amundsen</li>
-<li><strong>Monitoring:</strong> Monte Carlo, Bigeye, custom (Prometheus + Grafana)</li>
-<li><strong>Streaming:</strong> Apache Kafka, Apache Flink, RisingWave</li>
-</ul>
-
-<h2 id="practice-build-a-pipeline-manifest">Practice: Build a Pipeline Manifest</h2>
-<p>Every data pipeline should have a manifest file (YAML or TOML) that declares:</p>
-<ul>
-<li>Source connectors and their schemas</li>
-<li>Transformation DAG (materialized views or dbt models)</li>
-<li>Data quality expectations per stage</li>
-<li>SLOs (freshness, completeness, accuracy)</li>
-<li>Ownership and escalation contacts</li>
-</ul>
-<p>This manifest becomes the single source of truth for pipeline operations — the <em>registry of pipelines</em>, analogous to this site's registry.json for content.</p>
+      <h2 id="what-is-dataops">What is DataOps?</h2><p>DataOps is an automated, process-oriented methodology used by data teams to improve the quality and reduce the cycle time of data analytics. It applies agile software development, DevOps, and statistical process control (SPC) principles to the data pipeline lifecycle.</p><h2 id="core-principles">Core Principles</h2><ul><li><strong>Continuous Integration & Delivery:</strong> Changes to data pipelines, schemas, and transformations are automatically tested and deployed — just like application code.</li><li><strong>Pipeline Observability:</strong> Every stage of the data pipeline emits metrics: row counts, schema drift, null rates, latency percentiles. Teams monitor these in real-time dashboards.</li><li><strong>Data Quality as Code:</strong> Expectations and quality checks are defined programmatically (Great Expectations, Soda, dbt tests) and run on every pipeline execution.</li><li><strong>Version Everything:</strong> Data schemas, transformation logic, pipeline definitions, training datasets — all under version control with semantic versioning.</li><li><strong>Reproducibility:</strong> Given the same input data and pipeline version, the output must be identical. This requires deterministic transforms, immutable data layers, and full lineage tracking.</li></ul><h2 id="dataops-vs-devops-vs-mlops">DataOps vs DevOps vs MLOps</h2><table style="width:100%;border-collapse:collapse;font-size:0.9em"><tr style="background:var(--color-bg)"><th style="padding:8px;border:1px solid var(--color-border);text-align:left">Dimension</th><th style="padding:8px;border:1px solid var(--color-border);text-align:left">DevOps</th><th style="padding:8px;border:1px solid var(--color-border);text-align:left">DataOps</th><th style="padding:8px;border:1px solid var(--color-border);text-align:left">MLOps</th></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Unit of work</td><td style="padding:8px;border:1px solid var(--color-border)">Code commit</td><td style="padding:8px;border:1px solid var(--color-border)">Data pipeline run</td><td style="padding:8px;border:1px solid var(--color-border)">Model training run</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Quality gate</td><td style="padding:8px;border:1px solid var(--color-border)">Tests pass</td><td style="padding:8px;border:1px solid var(--color-border)">Expectations pass</td><td style="padding:8px;border:1px solid var(--color-border)">Metrics threshold met</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Artifact</td><td style="padding:8px;border:1px solid var(--color-border)">Deployable binary</td><td style="padding:8px;border:1px solid var(--color-border)">Cleaned dataset</td><td style="padding:8px;border:1px solid var(--color-border)">Trained model</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Orchestration</td><td style="padding:8px;border:1px solid var(--color-border)">CI/CD pipeline</td><td style="padding:8px;border:1px solid var(--color-border)">Airflow/Dagster DAG</td><td style="padding:8px;border:1px solid var(--color-border)">MLflow/Kubeflow</td></tr></table><h2 id="key-tools-by-category">Key Tools by Category</h2><ul><li><strong>Orchestration:</strong> Apache Airflow, Dagster, Prefect</li><li><strong>Data Integration:</strong> Airbyte, Meltano, Apache NiFi</li><li><strong>Transformation:</strong> dbt, SQLMesh</li><li><strong>Quality:</strong> Great Expectations, Soda, dbt tests</li><li><strong>Catalog & Lineage:</strong> OpenMetadata, DataHub, Amundsen</li><li><strong>Monitoring:</strong> Monte Carlo, Bigeye, custom (Prometheus + Grafana)</li><li><strong>Streaming:</strong> Apache Kafka, Apache Flink, RisingWave</li></ul><h2 id="practice-build-a-pipeline-manifest">Practice: Build a Pipeline Manifest</h2><p>Every data pipeline should have a manifest file (YAML or TOML) that declares:</p><ul><li>Source connectors and their schemas</li><li>Transformation DAG (materialized views or dbt models)</li><li>Data quality expectations per stage</li><li>SLOs (freshness, completeness, accuracy)</li><li>Ownership and escalation contacts</li></ul><p>This manifest becomes the single source of truth for pipeline operations — the <em>registry of pipelines</em>, analogous to this site's registry.json for content.</p>
     </div>
     <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
       <h2 class="text-2xl font-bold mb-6 inline-flex items-center gap-2" style="color:var(--color-text)">

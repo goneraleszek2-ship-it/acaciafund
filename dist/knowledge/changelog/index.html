@@ -37,8 +37,8 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="/static/css/tailwind.min.css?v=20260607172151">
-  <link rel="stylesheet" href="/static/css/custom.css?v=20260607172151">
+  <link rel="stylesheet" href="/static/css/tailwind.min.css?v=20260607173333">
+  <link rel="stylesheet" href="/static/css/custom.css?v=20260607173333">
   <link rel="preload" href="/static/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/static/fonts/Inter-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/static/fonts/Inter-Bold.woff2" as="font" type="font/woff2" crossorigin>
@@ -181,58 +181,7 @@
     </header>
 
     <div class="prose prose-lg max-w-none">
-      <p>Platform version history and notable changes to AcaciaFund.</p>
-
-<h3 id="2026-06-14-knowledge-base-overhaul">2026-06-14 — Knowledge Base Overhaul</h3>
-<ul>
-<li>Added dedicated <code>knowledge.j2</code> template with TOC, breadcrumbs, cross-references, and progress bar</li>
-<li>Reorganized knowledge entries into categories: Platform, Guides, Reference, Architecture</li>
-<li>Expanded glossary to 30+ terms across all four categories (AML, Markets, Science, DataOps)</li>
-<li>Added Research Methodology guide with full SQI formula and pipeline description</li>
-<li>Added Pillar Taxonomy guide with per-pillar scope, sources, and tag examples</li>
-<li>Migrated all knowledge slugs under <code>/knowledge/</code> namespace</li>
-<li>Added cross-referencing between knowledge and research/learn content via tag matching</li>
-<li>Generated category-specific thumbnail SVGs for knowledge sub-categories</li>
-</ul>
-
-<h3 id="2026-06-12-dataops-system-architecture">2026-06-12 — DataOps System Architecture</h3>
-<ul>
-<li>Added system architecture knowledge page</li>
-<li>Added DataOps glossary and open source tool landscape</li>
-<li>Updated README with full system architecture diagram</li>
-<li>Added <code>seed_dataops.py</code> for DataOps/engineering content seeding</li>
-</ul>
-
-<h3 id="2026-06-10-3-category-taxonomy-launch">2026-06-10 — 3-Category Taxonomy Launch</h3>
-<ul>
-<li>Introduced <code>content_type</code> field (research | learn | knowledge)</li>
-<li>Reclassified all registry entries</li>
-<li>Created category index pages for research/, learn/, knowledge/</li>
-<li>Created dedicated <code>learn.j2</code> template</li>
-<li>Added learning hub entries (AML basics, market analysis, science method, quiz)</li>
-<li>Added static knowledge pages (about, research overview, scholarship, contact, glossary, FAQ)</li>
-</ul>
-
-<h3 id="2026-06-07-fractal-thumbnails-amp-interest-ranking">2026-06-07 — Fractal Thumbnails &amp; Interest Ranking</h3>
-<ul>
-<li>Implemented seed-based fractal tree SVGs for per-article unique thumbnails</li>
-<li>Added OG image generation for social sharing</li>
-<li>Homepage now ranks articles by interest score (SQI × 0.6 + recency × 0.4)</li>
-<li>Added 15 new articles (Jan–May 2026, 5 per pillar)</li>
-</ul>
-
-<h3 id="2026-06-01-initial-platform-launch">2026-06-01 — Initial Platform Launch</h3>
-<ul>
-<li>Python-native static generator with Jinja2 + Pydantic</li>
-<li>Dark mode with FOUC prevention and localStorage persistence</li>
-<li>Accessible dropdown navigation and mobile menu</li>
-<li>Reading progress bar, TOC sidebar, focus mode</li>
-<li>Self-hosted Tailwind and Inter font</li>
-<li>Cloudflare Pages deployment via GitHub</li>
-<li>12 initial research articles (daily digest format)</li>
-</ul>
-
-<p><em>Last updated: 2026-06-14</em></p>
+      <p>Platform version history and notable changes to AcaciaFund.</p><h3 id="2026-06-14-knowledge-base-overhaul">2026-06-14 — Knowledge Base Overhaul</h3><ul><li>Added dedicated <code>knowledge.j2</code> template with TOC, breadcrumbs, cross-references, and progress bar</li><li>Reorganized knowledge entries into categories: Platform, Guides, Reference, Architecture</li><li>Expanded glossary to 30+ terms across all four categories (AML, Markets, Science, DataOps)</li><li>Added Research Methodology guide with full SQI formula and pipeline description</li><li>Added Pillar Taxonomy guide with per-pillar scope, sources, and tag examples</li><li>Migrated all knowledge slugs under <code>/knowledge/</code> namespace</li><li>Added cross-referencing between knowledge and research/learn content via tag matching</li><li>Generated category-specific thumbnail SVGs for knowledge sub-categories</li></ul><h3 id="2026-06-12-dataops-system-architecture">2026-06-12 — DataOps System Architecture</h3><ul><li>Added system architecture knowledge page</li><li>Added DataOps glossary and open source tool landscape</li><li>Updated README with full system architecture diagram</li><li>Added <code>seed_dataops.py</code> for DataOps/engineering content seeding</li></ul><h3 id="2026-06-10-3-category-taxonomy-launch">2026-06-10 — 3-Category Taxonomy Launch</h3><ul><li>Introduced <code>content_type</code> field (research | learn | knowledge)</li><li>Reclassified all registry entries</li><li>Created category index pages for research/, learn/, knowledge/</li><li>Created dedicated <code>learn.j2</code> template</li><li>Added learning hub entries (AML basics, market analysis, science method, quiz)</li><li>Added static knowledge pages (about, research overview, scholarship, contact, glossary, FAQ)</li></ul><h3 id="2026-06-07-fractal-thumbnails-amp-interest-ranking">2026-06-07 — Fractal Thumbnails &amp; Interest Ranking</h3><ul><li>Implemented seed-based fractal tree SVGs for per-article unique thumbnails</li><li>Added OG image generation for social sharing</li><li>Homepage now ranks articles by interest score (SQI × 0.6 + recency × 0.4)</li><li>Added 15 new articles (Jan–May 2026, 5 per pillar)</li></ul><h3 id="2026-06-01-initial-platform-launch">2026-06-01 — Initial Platform Launch</h3><ul><li>Python-native static generator with Jinja2 + Pydantic</li><li>Dark mode with FOUC prevention and localStorage persistence</li><li>Accessible dropdown navigation and mobile menu</li><li>Reading progress bar, TOC sidebar, focus mode</li><li>Self-hosted Tailwind and Inter font</li><li>Cloudflare Pages deployment via GitHub</li><li>12 initial research articles (daily digest format)</li></ul><p><em>Last updated: 2026-06-14</em></p>
     </div>
   </article>
 </div>

@@ -7,6 +7,7 @@ import hashlib
 import json
 import re
 import shutil
+import unicodedata
 from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
@@ -158,6 +159,20 @@ def thumbnail_key(title: str) -> str:
     return hashlib.md5(title.encode()).hexdigest()[:12]
 
 
+CJK_RE = re.compile(r'[\u4e00-\u9fff\u3400-\u4dbf\uff00-\uffef]')
+EMOJI_RE = re.compile(r'[\U0001F300-\U0001F9FF\U0001FA00-\U0001FA6F\U0001FA70-\U0001FAFF\u2600-\u27BF\u2B50\U0001F1E0-\U0001F1FF]')
+
+
+def sanitize_text(html: str, strip_emoji: bool = True) -> str:
+    html = unicodedata.normalize('NFKC', html)
+    html = CJK_RE.sub('', html)
+    if strip_emoji:
+        html = EMOJI_RE.sub('', html)
+    html = re.sub(r'  +', ' ', html)
+    html = re.sub(r'>\s+<', '><', html)
+    return html
+
+
 DOMAIN_BREAKDOWN_RE = re.compile(
     r'<li>[^<]*?([A-Za-z]+)\s*:\s*(\d+)%\s*of sources\s*</li>',
     re.IGNORECASE,
@@ -271,6 +286,8 @@ def main():
         body, toc_items = extract_headings(body)
         body = re.sub(r'<h2[^>]*>\s*' + re.escape(item.title.strip()) + r'\s*</h2>\s*', '', body, count=1)
         body = sanitize_domain_breakdown(body)
+        body = sanitize_text(body, strip_emoji=False)
+        item.description = sanitize_text(item.description, strip_emoji=False)
         item.body_html = body
 
         kcat = KNOWLEDGE_CATEGORIES.get(item.knowledge_category, {})
@@ -352,7 +369,10 @@ def main():
         body, toc_items = extract_headings(body)
         body = re.sub(r'<h2[^>]*>\s*' + re.escape(item.title.strip()) + r'\s*</h2>\s*', '', body, count=1)
         body = sanitize_domain_breakdown(body)
+        body = sanitize_text(body, strip_emoji=False)
+        item.description = sanitize_text(item.description, strip_emoji=False)
         item.body_html = body
+
 
         pillar = item.pillar or ""
         pconf = PILLAR_CONFIG.get(pillar) if pillar else None
@@ -430,7 +450,8 @@ def main():
         body, toc_items = extract_headings(body)
         body = re.sub(r'<h2[^>]*>\s*' + re.escape(item.title.strip()) + r'\s*</h2>\s*', '', body, count=1)
         body = sanitize_domain_breakdown(body)
-        item.body_html = body
+        body = sanitize_text(body, strip_emoji=True)
+        item.description = sanitize_text(item.description, strip_emoji=True)
 
         prev_post = research_items[i + 1] if i + 1 < len(research_items) else None
         next_post = research_items[i - 1] if i > 0 else None
@@ -460,7 +481,7 @@ def main():
         )
 
         html = render_template("blog_post.j2",
-            content=item, page_path=page_path,
+            content=item, page_path=page_path, page_body=body,
             prev_post=prev_post, next_post=next_post,
             pconf=pconf, sqi_svg=sqi_svg,
             og_image_url=og_image_url,

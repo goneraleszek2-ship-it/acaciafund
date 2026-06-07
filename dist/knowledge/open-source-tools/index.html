@@ -37,8 +37,8 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="/static/css/tailwind.min.css?v=20260607172151">
-  <link rel="stylesheet" href="/static/css/custom.css?v=20260607172151">
+  <link rel="stylesheet" href="/static/css/tailwind.min.css?v=20260607173333">
+  <link rel="stylesheet" href="/static/css/custom.css?v=20260607173333">
   <link rel="preload" href="/static/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/static/fonts/Inter-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/static/fonts/Inter-Bold.woff2" as="font" type="font/woff2" crossorigin>
@@ -202,74 +202,7 @@
     </header>
 
     <div class="prose prose-lg max-w-none">
-      <h2 id="open-source-data-engineering-tools-2026">Open Source Data Engineering Tools 2026</h2>
-<p>Curated reference of production-grade open source tools for each data platform layer.</p>
-
-<h2 id="orchestration">Orchestration</h2>
-<ul>
-<li><strong>Apache Airflow</strong> — Mature DAG-based scheduler. Largest ecosystem of operators and integrations. Best for teams that need battle-tested stability.</li>
-<li><strong>Dagster</strong> — Asset-centric orchestrator with software-defined assets, explicit lineage, and first-class testability. Growing rapidly in 2026.</li>
-<li><strong>Prefect</strong> — Python-native orchestration with automatic retries, caching, and cloud UI. Strong DX for smaller teams.</li>
-</ul>
-
-<h2 id="data-integration-elt">Data Integration (ELT)</h2>
-<ul>
-<li><strong>Airbyte</strong> — 600+ connectors, protocol-level schema handling, incremental syncs. Deploy self-hosted or Cloud.</li>
-<li><strong>Meltano</strong> — Singer-based integration platform with CI/CD for pipelines. Git-native pipeline management.</li>
-<li><strong>Apache NiFi</strong> — Visual data flow designer with real-time routing and transformation. Best for complex topologies.</li>
-<li><strong>Debezium</strong> — CDC platform for MySQL, PostgreSQL, MongoDB, etc. Streams changes to Kafka.</li>
-</ul>
-
-<h2 id="transformation">Transformation</h2>
-<ul>
-<li><strong>dbt</strong> — SQL transformation framework with testing, documentation, and package management. Industry standard.</li>
-<li><strong>SQLMesh</strong> — SQL transformation with automatic diff-based reconciliation, virtual data environments, and backfill optimization.</li>
-</ul>
-
-<h2 id="data-quality">Data Quality</h2>
-<ul>
-<li><strong>Great Expectations</strong> — Python expectation framework with automatic profiling, data docs, and suite management.</li>
-<li><strong>Soda</strong> — YAML-defined quality checks with built-in anomaly detection and Slack/API integrations.</li>
-<li><strong>dbt Tests</strong> — Built-in uniqueness, not-null, accepted-values, foreign-key tests plus custom generic tests.</li>
-</ul>
-
-<h2 id="catalog-governance">Catalog & Governance</h2>
-<ul>
-<li><strong>OpenMetadata</strong> — Unified metadata platform with data discovery, lineage, glossary, and data quality integration.</li>
-<li><strong>DataHub</strong> — LinkedIn's metadata platform. Strong lineage and search. Kubernetes-native.</li>
-<li><strong>Amundsen</strong> — Lyft's data discovery platform. Lighter weight, simpler deployment.</li>
-</ul>
-
-<h2 id="stream-processing">Stream Processing</h2>
-<ul>
-<li><strong>Apache Kafka</strong> — Distributed event store and stream processing. De facto standard for data streaming.</li>
-<li><strong>Apache Flink</strong> — True stream processing with exactly-once semantics, event-time processing, and state management.</li>
-<li><strong>RisingWave</strong> — Streaming SQL database. Materialized views on streams with PostgreSQL-compatible interface.</li>
-</ul>
-
-<h2 id="storage-query">Storage & Query</h2>
-<ul>
-<li><strong>Apache Iceberg</strong> — Open table format with ACID, time travel, partition evolution. The 2026 standard for lakehouse tables.</li>
-<li><strong>Delta Lake</strong> — Linux Foundation table format with ACID, schema enforcement, and unified batch/streaming.</li>
-<li><strong>Trino</strong> — Distributed SQL query engine for federated queries across data sources. Extremely fast.</li>
-<li><strong>DuckDB</strong> — Embedded OLAP database. Ideal for local analytics and embedded use cases.</li>
-<li><strong>MinIO</strong> — S3-compatible object storage for on-premise and edge deployments.</li>
-</ul>
-
-<h2 id="ml-platform">ML Platform</h2>
-<ul>
-<li><strong>MLflow</strong> — Experiment tracking, model registry, deployment. De facto standard for ML lifecycle.</li>
-<li><strong>Feast</strong> — Feature store for ML. Consistent feature computation across training and serving.</li>
-<li><strong>BentoML</strong> — Model serving framework with Python-native APIs and Kubernetes deployment.</li>
-<li><strong>Kubeflow</strong> — MLOps platform on Kubernetes for end-to-end ML workflows.</li>
-</ul>
-
-<h2 id="observability">Observability</h2>
-<ul>
-<li><strong>Prometheus + Grafana</strong> — Metrics collection and dashboarding. Standard for infrastructure and pipeline monitoring.</li>
-<li><strong>OpenTelemetry</strong> — Vendor-neutral observability framework for traces, metrics, and logs.</li>
-<li><strong>Grafana Loki</strong> — Log aggregation system. Lightweight, cost-effective, Grafana-native.</li>
-</ul>
+      <h2 id="open-source-data-engineering-tools-2026">Open Source Data Engineering Tools 2026</h2><p>Curated reference of production-grade open source tools for each data platform layer.</p><h2 id="orchestration">Orchestration</h2><ul><li><strong>Apache Airflow</strong> — Mature DAG-based scheduler. Largest ecosystem of operators and integrations. Best for teams that need battle-tested stability.</li><li><strong>Dagster</strong> — Asset-centric orchestrator with software-defined assets, explicit lineage, and first-class testability. Growing rapidly in 2026.</li><li><strong>Prefect</strong> — Python-native orchestration with automatic retries, caching, and cloud UI. Strong DX for smaller teams.</li></ul><h2 id="data-integration-elt">Data Integration (ELT)</h2><ul><li><strong>Airbyte</strong> — 600+ connectors, protocol-level schema handling, incremental syncs. Deploy self-hosted or Cloud.</li><li><strong>Meltano</strong> — Singer-based integration platform with CI/CD for pipelines. Git-native pipeline management.</li><li><strong>Apache NiFi</strong> — Visual data flow designer with real-time routing and transformation. Best for complex topologies.</li><li><strong>Debezium</strong> — CDC platform for MySQL, PostgreSQL, MongoDB, etc. Streams changes to Kafka.</li></ul><h2 id="transformation">Transformation</h2><ul><li><strong>dbt</strong> — SQL transformation framework with testing, documentation, and package management. Industry standard.</li><li><strong>SQLMesh</strong> — SQL transformation with automatic diff-based reconciliation, virtual data environments, and backfill optimization.</li></ul><h2 id="data-quality">Data Quality</h2><ul><li><strong>Great Expectations</strong> — Python expectation framework with automatic profiling, data docs, and suite management.</li><li><strong>Soda</strong> — YAML-defined quality checks with built-in anomaly detection and Slack/API integrations.</li><li><strong>dbt Tests</strong> — Built-in uniqueness, not-null, accepted-values, foreign-key tests plus custom generic tests.</li></ul><h2 id="catalog-governance">Catalog & Governance</h2><ul><li><strong>OpenMetadata</strong> — Unified metadata platform with data discovery, lineage, glossary, and data quality integration.</li><li><strong>DataHub</strong> — LinkedIn's metadata platform. Strong lineage and search. Kubernetes-native.</li><li><strong>Amundsen</strong> — Lyft's data discovery platform. Lighter weight, simpler deployment.</li></ul><h2 id="stream-processing">Stream Processing</h2><ul><li><strong>Apache Kafka</strong> — Distributed event store and stream processing. De facto standard for data streaming.</li><li><strong>Apache Flink</strong> — True stream processing with exactly-once semantics, event-time processing, and state management.</li><li><strong>RisingWave</strong> — Streaming SQL database. Materialized views on streams with PostgreSQL-compatible interface.</li></ul><h2 id="storage-query">Storage & Query</h2><ul><li><strong>Apache Iceberg</strong> — Open table format with ACID, time travel, partition evolution. The 2026 standard for lakehouse tables.</li><li><strong>Delta Lake</strong> — Linux Foundation table format with ACID, schema enforcement, and unified batch/streaming.</li><li><strong>Trino</strong> — Distributed SQL query engine for federated queries across data sources. Extremely fast.</li><li><strong>DuckDB</strong> — Embedded OLAP database. Ideal for local analytics and embedded use cases.</li><li><strong>MinIO</strong> — S3-compatible object storage for on-premise and edge deployments.</li></ul><h2 id="ml-platform">ML Platform</h2><ul><li><strong>MLflow</strong> — Experiment tracking, model registry, deployment. De facto standard for ML lifecycle.</li><li><strong>Feast</strong> — Feature store for ML. Consistent feature computation across training and serving.</li><li><strong>BentoML</strong> — Model serving framework with Python-native APIs and Kubernetes deployment.</li><li><strong>Kubeflow</strong> — MLOps platform on Kubernetes for end-to-end ML workflows.</li></ul><h2 id="observability">Observability</h2><ul><li><strong>Prometheus + Grafana</strong> — Metrics collection and dashboarding. Standard for infrastructure and pipeline monitoring.</li><li><strong>OpenTelemetry</strong> — Vendor-neutral observability framework for traces, metrics, and logs.</li><li><strong>Grafana Loki</strong> — Log aggregation system. Lightweight, cost-effective, Grafana-native.</li></ul>
     </div>
     <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
       <h2 class="text-xl font-bold mb-4" style="color:var(--color-text)">Related Research</h2>

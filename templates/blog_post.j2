@@ -58,7 +58,7 @@
       <h1 class="text-3xl font-extrabold text-gray-900 leading-tight">{{ content.title | striptags }}</h1>
       {%- if content.date_str %}
       <time class="mt-2 block text-sm text-gray-500" datetime="{{ content.date_str }}">{{ content.date_str }}
-        {%- if content.body_html %} · {{ content.body_html | reading_time }} min read{% endif %}
+        {%- if page_body %} · {{ page_body | reading_time }} min read{% endif %}
       </time>
       {%- endif %}
       {%- if content.tags and content.tags | length > 0 %}
@@ -107,7 +107,7 @@
     {%- endif %}
 
     <div class="prose prose-lg prose-blue max-w-none">
-      {{ content.body_html | safe }}
+      {{ page_body | default(content.body_html) | safe }}
     </div>
 
     {%- if content.bloom_questions and content.bloom_questions | length > 0 %}

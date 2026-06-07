@@ -37,8 +37,8 @@
       }
     })();
   </script>
-  <link rel="stylesheet" href="/static/css/tailwind.min.css?v=20260607172151">
-  <link rel="stylesheet" href="/static/css/custom.css?v=20260607172151">
+  <link rel="stylesheet" href="/static/css/tailwind.min.css?v=20260607173333">
+  <link rel="stylesheet" href="/static/css/custom.css?v=20260607173333">
   <link rel="preload" href="/static/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/static/fonts/Inter-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/static/fonts/Inter-Bold.woff2" as="font" type="font/woff2" crossorigin>
@@ -156,51 +156,7 @@
     </header>
 
     <div class="prose prose-lg max-w-none">
-      <p>Key terms used across DataOps, data engineering, and data science — as referenced in AcaciaFund's research and learning materials.</p>
-
-<dl style="line-height:1.8">
-<dt><strong>DataOps</strong></dt>
-<dd>Automated, process-oriented methodology applying Agile, DevOps, and statistical process control to data pipeline lifecycle management.</dd>
-
-<dt><strong>ELT vs ETL</strong></dt>
-<dd>Extract-Load-Transform: data is extracted and loaded raw into the warehouse, then transformed in-place. Contrasts with classic ETL where transformation happens before loading.</dd>
-
-<dt><strong>Medallion Architecture</strong></dt>
-<dd>Bronze (raw) → Silver (cleaned) → Gold (aggregated) data layering pattern popularized by Databricks for lakehouse implementations.</dd>
-
-<dt><strong>Pipeline Observability</strong></dt>
-<dd>Real-time monitoring of data pipelines — row counts, schema drift, latency, error rates — to detect and diagnose failures quickly.</dd>
-
-<dt><strong>Data Contract</strong></dt>
-<dd>Formal agreement between data producers and consumers specifying schema, semantics, quality SLOs, and ownership.</dd>
-
-<dt><strong>dbt</strong></dt>
-<dd>Data build tool — SQL-first transformation framework. Models are SELECT statements; dbt handles materialization, testing, and docs.</dd>
-
-<dt><strong>Great Expectations</strong></dt>
-<dd>Open-source Python framework for defining, testing, and documenting data quality expectations.</dd>
-
-<dt><strong>SQI (Signal Quality Index)</strong></dt>
-<dd>AcaciaFund's composite metric: source authority × freshness × consensus × relevance, normalized to [0,1].</dd>
-
-<dt><strong>CDC (Change Data Capture)</strong></dt>
-<dd>Technique for capturing row-level changes in databases, enabling real-time data replication without bulk loads.</dd>
-
-<dt><strong>DAG (Directed Acyclic Graph)</strong></dt>
-<dd>Acyclic graph of tasks with dependencies — the fundamental scheduling unit in Airflow, Dagster, and Prefect.</dd>
-
-<dt><strong>MCP (Model Context Protocol)</strong></dt>
-<dd>Emerging protocol for AI agents to interact with data tools and APIs in a standardized way, enabling agent-operated data pipelines.</dd>
-
-<dt><strong>Feature Store</strong></dt>
-<dd>Centralized repository for ML features enabling consistent computation, sharing, and serving across training and inference.</dd>
-
-<dt><strong>Data Lineage</strong></dt>
-<dd>End-to-end tracking of data from source through transformations to final consumption, enabling debugging, auditing, and impact analysis.</dd>
-
-<dt><strong>Schema-on-Read</strong></dt>
-<dd>Data lake paradigm where schema is applied at query time rather than ingest time, enabling flexible data storage.</dd>
-</dl>
+      <p>Key terms used across DataOps, data engineering, and data science — as referenced in AcaciaFund's research and learning materials.</p><dl style="line-height:1.8"><dt><strong>DataOps</strong></dt><dd>Automated, process-oriented methodology applying Agile, DevOps, and statistical process control to data pipeline lifecycle management.</dd><dt><strong>ELT vs ETL</strong></dt><dd>Extract-Load-Transform: data is extracted and loaded raw into the warehouse, then transformed in-place. Contrasts with classic ETL where transformation happens before loading.</dd><dt><strong>Medallion Architecture</strong></dt><dd>Bronze (raw) → Silver (cleaned) → Gold (aggregated) data layering pattern popularized by Databricks for lakehouse implementations.</dd><dt><strong>Pipeline Observability</strong></dt><dd>Real-time monitoring of data pipelines — row counts, schema drift, latency, error rates — to detect and diagnose failures quickly.</dd><dt><strong>Data Contract</strong></dt><dd>Formal agreement between data producers and consumers specifying schema, semantics, quality SLOs, and ownership.</dd><dt><strong>dbt</strong></dt><dd>Data build tool — SQL-first transformation framework. Models are SELECT statements; dbt handles materialization, testing, and docs.</dd><dt><strong>Great Expectations</strong></dt><dd>Open-source Python framework for defining, testing, and documenting data quality expectations.</dd><dt><strong>SQI (Signal Quality Index)</strong></dt><dd>AcaciaFund's composite metric: source authority × freshness × consensus × relevance, normalized to [0,1].</dd><dt><strong>CDC (Change Data Capture)</strong></dt><dd>Technique for capturing row-level changes in databases, enabling real-time data replication without bulk loads.</dd><dt><strong>DAG (Directed Acyclic Graph)</strong></dt><dd>Acyclic graph of tasks with dependencies — the fundamental scheduling unit in Airflow, Dagster, and Prefect.</dd><dt><strong>MCP (Model Context Protocol)</strong></dt><dd>Emerging protocol for AI agents to interact with data tools and APIs in a standardized way, enabling agent-operated data pipelines.</dd><dt><strong>Feature Store</strong></dt><dd>Centralized repository for ML features enabling consistent computation, sharing, and serving across training and inference.</dd><dt><strong>Data Lineage</strong></dt><dd>End-to-end tracking of data from source through transformations to final consumption, enabling debugging, auditing, and impact analysis.</dd><dt><strong>Schema-on-Read</strong></dt><dd>Data lake paradigm where schema is applied at query time rather than ingest time, enabling flexible data storage.</dd></dl>
     </div>
     <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
       <h2 class="text-xl font-bold mb-4" style="color:var(--color-text)">Related Research</h2>
