@@ -16,6 +16,7 @@ class AcaciaContent(BaseModel):
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     updated_at: Optional[datetime] = None
     pillar: str = ""
+    difficulty: str = ""  # beginner | intermediate | advanced
     date_str: str = ""
     thumbnail_svg: str = ""
     og_svg: str = ""

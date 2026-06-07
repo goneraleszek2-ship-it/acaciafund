@@ -99,46 +99,107 @@
   </header>
 
   <main id="main" class="max-w-5xl mx-auto px-4 py-8" tabindex="-1">
-<article class="max-w-3xl mx-auto">
-  <nav aria-label="Breadcrumb" class="mb-4 text-xs" style="color:var(--color-text-muted)">
-    <ol class="flex flex-wrap items-center gap-1.5">
-      <li><a href="/" class="hover:text-[var(--color-accent)] transition">Home</a></li>
-      <li aria-hidden="true">/</li>
-      <li><a href="/learn/" class="hover:text-[var(--color-accent)] transition">Learn</a></li>
-      <li aria-hidden="true">/</li>
-      <li aria-current="page" class="truncate max-w-[200px]">Data Quality Engineering: Testing, Monitoring, and Expectations at Scale</li>
-    </ol>
-  </nav>
+<div id="reading-progress" style="position:fixed;top:0;left:0;height:3px;z-index:9999;width:0%;background:var(--color-accent)"></div>
 
-  <header class="mb-8">
-    <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">Data Quality Engineering: Testing, Monitoring, and Expectations at Scale</h1>
-    <time class="mt-2 block text-sm" style="color:var(--color-text-muted)" datetime="2026-06-11">
-      2026-06-11 · 1 min
-    </time>
-    <div class="mt-3 flex flex-wrap gap-2">
-      <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">data-quality</span>
-      <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">testing</span>
-      <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">dataops</span>
-      <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">engineering</span>
+<div class="flex gap-8 lg:flex-row flex-col">
+  <aside class="toc-sidebar shrink-0 lg:sticky lg:top-20 lg:self-start lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto lg:w-56">
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="text-xs font-semibold uppercase tracking-wide" style="color:var(--color-text-muted)">On this page</h2>
+      <button id="focus-toggle" class="text-xs px-2 py-1 rounded" style="color:var(--color-text-muted);background:var(--color-bg)" title="Focus mode" aria-label="Toggle focus mode">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 4h4M6 20h4M18 4h-4M18 20h-4M4 6v4M4 18v4M20 6v4M20 18v4"/></svg>
+      </button>
     </div>
-  </header>
+    <nav aria-label="Table of contents">
+      <ul class="space-y-1 text-sm">
+        <li>
+          <a href="#why-data-quality-engineering-matters" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Why Data Quality Engineering Matters
+          </a>
+        </li>
+        <li>
+          <a href="#three-layers-of-data-quality" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Three Layers of Data Quality
+          </a>
+        </li>
+        <li>
+          <a href="#1-freshness" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            1. Freshness
+          </a>
+        </li>
+        <li>
+          <a href="#2-completeness" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            2. Completeness
+          </a>
+        </li>
+        <li>
+          <a href="#3-accuracy" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            3. Accuracy
+          </a>
+        </li>
+        <li>
+          <a href="#expectations-as-code" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Expectations as Code
+          </a>
+        </li>
+        <li>
+          <a href="#monitoring-dashboard" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Monitoring Dashboard
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
 
-  <div class="prose prose-lg max-w-none">
-    <h2>Why Data Quality Engineering Matters</h2>
+  <article class="min-w-0 flex-1">
+    <nav aria-label="Breadcrumb" class="mb-4 text-xs" style="color:var(--color-text-muted)">
+      <ol class="flex flex-wrap items-center gap-1.5">
+        <li><a href="/" class="hover:text-[var(--color-accent)] transition">Home</a></li>
+        <li aria-hidden="true">/</li>
+        <li><a href="/learn/" class="hover:text-[var(--color-accent)] transition">Learn</a></li>
+        <li aria-hidden="true">/</li>
+        <li aria-current="page" class="truncate max-w-[200px]">Data Quality Engineering: Testing, Monitoring, and Expectations at Scale</li>
+      </ol>
+    </nav>
+
+    <header class="mb-8">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+          chart Markets
+        </span>
+        <span class="inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-full" style="background:var(--color-bg);color:var(--color-text-secondary)">
+          📘 Intermediate
+        </span>
+      </div>
+      <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">Data Quality Engineering: Testing, Monitoring, and Expectations at Scale</h1>
+      <div class="mt-2 flex items-center gap-3 text-sm" style="color:var(--color-text-muted)">
+        <time datetime="2026-06-11">2026-06-11</time>
+        <span>1 min read</span>
+      </div>
+      <div class="mt-3 flex flex-wrap gap-2">
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">engineering</span>
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">stock</span>
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">dataops</span>
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">testing</span>
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">data-quality</span>
+      </div>
+    </header>
+
+    <div class="prose prose-lg max-w-none">
+      <h2 id="why-data-quality-engineering-matters">Why Data Quality Engineering Matters</h2>
 <p>In a DataOps culture, data quality is not discovered after the fact — it is engineered into the pipeline from day one. Every time data moves between stages, there is a risk of corruption, drift, or silent failure. Data quality engineering applies software testing principles to data.</p>
 
-<h2>Three Layers of Data Quality</h2>
+<h2 id="three-layers-of-data-quality">Three Layers of Data Quality</h2>
 
-<h3>1. Freshness</h3>
+<h3 id="1-freshness">1. Freshness</h3>
 <p>Is the data current? A pipeline SLO might state: "All source data must be ingested within 5 minutes of production." Violations trigger alerts and page the on-call data engineer. Freshness checks compare the max timestamp of incoming records against the current time.</p>
 
-<h3>2. Completeness</h3>
+<h3 id="2-completeness">2. Completeness</h3>
 <p>Are all expected records present? Row count checks compare expected vs actual counts. A sudden drop of 30% in event volume usually means a source connector failed or schema changed.</p>
 
-<h3>3. Accuracy</h3>
+<h3 id="3-accuracy">3. Accuracy</h3>
 <p>Do the values make sense? Accuracy checks include: NULL ratio thresholds, reference integrity (every foreign key has a matching primary key), domain constraints (age between 0 and 120), and statistical distribution checks (z-score outlier detection).</p>
 
-<h2>Expectations as Code</h2>
+<h2 id="expectations-as-code">Expectations as Code</h2>
 <p>Great Expectations lets you define expectations as Python objects:</p>
 <pre style="background:var(--color-bg);padding:16px;border-radius:8px;overflow-x:auto;font-size:0.85em">
 expectation_suite = ExpectationSuite("transactions_clean")
@@ -151,7 +212,7 @@ expectation_suite.add_expectation(
 </pre>
 <p>These expectations run on every pipeline execution. If they fail, the pipeline either halts (hard gate) or proceeds with a warning (soft gate) depending on severity.</p>
 
-<h2>Monitoring Dashboard</h2>
+<h2 id="monitoring-dashboard">Monitoring Dashboard</h2>
 <p>A production data quality dashboard tracks:</p>
 <ul>
 <li>Pass/fail rate per expectation over time</li>
@@ -161,29 +222,109 @@ expectation_suite.add_expectation(
 <li>Pipeline DAG health (success rate, duration, backlog)</li>
 </ul>
 <p>The AcaciaFund SQI (Signal Quality Index) is itself a data quality metric — combining source authority, freshness, consensus, and relevance into a single composable score.</p>
-  </div>
-  <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
-    <h2 class="text-2xl font-bold mb-6" style="color:var(--color-text)">Flashcards</h2>
-    <div class="grid gap-4 sm:grid-cols-2">
-      <div class="rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
-        <div class="font-semibold text-sm" style="color:var(--color-text)">Expectation Suite</div>
-        <div class="mt-1 text-xs" style="color:var(--color-text-secondary)">Collection of data quality assertions that define the expected state of a dataset.</div>
-      </div>
-      <div class="rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
-        <div class="font-semibold text-sm" style="color:var(--color-text)">Soft Gate vs Hard Gate</div>
-        <div class="mt-1 text-xs" style="color:var(--color-text-secondary)">Soft gate: pipeline continues but issues warning. Hard gate: pipeline halts on quality failure.</div>
-      </div>
-      <div class="rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
-        <div class="font-semibold text-sm" style="color:var(--color-text)">Schema Drift</div>
-        <div class="mt-1 text-xs" style="color:var(--color-text-secondary)">Unexpected change in dataset schema (new/missing columns, type changes) that can cause downstream failures.</div>
-      </div>
-      <div class="rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
-        <div class="font-semibold text-sm" style="color:var(--color-text)">Signal Quality Index (SQI)</div>
-        <div class="mt-1 text-xs" style="color:var(--color-text-secondary)">Composite metric measuring source authority, freshness, consensus, and relevance of synthesized content.</div>
-      </div>
     </div>
-  </section>
-</article>
+    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
+      <h2 class="text-2xl font-bold mb-6" style="color:var(--color-text)">Flashcards</h2>
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div class="rounded-lg p-4 flashcard-card">
+          <div class="font-semibold text-sm" style="color:var(--color-text)">Expectation Suite</div>
+          <div class="mt-1 text-xs" style="color:var(--color-text-secondary)">Collection of data quality assertions that define the expected state of a dataset.</div>
+        </div>
+        <div class="rounded-lg p-4 flashcard-card">
+          <div class="font-semibold text-sm" style="color:var(--color-text)">Soft Gate vs Hard Gate</div>
+          <div class="mt-1 text-xs" style="color:var(--color-text-secondary)">Soft gate: pipeline continues but issues warning. Hard gate: pipeline halts on quality failure.</div>
+        </div>
+        <div class="rounded-lg p-4 flashcard-card">
+          <div class="font-semibold text-sm" style="color:var(--color-text)">Schema Drift</div>
+          <div class="mt-1 text-xs" style="color:var(--color-text-secondary)">Unexpected change in dataset schema (new/missing columns, type changes) that can cause downstream failures.</div>
+        </div>
+        <div class="rounded-lg p-4 flashcard-card">
+          <div class="font-semibold text-sm" style="color:var(--color-text)">Signal Quality Index (SQI)</div>
+          <div class="mt-1 text-xs" style="color:var(--color-text-secondary)">Composite metric measuring source authority, freshness, consensus, and relevance of synthesized content.</div>
+        </div>
+      </div>
+    </section>
+    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
+      <h2 class="text-xl font-bold mb-4" style="color:var(--color-text)">Related Research</h2>
+      <div class="grid gap-3 sm:grid-cols-2">
+        <a href="/blog/2026-06-11-dataops-markets/" class="block rounded-lg p-3 transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+          <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded bg-green-100 text-green-800">chart Markets</span>
+          <span class="block mt-1 text-sm font-semibold" style="color:var(--color-text)">Real-Time Data Engineering for Algorithmic Trading: From Tick Data to Execution Signals</span>
+          <span class="block mt-1 text-xs" style="color:var(--color-text-muted)">2026-06-11 · 1 min</span>
+        </a>
+        <a href="/blog/2026-06-16-science-dataeng/" class="block rounded-lg p-3 transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+          <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded bg-purple-100 text-purple-800">microscope Science</span>
+          <span class="block mt-1 text-sm font-semibold" style="color:var(--color-text)">Data Pipeline Patterns for High-Throughput Genomics: Orchestrating Bioinformatics Workflows with Dagster</span>
+          <span class="block mt-1 text-xs" style="color:var(--color-text-muted)">2026-06-16 · 1 min</span>
+        </a>
+        <a href="/blog/2026-06-15-stock-dataeng/" class="block rounded-lg p-3 transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+          <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded bg-green-100 text-green-800">chart Markets</span>
+          <span class="block mt-1 text-sm font-semibold" style="color:var(--color-text)">Feature Engineering at Scale: Building ML-Ready Market Data Pipelines with dbt and Iceberg</span>
+          <span class="block mt-1 text-xs" style="color:var(--color-text-muted)">2026-06-15 · 1 min</span>
+        </a>
+      </div>
+    </section>
+    <section class="mt-8 pt-8 border-t" style="border-color:var(--color-border)">
+      <h2 class="text-xl font-bold mb-4" style="color:var(--color-text)">Related Knowledge</h2>
+      <div class="grid gap-3 sm:grid-cols-2">
+        <a href="/knowledge/dataops-glossary/" class="block rounded-lg p-3 transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+          <span class="block text-sm font-semibold" style="color:var(--color-text)">DataOps Glossary</span>
+          <p class="mt-1 text-xs" style="color:var(--color-text-secondary)">Key DataOps, data engineering, and data science terminology.</p>
+        </a>
+        <a href="/knowledge/open-source-tools/" class="block rounded-lg p-3 transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+          <span class="block text-sm font-semibold" style="color:var(--color-text)">Open Source Data Engineering Tool Landscape</span>
+          <p class="mt-1 text-xs" style="color:var(--color-text-secondary)">Curated reference of open source tools for modern data platforms.</p>
+        </a>
+        <a href="/knowledge/system-architecture/" class="block rounded-lg p-3 transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+          <span class="block text-sm font-semibold" style="color:var(--color-text)">AcaciaFund System Architecture: A DataOps Perspective</span>
+          <p class="mt-1 text-xs" style="color:var(--color-text-secondary)">AcaciaFund as a DataOps pipeline — architecture, principles, and metrics.</p>
+        </a>
+      </div>
+    </section>
+  </article>
+</div>
+
+<script>
+(function(){
+  var bar = document.getElementById('reading-progress');
+  if (bar) {
+    window.addEventListener('scroll', function() {
+      var h = document.documentElement;
+      var pct = (h.scrollTop || document.body.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+      bar.style.width = Math.min(pct, 100) + '%';
+    }, {passive: true});
+  }
+
+  var tocLinks = document.querySelectorAll('.toc-link');
+  if (tocLinks.length) {
+    var headings = [];
+    tocLinks.forEach(function(link) {
+      var id = link.getAttribute('href').slice(1);
+      var el = document.getElementById(id);
+      if (el) headings.push({el: el, link: link});
+    });
+    window.addEventListener('scroll', function() {
+      var scrollY = window.scrollY + 120;
+      var current = null;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        if (headings[i].el.offsetTop <= scrollY) { current = headings[i]; break; }
+      }
+      tocLinks.forEach(function(l) { l.style.background = ''; l.style.color = ''; });
+      if (current) {
+        current.link.style.background = 'var(--color-bg)';
+        current.link.style.color = 'var(--color-accent)';
+      }
+    }, {passive: true});
+  }
+
+  var focusBtn = document.getElementById('focus-toggle');
+  if (focusBtn) {
+    focusBtn.addEventListener('click', function() {
+      document.body.classList.toggle('focus-mode');
+    });
+  }
+})();
+</script>
 
   </main>
 

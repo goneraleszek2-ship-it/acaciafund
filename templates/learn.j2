@@ -1,48 +1,169 @@
 {% extends "layout.j2" %}
 {% block main_content %}
-<article class="max-w-3xl mx-auto">
-  <nav aria-label="Breadcrumb" class="mb-4 text-xs" style="color:var(--color-text-muted)">
-    <ol class="flex flex-wrap items-center gap-1.5">
-      <li><a href="/" class="hover:text-[var(--color-accent)] transition">Home</a></li>
-      <li aria-hidden="true">/</li>
-      <li><a href="/learn/" class="hover:text-[var(--color-accent)] transition">Learn</a></li>
-      <li aria-hidden="true">/</li>
-      <li aria-current="page" class="truncate max-w-[200px]">{{ content.title | striptags }}</li>
-    </ol>
-  </nav>
+<div id="reading-progress" style="position:fixed;top:0;left:0;height:3px;z-index:9999;width:0%;background:var(--color-accent)"></div>
 
-  <header class="mb-8">
-    <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">{{ content.title | striptags }}</h1>
-    {%- if content.date_str %}
-    <time class="mt-2 block text-sm" style="color:var(--color-text-muted)" datetime="{{ content.date_str }}">
-      {{ content.date_str }} · {{ content.body_html | reading_time }} min
-    </time>
-    {%- endif %}
-    {%- if content.tags and content.tags | length > 0 %}
-    <div class="mt-3 flex flex-wrap gap-2">
-      {%- for tag in content.tags %}
-      <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">{{ tag }}</span>
-      {%- endfor %}
+<div class="flex gap-8 {% if toc_items %}lg:flex-row{% endif %} flex-col">
+  {%- if toc_items %}
+  <aside class="toc-sidebar shrink-0 lg:sticky lg:top-20 lg:self-start lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto lg:w-56">
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="text-xs font-semibold uppercase tracking-wide" style="color:var(--color-text-muted)">On this page</h2>
+      <button id="focus-toggle" class="text-xs px-2 py-1 rounded" style="color:var(--color-text-muted);background:var(--color-bg)" title="Focus mode" aria-label="Toggle focus mode">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 4h4M6 20h4M18 4h-4M18 20h-4M4 6v4M4 18v4M20 6v4M20 18v4"/></svg>
+      </button>
     </div>
-    {%- endif %}
-  </header>
-
-  <div class="prose prose-lg max-w-none">
-    {{ content.body_html | safe }}
-  </div>
-
-  {%- if content.flashcards and content.flashcards | length > 0 %}
-  <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
-    <h2 class="text-2xl font-bold mb-6" style="color:var(--color-text)">Flashcards</h2>
-    <div class="grid gap-4 sm:grid-cols-2">
-      {%- for fc in content.flashcards[:12] %}
-      <div class="rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
-        <div class="font-semibold text-sm" style="color:var(--color-text)">{{ fc.term }}</div>
-        <div class="mt-1 text-xs" style="color:var(--color-text-secondary)">{{ fc.definition[:200] }}</div>
-      </div>
-      {%- endfor %}
-    </div>
-  </section>
+    <nav aria-label="Table of contents">
+      <ul class="space-y-1 text-sm">
+        {%- for item in toc_items %}
+        <li>
+          <a href="#{{ item.id }}" class="toc-link block py-1 {% if item.tag == 'h3' %}pl-4 text-xs{% endif %} rounded px-2 transition" style="color:var(--color-text-muted)">
+            {{ item.text }}
+          </a>
+        </li>
+        {%- endfor %}
+      </ul>
+    </nav>
+  </aside>
   {%- endif %}
-</article>
+
+  <article class="min-w-0 flex-1">
+    <nav aria-label="Breadcrumb" class="mb-4 text-xs" style="color:var(--color-text-muted)">
+      <ol class="flex flex-wrap items-center gap-1.5">
+        <li><a href="/" class="hover:text-[var(--color-accent)] transition">Home</a></li>
+        <li aria-hidden="true">/</li>
+        <li><a href="/learn/" class="hover:text-[var(--color-accent)] transition">Learn</a></li>
+        <li aria-hidden="true">/</li>
+        <li aria-current="page" class="truncate max-w-[200px]">{{ content.title | striptags }}</li>
+      </ol>
+    </nav>
+
+    <header class="mb-8">
+      <div class="flex items-center gap-3 mb-3">
+        {%- if pconf %}
+        <span class="inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-full {{ pconf.badge_color }}">
+          {{ pconf.emoji }} {{ pconf.label }}
+        </span>
+        {%- endif %}
+        {%- if content.difficulty %}
+        <span class="inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-full" style="background:var(--color-bg);color:var(--color-text-secondary)">
+          {%- set d_emoji = {"beginner": "🌱", "intermediate": "📘", "advanced": "🔥"} %}
+          {{ d_emoji.get(content.difficulty, "📘") }} {{ content.difficulty | capitalize }}
+        </span>
+        {%- endif %}
+      </div>
+      <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">{{ content.title | striptags }}</h1>
+      {%- if content.date_str or content.body_html %}
+      <div class="mt-2 flex items-center gap-3 text-sm" style="color:var(--color-text-muted)">
+        {%- if content.date_str %}
+        <time datetime="{{ content.date_str }}">{{ content.date_str }}</time>
+        {%- endif %}
+        {%- if content.body_html %}
+        <span>{{ content.body_html | reading_time }} min read</span>
+        {%- endif %}
+      </div>
+      {%- endif %}
+      {%- if content.tags and content.tags | length > 0 %}
+      <div class="mt-3 flex flex-wrap gap-2">
+        {%- for tag in content.tags %}
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">{{ tag }}</span>
+        {%- endfor %}
+      </div>
+      {%- endif %}
+    </header>
+
+    <div class="prose prose-lg max-w-none">
+      {{ content.body_html | safe }}
+    </div>
+
+    {%- if content.flashcards and content.flashcards | length > 0 %}
+    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
+      <h2 class="text-2xl font-bold mb-6" style="color:var(--color-text)">Flashcards</h2>
+      <div class="grid gap-4 sm:grid-cols-2">
+        {%- for fc in content.flashcards[:12] %}
+        <div class="rounded-lg p-4 flashcard-card">
+          <div class="font-semibold text-sm" style="color:var(--color-text)">{{ fc.term }}</div>
+          <div class="mt-1 text-xs" style="color:var(--color-text-secondary)">{{ fc.definition[:200] }}</div>
+        </div>
+        {%- endfor %}
+      </div>
+    </section>
+    {%- endif %}
+
+    {%- if related_research %}
+    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
+      <h2 class="text-xl font-bold mb-4" style="color:var(--color-text)">Related Research</h2>
+      <div class="grid gap-3 sm:grid-cols-2">
+        {%- for rp in related_research %}
+        {%- set rpillar = rp.pillar or "aml" %}
+        {%- set rpc = pillar_config.get(rpillar, pillar_config["aml"]) %}
+        <a href="/{{ rp.slug }}/" class="block rounded-lg p-3 transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+          <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded {{ rpc.badge_color }}">{{ rpc.emoji }} {{ rpc.label }}</span>
+          <span class="block mt-1 text-sm font-semibold" style="color:var(--color-text)">{{ rp.title | striptags }}</span>
+          {%- if rp.date_str %}
+          <span class="block mt-1 text-xs" style="color:var(--color-text-muted)">{{ rp.date_str }} · {{ rp.body_html | reading_time }} min</span>
+          {%- endif %}
+        </a>
+        {%- endfor %}
+      </div>
+    </section>
+    {%- endif %}
+
+    {%- if related_knowledge %}
+    <section class="mt-8 pt-8 border-t" style="border-color:var(--color-border)">
+      <h2 class="text-xl font-bold mb-4" style="color:var(--color-text)">Related Knowledge</h2>
+      <div class="grid gap-3 sm:grid-cols-2">
+        {%- for kp in related_knowledge %}
+        <a href="/{{ kp.slug }}/" class="block rounded-lg p-3 transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+          <span class="block text-sm font-semibold" style="color:var(--color-text)">{{ kp.title | striptags }}</span>
+          {%- if kp.description %}
+          <p class="mt-1 text-xs" style="color:var(--color-text-secondary)">{{ kp.description[:150] }}</p>
+          {%- endif %}
+        </a>
+        {%- endfor %}
+      </div>
+    </section>
+    {%- endif %}
+  </article>
+</div>
+
+<script>
+(function(){
+  var bar = document.getElementById('reading-progress');
+  if (bar) {
+    window.addEventListener('scroll', function() {
+      var h = document.documentElement;
+      var pct = (h.scrollTop || document.body.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+      bar.style.width = Math.min(pct, 100) + '%';
+    }, {passive: true});
+  }
+
+  var tocLinks = document.querySelectorAll('.toc-link');
+  if (tocLinks.length) {
+    var headings = [];
+    tocLinks.forEach(function(link) {
+      var id = link.getAttribute('href').slice(1);
+      var el = document.getElementById(id);
+      if (el) headings.push({el: el, link: link});
+    });
+    window.addEventListener('scroll', function() {
+      var scrollY = window.scrollY + 120;
+      var current = null;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        if (headings[i].el.offsetTop <= scrollY) { current = headings[i]; break; }
+      }
+      tocLinks.forEach(function(l) { l.style.background = ''; l.style.color = ''; });
+      if (current) {
+        current.link.style.background = 'var(--color-bg)';
+        current.link.style.color = 'var(--color-accent)';
+      }
+    }, {passive: true});
+  }
+
+  var focusBtn = document.getElementById('focus-toggle');
+  if (focusBtn) {
+    focusBtn.addEventListener('click', function() {
+      document.body.classList.toggle('focus-mode');
+    });
+  }
+})();
+</script>
 {% endblock %}

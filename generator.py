@@ -291,18 +291,47 @@ def main():
         else:
             out_file = OUTPUT_DIR / f"{slug}.html"
         body = add_lazy_loading(item.body_html)
+        body, toc_items = extract_headings(body)
         item.body_html = body
-        html = render_template("learn.j2", content=item, is_index=False,
-                                page_path=page_path, **ctx_base)
+
+        pillar = item.pillar or ""
+        pconf = PILLAR_CONFIG.get(pillar) if pillar else None
+        related_research = find_related(research_items, item, 3)
+        related_knowledge = find_related(knowledge_items, item, 3)
+        thumb_key = hashlib.md5(item.title.encode()).hexdigest()[:12]
+        thumb_base = f"{SITE_URL}/static/images"
+
+        html = render_template("learn.j2",
+            content=item, page_path=page_path,
+            toc_items=toc_items, pconf=pconf,
+            related_research=related_research,
+            related_knowledge=related_knowledge,
+            thumbnail_base=thumb_base, thumbnail_key=thumbnail_key,
+            is_index=False, **ctx_base)
         out_file.write_text(html, encoding="utf-8")
         print(f"  learn: {out_file.relative_to(OUTPUT_DIR)}")
 
-    # --- LEARN INDEX ---
+        # Write learn thumbnail SVGs
+        out_static = STATIC_DST_DIR / "images"
+        out_static.mkdir(parents=True, exist_ok=True)
+        if item.thumbnail_svg:
+            (out_static / f"thumb_{thumb_key}.svg").write_text(item.thumbnail_svg, encoding="utf-8")
+
+    # --- LEARN INDEX (difficulty-grouped) ---
     learn_dir = OUTPUT_DIR / "learn"
     learn_dir.mkdir(parents=True, exist_ok=True)
-    html = render_template("category_index.j2", content=_dummy("Learning Hub", "learn"),
-                            category="learn", items=learn_items,
-                            is_index=False, page_path="learn/", **ctx_base)
+    learn_grouped: dict[str, list] = defaultdict(list)
+    for l_item in learn_items:
+        diff = l_item.difficulty or "beginner"
+        learn_grouped[diff.capitalize()].append(l_item)
+    for g in learn_grouped.values():
+        g.sort(key=lambda x: x.title or "")
+    thumb_base = f"{SITE_URL}/static/images"
+    html = render_template("learn_index.j2",
+        content=_dummy("Learning Hub", "learn"),
+        items=learn_items, grouped=dict(learn_grouped),
+        thumbnail_base=thumb_base, thumbnail_key=thumbnail_key,
+        is_index=False, page_path="learn/", **ctx_base)
     (learn_dir / "index.html").write_text(html, encoding="utf-8")
     print("  category: learn/index.html")
 
@@ -468,11 +497,11 @@ def _dummy(title="", category="post", body_html=""):
     return type("obj", (object,), {
         "title": title, "language": "en", "category": category, "slug": "",
         "body_html": body_html, "description": "", "created_at": None,
-        "updated_at": None, "tags": [], "pillar": "", "date_str": "",
-        "thumbnail_svg": "", "og_svg": "", "signals": {}, "source_breakdown": {},
-        "quality_metrics": {}, "bloom_questions": [], "flashcards": [],
-        "trending_html": "", "analysis_html": "", "cross_pillar_html": "",
-        "quality_flags": [], "knowledge_category": "",
+        "updated_at": None, "tags": [], "pillar": "", "difficulty": "",
+        "date_str": "", "thumbnail_svg": "", "og_svg": "", "signals": {},
+        "source_breakdown": {}, "quality_metrics": {}, "bloom_questions": [],
+        "flashcards": [], "trending_html": "", "analysis_html": "",
+        "cross_pillar_html": "", "quality_flags": [], "knowledge_category": "",
     })
 
 
