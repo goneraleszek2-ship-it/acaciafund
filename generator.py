@@ -13,6 +13,7 @@ from pathlib import Path
 from typing import Any
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
+from urllib.parse import quote as urlquote
 
 from schemas import RegistryData
 from core.visuals import source_bar_svg, sparkline_svg, bloom_chart_svg, radar_svg, heatmap_svg, donut_svg, generate_thumbnail_svg, generate_og_image
@@ -199,6 +200,7 @@ def main():
         autoescape=select_autoescape(["html", "xml"]),
     )
     env.filters["reading_time"] = reading_time_minutes
+    env.filters["urlencode"] = lambda s: urlquote(s or '', safe='')
 
     year = datetime.now(timezone.utc).year
     all_content = registry.content
@@ -495,6 +497,34 @@ def main():
     (OUTPUT_DIR / "404.html").write_text(html, encoding="utf-8")
     print("  error: 404.html")
 
+    # --- TAG ARCHIVE PAGES ---
+    tag_items: dict[str, list] = defaultdict(list)
+    for c in all_content:
+        for t in (c.tags or []):
+            tag_items[t.lower().strip()].append(c)
+    tags_dir = OUTPUT_DIR / "tags"
+    tags_dir.mkdir(parents=True, exist_ok=True)
+    for tag_slug, tag_posts in sorted(tag_items.items()):
+        tag_slug_clean = re.sub(r'[^a-z0-9]+', '-', tag_slug).strip('-')
+        if not tag_slug_clean:
+            continue
+        tag_posts.sort(key=lambda x: x.created_at or datetime.min, reverse=True)
+        tag_out = tags_dir / tag_slug_clean / "index.html"
+        tag_out.parent.mkdir(parents=True, exist_ok=True)
+        html = render_template("tag_index.j2",
+            content=_dummy(f"Tag: {tag_slug}", "tag"),
+            tag=tag_slug, items=tag_posts,
+            is_index=False, page_path=f"tags/{tag_slug_clean}/", **ctx_base)
+        tag_out.write_text(html, encoding="utf-8")
+    if tag_items:
+        tag_out = tags_dir / "index.html"
+        html = render_template("tag_index.j2",
+            content=_dummy("Tags", "tag"),
+            tag="", items=[], all_tags=sorted(tag_items.keys()),
+            is_index=False, page_path="tags/", **ctx_base)
+        tag_out.write_text(html, encoding="utf-8")
+        print(f"  tags: {len(tag_items)} tag pages + index")
+
     # --- SEARCH INDEX ---
     search_index = []
     for c in all_content:
@@ -546,11 +576,15 @@ def main():
     print("  feed: feed.xml")
 
     # --- SITEMAP ---
-    urls = [f"{SITE_URL}/"]
+    urls = [f"{SITE_URL}/", f"{SITE_URL}/tags/"]
     for c in all_content:
         urls.append(slug_to_url(c.slug))
     for p in list(pillar_groups) + ["research", "learn", "knowledge", "search"]:
         urls.append(f"{SITE_URL}/{p}/")
+    for tag_slug in sorted(tag_items.keys()):
+        slug_clean = re.sub(r'[^a-z0-9]+', '-', tag_slug).strip('-')
+        if slug_clean:
+            urls.append(f"{SITE_URL}/tags/{slug_clean}/")
     sm = ['<?xml version="1.0" encoding="UTF-8"?>',
           '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
     for url in urls:

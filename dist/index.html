@@ -85,6 +85,7 @@
           <a href="/science/" class="block py-1.5 text-sm hover:text-[var(--color-accent)]">Science</a>
         </div>
         <a href="/knowledge/about/" class="block px-3 py-2 rounded hover:bg-[var(--color-bg)] transition">About</a>
+        <a href="/tags/" class="block px-3 py-2 rounded hover:bg-[var(--color-bg)] transition">Tags</a>
         <a href="/search/" class="block px-3 py-2 rounded hover:bg-[var(--color-bg)] transition">Search</a>
       </div>
     </nav>
@@ -123,8 +124,9 @@
 
 <section id="continue-learning" class="mt-8 hidden" aria-labelledby="continue-heading">
   <h2 id="continue-heading" class="text-2xl font-bold mb-4" style="color:var(--color-text)">Continue Learning</h2>
-  <div class="flex items-center gap-3 mb-4 text-sm" style="color:var(--color-text-secondary)">
+  <div class="flex flex-wrap items-center gap-4 mb-4 text-sm" style="color:var(--color-text-secondary)">
     <span id="continue-progress">0/0 completed</span>
+    <span id="streak-display" class="inline-flex items-center gap-1 text-base" hidden></span>
     <button id="reset-progress-btn" class="text-xs underline hover:no-underline" style="color:var(--color-text-muted)">Reset progress</button>
   </div>
   <div id="continue-list" class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3"></div>
@@ -136,6 +138,35 @@
   function loadProgress(){
     try{ return JSON.parse(localStorage.getItem(PROGRESS_KEY) || '{}'); }catch(e){return {};}
   }
+  function computeStreak(p){
+    var dates = [];
+    Object.keys(p).forEach(function(k){
+      var entry = p[k];
+      if(entry && entry.ts){
+        var d = new Date(entry.ts);
+        dates.push(d.toISOString().slice(0,10));
+      }
+    });
+    if(!dates.length) return 0;
+    var unique = {};
+    dates.forEach(function(d){ unique[d] = true; });
+    var sorted = Object.keys(unique).sort().reverse();
+    var streak = 0;
+    var today = new Date().toISOString().slice(0,10);
+    var check = today;
+    for(var i = 0; i < sorted.length; i++){
+      if(sorted[i] === check){
+        streak++;
+        var d = new Date(check);
+        d.setDate(d.getDate() - 1);
+        check = d.toISOString().slice(0,10);
+      } else if(sorted[i] < check){
+        break;
+      }
+    }
+    return streak;
+  }
+
   var p = loadProgress();
   var totalItems = [{slug:"/learn/",title:"Learning Hub",pillar:"",diff:"beginner"},{slug:"/learn/aml-basics/",title:"AML Fundamentals — A Beginner&#39;s Guide",pillar:"aml",diff:"beginner"},{slug:"/learn/market-analysis/",title:"How to Analyse Market Signals — Interactive Tutorial",pillar:"stock",diff:"intermediate"},{slug:"/learn/science-method/",title:"Scientific Reasoning in Research Synthesis",pillar:"science",diff:"intermediate"},{slug:"/learn/quiz-aml/",title:"AML Knowledge Check — Interactive Quiz",pillar:"aml",diff:"beginner"},{slug:"/learn/dataops-introduction/",title:"Introduction to DataOps: Principles, Practices, and Pipeline Architecture",pillar:"stock",diff:"beginner"}];
   var done = 0;
@@ -151,9 +182,16 @@
     var contSec = document.getElementById('continue-learning');
     var contProg = document.getElementById('continue-progress');
     var contList = document.getElementById('continue-list');
+    var streakEl = document.getElementById('streak-display');
     if(contSec){
       contSec.classList.remove('hidden');
       if(contProg) contProg.textContent = done + '/' + totalItems.length + ' completed';
+      var streak = computeStreak(p);
+      if(streak > 0 && streakEl){
+        streakEl.removeAttribute('hidden');
+        var fire = streak >= 7 ? '🔥' : streak >= 3 ? '✨' : '📖';
+        streakEl.innerHTML = fire + ' ' + streak + ' day' + (streak !== 1 ? 's' : '') + ' streak';
+      }
       if(incomplete.length > 0){
         incomplete.slice(0,6).forEach(function(it){
           var a = document.createElement('a');
@@ -650,6 +688,7 @@
           <li><a href="/research/" class="hover:opacity-70 transition">Research</a></li>
           <li><a href="/learn/" class="hover:opacity-70 transition">Learn</a></li>
           <li><a href="/knowledge/" class="hover:opacity-70 transition">Knowledge</a></li>
+          <li><a href="/tags/" class="hover:opacity-70 transition">Tags</a></li>
           <li><a href="/knowledge/about/" class="hover:opacity-70 transition">About</a></li>
           <li><a href="/feed.xml" class="hover:opacity-70 transition">RSS</a></li>
         </ul>

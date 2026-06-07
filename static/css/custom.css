@@ -237,6 +237,20 @@ body.focus-mode article {
   header, footer, nav, .skip-link {
     display: none !important;
   }
+  body {
+    background: #fff !important;
+    color: #000 !important;
+    font-size: 12pt;
+  }
+  a {
+    color: #000 !important;
+    text-decoration: underline;
+  }
+  @page {
+    margin: 2cm;
+  }
+}
+
 @media (prefers-color-scheme: dark) {
   :root { color-scheme: dark; }
   :root:not(.light) {
@@ -275,20 +289,6 @@ body.focus-mode article {
   --color-science: #8b8cc7;
 }
 
-body {
-    background: #fff !important;
-    color: #000 !important;
-    font-size: 12pt;
-  }
-  a {
-    color: #000 !important;
-    text-decoration: underline;
-  }
-  @page {
-    margin: 2cm;
-  }
-}
-
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -297,3 +297,9 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+/* Fluid typography */
+h1, .h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); }
+h2, .h2 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
+h3, .h3 { font-size: clamp(1.1rem, 1.5vw, 1.25rem); }
+article .prose p, article .prose li { line-height: 1.7; }

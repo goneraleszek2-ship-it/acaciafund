@@ -58,6 +58,7 @@ if [[ -n "${CLOUDFLARE_ACCOUNT_ID:-}" ]] && [[ -n "${CLOUDFLARE_API_TOKEN:-}" ]]
   echo "Step 3: Deploying to Cloudflare Pages..."
   wrangler pages deploy dist \
     --project-name="$PROJECT_NAME" \
+    --config=wrangler.toml \
     --commit-hash=$(git rev-parse --short HEAD 2>/dev/null || echo "latest") \
     --commit-message="Deploy: $(date +%Y-%m-%d)" \
     --branch=main
