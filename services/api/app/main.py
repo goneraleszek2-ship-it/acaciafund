@@ -1,34 +1,35 @@
-from fastapi import FastAPI, HTTPException
-from pydantic import BaseSettings, BaseModel, Field, validator
-from fastapi.middleware.cors import CORSMiddleware
-from . import db
-import time
+import os
 import sys
+import time
 from typing import List, Optional
 
+from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
+from pydantic import BaseModel, Field, validator
 
-class Settings(BaseSettings):
-    app_name: str = "AcaciaFund API"
-    debug: bool = False
-    host: str = "0.0.0.0"
-    port: int = 8000
-    # Allowed origins for CORS — set to your site origin in production
-    allowed_origins: List[str] = Field(default_factory=lambda: ["http://localhost:1313", "http://127.0.0.1:1313"])
-
-    class Config:
-        env_file = ".env"
+from . import db
 
 
-settings = Settings()
+def parse_origins(raw: str) -> List[str]:
+    return [o.strip() for o in raw.split(",") if o.strip()]
 
 
-app = FastAPI(title=settings.app_name, version="0.1.0")
-main = sys.modules[__name__]
+APP_NAME = "AcaciaFund API"
+DEBUG = os.environ.get("ACACIA_DEBUG", "false").lower() == "true"
+HOST = os.environ.get("ACACIA_HOST", "0.0.0.0")
+PORT = int(os.environ.get("ACACIA_PORT", "8000"))
+ALLOWED_ORIGINS = parse_origins(
+    os.environ.get(
+        "ACACIA_CORS_ORIGINS",
+        "http://localhost:1313,http://127.0.0.1:1313,https://www.acaciafund.org",
+    )
+)
 
-# Allow cross-origin requests from configured origins
+app = FastAPI(title=APP_NAME, version="0.2.0")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.allowed_origins,
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["POST", "GET", "OPTIONS"],
     allow_headers=["*"],
@@ -37,8 +38,7 @@ app.add_middleware(
 
 @app.get("/health")
 async def health():
-    """Simple health endpoint for orchestration checks."""
-    return {"status": "ok", "app": settings.app_name}
+    return {"status": "ok", "app": APP_NAME}
 
 
 @app.get("/ping")
@@ -48,13 +48,11 @@ async def ping():
 
 @app.get("/info")
 async def info():
-    """Expose basic runtime info useful for debugging in development."""
-    return {"app": settings.app_name, "debug": settings.debug}
+    return {"app": APP_NAME, "debug": DEBUG, "cors_origins": ALLOWED_ORIGINS}
 
 
 @app.on_event("startup")
 def startup():
-    # Ensure DB exists
     db.init_db()
 
 
@@ -66,7 +64,6 @@ class ProgressPayload(BaseModel):
 
     @validator("url")
     def url_must_be_path(cls, v: str) -> str:
-        # Require a relative path (site-local) to avoid arbitrary external URLs
         if not v.startswith("/"):
             raise ValueError("url must be a site-local path starting with '/'")
         return v
@@ -74,10 +71,6 @@ class ProgressPayload(BaseModel):
 
 @app.post("/progress")
 async def set_progress(payload: ProgressPayload):
-    """Accepts {url, done, score, ts} and stores into SQLite.
-
-    Validation: url must be a site-local path (start with '/'), score is 0..100.
-    """
     ts = int(payload.ts or time.time())
     db.upsert_progress(payload.url, bool(payload.done), int(payload.score), ts)
     return {"ok": True}

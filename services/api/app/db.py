@@ -1,8 +1,9 @@
+import os
 import sqlite3
 from pathlib import Path
 from typing import Optional, Dict, Any
 
-DB_PATH = Path("/data/progress.db")
+DB_PATH = Path(os.environ.get("ACACIA_DB_PATH", "/data/progress.db"))
 
 
 def init_db(path: Optional[Path] = None) -> None:

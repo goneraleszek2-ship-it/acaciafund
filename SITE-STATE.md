@@ -226,9 +226,11 @@ Dependencies: `jinja2`, `markdown2`, `pydantic`
 
 | Pillar | Posts | Topics |
 |--------|-------|--------|
-| AML | 4 | Financial crime, compliance, regulation, risk |
-| Markets | 4 | Semiconductors, AI industry, manufacturing |
-| Science | 4 | Biology, quantum, neuroscience, climate |
+| AML | 8 | Financial crime, compliance, regulation, risk, crypto, DeFi |
+| Markets | 9 | Semiconductors, AI industry, manufacturing, EV, quantum |
+| Science | 9 | Biology, quantum, neuroscience, space, climate, gene therapy |
+
+Total: 27 blog posts (Jan 2026 — present)
 
 All posts are auto-synthesized from HackerNews + arXiv sources.
 
@@ -236,10 +238,26 @@ All posts are auto-synthesized from HackerNews + arXiv sources.
 
 ## 10. DevOps
 
-- No CI/CD pipelines currently configured (Cloudflare auto-deploys from GitHub)
-- No GitHub Actions workflows
+- Cloudflare Pages auto-deploys static site from `main`
+- GitHub Actions (`deploy-api.yml`): deploys API service to Railway on push to `main` (when `services/api/**` or `railway.json` changes)
 - Deployment via git push to `main`
 - `deploy.sh` exists but superseded by auto-deploy
+
+### API Service (FastAPI — Railway)
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/health` | GET | Health check |
+| `/ping` | GET | Connectivity test |
+| `/info` | GET | Runtime info (debug, CORS origins) |
+| `/progress` | POST | Save reading progress `{url, done, score, ts}` |
+| `/progress?url=...` | GET | Retrieve reading progress for a URL |
+
+**Stack:** Python 3.11, FastAPI, Uvicorn, SQLite  
+**Database:** SQLite at `$ACACIA_DB_PATH` (persistent volume on Railway)  
+**Config:** All settings via env vars (`ACACIA_DB_PATH`, `ACACIA_CORS_ORIGINS`, `ACACIA_DEBUG`)  
+**Auth:** None (public endpoints; progress tracking is anonymous)  
+**CORS:** Configured for `acaciafund.org` + localhost development
 
 ---
 
@@ -336,6 +354,25 @@ All posts are auto-synthesized from HackerNews + arXiv sources.
 │   ├── blog/
 │   │   └── YYYY-MM-DD-slug/index.html (×12)
 │   └── static/ (copied from static/)
+│
+├── railway.json              # Railway deployment config
+├── .github/
+│   └── workflows/
+│       └── deploy-api.yml    # GitHub Actions → Railway deploy
+│
+├── services/
+│   └── api/
+│       ├── Dockerfile        # Containerized FastAPI service
+│       ├── requirements.txt
+│       ├── .env.example
+│       ├── app/
+│       │   ├── __init__.py
+│       │   ├── main.py       # FastAPI endpoints
+│       │   └── db.py         # SQLite progress storage
+│       └── tests/
+│           ├── test_main.py
+│           ├── test_db.py
+│           └── test_progress.py
 │
 ├── .env                      # (not committed)
 ├── .gitignore
