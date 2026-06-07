@@ -14,41 +14,78 @@
   </div>
 </section>
 
+{%- if featured_posts %}
+<section class="mt-8" aria-labelledby="featured-heading">
+  <h2 id="featured-heading" class="sr-only">Featured Articles</h2>
+  <div class="grid gap-6 md:grid-cols-3">
+  {%- for item in featured_posts %}
+    {%- set p = item.pillar or "aml" %}
+    {%- set pc = pillar_config.get(p, pillar_config["aml"]) %}
+    {%- set tkey = thumbnail_key(item.title) %}
+    <a href="/{{ item.slug }}/" class="group block rounded-xl overflow-hidden transition hover:shadow-lg" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+      <div class="aspect-[600/340] bg-gray-800 overflow-hidden">
+        <img src="{{ thumbnail_base }}/thumb_{{ tkey }}.svg" alt="" class="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300" loading="lazy">
+      </div>
+      <div class="p-4">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded {{ pc.badge_color }}">
+            {{ pc.emoji }} {{ pc.label }}
+          </span>
+        </div>
+        <h3 class="text-base font-semibold leading-snug" style="color:var(--color-text)">{{ item.title | striptags }}</h3>
+        <div class="mt-2 flex items-center gap-3 text-xs" style="color:var(--color-text-secondary)">
+          {%- if item.date_str %}
+          <time datetime="{{ item.date_str }}">{{ item.date_str }}</time>
+          {%- endif %}
+          {%- if item.body_html %}
+          <span>{{ item.body_html | reading_time }} min</span>
+          {%- endif %}
+          {%- if item.signals and item.signals.get("avg_sqi") is defined %}
+          <span class="font-mono">SQI {{ "%.3f"|format(item.signals.get("avg_sqi", 0)) }}</span>
+          {%- endif %}
+        </div>
+      </div>
+    </a>
+  {%- endfor %}
+  </div>
+</section>
+{%- endif %}
+
 {%- if recent_posts %}
 <section class="mt-12" aria-labelledby="latest-heading">
-  <h2 id="latest-heading" class="text-2xl font-bold text-gray-900 mb-6">Latest Posts</h2>
-  <div class="grid gap-6 md:grid-cols-2">
+  <h2 id="latest-heading" class="text-2xl font-bold text-gray-900 mb-6">All Articles</h2>
+  <div class="grid gap-5 md:grid-cols-2">
   {%- for item in recent_posts %}
     {%- set p = item.pillar or "aml" %}
     {%- set pc = pillar_config.get(p, pillar_config["aml"]) %}
-    <article class="bg-white rounded-lg border p-5 hover:shadow-md transition" style="border-color:var(--color-border)">
-      <div class="flex items-center gap-2 mb-2">
-        <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded {{ pc.badge_color }}">
-          {{ pc.emoji }} {{ pc.label }}
-        </span>
+    {%- set tkey = thumbnail_key(item.title) %}
+    <article class="flex gap-4 rounded-lg p-4 transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border)">
+      <div class="shrink-0 w-24 h-20 rounded-md overflow-hidden bg-gray-800 hidden sm:block">
+        <img src="{{ thumbnail_base }}/thumb_{{ tkey }}.svg" alt="" class="w-full h-full object-cover" loading="lazy">
       </div>
-      <h3 class="text-lg font-semibold text-gray-900 leading-snug">
-        <a href="/{{ item.slug }}/" class="hover:text-blue-600 transition">{{ item.title | striptags }}</a>
-      </h3>
-      <div class="mt-2 flex items-center gap-3 text-xs text-gray-500">
-        {%- if item.date_str %}
-        <time datetime="{{ item.date_str }}">{{ item.date_str }}</time>
-        {%- endif %}
-        {%- if item.body_html %}
-        <span>{{ item.body_html | reading_time }} min</span>
-        {%- endif %}
-        {%- if item.signals and item.signals.get("avg_sqi") is defined %}
-        <span class="font-mono">SQI {{ "%.3f"|format(item.signals.get("avg_sqi", 0)) }}</span>
-        {%- endif %}
+      <div class="min-w-0 flex-1">
+        <div class="flex items-center gap-2 mb-1">
+          <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded {{ pc.badge_color }}">
+            {{ pc.emoji }} {{ pc.label }}
+          </span>
+        </div>
+        <h3 class="text-base font-semibold leading-snug" style="color:var(--color-text)">
+          <a href="/{{ item.slug }}/" class="hover:text-blue-600 transition">{{ item.title | striptags }}</a>
+        </h3>
+        <div class="mt-1 flex items-center gap-3 text-xs" style="color:var(--color-text-secondary)">
+          {%- if item.date_str %}
+          <time datetime="{{ item.date_str }}">{{ item.date_str }}</time>
+          {%- endif %}
+          {%- if item.body_html %}
+          <span>{{ item.body_html | reading_time }} min</span>
+          {%- endif %}
+          {%- if item.signals and item.signals.get("avg_sqi") is defined %}
+          <span class="font-mono">SQI {{ "%.3f"|format(item.signals.get("avg_sqi", 0)) }}</span>
+          {%- endif %}
+        </div>
       </div>
-      {%- if item.description %}
-      <p class="mt-2 text-sm text-gray-600 line-clamp-2">{{ item.description[:160] }}</p>
-      {%- endif %}
     </article>
   {%- endfor %}
-  </div>
-  <div class="mt-6 text-center">
-    <a href="/aml/" class="text-sm text-blue-600 hover:underline">View all posts &rarr;</a>
   </div>
 </section>
 {%- endif %}

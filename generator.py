@@ -168,6 +168,17 @@ def generate_sqi_badge(sqi: float) -> str:
     )
 
 
+def thumbnail_key(title: str) -> str:
+    return hashlib.md5(title.encode()).hexdigest()[:12]
+
+
+def interest_score(post, now: datetime) -> float:
+    sqi = post.signals.get("avg_sqi", 0.0) if post.signals else 0.0
+    age_days = (now - (post.created_at or now)).days if post.created_at else 365
+    recency = max(0.1, 1.0 - age_days / 180)
+    return sqi * 0.6 + recency * 0.4
+
+
 def main():
     print("Starting AcaciaFund generator...")
 
@@ -317,8 +328,12 @@ def main():
         print(f"Generated: {pillar}/index.html")
 
     # --- INDEX PAGE ---
-    index_posts = posts[:8]
-    index_html = _render_index(env, index_posts, lessons[:6], ctx_base)
+    now = datetime.now(timezone.utc)
+    scored = [(interest_score(p, now), p) for p in posts]
+    scored.sort(key=lambda x: -x[0])
+    index_posts = [p for _, p in scored[:12]]
+    featured = index_posts[:3] if len(index_posts) >= 3 else index_posts
+    index_html = _render_index(env, index_posts, featured, lessons[:6], ctx_base)
     (OUTPUT_DIR / "index.html").write_text(index_html, encoding="utf-8")
     print("Generated: index.html")
 
@@ -448,23 +463,30 @@ def _render_blog_post(env, post, page_path, prev_post, next_post, related, toc_i
     sqi_svg = generate_sqi_badge(post.signals.get("avg_sqi", 0.5)) if post.signals else ""
     og_key = hashlib.md5(f"og_{post.title}".encode()).hexdigest()[:12]
     og_image_url = f"{SITE_URL}/static/images/og_{og_key}.svg"
+    thumb_base = f"{SITE_URL}/static/images"
     ctx_full = dict(ctx, content=post, page_path=page_path,
                      prev_post=prev_post, next_post=next_post,
                      pconf=pconf, sqi_svg=sqi_svg,
                      og_image_url=og_image_url,
+                     thumbnail_base=thumb_base,
+                     thumbnail_key=thumbnail_key,
                      toc_items=toc_items,
                      related_posts=related)
     return env.get_template("blog_post.j2").render(**ctx_full)
 
 
 def _render_pillar_index(env, content, pillar, pconf, posts, ctx):
+    thumb_base = f"{ctx['site_url']}/static/images"
     ctx_full = dict(ctx, content=content, pillar=pillar, pconf=pconf, posts=posts,
-                     is_index=False, page_path=f"{pillar}/")
+                     is_index=False, page_path=f"{pillar}/",
+                     thumbnail_base=thumb_base, thumbnail_key=thumbnail_key)
     return env.get_template("pillar_index.j2").render(**ctx_full)
 
 
-def _render_index(env, posts, lessons, ctx):
-    ctx_full = dict(ctx, recent_posts=posts, lessons=lessons)
+def _render_index(env, posts, featured, lessons, ctx):
+    thumb_base = f"{ctx['site_url']}/static/images"
+    ctx_full = dict(ctx, recent_posts=posts, featured_posts=featured, lessons=lessons,
+                     thumbnail_base=thumb_base, thumbnail_key=thumbnail_key)
     dummy = _make_dummy_content(
         title="Research Synthesis & Experimental Learning",
         slug="",

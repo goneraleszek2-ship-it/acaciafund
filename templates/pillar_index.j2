@@ -19,38 +19,44 @@
     <p class="mt-1 text-sm text-gray-400">{{ posts | length }} posts</p>
   </div>
 
-  <div class="space-y-6">
+  <div class="space-y-4">
     {%- for post in posts %}
-    <article class="bg-white rounded-lg border border-gray-200 p-5 hover:shadow-md transition" style="border-color:var(--color-border)">
-      <div class="flex items-start justify-between gap-4">
-        <div class="min-w-0">
-          <h2 class="text-lg font-semibold text-gray-900 leading-snug">
-            <a href="/{{ post.slug }}/" class="hover:text-blue-600 transition">{{ post.title | striptags }}</a>
-          </h2>
-          {%- if post.description %}
-          <p class="mt-1 text-sm text-gray-600 line-clamp-2">{{ post.description[:200] }}</p>
-          {%- endif %}
-          <div class="mt-2 flex items-center gap-3 text-xs text-gray-400">
-            {%- if post.date_str %}
-            <time datetime="{{ post.date_str }}">{{ post.date_str }}</time>
+    {%- set tkey = thumbnail_key(post.title) %}
+    <article class="flex gap-4 rounded-lg p-4 transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border)">
+      <div class="shrink-0 w-28 h-20 rounded-md overflow-hidden bg-gray-800 hidden sm:block">
+        <img src="{{ thumbnail_base }}/thumb_{{ tkey }}.svg" alt="" class="w-full h-full object-cover" loading="lazy">
+      </div>
+      <div class="min-w-0 flex-1">
+        <div class="flex items-start justify-between gap-4">
+          <div class="min-w-0">
+            <h2 class="text-lg font-semibold leading-snug" style="color:var(--color-text)">
+              <a href="/{{ post.slug }}/" class="hover:text-blue-600 transition">{{ post.title | striptags }}</a>
+            </h2>
+            {%- if post.description %}
+            <p class="mt-1 text-sm" style="color:var(--color-text-secondary)">{{ post.description[:200] }}</p>
             {%- endif %}
-            {%- if post.body_html %}
-            <span>{{ post.body_html | reading_time }} min</span>
-            {%- endif %}
-            {%- if post.signals and post.signals.get("avg_sqi") is defined %}
-            <span class="font-mono">SQI {{ "%.3f"|format(post.signals.get("avg_sqi", 0)) }}</span>
-            {%- endif %}
-            {%- if post.source_breakdown %}
-            <span>{{ post.source_breakdown.get("hn", 0) }} HN · {{ post.source_breakdown.get("arxiv", 0) }} arXiv</span>
-            {%- endif %}
+            <div class="mt-2 flex items-center gap-3 text-xs" style="color:var(--color-text-muted)">
+              {%- if post.date_str %}
+              <time datetime="{{ post.date_str }}">{{ post.date_str }}</time>
+              {%- endif %}
+              {%- if post.body_html %}
+              <span>{{ post.body_html | reading_time }} min</span>
+              {%- endif %}
+              {%- if post.signals and post.signals.get("avg_sqi") is defined %}
+              <span class="font-mono">SQI {{ "%.3f"|format(post.signals.get("avg_sqi", 0)) }}</span>
+              {%- endif %}
+              {%- if post.source_breakdown %}
+              <span>{{ post.source_breakdown.get("hn", 0) }} HN · {{ post.source_breakdown.get("arxiv", 0) }} arXiv</span>
+              {%- endif %}
+            </div>
           </div>
+          {%- if post.quality_metrics and post.quality_metrics.get("avg_source_score") is defined %}
+          <div class="hidden sm:flex flex-col items-end gap-1 text-xs" style="color:var(--color-text-muted)">
+            <span>Quality {{ "%.2f"|format(post.quality_metrics.get("avg_source_score", 0)) }}</span>
+            <span>Diversity {{ "%.2f"|format(post.quality_metrics.get("source_diversity", 0)) }}</span>
+          </div>
+          {%- endif %}
         </div>
-        {%- if post.quality_metrics and post.quality_metrics.get("avg_source_score") is defined %}
-        <div class="hidden sm:flex flex-col items-end gap-1 text-xs text-gray-500">
-          <span>Quality {{ "%.2f"|format(post.quality_metrics.get("avg_source_score", 0)) }}</span>
-          <span>Diversity {{ "%.2f"|format(post.quality_metrics.get("source_diversity", 0)) }}</span>
-        </div>
-        {%- endif %}
       </div>
     </article>
     {%- endfor %}

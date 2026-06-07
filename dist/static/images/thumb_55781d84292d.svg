@@ -1,76 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="600" height="340" viewBox="0 0 600 340">
-  <defs>
-    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#0f172a"/>
-      <stop offset="1" stop-color="#1e3a5f"/>
-    </linearGradient>
-    <radialGradient id="glow" cx="56%" cy="48%">
-      <stop offset="0" stop-color="#d97706" stop-opacity="0.15"/>
-      <stop offset="1" stop-color="#0f172a" stop-opacity="0"/>
-    </radialGradient>
-  </defs>
-  <rect width="600" height="340" fill="url(#bg)"/>
-  <rect width="600" height="340" fill="url(#glow)"/>
-
-  <!-- Decorative grid dots -->
-  <circle cx="422" cy="426" r="1.5" fill="#d97706" opacity="0.05"/>
-  <circle cx="608" cy="468" r="1.5" fill="#d97706" opacity="0.08"/>
-  <circle cx="194" cy="510" r="1.5" fill="#d97706" opacity="0.11"/>
-  <circle cx="380" cy="552" r="1.5" fill="#d97706" opacity="0.14"/>
-  <circle cx="566" cy="594" r="1.5" fill="#d97706" opacity="0.16999999999999998"/>
-  <circle cx="524" cy="564" r="1.5" fill="#d97706" opacity="0.08"/>
-  <circle cx="110" cy="606" r="1.5" fill="#d97706" opacity="0.11"/>
-  <circle cx="296" cy="48" r="1.5" fill="#d97706" opacity="0.14"/>
-  <circle cx="482" cy="90" r="1.5" fill="#d97706" opacity="0.16999999999999998"/>
-  <circle cx="68" cy="132" r="1.5" fill="#d97706" opacity="0.05"/>
-  <circle cx="26" cy="102" r="1.5" fill="#d97706" opacity="0.11"/>
-  <circle cx="212" cy="144" r="1.5" fill="#d97706" opacity="0.14"/>
-  <circle cx="398" cy="186" r="1.5" fill="#d97706" opacity="0.16999999999999998"/>
-  <circle cx="584" cy="228" r="1.5" fill="#d97706" opacity="0.05"/>
-  <circle cx="170" cy="270" r="1.5" fill="#d97706" opacity="0.08"/>
-  <circle cx="128" cy="240" r="1.5" fill="#d97706" opacity="0.14"/>
-  <circle cx="314" cy="282" r="1.5" fill="#d97706" opacity="0.16999999999999998"/>
-  <circle cx="500" cy="324" r="1.5" fill="#d97706" opacity="0.05"/>
-  <circle cx="86" cy="366" r="1.5" fill="#d97706" opacity="0.08"/>
-  <circle cx="272" cy="408" r="1.5" fill="#d97706" opacity="0.11"/>
-  <circle cx="230" cy="378" r="1.5" fill="#d97706" opacity="0.16999999999999998"/>
-  <circle cx="416" cy="420" r="1.5" fill="#d97706" opacity="0.05"/>
-  <circle cx="602" cy="462" r="1.5" fill="#d97706" opacity="0.08"/>
-  <circle cx="188" cy="504" r="1.5" fill="#d97706" opacity="0.11"/>
-  <circle cx="374" cy="546" r="1.5" fill="#d97706" opacity="0.14"/>
-  <circle cx="332" cy="516" r="1.5" fill="#d97706" opacity="0.05"/>
-  <circle cx="518" cy="558" r="1.5" fill="#d97706" opacity="0.08"/>
-  <circle cx="104" cy="600" r="1.5" fill="#d97706" opacity="0.11"/>
-  <circle cx="290" cy="42" r="1.5" fill="#d97706" opacity="0.14"/>
-  <circle cx="476" cy="84" r="1.5" fill="#d97706" opacity="0.16999999999999998"/>
-  <circle cx="434" cy="54" r="1.5" fill="#d97706" opacity="0.08"/>
-  <circle cx="20" cy="96" r="1.5" fill="#d97706" opacity="0.11"/>
-  <circle cx="206" cy="138" r="1.5" fill="#d97706" opacity="0.14"/>
-  <circle cx="392" cy="180" r="1.5" fill="#d97706" opacity="0.16999999999999998"/>
-  <circle cx="578" cy="222" r="1.5" fill="#d97706" opacity="0.05"/>
-  <circle cx="536" cy="192" r="1.5" fill="#d97706" opacity="0.11"/>
-  <circle cx="122" cy="234" r="1.5" fill="#d97706" opacity="0.14"/>
-  <circle cx="308" cy="276" r="1.5" fill="#d97706" opacity="0.16999999999999998"/>
-  <circle cx="494" cy="318" r="1.5" fill="#d97706" opacity="0.05"/>
-  <circle cx="80" cy="360" r="1.5" fill="#d97706" opacity="0.08"/>
-
-  <!-- Topic icon -->
-  <g transform="translate(40, 50) scale(1.4)" stroke="#d97706" fill="none" stroke-linecap="round" stroke-linejoin="round">
-    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-  </g>
-
-  <!-- Topic words as floating tags -->
-  <text x="98" y="200" fill="#d97706" font-family="system-ui,sans-serif" font-size="14" font-weight="600" opacity="0.4">Stripe</text>
-  <text x="135" y="240" fill="#d97706" font-family="system-ui,sans-serif" font-size="14" font-weight="600" opacity="0.4">Dutch</text>
-  <text x="172" y="280" fill="#d97706" font-family="system-ui,sans-serif" font-size="14" font-weight="600" opacity="0.4">Adyen</text>
-
-  <!-- SQI bar -->
-  <text x="40" y="260" fill="#d97706" font-family="system-ui,sans-serif" font-size="11" font-weight="600" opacity="0.6">SIGNAL QUALITY</text>
-  <rect x="40" y="270" width="200" height="4" rx="2" fill="#f8fafc" opacity="0.1"/>
-  <rect x="40" y="270" width="97" height="4" rx="2" fill="#d97706" opacity="0.8"/>
-  <text x="250" y="274" fill="#d97706" font-family="system-ui,sans-serif" font-size="12" font-weight="700">0.49</text>
-
-  <!-- Category badge -->
-  <rect x="40" y="290" width="80" height="24" rx="4" fill="#d97706" opacity="0.2"/>
-  <text x="80" y="306" text-anchor="middle" fill="#d97706" font-family="system-ui,sans-serif" font-size="11" font-weight="700" text-transform="uppercase">AML</text>
+<defs><linearGradient id="bg-blog/202" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0f172a"/><stop offset="0.5" stop-color="#2d2524"/><stop offset="1" stop-color="#0f172a"/></linearGradient></defs>
+<rect width="600" height="340" fill="url(#bg-blog/202)"/>
+<circle cx="48" cy="65" r="2" fill="#ffffff" opacity="0.03"/><circle cx="176" cy="51" r="2" fill="#ffffff" opacity="0.03"/><circle cx="312" cy="47" r="3" fill="#d97706" opacity="0.06"/><circle cx="456" cy="63" r="2" fill="#ffffff" opacity="0.02"/><circle cx="48" cy="119" r="2" fill="#d97706" opacity="0.06"/><circle cx="176" cy="129" r="1" fill="#d97706" opacity="0.06"/><circle cx="312" cy="123" r="1" fill="#d97706" opacity="0.06"/><circle cx="472" cy="113" r="2" fill="#ffffff" opacity="0.03"/><circle cx="40" cy="189" r="3" fill="#ffffff" opacity="0.03"/><circle cx="200" cy="209" r="1" fill="#d97706" opacity="0.06"/><circle cx="328" cy="181" r="3" fill="#ffffff" opacity="0.03"/><circle cx="480" cy="185" r="2" fill="#ffffff" opacity="0.03"/><circle cx="48" cy="279" r="2" fill="#ffffff" opacity="0.03"/><circle cx="208" cy="257" r="1" fill="#ffffff" opacity="0.03"/><circle cx="336" cy="261" r="3" fill="#ffffff" opacity="0.03"/><circle cx="480" cy="277" r="2" fill="#ffffff" opacity="0.03"/><line x1="10" y1="98" x2="153" y2="98" stroke="#d97706" stroke-width="0.5" opacity="0.08"/><line x1="10" y1="170" x2="71" y2="170" stroke="#d97706" stroke-width="0.5" opacity="0.08"/><line x1="10" y1="264" x2="133" y2="264" stroke="#d97706" stroke-width="0.5" opacity="0.08"/>
+<g transform="translate(260, 30) scale(1.2)" stroke="#d97706" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></g>
+<text x="300" y="170" fill="#f8fafc" font-family="system-ui,sans-serif" font-size="22" font-weight="700" text-anchor="middle">Gov.uk has replaced Stripe</text>
+<text x="300" y="206" fill="#f8fafc" font-family="system-ui,sans-serif" font-size="22" font-weight="700" text-anchor="middle">with Dutch provider Adyen --</text>
+<text x="300" y="242" fill="#f8fafc" font-family="system-ui,sans-serif" font-size="22" font-weight="700" text-anchor="middle">🛡️ AML 2026-06-07</text>
+<rect x="237" y="290" width="125" height="3" rx="1.5" fill="#e49f50" opacity="0.3"/>
+<text x="300" y="318" fill="#d97706" font-family="system-ui,sans-serif" font-size="11" font-weight="600" text-anchor="middle" opacity="0.6">AML</text>
 </svg>
