@@ -1,0 +1,27 @@
+title: Build Process — Sequence Diagram
+
+sequenceDiagram
+    actor Dev as Developer
+    participant Git as GitHub
+    participant CF as Cloudflare Pages
+    participant Build as generator.py
+    participant Reg as registry.json
+    participant VIZ as core/visuals.py
+    participant TPL as templates/*.j2
+    participant DIST as dist/
+
+    Dev->>Git: git push main
+    Git->>CF: Webhook trigger
+    CF->>Build: python3 generator.py
+    Build->>Reg: Read 60 content entries
+    Reg-->>Build: Return catalog data
+    Build->>Build: Validate with schemas.py
+    Build->>VIZ: Generate SVGs
+    VIZ-->>Build: 60 thumbnails + OG images
+    Build->>TPL: Render with Jinja2
+    TPL-->>Build: 236 HTML pages
+    Build->>DIST: Write output
+    Build->>Build: Smoke tests (12/12)
+    DIST-->>CF: Deployment artifact
+    CF->>CF: CDN cache warm
+    CF-->>Dev: Site live at acaciafund.com

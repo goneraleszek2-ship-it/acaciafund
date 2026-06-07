@@ -1,8 +1,39 @@
+title: AcaciaFund System Architecture
+
 flowchart TD
-    A[Browser] --> B[Cloudflare CDN]
-    B --> C[AcaciaFund Hugo Site]
-    C --> D[GitHub Repository]
-    D --> E[CI/CD Pipeline]
-    E --> F[Hugo Build]
-    F --> G[Deploy to Cloudflare Pages]
-    G --> B
+    subgraph Users["👤 Users"]
+        U[Browser / Visitor]
+    end
+
+    subgraph CDN["🌐 Cloudflare"]
+        CF[Cloudflare CDN]
+    end
+
+    subgraph Pipeline["⚙️ Build Pipeline"]
+        GIT[GitHub Repository<br/>main branch] --> CFW[Cloudflare Pages]
+        CFW --> BUILD[python3 generator.py]
+        BUILD --> REG[registry.json<br/>Content Catalog]
+        BUILD --> SCHEMA[schemas.py<br/>Validation]
+        BUILD --> VIZ[core/visuals.py<br/>SVG Generation]
+        BUILD --> TMPL[templates/*.j2<br/>Jinja2 Rendering]
+        BUILD --> DIST[dist/ directory<br/>Static HTML]
+    end
+
+    subgraph Output["📄 Generated Output"]
+        DIST --> PAGES[236 Static Pages]
+        PAGES --> RESEARCH[33 Research Articles]
+        PAGES --> LEARN[16 Learn Items]
+        PAGES --> KNOWLEDGE[11 Knowledge Pages]
+        PAGES --> TAGS[166 Tag Archives]
+        PAGES --> SEARCH[Search Index]
+        PAGES --> FEED[RSS Feed]
+    end
+
+    U --> CF
+    CFW --> CF
+    GIT --> CFW
+
+    style U fill:#1e3a5f,stroke:#d97706
+    style GIT fill:#1e293b,stroke:#64748b
+    style BUILD fill:#0f172a,stroke:#d97706
+    style DIST fill:#166534,stroke:#22c55e

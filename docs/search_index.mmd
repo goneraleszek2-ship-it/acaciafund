@@ -1,0 +1,30 @@
+title: Search Index Architecture
+
+flowchart LR
+    subgraph Build["🔨 Build Time"]
+        REG[registry.json<br/>60 entries]
+        GEN[generator.py]
+        INDEX[search-index.json<br/>Title / Desc / Tags / Pillar]
+    end
+
+    subgraph Runtime["⚡ Client-Side"]
+        PAGE[Search Page<br/>/search/]
+        JS[index.html<br/>fetch + filter]
+        INPUT[User Query]
+    end
+
+    subgraph Storage["💾 Output"]
+        JSON[search-index.json<br/>~60 entries]
+        SEARCH_HTML[/search/index.html]
+    end
+
+    REG --> GEN
+    GEN --> JSON
+    JSON --> PAGE
+    PAGE --> JS
+    INPUT --> JS
+    JS --> RESULTS[Results List<br/>Filtered by query]
+
+    style REG fill:#0f172a,stroke:#22c55e,color:#fff
+    style JSON fill:#1e293b,stroke:#64748b,color:#fff
+    style JS fill:#1e3a5f,stroke:#d97706,color:#fff

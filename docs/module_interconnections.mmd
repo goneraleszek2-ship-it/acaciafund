@@ -1,0 +1,63 @@
+title: Module Interconnections & Data Flow
+
+classDiagram
+    class config_py {
+        +SITE_URL: str
+        +THUMBNAIL_BASE: str
+        +PILLAR_CONFIG: dict
+        +build_hash: str
+        +get_out_dir()
+    }
+
+    class schemas_py {
+        +RegistryData
+        +ContentItem
+        +BloomQuestion
+        +Flashcard
+        +compute_quality_flags()
+        +sanitize_domain_breakdown()
+    }
+
+    class registry_json {
+        +content: list[ContentItem]
+        +pipeline_stages: list
+        +mcp_integrations: list
+        +last_run: datetime
+    }
+
+    class generator_py {
+        +load_registry()
+        +validate_schema()
+        +generate_thumbnails()
+        +render_templates()
+        +write_output()
+    }
+
+    class visuals_py {
+        +generate_fractal()
+        +source_bar_svg()
+        +bloom_chart_svg()
+        +radar_svg()
+        +donut_svg()
+        +topic_overlays()
+    }
+
+    class templates_j2 {
+        +layout.j2
+        +research.j2
+        +learn.j2
+        +learn_index.j2
+        +knowledge.j2
+        +knowledge_index.j2
+        +tags.j2
+        +search.j2
+    }
+
+    config_py --> generator_py : provides config
+    schemas_py --> generator_py : validates
+    registry_json --> schemas_py : validated by
+    registry_json --> generator_py : read by
+    generator_py --> visuals_py : invokes
+    generator_py --> templates_j2 : renders
+    templates_j2 --> config_py : uses config
+    visuals_py --> registry_json : reads content
