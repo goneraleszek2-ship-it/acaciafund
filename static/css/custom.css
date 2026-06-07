@@ -298,8 +298,31 @@ body.focus-mode article {
   }
 }
 
-/* Fluid typography */
-h1, .h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); }
-h2, .h2 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
-h3, .h3 { font-size: clamp(1.1rem, 1.5vw, 1.25rem); }
+/* Fluid typography — only for plain headings without explicit classes */
+h1:not([class*="text-"]), .h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); }
+h2:not([class*="text-"]), .h2 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
+h3:not([class*="text-"]), .h3 { font-size: clamp(1.1rem, 1.5vw, 1.25rem); }
 article .prose p, article .prose li { line-height: 1.7; }
+
+/* Responsive content constraints */
+.prose img, .prose svg, .prose video {
+  max-width: 100%;
+  height: auto;
+}
+.prose svg[class*="w-"] {
+  max-width: none;
+}
+.prose .emoji, .prose [class*="emoji"] {
+  font-size: 1.1em;
+  vertical-align: middle;
+}
+@media (max-width: 640px) {
+  .prose table { display: block; overflow-x: auto; }
+  .prose iframe { max-width: 100%; }
+  .grid-cols-2 { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .prose { font-size: 0.9375rem; }
+  .prose h2 { font-size: clamp(1.1rem, 5vw, 1.35rem); }
+  .prose h3 { font-size: clamp(1rem, 4vw, 1.15rem); }
+}
