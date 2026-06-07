@@ -1,17 +1,9 @@
 title: Search Index Architecture
 
 flowchart LR
-    REG[registry.json<br/>60 entries]
-    GEN[generator.py]
-    INDEX[search-index.json]
-    PAGE[Search Page]
-    JS[fetch + filter JS]
-    INPUT[User Query]
-    RESULTS[Results filtered by query]
-
-    REG --> GEN
-    GEN --> INDEX
-    INDEX --> PAGE
-    PAGE --> JS
-    INPUT --> JS
-    JS --> RESULTS
+    REG[registry.json] --> GEN[generator.py]
+    GEN --> INDEX[search-index-json]
+    INDEX --> PAGE[Search Page]
+    QUERY[User Input] --> FILTER[JavaScript Filter]
+    PAGE --> FILTER
+    FILTER --> RESULTS[Filtered Results]
