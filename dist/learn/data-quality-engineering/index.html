@@ -189,6 +189,8 @@
         <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">dataops</span>
         <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">testing</span>
         <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">data-quality</span>
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">expectations</span>
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">monitoring</span>
       </div>
     </header>
 
@@ -356,6 +358,13 @@ expectation_suite.add_expectation(
           </span>
         </a>
       </div>
+    </section>
+    <section class="mt-12 pt-8 border-t" id="quiz-section" style="border-color:var(--color-border)" data-quiz='{"questions": [{"q": "Which data quality layer checks whether all expected records are present in a dataset?", "options": ["Freshness", "Completeness", "Accuracy", "Consistency"], "a": 1}, {"q": "A pipeline stops execution when a Great Expectations check fails. This is an example of:", "options": ["Soft gate", "Hard gate", "Schema drift", "Observability"], "a": 1}, {"q": "Your data pipeline suddenly shows 0% null rate on a column that previously had 5% nulls. How should you interpret this?", "options": ["Data quality has improved", "Likely a schema change or silent failure in the source", "Ignore — null rates naturally fluctuate", "Increase the threshold to 10%"], "a": 1}, {"q": "You need to detect when new columns appear unexpectedly in a production dataset. Which tool category is most appropriate?", "options": ["Data orchestration (Dagster/Airflow)", "Schema monitoring (part of data quality framework)", "Data integration (Airbyte/Meltano)", "Business intelligence (Metabase/Superset)"], "a": 1}, {"q": "An engineering team defines 200 expectations but never reviews the results. What data quality anti-pattern is this?", "options": ["Over-testing", "Alert fatigue from unchecked monitoring", "Expectation drift", "Silent failure of quality gates"], "a": 1}]}'>
+      <h2 class="text-2xl font-bold mb-6 inline-flex items-center gap-2" style="color:var(--color-text)">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        Knowledge Check
+      </h2>
+      <div id="quiz-container"></div>
     </section>
     <section class="mt-8 pt-8 border-t" style="border-color:var(--color-border)">
       <h2 class="text-xl font-bold mb-4 inline-flex items-center gap-2" style="color:var(--color-text)">

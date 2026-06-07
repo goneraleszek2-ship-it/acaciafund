@@ -179,6 +179,8 @@
         <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">stock</span>
         <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">dataops</span>
         <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">data-engineering</span>
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">orchestration</span>
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">ci-cd</span>
       </div>
     </header>
 
@@ -368,6 +370,13 @@
           </span>
         </a>
       </div>
+    </section>
+    <section class="mt-12 pt-8 border-t" id="quiz-section" style="border-color:var(--color-border)" data-quiz='{"questions": [{"q": "What is the primary unit of work in DataOps?", "options": ["Code commit", "Data pipeline run", "Model training run", "Database query"], "a": 1}, {"q": "A pipeline manifest file should declare all of the following EXCEPT:", "options": ["Source connectors and schemas", "Data quality expectations per stage", "Employee salaries", "SLOs for freshness and completeness"], "a": 2}, {"q": "A data team notices row counts dropped 40% overnight. Which DataOps principle is most directly relevant?", "options": ["Reproducibility", "Pipeline Observability", "Version Everything", "Continuous Delivery"], "a": 1}, {"q": "How does the Medallion Architecture (Bronze → Silver → Gold) support DataOps quality goals?", "options": ["It adds more storage layers", "Each layer applies increasing quality standards, catching errors early", "It replaces the need for data quality checks", "It only works with Delta Lake"], "a": 1}, {"q": "Your organization wants to move from a monolithic data platform to a modular open source stack. What is the first quality gate you should implement?", "options": ["Deploy an ML model", "Define data quality expectations on incoming source data", "Build a dashboard first", "Migrate all data to the cloud"], "a": 1}]}'>
+      <h2 class="text-2xl font-bold mb-6 inline-flex items-center gap-2" style="color:var(--color-text)">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        Knowledge Check
+      </h2>
+      <div id="quiz-container"></div>
     </section>
     <section class="mt-8 pt-8 border-t" style="border-color:var(--color-border)">
       <h2 class="text-xl font-bold mb-4 inline-flex items-center gap-2" style="color:var(--color-text)">
