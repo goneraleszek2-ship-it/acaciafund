@@ -1,170 +1,151 @@
 <div align="center">
   <img src="https://img.shields.io/badge/status-active-22c55e?style=flat-square" alt="Status">
-  <img src="https://img.shields.io/badge/python-3.11+-3776AB?logo=python&logoColor=fff&style=flat-square" alt="Python">
+  <img src="https://img.shields.io/badge/python-3.13+-3776AB?logo=python&logoColor=fff&style=flat-square" alt="Python">
+  <img src="https://img.shields.io/badge/jinja2-B41717?logo=jinja&logoColor=fff&style=flat-square" alt="Jinja2">
   <img src="https://img.shields.io/badge/cloudflare-pages-F38020?logo=cloudflare&logoColor=fff&style=flat-square" alt="Cloudflare">
+  <img src="https://img.shields.io/badge/WCAG_2.1_AA-005A9C?style=flat-square" alt="WCAG">
 </div>
 
 # AcaciaFund
 
-Automated research synthesis and an experimental learning ecosystem.
+Automated research synthesis blog — static-first, privacy-preserving, psychologically-informed reading experience.
 
-HackerNews + arXiv → deterministic classification (Bloom taxonomy) → static site (Python-native) → interactive learning layer.
+HackerNews + arXiv → deterministic classification (Bloom taxonomy) → Python-native static generator → warm, accessible, dark-mode-capable site.
 
----
-
-## What's New (Summary)
-
-- **Python-native Headless Static Generator**: Replaced Astro/Node.js with a data-driven Python architecture (orchestrator + generator + Jinja2 template)
-- **Learning Hub**: Interactive lessons, quizzes, and an in-browser Bayes demo (content/learn/)
-- **Local-first Learning UX**: Client-side quizzes with progress saved in localStorage (static/js/learning_hub.js)
-- **Interactive Bayes Demo Shortcode**: static/js/learning.js
-- **Homepage UX Enhancement**: Refined hero section, call-to-action, pictograms and software stack diagram
-- **Accessibility Improvements**: Proper heading structure (H1→H2→H3), skip-to-content link, ARIA labels, lang attribute
-- **Zero Client-Side JavaScript for Content**: Only CSS/Tailwind CDN used for styling; no JS required to read content
-- **Deployed via Cloudflare Pages**: Fully static site with automatic deployments
+**Site:** https://www.acaciafund.org
 
 ---
 
-## Architecture Overview
+## Features
 
-AcaciaFund now follows a **Data-as-the-App** pattern with three core layers:
+### Reading Experience
+- Sticky table of contents with active-heading highlighting
+- Reading progress bar (fixed 3px at viewport top)
+- Focus mode (hides TOC, centers content to 65ch)
+- Previous/next post navigation
+- Related posts by tag overlap (3-card grid with pillar badges)
+- Reading time estimate on every card and post
 
-### 1. Data Engine (Python)
-- `ingest.py`: Fetches and processes HackerNews and arXiv content
-- `orchestrator.py`: Converts Markdown content to structured `registry.json` (single source of truth)
-- Uses Pydantic for data validation before rendering
+### Visual Identity
+- Warm cream palette (`#f5f0eb` background) with CSS custom properties
+- Self-hosted Inter font (Regular/SemiBold/Bold WOFF2 — no Google Fonts)
+- Dark mode with FOUC prevention, `localStorage` persistence, system preference fallback
+- Dual `theme-color` meta tags for light/dark browser chrome
 
-### 2. Rendering Shell (Immutable)
-- `generator.py`: Reads `registry.json` and renders content using Jinja2 template
-- `templates/layout.j2`: Single HTML template using Tailwind CSS CDN
-- Produces static HTML in `dist/` directory
+### Pillar Taxonomy
+| Pillar | Label | Badge Color | Posts |
+|--------|-------|-------------|-------|
+| AML | Shield | Amber | 4 |
+| Markets | Chart | Green | 4 |
+| Science | Microscope | Purple | 4 |
 
-### 3. Deployment
-- `deploy.sh`: Orchestrates full pipeline (ingest → orchestrator → generator → deploy)
-- Deploys to Cloudflare Pages via Wrangler
+### Accessibility
+- Skip-to-content link, `lang="en"`, ARIA labels, `role` attributes
+- Keyboard `:focus-visible` indicators
+- `prefers-reduced-motion` disables all animations
+- Proper heading hierarchy (H1 → H2 → H3)
+- Breadcrumbs with `aria-label` and `aria-current="page"`
+- Accessible dropdown (`aria-expanded`, `aria-haspopup`, Escape key, click-outside)
+
+### Per-Post Content
+- Bloom Taxonomy questions with colored level badges
+- Flashcards grid (term + definition)
+- Signal Analysis dashboard (article count, scores, domain diversity, entities)
+- Quality metrics (source score, diversity, recency)
+- Source breakdown (HN / arXiv / PubMed)
+- Tags, date, pillar badge, SQI score
+- Per-post OG images (unique SVG per title)
+
+### Infrastructure
+- Zero client-side JS for content reading (JS only for UI enhancements)
+- Python-native pipeline: `python3.13 generator.py`
+- Cloudflare Pages auto-deploy from `main`
+- Self-hosted Tailwind 3.4.19 (28KB, no CDN)
+- Security headers (`X-Content-Type-Options`, `X-Frame-Options`, `Permissions-Policy`, etc.)
+- Atom feed, sitemap, robots.txt, canonical URLs, JSON-LD structured data
+
+---
+
+## Architecture
+
+```
+registry.json ─→ generator.py ─→ Jinja2 templates ─→ dist/*.html
+                                              ↑
+                                    static/css/, static/fonts/
+```
+
+### Stack
+- **Python 3.13** — generator
+- **Pydantic** — schema validation (`schemas.py`)
+- **Jinja2** — 4 templates (`layout.j2`, `blog_post.j2`, `pillar_index.j2`, `index.j2`)
+- **Markdown2** — Markdown → HTML rendering
+- **Tailwind CSS 3.4.19** — utility classes (self-hosted)
+- **Custom CSS** — `static/css/custom.css` (~270 lines)
+- **Inter** — self-hosted font (3 WOFF2 files)
+- **Cloudflare Pages** — static hosting
+
+---
+
+## Quick Start
+
+```bash
+git clone https://github.com/goneraleszek2-ship-it/acaciafund.git
+cd acaciafund
+pip install markdown2 pydantic jinja2
+python3.13 generator.py
+python3 -m http.server 8000 --dir dist
+```
+
+Then open http://localhost:8000.
 
 ---
 
 ## Project Structure
 
 ```
-.
-├── content/                  # Source Markdown files (blog, lessons, etc.)
-├── dist/                     # Generated static site (output)
-├── registry.json             # Generated data file (single source of truth)
-├── schemas.py                # Pydantic models defining content schema
-├── orchestrator.py           # Parses Markdown and writes registry.json
-├── generator.py              # Renders registry.json to static HTML
-├── templates/                # Jinja2 templates (layout.j2)
-├── static/                   # Static assets (CSS, JS, images)
-├── deploy.sh                 # Deployment script: orchestrates pipeline
-├── .env                      # Environment variables (Wrangler API token)
-└── README.md                 # This file
+├── generator.py              # Main generator
+├── schemas.py                # Pydantic models
+├── registry.json             # Content registry (single source of truth)
+├── templates/                # Jinja2 templates
+│   ├── layout.j2             # Base layout with nav, dark mode, footer
+│   ├── blog_post.j2          # Blog post with TOC, progress bar, related
+│   ├── pillar_index.j2       # Pillar listing pages
+│   └── index.j2              # Homepage
+├── static/
+│   ├── css/
+│   │   ├── custom.css        # Custom styles (colors, dark mode, a11y)
+│   │   └── tailwind.min.css  # Tailwind utility classes (28KB)
+│   └── fonts/
+│       └── Inter-*.woff2     # Self-hosted font files
+├── content/                  # Source markdown for static pages
+├── public/                   # Additional static assets
+├── dist/                     # Generated output (gitignored items)
+├── SITE-STATE.md             # Full feature inventory
+├── UX-PLAN.md                # UX evolution roadmap
+└── ARCHITECTURE.md           # Target architecture blueprint
 ```
 
 ---
 
-## Developer Guide
+## Deployment
 
-### Prerequisites
-- Python 3.11+
-- Wrangler (for Cloudflare Pages deployment)
-- Git
-
-### Local Development (Quick Start)
-
-```bash
-git clone https://github.com/yourusername/acaciafund.git
-cd acaciafund
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt  # or install via apt: python3-markdown python3-pydantic python3-jinja2
-```
-
-### Full Synthesis Pipeline
-
-```bash
-# Fetch and process new content (optional)
-python ingest.py
-
-# Convert Markdown to structured data
-python orchestrator.py
-
-# Generate static HTML
-python generator.py
-
-# Preview locally (optional)
-python -m http.server 8000 --dir dist
-
-# Deploy to Cloudflare Pages
-./deploy.sh
-```
-
-### Requirements
-
-Create a `requirements.txt` with:
-```
-markdown2
-pydantic
-jinja2
-```
-
-Or install via system packages:
-```bash
-apt-get install python3-markdown2 python3-pydantic python3-jinja2
-```
+Push to `main` → Cloudflare Pages auto-deploys.  
+Build command: `python3.13 generator.py`  
+Output directory: `dist/`
 
 ---
 
-## Learning Hub — Design Principles
+## Design Principles
 
-- **Judgment Over Prediction**: Interactive Bayes demo develops belief updating intuition
-- **Privacy-First Approach**: Default local-only storage; server persistence available as opt-in
-- **Modular Lessons**: Each lesson is a standalone markdown file with optional embedded quiz JSON
-- **Accessibility**: All content accessible without JavaScript; proper heading structure and ARIA labels
-
----
-
-## Strategic Assessment & Recommended Priorities
-
-**Current State**: Production-ready static site featuring an experimental, privacy-preserving learning layer with a defined path toward dynamic backend capabilities.
-
-**Immediate Focus Areas**:
-
-1. **Performance Optimization**: 
-   - Implement image optimization (WebP, lazy loading)
-   - Add CSS purging for Tailwind
-   - Enable Cloudflare caching and Polish
-
-2. **Analytics Framework**: 
-   - Deploy differential privacy-enabled telemetry for aggregated learning insights
-   - Add basic pageview analytics (Plausible or Umami)
-
-3. **Content Enrichment**: 
-   - Generate lightweight SVG graphics based on post tags/metadata
-   - Add interactive elements to lessons (only where beneficial)
-
-4. **i18n Foundation**: 
-   - Prepare structure for multilingual content (though English-only per current requirements)
-
-5. **CI/CD Pipeline**: 
-   - Set up GitHub Actions for automated testing and deployment on PRs
+- **Static-first** — no build framework, no JS runtime for content
+- **Accessible** — WCAG 2.1 AA, keyboard nav, screen reader friendly
+- **Privacy-preserving** — no analytics, no CDN fonts, no third-party requests
+- **Deterministic** — same `registry.json` always produces identical output
+- **Typographic** — typography as primary hierarchy carrier
+- **Warm** — cream palette with deep navy text, not sterile white/blue
 
 ---
 
-## Accessibility Compliance
+## License
 
-The site adheres to WCAG 2.1 AA standards:
-- Proper heading hierarchy (H1 → H2 → H3)
-- Skip-to-content link
-- ARIA labels on interactive elements
-- Language attribute set on HTML element
-- Sufficient color contrast (via Tailwind CSS)
-- All images have alt text
-- No reliance on JavaScript for content consumption
-
----
-
-## Licensing
-
-MIT License — Leszek Gonera · AcaciaFund
+MIT — Leszek Gonera · AcaciaFund
