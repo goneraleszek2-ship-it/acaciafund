@@ -10,6 +10,7 @@ class AcaciaContent(BaseModel):
     description: str = ""
     body_html: str = ""
     category: str = "post"
+    content_type: str = ""  # research | learn | knowledge
     tags: List[str] = []
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     updated_at: Optional[datetime] = None

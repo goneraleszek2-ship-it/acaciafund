@@ -1,0 +1,36 @@
+{% extends "layout.j2" %}
+{% block main_content %}
+<section>
+  <nav aria-label="Breadcrumb" class="mb-4 text-xs" style="color:var(--color-text-muted)">
+    <ol class="flex flex-wrap items-center gap-1.5">
+      <li><a href="/" class="hover:text-[var(--color-accent)] transition">Home</a></li>
+      <li aria-hidden="true">/</li>
+      <li aria-current="page">{{ content.title }}</li>
+    </ol>
+  </nav>
+
+  <div class="mb-8">
+    <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">{{ content.title }}</h1>
+    <p class="mt-2 text-sm" style="color:var(--color-text-muted)">{{ items | length }} entries</p>
+  </div>
+
+  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    {%- for item in items %}
+    <a href="/{{ item.slug }}/" class="block rounded-lg p-4 transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+      <h2 class="font-semibold" style="color:var(--color-text)">{{ item.title | striptags }}</h2>
+      {%- if item.description %}
+      <p class="mt-1 text-xs" style="color:var(--color-text-secondary)">{{ item.description[:200] }}</p>
+      {%- endif %}
+      <div class="mt-3 flex items-center gap-3 text-xs" style="color:var(--color-text-muted)">
+        {%- if item.date_str %}
+        <time datetime="{{ item.date_str }}">{{ item.date_str }}</time>
+        {%- endif %}
+        {%- if item.body_html %}
+        <span>{{ item.body_html | reading_time }} min</span>
+        {%- endif %}
+      </div>
+    </a>
+    {%- endfor %}
+  </div>
+</section>
+{% endblock %}

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3.13
 """
 Generator for AcaciaFund: converts registry.json to static HTML using Jinja2 templates.
-Produces: index.html, blog posts, pillar indices, static pages, feed.xml, sitemap.xml, robots.txt, 404.html, _headers
+3-category taxonomy: research | learn | knowledge
 """
 import hashlib
 import json
@@ -10,12 +10,11 @@ import shutil
 from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
-import markdown2
 
-from schemas import RegistryData, AcaciaContent
+from schemas import RegistryData
 
 REGISTRY_PATH = Path("registry.json")
 TEMPLATE_DIR = Path("templates")
@@ -28,40 +27,27 @@ SITE_URL = "https://acaciafund.org"
 
 PILLAR_CONFIG = {
     "aml": {
-        "label": "AML",
-        "emoji": "shield",
-        "color": "slate",
-        "bg": "from-slate-900 to-slate-800",
-        "accent": "amber",
-        "text_color": "text-slate-900",
-        "badge_color": "bg-amber-100 text-amber-800",
+        "label": "AML", "emoji": "shield", "color": "slate",
+        "bg": "from-slate-900 to-slate-800", "accent": "amber",
+        "text_color": "text-slate-900", "badge_color": "bg-amber-100 text-amber-800",
         "heading": "Anti-Money Laundering",
         "description": "Financial crime, compliance, regulation, and risk management.",
     },
     "stock": {
-        "label": "Markets",
-        "emoji": "chart",
-        "color": "green",
-        "bg": "from-green-900 to-green-800",
-        "accent": "green",
-        "text_color": "text-green-900",
-        "badge_color": "bg-green-100 text-green-800",
+        "label": "Markets", "emoji": "chart", "color": "green",
+        "bg": "from-green-900 to-green-800", "accent": "green",
+        "text_color": "text-green-900", "badge_color": "bg-green-100 text-green-800",
         "heading": "Markets & Industry",
         "description": "Semiconductors, supply chains, AI industry, manufacturing.",
     },
     "science": {
-        "label": "Science",
-        "emoji": "microscope",
-        "color": "purple",
-        "bg": "from-purple-900 to-purple-800",
-        "accent": "purple",
-        "text_color": "text-purple-900",
-        "badge_color": "bg-purple-100 text-purple-800",
+        "label": "Science", "emoji": "microscope", "color": "purple",
+        "bg": "from-purple-900 to-purple-800", "accent": "purple",
+        "text_color": "text-purple-900", "badge_color": "bg-purple-100 text-purple-800",
         "heading": "Science & Discovery",
         "description": "Biology, quantum, neuroscience, space, climate, complexity.",
     },
 }
-
 PILLAR_EMOJIS = {"aml": "shield", "stock": "chart", "science": "microscope"}
 PILLAR_NAMES = {"aml": "AML", "stock": "Markets", "science": "Science"}
 
@@ -78,49 +64,27 @@ def slug_to_url(slug: str) -> str:
     return f"{SITE_URL}/{slug_to_path(slug)}"
 
 
-def extract_pillar_accent(pillar: str) -> str:
-    return pillar if pillar in PILLAR_CONFIG else "aml"
-
-
-def group_by_pillar(content_list: list[AcaciaContent]) -> dict[str, list[AcaciaContent]]:
-    groups: dict[str, list[AcaciaContent]] = defaultdict(list)
+def group_by_pillar(content_list: list) -> dict[str, list]:
+    groups: dict[str, list] = defaultdict(list)
     for c in content_list:
-        p = c.pillar or c.category
+        p = c.pillar or "aml"
         groups[p].append(c)
     for g in groups.values():
         g.sort(key=lambda x: x.created_at or datetime.min, reverse=True)
     return dict(groups)
 
 
-def build_static_page_html(md_path: Path) -> str:
-    try:
-        raw = md_path.read_text(encoding="utf-8")
-    except Exception:
-        return ""
-    if raw.startswith("---"):
-        parts = raw.split("---", 2)
-        if len(parts) >= 3:
-            body = parts[2].strip()
-        else:
-            body = raw
-    else:
-        body = raw
-    return markdown2.markdown(body, extras=["fenced-code-blocks", "tables"])
-
-
 HEADING_RE = re.compile(r'<h([23])([^>]*)>(.*?)</h\1>', re.IGNORECASE | re.DOTALL)
 
 
 def extract_headings(html: str) -> tuple[str, list[dict]]:
-    """Add id anchors to h2/h3 and return TOC structure [{id, text, tag}]."""
     toc = []
     id_counts: dict[str, int] = {}
-
     def _repl(m):
         tag = m.group(1)
         inner = m.group(3)
         text = re.sub(r'<[^>]+>', '', inner).strip()
-        base_id = re.sub(r'[^a-z0-9]+', '-', text.lower()).strip('-') or f"section"
+        base_id = re.sub(r'[^a-z0-9]+', '-', text.lower()).strip('-') or "section"
         if base_id in id_counts:
             id_counts[base_id] += 1
             id_str = f"{base_id}-{id_counts[base_id]}"
@@ -129,13 +93,11 @@ def extract_headings(html: str) -> tuple[str, list[dict]]:
             id_str = base_id
         toc.append({"id": id_str, "text": text, "tag": f"h{tag}"})
         return f'<h{tag} id="{id_str}">{inner}</h{tag}>'
-
     html = HEADING_RE.sub(_repl, html)
     return html, toc
 
 
 def find_related(posts: list, current: object, max_items: int = 3) -> list:
-    """Find posts sharing most tags with current, excluding current itself."""
     current_tags = set(t.lower() for t in current.tags)
     scored = []
     for p in posts:
@@ -206,14 +168,11 @@ def main():
                 dest = STATIC_DST_DIR / rel
                 dest.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(item, dest)
-        print(f"Copied pipeline static assets")
-
     if STATIC_SRC_DIR.exists():
         for sub in {"images", "icons"}:
             src = STATIC_SRC_DIR / sub
             if src.exists():
                 shutil.copytree(src, STATIC_DST_DIR / sub, dirs_exist_ok=True)
-        print(f"Copied legacy static assets")
 
     env = Environment(
         loader=FileSystemLoader(TEMPLATE_DIR),
@@ -223,11 +182,12 @@ def main():
 
     year = datetime.now(timezone.utc).year
     all_content = registry.content
-    posts = [c for c in all_content if c.category == "blog"]
-    lessons = [c for c in all_content if c.category in ("learn", "lesson")]
-    pillar_groups = group_by_pillar(posts)
-    latest_post = posts[0] if posts else None
-    pillar_latest = {p: g[0] for p, g in pillar_groups.items() if g}
+
+    research_items = [c for c in all_content if c.content_type == "research"]
+    learn_items = [c for c in all_content if c.content_type == "learn"]
+    knowledge_items = [c for c in all_content if c.content_type == "knowledge"]
+
+    pillar_groups = group_by_pillar(research_items)
 
     ctx_base = {
         "year": year,
@@ -238,32 +198,12 @@ def main():
         "pillar_names": PILLAR_NAMES,
     }
 
-    # --- STATIC PAGES: about, research, scholarship, contact ---
-    static_page_map = {
-        "about": "en/about/index.md",
-        "research": "en/research/index.md",
-        "scholarship": "en/scholarship/index.md",
-        "contact": "contact/index.md",
-    }
+    def render_template(template_name, **kw):
+        return env.get_template(template_name).render(**kw)
 
-    for page_name, rel_path in static_page_map.items():
-        page_path = CONTENT_DIR / rel_path
-        if not page_path.exists():
-            continue
-        body = build_static_page_html(page_path)
-        dummy = _make_dummy_content(
-            title=page_name.capitalize(),
-            slug=page_name,
-            body_html=body,
-            category="page",
-        )
-        html = _render_page(env, dummy, page_path=f"{page_name}.html", **ctx_base)
-        (OUTPUT_DIR / f"{page_name}.html").write_text(html, encoding="utf-8")
-        print(f"Generated: {page_name}.html")
-
-    # --- LEARNING PAGES ---
-    for lesson in lessons:
-        slug = lesson.slug
+    # --- KNOWLEDGE PAGES ---
+    for item in knowledge_items:
+        slug = item.slug
         page_path = slug_to_path(slug)
         if "/" in slug:
             out_dir = OUTPUT_DIR / slug
@@ -271,17 +211,50 @@ def main():
             out_file = out_dir / "index.html"
         else:
             out_file = OUTPUT_DIR / f"{slug}.html"
-        body = add_lazy_loading(lesson.body_html)
-        ctx = dict(ctx_base, content=lesson, page_path=page_path,
-                    prev_post=None, next_post=None)
-        html = env.get_template("layout.j2").render(content=lesson, is_index=False,
-                                                     page_path=page_path, **ctx_base)
+        html = render_template("layout.j2", content=item, is_index=False,
+                                page_path=page_path, page_type="knowledge", **ctx_base)
         out_file.write_text(html, encoding="utf-8")
-        print(f"Generated: {out_file.relative_to(OUTPUT_DIR)}")
+        print(f"  knowledge: {out_file.relative_to(OUTPUT_DIR)}")
 
-    # --- BLOG POSTS ---
-    for i, post in enumerate(posts):
-        slug = post.slug
+    # --- KNOWLEDGE INDEX ---
+    knowledge_dir = OUTPUT_DIR / "knowledge"
+    knowledge_dir.mkdir(parents=True, exist_ok=True)
+    ctx_k = dict(ctx_base, content_type="knowledge", items=knowledge_items)
+    html = render_template("category_index.j2", content=_dummy("Knowledge Base", "knowledge"),
+                            category="knowledge", items=knowledge_items,
+                            is_index=False, page_path="knowledge/", **ctx_base)
+    (knowledge_dir / "index.html").write_text(html, encoding="utf-8")
+    print("  category: knowledge/index.html")
+
+    # --- LEARN PAGES ---
+    for item in learn_items:
+        slug = item.slug
+        page_path = slug_to_path(slug)
+        if "/" in slug:
+            out_dir = OUTPUT_DIR / slug
+            out_dir.mkdir(parents=True, exist_ok=True)
+            out_file = out_dir / "index.html"
+        else:
+            out_file = OUTPUT_DIR / f"{slug}.html"
+        body = add_lazy_loading(item.body_html)
+        item.body_html = body
+        html = render_template("learn.j2", content=item, is_index=False,
+                                page_path=page_path, **ctx_base)
+        out_file.write_text(html, encoding="utf-8")
+        print(f"  learn: {out_file.relative_to(OUTPUT_DIR)}")
+
+    # --- LEARN INDEX ---
+    learn_dir = OUTPUT_DIR / "learn"
+    learn_dir.mkdir(parents=True, exist_ok=True)
+    html = render_template("category_index.j2", content=_dummy("Learning Hub", "learn"),
+                            category="learn", items=learn_items,
+                            is_index=False, page_path="learn/", **ctx_base)
+    (learn_dir / "index.html").write_text(html, encoding="utf-8")
+    print("  category: learn/index.html")
+
+    # --- RESEARCH PAGES (blog posts) ---
+    for i, item in enumerate(research_items):
+        slug = item.slug
         page_path = slug_to_path(slug)
         if "/" in slug:
             out_dir = OUTPUT_DIR / slug
@@ -290,69 +263,88 @@ def main():
         else:
             out_file = OUTPUT_DIR / f"{slug}.html"
 
-        body = add_lazy_loading(post.body_html)
+        body = add_lazy_loading(item.body_html)
         body, toc_items = extract_headings(body)
-        post.body_html = body
+        item.body_html = body
 
-        prev_post = posts[i + 1] if i + 1 < len(posts) else None
-        next_post = posts[i - 1] if i > 0 else None
-        related = find_related(posts, post, 3)
+        prev_post = research_items[i + 1] if i + 1 < len(research_items) else None
+        next_post = research_items[i - 1] if i > 0 else None
+        related = find_related(research_items, item, 3)
 
-        html = _render_blog_post(env, post, page_path, prev_post, next_post, related, toc_items, ctx_base)
+        pillar = item.pillar or "aml"
+        pconf = PILLAR_CONFIG.get(pillar, PILLAR_CONFIG["aml"])
+        sqi_svg = generate_sqi_badge(item.signals.get("avg_sqi", 0.5)) if item.signals else ""
+        og_key = hashlib.md5(f"og_{item.title}".encode()).hexdigest()[:12]
+        og_image_url = f"{SITE_URL}/static/images/og_{og_key}.svg"
+        thumb_base = f"{SITE_URL}/static/images"
+
+        html = render_template("blog_post.j2",
+            content=item, page_path=page_path,
+            prev_post=prev_post, next_post=next_post,
+            pconf=pconf, sqi_svg=sqi_svg,
+            og_image_url=og_image_url,
+            thumbnail_base=thumb_base, thumbnail_key=thumbnail_key,
+            toc_items=toc_items, related_posts=related, **ctx_base)
         out_file.write_text(html, encoding="utf-8")
-        print(f"Generated: {out_file.relative_to(OUTPUT_DIR)}")
+        print(f"  research: {out_file.relative_to(OUTPUT_DIR)}")
 
-        # Write SVG thumbnails/OG images
+        # Write SVGs
         out_static = STATIC_DST_DIR / "images"
         out_static.mkdir(parents=True, exist_ok=True)
-        if post.thumbnail_svg:
-            key = hashlib.md5(post.title.encode()).hexdigest()[:12]
-            (out_static / f"thumb_{key}.svg").write_text(post.thumbnail_svg, encoding="utf-8")
-        if post.og_svg:
-            key = hashlib.md5(f"og_{post.title}".encode()).hexdigest()[:12]
-            (out_static / f"og_{key}.svg").write_text(post.og_svg, encoding="utf-8")
+        if item.thumbnail_svg:
+            key = hashlib.md5(item.title.encode()).hexdigest()[:12]
+            (out_static / f"thumb_{key}.svg").write_text(item.thumbnail_svg, encoding="utf-8")
+        if item.og_svg:
+            key = hashlib.md5(f"og_{item.title}".encode()).hexdigest()[:12]
+            (out_static / f"og_{key}.svg").write_text(item.og_svg, encoding="utf-8")
 
-    # --- PILLAR INDEX PAGES ---
+    # --- RESEARCH INDEX (/research/) ---
+    research_dir = OUTPUT_DIR / "research"
+    research_dir.mkdir(parents=True, exist_ok=True)
+    now = datetime.now(timezone.utc)
+    scored = [(interest_score(p, now), p) for p in research_items]
+    scored.sort(key=lambda x: -x[0])
+    sorted_research = [p for _, p in scored]
+    html = render_template("category_index.j2", content=_dummy("Research", "research"),
+                            category="research", items=sorted_research,
+                            is_index=False, page_path="research/", **ctx_base)
+    (research_dir / "index.html").write_text(html, encoding="utf-8")
+    print("  category: research/index.html")
+
+    # --- PILLAR SUB-PAGES ---
     for pillar, p_posts in pillar_groups.items():
         out_dir = OUTPUT_DIR / pillar
         out_dir.mkdir(parents=True, exist_ok=True)
         pconf = PILLAR_CONFIG.get(pillar, PILLAR_CONFIG["aml"])
-        dummy = _make_dummy_content(
-            title=pconf['heading'],
-            slug=pillar,
-            body_html="",
-            category="index",
-        )
-        html = _render_pillar_index(env, dummy, pillar, pconf, p_posts, ctx_base)
+        html = render_template("pillar_index.j2",
+            content=_dummy(pconf['heading'], "index"), pillar=pillar, pconf=pconf,
+            posts=p_posts, is_index=False, page_path=f"{pillar}/",
+            thumbnail_base=f"{SITE_URL}/static/images", thumbnail_key=thumbnail_key, **ctx_base)
         (out_dir / "index.html").write_text(html, encoding="utf-8")
-        print(f"Generated: {pillar}/index.html")
+        print(f"  pillar: {pillar}/index.html")
 
-    # --- INDEX PAGE ---
-    now = datetime.now(timezone.utc)
-    scored = [(interest_score(p, now), p) for p in posts]
-    scored.sort(key=lambda x: -x[0])
-    index_posts = [p for _, p in scored[:12]]
-    featured = index_posts[:3] if len(index_posts) >= 3 else index_posts
-    index_html = _render_index(env, index_posts, featured, lessons[:6], ctx_base)
+    # --- HOMEPAGE ---
+    featured = sorted_research[:3] if len(sorted_research) >= 3 else sorted_research
+    index_html = render_template("index.j2",
+        content=_dummy("AcaciaFund — Research Synthesis & Learning", "index"),
+        is_index=True, page_path="",
+        featured_posts=featured, recent_posts=sorted_research[:12],
+        learn_items=learn_items[:6], knowledge_items=knowledge_items[:6],
+        thumbnail_base=f"{SITE_URL}/static/images", thumbnail_key=thumbnail_key, **ctx_base)
     (OUTPUT_DIR / "index.html").write_text(index_html, encoding="utf-8")
-    print("Generated: index.html")
+    print("  index: index.html")
 
-    # --- 404 PAGE ---
-    dummy_404 = _make_dummy_content(
-        title="Page Not Found",
-        slug="404",
-        body_html='<p>The page you requested does not exist. <a href="/">Return home</a></p>',
-        category="error",
-    )
-    html_404 = env.get_template("layout.j2").render(
-        content=dummy_404, is_index=False, page_path="404.html", **ctx_base
-    )
-    (OUTPUT_DIR / "404.html").write_text(html_404, encoding="utf-8")
-    print("Generated: 404.html")
+    # --- 404 ---
+    html = render_template("layout.j2",
+        content=_dummy("Page Not Found", "error",
+            '<p>The page you requested does not exist. <a href="/">Return home</a></p>'),
+        is_index=False, page_path="404.html", page_type="error", **ctx_base)
+    (OUTPUT_DIR / "404.html").write_text(html, encoding="utf-8")
+    print("  error: 404.html")
 
     # --- FEED ---
     feed_items = []
-    for post in posts[:20]:
+    for post in research_items[:20]:
         path = slug_to_path(post.slug)
         desc = (post.description or post.body_html[:200])[:300]
         feed_items.append(f"""  <entry>
@@ -364,7 +356,7 @@ def main():
   </entry>""")
     feed = f"""<?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>AcaciaFund Blog</title>
+  <title>AcaciaFund Research</title>
   <link href="{SITE_URL}/feed.xml" rel="self" type="application/atom+xml"/>
   <link href="{SITE_URL}/" rel="alternate" type="text/html"/>
   <id>{SITE_URL}/feed.xml</id>
@@ -373,15 +365,13 @@ def main():
 {chr(10).join(feed_items)}
 </feed>"""
     (OUTPUT_DIR / "feed.xml").write_text(feed, encoding="utf-8")
-    print("Generated: feed.xml")
+    print("  feed: feed.xml")
 
     # --- SITEMAP ---
     urls = [f"{SITE_URL}/"]
     for c in all_content:
         urls.append(slug_to_url(c.slug))
-    for page_name in static_page_map:
-        urls.append(f"{SITE_URL}/{page_name}.html")
-    for p in pillar_groups:
+    for p in list(pillar_groups) + ["research", "learn", "knowledge"]:
         urls.append(f"{SITE_URL}/{p}/")
     sm = ['<?xml version="1.0" encoding="UTF-8"?>',
           '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
@@ -389,13 +379,10 @@ def main():
         sm.append(f"  <url><loc>{url}</loc></url>")
     sm.append("</urlset>")
     (OUTPUT_DIR / "sitemap.xml").write_text("\n".join(sm), encoding="utf-8")
-    print("Generated: sitemap.xml")
 
     # --- ROBOTS ---
     (OUTPUT_DIR / "robots.txt").write_text(
-        f"User-agent: *\nAllow: /\nSitemap: {SITE_URL}/sitemap.xml\n", encoding="utf-8"
-    )
-    print("Generated: robots.txt")
+        f"User-agent: *\nAllow: /\nSitemap: {SITE_URL}/sitemap.xml\n", encoding="utf-8")
 
     # --- HEADERS ---
     (OUTPUT_DIR / "_headers").write_text("""/*
@@ -417,83 +404,22 @@ def main():
 /sitemap.xml
   Content-Type: application/xml; charset=utf-8
 """, encoding="utf-8")
-    print("Generated: _headers")
 
     total = len(list(OUTPUT_DIR.rglob("*.html")))
     print(f"Generation complete. Total pages: {total}")
     return 0
 
 
-def _make_dummy_content(title="", slug="", body_html="", category="post"):
+def _dummy(title="", category="post", body_html=""):
     return type("obj", (object,), {
-        "title": title,
-        "language": "en",
-        "category": category,
-        "slug": slug,
-        "body_html": body_html,
-        "description": "",
-        "created_at": None,
-        "updated_at": None,
-        "tags": [],
-        "pillar": "",
-        "date_str": "",
-        "thumbnail_svg": "",
-        "og_svg": "",
-        "signals": {},
-        "source_breakdown": {},
-        "quality_metrics": {},
-        "bloom_questions": [],
-        "flashcards": [],
-        "trending_html": "",
-        "analysis_html": "",
-        "cross_pillar_html": "",
+        "title": title, "language": "en", "category": category, "slug": "",
+        "body_html": body_html, "description": "", "created_at": None,
+        "updated_at": None, "tags": [], "pillar": "", "date_str": "",
+        "thumbnail_svg": "", "og_svg": "", "signals": {}, "source_breakdown": {},
+        "quality_metrics": {}, "bloom_questions": [], "flashcards": [],
+        "trending_html": "", "analysis_html": "", "cross_pillar_html": "",
         "quality_flags": [],
     })
-
-
-def _render_page(env, content, page_path="", **ctx):
-    return env.get_template("layout.j2").render(
-        content=content, is_index=False, page_path=page_path, page_type="page", **ctx
-    )
-
-
-def _render_blog_post(env, post, page_path, prev_post, next_post, related, toc_items, ctx):
-    pillar = post.pillar or "aml"
-    pconf = PILLAR_CONFIG.get(pillar, PILLAR_CONFIG["aml"])
-    sqi_svg = generate_sqi_badge(post.signals.get("avg_sqi", 0.5)) if post.signals else ""
-    og_key = hashlib.md5(f"og_{post.title}".encode()).hexdigest()[:12]
-    og_image_url = f"{SITE_URL}/static/images/og_{og_key}.svg"
-    thumb_base = f"{SITE_URL}/static/images"
-    ctx_full = dict(ctx, content=post, page_path=page_path,
-                     prev_post=prev_post, next_post=next_post,
-                     pconf=pconf, sqi_svg=sqi_svg,
-                     og_image_url=og_image_url,
-                     thumbnail_base=thumb_base,
-                     thumbnail_key=thumbnail_key,
-                     toc_items=toc_items,
-                     related_posts=related)
-    return env.get_template("blog_post.j2").render(**ctx_full)
-
-
-def _render_pillar_index(env, content, pillar, pconf, posts, ctx):
-    thumb_base = f"{ctx['site_url']}/static/images"
-    ctx_full = dict(ctx, content=content, pillar=pillar, pconf=pconf, posts=posts,
-                     is_index=False, page_path=f"{pillar}/",
-                     thumbnail_base=thumb_base, thumbnail_key=thumbnail_key)
-    return env.get_template("pillar_index.j2").render(**ctx_full)
-
-
-def _render_index(env, posts, featured, lessons, ctx):
-    thumb_base = f"{ctx['site_url']}/static/images"
-    ctx_full = dict(ctx, recent_posts=posts, featured_posts=featured, lessons=lessons,
-                     thumbnail_base=thumb_base, thumbnail_key=thumbnail_key)
-    dummy = _make_dummy_content(
-        title="Research Synthesis & Experimental Learning",
-        slug="",
-        body_html="",
-        category="index",
-    )
-    return env.get_template("index.j2").render(content=dummy, is_index=True, page_path="", **ctx_full)
 
 
 if __name__ == "__main__":

@@ -1,11 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>AcaciaFund Blog</title>
+  <title>AcaciaFund Research</title>
   <link href="https://acaciafund.org/feed.xml" rel="self" type="application/atom+xml"/>
   <link href="https://acaciafund.org/" rel="alternate" type="text/html"/>
   <id>https://acaciafund.org/feed.xml</id>
-  <updated>2026-06-07T09:15:32.880313+00:00</updated>
+  <updated>2026-06-07T09:42:37.321944+00:00</updated>
   <author><name>AcaciaFund</name></author>
+  <entry>
+    <title>Reproducible ML Pipelines in Computational Biology: MLOps for CRISPR Target Discovery</title>
+    <link href="https://acaciafund.org/blog/2026-06-12-dataops-science/index.html" rel="alternate" type="text/html"/>
+    <id>https://acaciafund.org/blog/2026-06-12-dataops-science/index.html</id>
+    <updated>2026-06-12T06:00:00+00:00</updated>
+    <summary>Applying DataOps and MLOps principles to computational biology workflows: version-controlled training data, reproducible feature engineering, automated model validation, and pipeline CI/CD for CRISPR target prediction.</summary>
+  </entry>
+  <entry>
+    <title>Real-Time Data Engineering for Algorithmic Trading: From Tick Data to Execution Signals</title>
+    <link href="https://acaciafund.org/blog/2026-06-11-dataops-markets/index.html" rel="alternate" type="text/html"/>
+    <id>https://acaciafund.org/blog/2026-06-11-dataops-markets/index.html</id>
+    <updated>2026-06-11T06:00:00+00:00</updated>
+    <summary>Production-grade data pipelines for algorithmic trading systems: handling market data at microsecond latency, feature engineering stream processing, backtesting infrastructure, and DataOps orchestration.</summary>
+  </entry>
+  <entry>
+    <title>Data Pipeline Observability in Financial Crime Compliance: Real-Time AML Monitoring at Scale</title>
+    <link href="https://acaciafund.org/blog/2026-06-10-dataops-aml/index.html" rel="alternate" type="text/html"/>
+    <id>https://acaciafund.org/blog/2026-06-10-dataops-aml/index.html</id>
+    <updated>2026-06-10T06:00:00+00:00</updated>
+    <summary>How DataOps practices including pipeline observability, data quality monitoring, and automated lineage tracking are transforming anti-money laundering transaction monitoring systems at major financial institutions.</summary>
+  </entry>
   <entry>
     <title>Gov.uk has replaced Stripe with Dutch provider Adyen -- 🛡️ AML 2026-06-07</title>
     <link href="https://acaciafund.org/blog/2026-06-07-aml/index.html" rel="alternate" type="text/html"/>
@@ -177,26 +198,5 @@ Retail investors pour money into AI ETFs despite warnings (di</summary>
 EU AI Act officially enters into force (discussion) (620 points)
 OpenAI releases GPT-5 with improved reasoning (discussion) (580 points)
 Google's new AI se</summary>
-  </entry>
-  <entry>
-    <title>AI-powered transaction monitoring: 80% false positive reduction at major European banks</title>
-    <link href="https://acaciafund.org/blog/2026-04-05-aml/index.html" rel="alternate" type="text/html"/>
-    <id>https://acaciafund.org/blog/2026-04-05-aml/index.html</id>
-    <updated>2026-04-05T08:00:00+00:00</updated>
-    <summary>Case study of how five major European banks deployed machine learning for AML transaction monitoring, achieving 80% false positive reduction while improving suspicious activity detection rates.</summary>
-  </entry>
-  <entry>
-    <title>AI hardware spending reaches $300B annual run rate: who benefits?</title>
-    <link href="https://acaciafund.org/blog/2026-03-28-stock/index.html" rel="alternate" type="text/html"/>
-    <id>https://acaciafund.org/blog/2026-03-28-stock/index.html</id>
-    <updated>2026-03-28T08:00:00+00:00</updated>
-    <summary>Analysis of the AI hardware investment boom as annual spending reaches $300B run rate, examining which companies capture value across the stack — from NVIDIA and AMD to custom ASIC designers and memory manufacturers.</summary>
-  </entry>
-  <entry>
-    <title>Neuralink first human trial results: 12 patients achieve brain-computer interface milestones</title>
-    <link href="https://acaciafund.org/blog/2026-03-15-science/index.html" rel="alternate" type="text/html"/>
-    <id>https://acaciafund.org/blog/2026-03-15-science/index.html</id>
-    <updated>2026-03-15T08:00:00+00:00</updated>
-    <summary>Detailed report on Neuralink's first human clinical trial results across 12 patients, examining cursor control accuracy, communication speeds for locked-in patients, and long-term implant biocompatibility.</summary>
   </entry>
 </feed>

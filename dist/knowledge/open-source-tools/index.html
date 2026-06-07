@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Open Source Data Engineering Tool Landscape | AcaciaFund</title>
+  <meta name="description" content="Curated reference of open source tools for building modern data platforms, organized by capability layer.">
+  <meta name="generator" content="AcaciaFund Python-native Pipeline">
+  <meta name="theme-color" content="#f5f0eb" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1a1a2e" media="(prefers-color-scheme: dark)">
+  <link rel="canonical" href="https://acaciafund.org/knowledge/open-source-tools/index.html">
+  <link rel="icon" href="/static/images/favicon.svg" type="image/svg+xml">
+  <link rel="alternate" type="application/atom+xml" title="AcaciaFund Research" href="/feed.xml">
+
+  <meta property="og:title" content="Open Source Data Engineering Tool Landscape">
+  <meta property="og:site_name" content="AcaciaFund">
+  <meta property="og:url" content="https://acaciafund.org/knowledge/open-source-tools/index.html">
+  <meta property="og:image" content="https://acaciafund.org/static/images/og-card.png">
+  <meta property="og:type" content="website">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "Open Source Data Engineering Tool Landscape",
+    "url": "https://acaciafund.org/knowledge/open-source-tools/index.html",
+    "publisher": { "@type": "Organization", "name": "AcaciaFund", "url": "https://acaciafund.org" }
+  }
+  </script>
+
+  <script>
+    (function(){
+      var t = localStorage.getItem('theme');
+      if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      } else if (t === 'light') {
+        document.documentElement.classList.add('light');
+      }
+    })();
+  </script>
+  <link rel="stylesheet" href="/static/css/tailwind.min.css">
+  <link rel="stylesheet" href="/static/css/custom.css">
+  <link rel="preload" href="/static/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/static/fonts/Inter-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/static/fonts/Inter-Bold.woff2" as="font" type="font/woff2" crossorigin>
+</head>
+<body class="antialiased">
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <header class="sticky top-0 z-50 backdrop-blur border-b border-b-[var(--color-border)]" style="background:var(--color-header-bg)">
+    <nav class="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between" aria-label="Main navigation">
+      <a href="/" class="text-lg font-bold tracking-tight whitespace-nowrap">
+        Acacia<span style="color:var(--color-accent)">Fund</span>
+      </a>
+
+      <!-- Desktop nav -->
+      <ul class="hidden sm:flex gap-6 text-sm font-medium" style="color:var(--color-text-secondary)" role="list">
+        <li><a href="/research/" class="nav-link">Research</a></li>
+        <li><a href="/learn/" class="nav-link">Learn</a></li>
+        <li><a href="/knowledge/" class="nav-link">Knowledge</a></li>
+        <li data-dropdown class="relative">
+          <button class="nav-link flex items-center gap-1" aria-haspopup="true" aria-expanded="false" data-dropdown-trigger>
+            Pillars
+            <svg class="w-3 h-3 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="dropdown-menu" role="menu" data-dropdown-menu>
+            <a href="/aml/" class="dropdown-item" role="menuitem">AML</a>
+            <a href="/stock/" class="dropdown-item" role="menuitem">Markets</a>
+            <a href="/science/" class="dropdown-item" role="menuitem">Science</a>
+          </div>
+        </li>
+        <li><a href="/about.html" class="nav-link">About</a></li>
+      </ul>
+
+      <div class="flex items-center gap-2">
+        <button id="dark-toggle" class="p-2 rounded-lg transition" style="color:var(--color-text-muted)" aria-label="Toggle dark mode" title="Toggle dark mode">
+          <svg class="w-5 h-5 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+          <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+        </button>
+      </div>
+
+      <!-- Mobile toggle -->
+      <button class="sm:hidden mobile-nav-toggle p-2" aria-label="Toggle navigation menu" aria-expanded="false" data-mobile-toggle>
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+
+      <!-- Mobile nav panel -->
+      <div class="mobile-nav-panel sm:hidden" data-mobile-panel>
+        <a href="/research/" class="block px-3 py-2 rounded hover:bg-[var(--color-bg)] transition">Research</a>
+        <a href="/learn/" class="block px-3 py-2 rounded hover:bg-[var(--color-bg)] transition">Learn</a>
+        <a href="/knowledge/" class="block px-3 py-2 rounded hover:bg-[var(--color-bg)] transition">Knowledge</a>
+        <div class="pl-3 border-l-2 ml-3 mt-1" style="border-color:var(--color-border)">
+          <a href="/aml/" class="block py-1.5 text-sm hover:text-[var(--color-accent)]">AML</a>
+          <a href="/stock/" class="block py-1.5 text-sm hover:text-[var(--color-accent)]">Markets</a>
+          <a href="/science/" class="block py-1.5 text-sm hover:text-[var(--color-accent)]">Science</a>
+        </div>
+        <a href="/about.html" class="block px-3 py-2 rounded hover:bg-[var(--color-bg)] transition">About</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main" class="max-w-5xl mx-auto px-4 py-8" tabindex="-1"><h2>Open Source Data Engineering Tools 2026</h2>
+<p>Curated reference of production-grade open source tools for each data platform layer.</p>
+
+<h2>Orchestration</h2>
+<ul>
+<li><strong>Apache Airflow</strong> — Mature DAG-based scheduler. Largest ecosystem of operators and integrations. Best for teams that need battle-tested stability.</li>
+<li><strong>Dagster</strong> — Asset-centric orchestrator with software-defined assets, explicit lineage, and first-class testability. Growing rapidly in 2026.</li>
+<li><strong>Prefect</strong> — Python-native orchestration with automatic retries, caching, and cloud UI. Strong DX for smaller teams.</li>
+</ul>
+
+<h2>Data Integration (ELT)</h2>
+<ul>
+<li><strong>Airbyte</strong> — 600+ connectors, protocol-level schema handling, incremental syncs. Deploy self-hosted or Cloud.</li>
+<li><strong>Meltano</strong> — Singer-based integration platform with CI/CD for pipelines. Git-native pipeline management.</li>
+<li><strong>Apache NiFi</strong> — Visual data flow designer with real-time routing and transformation. Best for complex topologies.</li>
+<li><strong>Debezium</strong> — CDC platform for MySQL, PostgreSQL, MongoDB, etc. Streams changes to Kafka.</li>
+</ul>
+
+<h2>Transformation</h2>
+<ul>
+<li><strong>dbt</strong> — SQL transformation framework with testing, documentation, and package management. Industry standard.</li>
+<li><strong>SQLMesh</strong> — SQL transformation with automatic diff-based reconciliation, virtual data environments, and backfill optimization.</li>
+</ul>
+
+<h2>Data Quality</h2>
+<ul>
+<li><strong>Great Expectations</strong> — Python expectation framework with automatic profiling, data docs, and suite management.</li>
+<li><strong>Soda</strong> — YAML-defined quality checks with built-in anomaly detection and Slack/API integrations.</li>
+<li><strong>dbt Tests</strong> — Built-in uniqueness, not-null, accepted-values, foreign-key tests plus custom generic tests.</li>
+</ul>
+
+<h2>Catalog & Governance</h2>
+<ul>
+<li><strong>OpenMetadata</strong> — Unified metadata platform with data discovery, lineage, glossary, and data quality integration.</li>
+<li><strong>DataHub</strong> — LinkedIn's metadata platform. Strong lineage and search. Kubernetes-native.</li>
+<li><strong>Amundsen</strong> — Lyft's data discovery platform. Lighter weight, simpler deployment.</li>
+</ul>
+
+<h2>Stream Processing</h2>
+<ul>
+<li><strong>Apache Kafka</strong> — Distributed event store and stream processing. De facto standard for data streaming.</li>
+<li><strong>Apache Flink</strong> — True stream processing with exactly-once semantics, event-time processing, and state management.</li>
+<li><strong>RisingWave</strong> — Streaming SQL database. Materialized views on streams with PostgreSQL-compatible interface.</li>
+</ul>
+
+<h2>Storage & Query</h2>
+<ul>
+<li><strong>Apache Iceberg</strong> — Open table format with ACID, time travel, partition evolution. The 2026 standard for lakehouse tables.</li>
+<li><strong>Delta Lake</strong> — Linux Foundation table format with ACID, schema enforcement, and unified batch/streaming.</li>
+<li><strong>Trino</strong> — Distributed SQL query engine for federated queries across data sources. Extremely fast.</li>
+<li><strong>DuckDB</strong> — Embedded OLAP database. Ideal for local analytics and embedded use cases.</li>
+<li><strong>MinIO</strong> — S3-compatible object storage for on-premise and edge deployments.</li>
+</ul>
+
+<h2>ML Platform</h2>
+<ul>
+<li><strong>MLflow</strong> — Experiment tracking, model registry, deployment. De facto standard for ML lifecycle.</li>
+<li><strong>Feast</strong> — Feature store for ML. Consistent feature computation across training and serving.</li>
+<li><strong>BentoML</strong> — Model serving framework with Python-native APIs and Kubernetes deployment.</li>
+<li><strong>Kubeflow</strong> — MLOps platform on Kubernetes for end-to-end ML workflows.</li>
+</ul>
+
+<h2>Observability</h2>
+<ul>
+<li><strong>Prometheus + Grafana</strong> — Metrics collection and dashboarding. Standard for infrastructure and pipeline monitoring.</li>
+<li><strong>OpenTelemetry</strong> — Vendor-neutral observability framework for traces, metrics, and logs.</li>
+<li><strong>Grafana Loki</strong> — Log aggregation system. Lightweight, cost-effective, Grafana-native.</li>
+</ul>
+  </main>
+
+  <footer class="mt-16 border-t" style="border-color:var(--color-border);background:var(--color-surface)">
+    <div class="max-w-5xl mx-auto px-4 py-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm" style="color:var(--color-text-secondary)">
+      <div>
+        <p>&copy; 2026 AcaciaFund. All rights reserved.</p>
+        <p class="text-xs mt-1" style="color:var(--color-text-muted)">Research synthesis &amp; experimental learning platform</p>
+      </div>
+      <nav aria-label="Footer navigation">
+        <ul class="flex gap-4" role="list">
+          <li><a href="/research/" class="hover:opacity-70 transition">Research</a></li>
+          <li><a href="/learn/" class="hover:opacity-70 transition">Learn</a></li>
+          <li><a href="/knowledge/" class="hover:opacity-70 transition">Knowledge</a></li>
+          <li><a href="/about.html" class="hover:opacity-70 transition">About</a></li>
+          <li><a href="/feed.xml" class="hover:opacity-70 transition">RSS</a></li>
+        </ul>
+      </nav>
+    </div>
+  </footer>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Dropdown
+      document.querySelectorAll('[data-dropdown]').forEach(function(dd) {
+        var trigger = dd.querySelector('[data-dropdown-trigger]');
+        var menu = dd.querySelector('[data-dropdown-menu]');
+        if (!trigger || !menu) return;
+        trigger.addEventListener('click', function(e) {
+          e.stopPropagation();
+          var expanded = trigger.getAttribute('aria-expanded') === 'true';
+          trigger.setAttribute('aria-expanded', !expanded);
+          menu.classList.toggle('dropdown-menu-open');
+        });
+        dd.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape') {
+            trigger.setAttribute('aria-expanded', 'false');
+            menu.classList.remove('dropdown-menu-open');
+            trigger.focus();
+          }
+        });
+        document.addEventListener('click', function(e) {
+          if (!dd.contains(e.target)) {
+            trigger.setAttribute('aria-expanded', 'false');
+            menu.classList.remove('dropdown-menu-open');
+          }
+        });
+      });
+      // Dark mode toggle
+      var darkToggle = document.getElementById('dark-toggle');
+      if (darkToggle) {
+        darkToggle.addEventListener('click', function() {
+          if (document.documentElement.classList.contains('dark')) {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.classList.add('light');
+            localStorage.setItem('theme', 'light');
+          } else {
+            document.documentElement.classList.remove('light');
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+          }
+        });
+      }
+      // Mobile nav
+      var mobToggle = document.querySelector('[data-mobile-toggle]');
+      var mobPanel = document.querySelector('[data-mobile-panel]');
+      if (mobToggle && mobPanel) {
+        mobToggle.addEventListener('click', function() {
+          var expanded = mobToggle.getAttribute('aria-expanded') === 'true';
+          mobToggle.setAttribute('aria-expanded', !expanded);
+          mobPanel.style.display = expanded ? 'none' : 'block';
+        });
+        document.querySelectorAll('[data-mobile-panel] a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            mobToggle.setAttribute('aria-expanded', 'false');
+            mobPanel.style.display = 'none';
+          });
+        });
+      }
+    });
+  </script>
+</body>
+</html>

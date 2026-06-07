@@ -3,19 +3,29 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Scholarship | AcaciaFund</title>
-  <meta name="description" content="">
+  <title>DataOps Glossary | AcaciaFund</title>
+  <meta name="description" content="Key terms and definitions for DataOps, data engineering, and data science.">
   <meta name="generator" content="AcaciaFund Python-native Pipeline">
   <meta name="theme-color" content="#f5f0eb" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#1a1a2e" media="(prefers-color-scheme: dark)">
-  <link rel="canonical" href="https://acaciafund.org/scholarship.html">
+  <link rel="canonical" href="https://acaciafund.org/knowledge/dataops-glossary/index.html">
   <link rel="icon" href="/static/images/favicon.svg" type="image/svg+xml">
-  <link rel="alternate" type="application/atom+xml" title="AcaciaFund Blog" href="/feed.xml">
+  <link rel="alternate" type="application/atom+xml" title="AcaciaFund Research" href="/feed.xml">
 
-  <meta property="og:title" content="Scholarship">
+  <meta property="og:title" content="DataOps Glossary">
   <meta property="og:site_name" content="AcaciaFund">
-  <meta property="og:url" content="https://acaciafund.org/scholarship.html">
+  <meta property="og:url" content="https://acaciafund.org/knowledge/dataops-glossary/index.html">
   <meta property="og:image" content="https://acaciafund.org/static/images/og-card.png">
+  <meta property="og:type" content="website">
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "DataOps Glossary",
+    "url": "https://acaciafund.org/knowledge/dataops-glossary/index.html",
+    "publisher": { "@type": "Organization", "name": "AcaciaFund", "url": "https://acaciafund.org" }
+  }
+  </script>
 
   <script>
     (function(){
@@ -44,12 +54,12 @@
 
       <!-- Desktop nav -->
       <ul class="hidden sm:flex gap-6 text-sm font-medium" style="color:var(--color-text-secondary)" role="list">
-        <li><a href="/about.html" class="nav-link">About</a></li>
-        <li><a href="/research.html" class="nav-link">Research</a></li>
-        <li><a href="/scholarship.html" class="nav-link">Scholarship</a></li>
+        <li><a href="/research/" class="nav-link">Research</a></li>
+        <li><a href="/learn/" class="nav-link">Learn</a></li>
+        <li><a href="/knowledge/" class="nav-link">Knowledge</a></li>
         <li data-dropdown class="relative">
           <button class="nav-link flex items-center gap-1" aria-haspopup="true" aria-expanded="false" data-dropdown-trigger>
-            Blog
+            Pillars
             <svg class="w-3 h-3 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
           </button>
           <div class="dropdown-menu" role="menu" data-dropdown-menu>
@@ -58,7 +68,7 @@
             <a href="/science/" class="dropdown-item" role="menuitem">Science</a>
           </div>
         </li>
-        <li><a href="/contact.html" class="nav-link">Contact</a></li>
+        <li><a href="/about.html" class="nav-link">About</a></li>
       </ul>
 
       <div class="flex items-center gap-2">
@@ -75,42 +85,79 @@
 
       <!-- Mobile nav panel -->
       <div class="mobile-nav-panel sm:hidden" data-mobile-panel>
-        <a href="/about.html" class="block px-3 py-2 rounded hover:bg-[var(--color-bg)] transition">About</a>
-        <a href="/research.html" class="block px-3 py-2 rounded hover:bg-[var(--color-bg)] transition">Research</a>
-        <a href="/scholarship.html" class="block px-3 py-2 rounded hover:bg-[var(--color-bg)] transition">Scholarship</a>
+        <a href="/research/" class="block px-3 py-2 rounded hover:bg-[var(--color-bg)] transition">Research</a>
+        <a href="/learn/" class="block px-3 py-2 rounded hover:bg-[var(--color-bg)] transition">Learn</a>
+        <a href="/knowledge/" class="block px-3 py-2 rounded hover:bg-[var(--color-bg)] transition">Knowledge</a>
         <div class="pl-3 border-l-2 ml-3 mt-1" style="border-color:var(--color-border)">
           <a href="/aml/" class="block py-1.5 text-sm hover:text-[var(--color-accent)]">AML</a>
           <a href="/stock/" class="block py-1.5 text-sm hover:text-[var(--color-accent)]">Markets</a>
           <a href="/science/" class="block py-1.5 text-sm hover:text-[var(--color-accent)]">Science</a>
         </div>
-        <a href="/contact.html" class="block px-3 py-2 rounded hover:bg-[var(--color-bg)] transition">Contact</a>
+        <a href="/about.html" class="block px-3 py-2 rounded hover:bg-[var(--color-bg)] transition">About</a>
       </div>
     </nav>
   </header>
 
-  <main id="main" class="max-w-5xl mx-auto px-4 py-8" tabindex="-1"><h1>Scholarship</h1>
+  <main id="main" class="max-w-5xl mx-auto px-4 py-8" tabindex="-1"><h2>DataOps Glossary</h2>
+<p>Key terms used across DataOps, data engineering, and data science — as referenced in AcaciaFund's research and learning materials.</p>
 
-<p>Explore scholarship opportunities, grants, and educational resources supported by AcaciaFund.</p>
+<dl style="line-height:1.8">
+<dt><strong>DataOps</strong></dt>
+<dd>Automated, process-oriented methodology applying Agile, DevOps, and statistical process control to data pipeline lifecycle management.</dd>
 
-<p>Our goal is to promote education and research excellence by providing financial support to deserving students and researchers.</p>
+<dt><strong>ELT vs ETL</strong></dt>
+<dd>Extract-Load-Transform: data is extracted and loaded raw into the warehouse, then transformed in-place. Contrasts with classic ETL where transformation happens before loading.</dd>
 
-<h2>Available Scholarships</h2>
+<dt><strong>Medallion Architecture</strong></dt>
+<dd>Bronze (raw) → Silver (cleaned) → Gold (aggregated) data layering pattern popularized by Databricks for lakehouse implementations.</dd>
 
-<p>Check back for updates on upcoming scholarship programs.</p>
+<dt><strong>Pipeline Observability</strong></dt>
+<dd>Real-time monitoring of data pipelines — row counts, schema drift, latency, error rates — to detect and diagnose failures quickly.</dd>
 
+<dt><strong>Data Contract</strong></dt>
+<dd>Formal agreement between data producers and consumers specifying schema, semantics, quality SLOs, and ownership.</dd>
+
+<dt><strong>dbt</strong></dt>
+<dd>Data build tool — SQL-first transformation framework. Models are SELECT statements; dbt handles materialization, testing, and docs.</dd>
+
+<dt><strong>Great Expectations</strong></dt>
+<dd>Open-source Python framework for defining, testing, and documenting data quality expectations.</dd>
+
+<dt><strong>SQI (Signal Quality Index)</strong></dt>
+<dd>AcaciaFund's composite metric: source authority × freshness × consensus × relevance, normalized to [0,1].</dd>
+
+<dt><strong>CDC (Change Data Capture)</strong></dt>
+<dd>Technique for capturing row-level changes in databases, enabling real-time data replication without bulk loads.</dd>
+
+<dt><strong>DAG (Directed Acyclic Graph)</strong></dt>
+<dd>Acyclic graph of tasks with dependencies — the fundamental scheduling unit in Airflow, Dagster, and Prefect.</dd>
+
+<dt><strong>MCP (Model Context Protocol)</strong></dt>
+<dd>Emerging protocol for AI agents to interact with data tools and APIs in a standardized way, enabling agent-operated data pipelines.</dd>
+
+<dt><strong>Feature Store</strong></dt>
+<dd>Centralized repository for ML features enabling consistent computation, sharing, and serving across training and inference.</dd>
+
+<dt><strong>Data Lineage</strong></dt>
+<dd>End-to-end tracking of data from source through transformations to final consumption, enabling debugging, auditing, and impact analysis.</dd>
+
+<dt><strong>Schema-on-Read</strong></dt>
+<dd>Data lake paradigm where schema is applied at query time rather than ingest time, enabling flexible data storage.</dd>
+</dl>
   </main>
 
   <footer class="mt-16 border-t" style="border-color:var(--color-border);background:var(--color-surface)">
     <div class="max-w-5xl mx-auto px-4 py-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm" style="color:var(--color-text-secondary)">
       <div>
         <p>&copy; 2026 AcaciaFund. All rights reserved.</p>
-        <p class="text-xs mt-1" style="color:var(--color-text-muted)">Content synthesized by AcaciaFund NLP pipelines</p>
+        <p class="text-xs mt-1" style="color:var(--color-text-muted)">Research synthesis &amp; experimental learning platform</p>
       </div>
       <nav aria-label="Footer navigation">
         <ul class="flex gap-4" role="list">
+          <li><a href="/research/" class="hover:opacity-70 transition">Research</a></li>
+          <li><a href="/learn/" class="hover:opacity-70 transition">Learn</a></li>
+          <li><a href="/knowledge/" class="hover:opacity-70 transition">Knowledge</a></li>
           <li><a href="/about.html" class="hover:opacity-70 transition">About</a></li>
-          <li><a href="/contact.html" class="hover:opacity-70 transition">Contact</a></li>
-          <li><a href="/research.html" class="hover:opacity-70 transition">Research</a></li>
           <li><a href="/feed.xml" class="hover:opacity-70 transition">RSS</a></li>
         </ul>
       </nav>
