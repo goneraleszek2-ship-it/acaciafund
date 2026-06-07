@@ -446,6 +446,13 @@ def main():
         existing = walk_existing_content()
         content_list.extend(existing)
         log(f"Loaded {len(existing)} items from existing content/")
+    if args.ingest:
+        existing = walk_existing_content()
+        existing_slugs = {c.slug for c in content_list}
+        for c in existing:
+            if c.slug not in existing_slugs:
+                content_list.append(c)
+        log(f"Appended {len(existing)} existing items (deduplicated)")
 
     if not content_list:
         log("No content generated -- exiting", ok=False)
