@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Migration script: convert flat posts under content/pl/blog/*.md into Hugo page bundles.
+"""Migration script: convert flat posts into page bundles.
 
 Usage:
   python scripts/migrate_posts_to_bundles.py --dry-run

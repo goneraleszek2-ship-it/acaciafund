@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Deployment preflight for AcaciaFund.
 
-Validates registry metadata and can optionally run Hugo and usability checks.
+Validates registry metadata and can optionally run usability checks.
 This gives GitHub Actions and local runs a single gate before deployment.
 """
 
@@ -39,14 +39,14 @@ def validate_registry(write_index: bool = True) -> None:
 def main() -> int:
     parser = argparse.ArgumentParser(description="AcaciaFund deployment preflight")
     parser.add_argument("--no-write-registry", action="store_true", help="Do not rewrite registry/index.json")
-    parser.add_argument("--build-site", action="store_true", help="Run hugo --cleanDestinationDir")
+    parser.add_argument("--build-site", action="store_true", help="Run Python generator (placeholder)")
     parser.add_argument("--usability", action="store_true", help="Run tests/usability.py")
     args = parser.parse_args()
 
     validate_registry(write_index=not args.no_write_registry)
 
     if args.build_site:
-        run(["hugo", "--cleanDestinationDir"])
+        print("--build-site: generator run would go here")
 
     if args.usability:
         run([sys.executable, "tests/usability.py"])

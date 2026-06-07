@@ -123,7 +123,7 @@ def generate_post(pillar_name: str, config: dict, pillar_stories: list[dict],
     """Generate an enhanced post with deep analysis sections."""
     date = date or datetime.now()
     date_str = date.strftime("%Y-%m-%d")
-    # Use a Hugo Page Bundle for each post so images can be page resources
+    # Use a date-based folder for each post so images can be page resources
     bundle_name = f"{date_str}-{pillar_name}"
     post_dir = config["folder"] / bundle_name
     filepath = post_dir / "index.md"
@@ -180,7 +180,7 @@ def generate_post(pillar_name: str, config: dict, pillar_stories: list[dict],
         thumb_svg = generate_thumbnail_svg(thumb_title, pillar_name, {"sqi": avg_sqi})
         thumb_key = hashlib.md5(thumb_title.encode()).hexdigest()[:12]
         thumb_filename = f"thumb_{thumb_key}.svg"
-        # write thumbnail into the page bundle so Hugo can treat it as a Page Resource
+        # write thumbnail into the post directory
         post_dir.mkdir(parents=True, exist_ok=True)
         thumb_path = post_dir / thumb_filename
         thumb_path.write_text(thumb_svg, encoding="utf-8")
@@ -195,7 +195,7 @@ def generate_post(pillar_name: str, config: dict, pillar_stories: list[dict],
         log(f"Error generating visuals: {e}", ok=False)
         avg_sqi = signals.get("avg_sqi", 0.5)
 
-    # When using page bundles, reference the resource by filename (Hugo Page Resource)
+    # Reference the thumbnail by filename
     thumbnail_url = f"{thumb_filename}" if thumb_filename else ""
 
     def _download_image(url: str, dest: Path) -> bool:
@@ -271,7 +271,7 @@ def generate_post(pillar_name: str, config: dict, pillar_stories: list[dict],
             lines.append(f"- **{fcard['term']}**: {fcard['definition']}")
         lines.append("")
 
-    # Embedded thumbnail in post body (Hugo will resolve Page Resources)
+    # Embedded thumbnail in post body
     if thumbnail_url:
         lines.extend([
             "> ![](" + thumbnail_url + ")",
