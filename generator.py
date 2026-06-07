@@ -15,7 +15,7 @@ from typing import Any
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 from schemas import RegistryData
-from core.visuals import source_bar_svg, sparkline_svg, bloom_chart_svg, radar_svg, heatmap_svg, donut_svg
+from core.visuals import source_bar_svg, sparkline_svg, bloom_chart_svg, radar_svg, heatmap_svg, donut_svg, generate_thumbnail_svg
 
 REGISTRY_PATH = Path("registry.json")
 TEMPLATE_DIR = Path("templates")
@@ -258,11 +258,13 @@ def main():
         out_file.write_text(html, encoding="utf-8")
         print(f"  knowledge: {out_file.relative_to(OUTPUT_DIR)}")
 
-        # Write knowledge thumbnail SVGs
+        # Write knowledge thumbnail SVGs (fractal engine)
         out_static = STATIC_DST_DIR / "images"
         out_static.mkdir(parents=True, exist_ok=True)
-        if item.thumbnail_svg:
-            (out_static / f"thumb_{thumb_key}.svg").write_text(item.thumbnail_svg, encoding="utf-8")
+        pillar_k = item.pillar or "aml"
+        scores_k = {"sqi": 0.5}
+        svg_k = generate_thumbnail_svg(item.title, pillar_k, scores_k, width=600, height=340)
+        (out_static / f"thumb_{thumb_key}.svg").write_text(svg_k, encoding="utf-8")
 
     # --- KNOWLEDGE INDEX (sub-category grouped) ---
     knowledge_dir = OUTPUT_DIR / "knowledge"
@@ -315,11 +317,13 @@ def main():
         out_file.write_text(html, encoding="utf-8")
         print(f"  learn: {out_file.relative_to(OUTPUT_DIR)}")
 
-        # Write learn thumbnail SVGs
+        # Write learn thumbnail SVGs (fractal engine)
         out_static = STATIC_DST_DIR / "images"
         out_static.mkdir(parents=True, exist_ok=True)
-        if item.thumbnail_svg:
-            (out_static / f"thumb_{thumb_key}.svg").write_text(item.thumbnail_svg, encoding="utf-8")
+        pillar_l = item.pillar or "aml"
+        scores_l = {"sqi": 0.5}
+        svg_l = generate_thumbnail_svg(item.title, pillar_l, scores_l, width=600, height=340)
+        (out_static / f"thumb_{thumb_key}.svg").write_text(svg_l, encoding="utf-8")
 
     # --- LEARN INDEX (difficulty-grouped) ---
     learn_dir = OUTPUT_DIR / "learn"
@@ -398,15 +402,18 @@ def main():
         out_file.write_text(html, encoding="utf-8")
         print(f"  research: {out_file.relative_to(OUTPUT_DIR)}")
 
-        # Write SVGs
+        # Write SVGs (fractal engine)
         out_static = STATIC_DST_DIR / "images"
         out_static.mkdir(parents=True, exist_ok=True)
-        if item.thumbnail_svg:
-            key = hashlib.md5(item.title.encode()).hexdigest()[:12]
-            (out_static / f"thumb_{key}.svg").write_text(item.thumbnail_svg, encoding="utf-8")
+        key = hashlib.md5(item.title.encode()).hexdigest()[:12]
+        scores_r = item.signals or {"sqi": 0.5}
+        if not isinstance(scores_r, dict):
+            scores_r = {"sqi": 0.5}
+        svg_r = generate_thumbnail_svg(item.title, pillar, scores_r, width=600, height=340)
+        (out_static / f"thumb_{key}.svg").write_text(svg_r, encoding="utf-8")
         if item.og_svg:
-            key = hashlib.md5(f"og_{item.title}".encode()).hexdigest()[:12]
-            (out_static / f"og_{key}.svg").write_text(item.og_svg, encoding="utf-8")
+            key_og = hashlib.md5(f"og_{item.title}".encode()).hexdigest()[:12]
+            (out_static / f"og_{key_og}.svg").write_text(item.og_svg, encoding="utf-8")
 
     # --- RESEARCH INDEX (/research/) ---
     research_dir = OUTPUT_DIR / "research"

@@ -116,99 +116,570 @@ def _extract_topic_words(titles: list[str], n: int = 5) -> list[str]:
     return [w for w, _ in counts.most_common(n)]
 
 
+# ────────────── Fractal Engine ──────────────
+
+def _hex_to_rgb(h: str) -> tuple:
+    h = h.lstrip("#")
+    return int(h[0:2], 16), int(h[2:4], 16), int(h[4:6], 16)
+
+
+def _rgb_to_hex(r: int, g: int, b: int) -> str:
+    return f"#{max(0, min(255, r)):02x}{max(0, min(255, g)):02x}{max(0, min(255, b)):02x}"
+
+
+def _lerp_color(c1: str, c2: str, t: float) -> str:
+    r1, g1, b1 = _hex_to_rgb(c1)
+    r2, g2, b2 = _hex_to_rgb(c2)
+    t = max(0.0, min(1.0, t))
+    return _rgb_to_hex(
+        int(r1 + (r2 - r1) * t),
+        int(g1 + (g2 - g1) * t),
+        int(b1 + (b2 - b1) * t),
+    )
+
+
+def _hsv_to_hex(h: float, s: float, v: float) -> str:
+    h = h % 360
+    c = v * s
+    x = c * (1 - abs((h / 60) % 2 - 1))
+    m = v - c
+    if h < 60:
+        r, g, b = c, x, 0
+    elif h < 120:
+        r, g, b = x, c, 0
+    elif h < 180:
+        r, g, b = 0, c, x
+    elif h < 240:
+        r, g, b = 0, x, c
+    elif h < 300:
+        r, g, b = x, 0, c
+    else:
+        r, g, b = c, 0, x
+    return _rgb_to_hex(int((r + m) * 255), int((g + m) * 255), int((b + m) * 255))
+
+
+def _det_rand(seed: int, i: int = 0) -> float:
+    """Deterministic pseudo-random from seed + index."""
+    h = hashlib.md5(f"{seed}:{i}".encode()).hexdigest()
+    return int(h[:8], 16) / 0xffffffff
+
+
+def _det_rand_range(seed: int, i: int, lo: float, hi: float) -> float:
+    return lo + _det_rand(seed, i) * (hi - lo)
+
+
+def _det_rand_int(seed: int, i: int, lo: int, hi: int) -> int:
+    return int(_det_rand(seed, i) * (hi - lo + 1)) + lo
+
+
+# ───── Fractal Type: L-System Tree ─────
+
+def _fractal_tree(elems: list, seed: int, pal: dict, w: int, h: int,
+                  cx: float, cy: float, trunk: float, depth: int,
+                  mirror_x: bool, mirror_y: bool, seq: list):
+    """Recursive L-system branching tree with rounded caps and color transitions."""
+    angle = -90 + _det_rand_range(seed, seq[0], -15, 15)
+    seq[0] += 1
+    spread = 20 + _det_rand_range(seed, seq[0], 10, 40)
+    seq[0] += 1
+    ratio = 0.62 + _det_rand_range(seed, seq[0], 0, 0.18)
+    seq[0] += 1
+    lean = _det_rand_range(seed, seq[0], -10, 10)
+    seq[0] += 1
+
+    def _branch(x, y, a, length, d):
+        if d <= 0 or length < 3:
+            return
+        rad = math.radians(a)
+        ex = x + length * math.cos(rad)
+        ey = y + length * math.sin(rad)
+        t = 1.0 - d / depth
+        sw = max(0.5, 3.0 * t)
+        op = 0.15 + 0.5 * t
+        color = _lerp_color(pal["fg"], pal["accent"], t * 0.7)
+        elems.append(
+            f'<line x1="{x:.1f}" y1="{y:.1f}" x2="{ex:.1f}" y2="{ey:.1f}" '
+            f'stroke="{color}" stroke-width="{sw:.1f}" opacity="{op:.2f}" '
+            f'stroke-linecap="round"/>'
+        )
+        if d <= 2 and t > 0.3:
+            glow_r = 2 + t * 8
+            elems.append(
+                f'<circle cx="{ex:.1f}" cy="{ey:.1f}" r="{glow_r:.0f}" '
+                f'fill="{pal["accent"]}" opacity="{op * 0.15:.2f}"/>'
+            )
+        n = 2 + _det_rand_int(seed, d * 10 + int(x + y), 2, 3)
+        for i in range(n):
+            off = (i - (n - 1) / 2) * spread / (n - 1) if n > 1 else 0
+            child_a = a + off + lean * (1 - t)
+            child_l = length * (ratio + _det_rand_range(seed, d * 100 + i * 10, -0.05, 0.05))
+            _branch(ex, ey, child_a, child_l, d - 1)
+
+    _branch(cx, cy, angle, trunk, depth)
+
+
+# ───── Fractal Type: Sierpinski Triangle ─────
+
+def _fractal_sierpinski(elems: list, seed: int, pal: dict, w: int, h: int,
+                        x1: float, y1: float, x2: float, y2: float,
+                        x3: float, y3: float, depth: int, seq: list):
+    """Recursive Sierpinski triangle with color fills and rounded lines."""
+    if depth <= 0:
+        t = _det_rand(seed, seq[0])
+        seq[0] += 1
+        c = _lerp_color(pal["fg"], pal["accent"], t)
+        op = 0.08 + t * 0.15
+        elems.append(
+            f'<polygon points="{x1:.1f},{y1:.1f} {x2:.1f},{y2:.1f} {x3:.1f},{y3:.1f}" '
+            f'fill="{c}" opacity="{op:.2f}" stroke="{pal["accent"]}" '
+            f'stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>'
+        )
+        return
+    mx1 = (x1 + x2) / 2
+    my1 = (y1 + y2) / 2
+    mx2 = (x2 + x3) / 2
+    my2 = (y2 + y3) / 2
+    mx3 = (x3 + x1) / 2
+    my3 = (y3 + y1) / 2
+    _fractal_sierpinski(elems, seed, pal, w, h, x1, y1, mx1, my1, mx3, my3, depth - 1, seq)
+    _fractal_sierpinski(elems, seed, pal, w, h, mx1, my1, x2, y2, mx2, my2, depth - 1, seq)
+    _fractal_sierpinski(elems, seed, pal, w, h, mx3, my3, mx2, my2, x3, y3, depth - 1, seq)
+
+
+# ───── Fractal Type: Koch Snowflake ─────
+
+def _fractal_koch(elems: list, seed: int, pal: dict, w: int, h: int,
+                  x1: float, y1: float, x2: float, y2: float,
+                  depth: int, seq: list, hue_offset: float = 0):
+    """Recursive Koch curve with dynamic hue-shifted coloring."""
+    if depth <= 0:
+        t = _det_rand(seed, seq[0])
+        seq[0] += 1
+        c = _lerp_color(pal["fg"], pal["accent"], t * 0.8)
+        sw = 0.8 + t * 1.5
+        op = 0.2 + t * 0.4
+        elems.append(
+            f'<line x1="{x1:.1f}" y1="{y1:.1f}" x2="{x2:.1f}" y2="{y2:.1f}" '
+            f'stroke="{c}" stroke-width="{sw:.1f}" opacity="{op:.2f}" '
+            f'stroke-linecap="round"/>'
+        )
+        return
+    dx = (x2 - x1) / 3
+    dy = (y2 - y1) / 3
+    p1x = x1 + dx
+    p1y = y1 + dy
+    p2x = x1 + dx * 2
+    p2y = y1 + dy * 2
+    angle = math.radians(60)
+    p3x = p1x + (dx * math.cos(angle) - dy * math.sin(angle))
+    p3y = p1y + (dx * math.sin(angle) + dy * math.cos(angle))
+    _fractal_koch(elems, seed, pal, w, h, x1, y1, p1x, p1y, depth - 1, seq, hue_offset)
+    _fractal_koch(elems, seed, pal, w, h, p1x, p1y, p3x, p3y, depth - 1, seq, hue_offset + 20)
+    _fractal_koch(elems, seed, pal, w, h, p3x, p3y, p2x, p2y, depth - 1, seq, hue_offset - 20)
+    _fractal_koch(elems, seed, pal, w, h, p2x, p2y, x2, y2, depth - 1, seq, hue_offset)
+
+
+# ───── Fractal Type: Dragon Curve ─────
+
+def _fractal_dragon(elems: list, seed: int, pal: dict, w: int, h: int,
+                    x1: float, y1: float, x2: float, y2: float,
+                    depth: int, seq: list, sign: float = 1):
+    """Recursive dragon curve with rounded segments and color shift."""
+    if depth <= 0:
+        t = _det_rand(seed, seq[0])
+        seq[0] += 1
+        c = _lerp_color(pal["fg"], pal["accent"], t)
+        sw = 0.5 + t * 2.0
+        op = 0.1 + t * 0.4
+        elems.append(
+            f'<line x1="{x1:.1f}" y1="{y1:.1f}" x2="{x2:.1f}" y2="{y2:.1f}" '
+            f'stroke="{c}" stroke-width="{sw:.1f}" opacity="{op:.2f}" '
+            f'stroke-linecap="round"/>'
+        )
+        return
+    mx = (x1 + x2) / 2 + (y2 - y1) / 2 * sign
+    my = (y1 + y2) / 2 - (x2 - x1) / 2 * sign
+    _fractal_dragon(elems, seed, pal, w, h, x1, y1, mx, my, depth - 1, seq, 1)
+    _fractal_dragon(elems, seed, pal, w, h, x2, y2, mx, my, depth - 1, seq, -1)
+
+
+# ───── Fractal Type: Barnsley Fern (IFS) ─────
+
+def _fractal_fern(elems: list, seed: int, pal: dict, w: int, h: int,
+                  seq: list, count: int = 300):
+    """Barnsley fern IFS rendered as rounded dots with color gradient."""
+    x, y = 0.0, 0.0
+    for i in range(count):
+        r = _det_rand(seed, seq[0] + i)
+        seq[0] += 1
+        if r < 0.01:
+            nx, ny = 0.0, 0.16 * y
+        elif r < 0.86:
+            nx, ny = 0.85 * x + 0.04 * y, -0.04 * x + 0.85 * y + 1.6
+        elif r < 0.93:
+            nx, ny = 0.2 * x - 0.26 * y, 0.23 * x + 0.22 * y + 1.6
+        else:
+            nx, ny = -0.15 * x + 0.28 * y, 0.26 * x + 0.24 * y + 0.44
+        x, y = nx, ny
+        px = w / 2 + x * (w / 12)
+        py = h * 0.92 - y * (h / 12)
+        t = i / count
+        c = _lerp_color(pal["accent"], pal["fg"], t)
+        op = 0.15 + t * 0.3
+        r_size = 0.8 + t * 1.5
+        elems.append(
+            f'<circle cx="{px:.1f}" cy="{py:.1f}" r="{r_size:.1f}" '
+            f'fill="{c}" opacity="{op:.2f}"/>'
+        )
+
+
+# ───── Fractal Type: Spiraling Circles ─────
+
+def _fractal_spiral(elems: list, seed: int, pal: dict, w: int, h: int,
+                    cx: float, cy: float, seq: list, turns: int = 8):
+    """Golden-ratio spiral of nested circles with color transitions."""
+    angle_step = 137.5  # golden angle
+    shrink = 0.92 + _det_rand_range(seed, seq[0], 0, 0.06)
+    seq[0] += 1
+    r = min(w, h) * 0.08
+    for i in range(turns * 8):
+        angle = math.radians(i * angle_step)
+        nx = cx + i * 2.5 * math.cos(angle)
+        ny = cy + i * 2.5 * math.sin(angle)
+        if nx < 0 or nx > w or ny < 0 or ny > h:
+            continue
+        radius = max(1.0, r * (shrink ** i))
+        t = i / (turns * 8)
+        c = _lerp_color(pal["accent"], pal["fg"], t)
+        op = 0.05 + t * 0.2
+        elems.append(
+            f'<circle cx="{nx:.1f}" cy="{ny:.1f}" r="{radius:.1f}" '
+            f'fill="none" stroke="{c}" stroke-width="0.8" opacity="{op:.2f}"/>'
+        )
+        if i % 3 == 0:
+            inner_r = radius * 0.4
+            inner_c = _lerp_color(pal["fg"], pal["accent"], 1 - t)
+            elems.append(
+                f'<circle cx="{nx:.1f}" cy="{ny:.1f}" r="{inner_r:.1f}" '
+                f'fill="{inner_c}" opacity="{op * 0.5:.2f}"/>'
+            )
+
+
+# ───── Fractal Type: Hilbert Curve ─────
+
+def _fractal_hilbert(elems: list, seed: int, pal: dict, w: int, h: int,
+                     x: float, y: float, xi: float, xj: float,
+                     yi: float, yj: float, depth: int, seq: list):
+    """Recursive Hilbert space-filling curve with color gradient."""
+    if depth <= 0:
+        t = _det_rand(seed, seq[0])
+        seq[0] += 1
+        nx = x + (xi + yi) / 2
+        ny = y + (xj + yj) / 2
+        c = _lerp_color(pal["fg"], pal["accent"], t)
+        sw = 0.5 + t * 2.0
+        op = 0.15 + t * 0.35
+        elems.append(
+            f'<circle cx="{nx:.1f}" cy="{ny:.1f}" r="{sw:.1f}" '
+            f'fill="{c}" opacity="{op:.2f}"/>'
+        )
+        return
+    _fractal_hilbert(elems, seed, pal, w, h, x, y, yi / 2, yj / 2, xi / 2, xj / 2, depth - 1, seq)
+    _fractal_hilbert(elems, seed, pal, w, h, x + xi / 2, y + xj / 2, xi / 2, xj / 2, yi / 2, yj / 2, depth - 1, seq)
+    _fractal_hilbert(elems, seed, pal, w, h, x + xi / 2 + yi / 2, y + xj / 2 + yj / 2, xi / 2, xj / 2, yi / 2, yj / 2, depth - 1, seq)
+    _fractal_hilbert(elems, seed, pal, w, h, x + xi / 2 + yi, y + xj / 2 + yj, -yi / 2, -yj / 2, -xi / 2, -xj / 2, depth - 1, seq)
+
+
+# ───── Mirror helper ─────
+
+def _mirror_elements(elems: list, mirror_x: bool, mirror_y: bool,
+                     w: int, h: int) -> list:
+    """Duplicate elements with mirror transformations."""
+    if not mirror_x and not mirror_y:
+        return elems
+    out = list(elems)
+    for el in elems:
+        m = el
+        if mirror_x:
+            m = m.replace(f'x1="', f'x1="{-1 if "x1" in m else ""}')
+            # Simple approach: wrap in <use> with transform
+        if mirror_y:
+            m = m.replace(f'y1="', f'y1="')
+    return out
+
+
+def _generate_mist(seed: int, pal: dict, w: int, h: int, count: int,
+                   seq: list) -> list:
+    """Generate atmospheric mist particles."""
+    elems = []
+    for i in range(count):
+        x = _det_rand_range(seed, seq[0] + i, 0, w)
+        y = _det_rand_range(seed, seq[0] + i + 100, 0, h)
+        r = _det_rand_range(seed, seq[0] + i + 200, 1, 6)
+        op = _det_rand_range(seed, seq[0] + i + 300, 0.01, 0.08)
+        c = _lerp_color(pal["accent"], pal["text"], _det_rand(seed, seq[0] + i + 400))
+        elems.append(
+            f'<circle cx="{x:.1f}" cy="{y:.1f}" r="{r:.1f}" '
+            f'fill="{c}" opacity="{op:.2f}"/>'
+        )
+    seq[0] += count + 500
+    return elems
+
+
 def generate_thumbnail_svg(title: str, pillar: str, scores: dict,
                            width: int = 600, height: int = 340) -> str:
-    """Generate a content-aware SVG thumbnail for a blog post.
+    """Generate a unique fractal-based SVG thumbnail for a blog post.
 
-    The thumbnail uses the article's topic, pillar palette, and signal data
-    to create a unique, non-generic visual.
+    Uses 7 fractal types, mirroring, dynamic color transitions, and
+    atmospheric effects — each image is uniquely derived from the title hash.
     """
     pal = PILLAR_COLORS.get(pillar, PILLAR_COLORS["aml"])
     sub = _pick_subtopic([title], pillar)
     icon_path = TOPIC_ICONS.get(sub, TOPIC_ICONS["regulation"])
     words = _extract_topic_words([title], 3)
-
-    # Create a unique but deterministic pattern from the title
     h = _content_hash(title)
-    offset1 = int(h[:4], 16) % 100
-    offset2 = int(h[4:8], 16) % 100
-    offset3 = int(h[8:12], 16) % 100
+    seed = int(h[:12], 16)
+    seq = [0]
 
-    sqi = scores.get("sqi", 0.5)
-    bar_w = int(sqi * 200)
+    # Fractal type (0-6)
+    ftype = _det_rand_int(seed, seq[0], 0, 6)
+    seq[0] += 1
+
+    # Mirror modes: 0=none, 1=h, 2=v, 3=both
+    mirror_mode = _det_rand_int(seed, seq[0], 0, 3)
+    seq[0] += 1
+    mirror_x = mirror_mode in (1, 3)
+    mirror_y = mirror_mode in (2, 3)
+
+    # Background gradient variant
+    bg_v = _det_rand_int(seed, seq[0], 0, 3)
+    seq[0] += 1
+    color_tint = _lerp_color(pal["bg"], pal["accent"], 0.08 + _det_rand(seed, seq[0]) * 0.1)
+    seq[0] += 1
+
+    if bg_v == 0:
+        bg = (f'<linearGradient id="bg-{h[:8]}" x1="0" y1="0" x2="1" y2="1">'
+              f'<stop offset="0" stop-color="{pal["bg"]}"/>'
+              f'<stop offset="0.5" stop-color="{color_tint}"/>'
+              f'<stop offset="1" stop-color="{pal["fg"]}"/>'
+              f'</linearGradient>')
+    elif bg_v == 1:
+        bg = (f'<radialGradient id="bg-{h[:8]}" cx="{30 + _det_rand_int(seed, seq[0], 0, 40)}%" '
+              f'cy="{30 + _det_rand_int(seed, seq[0] + 1, 0, 40)}%">'
+              f'<stop offset="0" stop-color="{color_tint}"/>'
+              f'<stop offset="1" stop-color="{pal["bg"]}"/>'
+              f'</radialGradient>')
+        seq[0] += 2
+    else:
+        c2 = _lerp_color(pal["bg"], pal["accent"], 0.18)
+        bg = (f'<linearGradient id="bg-{h[:8]}" x1="0" y1="1" x2="1" y2="0">'
+              f'<stop offset="0" stop-color="{pal["bg"]}"/>'
+              f'<stop offset="0.4" stop-color="{color_tint}"/>'
+              f'<stop offset="0.7" stop-color="{c2}"/>'
+              f'<stop offset="1" stop-color="{pal["fg"]}"/>'
+              f'</linearGradient>')
+
+    # Radial accent glow
+    glow_cx = _det_rand_int(seed, seq[0], 20, 80)
+    glow_cy = _det_rand_int(seed, seq[0] + 1, 20, 80)
+    seq[0] += 2
+    glow_op = 0.08 + _det_rand(seed, seq[0]) * 0.12
+    seq[0] += 1
 
     lines = [
-        f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}" viewBox="0 0 {width} {height}">',
-        f'  <defs>',
-        f'    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">',
-        f'      <stop offset="0" stop-color="{pal["bg"]}"/>',
-        f'      <stop offset="1" stop-color="{pal["fg"]}"/>',
-        f'    </linearGradient>',
-        f'    <radialGradient id="glow" cx="{30 + offset1 % 40}%" cy="{30 + offset2 % 40}%">',
-        f'      <stop offset="0" stop-color="{pal["accent"]}" stop-opacity="0.15"/>',
-        f'      <stop offset="1" stop-color="{pal["bg"]}" stop-opacity="0"/>',
-        f'    </radialGradient>',
-        f'  </defs>',
-        f'  <rect width="{width}" height="{height}" fill="url(#bg)"/>',
-        f'  <rect width="{width}" height="{height}" fill="url(#glow)"/>',
-        "",
-        f'  <!-- Decorative grid dots -->',
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}"'
+        f' viewBox="0 0 {width} {height}">',
+        '<defs>',
+        bg,
+        (f'<radialGradient id="glow-{h[:8]}" cx="{glow_cx}%" cy="{glow_cy}%">'
+         f'<stop offset="0" stop-color="{pal["accent"]}" stop-opacity="{glow_op:.2f}"/>'
+         f'<stop offset="1" stop-color="{pal["bg"]}" stop-opacity="0"/>'
+         f'</radialGradient>'),
+        '</defs>',
+        f'<rect width="{width}" height="{height}" fill="url(#bg-{h[:8]})"/>',
+        f'<rect width="{width}" height="{height}" fill="url(#glow-{h[:8]})"/>',
     ]
 
-    # Decorative dots pattern
-    for i in range(8):
-        for j in range(5):
-            dx = (offset3 + i * 17 + j * 31) % 100
-            dy = (offset1 + i * 23 + j * 7) % 100
-            opacity = 0.05 + ((i + j) % 5) * 0.03
-            lines.append(
-                f'  <circle cx="{20 + dx * 6}" cy="{30 + dy * 6}" r="1.5" fill="{pal["accent"]}" opacity="{opacity}"/>'
-            )
+    # Mist layer 1 (background)
+    mist1 = _generate_mist(seed, pal, width, height,
+                           15 + _det_rand_int(seed, seq[0], 0, 10), seq)
+    seq[0] += 1
+    lines.extend(mist1)
 
-    lines.append("")
-    lines.append(f'  <!-- Topic icon -->')
-    lines.append(f'  <g transform="translate(40, 50) scale(1.4)" stroke="{pal["accent"]}" fill="none" stroke-linecap="round" stroke-linejoin="round">')
-    lines.append(f'    {icon_path}')
-    lines.append(f'  </g>')
+    # Fractal elements
+    fractal_elems = []
+    cx, cy = width // 2, height // 2
 
-    lines.append("")
-    lines.append(f'  <!-- Topic words as floating tags -->')
-    for i, w in enumerate(words[:3]):
-        x = 40 + (offset2 + i * 37) % 200
-        y = 200 + i * 40
+    if ftype == 0:
+        # L-System Tree — grows from bottom-center with optional mirror branches
+        tree_x = width / 2 + (_det_rand_range(seed, seq[0], -40, 40))
+        tree_y = height * 0.92
+        trunk = 60 + _det_rand_range(seed, seq[0] + 1, 30, 80)
+        depth = _det_rand_int(seed, seq[0] + 2, 4, 6)
+        seq[0] += 3
+        _fractal_tree(fractal_elems, seed, pal, width, height,
+                       tree_x, tree_y, trunk, depth, mirror_x, mirror_y, seq)
+        if mirror_x:
+            _fractal_tree(fractal_elems, seed + 999, pal, width, height,
+                           width - tree_x, tree_y, trunk, depth, False, False, seq)
+
+    elif ftype == 1:
+        # Sierpinski Triangle
+        size = min(width, height) * 0.7
+        depth = _det_rand_int(seed, seq[0], 3, 5)
+        seq[0] += 1
+        ox = (width - size) / 2
+        oy = (height - size) / 2
+        _fractal_sierpinski(fractal_elems, seed, pal, width, height,
+                            ox + size / 2, oy,
+                            ox, oy + size,
+                            ox + size, oy + size,
+                            depth, seq)
+        if mirror_x:
+            _fractal_sierpinski(fractal_elems, seed + 999, pal, width, height,
+                                width - (ox + size / 2), oy,
+                                width - ox, oy + size,
+                                width - (ox + size), oy + size,
+                                depth, seq)
+
+    elif ftype == 2:
+        # Koch Snowflake (3 sides)
+        size = min(width, height) * 0.55
+        depth = _det_rand_int(seed, seq[0], 2, 4)
+        seq[0] += 1
+        cx_k = width / 2
+        cy_k = height / 2 - size * 0.2
+        r_k = size
+        for i in range(3):
+            a1 = math.radians(60 + i * 120)
+            a2 = math.radians(60 + (i + 1) * 120)
+            x1 = cx_k + r_k * math.cos(a1)
+            y1 = cy_k + r_k * math.sin(a1)
+            x2 = cx_k + r_k * math.cos(a2)
+            y2 = cy_k + r_k * math.sin(a2)
+            _fractal_koch(fractal_elems, seed + i, pal, width, height,
+                          x1, y1, x2, y2, depth, seq, i * 30)
+        if mirror_x:
+            seq[0] += 10
+            _fractal_koch(fractal_elems, seed + 999, pal, width, height,
+                          width - x1, y1, width - x2, y2, depth, seq, 0)
+
+    elif ftype == 3:
+        # Dragon Curve
+        depth = _det_rand_int(seed, seq[0], 6, 9)
+        seq[0] += 1
+        start_x = width * _det_rand_range(seed, seq[0], 0.1, 0.4)
+        start_y = height * _det_rand_range(seed, seq[0] + 1, 0.2, 0.8)
+        end_x = width * _det_rand_range(seed, seq[0] + 2, 0.6, 0.9)
+        end_y = height * _det_rand_range(seed, seq[0] + 3, 0.2, 0.8)
+        seq[0] += 4
+        _fractal_dragon(fractal_elems, seed, pal, width, height,
+                        start_x, start_y, end_x, end_y, depth, seq)
+        if mirror_x:
+            _fractal_dragon(fractal_elems, seed + 999, pal, width, height,
+                            width - start_x, start_y, width - end_x, end_y,
+                            depth, seq)
+
+    elif ftype == 4:
+        # Barnsley Fern
+        count = 200 + _det_rand_int(seed, seq[0], 0, 200)
+        seq[0] += 1
+        _fractal_fern(fractal_elems, seed, pal, width, height, seq, count)
+        if mirror_x:
+            _fractal_fern(fractal_elems, seed + 999, pal, width, height, seq, count)
+
+    elif ftype == 5:
+        # Spiraling Circles
+        turns = _det_rand_int(seed, seq[0], 5, 10)
+        seq[0] += 1
+        _fractal_spiral(fractal_elems, seed, pal, width, height,
+                        width / 2, height / 2, seq, turns)
+
+    else:
+        # Hilbert Curve (as point cloud)
+        depth = _det_rand_int(seed, seq[0], 3, 5)
+        seq[0] += 1
+        size = min(width, height) * 0.5
+        ox = (width - size) / 2
+        oy = (height - size) / 2
+        _fractal_hilbert(fractal_elems, seed, pal, width, height,
+                         ox, oy, size, 0, 0, size, depth, seq)
+        if mirror_x:
+            _fractal_hilbert(fractal_elems, seed + 999, pal, width, height,
+                             width - ox - size, oy, -size, 0, 0, size, depth, seq)
+
+    lines.extend(fractal_elems)
+
+    # Mist layer 2 (foreground, over fractal)
+    mist2 = _generate_mist(seed + 1000, pal, width, height,
+                           8 + _det_rand_int(seed, seq[0], 0, 8), seq)
+    seq[0] += 1
+    lines.extend(mist2)
+
+    # Topic icon (bottom-left)
+    icon_x = 14 + _det_rand_int(seed, seq[0], 0, 20)
+    icon_y = height - 56 + _det_rand_int(seed, seq[0] + 1, 0, 10)
+    icon_scale = 0.5 + _det_rand(seed, seq[0] + 2) * 0.3
+    seq[0] += 3
+    lines.extend([
+        f'<g transform="translate({icon_x:.0f}, {icon_y:.0f}) scale({icon_scale:.2f})"'
+        f' stroke="{pal["accent"]}" fill="none" stroke-linecap="round"'
+        f' stroke-linejoin="round" stroke-width="1.5" opacity="0.35">',
+        f'  {icon_path}',
+        f'</g>',
+    ])
+
+    # Topic words as floating tags (bottom-right)
+    for i, w in enumerate(words[:2]):
+        tx = width - 80 + _det_rand_int(seed, seq[0] + i, -30, 30)
+        ty = height - 30 + i * 18
+        op = 0.15 + _det_rand(seed, seq[0] + i + 10) * 0.15
         lines.append(
-            f'  <text x="{x}" y="{y}" fill="{pal["accent"]}" font-family="system-ui,sans-serif" '
-            f'font-size="14" font-weight="600" opacity="0.4">{w}</text>'
+            f'<text x="{tx:.0f}" y="{ty:.0f}" fill="{pal["accent"]}"'
+            f' font-family="system-ui,sans-serif" font-size="11" font-weight="600"'
+            f' opacity="{op:.2f}">{w}</text>'
         )
+    seq[0] += 20
 
-    lines.append("")
-    lines.append(f'  <!-- SQI bar -->')
-    lines.append(f'  <text x="40" y="260" fill="{pal["accent"]}" font-family="system-ui,sans-serif" font-size="11" font-weight="600" opacity="0.6">SIGNAL QUALITY</text>')
-    lines.append(f'  <rect x="40" y="270" width="200" height="4" rx="2" fill="{pal["text"]}" opacity="0.1"/>')
-    lines.append(f'  <rect x="40" y="270" width="{bar_w}" height="4" rx="2" fill="{pal["accent"]}" opacity="0.8"/>')
-    lines.append(f'  <text x="250" y="274" fill="{pal["accent"]}" font-family="system-ui,sans-serif" font-size="12" font-weight="700">{sqi:.2f}</text>')
+    # SQI indicator bar (subtle, bottom-center)
+    sqi = scores.get("sqi", 0.5)
+    bar_w = max(2, int(sqi * (width * 0.3)))
+    bar_y = height - 10
+    lines.append(
+        f'<rect x="{width / 2 - width * 0.15:.0f}" y="{bar_y}"'
+        f' width="{width * 0.3:.0f}" height="2" rx="1" fill="{pal["text"]}" opacity="0.06"/>'
+    )
+    lines.append(
+        f'<rect x="{width / 2 - width * 0.15:.0f}" y="{bar_y}"'
+        f' width="{bar_w}" height="2" rx="1" fill="{pal["accent"]}" opacity="0.4"/>'
+    )
 
-    lines.append("")
-    lines.append(f'  <!-- Category badge -->')
-    lines.append(f'  <rect x="40" y="290" width="80" height="24" rx="4" fill="{pal["accent"]}" opacity="0.2"/>')
-    lines.append(f'  <text x="80" y="306" text-anchor="middle" fill="{pal["accent"]}" font-family="system-ui,sans-serif" font-size="11" font-weight="700" text-transform="uppercase">{pillar.upper()}</text>')
+    # Pillar label (subtle, bottom-center near SQI)
+    lines.append(
+        f'<text x="{width / 2 + width * 0.15 + 6:.0f}" y="{bar_y + 10}"'
+        f' fill="{pal["accent"]}" font-family="system-ui,sans-serif"'
+        f' font-size="8" font-weight="600" opacity="0.25">{pillar.upper()}</text>'
+    )
 
-    lines.append(f'</svg>')
+    lines.append('</svg>')
     return "\n".join(lines)
 
 
 def generate_og_image(title: str, pillar: str, scores: dict,
                       date_str: str = "") -> str:
-    """Generate a social sharing OG image SVG with the article title."""
+    """Generate a social sharing OG image SVG with the article title and fractal backing."""
     pal = PILLAR_COLORS.get(pillar, PILLAR_COLORS["aml"])
     sub = _pick_subtopic([title], pillar)
     icon_path = TOPIC_ICONS.get(sub, TOPIC_ICONS["regulation"])
+    h = _content_hash(title)
+    seed = int(h[:12], 16)
+    seq = [0]
 
     # Wrap title text
-    words = title.split()
+    words_t = title.split()
     lines_text = []
     line = ""
-    for w in words:
+    for w in words_t:
         if len(line + w) > 40:
             lines_text.append(line.strip())
             line = w + " "
@@ -217,51 +688,75 @@ def generate_og_image(title: str, pillar: str, scores: dict,
     lines_text.append(line.strip())
     title_lines = lines_text[:4]
 
+    # Dynamic background with fractal elements
+    bg_v = _det_rand_int(seed, seq[0], 0, 2)
+    seq[0] += 1
+    c_tint = _lerp_color(pal["bg"], pal["accent"], 0.12)
+
+    if bg_v == 0:
+        bg = (f'<linearGradient id="ogbg" x1="0" y1="0" x2="1" y2="1">'
+              f'<stop offset="0" stop-color="{pal["bg"]}"/>'
+              f'<stop offset=".5" stop-color="{c_tint}"/>'
+              f'<stop offset="1" stop-color="{pal["fg"]}"/>'
+              f'</linearGradient>')
+    else:
+        bg = (f'<radialGradient id="ogbg" cx="{40 + _det_rand_int(seed, seq[0], 0, 30)}%"'
+              f' cy="{40 + _det_rand_int(seed, seq[0] + 1, 0, 30)}%">'
+              f'<stop offset="0" stop-color="{c_tint}"/>'
+              f'<stop offset="1" stop-color="{pal["bg"]}"/>'
+              f'</radialGradient>')
+        seq[0] += 2
+
+    # Decorative fractal circles
+    circles = []
+    for i in range(6):
+        r_x = 80 + _det_rand_int(seed, seq[0] + i * 3, 0, 200)
+        r_y = 80 + _det_rand_int(seed, seq[0] + i * 3 + 1, 0, 150)
+        cx_c = _det_rand_int(seed, seq[0] + i * 3 + 2, 100, 1100)
+        cy_c = _det_rand_int(seed, seq[0] + i * 3 + 3, 50, 550)
+        op_c = 0.015 + _det_rand(seed, seq[0] + i * 3 + 4) * 0.03
+        circles.append(
+            f'<ellipse cx="{cx_c}" cy="{cy_c}" rx="{r_x}" ry="{r_y}"'
+            f' fill="{pal["accent"]}" opacity="{op_c:.2f}"/>'
+        )
+    seq[0] += 20
+
+    # Subtle fractal mist overlay
+    mist = _generate_mist(seed, pal, 1200, 630, 20, seq)
+
     parts = [
         f'<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">',
-        f'  <defs>',
-        f'    <linearGradient id="ogbg" x1="0" y1="0" x2="1" y2="1">',
-        f'      <stop offset="0" stop-color="{pal["bg"]}"/>',
-        f'      <stop offset=".5" stop-color="{pal["fg"]}"/>',
-        f'      <stop offset="1" stop-color="{pal["bg"]}"/>',
-        f'    </linearGradient>',
-        f'    <radialGradient id="ogglow" cx="70%" cy="50%">',
-        f'      <stop offset="0" stop-color="{pal["accent"]}" stop-opacity=".08"/>',
-        f'      <stop offset="1" stop-color="#000" stop-opacity="0"/>',
-        f'    </radialGradient>',
-        f'  </defs>',
-        f'  <rect width="1200" height="630" fill="url(#ogbg)"/>',
-        f'  <rect width="1200" height="630" fill="url(#ogglow)"/>',
-        "",
-        f'  <!-- Decorative circles -->',
-        f'  <circle cx="1000" cy="150" r="300" fill="{pal["accent"]}" opacity=".03"/>',
-        f'  <circle cx="200" cy="500" r="200" fill="{pal["accent"]}" opacity=".02"/>',
-        f'  <circle cx="1100" cy="400" r="150" fill="{pal["accent"]}" opacity=".04"/>',
-        "",
-        f'  <!-- Icon -->',
-        f'  <g transform="translate(50, 50) scale(1.8)" stroke="{pal["accent"]}" fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">',
-        f'    {icon_path}',
-        f'  </g>',
+        '<defs>', bg, '</defs>',
+        f'<rect width="1200" height="630" fill="url(#ogbg)"/>',
+    ] + circles + mist + [
+        f'<!-- Icon -->',
+        f'<g transform="translate(50, 50) scale(1.8)" stroke="{pal["accent"]}"'
+        f' fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">',
+        f'  {icon_path}',
+        f'</g>',
     ]
 
     # Title lines
     y = 260
     for tl in title_lines:
         parts.append(
-            f'  <text x="50" y="{y}" fill="{pal["text"]}" font-family="system-ui,sans-serif" '
-            f'font-size="{44 if len(tl) < 35 else 36}" font-weight="700">'
+            f'<text x="50" y="{y}" fill="{pal["text"]}" font-family="system-ui,sans-serif"'
+            f' font-size="{44 if len(tl) < 35 else 36}" font-weight="700">'
             f'{tl.replace("&", "&amp;").replace("<", "&lt;")}</text>'
         )
         y += 52
 
+    # Meta info with accent glow bar
+    sqi = scores.get("sqi", 0.5)
     parts.extend([
-        "",
-        f'  <!-- Meta -->',
-        f'  <text x="50" y="500" fill="{pal["accent"]}" font-family="system-ui,sans-serif" font-size="18" font-weight="600">AcaciaFund &nbsp;·&nbsp; {pillar.upper()}',
+        f'<text x="50" y="500" fill="{pal["accent"]}" font-family="system-ui,sans-serif"'
+        f' font-size="18" font-weight="600">AcaciaFund &nbsp;·&nbsp; {pillar.upper()}'
         f'{" &nbsp;·&nbsp; " + date_str if date_str else ""}</text>',
-        f'  <text x="50" y="540" fill="{pal["text"]}" font-family="system-ui,sans-serif" font-size="14" opacity="0.5">Codzienna synteza badan — AML, rynki, nauka</text>',
-        f'  <rect x="50" y="570" width="{int(min(1.0, scores.get("sqi", 0.5)) * 200)}" height="4" rx="2" fill="{pal["accent"]}" opacity="0.8"/>',
-        f'</svg>',
+        f'<text x="50" y="540" fill="{pal["text"]}" font-family="system-ui,sans-serif"'
+        f' font-size="14" opacity="0.5">Codzienna synteza badan — AML, rynki, nauka</text>',
+        f'<rect x="50" y="570" width="{int(min(1.0, sqi) * 200)}" height="4" rx="2"'
+        f' fill="{pal["accent"]}" opacity="0.8"/>',
+        '</svg>',
     ])
 
     return "\n".join(parts)
