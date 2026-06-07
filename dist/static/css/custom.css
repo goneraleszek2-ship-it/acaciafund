@@ -326,3 +326,34 @@ article .prose p, article .prose li { line-height: 1.7; }
   .prose h2 { font-size: clamp(1.1rem, 5vw, 1.35rem); }
   .prose h3 { font-size: clamp(1rem, 4vw, 1.15rem); }
 }
+
+/* Search input Safari fix */
+input[type="search"] {
+  -webkit-appearance: none;
+  appearance: none;
+  box-sizing: border-box;
+}
+input[type="search"]::-webkit-search-decoration,
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-results-button,
+input[type="search"]::-webkit-search-results-decoration {
+  display: none;
+}
+
+/* Narrow viewport footer fix */
+@media (max-width: 480px) {
+  footer nav ul {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  footer nav ul li {
+    flex-shrink: 0;
+  }
+}
+
+/* SVG intrinsic size guard */
+svg:not([class*="w-"]):not([class*="h-"]) {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+}
