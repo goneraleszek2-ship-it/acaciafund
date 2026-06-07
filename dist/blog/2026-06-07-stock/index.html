@@ -10,7 +10,8 @@ Today in STOCK, the top story is **"Meta confirms 1000s of Instagram accounts we
 
  -- nearly 5x higher than">
   <meta name="generator" content="AcaciaFund Python-native Pipeline">
-  <meta name="theme-color" content="#2563eb">
+  <meta name="theme-color" content="#f5f0eb" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1a1a2e" media="(prefers-color-scheme: dark)">
   <link rel="canonical" href="https://acaciafund.org/blog/2026-06-07-stock/index.html">
   <link rel="icon" href="/static/images/favicon.svg" type="image/svg+xml">
   <link rel="alternate" type="application/atom+xml" title="AcaciaFund Blog" href="/feed.xml">
@@ -18,7 +19,7 @@ Today in STOCK, the top story is **"Meta confirms 1000s of Instagram accounts we
   <meta property="og:title" content="Meta confirms 1000s of Instagram accounts were hacked by abusing its AI chatbot -- 📈 STOCK 2026-06-07">
   <meta property="og:site_name" content="AcaciaFund">
   <meta property="og:url" content="https://acaciafund.org/blog/2026-06-07-stock/index.html">
-  <meta property="og:image" content="https://acaciafund.org/static/images/og-card.png">
+  <meta property="og:image" content="https://acaciafund.org/static/images/og_07e38f6b8679.svg">
   <meta property="og:type" content="article">
   <meta property="article:published_time" content="2026-06-07T07:00:59.886937+00:00">
   <script type="application/ld+json">
@@ -27,98 +28,179 @@ Today in STOCK, the top story is **"Meta confirms 1000s of Instagram accounts we
     "@type": "BlogPosting",
     "headline": "Meta confirms 1000s of Instagram accounts were hacked by abusing its AI chatbot -- \ud83d\udcc8 STOCK 2026-06-07",
     "datePublished": "2026-06-07T07:00:59.886937+00:00",
-    "image": "https://acaciafund.org/static/images/og-card.png",
+    "image": "https://acaciafund.org/static/images/og_07e38f6b8679.svg",
     "author": { "@type": "Organization", "name": "AcaciaFund" },
     "publisher": { "@type": "Organization", "name": "AcaciaFund" }
   }
   </script>
 
+  <script>
+    (function(){
+      var t = localStorage.getItem('theme');
+      if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      } else if (t === 'light') {
+        document.documentElement.classList.add('light');
+      }
+    })();
+  </script>
   <link rel="stylesheet" href="/static/css/tailwind.min.css">
-  <style>
-    .skip-link{position:absolute;left:-9999px;z-index:100;padding:.5rem 1rem;background:#1e293b;color:#fff;font-weight:600;text-decoration:none;border-radius:0 0 .25rem 0}
-    .skip-link:focus{left:0;top:0}
-    img[loading="lazy"]{background:#f1f5f9}
-    .nav-link{transition:color .15s}
-    .nav-link:hover{color:#2563eb}
-    .prose h2{scroll-margin-top:4rem}
-    .prose h3{scroll-margin-top:4rem}
-    .prose a{word-break:break-word}
-    .prose ul{list-style-type:disc}
-    .prose ol{list-style-type:decimal}
-    .pillar-card{border-left:4px solid;transition:box-shadow .2s}
-    .pillar-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.1)}
-    .sqi-bar{height:6px;border-radius:3px;background:#e2e8f0;overflow:hidden}
-    .sqi-bar-fill{height:100%;border-radius:3px;transition:width .5s}
-    .flashcard-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem}
-    .flashcard-card{padding:1rem;border-radius:8px;border:1px solid #e2e8f0;background:#fff}
-    .flashcard-card:hover{border-color:#94a3b8}
-  </style>
+  <link rel="stylesheet" href="/static/css/custom.css">
+  <link rel="preload" href="/static/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/static/fonts/Inter-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/static/fonts/Inter-Bold.woff2" as="font" type="font/woff2" crossorigin>
 </head>
-<body class="bg-gray-50 text-gray-900 antialiased">
+<body class="antialiased">
   <a href="#main" class="skip-link">Skip to content</a>
 
-  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-gray-200">
+  <header class="sticky top-0 z-50 backdrop-blur border-b border-b-[var(--color-border)]" style="background:var(--color-header-bg)">
     <nav class="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between" aria-label="Main navigation">
-      <a href="/" class="text-lg font-bold tracking-tight text-gray-900 whitespace-nowrap">
-        Acacia<span class="text-blue-600">Fund</span>
+      <a href="/" class="text-lg font-bold tracking-tight whitespace-nowrap">
+        Acacia<span style="color:var(--color-accent)">Fund</span>
       </a>
-      <ul class="flex gap-4 sm:gap-6 text-sm font-medium text-gray-600" role="list">
+
+      <!-- Desktop nav -->
+      <ul class="hidden sm:flex gap-6 text-sm font-medium" style="color:var(--color-text-secondary)" role="list">
         <li><a href="/about.html" class="nav-link">About</a></li>
         <li><a href="/research.html" class="nav-link">Research</a></li>
         <li><a href="/scholarship.html" class="nav-link">Scholarship</a></li>
-        <li class="relative group">
-          <a href="#" class="nav-link">Blog</a>
-          <ul class="absolute left-0 top-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg p-2 min-w-[140px] hidden group-hover:block z-50" role="list">
-            <li><a href="/aml/" class="block px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50 rounded">AML</a></li>
-            <li><a href="/stock/" class="block px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50 rounded">Markets</a></li>
-            <li><a href="/science/" class="block px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50 rounded">Science</a></li>
-          </ul>
+        <li data-dropdown class="relative">
+          <button class="nav-link flex items-center gap-1" aria-haspopup="true" aria-expanded="false" data-dropdown-trigger>
+            Blog
+            <svg class="w-3 h-3 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="dropdown-menu" role="menu" data-dropdown-menu>
+            <a href="/aml/" class="dropdown-item" role="menuitem">AML</a>
+            <a href="/stock/" class="dropdown-item" role="menuitem">Markets</a>
+            <a href="/science/" class="dropdown-item" role="menuitem">Science</a>
+          </div>
         </li>
         <li><a href="/contact.html" class="nav-link">Contact</a></li>
       </ul>
+
+      <div class="flex items-center gap-2">
+        <button id="dark-toggle" class="p-2 rounded-lg transition" style="color:var(--color-text-muted)" aria-label="Toggle dark mode" title="Toggle dark mode">
+          <svg class="w-5 h-5 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+          <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+        </button>
+      </div>
+
+      <!-- Mobile toggle -->
+      <button class="sm:hidden mobile-nav-toggle p-2" aria-label="Toggle navigation menu" aria-expanded="false" data-mobile-toggle>
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+
+      <!-- Mobile nav panel -->
+      <div class="mobile-nav-panel sm:hidden" data-mobile-panel>
+        <a href="/about.html" class="block px-3 py-2 rounded hover:bg-[var(--color-bg)] transition">About</a>
+        <a href="/research.html" class="block px-3 py-2 rounded hover:bg-[var(--color-bg)] transition">Research</a>
+        <a href="/scholarship.html" class="block px-3 py-2 rounded hover:bg-[var(--color-bg)] transition">Scholarship</a>
+        <div class="pl-3 border-l-2 ml-3 mt-1" style="border-color:var(--color-border)">
+          <a href="/aml/" class="block py-1.5 text-sm hover:text-[var(--color-accent)]">AML</a>
+          <a href="/stock/" class="block py-1.5 text-sm hover:text-[var(--color-accent)]">Markets</a>
+          <a href="/science/" class="block py-1.5 text-sm hover:text-[var(--color-accent)]">Science</a>
+        </div>
+        <a href="/contact.html" class="block px-3 py-2 rounded hover:bg-[var(--color-bg)] transition">Contact</a>
+      </div>
     </nav>
   </header>
 
   <main id="main" class="max-w-5xl mx-auto px-4 py-8" tabindex="-1">
-<article>
-  <header class="mb-8">
-    <div class="flex items-center gap-3 mb-3">
-      <span class="inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
-        chart Markets
-      </span>
-      <span class="text-xs text-gray-400 font-mono" title="Signal Quality Index">
-        SQI 0.567
-      </span>
-      <span class="text-xs text-gray-400">
-        25 HN · 5 arXiv
-      </span>
-    </div>
-    <h1 class="text-3xl font-extrabold text-gray-900 leading-tight">Meta confirms 1000s of Instagram accounts were hacked by abusing its AI chatbot -- 📈 STOCK 2026-06-07</h1>
-    <time class="mt-2 block text-sm text-gray-500" datetime="2026-06-07">2026-06-07</time>
-    <div class="mt-3 flex flex-wrap gap-2">
-      <span class="inline-block px-2 py-0.5 text-xs font-medium rounded bg-gray-100 text-gray-700">markets</span>
-      <span class="inline-block px-2 py-0.5 text-xs font-medium rounded bg-gray-100 text-gray-700">stocks</span>
-      <span class="inline-block px-2 py-0.5 text-xs font-medium rounded bg-gray-100 text-gray-700">semiconductors</span>
-      <span class="inline-block px-2 py-0.5 text-xs font-medium rounded bg-gray-100 text-gray-700">hardware</span>
-    </div>
-  </header>
-  <div class="mb-8 grid grid-cols-3 gap-4 text-center text-sm">
-    <div class="bg-white rounded-lg border border-gray-200 p-3">
-      <div class="text-lg font-bold text-gray-900">1.28</div>
-      <div class="text-gray-500 text-xs">Avg Source Score</div>
-    </div>
-    <div class="bg-white rounded-lg border border-gray-200 p-3">
-      <div class="text-lg font-bold text-gray-900">0.28</div>
-      <div class="text-gray-500 text-xs">Source Diversity</div>
-    </div>
-    <div class="bg-white rounded-lg border border-gray-200 p-3">
-      <div class="text-lg font-bold text-gray-900">8%</div>
-      <div class="text-gray-500 text-xs">Recency</div>
-    </div>
-  </div>
+<div id="reading-progress" style="position:fixed;top:0;left:0;height:3px;z-index:9999;width:0%;background:var(--color-accent)"></div>
 
-  <div class="prose prose-lg prose-blue max-w-none">
-    <h2>Trending (HackerNews, 2026-06-07)</h2>
+<div class="flex gap-8 lg:flex-row flex-col">
+  <aside class="toc-sidebar shrink-0 lg:sticky lg:top-20 lg:self-start lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto lg:w-56">
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="text-xs font-semibold uppercase tracking-wide" style="color:var(--color-text-muted)">On this page</h2>
+      <button id="focus-toggle" class="text-xs px-2 py-1 rounded" style="color:var(--color-text-muted);background:var(--color-bg)" title="Focus mode" aria-label="Toggle focus mode">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 4h4M6 20h4M18 4h-4M18 20h-4M4 6v4M4 18v4M20 6v4M20 18v4"/></svg>
+      </button>
+    </div>
+    <nav aria-label="Table of contents">
+      <ul class="space-y-1 text-sm">
+        <li>
+          <a href="#trending-hackernews-2026-06-07" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Trending (HackerNews, 2026-06-07)
+          </a>
+        </li>
+        <li>
+          <a href="#analysis" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Analysis
+          </a>
+        </li>
+        <li>
+          <a href="#cross-pillar-connections" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            Cross-pillar connections
+          </a>
+        </li>
+        <li>
+          <a href="#bloom-taxonomy-questions" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Bloom Taxonomy Questions
+          </a>
+        </li>
+        <li>
+          <a href="#flashcards" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Flashcards
+          </a>
+        </li>
+        <li>
+          <a href="#classification-quality" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Classification quality
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+
+  <article class="min-w-0 flex-1">
+    <nav aria-label="Breadcrumb" class="mb-4 text-xs" style="color:var(--color-text-muted)">
+      <ol class="flex flex-wrap items-center gap-1.5">
+        <li><a href="/" class="hover:text-[var(--color-accent)] transition">Home</a></li>
+        <li aria-hidden="true">/</li>
+        <li><a href="/stock/" class="hover:text-[var(--color-accent)] transition">Markets</a></li>
+        <li aria-hidden="true">/</li>
+        <li aria-current="page" class="truncate max-w-[200px]">Meta confirms 1000s of Instagram accounts were hacked by abusing its AI chatbot -- 📈 STOCK 2026-06-07</li>
+      </ol>
+    </nav>
+    <header class="mb-8">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
+          chart Markets
+        </span>
+        <span class="text-xs text-gray-400 font-mono" title="Signal Quality Index">
+          SQI 0.567
+        </span>
+        <span class="text-xs text-gray-400">
+          25 HN · 5 arXiv
+        </span>
+      </div>
+      <h1 class="text-3xl font-extrabold text-gray-900 leading-tight">Meta confirms 1000s of Instagram accounts were hacked by abusing its AI chatbot -- 📈 STOCK 2026-06-07</h1>
+      <time class="mt-2 block text-sm text-gray-500" datetime="2026-06-07">2026-06-07 · 3 min read
+      </time>
+      <div class="mt-3 flex flex-wrap gap-2">
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded bg-gray-100 text-gray-700">markets</span>
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded bg-gray-100 text-gray-700">stocks</span>
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded bg-gray-100 text-gray-700">semiconductors</span>
+        <span class="inline-block px-2 py-0.5 text-xs font-medium rounded bg-gray-100 text-gray-700">hardware</span>
+      </div>
+    </header>
+    <div class="mb-8 grid grid-cols-3 gap-4 text-center text-sm">
+      <div class="bg-white rounded-lg border border-gray-200 p-3">
+        <div class="text-lg font-bold text-gray-900">1.28</div>
+        <div class="text-gray-500 text-xs">Avg Source Score</div>
+      </div>
+      <div class="bg-white rounded-lg border border-gray-200 p-3">
+        <div class="text-lg font-bold text-gray-900">0.28</div>
+        <div class="text-gray-500 text-xs">Source Diversity</div>
+      </div>
+      <div class="bg-white rounded-lg border border-gray-200 p-3">
+        <div class="text-lg font-bold text-gray-900">8%</div>
+        <div class="text-gray-500 text-xs">Recency</div>
+      </div>
+    </div>
+
+    <div class="prose prose-lg prose-blue max-w-none">
+      <h2 id="trending-hackernews-2026-06-07">Trending (HackerNews, 2026-06-07)</h2>
 
 <ol>
 <li><a href="https://this.weekinsecurity.com/meta-confirms-thousands-of-instagram-accounts-were-hacked-by-abusing-its-ai-chatbot/">Meta confirms 1000s of Instagram accounts were hacked by abusing its AI chatbot</a> (<a href="https://news.ycombinator.com/item?id=48427643">discussion</a>) (546 pts)</li>
@@ -149,7 +231,7 @@ Today in STOCK, the top story is **"Meta confirms 1000s of Instagram accounts we
   <p>Total: 30 articles with 3325 points. Average SQI: 0.567.</p>
 </blockquote>
 
-<h2>Analysis</h2>
+<h2 id="analysis">Analysis</h2>
 
 <p><strong>Key entities:</strong> <code>Microsoft</code> · <code>Qualcomm</code> · <code>Google</code> · <code>NVIDIA</code> · <code>Meta</code>
 <strong>Key numbers:</strong> 1000 · 920 · 920 · 32
@@ -158,7 +240,7 @@ Today in STOCK, the top story is **"Meta confirms 1000s of Instagram accounts we
 - In anew data breach notification letter, seen bythis week in security, Meta has revealed for the first time how many people had their accounts hijacke
 - Long-running, fault-tolerant SQL functions for teams that already keep their state in Postgres and want to stop stitching together cron jobs, workers,</p>
 
-<h3>Cross-pillar connections</h3>
+<h3 id="cross-pillar-connections">Cross-pillar connections</h3>
 
 <ul>
 <li>"Home alone: Remote work, isolation, and mental health" has connections to <strong>SCIENCE</strong> (score: 10)</li>
@@ -168,7 +250,7 @@ Today in STOCK, the top story is **"Meta confirms 1000s of Instagram accounts we
 <li>"Language models transmit behavioural traits through hidden s" has connections to <strong>SCIENCE</strong> (score: 10)</li>
 </ul>
 
-<h2>Bloom Taxonomy Questions</h2>
+<h2 id="bloom-taxonomy-questions">Bloom Taxonomy Questions</h2>
 
 <ol>
 <li><strong>Remembering</strong>: Which domain does the article "The back cover of C++: The Language raises questions not ans…" come from?</li>
@@ -178,7 +260,7 @@ Today in STOCK, the top story is **"Meta confirms 1000s of Instagram accounts we
 <li><strong>Evaluating</strong>: What is the credibility level of the source ft.com?</li>
 </ol>
 
-<h2>Flashcards</h2>
+<h2 id="flashcards">Flashcards</h2>
 
 <ul>
 <li><strong>ARM</strong>: Low-power processor architecture owned by SoftBank</li>
@@ -191,158 +273,284 @@ Today in STOCK, the top story is **"Meta confirms 1000s of Instagram accounts we
 <li><strong>Hardware Hacking</strong>: Topic from article: ESP32 Bit Pirate, a Hardware Hacking Tool with WebCLI That Speaks Every Protocol</li>
 </ul>
 
-<h2>Classification quality</h2>
+<h2 id="classification-quality">Classification quality</h2>
 
 <p>Classification: 3% (30/1000) | Pillar share: 3%</p>
 
 <p><em>Report generated 2026-06-07. Source: Algolia HN API. Classification: AcaciaFund NLP. SQI: 0.567.</em></p>
 
-  </div>
-  <section class="mt-12 pt-8 border-t border-gray-200">
-    <h2 class="text-2xl font-bold text-gray-900 mb-6">Bloom Taxonomy Questions</h2>
-    <div class="space-y-4">
-      <div class="bg-white rounded-lg border border-gray-200 p-4">
-        <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded bg-blue-100 text-blue-700">
-          Remember
-        </span>
-        <p class="mt-2 text-gray-800">Which domain does the article "The back cover of C++: The Language raises questions not ans…" come from?</p>
-      </div>
-      <div class="bg-white rounded-lg border border-gray-200 p-4">
-        <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded bg-green-100 text-green-700">
-          Understand
-        </span>
-        <p class="mt-2 text-gray-800">What type of domain is kotaku.com?</p>
-      </div>
-      <div class="bg-white rounded-lg border border-gray-200 p-4">
-        <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded bg-amber-100 text-amber-700">
-          Apply
-        </span>
-        <p class="mt-2 text-gray-800">How can concepts from the article "Police in England and Wales told to halt AI use in court sta…" be applied in practice in STOCK?</p>
-      </div>
-      <div class="bg-white rounded-lg border border-gray-200 p-4">
-        <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded bg-purple-100 text-purple-700">
-          Analyze
-        </span>
-        <p class="mt-2 text-gray-800">Which of these articles comes from a news source?</p>
-      </div>
-      <div class="bg-white rounded-lg border border-gray-200 p-4">
-        <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded bg-red-100 text-red-700">
-          Evaluate
-        </span>
-        <p class="mt-2 text-gray-800">What is the credibility level of the source ft.com?</p>
-      </div>
     </div>
-  </section>
-  <section class="mt-12 pt-8 border-t border-gray-200">
-    <h2 class="text-2xl font-bold text-gray-900 mb-6">Flashcards</h2>
-    <div class="flashcard-grid">
-      <div class="flashcard-card">
-        <div class="font-semibold text-gray-900 text-sm">ARM</div>
-        <div class="mt-1 text-xs text-gray-600">Low-power processor architecture owned by SoftBank</div>
+    <section class="mt-12 pt-8 border-t border-gray-200">
+      <h2 class="text-2xl font-bold text-gray-900 mb-6">Bloom Taxonomy Questions</h2>
+      <div class="space-y-4">
+        <div class="bg-white rounded-lg border border-gray-200 p-4">
+          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded bg-blue-100 text-blue-700">
+            Remember
+          </span>
+          <p class="mt-2 text-gray-800">Which domain does the article "The back cover of C++: The Language raises questions not ans…" come from?</p>
+        </div>
+        <div class="bg-white rounded-lg border border-gray-200 p-4">
+          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded bg-green-100 text-green-700">
+            Understand
+          </span>
+          <p class="mt-2 text-gray-800">What type of domain is kotaku.com?</p>
+        </div>
+        <div class="bg-white rounded-lg border border-gray-200 p-4">
+          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded bg-amber-100 text-amber-700">
+            Apply
+          </span>
+          <p class="mt-2 text-gray-800">How can concepts from the article "Police in England and Wales told to halt AI use in court sta…" be applied in practice in STOCK?</p>
+        </div>
+        <div class="bg-white rounded-lg border border-gray-200 p-4">
+          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded bg-purple-100 text-purple-700">
+            Analyze
+          </span>
+          <p class="mt-2 text-gray-800">Which of these articles comes from a news source?</p>
+        </div>
+        <div class="bg-white rounded-lg border border-gray-200 p-4">
+          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded bg-red-100 text-red-700">
+            Evaluate
+          </span>
+          <p class="mt-2 text-gray-800">What is the credibility level of the source ft.com?</p>
+        </div>
       </div>
-      <div class="flashcard-card">
-        <div class="font-semibold text-gray-900 text-sm">ASML</div>
-        <div class="mt-1 text-xs text-gray-600">Dutch lithography machine manufacturer for the semiconductor industry</div>
+    </section>
+    <section class="mt-12 pt-8 border-t border-gray-200">
+      <h2 class="text-2xl font-bold text-gray-900 mb-6">Flashcards</h2>
+      <div class="flashcard-grid">
+        <div class="flashcard-card">
+          <div class="font-semibold text-gray-900 text-sm">ARM</div>
+          <div class="mt-1 text-xs text-gray-600">Low-power processor architecture owned by SoftBank</div>
+        </div>
+        <div class="flashcard-card">
+          <div class="font-semibold text-gray-900 text-sm">ASML</div>
+          <div class="mt-1 text-xs text-gray-600">Dutch lithography machine manufacturer for the semiconductor industry</div>
+        </div>
+        <div class="flashcard-card">
+          <div class="font-semibold text-gray-900 text-sm">CPU</div>
+          <div class="mt-1 text-xs text-gray-600">Central Processing Unit</div>
+        </div>
+        <div class="flashcard-card">
+          <div class="font-semibold text-gray-900 text-sm">Nasdaq</div>
+          <div class="mt-1 text-xs text-gray-600">US technology stock exchange</div>
+        </div>
+        <div class="flashcard-card">
+          <div class="font-semibold text-gray-900 text-sm">NVIDIA</div>
+          <div class="mt-1 text-xs text-gray-600">GPU manufacturer and AI computing leader</div>
+        </div>
+        <div class="flashcard-card">
+          <div class="font-semibold text-gray-900 text-sm">Qualcomm</div>
+          <div class="mt-1 text-xs text-gray-600">Maker of Snapdragon mobile chipsets</div>
+        </div>
+        <div class="flashcard-card">
+          <div class="font-semibold text-gray-900 text-sm">SPAC</div>
+          <div class="mt-1 text-xs text-gray-600">Special Purpose Acquisition Company</div>
+        </div>
+        <div class="flashcard-card">
+          <div class="font-semibold text-gray-900 text-sm">Hardware Hacking</div>
+          <div class="mt-1 text-xs text-gray-600">Topic from article: ESP32 Bit Pirate, a Hardware Hacking Tool with WebCLI That Speaks Every Protocol</div>
+        </div>
+        <div class="flashcard-card">
+          <div class="font-semibold text-gray-900 text-sm">Entanglement Builds</div>
+          <div class="mt-1 text-xs text-gray-600">Topic from article: Entanglement Builds Space-Time. Now "Magic" Gives It Gravity</div>
+        </div>
+        <div class="flashcard-card">
+          <div class="font-semibold text-gray-900 text-sm">Worldbuilders Part</div>
+          <div class="mt-1 text-xs text-gray-600">Term from the field of STOCK</div>
+        </div>
+        <div class="flashcard-card">
+          <div class="font-semibold text-gray-900 text-sm">Reveals Microsoft</div>
+          <div class="mt-1 text-xs text-gray-600">Topic from article: Leak Reveals Microsoft Wants Its AI to Be 'Addictive'</div>
+        </div>
+        <div class="flashcard-card">
+          <div class="font-semibold text-gray-900 text-sm">Keeps Delaying</div>
+          <div class="mt-1 text-xs text-gray-600">Topic from article: Meta Keeps Delaying the Release of Its New AI Model to Developers</div>
+        </div>
       </div>
-      <div class="flashcard-card">
-        <div class="font-semibold text-gray-900 text-sm">CPU</div>
-        <div class="mt-1 text-xs text-gray-600">Central Processing Unit</div>
+    </section>
+    <section class="mt-12 pt-8 border-t border-gray-200">
+      <h2 class="text-2xl font-bold text-gray-900 mb-4">Signal Analysis</h2>
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+        <div class="bg-white rounded-lg border p-3">
+          <div class="text-xl font-bold text-gray-900">30</div>
+          <div class="text-xs text-gray-500">Articles</div>
+        </div>
+        <div class="bg-white rounded-lg border p-3">
+          <div class="text-xl font-bold text-gray-900">3325</div>
+          <div class="text-xs text-gray-500">Total Points</div>
+        </div>
+        <div class="bg-white rounded-lg border p-3">
+          <div class="text-xl font-bold text-gray-900">110.83</div>
+          <div class="text-xs text-gray-500">Avg Points</div>
+        </div>
+        <div class="bg-white rounded-lg border p-3">
+          <div class="text-xl font-bold text-gray-900">20</div>
+          <div class="text-xs text-gray-500">Domains</div>
+        </div>
       </div>
-      <div class="flashcard-card">
-        <div class="font-semibold text-gray-900 text-sm">Nasdaq</div>
-        <div class="mt-1 text-xs text-gray-600">US technology stock exchange</div>
+      <div class="mt-4">
+        <span class="text-sm font-medium text-gray-700">Entities:</span>
+        <div class="mt-1 flex flex-wrap gap-2">
+          <span class="inline-block px-2 py-0.5 text-xs font-mono bg-gray-100 text-gray-700 rounded">Microsoft</span>
+          <span class="inline-block px-2 py-0.5 text-xs font-mono bg-gray-100 text-gray-700 rounded">Qualcomm</span>
+          <span class="inline-block px-2 py-0.5 text-xs font-mono bg-gray-100 text-gray-700 rounded">Google</span>
+          <span class="inline-block px-2 py-0.5 text-xs font-mono bg-gray-100 text-gray-700 rounded">NVIDIA</span>
+          <span class="inline-block px-2 py-0.5 text-xs font-mono bg-gray-100 text-gray-700 rounded">Meta</span>
+        </div>
       </div>
-      <div class="flashcard-card">
-        <div class="font-semibold text-gray-900 text-sm">NVIDIA</div>
-        <div class="mt-1 text-xs text-gray-600">GPU manufacturer and AI computing leader</div>
+    </section>
+    <section class="mt-12 pt-8 border-t border-gray-200">
+      <h2 class="text-2xl font-bold text-gray-900 mb-6">Related</h2>
+      <div class="grid gap-4 sm:grid-cols-3">
+        <a href="/blog/2026-06-01-stock/" class="block p-4 rounded-lg transition" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+          <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded bg-green-100 text-green-800">chart Markets</span>
+          <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Microsoft Office 2019 and 2021 for Mac view-only conversion -- 📈 STOCK 2026-06-01</span>
+          <span class="block mt-1 text-xs" style="color:var(--color-text-muted)">2026-06-01</span>
+        </a>
+        <a href="/blog/2026-06-02-stock/" class="block p-4 rounded-lg transition" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+          <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded bg-green-100 text-green-800">chart Markets</span>
+          <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Nvidia RTX Spark -- 📈 STOCK 2026-06-02</span>
+          <span class="block mt-1 text-xs" style="color:var(--color-text-muted)">2026-06-02</span>
+        </a>
+        <a href="/blog/2026-05-10-stock-market/" class="block p-4 rounded-lg transition" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+          <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded bg-green-100 text-green-800">chart Markets</span>
+          <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Global Stock Markets Volatility Amid Interest Rate Uncertainty</span>
+          <span class="block mt-1 text-xs" style="color:var(--color-text-muted)">2026-05-10</span>
+        </a>
       </div>
-      <div class="flashcard-card">
-        <div class="font-semibold text-gray-900 text-sm">Qualcomm</div>
-        <div class="mt-1 text-xs text-gray-600">Maker of Snapdragon mobile chipsets</div>
-      </div>
-      <div class="flashcard-card">
-        <div class="font-semibold text-gray-900 text-sm">SPAC</div>
-        <div class="mt-1 text-xs text-gray-600">Special Purpose Acquisition Company</div>
-      </div>
-      <div class="flashcard-card">
-        <div class="font-semibold text-gray-900 text-sm">Hardware Hacking</div>
-        <div class="mt-1 text-xs text-gray-600">Topic from article: ESP32 Bit Pirate, a Hardware Hacking Tool with WebCLI That Speaks Every Protocol</div>
-      </div>
-      <div class="flashcard-card">
-        <div class="font-semibold text-gray-900 text-sm">Entanglement Builds</div>
-        <div class="mt-1 text-xs text-gray-600">Topic from article: Entanglement Builds Space-Time. Now "Magic" Gives It Gravity</div>
-      </div>
-      <div class="flashcard-card">
-        <div class="font-semibold text-gray-900 text-sm">Worldbuilders Part</div>
-        <div class="mt-1 text-xs text-gray-600">Term from the field of STOCK</div>
-      </div>
-      <div class="flashcard-card">
-        <div class="font-semibold text-gray-900 text-sm">Reveals Microsoft</div>
-        <div class="mt-1 text-xs text-gray-600">Topic from article: Leak Reveals Microsoft Wants Its AI to Be 'Addictive'</div>
-      </div>
-      <div class="flashcard-card">
-        <div class="font-semibold text-gray-900 text-sm">Keeps Delaying</div>
-        <div class="mt-1 text-xs text-gray-600">Topic from article: Meta Keeps Delaying the Release of Its New AI Model to Developers</div>
-      </div>
-    </div>
-  </section>
-  <section class="mt-12 pt-8 border-t border-gray-200">
-    <h2 class="text-2xl font-bold text-gray-900 mb-4">Signal Analysis</h2>
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-      <div class="bg-white rounded-lg border p-3">
-        <div class="text-xl font-bold text-gray-900">30</div>
-        <div class="text-xs text-gray-500">Articles</div>
-      </div>
-      <div class="bg-white rounded-lg border p-3">
-        <div class="text-xl font-bold text-gray-900">3325</div>
-        <div class="text-xs text-gray-500">Total Points</div>
-      </div>
-      <div class="bg-white rounded-lg border p-3">
-        <div class="text-xl font-bold text-gray-900">110.83</div>
-        <div class="text-xs text-gray-500">Avg Points</div>
-      </div>
-      <div class="bg-white rounded-lg border p-3">
-        <div class="text-xl font-bold text-gray-900">20</div>
-        <div class="text-xs text-gray-500">Domains</div>
-      </div>
-    </div>
-    <div class="mt-4">
-      <span class="text-sm font-medium text-gray-700">Entities:</span>
-      <div class="mt-1 flex flex-wrap gap-2">
-        <span class="inline-block px-2 py-0.5 text-xs font-mono bg-gray-100 text-gray-700 rounded">Microsoft</span>
-        <span class="inline-block px-2 py-0.5 text-xs font-mono bg-gray-100 text-gray-700 rounded">Qualcomm</span>
-        <span class="inline-block px-2 py-0.5 text-xs font-mono bg-gray-100 text-gray-700 rounded">Google</span>
-        <span class="inline-block px-2 py-0.5 text-xs font-mono bg-gray-100 text-gray-700 rounded">NVIDIA</span>
-        <span class="inline-block px-2 py-0.5 text-xs font-mono bg-gray-100 text-gray-700 rounded">Meta</span>
-      </div>
-    </div>
-  </section>
-  <nav class="mt-12 pt-6 border-t border-gray-200 grid grid-cols-2 gap-4" aria-label="Post navigation">
-    <a href="/blog/2026-06-07-science/" class="group">
-      <span class="text-xs text-gray-500">&larr; Previous</span>
-      <span class="block text-sm font-medium text-gray-900 group-hover:text-blue-600 truncate">S&P 500 rejects SpaceX, also blocking entry for OpenAI and Anthropic -- 🧬 SCIENCE 2026-06-07</span>
-    </a>
-    <a href="/blog/2026-06-07-aml/" class="group text-right">
-      <span class="text-xs text-gray-500">Next &rarr;</span>
-      <span class="block text-sm font-medium text-gray-900 group-hover:text-blue-600 truncate">Gov.uk has replaced Stripe with Dutch provider Adyen -- 🛡️ AML 2026-06-07</span>
-    </a>
-  </nav>
-</article>
+    </section>
+    <nav class="mt-12 pt-6 border-t border-gray-200 grid grid-cols-2 gap-4" aria-label="Post navigation">
+      <a href="/blog/2026-06-07-science/" class="group">
+        <span class="text-xs text-gray-500">&larr; Previous</span>
+        <span class="block text-sm font-medium text-gray-900 group-hover:text-blue-600 truncate">S&P 500 rejects SpaceX, also blocking entry for OpenAI and Anthropic -- 🧬 SCIENCE 2026-06-07</span>
+      </a>
+      <a href="/blog/2026-06-07-aml/" class="group text-right">
+        <span class="text-xs text-gray-500">Next &rarr;</span>
+        <span class="block text-sm font-medium text-gray-900 group-hover:text-blue-600 truncate">Gov.uk has replaced Stripe with Dutch provider Adyen -- 🛡️ AML 2026-06-07</span>
+      </a>
+    </nav>
+  </article>
+</div>
+
+<script>
+(function(){
+  var bar = document.getElementById('reading-progress');
+  if (bar) {
+    window.addEventListener('scroll', function() {
+      var h = document.documentElement;
+      var pct = (h.scrollTop || document.body.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+      bar.style.width = Math.min(pct, 100) + '%';
+    }, {passive: true});
+  }
+
+  var tocLinks = document.querySelectorAll('.toc-link');
+  if (tocLinks.length) {
+    var headings = [];
+    tocLinks.forEach(function(link) {
+      var id = link.getAttribute('href').slice(1);
+      var el = document.getElementById(id);
+      if (el) headings.push({el: el, link: link});
+    });
+    window.addEventListener('scroll', function() {
+      var scrollY = window.scrollY + 120;
+      var current = null;
+      for (var i = headings.length - 1; i >= 0; i--) {
+        if (headings[i].el.offsetTop <= scrollY) { current = headings[i]; break; }
+      }
+      tocLinks.forEach(function(l) { l.style.background = ''; l.style.color = ''; });
+      if (current) {
+        current.link.style.background = 'var(--color-bg)';
+        current.link.style.color = 'var(--color-accent)';
+      }
+    }, {passive: true});
+  }
+
+  var focusBtn = document.getElementById('focus-toggle');
+  if (focusBtn) {
+    focusBtn.addEventListener('click', function() {
+      document.body.classList.toggle('focus-mode');
+    });
+  }
+})();
+</script>
 
   </main>
 
-  <footer class="mt-16 border-t border-gray-200 bg-white">
-    <div class="max-w-5xl mx-auto px-4 py-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-gray-500">
-      <p>&copy; 2026 AcaciaFund. All rights reserved.</p>
+  <footer class="mt-16 border-t" style="border-color:var(--color-border);background:var(--color-surface)">
+    <div class="max-w-5xl mx-auto px-4 py-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm" style="color:var(--color-text-secondary)">
+      <div>
+        <p>&copy; 2026 AcaciaFund. All rights reserved.</p>
+        <p class="text-xs mt-1" style="color:var(--color-text-muted)">Content synthesized by AcaciaFund NLP pipelines</p>
+      </div>
       <nav aria-label="Footer navigation">
         <ul class="flex gap-4" role="list">
-          <li><a href="/about.html" class="hover:text-gray-900 transition">About</a></li>
-          <li><a href="/contact.html" class="hover:text-gray-900 transition">Contact</a></li>
-          <li><a href="/research.html" class="hover:text-gray-900 transition">Research</a></li>
-          <li><a href="/feed.xml" class="hover:text-gray-900 transition">RSS</a></li>
+          <li><a href="/about.html" class="hover:opacity-70 transition">About</a></li>
+          <li><a href="/contact.html" class="hover:opacity-70 transition">Contact</a></li>
+          <li><a href="/research.html" class="hover:opacity-70 transition">Research</a></li>
+          <li><a href="/feed.xml" class="hover:opacity-70 transition">RSS</a></li>
         </ul>
       </nav>
     </div>
   </footer>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Dropdown
+      document.querySelectorAll('[data-dropdown]').forEach(function(dd) {
+        var trigger = dd.querySelector('[data-dropdown-trigger]');
+        var menu = dd.querySelector('[data-dropdown-menu]');
+        if (!trigger || !menu) return;
+        trigger.addEventListener('click', function(e) {
+          e.stopPropagation();
+          var expanded = trigger.getAttribute('aria-expanded') === 'true';
+          trigger.setAttribute('aria-expanded', !expanded);
+          menu.classList.toggle('dropdown-menu-open');
+        });
+        dd.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape') {
+            trigger.setAttribute('aria-expanded', 'false');
+            menu.classList.remove('dropdown-menu-open');
+            trigger.focus();
+          }
+        });
+        document.addEventListener('click', function(e) {
+          if (!dd.contains(e.target)) {
+            trigger.setAttribute('aria-expanded', 'false');
+            menu.classList.remove('dropdown-menu-open');
+          }
+        });
+      });
+      // Dark mode toggle
+      var darkToggle = document.getElementById('dark-toggle');
+      if (darkToggle) {
+        darkToggle.addEventListener('click', function() {
+          if (document.documentElement.classList.contains('dark')) {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.classList.add('light');
+            localStorage.setItem('theme', 'light');
+          } else {
+            document.documentElement.classList.remove('light');
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+          }
+        });
+      }
+      // Mobile nav
+      var mobToggle = document.querySelector('[data-mobile-toggle]');
+      var mobPanel = document.querySelector('[data-mobile-panel]');
+      if (mobToggle && mobPanel) {
+        mobToggle.addEventListener('click', function() {
+          var expanded = mobToggle.getAttribute('aria-expanded') === 'true';
+          mobToggle.setAttribute('aria-expanded', !expanded);
+          mobPanel.style.display = expanded ? 'none' : 'block';
+        });
+        document.querySelectorAll('[data-mobile-panel] a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            mobToggle.setAttribute('aria-expanded', 'false');
+            mobPanel.style.display = 'none';
+          });
+        });
+      }
+    });
+  </script>
 </body>
 </html>

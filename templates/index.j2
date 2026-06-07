@@ -21,7 +21,7 @@
   {%- for item in recent_posts %}
     {%- set p = item.pillar or "aml" %}
     {%- set pc = pillar_config.get(p, pillar_config["aml"]) %}
-    <article class="bg-white rounded-lg border border-gray-200 p-5 hover:shadow-md transition">
+    <article class="bg-white rounded-lg border p-5 hover:shadow-md transition" style="border-color:var(--color-border)">
       <div class="flex items-center gap-2 mb-2">
         <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded {{ pc.badge_color }}">
           {{ pc.emoji }} {{ pc.label }}
@@ -33,6 +33,9 @@
       <div class="mt-2 flex items-center gap-3 text-xs text-gray-500">
         {%- if item.date_str %}
         <time datetime="{{ item.date_str }}">{{ item.date_str }}</time>
+        {%- endif %}
+        {%- if item.body_html %}
+        <span>{{ item.body_html | reading_time }} min</span>
         {%- endif %}
         {%- if item.signals and item.signals.get("avg_sqi") is defined %}
         <span class="font-mono">SQI {{ "%.3f"|format(item.signals.get("avg_sqi", 0)) }}</span>

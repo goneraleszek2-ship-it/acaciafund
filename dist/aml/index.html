@@ -6,7 +6,8 @@
   <title>Anti-Money Laundering | AcaciaFund</title>
   <meta name="description" content="">
   <meta name="generator" content="AcaciaFund Python-native Pipeline">
-  <meta name="theme-color" content="#2563eb">
+  <meta name="theme-color" content="#f5f0eb" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1a1a2e" media="(prefers-color-scheme: dark)">
   <link rel="canonical" href="https://acaciafund.org/aml/">
   <link rel="icon" href="/static/images/favicon.svg" type="image/svg+xml">
   <link rel="alternate" type="application/atom+xml" title="AcaciaFund Blog" href="/feed.xml">
@@ -16,54 +17,88 @@
   <meta property="og:url" content="https://acaciafund.org/aml/">
   <meta property="og:image" content="https://acaciafund.org/static/images/og-card.png">
 
+  <script>
+    (function(){
+      var t = localStorage.getItem('theme');
+      if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      } else if (t === 'light') {
+        document.documentElement.classList.add('light');
+      }
+    })();
+  </script>
   <link rel="stylesheet" href="/static/css/tailwind.min.css">
-  <style>
-    .skip-link{position:absolute;left:-9999px;z-index:100;padding:.5rem 1rem;background:#1e293b;color:#fff;font-weight:600;text-decoration:none;border-radius:0 0 .25rem 0}
-    .skip-link:focus{left:0;top:0}
-    img[loading="lazy"]{background:#f1f5f9}
-    .nav-link{transition:color .15s}
-    .nav-link:hover{color:#2563eb}
-    .prose h2{scroll-margin-top:4rem}
-    .prose h3{scroll-margin-top:4rem}
-    .prose a{word-break:break-word}
-    .prose ul{list-style-type:disc}
-    .prose ol{list-style-type:decimal}
-    .pillar-card{border-left:4px solid;transition:box-shadow .2s}
-    .pillar-card:hover{box-shadow:0 4px 12px rgba(0,0,0,.1)}
-    .sqi-bar{height:6px;border-radius:3px;background:#e2e8f0;overflow:hidden}
-    .sqi-bar-fill{height:100%;border-radius:3px;transition:width .5s}
-    .flashcard-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem}
-    .flashcard-card{padding:1rem;border-radius:8px;border:1px solid #e2e8f0;background:#fff}
-    .flashcard-card:hover{border-color:#94a3b8}
-  </style>
+  <link rel="stylesheet" href="/static/css/custom.css">
+  <link rel="preload" href="/static/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/static/fonts/Inter-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/static/fonts/Inter-Bold.woff2" as="font" type="font/woff2" crossorigin>
 </head>
-<body class="bg-gray-50 text-gray-900 antialiased">
+<body class="antialiased">
   <a href="#main" class="skip-link">Skip to content</a>
 
-  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-gray-200">
+  <header class="sticky top-0 z-50 backdrop-blur border-b border-b-[var(--color-border)]" style="background:var(--color-header-bg)">
     <nav class="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between" aria-label="Main navigation">
-      <a href="/" class="text-lg font-bold tracking-tight text-gray-900 whitespace-nowrap">
-        Acacia<span class="text-blue-600">Fund</span>
+      <a href="/" class="text-lg font-bold tracking-tight whitespace-nowrap">
+        Acacia<span style="color:var(--color-accent)">Fund</span>
       </a>
-      <ul class="flex gap-4 sm:gap-6 text-sm font-medium text-gray-600" role="list">
+
+      <!-- Desktop nav -->
+      <ul class="hidden sm:flex gap-6 text-sm font-medium" style="color:var(--color-text-secondary)" role="list">
         <li><a href="/about.html" class="nav-link">About</a></li>
         <li><a href="/research.html" class="nav-link">Research</a></li>
         <li><a href="/scholarship.html" class="nav-link">Scholarship</a></li>
-        <li class="relative group">
-          <a href="#" class="nav-link">Blog</a>
-          <ul class="absolute left-0 top-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg p-2 min-w-[140px] hidden group-hover:block z-50" role="list">
-            <li><a href="/aml/" class="block px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50 rounded">AML</a></li>
-            <li><a href="/stock/" class="block px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50 rounded">Markets</a></li>
-            <li><a href="/science/" class="block px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50 rounded">Science</a></li>
-          </ul>
+        <li data-dropdown class="relative">
+          <button class="nav-link flex items-center gap-1" aria-haspopup="true" aria-expanded="false" data-dropdown-trigger>
+            Blog
+            <svg class="w-3 h-3 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+          </button>
+          <div class="dropdown-menu" role="menu" data-dropdown-menu>
+            <a href="/aml/" class="dropdown-item" role="menuitem">AML</a>
+            <a href="/stock/" class="dropdown-item" role="menuitem">Markets</a>
+            <a href="/science/" class="dropdown-item" role="menuitem">Science</a>
+          </div>
         </li>
         <li><a href="/contact.html" class="nav-link">Contact</a></li>
       </ul>
+
+      <div class="flex items-center gap-2">
+        <button id="dark-toggle" class="p-2 rounded-lg transition" style="color:var(--color-text-muted)" aria-label="Toggle dark mode" title="Toggle dark mode">
+          <svg class="w-5 h-5 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+          <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+        </button>
+      </div>
+
+      <!-- Mobile toggle -->
+      <button class="sm:hidden mobile-nav-toggle p-2" aria-label="Toggle navigation menu" aria-expanded="false" data-mobile-toggle>
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+
+      <!-- Mobile nav panel -->
+      <div class="mobile-nav-panel sm:hidden" data-mobile-panel>
+        <a href="/about.html" class="block px-3 py-2 rounded hover:bg-[var(--color-bg)] transition">About</a>
+        <a href="/research.html" class="block px-3 py-2 rounded hover:bg-[var(--color-bg)] transition">Research</a>
+        <a href="/scholarship.html" class="block px-3 py-2 rounded hover:bg-[var(--color-bg)] transition">Scholarship</a>
+        <div class="pl-3 border-l-2 ml-3 mt-1" style="border-color:var(--color-border)">
+          <a href="/aml/" class="block py-1.5 text-sm hover:text-[var(--color-accent)]">AML</a>
+          <a href="/stock/" class="block py-1.5 text-sm hover:text-[var(--color-accent)]">Markets</a>
+          <a href="/science/" class="block py-1.5 text-sm hover:text-[var(--color-accent)]">Science</a>
+        </div>
+        <a href="/contact.html" class="block px-3 py-2 rounded hover:bg-[var(--color-bg)] transition">Contact</a>
+      </div>
     </nav>
   </header>
 
   <main id="main" class="max-w-5xl mx-auto px-4 py-8" tabindex="-1">
 <section>
+  <nav aria-label="Breadcrumb" class="mb-4 text-xs" style="color:var(--color-text-muted)">
+    <ol class="flex flex-wrap items-center gap-1.5">
+      <li><a href="/" class="hover:text-[var(--color-accent)] transition">Home</a></li>
+      <li aria-hidden="true">/</li>
+      <li><a href="/aml/" class="hover:text-[var(--color-accent)] transition">AML</a></li>
+      <li aria-hidden="true">/</li>
+      <li aria-current="page">Anti-Money Laundering</li>
+    </ol>
+  </nav>
   <div class="mb-8">
     <span class="inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-full bg-amber-100 text-amber-800">
       shield AML
@@ -74,7 +109,7 @@
   </div>
 
   <div class="space-y-6">
-    <article class="bg-white rounded-lg border border-gray-200 p-5 hover:shadow-md transition">
+    <article class="bg-white rounded-lg border border-gray-200 p-5 hover:shadow-md transition" style="border-color:var(--color-border)">
       <div class="flex items-start justify-between gap-4">
         <div class="min-w-0">
           <h2 class="text-lg font-semibold text-gray-900 leading-snug">
@@ -88,11 +123,12 @@ Show HN: Eyeball (discussion) (60 pts)
 The Infosec Phraseboo</p>
           <div class="mt-2 flex items-center gap-3 text-xs text-gray-400">
             <time datetime="2026-06-02">2026-06-02</time>
+            <span>2 min</span>
           </div>
         </div>
       </div>
     </article>
-    <article class="bg-white rounded-lg border border-gray-200 p-5 hover:shadow-md transition">
+    <article class="bg-white rounded-lg border border-gray-200 p-5 hover:shadow-md transition" style="border-color:var(--color-border)">
       <div class="flex items-start justify-between gap-4">
         <div class="min-w-0">
           <h2 class="text-lg font-semibold text-gray-900 leading-snug">
@@ -105,11 +141,12 @@ EY Canada published a cybersecurity report and most citations were hallucinated 
 White House's Aliens.gov Site Brags That ICE Arrested More </p>
           <div class="mt-2 flex items-center gap-3 text-xs text-gray-400">
             <time datetime="2026-06-01">2026-06-01</time>
+            <span>2 min</span>
           </div>
         </div>
       </div>
     </article>
-    <article class="bg-white rounded-lg border border-gray-200 p-5 hover:shadow-md transition">
+    <article class="bg-white rounded-lg border border-gray-200 p-5 hover:shadow-md transition" style="border-color:var(--color-border)">
       <div class="flex items-start justify-between gap-4">
         <div class="min-w-0">
           <h2 class="text-lg font-semibold text-gray-900 leading-snug">
@@ -122,6 +159,7 @@ Today in AML, the top story is **"Gov.uk has replaced Stripe with Dutch provider
  -- nearly 13x higher than the average of other articl</p>
           <div class="mt-2 flex items-center gap-3 text-xs text-gray-400">
             <time datetime="2026-06-07">2026-06-07</time>
+            <span>2 min</span>
             <span class="font-mono">SQI 0.486</span>
             <span>25 HN · 5 arXiv</span>
           </div>
@@ -137,18 +175,81 @@ Today in AML, the top story is **"Gov.uk has replaced Stripe with Dutch provider
 
   </main>
 
-  <footer class="mt-16 border-t border-gray-200 bg-white">
-    <div class="max-w-5xl mx-auto px-4 py-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-gray-500">
-      <p>&copy; 2026 AcaciaFund. All rights reserved.</p>
+  <footer class="mt-16 border-t" style="border-color:var(--color-border);background:var(--color-surface)">
+    <div class="max-w-5xl mx-auto px-4 py-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm" style="color:var(--color-text-secondary)">
+      <div>
+        <p>&copy; 2026 AcaciaFund. All rights reserved.</p>
+        <p class="text-xs mt-1" style="color:var(--color-text-muted)">Content synthesized by AcaciaFund NLP pipelines</p>
+      </div>
       <nav aria-label="Footer navigation">
         <ul class="flex gap-4" role="list">
-          <li><a href="/about.html" class="hover:text-gray-900 transition">About</a></li>
-          <li><a href="/contact.html" class="hover:text-gray-900 transition">Contact</a></li>
-          <li><a href="/research.html" class="hover:text-gray-900 transition">Research</a></li>
-          <li><a href="/feed.xml" class="hover:text-gray-900 transition">RSS</a></li>
+          <li><a href="/about.html" class="hover:opacity-70 transition">About</a></li>
+          <li><a href="/contact.html" class="hover:opacity-70 transition">Contact</a></li>
+          <li><a href="/research.html" class="hover:opacity-70 transition">Research</a></li>
+          <li><a href="/feed.xml" class="hover:opacity-70 transition">RSS</a></li>
         </ul>
       </nav>
     </div>
   </footer>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Dropdown
+      document.querySelectorAll('[data-dropdown]').forEach(function(dd) {
+        var trigger = dd.querySelector('[data-dropdown-trigger]');
+        var menu = dd.querySelector('[data-dropdown-menu]');
+        if (!trigger || !menu) return;
+        trigger.addEventListener('click', function(e) {
+          e.stopPropagation();
+          var expanded = trigger.getAttribute('aria-expanded') === 'true';
+          trigger.setAttribute('aria-expanded', !expanded);
+          menu.classList.toggle('dropdown-menu-open');
+        });
+        dd.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape') {
+            trigger.setAttribute('aria-expanded', 'false');
+            menu.classList.remove('dropdown-menu-open');
+            trigger.focus();
+          }
+        });
+        document.addEventListener('click', function(e) {
+          if (!dd.contains(e.target)) {
+            trigger.setAttribute('aria-expanded', 'false');
+            menu.classList.remove('dropdown-menu-open');
+          }
+        });
+      });
+      // Dark mode toggle
+      var darkToggle = document.getElementById('dark-toggle');
+      if (darkToggle) {
+        darkToggle.addEventListener('click', function() {
+          if (document.documentElement.classList.contains('dark')) {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.classList.add('light');
+            localStorage.setItem('theme', 'light');
+          } else {
+            document.documentElement.classList.remove('light');
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+          }
+        });
+      }
+      // Mobile nav
+      var mobToggle = document.querySelector('[data-mobile-toggle]');
+      var mobPanel = document.querySelector('[data-mobile-panel]');
+      if (mobToggle && mobPanel) {
+        mobToggle.addEventListener('click', function() {
+          var expanded = mobToggle.getAttribute('aria-expanded') === 'true';
+          mobToggle.setAttribute('aria-expanded', !expanded);
+          mobPanel.style.display = expanded ? 'none' : 'block';
+        });
+        document.querySelectorAll('[data-mobile-panel] a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            mobToggle.setAttribute('aria-expanded', 'false');
+            mobPanel.style.display = 'none';
+          });
+        });
+      }
+    });
+  </script>
 </body>
 </html>

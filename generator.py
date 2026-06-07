@@ -108,6 +108,52 @@ def build_static_page_html(md_path: Path) -> str:
     return markdown2.markdown(body, extras=["fenced-code-blocks", "tables"])
 
 
+HEADING_RE = re.compile(r'<h([23])([^>]*)>(.*?)</h\1>', re.IGNORECASE | re.DOTALL)
+
+
+def extract_headings(html: str) -> tuple[str, list[dict]]:
+    """Add id anchors to h2/h3 and return TOC structure [{id, text, tag}]."""
+    toc = []
+    id_counts: dict[str, int] = {}
+
+    def _repl(m):
+        tag = m.group(1)
+        inner = m.group(3)
+        text = re.sub(r'<[^>]+>', '', inner).strip()
+        base_id = re.sub(r'[^a-z0-9]+', '-', text.lower()).strip('-') or f"section"
+        if base_id in id_counts:
+            id_counts[base_id] += 1
+            id_str = f"{base_id}-{id_counts[base_id]}"
+        else:
+            id_counts[base_id] = 0
+            id_str = base_id
+        toc.append({"id": id_str, "text": text, "tag": f"h{tag}"})
+        return f'<h{tag} id="{id_str}">{inner}</h{tag}>'
+
+    html = HEADING_RE.sub(_repl, html)
+    return html, toc
+
+
+def find_related(posts: list, current: object, max_items: int = 3) -> list:
+    """Find posts sharing most tags with current, excluding current itself."""
+    current_tags = set(t.lower() for t in current.tags)
+    scored = []
+    for p in posts:
+        if p.slug == current.slug:
+            continue
+        overlap = len(current_tags & set(t.lower() for t in p.tags))
+        if overlap > 0:
+            scored.append((overlap, p))
+    scored.sort(key=lambda x: -x[0])
+    return [p for _, p in scored[:max_items]]
+
+
+def reading_time_minutes(html_or_text: str) -> int:
+    text = re.sub(r'<[^>]+>', '', html_or_text)
+    words = len(text.strip().split())
+    return max(1, (words + 99) // 200)
+
+
 def generate_sqi_badge(sqi: float) -> str:
     color = "#22c55e" if sqi >= 0.6 else "#d97706" if sqi >= 0.35 else "#ef4444"
     w = 160
@@ -162,6 +208,7 @@ def main():
         loader=FileSystemLoader(TEMPLATE_DIR),
         autoescape=select_autoescape(["html", "xml"]),
     )
+    env.filters["reading_time"] = reading_time_minutes
 
     year = datetime.now(timezone.utc).year
     all_content = registry.content
@@ -233,12 +280,14 @@ def main():
             out_file = OUTPUT_DIR / f"{slug}.html"
 
         body = add_lazy_loading(post.body_html)
+        body, toc_items = extract_headings(body)
         post.body_html = body
 
         prev_post = posts[i + 1] if i + 1 < len(posts) else None
         next_post = posts[i - 1] if i > 0 else None
+        related = find_related(posts, post, 3)
 
-        html = _render_blog_post(env, post, page_path, prev_post, next_post, ctx_base)
+        html = _render_blog_post(env, post, page_path, prev_post, next_post, related, toc_items, ctx_base)
         out_file.write_text(html, encoding="utf-8")
         print(f"Generated: {out_file.relative_to(OUTPUT_DIR)}")
 
@@ -393,13 +442,18 @@ def _render_page(env, content, page_path="", **ctx):
     )
 
 
-def _render_blog_post(env, post, page_path, prev_post, next_post, ctx):
+def _render_blog_post(env, post, page_path, prev_post, next_post, related, toc_items, ctx):
     pillar = post.pillar or "aml"
     pconf = PILLAR_CONFIG.get(pillar, PILLAR_CONFIG["aml"])
     sqi_svg = generate_sqi_badge(post.signals.get("avg_sqi", 0.5)) if post.signals else ""
+    og_key = hashlib.md5(f"og_{post.title}".encode()).hexdigest()[:12]
+    og_image_url = f"{SITE_URL}/static/images/og_{og_key}.svg"
     ctx_full = dict(ctx, content=post, page_path=page_path,
                      prev_post=prev_post, next_post=next_post,
-                     pconf=pconf, sqi_svg=sqi_svg)
+                     pconf=pconf, sqi_svg=sqi_svg,
+                     og_image_url=og_image_url,
+                     toc_items=toc_items,
+                     related_posts=related)
     return env.get_template("blog_post.j2").render(**ctx_full)
 
 
