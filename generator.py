@@ -362,10 +362,12 @@ def main():
         g.sort(key=lambda x: x.title or "")
     thumb_base = f"{SITE_URL}/static/images"
     html = render_template("knowledge_index.j2",
-        content=_dummy("Knowledge Base", "knowledge"),
+        content=_dummy("Knowledge Base", "knowledge",
+                       description="AcaciaFund knowledge base: platform guides, methodology, reference glossaries, system architecture, and DataOps resources across all pillars."),
         items=knowledge_items, grouped=dict(grouped),
         categories=KNOWLEDGE_CATEGORIES,
         thumbnail_base=thumb_base, thumbnail_key=thumbnail_key,
+        page_title="Knowledge Base",
         is_index=False, page_path="knowledge/", **ctx_base)
     (knowledge_dir / "index.html").write_text(html, encoding="utf-8")
     print("  category: knowledge/index.html")
@@ -459,9 +461,11 @@ def main():
         g.sort(key=lambda x: x.title or "")
     thumb_base = f"{SITE_URL}/static/images"
     html = render_template("learn_index.j2",
-        content=_dummy("Learning Hub", "learn"),
+        content=_dummy("Learning Hub", "learn",
+                       description="Interactive lessons, tutorials, and quizzes on AML compliance, financial markets, science, and DataOps — powered by Bloom taxonomy."),
         items=learn_items, grouped=dict(learn_grouped),
         thumbnail_base=thumb_base, thumbnail_key=thumbnail_key,
+        page_title="Learning Hub",
         is_index=False, page_path="learn/", **ctx_base)
     (learn_dir / "index.html").write_text(html, encoding="utf-8")
     print("  category: learn/index.html")
@@ -547,9 +551,12 @@ def main():
     scored = [(interest_score(p, now), p) for p in research_items]
     scored.sort(key=lambda x: -x[0])
     sorted_research = [p for _, p in scored]
-    html = render_template("category_index.j2", content=_dummy("Research", "research"),
-                            category="research", items=sorted_research,
-                            is_index=False, page_path="research/", **ctx_base)
+    html = render_template("category_index.j2",
+        content=_dummy("Research", "research",
+                       description="Quality-scored research articles on AML, financial markets, and science. Automatically classified from HackerNews and arXiv using Bloom taxonomy."),
+        category="research", items=sorted_research,
+        page_title="Research",
+        is_index=False, page_path="research/", **ctx_base)
     (research_dir / "index.html").write_text(html, encoding="utf-8")
     print("  category: research/index.html")
 
@@ -559,8 +566,11 @@ def main():
         out_dir.mkdir(parents=True, exist_ok=True)
         pconf = PILLAR_CONFIG.get(pillar, PILLAR_CONFIG["aml"])
         html = render_template("pillar_index.j2",
-            content=_dummy(pconf['heading'], "index"), pillar=pillar, pconf=pconf,
+            content=_dummy(pconf['heading'], "index",
+                           description=pconf.get("description", f"{pconf['label']} research articles — quality-scored and Bloom-classified.")),
+            pillar=pillar, pconf=pconf,
             posts=p_posts, is_index=False, page_path=f"{pillar}/",
+            page_title=pconf["heading"],
             thumbnail_base=f"{SITE_URL}/static/images", thumbnail_key=thumbnail_key, **ctx_base)
         (out_dir / "index.html").write_text(html, encoding="utf-8")
         print(f"  pillar: {pillar}/index.html")
@@ -570,7 +580,7 @@ def main():
     home_og_key = hashlib.md5(b"AcaciaFund homepage").hexdigest()[:12]
     home_og_url = f"{SITE_URL}/static/images/og_{home_og_key}.svg"
     index_html = render_template("index.j2",
-        content=_dummy("AcaciaFund — Research Synthesis & Learning", "index",
+        content=_dummy("Research Synthesis & Learning", "index",
                        description="AcaciaFund — research synthesis & experimental learning platform. Automated classification of HackerNews + arXiv content using Bloom taxonomy."),
         is_index=True, page_path="",
         og_image_url=home_og_url,
@@ -584,6 +594,18 @@ def main():
     home_og_svg = generate_og_image("AcaciaFund — Research Synthesis & Learning", "aml", {"sqi": 0.7})
     (out_static / f"og_{home_og_key}.svg").write_text(home_og_svg, encoding="utf-8")
     print("  index: index.html")
+
+    # --- /contact/ redirect to /knowledge/contact/ ---
+    contact_dir = OUTPUT_DIR / "contact"
+    contact_dir.mkdir(parents=True, exist_ok=True)
+    (contact_dir / "index.html").write_text(
+        f'<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">'
+        f'<title>Contact — AcaciaFund</title>'
+        f'<meta http-equiv="refresh" content="0;url={SITE_URL}/knowledge/contact/">'
+        f'<link rel="canonical" href="{SITE_URL}/knowledge/contact/">'
+        f'</head><body><p><a href="{SITE_URL}/knowledge/contact/">Contact — AcaciaFund</a></p></body></html>',
+        encoding="utf-8")
+    print("  redirect: /contact/ → /knowledge/contact/")
 
     # --- 404 ---
     _suggestions = sorted(all_content, key=lambda c: hashlib.md5(c.slug.encode()).hexdigest())[:3]
@@ -606,12 +628,14 @@ def main():
         if not tag_slug_clean:
             continue
         tag_posts.sort(key=lambda x: x.created_at or datetime.min, reverse=True)
+        thin = len(tag_posts) < 3
         tag_out = tags_dir / tag_slug_clean / "index.html"
         tag_out.parent.mkdir(parents=True, exist_ok=True)
         html = render_template("tag_index.j2",
             content=_dummy(f"Tag: {tag_slug}", "tag"),
             tag=tag_slug, items=tag_posts,
-            is_index=False, page_path=f"tags/{tag_slug_clean}/", **ctx_base)
+            is_index=False, page_path=f"tags/{tag_slug_clean}/",
+            robots_noindex=thin, **ctx_base)
         tag_out.write_text(html, encoding="utf-8")
     if tag_items:
         tag_out = tags_dir / "index.html"
@@ -677,19 +701,24 @@ def main():
     print("  feed: feed.xml")
 
     # --- SITEMAP ---
-    urls = [f"{SITE_URL}/", f"{SITE_URL}/tags/"]
-    for c in all_content:
-        urls.append(slug_to_url(c.slug))
-    for p in list(pillar_groups) + ["research", "learn", "knowledge", "search"]:
-        urls.append(f"{SITE_URL}/{p}/")
+    today = datetime.now(timezone.utc).date().isoformat()
+    section_pages = list(pillar_groups) + ["research", "learn", "knowledge", "search"]
+    tag_slugs = []
     for tag_slug in sorted(tag_items.keys()):
         slug_clean = re.sub(r'[^a-z0-9]+', '-', tag_slug).strip('-')
         if slug_clean:
-            urls.append(f"{SITE_URL}/tags/{slug_clean}/")
+            tag_slugs.append(slug_clean)
     sm = ['<?xml version="1.0" encoding="UTF-8"?>',
           '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">']
-    for url in urls:
-        sm.append(f"  <url><loc>{url}</loc></url>")
+    sm.append(f'  <url><loc>{SITE_URL}/</loc><lastmod>{today}</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>')
+    sm.append(f'  <url><loc>{SITE_URL}/tags/</loc><lastmod>{today}</lastmod><changefreq>weekly</changefreq><priority>0.4</priority></url>')
+    for c in all_content:
+        lastmod = c.updated_at.date().isoformat() if c.updated_at else (c.created_at.date().isoformat() if c.created_at else today)
+        sm.append(f'  <url><loc>{slug_to_url(c.slug)}</loc><lastmod>{lastmod}</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>')
+    for p in section_pages:
+        sm.append(f'  <url><loc>{SITE_URL}/{p}/</loc><lastmod>{today}</lastmod><changefreq>weekly</changefreq><priority>0.8</priority></url>')
+    for slug_clean in tag_slugs:
+        sm.append(f'  <url><loc>{SITE_URL}/tags/{slug_clean}/</loc><lastmod>{today}</lastmod><changefreq>weekly</changefreq><priority>0.3</priority></url>')
     sm.append("</urlset>")
     (OUTPUT_DIR / "sitemap.xml").write_text("\n".join(sm), encoding="utf-8")
 

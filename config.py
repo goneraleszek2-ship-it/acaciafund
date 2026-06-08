@@ -8,7 +8,7 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).parent
 
 # Site identity
-SITE_URL = "https://acaciafund.org"
+SITE_URL = "https://www.acaciafund.org"
 SITE_NAME = "AcaciaFund"
 SITE_DESCRIPTION = (
     "AcaciaFund — research synthesis & experimental learning platform. "

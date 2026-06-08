@@ -3,8 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{ content.title | striptags }} | AcaciaFund</title>
+  <title>{{ page_title | default(content.title | striptags) }} | AcaciaFund</title>
   <meta name="description" content="{{ content.description | default(site_description | default(content.body_html | striptags | truncate(160))) }}">
+  {%- if robots_noindex %}<meta name="robots" content="noindex,follow">{% endif %}
   <meta name="generator" content="AcaciaFund Python-native Pipeline">
   <meta name="theme-color" content="#f5f0eb" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#1a1a2e" media="(prefers-color-scheme: dark)">
@@ -16,10 +17,19 @@
   <meta property="og:site_name" content="AcaciaFund">
   <meta property="og:url" content="{{ site_url }}/{{ page_path }}">
   <meta property="og:image" content="{{ og_image_url | default(site_url + '/static/images/og-card.png') }}">
+  <meta property="og:description" content="{{ content.description | default(site_description | default(content.body_html | striptags | truncate(160))) }}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ content.title | striptags }}">
+  <meta name="twitter:description" content="{{ content.description | default(site_description | default(content.body_html | striptags | truncate(160))) }}">
+  <meta name="twitter:image" content="{{ og_image_url | default(site_url + '/static/images/og-card.png') }}">
 
   {%- if content.content_type == "research" or content.category == "blog" %}
   <meta property="og:type" content="article">
   <meta property="article:published_time" content="{{ content.created_at.isoformat() if content.created_at else '' }}">
+  {%- set sqi_val = content.signals.get("avg_sqi", "") if content.signals else "" %}
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -28,7 +38,16 @@
     "datePublished": "{{ content.created_at.isoformat() if content.created_at else '' }}",
     "image": "{{ og_image_url | default(site_url + '/static/images/og-card.png') }}",
     "author": { "@type": "Organization", "name": "AcaciaFund" },
-    "publisher": { "@type": "Organization", "name": "AcaciaFund" }
+    "publisher": { "@type": "Organization", "name": "AcaciaFund" }{% if sqi_val %},
+    "review": {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "{{ sqi_val }}",
+        "bestRating": "1.0"
+      }
+    }
+    {%- endif %}
   }
   </script>
   {%- elif content.content_type == "learn" %}
@@ -51,6 +70,28 @@
     "name": {{ content.title | striptags | tojson }},
     "url": "{{ site_url }}/{{ page_path }}",
     "publisher": { "@type": "Organization", "name": "AcaciaFund", "url": "{{ site_url }}" }
+  }
+  </script>
+  {%- endif %}
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "AcaciaFund",
+    "url": "{{ site_url }}/",
+    "description": {{ site_description | tojson }}
+  }
+  </script>
+  {%- if page_path != "" %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "{{ site_url }}/" },
+      { "@type": "ListItem", "position": 2, "name": "{{ content.title | striptags }}", "item": "{{ site_url }}/{{ page_path }}" }
+    ]
   }
   </script>
   {%- endif %}
@@ -145,7 +186,7 @@
         <div class="mobile-nav-label">Resources</div>
         <a href="/knowledge/diagrams/" class="mobile-nav-item">Diagrams</a>
         <a href="/knowledge/about/" class="mobile-nav-item">About</a>
-        <a href="/contact/" class="mobile-nav-item">Contact</a>
+        <a href="/knowledge/contact/" class="mobile-nav-item">Contact</a>
       </div>
       <div class="mobile-nav-section">
         <div class="mobile-nav-label">Discover</div>
