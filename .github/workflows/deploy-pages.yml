@@ -20,7 +20,7 @@ jobs:
           python-version: "3.13"
 
       - name: Install dependencies
-        run: pip install jinja2 markdown2 pydantic
+        run: pip install jinja2 markdown2 pydantic pytest
 
       - name: Run tests
         run: python -m pytest tests/ -q --ignore=tests/test_usability.py.stale
