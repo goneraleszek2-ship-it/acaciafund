@@ -174,13 +174,198 @@ NEW_ARTICLES = [
         "tags": ["markets", "data-engineering", "dbt", "iceberg", "features", "ml", "dataops"],
         "sqi": 0.88, "hn_pts": 567, "source_count": 15, "domains": 7,
     },
+    # ── Data Engineering articles (23-week content plan) ──
     {
         "slug": "blog/2026-06-08-science-dataeng",
         "title": "Data Pipeline Patterns for High-Throughput Genomics: Orchestrating Bioinformatics Workflows with Dagster",
         "description": "Applying modern DataOps orchestration to genomics: Dagster assets for sequencing pipeline stages, Great Expectations for quality gates on base-call accuracy, and dbt for cohort-level analytical transformations.",
-        "date": "2026-06-08", "pillar": "science",
+        "date": "2026-06-08", "pillar": "data-engineering",
         "tags": ["science", "data-engineering", "genomics", "dagster", "bioinformatics", "pipeline", "dataops"],
         "sqi": 0.85, "hn_pts": 389, "source_count": 14, "domains": 6,
+    },
+    {
+        "slug": "blog/2026-06-15-dagster-2",
+        "title": "Dagster 2.0: Next-Gen Data Pipeline Orchestration for the Modern Data Platform",
+        "description": "Deep dive into Dagster 2.0's asset-based orchestration model, software-defined assets, and the shift from DAG-centric to asset-centric pipeline design. Covers partitioning, backfills, and the new dagster-ui 2.0.",
+        "date": "2026-06-15", "pillar": "data-engineering",
+        "tags": ["dagster", "orchestration", "data-pipeline", "dataops", "workflow"],
+        "sqi": 0.82, "hn_pts": 412, "source_count": 12, "domains": 4,
+    },
+    {
+        "slug": "blog/2026-06-22-data-quality-great-expectations",
+        "title": "Data Quality at Scale: Great Expectations Beyond Unit Tests for Data",
+        "description": "Advanced patterns for Great Expectations in production: custom expectations, data docs auto-generation, checkpoint orchestration, and integration with Dagster and Airflow for automated quality gating.",
+        "date": "2026-06-22", "pillar": "data-engineering",
+        "tags": ["great-expectations", "data-quality", "testing", "dataops", "expectations"],
+        "sqi": 0.84, "hn_pts": 378, "source_count": 13, "domains": 5,
+    },
+    {
+        "slug": "blog/2026-06-29-airflow-prefect-dagster-comparison",
+        "title": "Airflow vs Prefect vs Dagster: Choosing the Right Orchestrator in 2026",
+        "description": "Comprehensive comparison of the three leading Python orchestrators: execution model, DAG vs asset paradigm, scaling characteristics, monitoring, and community ecosystem. Decision framework for greenfield and migration scenarios.",
+        "date": "2026-06-29", "pillar": "data-engineering",
+        "tags": ["airflow", "prefect", "dagster", "orchestration", "comparison"],
+        "sqi": 0.86, "hn_pts": 534, "source_count": 16, "domains": 6,
+    },
+    {
+        "slug": "blog/2026-07-06-data-contracts",
+        "title": "Data Contracts: Schema as API for the Analytics Team",
+        "description": "Implementing data contracts with dbt-expectations, Soda, and Great Expectations. Covers schema evolution, contract versioning, producer/consumer ownership patterns, and breaking change detection in production pipelines.",
+        "date": "2026-07-06", "pillar": "data-engineering",
+        "tags": ["data-contract", "schema", "data-quality", "dataops", "soda"],
+        "sqi": 0.83, "hn_pts": 445, "source_count": 11, "domains": 4,
+    },
+    {
+        "slug": "blog/2026-07-13-kafka-streaming-event-driven",
+        "title": "Real-Time Streaming with Apache Kafka: From Pub/Sub to Event-Driven Architecture",
+        "description": "Production patterns for Apache Kafka: topic design strategies, consumer group rebalancing, exactly-once semantics, Kafka Connect for source/sink integration, and ksqlDB for stream processing. Real case studies from financial services.",
+        "date": "2026-07-13", "pillar": "data-engineering",
+        "tags": ["kafka", "streaming", "kafka-connect", "event-driven", "real-time"],
+        "sqi": 0.85, "hn_pts": 467, "source_count": 14, "domains": 5,
+    },
+    {
+        "slug": "blog/2026-07-20-apache-iceberg-lakehouse",
+        "title": "Apache Iceberg Deep Dive: Table Formats for the Lakehouse Era",
+        "description": "How Apache Iceberg enables ACID transactions on data lakes: partitioning, hidden partitioning, time travel, snapshot isolation, and Iceberg REST catalog. Migration strategies from Hive-style tables and Parquet-only storage.",
+        "date": "2026-07-20", "pillar": "data-engineering",
+        "tags": ["iceberg", "lakehouse", "table-format", "apache-iceberg", "data-lake"],
+        "sqi": 0.87, "hn_pts": 498, "source_count": 15, "domains": 5,
+    },
+    {
+        "slug": "blog/2026-07-27-debezium-cdc-change-data-capture",
+        "title": "Debezium and CDC: Capturing Database Changes at Scale",
+        "description": "Change Data Capture with Debezium: connector configuration, schema evolution handling, initial snapshots, and integration with Kafka and Flink. Patterns for reliable replication and exactly-once semantics.",
+        "date": "2026-07-27", "pillar": "data-engineering",
+        "tags": ["debezium", "cdc", "kafka", "database", "replication"],
+        "sqi": 0.82, "hn_pts": 356, "source_count": 11, "domains": 4,
+    },
+    {
+        "slug": "blog/2026-08-03-delta-lake-iceberg-hudi-comparison",
+        "title": "Delta Lake vs Apache Iceberg vs Apache Hudi: Lakehouse Format Shootout",
+        "description": "Head-to-head comparison of the three major lakehouse storage formats: table mutation semantics, time travel, schema evolution, compaction, and ecosystem integration (Spark, Flink, Trino, DuckDB). Benchmark results included.",
+        "date": "2026-08-03", "pillar": "data-engineering",
+        "tags": ["delta-lake", "iceberg", "hudi", "lakehouse", "comparison"],
+        "sqi": 0.88, "hn_pts": 612, "source_count": 18, "domains": 6,
+    },
+    {
+        "slug": "blog/2026-08-10-dbt-mesh-enterprise-scale",
+        "title": "dbt Mesh: Decentralizing Data Transformation at Enterprise Scale",
+        "description": "dbt Mesh architecture: dbt projects as domains, cross-project refs, blue/green deployments for models, and governance through the dbt Cloud Discovery API. Migration guide from monolithic dbt projects.",
+        "date": "2026-08-10", "pillar": "data-engineering",
+        "tags": ["dbt", "dbt-mesh", "analytics-engineering", "governance", "data-platform"],
+        "sqi": 0.85, "hn_pts": 423, "source_count": 13, "domains": 4,
+    },
+    {
+        "slug": "blog/2026-08-17-sqlmesh-data-transformation",
+        "title": "SQLMesh: The SQL-First Data Transformation Framework Challenging dbt",
+        "description": "SQLMesh's approach to data transformation: physical vs logical plans, virtual data environments, automatic column-level lineage, and backward-incompatible change detection. Comparison with dbt's materialization model.",
+        "date": "2026-08-17", "pillar": "data-engineering",
+        "tags": ["sqlmesh", "dbt", "analytics-engineering", "sql", "data-transformation"],
+        "sqi": 0.83, "hn_pts": 389, "source_count": 10, "domains": 3,
+    },
+    {
+        "slug": "blog/2026-08-24-open-source-data-platform",
+        "title": "Building a Data Platform on a Budget: The Open Source Stack in 2026",
+        "description": "Complete open source data stack: Dagster + dbt + Iceberg + Trino + DuckDB + Superset. Cost analysis against Snowflake and Databricks. Deployment patterns with Docker Compose, Terraform, and Kubernetes.",
+        "date": "2026-08-24", "pillar": "data-engineering",
+        "tags": ["open-source", "data-platform", "stack", "cost", "architecture"],
+        "sqi": 0.86, "hn_pts": 512, "source_count": 16, "domains": 6,
+    },
+    {
+        "slug": "blog/2026-08-31-data-observability-lineage",
+        "title": "Data Observability: Monitoring, Lineage, and Incident Response for Pipelines",
+        "description": "Implementing data observability with open source tools: OpenLineage for lineage, Great Expectations for quality monitoring, and custom health checks. Incident response runbooks and SLAs for data products.",
+        "date": "2026-08-31", "pillar": "data-engineering",
+        "tags": ["observability", "lineage", "monitoring", "dataops", "incident-response"],
+        "sqi": 0.84, "hn_pts": 434, "source_count": 14, "domains": 5,
+    },
+    {
+        "slug": "blog/2026-09-07-ml-pipeline-orchestration-feast-mlflow",
+        "title": "ML Pipeline Orchestration: From Notebook to Production with Feast and MLflow",
+        "description": "Production ML pipeline patterns: Feast feature serving for training/inference consistency, MLflow model registry and deployment, and Dagster for ML pipeline orchestration. Feature engineering at scale with dbt and Spark.",
+        "date": "2026-09-07", "pillar": "data-engineering",
+        "tags": ["mlops", "feast", "mlflow", "orchestration", "machine-learning"],
+        "sqi": 0.85, "hn_pts": 456, "source_count": 14, "domains": 5,
+    },
+    {
+        "slug": "blog/2026-09-14-feature-store-feast-vs-tecton",
+        "title": "Feature Stores at Scale: Feast vs Tecton in Production Deployments",
+        "description": "Deep comparison of Feast (open source) and Tecton (managed): feature definitions, online/offline serving, point-in-time correctness, stream feature computation, and cost models. Production deployment patterns.",
+        "date": "2026-09-14", "pillar": "data-engineering",
+        "tags": ["feature-store", "feast", "tecton", "mlops", "feature-engineering"],
+        "sqi": 0.83, "hn_pts": 378, "source_count": 12, "domains": 4,
+    },
+    {
+        "slug": "blog/2026-09-21-kubernetes-data-pipelines",
+        "title": "Kubernetes for Data Engineering: Running Data Pipelines on K8s",
+        "description": "Running data workloads on Kubernetes: Airflow Executor types (Celery vs Kubernetes), Dagster on K8s, Spark on Kubernetes with the Spark Operator, and stateful workloads (Kafka, Flink) on K8s. Resource management and cost optimization.",
+        "date": "2026-09-21", "pillar": "data-engineering",
+        "tags": ["kubernetes", "k8s", "infrastructure", "orchestration", "deployment"],
+        "sqi": 0.86, "hn_pts": 489, "source_count": 15, "domains": 5,
+    },
+    {
+        "slug": "blog/2026-09-28-terraform-data-infrastructure",
+        "title": "Terraform for Data Infrastructure: Infrastructure as Code for the Data Platform",
+        "description": "Infrastructure as Code patterns for data platforms: Terraform modules for Kafka clusters, Iceberg catalogs, dbt Cloud projects, and Dagster deployments. State management, CI/CD for infrastructure, and multi-environment strategies.",
+        "date": "2026-09-28", "pillar": "data-engineering",
+        "tags": ["terraform", "infrastructure", "iac", "data-platform", "deployment"],
+        "sqi": 0.82, "hn_pts": 367, "source_count": 11, "domains": 4,
+    },
+    {
+        "slug": "blog/2026-10-05-data-mesh-implementation",
+        "title": "Data Mesh in Practice: Implementing Domain Ownership Without Chaos",
+        "description": "Practical guide to data mesh adoption: domain ownership patterns, data product definitions, federated governance, and the compute platform. Case studies of mesh implementations and common failure modes.",
+        "date": "2026-10-05", "pillar": "data-engineering",
+        "tags": ["data-mesh", "domain-ownership", "data-product", "governance", "architecture"],
+        "sqi": 0.87, "hn_pts": 523, "source_count": 16, "domains": 5,
+    },
+    {
+        "slug": "blog/2026-10-12-data-products-api-design",
+        "title": "Data Products: Designing APIs for the Internal Data Platform",
+        "description": "Data product design patterns: API contracts, SLAs, versioning, discovery, and access control. Implementation with dbt (data products as models), Dagster (software-defined assets), and DataHub for cataloging.",
+        "date": "2026-10-12", "pillar": "data-engineering",
+        "tags": ["data-product", "api", "data-platform", "data-catalog", "design"],
+        "sqi": 0.84, "hn_pts": 401, "source_count": 13, "domains": 4,
+    },
+    {
+        "slug": "blog/2026-10-19-schema-registry-avro-protobuf",
+        "title": "Schema Registry Patterns: Avro, Protobuf, and JSON Schema in Production",
+        "description": "Schema registry architectures with Confluent Schema Registry and Apicurio: schema evolution rules, compatibility checking, wire format trade-offs (Avro vs Protobuf vs JSON Schema), and multi-tenant registry deployment.",
+        "date": "2026-10-19", "pillar": "data-engineering",
+        "tags": ["schema-registry", "avro", "protobuf", "json-schema", "kafka"],
+        "sqi": 0.83, "hn_pts": 412, "source_count": 12, "domains": 4,
+    },
+    {
+        "slug": "blog/2026-10-26-cost-optimization-data-pipelines",
+        "title": "Cost Optimization in Data Pipelines: Engineering for Efficiency at Petabyte Scale",
+        "description": "Strategies for reducing data pipeline costs: intelligent partitioning, incremental processing, compute auto-scaling, storage tiering (Iceberg maintenance), query optimization, and workload scheduling on spot/preemptible instances.",
+        "date": "2026-10-26", "pillar": "data-engineering",
+        "tags": ["cost-optimization", "efficiency", "scaling", "data-pipeline", "infrastructure"],
+        "sqi": 0.85, "hn_pts": 478, "source_count": 14, "domains": 5,
+    },
+    {
+        "slug": "blog/2026-11-02-analytics-engineering-rise",
+        "title": "The Rise of the Analytics Engineer: dbt, SQLMesh, and the Modern Data Stack",
+        "description": "The analytics engineering discipline: how dbt and SQLMesh transformed the data workflow, the shift from ETL to ELT, analytics engineering best practices, and the evolving role between data engineering and data science.",
+        "date": "2026-11-02", "pillar": "data-engineering",
+        "tags": ["analytics-engineering", "dbt", "sqlmesh", "data-stack", "career"],
+        "sqi": 0.82, "hn_pts": 389, "source_count": 11, "domains": 4,
+    },
+    {
+        "slug": "blog/2026-11-09-data-platform-product-ux",
+        "title": "Data Platform as a Product: UX Patterns for Internal Developer Platforms",
+        "description": "Treating the data platform as an internal product: developer experience design, self-service data ingestion, catalog/search UX, pipeline debugging tools, and SLA dashboards. Patterns from leading platform teams.",
+        "date": "2026-11-09", "pillar": "data-engineering",
+        "tags": ["data-platform", "product", "ux", "developer-experience", "self-service"],
+        "sqi": 0.84, "hn_pts": 434, "source_count": 12, "domains": 4,
+    },
+    {
+        "slug": "blog/2026-11-16-2027-data-engineering-predictions",
+        "title": "2027 Data Engineering Predictions: AI-Augmented Pipelines, Real-Time Universal Catalogs, and the Death of Batch",
+        "description": "Predictions for data engineering in 2027: AI-assisted pipeline generation, universal catalogs with Unity Catalog and Iceberg REST, real-time streaming replacing nightly batches, and the convergence of data and ML platforms.",
+        "date": "2026-11-16", "pillar": "data-engineering",
+        "tags": ["predictions", "trends", "ai", "real-time", "data-platform"],
+        "sqi": 0.80, "hn_pts": 567, "source_count": 15, "domains": 5,
     },
 ]
 
@@ -675,11 +860,11 @@ def generate_body_html(article: dict) -> str:
         f"<p>This topic has connections across multiple pillars:</p>",
         f"<ul>",
     ]
-    cross = {"aml": "Markets/Science", "stock": "AML/Science", "science": "Markets/AML"}
+    cross = {"aml": "Markets/Science", "stock": "AML/Science", "science": "Markets/AML", "data-engineering": "Markets/AML"}
     sections.append(f"<li><strong>{cross[p]}:</strong> "
                     f"Significant overlap identified with {src_count // 3} shared sources</li>")
     sections.append(f"<li><strong>Policy Implications:</strong> "
-                    f"Regulatory developments in this area may affect {['cross-border compliance','supply chain planning','research funding'][['aml','stock','science'].index(p)]}</li>")
+                    f"Regulatory developments in this area may affect {['cross-border compliance','supply chain planning','research funding','data platform costs'][['aml','stock','science','data-engineering'].index(p)]}</li>")
     sections.append("</ul>")
 
     sections += [
@@ -699,8 +884,8 @@ def make_bloom_questions(article: dict) -> list:
     return [
         {"bloom_level": "remember", "type": "mc",
          "question": f"Which pillar does the article '{title[:50]}...' belong to?",
-         "options": ["AML", "Markets", "Science", "Policy"],
-         "correct": {"aml": "AML", "stock": "Markets", "science": "Science"}[p]},
+          "options": ["AML", "Markets", "Data Engineering", "Science", "Policy"],
+         "correct": {"aml": "AML", "stock": "Markets", "science": "Science", "data-engineering": "Data Engineering"}[p]},
         {"bloom_level": "understand", "type": "mc",
          "question": f"What is the primary domain of this article?",
          "options": ["Technology", "Finance", "Science", "Mixed"],
@@ -718,7 +903,7 @@ def make_flashcards(article: dict) -> list:
     cards = [
         {"term": "Signal Quality Index", "definition": "Composite metric measuring source authority, freshness, consensus, and relevance of synthesized content."},
         {"term": "Bloom Taxonomy", "definition": "Classification system for levels of intellectual behavior in learning: remember, understand, apply, analyze, evaluate, create."},
-        {"term": "Cross-Pillar Analysis", "definition": "Identification of connections and shared sources across AML, Markets, and Science domains."},
+        {"term": "Cross-Pillar Analysis", "definition": "Identification of connections and shared sources across AML, Markets, and Data Engineering domains."},
     ]
     if article["pillar"] == "aml":
         cards += [
@@ -729,6 +914,11 @@ def make_flashcards(article: dict) -> list:
         cards += [
             {"term": "Semiconductor Node", "definition": "The manufacturing process size for transistors, with smaller nodes (e.g., 2nm) enabling more powerful and efficient chips."},
             {"term": "Supply Chain Diversification", "definition": "Strategy of spreading production across multiple geographic regions to reduce dependency on single sources."},
+        ]
+    elif article["pillar"] == "data-engineering":
+        cards += [
+            {"term": "Software-Defined Asset", "definition": "A Dagster concept representing a data asset (table, file, ML model) whose lineage, partitioning, and freshness are declared in code."},
+            {"term": "Change Data Capture", "definition": "Pattern for capturing database row-level changes (inserts, updates, deletes) from transaction logs to enable real-time replication."},
         ]
     else:
         cards += [
@@ -802,6 +992,7 @@ def main():
             "description": description,
             "body_html": body_html,
             "category": "blog",
+            "content_type": "research",
             "tags": tags,
             "created_at": created_at,
             "updated_at": None,
@@ -816,7 +1007,7 @@ def main():
                              f"**SQI:** {sqi}",
             "cross_pillar_html": f"### Cross-pillar connections\n"
                                  f"- This article has connections to "
-                                 f"{['Markets and Science','AML and Science','Markets and AML'][['aml','stock','science'].index(pillar)]}",
+                                  f"{['Markets and Science','AML and Science','Markets and AML','Markets and AML'][['aml','stock','science','data-engineering'].index(pillar)]}",
             "bloom_questions": bloom_questions,
             "flashcards": flashcards,
             "signals": signals,
@@ -837,7 +1028,9 @@ def main():
             continue
         slug = c["slug"]
         title = c["title"]
-        pillar = c.get("pillar", "aml")
+        pillar = c.get("pillar", "")
+        if not pillar:
+            continue
         date_str = c.get("date_str", "")
         c["thumbnail_svg"] = generate_thumbnail_svg(slug, title, pillar)
         c["og_svg"] = generate_og_svg(slug, title, pillar, date_str)
