@@ -120,29 +120,42 @@
 
       <!-- Mobile nav panel -->
       <div class="mobile-nav-panel sm:hidden" data-mobile-panel>
-        <div class="mobile-nav-section">
-          <div class="mobile-nav-label">Content</div>
-          <a href="/research/" class="mobile-nav-item">Research</a>
-          <a href="/learn/" class="mobile-nav-item">Learn</a>
-          <a href="/knowledge/" class="mobile-nav-item">Knowledge</a>
+        <div class="mobile-nav-scroll">
+          <div class="mobile-nav-section">
+            <div class="mobile-nav-label">Content</div>
+            <a href="/research/" class="mobile-nav-item">Research</a>
+            <a href="/learn/" class="mobile-nav-item">Learn</a>
+            <a href="/knowledge/" class="mobile-nav-item">Knowledge Base</a>
+          </div>
+          <div class="mobile-nav-section">
+            <div class="mobile-nav-label">Pillars</div>
+            <a href="/aml/" class="mobile-nav-item mobile-nav-pillar">
+              <span class="pillar-dot" style="background:var(--color-aml)"></span>AML
+            </a>
+            <a href="/stock/" class="mobile-nav-item mobile-nav-pillar">
+              <span class="pillar-dot" style="background:var(--color-markets)"></span>Markets
+            </a>
+            <a href="/science/" class="mobile-nav-item mobile-nav-pillar">
+              <span class="pillar-dot" style="background:var(--color-science)"></span>Science
+            </a>
+          </div>
+          <div class="mobile-nav-section">
+            <div class="mobile-nav-label">Resources</div>
+            <a href="/knowledge/diagrams/" class="mobile-nav-item">Diagrams</a>
+            <a href="/knowledge/about/" class="mobile-nav-item">About</a>
+            <a href="/contact/" class="mobile-nav-item">Contact</a>
+          </div>
+          <div class="mobile-nav-section">
+            <div class="mobile-nav-label">Discover</div>
+            <a href="/tags/" class="mobile-nav-item">Tags</a>
+            <a href="/search/" class="mobile-nav-item">Search</a>
+          </div>
         </div>
-        <div class="mobile-nav-section">
-          <div class="mobile-nav-label">Pillars</div>
-          <a href="/aml/" class="mobile-nav-item mobile-nav-pillar">
-            <span class="pillar-dot" style="background:var(--color-aml)"></span>AML
-          </a>
-          <a href="/stock/" class="mobile-nav-item mobile-nav-pillar">
-            <span class="pillar-dot" style="background:var(--color-markets)"></span>Markets
-          </a>
-          <a href="/science/" class="mobile-nav-item mobile-nav-pillar">
-            <span class="pillar-dot" style="background:var(--color-science)"></span>Science
-          </a>
-        </div>
-        <div class="mobile-nav-section">
-          <div class="mobile-nav-label">More</div>
-          <a href="/knowledge/about/" class="mobile-nav-item">About</a>
-          <a href="/tags/" class="mobile-nav-item">Tags</a>
-          <a href="/search/" class="mobile-nav-item">Search</a>
+        <div class="mobile-nav-close-bar">
+          <button class="mobile-nav-close-btn" data-mobile-close aria-label="Close navigation">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+            Close
+          </button>
         </div>
       </div>
     </nav>
@@ -215,17 +228,23 @@
       // Mobile nav
       var mobToggle = document.querySelector('[data-mobile-toggle]');
       var mobPanel = document.querySelector('[data-mobile-panel]');
+      var mobClose = document.querySelector('[data-mobile-close]');
+      function closeMobileNav() {
+        if (!mobToggle || !mobPanel) return;
+        mobToggle.setAttribute('aria-expanded', 'false');
+        mobPanel.classList.remove('open');
+      }
+      function toggleMobileNav() {
+        if (!mobToggle || !mobPanel) return;
+        var expanded = mobToggle.getAttribute('aria-expanded') === 'true';
+        mobToggle.setAttribute('aria-expanded', !expanded);
+        mobPanel.classList.toggle('open');
+      }
       if (mobToggle && mobPanel) {
-        mobToggle.addEventListener('click', function() {
-          var expanded = mobToggle.getAttribute('aria-expanded') === 'true';
-          mobToggle.setAttribute('aria-expanded', !expanded);
-          mobPanel.classList.toggle('open');
-        });
+        mobToggle.addEventListener('click', toggleMobileNav);
+        if (mobClose) mobClose.addEventListener('click', closeMobileNav);
         mobPanel.querySelectorAll('a').forEach(function(link) {
-          link.addEventListener('click', function() {
-            mobToggle.setAttribute('aria-expanded', 'false');
-            mobPanel.classList.remove('open');
-          });
+          link.addEventListener('click', closeMobileNav);
         });
       }
     });
