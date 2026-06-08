@@ -3,7 +3,7 @@ title: Pipeline Quality Gates & Observability
 flowchart TD
     subgraph Gates["🚧 Quality Gates"]
         SCHEMA[Schema Validation<br/>schemas.py Pydantic]
-        SQI_CK[SQI Threshold<br/>> 0.65]
+        SQI_CK[SQI Threshold ≥ 0.65<br/>(config.SQI_THRESHOLD_MIN)]
         DOMAIN_CK[Domain % ≤ 100%<br/>Sanitize]
         FLAG_CK[Quality Flags<br/>Build-time]
     end

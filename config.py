@@ -27,3 +27,14 @@ CONTENT_DIR = PROJECT_ROOT / "content"
 # Paths (build output)
 OUTPUT_DIR = PROJECT_ROOT / "dist"
 STATIC_DST_DIR = OUTPUT_DIR / "static"
+
+# Quality thresholds
+SQI_THRESHOLD_MIN = 0.65       # minimum SQI for quality gate pass
+SQI_BADGE_HIGH = 0.6           # SQI above this → green badge
+SQI_BADGE_MED = 0.35           # SQI above this → amber badge (below → red)
+SQI_DEFAULT = 0.5              # fallback when signal missing
+
+# Interest score weights
+INTEREST_SQI_WEIGHT = 0.6
+INTEREST_RECENCY_WEIGHT = 0.4
+INTEREST_RECENCY_DAYS = 180

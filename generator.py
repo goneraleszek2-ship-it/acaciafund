@@ -5,6 +5,7 @@ Generator for AcaciaFund: converts registry.json to static HTML using Jinja2 tem
 """
 import hashlib
 import json
+import os
 import re
 import shutil
 import unicodedata
@@ -19,9 +20,11 @@ from urllib.parse import quote as urlquote
 from schemas import RegistryData
 from core.visuals import source_bar_svg, sparkline_svg, bloom_chart_svg, radar_svg, heatmap_svg, donut_svg, generate_thumbnail_svg, generate_og_image
 from config import (
-    SITE_URL, SITE_NAME, SITE_DESCRIPTION, PLAUSIBLE_DOMAIN,
+    PROJECT_ROOT, SITE_URL, SITE_NAME, SITE_DESCRIPTION, PLAUSIBLE_DOMAIN,
     REGISTRY_PATH, TEMPLATE_DIR, OUTPUT_DIR, STATIC_SRC_DIR,
     STATIC_DST_DIR, PIPELINE_STATIC_DIR, CONTENT_DIR,
+    SQI_THRESHOLD_MIN, SQI_BADGE_HIGH, SQI_BADGE_MED, SQI_DEFAULT,
+    INTEREST_SQI_WEIGHT, INTEREST_RECENCY_WEIGHT, INTEREST_RECENCY_DAYS,
 )
 
 PILLAR_CONFIG = {
@@ -139,7 +142,7 @@ def reading_time_minutes(html_or_text: str) -> int:
 
 
 def generate_sqi_badge(sqi: float) -> str:
-    color = "#22c55e" if sqi >= 0.6 else "#d97706" if sqi >= 0.35 else "#ef4444"
+    color = "#22c55e" if sqi >= SQI_BADGE_HIGH else "#d97706" if sqi >= SQI_BADGE_MED else "#ef4444"
     w = 160
     bar_w = int(min(1.0, max(0, sqi)) * w)
     return (
@@ -211,8 +214,8 @@ def sanitize_domain_breakdown(html: str) -> str:
 def interest_score(post, now: datetime) -> float:
     sqi = post.signals.get("avg_sqi", 0.0) if post.signals else 0.0
     age_days = (now - (post.created_at or now)).days if post.created_at else 365
-    recency = max(0.1, 1.0 - age_days / 180)
-    return sqi * 0.6 + recency * 0.4
+    recency = max(0.1, 1.0 - age_days / INTEREST_RECENCY_DAYS)
+    return sqi * INTEREST_SQI_WEIGHT + recency * INTEREST_RECENCY_WEIGHT
 
 
 def main():
@@ -221,6 +224,19 @@ def main():
     if not REGISTRY_PATH.exists():
         print(f"Error: {REGISTRY_PATH} not found.")
         return 1
+
+    # Archive previous registry before loading (versioning)
+    archive_dir = PROJECT_ROOT / ".registry-archive"
+    archive_dir.mkdir(parents=True, exist_ok=True)
+    if REGISTRY_PATH.exists():
+        ts = datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
+        archive_path = archive_dir / f"registry_{ts}.json"
+        shutil.copy2(REGISTRY_PATH, archive_path)
+        # Keep only last 20 archives
+        archives = sorted(archive_dir.glob("registry_*.json"), reverse=True)
+        for old in archives[20:]:
+            old.unlink()
+        print(f"  registry archived: {archive_path.name}")
 
     try:
         with open(REGISTRY_PATH, "r", encoding="utf-8") as f:
@@ -327,7 +343,7 @@ def main():
         out_static = STATIC_DST_DIR / "images"
         out_static.mkdir(parents=True, exist_ok=True)
         pillar_k = item.pillar or "aml"
-        scores_k = {"sqi": 0.5}
+        scores_k = {"sqi": SQI_DEFAULT}
         svg_k = generate_thumbnail_svg(item.title, pillar_k, scores_k, width=600, height=340)
         (out_static / f"thumb_{thumb_key}.svg").write_text(svg_k, encoding="utf-8")
         og_svg = generate_og_image(item.title, pillar_k, scores_k)
@@ -424,7 +440,7 @@ def main():
         out_static = STATIC_DST_DIR / "images"
         out_static.mkdir(parents=True, exist_ok=True)
         pillar_l = item.pillar or "aml"
-        scores_l = {"sqi": 0.5}
+        scores_l = {"sqi": SQI_DEFAULT}
         svg_l = generate_thumbnail_svg(item.title, pillar_l, scores_l, width=600, height=340)
         (out_static / f"thumb_{thumb_key}.svg").write_text(svg_l, encoding="utf-8")
         og_svg = generate_og_image(item.title, pillar_l, scores_l)
@@ -472,7 +488,7 @@ def main():
 
         pillar = item.pillar or "aml"
         pconf = PILLAR_CONFIG.get(pillar, PILLAR_CONFIG["aml"])
-        sqi_svg = generate_sqi_badge(item.signals.get("avg_sqi", 0.5)) if item.signals else ""
+        sqi_svg = generate_sqi_badge(item.signals.get("avg_sqi", SQI_DEFAULT)) if item.signals else ""
         og_key = hashlib.md5(f"og_{item.title}".encode()).hexdigest()[:12]
         og_image_url = f"{SITE_URL}/static/images/og_{og_key}.svg"
         thumb_base = f"{SITE_URL}/static/images"
@@ -482,7 +498,7 @@ def main():
         chart_donut = donut_svg(item.source_breakdown or {})
         chart_bloom = bloom_chart_svg(item.bloom_questions or [])
         chart_radar = radar_svg(item.quality_metrics or {})
-        sqi_val = item.signals.get("avg_sqi", 0.5) if item.signals else 0.5
+        sqi_val = item.signals.get("avg_sqi", SQI_DEFAULT) if item.signals else SQI_DEFAULT
         sqi_trend = [max(0.1, sqi_val - 0.3), max(0.15, sqi_val - 0.2), max(0.2, sqi_val - 0.1), sqi_val]
         chart_sparkline = sparkline_svg(sqi_trend, color="#a855f7")
         qf = item.quality_flags or []
@@ -514,9 +530,9 @@ def main():
         out_static = STATIC_DST_DIR / "images"
         out_static.mkdir(parents=True, exist_ok=True)
         key = hashlib.md5(item.title.encode()).hexdigest()[:12]
-        scores_r = item.signals or {"sqi": 0.5}
+        scores_r = item.signals or {"sqi": SQI_DEFAULT}
         if not isinstance(scores_r, dict):
-            scores_r = {"sqi": 0.5}
+            scores_r = {"sqi": SQI_DEFAULT}
         svg_r = generate_thumbnail_svg(item.title, pillar, scores_r, width=600, height=340)
         (out_static / f"thumb_{key}.svg").write_text(svg_r, encoding="utf-8")
         og_svg = generate_og_image(item.title, pillar, scores_r)

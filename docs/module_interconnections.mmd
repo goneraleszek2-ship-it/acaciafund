@@ -54,10 +54,15 @@ classDiagram
     }
 
     config_py --> generator_py : provides config
+    generator_py ..> config_py : uses SQI thresholds
     schemas_py --> generator_py : validates
     registry_json --> schemas_py : validated by
     registry_json --> generator_py : read by
+    generator_py ..> schemas_py : needs schema
     generator_py --> visuals_py : invokes
+    visuals_py ..> generator_py : breaks if missing
     generator_py --> templates_j2 : renders
+    templates_j2 ..> generator_py : template not found
     templates_j2 --> config_py : uses config
     visuals_py --> registry_json : reads content
+    registry_json ..> visuals_py : missing content = empty SVGs
