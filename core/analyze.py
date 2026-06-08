@@ -76,7 +76,6 @@ def classify_story(story: dict) -> list[tuple[str, float]]:
             "aml": {"regulacje", "finanse"},
             "stock": {"finanse", "technologia"},
             "data-engineering": {"technologia", "nauka"},
-            "science": {"nauka", "technologia"},
         }
         if cat in pillar_domain_cats.get(pillar_name, set()):
             score += 2.0
@@ -87,7 +86,6 @@ def classify_story(story: dict) -> list[tuple[str, float]]:
                 "aml": {"q-fin", "cs"},
                 "stock": {"q-fin", "cs"},
                 "data-engineering": {"cs", "stat"},
-                "science": {"q-bio", "nlin", "cs", "physics"},
             }
             for ap in arxiv_pillar_map.get(pillar_name, set()):
                 if ap in title_lower:

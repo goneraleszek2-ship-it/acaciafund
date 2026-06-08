@@ -50,16 +50,9 @@ PILLAR_CONFIG = {
         "heading": "Data Engineering & Infrastructure",
         "description": "Data pipelines, orchestration, quality engineering, streaming, storage, and analytics infrastructure.",
     },
-    "science": {
-        "label": "Science", "emoji": "microscope", "color": "purple",
-        "bg": "from-purple-900 to-purple-800", "accent": "purple",
-        "text_color": "text-purple-900", "badge_color": "bg-purple-100 text-purple-800",
-        "heading": "Science & Discovery",
-        "description": "Biology, quantum, neuroscience, space, climate, complexity.",
-    },
 }
-PILLAR_EMOJIS = {"aml": "shield", "stock": "chart", "data-engineering": "gears", "science": "microscope"}
-PILLAR_NAMES = {"aml": "AML", "stock": "Markets", "data-engineering": "Data Engineering", "science": "Science"}
+PILLAR_EMOJIS = {"aml": "shield", "stock": "chart", "data-engineering": "gears"}
+PILLAR_NAMES = {"aml": "AML", "stock": "Markets", "data-engineering": "Data Engineering"}
 DIFFICULTY_ORDER = {"beginner": 0, "intermediate": 1, "advanced": 2}
 
 KNOWLEDGE_CATEGORIES = {
@@ -97,7 +90,9 @@ def slug_to_url(slug: str) -> str:
 def group_by_pillar(content_list: list) -> dict[str, list]:
     groups: dict[str, list] = defaultdict(list)
     for c in content_list:
-        p = c.pillar or "aml"
+        p = c.pillar
+        if not p:
+            continue
         groups[p].append(c)
     for g in groups.values():
         g.sort(key=lambda x: x.created_at or datetime.min, reverse=True)

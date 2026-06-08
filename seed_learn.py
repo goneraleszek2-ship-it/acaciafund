@@ -11,7 +11,6 @@ REGISTRY_PATH = Path("registry.json")
 PILLAR_MAP = {
     "learn/aml-basics": "aml",
     "learn/market-analysis": "stock",
-    "learn/science-method": "science",
     "learn/quiz-aml": "aml",
     "learn/dataops-introduction": "data-engineering",
     "learn/data-quality-engineering": "data-engineering",
@@ -22,7 +21,6 @@ PILLAR_MAP = {
 DIFFICULTY_MAP = {
     "learn/aml-basics": "beginner",
     "learn/market-analysis": "intermediate",
-    "learn/science-method": "intermediate",
     "learn/quiz-aml": "beginner",
     "learn/dataops-introduction": "beginner",
     "learn/data-quality-engineering": "intermediate",
@@ -33,7 +31,6 @@ PILLAR_COLORS = {
     "aml": {"primary": "#d97706", "secondary": "#f59e0b", "bg": "#1c1917"},
     "stock": {"primary": "#22c55e", "secondary": "#4ade80", "bg": "#052e16"},
     "data-engineering": {"primary": "#6366f1", "secondary": "#818cf8", "bg": "#1e1b4b"},
-    "science": {"primary": "#a855f7", "secondary": "#c084fc", "bg": "#1e1b4b"},
 }
 
 DIFFICULTY_EMOJI = {

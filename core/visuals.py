@@ -63,18 +63,17 @@ SUBTOPIC_CATEGORIES: dict[str, dict[str, set[str]]] = {
         "manufacturing": {"supply chain", "manufacturing", "production", "factory",
                           "industry", "industrial", "logistics"},
     },
-    "science": {
-        "dna": {"dna", "gene", "genetic", "crispr", "biology", "cell", "protein",
-                "mitochondria", "genome"},
-        "quantum": {"quantum", "qubit", "superposition", "entanglement"},
-        "brain": {"brain", "neuron", "neuroscience", "cognitive", "consciousness",
-                  "mind", "mental"},
-        "space": {"space", "nasa", "esa", "rocket", "satellite", "cosmos",
-                  "astronomy", "planet", "star"},
-        "climate": {"climate", "energy", "solar", "renewable", "carbon",
-                    "emission", "temperature", "environment"},
-        "complexity": {"complexity", "emergence", "network", "system", "cybernetics",
-                       "self-organization", "antifragile"},
+    "data-engineering": {
+        "pipeline": {"pipeline", "etl", "elt", "orchestration", "dag", "workflow",
+                     "airflow", "dagster", "prefect", "kestra"},
+        "storage": {"lake", "warehouse", "iceberg", "delta", "hudi", "parquet",
+                    "arrow", "storage", "catalog", "schema"},
+        "quality": {"quality", "test", "expectation", "monitoring", "observability",
+                    "lineage", "contract", "soda", "great expectations"},
+        "streaming": {"stream", "kafka", "flink", "beam", "event", "real-time",
+                      "kafka connect", "debezium", "cdc"},
+        "infrastructure": {"terraform", "kubernetes", "docker", "ci/cd", "cloud",
+                           "deployment", "infrastructure", "platform"},
     },
 }
 
@@ -82,7 +81,6 @@ PILLAR_COLORS = {
     "aml":              {"bg": "#0f172a", "fg": "#1e3a5f",  "text": "#f8fafc", "accent": "#d97706"},
     "stock":            {"bg": "#052e16", "fg": "#166534",  "text": "#f0fdf4", "accent": "#22c55e"},
     "data-engineering": {"bg": "#1e1b4b", "fg": "#3730a3",  "text": "#eef2ff", "accent": "#6366f1"},
-    "science":          {"bg": "#3b0764", "fg": "#7e22ce",  "text": "#faf5ff", "accent": "#c084fc"},
 }
 
 

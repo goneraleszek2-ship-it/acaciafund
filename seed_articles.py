@@ -31,12 +31,6 @@ PILLAR_META = {
         "tags_base": ["data-engineering", "dataops", "pipeline", "infrastructure"],
         "label": "Data Engineering",
     },
-    "science": {
-        "color": "#a855f7", "bg1": "#1e1b4b", "bg2": "#3b0764",
-        "icon_path": '<path d="M6 4h4M6 20h4M18 4h-4M18 20h-4M4 6v4M4 18v4M20 6v4M20 18v4"/>',
-        "tags_base": ["science", "systems", "cybernetics", "complexity"],
-        "label": "Science",
-    },
 }
 
 NEW_ARTICLES = [

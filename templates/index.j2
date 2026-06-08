@@ -106,7 +106,7 @@
         streakEl.innerHTML = fire + ' ' + streak + ' day' + (streak !== 1 ? 's' : '') + ' streak';
       }
       if(incomplete.length > 0){
-        var pillarBadgeColors = {aml:{bg:'#fef3c7',text:'#92400e'},stock:{bg:'#dcfce7',text:'#166534'},'data-engineering':{bg:'#e0e7ff',text:'#3730a3'},science:{bg:'#f3e8ff',text:'#6b21a8'}};
+        var pillarBadgeColors = {aml:{bg:'#fef3c7',text:'#92400e'},stock:{bg:'#dcfce7',text:'#166534'},'data-engineering':{bg:'#e0e7ff',text:'#3730a3'}};
         var dEmoji = {beginner:'🌱', intermediate:'📘', advanced:'🔥'};
         incomplete.slice(0,6).forEach(function(it){
           var bc = pillarBadgeColors[it.pillar] || {bg:'var(--color-bg)',text:'var(--color-text-muted)'};

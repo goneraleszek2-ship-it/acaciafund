@@ -33,7 +33,7 @@ EXPANDED_BODIES = {
 <p>AcaciaFund is an automated research synthesis platform that applies <strong>DataOps principles</strong> to the content lifecycle: ingesting from HackerNews and arXiv, classifying via Bloom taxonomy, scoring with the Signal Quality Index (SQI), and serving as a static data product.</p>
 
 <h3>Mission</h3>
-<p>To make high-quality, multi-perspective research synthesis accessible — bridging anti-money laundering (AML), financial markets, and scientific discovery through automated classification and transparent quality metrics.</p>
+<p>To make high-quality, multi-perspective research synthesis accessible — bridging anti-money laundering (AML), financial markets, and data engineering infrastructure through automated classification and transparent quality metrics.</p>
 
 <h3>How It Works</h3>
 <ul>
@@ -45,7 +45,7 @@ EXPANDED_BODIES = {
 
 <h3>Content Taxonomy</h3>
 <ul>
-<li><strong>Research:</strong> Bloom-classified articles with SQI, signals, flashcards, and source breakdowns. Organized by pillar (AML, Markets, Science).</li>
+<li><strong>Research:</strong> Bloom-classified articles with SQI, signals, flashcards, and source breakdowns. Organized by pillar (AML, Markets, Data Engineering).</li>
 <li><strong>Learn:</strong> Structured lessons with flashcards, code examples, and practical exercises for self-directed study.</li>
 <li><strong>Knowledge:</strong> Reference documentation — glossaries, architecture, tools landscape, methodology guides, and platform information.</li>
 </ul>
@@ -87,10 +87,10 @@ EXPANDED_BODIES = {
 <p>Each article is classified across six cognitive levels: <strong>remember</strong>, <strong>understand</strong>, <strong>apply</strong>, <strong>analyze</strong>, <strong>evaluate</strong>, and <strong>create</strong>. Questions and flashcards are generated at each level to support different learning objectives. A single article may span multiple levels depending on its content depth.</p>
 
 <h3>What are the three pillars?</h3>
-<p><strong>AML</strong> (Anti-Money Laundering) covers financial crime, compliance, regulation, and risk management. <strong>Markets</strong> covers semiconductors, supply chains, AI industry, and manufacturing. <strong>Science</strong> covers biology, quantum, neuroscience, space, climate, and complexity science.</p>
+<p><strong>AML</strong> (Anti-Money Laundering) covers financial crime, compliance, regulation, and risk management. <strong>Markets</strong> covers semiconductors, supply chains, AI industry, and manufacturing. <strong>Data Engineering</strong> covers data pipelines, orchestration, quality engineering, streaming, storage, and analytics infrastructure.</p>
 
 <h3>How are sources selected?</h3>
-<p>Sources are drawn from three primary feeds: <strong>HackerNews</strong> (technology and current events), <strong>arXiv</strong> (academic preprints across all domains), and <strong>PubMed</strong> (biomedical research). Articles are filtered by relevance to the three pillars and scored using the SQI framework.</p>
+<p>Sources are drawn from two primary feeds: <strong>HackerNews</strong> (technology and current events) and <strong>arXiv</strong> (academic preprints across computer science, statistics, and finance). Articles are filtered by relevance to the three pillars and scored using the SQI framework.</p>
 
 <h3>How often is content updated?</h3>
 <p>Research articles are published as significant stories emerge. The pipeline processes HackerNews and arXiv feeds daily, but publication frequency depends on the volume of high-SQI signals. Historical articles are preserved with their original quality metrics.</p>
@@ -99,7 +99,7 @@ EXPANDED_BODIES = {
 <p>All content is licensed under MIT. You are free to reuse, adapt, and cite. We recommend citing by article slug and date, as content is version-controlled via Git. Each article has a canonical URL and JSON-LD structured data for citation purposes.</p>
 
 <h3>How are thumbnails generated?</h3>
-<p>Each research article gets a unique fractal tree SVG, generated using a seed-based L-system. The tree shape is deterministic (same title = same tree) and colored by pillar (amber for AML, green for Markets, purple for Science). Additional color flooding, bloom, and mist effects create a distinctive visual identity per article.</p>
+<p>Each research article gets a unique fractal tree SVG, generated using a seed-based L-system. The tree shape is deterministic (same title = same tree) and colored by pillar (amber for AML, green for Markets, indigo for Data Engineering). Additional color flooding, bloom, and mist effects create a distinctive visual identity per article.</p>
 
 <h3>Does AcaciaFund use client-side JavaScript?</h3>
 <p>JavaScript is used only for UI enhancements: dark mode toggling, mobile navigation, reading progress bar, table of contents highlighting, and focus mode. No JavaScript is required for reading content — the site is fully functional with JavaScript disabled.</p>
@@ -141,6 +141,7 @@ EXPANDED_BODIES = {
 <dt><strong>Exoplanet Atmosphere</strong></dt><dd>The layer of gases surrounding planets outside our solar system, analyzed via transmission spectroscopy during transits.</dd>
 <dt><strong>Superconductivity</strong></dt><dd>Zero electrical resistance in a material below a critical temperature. Room-temperature superconductivity remains an active research frontier.</dd>
 </dl>
+<p><em>Note: The Science glossary section is preserved for archival reference. Active coverage now focuses on Data Engineering.</em></p>
 
 <h3>DataOps &amp; Engineering</h3>
 <dl style="line-height:1.8">
@@ -164,7 +165,7 @@ EXPANDED_BODIES = {
 <ul>
 <li><strong>HackerNews API</strong> (news.ycombinator.com) — technology, business, and science stories ranked by community engagement (points, comments). Top ~30 stories per day are analyzed.</li>
 <li><strong>arXiv API</strong> (arxiv.org) — academic preprints across computer science, physics, mathematics, quantitative biology, and finance. Filtered by relevance to pillar topics.</li>
-<li><strong>PubMed</strong> — biomedical literature for science-pillar articles, particularly genetics, neuroscience, and biotechnology.</li>
+<li><strong>PubMed</strong> — biomedical literature (archived — science pillar discontinued).</li>
 </ul>
 
 <h4>2. Entity Extraction &amp; Summarization</h4>
@@ -200,7 +201,7 @@ where:
 
 Default weights: w₁=0.35, w₂=0.25, w₃=0.25, w₄=0.15
 </pre>
-<p>Weights are adjustable per pillar to prioritize different quality dimensions (e.g., AML favors authority, Science favors freshness).</p>
+<p>Weights are adjustable per pillar to prioritize different quality dimensions (e.g., AML favors authority, Data Engineering favors freshness).</p>
 
 <h4>5. Cross-Pillar Analysis</h4>
 <p>Each article is analyzed for connections to other pillars via:</p>
@@ -245,23 +246,22 @@ Default weights: w₁=0.35, w₂=0.25, w₃=0.25, w₄=0.15
 <tr><td style="padding:8px;border:1px solid var(--color-border)">Example Tags</td><td style="padding:8px;border:1px solid var(--color-border)">markets, semiconductors, supply-chain, manufacturing, ev, batteries, venture-capital, deep-tech</td></tr>
 </table>
 
-<h3>Science — Science &amp; Discovery</h3>
+<h3>Data Engineering — Data Engineering &amp; Infrastructure</h3>
 <table style="width:100%;border-collapse:collapse;font-size:0.9em">
 <tr style="background:var(--color-bg)"><th style="padding:8px;border:1px solid var(--color-border);text-align:left">Aspect</th><th style="padding:8px;border:1px solid var(--color-border);text-align:left">Detail</th></tr>
-<tr><td style="padding:8px;border:1px solid var(--color-border)">Color</td><td style="padding:8px;border:1px solid var(--color-border)">Purple (#a855f7)</td></tr>
-<tr><td style="padding:8px;border:1px solid var(--color-border)">Icon</td><td style="padding:8px;border:1px solid var(--color-border)">Microscope</td></tr>
-<tr><td style="padding:8px;border:1px solid var(--color-border)">Scope</td><td style="padding:8px;border:1px solid var(--color-border)">Gene editing (CRISPR), protein structure prediction (AlphaFold), exoplanet atmospheres (JWST), brain-computer interfaces, superconductivity, quantum computing science</td></tr>
-<tr><td style="padding:8px;border:1px solid var(--color-border)">Key Sources</td><td style="padding:8px;border:1px solid var(--color-border)">Nature, Science, arXiv (quant-bio, quant-ph), PubMed, NIH, NASA, university press releases</td></tr>
-<tr><td style="padding:8px;border:1px solid var(--color-border)">Example Tags</td><td style="padding:8px;border:1px solid var(--color-border)">science, biology, physics, neuroscience, space, crispr, proteins, exoplanets, bci</td></tr>
+<tr><td style="padding:8px;border:1px solid var(--color-border)">Color</td><td style="padding:8px;border:1px solid var(--color-border)">Indigo (#6366f1)</td></tr>
+<tr><td style="padding:8px;border:1px solid var(--color-border)">Icon</td><td style="padding:8px;border:1px solid var(--color-border)">Gears</td></tr>
+<tr><td style="padding:8px;border:1px solid var(--color-border)">Scope</td><td style="padding:8px;border:1px solid var(--color-border)">Data pipeline orchestration (Dagster, Airflow, Prefect), data quality engineering (Great Expectations, Soda), streaming platforms (Kafka, Flink), lakehouse architectures (Iceberg, Delta Lake), analytics engineering (dbt, SQLMesh)</td></tr>
+<tr><td style="padding:8px;border:1px solid var(--color-border)">Key Sources</td><td style="padding:8px;border:1px solid var(--color-border)">Dagster blog, dbt developer blog, Apache project docs, Data Engineering Weekly, Confluent blog, vendor engineering blogs</td></tr>
+<tr><td style="padding:8px;border:1px solid var(--color-border)">Example Tags</td><td style="padding:8px;border:1px solid var(--color-border)">data-engineering, dataops, pipeline, orchestration, dbt, dagster, kafka, data-quality, lakehouse, streaming</td></tr>
 </table>
 
 <h3>Cross-Pillar Topics</h3>
 <p>Some topics span multiple pillars. Notable cross-pillar themes include:</p>
 <ul>
-<li><strong>Crypto &amp; Blockchain</strong> — AML (regulatory enforcement), Markets (investment, mining economics), Science (consensus mechanisms, cryptographic research)</li>
-<li><strong>AI Regulation</strong> — AML (compliance automation), Markets (AI industry investment), Science (AI research, neural networks)</li>
-<li><strong>Supply Chain Intelligence</strong> — AML (trade-based money laundering), Markets (semiconductor/EV supply chains), Science (materials science, logistics optimization)</li>
-<li><strong>Data Engineering Infrastructure</strong> — common underpinning for all three pillars, covered in the DataOps knowledge base</li>
+<li><strong>Crypto &amp; Blockchain</strong> — AML (regulatory enforcement), Markets (investment, mining economics), Data Engineering (blockchain data pipelines, on-chain analytics infrastructure)</li>
+<li><strong>AI Regulation</strong> — AML (compliance automation), Markets (AI industry investment), Data Engineering (ML pipeline infrastructure, feature stores, model serving)</li>
+<li><strong>Supply Chain Intelligence</strong> — AML (trade-based money laundering), Markets (semiconductor/EV supply chains), Data Engineering (supply chain data integration, real-time tracking pipelines)</li>
 </ul>
 
 <p><em>Last updated: 2026-06-08</em></p>""",
@@ -273,7 +273,7 @@ Default weights: w₁=0.35, w₂=0.25, w₃=0.25, w₄=0.15
 <ul>
 <li>Added dedicated <code>knowledge.j2</code> template with TOC, breadcrumbs, cross-references, and progress bar</li>
 <li>Reorganized knowledge entries into categories: Platform, Guides, Reference, Architecture</li>
-<li>Expanded glossary to 30+ terms across all four categories (AML, Markets, Science, DataOps)</li>
+<li>Expanded glossary to 30+ terms across all categories (AML, Markets, Data Engineering, DataOps)</li>
 <li>Added Research Methodology guide with full SQI formula and pipeline description</li>
 <li>Added Pillar Taxonomy guide with per-pillar scope, sources, and tag examples</li>
 <li>Migrated all knowledge slugs under <code>/knowledge/</code> namespace</li>
@@ -402,7 +402,7 @@ Default weights: w₁=0.35, w₂=0.25, w₃=0.25, w₄=0.15
 <h2>Pipeline Metrics</h2>
 <ul>
 <li><strong>Content volume:</strong> 51 entries across research (33), learn (8), knowledge (10)</li>
-<li><strong>Pillar coverage:</strong> AML (11), Markets (11), Science (11)</li>
+<li><strong>Pillar coverage:</strong> AML (11), Markets (11), Data Engineering (5)</li>
 <li><strong>Build time:</strong> ~2 seconds (Python-native, no external deps at build)</li>
 <li><strong>Output size:</strong> ~2MB uncompressed (HTML + SVG thumbnails + OG images)</li>
 <li><strong>SQI range:</strong> 0.35 – 0.88 across all research articles</li>
@@ -571,10 +571,10 @@ def main():
                 "knowledge/contact": "How to reach the AcaciaFund team, report issues, or suggest content.",
                 "knowledge/faq": "Answers to common questions about AcaciaFund's methodology, content, and platform.",
                 "knowledge/research-methodology": "How AcaciaFund transforms raw signals into quality-scored research — SQI, Bloom taxonomy, pipeline stages.",
-                "knowledge/pillar-taxonomy": "Detailed guide to the AML, Markets, and Science pillars with scope criteria and examples.",
-                "knowledge/glossary": "Terms defined across AML, Markets, Science, and DataOps — continuously expanded.",
+                "knowledge/pillar-taxonomy": "Detailed guide to the AML, Markets, and Data Engineering pillars with scope criteria and examples.",
+                "knowledge/glossary": "Terms defined across AML, Markets, Data Engineering, and DataOps — continuously expanded.",
                 "knowledge/changelog": "Platform version history and notable changes.",
-                "knowledge/dataops-glossary": "Key DataOps, data engineering, and data science terminology.",
+                "knowledge/dataops-glossary": "Key DataOps and data engineering terminology.",
                 "knowledge/open-source-tools": "Curated reference of open source tools for modern data platforms.",
                 "knowledge/system-architecture": "AcaciaFund as a DataOps pipeline — architecture, principles, and metrics.",
             }
@@ -583,7 +583,7 @@ def main():
                 "knowledge/contact": ["contact", "support"],
                 "knowledge/faq": ["faq", "help", "questions"],
                 "knowledge/research-methodology": ["methodology", "research", "pipeline", "sqi", "bloom"],
-                "knowledge/pillar-taxonomy": ["pillars", "taxonomy", "aml", "markets", "science"],
+                "knowledge/pillar-taxonomy": ["pillars", "taxonomy", "aml", "markets", "data-engineering"],
                 "knowledge/glossary": ["glossary", "reference", "terms"],
                 "knowledge/changelog": ["changelog", "version", "history"],
                 "knowledge/dataops-glossary": ["dataops", "glossary", "reference"],
@@ -626,10 +626,10 @@ def main():
                 "knowledge/contact": "How to reach the AcaciaFund team, report issues, or suggest content.",
                 "knowledge/faq": "Answers to common questions about AcaciaFund's methodology, content, and platform.",
                 "knowledge/research-methodology": "How AcaciaFund transforms raw signals into quality-scored research — SQI, Bloom taxonomy, pipeline stages.",
-                "knowledge/pillar-taxonomy": "Detailed guide to the AML, Markets, and Science pillars with scope criteria and examples.",
-                "knowledge/glossary": "Terms defined across AML, Markets, Science, and DataOps — continuously expanded.",
+                "knowledge/pillar-taxonomy": "Detailed guide to the AML, Markets, and Data Engineering pillars with scope criteria and examples.",
+                "knowledge/glossary": "Terms defined across AML, Markets, Data Engineering, and DataOps — continuously expanded.",
                 "knowledge/changelog": "Platform version history and notable changes.",
-                "knowledge/dataops-glossary": "Key DataOps, data engineering, and data science terminology.",
+                "knowledge/dataops-glossary": "Key DataOps and data engineering terminology.",
                 "knowledge/open-source-tools": "Curated reference of open source tools for modern data platforms.",
                 "knowledge/system-architecture": "AcaciaFund as a DataOps pipeline — architecture, principles, and metrics.",
             }.get(slug, entry.get("description", ""))
@@ -638,7 +638,7 @@ def main():
                 "knowledge/contact": ["contact", "support"],
                 "knowledge/faq": ["faq", "help", "questions"],
                 "knowledge/research-methodology": ["methodology", "research", "pipeline", "sqi", "bloom"],
-                "knowledge/pillar-taxonomy": ["pillars", "taxonomy", "aml", "markets", "science"],
+                "knowledge/pillar-taxonomy": ["pillars", "taxonomy", "aml", "markets", "data-engineering"],
                 "knowledge/glossary": ["glossary", "reference", "terms"],
                 "knowledge/changelog": ["changelog", "version", "history"],
                 "knowledge/dataops-glossary": ["dataops", "glossary", "reference"],

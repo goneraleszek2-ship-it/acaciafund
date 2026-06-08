@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="340" viewBox="0 0 600 340">
+  <defs>
+    <linearGradient id="de-thumb-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1e1b4b"/>
+      <stop offset="1" stop-color="#0f0f23"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="340" fill="url(#de-thumb-bg)"/>
+  <g opacity="0.15" fill="none" stroke="#6366f1" stroke-width="1">
+    <rect x="100" y="100" width="80" height="50" rx="6"/>
+    <polygon points="186,115 200,125 186,135"/>
+    <rect x="210" y="100" width="80" height="50" rx="6"/>
+    <polygon points="296,115 310,125 296,135"/>
+    <rect x="320" y="100" width="80" height="50" rx="6"/>
+  </g>
+  <g opacity="0.1" stroke="#6366f1" stroke-width="0.5">
+    <line x1="100" y1="160" x2="400" y2="160" stroke-dasharray="3,4"/>
+    <line x1="100" y1="165" x2="400" y2="165" stroke-dasharray="2,5"/>
+  </g>
+  <circle cx="300" cy="170" r="120" fill="#6366f1" opacity="0.04"/>
+  <circle cx="300" cy="170" r="70" fill="#818cf8" opacity="0.04"/>
+</svg>

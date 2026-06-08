@@ -354,7 +354,7 @@ def walk_existing_content() -> list[AcaciaContent]:
         if isinstance(categories, str):
             categories = [categories]
         pillar_raw = categories[0].lower() if categories else ""
-        pillar_map = {"aml": "aml", "markets": "stock", "data-engineering": "data-engineering", "data_engineering": "data-engineering", "data engineering": "data-engineering", "science": "science", "stock": "stock"}
+        pillar_map = {"aml": "aml", "markets": "stock", "data-engineering": "data-engineering", "data_engineering": "data-engineering", "data engineering": "data-engineering", "stock": "stock"}
         pillar = pillar_map.get(pillar_raw, pillar_raw)
 
         tags = metadata.get("tags", [])

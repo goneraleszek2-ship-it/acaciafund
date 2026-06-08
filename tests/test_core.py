@@ -54,7 +54,7 @@ def test_pillars_loaded():
     from core.data import PILLARS
     assert "aml" in PILLARS
     assert "stock" in PILLARS
-    assert "science" in PILLARS
+    assert "data-engineering" in PILLARS
     for p in PILLARS:
         assert "label" in PILLARS[p]
         assert "emoji" in PILLARS[p]
@@ -64,7 +64,7 @@ def test_pillars_loaded():
 
 def test_domain_taxonomy():
     from core.data import DOMAIN_TAXONOMY
-    assert "science" in DOMAIN_TAXONOMY
+    assert "data-engineering" in DOMAIN_TAXONOMY
     assert "finance" in DOMAIN_TAXONOMY
     assert "regulation" in DOMAIN_TAXONOMY
 
@@ -73,10 +73,10 @@ def test_known_entities():
     from core.data import KNOWN_ENTITIES, ALL_ENTITIES
     assert "aml" in KNOWN_ENTITIES
     assert "stock" in KNOWN_ENTITIES
-    assert "science" in KNOWN_ENTITIES
+    assert "data-engineering" in KNOWN_ENTITIES
     assert "FinCEN" in KNOWN_ENTITIES["aml"]
     assert "NVIDIA" in KNOWN_ENTITIES["stock"]
-    assert "MIT" in KNOWN_ENTITIES["science"]
+    assert "Dagster" in KNOWN_ENTITIES["data-engineering"]
     assert len(ALL_ENTITIES) > 10
 
 
@@ -105,7 +105,7 @@ def test_extract_domain():
 
 def test_categorize_domain():
     from core.data import categorize_domain
-    assert categorize_domain("nature.com") == "science"
+    assert categorize_domain("dagster.io") == "data-engineering"
     assert categorize_domain("bloomberg.com") == "finance"
     assert categorize_domain("fincen.gov") == "regulation"
     assert categorize_domain("arstechnica.com") == "technology"
@@ -153,16 +153,16 @@ def test_classify_stock_story():
     assert top[0] == "stock", f"Expected stock, got {top}"
 
 
-def test_classify_science_story():
+def test_classify_data_engineering_story():
     from core.analyze import classify_story
     results = classify_story({
-        "title": "MIT researchers discover new quantum computing breakthrough",
-        "url": "https://news.mit.edu/quantum",
+        "title": "Dagster 2.0: new data pipeline orchestration and observability features",
+        "url": "https://dagster.io/blog/2.0",
         "points": 150,
     })
-    assert results, "Should classify science story"
+    assert results, "Should classify DE story"
     top = max(results, key=lambda x: x[1])
-    assert top[0] == "science", f"Expected science, got {top}"
+    assert top[0] == "data-engineering", f"Expected data-engineering, got {top}"
 
 
 def test_classify_empty_story():
@@ -172,7 +172,7 @@ def test_classify_empty_story():
 
 
 def test_classify_multi_pillar():
-    """A story about AI regulation could score for both aml and science."""
+    """A story about AI regulation could score for both aml and data-engineering."""
     from core.analyze import classify_story
     results = classify_story({
         "title": "SEC proposes new AI regulation framework for algorithmic trading",
@@ -361,11 +361,11 @@ def test_generate_thumbnail_svg_markets():
     assert "STOCK" in svg  # badge shows pillar name
 
 
-def test_generate_thumbnail_svg_science():
+def test_generate_thumbnail_svg_data_engineering():
     from core.visuals import generate_thumbnail_svg
     svg = generate_thumbnail_svg(
-        "DNA breakthrough in genetic research",
-        "science",
+        "Building real-time data pipelines with Kafka and Flink",
+        "data-engineering",
         {"sqi": 0.9},
     )
     assert svg.startswith("<svg")
@@ -414,8 +414,8 @@ def test_pick_subtopic():
     assert _pick_subtopic(["New cryptocurrency regulation"], "aml") in (
         "regulation", "crypto", "fraud", "banking",
     )
-    assert _pick_subtopic(["Quantum computing breakthrough"], "science") in (
-        "quantum", "dna", "brain", "space", "climate", "complexity",
+    assert _pick_subtopic(["Kafka streaming pipeline optimization"], "data-engineering") in (
+        "pipeline", "storage", "quality", "streaming", "infrastructure",
     )
 
 
@@ -574,7 +574,7 @@ def test_visuals_subtopic_unknown_pillar():
 
 def test_pillar_config_consistency():
     from core.data import PILLARS, DOMAIN_TAXONOMY, KNOWN_ENTITIES
-    for pname in ("aml", "stock", "science"):
+    for pname in ("aml", "stock", "data-engineering"):
         assert pname in PILLARS, f"Missing pillar: {pname}"
         assert pname in KNOWN_ENTITIES, f"Missing entities for: {pname}"
         assert len(KNOWN_ENTITIES[pname]) >= 10, f"Too few entities for {pname}"
@@ -586,7 +586,7 @@ def test_static_assets_exist():
     assert (static / "favicon.svg").exists()
     assert (static / "aml-thumb.svg").exists()
     assert (static / "markets-thumb.svg").exists()
-    assert (static / "science-thumb.svg").exists()
+    assert (static / "data-engineering-thumb.svg").exists()
     assert (static / "about" / "about-section.svg").exists()
     assert (static / "course-panel.svg").exists()
 

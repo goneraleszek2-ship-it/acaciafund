@@ -117,9 +117,6 @@ ARXIV_CATEGORIES = {
     "stock": ["q-fin.ST", "q-fin.PM", "cs.AR", "cs.ET", "cs.CE", "eess.SP"],
     "data-engineering": ["cs.DB", "cs.DC", "cs.DS", "cs.IR", "cs.SE", "cs.PF",
                          "cs.ET", "cs.LG", "stat.ML", "stat.CO", "stat.AP"],
-    "science": ["q-bio.MN", "cs.NE", "cs.CC", "nlin.AO", "nlin.CG", 
-                "q-bio.NC", "q-bio.QM", "physics.soc-ph", "physics.pop-ph",
-                "stat.AP", "stat.ML", "cs.LG", "cs.AI", "cs.CY", "cs.ET"]
 }
 
 ARXIV_KEYWORDS = {
@@ -138,10 +135,6 @@ ARXIV_KEYWORDS = {
                          "dbt", "dagster", "airflow", "prefect", "data engineering",
                          "dataops", "mlops", "feature store", "data observability",
                          "analytics engineering", "sql", "schema", "data platform"],
-    "science": ["mitochondria", "cybernetics", "complex systems", "network theory",
-                "emergence", "self-organization", "bioenergetics", "cognitive",
-                "complexity", "systems biology", "network science", "agent-based modeling",
-                "game theory", "evolutionary computation", "swarm intelligence"],
 }
 
 

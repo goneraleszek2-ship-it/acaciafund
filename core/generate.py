@@ -22,7 +22,7 @@ from .visuals import (
 import urllib.request
 import urllib.error
 
-PILLAR_CATEGORY = {"aml": "AML", "stock": "Markets", "data-engineering": "Data Engineering", "science": "Science"}
+PILLAR_CATEGORY = {"aml": "AML", "stock": "Markets", "data-engineering": "Data Engineering"}
 
 
 def _build_content_deep_analysis(pillar_stories: list[dict],

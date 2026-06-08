@@ -41,24 +41,6 @@ keywords = [
 ]
 domain_scores = { "nvidia.com" = 10, "tsmc.com" = 10, "asml.com" = 10, "intel.com" = 8, "amd.com" = 8, "semiengineering.com" = 9, "anandtech.com" = 7, "tomshardware.com" = 7, "bloomberg.com" = 5, "reuters.com" = 5, "wsj.com" = 5, "ft.com" = 5, "seekingalpha.com" = 6 }
 
-[pillars.science]
-label = "SCIENCE"
-emoji = "🧬"
-folder = "content/en/blog"
-tags = ["science", "systems", "cybernetics", "complexity"]
-description = "Science, complex systems, and cognitive evolution"
-keywords = [
-  "cybernetics", "mitochondria", "bioenergetics", "systems theory",
-  "complexity", "emergence", "self-organization", "autopoiesis",
-  "antifragile", "antifragility", "black swan", "taleb",
-  "cognitive science", "neuroscience", "consciousness",
-  "artificial life", "origin of life", "evolutionary biology",
-  "epigenetics", "crispr", "gene therapy", "longevity",
-  "mitochondrial", "cellular metabolism", "biohacking",
-  "network theory", "graph theory", "scale-free",
-]
-domain_scores = { "nature.com" = 10, "science.org" = 10, "cell.com" = 9, "pnas.org" = 9, "biorxiv.org" = 8, "arxiv.org" = 7, "sciencedirect.com" = 7, "scientificamerican.com" = 8, "quantamagazine.org" = 9, "nautil.us" = 7, "aeon.co" = 6 }
-
 [pillars.data-engineering]
 label = "DATA_ENGINEERING"
 emoji = "⚙️"
@@ -86,7 +68,6 @@ keywords = [
 domain_scores = { "dagster.io" = 10, "getdbt.com" = 10, "iceberg.apache.org" = 9, "kafka.apache.org" = 9, "flink.apache.org" = 9, "spark.apache.org" = 8, "duckdb.org" = 9, "clickhouse.com" = 8, "trino.io" = 8, "github.com" = 6, "dataengineeringweekly.com" = 8, "databricks.com" = 7, "confluent.io" = 8, "great-expectations.io" = 8, "soda.io" = 7, "airbyte.com" = 7, "dagster.io/blog" = 9, "getdbt.com/blog" = 9 }
 
 [domain_taxonomy]
-science = ["nature.com", "science.org", "cell.com", "pnas.org", "biorxiv.org", "arxiv.org", "quantamagazine.org", "sciencedirect.com", "scientificamerican.com"]
 data-engineering = ["dagster.io", "getdbt.com", "iceberg.apache.org", "kafka.apache.org", "flink.apache.org", "spark.apache.org", "duckdb.org", "clickhouse.com", "trino.io", "dataengineeringweekly.com", "databricks.com", "confluent.io", "great-expectations.io", "soda.io", "airbyte.com"]
 finance = ["bloomberg.com", "reuters.com", "wsj.com", "ft.com", "seekingalpha.com", "marketwatch.com", "investopedia.com"]
 regulation = ["fincen.gov", "fatf-gafi.org", "fca.org.uk", "sec.gov", "occ.gov", "bis.org", "ec.europa.eu"]
@@ -101,9 +82,6 @@ values = ["FinCEN", "FATF", "SEC", "FCA", "ECB", "Fed", "OCC", "EBA", "Binance",
 
 [entities.stock]
 values = ["NVIDIA", "AMD", "TSMC", "Intel", "ASML", "Apple", "Microsoft", "Samsung", "Qualcomm", "ARM", "Broadcom", "Micron", "Amazon", "Google", "Meta", "Tesla", "OpenAI", "SoftBank"]
-
-[entities.science]
-values = ["OpenAI", "DeepMind", "Google AI", "Meta AI", "Anthropic", "xAI", "MIT", "Stanford", "Harvard", "Oxford", "Cambridge", "Caltech", "DARPA", "NIH", "CERN", "NASA", "ESA", "WHO"]
 
 [entity_defs]
 AML = "Anti-Money Laundering"

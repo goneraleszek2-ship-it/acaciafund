@@ -18,9 +18,9 @@
   <div class="mb-10 p-4 rounded-lg" style="background:var(--color-surface);border:1px solid var(--color-border)" id="pillar-progress-section">
     <h2 class="text-sm font-semibold mb-3" style="color:var(--color-text)">Progress by Pillar</h2>
     <div class="space-y-3" id="pillar-progress-bars">
-      {%- set pillar_icons = {"aml": "🛡️", "stock": "📈", "data-engineering": "⚙️", "science": "🔬"} %}
-      {%- set pillar_names = {"aml": "AML", "stock": "Markets", "data-engineering": "Data Engineering", "science": "Science"} %}
-      {%- set pillar_bar_colors = {"aml": "#c97d3e", "stock": "#3a7d5c", "data-engineering": "#6366f1", "science": "#5b5ea6"} %}
+      {%- set pillar_icons = {"aml": "🛡️", "stock": "📈", "data-engineering": "⚙️"} %}
+      {%- set pillar_names = {"aml": "AML", "stock": "Markets", "data-engineering": "Data Engineering"} %}
+      {%- set pillar_bar_colors = {"aml": "#c97d3e", "stock": "#3a7d5c", "data-engineering": "#6366f1"} %}
       {%- for pkey, pinfo in pillar_config.items() %}
       {%- set pcount = items | selectattr("pillar", "equalto", pkey) | list | length %}
       {%- if pcount > 0 %}
