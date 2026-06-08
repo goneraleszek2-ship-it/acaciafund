@@ -117,48 +117,48 @@
       <button class="sm:hidden mobile-nav-toggle p-2" aria-label="Toggle navigation menu" aria-expanded="false" data-mobile-toggle>
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
       </button>
+    </nav>
 
-      <!-- Mobile nav panel -->
-      <div class="mobile-nav-panel sm:hidden" data-mobile-panel>
-        <div class="mobile-nav-scroll">
-          <div class="mobile-nav-section">
-            <div class="mobile-nav-label">Content</div>
-            <a href="/research/" class="mobile-nav-item">Research</a>
-            <a href="/learn/" class="mobile-nav-item">Learn</a>
-            <a href="/knowledge/" class="mobile-nav-item">Knowledge Base</a>
-          </div>
-          <div class="mobile-nav-section">
-            <div class="mobile-nav-label">Pillars</div>
-            <a href="/aml/" class="mobile-nav-item mobile-nav-pillar">
-              <span class="pillar-dot" style="background:var(--color-aml)"></span>AML
-            </a>
-            <a href="/stock/" class="mobile-nav-item mobile-nav-pillar">
-              <span class="pillar-dot" style="background:var(--color-markets)"></span>Markets
-            </a>
-            <a href="/science/" class="mobile-nav-item mobile-nav-pillar">
-              <span class="pillar-dot" style="background:var(--color-science)"></span>Science
-            </a>
-          </div>
-          <div class="mobile-nav-section">
-            <div class="mobile-nav-label">Resources</div>
-            <a href="/knowledge/diagrams/" class="mobile-nav-item">Diagrams</a>
-            <a href="/knowledge/about/" class="mobile-nav-item">About</a>
-            <a href="/contact/" class="mobile-nav-item">Contact</a>
-          </div>
-          <div class="mobile-nav-section">
-            <div class="mobile-nav-label">Discover</div>
-            <a href="/tags/" class="mobile-nav-item">Tags</a>
-            <a href="/search/" class="mobile-nav-item">Search</a>
-          </div>
+    <!-- Mobile nav panel (outside nav to avoid width constraints) -->
+    <div class="mobile-nav-panel" data-mobile-panel>
+      <div class="mobile-nav-scroll">
+        <div class="mobile-nav-section">
+          <div class="mobile-nav-label">Content</div>
+          <a href="/research/" class="mobile-nav-item">Research</a>
+          <a href="/learn/" class="mobile-nav-item">Learn</a>
+          <a href="/knowledge/" class="mobile-nav-item">Knowledge Base</a>
         </div>
-        <div class="mobile-nav-close-bar">
-          <button class="mobile-nav-close-btn" data-mobile-close aria-label="Close navigation">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-            Close
-          </button>
+        <div class="mobile-nav-section">
+          <div class="mobile-nav-label">Pillars</div>
+          <a href="/aml/" class="mobile-nav-item mobile-nav-pillar">
+            <span class="pillar-dot" style="background:var(--color-aml)"></span>AML
+          </a>
+          <a href="/stock/" class="mobile-nav-item mobile-nav-pillar">
+            <span class="pillar-dot" style="background:var(--color-markets)"></span>Markets
+          </a>
+          <a href="/science/" class="mobile-nav-item mobile-nav-pillar">
+            <span class="pillar-dot" style="background:var(--color-science)"></span>Science
+          </a>
+        </div>
+        <div class="mobile-nav-section">
+          <div class="mobile-nav-label">Resources</div>
+          <a href="/knowledge/diagrams/" class="mobile-nav-item">Diagrams</a>
+          <a href="/knowledge/about/" class="mobile-nav-item">About</a>
+          <a href="/contact/" class="mobile-nav-item">Contact</a>
+        </div>
+        <div class="mobile-nav-section">
+          <div class="mobile-nav-label">Discover</div>
+          <a href="/tags/" class="mobile-nav-item">Tags</a>
+          <a href="/search/" class="mobile-nav-item">Search</a>
         </div>
       </div>
-    </nav>
+      <div class="mobile-nav-close-bar">
+        <button class="mobile-nav-close-btn" data-mobile-close aria-label="Close navigation">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          Close
+        </button>
+      </div>
+    </div>
   </header>
 
   <main id="main" class="max-w-5xl mx-auto px-4 py-8" tabindex="-1">
