@@ -610,6 +610,18 @@ def main():
         encoding="utf-8")
     print("  redirect: /contact/ → /knowledge/contact/")
 
+    # --- /science/ redirect to /research/ ---
+    science_dir = OUTPUT_DIR / "science"
+    science_dir.mkdir(parents=True, exist_ok=True)
+    (science_dir / "index.html").write_text(
+        f'<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">'
+        f'<title>Science — AcaciaFund</title>'
+        f'<meta http-equiv="refresh" content="0;url={SITE_URL}/research/">'
+        f'<link rel="canonical" href="{SITE_URL}/research/">'
+        f'</head><body><p><a href="{SITE_URL}/research/">Research — AcaciaFund</a></p></body></html>',
+        encoding="utf-8")
+    print("  redirect: /science/ → /research/")
+
     # --- 404 ---
     _suggestions = sorted(all_content, key=lambda c: hashlib.md5(c.slug.encode()).hexdigest())[:3]
     html = render_template("404.j2",
