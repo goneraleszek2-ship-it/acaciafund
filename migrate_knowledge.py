@@ -59,7 +59,7 @@ EXPANDED_BODIES = {
 <li><strong>CI/CD:</strong> GitHub → Cloudflare Pages auto-deploy from <code>main</code></li>
 </ul>
 
-<p><em>Last updated: 2026-06-14</em></p>""",
+<p><em>Last updated: 2026-06-08</em></p>""",
 
     "knowledge/contact": """<h2>Contact Us</h2>
 <p>Get in touch with the AcaciaFund team. We welcome questions, feedback, research collaborations, and bug reports.</p>
@@ -76,7 +76,7 @@ EXPANDED_BODIES = {
 <h3>Content Suggestions</h3>
 <p>To suggest a topic for research synthesis or a new knowledge base entry, open a GitHub issue with the "content-suggestion" label and include relevant source links.</p>
 
-<p><em>Last updated: 2026-06-14</em></p>""",
+<p><em>Last updated: 2026-06-08</em></p>""",
 
     "knowledge/faq": """<h2>Frequently Asked Questions</h2>
 
@@ -104,7 +104,7 @@ EXPANDED_BODIES = {
 <h3>Does AcaciaFund use client-side JavaScript?</h3>
 <p>JavaScript is used only for UI enhancements: dark mode toggling, mobile navigation, reading progress bar, table of contents highlighting, and focus mode. No JavaScript is required for reading content — the site is fully functional with JavaScript disabled.</p>
 
-<p><em>Last updated: 2026-06-14</em></p>""",
+<p><em>Last updated: 2026-06-08</em></p>""",
 
     "knowledge/glossary": """<h2>Glossary — Research &amp; Financial Crime Terminology</h2>
 <p>Key terms used across AcaciaFund's research, organized by pillar. This glossary is continuously expanded as new concepts are encountered.</p>
@@ -152,7 +152,7 @@ EXPANDED_BODIES = {
 <dt><strong>Medallion Architecture</strong></dt><dd>Bronze (raw) → Silver (cleaned) → Gold (aggregated) layering pattern for lakehouse data organization.</dd>
 </dl>
 
-<p><em>Last updated: 2026-06-14</em></p>""",
+<p><em>Last updated: 2026-06-08</em></p>""",
 
     "knowledge/research-methodology": """<h2>Research Methodology</h2>
 <p>How AcaciaFund transforms raw signals into structured, quality-scored research articles.</p>
@@ -220,7 +220,7 @@ Default weights: w₁=0.35, w₂=0.25, w₃=0.25, w₄=0.15
 </ul>
 <p>The final artifact is static HTML deployed to Cloudflare Pages via <code>python3.13 generator.py</code>.</p>
 
-<p><em>Last updated: 2026-06-14</em></p>""",
+<p><em>Last updated: 2026-06-08</em></p>""",
 
     "knowledge/pillar-taxonomy": """<h2>Pillar Taxonomy Guide</h2>
 <p>How AcaciaFund organizes research into three thematic pillars, with criteria for classification and examples.</p>
@@ -264,12 +264,12 @@ Default weights: w₁=0.35, w₂=0.25, w₃=0.25, w₄=0.15
 <li><strong>Data Engineering Infrastructure</strong> — common underpinning for all three pillars, covered in the DataOps knowledge base</li>
 </ul>
 
-<p><em>Last updated: 2026-06-14</em></p>""",
+<p><em>Last updated: 2026-06-08</em></p>""",
 
     "knowledge/changelog": """<h2>Changelog</h2>
 <p>Platform version history and notable changes to AcaciaFund.</p>
 
-<h3>2026-06-14 — Knowledge Base Overhaul</h3>
+<h3>2026-06-08 — Knowledge Base Overhaul</h3>
 <ul>
 <li>Added dedicated <code>knowledge.j2</code> template with TOC, breadcrumbs, cross-references, and progress bar</li>
 <li>Reorganized knowledge entries into categories: Platform, Guides, Reference, Architecture</li>
@@ -281,7 +281,7 @@ Default weights: w₁=0.35, w₂=0.25, w₃=0.25, w₄=0.15
 <li>Generated category-specific thumbnail SVGs for knowledge sub-categories</li>
 </ul>
 
-<h3>2026-06-12 — DataOps System Architecture</h3>
+<h3>2026-06-08 — DataOps System Architecture</h3>
 <ul>
 <li>Added system architecture knowledge page</li>
 <li>Added DataOps glossary and open source tool landscape</li>
@@ -289,7 +289,7 @@ Default weights: w₁=0.35, w₂=0.25, w₃=0.25, w₄=0.15
 <li>Added <code>seed_dataops.py</code> for DataOps/engineering content seeding</li>
 </ul>
 
-<h3>2026-06-10 — 3-Category Taxonomy Launch</h3>
+<h3>2026-06-08 — 3-Category Taxonomy Launch</h3>
 <ul>
 <li>Introduced <code>content_type</code> field (research | learn | knowledge)</li>
 <li>Reclassified all registry entries</li>
@@ -318,7 +318,7 @@ Default weights: w₁=0.35, w₂=0.25, w₃=0.25, w₄=0.15
 <li>12 initial research articles (daily digest format)</li>
 </ul>
 
-<p><em>Last updated: 2026-06-14</em></p>""",
+<p><em>Last updated: 2026-06-08</em></p>""",
 
     "knowledge/system-architecture": """<h2>AcaciaFund as a DataOps Pipeline</h2>
 <p>AcaciaFund is not just a static site — it is a <strong>data product</strong> produced by an automated DataOps pipeline. Every component from source ingestion to final HTML rendering follows DataOps principles: version control, quality gates, observability, and reproducible builds.</p>
@@ -418,7 +418,7 @@ Default weights: w₁=0.35, w₂=0.25, w₃=0.25, w₄=0.15
 </ul>
 <p>This follows the <strong>lambda architecture</strong> pattern: batch (static site) + speed (API) layers.</p>
 
-<p><em>Last updated: 2026-06-15</em></p>""",
+<p><em>Last updated: 2026-06-08</em></p>""",
 }
 
 def generate_knowledge_thumbnail(category: str) -> str:
@@ -602,7 +602,7 @@ def main():
                 "created_at": now.isoformat(),
                 "updated_at": None,
                 "pillar": "",
-                "date_str": "2026-06-14",
+                "date_str": "2026-06-08",
                 "thumbnail_svg": generate_knowledge_thumbnail(category),
                 "og_svg": "",
                 "featured_image": "",
@@ -645,7 +645,7 @@ def main():
                 "knowledge/open-source-tools": ["dataops", "tools", "open-source", "reference"],
                 "knowledge/system-architecture": ["dataops", "architecture", "system", "pipeline"],
             }.get(slug, entry.get("tags", []))
-            entry["date_str"] = "2026-06-14"
+            entry["date_str"] = "2026-06-08"
             entry["corrected_at"] = now.isoformat()
             entry["thumbnail_svg"] = generate_knowledge_thumbnail(category)
 
