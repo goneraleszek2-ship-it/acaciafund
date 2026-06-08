@@ -416,7 +416,7 @@ def main():
             pillar_stories[best[0]].append(story)
 
         log(f"AML={len(pillar_stories['aml'])}, STOCK={len(pillar_stories['stock'])}, "
-            f"SCIENCE={len(pillar_stories['science'])}, unclassified={unclassified}")
+            f"archived={len(pillar_stories[''])}, unclassified={unclassified}")
 
         arxiv_papers = fetch_arxiv(since_hours=72)
         log(f"Fetched {len(arxiv_papers)} arXiv papers")
@@ -436,7 +436,7 @@ def main():
                 best = max(classifications, key=lambda x: x[1])
                 p = best[0]
             else:
-                p = "science"
+                p = ""
             pillar_stories[p].append({
                 "title": paper["title"], "url": paper.get("url", ""), "hn_url": "",
                 "points": 0, "created_at": paper.get("published", ""),

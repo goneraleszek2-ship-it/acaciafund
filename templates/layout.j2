@@ -212,16 +212,36 @@
         <p>&copy; {{ year }} AcaciaFund. All rights reserved.</p>
         <p class="text-xs mt-1" style="color:var(--color-text-muted)">Research synthesis &amp; experimental learning platform</p>
       </div>
-      <nav aria-label="Footer navigation">
-        <ul class="flex gap-4" role="list">
-          <li><a href="/research/" class="hover:opacity-70 transition">Research</a></li>
-          <li><a href="/learn/" class="hover:opacity-70 transition">Learn</a></li>
-          <li><a href="/knowledge/" class="hover:opacity-70 transition">Knowledge</a></li>
-          <li><a href="/tags/" class="hover:opacity-70 transition">Tags</a></li>
-          <li><a href="/knowledge/about/" class="hover:opacity-70 transition">About</a></li>
-          <li><a href="/feed.xml" class="hover:opacity-70 transition">RSS</a></li>
-        </ul>
-      </nav>
+      <div class="flex flex-col items-end gap-3">
+        <div class="pillar-matrix" role="img" aria-label="Color system matrix: 3 pillars × 3 content layers">
+          <div></div>
+          <div class="pillar-matrix-header">AML</div>
+          <div class="pillar-matrix-header">Markets</div>
+          <div class="pillar-matrix-header">Data&nbsp;Eng</div>
+          <div class="pillar-matrix-label">Research</div>
+          <div class="pillar-matrix-cell matrix-tooltip" style="background:var(--matrix-aml-research)" data-label="AML Research"></div>
+          <div class="pillar-matrix-cell matrix-tooltip" style="background:var(--matrix-markets-research)" data-label="Markets Research"></div>
+          <div class="pillar-matrix-cell matrix-tooltip" style="background:var(--matrix-de-research)" data-label="DE Research"></div>
+          <div class="pillar-matrix-label">Knowledge</div>
+          <div class="pillar-matrix-cell matrix-tooltip" style="background:var(--matrix-aml-knowledge)" data-label="AML Knowledge"></div>
+          <div class="pillar-matrix-cell matrix-tooltip" style="background:var(--matrix-markets-knowledge)" data-label="Markets Knowledge"></div>
+          <div class="pillar-matrix-cell matrix-tooltip" style="background:var(--matrix-de-knowledge)" data-label="DE Knowledge"></div>
+          <div class="pillar-matrix-label">Learn</div>
+          <div class="pillar-matrix-cell matrix-tooltip" style="background:var(--matrix-aml-learn)" data-label="AML Learn"></div>
+          <div class="pillar-matrix-cell matrix-tooltip" style="background:var(--matrix-markets-learn)" data-label="Markets Learn"></div>
+          <div class="pillar-matrix-cell matrix-tooltip" style="background:var(--matrix-de-learn)" data-label="DE Learn"></div>
+        </div>
+        <nav aria-label="Footer navigation">
+          <ul class="flex gap-4" role="list">
+            <li><a href="/research/" class="hover:opacity-70 transition">Research</a></li>
+            <li><a href="/learn/" class="hover:opacity-70 transition">Learn</a></li>
+            <li><a href="/knowledge/" class="hover:opacity-70 transition">Knowledge</a></li>
+            <li><a href="/tags/" class="hover:opacity-70 transition">Tags</a></li>
+            <li><a href="/knowledge/about/" class="hover:opacity-70 transition">About</a></li>
+            <li><a href="/feed.xml" class="hover:opacity-70 transition">RSS</a></li>
+          </ul>
+        </nav>
+      </div>
     </div>
   </footer>
   <script>

@@ -20,7 +20,6 @@ PLAUSIBLE_DOMAIN = ""
 # Paths (source)
 REGISTRY_PATH = PROJECT_ROOT / "registry.json"
 TEMPLATE_DIR = PROJECT_ROOT / "templates"
-STATIC_SRC_DIR = PROJECT_ROOT / "public"
 PIPELINE_STATIC_DIR = PROJECT_ROOT / "static"
 CONTENT_DIR = PROJECT_ROOT / "content"
 

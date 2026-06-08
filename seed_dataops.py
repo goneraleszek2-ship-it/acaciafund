@@ -33,8 +33,8 @@ NEW_RESEARCH = [
         "slug": "blog/2026-06-08-dataops-science",
         "title": "Reproducible ML Pipelines in Computational Biology: MLOps for CRISPR Target Discovery",
         "description": "Applying DataOps and MLOps principles to computational biology workflows: version-controlled training data, reproducible feature engineering, automated model validation, and pipeline CI/CD for CRISPR target prediction.",
-        "date": "2026-06-08", "pillar": "science",
-        "tags": ["science", "dataops", "mlops", "crispr", "reproducibility", "bioinformatics"],
+        "date": "2026-06-08", "pillar": "data-engineering",
+        "tags": ["dataops", "data-engineering", "mlops", "crispr", "reproducibility", "bioinformatics"],
         "sqi": 0.84, "hn_pts": 423, "source_count": 15, "domains": 6,
     },
 ]
@@ -480,7 +480,7 @@ def main():
                              f"**Key numbers:** {hn} · {art['source_count']} · {art['domains']}\n"
                              f"**SQI:** {sqi}",
             "cross_pillar_html": f"### Cross-pillar connections\n- This DataOps-focused article bridges "
-                                 f"{['AML and Data Engineering','Market Data and Real-Time Engineering','Scientific Computing and MLOps'][['aml','stock','science'].index(pillar)]}",
+                                 f"{['AML and Data Engineering','Market Data and Real-Time Engineering','Scientific Computing and MLOps'][['aml','stock','data-engineering'].index(pillar)]}",
             "bloom_questions": bloom_questions, "flashcards": flashcards,
             "signals": signals, "source_breakdown": source_breakdown,
             "quality_metrics": quality_metrics, "lineage": {}, "quality_flags": [],

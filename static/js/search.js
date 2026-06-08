@@ -39,7 +39,7 @@
       resultsEl.innerHTML = '<p class="text-sm py-8 text-center" style="color:var(--color-text-muted)">No results for "' + query + '"</p>';
       return;
     }
-    var pillarColors = {aml:'#d97706', stock:'#22c55e', science:'#a855f7'};
+    var pillarColors = {aml:'#d97706', stock:'#22c55e', 'data-engineering':'#6366f1'};
     var typeLabels = {research:'Research', learn:'Learn', knowledge:'Knowledge'};
     var html = '';
     results.forEach(function(r){

@@ -36,6 +36,16 @@
   --color-aml: #c97d3e;
   --color-markets: #3a7d5c;
   --color-data-engineering: #6366f1;
+  /* Pillar × Layer matrix (3 pillars × research/knowledge/learn) */
+  --matrix-aml-research: #c97d3e;
+  --matrix-aml-knowledge: #92400e;
+  --matrix-aml-learn: #78350f;
+  --matrix-markets-research: #3a7d5c;
+  --matrix-markets-knowledge: #166534;
+  --matrix-markets-learn: #14532d;
+  --matrix-de-research: #6366f1;
+  --matrix-de-knowledge: #4338ca;
+  --matrix-de-learn: #3730a3;
 }
 
 body {
@@ -342,6 +352,15 @@ body.focus-mode article {
     --color-aml: #d4a373;
     --color-markets: #6abf8a;
     --color-data-engineering: #818cf8;
+    --matrix-aml-research: #d4a373;
+    --matrix-aml-knowledge: #b97c4a;
+    --matrix-aml-learn: #9a6535;
+    --matrix-markets-research: #6abf8a;
+    --matrix-markets-knowledge: #4a9f6a;
+    --matrix-markets-learn: #3a7f55;
+    --matrix-de-research: #818cf8;
+    --matrix-de-knowledge: #6366f1;
+    --matrix-de-learn: #4f46e5;
   }
 }
 
@@ -430,4 +449,69 @@ svg:not([class*="w-"]):not([class*="h-"]) {
   width: auto;
   height: auto;
   max-width: 100%;
+}
+
+/* === Pillar × Layer Color Matrix === */
+.pillar-matrix {
+  display: inline-grid;
+  grid-template-columns: auto 1fr 1fr 1fr;
+  gap: 0;
+  font-size: 0.75rem;
+  line-height: 1.2;
+}
+.pillar-matrix-cell {
+  width: 2.25rem;
+  height: 2.25rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.6rem;
+  color: #fff;
+  border-radius: 4px;
+  transition: transform 0.15s, box-shadow 0.15s;
+  cursor: default;
+}
+.pillar-matrix-cell:hover {
+  transform: scale(1.15);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+.pillar-matrix-label {
+  display: flex;
+  align-items: center;
+  padding-right: 0.5rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.pillar-matrix-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.6rem;
+  padding-bottom: 0.25rem;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.matrix-tooltip {
+  position: relative;
+}
+.matrix-tooltip:hover::after {
+  content: attr(data-label);
+  position: absolute;
+  bottom: calc(100% + 4px);
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--color-text);
+  color: var(--color-bg);
+  font-size: 0.625rem;
+  padding: 2px 6px;
+  border-radius: 3px;
+  white-space: nowrap;
+  z-index: 10;
 }

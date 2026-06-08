@@ -1,10 +1,10 @@
 # AcaciaFund — Site State & Feature Inventory
 
-> **Last updated:** 2026-06-07  
+> **Last updated:** 2026-06-08  
 > **Deployed URL:** https://www.acaciafund.org  
 > **Repo:** https://github.com/goneraleszek2-ship-it/acaciafund  
 > **Generator:** `python3.13 generator.py`  
-> **Build output:** 233 HTML pages + fractal thumbnails + OG images + search index + Atom feed  
+> **Build output:** 326 HTML pages + fractal thumbnails + OG images + search index + Atom feed  
 > **Host:** Cloudflare Pages (static)
 
 ---
@@ -37,25 +37,23 @@ No build framework (no Astro, no Hugo). The output is ready-to-serve static HTML
 | Page | Route | Template | Content Source |
 |------|-------|----------|----------------|
 | Home | `/` | `index.j2` | Featured + latest research + learn + knowledge cards |
-| Research article (×33) | `/YYYY-MM-DD-slug/` | `blog_post.j2` | `registry.json` |
-| Learn lesson (×15) | `/learn/slug/` | `learn.j2` | `registry.json` |
-| Learn index | `/learn/` | `learn_index.j2` | All 15 lessons (+ hub), difficulty-grouped, pillar progress bars, due-for-review |
-| Knowledge article (×10) | `/knowledge/slug/` | `knowledge.j2` | `registry.json` |
+| Research article (×56) | `/YYYY-MM-DD-slug/` | `blog_post.j2` | `registry.json` |
+| Learn lesson (×16) | `/learn/slug/` | `learn.j2` | `registry.json` |
+| Learn index | `/learn/` | `learn_index.j2` | All lessons, difficulty-grouped, pillar progress bars, due-for-review |
+| Knowledge article (×12) | `/knowledge/slug/` | `knowledge.j2` | `registry.json` |
 | Knowledge index | `/knowledge/` | `knowledge_index.j2` | All references, sub-category grouped |
 | Research index | `/research/` | `category_index.j2` | All research articles |
-| AML pillar | `/aml/` | `pillar_index.j2` | Filtered entries |
-| Markets pillar | `/market/` (redirect) + `/stock/` | `pillar_index.j2` | Filtered entries |
-| Science pillar | `/science/` | `pillar_index.j2` | Filtered entries |
+| AML pillar | `/aml/` | `pillar_index.j2` | Filtered entries (14 articles) |
+| Markets pillar | `/stock/` | `pillar_index.j2` | Filtered entries (17 articles) |
+| Data Engineering pillar | `/data-engineering/` | `pillar_index.j2` | Filtered entries (32 articles) |
+| Science redirect | `/science/` → `/research/` | (meta-refresh) | Cached-visitor redirect |
 | Search | `/search/` | `search.j2` | Vanilla JS fuzzy search |
 | 404 | `/404.html` | `404.j2` | Deterministic suggestions |
-| About | `/about/` | `layout.j2` | `content/en/about/index.md` |
-| Contact | `/contact/` | `layout.j2` | `content/contact/index.md` |
-| Research (static) | `/research.html` | `layout.j2` | `content/en/research/index.md` |
-| Feed | `/feed.xml` | — | Atom feed, last 20 posts |
+| Feed | `/feed.xml` | — | Atom feed, last 20 published posts |
 | Sitemap | `/sitemap.xml` | — | All pages |
 | Robots | `/robots.txt` | — | Allow all, sitemap link |
 
-**Total: 233 HTML pages** (33 research + 16 learn + 10 knowledge + 5 indices + 4 static + 1 search + 1 404 + 1 home + 162 tag archives)
+**Total: 326 HTML pages** (56 research + 16 learn + 12 knowledge + 5 indices + 1 search + 1 404 + 1 home + 230 tag archives + 3 pillar pages + 1 redirect)
 
 ---
 
@@ -79,7 +77,7 @@ All colors live in `:root` CSS variables in `custom.css`, overridden by `.dark` 
 | `--color-header-bg` | `rgba(250,247,242,0.9)` | Sticky header backdrop |
 | `--color-aml` | `#c97d3e` | AML pillar accent |
 | `--color-markets` | `#3a7d5c` | Markets pillar accent |
-| `--color-science` | `#5b5ea6` | Science pillar accent |
+| `--color-data-engineering` | `#6366f1` | Data Engineering pillar accent |
 
 #### Dark Mode (`.dark` class)
 | Token | Value |
@@ -237,13 +235,14 @@ Dependencies: `jinja2`, `markdown2`, `pydantic`
 
 | Pillar | Research | Learn | Knowledge | Topics |
 |--------|----------|-------|-----------|--------|
-| AML | 11 | 5 | 2 | Financial crime, compliance, regulation, risk, crypto, DeFi |
-| Markets | 10 | 6 | 4 | Semiconductors, AI industry, manufacturing, EV, quantum |
-| Science | 12 | 4 | 4 | Biology, quantum, neuroscience, space, climate, gene therapy |
+| AML | 14 | 5 | 2 | Financial crime, compliance, regulation, risk, crypto, DeFi |
+| Markets | 17 | 6 | 4 | Semiconductors, AI industry, manufacturing, EV, quantum |
+| Data Engineering | 32 | 6 | 6 | Orchestration, quality, streaming, lakehouse, analytics, data mesh |
 
-Total: 59 entries (33 research + 16 learn + 10 knowledge)
+Total: 84 entries (56 research + 16 learn + 12 knowledge)
 
 All content is auto-synthesized from HackerNews + arXiv sources.
+Science pillar discontinued (Jun 2026). `/science/` redirects to `/research/`.
 
 ---
 
@@ -338,33 +337,24 @@ All content is auto-synthesized from HackerNews + arXiv sources.
 │       ├── Inter-SemiBold.woff2
 │       └── Inter-Bold.woff2
 │
-├── content/
-│   ├── en/
-│   │   ├── about/index.md
-│   │   ├── research/index.md
-│   │   └── scholarship/index.md
-│   └── contact/index.md
-│
-├── dist/                     # Generated output (60+ pages)
+├── dist/                     # Generated output (326+ pages)
 │   ├── index.html
 │   ├── 404.html
 │   ├── search/index.html
 │   ├── learn/index.html
 │   ├── knowledge/index.html
 │   ├── research/index.html
-│   ├── about/index.html
-│   ├── contact/index.html
-│   ├── research.html
 │   ├── feed.xml
 │   ├── sitemap.xml
 │   ├── robots.txt
 │   ├── _headers
 │   ├── aml/index.html
 │   ├── stock/index.html
-│   ├── science/index.html
-│   ├── YYYY-MM-DD-slug/index.html (×33)
-│   ├── learn/slug/index.html (×8)
-│   ├── knowledge/slug/index.html (×10)
+│   ├── data-engineering/index.html
+│   ├── science/index.html (→ /research/ meta-refresh redirect)
+│   ├── YYYY-MM-DD-slug/index.html (×56)
+│   ├── learn/slug/index.html (×16)
+│   ├── knowledge/slug/index.html (×12)
 │   └── static/ (copied from static/)
 │
 ├── railway.json              # Railway deployment config

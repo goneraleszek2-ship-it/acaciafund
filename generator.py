@@ -22,7 +22,7 @@ from schemas import RegistryData
 from core.visuals import source_bar_svg, sparkline_svg, bloom_chart_svg, radar_svg, heatmap_svg, donut_svg, generate_thumbnail_svg, generate_og_image
 from config import (
     PROJECT_ROOT, SITE_URL, SITE_NAME, SITE_DESCRIPTION, PLAUSIBLE_DOMAIN,
-    REGISTRY_PATH, TEMPLATE_DIR, OUTPUT_DIR, STATIC_SRC_DIR,
+    REGISTRY_PATH, TEMPLATE_DIR, OUTPUT_DIR,
     STATIC_DST_DIR, PIPELINE_STATIC_DIR, CONTENT_DIR,
     SQI_THRESHOLD_MIN, SQI_BADGE_HIGH, SQI_BADGE_MED, SQI_DEFAULT,
     INTEREST_SQI_WEIGHT, INTEREST_RECENCY_WEIGHT, INTEREST_RECENCY_DAYS,
@@ -214,9 +214,14 @@ def sanitize_domain_breakdown(html: str) -> str:
     return html
 
 
+def is_future_post(post) -> bool:
+    return bool(post.created_at and post.created_at > datetime.now(timezone.utc))
+
+
 def interest_score(post, now: datetime) -> float:
     sqi = post.signals.get("avg_sqi", 0.0) if post.signals else 0.0
     age_days = (now - (post.created_at or now)).days if post.created_at else 365
+    age_days = max(0, age_days)
     recency = max(0.1, 1.0 - age_days / INTEREST_RECENCY_DAYS)
     return sqi * INTEREST_SQI_WEIGHT + recency * INTEREST_RECENCY_WEIGHT
 
@@ -262,12 +267,6 @@ def main():
                 dest = STATIC_DST_DIR / rel
                 dest.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(item, dest)
-    if STATIC_SRC_DIR.exists():
-        for sub in {"images", "icons"}:
-            src = STATIC_SRC_DIR / sub
-            if src.exists():
-                shutil.copytree(src, STATIC_DST_DIR / sub, dirs_exist_ok=True)
-
     env = Environment(
         loader=FileSystemLoader(TEMPLATE_DIR),
         autoescape=select_autoescape(["html", "xml"]),
@@ -578,8 +577,9 @@ def main():
         (out_dir / "index.html").write_text(html, encoding="utf-8")
         print(f"  pillar: {pillar}/index.html")
 
-    # --- HOMEPAGE ---
-    featured = sorted_research[:3] if len(sorted_research) >= 3 else sorted_research
+    # --- HOMEPAGE (filter future posts from featured/recent) ---
+    published_research = [p for p in sorted_research if not is_future_post(p)]
+    featured = published_research[:3] if len(published_research) >= 3 else published_research
     home_og_key = hashlib.md5(b"AcaciaFund homepage").hexdigest()[:12]
     home_og_url = f"{SITE_URL}/static/images/og_{home_og_key}.svg"
     index_html = render_template("index.j2",
@@ -587,7 +587,7 @@ def main():
                        description="AcaciaFund — research synthesis & experimental learning platform. Automated classification of HackerNews + arXiv content using Bloom taxonomy."),
         is_index=True, page_path="",
         og_image_url=home_og_url,
-        featured_posts=featured, recent_posts=sorted_research[:12],
+        featured_posts=featured, recent_posts=published_research[:12],
         learn_items=learn_items[:6], knowledge_items=knowledge_items[:6],
         thumbnail_base=f"{SITE_URL}/static/images", thumbnail_key=thumbnail_key, **ctx_base)
     (OUTPUT_DIR / "index.html").write_text(index_html, encoding="utf-8")
@@ -688,10 +688,11 @@ def main():
     print("  search: search/index.html")
 
     # --- FEED ---
-    feed_candidates = [p.created_at for p in research_items[:20] if p.created_at]
+    published_for_feed = [p for p in research_items if not is_future_post(p)]
+    feed_candidates = [p.created_at for p in published_for_feed[:20] if p.created_at]
     feed_updated = max(feed_candidates).isoformat() if feed_candidates else now.isoformat()
     feed_items = []
-    for post in research_items[:20]:
+    for post in published_for_feed[:20]:
         path = slug_to_path(post.slug)
         desc = (post.description or post.body_html[:200])[:300]
         post_updated = (post.created_at or now).isoformat()

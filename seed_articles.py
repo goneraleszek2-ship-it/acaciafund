@@ -116,48 +116,7 @@ NEW_ARTICLES = [
         "tags": ["markets", "quantum", "venture-capital", "startups", "deep-tech"],
         "sqi": 0.74, "hn_pts": 489, "source_count": 12, "domains": 5,
     },
-    # --- SCIENCE ---
-    {
-        "slug": "blog/2026-01-29-science",
-        "title": "AlphaFold 3 predicts 200 million protein structures in largest-ever validation study",
-        "description": "DeepMind's AlphaFold 3 achieves unprecedented scale, predicting 200 million protein structures with experimental validation across 10,000 targets, accelerating drug discovery and structural biology.",
-        "date": "2026-01-29", "pillar": "science",
-        "tags": ["science", "ai", "biology", "proteins", "drug-discovery", "deepmind"],
-        "sqi": 0.88, "hn_pts": 1023, "source_count": 20, "domains": 8,
-    },
-    {
-        "slug": "blog/2026-02-25-science",
-        "title": "New room temperature superconductivity claim: LK-99 replication attempt yields unexpected results",
-        "description": "Comprehensive analysis of the latest room temperature superconductivity claim, following rigorous replication attempts by 15 independent laboratories showing partial resistance drops but no definitive zero resistance.",
-        "date": "2026-02-25", "pillar": "science",
-        "tags": ["science", "physics", "superconductivity", "materials", "replication"],
-        "sqi": 0.65, "hn_pts": 756, "source_count": 18, "domains": 7,
-    },
-    {
-        "slug": "blog/2026-03-15-science",
-        "title": "Neuralink first human trial results: 12 patients achieve brain-computer interface milestones",
-        "description": "Detailed report on Neuralink's first human clinical trial results across 12 patients, examining cursor control accuracy, communication speeds for locked-in patients, and long-term implant biocompatibility.",
-        "date": "2026-03-15", "pillar": "science",
-        "tags": ["science", "neuroscience", "bci", "neuralink", "clinical-trials"],
-        "sqi": 0.82, "hn_pts": 912, "source_count": 16, "domains": 6,
-    },
-    {
-        "slug": "blog/2026-04-22-science",
-        "title": "JWST detects unexpected atmospheric chemistry on temperate exoplanet in habitable zone",
-        "description": "JWST reveals unexpected atmospheric composition on a temperate exoplanet in the habitable zone, including potential biosignature gases and unusual chemical disequilibrium that challenges current atmospheric models.",
-        "date": "2026-04-22", "pillar": "science",
-        "tags": ["science", "space", "exoplanets", "jwst", "astronomy", "atmosphere"],
-        "sqi": 0.87, "hn_pts": 1156, "source_count": 14, "domains": 6,
-    },
-    {
-        "slug": "blog/2026-05-27-science",
-        "title": "CRISPR-based gene therapy receives expanded FDA approval for five genetic disorders",
-        "description": "FDA expands approval for CRISPR-based gene therapy to treat five additional genetic disorders, analyzing clinical trial outcomes, patient eligibility criteria, pricing models, and long-term safety monitoring requirements.",
-        "date": "2026-05-27", "pillar": "science",
-        "tags": ["science", "crispr", "gene-therapy", "fda", "biotech", "medicine"],
-        "sqi": 0.84, "hn_pts": 834, "source_count": 17, "domains": 7,
-    },
-    # --- New batch: Data Engineering meets Pillars ---
+    # --- Data Engineering × Pillar cross-posts ---
     {
         "slug": "blog/2026-06-08-aml-dataeng",
         "title": "Streaming ETL for Suspicious Activity Reports: Real-Time AML Data Pipelines with Kafka and Flink",
@@ -860,11 +819,11 @@ def generate_body_html(article: dict) -> str:
         f"<p>This topic has connections across multiple pillars:</p>",
         f"<ul>",
     ]
-    cross = {"aml": "Markets/Science", "stock": "AML/Science", "science": "Markets/AML", "data-engineering": "Markets/AML"}
+    cross = {"aml": "Markets/Data Engineering", "stock": "AML/Data Engineering", "data-engineering": "Markets/AML"}
     sections.append(f"<li><strong>{cross[p]}:</strong> "
                     f"Significant overlap identified with {src_count // 3} shared sources</li>")
     sections.append(f"<li><strong>Policy Implications:</strong> "
-                    f"Regulatory developments in this area may affect {['cross-border compliance','supply chain planning','research funding','data platform costs'][['aml','stock','science','data-engineering'].index(p)]}</li>")
+                    f"Regulatory developments in this area may affect {['cross-border compliance','supply chain planning','data platform costs'][['aml','stock','data-engineering'].index(p)]}</li>")
     sections.append("</ul>")
 
     sections += [
@@ -884,8 +843,8 @@ def make_bloom_questions(article: dict) -> list:
     return [
         {"bloom_level": "remember", "type": "mc",
          "question": f"Which pillar does the article '{title[:50]}...' belong to?",
-          "options": ["AML", "Markets", "Data Engineering", "Science", "Policy"],
-         "correct": {"aml": "AML", "stock": "Markets", "science": "Science", "data-engineering": "Data Engineering"}[p]},
+          "options": ["AML", "Markets", "Data Engineering", "Policy"],
+          "correct": {"aml": "AML", "stock": "Markets", "data-engineering": "Data Engineering"}[p]},
         {"bloom_level": "understand", "type": "mc",
          "question": f"What is the primary domain of this article?",
          "options": ["Technology", "Finance", "Science", "Mixed"],

@@ -54,8 +54,8 @@ def inject_external_sources(pillar_stories: dict[str, list[dict]]) -> dict[str, 
             best = max(classifications, key=lambda x: x[1])
             p = best[0]
         else:
-            # Default to science if unclassified
-            p = "science"
+            # Default to archived (unclassified)
+            p = ""
         
         pillar_stories[p].append({
             "title": paper["title"],
@@ -97,7 +97,7 @@ def main():
         pillar_stories[best[0]].append(story)
 
     log(f"AML={len(pillar_stories['aml'])}, STOCK={len(pillar_stories['stock'])}, "
-        f"SCIENCE={len(pillar_stories['science'])}, unclassified={unclassified}")
+        f"archived={len(pillar_stories[''])}, unclassified={unclassified}")
 
     source_counts = inject_external_sources(pillar_stories)
 

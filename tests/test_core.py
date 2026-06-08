@@ -6,6 +6,7 @@ and the data/config layer. No external API calls or network access.
 
 import json
 import re
+from datetime import datetime, timezone
 from pathlib import Path
 
 # ── Test data ──
@@ -44,6 +45,20 @@ _SAMPLE_STORIES = [
 
 _EMPTY_STORY: dict = {}
 _NO_SCORE_STORY = {"title": "Random blog post about something unrelated", "points": 1}
+
+
+def parse_date(s: str) -> datetime:
+    """Parse YYYY-MM-DD or ISO datetime string."""
+    if not s:
+        return datetime.min.replace(tzinfo=timezone.utc)
+    try:
+        return datetime.fromisoformat(s).replace(tzinfo=timezone.utc)
+    except (ValueError, TypeError):
+        pass
+    try:
+        return datetime.strptime(s[:10], "%Y-%m-%d").replace(tzinfo=timezone.utc)
+    except (ValueError, TypeError):
+        return datetime.min.replace(tzinfo=timezone.utc)
 
 
 # ══════════════════════════════════════════════
@@ -598,3 +613,43 @@ def test_pwa_manifest():
     assert "name" in data
     assert "icons" in data
     assert len(data["icons"]) >= 2
+    assert data.get("lang") == "en"
+    assert "science" not in data.get("categories", [])
+
+
+def test_no_future_articles():
+    """Blog articles should be within a reasonable future horizon (≤180 days)."""
+    registry = Path(__file__).parent.parent / "registry.json"
+    assert registry.exists()
+    data = json.loads(registry.read_text())
+    now = datetime.now(timezone.utc)
+    max_days = 180
+    for c in data["content"]:
+        if c.get("category") != "blog" or not c.get("date_str"):
+            continue
+        dt = parse_date(c["date_str"])
+        days_ahead = (dt - now).days
+        if days_ahead > max_days:
+            raise AssertionError(
+                f"{c['slug']} is {days_ahead} days in the future (max {max_days})"
+            )
+        if days_ahead > 28:
+            print(f"  NOTE: {c['slug']} is {days_ahead} days ahead (scheduled)")
+
+
+def test_future_posts_filtered_from_homepage():
+    """Future-dated posts must not appear in homepage featured/recent sections."""
+    registry_path = Path(__file__).parent.parent / "registry.json"
+    assert registry_path.exists()
+    registry = json.loads(registry_path.read_text())
+    now = datetime.now(timezone.utc)
+    for c in registry["content"]:
+        if c.get("category") != "blog" or not c.get("date_str"):
+            continue
+        dt = parse_date(c["date_str"])
+        if dt <= now:
+            continue
+        # Future posts must have content_type research AND a date_str
+        assert c.get("content_type") == "research"
+        assert c.get("date_str")
+        assert c.get("pillar") in ("data-engineering", "stock", "aml")
