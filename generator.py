@@ -160,13 +160,29 @@ CJK_RE = re.compile(r'[\u4e00-\u9fff\u3400-\u4dbf\uff00-\uffef]')
 EMOJI_RE = re.compile(r'[\U0001F300-\U0001F9FF\U0001FA00-\U0001FA6F\U0001FA70-\U0001FAFF\u2600-\u27BF\u2B50\U0001F1E0-\U0001F1FF]')
 
 
+MERMAID_PLACEHOLDER = "@@MERMAID_"
+_mermaid_counter = 0
+
 def sanitize_text(html: str, strip_emoji: bool = True) -> str:
+    global _mermaid_counter
     html = unicodedata.normalize('NFKC', html)
     html = CJK_RE.sub('', html)
     if strip_emoji:
         html = EMOJI_RE.sub('', html)
+    # Protect mermaid div content from space-collapsing (need indent for mindmap)
+    global _mermaid_counter
+    mermaid_map = {}
+    def _save_mermaid(m):
+        global _mermaid_counter
+        key = f"{MERMAID_PLACEHOLDER}{_mermaid_counter}_"
+        _mermaid_counter += 1
+        mermaid_map[key] = m.group(0)
+        return key
+    html = re.sub(r'(<div class="mermaid"[^>]*>)(.*?)(</div>)', _save_mermaid, html, flags=re.DOTALL)
     html = re.sub(r'  +', ' ', html)
     html = re.sub(r'>\s+<', '><', html)
+    for key, original in mermaid_map.items():
+        html = html.replace(key, original)
     return html
 
 
