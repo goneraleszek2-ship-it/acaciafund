@@ -43,6 +43,13 @@ PILLAR_CONFIG = {
         "heading": "Markets & Industry",
         "description": "Semiconductors, supply chains, AI industry, manufacturing.",
     },
+    "data-engineering": {
+        "label": "Data Engineering", "emoji": "gears", "color": "indigo",
+        "bg": "from-indigo-900 to-indigo-800", "accent": "indigo",
+        "text_color": "text-indigo-900", "badge_color": "bg-indigo-100 text-indigo-800",
+        "heading": "Data Engineering & Infrastructure",
+        "description": "Data pipelines, orchestration, quality engineering, streaming, storage, and analytics infrastructure.",
+    },
     "science": {
         "label": "Science", "emoji": "microscope", "color": "purple",
         "bg": "from-purple-900 to-purple-800", "accent": "purple",
@@ -51,8 +58,8 @@ PILLAR_CONFIG = {
         "description": "Biology, quantum, neuroscience, space, climate, complexity.",
     },
 }
-PILLAR_EMOJIS = {"aml": "shield", "stock": "chart", "science": "microscope"}
-PILLAR_NAMES = {"aml": "AML", "stock": "Markets", "science": "Science"}
+PILLAR_EMOJIS = {"aml": "shield", "stock": "chart", "data-engineering": "gears", "science": "microscope"}
+PILLAR_NAMES = {"aml": "AML", "stock": "Markets", "data-engineering": "Data Engineering", "science": "Science"}
 DIFFICULTY_ORDER = {"beginner": 0, "intermediate": 1, "advanced": 2}
 
 KNOWLEDGE_CATEGORIES = {
@@ -561,7 +568,8 @@ def main():
     print("  category: research/index.html")
 
     # --- PILLAR SUB-PAGES ---
-    for pillar, p_posts in pillar_groups.items():
+    for pillar in PILLAR_CONFIG:
+        p_posts = pillar_groups.get(pillar, [])
         out_dir = OUTPUT_DIR / pillar
         out_dir.mkdir(parents=True, exist_ok=True)
         pconf = PILLAR_CONFIG.get(pillar, PILLAR_CONFIG["aml"])

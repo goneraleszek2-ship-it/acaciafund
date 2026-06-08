@@ -25,6 +25,12 @@ PILLAR_META = {
         "tags_base": ["markets", "stocks", "semiconductors", "hardware"],
         "label": "Markets",
     },
+    "data-engineering": {
+        "color": "#6366f1", "bg1": "#1e1b4b", "bg2": "#312e81",
+        "icon_path": '<path d="M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zm2 3v2m4-2v6m4-6v4m4-4v8"/>',
+        "tags_base": ["data-engineering", "dataops", "pipeline", "infrastructure"],
+        "label": "Data Engineering",
+    },
     "science": {
         "color": "#a855f7", "bg1": "#1e1b4b", "bg2": "#3b0764",
         "icon_path": '<path d="M6 4h4M6 20h4M18 4h-4M18 20h-4M4 6v4M4 18v4M20 6v4M20 18v4"/>',

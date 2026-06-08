@@ -59,12 +59,42 @@ keywords = [
 ]
 domain_scores = { "nature.com" = 10, "science.org" = 10, "cell.com" = 9, "pnas.org" = 9, "biorxiv.org" = 8, "arxiv.org" = 7, "sciencedirect.com" = 7, "scientificamerican.com" = 8, "quantamagazine.org" = 9, "nautil.us" = 7, "aeon.co" = 6 }
 
+[pillars.data-engineering]
+label = "DATA_ENGINEERING"
+emoji = "⚙️"
+folder = "content/en/blog"
+tags = ["data-engineering", "dataops", "pipeline", "infrastructure"]
+description = "Data pipelines, orchestration, quality engineering, and analytics infrastructure"
+keywords = [
+  "dagster", "dbt", "airflow", "prefect", "kafka", "flink",
+  "spark", "beam", "iceberg", "delta lake", "hudi",
+  "parquet", "arrow", "duckdb", "clickhouse", "trino",
+  "great expectations", "soda", "data quality", "data contract",
+  "data lineage", "data catalog", "data mesh", "data product",
+  "data lakehouse", "medallion architecture",
+  "elt", "etl", "reverse etl", "cdc", "debezium",
+  "kafka connect", "stream processing", "batch processing",
+  "event-driven architecture", "data observability",
+  "terraform", "kubernetes", "docker", "ci/cd",
+  "mlops", "feature store", "feast", "mlflow", "model serving",
+  "data pipeline", "orchestration", "workflow", "dag",
+  "analytics engineering", "sql mesh", "data build tool",
+  "schema registry", "data platform", "data infrastructure",
+  "data engineering", "dataops", "data warehousing",
+  "data lake", "data integration", "data transformation",
+]
+domain_scores = { "dagster.io" = 10, "getdbt.com" = 10, "iceberg.apache.org" = 9, "kafka.apache.org" = 9, "flink.apache.org" = 9, "spark.apache.org" = 8, "duckdb.org" = 9, "clickhouse.com" = 8, "trino.io" = 8, "github.com" = 6, "dataengineeringweekly.com" = 8, "databricks.com" = 7, "confluent.io" = 8, "great-expectations.io" = 8, "soda.io" = 7, "airbyte.com" = 7, "dagster.io/blog" = 9, "getdbt.com/blog" = 9 }
+
 [domain_taxonomy]
 science = ["nature.com", "science.org", "cell.com", "pnas.org", "biorxiv.org", "arxiv.org", "quantamagazine.org", "sciencedirect.com", "scientificamerican.com"]
+data-engineering = ["dagster.io", "getdbt.com", "iceberg.apache.org", "kafka.apache.org", "flink.apache.org", "spark.apache.org", "duckdb.org", "clickhouse.com", "trino.io", "dataengineeringweekly.com", "databricks.com", "confluent.io", "great-expectations.io", "soda.io", "airbyte.com"]
 finance = ["bloomberg.com", "reuters.com", "wsj.com", "ft.com", "seekingalpha.com", "marketwatch.com", "investopedia.com"]
 regulation = ["fincen.gov", "fatf-gafi.org", "fca.org.uk", "sec.gov", "occ.gov", "bis.org", "ec.europa.eu"]
 technology = ["arstechnica.com", "techcrunch.com", "theverge.com", "wired.com", "anandtech.com", "tomshardware.com", "semiengineering.com"]
 media = ["nytimes.com", "theguardian.com", "bbc.com", "apnews.com", "gizmodo.com", "cnn.com", "npr.org"]
+
+[entities.data-engineering]
+values = ["Dagster", "dbt", "dbt Core", "dbt Cloud", "dbt Labs", "Apache Iceberg", "Apache Kafka", "Apache Flink", "Apache Spark", "Apache Beam", "Great Expectations", "Soda", "DuckDB", "ClickHouse", "Trino", "Presto", "DataHub", "Amundsen", "Atlan", "Monte Carlo", "Sifflet", "Apache Airflow", "Prefect", "Kestra", "Airbyte", "Fivetran", "Debezium", "Kafka Connect", "Feast", "Tecton", "MLflow", "Terraform", "Kubernetes", "Docker", "Delta Lake", "Apache Hudi", "SQLMesh", "Confluent", "Starburst", "Dremio", "MotherDuck", "Datafold", "dbt Mesh"]
 
 [entities.aml]
 values = ["FinCEN", "FATF", "SEC", "FCA", "ECB", "Fed", "OCC", "EBA", "Binance", "Coinbase", "Circle", "PayPal", "Stripe", "Block", "JPMorgan", "Goldman Sachs", "HSBC", "Deutsche Bank", "Citi", "Visa", "Mastercard", "SWIFT", "Pix", "FedNow"]
@@ -143,6 +173,17 @@ TSMC = "Taiwan Semiconductor Manufacturing Company — largest chip foundry"
 Visa = "Global payment card network"
 WHO = "World Health Organization"
 
+[learning_paths.data-engineering]
+label = "Data Engineering Path: From pipeline to platform"
+steps = [
+  { bloom = "remember", label = "Basics: data engineering glossary and tool landscape" },
+  { bloom = "understand", label = "Understanding: pipeline architectures and data flow" },
+  { bloom = "apply", label = "Practice: building pipelines with dbt and Dagster" },
+  { bloom = "analyze", label = "Analysis: performance, quality, and cost optimization" },
+  { bloom = "evaluate", label = "Evaluation: architecture trade-offs and design decisions" },
+  { bloom = "create", label = "Creation: designing a data platform from scratch" },
+]
+
 [learning_paths.aml]
 label = "AML Path: From fundamentals to strategy"
 steps = [
@@ -163,17 +204,6 @@ steps = [
   { bloom = "analyze", label = "Analysis: market trends and supply chains" },
   { bloom = "evaluate", label = "Evaluation: risk and diversification" },
   { bloom = "create", label = "Creation: investment strategy" },
-]
-
-[learning_paths.science]
-label = "Science Path: From concepts to synthesis"
-steps = [
-  { bloom = "remember", label = "Basics: systems glossary" },
-  { bloom = "understand", label = "Understanding: emergence and complexity" },
-  { bloom = "apply", label = "Practice: systems models" },
-  { bloom = "analyze", label = "Analysis: networks and feedback loops" },
-  { bloom = "evaluate", label = "Evaluation: theory critique" },
-  { bloom = "create", label = "Creation: interdisciplinary synthesis" },
 ]
 
 [source_tiers]

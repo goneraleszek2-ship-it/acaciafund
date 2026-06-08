@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="300" viewBox="0 0 600 300">
+  <defs>
+    <linearGradient id="de-hero-bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1e1b4b"/>
+      <stop offset="1" stop-color="#0f0f23"/>
+    </linearGradient>
+    <radialGradient id="de-hero-glow" cx="50%" cy="50%">
+      <stop offset="0" stop-color="#6366f1" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#6366f1" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="de-hero-line" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#6366f1" stop-opacity="0"/>
+      <stop offset="0.3" stop-color="#6366f1" stop-opacity="0.3"/>
+      <stop offset="0.7" stop-color="#6366f1" stop-opacity="0.3"/>
+      <stop offset="1" stop-color="#6366f1" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="300" fill="url(#de-hero-bg)" rx="8"/>
+  <rect width="600" height="300" fill="url(#de-hero-glow)"/>
+
+  <!-- Pipeline nodes and arrows -->
+  <g opacity="0.3">
+    <rect x="40" y="120" width="60" height="40" rx="6" fill="none" stroke="#818cf8" stroke-width="1.5"/>
+    <polygon points="108,130 120,140 108,150" fill="#818cf8"/>
+    <rect x="130" y="120" width="60" height="40" rx="6" fill="none" stroke="#818cf8" stroke-width="1.5"/>
+    <polygon points="198,130 210,140 198,150" fill="#818cf8"/>
+    <rect x="220" y="120" width="60" height="40" rx="6" fill="none" stroke="#818cf8" stroke-width="1.5"/>
+    <polygon points="288,130 300,140 288,150" fill="#818cf8"/>
+    <rect x="310" y="120" width="60" height="40" rx="6" fill="none" stroke="#818cf8" stroke-width="1.5"/>
+    <polygon points="378,130 390,140 378,150" fill="#818cf8"/>
+    <rect x="400" y="120" width="60" height="40" rx="6" fill="none" stroke="#818cf8" stroke-width="1.5"/>
+    <polygon points="468,130 480,140 468,150" fill="#818cf8"/>
+    <rect x="490" y="120" width="60" height="40" rx="6" fill="#818cf8" opacity="0.15"/>
+  </g>
+
+  <!-- Data flow streams between nodes -->
+  <g opacity="0.15">
+    <line x1="40" y1="160" x2="550" y2="160" stroke="#6366f1" stroke-width="0.5" stroke-dasharray="3,4"/>
+    <line x1="40" y1="165" x2="550" y2="165" stroke="#6366f1" stroke-width="0.3" stroke-dasharray="2,5"/>
+  </g>
+
+  <!-- Cylinders (storage) -->
+  <g opacity="0.25">
+    <ellipse cx="90" cy="230" rx="25" ry="8" fill="none" stroke="#818cf8" stroke-width="1"/>
+    <rect x="65" y="230" width="50" height="30" fill="none" stroke="#818cf8" stroke-width="1"/>
+    <ellipse cx="90" cy="260" rx="25" ry="8" fill="none" stroke="#818cf8" stroke-width="1"/>
+    <ellipse cx="300" cy="230" rx="25" ry="8" fill="none" stroke="#818cf8" stroke-width="1" opacity="0.6"/>
+    <rect x="275" y="230" width="50" height="30" fill="none" stroke="#818cf8" stroke-width="1" opacity="0.6"/>
+    <ellipse cx="300" cy="260" rx="25" ry="8" fill="none" stroke="#818cf8" stroke-width="1" opacity="0.6"/>
+    <ellipse cx="510" cy="230" rx="25" ry="8" fill="none" stroke="#818cf8" stroke-width="1" opacity="0.3"/>
+    <rect x="485" y="230" width="50" height="30" fill="none" stroke="#818cf8" stroke-width="1" opacity="0.3"/>
+    <ellipse cx="510" cy="260" rx="25" ry="8" fill="none" stroke="#818cf8" stroke-width="1" opacity="0.3"/>
+  </g>
+
+  <!-- Dotted arrows between storage -->
+  <g opacity="0.2">
+    <line x1="115" y1="245" x2="275" y2="245" stroke="#818cf8" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+    <line x1="325" y1="245" x2="485" y2="245" stroke="#818cf8" stroke-width="1" stroke-dasharray="4,3" marker-end="url(#arrow)"/>
+  </g>
+
+  <!-- Vertical accent lines -->
+  <line x1="100" y1="30" x2="100" y2="80" stroke="url(#de-hero-line)" stroke-width="0.5"/>
+  <line x1="500" y1="30" x2="500" y2="80" stroke="url(#de-hero-line)" stroke-width="0.5"/>
+
+  <!-- Bottom accent bar -->
+  <rect x="200" y="280" width="200" height="3" rx="1.5" fill="#6366f1" opacity="0.4"/>
+  <circle cx="300" cy="281.5" r="3" fill="#6366f1" opacity="0.6"/>
+</svg>

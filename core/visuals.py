@@ -79,9 +79,10 @@ SUBTOPIC_CATEGORIES: dict[str, dict[str, set[str]]] = {
 }
 
 PILLAR_COLORS = {
-    "aml":     {"bg": "#0f172a", "fg": "#1e3a5f",  "text": "#f8fafc", "accent": "#d97706"},
-    "stock":   {"bg": "#052e16", "fg": "#166534",  "text": "#f0fdf4", "accent": "#22c55e"},
-    "science": {"bg": "#3b0764", "fg": "#7e22ce",  "text": "#faf5ff", "accent": "#c084fc"},
+    "aml":              {"bg": "#0f172a", "fg": "#1e3a5f",  "text": "#f8fafc", "accent": "#d97706"},
+    "stock":            {"bg": "#052e16", "fg": "#166534",  "text": "#f0fdf4", "accent": "#22c55e"},
+    "data-engineering": {"bg": "#1e1b4b", "fg": "#3730a3",  "text": "#eef2ff", "accent": "#6366f1"},
+    "science":          {"bg": "#3b0764", "fg": "#7e22ce",  "text": "#faf5ff", "accent": "#c084fc"},
 }
 
 

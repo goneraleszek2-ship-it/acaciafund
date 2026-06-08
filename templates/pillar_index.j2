@@ -11,7 +11,7 @@
     </ol>
   </nav>
 
-  {%- set hero_map = {"aml": "pillar-aml-hero", "stock": "pillar-stock-hero", "science": "pillar-science-hero"} %}
+  {%- set hero_map = {"aml": "pillar-aml-hero", "stock": "pillar-stock-hero", "data-engineering": "pillar-data-engineering-hero", "science": "pillar-science-hero"} %}
   {%- set hero = hero_map.get(pillar, "pillar-aml-hero") %}
   <div class="mb-8 rounded-xl overflow-hidden">
     <img src="/static/images/{{ hero }}.svg" alt="{{ pconf.heading }} illustration" class="w-full h-auto" loading="lazy">
