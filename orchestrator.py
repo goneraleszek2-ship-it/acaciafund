@@ -19,7 +19,7 @@ from schemas import AcaciaContent, RegistryData, PipelineStage, MCPIntegration, 
 
 sys.path.insert(0, str(Path(__file__).parent))
 from core.data import PILLARS, log, extract_domain, extract_entities, extract_themes
-from core.fetch import fetch_hn_stories, fetch_arxiv, fetch_pubmed
+from core.fetch import fetch_hn_stories, fetch_arxiv, fetch_pubmed, fetch_semantic_scholar
 from core.analyze import classify_story
 from core.score import compute_signal_score, build_history
 from core.bloom import classify_bloom_level, generate_quiz_questions, generate_flashcards, level_label_en
@@ -426,6 +426,21 @@ def main():
                 "title": paper["title"], "url": paper["url"], "hn_url": "",
                 "points": 0, "created_at": paper["published"],
                 "author": "arXiv", "object_id": "", "source": "arxiv"
+            })
+
+        ss_papers = fetch_semantic_scholar(since_hours=168, max_results=40)
+        log(f"Fetched {len(ss_papers)} papers from Semantic Scholar")
+        for paper in ss_papers:
+            classifications = classify_story(paper)
+            if classifications:
+                best = max(classifications, key=lambda x: x[1])
+                p = best[0]
+            else:
+                p = "science"
+            pillar_stories[p].append({
+                "title": paper["title"], "url": paper.get("url", ""), "hn_url": "",
+                "points": 0, "created_at": paper.get("published", ""),
+                "author": paper.get("author", "Semantic Scholar"), "object_id": "", "source": "semantic_scholar"
             })
 
         for p in PILLARS:

@@ -9,21 +9,20 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from xml.etree import ElementTree as ET
 
-from .data import ALGOLIA_URL, USER_AGENT, HN_DISCUSSION_URL, log, extract_domain
+from .data import ALGOLIA_URL, USER_AGENT, HN_DISCUSSION_URL, log, extract_domain, write_dlq
 
 CACHE_DIR = Path(__file__).parent.parent / ".cache"
 CACHE_DIR.mkdir(exist_ok=True)
 
 
 def _request(url: str, timeout: int = 20, max_retries: int = 3) -> str | None:
-    """HTTP GET z retry i exponential backoff."""
+    """HTTP GET with retry and exponential backoff."""
     last_err = None
     for attempt in range(1, max_retries + 1):
         try:
             req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
             with urllib.request.urlopen(req, timeout=timeout) as resp:
                 data = resp.read().decode("utf-8", errors="replace")
-            # slow-read guard: if we don't get the full body in 20s → timeout
             if not data:
                 raise OSError("Empty response")
             return data
@@ -33,7 +32,7 @@ def _request(url: str, timeout: int = 20, max_retries: int = 3) -> str | None:
                 wait = 2 ** attempt
                 log(f"Retry {attempt}/{max_retries} in {wait}s: {e}", ok=False)
                 time.sleep(wait)
-        log(f"Error after {max_retries} attempts: {last_err}", ok=False)
+    log(f"Error after {max_retries} attempts: {last_err}", ok=False)
     return None
 
 
@@ -82,6 +81,7 @@ def fetch_hn_stories(target_date: datetime | None = None,
 
     raw = _cached_request(url, cache_key, ttl_hours=24) if use_cache else _request(url)
     if raw is None:
+        write_dlq("hn", url, "All retries exhausted", {"since_hours": since_hours, "min_points": min_points})
         return []
 
     try:
@@ -172,6 +172,8 @@ def fetch_arxiv(since_hours: int = 72, max_results: int = 100) -> list[dict]:
 
     xml = _request(url, timeout=30)
     if xml is None:
+        write_dlq("arxiv", url, "All retries exhausted",
+                   {"since_hours": since_hours, "max_results": max_results})
         return []
 
     parsed = _parse_arxiv_xml(xml)
@@ -244,10 +246,12 @@ def fetch_pubmed(since_hours: int = 168, max_results: int = 50) -> list[dict]:
     
     url = f"{base_url}?{urllib.parse.urlencode(params)}"
     raw = _request(url, timeout=30)
-    
+
     if raw is None:
+        write_dlq("pubmed", url, "All retries exhausted",
+                   {"since_hours": since_hours, "max_results": max_results, "step": "search"})
         return []
-    
+
     try:
         data = json.loads(raw)
         id_list = data.get("esearchresult", {}).get("idlist", [])
@@ -288,10 +292,13 @@ def _fetch_pubmed_details(id_list: list[str]) -> list[dict]:
         
         url = f"{base_url}?{urllib.parse.urlencode(params)}"
         xml_data = _request(url, timeout=30)
-        
+
         if xml_data:
             papers = _parse_pubmed_xml(xml_data)
             all_papers.extend(papers)
+        else:
+            write_dlq("pubmed", url, "Batch fetch failed",
+                       {"step": "details", "batch_ids": batch_ids})
     
     return all_papers
 
@@ -373,21 +380,72 @@ def _parse_pubmed_xml(xml: str) -> list[dict]:
 
 
 def fetch_semantic_scholar(since_hours: int = 168, max_results: int = 50) -> list[dict]:
-    """Fetch papers from Semantic Scholar (requires API key for full functionality).
+    """Fetch papers from Semantic Scholar API.
     
-    Free tier: 100 requests/day per IP with registration.
-    Without an API key, returns empty list (placeholder for future implementation).
+    Searches for recent papers across AML, finance, and science domains.
+    Free tier: 100 requests/day without API key.
+    With SEMANTIC_SCHOLAR_API_KEY set: higher rate limits.
     """
-    # Check for API key in environment
     api_key = os.environ.get("SEMANTIC_SCHOLAR_API_KEY")
-    if not api_key:
-        log("Semantic Scholar fetch disabled - API key not configured (set SEMANTIC_SCHOLAR_API_KEY)", ok=False)
-        return []
-    
-    # TODO: Implement actual Semantic Scholar API call when key is available
-    # This is a placeholder for future development
-    log("Semantic Scholar fetch not yet implemented - returning empty list", ok=False)
-    return []
+    headers = {"Accept": "application/json"}
+    if api_key:
+        headers["x-api-key"] = api_key
+
+    papers: list[dict] = []
+    queries = [
+        "anti-money laundering compliance",
+        "financial crime regulation",
+        "semiconductor supply chain",
+        "artificial intelligence industry",
+        "quantum computing",
+        "gene therapy CRISPR",
+        "climate technology",
+        "data engineering pipeline",
+    ]
+    fields = "title,url,publicationDate,authors,venue,citationCount,abstract"
+    per_query = max(1, max_results // len(queries))
+
+    for query in queries:
+        url = (
+            f"https://api.semanticscholar.org/graph/v1/paper/search"
+            f"?query={urllib.parse.quote(query)}"
+            f"&limit={per_query}"
+            f"&fields={fields}"
+            f"&year=2025-"
+        )
+        data = _cached_request(url, f"semantic_{query[:20].replace(' ', '_')}", ttl_hours=12)
+        if not data:
+            continue
+        try:
+            resp = json.loads(data)
+            for paper in resp.get("data", []):
+                pub_date = paper.get("publicationDate") or ""
+                if pub_date:
+                    try:
+                        pub = datetime.fromisoformat(pub_date)
+                        if (datetime.now(timezone.utc) - pub).total_seconds() > since_hours * 3600:
+                            continue
+                    except ValueError:
+                        pass
+                title = paper.get("title", "")
+                if not title:
+                    continue
+                papers.append({
+                    "title": title,
+                    "url": paper.get("url", ""),
+                    "published": pub_date,
+                    "author": (paper.get("authors") or [{}])[0].get("name", "") if paper.get("authors") else "",
+                    "abstract": (paper.get("abstract") or "")[:500],
+                    "venue": paper.get("venue", ""),
+                    "citations": paper.get("citationCount", 0),
+                    "source": "semantic_scholar",
+                })
+        except (json.JSONDecodeError, KeyError, TypeError) as e:
+            log(f"Semantic Scholar parse error: {e}", ok=False)
+            continue
+
+    log(f"Fetched {len(papers)} papers from Semantic Scholar ({len(queries)} queries)")
+    return papers[:max_results]
 
 
 # Update ARXIV_CATEGORIES to include more relevant sections

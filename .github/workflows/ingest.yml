@@ -1,0 +1,50 @@
+name: Daily Ingest Pipeline
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: pip install markdown2 pydantic jinja2
+
+      - name: Run ingest pipeline
+        run: python orchestrator.py --ingest
+
+      - name: Rebuild static site
+        run: python3.13 generator.py
+
+      - name: Check for changes
+        id: git_diff
+        run: |
+          if git diff --quiet registry.json; then
+            echo "No changes to commit"
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Commit and push
+        if: steps.git_diff.outputs.changed == 'true'
+        run: |
+          git config user.name "acaciafund-bot"
+          git config user.email "bot@acaciafund.org"
+          git add registry.json static/images/ dist/ .registry-archive/
+          git commit -m "auto: daily ingest $(date +%Y-%m-%d)"
+          git push

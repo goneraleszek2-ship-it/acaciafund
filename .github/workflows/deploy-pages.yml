@@ -22,8 +22,38 @@ jobs:
       - name: Install dependencies
         run: pip install jinja2 markdown2 pydantic
 
+      - name: Run tests
+        run: python -m pytest tests/ -q --ignore=tests/test_usability.py.stale
+
       - name: Build static site
         run: python3.13 generator.py
+
+      - name: Upload build metrics
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-meta
+          path: dist/build-meta.json
+          if-no-files-found: warn
+
+      - name: Upload DLQ artifacts (if any)
+        uses: actions/upload-artifact@v4
+        with:
+          name: dlq-failures
+          path: .dlq/
+          if-no-files-found: ignore
+
+      - name: Report SQI quality gate
+        id: sqi_check
+        run: |
+          if [ -f dist/build-meta.json ]; then
+            LOW_SQI=$(python3 -c "import json; d=json.load(open('dist/build-meta.json')); print(d['quality']['low_sqi_count'])")
+            echo "low_sqi=$LOW_SQI" >> $GITHUB_OUTPUT
+            if [ "$LOW_SQI" -gt "0" ]; then
+              echo "⚠️  $LOW_SQI content items below SQI threshold $(python3 -c "import json; print(json.load(open('dist/build-meta.json'))['quality']['gate_min_sqi'])")"
+            else
+              echo "✅ All content meets SQI quality threshold"
+            fi
+          fi
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
@@ -31,3 +61,48 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy dist --project-name=acaciafund
+
+      - name: Notify on failure or quality gate
+        if: ${{ failure() || steps.sqi_check.outputs.low_sqi != '0' }}
+        env:
+          WEBHOOK_URL: ${{ secrets.NOTIFICATION_WEBHOOK_URL }}
+        run: |
+          if [ -z "$WEBHOOK_URL" ]; then
+            echo "No NOTIFICATION_WEBHOOK_URL set — skipping notification"
+            exit 0
+          fi
+          STATUS="${{ job.status }}"
+          LOW_SQI="${{ steps.sqi_check.outputs.low_sqi }}"
+          COMMIT_MSG="${{ github.event.head_commit.message }}"
+          PAYLOAD=$(cat <<'EOPAYLOAD'
+          {
+            "text": "AcaciaFund build notification",
+            "blocks": [
+              {
+                "type": "header",
+                "text": {
+                  "type": "plain_text",
+                  "text": ":acaciafund: AcaciaFund Build"
+                }
+              },
+              {
+                "type": "section",
+                "fields": [
+                  {"type": "mrkdwn", "text": "*Status:*\n$STATUS"},
+                  {"type": "mrkdwn", "text": "*Commit:*\n<${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|${COMMIT_MSG:0:60}>"},
+                  {"type": "mrkdwn", "text": "*SQI low items:*\n$LOW_SQI"},
+                  {"type": "mrkdwn", "text": "*Runner:*\n${{ github.run_id }}"}
+                ]
+              },
+              {
+                "type": "context",
+                "elements": [
+                  {"type": "mrkdwn", "text": "Repository: ${{ github.repository }} · ${{ github.ref_name }}"}
+                ]
+              }
+            ]
+          }
+          EOPAYLOAD
+          )
+          # Send as generic JSON webhook (Slack-compatible)
+          curl -s -X POST -H "Content-Type: application/json" -d "$PAYLOAD" "$WEBHOOK_URL"

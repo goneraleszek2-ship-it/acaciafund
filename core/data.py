@@ -1,3 +1,4 @@
+import json
 import re
 import sys
 import tomllib
@@ -104,3 +105,32 @@ def extract_themes(titles: list[str]) -> list[str]:
         words.extend(w for w in cleaned.split() if len(w) > 3 and w not in STOP_WORDS)
     counts = Counter(words)
     return [w.capitalize() for w, _ in counts.most_common(5)]
+
+
+# ── Dead-Letter Queue ──
+
+DLQ_DIR = BASE_DIR / ".dlq"
+
+def write_dlq(source: str, url: str, error: str, context: dict | None = None) -> None:
+    """Write a failed fetch attempt to the dead-letter queue.
+    
+    Args:
+        source: Source name (e.g. 'hn', 'arxiv', 'pubmed').
+        url: The URL that failed.
+        error: Error message.
+        context: Optional metadata (params, response snippet, etc.).
+    """
+    DLQ_DIR.mkdir(parents=True, exist_ok=True)
+    ts = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%f")
+    filename = f"{source}_{ts}.json"
+    entry = {
+        "source": source,
+        "url": url,
+        "error": str(error),
+        "timestamp": ts,
+        "context": context or {},
+    }
+    (DLQ_DIR / filename).write_text(
+        json.dumps(entry, indent=2, default=str), encoding="utf-8"
+    )
+    log(f"DLQ: {filename} written for {source}", ok=False)

@@ -64,9 +64,9 @@ def test_pillars_loaded():
 
 def test_domain_taxonomy():
     from core.data import DOMAIN_TAXONOMY
-    assert "nauka" in DOMAIN_TAXONOMY
-    assert "finanse" in DOMAIN_TAXONOMY
-    assert "regulacje" in DOMAIN_TAXONOMY
+    assert "science" in DOMAIN_TAXONOMY
+    assert "finance" in DOMAIN_TAXONOMY
+    assert "regulation" in DOMAIN_TAXONOMY
 
 
 def test_known_entities():
@@ -105,11 +105,11 @@ def test_extract_domain():
 
 def test_categorize_domain():
     from core.data import categorize_domain
-    assert categorize_domain("nature.com") == "nauka"
-    assert categorize_domain("bloomberg.com") == "finanse"
-    assert categorize_domain("fincen.gov") == "regulacje"
-    assert categorize_domain("arstechnica.com") == "technologia"
-    assert categorize_domain("unknown.xyz") == "inne"
+    assert categorize_domain("nature.com") == "science"
+    assert categorize_domain("bloomberg.com") == "finance"
+    assert categorize_domain("fincen.gov") == "regulation"
+    assert categorize_domain("arstechnica.com") == "technology"
+    assert categorize_domain("unknown.xyz") == "other"
 
 
 def test_extract_entities():
@@ -242,14 +242,14 @@ def test_classify_bloom_understand():
     assert level == "understand", f"Expected understand, got {level}"
 
 
-def test_level_label_pl():
-    from core.bloom import level_label_pl
-    assert level_label_pl("remember") == "Zapamiętywanie"
-    assert level_label_pl("understand") == "Rozumienie"
-    assert level_label_pl("apply") == "Stosowanie"
-    assert level_label_pl("analyze") == "Analiza"
-    assert level_label_pl("evaluate") == "Ewaluacja"
-    assert level_label_pl("create") == "Tworzenie"
+def test_level_label_en():
+    from core.bloom import level_label_en
+    assert level_label_en("remember") == "Remembering"
+    assert level_label_en("understand") == "Understanding"
+    assert level_label_en("apply") == "Applying"
+    assert level_label_en("analyze") == "Analyzing"
+    assert level_label_en("evaluate") == "Evaluating"
+    assert level_label_en("create") == "Creating"
 
 
 def test_generate_quiz_questions():
@@ -463,7 +463,7 @@ def test_build_classification_confidence():
     result = _build_classification_confidence(
         _SAMPLE_STORIES, "aml", _SAMPLE_STORIES, 0
     )
-    assert "Klasyfikacja" in result
+    assert "Classification" in result
     assert "%" in result
 
 

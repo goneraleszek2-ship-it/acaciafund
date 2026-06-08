@@ -8,6 +8,7 @@ import json
 import os
 import re
 import shutil
+import time
 import unicodedata
 from collections import defaultdict
 from datetime import datetime, timezone
@@ -219,6 +220,7 @@ def interest_score(post, now: datetime) -> float:
 
 
 def main():
+    start_time = time.time()
     print("Starting AcaciaFund generator...")
 
     if not REGISTRY_PATH.exists():
@@ -717,7 +719,84 @@ def main():
 """, encoding="utf-8")
 
     total = len(list(OUTPUT_DIR.rglob("*.html")))
-    print(f"Generation complete. Total pages: {total}")
+    duration = time.time() - start_time
+    print(f"Generation complete. Total pages: {total} ({duration:.2f}s)")
+
+    # ── Build metrics (build-meta.json) ──
+    sqi_values = [
+        c.signals.get("avg_sqi", 0.0)
+        for c in all_content
+        if c.signals and isinstance(c.signals, dict) and "avg_sqi" in c.signals
+    ]
+    sqi_sorted = sorted(sqi_values) if sqi_values else [0.0]
+    n_sqi = len(sqi_sorted)
+    sqi_min = sqi_sorted[0] if n_sqi > 0 else 0.0
+    sqi_max = sqi_sorted[-1] if n_sqi > 0 else 0.0
+    sqi_avg = round(sum(sqi_sorted) / n_sqi, 3) if n_sqi > 0 else 0.0
+    sqi_median = sqi_sorted[n_sqi // 2] if n_sqi > 0 else 0.0
+    sqi_q1 = sqi_sorted[n_sqi // 4] if n_sqi > 3 else sqi_min
+    sqi_q3 = sqi_sorted[3 * n_sqi // 4] if n_sqi > 3 else sqi_max
+
+    # Source-type aggregation across all content
+    source_counts: dict[str, int] = defaultdict(int)
+    for c in all_content:
+        if c.source_breakdown:
+            for src, cnt in c.source_breakdown.items():
+                source_counts[src] += cnt
+
+    # Soft quality gate: flag low-SQI items without excluding them
+    low_sqi_items = [
+        {"slug": c.slug, "title": c.title[:80], "sqi": c.signals.get("avg_sqi", 0.0)}
+        for c in all_content
+        if c.signals and isinstance(c.signals, dict)
+        and c.signals.get("avg_sqi", SQI_DEFAULT) < SQI_THRESHOLD_MIN
+    ]
+    low_sqi_items.sort(key=lambda x: x["sqi"])
+
+    # Content type counts
+    content_type_counts: dict[str, int] = defaultdict(int)
+    for c in all_content:
+        ct = c.content_type or "unknown"
+        content_type_counts[ct] += 1
+
+    build_meta = {
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "duration_seconds": round(duration, 2),
+        "page_count": total,
+        "registry_hash": build_hash,
+        "sqi": {
+            "min": round(sqi_min, 3),
+            "max": round(sqi_max, 3),
+            "avg": sqi_avg,
+            "median": round(sqi_median, 3),
+            "q1": round(sqi_q1, 3),
+            "q3": round(sqi_q3, 3),
+            "sample_count": n_sqi,
+        },
+        "sources": {
+            "last_build": datetime.now(timezone.utc).isoformat(),
+            "source_type_counts": dict(source_counts),
+        },
+        "content_counts": dict(content_type_counts),
+        "quality": {
+            "gate_min_sqi": SQI_THRESHOLD_MIN,
+            "gate_passed": len(low_sqi_items) == 0,
+            "low_sqi_count": len(low_sqi_items),
+            "low_sqi_items": low_sqi_items,
+        },
+    }
+
+    build_meta_path = OUTPUT_DIR / "build-meta.json"
+    build_meta_path.write_text(
+        json.dumps(build_meta, indent=2, default=str), encoding="utf-8"
+    )
+    print(f"  build-meta: build-meta.json ({build_meta_path.stat().st_size} bytes)")
+
+    if low_sqi_items:
+        log_text = "; ".join(f"{i['slug']} (SQI={i['sqi']})" for i in low_sqi_items)
+        print(f"  quality gate: {len(low_sqi_items)} items below SQI {SQI_THRESHOLD_MIN}")
+        print(f"    -> {log_text}")
+
     return 0
 
 
