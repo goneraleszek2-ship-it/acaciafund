@@ -120,17 +120,30 @@
 
       <!-- Mobile nav panel -->
       <div class="mobile-nav-panel sm:hidden" data-mobile-panel>
-        <a href="/research/" class="block px-3 py-2 rounded hover:bg-[var(--color-bg)] transition">Research</a>
-        <a href="/learn/" class="block px-3 py-2 rounded hover:bg-[var(--color-bg)] transition">Learn</a>
-        <a href="/knowledge/" class="block px-3 py-2 rounded hover:bg-[var(--color-bg)] transition">Knowledge</a>
-        <div class="pl-3 border-l-2 ml-3 mt-1" style="border-color:var(--color-border)">
-          <a href="/aml/" class="block py-1.5 text-sm hover:text-[var(--color-accent)]">AML</a>
-          <a href="/stock/" class="block py-1.5 text-sm hover:text-[var(--color-accent)]">Markets</a>
-          <a href="/science/" class="block py-1.5 text-sm hover:text-[var(--color-accent)]">Science</a>
+        <div class="mobile-nav-section">
+          <div class="mobile-nav-label">Content</div>
+          <a href="/research/" class="mobile-nav-item">Research</a>
+          <a href="/learn/" class="mobile-nav-item">Learn</a>
+          <a href="/knowledge/" class="mobile-nav-item">Knowledge</a>
         </div>
-        <a href="/knowledge/about/" class="block px-3 py-2 rounded hover:bg-[var(--color-bg)] transition">About</a>
-        <a href="/tags/" class="block px-3 py-2 rounded hover:bg-[var(--color-bg)] transition">Tags</a>
-        <a href="/search/" class="block px-3 py-2 rounded hover:bg-[var(--color-bg)] transition">Search</a>
+        <div class="mobile-nav-section">
+          <div class="mobile-nav-label">Pillars</div>
+          <a href="/aml/" class="mobile-nav-item mobile-nav-pillar">
+            <span class="pillar-dot" style="background:var(--color-aml)"></span>AML
+          </a>
+          <a href="/stock/" class="mobile-nav-item mobile-nav-pillar">
+            <span class="pillar-dot" style="background:var(--color-markets)"></span>Markets
+          </a>
+          <a href="/science/" class="mobile-nav-item mobile-nav-pillar">
+            <span class="pillar-dot" style="background:var(--color-science)"></span>Science
+          </a>
+        </div>
+        <div class="mobile-nav-section">
+          <div class="mobile-nav-label">More</div>
+          <a href="/knowledge/about/" class="mobile-nav-item">About</a>
+          <a href="/tags/" class="mobile-nav-item">Tags</a>
+          <a href="/search/" class="mobile-nav-item">Search</a>
+        </div>
       </div>
     </nav>
   </header>
@@ -206,12 +219,12 @@
         mobToggle.addEventListener('click', function() {
           var expanded = mobToggle.getAttribute('aria-expanded') === 'true';
           mobToggle.setAttribute('aria-expanded', !expanded);
-          mobPanel.style.display = expanded ? 'none' : 'block';
+          mobPanel.classList.toggle('open');
         });
-        document.querySelectorAll('[data-mobile-panel] a').forEach(function(link) {
+        mobPanel.querySelectorAll('a').forEach(function(link) {
           link.addEventListener('click', function() {
             mobToggle.setAttribute('aria-expanded', 'false');
-            mobPanel.style.display = 'none';
+            mobPanel.classList.remove('open');
           });
         });
       }
