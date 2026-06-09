@@ -173,7 +173,7 @@ img[loading="lazy"] { background: var(--color-border); }
 }
 
 /* Mobile navigation — native <dialog> */
-.mobile-nav-dialog {
+.mobile-nav-dialog[open] {
   display: flex;
   flex-direction: column;
   width: 100vw;
@@ -269,9 +269,9 @@ img[loading="lazy"] { background: var(--color-border); }
 }
 
 /* Hide mobile dialog on desktop (its default state is closed, but keep it hidden) */
-@media (min-width: 641px) {
+@media (min-width: 640px) {
   .mobile-nav-dialog {
-    display: none;
+    display: none !important;
   }
 }
 
