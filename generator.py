@@ -386,7 +386,12 @@ def main():
     now = datetime.now(timezone.utc)
     year = now.year
     registry_bytes = REGISTRY_PATH.read_bytes() if REGISTRY_PATH.exists() else b""
-    build_hash = hashlib.md5(registry_bytes).hexdigest()[:12]
+    # Include CSS file hashes in build_hash so CSS changes bust CDN cache
+    css_hasher = hashlib.md5()
+    css_hasher.update(registry_bytes)
+    for css_file in sorted(Path("static/css").glob("*.css")):
+        css_hasher.update(css_file.read_bytes())
+    build_hash = css_hasher.hexdigest()[:12]
     all_content = registry.content
 
     research_items = [c for c in all_content if c.content_type == "research"]
