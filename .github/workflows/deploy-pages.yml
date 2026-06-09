@@ -20,7 +20,10 @@ jobs:
           python-version: "3.13"
 
       - name: Install dependencies
-        run: pip install jinja2 markdown2 pydantic pytest
+        run: pip install jinja2 markdown2 pydantic pytest requests
+
+      - name: Fetch article images
+        run: python3.13 scripts/fetch_images.py
 
       - name: Run tests
         run: python -m pytest tests/ -q --ignore=tests/test_usability.py.stale
