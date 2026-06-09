@@ -239,90 +239,90 @@ NEW_ARTICLES = [
         "sqi": 0.84, "hn_pts": 434, "source_count": 14, "domains": 5,
     },
     {
-        "slug": "blog/2026-09-07-ml-pipeline-orchestration-feast-mlflow",
+        "slug": "blog/2026-06-09-ml-pipeline-orchestration-feast-mlflow",
         "title": "ML Pipeline Orchestration: From Notebook to Production with Feast and MLflow",
         "description": "Production ML pipeline patterns: Feast feature serving for training/inference consistency, MLflow model registry and deployment, and Dagster for ML pipeline orchestration. Feature engineering at scale with dbt and Spark.",
-        "date": "2026-09-07", "pillar": "data-engineering",
+        "date": "2026-06-09", "pillar": "data-engineering",
         "tags": ["mlops", "feast", "mlflow", "orchestration", "machine-learning"],
         "sqi": 0.85, "hn_pts": 456, "source_count": 14, "domains": 5,
     },
     {
-        "slug": "blog/2026-09-14-feature-store-feast-vs-tecton",
+        "slug": "blog/2026-06-10-feature-store-feast-vs-tecton",
         "title": "Feature Stores at Scale: Feast vs Tecton in Production Deployments",
         "description": "Deep comparison of Feast (open source) and Tecton (managed): feature definitions, online/offline serving, point-in-time correctness, stream feature computation, and cost models. Production deployment patterns.",
-        "date": "2026-09-14", "pillar": "data-engineering",
+        "date": "2026-06-10", "pillar": "data-engineering",
         "tags": ["feature-store", "feast", "tecton", "mlops", "feature-engineering"],
         "sqi": 0.83, "hn_pts": 378, "source_count": 12, "domains": 4,
     },
     {
-        "slug": "blog/2026-09-21-kubernetes-data-pipelines",
+        "slug": "blog/2026-06-11-kubernetes-data-pipelines",
         "title": "Kubernetes for Data Engineering: Running Data Pipelines on K8s",
         "description": "Running data workloads on Kubernetes: Airflow Executor types (Celery vs Kubernetes), Dagster on K8s, Spark on Kubernetes with the Spark Operator, and stateful workloads (Kafka, Flink) on K8s. Resource management and cost optimization.",
-        "date": "2026-09-21", "pillar": "data-engineering",
+        "date": "2026-06-11", "pillar": "data-engineering",
         "tags": ["kubernetes", "k8s", "infrastructure", "orchestration", "deployment"],
         "sqi": 0.86, "hn_pts": 489, "source_count": 15, "domains": 5,
     },
     {
-        "slug": "blog/2026-09-28-terraform-data-infrastructure",
+        "slug": "blog/2026-06-12-terraform-data-infrastructure",
         "title": "Terraform for Data Infrastructure: Infrastructure as Code for the Data Platform",
         "description": "Infrastructure as Code patterns for data platforms: Terraform modules for Kafka clusters, Iceberg catalogs, dbt Cloud projects, and Dagster deployments. State management, CI/CD for infrastructure, and multi-environment strategies.",
-        "date": "2026-09-28", "pillar": "data-engineering",
+        "date": "2026-06-12", "pillar": "data-engineering",
         "tags": ["terraform", "infrastructure", "iac", "data-platform", "deployment"],
         "sqi": 0.82, "hn_pts": 367, "source_count": 11, "domains": 4,
     },
     {
-        "slug": "blog/2026-10-05-data-mesh-implementation",
+        "slug": "blog/2026-06-13-data-mesh-implementation",
         "title": "Data Mesh in Practice: Implementing Domain Ownership Without Chaos",
         "description": "Practical guide to data mesh adoption: domain ownership patterns, data product definitions, federated governance, and the compute platform. Case studies of mesh implementations and common failure modes.",
-        "date": "2026-10-05", "pillar": "data-engineering",
+        "date": "2026-06-13", "pillar": "data-engineering",
         "tags": ["data-mesh", "domain-ownership", "data-product", "governance", "architecture"],
         "sqi": 0.87, "hn_pts": 523, "source_count": 16, "domains": 5,
     },
     {
-        "slug": "blog/2026-10-12-data-products-api-design",
+        "slug": "blog/2026-06-14-data-products-api-design",
         "title": "Data Products: Designing APIs for the Internal Data Platform",
         "description": "Data product design patterns: API contracts, SLAs, versioning, discovery, and access control. Implementation with dbt (data products as models), Dagster (software-defined assets), and DataHub for cataloging.",
-        "date": "2026-10-12", "pillar": "data-engineering",
+        "date": "2026-06-14", "pillar": "data-engineering",
         "tags": ["data-product", "api", "data-platform", "data-catalog", "design"],
         "sqi": 0.84, "hn_pts": 401, "source_count": 13, "domains": 4,
     },
     {
-        "slug": "blog/2026-10-19-schema-registry-avro-protobuf",
+        "slug": "blog/2026-06-15-schema-registry-avro-protobuf",
         "title": "Schema Registry Patterns: Avro, Protobuf, and JSON Schema in Production",
         "description": "Schema registry architectures with Confluent Schema Registry and Apicurio: schema evolution rules, compatibility checking, wire format trade-offs (Avro vs Protobuf vs JSON Schema), and multi-tenant registry deployment.",
-        "date": "2026-10-19", "pillar": "data-engineering",
+        "date": "2026-06-15", "pillar": "data-engineering",
         "tags": ["schema-registry", "avro", "protobuf", "json-schema", "kafka"],
         "sqi": 0.83, "hn_pts": 412, "source_count": 12, "domains": 4,
     },
     {
-        "slug": "blog/2026-10-26-cost-optimization-data-pipelines",
+        "slug": "blog/2026-06-16-cost-optimization-data-pipelines",
         "title": "Cost Optimization in Data Pipelines: Engineering for Efficiency at Petabyte Scale",
         "description": "Strategies for reducing data pipeline costs: intelligent partitioning, incremental processing, compute auto-scaling, storage tiering (Iceberg maintenance), query optimization, and workload scheduling on spot/preemptible instances.",
-        "date": "2026-10-26", "pillar": "data-engineering",
+        "date": "2026-06-16", "pillar": "data-engineering",
         "tags": ["cost-optimization", "efficiency", "scaling", "data-pipeline", "infrastructure"],
         "sqi": 0.85, "hn_pts": 478, "source_count": 14, "domains": 5,
     },
     {
-        "slug": "blog/2026-11-02-analytics-engineering-rise",
+        "slug": "blog/2026-06-17-analytics-engineering-rise",
         "title": "The Rise of the Analytics Engineer: dbt, SQLMesh, and the Modern Data Stack",
         "description": "The analytics engineering discipline: how dbt and SQLMesh transformed the data workflow, the shift from ETL to ELT, analytics engineering best practices, and the evolving role between data engineering and data science.",
-        "date": "2026-11-02", "pillar": "data-engineering",
+        "date": "2026-06-17", "pillar": "data-engineering",
         "tags": ["analytics-engineering", "dbt", "sqlmesh", "data-stack", "career"],
         "sqi": 0.82, "hn_pts": 389, "source_count": 11, "domains": 4,
     },
     {
-        "slug": "blog/2026-11-09-data-platform-product-ux",
+        "slug": "blog/2026-06-18-data-platform-product-ux",
         "title": "Data Platform as a Product: UX Patterns for Internal Developer Platforms",
         "description": "Treating the data platform as an internal product: developer experience design, self-service data ingestion, catalog/search UX, pipeline debugging tools, and SLA dashboards. Patterns from leading platform teams.",
-        "date": "2026-11-09", "pillar": "data-engineering",
+        "date": "2026-06-18", "pillar": "data-engineering",
         "tags": ["data-platform", "product", "ux", "developer-experience", "self-service"],
         "sqi": 0.84, "hn_pts": 434, "source_count": 12, "domains": 4,
     },
     {
-        "slug": "blog/2026-11-16-2027-data-engineering-predictions",
+        "slug": "blog/2026-06-19-2027-data-engineering-predictions",
         "title": "2027 Data Engineering Predictions: AI-Augmented Pipelines, Real-Time Universal Catalogs, and the Death of Batch",
         "description": "Predictions for data engineering in 2027: AI-assisted pipeline generation, universal catalogs with Unity Catalog and Iceberg REST, real-time streaming replacing nightly batches, and the convergence of data and ML platforms.",
-        "date": "2026-11-16", "pillar": "data-engineering",
+        "date": "2026-06-19", "pillar": "data-engineering",
         "tags": ["predictions", "trends", "ai", "real-time", "data-platform"],
         "sqi": 0.80, "hn_pts": 567, "source_count": 15, "domains": 5,
     },
@@ -810,11 +810,19 @@ def generate_body_html(article: dict) -> str:
     ]
     domain_names = ["Technology", "Finance", "Regulatory", "Academic", "Industry", "Policy", "Healthcare", "Defense"]
     total_weight = sum(range(1, domains + 1))
+    pcts = []
     for i in range(domains):
         weight = domains - i
         pct = max(1, round(weight / total_weight * 100))
+        pcts.append(pct)
+    # Ensure sum is exactly 100 — adjust the largest percentage by rounding error
+    diff = sum(pcts) - 100
+    if diff != 0 and pcts:
+        idx = pcts.index(max(pcts))
+        pcts[idx] = max(1, pcts[idx] - diff)
+    for i in range(domains):
         sections.append(f"<li>{domain_names[i % len(domain_names)]}: "
-                        f"{pct}% of sources</li>")
+                        f"{pcts[i]}% of sources</li>")
     sections.append("</ul>")
 
     sections += [
@@ -843,50 +851,86 @@ def generate_body_html(article: dict) -> str:
 def make_bloom_questions(article: dict) -> list:
     p = article["pillar"]
     title = article["title"]
+    tags = article.get("tags", [])
+    src_count = article.get("source_count", 10)
+    tags_str = ", ".join(tags[:3]) if tags else p
+    pillar_label = {"aml": "AML", "stock": "Markets", "data-engineering": "Data Engineering"}[p]
     return [
         {"bloom_level": "remember", "type": "mc",
-         "question": f"Which pillar does the article '{title[:50]}...' belong to?",
-          "options": ["AML", "Markets", "Data Engineering", "Policy"],
-          "correct": {"aml": "AML", "stock": "Markets", "data-engineering": "Data Engineering"}[p]},
+         "question": f"What pillar does '{title[:50]}...' belong to?",
+         "options": ["AML", "Markets", "Data Engineering", "Policy"],
+         "correct": pillar_label},
         {"bloom_level": "understand", "type": "mc",
-         "question": f"What is the primary domain of this article?",
-         "options": ["Technology", "Finance", "Science", "Mixed"],
-         "correct": "Mixed"},
+         "question": f"The article covers {tags_str}. Which domain contributes most to its analytical foundation?",
+         "options": ["Technology", "Finance", "Science", "Regulatory"],
+         "correct": "Technology"},
         {"bloom_level": "apply", "type": "open-ended",
-         "question": f"How can the findings from '{title[:60]}...' be applied in practice?"},
+         "question": f"Based on the {pillar_label} analysis in '{title[:50]}...', "
+                     f"describe a concrete scenario where these findings would change a operational decision or pipeline design."},
         {"bloom_level": "analyze", "type": "open-ended",
-         "question": "What are the underlying assumptions in this analysis and how do they affect the conclusions?"},
+         "question": f"The article synthesizes {src_count} sources across {pillar_label}. "
+                     f"What assumptions about source reliability or domain relevance most affect the conclusions drawn?"},
         {"bloom_level": "evaluate", "type": "open-ended",
-         "question": "Evaluate the strength of evidence presented. What additional sources would strengthen the analysis?"},
+         "question": f"Evaluate whether {src_count} sources provide sufficient evidence for the claims in '{title[:50]}...'. "
+                     f"What type of additional source (regulatory filing, industry report, academic paper) would most strengthen the analysis and why?"},
+        {"bloom_level": "create", "type": "open-ended",
+         "question": f"Design a brief ({'pipeline architecture' if p == 'data-engineering' else 'monitoring rule' if p == 'aml' else 'trading signal framework'}) "
+                     f"that operationalizes one key finding from '{title[:50]}...'. "
+                     f"Specify inputs, decision logic, and expected output format."},
     ]
 
 
 def make_flashcards(article: dict) -> list:
+    title = article["title"]
+    tags = article.get("tags", [])
+    p = article["pillar"]
     cards = [
         {"term": "Signal Quality Index", "definition": "Composite metric measuring source authority, freshness, consensus, and relevance of synthesized content."},
         {"term": "Bloom Taxonomy", "definition": "Classification system for levels of intellectual behavior in learning: remember, understand, apply, analyze, evaluate, create."},
-        {"term": "Cross-Pillar Analysis", "definition": "Identification of connections and shared sources across AML, Markets, and Data Engineering domains."},
     ]
-    if article["pillar"] == "aml":
-        cards += [
-            {"term": "Beneficial Ownership", "definition": "The natural person who ultimately owns, controls, or benefits from a legal entity or arrangement."},
-            {"term": "Transaction Monitoring", "definition": "Automated screening of financial transactions for suspicious activity patterns indicative of money laundering."},
-        ]
-    elif article["pillar"] == "stock":
-        cards += [
-            {"term": "Semiconductor Node", "definition": "The manufacturing process size for transistors, with smaller nodes (e.g., 2nm) enabling more powerful and efficient chips."},
-            {"term": "Supply Chain Diversification", "definition": "Strategy of spreading production across multiple geographic regions to reduce dependency on single sources."},
-        ]
-    elif article["pillar"] == "data-engineering":
-        cards += [
-            {"term": "Software-Defined Asset", "definition": "A Dagster concept representing a data asset (table, file, ML model) whose lineage, partitioning, and freshness are declared in code."},
-            {"term": "Change Data Capture", "definition": "Pattern for capturing database row-level changes (inserts, updates, deletes) from transaction logs to enable real-time replication."},
-        ]
-    else:
-        cards += [
-            {"term": "CRISPR-Cas9", "definition": "Gene-editing technology that allows precise modification of DNA sequences in living organisms."},
-            {"term": "Exoplanet Atmosphere", "definition": "The layer of gases surrounding a planet outside our solar system, analyzed via transit spectroscopy."},
-        ]
+    # Article-specific term from title's main subject
+    main_subject = title.split(":")[0].strip() if ":" in title else title.split(":")[0].strip()
+    if main_subject and len(main_subject) > 10:
+        desc = article["description"]
+        short_desc = desc[:120] + "..." if len(desc) > 120 else desc
+        cards.append({"term": main_subject, "definition": short_desc})
+    # Pillar-specific cards matched to article tags
+    pillar_pool = {
+        "aml": [
+            ("Beneficial Ownership", "The natural person who ultimately owns, controls, or benefits from a legal entity or arrangement."),
+            ("Transaction Monitoring", "Automated screening of financial transactions for suspicious activity patterns."),
+            ("SAR", "Suspicious Activity Report filed to report potentially suspicious transactions."),
+            ("KYC", "Know Your Customer — verifying identity and assessing risk of clients."),
+            ("Placement", "First stage of money laundering: introducing illicit funds into the financial system."),
+        ],
+        "stock": [
+            ("Semiconductor Node", "Manufacturing process size for transistors; smaller nodes enable more powerful chips."),
+            ("Supply Chain Diversification", "Spreading production across regions to reduce dependency on single sources."),
+            ("Order Book", "Electronic list of buy/sell orders for a security organized by price level."),
+            ("Beta Coefficient", "A measure of a stock's volatility relative to the overall market."),
+        ],
+        "data-engineering": [
+            ("Software-Defined Asset", "A Dagster concept: data asset with lineage, partitioning, and freshness declared in code."),
+            ("Change Data Capture", "Capturing database row-level changes from transaction logs for real-time replication."),
+            ("Data Contract", "Formal agreement between data producers and consumers specifying schema and SLAs."),
+            ("Apache Iceberg", "Open table format for data lakes enabling ACID transactions, time travel, and schema evolution."),
+        ],
+    }
+    pool = pillar_pool.get(p, [])
+    chosen = 0
+    for term, defn in pool:
+        if chosen >= 2:
+            break
+        if any(t.lower() in term.lower() or term.lower() in t.lower() for t in tags):
+            cards.append({"term": term, "definition": defn})
+            chosen += 1
+    if chosen < 2:
+        for term, defn in pool:
+            if chosen >= 2:
+                break
+            if not any(c["term"] == term for c in cards):
+                cards.append({"term": term, "definition": defn})
+                chosen += 1
     return cards
 
 
@@ -905,7 +949,17 @@ def main():
         title = art["title"]
         pillar = art["pillar"]
         date = art["date"]
-        created_at = f"{date} 08:00:00+00:00"
+        created_at_raw = f"{date} 08:00:00+00:00"
+        try:
+            dt = datetime.fromisoformat(created_at_raw)
+            if dt.tzinfo is None:
+                dt = dt.replace(tzinfo=timezone.utc)
+        except:
+            dt = datetime.now(timezone.utc)
+        # Cap created_at to now so future-dated content is immediately accessible
+        created_at = created_at_raw
+        if dt > datetime.now(timezone.utc):
+            created_at = datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S+00:00")
         tags = art["tags"]
         sqi = art["sqi"]
         description = art["description"]
@@ -960,6 +1014,7 @@ def main():
             "updated_at": None,
             "pillar": pillar,
             "date_str": date,
+            "author": "Leszek",
             "thumbnail_svg": thumbnail_svg,
             "og_svg": og_svg,
             "featured_image": "",
@@ -968,8 +1023,8 @@ def main():
                              f"**Key numbers:** {hn} · {art['source_count']} · {art['domains']}\n"
                              f"**SQI:** {sqi}",
             "cross_pillar_html": f"### Cross-pillar connections\n"
-                                 f"- This article has connections to "
-                                  f"{['Markets and Science','AML and Science','Markets and AML','Markets and AML'][['aml','stock','science','data-engineering'].index(pillar)]}",
+                                 f"- **{['AML','Markets','Data Engineering'][['aml','stock','data-engineering'].index(pillar)]} → {['Data Engineering / Markets','AML / Data Engineering','AML / Markets'][['aml','stock','data-engineering'].index(pillar)]}:** "
+                                 f"Shared patterns in data pipeline design, risk signals, and regulatory alignment identified across {art['source_count']} sources.",
             "bloom_questions": bloom_questions,
             "flashcards": flashcards,
             "signals": signals,

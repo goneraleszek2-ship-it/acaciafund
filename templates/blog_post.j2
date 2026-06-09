@@ -61,9 +61,12 @@
         <h1 class="text-3xl font-extrabold text-gray-900 leading-tight">{{ content.title | striptags }}</h1>
       </div>
       {%- if content.date_str %}
-      <time class="mt-2 block text-sm text-gray-500" datetime="{{ content.date_str }}">{{ content.date_str }}
+      <div class="mt-2 flex items-center gap-2 text-sm" style="color:var(--color-text-muted)">
+        <time datetime="{{ content.date_str }}">{{ content.date_str }}</time>
+        <span aria-hidden="true">·</span>
+        <span>By {{ content.author | default("Leszek") }}</span>
         {%- if page_body %} · {{ page_body | reading_time }} min read{% endif %}
-      </time>
+      </div>
       {%- endif %}
       {%- if content.tags and content.tags | length > 0 %}
       <div class="mt-3 flex flex-wrap gap-2">

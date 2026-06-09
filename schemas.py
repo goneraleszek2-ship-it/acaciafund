@@ -43,6 +43,7 @@ class AcaciaContent(BaseModel):
     curated_relations: List[dict] = []
     prerequisites: List[str] = []
     visual_fingerprint: str = ""
+    author: str = "Leszek"
 
     @validator('slug')
     def slug_must_be_alphanumeric_dashes_slashes(cls, v):

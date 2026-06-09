@@ -18,7 +18,7 @@ def test_new_features_in_generated_output():
     assert "Learn" in learn_html
 
     # 2. Fingerprint + layer badge on research page
-    research_html = (out / "blog" / "2026-11-16-2027-data-engineering-predictions" / "index.html").read_text(encoding="utf-8")
+    research_html = (out / "blog" / "2026-06-19-2027-data-engineering-predictions" / "index.html").read_text(encoding="utf-8")
     assert 'viewBox="0 0 120 32"' in research_html
     assert "Research" in research_html
 

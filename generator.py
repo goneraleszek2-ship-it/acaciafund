@@ -235,17 +235,25 @@ DOMAIN_BREAKDOWN_RE = re.compile(
 
 
 def sanitize_domain_breakdown(html: str) -> str:
-    """Cap domain breakdown percentages so they sum to <=100%."""
+    """Normalize domain breakdown percentages so they sum to exactly 100."""
     matches = list(DOMAIN_BREAKDOWN_RE.finditer(html))
     if not matches:
         return html
     total_pct = sum(int(m.group(2)) for m in matches)
     if total_pct <= 100:
         return html
+    rescaled = []
     for m in matches:
         domain = m.group(1)
         orig = int(m.group(2))
-        capped = max(1, int(orig * 100 / total_pct))
+        capped = max(1, round(orig * 100 / total_pct))
+        rescaled.append((domain, capped))
+    diff = sum(r[1] for r in rescaled) - 100
+    if diff != 0:
+        idx = max(range(len(rescaled)), key=lambda i: rescaled[i][1])
+        d, v = rescaled[idx]
+        rescaled[idx] = (d, max(1, v - diff))
+    for m, (domain, capped) in zip(matches, rescaled):
         html = html.replace(m.group(0), f'<li>{domain}: {capped}% of sources</li>', 1)
     return html
 
@@ -885,6 +893,8 @@ def main():
     sm.append(f'  <url><loc>{SITE_URL}/</loc><lastmod>{today}</lastmod><changefreq>daily</changefreq><priority>1.0</priority></url>')
     sm.append(f'  <url><loc>{SITE_URL}/tags/</loc><lastmod>{today}</lastmod><changefreq>weekly</changefreq><priority>0.4</priority></url>')
     for c in all_content:
+        if is_future_post(c):
+            continue
         lastmod = c.updated_at.date().isoformat() if c.updated_at else (c.created_at.date().isoformat() if c.created_at else today)
         sm.append(f'  <url><loc>{slug_to_url(c.slug)}</loc><lastmod>{lastmod}</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>')
     for p in section_pages:
