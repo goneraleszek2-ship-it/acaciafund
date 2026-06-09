@@ -290,9 +290,12 @@ def inject_section_images(body_html: str, section_images: list[dict]) -> str:
             alt = entry.get("image_alt", "")
             w = entry.get("width", 1200)
             h = entry.get("height", 675)
+            # Alternate style: full for even sections, contained for odd
+            style_class = "section-image--full" if section_idx % 2 == 0 else "section-image--contained"
+            figure_style = "background:var(--color-bg);border:1px solid var(--color-border)"
             f = [
-                '<figure class="section-image section-image--full my-6 rounded-lg overflow-hidden"',
-                ' style="background:var(--color-bg);border:1px solid var(--color-border)">',
+                f'<figure class="section-image {style_class} my-6 rounded-lg overflow-hidden"',
+                f' style="{figure_style}">',
                 f'<img src="{url}" alt="{alt}" width="{w}" height="{h}"',
                 ' loading="lazy" decoding="async"',
                 ' class="w-full h-auto object-cover">',

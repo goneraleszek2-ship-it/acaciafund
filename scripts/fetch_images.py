@@ -38,7 +38,7 @@ RATE_LIMIT_DELAY = 0.15
 MAX_WORKERS = 4
 MIN_SCORE = 20
 MAX_IMAGE_WIDTH = 1200
-TARGET_WORDS_PER_IMAGE = 200
+TARGET_WORDS_PER_IMAGE = 150
 
 PILLAR_KEYWORDS = {
     "aml": "compliance regulation security audit financial crime",
@@ -85,18 +85,18 @@ SECTION_WORD_MIN = {
 }
 
 CURATED_KNOWN = {
-    "eniac": "File:ENIAC_Penn1.jpg",
-    "nyse": "File:New_York_Stock_Exchange_Facade-01.jpg",
-    "treasury": "File:US_Treasury_Building_Washington_DC_2012.jpg",
-    "federal_reserve": "File:Eccles_Building_2015.jpg",
-    "semiconductor": "File:Wafer_2_Zoll_b.jpg",
-    "server_room": "File:Google_data_center_interior.jpg",
-    "trading_floor": "File:Chicago_Board_of_Trade_Building_2015.jpg",
-    "data_center": "File:Sun_Microsystems_data_center.jpg",
-    "stock_ticker": "File:Stock_ticker_tape_machine.jpg",
-    "compliance": "File:US_Treasury_Department_2020.jpg",
-    "supply_chain": "File:Container_ship_at_port.jpg",
-    "blockchain": "File:Bitcoin_blockchain_diagram.svg",
+    "eniac computer history computing": "File:ENIAC_Penn1.jpg",
+    "nyse stock exchange trading wall street": "File:New_York_Stock_Exchange_Facade-01.jpg",
+    "treasury department government building": "File:US_Treasury_Building_Washington_DC_2012.jpg",
+    "federal reserve central bank": "File:Eccles_Building_2015.jpg",
+    "semiconductor chip wafer fabrication": "File:Wafer_2_Zoll_b.jpg",
+    "server room data center": "File:Google_data_center_interior.jpg",
+    "trading floor commodities exchange": "File:Chicago_Board_of_Trade_Building_2015.jpg",
+    "data center server infrastructure": "File:Sun_Microsystems_data_center.jpg",
+    "stock ticker market data": "File:Stock_ticker_tape_machine.jpg",
+    "compliance regulation regulatory": "File:US_Treasury_Department_2020.jpg",
+    "supply chain logistics shipping": "File:Container_ship_at_port.jpg",
+    "blockchain cryptocurrency distributed ledger": "File:Bitcoin_blockchain_diagram.svg",
 }
 
 STOP_WORDS = {
@@ -181,30 +181,29 @@ def build_section_query(section: dict, article: dict) -> str:
     pillar = article.get("pillar", "")
     pillar_kw = PILLAR_KEYWORDS.get(pillar, "")
 
-    # Strip year numbers, subtitles, keep the core topic
     title_core = re.sub(r'^\d{4}\s+', '', title)
-    title_core = re.sub(r'[:\-].*', '', title_core).strip()[:50]
+    title_core = re.sub(r'[:\-].*', '', title_core).strip()[:40]
     title_core = re.sub(r'\d{4}', '', title_core).strip()
     if not title_core:
-        title_core = pillar_kw
+        title_core = pillar_kw.split()[0] if pillar_kw else ""
 
     parts = [title_core]
     if tags:
         tag = tags[0].replace('-', ' ')
         if tag.lower() not in title_core.lower():
             parts.append(tag)
-        else:
-            parts.append(pillar_kw.split()[0] if pillar_kw else "")
-    query = " ".join(p for p in parts if p)
+    query = " ".join(parts)
     terms = query.split()
     terms = [t for t in terms if len(t) > 2 and t.lower() not in STOP_WORDS]
-    return " ".join(terms[:3])
+    return " ".join(terms[:2])
 
 
 def resolve_curated(article: dict) -> str | None:
-    title_lower = (article.get("title", "") + " " + " ".join(article.get("tags", []))).lower()
-    for key, filename in CURATED_KNOWN.items():
-        if key in title_lower:
+    haystack = (article.get("title", "") + " " + " ".join(article.get("tags", []))).lower()
+    body_text = strip_html(article.get("body_html", "")).lower()
+    for phrase, filename in CURATED_KNOWN.items():
+        keywords = phrase.split()
+        if any(kw in haystack for kw in keywords) or any(kw in body_text for kw in keywords):
             return filename
     return None
 
@@ -514,6 +513,8 @@ def fetch_section_images(article: dict, force: bool = False) -> list[dict]:
     slug = article.get("slug", "")
     pillar = article.get("pillar", "")
     results: list[dict] = []
+    used_urls: set[str] = set()
+    used_creators: set[str] = set()
 
     curated_file = resolve_curated(article)
     curated_done = False
@@ -527,6 +528,8 @@ def fetch_section_images(article: dict, force: bool = False) -> list[dict]:
                 img_path = existing_entry.get("image_url", "")
                 if img_path and (IMAGES_DIR / Path(img_path).name).exists():
                     results.append(existing_entry)
+                    used_urls.add(existing_entry.get("image_url", ""))
+                    used_creators.add(existing_entry.get("image_credit", "").split("via")[0].strip().lower())
                     continue
 
         if not curated_done and curated_file:
@@ -549,6 +552,8 @@ def fetch_section_images(article: dict, force: bool = False) -> list[dict]:
                         "height": h,
                         "content_hash": hashlib.sha256(section.get("text_content", "").encode()).hexdigest()[:16],
                     })
+                    used_urls.add(rel_path)
+                    used_creators.add(curated_result.get("creator", "").lower()[:30])
                     curated_done = True
                     continue
 
@@ -565,6 +570,10 @@ def fetch_section_images(article: dict, force: bool = False) -> list[dict]:
             try:
                 candidates = search_fn(query)
                 for c in candidates:
+                    url = c.get("url", "")
+                    creator = c.get("creator", "").lower()[:30] if c.get("creator") else ""
+                    if url in used_urls or creator in used_creators:
+                        continue
                     score = score_result(c, query_terms)
                     if score > best_score:
                         c["_score"] = score
@@ -596,6 +605,8 @@ def fetch_section_images(article: dict, force: bool = False) -> list[dict]:
             "height": h,
             "content_hash": hashlib.sha256(section.get("text_content", "").encode()).hexdigest()[:16],
         })
+        used_urls.add(rel_path)
+        used_creators.add(best.get("creator", "").lower()[:30] if best.get("creator") else "")
 
     return results
 
