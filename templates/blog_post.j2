@@ -122,6 +122,8 @@
     </div>
     {%- endif %}
 
+    {% include 'partials/article_image.html' %}
+
     <div class="prose prose-lg prose-blue max-w-none">
       {{ page_body | default(content.body_html) | safe }}
     </div>

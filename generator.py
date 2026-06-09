@@ -560,6 +560,8 @@ def main():
             visual_fingerprint=visual_fingerprint, layer_badge=layer_badge,
             thumbnail_base=thumb_base, thumbnail_key=thumbnail_key,
             og_image_url=og_image_url, quiz_json=quiz_json,
+            featured_image=item.featured_image,
+            image_credit=item.image_credit,
             is_index=False, **ctx_base)
         out_file.write_text(html, encoding="utf-8")
         print(f"  learn: {out_file.relative_to(OUTPUT_DIR)}")
@@ -647,6 +649,8 @@ def main():
             toc_items=toc_items, related_posts=related,
             related_learn=related_learn,
             visual_fingerprint=visual_fingerprint, layer_badge=layer_badge,
+            featured_image=item.featured_image,
+            image_credit=item.image_credit,
             **ctx_base)
         out_file.write_text(html, encoding="utf-8")
         print(f"  research: {out_file.relative_to(OUTPUT_DIR)}")

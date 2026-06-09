@@ -389,6 +389,7 @@ def main():
     parser = argparse.ArgumentParser(description="AcaciaFund Orchestrator")
     parser.add_argument("--ingest", action="store_true", help="Run ingest pipeline (fetch HN/arXiv)")
     parser.add_argument("--from-content", action="store_true", help="Build registry from existing content/")
+    parser.add_argument("--fetch-images", action="store_true", help="Fetch CC images for articles missing featured_image")
     args = parser.parse_args()
 
     print("Starting AcaciaFund orchestrator...")
@@ -506,6 +507,11 @@ def main():
                 og_path = STATIC_IMAGES_DIR / f"og_{hashlib.md5(content.title.encode()).hexdigest()[:12]}.svg"
                 og_path.parent.mkdir(parents=True, exist_ok=True)
                 og_path.write_text(content.og_svg, encoding="utf-8")
+
+    if args.fetch_images:
+        log("Fetching images for articles without featured_image…")
+        from scripts.fetch_images import main as fetch_main
+        fetch_main()
 
     return 0
 

@@ -30,6 +30,8 @@ class AcaciaContent(BaseModel):
     thumbnail_svg: str = ""
     og_svg: str = ""
     featured_image: str = ""
+    image_credit: str = ""
+    section_images: list[dict] = []
     trending_html: str = ""
     analysis_html: str = ""
     cross_pillar_html: str = ""

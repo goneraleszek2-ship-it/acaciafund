@@ -115,7 +115,9 @@
     </div>
     {%- endif %}
 
-    <div class="prose prose-lg max-w-none lesson-body">
+    {% include 'partials/article_image.html' %}
+
+  <div class="prose prose-lg max-w-none lesson-body">
       {{ content.body_html | safe }}
     </div>
 

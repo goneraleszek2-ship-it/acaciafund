@@ -22,10 +22,13 @@ jobs:
           python-version: "3.13"
 
       - name: Install dependencies
-        run: pip install markdown2 pydantic jinja2
+        run: pip install markdown2 pydantic jinja2 requests
 
       - name: Run ingest pipeline
         run: python orchestrator.py --ingest
+
+      - name: Fetch article images
+        run: python orchestrator.py --fetch-images
 
       - name: Rebuild static site
         run: python3.13 generator.py
@@ -33,7 +36,7 @@ jobs:
       - name: Check for changes
         id: git_diff
         run: |
-          if git diff --quiet registry.json; then
+          if git diff --quiet registry.json && git diff --quiet -- static/images/generated/; then
             echo "No changes to commit"
             echo "changed=false" >> $GITHUB_OUTPUT
           else
