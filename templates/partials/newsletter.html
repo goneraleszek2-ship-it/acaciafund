@@ -1,0 +1,60 @@
+<section class="newsletter-section my-12 py-8 px-6 rounded-xl text-center" style="background:var(--color-surface);border:1px solid var(--color-border)" aria-labelledby="newsletter-heading">
+  <h2 id="newsletter-heading" class="text-xl font-bold mb-2" style="color:var(--color-text)">Stay in the Loop</h2>
+  <p class="text-sm mb-5 max-w-md mx-auto" style="color:var(--color-text-secondary)">
+    Get a weekly roundup of top-signal research, new lessons, and knowledge updates.
+  </p>
+  <form class="newsletter-form max-w-xs mx-auto flex flex-col sm:flex-row gap-2" method="post" action="/api/subscribe" data-newsletter-form>
+    <label for="newsletter-email" class="sr-only">Email address</label>
+    <input id="newsletter-email" type="email" name="email" required placeholder="you@example.com"
+      class="flex-1 px-3 py-2 text-sm rounded-lg transition"
+      style="background:var(--color-bg);border:1px solid var(--color-border);color:var(--color-text)">
+    <button type="submit"
+      class="px-4 py-2 text-sm font-semibold rounded-lg transition hover:opacity-90 whitespace-nowrap"
+      style="background:var(--color-accent);color:#fff">
+      Subscribe
+    </button>
+  </form>
+  <p class="newsletter-status mt-3 text-xs hidden" style="color:var(--color-text-muted)" data-newsletter-status></p>
+  <noscript>
+    <p class="mt-3 text-xs" style="color:var(--color-text-muted)">
+      Your browser does not support JavaScript. The form will submit to our server directly.
+    </p>
+  </noscript>
+  <script>
+  (function() {
+    var form = document.querySelector('[data-newsletter-form]');
+    if (!form) return;
+    var statusEl = document.querySelector('[data-newsletter-status]');
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var email = form.querySelector('input[type=email]').value.trim();
+      if (!email) return;
+      statusEl.classList.remove('hidden');
+      statusEl.textContent = 'Subscribing…';
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', '/api/subscribe', true);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+          statusEl.textContent = '✓ Subscribed! Check your inbox.';
+          statusEl.style.color = 'var(--color-success, #22c55e)';
+          form.querySelector('input[type=email]').value = '';
+        } else {
+          try {
+            var err = JSON.parse(xhr.responseText);
+            statusEl.textContent = err.error || 'Subscription failed.';
+          } catch(_) {
+            statusEl.textContent = 'Subscription failed.';
+          }
+          statusEl.style.color = 'var(--color-error, #ef4444)';
+        }
+      };
+      xhr.onerror = function() {
+        statusEl.textContent = 'Network error. Please try again.';
+        statusEl.style.color = 'var(--color-error, #ef4444)';
+      };
+      xhr.send(JSON.stringify({ email: email }));
+    });
+  })();
+  </script>
+</section>

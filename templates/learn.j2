@@ -1,5 +1,8 @@
 {% extends "layout.j2" %}
+{% from "macros/pillar_badge.html" import pillar_badge %}
+{% from "macros/breadcrumbs.html" import breadcrumbs %}
 {% block main_content %}
+{{ breadcrumbs(page_path, content.title) }}
 <div id="reading-progress" style="position:fixed;top:0;left:0;height:3px;z-index:9999;width:0%;background:var(--color-accent)"></div>
 
 <div class="flex gap-8 {% if toc_items %}lg:flex-row{% endif %} flex-col">
@@ -40,9 +43,7 @@
       <div class="flex items-center gap-3 mb-3">
         {{ layer_badge | default("") | safe }}
         {%- if pconf %}
-        <span class="inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-full {{ pconf.badge_color }}">
-          {{ pconf.emoji }} {{ pconf.label }}
-        </span>
+          {{ pillar_badge(content.pillar) }}
         {%- endif %}
         {%- if content.difficulty %}
         <span class="inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-full" style="background:var(--color-bg);color:var(--color-text-secondary)">
@@ -160,7 +161,7 @@
         {%- set rpillar = rp.pillar or "aml" %}
         {%- set rpc = pillar_config.get(rpillar, pillar_config["aml"]) %}
         <a href="/{{ rp.slug }}/" class="block rounded-xl p-3 transition hover:-translate-y-0.5" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none;box-shadow:0 1px 3px rgba(0,0,0,0.04)">
-          <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded {{ rpc.badge_color }}">{{ rpc.emoji }} {{ rpc.label }}</span>
+          {{ pillar_badge(rp.pillar) }}
           <span class="block mt-1 text-sm font-semibold" style="color:var(--color-text)">{{ rp.title | striptags }}</span>
           {%- if rp.date_str %}
           <span class="block mt-1.5 text-xs inline-flex items-center gap-2" style="color:var(--color-text-muted)">

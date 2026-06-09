@@ -1,15 +1,9 @@
 {% extends "layout.j2" %}
+{% from "macros/pillar_badge.html" import pillar_badge %}
+{% from "macros/breadcrumbs.html" import breadcrumbs %}
 {% block main_content %}
 {%- if tag and items %}
-<nav aria-label="Breadcrumb" class="mb-6 text-xs" style="color:var(--color-text-muted)">
-  <ol class="flex flex-wrap items-center gap-1.5">
-    <li><a href="/" class="hover:text-[var(--color-accent)] transition">Home</a></li>
-    <li aria-hidden="true">/</li>
-    <li><a href="/tags/" class="hover:text-[var(--color-accent)] transition">Tags</a></li>
-    <li aria-hidden="true">/</li>
-    <li aria-current="page">{{ tag }}</li>
-  </ol>
-</nav>
+{{ breadcrumbs(page_path, tag) }}
 <header class="mb-8">
   <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">
     <span class="inline-flex items-center gap-2">🏷️ {{ tag }}</span>
@@ -22,7 +16,7 @@
   {%- set pc = pillar_config.get(p, pillar_config["aml"]) %}
   <article class="rounded-lg p-4 transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border)">
     <div class="flex items-center gap-2 mb-2">
-      <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded {{ pc.badge_color }}">{{ pc.emoji }} {{ pc.label }}</span>
+      {{ pillar_badge(item.pillar) }}
       {%- if item.date_str %}
       <span class="text-xs" style="color:var(--color-text-muted)">{{ item.date_str }}</span>
       {%- endif %}
@@ -37,13 +31,7 @@
   {%- endfor %}
 </div>
 {%- elif all_tags is defined and all_tags %}
-<nav aria-label="Breadcrumb" class="mb-6 text-xs" style="color:var(--color-text-muted)">
-  <ol class="flex flex-wrap items-center gap-1.5">
-    <li><a href="/" class="hover:text-[var(--color-accent)] transition">Home</a></li>
-    <li aria-hidden="true">/</li>
-    <li aria-current="page">Tags</li>
-  </ol>
-</nav>
+{{ breadcrumbs(page_path, "Tags") }}
 <header class="mb-8">
   <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">🏷️ Tags</h1>
   <p class="mt-2 text-sm" style="color:var(--color-text-secondary)">{{ all_tags | length }} tag{{ 's' if all_tags | length != 1 else '' }}</p>

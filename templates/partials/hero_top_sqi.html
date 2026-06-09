@@ -1,0 +1,24 @@
+{%- if hero_article %}
+{%- set ha = hero_article %}
+{%- set hp = ha.pillar or "aml" %}
+{%- set htkey = thumbnail_key(ha.title) %}
+<a href="/{{ ha.slug }}/" class="group block max-w-lg mx-auto rounded-xl overflow-hidden transition hover:shadow-lg" style="background:var(--color-surface);border:1px solid var(--color-border);border-left:3px solid var(--color-{{ hp }});text-decoration:none">
+  <div class="aspect-[600/340] overflow-hidden" style="background:var(--color-bg)">
+    <img src="{{ thumbnail_base }}/thumb_{{ htkey }}.svg" alt="" class="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300" loading="eager">
+  </div>
+  <div class="p-4 text-left">
+    <div class="flex items-center justify-between mb-2">
+      {{ pillar_badge(ha.pillar) }}
+      {%- if ha.signals and ha.signals.get("avg_sqi") is defined %}
+      {{ sqi_chip(ha.signals.get("avg_sqi", 0)) }}
+      {%- endif %}
+    </div>
+    <h3 class="text-base font-semibold leading-snug group-hover:text-[var(--color-accent)] transition" style="color:var(--color-text)">{{ ha.title | striptags }}</h3>
+    <p class="mt-1 text-xs" style="color:var(--color-text-secondary)">{{ ha.description[:160] }}{% if ha.description | length > 160 %}…{% endif %}</p>
+    <div class="mt-2 flex items-center gap-3 text-xs" style="color:var(--color-text-muted)">
+      {%- if ha.date_str %}<time datetime="{{ ha.date_str }}">{{ ha.date_str }}</time>{% endif %}
+      {%- if ha.body_html %}<span>{{ ha.body_html | reading_time }} min read</span>{% endif %}
+    </div>
+  </div>
+</a>
+{%- endif %}

@@ -1,0 +1,16 @@
+{%- macro card(href, pillar, label, title, description, meta="") %}
+<article class="rounded-lg overflow-hidden transition hover:shadow-md" style="border-left:3px solid var(--color-{{ pillar }}, var(--color-aml));background:var(--color-surface);border-top:1px solid var(--color-border);border-right:1px solid var(--color-border);border-bottom:1px solid var(--color-border)">
+  <a href="{{ href }}" class="block p-4" style="text-decoration:none">
+    {%- if label %}
+    <div class="flex items-center gap-1.5 mb-1.5">{{ label }}</div>
+    {%- endif %}
+    <h3 class="text-sm font-semibold leading-snug transition group-hover:text-[var(--color-accent)]" style="color:var(--color-text)">{{ title }}</h3>
+    {%- if description %}
+    <p class="mt-1 text-xs leading-relaxed" style="color:var(--color-text-secondary)">{{ description[:200] }}{% if description | length > 200 %}…{% endif %}</p>
+    {%- endif %}
+    {%- if meta %}
+    <div class="mt-2 text-xs" style="color:var(--color-text-muted)">{{ meta }}</div>
+    {%- endif %}
+  </a>
+</article>
+{%- endmacro %}

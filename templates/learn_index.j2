@@ -1,4 +1,5 @@
 {% extends "layout.j2" %}
+{% from "macros/pillar_badge.html" import pillar_badge %}
 {% block main_content %}
 <section>
   <nav aria-label="Breadcrumb" class="mb-4 text-xs" style="color:var(--color-text-muted)">
@@ -123,9 +124,7 @@
           <div class="p-4">
             <div class="flex items-center gap-2 mb-2">
               {%- if pc %}
-              <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded {{ pc.badge_color }}">
-                {{ pc.emoji }} {{ pc.label }}
-              </span>
+              {{ pillar_badge(p) }}
               {%- endif %}
               {%- if item.difficulty %}
               <span class="text-xs" style="color:var(--color-text-muted)">{{ d_emoji.get(item.difficulty, "📘") }} {{ item.difficulty | capitalize }}</span>

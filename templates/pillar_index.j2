@@ -1,15 +1,10 @@
 {% extends "layout.j2" %}
+{% from "macros/pillar_badge.html" import pillar_badge %}
+{% from "macros/sqi_chip.html" import sqi_chip %}
+{% from "macros/breadcrumbs.html" import breadcrumbs %}
 {% block main_content %}
 <section>
-  <nav aria-label="Breadcrumb" class="mb-4 text-xs" style="color:var(--color-text-muted)">
-    <ol class="flex flex-wrap items-center gap-1.5">
-      <li><a href="/" class="hover:text-[var(--color-accent)] transition">Home</a></li>
-      <li aria-hidden="true">/</li>
-      <li><a href="/{{ pillar }}/" class="hover:text-[var(--color-accent)] transition">{{ pconf.label }}</a></li>
-      <li aria-hidden="true">/</li>
-      <li aria-current="page">{{ pconf.heading }}</li>
-    </ol>
-  </nav>
+{{ breadcrumbs(page_path, pconf.heading) }}
 
   {%- set hero_map = {"aml": "pillar-aml-hero", "stock": "pillar-stock-hero", "data-engineering": "pillar-data-engineering-hero"} %}
   {%- set hero = hero_map.get(pillar, "pillar-aml-hero") %}
@@ -18,9 +13,7 @@
   </div>
 
   <div class="mb-8">
-    <span class="inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-full {{ pconf.badge_color }}">
-      {{ pconf.emoji }} {{ pconf.label }}
-    </span>
+    {{ pillar_badge(pillar) }}
     <h1 class="text-3xl font-extrabold text-gray-900 mt-2">{{ pconf.heading }}</h1>
     <p class="mt-2 text-gray-600">{{ pconf.description }}</p>
     <p class="mt-1 text-sm text-gray-400">{{ posts | length }} posts</p>
@@ -34,7 +27,7 @@
   <div class="space-y-4">
     {%- for post in posts %}
     {%- set tkey = thumbnail_key(post.title) %}
-    <article class="flex gap-4 rounded-lg p-4 transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border)">
+    <article class="flex gap-4 rounded-lg p-4 transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);border-left:3px solid var(--color-{{ pillar }})">
       <div class="shrink-0 w-28 h-20 rounded-md overflow-hidden bg-gray-800 hidden sm:block">
         <img src="{{ thumbnail_base }}/thumb_{{ tkey }}.svg" alt="" class="w-full h-full object-cover" loading="lazy">
       </div>
@@ -55,7 +48,7 @@
               <span>{{ post.body_html | reading_time }} min</span>
               {%- endif %}
               {%- if post.signals and post.signals.get("avg_sqi") is defined %}
-              <span class="font-mono">SQI {{ "%.3f"|format(post.signals.get("avg_sqi", 0)) }}</span>
+              {{ sqi_chip(post.signals.get("avg_sqi", 0)) }}
               {%- endif %}
               {%- if post.source_breakdown %}
               <span>{{ post.source_breakdown.get("hn", 0) }} HN · {{ post.source_breakdown.get("arxiv", 0) }} arXiv</span>
@@ -74,4 +67,7 @@
     {%- endfor %}
   </div>
 </section>
+
+{% include 'partials/newsletter.html' %}
+
 {% endblock %}

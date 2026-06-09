@@ -1,0 +1,15 @@
+{% macro sqi_chip(score, scale=1000) -%}
+  {%- if score is defined and score is not none %}
+  {%- if scale == 100 %}
+    {%- set display = "%.0f"|format(score) %}
+  {%- else %}
+    {%- set display = "%.3f"|format(score) %}
+  {%- endif %}
+  <a href="/knowledge/research-methodology/#sqi"
+     class="sqi-chip font-mono"
+     title="Signal Quality Index — composite metric of source authority, freshness, consensus, and relevance. Click for methodology."
+     style="border-bottom:1px dotted var(--color-border);text-decoration:none;color:var(--color-text-muted);cursor:help">
+    SQI {{ display }}
+  </a>
+  {%- endif %}
+{%- endmacro %}

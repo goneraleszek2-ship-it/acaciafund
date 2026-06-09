@@ -1,0 +1,22 @@
+{% macro pillar_badge(pillar) -%}
+  {%- set meta = {
+    'aml':              {'label': 'AML',             'icon': 'shield'},
+    'stock':            {'label': 'Markets',         'icon': 'line-chart'},
+    'data-engineering': {'label': 'Data Engineering','icon': 'cog'},
+  } -%}
+  {%- set m = meta.get(pillar, meta['aml']) -%}
+  {%- set colors = {
+    'aml':              'bg-amber-100 text-amber-800',
+    'stock':            'bg-green-100 text-green-800',
+    'data-engineering': 'bg-indigo-100 text-indigo-800',
+  } -%}
+  {%- set dot_colors = {
+    'aml':              '#c97d3e',
+    'stock':            '#3a7d5c',
+    'data-engineering': '#6366f1',
+  } -%}
+  <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium {{ colors.get(pillar, 'bg-gray-100 text-gray-700') }}">
+    {%- include 'icons/' ~ m.icon ~ '.svg' %}
+    {{ m.label }}
+  </span>
+{%- endmacro %}

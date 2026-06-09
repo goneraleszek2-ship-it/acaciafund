@@ -1,0 +1,52 @@
+{%- macro breadcrumbs(page_path, page_title) %}
+{%- set _crumbs = namespace(items=[]) %}
+{%- set _trailing = namespace(done=false) %}
+{%- if page_path and page_path != "" %}
+  {%- set _ = _crumbs.items.append(("Home", "/")) %}
+  {%- set parts = page_path.strip("/").split("/") %}
+  {%- set _label_map = {
+    "research": "Research",
+    "learn": "Learn",
+    "knowledge": "Knowledge",
+    "aml": "AML",
+    "stock": "Markets",
+    "data-engineering": "Data Engineering",
+    "tags": "Tags",
+    "search": "Search",
+    "aml/signals": "Signals Dashboard",
+    "about": "About",
+    "contact": "Contact",
+    "diagrams": "Diagrams",
+    "research-methodology": "Research Methodology"
+  } %}
+  {%- set _acc = namespace(path="") %}
+  {%- for part in parts %}
+    {%- if not _trailing.done %}
+    {%- set _acc.path = _acc.path + part + "/" %}
+    {%- set _label = _label_map.get(_acc.path.strip("/"), _label_map.get(part, part | replace("-"," ") | title)) %}
+    {%- if loop.last %}
+      {%- set _ = _crumbs.items.append((page_title or _label, None)) %}
+    {%- else %}
+      {%- set _ = _crumbs.items.append((_label, "/" + _acc.path)) %}
+    {%- endif %}
+    {%- endif %}
+  {%- endfor %}
+{%- endif %}
+{%- if _crumbs.items | length > 1 %}
+<nav aria-label="Breadcrumb" class="mb-4 text-xs">
+  <ol class="flex flex-wrap items-center gap-1.5" style="color:var(--color-text-muted)" vocab="https://schema.org/" typeof="BreadcrumbList">
+    {%- for label, url in _crumbs.items %}
+    <li property="itemListElement" typeof="ListItem" class="flex items-center gap-1.5">
+      {%- if url %}
+      <a property="item" typeof="WebPage" href="{{ url }}" style="color:var(--color-text-muted)"><span property="name">{{ label }}</span></a>
+      {%- else %}
+      <span property="item" typeof="WebPage" style="color:var(--color-text-secondary)" aria-current="page"><span property="name">{{ label }}</span></span>
+      {%- endif %}
+      <meta property="position" content="{{ loop.index }}">
+      {%- if not loop.last %}<span aria-hidden="true">/</span>{% endif %}
+    </li>
+    {%- endfor %}
+  </ol>
+</nav>
+{%- endif %}
+{%- endmacro %}

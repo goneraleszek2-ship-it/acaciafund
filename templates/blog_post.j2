@@ -1,5 +1,9 @@
 {% extends "layout.j2" %}
+{% from "macros/pillar_badge.html" import pillar_badge %}
+{% from "macros/sqi_chip.html" import sqi_chip %}
+{% from "macros/breadcrumbs.html" import breadcrumbs %}
 {% block main_content %}
+{{ breadcrumbs(page_path, content.title) }}
 <div id="reading-progress" style="position:fixed;top:0;left:0;height:3px;z-index:9999;width:0%;background:var(--color-accent)"></div>
 
 <div class="flex gap-8 {% if toc_items %}lg:flex-row{% endif %} flex-col">
@@ -40,13 +44,9 @@
     <header class="mb-8">
       <div class="flex items-center gap-3 mb-3">
         {{ layer_badge | default("") | safe }}
-        <span class="inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-full {{ pc.badge_color }}">
-          {{ pc.emoji }} {{ pc.label }}
-        </span>
+        {{ pillar_badge(content.pillar) }}
         {%- if content.signals and content.signals.get("avg_sqi") is defined %}
-        <span class="text-xs text-gray-400 font-mono" title="Signal Quality Index">
-          SQI {{ "%.3f"|format(content.signals.get("avg_sqi", 0)) }}
-        </span>
+        {{ sqi_chip(content.signals.get("avg_sqi", 0)) }}
         {%- endif %}
         {%- if content.source_breakdown %}
         <span class="text-xs text-gray-400">
@@ -93,23 +93,32 @@
     </div>
 
     {%- if content.quality_metrics and content.quality_metrics.get("avg_source_score") is defined %}
-    <div class="mb-6 grid grid-cols-2 gap-2">
-      <div class="rounded-lg p-2.5" style="background:var(--color-surface);border:1px solid var(--color-border)">
-        <h3 class="text-[11px] font-semibold mb-1 text-center" style="color:var(--color-text-secondary)">Quality Radar</h3>
-        <div class="flex justify-center">{{ chart_radar | safe }}</div>
-      </div>
-      <div class="rounded-lg p-2.5" style="background:var(--color-surface);border:1px solid var(--color-border)">
-        <h3 class="text-[11px] font-semibold mb-1 text-center" style="color:var(--color-text-secondary)">Source Mix</h3>
-        <div class="flex justify-center">{{ chart_donut | safe }}</div>
-      </div>
-      <div class="rounded-lg p-2.5" style="background:var(--color-surface);border:1px solid var(--color-border)">
-        <h3 class="text-[11px] font-semibold mb-1 text-center" style="color:var(--color-text-secondary)">SQI Trend</h3>
-        <div class="flex justify-center">{{ chart_sparkline | safe }}</div>
-      </div>
-      <div class="rounded-lg p-2.5" style="background:var(--color-surface);border:1px solid var(--color-border)">
-        <h3 class="text-[11px] font-semibold mb-1 text-center" style="color:var(--color-text-secondary)">Quality Checks</h3>
-        <div class="flex justify-center">{{ chart_heatmap | safe }}</div>
-      </div>
+    <div class="mb-6 flex flex-wrap items-center gap-x-5 gap-y-1.5 text-xs" style="color:var(--color-text-muted)">
+      {%- set sqi = content.signals.get("avg_sqi", 0) if content.signals else 0 %}
+      {%- set qm = content.quality_metrics %}
+      <span class="inline-flex items-center gap-1">
+        <span style="color:var(--color-text-secondary);font-weight:600">SQI</span>
+        {{ sqi_chip(sqi) }}
+      </span>
+      <span class="inline-flex items-center gap-1">
+        <span style="color:var(--color-text-secondary);font-weight:600">Authority</span>
+        {{ "%.2f"|format(qm.get("avg_source_score", 0)) }}
+      </span>
+      <span class="inline-flex items-center gap-1">
+        <span style="color:var(--color-text-secondary);font-weight:600">Diversity</span>
+        {{ "%.2f"|format(qm.get("source_diversity", 0)) }}
+      </span>
+      <span class="inline-flex items-center gap-1">
+        <span style="color:var(--color-text-secondary);font-weight:600">Sources</span>
+        {%- set sb = content.source_breakdown or {} %}
+        {%- set total = sb.get("hn", 0) + sb.get("arxiv", 0) + sb.get("pubmed", 0) %}
+        {{ total }}
+        {%- if sb.get("hn", 0) > 0 or sb.get("arxiv", 0) > 0 or sb.get("pubmed", 0) > 0 %}
+        <span style="color:var(--color-text-muted)">
+          ({%- if sb.get("hn", 0) > 0 %}{{ sb["hn"] }} HN{% endif %}{% if sb.get("hn", 0) > 0 and sb.get("arxiv", 0) > 0 %} · {% endif %}{%- if sb.get("arxiv", 0) > 0 %}{{ sb["arxiv"] }} arXiv{% endif %}{% if (sb.get("hn", 0) > 0 or sb.get("arxiv", 0) > 0) and sb.get("pubmed", 0) > 0 %} · {% endif %}{%- if sb.get("pubmed", 0) > 0 %}{{ sb["pubmed"] }} PubMed{% endif %})
+        </span>
+        {%- endif %}
+      </span>
     </div>
     {%- endif %}
 
@@ -131,9 +140,16 @@
     {%- if content.bloom_questions and content.bloom_questions | length > 0 %}
     <section class="mt-12 pt-8 border-t border-gray-200">
       <h2 class="text-2xl font-bold text-gray-900 mb-4">Bloom Taxonomy Questions</h2>
-      <div class="mb-6 p-4 rounded-lg" style="background:var(--color-surface);border:1px solid var(--color-border)">
-        <h3 class="text-xs font-semibold mb-2" style="color:var(--color-text-muted)">Distribution by Level</h3>
-        {{ chart_bloom | safe }}
+      <div class="mb-6 flex flex-wrap items-center gap-2">
+        {%- set levels = {"remember":"🔵","understand":"🟢","apply":"🟠","analyze":"🟣","evaluate":"🔴","create":"🟡"} %}
+        {%- for l, dot in levels.items() %}
+        {%- set count = content.bloom_questions | selectattr("bloom_level", "equalto", l) | list | length %}
+        {%- if count > 0 %}
+        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs" style="background:var(--color-bg);color:var(--color-text-secondary)">
+          <span>{{ dot }}</span> {{ count }} {{ l | capitalize }}
+        </span>
+        {%- endif %}
+        {%- endfor %}
       </div>
       <div class="space-y-4">
         {%- for q in content.bloom_questions %}
@@ -188,14 +204,6 @@
     {%- if content.signals %}
     <section class="mt-12 pt-8 border-t border-gray-200">
       <h2 class="text-2xl font-bold text-gray-900 mb-4">Signal Analysis</h2>
-      {%- if content.source_breakdown %}
-      <div class="mb-6">
-        <h3 class="text-sm font-semibold mb-2" style="color:var(--color-text-muted)">Source Breakdown</h3>
-        <div class="flex flex-wrap gap-6 items-center">
-          <div>{{ chart_source_bar | safe }}</div>
-        </div>
-      </div>
-      {%- endif %}
       {%- set s = content.signals %}
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
         <div class="bg-white rounded-lg border p-3">
@@ -236,12 +244,12 @@
         {%- set rpillar = rp.pillar or "aml" %}
         {%- set rpc = pillar_config.get(rpillar, pillar_config["aml"]) %}
         {%- set rtkey = thumbnail_key(rp.title) %}
-        <a href="/{{ rp.slug }}/" class="block rounded-lg overflow-hidden transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+        <a href="/{{ rp.slug }}/" class="block rounded-lg overflow-hidden transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);border-left:3px solid var(--color-{{ rpillar }});text-decoration:none">
           <div class="aspect-[600/340] bg-gray-800 overflow-hidden">
             <img src="{{ thumbnail_base }}/thumb_{{ rtkey }}.svg" alt="" class="w-full h-full object-cover" loading="lazy">
           </div>
           <div class="p-3">
-            <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded {{ rpc.badge_color }}">{{ rpc.emoji }} {{ rpc.label }}</span>
+            {{ pillar_badge(rp.pillar) }}
             <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">{{ rp.title | striptags }}</span>
             {%- if rp.date_str %}
             <span class="block mt-1 text-xs" style="color:var(--color-text-muted)">{{ rp.date_str }}</span>
@@ -267,7 +275,7 @@
             <img src="{{ thumbnail_base }}/thumb_{{ rtkey }}.svg" alt="" class="w-full h-full object-cover" loading="lazy">
           </div>
           <div class="p-3">
-            <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded {{ rpc.badge_color }}">{{ rpc.emoji }} {{ rpc.label }}</span>
+            {{ pillar_badge(rl.pillar) }}
             {%- if rl.difficulty %}<span class="text-xs text-gray-400 ml-1">{{ rl.difficulty | capitalize }}</span>{% endif %}
             <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">{{ rl.title | striptags }}</span>
             {%- if rl.date_str %}
@@ -337,7 +345,10 @@
     focusBtn.addEventListener('click', function() {
       document.body.classList.toggle('focus-mode');
     });
-  }
-})();
+}
+  })();
 </script>
+
+{% include 'partials/newsletter.html' %}
+
 {% endblock %}

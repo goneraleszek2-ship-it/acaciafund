@@ -130,17 +130,10 @@
         <li><a href="/research/" class="nav-link">Research</a></li>
         <li><a href="/learn/" class="nav-link">Learn</a></li>
         <li><a href="/knowledge/" class="nav-link">Knowledge</a></li>
-        <li data-dropdown class="relative">
-          <button class="nav-link flex items-center gap-1" aria-haspopup="true" aria-expanded="false" data-dropdown-trigger>
-            Pillars
-            <svg class="w-3 h-3 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-          </button>
-          <div class="dropdown-menu" role="menu" data-dropdown-menu>
-            <a href="/aml/" class="dropdown-item" role="menuitem">AML</a>
-            <a href="/stock/" class="dropdown-item" role="menuitem">Markets</a>
-            <a href="/data-engineering/" class="dropdown-item" role="menuitem">Data Engineering</a>
-          </div>
-        </li>
+        <li><span class="nav-sep hidden lg:inline" style="color:var(--color-border);width:1px;height:1em;display:inline-block;margin:0 0.25rem" aria-hidden="true">|</span></li>
+        <li><a href="/aml/" class="nav-link flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full inline-block" style="background:var(--color-aml,#c97d3e)"></span>AML</a></li>
+        <li><a href="/stock/" class="nav-link flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full inline-block" style="background:var(--color-markets,#2e7d5b)"></span>Markets</a></li>
+        <li><a href="/data-engineering/" class="nav-link flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full inline-block" style="background:var(--color-data-engineering,#5a4fcf)"></span>Data</a></li>
         <li><a href="/knowledge/about/" class="nav-link hidden lg:inline">About</a></li>
         <li><a href="/search/" class="nav-link" aria-label="Search">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
@@ -161,8 +154,8 @@
     </nav>
   </header>
 
-  <!-- Mobile nav panel (outside header to avoid backdrop-filter breaking position:fixed) -->
-  <div class="mobile-nav-panel" data-mobile-panel>
+  <!-- Mobile nav dialog (native <dialog> for focus trap, escape, scrim) -->
+  <dialog id="mobile-nav-dialog" class="mobile-nav-dialog">
     <div class="mobile-nav-scroll">
       <div class="mobile-nav-section">
         <div class="mobile-nav-label">Content</div>
@@ -200,50 +193,75 @@
         Close
       </button>
     </div>
-  </div>
+  </dialog>
 
   <main id="main" class="max-w-5xl mx-auto px-4 py-8" tabindex="-1">
     {%- block main_content %}{{ content.body_html | safe }}{% endblock %}
   </main>
 
   <footer class="mt-16 border-t" style="border-color:var(--color-border);background:var(--color-surface)">
-    <div class="max-w-5xl mx-auto px-4 py-8 flex flex-col sm:flex-row justify-between items-center gap-4 text-sm" style="color:var(--color-text-secondary)">
-      <div>
-        <p>&copy; {{ year }} AcaciaFund. All rights reserved.</p>
-        <p class="text-xs mt-1" style="color:var(--color-text-muted)">Research synthesis &amp; experimental learning platform</p>
-      </div>
-      <div class="flex flex-col items-end gap-3">
-        <div class="pillar-matrix" role="img" aria-label="Color system matrix: 3 pillars × 3 content layers">
-          <div></div>
-          <div class="pillar-matrix-header">AML</div>
-          <div class="pillar-matrix-header">Markets</div>
-          <div class="pillar-matrix-header">Data&nbsp;Eng</div>
-          <div class="pillar-matrix-label">Research</div>
-          <div class="pillar-matrix-cell matrix-tooltip" style="background:var(--matrix-aml-research)" data-label="AML Research"></div>
-          <div class="pillar-matrix-cell matrix-tooltip" style="background:var(--matrix-markets-research)" data-label="Markets Research"></div>
-          <div class="pillar-matrix-cell matrix-tooltip" style="background:var(--matrix-de-research)" data-label="DE Research"></div>
-          <div class="pillar-matrix-label">Knowledge</div>
-          <div class="pillar-matrix-cell matrix-tooltip" style="background:var(--matrix-aml-knowledge)" data-label="AML Knowledge"></div>
-          <div class="pillar-matrix-cell matrix-tooltip" style="background:var(--matrix-markets-knowledge)" data-label="Markets Knowledge"></div>
-          <div class="pillar-matrix-cell matrix-tooltip" style="background:var(--matrix-de-knowledge)" data-label="DE Knowledge"></div>
-          <div class="pillar-matrix-label">Learn</div>
-          <div class="pillar-matrix-cell matrix-tooltip" style="background:var(--matrix-aml-learn)" data-label="AML Learn"></div>
-          <div class="pillar-matrix-cell matrix-tooltip" style="background:var(--matrix-markets-learn)" data-label="Markets Learn"></div>
-          <div class="pillar-matrix-cell matrix-tooltip" style="background:var(--matrix-de-learn)" data-label="DE Learn"></div>
+    <div class="max-w-5xl mx-auto px-4 py-10">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-sm" style="color:var(--color-text-secondary)">
+        <div>
+          <a href="/" class="text-lg font-bold tracking-tight" style="color:var(--color-text)">
+            Acacia<span style="color:var(--color-accent)">Fund</span>
+          </a>
+          <p class="mt-2 text-xs" style="color:var(--color-text-muted)">Research synthesis &amp; experimental learning platform. Static-first, privacy-preserving.</p>
+          <div class="mt-4">
+            <div class="pillar-matrix" role="img" aria-label="Color system matrix: 3 pillars × 3 content layers">
+              <div></div>
+              <div class="pillar-matrix-header">AML</div>
+              <div class="pillar-matrix-header">Markets</div>
+              <div class="pillar-matrix-header">Data&nbsp;Eng</div>
+              <div class="pillar-matrix-label">Research</div>
+              <div class="pillar-matrix-cell matrix-tooltip" style="background:var(--matrix-aml-research)" data-label="AML Research"></div>
+              <div class="pillar-matrix-cell matrix-tooltip" style="background:var(--matrix-markets-research)" data-label="Markets Research"></div>
+              <div class="pillar-matrix-cell matrix-tooltip" style="background:var(--matrix-de-research)" data-label="DE Research"></div>
+              <div class="pillar-matrix-label">Knowledge</div>
+              <div class="pillar-matrix-cell matrix-tooltip" style="background:var(--matrix-aml-knowledge)" data-label="AML Knowledge"></div>
+              <div class="pillar-matrix-cell matrix-tooltip" style="background:var(--matrix-markets-knowledge)" data-label="Markets Knowledge"></div>
+              <div class="pillar-matrix-cell matrix-tooltip" style="background:var(--matrix-de-knowledge)" data-label="DE Knowledge"></div>
+              <div class="pillar-matrix-label">Learn</div>
+              <div class="pillar-matrix-cell matrix-tooltip" style="background:var(--matrix-aml-learn)" data-label="AML Learn"></div>
+              <div class="pillar-matrix-cell matrix-tooltip" style="background:var(--matrix-markets-learn)" data-label="Markets Learn"></div>
+              <div class="pillar-matrix-cell matrix-tooltip" style="background:var(--matrix-de-learn)" data-label="DE Learn"></div>
+            </div>
+          </div>
         </div>
-        <nav aria-label="Footer navigation">
-          <ul class="flex gap-4" role="list">
+        <div>
+          <h3 class="text-xs font-semibold uppercase tracking-wider" style="color:var(--color-text-muted)">Content</h3>
+          <ul class="mt-3 space-y-2" role="list">
             <li><a href="/research/" class="hover:opacity-70 transition">Research</a></li>
             <li><a href="/learn/" class="hover:opacity-70 transition">Learn</a></li>
-            <li><a href="/knowledge/" class="hover:opacity-70 transition">Knowledge</a></li>
+            <li><a href="/knowledge/" class="hover:opacity-70 transition">Knowledge Base</a></li>
             <li><a href="/tags/" class="hover:opacity-70 transition">Tags</a></li>
-            <li><a href="/knowledge/about/" class="hover:opacity-70 transition">About</a></li>
-            <li><a href="/feed.xml" class="hover:opacity-70 transition">RSS</a></li>
           </ul>
-        </nav>
+        </div>
+        <div>
+          <h3 class="text-xs font-semibold uppercase tracking-wider" style="color:var(--color-text-muted)">Pillars</h3>
+          <ul class="mt-3 space-y-2" role="list">
+            <li><a href="/aml/" class="hover:opacity-70 transition flex items-center gap-1.5"><span class="w-2 h-2 rounded-full inline-block" style="background:var(--color-aml,#c97d3e)"></span>AML</a></li>
+            <li><a href="/stock/" class="hover:opacity-70 transition flex items-center gap-1.5"><span class="w-2 h-2 rounded-full inline-block" style="background:var(--color-markets,#2e7d5b)"></span>Markets</a></li>
+            <li><a href="/data-engineering/" class="hover:opacity-70 transition flex items-center gap-1.5"><span class="w-2 h-2 rounded-full inline-block" style="background:var(--color-data-engineering,#5a4fcf)"></span>Data Engineering</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-xs font-semibold uppercase tracking-wider" style="color:var(--color-text-muted)">Connect</h3>
+          <ul class="mt-3 space-y-2" role="list">
+            <li><a href="/knowledge/about/" class="hover:opacity-70 transition">About</a></li>
+            <li><a href="/feed.xml" class="hover:opacity-70 transition">RSS Feed</a></li>
+            <li><a href="/search/" class="hover:opacity-70 transition">Search</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-8 pt-6 border-t text-center text-xs" style="border-color:var(--color-border);color:var(--color-text-muted)">
+        <p>&copy; {{ year }} AcaciaFund. All rights reserved.</p>
       </div>
     </div>
   </footer>
+
+  {% include 'partials/search_palette.html' %}
+
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       // Dropdown
@@ -286,26 +304,101 @@
           }
         });
       }
-      // Mobile nav
+      // Mobile nav via native <dialog>
       var mobToggle = document.querySelector('[data-mobile-toggle]');
-      var mobPanel = document.querySelector('[data-mobile-panel]');
+      var mobDialog = document.getElementById('mobile-nav-dialog');
       var mobClose = document.querySelector('[data-mobile-close]');
-      function closeMobileNav() {
-        if (!mobToggle || !mobPanel) return;
-        mobToggle.setAttribute('aria-expanded', 'false');
-        mobPanel.classList.remove('open');
+      if (mobToggle && mobDialog) {
+        mobToggle.addEventListener('click', function() {
+          mobDialog.showModal();
+        });
+        if (mobClose) {
+          mobClose.addEventListener('click', function() {
+            mobDialog.close();
+          });
+        }
+        mobDialog.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            mobDialog.close();
+          });
+        });
       }
-      function toggleMobileNav() {
-        if (!mobToggle || !mobPanel) return;
-        var expanded = mobToggle.getAttribute('aria-expanded') === 'true';
-        mobToggle.setAttribute('aria-expanded', !expanded);
-        mobPanel.classList.toggle('open');
+      // Search palette (Cmd+K / Ctrl+K)
+      var paletteDialog = document.getElementById('search-palette');
+      var paletteInput = document.getElementById('palette-input');
+      var paletteResults = document.getElementById('palette-results');
+      var paletteIndex = null;
+      function loadPaletteIndex() {
+        if (paletteIndex) return Promise.resolve(paletteIndex);
+        return fetch('/static/search-index.json').then(function(r) { return r.json(); }).then(function(data) {
+          paletteIndex = data;
+          return data;
+        }).catch(function() { return []; });
       }
-      if (mobToggle && mobPanel) {
-        mobToggle.addEventListener('click', toggleMobileNav);
-        if (mobClose) mobClose.addEventListener('click', closeMobileNav);
-        mobPanel.querySelectorAll('a').forEach(function(link) {
-          link.addEventListener('click', closeMobileNav);
+      function openPalette() {
+        if (!paletteDialog) return;
+        paletteDialog.showModal();
+        if (paletteInput) { paletteInput.value = ''; paletteInput.focus(); }
+        if (paletteResults) paletteResults.innerHTML = '<p class="text-sm py-8 text-center" style="color:var(--color-text-muted)">Type at least 2 characters to search.</p>';
+      }
+      function closePalette() {
+        if (paletteDialog) paletteDialog.close();
+      }
+      function searchPalette(query) {
+        if (!paletteResults) return;
+        var q = query.trim().toLowerCase();
+        if (q.length < 2) {
+          paletteResults.innerHTML = '<p class="text-sm py-8 text-center" style="color:var(--color-text-muted)">Type at least 2 characters to search.</p>';
+          return;
+        }
+        loadPaletteIndex().then(function(idx) {
+          var hits = idx.filter(function(item) {
+            return (item.title && item.title.toLowerCase().includes(q)) ||
+                   (item.description && item.description.toLowerCase().includes(q)) ||
+                   (item.tags && item.tags.toLowerCase().includes(q));
+          }).slice(0, 10);
+          if (hits.length === 0) {
+            paletteResults.innerHTML = '<p class="text-sm py-8 text-center" style="color:var(--color-text-muted)">No results found.</p>';
+            return;
+          }
+          var html = '';
+          hits.forEach(function(h) {
+            var slug = h.slug || '';
+            var label = h.type || 'article';
+            var pillar = h.pillar || 'aml';
+            html += '<a href="/' + slug + '/" class="palette-result" style="border-left-color:var(--color-' + pillar + ')">' +
+              '<div class="palette-result-title">' + escapeHtml(h.title || slug) + '</div>' +
+              '<div class="palette-result-meta">' + label + '</div>' +
+              '</a>';
+          });
+          paletteResults.innerHTML = html;
+        });
+      }
+      function escapeHtml(s) {
+        var d = document.createElement('div');
+        d.textContent = s;
+        return d.innerHTML;
+      }
+      if (paletteInput) {
+        paletteInput.addEventListener('input', function() { searchPalette(paletteInput.value); });
+        paletteInput.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape') { e.stopPropagation(); closePalette(); }
+          if (e.key === 'Enter') {
+            var first = paletteResults && paletteResults.querySelector('a');
+            if (first) { closePalette(); window.location.href = first.getAttribute('href'); }
+          }
+        });
+      }
+      document.addEventListener('keydown', function(e) {
+        if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+          e.preventDefault();
+          if (paletteDialog && paletteDialog.open) { closePalette(); } else { openPalette(); }
+        }
+      });
+      // Close palette on backdrop click
+      if (paletteDialog) {
+        paletteDialog.addEventListener('click', function(e) {
+          if (e.target === paletteDialog) closePalette();
         });
       }
     });

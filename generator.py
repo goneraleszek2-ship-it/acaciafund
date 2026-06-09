@@ -11,7 +11,7 @@ import shutil
 import time
 import unicodedata
 from collections import defaultdict
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
@@ -19,7 +19,7 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 from urllib.parse import quote as urlquote
 
 from schemas import RegistryData
-from core.visuals import source_bar_svg, sparkline_svg, bloom_chart_svg, radar_svg, heatmap_svg, donut_svg, generate_thumbnail_svg, generate_og_image
+from core.visuals import generate_thumbnail_svg, generate_og_image
 from core.compositor import auto_compose, render_entity_badges, render_key_numbers, render_connections, render_timeline
 from core.extractors import extract_entities_from_analysis, extract_numbers_from_analysis, extract_sqi_from_analysis, extract_timeline_from_trending
 from seed_learn import CURATED_RELATIONS, PREREQUISITES as LEARN_PREREQUISITES
@@ -33,28 +33,28 @@ from config import (
 
 PILLAR_CONFIG = {
     "aml": {
-        "label": "AML", "emoji": "shield", "color": "slate",
+        "label": "AML", "emoji": "🛡️", "color": "slate",
         "bg": "from-slate-900 to-slate-800", "accent": "amber",
         "text_color": "text-slate-900", "badge_color": "bg-amber-100 text-amber-800",
         "heading": "Anti-Money Laundering",
         "description": "Financial crime, compliance, regulation, and risk management.",
     },
     "stock": {
-        "label": "Markets", "emoji": "chart", "color": "green",
+        "label": "Markets", "emoji": "📈", "color": "green",
         "bg": "from-green-900 to-green-800", "accent": "green",
         "text_color": "text-green-900", "badge_color": "bg-green-100 text-green-800",
         "heading": "Markets & Industry",
         "description": "Semiconductors, supply chains, AI industry, manufacturing.",
     },
     "data-engineering": {
-        "label": "Data Engineering", "emoji": "gears", "color": "indigo",
+        "label": "Data Engineering", "emoji": "⚙️", "color": "indigo",
         "bg": "from-indigo-900 to-indigo-800", "accent": "indigo",
         "text_color": "text-indigo-900", "badge_color": "bg-indigo-100 text-indigo-800",
         "heading": "Data Engineering & Infrastructure",
         "description": "Data pipelines, orchestration, quality engineering, streaming, storage, and analytics infrastructure.",
     },
 }
-PILLAR_EMOJIS = {"aml": "shield", "stock": "chart", "data-engineering": "gears"}
+PILLAR_EMOJIS = {"aml": "🛡️", "stock": "📈", "data-engineering": "⚙️"}
 PILLAR_NAMES = {"aml": "AML", "stock": "Markets", "data-engineering": "Data Engineering"}
 DIFFICULTY_ORDER = {"beginner": 0, "intermediate": 1, "advanced": 2}
 
@@ -639,25 +639,6 @@ def main():
         og_image_url = f"{SITE_URL}/static/images/og_{og_key}.svg"
         thumb_base = f"{SITE_URL}/static/images"
 
-        # Phase 2: Generate chart SVGs
-        chart_source_bar = source_bar_svg(item.source_breakdown or {})
-        chart_donut = donut_svg(item.source_breakdown or {})
-        chart_bloom = bloom_chart_svg(item.bloom_questions or [])
-        chart_radar = radar_svg(item.quality_metrics or {})
-        sqi_val = item.signals.get("avg_sqi", SQI_DEFAULT) if item.signals else SQI_DEFAULT
-        sqi_trend = [max(0.1, sqi_val - 0.3), max(0.15, sqi_val - 0.2), max(0.2, sqi_val - 0.1), sqi_val]
-        chart_sparkline = sparkline_svg(sqi_trend, color="#a855f7")
-        qm = item.quality_metrics or {}
-        chart_heatmap = heatmap_svg(
-            [[
-                qm.get("avg_source_score", sqi_val),
-                qm.get("source_diversity", sqi_val * 0.85),
-                qm.get("recency_score", 0.75),
-            ]],
-            row_labels=["Quality"],
-            col_labels=["Validated", "Diverse", "Recent"],
-        )
-
         # Phase 3: GaC composited visualizations
         gac_visuals = auto_compose(body, pillar=pillar, width=580)
 
@@ -698,12 +679,6 @@ def main():
             toc_items=toc_items, related_posts=related,
             related_learn=related_learn,
             visual_fingerprint=visual_fingerprint, layer_badge=layer_badge,
-            chart_source_bar=chart_source_bar,
-            chart_donut=chart_donut,
-            chart_bloom=chart_bloom,
-            chart_radar=chart_radar,
-            chart_sparkline=chart_sparkline,
-            chart_heatmap=chart_heatmap,
             gac_visuals=gac_visuals,
             **ctx_base)
         out_file.write_text(html, encoding="utf-8")
@@ -824,6 +799,10 @@ def main():
     # --- HOMEPAGE (filter future posts from featured/recent) ---
     published_research = [p for p in sorted_research if not is_future_post(p)]
     featured = published_research[:3] if len(published_research) >= 3 else published_research
+    # Hero: highest-SQI article from last 7 days
+    seven_days_ago = now - timedelta(days=7)
+    recent_articles = [p for p in published_research if p.created_at and p.created_at >= seven_days_ago]
+    hero_article = max(recent_articles, key=lambda x: (x.signals or {}).get("avg_sqi", 0)) if recent_articles else None
     home_og_key = hashlib.md5(b"AcaciaFund homepage").hexdigest()[:12]
     home_og_url = f"{SITE_URL}/static/images/og_{home_og_key}.svg"
     index_html = render_template("index.j2",
@@ -833,6 +812,7 @@ def main():
         og_image_url=home_og_url,
         featured_posts=featured, recent_posts=published_research[:12],
         learn_items=learn_items[:6], knowledge_items=knowledge_items[:6],
+        hero_article=hero_article,
         thumbnail_base=f"{SITE_URL}/static/images", thumbnail_key=thumbnail_key, **ctx_base)
     (OUTPUT_DIR / "index.html").write_text(index_html, encoding="utf-8")
     # Write homepage OG image

@@ -1,15 +1,9 @@
 {% extends "layout.j2" %}
+{% from "macros/pillar_badge.html" import pillar_badge %}
+{% from "macros/breadcrumbs.html" import breadcrumbs %}
 {% block main_content %}
 <section>
-  <nav aria-label="Breadcrumb" class="mb-4 text-xs" style="color:var(--color-text-muted)">
-    <ol class="flex flex-wrap items-center gap-1.5">
-      <li><a href="/" class="hover:text-[var(--color-accent)] transition">Home</a></li>
-      <li aria-hidden="true">/</li>
-      <li><a href="/aml/" class="hover:text-[var(--color-accent)] transition">AML</a></li>
-      <li aria-hidden="true">/</li>
-      <li aria-current="page">Signals Dashboard</li>
-    </ol>
-  </nav>
+{{ breadcrumbs(page_path, page_title) }}
 
   <div class="mb-8">
     <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">🛡️ AML Signals Dashboard</h1>
@@ -144,7 +138,7 @@
           <div class="flex items-center gap-2 mt-0.5 text-xs" style="color:var(--color-text-muted)">
             <time datetime="{{ a.date_str }}">{{ a.date_str }}</time>
             {%- if a.signals and a.signals.get('avg_sqi') %}
-            <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[10px]" style="background:rgba(217,119,6,0.1);color:#d97706">SQI {{ "%.0f" | format(a.signals.get('avg_sqi', 0) * 100) }}</span>
+            <a href="/knowledge/research-methodology/#sqi" class="sqi-chip" title="Signal Quality Index — see methodology" style="text-decoration:none"><span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[10px]" style="background:rgba(217,119,6,0.1);color:#d97706">SQI {{ "%.0f" | format(a.signals.get('avg_sqi', 0) * 100) }}</span></a>
             {%- endif %}
             {%- if a.tags %}
             <span>{{ a.tags[:3] | join(', ') }}</span>
