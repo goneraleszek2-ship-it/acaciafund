@@ -322,6 +322,12 @@
             mobDialog.close();
           });
         });
+        // Close on backdrop click
+        mobDialog.addEventListener('click', function(e) {
+          if (e.target === mobDialog) {
+            mobDialog.close();
+          }
+        });
       }
       // Search palette (Cmd+K / Ctrl+K)
       var paletteDialog = document.getElementById('search-palette');
