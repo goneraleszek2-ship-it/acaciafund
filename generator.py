@@ -257,6 +257,60 @@ def sanitize_domain_breakdown(html: str) -> str:
     return html
 
 
+def inject_section_images(body_html: str, section_images: list[dict]) -> str:
+    """Insert section-level images into body_html after matching <h2> headings.
+
+    Matches by section_index (positional: 0 = first <h2>, 1 = second, etc.)
+    Images get style variants based on section type.
+    """
+    if not section_images:
+        return body_html
+
+    img_map: dict[int, dict] = {}
+    for si in section_images:
+        idx = si.get("section_index")
+        if idx is not None:
+            img_map[idx] = si
+
+    h2_pattern = re.compile(r'(<h2[^>]*>.*?</h2>)', re.IGNORECASE | re.DOTALL)
+    parts = h2_pattern.split(body_html)
+    result: list[str] = [parts[0]] if parts else []
+
+    for i in range(1, len(parts), 2):
+        h2_tag = parts[i]
+        content = parts[i + 1] if i + 1 < len(parts) else ""
+        section_idx = (i - 1) // 2
+
+        result.append(h2_tag)
+
+        entry = img_map.get(section_idx)
+        if entry:
+            url = entry.get("image_url", "")
+            credit = entry.get("image_credit", "")
+            alt = entry.get("image_alt", "")
+            w = entry.get("width", 1200)
+            h = entry.get("height", 675)
+            f = [
+                '<figure class="section-image section-image--full my-6 rounded-lg overflow-hidden"',
+                ' style="background:var(--color-bg);border:1px solid var(--color-border)">',
+                f'<img src="{url}" alt="{alt}" width="{w}" height="{h}"',
+                ' loading="lazy" decoding="async"',
+                ' class="w-full h-auto object-cover">',
+            ]
+            if credit:
+                f.append(
+                    '<figcaption class="px-3 py-1.5 text-xs"'
+                    ' style="color:var(--color-text-muted);border-top:1px solid var(--color-border)">'
+                    f'{credit}</figcaption>'
+                )
+            f.append("</figure>")
+            result.append("".join(f))
+
+        result.append(content)
+
+    return "".join(result)
+
+
 def is_future_post(post) -> bool:
     return bool(post.created_at and post.created_at > datetime.now(timezone.utc))
 
@@ -529,6 +583,7 @@ def main():
         body = re.sub(r'<h2[^>]*>\s*' + re.escape(item.title.strip()) + r'\s*</h2>\s*', '', body, count=1)
         body = sanitize_domain_breakdown(body)
         body = sanitize_text(body, strip_emoji=False)
+        body = inject_section_images(body, item.section_images)
         item.description = sanitize_text(item.description, strip_emoji=False)
         item.body_html = body
 
@@ -629,6 +684,7 @@ def main():
         body = re.sub(r'<h2[^>]*>\s*' + re.escape(item.title.strip()) + r'\s*</h2>\s*', '', body, count=1)
         body = sanitize_domain_breakdown(body)
         body = sanitize_text(body, strip_emoji=True)
+        body = inject_section_images(body, item.section_images)
         item.description = sanitize_text(item.description, strip_emoji=True)
 
         prev_post = research_items[i + 1] if i + 1 < len(research_items) else None

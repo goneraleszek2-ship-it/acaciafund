@@ -20,10 +20,10 @@ jobs:
           python-version: "3.13"
 
       - name: Install dependencies
-        run: pip install jinja2 markdown2 pydantic pytest requests
+        run: pip install jinja2 markdown2 pydantic pytest requests Pillow
 
-      - name: Fetch article images (10 most recent)
-        run: python3.13 scripts/fetch_images.py --max 10
+      - name: Fetch section-level images for all articles
+        run: python3.13 scripts/fetch_images.py
 
       - name: Run tests
         run: python -m pytest tests/ -q --ignore=tests/test_usability.py.stale
