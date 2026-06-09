@@ -39,6 +39,7 @@
     </nav>
     <header class="mb-8">
       <div class="flex items-center gap-3 mb-3">
+        {{ layer_badge | default("") | safe }}
         <span class="inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-full {{ pc.badge_color }}">
           {{ pc.emoji }} {{ pc.label }}
         </span>
@@ -55,7 +56,10 @@
         </span>
         {%- endif %}
       </div>
-      <h1 class="text-3xl font-extrabold text-gray-900 leading-tight">{{ content.title | striptags }}</h1>
+      <div class="flex items-center gap-2 mt-1">
+        {{ visual_fingerprint | default("") | safe }}
+        <h1 class="text-3xl font-extrabold text-gray-900 leading-tight">{{ content.title | striptags }}</h1>
+      </div>
       {%- if content.date_str %}
       <time class="mt-2 block text-sm text-gray-500" datetime="{{ content.date_str }}">{{ content.date_str }}
         {%- if page_body %} · {{ page_body | reading_time }} min read{% endif %}
@@ -103,6 +107,17 @@
         <h3 class="text-[11px] font-semibold mb-1 text-center" style="color:var(--color-text-secondary)">Quality Checks</h3>
         <div class="flex justify-center">{{ chart_heatmap | safe }}</div>
       </div>
+    </div>
+    {%- endif %}
+
+    {%- if gac_visuals %}
+    <div class="mb-8 space-y-6">
+      {%- for gv in gac_visuals %}
+      <div class="rounded-lg p-3" style="background:var(--color-surface);border:1px solid var(--color-border)">
+        <h3 class="text-[11px] font-semibold mb-2" style="color:var(--color-text-secondary)">{{ gv.label }}</h3>
+        <div class="overflow-x-auto">{{ gv.svg | safe }}</div>
+      </div>
+      {%- endfor %}
     </div>
     {%- endif %}
 
@@ -227,6 +242,33 @@
             <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">{{ rp.title | striptags }}</span>
             {%- if rp.date_str %}
             <span class="block mt-1 text-xs" style="color:var(--color-text-muted)">{{ rp.date_str }}</span>
+            {%- endif %}
+          </div>
+        </a>
+        {%- endfor %}
+      </div>
+    </section>
+    {%- endif %}
+
+    {%- if related_learn %}
+    <section class="mt-12 pt-8 border-t border-gray-200">
+      <h2 class="text-2xl font-bold text-gray-900 mb-2">Related Lessons</h2>
+      <p class="text-sm text-gray-500 mb-6">Deepen your understanding of this topic with structured learning lessons.</p>
+      <div class="grid gap-4 sm:grid-cols-3">
+        {%- for rl in related_learn %}
+        {%- set rpillar = rl.pillar or "aml" %}
+        {%- set rpc = pillar_config.get(rpillar, pillar_config["aml"]) %}
+        {%- set rtkey = thumbnail_key(rl.title) %}
+        <a href="/{{ rl.slug }}/" class="block rounded-lg overflow-hidden transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+          <div class="aspect-[600/340] bg-gray-800 overflow-hidden">
+            <img src="{{ thumbnail_base }}/thumb_{{ rtkey }}.svg" alt="" class="w-full h-full object-cover" loading="lazy">
+          </div>
+          <div class="p-3">
+            <span class="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded {{ rpc.badge_color }}">{{ rpc.emoji }} {{ rpc.label }}</span>
+            {%- if rl.difficulty %}<span class="text-xs text-gray-400 ml-1">{{ rl.difficulty | capitalize }}</span>{% endif %}
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">{{ rl.title | striptags }}</span>
+            {%- if rl.date_str %}
+            <span class="block mt-1 text-xs" style="color:var(--color-text-muted)">{{ rl.date_str }}</span>
             {%- endif %}
           </div>
         </a>

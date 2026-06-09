@@ -9,10 +9,51 @@
     </ol>
   </nav>
 
-  <div class="mb-8">
+   <div class="mb-8">
     <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">Learning Hub</h1>
     <p class="mt-2 text-sm" style="color:var(--color-text-muted)" id="progress-summary">{{ items | length }} lessons — structured learning across all pillars</p>
     <p class="mt-1 text-xs" style="color:var(--color-text-muted)" id="review-due"></p>
+  </div>
+
+  {%- set learning_paths = {
+    "aml": {
+      "icon": "🛡️",
+      "name": "Anti-Money Laundering",
+      "color": "#c97d3e",
+      "desc": "Learn AML regulations, transaction monitoring, SAR filing, and risk-based approaches.",
+    },
+    "stock": {
+      "icon": "📈",
+      "name": "Financial Markets",
+      "color": "#3a7d5c",
+      "desc": "Understand market mechanics, securities analysis, trading strategies, and portfolio theory.",
+    },
+    "data-engineering": {
+      "icon": "⚙️",
+      "name": "Data Engineering",
+      "color": "#6366f1",
+      "desc": "Build data pipelines, warehouses, ETL processes, and learn big data architectures.",
+    },
+  } %}
+    <div class="mb-10 grid gap-4 sm:grid-cols-3">
+    {%- for pkey, pinfo in learning_paths.items() %}
+    {%- set pcount = items | selectattr("pillar", "equalto", pkey) | list | length %}
+    <div class="block rounded-xl p-4 transition hover:-translate-y-0.5 hover:shadow-md"
+       style="background:var(--color-surface);border:1px solid var(--color-border)">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="text-lg">{{ pinfo.icon }}</span>
+        <span class="font-semibold text-sm" style="color:var(--color-text)">{{ pinfo.name }}</span>
+      </div>
+      <p class="text-xs mb-2" style="color:var(--color-text-secondary)">{{ pinfo.desc }}</p>
+      <div class="flex items-center justify-between text-xs">
+        <span style="color:var(--color-text-muted)">{{ pcount }} lessons</span>
+        <span class="path-progress-text" data-path="{{ pkey }}" style="color:var(--color-text-muted)">0%</span>
+      </div>
+      <div class="sqi-bar mt-1">
+        <div class="sqi-bar-fill path-bar-fill" data-path="{{ pkey }}" style="width:0%;background:{{ pinfo.color }}"></div>
+      </div>
+    </div>
+    {%- endfor %}
   </div>
 
   <div class="mb-10 p-4 rounded-lg" style="background:var(--color-surface);border:1px solid var(--color-border)" id="pillar-progress-section">
@@ -192,6 +233,33 @@
   if(summary && total > 0){
     summary.textContent = completed + '/' + total + ' completed — ' + (total - completed) + ' remaining';
   }
+
+  // Learning path progress bars
+  document.querySelectorAll('.path-bar-fill').forEach(function(bar){
+    var pathKey = bar.getAttribute('data-path');
+    var cards = document.querySelectorAll('[data-path="' + pathKey + '"]');
+    // Count via pillar cards matching this path
+    var totalInPath = 0;
+    var doneInPath = 0;
+    document.querySelectorAll('.lesson-status').forEach(function(el){
+      var card = el.closest('.learn-card');
+      if (card) {
+        var pillarEl = card.querySelector('[class*="inline-flex"]');
+        if (pillarEl && pillarEl.textContent.indexOf(pathKey) > -1) {
+          totalInPath++;
+          var slug = progressKey(el.getAttribute('data-slug'));
+          if(p[slug] && p[slug].done) doneInPath++;
+        }
+      }
+    });
+    if (totalInPath > 0) {
+      bar.style.width = Math.round(doneInPath / totalInPath * 100) + '%';
+    }
+    var txtEl = document.querySelector('.path-progress-text[data-path="' + pathKey + '"]');
+    if (txtEl && totalInPath > 0) {
+      txtEl.textContent = Math.round(doneInPath / totalInPath * 100) + '%';
+    }
+  });
 })();
 </script>
 {% endblock %}

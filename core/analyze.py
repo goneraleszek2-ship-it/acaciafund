@@ -91,6 +91,19 @@ def classify_story(story: dict) -> list[tuple[str, float]]:
                 if ap in title_lower:
                     score += 3.0
 
+        # Geopolitics penalty for AML: if the title reads like foreign policy / military
+        # (e.g. "Iran stops negotiations — Strait of Hormuz") drop AML score sharply
+        GEOPOLITICS_KW = {
+            "military", "navy", "strait", "blockade", "negotiation", "treaty",
+            "diplomacy", "ambassador", "embassy", "geopolit", "territorial",
+            "border", "sovereignty", "weapon", "missile", "drone strike",
+            "ceasefire", "war", "invasion", "soldier",
+        }
+        if pillar_name == "aml":
+            geo_matches = sum(1 for kw in GEOPOLITICS_KW if kw in title_lower)
+            if geo_matches >= 2:
+                score *= 0.3
+
         if matched_keywords > 0:
             scores.append((pillar_name, score))
 

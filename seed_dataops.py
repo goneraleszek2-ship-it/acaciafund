@@ -85,7 +85,7 @@ NEW_LEARN = [
 <li>Ownership and escalation contacts</li>
 </ul>
 <p>This manifest becomes the single source of truth for pipeline operations — the <em>registry of pipelines</em>, analogous to this site's registry.json for content.</p>""",
-        "date": "2026-06-08", "pillar": "",
+        "date": "2026-06-08", "pillar": "data-engineering",
         "tags": ["dataops", "data-engineering", "pipeline", "best-practices"],
         "flashcards": [
             {"term": "DataOps", "definition": "Automated, process-oriented methodology applying DevOps and SPC principles to data pipeline lifecycle."},
@@ -135,7 +135,7 @@ expectation_suite.add_expectation(
 <li>Pipeline DAG health (success rate, duration, backlog)</li>
 </ul>
 <p>The AcaciaFund SQI (Signal Quality Index) is itself a data quality metric — combining source authority, freshness, consensus, and relevance into a single composable score.</p>""",
-        "date": "2026-06-08", "pillar": "",
+        "date": "2026-06-08", "pillar": "data-engineering",
         "tags": ["data-quality", "testing", "dataops", "engineering"],
         "flashcards": [
             {"term": "Expectation Suite", "definition": "Collection of data quality assertions that define the expected state of a dataset."},
@@ -172,7 +172,7 @@ expectation_suite.add_expectation(
 <h2>Putting It Together</h2>
 <p>This entire stack runs on a single `docker-compose.yml` for development and scales to production on Kubernetes. The total infrastructure cost for a mid-size data team: roughly $500-2000/month in cloud compute, zero licensing fees.</p>
 <p>AcaciaFund itself follows this philosophy: Python-native, open source tools only, static output, zero vendor lock-in.</p>""",
-        "date": "2026-06-08", "pillar": "",
+        "date": "2026-06-08", "pillar": "data-engineering",
         "tags": ["open-source", "data-stack", "dataops", "architecture"],
         "flashcards": [
             {"term": "Lakehouse", "definition": "Data architecture combining data lake flexibility with warehouse ACID guarantees, using table formats like Apache Iceberg or Delta Lake."},
@@ -235,7 +235,7 @@ NEW_KNOWLEDGE = [
 <dt><strong>Schema-on-Read</strong></dt>
 <dd>Data lake paradigm where schema is applied at query time rather than ingest time, enabling flexible data storage.</dd>
 </dl>""",
-        "date": "2026-06-08", "pillar": "",
+        "date": "2026-06-08", "pillar": "data-engineering",
         "tags": ["dataops", "glossary", "reference"],
     },
     {
@@ -310,7 +310,7 @@ NEW_KNOWLEDGE = [
 <li><strong>OpenTelemetry</strong> — Vendor-neutral observability framework for traces, metrics, and logs.</li>
 <li><strong>Grafana Loki</strong> — Log aggregation system. Lightweight, cost-effective, Grafana-native.</li>
 </ul>""",
-        "date": "2026-06-08", "pillar": "",
+        "date": "2026-06-08", "pillar": "data-engineering",
         "tags": ["dataops", "tools", "open-source", "reference"],
     },
     {
@@ -414,7 +414,7 @@ NEW_KNOWLEDGE = [
 <li>Reader engagement metrics</li>
 </ul>
 <p>This follows the <strong>lambda architecture</strong> pattern: batch (static site) + speed (API) layers.</p>""",
-        "date": "2026-06-08", "pillar": "",
+        "date": "2026-06-08", "pillar": "data-engineering",
         "tags": ["dataops", "architecture", "system", "pipeline"],
     },
 ]

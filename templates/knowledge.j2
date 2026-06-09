@@ -42,13 +42,17 @@
 
     <header class="mb-8">
       <div class="flex items-center gap-3 mb-3">
+        {{ layer_badge | default("") | safe }}
         {%- if kcat %}
         <span class="inline-flex items-center gap-1 px-3 py-1 text-xs font-semibold rounded-full" style="background:{{ kcat.bg_color | default('#e2e8f0') }}20;color:{{ kcat.color | default('#64748b') }}">
           {{ kcat.icon }} {{ kcat.label }}
         </span>
         {%- endif %}
       </div>
-      <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">{{ content.title | striptags }}</h1>
+      <div class="flex items-center gap-2 mt-1">
+        {{ visual_fingerprint | default("") | safe }}
+        <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">{{ content.title | striptags }}</h1>
+      </div>
       {%- if content.date_str %}
       <time class="mt-2 block text-sm" style="color:var(--color-text-muted)" datetime="{{ content.date_str }}">
         Last updated {{ content.date_str }}{% if content.body_html %} · {{ content.body_html | reading_time }} min read{% endif %}

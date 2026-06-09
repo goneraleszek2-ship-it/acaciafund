@@ -20,6 +20,9 @@ from urllib.parse import quote as urlquote
 
 from schemas import RegistryData
 from core.visuals import source_bar_svg, sparkline_svg, bloom_chart_svg, radar_svg, heatmap_svg, donut_svg, generate_thumbnail_svg, generate_og_image
+from core.compositor import auto_compose, render_entity_badges, render_key_numbers, render_connections, render_timeline
+from core.extractors import extract_entities_from_analysis, extract_numbers_from_analysis, extract_sqi_from_analysis, extract_timeline_from_trending
+from seed_learn import CURATED_RELATIONS, PREREQUISITES as LEARN_PREREQUISITES
 from config import (
     PROJECT_ROOT, SITE_URL, SITE_NAME, SITE_DESCRIPTION, PLAUSIBLE_DOMAIN,
     REGISTRY_PATH, TEMPLATE_DIR, OUTPUT_DIR,
@@ -83,8 +86,16 @@ def slug_to_path(slug: str) -> str:
     return f"{slug}/index.html" if "/" in slug else f"{slug}.html"
 
 
+def canonical_path(slug_or_path: str) -> str:
+    """Normalize a path for canonical URLs: strip /index.html, enforce trailing slash."""
+    path = slug_or_path.replace("/index.html", "/").replace(".html", "/")
+    if not path.endswith("/"):
+        path += "/"
+    return path
+
+
 def slug_to_url(slug: str) -> str:
-    return f"{SITE_URL}/{slug_to_path(slug)}"
+    return f"{SITE_URL}/{canonical_path(slug_to_path(slug))}"
 
 
 def group_by_pillar(content_list: list) -> dict[str, list]:
@@ -123,14 +134,39 @@ def extract_headings(html: str) -> tuple[str, list[dict]]:
 
 
 def find_related(posts: list, current: object, max_items: int = 3) -> list:
+    """Score relatedness by pillar match (40%), tag overlap (40%), curated relations (20%).
+
+    Curated relations (from current.curated_relations) always appear first
+    when they match a post slug in the candidate pool.
+    """
     current_tags = set(t.lower() for t in current.tags)
-    scored = []
-    for p in posts:
-        if p.slug == current.slug:
+    current_pillar = current.pillar or ""
+    curated_slugs = {r.get("slug", "") for r in (current.curated_relations or [])}
+
+    scored: list[tuple[float, object]] = []
+    seen_slugs: set[str] = set()
+
+    # Phase 1: Curated relations (always included if post exists in pool)
+    for r in current.curated_relations or []:
+        rslug = r.get("slug", "")
+        if not rslug:
             continue
-        overlap = len(current_tags & set(t.lower() for t in p.tags))
-        if overlap > 0:
-            scored.append((overlap, p))
+        for p in posts:
+            if p.slug == rslug and p.slug != current.slug:
+                scored.append((2.0, p))
+                seen_slugs.add(p.slug)
+                break
+
+    # Phase 2: Algorithmic scoring for remaining candidates
+    for p in posts:
+        if p.slug == current.slug or p.slug in seen_slugs:
+            continue
+        pillar_match = 1.0 if p.pillar and p.pillar == current_pillar else 0.0
+        tag_overlap = len(current_tags & set(t.lower() for t in p.tags))
+        tag_score = min(tag_overlap / max(len(current_tags), 1), 1.0)
+        score = pillar_match * 0.4 + tag_score * 0.4
+        if score > 0:
+            scored.append((score, p))
     scored.sort(key=lambda x: -x[0])
     return [p for _, p in scored[:max_items]]
 
@@ -218,6 +254,72 @@ def is_future_post(post) -> bool:
     return bool(post.created_at and post.created_at > datetime.now(timezone.utc))
 
 
+# ── Visual fingerprint: unique ident for every article ─────
+PILLAR_FINGERPRINT_COLORS = {
+    "aml": "#c97d3e", "stock": "#3a7d5c", "data-engineering": "#6366f1",
+    "": "#6b7280",
+}
+
+LAYER_SYMBOLS = {
+    "research": ("path", '<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" fill="none" stroke="currentColor" stroke-width="1.5"/>'),
+    "learn": ("path", '<path d="M4 19.5A2.5 2.5 0 016.5 17H20" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" fill="none" stroke="currentColor" stroke-width="1.5"/>'),
+    "knowledge": ("circle", '<circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 6v6l4 2" fill="none" stroke="currentColor" stroke-width="1.5"/>'),
+}
+
+LAYER_LABELS = {"research": "Research", "learn": "Learn", "knowledge": "Knowledge"}
+
+
+def generate_article_fingerprint(slug: str, title: str, pillar: str, content_type: str, tags: list) -> str:
+    """Generate a unique SVG ident for an article — a mini tartan-like pattern.
+
+    The fingerprint is derived from:
+      - Pillar → base color
+      - Content type → pattern style (bars/dots/diagonals)
+      - Title hash → pattern permutation
+      - Tags → number of columns
+    """
+    h = int(hashlib.md5((slug + title).encode()).hexdigest()[:6], 16)
+    base_color = PILLAR_FINGERPRINT_COLORS.get(pillar, "#6366f1")
+    column_count = 3 + (h % 5)
+    row_count = 3 + ((h >> 8) % 3)
+
+    bars = []
+    for col in range(column_count):
+        cx = 4 + col * (120 // column_count)
+        bar_h = 5 + ((h >> (col * 4)) % 10)
+        for row in range(row_count):
+            if (h >> (col + row * 7)) & 1:
+                ry = 4 + row * (28 // row_count)
+                opacity = 0.3 + ((h >> (col * 3 + row * 2)) % 5) * 0.14
+                if content_type == "learn":
+                    bars.append(f'<circle cx="{cx}" cy="{ry + 6}" r="{bar_h // 4}" fill="{base_color}" opacity="{opacity}"/>')
+                elif content_type == "knowledge":
+                    bars.append(f'<line x1="{cx - 3}" y1="{ry}" x2="{cx + 3}" y2="{ry + 12}" stroke="{base_color}" stroke-width="1.5" opacity="{opacity}"/>')
+                else:
+                    bars.append(f'<rect x="{cx - 2}" y="{ry}" width="4" height="{bar_h}" rx="1" fill="{base_color}" opacity="{opacity}"/>')
+
+    return (
+        f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 32" width="120" height="32" aria-hidden="true">'
+        f'<rect width="120" height="32" rx="2" fill="{base_color}" opacity="0.08"/>'
+        f'{"".join(bars)}'
+        f'</svg>'
+    )
+
+
+def layer_indicator_html(content_type: str, pillar: str = "") -> str:
+    """Small visual badge showing which layer (research/learn/knowledge) the user is in."""
+    sym_type, sym_path = LAYER_SYMBOLS.get(content_type, LAYER_SYMBOLS["research"])
+    label = LAYER_LABELS.get(content_type, "Research")
+    color = PILLAR_FINGERPRINT_COLORS.get(pillar, "#6366f1")
+    return (
+        f'<span class="inline-flex items-center gap-1.5 px-2 py-1 text-xs font-medium rounded" '
+        f'style="background:{color}14;color:{color};border:1px solid {color}33">'
+        f'<svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" aria-hidden="true">{sym_path}</svg>'
+        f'{label}'
+        f'</span>'
+    )
+
+
 def interest_score(post, now: datetime) -> float:
     sqi = post.signals.get("avg_sqi", 0.0) if post.signals else 0.0
     age_days = (now - (post.created_at or now)).days if post.created_at else 365
@@ -303,7 +405,7 @@ def main():
     # --- KNOWLEDGE PAGES ---
     for item in knowledge_items:
         slug = item.slug
-        page_path = slug_to_path(slug)
+        page_path = canonical_path(slug_to_path(slug))
         if "/" in slug:
             out_dir = OUTPUT_DIR / slug
             out_dir.mkdir(parents=True, exist_ok=True)
@@ -325,6 +427,8 @@ def main():
 
         related_research = find_related(research_items, item, 3)
         related_learn = find_related(learn_items, item, 3)
+        visual_fingerprint = generate_article_fingerprint(item.slug, item.title, item.pillar or "", "knowledge", item.tags)
+        layer_badge = layer_indicator_html("knowledge", item.pillar or "")
 
         thumb_key = hashlib.md5(item.title.encode()).hexdigest()[:12]
         og_key = hashlib.md5(f"og_{item.title}".encode()).hexdigest()[:12]
@@ -336,6 +440,7 @@ def main():
             toc_items=toc_items, kcat=kcat,
             related_research=related_research,
             related_learn=related_learn,
+            visual_fingerprint=visual_fingerprint, layer_badge=layer_badge,
             thumbnail_base=thumb_base, thumbnail_key=thumbnail_key,
             og_image_url=og_image_url,
             is_index=False, page_type="knowledge", **ctx_base)
@@ -374,6 +479,14 @@ def main():
     print("  category: knowledge/index.html")
 
     # --- LEARN PAGES ---
+    # Apply curated relations and prerequisites from seed_learn.py
+    for item in learn_items:
+        slug = item.slug
+        if slug in CURATED_RELATIONS:
+            item.curated_relations = CURATED_RELATIONS[slug]
+        if slug in LEARN_PREREQUISITES:
+            item.prerequisites = LEARN_PREREQUISITES[slug]
+
     learn_lessons = sorted(
         [li for li in learn_items if li.slug != "learn"],
         key=lambda x: (DIFFICULTY_ORDER.get(x.difficulty or "beginner", 0), x.pillar or "", x.title or ""),
@@ -392,7 +505,7 @@ def main():
             prev_lesson = None
             next_lesson = None
         slug = item.slug
-        page_path = slug_to_path(slug)
+        page_path = canonical_path(slug_to_path(slug))
         if "/" in slug:
             out_dir = OUTPUT_DIR / slug
             out_dir.mkdir(parents=True, exist_ok=True)
@@ -412,6 +525,8 @@ def main():
         pconf = PILLAR_CONFIG.get(pillar) if pillar else None
         related_research = find_related(research_items, item, 3)
         related_knowledge = find_related(knowledge_items, item, 3)
+        visual_fingerprint = generate_article_fingerprint(item.slug, item.title, pillar, "learn", item.tags)
+        layer_badge = layer_indicator_html("learn", pillar)
         thumb_key = hashlib.md5(item.title.encode()).hexdigest()[:12]
         og_key = hashlib.md5(f"og_{item.title}".encode()).hexdigest()[:12]
         thumb_base = f"{SITE_URL}/static/images"
@@ -435,6 +550,7 @@ def main():
             prev_lesson=prev_lesson, next_lesson=next_lesson,
             related_research=related_research,
             related_knowledge=related_knowledge,
+            visual_fingerprint=visual_fingerprint, layer_badge=layer_badge,
             thumbnail_base=thumb_base, thumbnail_key=thumbnail_key,
             og_image_url=og_image_url, quiz_json=quiz_json,
             is_index=False, **ctx_base)
@@ -474,7 +590,7 @@ def main():
     # --- RESEARCH PAGES (blog posts) ---
     for i, item in enumerate(research_items):
         slug = item.slug
-        page_path = slug_to_path(slug)
+        page_path = canonical_path(slug_to_path(slug))
         if "/" in slug:
             out_dir = OUTPUT_DIR / slug
             out_dir.mkdir(parents=True, exist_ok=True)
@@ -491,9 +607,12 @@ def main():
 
         prev_post = research_items[i + 1] if i + 1 < len(research_items) else None
         next_post = research_items[i - 1] if i > 0 else None
-        related = find_related(research_items, item, 3)
-
         pillar = item.pillar or "aml"
+        related = find_related(research_items, item, 3)
+        related_learn = find_related(learn_items, item, 3)
+        visual_fingerprint = generate_article_fingerprint(item.slug, item.title, pillar, "research", item.tags)
+        layer_badge = layer_indicator_html("research", pillar)
+
         pconf = PILLAR_CONFIG.get(pillar, PILLAR_CONFIG["aml"])
         sqi_svg = generate_sqi_badge(item.signals.get("avg_sqi", SQI_DEFAULT)) if item.signals else ""
         og_key = hashlib.md5(f"og_{item.title}".encode()).hexdigest()[:12]
@@ -508,13 +627,47 @@ def main():
         sqi_val = item.signals.get("avg_sqi", SQI_DEFAULT) if item.signals else SQI_DEFAULT
         sqi_trend = [max(0.1, sqi_val - 0.3), max(0.15, sqi_val - 0.2), max(0.2, sqi_val - 0.1), sqi_val]
         chart_sparkline = sparkline_svg(sqi_trend, color="#a855f7")
-        qf = item.quality_flags or []
+        qm = item.quality_metrics or {}
         chart_heatmap = heatmap_svg(
-            [[1.0 if f in qf else 0.0 for f in ["validated", "diverse", "recent"]]]
-            if qf else [[0.0, 0.0, 0.0]],
+            [[
+                qm.get("avg_source_score", sqi_val),
+                qm.get("source_diversity", sqi_val * 0.85),
+                qm.get("recency_score", 0.75),
+            ]],
             row_labels=["Quality"],
             col_labels=["Validated", "Diverse", "Recent"],
         )
+
+        # Phase 3: GaC composited visualizations
+        gac_visuals = auto_compose(body, pillar=pillar, width=580)
+
+        # Phase 3b: Additional visuals from analysis/trending/cross-pillar fields
+        analysis_html = item.analysis_html or ""
+        trending_html = item.trending_html or ""
+        cross_pillar_html = item.cross_pillar_html or ""
+
+        entities = extract_entities_from_analysis(analysis_html)
+        if len(entities) >= 2:
+            svg = render_entity_badges(entities, pillar=pillar, width=580)
+            gac_visuals.append({"type": "entities", "label": "Key Entities", "svg": svg})
+
+        numbers = extract_numbers_from_analysis(analysis_html)
+        if numbers:
+            svg = render_key_numbers(numbers, pillar=pillar, width=580)
+            gac_visuals.append({"type": "numbers", "label": "Key Numbers", "svg": svg})
+
+        trend_items = extract_timeline_from_trending(trending_html)
+        if trend_items:
+            h = 28 + len(trend_items) * 52
+            svg = render_timeline(trend_items, pillar=pillar, width=580, height=h)
+            gac_visuals.append({"type": "trending", "label": "Trending", "svg": svg})
+
+        # Cross-pillar connections
+        if cross_pillar_html:
+            conns = [c.strip() for c in cross_pillar_html.replace("###", "").replace("Cross-pillar connections", "").split("-") if c.strip()]
+            if conns:
+                svg = render_connections(conns, pillar=pillar, width=580)
+                gac_visuals.append({"type": "connections", "label": "Cross-Pillar", "svg": svg})
 
         html = render_template("blog_post.j2",
             content=item, page_path=page_path, page_body=body,
@@ -523,12 +676,15 @@ def main():
             og_image_url=og_image_url,
             thumbnail_base=thumb_base, thumbnail_key=thumbnail_key,
             toc_items=toc_items, related_posts=related,
+            related_learn=related_learn,
+            visual_fingerprint=visual_fingerprint, layer_badge=layer_badge,
             chart_source_bar=chart_source_bar,
             chart_donut=chart_donut,
             chart_bloom=chart_bloom,
             chart_radar=chart_radar,
             chart_sparkline=chart_sparkline,
             chart_heatmap=chart_heatmap,
+            gac_visuals=gac_visuals,
             **ctx_base)
         out_file.write_text(html, encoding="utf-8")
         print(f"  research: {out_file.relative_to(OUTPUT_DIR)}")
@@ -693,7 +849,7 @@ def main():
     feed_updated = max(feed_candidates).isoformat() if feed_candidates else now.isoformat()
     feed_items = []
     for post in published_for_feed[:20]:
-        path = slug_to_path(post.slug)
+        path = canonical_path(slug_to_path(post.slug))
         desc = (post.description or post.body_html[:200])[:300]
         post_updated = (post.created_at or now).isoformat()
         feed_items.append(f"""  <entry>

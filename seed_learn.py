@@ -27,6 +27,28 @@ DIFFICULTY_MAP = {
     "learn/open-source-data-stack": "intermediate",
 }
 
+CURATED_RELATIONS = {
+    "learn/aml-basics": [
+        {"slug": "learn/quiz-aml", "type": "reinforcement", "label": "Test your AML knowledge"},
+    ],
+    "learn/market-analysis": [
+        {"slug": "learn/quiz-aml", "type": "related", "label": "Risk assessment concepts"},
+    ],
+    "learn/dataops-introduction": [
+        {"slug": "learn/data-quality-engineering", "type": "next", "label": "Next: data quality"},
+        {"slug": "learn/open-source-data-stack", "type": "related", "label": "Open-source tools"},
+    ],
+    "learn/data-quality-engineering": [
+        {"slug": "learn/open-source-data-stack", "type": "next", "label": "Next: open-source stack"},
+    ],
+}
+
+PREREQUISITES = {
+    "learn/data-quality-engineering": ["learn/open-source-data-stack"],
+    "learn/open-source-data-stack": ["learn/dataops-introduction"],
+    "learn/data-ethics-privacy": ["learn/open-source-data-stack"],
+}
+
 PILLAR_COLORS = {
     "aml": {"primary": "#d97706", "secondary": "#f59e0b", "bg": "#1c1917"},
     "stock": {"primary": "#22c55e", "secondary": "#4ade80", "bg": "#052e16"},
@@ -106,6 +128,10 @@ def main():
             item["tags"] = list(set(item.get("tags", []) + [pillar]))
         if slug in DIFFICULTY_MAP:
             item["difficulty"] = DIFFICULTY_MAP[slug]
+        if slug in CURATED_RELATIONS:
+            item["curated_relations"] = CURATED_RELATIONS[slug]
+        if slug in PREREQUISITES:
+            item["prerequisites"] = PREREQUISITES[slug]
 
     with open(REGISTRY_PATH, "w", encoding="utf-8") as f:
         json.dump(registry, f, indent=2, ensure_ascii=False)
@@ -114,7 +140,9 @@ def main():
     for item in learn_items:
         p = item.get("pillar", "")
         d = item.get("difficulty", "")
-        print(f"  {item['slug']}: pillar={p}, difficulty={d}, thumbnail={'yes' if item.get('thumbnail_svg') else 'no'}")
+        cr = "yes" if item.get("curated_relations") else "no"
+        pr = "yes" if item.get("prerequisites") else "no"
+        print(f"  {item['slug']}: pillar={p}, difficulty={d}, thumbnail={'yes' if item.get('thumbnail_svg') else 'no'}, curated_relations={cr}, prerequisites={pr}")
 
 
 if __name__ == "__main__":

@@ -809,9 +809,12 @@ def generate_body_html(article: dict) -> str:
         f"<ul>",
     ]
     domain_names = ["Technology", "Finance", "Regulatory", "Academic", "Industry", "Policy", "Healthcare", "Defense"]
+    total_weight = sum(range(1, domains + 1))
     for i in range(domains):
+        weight = domains - i
+        pct = max(1, round(weight / total_weight * 100))
         sections.append(f"<li>{domain_names[i % len(domain_names)]}: "
-                        f"{(src_count * (domains - i) * 10 // domains)}% of sources</li>")
+                        f"{pct}% of sources</li>")
     sections.append("</ul>")
 
     sections += [

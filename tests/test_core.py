@@ -584,7 +584,131 @@ def test_visuals_subtopic_unknown_pillar():
 
 
 # ══════════════════════════════════════════════
-# 10. CONFIG INTEGRITY
+# 11. VISUAL FINGERPRINT & LAYER INDICATOR
+# ══════════════════════════════════════════════
+
+def test_generate_article_fingerprint():
+    from generator import generate_article_fingerprint
+    svg = generate_article_fingerprint("test-slug", "Test Title", "aml", "research", ["aml"])
+    assert svg.startswith("<svg")
+    assert svg.endswith("</svg>")
+    assert "#c97d3e" in svg or "c97d3e" in svg
+
+
+def test_generate_article_fingerprint_learn():
+    from generator import generate_article_fingerprint
+    svg = generate_article_fingerprint("learn/foo", "Foo Lesson", "data-engineering", "learn", ["data-engineering"])
+    assert svg.startswith("<svg")
+    assert "circle" in svg  # learn uses circles
+
+
+def test_generate_article_fingerprint_knowledge():
+    from generator import generate_article_fingerprint
+    svg = generate_article_fingerprint("knowledge/bar", "Bar Ref", "stock", "knowledge", ["stock"])
+    assert svg.startswith("<svg")
+    assert "line" in svg  # knowledge uses lines
+
+
+def test_layer_indicator_html():
+    from generator import layer_indicator_html
+    html = layer_indicator_html("research", "aml")
+    assert "Research" in html
+    assert "#c97d3e" in html or "c97d3e" in html
+
+
+def test_layer_indicator_html_learn():
+    from generator import layer_indicator_html
+    html = layer_indicator_html("learn", "stock")
+    assert "Learn" in html
+    assert "#3a7d5c" in html or "3a7d5c" in html
+
+
+def test_layer_indicator_html_default():
+    from generator import layer_indicator_html
+    html = layer_indicator_html("unknown")
+    assert "Research" in html  # fallback to research
+
+
+# ══════════════════════════════════════════════
+# 12. FIND RELATED
+# ══════════════════════════════════════════════
+
+class _FakePost:
+    def __init__(self, slug, pillar="", tags=None, curated_relations=None):
+        self.slug = slug
+        self.pillar = pillar
+        self.tags = tags or []
+        self.curated_relations = curated_relations or []
+
+
+def test_find_related_by_tags():
+    from generator import find_related
+    posts = [
+        _FakePost("a", "aml", ["aml", "compliance"]),
+        _FakePost("b", "stock", ["markets"]),
+        _FakePost("c", "aml", ["aml", "kyc"]),
+    ]
+    current = _FakePost("self", "aml", ["aml", "compliance"])
+    result = find_related(posts, current, max_items=2)
+    slugs = [p.slug for p in result]
+    assert len(result) == 2
+    assert "self" not in slugs
+
+
+def test_find_related_curated():
+    from generator import find_related
+    posts = [
+        _FakePost("a", "aml", ["aml"]),
+        _FakePost("b", "stock", ["markets"]),
+    ]
+    current = _FakePost("self", "aml", ["aml"], curated_relations=[{"slug": "b"}])
+    result = find_related(posts, current, max_items=2)
+    assert result[0].slug == "b"  # curated first
+
+
+def test_find_related_empty():
+    from generator import find_related
+    assert find_related([], _FakePost("self")) == []
+
+
+def test_find_related_max_items():
+    from generator import find_related
+    posts = [_FakePost(f"p{i}", "aml", ["aml"]) for i in range(10)]
+    current = _FakePost("self", "aml", ["aml"])
+    result = find_related(posts, current, max_items=4)
+    assert len(result) == 4
+
+
+# ══════════════════════════════════════════════
+# 13. SM-2 SPACED REPETITION ALGORITHM
+# ══════════════════════════════════════════════
+
+def test_sm2_first_correct():
+    ef, interval, rep = 2.5, 0, 0
+    rep += 1
+    interval = 1 if rep == 1 else (6 if rep == 2 else round(interval * ef))
+    assert interval == 1 and ef == 2.5
+
+
+def test_sm2_wrong_answer_resets():
+    ef, interval, rep = 2.5, 6, 3
+    rep = 0
+    interval = 1
+    ef = max(1.3, ef - 0.2)
+    assert rep == 0 and interval == 1 and ef == 2.3
+
+
+def test_sm2_repeated_correct():
+    ef, interval, rep = 2.5, 1, 1
+    # second correct
+    rep += 1; interval = 6; ef = max(1.3, ef + 0.1)
+    # third correct
+    rep += 1; interval = round(interval * ef); ef = max(1.3, ef + 0.1)
+    assert interval == round(6 * 2.6) and round(ef, 1) == 2.7
+
+
+# ══════════════════════════════════════════════
+# 14. CONFIG INTEGRITY
 # ══════════════════════════════════════════════
 
 def test_pillar_config_consistency():

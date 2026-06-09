@@ -40,6 +40,9 @@ class AcaciaContent(BaseModel):
     quality_metrics: dict = {}
     lineage: dict = {}
     quality_flags: List[str] = []
+    curated_relations: List[dict] = []
+    prerequisites: List[str] = []
+    visual_fingerprint: str = ""
 
     @validator('slug')
     def slug_must_be_alphanumeric_dashes_slashes(cls, v):
