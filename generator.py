@@ -20,8 +20,7 @@ from urllib.parse import quote as urlquote
 
 from schemas import RegistryData
 from core.visuals import generate_thumbnail_svg, generate_og_image
-from core.compositor import auto_compose, render_entity_badges, render_key_numbers, render_connections, render_timeline
-from core.extractors import extract_entities_from_analysis, extract_numbers_from_analysis, extract_sqi_from_analysis, extract_timeline_from_trending
+
 from seed_learn import CURATED_RELATIONS, PREREQUISITES as LEARN_PREREQUISITES
 from config import (
     PROJECT_ROOT, SITE_URL, SITE_NAME, SITE_DESCRIPTION, PLAUSIBLE_DOMAIN,
@@ -639,37 +638,6 @@ def main():
         og_image_url = f"{SITE_URL}/static/images/og_{og_key}.svg"
         thumb_base = f"{SITE_URL}/static/images"
 
-        # Phase 3: GaC composited visualizations
-        gac_visuals = auto_compose(body, pillar=pillar, width=580)
-
-        # Phase 3b: Additional visuals from analysis/trending/cross-pillar fields
-        analysis_html = item.analysis_html or ""
-        trending_html = item.trending_html or ""
-        cross_pillar_html = item.cross_pillar_html or ""
-
-        entities = extract_entities_from_analysis(analysis_html)
-        if len(entities) >= 2:
-            svg = render_entity_badges(entities, pillar=pillar, width=580)
-            gac_visuals.append({"type": "entities", "label": "Key Entities", "svg": svg})
-
-        numbers = extract_numbers_from_analysis(analysis_html)
-        if numbers:
-            svg = render_key_numbers(numbers, pillar=pillar, width=580)
-            gac_visuals.append({"type": "numbers", "label": "Key Numbers", "svg": svg})
-
-        trend_items = extract_timeline_from_trending(trending_html)
-        if trend_items:
-            h = 28 + len(trend_items) * 52
-            svg = render_timeline(trend_items, pillar=pillar, width=580, height=h)
-            gac_visuals.append({"type": "trending", "label": "Trending", "svg": svg})
-
-        # Cross-pillar connections
-        if cross_pillar_html:
-            conns = [c.strip() for c in cross_pillar_html.replace("###", "").replace("Cross-pillar connections", "").split("-") if c.strip()]
-            if conns:
-                svg = render_connections(conns, pillar=pillar, width=580)
-                gac_visuals.append({"type": "connections", "label": "Cross-Pillar", "svg": svg})
-
         html = render_template("blog_post.j2",
             content=item, page_path=page_path, page_body=body,
             prev_post=prev_post, next_post=next_post,
@@ -679,7 +647,6 @@ def main():
             toc_items=toc_items, related_posts=related,
             related_learn=related_learn,
             visual_fingerprint=visual_fingerprint, layer_badge=layer_badge,
-            gac_visuals=gac_visuals,
             **ctx_base)
         out_file.write_text(html, encoding="utf-8")
         print(f"  research: {out_file.relative_to(OUTPUT_DIR)}")

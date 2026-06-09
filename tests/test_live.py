@@ -50,10 +50,10 @@ def test_new_features_in_generated_output():
     quiz = json.loads(m.group(1))
     assert len(quiz["questions"]) > 0
 
-    # 9. GaC visuals exist on research articles
-    gac_count = 0
+    # 9. Stats belt exists on research articles (replaced GaC visuals)
+    stats_count = 0
     for fpath in sorted(out.glob("blog/*/index.html"))[:5]:
         html = fpath.read_text(encoding="utf-8")
-        if "gac-timeline" in html or "gac-entities" in html or "gac-numbers" in html:
-            gac_count += 1
-    assert gac_count >= 1, "At least one research page has GaC visuals"
+        if "inline-flex items-center gap-1" in html and "SQI" in html:
+            stats_count += 1
+    assert stats_count >= 1, "At least one research page has stats belt"

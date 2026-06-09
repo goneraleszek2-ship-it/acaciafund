@@ -122,17 +122,6 @@
     </div>
     {%- endif %}
 
-    {%- if gac_visuals %}
-    <div class="mb-8 space-y-6">
-      {%- for gv in gac_visuals %}
-      <div class="rounded-lg p-3" style="background:var(--color-surface);border:1px solid var(--color-border)">
-        <h3 class="text-[11px] font-semibold mb-2" style="color:var(--color-text-secondary)">{{ gv.label }}</h3>
-        <div class="overflow-x-auto">{{ gv.svg | safe }}</div>
-      </div>
-      {%- endfor %}
-    </div>
-    {%- endif %}
-
     <div class="prose prose-lg prose-blue max-w-none">
       {{ page_body | default(content.body_html) | safe }}
     </div>
