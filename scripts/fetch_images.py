@@ -86,17 +86,17 @@ SECTION_WORD_MIN = {
 
 CURATED_KNOWN = {
     "eniac computer history computing": "File:ENIAC_Penn1.jpg",
-    "nyse stock exchange trading wall street": "File:New_York_Stock_Exchange_Facade-01.jpg",
-    "treasury department government building": "File:US_Treasury_Building_Washington_DC_2012.jpg",
-    "federal reserve central bank": "File:Eccles_Building_2015.jpg",
-    "semiconductor chip wafer fabrication": "File:Wafer_2_Zoll_b.jpg",
-    "server room data center": "File:Google_data_center_interior.jpg",
-    "trading floor commodities exchange": "File:Chicago_Board_of_Trade_Building_2015.jpg",
-    "data center server infrastructure": "File:Sun_Microsystems_data_center.jpg",
-    "stock ticker market data": "File:Stock_ticker_tape_machine.jpg",
-    "compliance regulation regulatory": "File:US_Treasury_Department_2020.jpg",
-    "supply chain logistics shipping": "File:Container_ship_at_port.jpg",
-    "blockchain cryptocurrency distributed ledger": "File:Bitcoin_blockchain_diagram.svg",
+    "nyse stock exchange trading wall street": "File:New York Stock Exchange August 2017 04.jpg",
+    "treasury department government building": "File:United States Treasury Building.JPG",
+    "federal reserve central bank": "File:Federal Reserve Bank Building (36344p).jpg",
+    "semiconductor chip wafer fabrication": "File:Wafer 20110212.jpg",
+    "server room data center": "File:Google data center.jpg",
+    "trading floor commodities exchange": "File:Chicago Board Of Trade Building.jpg",
+    "data center server infrastructure": "File:Virginia Tech - data center.jpg",
+    "stock ticker market data": "File:Stock ticker.jpg",
+    "compliance regulation regulatory": "File:Us-treasury-building.jpg",
+    "supply chain logistics shipping": "File:Container Ship at the Hai Phong International Container Terminal 03.jpg",
+    "blockchain cryptocurrency distributed ledger": "File:Blockchain workflow.png",
 }
 
 STOP_WORDS = {
