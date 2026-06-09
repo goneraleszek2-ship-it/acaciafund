@@ -37,7 +37,7 @@
     "headline": {{ content.title | striptags | tojson }},
     "datePublished": "{{ content.created_at.isoformat() if content.created_at else '' }}",
     "image": "{{ og_image_url | default(site_url + '/static/images/og-card.png') }}",
-    "author": { "@type": "Organization", "name": "AcaciaFund" },
+    "author": { "@type": "Person", "name": "{{ content.author | default('Leszek') }}" },
     "publisher": { "@type": "Organization", "name": "AcaciaFund" }{% if sqi_val %},
     "review": {
       "@type": "Review",
