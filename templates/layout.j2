@@ -127,13 +127,13 @@
 
       <!-- Desktop nav -->
       <ul class="hidden sm:flex gap-3 lg:gap-5 text-sm font-medium" style="color:var(--color-text-secondary)" role="list">
-        <li><a href="/research/" class="nav-link">Research</a></li>
-        <li><a href="/learn/" class="nav-link">Learn</a></li>
-        <li><a href="/knowledge/" class="nav-link">Knowledge</a></li>
+        <li><a href="/research/" class="nav-link"{% if page_path and page_path.startswith("research/") %} aria-current="page"{% endif %}>Research</a></li>
+        <li><a href="/learn/" class="nav-link"{% if page_path and page_path.startswith("learn/") %} aria-current="page"{% endif %}>Learn</a></li>
+        <li><a href="/knowledge/" class="nav-link"{% if page_path and page_path.startswith("knowledge/") %} aria-current="page"{% endif %}>Knowledge</a></li>
         <li><span class="nav-sep hidden lg:inline" style="color:var(--color-border);width:1px;height:1em;display:inline-block;margin:0 0.25rem" aria-hidden="true">|</span></li>
-        <li><a href="/aml/" class="nav-link flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full inline-block" style="background:var(--color-aml,#c97d3e)"></span>AML</a></li>
-        <li><a href="/stock/" class="nav-link flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full inline-block" style="background:var(--color-markets,#2e7d5b)"></span>Markets</a></li>
-        <li><a href="/data-engineering/" class="nav-link flex items-center gap-1"><span class="w-1.5 h-1.5 rounded-full inline-block" style="background:var(--color-data-engineering,#5a4fcf)"></span>Data</a></li>
+        <li><a href="/aml/" class="nav-link flex items-center gap-1"{% if page_path and page_path.startswith("aml/") %} aria-current="page"{% endif %}><span class="w-1.5 h-1.5 rounded-full inline-block" style="background:var(--color-aml,#c97d3e)"></span>AML</a></li>
+        <li><a href="/stock/" class="nav-link flex items-center gap-1"{% if page_path and page_path.startswith("stock/") %} aria-current="page"{% endif %}><span class="w-1.5 h-1.5 rounded-full inline-block" style="background:var(--color-markets,#2e7d5b)"></span>Markets</a></li>
+        <li><a href="/data-engineering/" class="nav-link flex items-center gap-1"{% if page_path and page_path.startswith("data-engineering/") %} aria-current="page"{% endif %}><span class="w-1.5 h-1.5 rounded-full inline-block" style="background:var(--color-data-engineering,#5a4fcf)"></span>Data</a></li>
         <li><a href="/knowledge/about/" class="nav-link hidden lg:inline">About</a></li>
         <li><a href="/search/" class="nav-link" aria-label="Search">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
@@ -355,7 +355,7 @@
           var hits = idx.filter(function(item) {
             return (item.title && item.title.toLowerCase().includes(q)) ||
                    (item.description && item.description.toLowerCase().includes(q)) ||
-                   (item.tags && item.tags.toLowerCase().includes(q));
+                   ((item.tags || []).join(' ').toLowerCase().includes(q));
           }).slice(0, 10);
           if (hits.length === 0) {
             paletteResults.innerHTML = '<p class="text-sm py-8 text-center" style="color:var(--color-text-muted)">No results found.</p>';
@@ -364,7 +364,7 @@
           var html = '';
           hits.forEach(function(h) {
             var slug = h.slug || '';
-            var label = h.type || 'article';
+            var label = h.content_type || 'article';
             var pillar = h.pillar || 'aml';
             html += '<a href="/' + slug + '/" class="palette-result" style="border-left-color:var(--color-' + pillar + ')">' +
               '<div class="palette-result-title">' + escapeHtml(h.title || slug) + '</div>' +

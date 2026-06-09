@@ -4,7 +4,7 @@
 {%- set htkey = thumbnail_key(ha.title) %}
 <a href="/{{ ha.slug }}/" class="group block max-w-lg mx-auto rounded-xl overflow-hidden transition hover:shadow-lg" style="background:var(--color-surface);border:1px solid var(--color-border);border-left:3px solid var(--color-{{ hp }});text-decoration:none">
   <div class="aspect-[600/340] overflow-hidden" style="background:var(--color-bg)">
-    <img src="{{ thumbnail_base }}/thumb_{{ htkey }}.svg" alt="" class="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300" loading="eager">
+    <img src="{{ thumbnail_base }}/thumb_{{ htkey }}.svg" alt="" width="600" height="340" class="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300" loading="eager">
   </div>
   <div class="p-4 text-left">
     <div class="flex items-center justify-between mb-2">

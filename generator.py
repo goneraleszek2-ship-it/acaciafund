@@ -798,7 +798,10 @@ def main():
 
     # --- HOMEPAGE (filter future posts from featured/recent) ---
     published_research = [p for p in sorted_research if not is_future_post(p)]
-    featured = published_research[:3] if len(published_research) >= 3 else published_research
+    # Freshness cutoff: exclude articles older than 90 days from featured + recent
+    ninety_days_ago = now - timedelta(days=90)
+    fresh_posts = [p for p in published_research if not p.created_at or p.created_at >= ninety_days_ago]
+    featured = fresh_posts[:3] if len(fresh_posts) >= 3 else published_research[:3]
     # Hero: highest-SQI article from last 7 days
     seven_days_ago = now - timedelta(days=7)
     recent_articles = [p for p in published_research if p.created_at and p.created_at >= seven_days_ago]
@@ -810,7 +813,7 @@ def main():
                        description="AcaciaFund — research synthesis & experimental learning platform. Automated classification of HackerNews + arXiv content using Bloom taxonomy."),
         is_index=True, page_path="",
         og_image_url=home_og_url,
-        featured_posts=featured, recent_posts=published_research[:12],
+        featured_posts=featured, recent_posts=fresh_posts[:12],
         learn_items=learn_items[:6], knowledge_items=knowledge_items[:6],
         hero_article=hero_article,
         thumbnail_base=f"{SITE_URL}/static/images", thumbnail_key=thumbnail_key, **ctx_base)

@@ -135,7 +135,7 @@
     {%- set tkey = thumbnail_key(item.title) %}
     <a href="/{{ item.slug }}/" class="group block rounded-xl overflow-hidden transition hover:shadow-lg" style="background:var(--color-surface);border:1px solid var(--color-border);border-left:3px solid var(--color-{{ p }});text-decoration:none">
       <div class="aspect-[600/340] overflow-hidden" style="background:var(--color-bg)">
-        <img src="{{ thumbnail_base }}/thumb_{{ tkey }}.svg" alt="" class="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300" loading="lazy">
+        <img src="{{ thumbnail_base }}/thumb_{{ tkey }}.svg" alt="" width="600" height="340" class="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300" loading="lazy">
       </div>
       <div class="p-4">
         <div class="flex items-center gap-2 mb-2">
@@ -169,7 +169,7 @@
     {%- set tkey = thumbnail_key(item.title) %}
     <article class="flex gap-4 rounded-lg p-4 transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);border-left:3px solid var(--color-{{ p }})">
       <div class="shrink-0 w-24 h-20 rounded-md overflow-hidden sm:block" style="background:var(--color-bg)">
-        <img src="{{ thumbnail_base }}/thumb_{{ tkey }}.svg" alt="" class="w-full h-full object-cover" loading="lazy">
+        <img src="{{ thumbnail_base }}/thumb_{{ tkey }}.svg" alt="" width="600" height="340" class="w-full h-full object-cover" loading="lazy">
       </div>
       <div class="min-w-0 flex-1">
         <div class="flex items-center gap-2 mb-1">
@@ -210,7 +210,7 @@
     {%- set tkey = thumbnail_key(item.title) %}
     <a href="/{{ item.slug }}/" class="block rounded-lg overflow-hidden transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
       <div class="aspect-[600/340] overflow-hidden" style="background:var(--color-bg)">
-        <img src="{{ thumbnail_base }}/thumb_{{ tkey }}.svg" alt="" class="w-full h-full object-cover" loading="lazy">
+        <img src="{{ thumbnail_base }}/thumb_{{ tkey }}.svg" alt="" width="600" height="340" class="w-full h-full object-cover" loading="lazy">
       </div>
       <div class="p-4">
         <div class="flex items-center gap-2 mb-2">
