@@ -19,6 +19,15 @@
   font-display: swap;
   src: url('/static/fonts/Inter-Bold.woff2') format('woff2');
 }
+/* Metric-matched fallback to eliminate CLS */
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local('system-ui'), local('ui-sans-serif');
+  size-adjust: 107%;
+  ascent-override: 90%;
+  descent-override: 22%;
+  line-gap-override: 0%;
+}
 
 :root {
   color-scheme: light;
@@ -49,9 +58,10 @@
 }
 
 body {
-  font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  font-family: 'Inter', 'Inter Fallback', ui-sans-serif, system-ui, sans-serif;
   background-color: var(--color-bg);
   color: var(--color-text);
+  line-height: 1.6;
 }
 
 .skip-link {
@@ -349,6 +359,180 @@ img[loading="lazy"] { background: var(--color-border); }
   margin-top: 0.125rem;
 }
 
+/* Code blocks — prose context */
+.prose pre {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  padding: 1rem 1.25rem;
+  overflow-x: auto;
+  font-size: 0.8125rem;
+  line-height: 1.55;
+  font-family: ui-monospace, 'SF Mono', 'Cascadia Code', 'JetBrains Mono', 'Consolas', monospace;
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+}
+.prose pre code {
+  background: none;
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+  border: none;
+}
+.prose code {
+  font-family: ui-monospace, 'SF Mono', 'Cascadia Code', 'JetBrains Mono', 'Consolas', monospace;
+  font-size: 0.8125em;
+  background: var(--color-surface);
+  padding: 0.125rem 0.375rem;
+  border-radius: 0.25rem;
+  border: 1px solid var(--color-border);
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+}
+.codehilite { background: var(--color-surface); border-radius: 0.5rem; overflow-x: auto; }
+.codehilite pre { background: none; border: none; padding: 1rem 1.25rem; margin: 0; }
+/* Pygments token colors — light theme */
+.codehilite .c, .codehilite .c1, .codehilite .cm { color: #6b7280; font-style: italic; }
+.codehilite .k, .codehilite .kd, .codehilite .kn, .codehilite .kt { color: #7c3aed; font-weight: 600; }
+.codehilite .s, .codehilite .s2, .codehilite .s1 { color: #059669; }
+.codehilite .na { color: #2563eb; }
+.codehilite .nb { color: #7c3aed; }
+.codehilite .nc { color: #2563eb; font-weight: 600; }
+.codehilite .nf { color: #dc2626; }
+.codehilite .nx { color: var(--color-text); }
+.codehilite .o { color: #d97706; }
+.codehilite .mi, .codehilite .mf { color: #d97706; }
+.codehilite .p { color: var(--color-text-secondary); }
+.codehilite .err { color: #dc2626; }
+.codehilite .cp { color: #6b7280; font-weight: 600; }
+.codehilite .gp { color: #6b7280; font-weight: 600; }
+.codehilite .w { color: var(--color-text-muted); }
+.codehilite .il { color: #d97706; }
+.codehilite .ss { color: #059669; }
+.codehilite .sh { color: #059669; }
+.codehilite .sc { color: #059669; }
+.codehilite .sd { color: #6b7280; font-style: italic; }
+.codehilite .si { color: #d97706; }
+.codehilite .se { color: #dc2626; }
+.codehilite .sr { color: #059669; }
+.codehilite .sx { color: #2563eb; }
+.codehilite .nd { color: #7c3aed; font-weight: 600; }
+.codehilite .ni { color: #d97706; }
+.codehilite .ne { color: #dc2626; font-weight: 600; }
+.codehilite .no { color: #2563eb; }
+.codehilite .nl { color: #2563eb; }
+.codehilite .nn { color: var(--color-text); }
+.codehilite .py { color: #2563eb; }
+.codehilite .ow { color: #7c3aed; font-weight: 600; }
+.codehilite .bp { color: #7c3aed; }
+.codehilite .vc { color: #2563eb; }
+.codehilite .vg { color: #2563eb; }
+.codehilite .vi { color: #2563eb; }
+.codehilite .gu { color: #6b7280; }
+.codehilite .gt { color: #dc2626; }
+.codehilite .ge { font-style: italic; }
+.codehilite .gs { font-weight: 700; }
+.codehilite .gr { color: #dc2626; }
+.codehilite .gh { color: #6b7280; font-weight: 600; }
+
+/* Pull quotes */
+.prose blockquote {
+  border-left: 3px solid var(--color-accent);
+  margin: 1.5rem 0;
+  padding: 0.5rem 1.25rem;
+  background: var(--color-surface);
+  border-radius: 0 0.5rem 0.5rem 0;
+  font-style: italic;
+  color: var(--color-text-secondary);
+}
+.prose blockquote p:first-of-type::before {
+  content: "\201C";
+  font-size: 2.5em;
+  line-height: 0.6;
+  vertical-align: -0.3em;
+  color: var(--color-accent);
+  opacity: 0.4;
+  margin-right: 0.15em;
+  font-family: Georgia, 'Times New Roman', serif;
+}
+.prose blockquote p:last-of-type::after {
+  content: "\201D";
+  font-size: 2.5em;
+  line-height: 0;
+  vertical-align: -0.15em;
+  color: var(--color-accent);
+  opacity: 0.4;
+  margin-left: 0.05em;
+  font-family: Georgia, 'Times New Roman', serif;
+}
+
+/* Article featured image */
+.prose figure img {
+  border-radius: 0.5rem;
+  background: var(--color-surface);
+}
+.prose figure figcaption {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  margin-top: 0.375rem;
+  text-align: center;
+}
+
+/* Horizontal rules as subtle section breaks */
+.prose hr {
+  border: none;
+  height: 1px;
+  background: var(--color-border);
+  margin: 2.5rem 0;
+}
+.prose hr::before {
+  content: "\00B7\00A0\00B7\00A0\00B7";
+  display: block;
+  text-align: center;
+  font-size: 1.25rem;
+  letter-spacing: 0.5em;
+  color: var(--color-text-muted);
+  margin-top: -0.85em;
+}
+
+/* Dark mode token overrides */
+.dark .codehilite .c, .dark .codehilite .c1, .dark .codehilite .cm { color: #9ca3af; }
+.dark .codehilite .k, .dark .codehilite .kd, .dark .codehilite .kn, .dark .codehilite .kt { color: #a78bfa; }
+.dark .codehilite .s, .dark .codehilite .s2, .dark .codehilite .s1 { color: #34d399; }
+.dark .codehilite .na { color: #60a5fa; }
+.dark .codehilite .nb { color: #a78bfa; }
+.dark .codehilite .nc { color: #60a5fa; }
+.dark .codehilite .nf { color: #f87171; }
+.dark .codehilite .o { color: #fbbf24; }
+.dark .codehilite .mi, .dark .codehilite .mf { color: #fbbf24; }
+.dark .codehilite .si { color: #fbbf24; }
+.dark .codehilite .se { color: #f87171; }
+.dark .codehilite .sr { color: #34d399; }
+.dark .codehilite .sx { color: #60a5fa; }
+.dark .codehilite .nd { color: #a78bfa; }
+.dark .codehilite .ne { color: #f87171; }
+.dark .codehilite .no { color: #60a5fa; }
+.dark .codehilite .nl { color: #60a5fa; }
+.dark .codehilite .py { color: #60a5fa; }
+.dark .codehilite .ow { color: #a78bfa; }
+.dark .codehilite .bp { color: #a78bfa; }
+.dark .codehilite .vc { color: #60a5fa; }
+.dark .codehilite .vg { color: #60a5fa; }
+.dark .codehilite .vi { color: #60a5fa; }
+.dark .codehilite .err { color: #f87171; }
+.dark .codehilite .ni { color: #fbbf24; }
+.dark .codehilite .cp { color: #9ca3af; }
+.dark .codehilite .gp { color: #9ca3af; }
+.dark .codehilite .sd { color: #9ca3af; }
+.dark .codehilite .gh { color: #9ca3af; }
+.dark .codehilite .gu { color: #9ca3af; }
+.dark .codehilite .gt { color: #f87171; }
+.dark .codehilite .gr { color: #f87171; }
+.dark .codehilite .il { color: #fbbf24; }
+.dark .codehilite .ss { color: #34d399; }
+.dark .codehilite .sh { color: #34d399; }
+.dark .codehilite .sc { color: #34d399; }
+
 /* Table of Contents */
 .toc-sidebar {
   scrollbar-width: thin;
@@ -468,10 +652,12 @@ body.focus-mode article {
 }
 
 /* Fluid typography — only for plain headings without explicit classes */
-h1:not([class*="text-"]), .h1 { font-size: clamp(1.75rem, 4vw, 2.5rem); }
-h2:not([class*="text-"]), .h2 { font-size: clamp(1.25rem, 2.5vw, 1.75rem); }
-h3:not([class*="text-"]), .h3 { font-size: clamp(1.1rem, 1.5vw, 1.25rem); }
-article .prose p, article .prose li { line-height: 1.7; }
+h1:not([class*="text-"]), .h1 { font-size: clamp(2rem, 5vw, 3rem); line-height: 1.1; font-weight: 700; letter-spacing: -0.02em; }
+h2:not([class*="text-"]), .h2 { font-size: clamp(1.35rem, 3vw, 1.85rem); line-height: 1.25; font-weight: 600; letter-spacing: -0.01em; }
+h3:not([class*="text-"]), .h3 { font-size: clamp(1.1rem, 2vw, 1.35rem); line-height: 1.3; font-weight: 600; }
+h4:not([class*="text-"]) { font-size: clamp(1rem, 1.5vw, 1.1rem); line-height: 1.35; font-weight: 600; }
+article .prose p, article .prose li { line-height: 1.75; }
+article .prose { max-inline-size: 66ch; }
 
 /* Responsive content constraints */
 .prose img, .prose svg, .prose video {
@@ -494,6 +680,7 @@ article .prose p, article .prose li { line-height: 1.7; }
   .prose { font-size: 0.9375rem; }
   .prose h2 { font-size: clamp(1.1rem, 5vw, 1.35rem); }
   .prose h3 { font-size: clamp(1rem, 4vw, 1.15rem); }
+  .prose pre { font-size: 0.75rem; padding: 0.75rem 1rem; }
 }
 
 /* Search input Safari fix */
