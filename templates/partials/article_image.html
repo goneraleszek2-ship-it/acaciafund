@@ -9,4 +9,11 @@
   </figcaption>
   {%- endif %}
 </figure>
+{%- elif thumbnail_base is defined and thumbnail_key is defined and content is defined %}
+{%- set fallback_key = thumbnail_key(content.title) %}
+<figure class="my-6 rounded-lg overflow-hidden" style="background:var(--color-bg);border:1px solid var(--color-border)">
+  <img src="{{ thumbnail_base }}/thumb_{{ fallback_key }}.svg" alt="{{ image_alt | default('') }}"
+       width="600" height="340" loading="lazy"
+       class="w-full h-auto object-contain" style="background:var(--color-surface)">
+</figure>
 {%- endif %}

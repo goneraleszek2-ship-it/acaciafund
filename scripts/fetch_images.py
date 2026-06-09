@@ -1,26 +1,40 @@
 #!/usr/bin/env python3
 """
-Fetch CC-licensed images from Openverse API for articles without featured_image.
+Fetch CC-licensed / public-domain images from multiple backends:
+  1. Openverse (CC0/CC-BY)
+  2. NASA Image Library (public domain, US government)
+  3. Wikimedia Commons (CC0/CC-BY/CC-BY-SA)
+
 Saves to static/images/generated/ and updates registry.json.
 """
 import argparse
-import hashlib
 import json
 import os
 import sys
 import time
 from pathlib import Path
-from urllib.parse import quote
 
 import requests
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 REGISTRY_PATH = PROJECT_ROOT / "registry.json"
 IMAGES_DIR = PROJECT_ROOT / "static" / "images" / "generated"
-OPENVERSE_API = "https://api.openverse.engineering/v1/images/"
-RATE_LIMIT_DELAY = 1.1  # seconds between requests
+RATE_LIMIT_DELAY = 0.5
 USER_AGENT = "AcaciaFund/1.0 (image-fetcher; +https://acaciafund.org)"
-MAX_RETRY_ON_429 = 1
+
+PILLAR_KEYWORDS = {
+    "aml": "compliance regulation security audit",
+    "stock": "market finance trading economy",
+    "data-engineering": "data pipeline server architecture",
+    "science": "laboratory research experiment analysis",
+}
+
+PILLAR_FALLBACK = {
+    "aml": "abstract compliance security concept",
+    "stock": "abstract market finance concept",
+    "data-engineering": "abstract data technology concept",
+    "science": "abstract laboratory research concept",
+}
 
 
 def build_query(article: dict) -> str:
@@ -28,20 +42,14 @@ def build_query(article: dict) -> str:
     title = article.get("title", "")
     tags = article.get("tags", [])
     pillar = article.get("pillar", "")
-    pillar_keywords = {
-        "aml": "compliance regulation security audit",
-        "stock": "market finance trading economy",
-        "data-engineering": "data pipeline server architecture",
-        "science": "laboratory research experiment analysis",
-    }
-    kw = pillar_keywords.get(pillar, "")
+    kw = PILLAR_KEYWORDS.get(pillar, "")
     tag_str = " ".join(tags[:3]) if tags else ""
     parts = [title, kw, tag_str]
     return " ".join(p for p in parts if p)
 
 
 def search_openverse(query: str, retry: int = 0) -> dict | None:
-    """Search Openverse for the best CC image."""
+    """Search Openverse (CC0/CC-BY)."""
     params = {
         "q": query,
         "license": "cc0,by",
@@ -52,34 +60,199 @@ def search_openverse(query: str, retry: int = 0) -> dict | None:
     }
     try:
         resp = requests.get(
-            OPENVERSE_API,
+            "https://api.openverse.engineering/v1/images/",
             params=params,
             headers={"User-Agent": USER_AGENT},
             timeout=15,
         )
         if resp.status_code == 429:
-            if retry < MAX_RETRY_ON_429:
-                print(f"429, retrying… ", end="")
+            if retry < 1:
                 time.sleep(3)
                 return search_openverse(query, retry + 1)
-            print(f"rate limited (429) ", end="")
             return None
         resp.raise_for_status()
         data = resp.json()
         results = data.get("results", [])
         if not results:
             return None
-        # Prefer CC0 over CC-BY
         for r in results:
             if r.get("license") == "cc0":
                 return r
         return results[0]
-    except (requests.RequestException, json.JSONDecodeError) as e:
-        print(f"  openverse error: {e}")
+    except (requests.RequestException, json.JSONDecodeError):
         return None
 
 
-def download_image(url: str, dest: Path) -> bool:
+def search_nasa(query: str) -> dict | None:
+    """Search NASA Image Library (public domain)."""
+    try:
+        resp = requests.get(
+            "https://images-api.nasa.gov/search",
+            params={"q": query, "media_type": "image"},
+            headers={"User-Agent": USER_AGENT},
+            timeout=15,
+        )
+        resp.raise_for_status()
+        data = resp.json()
+        items = data.get("collection", {}).get("items", [])
+        if not items:
+            return None
+        # Find first item with a valid image URL
+        for item in items:
+            links = item.get("links", [])
+            if not links:
+                continue
+            img_url = links[0].get("href", "")
+            if not img_url:
+                continue
+            data_list = item.get("data", [{}])
+            meta = data_list[0] if data_list else {}
+            return {
+                "url": img_url,
+                "title": meta.get("title", ""),
+                "creator": "NASA",
+                "license": "cc0",
+                "license_url": "https://www.nasa.gov/nasa-brand-center/images-and-media/",
+            }
+        return None
+    except (requests.RequestException, json.JSONDecodeError):
+        return None
+
+
+def search_wikimedia(query: str) -> dict | None:
+    """Search Wikimedia Commons for free-license images."""
+    try:
+        # Step 1: search for file pages
+        sr = requests.get(
+            "https://commons.wikimedia.org/w/api.php",
+            params={
+                "action": "query",
+                "list": "search",
+                "srsearch": query,
+                "srnamespace": 6,
+                "srlimit": 10,
+                "format": "json",
+            },
+            headers={"User-Agent": USER_AGENT},
+            timeout=15,
+        )
+        sr.raise_for_status()
+        sr_data = sr.json()
+        pages = sr_data.get("query", {}).get("search", [])
+        if not pages:
+            return None
+
+        # Step 2: get image URLs for found files
+        titles = "|".join(p["title"] for p in pages[:5])
+        ii = requests.get(
+            "https://commons.wikimedia.org/w/api.php",
+            params={
+                "action": "query",
+                "titles": titles,
+                "prop": "imageinfo",
+                "iiprop": "url|extmetadata",
+                "iiurlwidth": 1200,
+                "format": "json",
+            },
+            headers={"User-Agent": USER_AGENT},
+            timeout=15,
+        )
+        ii.raise_for_status()
+        ii_data = ii.json()
+        for pid, page in ii_data.get("query", {}).get("pages", {}).items():
+            if pid == "-1":
+                continue
+            info = page.get("imageinfo", [{}])[0]
+            img_url = info.get("url", "")
+            if not img_url:
+                continue
+            meta = info.get("extmetadata", {})
+            license_name = "cc-by-sa"
+            license_url = ""
+            if "LicenseShortName" in meta:
+                license_name = meta["LicenseShortName"].get("value", license_name)
+            if "LicenseUrl" in meta:
+                license_url = meta["LicenseUrl"].get("value", "")
+            artist = ""
+            if "Artist" in meta:
+                raw = meta["Artist"].get("value", "")
+                artist = raw.replace("<a[^>]*>", "").replace("</a>", "").strip()[:100]
+            return {
+                "url": img_url,
+                "title": page.get("title", "").replace("File:", "", 1),
+                "creator": artist or "Wikimedia Commons",
+                "license": license_name.lower().replace(" ", "-").replace("cc-", ""),
+                "license_url": license_url,
+            }
+        return None
+    except (requests.RequestException, json.JSONDecodeError):
+        return None
+
+
+BACKENDS = [
+    ("openverse", search_openverse),
+    ("nasa", search_nasa),
+    ("wikimedia", search_wikimedia),
+]
+
+
+def fetch_featured_image(article: dict, force: bool = False) -> dict | None:
+    """Fetch an image from the best available backend. Returns update dict."""
+    slug = article.get("slug", "")
+    if not slug:
+        return None
+    if article.get("featured_image", "") and not force:
+        return None
+
+    query = build_query(article)
+    pillar = article.get("pillar", "")
+    fallback_q = PILLAR_FALLBACK.get(pillar, "abstract concept minimalist")
+
+    result = None
+    backend_used = ""
+    # Try primary query across all backends
+    for name, search_fn in BACKENDS:
+        result = search_fn(query)
+        if result:
+            backend_used = name
+            break
+
+    # Fallback: pillar-only query
+    if not result:
+        for name, search_fn in BACKENDS:
+            result = search_fn(fallback_q)
+            if result:
+                backend_used = name
+                break
+
+    if not result:
+        return None
+
+    img_url = result.get("url", "")
+    if not img_url:
+        return None
+
+    dest = IMAGES_DIR / slug
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    ok, ext = download_image(img_url, dest)
+    if not ok:
+        return None
+
+    rel_path = f"/static/images/generated/{slug}{ext}"
+    creator = result.get("creator", "") or ""
+    license_name = result.get("license", "by").upper()
+    license_url = result.get("license_url", "") or ""
+    backend_label = {"openverse": "Openverse", "nasa": "NASA", "wikimedia": "Wikimedia Commons"}.get(backend_used, backend_used)
+    credit_parts = [f"Photo by {creator}"] if creator else ["Photo"]
+    credit_parts.append(f"via {backend_label} ({license_name})")
+    if license_url:
+        credit_parts.append(f" — {license_url}")
+    credit = " ".join(credit_parts)
+
+    return {"featured_image": rel_path, "image_credit": credit}
+
+
+def download_image(url: str, dest: Path) -> tuple[bool, str]:
     """Download image from URL to destination path."""
     try:
         resp = requests.get(url, headers={"User-Agent": USER_AGENT}, timeout=30)
@@ -92,69 +265,19 @@ def download_image(url: str, dest: Path) -> bool:
             ext = ".webp"
         elif "gif" in content_type:
             ext = ".gif"
+        elif "jpeg" in content_type or "jpg" in content_type:
+            ext = ".jpg"
         dest = dest.with_suffix(ext)
         dest.write_bytes(resp.content)
         return True, ext
-    except (requests.RequestException, OSError) as e:
-        print(f"  download failed: {e}")
+    except (requests.RequestException, OSError):
         return False, ""
 
 
-def fetch_images_for_article(article: dict, force: bool = False) -> dict | None:
-    """Fetch an image for a single article. Returns update dict or None."""
-    slug = article.get("slug", "")
-    if not slug:
-        return None
-    existing = article.get("featured_image", "")
-    if existing and not force:
-        return None  # already has image
-
-    # Build query with visual metaphors
-    query = build_query(article)
-    result = search_openverse(query)
-    if not result:
-        # Retry with fallback query (pillar-only)
-        pillar = article.get("pillar", "")
-        pillar_fallback = {
-            "aml": "abstract compliance security concept",
-            "stock": "abstract market finance concept",
-            "data-engineering": "abstract data technology concept",
-            "science": "abstract laboratory research concept",
-        }
-        fallback_q = pillar_fallback.get(pillar, "abstract concept minimalist")
-        result = search_openverse(fallback_q)
-        if not result:
-            return None
-
-    img_url = result.get("url", "")
-    if not img_url:
-        return None
-
-    # Ensure output dir exists
-    dest = IMAGES_DIR / slug
-    dest.parent.mkdir(parents=True, exist_ok=True)
-    ok, ext = download_image(img_url, dest)
-    if not ok:
-        return None
-
-    rel_path = f"/static/images/generated/{slug}{ext}"
-    creator = result.get("creator", "")
-    license_name = result.get("license", "by").upper()
-    license_url = result.get("license_url", "")
-    credit_parts = [f"Photo by {creator}"] if creator else ["Photo"]
-    credit_parts.append(f"via Openverse ({license_name})")
-    if license_url:
-        credit_parts.append(f" — {license_url}")
-    credit = " ".join(credit_parts)
-
-    return {
-        "featured_image": rel_path,
-        "image_credit": credit,
-    }
-
-
 def main():
-    parser = argparse.ArgumentParser(description="Fetch CC images from Openverse for articles")
+    parser = argparse.ArgumentParser(
+        description="Fetch CC/public-domain images for articles from multiple backends"
+    )
     parser.add_argument("--max", type=int, default=0, help="Max articles to process (0 = all)")
     args = parser.parse_args()
 
@@ -165,10 +288,8 @@ def main():
     registry = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
     content_list = registry.get("content", [])
     updated = 0
-    skipped = 0
     max_count = args.max if args.max > 0 else len(content_list)
 
-    # Process most recent articles first (by created_at, newest first)
     candidates = [(i, a) for i, a in enumerate(content_list) if not a.get("featured_image")]
     candidates.sort(key=lambda x: x[1].get("created_at", ""), reverse=True)
     candidates = candidates[:max_count]
@@ -178,23 +299,21 @@ def main():
     for orig_idx, article in candidates:
         slug = article.get("slug", "")
         print(f"  {slug} … ", end="", flush=True)
-        update = fetch_images_for_article(article)
+        update = fetch_featured_image(article)
         if update:
             content_list[orig_idx].update(update)
             updated += 1
-            print(f"✓ {update['featured_image']}")
+            print(f"\u2713 {update['featured_image']}")
         else:
-            print("✗")
+            print("\u2717")
         time.sleep(RATE_LIMIT_DELAY)
 
     if updated > 0:
         registry["content"] = content_list
-        REGISTRY_PATH.write_text(
-            json.dumps(registry, indent=2, default=str), encoding="utf-8"
-        )
-        print(f"\nUpdated {updated} articles ({skipped} already had images)")
+        REGISTRY_PATH.write_text(json.dumps(registry, indent=2, default=str), encoding="utf-8")
+        print(f"\nUpdated {updated} articles")
     else:
-        print(f"\nNo articles updated ({skipped} already had images)")
+        print("\nNo articles updated")
 
 
 if __name__ == "__main__":
