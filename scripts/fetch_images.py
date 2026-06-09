@@ -44,7 +44,7 @@ def search_openverse(query: str, retry: int = 0) -> dict | None:
     """Search Openverse for the best CC image."""
     params = {
         "q": query,
-        "license": "cc0,cc-by",
+        "license": "cc0,by",
         "license_type": "commercial",
         "size": "large",
         "aspect_ratio": "wide",
@@ -131,15 +131,15 @@ def fetch_images_for_article(article: dict, force: bool = False) -> dict | None:
         return None
 
     # Ensure output dir exists
-    IMAGES_DIR.mkdir(parents=True, exist_ok=True)
     dest = IMAGES_DIR / slug
+    dest.parent.mkdir(parents=True, exist_ok=True)
     ok, ext = download_image(img_url, dest)
     if not ok:
         return None
 
     rel_path = f"/static/images/generated/{slug}{ext}"
     creator = result.get("creator", "")
-    license_name = result.get("license", "cc-by").upper()
+    license_name = result.get("license", "by").upper()
     license_url = result.get("license_url", "")
     credit_parts = [f"Photo by {creator}"] if creator else ["Photo"]
     credit_parts.append(f"via Openverse ({license_name})")
