@@ -27,8 +27,8 @@ jobs:
       - name: Run ingest pipeline
         run: python orchestrator.py --ingest
 
-      - name: Fetch article images
-        run: python orchestrator.py --fetch-images
+      - name: Fetch article images (10 most recent)
+        run: python3.13 scripts/fetch_images.py --max 10
 
       - name: Rebuild static site
         run: python3.13 generator.py

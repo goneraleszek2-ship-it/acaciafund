@@ -3,6 +3,7 @@
 Fetch CC-licensed images from Openverse API for articles without featured_image.
 Saves to static/images/generated/ and updates registry.json.
 """
+import argparse
 import hashlib
 import json
 import os
@@ -17,8 +18,9 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 REGISTRY_PATH = PROJECT_ROOT / "registry.json"
 IMAGES_DIR = PROJECT_ROOT / "static" / "images" / "generated"
 OPENVERSE_API = "https://api.openverse.engineering/v1/images/"
-RATE_LIMIT_DELAY = 1.1  # seconds between requests (Openverse rate limit ~1 req/s without key)
+RATE_LIMIT_DELAY = 1.1  # seconds between requests
 USER_AGENT = "AcaciaFund/1.0 (image-fetcher; +https://acaciafund.org)"
+MAX_RETRY_ON_429 = 1
 
 
 def build_query(article: dict) -> str:
@@ -38,7 +40,7 @@ def build_query(article: dict) -> str:
     return " ".join(p for p in parts if p)
 
 
-def search_openverse(query: str) -> dict | None:
+def search_openverse(query: str, retry: int = 0) -> dict | None:
     """Search Openverse for the best CC image."""
     params = {
         "q": query,
@@ -56,8 +58,11 @@ def search_openverse(query: str) -> dict | None:
             timeout=15,
         )
         if resp.status_code == 429:
-            print(f"  rate limited (429), waiting…")
-            time.sleep(5)
+            if retry < MAX_RETRY_ON_429:
+                print(f"429, retrying… ", end="")
+                time.sleep(3)
+                return search_openverse(query, retry + 1)
+            print(f"rate limited (429) ", end="")
             return None
         resp.raise_for_status()
         data = resp.json()
@@ -149,6 +154,10 @@ def fetch_images_for_article(article: dict, force: bool = False) -> dict | None:
 
 
 def main():
+    parser = argparse.ArgumentParser(description="Fetch CC images from Openverse for articles")
+    parser.add_argument("--max", type=int, default=0, help="Max articles to process (0 = all)")
+    args = parser.parse_args()
+
     if not REGISTRY_PATH.exists():
         print(f"Registry not found at {REGISTRY_PATH}")
         return 1
@@ -157,21 +166,25 @@ def main():
     content_list = registry.get("content", [])
     updated = 0
     skipped = 0
+    max_count = args.max if args.max > 0 else len(content_list)
 
-    for i, article in enumerate(content_list):
+    # Process most recent articles first (by created_at, newest first)
+    candidates = [(i, a) for i, a in enumerate(content_list) if not a.get("featured_image")]
+    candidates.sort(key=lambda x: x[1].get("created_at", ""), reverse=True)
+    candidates = candidates[:max_count]
+
+    print(f"Fetching images for {len(candidates)} articles (out of {len(content_list)} total)…")
+
+    for orig_idx, article in candidates:
         slug = article.get("slug", "")
-        if article.get("featured_image", ""):
-            skipped += 1
-            continue
-
-        print(f"[{i + 1}/{len(content_list)}] {slug} …", end=" ")
+        print(f"  {slug} … ", end="", flush=True)
         update = fetch_images_for_article(article)
         if update:
-            content_list[i].update(update)
+            content_list[orig_idx].update(update)
             updated += 1
             print(f"✓ {update['featured_image']}")
         else:
-            print("✗ no image found")
+            print("✗")
         time.sleep(RATE_LIMIT_DELAY)
 
     if updated > 0:
@@ -179,7 +192,7 @@ def main():
         REGISTRY_PATH.write_text(
             json.dumps(registry, indent=2, default=str), encoding="utf-8"
         )
-        print(f"\nUpdated {updated} articles, {skipped} already had images")
+        print(f"\nUpdated {updated} articles ({skipped} already had images)")
     else:
         print(f"\nNo articles updated ({skipped} already had images)")
 
