@@ -44,6 +44,7 @@ class AcaciaContent(BaseModel):
     prerequisites: List[str] = []
     visual_fingerprint: str = ""
     author: str = "Leszek"
+    highest_bloom: int = 0
 
     @validator('slug')
     def slug_must_be_alphanumeric_dashes_slashes(cls, v):

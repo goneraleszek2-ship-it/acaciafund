@@ -579,9 +579,21 @@ def main():
     learn_dir = OUTPUT_DIR / "learn"
     learn_dir.mkdir(parents=True, exist_ok=True)
     learn_grouped: dict[str, list] = defaultdict(list)
+    BLOOM_ORDER = {"remember": 1, "understand": 2, "apply": 3, "analyze": 4, "evaluate": 5, "create": 6}
     for l_item in learn_items:
         diff = l_item.difficulty or "beginner"
         learn_grouped[diff.capitalize()].append(l_item)
+        # Compute highest Bloom level from bloom_questions
+        if l_item.bloom_questions:
+            max_lvl = 0
+            for q in l_item.bloom_questions:
+                bl = q.get("bloom_level", "")
+                lvl = BLOOM_ORDER.get(bl, 0)
+                if lvl > max_lvl:
+                    max_lvl = lvl
+            l_item.highest_bloom = max_lvl
+        else:
+            l_item.highest_bloom = 0
     for g in learn_grouped.values():
         g.sort(key=lambda x: x.title or "")
     thumb_base = f"{SITE_URL}/static/images"
@@ -740,6 +752,74 @@ def main():
             thumbnail_base=f"{SITE_URL}/static/images", thumbnail_key=thumbnail_key, **ctx_base)
         (out_dir / "index.html").write_text(html, encoding="utf-8")
         print(f"  pillar: {pillar}/index.html")
+
+    # --- AML SIGNALS DASHBOARD ---
+    aml_research = [p for p in research_items if p.pillar == "aml"]
+    aml_learn = [l for l in learn_items if l.pillar == "aml"]
+    tag_cloud: dict[str, int] = {}
+    entity_cloud: dict[str, int] = {}
+    source_totals: dict[str, int] = {}
+    cross_pillar_links: dict[str, int] = {}
+    timeline: dict[str, int] = {}
+    for a in aml_research:
+        for t in (a.tags or []):
+            tag_cloud[t] = tag_cloud.get(t, 0) + 1
+        signals = a.signals or {}
+        for e in (signals.get("top_entities", []) or []):
+            entity_cloud[e] = entity_cloud.get(e, 0) + 1
+        sb = a.source_breakdown or {}
+        for k, v in sb.items():
+            source_totals[k] = source_totals.get(k, 0) + v
+        cross = a.cross_pillar_html or ""
+        if "stock" in cross.lower() or "markets" in cross.lower():
+            cross_pillar_links["stock"] = cross_pillar_links.get("stock", 0) + 1
+        if "science" in cross.lower():
+            cross_pillar_links["science"] = cross_pillar_links.get("science", 0) + 1
+        if "data-engineering" in cross.lower() or "data engineering" in cross.lower():
+            cross_pillar_links["data-engineering"] = cross_pillar_links.get("data-engineering", 0) + 1
+        if a.date_str:
+            month = a.date_str[:7]
+            timeline[month] = timeline.get(month, 0) + 1
+    tag_sorted = sorted(tag_cloud.items(), key=lambda x: -x[1])
+    entity_sorted = sorted(entity_cloud.items(), key=lambda x: -x[1])
+    source_sorted = sorted(source_totals.items(), key=lambda x: -x[1])
+    source_max = max((c for _, c in source_sorted), default=1)
+    cp_sorted = sorted(cross_pillar_links.items(), key=lambda x: -x[1])
+    tl_sorted = sorted(timeline.items())
+    tl_max = max(timeline.values()) if timeline else 1
+    avg_sqi = sum((a.signals or {}).get("avg_sqi", 0) or 0 for a in aml_research) / max(len(aml_research), 1)
+    unique_tags = set()
+    for a in aml_research:
+        for t in (a.tags or []):
+            unique_tags.add(t)
+    unique_entities = set()
+    for a in aml_research:
+        for e in ((a.signals or {}).get("top_entities", []) or []):
+            unique_entities.add(e)
+
+    aml_signals_html = render_template("aml_signals.j2",
+        content=_dummy("AML Signals Dashboard", "index",
+                       description="Aggregated AML risk signals, entity profiles, and coverage metrics across AML articles."),
+        aml_count=len(aml_research),
+        avg_sqi=avg_sqi,
+        unique_tags_count=len(unique_tags),
+        unique_entities_count=len(unique_entities),
+        tag_cloud=tag_sorted,
+        entity_cloud=entity_sorted,
+        source_totals=source_sorted,
+        source_max=source_max,
+        cross_pillar_summary=cp_sorted,
+        timeline=tl_sorted,
+        timeline_max=tl_max,
+        recent_articles=sorted(aml_research, key=lambda x: x.date_str or "", reverse=True)[:10],
+        learn_path=aml_learn,
+        is_index=False, page_path="aml/signals/",
+        page_title="AML Signals Dashboard",
+        thumbnail_base=f"{SITE_URL}/static/images", thumbnail_key=thumbnail_key, **ctx_base)
+    sig_dir = OUTPUT_DIR / "aml" / "signals"
+    sig_dir.mkdir(parents=True, exist_ok=True)
+    (sig_dir / "index.html").write_text(aml_signals_html, encoding="utf-8")
+    print("  signals: aml/signals/index.html")
 
     # --- HOMEPAGE (filter future posts from featured/recent) ---
     published_research = [p for p in sorted_research if not is_future_post(p)]

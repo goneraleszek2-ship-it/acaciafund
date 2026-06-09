@@ -1,0 +1,177 @@
+{% extends "layout.j2" %}
+{% block main_content %}
+<section>
+  <nav aria-label="Breadcrumb" class="mb-4 text-xs" style="color:var(--color-text-muted)">
+    <ol class="flex flex-wrap items-center gap-1.5">
+      <li><a href="/" class="hover:text-[var(--color-accent)] transition">Home</a></li>
+      <li aria-hidden="true">/</li>
+      <li><a href="/aml/" class="hover:text-[var(--color-accent)] transition">AML</a></li>
+      <li aria-hidden="true">/</li>
+      <li aria-current="page">Signals Dashboard</li>
+    </ol>
+  </nav>
+
+  <div class="mb-8">
+    <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">🛡️ AML Signals Dashboard</h1>
+    <p class="mt-2 text-sm" style="color:var(--color-text-muted)">Aggregated risk signals, entity profiles, and coverage metrics across {{ aml_count }} AML articles</p>
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="grid gap-3 sm:grid-cols-4 mb-8">
+    <div class="rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
+      <div class="text-2xl font-bold" style="color:#d97706">{{ aml_count }}</div>
+      <div class="text-xs mt-1" style="color:var(--color-text-muted)">Articles</div>
+    </div>
+    <div class="rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
+      <div class="text-2xl font-bold" style="color:var(--color-text)">{{ "%.0f" | format(avg_sqi * 100) }}</div>
+      <div class="text-xs mt-1" style="color:var(--color-text-muted)">Avg SQI</div>
+    </div>
+    <div class="rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
+      <div class="text-2xl font-bold" style="color:var(--color-text)">{{ unique_tags_count }}</div>
+      <div class="text-xs mt-1" style="color:var(--color-text-muted)">Unique Tags</div>
+    </div>
+    <div class="rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
+      <div class="text-2xl font-bold" style="color:var(--color-text)">{{ unique_entities_count }}</div>
+      <div class="text-xs mt-1" style="color:var(--color-text-muted)">Key Entities</div>
+    </div>
+  </div>
+
+  <!-- Tag Cloud -->
+  <div class="mb-8 rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
+    <h2 class="text-sm font-semibold mb-3" style="color:var(--color-text)">🏷️ AML Topic Tag Cloud</h2>
+    {%- if tag_cloud %}
+    <div class="flex flex-wrap gap-2">
+      {%- for tag, count in tag_cloud %}
+      {%- set size = [0.75, 0.85, 1.0, 1.15, 1.3] | min(count) %}
+      <span style="font-size:{{ 0.7 + count * 0.13 }}rem;padding:2px 8px;border-radius:4px;background:rgba(217,119,6,0.08);color:#d97706;border:1px solid rgba(217,119,6,0.15);white-space:nowrap">
+        {{ tag }}<span class="ml-1 opacity-60" style="font-size:0.7rem;color:var(--color-text-muted)">×{{ count }}</span>
+      </span>
+      {%- endfor %}
+    </div>
+    {%- else %}
+    <p class="text-xs" style="color:var(--color-text-muted)">No topic tags found.</p>
+    {%- endif %}
+  </div>
+
+  <!-- Top Entities -->
+  <div class="mb-8 rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
+    <h2 class="text-sm font-semibold mb-3" style="color:var(--color-text)">🔍 Top Signals & Entities</h2>
+    {%- if entity_cloud %}
+    <div class="flex flex-wrap gap-2">
+      {%- for entity, count in entity_cloud %}
+      <span style="padding:3px 10px;border-radius:12px;font-size:0.8rem;background:rgba(217,119,6,0.06);color:#d97706;border:1px solid rgba(217,119,6,0.12)">
+        {{ entity }}
+        {%- if count > 0 %}
+        <span class="ml-1 text-xs" style="color:var(--color-text-muted)">×{{ count }}</span>
+        {%- endif %}
+      </span>
+      {%- endfor %}
+    </div>
+    {%- else %}
+    <p class="text-xs" style="color:var(--color-text-muted)">No entity signals extracted.</p>
+    {%- endif %}
+  </div>
+
+  <!-- Source Breakdown -->
+  <div class="grid gap-4 sm:grid-cols-2 mb-8">
+    <div class="rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
+      <h2 class="text-sm font-semibold mb-3" style="color:var(--color-text)">📊 Source Distribution</h2>
+      {%- if source_totals %}
+      <div class="space-y-2">
+        {%- for src, count in source_totals %}
+        <div class="flex items-center justify-between text-xs">
+          <span style="color:var(--color-text-secondary)">{{ src }}</span>
+          <div class="flex items-center gap-2">
+            <div class="sqi-bar" style="width:120px">
+              <div class="sqi-bar-fill" style="width:{{ "%.0f" | format(count / source_max * 100) }}%;background:var(--color-accent)"></div>
+            </div>
+            <span style="color:var(--color-text-muted)">{{ count }}</span>
+          </div>
+        </div>
+        {%- endfor %}
+      </div>
+      {%- else %}
+      <p class="text-xs" style="color:var(--color-text-muted)">No source data.</p>
+      {%- endif %}
+    </div>
+
+    <!-- Cross-Pillar Connections -->
+    <div class="rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
+      <h2 class="text-sm font-semibold mb-3" style="color:var(--color-text)">🔗 Cross-Pillar Connections</h2>
+      {%- if cross_pillar_summary %}
+      <div class="space-y-2">
+        {%- for cp, count in cross_pillar_summary %}
+        <div class="flex items-center gap-2 text-xs">
+          {%- set cp_icons = {"stock": "📈", "data-engineering": "⚙️", "science": "🔬"} %}
+          <span>{{ cp_icons.get(cp, "📄") }}</span>
+          <span style="color:var(--color-text-secondary)">{{ cp | capitalize }}</span>
+          <span class="ml-auto" style="color:var(--color-text-muted)">{{ count }} articles</span>
+        </div>
+        {%- endfor %}
+      </div>
+      {%- else %}
+      <p class="text-xs" style="color:var(--color-text-muted)">No cross-pillar links found.</p>
+      {%- endif %}
+    </div>
+  </div>
+
+  <!-- Timeline / Recency -->
+  <div class="mb-8 rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
+    <h2 class="text-sm font-semibold mb-3" style="color:var(--color-text)">📅 Coverage Timeline</h2>
+    {%- if timeline %}
+    <div class="flex items-end gap-1" style="height:80px">
+      {%- for month, count in timeline %}
+      <div class="flex-1 flex flex-col items-center gap-1">
+        <div class="w-full rounded-t" style="height:{{ "%.0f" | format(count / timeline_max * 70 + 4) }}px;background:#d97706;opacity:{{ 0.3 + count / timeline_max * 0.7 }};min-height:4px"></div>
+        <span class="text-[9px]" style="color:var(--color-text-muted)">{{ month[-2:] }}</span>
+      </div>
+      {%- endfor %}
+    </div>
+    {%- else %}
+    <p class="text-xs" style="color:var(--color-text-muted)">No timeline data.</p>
+    {%- endif %}
+  </div>
+
+  <!-- Recent Articles -->
+  <div class="mb-8 rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
+    <h2 class="text-sm font-semibold mb-3" style="color:var(--color-text)">📄 Recent AML Articles</h2>
+    {%- if recent_articles %}
+    <div class="divide-y" style="border-color:var(--color-border)">
+      {%- for a in recent_articles %}
+      <div class="py-2.5 flex items-start gap-3">
+        <div class="flex-1 min-w-0">
+          <a href="/{{ a.slug }}/" class="text-sm font-medium hover:underline" style="color:var(--color-text)">{{ a.title }}</a>
+          <div class="flex items-center gap-2 mt-0.5 text-xs" style="color:var(--color-text-muted)">
+            <time datetime="{{ a.date_str }}">{{ a.date_str }}</time>
+            {%- if a.signals and a.signals.get('avg_sqi') %}
+            <span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[10px]" style="background:rgba(217,119,6,0.1);color:#d97706">SQI {{ "%.0f" | format(a.signals.get('avg_sqi', 0) * 100) }}</span>
+            {%- endif %}
+            {%- if a.tags %}
+            <span>{{ a.tags[:3] | join(', ') }}</span>
+            {%- endif %}
+          </div>
+        </div>
+      </div>
+      {%- endfor %}
+    </div>
+    {%- else %}
+    <p class="text-xs" style="color:var(--color-text-muted)">No articles yet.</p>
+    {%- endif %}
+  </div>
+
+  <!-- Learn Path -->
+  {%- if learn_path %}
+  <div class="rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
+    <h2 class="text-sm font-semibold mb-3" style="color:var(--color-text)">🎓 AML Learning Path</h2>
+    <div class="flex flex-wrap gap-2">
+      {%- for l in learn_path %}
+      <a href="/{{ l.slug }}/" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-medium transition hover:opacity-80" style="background:rgba(217,119,6,0.08);color:#d97706;border:1px solid rgba(217,119,6,0.15)">
+        {%- set diff_icons = {"beginner": "🌱", "intermediate": "📘", "advanced": "🔥"} %}
+        {{ diff_icons.get(l.difficulty, "📘") }} {{ l.title }}
+      </a>
+      {%- endfor %}
+    </div>
+  </div>
+  {%- endif %}
+</section>
+{% endblock %}

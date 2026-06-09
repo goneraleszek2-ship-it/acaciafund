@@ -16,6 +16,14 @@ PILLAR_MAP = {
     "learn/data-quality-engineering": "data-engineering",
     "learn/open-source-data-stack": "data-engineering",
     "learn/data-ethics-privacy": "data-engineering",
+    "learn/crypto-aml": "aml",
+    "learn/trade-based-ml-sanctions": "aml",
+    "learn/science-method": "stock",
+    "learn/semiconductor-supply-chain": "stock",
+    "learn/crispr-gene-editing": "stock",
+    "learn/behavioral-design-learning": "stock",
+    "learn/behavioral-finance-portfolio": "stock",
+    "learn/meta-analysis-statistics": "stock",
 }
 
 DIFFICULTY_MAP = {
@@ -25,6 +33,15 @@ DIFFICULTY_MAP = {
     "learn/dataops-introduction": "beginner",
     "learn/data-quality-engineering": "intermediate",
     "learn/open-source-data-stack": "intermediate",
+    "learn/crypto-aml": "intermediate",
+    "learn/trade-based-ml-sanctions": "advanced",
+    "learn/science-method": "beginner",
+    "learn/semiconductor-supply-chain": "advanced",
+    "learn/crispr-gene-editing": "advanced",
+    "learn/behavioral-design-learning": "intermediate",
+    "learn/behavioral-finance-portfolio": "advanced",
+    "learn/meta-analysis-statistics": "intermediate",
+    "learn/data-ethics-privacy": "intermediate",
 }
 
 CURATED_RELATIONS = {
@@ -41,12 +58,49 @@ CURATED_RELATIONS = {
     "learn/data-quality-engineering": [
         {"slug": "learn/open-source-data-stack", "type": "next", "label": "Next: open-source stack"},
     ],
+    "learn/quiz-aml": [
+        {"slug": "learn/crypto-aml", "type": "next", "label": "Next: crypto AML"},
+    ],
+    "learn/crypto-aml": [
+        {"slug": "learn/trade-based-ml-sanctions", "type": "next", "label": "Next: trade-based ML"},
+    ],
+    "learn/science-method": [
+        {"slug": "learn/market-analysis", "type": "next", "label": "Next: market analysis"},
+    ],
+    "learn/behavioral-design-learning": [
+        {"slug": "learn/behavioral-finance-portfolio", "type": "next", "label": "Next: behavioral portfolio"},
+    ],
+    "learn/meta-analysis-statistics": [
+        {"slug": "learn/behavioral-finance-portfolio", "type": "reinforcement", "label": "See also: portfolio construction"},
+    ],
+    "learn/market-analysis": [
+        {"slug": "learn/semiconductor-supply-chain", "type": "next", "label": "Next: supply chain analysis"},
+        {"slug": "learn/behavioral-design-learning", "type": "related", "label": "Behavioral factors"},
+    ],
+    "learn/semiconductor-supply-chain": [
+        {"slug": "learn/crispr-gene-editing", "type": "next", "label": "Next: gene editing investing"},
+    ],
+    "learn/crispr-gene-editing": [
+        {"slug": "learn/behavioral-finance-portfolio", "type": "related", "label": "See also: portfolio strategy"},
+    ],
+    "learn/open-source-data-stack": [
+        {"slug": "learn/data-ethics-privacy", "type": "next", "label": "Next: data ethics & privacy"},
+    ],
 }
 
 PREREQUISITES = {
-    "learn/data-quality-engineering": ["learn/open-source-data-stack"],
-    "learn/open-source-data-stack": ["learn/dataops-introduction"],
+    "learn/data-quality-engineering": ["learn/dataops-introduction"],
+    "learn/open-source-data-stack": ["learn/data-quality-engineering"],
     "learn/data-ethics-privacy": ["learn/open-source-data-stack"],
+    "learn/crypto-aml": ["learn/quiz-aml"],
+    "learn/trade-based-ml-sanctions": ["learn/crypto-aml"],
+    "learn/market-analysis": ["learn/science-method"],
+    "learn/semiconductor-supply-chain": ["learn/market-analysis"],
+    "learn/crispr-gene-editing": ["learn/semiconductor-supply-chain"],
+    "learn/behavioral-design-learning": ["learn/market-analysis"],
+    "learn/behavioral-finance-portfolio": ["learn/behavioral-design-learning"],
+    "learn/meta-analysis-statistics": ["learn/science-method"],
+    "learn/quiz-aml": ["learn/aml-basics"],
 }
 
 PILLAR_COLORS = {
@@ -70,7 +124,6 @@ def generate_learn_thumbnail(title: str, pillar: str) -> str:
     rng = random.Random(seed)
 
     elements = []
-    # Random circles
     for _ in range(6):
         cx = rng.randint(40, 560)
         cy = rng.randint(30, 310)
@@ -79,7 +132,6 @@ def generate_learn_thumbnail(title: str, pillar: str) -> str:
         elements.append(
             f'<circle cx="{cx}" cy="{cy}" r="{r_val}" fill="{c["primary"]}" opacity="{op}"/>'
         )
-    # Random lines
     for _ in range(4):
         x1 = rng.randint(20, 300)
         y1 = rng.randint(20, 320)
@@ -89,7 +141,6 @@ def generate_learn_thumbnail(title: str, pillar: str) -> str:
             f'<line x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}" stroke="{c["secondary"]}" '
             f'stroke-width="{rng.randint(1, 3)}" opacity="{round(rng.uniform(0.1, 0.3), 2)}"/>'
         )
-    # Small dots
     for _ in range(20):
         dx = rng.randint(10, 590)
         dy = rng.randint(10, 330)

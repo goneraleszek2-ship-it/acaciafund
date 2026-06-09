@@ -52,6 +52,16 @@
       <div class="sqi-bar mt-1">
         <div class="sqi-bar-fill path-bar-fill" data-path="{{ pkey }}" style="width:0%;background:{{ pinfo.color }}"></div>
       </div>
+      <div class="bloom-progress-row mt-3 flex items-center gap-1 bloom-progress-{{ pkey }}" data-bloom-path="{{ pkey }}">
+        {%- set bloom_labels = {1:"R",2:"U",3:"Ap",4:"An",5:"E",6:"C"} %}
+        {%- set bloom_dot_colors = {1:"#7eb8a4",2:"#8fa3c8",3:"#c8a96e",4:"#c87070",5:"#b87ab8",6:"#c87070"} %}
+        <span class="text-[10px] font-medium mr-1" style="color:var(--color-text-muted)">Bloom:</span>
+        {%- for blvl in range(1, 7) %}
+        <span class="bloom-dot" data-bloom-level="{{ blvl }}" data-bloom-path="{{ pkey }}"
+              style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;font-size:8px;font-weight:700;background:var(--color-bg);color:var(--color-text-muted);border:1.5px solid var(--color-border);opacity:0.4"
+              title="Level {{ blvl }}: {{ ['Remember','Understand','Apply','Analyze','Evaluate','Create'][blvl-1] }}">{{ bloom_labels[blvl] }}</span>
+        {%- endfor %}
+      </div>
     </div>
     {%- endfor %}
   </div>
@@ -100,7 +110,13 @@
         {%- set pc = pillar_config.get(p, none) %}
         {%- set tkey = thumbnail_key(item.title) %}
         {%- set d_emoji = {"beginner": "🌱", "intermediate": "📘", "advanced": "🔥"} %}
-        <a href="/{{ item.slug }}/" class="learn-card block rounded-lg overflow-hidden transition hover:shadow-md" data-learn-slug="/{{ item.slug }}/" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+        {%- set bloom_names = {1:"L1 Remember",2:"L2 Understand",3:"L3 Apply",4:"L4 Analyze",5:"L5 Evaluate",6:"L6 Create"} %}
+        {%- set bloom_colors = {1:"#7eb8a4",2:"#8fa3c8",3:"#c8a96e",4:"#c87070",5:"#b87ab8",6:"#c87070"} %}
+        {%- set hb = item.highest_bloom | default(0) %}
+        <a href="/{{ item.slug }}/" class="learn-card block rounded-lg overflow-hidden transition hover:shadow-md" data-learn-slug="/{{ item.slug }}/"
+           {%- if item.prerequisites and item.prerequisites | length > 0 %} data-prereqs="{{ item.prerequisites | join(',') }}"{% endif %}
+           data-bloom-level="{{ hb }}" data-pillar="{{ p }}"
+           style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
           <div class="aspect-[600/340] overflow-hidden" style="background:var(--color-bg)">
             <img src="{{ thumbnail_base }}/thumb_{{ tkey }}.svg" alt="" class="w-full h-full object-cover" loading="lazy">
           </div>
@@ -114,11 +130,26 @@
               {%- if item.difficulty %}
               <span class="text-xs" style="color:var(--color-text-muted)">{{ d_emoji.get(item.difficulty, "📘") }} {{ item.difficulty | capitalize }}</span>
               {%- endif %}
-              <span class="ml-auto text-xs lesson-status" data-slug="/{{ item.slug }}/" style="color:var(--color-text-muted)">⬜</span>
+              {%- if hb > 0 %}
+              <span class="inline-flex items-center px-1.5 py-0.5 text-[10px] font-semibold rounded" style="background:{{ bloom_colors.get(hb, '#7eb8a4') }}20;color:{{ bloom_colors.get(hb, '#7eb8a4') }};border:1px solid {{ bloom_colors.get(hb, '#7eb8a4') }}40">
+                {{ bloom_names.get(hb, '') }}
+              </span>
+              {%- endif %}
+              <span class="ml-auto text-xs lesson-status" data-slug="/{{ item.slug }}/" data-prereqs="{{ item.prerequisites | join(',') }}" style="color:var(--color-text-muted)">⬜</span>
             </div>
             <h3 class="font-semibold" style="color:var(--color-text)">{{ item.title | striptags }}</h3>
             {%- if item.description %}
             <p class="mt-1 text-xs" style="color:var(--color-text-secondary)">{{ item.description[:200] }}</p>
+            {%- endif %}
+            {%- if item.prerequisites and item.prerequisites | length > 0 %}
+            <div class="mt-2 flex flex-wrap gap-1">
+              {%- for pre in item.prerequisites %}
+              {%- set pre_title = pre | replace('learn/', '') | replace('-', ' ') | title %}
+              <span class="prereq-badge inline-flex items-center gap-0.5 px-1.5 py-0.5 text-[10px] rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)" data-prereq-slug="{{ pre }}">
+                <span class="prereq-icon" style="color:#c87070">🔒</span> {{ pre_title[:24] }}
+              </span>
+              {%- endfor %}
+            </div>
             {%- endif %}
             <div class="mt-3 flex items-center gap-3 text-xs" style="color:var(--color-text-muted)">
               {%- if item.date_str %}
@@ -154,12 +185,52 @@
     return dataSlug.replace(/^\//, '').replace(/\/$/, '') + '/index.html';
   }
 
-  // Lesson completion status
-  document.querySelectorAll('.lesson-status').forEach(function(el){
-    var slug = progressKey(el.getAttribute('data-slug'));
-    if(p[slug] && p[slug].done){
-      el.textContent = '✅';
-      el.style.color = '#22c55e';
+  // Lesson completion status + prerequisite locking
+  document.querySelectorAll('.learn-card').forEach(function(card){
+    var statusEl = card.querySelector('.lesson-status');
+    if (!statusEl) return;
+    var slug = progressKey(statusEl.getAttribute('data-slug'));
+    var done = p[slug] && p[slug].done;
+
+    // Check prerequisites
+    var prereqsAttr = card.getAttribute('data-prereqs');
+    var prereqSlugs = prereqsAttr ? prereqsAttr.split(',') : [];
+    var prereqsMet = prereqSlugs.every(function(ps){
+      var key = progressKey('/' + ps + '/');
+      return p[key] && p[key].done;
+    });
+
+    if (!prereqsMet && prereqSlugs.length > 0) {
+      // Card is locked
+      card.style.opacity = '0.5';
+      card.style.cursor = 'not-allowed';
+      card.querySelectorAll('.prereq-icon').forEach(function(icon){
+        icon.textContent = '🔒';
+      });
+      statusEl.textContent = '🔒';
+      statusEl.style.color = '#c87070';
+      card.addEventListener('click', function(e){
+        e.preventDefault();
+        var msg = 'Complete prerequisites first: ' + prereqSlugs.map(function(s){
+          return s.replace('learn/', '').replace(/-/g, ' ');
+        }).join(', ');
+        var tip = document.createElement('div');
+        tip.textContent = msg;
+        tip.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#333;color:#fff;padding:10px 18px;border-radius:8px;font-size:13px;z-index:9999;max-width:480px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,0.3)';
+        document.body.appendChild(tip);
+        setTimeout(function(){ tip.remove(); }, 3500);
+      });
+    } else {
+      // Prerequisites met — update icon
+      card.querySelectorAll('.prereq-icon').forEach(function(icon){
+        icon.textContent = '✅';
+      });
+      if (done) {
+        statusEl.textContent = '✅';
+        statusEl.style.color = '#22c55e';
+      } else {
+        statusEl.textContent = '⬜';
+      }
     }
   });
 
@@ -186,14 +257,18 @@
 
   // Group progress
   document.querySelectorAll('.group-progress').forEach(function(el){
-    var cards = el.closest('.mb-12').querySelectorAll('.lesson-status');
+    var cards = el.closest('.mb-12').querySelectorAll('.learn-card');
     var done = 0;
-    cards.forEach(function(s){
-      var slug = progressKey(s.getAttribute('data-slug'));
+    var total = 0;
+    cards.forEach(function(card){
+      var statusEl = card.querySelector('.lesson-status');
+      if (!statusEl) return;
+      total++;
+      var slug = progressKey(statusEl.getAttribute('data-slug'));
       if(p[slug] && p[slug].done) done++;
     });
-    el.textContent = done + '/' + cards.length;
-    if(done === cards.length && cards.length > 0){
+    el.textContent = done + '/' + total;
+    if(done === total && total > 0){
       el.style.color = '#22c55e';
     }
   });
@@ -203,15 +278,14 @@
     var pillar = pp.getAttribute('data-pillar');
     var totalInPillar = 0;
     var doneInPillar = 0;
-    document.querySelectorAll('.lesson-status').forEach(function(el){
-      var card = el.closest('.learn-card');
-      if (card) {
-        var pillarEl = card.querySelector('[class*="inline-flex"]');
-        if (pillarEl && pillarEl.textContent.indexOf(pillar) > -1) {
-          totalInPillar++;
-          var slug = progressKey(el.getAttribute('data-slug'));
-          if(p[slug] && p[slug].done) doneInPillar++;
-        }
+    document.querySelectorAll('.learn-card').forEach(function(card){
+      var statusEl = card.querySelector('.lesson-status');
+      if (!statusEl) return;
+      var pillarEl = card.querySelector('[class*="inline-flex"]');
+      if (pillarEl && pillarEl.textContent.indexOf(pillar) > -1) {
+        totalInPillar++;
+        var slug = progressKey(statusEl.getAttribute('data-slug'));
+        if(p[slug] && p[slug].done) doneInPillar++;
       }
     });
     var countEl = pp.querySelector('.pillar-count');
@@ -223,10 +297,12 @@
   });
 
   // Overall summary
-  var total = document.querySelectorAll('.lesson-status').length;
+  var total = document.querySelectorAll('.learn-card').length;
   var completed = 0;
-  document.querySelectorAll('.lesson-status').forEach(function(el){
-    var slug = progressKey(el.getAttribute('data-slug'));
+  document.querySelectorAll('.learn-card').forEach(function(card){
+    var statusEl = card.querySelector('.lesson-status');
+    if (!statusEl) return;
+    var slug = progressKey(statusEl.getAttribute('data-slug'));
     if(p[slug] && p[slug].done) completed++;
   });
   var summary = document.getElementById('progress-summary');
@@ -237,19 +313,16 @@
   // Learning path progress bars
   document.querySelectorAll('.path-bar-fill').forEach(function(bar){
     var pathKey = bar.getAttribute('data-path');
-    var cards = document.querySelectorAll('[data-path="' + pathKey + '"]');
-    // Count via pillar cards matching this path
     var totalInPath = 0;
     var doneInPath = 0;
-    document.querySelectorAll('.lesson-status').forEach(function(el){
-      var card = el.closest('.learn-card');
-      if (card) {
-        var pillarEl = card.querySelector('[class*="inline-flex"]');
-        if (pillarEl && pillarEl.textContent.indexOf(pathKey) > -1) {
-          totalInPath++;
-          var slug = progressKey(el.getAttribute('data-slug'));
-          if(p[slug] && p[slug].done) doneInPath++;
-        }
+    document.querySelectorAll('.learn-card').forEach(function(card){
+      var statusEl = card.querySelector('.lesson-status');
+      if (!statusEl) return;
+      var pillarEl = card.querySelector('[class*="inline-flex"]');
+      if (pillarEl && pillarEl.textContent.indexOf(pathKey) > -1) {
+        totalInPath++;
+        var slug = progressKey(statusEl.getAttribute('data-slug'));
+        if(p[slug] && p[slug].done) doneInPath++;
       }
     });
     if (totalInPath > 0) {
@@ -259,6 +332,30 @@
     if (txtEl && totalInPath > 0) {
       txtEl.textContent = Math.round(doneInPath / totalInPath * 100) + '%';
     }
+  });
+  // Bloom progression per pillar
+  var BLOOM_ORDER = ['Remember','Understand','Apply','Analyze','Evaluate','Create'];
+  document.querySelectorAll('[data-bloom-path]').forEach(function(container){
+    var pathKey = container.getAttribute('data-bloom-path');
+    var levelsDone = {};
+    document.querySelectorAll('.learn-card[data-pillar="' + pathKey + '"]').forEach(function(card){
+      var statusEl = card.querySelector('.lesson-status');
+      if (!statusEl) return;
+      var slug = progressKey(statusEl.getAttribute('data-slug'));
+      if (!(p[slug] && p[slug].done)) return;
+      var bl = parseInt(card.getAttribute('data-bloom-level'), 10);
+      if (bl > 0) levelsDone[bl] = true;
+    });
+    container.querySelectorAll('.bloom-dot').forEach(function(dot){
+      var blvl = parseInt(dot.getAttribute('data-bloom-level'), 10);
+      if (levelsDone[blvl]) {
+        var colors = {1:'#7eb8a4',2:'#8fa3c8',3:'#c8a96e',4:'#c87070',5:'#b87ab8',6:'#c87070'};
+        dot.style.background = colors[blvl] || '#22c55e';
+        dot.style.color = '#fff';
+        dot.style.borderColor = colors[blvl] || '#22c55e';
+        dot.style.opacity = '1';
+      }
+    });
   });
 })();
 </script>

@@ -24,6 +24,11 @@
     <h1 class="text-3xl font-extrabold text-gray-900 mt-2">{{ pconf.heading }}</h1>
     <p class="mt-2 text-gray-600">{{ pconf.description }}</p>
     <p class="mt-1 text-sm text-gray-400">{{ posts | length }} posts</p>
+    {%- if pillar == "aml" %}
+    <a href="/aml/signals/" class="inline-flex items-center gap-1.5 mt-2 px-3 py-1.5 text-xs font-medium rounded transition hover:opacity-80" style="background:rgba(217,119,6,0.1);color:#d97706;border:1px solid rgba(217,119,6,0.2)">
+      🛡️ Signals Dashboard →
+    </a>
+    {%- endif %}
   </div>
 
   <div class="space-y-4">
