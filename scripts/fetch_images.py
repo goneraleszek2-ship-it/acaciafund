@@ -942,6 +942,72 @@ def fetch_section_images(article: dict, force: bool = False) -> list[dict]:
     return results
 
 
+def fetch_featured_image(article: dict) -> str | None:
+    """Fetch a single featured image for an article's card/thumbnail.
+
+    Queries APIs using article tags + pillar keywords, downloads the best
+    match to static/images/generated/{slug}.jpg, returns the path.
+    """
+    slug = article.get("slug", "")
+    pillar = article.get("pillar", "")
+    tags = article.get("tags", [])
+    title = article.get("title", "")
+
+    # Build a focused query from tags + title
+    query_parts = []
+    if tags:
+        query_parts.extend(tags[:3])
+    if title:
+        query_parts.append(title.split(":")[0][:40])
+    pk = PILLAR_KEYWORDS.get(pillar, "")
+    if pk:
+        query_parts.append(pk.split()[0])
+    query = " ".join(query_parts)[:80]
+    if not query:
+        return None
+
+    query_terms, _ = normalize_query(query)
+    if not query_terms:
+        return None
+
+    dest = IMAGES_DIR / slug
+    dest.parent.mkdir(parents=True, exist_ok=True)
+
+    # Try backends
+    all_backends = list(ALL_BACKENDS)
+    if UNSPLASH_KEY:
+        all_backends.append(("unsplash", search_unsplash))
+    if PEXELS_KEY:
+        all_backends.append(("pexels", search_pexels))
+
+    best_url = None
+    best_score = 0.0
+
+    for backend_name, search_fn in all_backends:
+        try:
+            candidates = search_fn(query)
+            for c in candidates:
+                url = c.get("url", "")
+                if url in _GLOBAL_USED_URLS:
+                    continue
+                score = score_result(c, query_terms)
+                if score > best_score:
+                    best_score = score
+                    best_url = url
+        except Exception:
+            continue
+
+    if not best_url:
+        return None
+
+    ok, ext, w, h, size = download_image(best_url, dest)
+    if not ok:
+        return None
+
+    rel_path = f"/static/images/generated/{slug}{ext}"
+    return rel_path
+
+
 def print_report(stats: dict):
     print()
     print("═" * 55)
@@ -1017,6 +1083,13 @@ def main():
     for article in articles_to_process:
         slug = article.get("slug", "")
         print(f"  {slug} … ", end="", flush=True)
+
+        # Fetch featured image if missing
+        feat = article.get("featured_image", "")
+        if not feat or not (PROJECT_ROOT / feat.lstrip("/")).exists():
+            fi = fetch_featured_image(article)
+            if fi:
+                article["featured_image"] = fi
 
         section_images = fetch_section_images(article, force=args.force)
         if section_images:
