@@ -642,56 +642,60 @@ def normalize_query(query: str) -> tuple[set[str], str]:
     return terms, " ".join(sorted(terms))
 
 
-def download_image(url: str, dest: Path) -> tuple[bool, str, int, int, int]:
-    try:
-        resp = requests.get(url, headers={"User-Agent": USER_AGENT}, timeout=30)
-        resp.raise_for_status()
-        content = resp.content
-        if not content:
-            return False, "", 0, 0, 0
-        if HAS_PIL:
-            img = Image.open(BytesIO(content))
-            img_format = img.format or "JPEG"
-            if img.mode == "RGBA":
-                rgb = Image.new("RGB", img.size, (255, 255, 255))
-                rgb.paste(img, mask=img.split()[3])
-                img = rgb
-            elif img.mode != "RGB":
-                img = img.convert("RGB")
-            if max(img.size) > MAX_IMAGE_WIDTH:
-                ratio = MAX_IMAGE_WIDTH / max(img.size)
-                new_size = (int(img.size[0] * ratio), int(img.size[1] * ratio))
-                img = img.resize(new_size, Image.LANCZOS)
-            w, h = img.size
-            output = BytesIO()
-            img.save(output, format="WEBP", quality=85, method=6)
-            data = output.getvalue()
-            ext = ".webp"
-        else:
-            ct = resp.headers.get("content-type", "")
-            if "png" in ct:
-                ext = ".png"
-            elif "gif" in ct:
-                ext = ".gif"
-            elif "jpeg" in ct or "jpg" in ct or "image/jpg" in ct:
-                ext = ".jpg"
-            elif "webp" in ct:
+def download_image(url: str, dest: Path, retries: int = 2) -> tuple[bool, str, int, int, int]:
+    for attempt in range(retries + 1):
+        try:
+            resp = requests.get(url, headers={"User-Agent": USER_AGENT}, timeout=30)
+            resp.raise_for_status()
+            content = resp.content
+            if not content:
+                return False, "", 0, 0, 0
+            if HAS_PIL:
+                img = Image.open(BytesIO(content))
+                img_format = img.format or "JPEG"
+                if img.mode == "RGBA":
+                    rgb = Image.new("RGB", img.size, (255, 255, 255))
+                    rgb.paste(img, mask=img.split()[3])
+                    img = rgb
+                elif img.mode != "RGB":
+                    img = img.convert("RGB")
+                if max(img.size) > MAX_IMAGE_WIDTH:
+                    ratio = MAX_IMAGE_WIDTH / max(img.size)
+                    new_size = (int(img.size[0] * ratio), int(img.size[1] * ratio))
+                    img = img.resize(new_size, Image.LANCZOS)
+                w, h = img.size
+                output = BytesIO()
+                img.save(output, format="WEBP", quality=85, method=6)
+                data = output.getvalue()
                 ext = ".webp"
             else:
-                ext = ".jpg"
-            data = content
-            w, h = 0, 0
-        dest_path = dest.with_suffix(ext)
-        dest_path.write_bytes(data)
-        if not HAS_PIL and w == 0:
-            try:
-                img = Image.open(BytesIO(data))
-                w, h = img.size
-            except Exception:
-                w, h = 1200, 675
-        return True, ext, w, h, len(data)
-    except (requests.RequestException, OSError, Exception) as e:
-        return False, "", 0, 0, 0
+                ct = resp.headers.get("content-type", "")
+                if "png" in ct:
+                    ext = ".png"
+                elif "gif" in ct:
+                    ext = ".gif"
+                elif "jpeg" in ct or "jpg" in ct or "image/jpg" in ct:
+                    ext = ".jpg"
+                elif "webp" in ct:
+                    ext = ".webp"
+                else:
+                    ext = ".jpg"
+                data = content
+                w, h = 0, 0
+            dest_path = dest.with_suffix(ext)
+            dest_path.write_bytes(data)
+            if not HAS_PIL and w == 0:
+                try:
+                    img = Image.open(BytesIO(data))
+                    w, h = img.size
+                except Exception:
+                    w, h = 1200, 675
+            return True, ext, w, h, len(data)
+        except (requests.RequestException, OSError, Exception):
+            if attempt < retries:
+                time.sleep(2 ** attempt)
+                continue
+    return False, "", 0, 0, 0
 
 
 def build_credit(result: dict, backend_name: str) -> str:
@@ -836,21 +840,25 @@ def fetch_section_images(article: dict, force: bool = False) -> list[dict]:
             all_backends.append(("pixabay", search_pixabay))
 
         for backend_name, search_fn in all_backends:
-            try:
-                candidates = search_fn(query)
-                for c in candidates:
-                    url = c.get("url", "")
-                    creator = c.get("creator", "").lower()[:30] if c.get("creator") else ""
-                    if url in used_urls or url in _GLOBAL_USED_URLS or creator in used_creators:
-                        continue
-                    score = score_result(c, query_terms)
-                    if score > best_score:
-                        c["_score"] = score
-                        best = c
-                        best_score = score
-                        best_backend = backend_name
-            except Exception:
-                continue
+            for attempt in range(3):
+                try:
+                    candidates = search_fn(query)
+                    for c in candidates:
+                        url = c.get("url", "")
+                        creator = c.get("creator", "").lower()[:30] if c.get("creator") else ""
+                        if url in used_urls or url in _GLOBAL_USED_URLS or creator in used_creators:
+                            continue
+                        score = score_result(c, query_terms)
+                        if score > best_score:
+                            c["_score"] = score
+                            best = c
+                            best_score = score
+                            best_backend = backend_name
+                    break
+                except Exception:
+                    if attempt < 2:
+                        time.sleep(1)
+                    continue
 
         # Tier 3: AI fallback when no photo found
         if best is None or best_score < MIN_SCORE:
