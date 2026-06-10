@@ -19,7 +19,7 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 from urllib.parse import quote as urlquote
 
 from schemas import RegistryData
-from core.visuals import generate_thumbnail_svg, generate_og_image
+from core.visuals import generate_thumbnail_svg, generate_og_image, TOPIC_ICONS, SUBTOPIC_CATEGORIES
 from core.images import generate_fallback_svg
 
 from seed_learn import CURATED_RELATIONS, PREREQUISITES as LEARN_PREREQUISITES
@@ -30,6 +30,47 @@ from config import (
     SQI_THRESHOLD_MIN, SQI_BADGE_HIGH, SQI_BADGE_MED, SQI_DEFAULT,
     INTEREST_SQI_WEIGHT, INTEREST_RECENCY_WEIGHT, INTEREST_RECENCY_DAYS,
 )
+
+def get_topic_icons(tags: list[str]) -> list[str]:
+    """Map article tags to TOPIC_ICONS SVG path data, returning up to 3 matches."""
+    if not tags:
+        return []
+    lower_tags = {t.lower() for t in tags}
+    matched = []
+    seen = set()
+    for tag in lower_tags:
+        if tag in TOPIC_ICONS and tag not in seen:
+            matched.append(TOPIC_ICONS[tag])
+            seen.add(tag)
+            if len(matched) >= 3:
+                break
+    if len(matched) < 3:
+        for subs in SUBTOPIC_CATEGORIES.values():
+            for key, keywords in subs.items():
+                if key in seen:
+                    continue
+                if lower_tags & keywords:
+                    if key in TOPIC_ICONS:
+                        matched.append(TOPIC_ICONS[key])
+                        seen.add(key)
+                        if len(matched) >= 3:
+                            break
+            if len(matched) >= 3:
+                break
+    if len(matched) < 3:
+        for tag in lower_tags:
+            for tkey in TOPIC_ICONS:
+                if tkey in seen:
+                    continue
+                if tkey in tag or tag in tkey:
+                    matched.append(TOPIC_ICONS[tkey])
+                    seen.add(tkey)
+                    if len(matched) >= 3:
+                        break
+            if len(matched) >= 3:
+                break
+    return matched
+
 
 PILLAR_CONFIG = {
     "aml": {
@@ -559,9 +600,15 @@ def main():
         out_static.mkdir(parents=True, exist_ok=True)
         pillar_k = item.pillar or "aml"
         scores_k = {"sqi": SQI_DEFAULT}
-        svg_k = generate_thumbnail_svg(item.title, pillar_k, scores_k, width=600, height=340)
+        feat_k = item.featured_image or ""
+        icons_k = get_topic_icons(item.tags) if not feat_k else []
+        svg_k = generate_thumbnail_svg(item.title, pillar_k, scores_k, width=600, height=340,
+                                       featured_image_url=feat_k, layer="knowledge",
+                                       fallback_icons=icons_k)
         (out_static / f"thumb_{thumb_key}.svg").write_text(svg_k, encoding="utf-8")
-        og_svg = generate_og_image(item.title, pillar_k, scores_k)
+        og_svg = generate_og_image(item.title, pillar_k, scores_k,
+                                   featured_image_url=feat_k, layer="knowledge",
+                                   fallback_icons=icons_k)
         (out_static / f"og_{og_key}.svg").write_text(og_svg, encoding="utf-8")
 
     # --- KNOWLEDGE INDEX (sub-category grouped) ---
@@ -692,9 +739,15 @@ def main():
         out_static.mkdir(parents=True, exist_ok=True)
         pillar_l = item.pillar or "aml"
         scores_l = {"sqi": SQI_DEFAULT}
-        svg_l = generate_thumbnail_svg(item.title, pillar_l, scores_l, width=600, height=340)
+        feat_l = item.featured_image or ""
+        icons_l = get_topic_icons(item.tags) if not feat_l else []
+        svg_l = generate_thumbnail_svg(item.title, pillar_l, scores_l, width=600, height=340,
+                                       featured_image_url=feat_l, layer="learn",
+                                       fallback_icons=icons_l)
         (out_static / f"thumb_{thumb_key}.svg").write_text(svg_l, encoding="utf-8")
-        og_svg = generate_og_image(item.title, pillar_l, scores_l)
+        og_svg = generate_og_image(item.title, pillar_l, scores_l,
+                                   featured_image_url=feat_l, layer="learn",
+                                   fallback_icons=icons_l)
         (out_static / f"og_{og_key}.svg").write_text(og_svg, encoding="utf-8")
 
     # --- LEARN INDEX (difficulty-grouped) ---
@@ -781,9 +834,15 @@ def main():
         scores_r = item.signals or {"sqi": SQI_DEFAULT}
         if not isinstance(scores_r, dict):
             scores_r = {"sqi": SQI_DEFAULT}
-        svg_r = generate_thumbnail_svg(item.title, pillar, scores_r, width=600, height=340)
+        feat_r = item.featured_image or ""
+        icons_r = get_topic_icons(item.tags) if not feat_r else []
+        svg_r = generate_thumbnail_svg(item.title, pillar, scores_r, width=600, height=340,
+                                       featured_image_url=feat_r, layer="research",
+                                       fallback_icons=icons_r)
         (out_static / f"thumb_{key}.svg").write_text(svg_r, encoding="utf-8")
-        og_svg = generate_og_image(item.title, pillar, scores_r)
+        og_svg = generate_og_image(item.title, pillar, scores_r,
+                                   featured_image_url=feat_r, layer="research",
+                                   fallback_icons=icons_r)
         (out_static / f"og_{og_key}.svg").write_text(og_svg, encoding="utf-8")
 
     # --- RESEARCH INDEX (/research/) ---

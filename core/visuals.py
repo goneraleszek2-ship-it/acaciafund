@@ -425,12 +425,58 @@ def _generate_mist(seed: int, pal: dict, w: int, h: int, count: int,
     return elems
 
 
+def _overlay_panel_svg(featured_image_url: str, fallback_icons: list | None,
+                        layer: str, pal: dict, width: int, height: int) -> list:
+    """Generate SVG elements for the image/fallback overlay panel.
+
+    Research: image left (4/7 width), Learn: image right (4/7 width),
+    Knowledge: image top (4/7 height).
+    """
+    elems = []
+    if layer == "research":
+        ix, iy, iw, ih = 0, 0, int(width * 4 / 7), height
+    elif layer == "learn":
+        ix, iy, iw, ih = int(width * 3 / 7), 0, int(width * 4 / 7), height
+    elif layer == "knowledge":
+        ix, iy, iw, ih = 0, 0, width, int(height * 4 / 7)
+    else:
+        return elems
+
+    if featured_image_url:
+        elems.append(
+            f'<image href="{featured_image_url}" x="{ix}" y="{iy}"'
+            f' width="{iw}" height="{ih}" preserveAspectRatio="xMidYMid slice"/>'
+        )
+    elif fallback_icons:
+        elems.append(
+            f'<rect x="{ix}" y="{iy}" width="{iw}" height="{ih}"'
+            f' fill="{pal["bg"]}" opacity="0.85" rx="3"/>'
+        )
+        n = min(3, len(fallback_icons))
+        for idx, path_data in enumerate(fallback_icons[:3]):
+            cx_pos = ix + (iw / (n + 1)) * (idx + 1)
+            cy_pos = iy + ih / 2
+            elems.append(
+                f'<g transform="translate({cx_pos:.0f}, {cy_pos:.0f}) scale(0.6)"'
+                f' stroke="{pal["accent"]}" fill="none"'
+                f' stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" opacity="0.6">'
+                f'  {path_data}'
+                f'</g>'
+            )
+    return elems
+
+
 def generate_thumbnail_svg(title: str, pillar: str, scores: dict,
-                           width: int = 600, height: int = 340) -> str:
+                           width: int = 600, height: int = 340,
+                           featured_image_url: str = "",
+                           layer: str = "research",
+                           fallback_icons: list | None = None) -> str:
     """Generate a unique fractal-based SVG thumbnail for a blog post.
 
     Uses 7 fractal types, mirroring, dynamic color transitions, and
     atmospheric effects — each image is uniquely derived from the title hash.
+    When featured_image_url is provided, overlays a 4/7 image panel per layer.
+    Falls back to 3 tag-derived topic icons when no image is available.
     """
     pal = PILLAR_COLORS.get(pillar, PILLAR_COLORS["aml"])
     sub = _pick_subtopic([title], pillar)
@@ -615,6 +661,9 @@ def generate_thumbnail_svg(title: str, pillar: str, scores: dict,
     seq[0] += 1
     lines.extend(mist2)
 
+    # Image/fallback overlay panel (covers 4/7 of fractal, positioned per layer)
+    lines.extend(_overlay_panel_svg(featured_image_url, fallback_icons, layer, pal, width, height))
+
     # Topic icon (bottom-left)
     icon_x = 14 + _det_rand_int(seed, seq[0], 0, 20)
     icon_y = height - 56 + _det_rand_int(seed, seq[0] + 1, 0, 10)
@@ -665,8 +714,15 @@ def generate_thumbnail_svg(title: str, pillar: str, scores: dict,
 
 
 def generate_og_image(title: str, pillar: str, scores: dict,
-                      date_str: str = "") -> str:
-    """Generate a social sharing OG image SVG with the article title and fractal backing."""
+                      date_str: str = "",
+                      featured_image_url: str = "",
+                      layer: str = "research",
+                      fallback_icons: list | None = None) -> str:
+    """Generate a social sharing OG image SVG with the article title and fractal backing.
+
+    When featured_image_url is provided, overlays a 4/7 image panel per layer
+    behind the title/meta content. Falls back to tag-derived topic icons.
+    """
     pal = PILLAR_COLORS.get(pillar, PILLAR_COLORS["aml"])
     sub = _pick_subtopic([title], pillar)
     icon_path = TOPIC_ICONS.get(sub, TOPIC_ICONS["regulation"])
@@ -723,11 +779,16 @@ def generate_og_image(title: str, pillar: str, scores: dict,
     # Subtle fractal mist overlay
     mist = _generate_mist(seed, pal, 1200, 630, 20, seq)
 
+    # Image/fallback overlay panel (before content, so text renders on top)
+    overlay_panel = _overlay_panel_svg(
+        featured_image_url, fallback_icons, layer, pal, 1200, 630
+    )
+
     parts = [
         f'<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">',
         '<defs>', bg, '</defs>',
         f'<rect width="1200" height="630" fill="url(#ogbg)"/>',
-    ] + circles + mist + [
+    ] + circles + mist + overlay_panel + [
         f'<!-- Icon -->',
         f'<g transform="translate(50, 50) scale(1.8)" stroke="{pal["accent"]}"'
         f' fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">',
