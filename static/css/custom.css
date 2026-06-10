@@ -36,8 +36,8 @@
   --color-surface-hover: #f5f0e8;
   --color-border: #e5ddd4;
   --color-text: #1a1a2e;
-  --color-text-secondary: #8b7e74;
-  --color-text-muted: #a09488;
+  --color-text-secondary: #6d6359;
+  --color-text-muted: #7a6e64;
   --color-accent: #1d4ed8;
   --color-accent-hover: #1e40af;
   --color-focus: #1d4ed8;
@@ -107,8 +107,11 @@ img[loading="lazy"] { background: var(--color-border); }
 }
 .nav-link:hover { color: var(--color-accent); }
 
-.prose h2 { scroll-margin-top: 4rem; }
-.prose h3 { scroll-margin-top: 4rem; }
+.prose h2 { scroll-margin-top: 4rem; margin-top: 2.5rem; margin-bottom: 0.75rem; }
+.prose h3 { scroll-margin-top: 4rem; margin-top: 1.75rem; margin-bottom: 0.5rem; }
+.prose h4 { margin-top: 1.25rem; margin-bottom: 0.5rem; }
+.prose p { margin-bottom: 1rem; }
+.prose ul, .prose ol { margin-top: 0.5rem; margin-bottom: 1rem; }
 .prose a { word-break: break-word; }
 .prose ul { list-style-type: disc; }
 .prose ol { list-style-type: decimal; }
@@ -619,9 +622,6 @@ body.focus-mode article {
 .bg-gray-100 {
   background-color: var(--color-surface) !important;
 }
-.text-gray-400, .text-gray-500, .text-gray-600, .text-gray-700, .text-gray-800 {
-  color: var(--color-text-secondary) !important;
-}
 .text-gray-900 {
   color: var(--color-text) !important;
 }
@@ -658,36 +658,36 @@ body.focus-mode article {
     --color-surface-hover: #252542;
     --color-border: #2d2d4a;
     --color-text: #e8e6e3;
-    --color-text-secondary: #9d9bb0;
-    --color-text-muted: #6b6a80;
-    --color-accent: #60a5fa;
-    --color-accent-hover: #93bbfd;
-    --color-focus: #60a5fa;
-    --color-header-bg: rgba(26, 26, 46, 0.9);
-    --color-aml: #d4a373;
-    --color-markets: #6abf8a;
-    --color-data-engineering: #818cf8;
-    --matrix-aml-research: #d4a373;
-    --matrix-aml-knowledge: #b97c4a;
-    --matrix-aml-learn: #9a6535;
-    --matrix-markets-research: #6abf8a;
-    --matrix-markets-knowledge: #4a9f6a;
-    --matrix-markets-learn: #3a7f55;
-    --matrix-de-research: #818cf8;
-    --matrix-de-knowledge: #6366f1;
-    --matrix-de-learn: #4f46e5;
-    --layer-research-badge: #c8a96e;
-    --layer-research-bg: #141210;
-    --layer-research-body: #0f0d0a;
-    --layer-research-accent: #9a7f45;
-    --layer-learn-badge: #7eb8a4;
-    --layer-learn-bg: #0e1412;
-    --layer-learn-body: #0a0f0d;
-    --layer-learn-accent: #509a84;
-    --layer-knowledge-badge: #8fa3c8;
-    --layer-knowledge-bg: #0e1114;
-    --layer-knowledge-body: #0a0d0f;
-    --layer-knowledge-accent: #5a74a8;
+  --color-text-secondary: #a8a6be;
+  --color-text-muted: #8a89a0;
+  --color-accent: #60a5fa;
+  --color-accent-hover: #93bbfd;
+  --color-focus: #60a5fa;
+  --color-header-bg: rgba(26, 26, 46, 0.9);
+  --color-aml: #d4a373;
+  --color-markets: #6abf8a;
+  --color-data-engineering: #818cf8;
+  --matrix-aml-research: #d4a373;
+  --matrix-aml-knowledge: #b97c4a;
+  --matrix-aml-learn: #9a6535;
+  --matrix-markets-research: #6abf8a;
+  --matrix-markets-knowledge: #4a9f6a;
+  --matrix-markets-learn: #3a7f55;
+  --matrix-de-research: #818cf8;
+  --matrix-de-knowledge: #6366f1;
+  --matrix-de-learn: #4f46e5;
+  --layer-research-badge: #c8a96e;
+  --layer-research-bg: #141210;
+  --layer-research-body: #0f0d0a;
+  --layer-research-accent: #9a7f45;
+  --layer-learn-badge: #7eb8a4;
+  --layer-learn-bg: #0e1412;
+  --layer-learn-body: #0a0f0d;
+  --layer-learn-accent: #509a84;
+  --layer-knowledge-badge: #8fa3c8;
+  --layer-knowledge-bg: #0e1114;
+  --layer-knowledge-body: #0a0d0f;
+  --layer-knowledge-accent: #5a74a8;
   }
 }
 
@@ -698,8 +698,8 @@ body.focus-mode article {
   --color-surface-hover: #252542;
   --color-border: #2d2d4a;
   --color-text: #e8e6e3;
-  --color-text-secondary: #9d9bb0;
-  --color-text-muted: #6b6a80;
+  --color-text-secondary: #a8a6be;
+  --color-text-muted: #8a89a0;
   --color-accent: #60a5fa;
   --color-accent-hover: #93bbfd;
   --color-focus: #60a5fa;
@@ -1141,4 +1141,24 @@ svg:not([class*="w-"]):not([class*="h-"]) {
 }
 .sparkline svg {
   display: block;
+}
+
+/* ── Flashcard back text: theme-adaptive contrast ── */
+.flashcard-back-text {
+  color: #fff;
+}
+.dark .flashcard-back-text {
+  color: #1a1a2e;
+}
+.flashcard-back {
+  background: var(--color-accent);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* ── Card title truncation: 2-line clamp ── */
+.card-title-clamp {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }

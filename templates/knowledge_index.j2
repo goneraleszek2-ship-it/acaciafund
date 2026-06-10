@@ -64,7 +64,7 @@
         </div>
         {%- endif %}
         <div class="p-4">
-          <h3 class="font-semibold" style="color:var(--color-text)">{{ item.title | striptags }}</h3>
+          <h3 class="font-semibold card-title-clamp" style="color:var(--color-text)">{{ item.title | striptags }}</h3>
           {%- if item.description %}
           <p class="mt-1 text-xs" style="color:var(--color-text-secondary)">{{ item.description[:200] }}</p>
           {%- endif %}
