@@ -21,6 +21,7 @@ from urllib.parse import quote as urlquote
 from schemas import RegistryData
 from core.visuals import generate_thumbnail_svg, generate_og_image, TOPIC_ICONS, SUBTOPIC_CATEGORIES
 from core.images import generate_fallback_svg
+from core.brand import BRAND, brand_domain_icon, brand_micro_icon, brand_logo_svg
 
 from seed_learn import CURATED_RELATIONS, PREREQUISITES as LEARN_PREREQUISITES
 from config import (
@@ -329,6 +330,31 @@ def resolve_section_image(url: str) -> str:
     return ""
 
 
+def generate_missing_ai_image(url: str) -> str:
+    """Generate a simple AI fallback SVG for missing section images."""
+    if not url:
+        return ""
+    p = Path(PROJECT_ROOT / url.lstrip("/"))
+    if p.exists():
+        return url
+    # Generate a simple gradient SVG as placeholder
+    slug = url.split("/")[-1].rsplit(".", 1)[0]
+    svg = f"""<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+      <defs>
+        <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#1a1a2e;stop-opacity:1" />
+          <stop offset="100%" style="stop-color:#16213e;stop-opacity:1" />
+        </linearGradient>
+      </defs>
+      <rect width="1200" height="675" fill="url(#bg)"/>
+      <text x="600" y="337" font-family="monospace" font-size="16" fill="#4cc9f0" text-anchor="middle">{slug}</text>
+    </svg>"""
+    svg_path = p.with_suffix(".svg")
+    svg_path.parent.mkdir(parents=True, exist_ok=True)
+    svg_path.write_text(svg)
+    return url.rsplit(".", 1)[0] + ".svg"
+
+
 def inject_section_images(body_html: str, section_images: list[dict],
                            article: dict | None = None) -> str:
     """Insert section-level images into body_html after matching <h2> headings.
@@ -434,7 +460,9 @@ def is_future_post(post) -> bool:
 
 # ── Visual fingerprint: unique ident for every article ─────
 PILLAR_FINGERPRINT_COLORS = {
-    "aml": "#c97d3e", "stock": "#3a7d5c", "data-engineering": "#6366f1",
+    "aml": BRAND["aml"]["primary"],
+    "stock": BRAND["markets"]["primary"],
+    "data-engineering": BRAND["science"]["primary"],
     "": "#6b7280",
 }
 

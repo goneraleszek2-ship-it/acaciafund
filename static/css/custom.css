@@ -1095,3 +1095,50 @@ svg:not([class*="w-"]):not([class*="h-"]) {
   display: block;
   border-radius: 0.5rem;
 }
+
+/* ── Brand System: Domain Patterns ── */
+.domain-pattern {
+  position: relative;
+  overflow: hidden;
+}
+.domain-pattern::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  pointer-events: none;
+  background-repeat: repeat;
+  background-size: 200px 200px;
+}
+.domain-pattern--aml::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cpolygon points='100,10 130,30 130,60 100,80 70,60 70,30' fill='none' stroke='%23c97d3e' stroke-width='0.5' opacity='0.3'/%3E%3Cpolygon points='50,50 80,70 80,100 50,120 20,100 20,70' fill='none' stroke='%23c97d3e' stroke-width='0.5' opacity='0.2'/%3E%3Cpolygon points='150,50 180,70 180,100 150,120 120,100 120,70' fill='none' stroke='%23c97d3e' stroke-width='0.5' opacity='0.2'/%3E%3C/svg%3E");
+}
+.domain-pattern--markets::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cpolyline points='0,100 20,90 40,95 60,80 80,85 100,70 120,75 140,60 160,65 180,50 200,55' fill='none' stroke='%233a7d5c' stroke-width='0.6' opacity='0.3'/%3E%3Cpolyline points='0,130 20,125 40,128 60,118 80,120 100,110 120,112 140,102 160,105 180,95 200,98' fill='none' stroke='%233a7d5c' stroke-width='0.5' opacity='0.2'/%3E%3Cpolyline points='0,160 20,158 40,160 60,152 80,154 100,146 120,148 140,140 160,142 180,134 200,136' fill='none' stroke='%233a7d5c' stroke-width='0.4' opacity='0.15'/%3E%3C/svg%3E");
+}
+.domain-pattern--science::before {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cline x1='100' y1='180' x2='100' y2='130' stroke='%236366f1' stroke-width='0.8' opacity='0.25'/%3E%3Cline x1='100' y1='130' x2='75' y2='90' stroke='%236366f1' stroke-width='0.6' opacity='0.2'/%3E%3Cline x1='100' y1='130' x2='125' y2='90' stroke='%236366f1' stroke-width='0.6' opacity='0.2'/%3E%3Cline x1='75' y1='90' x2='60' y2='60' stroke='%236366f1' stroke-width='0.5' opacity='0.15'/%3E%3Cline x1='75' y1='90' x2='90' y2='60' stroke='%236366f1' stroke-width='0.5' opacity='0.15'/%3E%3Cline x1='125' y1='90' x2='110' y2='60' stroke='%236366f1' stroke-width='0.5' opacity='0.15'/%3E%3Cline x1='125' y1='90' x2='140' y2='60' stroke='%236366f1' stroke-width='0.5' opacity='0.15'/%3E%3Ccircle cx='100' cy='180' r='3' fill='%236366f1' opacity='0.3'/%3E%3Ccircle cx='75' cy='90' r='2' fill='%23818cf8' opacity='0.25'/%3E%3Ccircle cx='125' cy='90' r='2' fill='%23818cf8' opacity='0.25'/%3E%3C/svg%3E");
+}
+
+/* ── Brand System: Micro-icon alignment ── */
+.micro-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+}
+.micro-icon svg {
+  display: block;
+}
+
+/* ── Brand System: Sparkline container ── */
+.sparkline {
+  display: inline-block;
+  vertical-align: middle;
+  line-height: 0;
+}
+.sparkline svg {
+  display: block;
+}

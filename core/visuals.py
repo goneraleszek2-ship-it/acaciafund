@@ -12,13 +12,16 @@ from datetime import datetime
 from pathlib import Path
 from typing import Optional
 
+from core.brand import BRAND, PILLAR_MAP, _brand_key
+
 STATIC_DIR = Path(__file__).parent.parent / "static" / "images"
 STATIC_DIR.mkdir(parents=True, exist_ok=True)
 
+# Canonical brand palettes — sourced from core/brand.py
 PILLAR_PALETTES = {
-    "aml":     {"primary": "#1e3a5f", "secondary": "#2d5a8e", "accent": "#d97706", "bg": "#0f172a"},
-    "stock":   {"primary": "#166534", "secondary": "#15803d", "accent": "#22c55e", "bg": "#052e16"},
-    "science": {"primary": "#7e22ce", "secondary": "#a855f7", "accent": "#c084fc", "bg": "#3b0764"},
+    "aml":     {"primary": BRAND["aml"]["dark"],     "secondary": "#2d5a8e", "accent": BRAND["aml"]["secondary"],     "bg": BRAND["aml"]["darker"]},
+    "stock":   {"primary": BRAND["markets"]["dark"],  "secondary": "#15803d", "accent": BRAND["markets"]["secondary"], "bg": BRAND["markets"]["darker"]},
+    "science": {"primary": BRAND["science"]["dark"],  "secondary": "#a855f7", "accent": BRAND["science"]["secondary"], "bg": BRAND["science"]["darker"]},
 }
 
 TOPIC_ICONS = {
@@ -78,9 +81,9 @@ SUBTOPIC_CATEGORIES: dict[str, dict[str, set[str]]] = {
 }
 
 PILLAR_COLORS = {
-    "aml":              {"bg": "#0f172a", "fg": "#1e3a5f",  "text": "#f8fafc", "accent": "#d97706"},
-    "stock":            {"bg": "#052e16", "fg": "#166534",  "text": "#f0fdf4", "accent": "#22c55e"},
-    "data-engineering": {"bg": "#1e1b4b", "fg": "#3730a3",  "text": "#eef2ff", "accent": "#6366f1"},
+    "aml":              {"bg": BRAND["aml"]["darker"],     "fg": BRAND["aml"]["dark"],     "text": "#f8fafc", "accent": BRAND["aml"]["secondary"]},
+    "stock":            {"bg": BRAND["markets"]["darker"], "fg": BRAND["markets"]["dark"],  "text": "#f0fdf4", "accent": BRAND["markets"]["secondary"]},
+    "data-engineering": {"bg": BRAND["science"]["darker"], "fg": BRAND["science"]["dark"],  "text": "#eef2ff", "accent": BRAND["science"]["secondary"]},
 }
 
 
@@ -1134,3 +1137,9 @@ def donut_svg(breakdown: dict, width: int = 140, height: int = 140) -> str:
         lx += 50
     parts.append('</svg>')
     return "\n".join(parts)
+
+
+def generate_sparkline_svg(data: list[float], pillar: str = "aml", width: int = 60, height: int = 24) -> str:
+    """Generate an inline sparkline SVG for metadata cards."""
+    from core.brand import brand_sparkline
+    return brand_sparkline(data, pillar, width, height)

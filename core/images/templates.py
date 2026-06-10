@@ -5,33 +5,35 @@ import html
 import math
 from typing import Any
 
+from core.brand import BRAND, brand_section_icon, _brand_key
+
 PILLAR_VISUALS = {
     "data-engineering": {
         "name": "Data Engineering",
-        "primary": "#2563eb",
-        "dark": "#1e3a5f",
-        "darker": "#0f172a",
-        "accent": "#38bdf8",
-        "icon_accent": "#60a5fa",
-        "label": "DATA",
+        "primary": BRAND["science"]["primary"],
+        "dark": BRAND["science"]["dark"],
+        "darker": BRAND["science"]["darker"],
+        "accent": BRAND["science"]["accent"],
+        "icon_accent": BRAND["science"]["secondary"],
+        "label": BRAND["science"]["label"],
     },
     "aml": {
         "name": "AML",
-        "primary": "#dc2626",
-        "dark": "#7f1d1d",
-        "darker": "#1a0a0a",
-        "accent": "#fca5a5",
-        "icon_accent": "#f87171",
-        "label": "AML",
+        "primary": BRAND["aml"]["primary"],
+        "dark": BRAND["aml"]["dark"],
+        "darker": BRAND["aml"]["darker"],
+        "accent": BRAND["aml"]["accent"],
+        "icon_accent": BRAND["aml"]["secondary"],
+        "label": BRAND["aml"]["label"],
     },
     "stock": {
         "name": "Markets",
-        "primary": "#059669",
-        "dark": "#064e3b",
-        "darker": "#0a1a10",
-        "accent": "#6ee7b7",
-        "icon_accent": "#34d399",
-        "label": "MKT",
+        "primary": BRAND["markets"]["primary"],
+        "dark": BRAND["markets"]["dark"],
+        "darker": BRAND["markets"]["darker"],
+        "accent": BRAND["markets"]["accent"],
+        "icon_accent": BRAND["markets"]["secondary"],
+        "label": BRAND["markets"]["label"],
     },
 }
 
@@ -144,8 +146,11 @@ def generate_fallback_svg(section: dict, article: dict) -> str:
     """Generate an inline SVG HTML string for a section without an image.
 
     The SVG uses pillar colors, a section-type icon, and article metadata.
+    Includes domain pattern background (mesh/waves/branching).
     Returns a complete <svg> element as a string.
     """
+    from core.brand import brand_pattern
+
     pillar = article.get("pillar", "")
     v = _pillar_visual(pillar)
     idx = section.get("section_index", 0)
@@ -158,6 +163,11 @@ def generate_fallback_svg(section: dict, article: dict) -> str:
     w, h = 800, 400
     icon_html = _icon_paths(SECTION_ICON_INDEX.get(idx, 0))
     dots_html = _decorative_dots(w, h, seed=hash(title + str(idx)) & 0xFFFF)
+
+    # Domain pattern background (inline SVG as data URI)
+    import base64
+    pattern_svg = brand_pattern(pillar, w, h, opacity=0.08)
+    pattern_b64 = base64.b64encode(pattern_svg.encode()).decode()
 
     truncated_title = (title[:60] + "…") if len(title) > 60 else title
     truncated_heading = (heading[:40] + "…") if len(heading) > 40 else heading
@@ -173,6 +183,9 @@ def generate_fallback_svg(section: dict, article: dict) -> str:
         f'</linearGradient>'
         f'</defs>'
         f'<rect width="{w}" height="{h}" fill="url(#fbsg)" rx="8"/>'
+        # Domain pattern overlay
+        f'<image href="data:image/svg+xml;base64,{pattern_b64}" '
+        f'width="{w}" height="{h}" opacity="0.5" rx="8"/>'
         f'<rect width="{w}" height="{h}" fill="none" stroke="{v["primary"]}" '
         f'stroke-width="1" rx="8" opacity="0.15"/>'
         f'<line x1="0" y1="0" x2="80" y2="0" stroke="{v["accent"]}" '

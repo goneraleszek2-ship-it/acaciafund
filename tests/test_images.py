@@ -74,8 +74,9 @@ class TestSvgFallback:
 
     def test_fallback_svg_contains_pillar_color(self):
         from core.images import generate_fallback_svg
+        from core.brand import BRAND
         svg = generate_fallback_svg(self._SAMPLE_SECTION, self._SAMPLE_ARTICLE)
-        assert "#2563eb" in svg  # data-engineering primary blue
+        assert BRAND["science"]["primary"] in svg  # data-engineering uses science brand
 
     def test_fallback_svg_contains_heading(self):
         from core.images import generate_fallback_svg
@@ -89,21 +90,24 @@ class TestSvgFallback:
 
     def test_fallback_svg_aml_pillar(self):
         from core.images import generate_fallback_svg
+        from core.brand import BRAND
         article = {**self._SAMPLE_ARTICLE, "pillar": "aml"}
         svg = generate_fallback_svg(self._SAMPLE_SECTION, article)
-        assert "#dc2626" in svg  # AML primary red
+        assert BRAND["aml"]["primary"] in svg  # AML primary
 
     def test_fallback_svg_markets_pillar(self):
         from core.images import generate_fallback_svg
+        from core.brand import BRAND
         article = {**self._SAMPLE_ARTICLE, "pillar": "stock"}
         svg = generate_fallback_svg(self._SAMPLE_SECTION, article)
-        assert "#059669" in svg  # Markets primary green
+        assert BRAND["markets"]["primary"] in svg  # Markets primary
 
     def test_fallback_svg_unknown_pillar_defaults(self):
         from core.images import generate_fallback_svg
+        from core.brand import BRAND
         article = {**self._SAMPLE_ARTICLE, "pillar": "unknown"}
         svg = generate_fallback_svg(self._SAMPLE_SECTION, article)
-        assert "#2563eb" in svg  # falls back to data-engineering
+        assert BRAND["science"]["primary"] in svg  # falls back to data-engineering/science
 
     def test_fallback_svg_different_section_indices(self):
         from core.images import generate_fallback_svg
@@ -138,8 +142,9 @@ class TestSvgFallback:
 
     def test_fallback_svg_includes_pillar_label(self):
         from core.images import generate_fallback_svg
+        from core.brand import BRAND
         svg = generate_fallback_svg(self._SAMPLE_SECTION, self._SAMPLE_ARTICLE)
-        assert "DATA" in svg  # data-engineering pillar label
+        assert BRAND["science"]["label"] in svg  # data-engineering uses science label
 
     def test_fallback_svg_aml_label(self):
         from core.images import generate_fallback_svg

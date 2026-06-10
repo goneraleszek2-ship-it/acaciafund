@@ -40,7 +40,7 @@ IMAGES_DIR = PROJECT_ROOT / "static" / "images" / "generated"
 USER_AGENT = "AcaciaFund/1.0 (image-fetcher; +https://acaciafund.org)"
 RATE_LIMIT_DELAY = 0.15
 MAX_WORKERS = 4
-MIN_SCORE = 20
+MIN_SCORE = 10
 MAX_IMAGE_WIDTH = 1200
 TARGET_WORDS_PER_IMAGE = 150
 
