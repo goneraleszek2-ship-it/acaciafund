@@ -20,6 +20,7 @@ from urllib.parse import quote as urlquote
 
 from schemas import RegistryData
 from core.visuals import generate_thumbnail_svg, generate_og_image
+from scripts.visuals import generate_fallback_svg
 
 from seed_learn import CURATED_RELATIONS, PREREQUISITES as LEARN_PREREQUISITES
 from config import (
@@ -257,46 +258,50 @@ def sanitize_domain_breakdown(html: str) -> str:
     return html
 
 
-def inject_section_images(body_html: str, section_images: list[dict]) -> str:
+def inject_section_images(body_html: str, section_images: list[dict],
+                           article: dict | None = None) -> str:
     """Insert section-level images into body_html after matching <h2> headings.
 
+    Tier 1: Editorial manifest images (already resolved by fetch pipeline)
+    Tier 2: Auto-fetched images from registry
+    Tier 3: Inline SVG fallback generated from article + section context
+
     Matches by section_index (positional: 0 = first <h2>, 1 = second, etc.)
-    Images get style variants based on section type.
     """
-    if not section_images:
+    h2_pattern = re.compile(r'(<h2[^>]*>.*?</h2>)', re.IGNORECASE | re.DOTALL)
+    parts = h2_pattern.split(body_html)
+    if not parts:
         return body_html
 
     img_map: dict[int, dict] = {}
-    for si in section_images:
-        idx = si.get("section_index")
-        if idx is not None:
-            img_map[idx] = si
+    if section_images:
+        for si in section_images:
+            idx = si.get("section_index")
+            if idx is not None:
+                img_map[idx] = si
 
-    h2_pattern = re.compile(r'(<h2[^>]*>.*?</h2>)', re.IGNORECASE | re.DOTALL)
-    parts = h2_pattern.split(body_html)
-    result: list[str] = [parts[0]] if parts else []
+    result: list[str] = [parts[0]]
 
     for i in range(1, len(parts), 2):
         h2_tag = parts[i]
         content = parts[i + 1] if i + 1 < len(parts) else ""
         section_idx = (i - 1) // 2
-
         result.append(h2_tag)
 
         entry = img_map.get(section_idx)
+
         if entry:
             url = entry.get("image_url", "")
             credit = entry.get("image_credit", "")
-            alt = entry.get("image_alt", "")
+            alt_ = entry.get("image_alt", "")
             w = entry.get("width", 1200)
             h = entry.get("height", 675)
-            # Alternate style: full for even sections, contained for odd
             style_class = "section-image--full" if section_idx % 2 == 0 else "section-image--contained"
             figure_style = "background:var(--color-bg);border:1px solid var(--color-border)"
             f = [
                 f'<figure class="section-image {style_class} my-6 rounded-lg overflow-hidden"',
                 f' style="{figure_style}">',
-                f'<img src="{url}" alt="{alt}" width="{w}" height="{h}"',
+                f'<img src="{url}" alt="{alt_}" width="{w}" height="{h}"',
                 ' loading="lazy" decoding="async"',
                 ' class="w-full h-auto object-cover">',
             ]
@@ -308,10 +313,30 @@ def inject_section_images(body_html: str, section_images: list[dict]) -> str:
                 )
             f.append("</figure>")
             result.append("".join(f))
+        elif article:
+            # Tier 3: generate inline SVG fallback
+            section = {
+                "section_index": section_idx,
+                "heading": strip_html_tag(h2_tag),
+            }
+            try:
+                svg = generate_fallback_svg(section, article)
+                result.append(
+                    f'<figure class="section-image section-image--full section-fallback my-6 rounded-lg overflow-hidden"'
+                    f' style="background:var(--color-bg);border:1px solid var(--color-border)">'
+                    f'{svg}</figure>'
+                )
+            except Exception:
+                pass
 
         result.append(content)
 
     return "".join(result)
+
+
+def strip_html_tag(tag: str) -> str:
+    m = re.search(r'>([^<]+)<', tag)
+    return m.group(1).strip() if m else ""
 
 
 def is_future_post(post) -> bool:
@@ -586,7 +611,8 @@ def main():
         body = re.sub(r'<h2[^>]*>\s*' + re.escape(item.title.strip()) + r'\s*</h2>\s*', '', body, count=1)
         body = sanitize_domain_breakdown(body)
         body = sanitize_text(body, strip_emoji=False)
-        body = inject_section_images(body, item.section_images)
+        body = inject_section_images(body, item.section_images,
+                                       article={"pillar": item.pillar, "title": item.title, "slug": item.slug})
         item.description = sanitize_text(item.description, strip_emoji=False)
         item.body_html = body
 
@@ -687,7 +713,8 @@ def main():
         body = re.sub(r'<h2[^>]*>\s*' + re.escape(item.title.strip()) + r'\s*</h2>\s*', '', body, count=1)
         body = sanitize_domain_breakdown(body)
         body = sanitize_text(body, strip_emoji=True)
-        body = inject_section_images(body, item.section_images)
+        body = inject_section_images(body, item.section_images,
+                                       article={"pillar": item.pillar, "title": item.title, "slug": item.slug})
         item.description = sanitize_text(item.description, strip_emoji=True)
 
         prev_post = research_items[i + 1] if i + 1 < len(research_items) else None

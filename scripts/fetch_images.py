@@ -24,6 +24,8 @@ from typing import Any
 
 import requests
 
+from scripts.visuals import load_manifest, get_manifest_entry
+
 try:
     from PIL import Image
     HAS_PIL = True
@@ -506,11 +508,41 @@ def fetch_section_images(article: dict, force: bool = False) -> list[dict]:
     if not break_sections:
         return article.get("section_images", []) or []
 
+    slug = article.get("slug", "")
+
+    # Tier 1 — Editorial Manifest (highest priority)
+    manifest_entries = get_manifest_entry(slug)
+    if manifest_entries:
+        manifest_results = []
+        for me in manifest_entries:
+            idx = me.get("section_index")
+            section = next((s for s in break_sections if s["section_index"] == idx), None)
+            if not section:
+                continue
+            dest = IMAGES_DIR / f"manifest_{slug.replace('/', '_')}_s{idx}"
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            ok, ext, w, h, size = download_image(me["image_url"], dest)
+            if ok:
+                rel_path = f"/static/images/generated/manifest_{slug.replace('/', '_')}_s{idx}{ext}"
+                manifest_results.append({
+                    "section_index": idx,
+                    "heading": section["heading"],
+                    "image_url": rel_path,
+                    "image_credit": me.get("image_credit", ""),
+                    "image_alt": me.get("image_alt", ""),
+                    "relevance_score": 100.0,
+                    "source_api": "manifest",
+                    "width": w,
+                    "height": h,
+                    "content_hash": hashlib.sha256(section.get("text_content", "").encode()).hexdigest()[:16],
+                })
+        if manifest_results:
+            return manifest_results
+
     existing = {s.get("section_index") for s in (article.get("section_images", []) or [])}
     if not force and existing >= {s["section_index"] for s in break_sections}:
         return article["section_images"]
 
-    slug = article.get("slug", "")
     pillar = article.get("pillar", "")
     results: list[dict] = []
     used_urls: set[str] = set()

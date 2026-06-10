@@ -508,6 +508,18 @@ img[loading="lazy"] { background: var(--color-border); }
   }
 }
 
+/* Tier 3: SVG fallback images when no photo is available */
+.section-fallback svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 0.5rem;
+  max-height: 400px;
+}
+.prose .section-fallback {
+  margin: 1.5rem 0;
+}
+
 /* Horizontal rules as subtle section breaks */
 .prose hr {
   border: none;
