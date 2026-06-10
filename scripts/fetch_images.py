@@ -617,6 +617,8 @@ def generate_ai_illustration(prompt: str, dest: Path) -> tuple[bool, str, int, i
 
 # ── Global dedup: track images used across all articles ──────────────
 _GLOBAL_USED_URLS: set[str] = set()
+_GLOBAL_USED_CREATORS: dict[str, int] = {}  # creator -> count
+MAX_IMAGES_PER_CREATOR = 5  # max images from same photographer across site
 
 
 def score_result(result: dict, query_terms: set[str]) -> float:
@@ -846,7 +848,13 @@ def fetch_section_images(article: dict, force: bool = False) -> list[dict]:
                     for c in candidates:
                         url = c.get("url", "")
                         creator = c.get("creator", "").lower()[:30] if c.get("creator") else ""
-                        if url in used_urls or url in _GLOBAL_USED_URLS or creator in used_creators:
+                        if url in used_urls or url in _GLOBAL_USED_URLS:
+                            continue
+                        if creator in used_creators:
+                            continue
+                        # Global creator limit — prevent one photographer dominating
+                        creator_key = creator[:20] if creator else ""
+                        if creator_key and _GLOBAL_USED_CREATORS.get(creator_key, 0) >= MAX_IMAGES_PER_CREATOR:
                             continue
                         score = score_result(c, query_terms)
                         if score > best_score:
@@ -926,6 +934,10 @@ def fetch_section_images(article: dict, force: bool = False) -> list[dict]:
         used_urls.add(rel_path)
         _GLOBAL_USED_URLS.add(rel_path)
         used_creators.add(best.get("creator", "").lower()[:30] if best.get("creator") else "")
+        # Track global creator count
+        ck = (best.get("creator", "") or "")[:20].lower()
+        if ck:
+            _GLOBAL_USED_CREATORS[ck] = _GLOBAL_USED_CREATORS.get(ck, 0) + 1
 
     return results
 

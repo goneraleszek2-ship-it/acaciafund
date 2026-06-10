@@ -1,18 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 192" width="192" height="192">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
   <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0f172a"/>
-      <stop offset="100%" stop-color="#1e293b"/>
-    </linearGradient>
-    <linearGradient id="ac" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#d97706"/>
-      <stop offset="100%" stop-color="#f59e0b"/>
+    <linearGradient id="fg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#c97d3e"/>
+      <stop offset="100%" stop-color="#fbbf24"/>
     </linearGradient>
   </defs>
-  <rect width="192" height="192" rx="24" fill="url(#bg)"/>
-  <g transform="translate(56, 28)">
-    <path d="M40 128 L40 72 Q40 60 36 56" stroke="#d97706" stroke-width="3" fill="none" stroke-linecap="round"/>
-    <path d="M40 128 L40 72 Q40 60 44 56" stroke="#d97706" stroke-width="3" fill="none" stroke-linecap="round"/>
-    <path d="M4 60 Q16 12 40 4 Q64 12 76 60" fill="url(#ac)" opacity="0.95"/>
-  </g>
+  <rect width="32" height="32" rx="6" fill="#1a1a2e"/>
+  <!-- Leaf -->
+  <path d="M16 4L9 14h14L16 4z" fill="url(#fg)" opacity="0.9"/>
+  <path d="M12 7L6 17h12L12 7z" fill="#c97d3e" opacity="0.6"/>
+  <path d="M20 7L14 17h12L20 7z" fill="#fbbf24" opacity="0.5"/>
+  <!-- Stem + nodes -->
+  <line x1="16" y1="17" x2="16" y2="23" stroke="#c97d3e" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="16" cy="25" r="2" fill="#c97d3e"/>
+  <circle cx="11" cy="29" r="1.5" fill="#fbbf24"/>
+  <circle cx="21" cy="29" r="1.5" fill="#fbbf24"/>
+  <line x1="16" y1="25" x2="11" y2="29" stroke="#c97d3e" stroke-width="0.8" opacity="0.7"/>
+  <line x1="16" y1="25" x2="21" y2="29" stroke="#c97d3e" stroke-width="0.8" opacity="0.7"/>
 </svg>
