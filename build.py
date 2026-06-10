@@ -301,18 +301,26 @@ def sanitize_domain_breakdown(html: str) -> str:
 
 
 def resolve_featured_image(raw_path: str) -> str:
-    """Resolve featured_image path to absolute URL, falling back to _s1 variant."""
+    """Resolve featured_image path to absolute URL, trying multiple extensions."""
     if not raw_path:
         return ""
     p = Path(PROJECT_ROOT / raw_path.lstrip("/"))
+    # Try original path
     if p.exists():
         return f"{SITE_URL}{raw_path}" if raw_path.startswith("/") else f"{SITE_URL}/{raw_path}"
+    # Try alternate extensions: .webp, .png, .jpg, .jpeg
     stem = p.stem
-    suffix = p.suffix
-    s1_path = p.parent / f"{stem}_s1{suffix}"
-    if s1_path.exists():
-        resolved = raw_path.rsplit("/", 1)[0] + "/" + s1_path.name
-        return f"{SITE_URL}{resolved}" if resolved.startswith("/") else f"{SITE_URL}/{resolved}"
+    for ext in (".webp", ".png", ".jpg", ".jpeg"):
+        alt = p.parent / f"{stem}{ext}"
+        if alt.exists():
+            resolved = raw_path.rsplit("/", 1)[0] + "/" + alt.name
+            return f"{SITE_URL}{resolved}" if resolved.startswith("/") else f"{SITE_URL}/{resolved}"
+    # Try _s1 variant with extensions
+    for ext in (".webp", ".png", ".jpg", ".jpeg"):
+        s1_path = p.parent / f"{stem}_s1{ext}"
+        if s1_path.exists():
+            resolved = raw_path.rsplit("/", 1)[0] + "/" + s1_path.name
+            return f"{SITE_URL}{resolved}" if resolved.startswith("/") else f"{SITE_URL}/{resolved}"
     return ""
 
 
