@@ -881,6 +881,25 @@ def fetch_section_images(article: dict, force: bool = False) -> list[dict]:
         dest.parent.mkdir(parents=True, exist_ok=True)
         ok, ext, w, h, size = download_image(best["url"], dest)
         if not ok:
+            # Download failed — try AI fallback
+            ai_prompt = f"{query} professional illustration wide format"
+            ok2, ext2, w2, h2, size2 = generate_ai_illustration(ai_prompt, dest)
+            if ok2:
+                rel_path = f"/static/images/generated/{slug}_s{idx}{ext2}"
+                results.append({
+                    "section_index": idx,
+                    "heading": section["heading"],
+                    "image_url": rel_path,
+                    "image_credit": "AI-generated via Pollinations.ai (MIT)",
+                    "image_alt": generate_alt_text(section),
+                    "relevance_score": 50.0,
+                    "source_api": "ai_generated",
+                    "width": w2,
+                    "height": h2,
+                    "content_hash": hashlib.sha256(section.get("text_content", "").encode()).hexdigest()[:16],
+                })
+                used_urls.add(rel_path)
+                _GLOBAL_USED_URLS.add(rel_path)
             continue
 
         rel_path = f"/static/images/generated/{slug}_s{idx}{ext}"
