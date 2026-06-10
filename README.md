@@ -10,7 +10,7 @@
 
 Automated research synthesis platform — a **DataOps pipeline** that ingests, transforms, quality-gates, and serves content as a static data product.
 
-HackerNews + arXiv → deterministic classification (Bloom taxonomy) → quality metrics (SQI) → Python-native static generator → warm, accessible, dark-mode-capable site with 33 research articles, 15 learn lessons (+ hub), and 10 knowledge references.
+HackerNews + arXiv → deterministic classification (Bloom taxonomy) → quality metrics (SQI) → Python-native static generator → warm, accessible, dark-mode-capable site with 56 research articles, 16 learn lessons, and 12 knowledge references.
 
 **Site:** https://www.acaciafund.org
 
@@ -61,7 +61,7 @@ AcaciaFund applies **DataOps principles** across its entire content lifecycle �
 │  • SQI per article (0–1)    • Source diversity score    │
 │  • Quality flags            • Cross-pillar connections  │
 │  • Source breakdown (HN/arXiv/PubMed)                   │
-│  • Build output: 60+ pages, validated                   │
+│  • Build output: 332 pages, validated                   │
 └────────────────────────────────────────────────────────┘
 ```
 
@@ -81,6 +81,18 @@ AcaciaFund applies **DataOps principles** across its entire content lifecycle �
 
 ## Features
 
+### 3-Layer Visual Identity System
+- **Research (gold)** — SQI-leading cards with left-column SQI scores and source badges, gold layer indicator bar, gold nav active state, gold-bordered card layout
+- **Learn (teal)** — Bloom taxonomy path visual (L1 Remember → L6 Create) with data-driven node completion, teal indicator bar, teal nav active state
+- **Knowledge (blue)** — Search-enhanced category card grid (Platform/Guides/Reference/Architecture), blue indicator bar, blue nav active state
+- Persistent layer indicator bar on every page (icon + label + contextual sub-text showing pillar/bloom/category)
+- Per-layer CSS tokens with light/dark mode support
+
+### 3-Tier Image Management System
+- **Tier 1 (Editorial)** — `core/images/manifest.json` maps article slugs to hand-picked images; edit as JSON, no Python needed
+- **Tier 2 (Auto-fetch)** — Openverse / Wikimedia / NASA / Library of Congress API backends with keyword scoring
+- **Tier 3 (SVG Fallback)** — Pillar-colored inline SVGs with section-type icons; zero network, zero storage, 100% coverage invariant
+
 ### Reading Experience
 - Sticky table of contents with active-heading highlighting
 - Reading progress bar (fixed 3px at viewport top)
@@ -98,16 +110,16 @@ AcaciaFund applies **DataOps principles** across its entire content lifecycle �
 ### Content Taxonomy (DataOps-aligned)
 | Type | Count | Description |
 |------|-------|-------------|
-| Research | 33 | Bloom-classified articles with SQI, signals, flashcards, charts |
-| Learn | 16 | 15 structured lessons + hub index — flashcards (CSS 3D flip), quizzes (Bloom taxonomy), progress tracking, spaced repetition |
-| Knowledge | 10 | Reference pages: glossary, tools landscape, system architecture, DataOps |
+| Research | 56 | Bloom-classified articles with SQI, signals, flashcards, charts |
+| Learn | 16 | Structured lessons + hub index — flashcards (CSS 3D flip), quizzes (Bloom taxonomy), progress tracking, spaced repetition |
+| Knowledge | 12 | Reference pages: platform info, guides, glossaries, system architecture |
 
 ### Pillar Coverage
-| Pillar | Label | Badge Color | Research Articles | Learn Lessons |
-|--------|-------|-------------|-------------------|---------------|
-| AML | Shield | Amber | 11 | 5 |
-| Markets | Chart | Green | 10 | 6 |
-| Science | Microscope | Purple | 12 | 4 |
+| Pillar | Research | Learn | Topics |
+|--------|----------|-------|--------|
+| Data Engineering | 27 | 4 | Orchestration, quality, streaming, lakehouse, analytics, data mesh |
+| Markets | 21 | 7 | Semiconductors, AI industry, manufacturing, EV, quantum, finance |
+| AML | 7 | 4 | Financial crime, compliance, regulation, crypto, DeFi, sanctions |
 
 ### Per-Article Content (Research)
 - Bloom Taxonomy questions with colored level badges
@@ -126,11 +138,9 @@ AcaciaFund applies **DataOps principles** across its entire content lifecycle �
 - `prefers-reduced-motion` disables all animations
 - Proper heading hierarchy (H1 → H2 → H3)
 - Breadcrumbs with `aria-label` and `aria-current="page"`
-- Accessible dropdown (`aria-expanded`, `aria-haspopup`, Escape key, click-outside)
 
 ### Navigation & UI
-- Fixed full-viewport mobile drawer with backdrop — never overlaps content
-- Accessible dropdown (`aria-expanded`, `aria-haspopup`, Escape key, click-outside)
+- Fixed full-viewport mobile drawer with native `<dialog>` element (focus trap, Escape key)
 - Client-side search with vanilla JS fuzzy scoring (title > tag > description priority)
 - "Surprise Me" button — picks random article from index on click
 - Custom 404 page with deterministic article suggestions (hash-stable per build)
@@ -138,7 +148,9 @@ AcaciaFund applies **DataOps principles** across its entire content lifecycle �
 ### Interactive Content
 - CSS 3D flip flashcards (term → definition with tap/reveal animation)
 - Accordion key concepts (click-to-expand with animated chevron in learn lessons)
-- Metadata icons (clock SVG for reading time, calendar SVG for dates)
+- Bloom taxonomy quiz engine with SM-2 spaced repetition scoring
+- "Mark Complete" progress tracking (localStorage)
+- Spaced repetition review scheduling
 
 ### Charts & Visuals
 - Zero-JS static charts (donut, radar, heatmap, bloom, source bar) — 2x2 grid layout
@@ -160,10 +172,10 @@ AcaciaFund applies **DataOps principles** across its entire content lifecycle �
 ### Core Pipeline
 - **Python 3.13** — generator + visual engine
 - **Pydantic** — schema validation (`schemas.py`)
-- **Jinja2** — 11 templates (`layout.j2`, `blog_post.j2`, `pillar_index.j2`, `index.j2`, `category_index.j2`, `learn.j2`, `learn_index.j2`, `knowledge.j2`, `knowledge_index.j2`, `search.j2`, `404.j2`)
+- **Jinja2** — 13 templates (layout, blog_post, pillar_index, index, category_index, learn, learn_index, knowledge, knowledge_index, search, 404, aml_signals, tag_index)
 - **Markdown2** — Markdown → HTML rendering
 - **Tailwind CSS 3.4.19** — utility classes (self-hosted)
-- **Custom CSS** — `static/css/custom.css` (flashcard flip, accordion, mobile drawer, TOC, focus mode, dark mode)
+- **Custom CSS** — `static/css/custom.css` (~1095 lines: layer system, flashcard flip, accordion, mobile dialog, TOC, focus mode, dark mode, Bloom path, knowledge hub)
 - **Inter** — self-hosted font (3 WOFF2 files)
 - **Cloudflare Pages** — static hosting
 
@@ -172,6 +184,11 @@ AcaciaFund applies **DataOps principles** across its entire content lifecycle �
 - **Chart engine** — 6 functions (donut, radar, heatmap, bloom, source bar, scaffold) with WCAG AA contrast
 - **Topic-aware overlays** — PILLAR_PALETTES, TOPIC_ICONS, keyword tags per article
 
+### Image Management (`core/images/`)
+- **Manifest** — `manifest.json` editorial overrides (Tier 1)
+- **Auto-fetch** — `scripts/fetch_images.py` queries 4 API backends (Tier 2)
+- **Fallback SVGs** — `templates.py` pillar-colored inline SVGs (Tier 3)
+
 ### Service Layer
 - **FastAPI** (Python 3.11) — `services/api/`
 - **Docker** — containerized deployment
@@ -179,18 +196,10 @@ AcaciaFund applies **DataOps principles** across its entire content lifecycle �
 - **SQLite** — progress tracking storage
 - **GitHub Actions** — API deployment workflow
 
-### Data Sources for Daily Article Discovery
-- **HackerNews** (news.ycombinator.com) — tech/business/science current events
-- **arXiv** (arxiv.org) — academic preprints across all domains
-- **KDnuggets** — data science and ML news
-- **Daily Dose of Data Science** — daily DS/ML engineering insights
-- **DataOps Labs (Substack)** — DataOps, AI/ML, cloud DevOps
-- **Pipeline To Insights** — data engineering interview prep and practices
-- **Airbyte Blog** — data integration and DataOps best practices
-- **Astronomer Blog** — Airflow and data pipeline orchestration
-- **GigaOm** — data infrastructure research
-- **Data Stack Hub** — open source data tool comparisons
-- **Awesome DataOps / Awesome Open Source Data Engineering** — curated GitHub tool lists
+### CI/CD Workflows
+- `.github/workflows/deploy-pages.yml` — Build + test + deploy to Cloudflare Pages on push to `main`
+- `.github/workflows/ingest.yml` — Daily scheduled content ingestion (06:00 UTC)
+- `.github/workflows/deploy-api.yml` — Deploy FastAPI service to Railway
 
 ---
 
@@ -199,7 +208,7 @@ AcaciaFund applies **DataOps principles** across its entire content lifecycle �
 ```bash
 git clone https://github.com/goneraleszek2-ship-it/acaciafund.git
 cd acaciafund
-pip install markdown2 pydantic jinja2
+pip install markdown2 pydantic jinja2 requests Pillow
 python3.13 build.py
 python3 -m http.server 8000 --dir dist
 ```
@@ -209,7 +218,7 @@ Then open http://localhost:8000.
 ### Regenerate Everything
 
 ```bash
-python3.13 build.py          # Rebuild all 233 pages, fractal thumbnails, OG images, search index, feed
+python3.13 build.py          # Rebuild all 332 pages, fractal thumbnails, OG images, search index, feed
 ```
 
 ---
@@ -218,47 +227,68 @@ python3.13 build.py          # Rebuild all 233 pages, fractal thumbnails, OG ima
 
 ```
 ├── config.py                   # Single source of truth: SITE_URL, paths, env config
-├── build.py                    # Main build script (Jinja2 → 233 HTML pages)
+├── build.py                    # Main build script (Jinja2 → 332 HTML pages)
 ├── schemas.py                  # Pydantic models (AcaciaContent, RegistryData)
-├── registry.json               # Content registry (data catalog — 59 entries)
+├── registry.json               # Content registry (data catalog — 84 entries)
 ├── core/
 │   ├── visuals.py              # Visual engine: fractal (7 types), chart (6 functions), topic overlays
 │   └── images/                 # 3-tier visual management: manifest, auto-fetch, SVG fallback
-├── seed_articles.py            # Article seeding (legacy thumbnail generator)
-├── seed_dataops.py             # DataOps/Engineering article seeder
+│       ├── manifest.py
+│       ├── manifest.json
+│       └── templates.py
+├── scripts/
+│   ├── fetch_images.py         # Tier 2 auto-fetch (4 API backends)
+│   ├── preflight.py            # Deployment preflight checks
+│   ├── create_diagrams_page.py # System architecture knowledge page
+│   └── migrate_posts_to_bundles.py
+├── seed_learn.py               # Learn article seed data (pillars, difficulty, prerequisites)
+├── seed_articles.py            # Legacy article seeding (superseded)
+├── seed_dataops.py             # DataOps article seeder
 ├── migrate_categories.py       # Content type migration scripts
-├── templates/                  # Jinja2 templates (11 total)
-│   ├── layout.j2               # Base layout: nav, dark mode, mobile drawer, footer
+├── templates/                  # Jinja2 templates (13 + 4 macros + 4 partials)
+│   ├── layout.j2               # Base layout: sticky header, layer indicator, nav, mobile dialog, footer
 │   ├── blog_post.j2            # Research: TOC, progress bar, 2x2 charts, flip flashcards
-│   ├── index.j2                # Homepage: featured, 2x2 CTA grid, learn/knowledge cards
+│   ├── index.j2                # Homepage: featured, hero, learn/knowledge cards
 │   ├── category_index.j2       # Category listing (research/learn/knowledge)
-│   ├── pillar_index.j2         # Pillar pages (AML/Markets/Science)
+│   ├── pillar_index.j2         # Pillar pages (AML/Markets/Data Engineering)
 │   ├── learn.j2                # Learn lesson: quizzes (Bloom), flashcards (3D flip), progress
-│   ├── learn_index.j2          # Learn index: difficulty-grouped, pillar progress bars, review due
+│   ├── learn_index.j2          # Learn index: Bloom path, difficulty-grouped, pillar progress bars
 │   ├── knowledge.j2            # Knowledge article: category badge, cross-references
-│   ├── knowledge_index.j2      # Knowledge index: grouped by sub-category
+│   ├── knowledge_index.j2      # Knowledge index: search bar, category card grid
 │   ├── search.j2               # Search: input + JSON index + vanilla JS scoring
-│   └── 404.j2                  # Custom 404: deterministic suggestions
+│   ├── 404.j2                  # Custom 404: deterministic suggestions
+│   ├── aml_signals.j2          # AML Signals Dashboard
+│   ├── tag_index.j2            # Tag archive listing
+│   ├── icons/                  # Pillar SVG icons (shield, line-chart, cog)
+│   ├── macros/                 # Reusable macros (breadcrumbs, pillar_badge, sqi_chip, card)
+│   └── partials/               # Reusable partials (article_image, newsletter, search_palette, hero)
 ├── static/
 │   ├── css/
-│   │   ├── custom.css          # Custom styles (colors, dark mode, flashcard flip, mobile drawer, TOC)
-│   │   └── tailwind.min.css    # Tailwind utility classes (28KB)
+│   │   ├── custom.css          # ~1095 lines: CSS vars, layer system, dark mode, flashcard flip
+│   │   └── tailwind.min.css    # Tailwind 3.4.19 (28KB, local)
 │   ├── js/
 │   │   └── search.js           # Client-side search (vanilla JS, fuzzy scoring)
 │   └── fonts/
 │       └── Inter-*.woff2       # Self-hosted font files
-├── content/                     # Source markdown for static pages
-├── services/api/                # FastAPI service (Railway-deployed)
 ├── tests/
-│   └── astro_smoke.py           # Build output smoke tests
-├── dist/                        # Generated output (233 pages, gitignored)
+│   ├── test_core.py            # Core pipeline tests (779 lines)
+│   ├── test_images.py          # 3-tier image system tests (213 lines)
+│   ├── test_build_meta.py      # Build metadata tests
+│   ├── test_live.py            # Generated output smoke tests
+│   ├── test_metadata.py        # Registry and manifest tests
+│   └── test_gac.py             # GAC component tests
+├── dist/                       # Generated output (332 pages, gitignored)
 ├── .github/workflows/
-│   └── deploy-api.yml           # Railway API deployment
-├── railway.json                 # Railway config
-├── wrangler.toml                # Cloudflare Pages build config
-├── SITE-STATE.md                # Full feature inventory
-├── UX-PLAN.md                   # UX evolution roadmap
-└── ARCHITECTURE.md              # Architecture blueprint
+│   ├── deploy-pages.yml        # Cloudflare Pages deploy (build + test + deploy)
+│   ├── ingest.yml              # Daily scheduled ingestion pipeline
+│   └── deploy-api.yml          # Railway API deployment
+├── services/api/               # FastAPI service (Railway-deployed)
+├── app/                        # Legacy compatibility shim
+├── railway.json                # Railway config
+├── wrangler.toml               # Cloudflare Pages build config
+├── SITE-STATE.md               # Full feature inventory
+├── ARCHITECTURE.md             # Architecture blueprint
+└── README.md                   # This file
 ```
 
 ---
