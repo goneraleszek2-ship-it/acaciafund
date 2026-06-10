@@ -588,6 +588,7 @@ def main():
     print("  category: knowledge/index.html")
 
     # --- LEARN PAGES ---
+    BLOOM_ORDER = {"remember": 1, "understand": 2, "apply": 3, "analyze": 4, "evaluate": 5, "create": 6}
     # Apply curated relations and prerequisites from seed_learn.py
     for item in learn_items:
         slug = item.slug
@@ -595,6 +596,19 @@ def main():
             item.curated_relations = CURATED_RELATIONS[slug]
         if slug in LEARN_PREREQUISITES:
             item.prerequisites = LEARN_PREREQUISITES[slug]
+
+    # Compute highest Bloom level from bloom_questions (must be done before article rendering)
+    for l_item in learn_items:
+        if l_item.bloom_questions:
+            max_lvl = 0
+            for q in l_item.bloom_questions:
+                bl = q.get("bloom_level", "")
+                lvl = BLOOM_ORDER.get(bl, 0)
+                if lvl > max_lvl:
+                    max_lvl = lvl
+            l_item.highest_bloom = max_lvl
+        else:
+            l_item.highest_bloom = 0
 
     learn_lessons = sorted(
         [li for li in learn_items if li.slug != "learn"],
@@ -687,21 +701,9 @@ def main():
     learn_dir = OUTPUT_DIR / "learn"
     learn_dir.mkdir(parents=True, exist_ok=True)
     learn_grouped: dict[str, list] = defaultdict(list)
-    BLOOM_ORDER = {"remember": 1, "understand": 2, "apply": 3, "analyze": 4, "evaluate": 5, "create": 6}
     for l_item in learn_items:
         diff = l_item.difficulty or "beginner"
         learn_grouped[diff.capitalize()].append(l_item)
-        # Compute highest Bloom level from bloom_questions
-        if l_item.bloom_questions:
-            max_lvl = 0
-            for q in l_item.bloom_questions:
-                bl = q.get("bloom_level", "")
-                lvl = BLOOM_ORDER.get(bl, 0)
-                if lvl > max_lvl:
-                    max_lvl = lvl
-            l_item.highest_bloom = max_lvl
-        else:
-            l_item.highest_bloom = 0
     for g in learn_grouped.values():
         g.sort(key=lambda x: x.title or "")
     bloom_first_articles: dict[int, str] = {}
