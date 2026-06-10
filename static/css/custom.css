@@ -1041,6 +1041,8 @@ svg:not([class*="w-"]):not([class*="h-"]) {
 }
 .bloom-cta:hover { background: var(--layer-learn-accent); color: var(--layer-learn-body); }
 .bloom-soon { font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 0.5625rem; color: var(--color-text-muted); }
+.bloom-complete-link { font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 0.5625rem; color: var(--color-text-muted); text-decoration: none; }
+.bloom-complete-link:hover { color: var(--layer-learn-accent); text-decoration: underline; }
 
 /* Knowledge hub redesign */
 .kb-search {

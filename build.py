@@ -491,6 +491,8 @@ def main():
 
     pillar_groups = group_by_pillar(research_items)
 
+    BLOOM_NAMES = {1: "Remember", 2: "Understand", 3: "Apply", 4: "Analyse", 5: "Evaluate", 6: "Create"}
+
     ctx_base = {
         "build_hash": build_hash,
         "year": year,
@@ -538,6 +540,7 @@ def main():
         thumb_base = f"{SITE_URL}/static/images"
         og_image_url = f"{SITE_URL}/static/images/og_{og_key}.svg"
 
+        layer_sub = item.knowledge_category.replace("_", " ").title() if item.knowledge_category else item.pillar or ""
         html = render_template("knowledge.j2",
             content=item, page_path=page_path,
             toc_items=toc_items, kcat=kcat,
@@ -547,7 +550,7 @@ def main():
             thumbnail_base=thumb_base, thumbnail_key=thumbnail_key,
             og_image_url=og_image_url,
             is_index=False, page_type="knowledge", layer="knowledge",
-            layer_icon=LAYER_ICONS["knowledge"], **ctx_base)
+            layer_icon=LAYER_ICONS["knowledge"], layer_sub=layer_sub, **ctx_base)
         out_file.write_text(html, encoding="utf-8")
         print(f"  knowledge: {out_file.relative_to(OUTPUT_DIR)}")
 
@@ -652,6 +655,8 @@ def main():
             if quiz_data["questions"]:
                 quiz_json = json.dumps(quiz_data, ensure_ascii=False)
 
+        bl_name = BLOOM_NAMES.get(item.highest_bloom or 0, "")
+        layer_sub = f"Level {item.highest_bloom}: {bl_name}" if bl_name else ""
         html = render_template("learn.j2",
             content=item, page_path=page_path,
             toc_items=toc_items, pconf=pconf,
@@ -664,7 +669,7 @@ def main():
             featured_image=item.featured_image,
             image_credit=item.image_credit,
             is_index=False, layer="learn",
-            layer_icon=LAYER_ICONS["learn"], **ctx_base)
+            layer_icon=LAYER_ICONS["learn"], layer_sub=layer_sub, **ctx_base)
         out_file.write_text(html, encoding="utf-8")
         print(f"  learn: {out_file.relative_to(OUTPUT_DIR)}")
 
@@ -699,6 +704,11 @@ def main():
             l_item.highest_bloom = 0
     for g in learn_grouped.values():
         g.sort(key=lambda x: x.title or "")
+    bloom_first_articles: dict[int, str] = {}
+    for l_item in learn_items:
+        bl = l_item.highest_bloom or 0
+        if bl > 0 and bl not in bloom_first_articles:
+            bloom_first_articles[bl] = l_item.slug
     thumb_base = f"{SITE_URL}/static/images"
     html = render_template("learn_index.j2",
         content=_dummy("Learning Hub", "learn",
@@ -708,6 +718,7 @@ def main():
         page_title="Learning Hub",
         is_index=False, page_path="learn/",
         layer="learn", layer_icon=LAYER_ICONS["learn"],
+        bloom_first_articles=bloom_first_articles,
         **ctx_base)
     (learn_dir / "index.html").write_text(html, encoding="utf-8")
     print("  category: learn/index.html")
@@ -757,7 +768,7 @@ def main():
             visual_fingerprint=visual_fingerprint, layer_badge=layer_badge,
             featured_image=item.featured_image,
             image_credit=item.image_credit,
-            **ctx_base)
+            layer_sub=pconf["label"], **ctx_base)
         out_file.write_text(html, encoding="utf-8")
         print(f"  research: {out_file.relative_to(OUTPUT_DIR)}")
 
@@ -801,6 +812,7 @@ def main():
             pillar=pillar, pconf=pconf,
             posts=p_posts, is_index=False, page_path=f"{pillar}/",
             page_title=pconf["heading"],
+            layer_sub=pconf["label"],
             thumbnail_base=f"{SITE_URL}/static/images", thumbnail_key=thumbnail_key, **ctx_base)
         (out_dir / "index.html").write_text(html, encoding="utf-8")
         print(f"  pillar: {pillar}/index.html")

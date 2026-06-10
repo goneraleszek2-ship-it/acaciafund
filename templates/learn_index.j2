@@ -72,11 +72,11 @@
         <span class="bloom-count">{{ level.articles }} lessons</span>
       </div>
       {%- if is_current %}
-      <a href="/learn/?bloom={{ level.num }}" class="bloom-cta">Start →</a>
+      <a href="/{{ bloom_first_articles.get(level.num, '#') }}/" class="bloom-cta">Start →</a>
       {%- elif not is_done %}
       <span class="bloom-soon">Coming soon</span>
       {%- else %}
-      <span class="bloom-soon">✓ Complete</span>
+      <a href="/{{ bloom_first_articles.get(level.num, '#') }}/" class="bloom-soon bloom-complete-link">✓ {{ level.articles }} lessons</a>
       {%- endif %}
     </div>
     {%- endfor %}

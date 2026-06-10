@@ -1,6 +1,5 @@
 {% extends "layout.j2" %}
 {% from "macros/pillar_badge.html" import pillar_badge %}
-{% from "macros/sqi_chip.html" import sqi_chip %}
 {% from "macros/breadcrumbs.html" import breadcrumbs %}
 {% block main_content %}
 <section>
@@ -14,9 +13,9 @@
 
   <div class="mb-8">
     {{ pillar_badge(pillar) }}
-    <h1 class="text-3xl font-extrabold text-gray-900 mt-2">{{ pconf.heading }}</h1>
-    <p class="mt-2 text-gray-600">{{ pconf.description }}</p>
-    <p class="mt-1 text-sm text-gray-400">{{ posts | length }} posts</p>
+    <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">{{ pconf.heading }}</h1>
+    <p class="mt-2 text-sm" style="color:var(--color-text-secondary)">{{ pconf.description }}</p>
+    <p class="mt-1 text-sm" style="color:var(--color-text-muted)">{{ posts | length }} posts</p>
     {%- if pillar == "aml" %}
     <a href="/aml/signals/" class="inline-flex items-center gap-1.5 mt-2 px-3 py-1.5 text-xs font-medium rounded transition hover:opacity-80" style="background:rgba(217,119,6,0.1);color:#d97706;border:1px solid rgba(217,119,6,0.2)">
       🛡️ Signals Dashboard →
@@ -24,46 +23,43 @@
     {%- endif %}
   </div>
 
-  <div class="space-y-4">
+  <div class="flex flex-col gap-2">
     {%- for post in posts %}
-    {%- set tkey = thumbnail_key(post.title) %}
-    <article class="flex gap-4 rounded-lg p-4 transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);border-left:3px solid var(--color-{{ pillar }})">
-      <div class="shrink-0 w-28 h-20 rounded-md overflow-hidden bg-gray-800 hidden sm:block">
-        <img src="{{ thumbnail_base }}/thumb_{{ tkey }}.svg" alt="" width="600" height="340" class="w-full h-full object-cover" loading="lazy">
+    {%- set sqi = (post.signals.get("avg_sqi", 0.0) | float) if post.signals else 0.0 %}
+    {%- set source_breakdown = post.source_breakdown or {} %}
+    {%- set pillar_color = pillar_config.get(pillar, {}).get("color", "#6366f1") %}
+    {%- set pillar_icon = pillar_emojis.get(pillar, "") %}
+    {%- set risk_count = post.quality_flags | length if post.quality_flags else 0 %}
+    <a href="/{{ post.slug }}/" class="card-research" style="text-decoration:none">
+      <div class="card-research-left">
+        <span class="card-research-sqi">{{ "%.2f"|format(sqi) }}</span>
+        <span class="card-research-sqi-label">SQI</span>
+        {%- for src, count in source_breakdown.items() if count > 0 %}
+        {%- set src_class = "src-hn" if src == "hn" or src == "hackernews" else "src-ar" if src == "arxiv" or src == "ar" else "src-pu" %}
+        <span class="card-research-source {{ src_class }}">{{ src[:2].upper() }}</span>
+        {%- endfor %}
       </div>
-      <div class="min-w-0 flex-1">
-        <div class="flex items-start justify-between gap-4">
-          <div class="min-w-0">
-            <h2 class="text-lg font-semibold leading-snug" style="color:var(--color-text)">
-              <a href="/{{ post.slug }}/" class="hover:text-blue-600 transition">{{ post.title | striptags }}</a>
-            </h2>
-            {%- if post.description %}
-            <p class="mt-1 text-sm" style="color:var(--color-text-secondary)">{{ post.description[:200] }}</p>
+      <div class="card-research-body">
+        <div class="card-research-meta">
+          <span class="card-research-pillar" style="color:{{ pillar_color }}">{{ pillar_icon }} {{ pconf.label }}</span>
+          <span class="card-research-meta-right">
+            {%- if post.date_str %}
+            <time datetime="{{ post.date_str }}">{{ post.date_str }}</time>
             {%- endif %}
-            <div class="mt-2 flex items-center gap-3 text-xs" style="color:var(--color-text-muted)">
-              {%- if post.date_str %}
-              <time datetime="{{ post.date_str }}">{{ post.date_str }}</time>
-              {%- endif %}
-              {%- if post.body_html %}
-              <span>{{ post.body_html | reading_time }} min</span>
-              {%- endif %}
-              {%- if post.signals and post.signals.get("avg_sqi") is defined %}
-              {{ sqi_chip(post.signals.get("avg_sqi", 0)) }}
-              {%- endif %}
-              {%- if post.source_breakdown %}
-              <span>{{ post.source_breakdown.get("hn", 0) }} HN · {{ post.source_breakdown.get("arxiv", 0) }} arXiv</span>
-              {%- endif %}
-            </div>
-          </div>
-          {%- if post.quality_metrics and post.quality_metrics.get("avg_source_score") is defined %}
-          <div class="hidden sm:flex flex-col items-end gap-1 text-xs" style="color:var(--color-text-muted)">
-            <span>Quality {{ "%.2f"|format(post.quality_metrics.get("avg_source_score", 0)) }}</span>
-            <span>Diversity {{ "%.2f"|format(post.quality_metrics.get("source_diversity", 0)) }}</span>
-          </div>
-          {%- endif %}
+            {%- if post.body_html %}
+            <span>{{ post.body_html | reading_time }} min</span>
+            {%- endif %}
+          </span>
         </div>
+        <h2 class="card-research-title">{{ post.title | striptags }}</h2>
+        {%- if post.description %}
+        <p class="card-research-summary">{{ post.description[:200] }}</p>
+        {%- endif %}
+        {%- if risk_count > 0 %}
+        <div class="card-research-risk">&#9888; {{ risk_count }} quality flag(s)</div>
+        {%- endif %}
       </div>
-    </article>
+    </a>
     {%- endfor %}
   </div>
 </section>
