@@ -299,6 +299,36 @@ def sanitize_domain_breakdown(html: str) -> str:
     return html
 
 
+def resolve_featured_image(raw_path: str) -> str:
+    """Resolve featured_image path to absolute URL, falling back to _s1 variant."""
+    if not raw_path:
+        return ""
+    p = Path(PROJECT_ROOT / raw_path.lstrip("/"))
+    if p.exists():
+        return f"{SITE_URL}{raw_path}" if raw_path.startswith("/") else f"{SITE_URL}/{raw_path}"
+    stem = p.stem
+    suffix = p.suffix
+    s1_path = p.parent / f"{stem}_s1{suffix}"
+    if s1_path.exists():
+        resolved = raw_path.rsplit("/", 1)[0] + "/" + s1_path.name
+        return f"{SITE_URL}{resolved}" if resolved.startswith("/") else f"{SITE_URL}/{resolved}"
+    return ""
+
+
+def resolve_section_image(url: str) -> str:
+    """Resolve section image URL, trying alternate extensions if file missing."""
+    if not url:
+        return ""
+    p = Path(PROJECT_ROOT / url.lstrip("/"))
+    if p.exists():
+        return url
+    for ext in (".webp", ".png", ".jpg", ".jpeg"):
+        alt = p.with_suffix(ext)
+        if alt.exists():
+            return url.rsplit(".", 1)[0] + ext
+    return ""
+
+
 def inject_section_images(body_html: str, section_images: list[dict],
                            article: dict | None = None) -> str:
     """Insert section-level images into body_html after matching <h2> headings.
@@ -332,7 +362,25 @@ def inject_section_images(body_html: str, section_images: list[dict],
         entry = img_map.get(section_idx)
 
         if entry:
-            url = entry.get("image_url", "")
+            url = resolve_section_image(entry.get("image_url", ""))
+            credit = entry.get("image_credit", "")
+            alt_ = entry.get("image_alt", "")
+            w = entry.get("width", 1200)
+            h = entry.get("height", 675)
+            if not url:
+                if article:
+                    section = {"section_index": section_idx, "heading": strip_html_tag(h2_tag)}
+                    try:
+                        svg = generate_fallback_svg(section, article)
+                        result.append(
+                            f'<figure class="section-image section-image--full section-fallback my-6 rounded-lg overflow-hidden"'
+                            f' style="background:var(--color-bg);border:1px solid var(--color-border)">'
+                            f'{svg}</figure>'
+                        )
+                    except Exception:
+                        pass
+                result.append(content)
+                continue
             credit = entry.get("image_credit", "")
             alt_ = entry.get("image_alt", "")
             w = entry.get("width", 1200)
@@ -600,10 +648,8 @@ def main():
         out_static.mkdir(parents=True, exist_ok=True)
         pillar_k = item.pillar or "aml"
         scores_k = {"sqi": SQI_DEFAULT}
-        feat_raw_k = item.featured_image or ""
-        feat_exists_k = feat_raw_k and Path(PROJECT_ROOT / feat_raw_k.lstrip("/")).exists()
-        feat_k = feat_raw_k if feat_exists_k else ""
-        icons_k = get_topic_icons(item.tags) if not feat_exists_k else []
+        feat_k = resolve_featured_image(item.featured_image or "")
+        icons_k = get_topic_icons(item.tags) if not feat_k else []
         svg_k = generate_thumbnail_svg(item.title, pillar_k, scores_k, width=600, height=340,
                                        featured_image_url=feat_k, layer="knowledge",
                                        fallback_icons=icons_k)
@@ -729,7 +775,7 @@ def main():
             visual_fingerprint=visual_fingerprint, layer_badge=layer_badge,
             thumbnail_base=thumb_base, thumbnail_key=thumbnail_key,
             og_image_url=og_image_url, quiz_json=quiz_json,
-            featured_image=item.featured_image,
+            featured_image=resolve_section_image(item.featured_image),
             image_credit=item.image_credit,
             is_index=False, layer="learn",
             layer_icon=LAYER_ICONS["learn"], layer_sub=layer_sub, **ctx_base)
@@ -741,10 +787,8 @@ def main():
         out_static.mkdir(parents=True, exist_ok=True)
         pillar_l = item.pillar or "aml"
         scores_l = {"sqi": SQI_DEFAULT}
-        feat_raw_l = item.featured_image or ""
-        feat_exists_l = feat_raw_l and Path(PROJECT_ROOT / feat_raw_l.lstrip("/")).exists()
-        feat_l = feat_raw_l if feat_exists_l else ""
-        icons_l = get_topic_icons(item.tags) if not feat_exists_l else []
+        feat_l = resolve_featured_image(item.featured_image or "")
+        icons_l = get_topic_icons(item.tags) if not feat_l else []
         svg_l = generate_thumbnail_svg(item.title, pillar_l, scores_l, width=600, height=340,
                                        featured_image_url=feat_l, layer="learn",
                                        fallback_icons=icons_l)
@@ -825,7 +869,7 @@ def main():
             toc_items=toc_items, related_posts=related,
             related_learn=related_learn,
             visual_fingerprint=visual_fingerprint, layer_badge=layer_badge,
-            featured_image=item.featured_image,
+            featured_image=resolve_section_image(item.featured_image),
             image_credit=item.image_credit,
             layer_sub=pconf["label"], **ctx_base)
         out_file.write_text(html, encoding="utf-8")
@@ -838,10 +882,8 @@ def main():
         scores_r = item.signals or {"sqi": SQI_DEFAULT}
         if not isinstance(scores_r, dict):
             scores_r = {"sqi": SQI_DEFAULT}
-        feat_raw_r = item.featured_image or ""
-        feat_exists_r = feat_raw_r and Path(PROJECT_ROOT / feat_raw_r.lstrip("/")).exists()
-        feat_r = feat_raw_r if feat_exists_r else ""
-        icons_r = get_topic_icons(item.tags) if not feat_exists_r else []
+        feat_r = resolve_featured_image(item.featured_image or "")
+        icons_r = get_topic_icons(item.tags) if not feat_r else []
         svg_r = generate_thumbnail_svg(item.title, pillar, scores_r, width=600, height=340,
                                        featured_image_url=feat_r, layer="research",
                                        fallback_icons=icons_r)
