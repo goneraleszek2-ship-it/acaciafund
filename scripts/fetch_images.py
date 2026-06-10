@@ -24,7 +24,7 @@ from typing import Any
 
 import requests
 
-from scripts.visuals import load_manifest, get_manifest_entry
+from visuals import load_manifest, get_manifest_entry
 
 try:
     from PIL import Image
