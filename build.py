@@ -600,8 +600,10 @@ def main():
         out_static.mkdir(parents=True, exist_ok=True)
         pillar_k = item.pillar or "aml"
         scores_k = {"sqi": SQI_DEFAULT}
-        feat_k = item.featured_image or ""
-        icons_k = get_topic_icons(item.tags) if not feat_k else []
+        feat_raw_k = item.featured_image or ""
+        feat_exists_k = feat_raw_k and Path(PROJECT_ROOT / feat_raw_k.lstrip("/")).exists()
+        feat_k = feat_raw_k if feat_exists_k else ""
+        icons_k = get_topic_icons(item.tags) if not feat_exists_k else []
         svg_k = generate_thumbnail_svg(item.title, pillar_k, scores_k, width=600, height=340,
                                        featured_image_url=feat_k, layer="knowledge",
                                        fallback_icons=icons_k)
@@ -739,8 +741,10 @@ def main():
         out_static.mkdir(parents=True, exist_ok=True)
         pillar_l = item.pillar or "aml"
         scores_l = {"sqi": SQI_DEFAULT}
-        feat_l = item.featured_image or ""
-        icons_l = get_topic_icons(item.tags) if not feat_l else []
+        feat_raw_l = item.featured_image or ""
+        feat_exists_l = feat_raw_l and Path(PROJECT_ROOT / feat_raw_l.lstrip("/")).exists()
+        feat_l = feat_raw_l if feat_exists_l else ""
+        icons_l = get_topic_icons(item.tags) if not feat_exists_l else []
         svg_l = generate_thumbnail_svg(item.title, pillar_l, scores_l, width=600, height=340,
                                        featured_image_url=feat_l, layer="learn",
                                        fallback_icons=icons_l)
@@ -834,8 +838,10 @@ def main():
         scores_r = item.signals or {"sqi": SQI_DEFAULT}
         if not isinstance(scores_r, dict):
             scores_r = {"sqi": SQI_DEFAULT}
-        feat_r = item.featured_image or ""
-        icons_r = get_topic_icons(item.tags) if not feat_r else []
+        feat_raw_r = item.featured_image or ""
+        feat_exists_r = feat_raw_r and Path(PROJECT_ROOT / feat_raw_r.lstrip("/")).exists()
+        feat_r = feat_raw_r if feat_exists_r else ""
+        icons_r = get_topic_icons(item.tags) if not feat_exists_r else []
         svg_r = generate_thumbnail_svg(item.title, pillar, scores_r, width=600, height=340,
                                        featured_image_url=feat_r, layer="research",
                                        fallback_icons=icons_r)
