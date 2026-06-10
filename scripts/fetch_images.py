@@ -62,12 +62,19 @@ SECTION_TYPES = {
 }
 
 SECTION_QUERY_TEMPLATES = {
-    "key_findings": "{entities}",
-    "applied_scenario": "{entities}",
-    "source_analysis": "{entities}",
-    "domain_breakdown": "{entities}",
-    "cross_pillar": "{entities}",
-    "methodology": "{entities}",
+    "key_findings": "{entities} {pillar_context}",
+    "applied_scenario": "{entities} {pillar_context}",
+    "source_analysis": "{entities} {pillar_context}",
+    "domain_breakdown": "{entities} {pillar_context}",
+    "cross_pillar": "{entities} {pillar_context}",
+    "methodology": "{entities} {pillar_context}",
+}
+
+PILLAR_CONTEXT_WORDS = {
+    "aml": "compliance security financial regulation",
+    "stock": "finance market trading investment",
+    "data-engineering": "technology server data infrastructure",
+    "science": "research laboratory analysis",
 }
 
 SECTION_PRIORITY = {
@@ -89,18 +96,97 @@ SECTION_WORD_MIN = {
 }
 
 CURATED_KNOWN = {
+    # === COMPUTING & IT ===
     "eniac computer history computing": "File:ENIAC_Penn1.jpg",
+    "server room data center": "File:Google data center.jpg",
+    "data center server infrastructure": "File:Virginia Tech - data center.jpg",
+    "semiconductor chip wafer fabrication": "File:Wafer 20110212.jpg",
+    "circuit board electronics hardware": "File:Motherboard closeup.jpg",
+    "programming code developer": "File:Programming code - Pair programming.jpg",
+    "network cable ethernet connectivity": "File:Network switch.jpg",
+    "cloud computing infrastructure": "File:Cloud computing.jpg",
+    "artificial intelligence machine learning": "File:Artificial intelligence and robotics.jpg",
+    "database sql query": "File:Database schema.jpg",
+    "kafka streaming message queue": "File:Apache Kafka logo.png",
+    "docker container kubernetes orchestration": "File:Docker logo (2013).svg",
+    "python programming language": "File:Python logo and wordmark.svg",
+    "git version control": "File:Git logo.svg",
+    "linux operating system": "File:Tux.svg",
+    "api rest http web service": "File:REST API.png",
+    "cybersecurity hacking encryption": "File:Cybersecurity.jpg",
+    "quantum computing": "File:Quantum computer - artist concept.jpg",
+
+    # === FINANCE & MARKETS ===
     "nyse stock exchange trading wall street": "File:New York Stock Exchange August 2017 04.jpg",
     "treasury department government building": "File:United States Treasury Building.JPG",
     "federal reserve central bank": "File:Federal Reserve Bank Building (36344p).jpg",
-    "semiconductor chip wafer fabrication": "File:Wafer 20110212.jpg",
-    "server room data center": "File:Google data center.jpg",
     "trading floor commodities exchange": "File:Chicago Board Of Trade Building.jpg",
-    "data center server infrastructure": "File:Virginia Tech - data center.jpg",
     "stock ticker market data": "File:Stock ticker.jpg",
+    "wall street financial district": "File:Wall Street Sign.jpg",
+    "bloomberg terminal finance": "File:Bloomberg Terminal.jpg",
+    "stock market chart trading": "File:Stock market chart.svg",
+    "cryptocurrency bitcoin blockchain": "File:Blockchain workflow.png",
+    "bank vault security gold": "File:Bank vault.jpg",
+    "financial audit accounting": "File:Financial audit.jpg",
+    "investment portfolio diversification": "File:Investment portfolio.jpg",
+    "forex currency exchange": "File:Foreign exchange market.jpg",
+    "venture capital startup funding": "File:Venture capital funding.jpg",
+    "pension fund retirement investing": "File:Pension fund management.jpg",
+    "hedge fund quantitative trading": "File:Quantitative trading.jpg",
+    "bond yield fixed income": "File:Bond market.jpg",
+    "real estate investment trust": "File:Real estate investment.jpg",
+    "commodities gold silver oil": "File:Commodities trading.jpg",
+    "fintech digital banking": "File:Fintech digital banking.jpg",
+
+    # === AML & COMPLIANCE ===
     "compliance regulation regulatory": "File:Us-treasury-building.jpg",
+    "money laundering financial crime": "File:Money laundering prevention.jpg",
+    "kyc know your customer verification": "File:KYC verification.jpg",
+    "sanctions ofac embargoes": "File:OFAC sanctions compliance.jpg",
+    "suspicious activity report sar": "File:SAR filing compliance.jpg",
+    "beneficial ownership transparency": "File:Beneficial ownership registry.jpg",
+    "anti corruption bribery": "File:Anti-corruption compliance.jpg",
+    "financial intelligence unit": "File:Financial intelligence center.jpg",
+    "risk assessment due diligence": "File:Risk assessment framework.jpg",
+    "blockchain analytics tracing": "File:Blockchain analytics.jpg",
+    "crypto mixer tumbling": "File:Cryptocurrency mixing service.jpg",
+    "travel rule fatf": "File:FATF Travel Rule compliance.jpg",
+    "decentralized finance defi": "File:DeFi decentralized finance.jpg",
+    "stablecoin usdt usdc": "File:Stablecoin market.jpg",
+    "binance crypto exchange": "File:Binance exchange.jpg",
+    "wire transfer swift": "File:SWIFT payment system.jpg",
+
+    # === DATA ENGINEERING ===
+    "apache spark hadoop big data": "File:Apache Spark logo.png",
+    "airflow workflow dag scheduling": "File:Apache Airflow logo.png",
+    "snowflake data warehouse": "File:Snowflake logo.svg",
+    "databricks lakehouse platform": "File:Databricks logo.svg",
+    "dbt data build tool transformation": "File:dbt logo.svg",
+    "kafka connect streaming": "File:Apache Kafka logo.png",
+    "redis cache memory database": "File:Redis logo.svg",
+    "elasticsearch search analytics": "File:Elasticsearch logo.svg",
+    "terraform infrastructure code": "File:Terraform logo.svg",
+    "grafana monitoring dashboard": "File:Grafana logo.svg",
+    "prometheus monitoring": "File:Prometheus logo.svg",
+    "apache flink stream processing": "File:Apache Flink logo.svg",
+    "delta lake acid transactions": "File:Delta Lake logo.svg",
+    "apache iceberg table format": "File:Apache Iceberg logo.svg",
+    "apache hudi data lake": "File:Apache Hudi logo.svg",
+    "great expectations data quality": "File:Great Expectations logo.svg",
+    "prefect workflow orchestration": "File:Prefect logo.svg",
+    "dagster data orchestration": "File:Dagster logo.svg",
+
+    # === SUPPLY CHAIN & LOGISTICS ===
     "supply chain logistics shipping": "File:Container Ship at the Hai Phong International Container Terminal 03.jpg",
-    "blockchain cryptocurrency distributed ledger": "File:Blockchain workflow.png",
+    "warehouse automation robotics": "File:Warehouse automation.jpg",
+    "global trade import export": "File:Global trade shipping.jpg",
+
+    # === SCIENCE & RESEARCH ===
+    "laboratory research experiment": "File:Laboratory research.jpg",
+    "genome dna sequencing": "File:DNA sequencing.jpg",
+    "protein structure biology": "File:Protein structure visualization.jpg",
+    "telescope astronomy space": "File:Telescope astronomy.jpg",
+    "climate weather environmental": "File:Climate monitoring.jpg",
 }
 
 STOP_WORDS = {
@@ -184,6 +270,7 @@ def build_section_query(section: dict, article: dict) -> str:
     tags = article.get("tags", [])
     pillar = article.get("pillar", "")
     pillar_kw = PILLAR_KEYWORDS.get(pillar, "")
+    pillar_ctx = PILLAR_CONTEXT_WORDS.get(pillar, "")
 
     title_core = re.sub(r'^\d{4}\s+', '', title)
     title_core = re.sub(r'[:\-].*', '', title_core).strip()[:40]
@@ -193,13 +280,14 @@ def build_section_query(section: dict, article: dict) -> str:
 
     parts = [title_core]
     if tags:
-        tag = tags[0].replace('-', ' ')
-        if tag.lower() not in title_core.lower():
-            parts.append(tag)
+        for tag in tags[:3]:
+            tag_clean = tag.replace('-', ' ')
+            if tag_clean.lower() not in title_core.lower():
+                parts.append(tag_clean)
     query = " ".join(parts)
     terms = query.split()
     terms = [t for t in terms if len(t) > 2 and t.lower() not in STOP_WORDS]
-    return " ".join(terms[:2])
+    return " ".join(terms[:4])
 
 
 def resolve_curated(article: dict) -> str | None:
@@ -395,6 +483,141 @@ ALL_BACKENDS: list[tuple[str, Any]] = [
     ("nasa", search_nasa),
 ]
 
+# ── Optional paid/free backends (enabled via env vars) ──────────────
+
+UNSPLASH_KEY = os.environ.get("UNSPLASH_ACCESS_KEY", "")
+PEXELS_KEY = os.environ.get("PEXELS_API_KEY", "")
+PIXABAY_KEY = os.environ.get("PIXABAY_API_KEY", "")
+
+
+def search_unsplash(query: str) -> list[dict]:
+    """Unsplash API — high-quality IT/finance photography. Free 50 req/hr."""
+    if not UNSPLASH_KEY:
+        return []
+    candidates = []
+    try:
+        resp = requests.get("https://api.unsplash.com/search/photos", params={
+            "query": query, "per_page": 5, "orientation": "landscape",
+        }, headers={"Authorization": f"Client-ID {UNSPLASH_KEY}"}, timeout=15)
+        resp.raise_for_status()
+        for r in resp.json().get("results", []):
+            url = r.get("urls", {}).get("regular", "")
+            if not url:
+                continue
+            candidates.append({
+                "url": url,
+                "title": r.get("description", "") or r.get("alt_description", ""),
+                "tags": " ".join(r.get("tags", [])),
+                "creator": r.get("user", {}).get("name", ""),
+                "license": "unsplash",
+                "license_url": "https://unsplash.com/license",
+                "source_api": "unsplash",
+            })
+    except (requests.RequestException, json.JSONDecodeError):
+        pass
+    return candidates
+
+
+def search_pexels(query: str) -> list[dict]:
+    """Pexels API — free 200 req/hr. Strong business/tech photos."""
+    if not PEXELS_KEY:
+        return []
+    candidates = []
+    try:
+        resp = requests.get("https://api.pexels.com/v1/search", params={
+            "query": query, "per_page": 5, "orientation": "landscape",
+        }, headers={"Authorization": PEXELS_KEY}, timeout=15)
+        resp.raise_for_status()
+        for r in resp.json().get("photos", []):
+            url = r.get("src", {}).get("large", "")
+            if not url:
+                continue
+            candidates.append({
+                "url": url,
+                "title": r.get("alt", ""),
+                "tags": query,
+                "creator": r.get("photographer", ""),
+                "license": "pexels",
+                "license_url": "https://www.pexels.com/license/",
+                "source_api": "pexels",
+            })
+    except (requests.RequestException, json.JSONDecodeError):
+        pass
+    return candidates
+
+
+def search_pixabay(query: str) -> list[dict]:
+    """Pixabay API — free 100 req/min. Has illustrations/vectors."""
+    if not PIXABAY_KEY:
+        return []
+    candidates = []
+    try:
+        resp = requests.get("https://pixabay.com/api/", params={
+            "key": PIXABAY_KEY, "q": query, "per_page": 5,
+            "image_type": "photo", "orientation": "horizontal",
+            "min_width": 800,
+        }, timeout=15)
+        resp.raise_for_status()
+        for r in resp.json().get("hits", []):
+            url = r.get("largeImageURL", "")
+            if not url:
+                continue
+            candidates.append({
+                "url": url,
+                "title": r.get("tags", ""),
+                "tags": r.get("tags", ""),
+                "creator": r.get("user", ""),
+                "license": "pixabay",
+                "license_url": "https://pixabay.com/service/terms/",
+                "source_api": "pixabay",
+            })
+    except (requests.RequestException, json.JSONDecodeError):
+        pass
+    return candidates
+
+
+def generate_ai_illustration(prompt: str, dest: Path) -> tuple[bool, str, int, int, int]:
+    """Pollinations.ai — free AI image generation. Fallback when no photo found."""
+    try:
+        safe_prompt = re.sub(r'[^a-zA-Z0-9 ]', '', prompt)[:200]
+        url = f"https://gen.pollinations.ai/image/{safe_prompt}?model=flux&width=1200&height=675&nologo=true"
+        resp = requests.get(url, headers={"User-Agent": USER_AGENT}, timeout=60)
+        resp.raise_for_status()
+        content = resp.content
+        if not content or len(content) < 1000:
+            return False, "", 0, 0, 0
+        if HAS_PIL:
+            img = Image.open(BytesIO(content))
+            if img.mode == "RGBA":
+                rgb = Image.new("RGB", img.size, (255, 255, 255))
+                rgb.paste(img, mask=img.split()[3])
+                img = rgb
+            elif img.mode != "RGB":
+                img = img.convert("RGB")
+            if max(img.size) > MAX_IMAGE_WIDTH:
+                ratio = MAX_IMAGE_WIDTH / max(img.size)
+                new_size = (int(img.size[0] * ratio), int(img.size[1] * ratio))
+                img = img.resize(new_size, Image.LANCZOS)
+            w, h = img.size
+            output = BytesIO()
+            img.save(output, format="WEBP", quality=85, method=6)
+            data = output.getvalue()
+            ext = ".webp"
+        else:
+            ct = resp.headers.get("content-type", "")
+            ext = ".webp" if "webp" in ct else ".jpg"
+            data = content
+            w, h = 1200, 675
+        dest_path = dest.with_suffix(ext)
+        dest_path.write_bytes(data)
+        return True, ext, w, h, len(data)
+    except Exception:
+        return False, "", 0, 0, 0
+
+
+# ── Global dedup: track images used across all articles ──────────────
+_GLOBAL_USED_URLS: set[str] = set()
+
 
 def score_result(result: dict, query_terms: set[str]) -> float:
     text = (result.get("title", "") + " " + result.get("tags", "")).lower()
@@ -476,7 +699,9 @@ def build_credit(result: dict, backend_name: str) -> str:
     license_name = result.get("license", "by").upper()
     license_url = result.get("license_url", "") or ""
     backend_labels = {"openverse": "Openverse", "loc": "Library of Congress",
-                      "nasa": "NASA", "wikimedia": "Wikimedia Commons"}
+                      "nasa": "NASA", "wikimedia": "Wikimedia Commons",
+                      "unsplash": "Unsplash", "pexels": "Pexels",
+                      "pixabay": "Pixabay", "ai_generated": "AI-generated (Pollinations.ai)"}
     label = backend_labels.get(backend_name, backend_name)
     parts = [f"Photo by {creator}"] if creator else ["Photo"]
     parts.append(f"via {label} ({license_name})")
@@ -564,6 +789,7 @@ def fetch_section_images(article: dict, force: bool = False) -> list[dict]:
                     results.append(existing_entry)
                     used_urls.add(existing_entry.get("image_url", ""))
                     used_creators.add(existing_entry.get("image_credit", "").split("via")[0].strip().lower())
+                    _GLOBAL_USED_URLS.add(img_path)
                     continue
 
         if not curated_done and curated_file:
@@ -587,6 +813,7 @@ def fetch_section_images(article: dict, force: bool = False) -> list[dict]:
                         "content_hash": hashlib.sha256(section.get("text_content", "").encode()).hexdigest()[:16],
                     })
                     used_urls.add(rel_path)
+                    _GLOBAL_USED_URLS.add(rel_path)
                     used_creators.add(curated_result.get("creator", "").lower()[:30])
                     curated_done = True
                     continue
@@ -600,13 +827,21 @@ def fetch_section_images(article: dict, force: bool = False) -> list[dict]:
         best_score = 0.0
         best_backend = ""
 
-        for backend_name, search_fn in ALL_BACKENDS:
+        all_backends = list(ALL_BACKENDS)
+        if UNSPLASH_KEY:
+            all_backends.append(("unsplash", search_unsplash))
+        if PEXELS_KEY:
+            all_backends.append(("pexels", search_pexels))
+        if PIXABAY_KEY:
+            all_backends.append(("pixabay", search_pixabay))
+
+        for backend_name, search_fn in all_backends:
             try:
                 candidates = search_fn(query)
                 for c in candidates:
                     url = c.get("url", "")
                     creator = c.get("creator", "").lower()[:30] if c.get("creator") else ""
-                    if url in used_urls or creator in used_creators:
+                    if url in used_urls or url in _GLOBAL_USED_URLS or creator in used_creators:
                         continue
                     score = score_result(c, query_terms)
                     if score > best_score:
@@ -617,7 +852,29 @@ def fetch_section_images(article: dict, force: bool = False) -> list[dict]:
             except Exception:
                 continue
 
+        # Tier 3: AI fallback when no photo found
         if best is None or best_score < MIN_SCORE:
+            ai_prompt = f"{query} professional illustration wide format"
+            dest = IMAGES_DIR / f"{slug}_s{idx}"
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            ok, ext, w, h, size = generate_ai_illustration(ai_prompt, dest)
+            if ok:
+                rel_path = f"/static/images/generated/{slug}_s{idx}{ext}"
+                results.append({
+                    "section_index": idx,
+                    "heading": section["heading"],
+                    "image_url": rel_path,
+                    "image_credit": "AI-generated via Pollinations.ai (MIT)",
+                    "image_alt": generate_alt_text(section),
+                    "relevance_score": 50.0,
+                    "source_api": "ai_generated",
+                    "width": w,
+                    "height": h,
+                    "content_hash": hashlib.sha256(section.get("text_content", "").encode()).hexdigest()[:16],
+                })
+                used_urls.add(rel_path)
+                _GLOBAL_USED_URLS.add(rel_path)
+                continue
             continue
 
         dest = IMAGES_DIR / f"{slug}_s{idx}"
@@ -640,6 +897,7 @@ def fetch_section_images(article: dict, force: bool = False) -> list[dict]:
             "content_hash": hashlib.sha256(section.get("text_content", "").encode()).hexdigest()[:16],
         })
         used_urls.add(rel_path)
+        _GLOBAL_USED_URLS.add(rel_path)
         used_creators.add(best.get("creator", "").lower()[:30] if best.get("creator") else "")
 
     return results
