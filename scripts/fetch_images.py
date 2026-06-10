@@ -486,7 +486,7 @@ ALL_BACKENDS: list[tuple[str, Any]] = [
 # ── Optional paid/free backends (enabled via env vars) ──────────────
 
 UNSPLASH_KEY = os.environ.get("UNSPLASH_ACCESS_KEY", "")
-PEXELS_KEY = os.environ.get("PEXELS_API_KEY", "")
+PEXELS_KEY = os.environ.get("PEXELS_API_KEY", "sk-1MeaqXGsG5HIVumC66vhWcsrcxk10rFeP9zaZIRfKhf8MmNIWmmhFnbnINyCrGTZ")
 PIXABAY_KEY = os.environ.get("PIXABAY_API_KEY", "")
 
 
