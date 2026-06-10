@@ -22,8 +22,8 @@ jobs:
       - name: Install dependencies
         run: pip install jinja2 markdown2 pydantic pytest requests Pillow
 
-      - name: Fetch section-level images for all articles
-        run: python3.13 scripts/fetch_images.py --force
+      - name: Fetch section-level images for new articles only
+        run: python3.13 scripts/fetch_images.py
 
       - name: Run tests
         run: python -m pytest tests/ -q --ignore=tests/test_usability.py.stale
