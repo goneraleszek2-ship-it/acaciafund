@@ -588,7 +588,7 @@ def test_visuals_subtopic_unknown_pillar():
 # ══════════════════════════════════════════════
 
 def test_generate_article_fingerprint():
-    from generator import generate_article_fingerprint
+    from build import generate_article_fingerprint
     svg = generate_article_fingerprint("test-slug", "Test Title", "aml", "research", ["aml"])
     assert svg.startswith("<svg")
     assert svg.endswith("</svg>")
@@ -596,35 +596,35 @@ def test_generate_article_fingerprint():
 
 
 def test_generate_article_fingerprint_learn():
-    from generator import generate_article_fingerprint
+    from build import generate_article_fingerprint
     svg = generate_article_fingerprint("learn/foo", "Foo Lesson", "data-engineering", "learn", ["data-engineering"])
     assert svg.startswith("<svg")
     assert "circle" in svg  # learn uses circles
 
 
 def test_generate_article_fingerprint_knowledge():
-    from generator import generate_article_fingerprint
+    from build import generate_article_fingerprint
     svg = generate_article_fingerprint("knowledge/bar", "Bar Ref", "stock", "knowledge", ["stock"])
     assert svg.startswith("<svg")
     assert "line" in svg  # knowledge uses lines
 
 
 def test_layer_indicator_html():
-    from generator import layer_indicator_html
+    from build import layer_indicator_html
     html = layer_indicator_html("research", "aml")
     assert "Research" in html
     assert "#c97d3e" in html or "c97d3e" in html
 
 
 def test_layer_indicator_html_learn():
-    from generator import layer_indicator_html
+    from build import layer_indicator_html
     html = layer_indicator_html("learn", "stock")
     assert "Learn" in html
     assert "#3a7d5c" in html or "3a7d5c" in html
 
 
 def test_layer_indicator_html_default():
-    from generator import layer_indicator_html
+    from build import layer_indicator_html
     html = layer_indicator_html("unknown")
     assert "Research" in html  # fallback to research
 
@@ -642,7 +642,7 @@ class _FakePost:
 
 
 def test_find_related_by_tags():
-    from generator import find_related
+    from build import find_related
     posts = [
         _FakePost("a", "aml", ["aml", "compliance"]),
         _FakePost("b", "stock", ["markets"]),
@@ -656,7 +656,7 @@ def test_find_related_by_tags():
 
 
 def test_find_related_curated():
-    from generator import find_related
+    from build import find_related
     posts = [
         _FakePost("a", "aml", ["aml"]),
         _FakePost("b", "stock", ["markets"]),
@@ -667,12 +667,12 @@ def test_find_related_curated():
 
 
 def test_find_related_empty():
-    from generator import find_related
+    from build import find_related
     assert find_related([], _FakePost("self")) == []
 
 
 def test_find_related_max_items():
-    from generator import find_related
+    from build import find_related
     posts = [_FakePost(f"p{i}", "aml", ["aml"]) for i in range(10)]
     current = _FakePost("self", "aml", ["aml"])
     result = find_related(posts, current, max_items=4)

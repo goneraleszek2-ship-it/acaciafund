@@ -1,7 +1,7 @@
 """Single source of truth for AcaciaFund environment configuration.
 
 All paths are relative to this file's directory (project root).
-Import this from generator.py and anywhere else config values are needed.
+Import this from build.py and anywhere else config values are needed.
 """
 from pathlib import Path
 

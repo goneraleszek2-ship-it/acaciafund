@@ -95,7 +95,7 @@ def test_build_meta_fields():
     test_root = P(__file__).parent.parent
     sys.path.insert(0, str(test_root))
 
-    from generator import main as generator_main
+    from build import main as generator_main
     from config import OUTPUT_DIR, REGISTRY_PATH
 
     # Ensure registry exists

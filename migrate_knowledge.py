@@ -219,7 +219,7 @@ Default weights: w₁=0.35, w₂=0.25, w₃=0.25, w₄=0.15
 <li><strong>SQI threshold</strong> — minimum SQI of 0.35 for publication</li>
 <li><strong>Deterministic build</strong> — same registry.json always produces identical output</li>
 </ul>
-<p>The final artifact is static HTML deployed to Cloudflare Pages via <code>python3.13 generator.py</code>.</p>
+<p>The final artifact is static HTML deployed to Cloudflare Pages via <code>python3.13 build.py</code>.</p>
 
 <p><em>Last updated: 2026-06-08</em></p>""",
 
@@ -374,13 +374,13 @@ Default weights: w₁=0.35, w₂=0.25, w₃=0.25, w₄=0.15
 <h2>DataOps Principles Applied</h2>
 
 <h3>1. Version Control Everything</h3>
-<p><strong>registry.json</strong> — the content catalog — is under Git version control alongside pipeline code (<code>generator.py</code>, <code>schemas.py</code>). Every content change is a Git commit with a full audit trail. Rolling back is a <code>git revert</code> away.</p>
+<p><strong>registry.json</strong> — the content catalog — is under Git version control alongside pipeline code (<code>build.py</code>, <code>schemas.py</code>). Every content change is a Git commit with a full audit trail. Rolling back is a <code>git revert</code> away.</p>
 
 <h3>2. Data Quality as Code</h3>
 <p>Each content entry carries structured <strong>quality metrics</strong> (source score, diversity, recency) and <strong>quality flags</strong>. The <strong>Signal Quality Index (SQI)</strong> is a composable metric computed from source authority, freshness, consensus, and relevance — evaluated programmatically, not manually.</p>
 
 <h3>3. CI/CD for Data</h3>
-<p>On push to <code>main</code>, <strong>Cloudflare Pages</strong> runs <code>python3.13 generator.py</code> — an automated build that transforms raw registry data into static HTML. Failed builds (e.g., schema validation errors) prevent deployment, acting as a quality gate.</p>
+<p>On push to <code>main</code>, <strong>Cloudflare Pages</strong> runs <code>python3.13 build.py</code> — an automated build that transforms raw registry data into static HTML. Failed builds (e.g., schema validation errors) prevent deployment, acting as a quality gate.</p>
 
 <h3>4. Declarative Pipeline</h3>
 <p>The pipeline is <strong>deterministic</strong>: same <code>registry.json</code> → identical output. No side effects, no external state at build time. This makes builds reproducible and debuggable.</p>
@@ -395,7 +395,7 @@ Default weights: w₁=0.35, w₂=0.25, w₃=0.25, w₄=0.15
 <tr><td style="padding:8px;border:1px solid var(--color-border)">Transformation</td><td style="padding:8px;border:1px solid var(--color-border)">seed_articles.py + manual</td><td style="padding:8px;border:1px solid var(--color-border)">dbt models / transformation DAG</td></tr>
 <tr><td style="padding:8px;border:1px solid var(--color-border)">Storage</td><td style="padding:8px;border:1px solid var(--color-border)">registry.json (Git)</td><td style="padding:8px;border:1px solid var(--color-border)">Data catalog (OpenMetadata-style)</td></tr>
 <tr><td style="padding:8px;border:1px solid var(--color-border)">Quality</td><td style="padding:8px;border:1px solid var(--color-border)">SQI + quality_metrics</td><td style="padding:8px;border:1px solid var(--color-border)">Great Expectations suites</td></tr>
-<tr><td style="padding:8px;border:1px solid var(--color-border)">Serving</td><td style="padding:8px;border:1px solid var(--color-border)">generator.py → static HTML</td><td style="padding:8px;border:1px solid var(--color-border)">Data mart / analytics layer</td></tr>
+<tr><td style="padding:8px;border:1px solid var(--color-border)">Serving</td><td style="padding:8px;border:1px solid var(--color-border)">build.py → static HTML</td><td style="padding:8px;border:1px solid var(--color-border)">Data mart / analytics layer</td></tr>
 <tr><td style="padding:8px;border:1px solid var(--color-border)">CI/CD</td><td style="padding:8px;border:1px solid var(--color-border)">Git → Cloudflare Pages</td><td style="padding:8px;border:1px solid var(--color-border)">dbt Cloud / Airflow CI</td></tr>
 </table>
 

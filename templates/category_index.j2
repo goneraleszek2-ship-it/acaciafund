@@ -1,5 +1,4 @@
 {% extends "layout.j2" %}
-{% from "macros/pillar_badge.html" import pillar_badge %}
 {% block main_content %}
 <section>
   <nav aria-label="Breadcrumb" class="mb-4 text-xs" style="color:var(--color-text-muted)">
@@ -22,19 +21,41 @@
     </div>
   </div>
 
-  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+  <div class="flex flex-col gap-2">
     {%- for item in items %}
-    <a href="/{{ item.slug }}/" class="block rounded-lg p-4 transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
-      <h2 class="font-semibold" style="color:var(--color-text)">{{ item.title | striptags }}</h2>
-      {%- if item.description %}
-      <p class="mt-1 text-xs" style="color:var(--color-text-secondary)">{{ item.description[:200] }}</p>
-      {%- endif %}
-      <div class="mt-3 flex items-center gap-3 text-xs" style="color:var(--color-text-muted)">
-        {%- if item.date_str %}
-        <time datetime="{{ item.date_str }}">{{ item.date_str }}</time>
+    {%- set sqi = (item.signals.get("avg_sqi", 0.0) | float) if item.signals else 0.0 %}
+    {%- set pillar = item.pillar or "" %}
+    {%- set source_breakdown = item.source_breakdown or {} %}
+    {%- set pillar_color = pillar_config.get(pillar, {}).get("color", "#6366f1") %}
+    {%- set pillar_icon = pillar_emojis.get(pillar, "") %}
+    {%- set risk_count = item.quality_flags | length if item.quality_flags else 0 %}
+    <a href="/{{ item.slug }}/" class="card-research" style="text-decoration:none">
+      <div class="card-research-left">
+        <span class="card-research-sqi">{{ "%.2f"|format(sqi) }}</span>
+        <span class="card-research-sqi-label">SQI</span>
+        {%- for src, count in source_breakdown.items() if count > 0 %}
+        {%- set src_class = "src-hn" if src == "hn" or src == "hackernews" else "src-ar" if src == "arxiv" or src == "ar" else "src-pu" %}
+        <span class="card-research-source {{ src_class }}">{{ src[:2].upper() }}</span>
+        {%- endfor %}
+      </div>
+      <div class="card-research-body">
+        <div class="card-research-meta">
+          <span class="card-research-pillar" style="color:{{ pillar_color }}">{{ pillar_icon }} {{ pillar_names.get(pillar, pillar) | default("Research") }}</span>
+          <span class="card-research-meta-right">
+            {%- if item.date_str %}
+            <time datetime="{{ item.date_str }}">{{ item.date_str }}</time>
+            {%- endif %}
+            {%- if item.body_html %}
+            <span>{{ item.body_html | reading_time }} min</span>
+            {%- endif %}
+          </span>
+        </div>
+        <h2 class="card-research-title">{{ item.title | striptags }}</h2>
+        {%- if item.description %}
+        <p class="card-research-summary">{{ item.description[:200] }}</p>
         {%- endif %}
-        {%- if item.body_html %}
-        <span>{{ item.body_html | reading_time }} min</span>
+        {%- if risk_count > 0 %}
+        <div class="card-research-risk">&#9888; {{ risk_count }} quality flag(s)</div>
         {%- endif %}
       </div>
     </a>

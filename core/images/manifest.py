@@ -1,7 +1,7 @@
 """Editorial image manifest — Tier 1 of visual management system.
 
 How to override:
-  1. Open scripts/visuals/manifest.json
+   1. Open core/images/manifest.json
   2. Add entry under article slug:
      {
        "blog/2026-06-10-feature-store-feast-vs-tecton": {

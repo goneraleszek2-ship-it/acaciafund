@@ -1,6 +1,6 @@
 #!/usr/bin/env python3.13
 """
-Generator for AcaciaFund: converts registry.json to static HTML using Jinja2 templates.
+Build script for AcaciaFund: converts registry.json to static HTML using Jinja2 templates.
 3-category taxonomy: research | learn | knowledge
 """
 import hashlib
@@ -20,7 +20,7 @@ from urllib.parse import quote as urlquote
 
 from schemas import RegistryData
 from core.visuals import generate_thumbnail_svg, generate_og_image
-from scripts.visuals import generate_fallback_svg
+from core.images import generate_fallback_svg
 
 from seed_learn import CURATED_RELATIONS, PREREQUISITES as LEARN_PREREQUISITES
 from config import (
@@ -356,6 +356,15 @@ LAYER_SYMBOLS = {
 }
 
 LAYER_LABELS = {"research": "Research", "learn": "Learn", "knowledge": "Knowledge"}
+LAYER_ICONS = {"research": "\u25c7", "learn": "\u25c9", "knowledge": "\u25ce"}
+
+
+def get_layer(url_path: str) -> str:
+    if url_path.startswith("learn") or url_path.startswith("learn/"):
+        return "learn"
+    if url_path.startswith("knowledge") or url_path.startswith("knowledge/"):
+        return "knowledge"
+    return "research"
 
 
 def generate_article_fingerprint(slug: str, title: str, pillar: str, content_type: str, tags: list) -> str:
@@ -537,7 +546,8 @@ def main():
             visual_fingerprint=visual_fingerprint, layer_badge=layer_badge,
             thumbnail_base=thumb_base, thumbnail_key=thumbnail_key,
             og_image_url=og_image_url,
-            is_index=False, page_type="knowledge", **ctx_base)
+            is_index=False, page_type="knowledge", layer="knowledge",
+            layer_icon=LAYER_ICONS["knowledge"], **ctx_base)
         out_file.write_text(html, encoding="utf-8")
         print(f"  knowledge: {out_file.relative_to(OUTPUT_DIR)}")
 
@@ -568,7 +578,9 @@ def main():
         categories=KNOWLEDGE_CATEGORIES,
         thumbnail_base=thumb_base, thumbnail_key=thumbnail_key,
         page_title="Knowledge Base",
-        is_index=False, page_path="knowledge/", **ctx_base)
+        is_index=False, page_path="knowledge/",
+        layer="knowledge", layer_icon=LAYER_ICONS["knowledge"],
+        **ctx_base)
     (knowledge_dir / "index.html").write_text(html, encoding="utf-8")
     print("  category: knowledge/index.html")
 
@@ -651,7 +663,8 @@ def main():
             og_image_url=og_image_url, quiz_json=quiz_json,
             featured_image=item.featured_image,
             image_credit=item.image_credit,
-            is_index=False, **ctx_base)
+            is_index=False, layer="learn",
+            layer_icon=LAYER_ICONS["learn"], **ctx_base)
         out_file.write_text(html, encoding="utf-8")
         print(f"  learn: {out_file.relative_to(OUTPUT_DIR)}")
 
@@ -693,7 +706,9 @@ def main():
         items=learn_items, grouped=dict(learn_grouped),
         thumbnail_base=thumb_base, thumbnail_key=thumbnail_key,
         page_title="Learning Hub",
-        is_index=False, page_path="learn/", **ctx_base)
+        is_index=False, page_path="learn/",
+        layer="learn", layer_icon=LAYER_ICONS["learn"],
+        **ctx_base)
     (learn_dir / "index.html").write_text(html, encoding="utf-8")
     print("  category: learn/index.html")
 

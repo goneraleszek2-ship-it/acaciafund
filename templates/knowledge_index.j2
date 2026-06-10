@@ -9,7 +9,7 @@
     </ol>
   </nav>
 
-  <div class="mb-8 flex items-center gap-4">
+  <div class="mb-6 flex items-center gap-4">
     <img src="/static/images/icon-knowledge.svg" alt="" class="w-10 h-10 shrink-0">
     <div>
       <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">Knowledge Base</h1>
@@ -17,10 +17,29 @@
     </div>
   </div>
 
+  {# Search bar — JS-enhanced, degrades gracefully #}
+  <input type="search" class="kb-search" id="kb-search" placeholder="Search concepts, terms, regulations..." aria-label="Search knowledge base">
+  <div id="kb-no-results" class="hidden text-sm" style="color:var(--color-text-muted);margin-bottom:1rem">No results found.</div>
+
+  {# Category grid #}
+  <div class="kb-grid">
+    {%- for cat_id, cat_data in categories.items() %}
+    {%- set cat_items = grouped[cat_id] | default([]) %}
+    {%- if cat_items | length > 0 %}
+    <a href="#{{ cat_id }}" class="kb-cat">
+      <span class="kb-cat-icon">{{ cat_data.icon }}</span>
+      <span class="kb-cat-label">{{ cat_data.label }}</span>
+      <span class="kb-cat-count">{{ cat_items | length }}</span>
+    </a>
+    {%- endif %}
+    {%- endfor %}
+  </div>
+
+  {# Category-grouped content #}
   {%- for cat_id, cat_data in categories.items() %}
   {%- set cat_items = grouped[cat_id] | default([]) %}
   {%- if cat_items | length > 0 %}
-  <div id="{{ cat_id }}" class="mb-12 scroll-mt-20">
+  <div id="{{ cat_id }}" class="mb-12 scroll-mt-20 kb-section">
     <div class="flex items-center gap-3 mb-4">
       <span class="text-2xl">{{ cat_data.icon }}</span>
       <div>
@@ -32,7 +51,7 @@
     <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
       {%- for item in cat_items %}
       {%- set thumb_key = thumbnail_key(item.title) if thumbnail_key is defined else "" %}
-      <a href="/{{ item.slug }}/" class="block rounded-lg overflow-hidden transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+      <a href="/{{ item.slug }}/" class="kb-item block rounded-lg overflow-hidden transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none" data-title="{{ item.title | striptags | lower }}" data-desc="{{ (item.description or '') | striptags | lower }}">
         {%- if item.thumbnail_svg and thumb_key %}
         <div class="aspect-[3/1] overflow-hidden" style="background:#0f172a">
           <img src="{{ thumbnail_base }}/thumb_{{ thumb_key }}.svg" alt="" class="w-full h-full object-cover" loading="lazy">
@@ -59,4 +78,30 @@
   {%- endif %}
   {%- endfor %}
 </section>
+
+<script>
+(function() {
+  var input = document.getElementById('kb-search');
+  var noResults = document.getElementById('kb-no-results');
+  if (!input) return;
+  var items = document.querySelectorAll('.kb-item');
+  var sections = document.querySelectorAll('.kb-section');
+  input.addEventListener('input', function() {
+    var q = input.value.trim().toLowerCase();
+    var anyVisible = false;
+    items.forEach(function(item) {
+      var title = item.getAttribute('data-title') || '';
+      var desc = item.getAttribute('data-desc') || '';
+      var match = !q || title.indexOf(q) !== -1 || desc.indexOf(q) !== -1;
+      item.style.display = match ? '' : 'none';
+      if (match) anyVisible = true;
+    });
+    sections.forEach(function(s) {
+      var hasVisible = Array.from(s.querySelectorAll('.kb-item')).some(function(i) { return i.style.display !== 'none'; });
+      s.style.display = hasVisible ? '' : 'none';
+    });
+    if (noResults) noResults.style.display = q && !anyVisible ? '' : 'none';
+  });
+})();
+</script>
 {% endblock %}

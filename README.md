@@ -50,7 +50,7 @@ AcaciaFund applies **DataOps principles** across its entire content lifecycle �
 ┌───────────────────────────▼────────────────────────────┐
 │                 SERVING LAYER                           │
 │  ┌──────────────┐    ┌──────────────┐                   │
-│  │  generator   │───→│   Static     │───→ Cloudflare    │
+│  │    build     │───→│   Static     │───→ Cloudflare    │
 │  │  .py (Jinja2)│    │  HTML Files  │    Pages (CDN)    │
 │  └──────────────┘    └──────────────┘                   │
 │  Serves: research/ · learn/ · knowledge/ · pillars/     │
@@ -71,7 +71,7 @@ AcaciaFund applies **DataOps principles** across its entire content lifecycle �
 |----------|--------------------------|
 | **Version Control Everything** | `registry.json` + pipeline code under Git — every content change is a commit with audit trail |
 | **Data Quality as Code** | SQI metric, quality_metrics, quality_flags — evaluated programmatically per entry |
-| **CI/CD for Data** | `git push → Cloudflare Pages → python3.13 generator.py` — automated build with schema validation gate |
+| **CI/CD for Data** | `git push → Cloudflare Pages → python3.13 build.py` — automated build with schema validation gate |
 | **Declarative Pipeline** | Deterministic: same `registry.json` → identical output, no side effects |
 | **Observability** | Structured signals per article: source breakdown, domain diversity, SQI, top entities |
 | **Content Taxonomy** | 3 content types — research (Bloom-classified), learn (lessons), knowledge (reference) |
@@ -147,7 +147,7 @@ AcaciaFund applies **DataOps principles** across its entire content lifecycle �
 
 ### Infrastructure
 - Zero client-side JS for content reading (JS only for UI enhancements)
-- Python-native pipeline: `python3.13 generator.py`
+- Python-native pipeline: `python3.13 build.py`
 - Cloudflare Pages auto-deploy from `main`
 - Self-hosted Tailwind 3.4.19 (28KB, no CDN)
 - Security headers (`X-Content-Type-Options`, `X-Frame-Options`, `Permissions-Policy`, etc.)
@@ -200,7 +200,7 @@ AcaciaFund applies **DataOps principles** across its entire content lifecycle �
 git clone https://github.com/goneraleszek2-ship-it/acaciafund.git
 cd acaciafund
 pip install markdown2 pydantic jinja2
-python3.13 generator.py
+python3.13 build.py
 python3 -m http.server 8000 --dir dist
 ```
 
@@ -209,7 +209,7 @@ Then open http://localhost:8000.
 ### Regenerate Everything
 
 ```bash
-python3.13 generator.py          # Rebuild all 233 pages, fractal thumbnails, OG images, search index, feed
+python3.13 build.py          # Rebuild all 233 pages, fractal thumbnails, OG images, search index, feed
 ```
 
 ---
@@ -218,11 +218,12 @@ python3.13 generator.py          # Rebuild all 233 pages, fractal thumbnails, OG
 
 ```
 ├── config.py                   # Single source of truth: SITE_URL, paths, env config
-├── generator.py                # Main generator (Jinja2 → 233 HTML pages)
+├── build.py                    # Main build script (Jinja2 → 233 HTML pages)
 ├── schemas.py                  # Pydantic models (AcaciaContent, RegistryData)
 ├── registry.json               # Content registry (data catalog — 59 entries)
 ├── core/
-│   └── visuals.py              # Visual engine: fractal (7 types), chart (6 functions), topic overlays
+│   ├── visuals.py              # Visual engine: fractal (7 types), chart (6 functions), topic overlays
+│   └── images/                 # 3-tier visual management: manifest, auto-fetch, SVG fallback
 ├── seed_articles.py            # Article seeding (legacy thumbnail generator)
 ├── seed_dataops.py             # DataOps/Engineering article seeder
 ├── migrate_categories.py       # Content type migration scripts
@@ -265,7 +266,7 @@ python3.13 generator.py          # Rebuild all 233 pages, fractal thumbnails, OG
 ## Deployment
 
 Push to `main` → Cloudflare Pages auto-deploys.  
-Build command: `python3.13 generator.py`  
+Build command: `python3.13 build.py`  
 Output directory: `dist/`
 
 API service deploys separately via Railway (Docker container).

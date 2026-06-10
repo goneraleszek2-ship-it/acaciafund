@@ -127,9 +127,9 @@
 
       <!-- Desktop nav -->
       <ul class="hidden sm:flex gap-3 lg:gap-5 text-sm font-medium" style="color:var(--color-text-secondary)" role="list">
-        <li><a href="/research/" class="nav-link"{% if page_path and page_path.startswith("research/") %} aria-current="page"{% endif %}>Research</a></li>
-        <li><a href="/learn/" class="nav-link"{% if page_path and page_path.startswith("learn/") %} aria-current="page"{% endif %}>Learn</a></li>
-        <li><a href="/knowledge/" class="nav-link"{% if page_path and page_path.startswith("knowledge/") %} aria-current="page"{% endif %}>Knowledge</a></li>
+        <li><a href="/research/" class="nav-link{% if layer == 'research' %} nav-active-research{% endif %}">Research</a></li>
+        <li><a href="/learn/" class="nav-link{% if layer == 'learn' %} nav-active-learn{% endif %}">Learn</a></li>
+        <li><a href="/knowledge/" class="nav-link{% if layer == 'knowledge' %} nav-active-knowledge{% endif %}">Knowledge</a></li>
         <li><span class="nav-sep hidden lg:inline" style="color:var(--color-border);width:1px;height:1em;display:inline-block;margin:0 0.25rem" aria-hidden="true">|</span></li>
         <li><a href="/aml/" class="nav-link flex items-center gap-1"{% if page_path and page_path.startswith("aml/") %} aria-current="page"{% endif %}><span class="w-1.5 h-1.5 rounded-full inline-block" style="background:var(--color-aml,#c97d3e)"></span>AML</a></li>
         <li><a href="/stock/" class="nav-link flex items-center gap-1"{% if page_path and page_path.startswith("stock/") %} aria-current="page"{% endif %}><span class="w-1.5 h-1.5 rounded-full inline-block" style="background:var(--color-markets,#2e7d5b)"></span>Markets</a></li>
@@ -153,6 +153,14 @@
       </button>
     </nav>
   </header>
+
+  {%- set layer = layer | default("research") %}
+  {%- set layer_icon = layer_icon | default("◇") %}
+  <div class="layer-indicator layer-{{ layer }}-indicator" role="status" aria-label="{{ layer }} layer">
+    <span class="layer-icon" aria-hidden="true">{{ layer_icon }}</span>
+    <span class="layer-label">{{ layer }}</span>
+    <span class="layer-sub">{{ layer_sub | default("") }}</span>
+  </div>
 
   <!-- Mobile nav dialog (native <dialog> for focus trap, escape, scrim) -->
   <dialog id="mobile-nav-dialog" class="mobile-nav-dialog">

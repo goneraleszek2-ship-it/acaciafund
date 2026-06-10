@@ -24,7 +24,9 @@ from typing import Any
 
 import requests
 
-from visuals import load_manifest, get_manifest_entry
+# core/images is the visual management system — Tier 1 (manifest), Tier 2 (auto-fetch), Tier 3 (SVG fallback)
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
+from core.images import load_manifest, get_manifest_entry
 
 try:
     from PIL import Image

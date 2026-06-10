@@ -36,7 +36,53 @@
       "desc": "Build data pipelines, warehouses, ETL processes, and learn big data architectures.",
     },
   } %}
-    <div class="mb-10 grid gap-4 sm:grid-cols-3">
+    {# Bloom taxonomy path — visual progression L1→L6 #}
+  {%- set bloom_levels = [
+    {"num": 1, "name": "Remember", "articles": 0, "complete": false},
+    {"num": 2, "name": "Understand", "articles": 0, "complete": false},
+    {"num": 3, "name": "Apply", "articles": 0, "complete": false},
+    {"num": 4, "name": "Analyse", "articles": 0, "complete": false},
+    {"num": 5, "name": "Evaluate", "articles": 0, "complete": false},
+    {"num": 6, "name": "Create", "articles": 0, "complete": false},
+  ] %}
+  {%- for item in items %}
+    {%- set bl = item.highest_bloom | int %}
+    {%- if bl >= 1 and bl <= 6 %}
+      {%- set _ = bloom_levels[bl - 1].update({"articles": bloom_levels[bl - 1]["articles"] + 1}) %}
+    {%- endif %}
+  {%- endfor %}
+  {%- set completed_count = namespace(value=0) %}
+  {%- for level in bloom_levels %}
+    {%- if level.articles >= 3 %}{% set completed_count.value = completed_count.value + 1 %}{% endif %}
+  {%- endfor %}
+  <div class="bloom-path">
+    {%- for level in bloom_levels %}
+    {%- set is_done = level.articles >= 3 %}
+    {%- set is_current = not is_done and level.articles > 0 %}
+    {%- set node_class = "bloom-done" if is_done else ("bloom-current" if is_current else "bloom-pending") %}
+    <div class="bloom-node">
+      {%- if not loop.first %}
+      <div class="bloom-connector {% if is_done or loop.index0 <= completed_count.value %}active{% endif %}"></div>
+      {%- else %}
+      <div></div>
+      {%- endif %}
+      <div class="bloom-circle {{ node_class }}">{{ level.num }}</div>
+      <div>
+        <span class="bloom-name">{{ level.name }}</span>
+        <span class="bloom-count">{{ level.articles }} lessons</span>
+      </div>
+      {%- if is_current %}
+      <a href="/learn/?bloom={{ level.num }}" class="bloom-cta">Start →</a>
+      {%- elif not is_done %}
+      <span class="bloom-soon">Coming soon</span>
+      {%- else %}
+      <span class="bloom-soon">✓ Complete</span>
+      {%- endif %}
+    </div>
+    {%- endfor %}
+  </div>
+
+  <div class="mb-10 grid gap-4 sm:grid-cols-3">
     {%- for pkey, pinfo in learning_paths.items() %}
     {%- set pcount = items | selectattr("pillar", "equalto", pkey) | list | length %}
     <div class="block rounded-xl p-4 transition hover:-translate-y-0.5 hover:shadow-md"

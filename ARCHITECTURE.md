@@ -75,7 +75,8 @@ Every generated object should carry explicit metadata.
 - Scheduler: triggers synthesis on a cadence and on demand.
 - Fetch layer: pulls HN and arXiv, caches requests, and records source state.
 - Analysis layer: classifies pillar, computes SQI, extracts entities, and detects trends.
-- Generation layer: `generator.py` emits static HTML, SVG assets (fractal thumbnails, chart SVGs, OG images), and search index.
+- Generation layer: `build.py` emits static HTML, SVG assets (fractal thumbnails, chart SVGs, OG images), and search index.
+- Visual management system (`core/images/`): 3-tier image pipeline ensuring every article section has a visual — manifests (editorial override) → auto-fetch (Openverse/Wikimedia/NASA/LoC APIs) → inline SVG fallback (pillar-colored with section-type icons). Deterministic fallback, zero gaps.
 - Public site: Jinja2 renders static pages and vanilla JS handles search.
 - Learning layer: renders lessons (difficulty-grouped), quizzes (Bloom taxonomy with live scoring), flashcards (CSS 3D flip), progress tracking (localStorage), spaced repetition tracking, and interleaved practice (shuffle).
 - Sync layer: stores optional progress and future learner state.
@@ -124,10 +125,15 @@ Every generated object should carry explicit metadata.
 ```text
 ./
 ├── config.py           # Single source of truth: SITE_URL, paths, env constants
-├── core/               # visual engine (fractal, chart, topic overlays)
+├── core/
+│   ├── visuals.py      # fractal / chart / OG image SVG engine
+│   └── images/         # 3-tier visual management system
+│       ├── manifest.py     # Tier 1: editorial overrides (manifest.json)
+│       ├── manifest.json   # Hand-picked image overrides per section
+│       └── templates.py    # Tier 3: pillar-colored inline SVGs
 ├── schemas.py          # Pydantic models for content contracts
 ├── registry.json       # content metadata catalog (59 entries)
-├── generator.py        # main build pipeline: Jinja2 → static HTML (233 pages)
+├── build.py            # main build pipeline: Jinja2 → static HTML (233 pages)
 ├── templates/          # Jinja2 templates (11 files)
 ├── static/             # CSS, JS, fonts (self-hosted)
 ├── content/            # source markdown for static pages
@@ -137,6 +143,24 @@ Every generated object should carry explicit metadata.
 ├── wrangler.toml       # Cloudflare Pages config
 └── dist/               # generated output (233 pages, gitignored)
 ```
+
+## Visual Management System (3-Tier Pattern)
+
+The image pipeline uses a **deterministic fallback chain** — a pattern that recurs across the codebase:
+
+| Tier | Layer | Mechanism | Guarantee |
+|------|-------|-----------|-----------|
+| 1 | Editorial manifest (`manifest.json`) | Hand-picked Unsplash/Commons URLs per section | Editorial control, no auto-fetch |
+| 2 | Auto-fetch backends (Openverse, NASA, Wikimedia, LoC) | Keyword-scored parallel queries | Best-effort algorithmic match |
+| 3 | Inline SVG fallback (`templates.py`) | Pillar-colored SVG with section-type icon | 100% coverage, network-independent |
+
+**Properties:**
+- **Policy over algorithm** — Tier 1 wins when it exists, Tier 2 fills gaps, Tier 3 guarantees no empty spaces.
+- **Zero-gap invariant** — Every `<h2>` section always has a `<figure>` or `<svg>`; never an empty container.
+- **No network dependency for fallback** — Tier 3 produces inline SVGs with zero fetch, zero storage, zero bandwidth.
+- **Human-debuggable** — Failed auto-fetch is visible in the ETL report; manifest additions are a JSON edit away.
+
+This is the same architectural philosophy applied in quality scoring (SQI override → deterministic formula → default minimum) and classification (manual reassignment → keyword/regex → `Uncategorized`). The invariant is: **explicit over implicit, deterministic over clever, always a visible fallback.**
 
 ## Quality Gates
 

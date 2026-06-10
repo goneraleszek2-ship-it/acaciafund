@@ -8,7 +8,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 
 def test_new_features_in_generated_output():
-    from generator import main
+    from build import main
     assert main() == 0
     from config import OUTPUT_DIR as out
 

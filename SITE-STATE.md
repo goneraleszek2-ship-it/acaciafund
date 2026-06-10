@@ -3,7 +3,7 @@
 > **Last updated:** 2026-06-08  
 > **Deployed URL:** https://www.acaciafund.org  
 > **Repo:** https://github.com/goneraleszek2-ship-it/acaciafund  
-> **Generator:** `python3.13 generator.py`  
+> **Build:** `python3.13 build.py`  
 > **Build output:** 326 HTML pages + fractal thumbnails + OG images + search index + Atom feed  
 > **Host:** Cloudflare Pages (static)
 
@@ -25,7 +25,7 @@
 ### Pipeline
 
 ```
-registry.json → generator.py → Jinja2 templates → dist/*.html
+registry.json → build.py → Jinja2 templates → dist/*.html
 ```
 
 No build framework (no Astro, no Hugo). The output is ready-to-serve static HTML.
@@ -155,7 +155,7 @@ All colors live in `:root` CSS variables in `custom.css`, overridden by `.dark` 
 - Previous/Next post navigation
 
 ### TOC Sidebar
-- Auto-generated from h2/h3 headings via `extract_headings()` in `generator.py`
+- Auto-generated from h2/h3 headings via `extract_headings()` in `build.py`
 - Sticky on desktop (`lg:sticky lg:top-20`)
 - Active heading highlighting on scroll (JS Intersection-like via scroll listener)
 - Smooth scroll on click (via `id` anchors with `scroll-margin-top`)
@@ -202,14 +202,14 @@ All colors live in `:root` CSS variables in `custom.css`, overridden by `.dark` 
 
 ### Build
 ```bash
-python3.13 generator.py
+python3.13 build.py
 ```
 Dependencies: `jinja2`, `markdown2`, `pydantic`
 
 ### Deployment
 - Cloudflare Pages: auto-deploys from `main` branch
 - Custom domain: `acaciafund.org` (www redirects from apex)
-- Build command: `python3.13 generator.py`
+- Build command: `python3.13 build.py`
 - Output directory: `dist/`
 
 ### HTTP Headers (`_headers`)
@@ -299,12 +299,17 @@ Science pillar discontinued (Jun 2026). `/science/` redirects to `/research/`.
 ```
 .
 ├── config.py                 # Single source of truth: SITE_URL, paths, env constants
-├── generator.py              # Main generator — 233 pages, thumbnails, OG images
+├── build.py                  # Main build script — 233 pages, thumbnails, OG images
 ├── schemas.py                # Pydantic models (AcaciaContent, RegistryData)
 ├── registry.json             # Content registry (59 entries: 33 research, 16 learn, 10 knowledge)
 ├── requirements.txt          # Dependencies
 ├── core/
-│   └── visuals.py            # Visual engine: fractal (7 types), chart (6 functions), topic overlays
+│   ├── visuals.py            # Visual engine: fractal (7 types), chart (6 functions), topic overlays
+│   └── images/               # 3-tier visual management: manifest, auto-fetch, SVG fallback
+│       ├── __init__.py
+│       ├── manifest.py
+│       ├── manifest.json
+│       └── templates.py      # Tier 3 SVG fallback generator
 ├── seed_articles.py          # Article seeding (legacy thumbnail gen — superseded by core/visuals.py)
 ├── seed_dataops.py           # DataOps/Engineering article seeder
 ├── migrate_categories.py     # Content type migration scripts
