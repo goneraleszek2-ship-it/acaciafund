@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-# AI crawlers
+# AI crawlers — explicit Allow for GEO visibility
 User-agent: GPTBot
 Allow: /
 Allow: /static/llms.txt
@@ -19,6 +19,8 @@ Allow: /llms-full.txt
 
 User-agent: Google-Extended
 Allow: /
+Allow: /static/llms.txt
+Allow: /llms-full.txt
 
 User-agent: anthropic-ai
 Allow: /
@@ -40,11 +42,25 @@ Allow: /
 Allow: /static/llms.txt
 Allow: /llms-full.txt
 
-# Block AI training crawlers that scrape for model training
-User-agent: Omgilibot
-Disallow: /
+User-agent: Applebot-Extended
+Allow: /
+Allow: /static/llms.txt
+Allow: /llms-full.txt
+
+User-agent: Meta-ExternalAgent
+Allow: /
+Allow: /static/llms.txt
+Allow: /llms-full.txt
+
+User-agent: Amazonbot
+Allow: /
+Allow: /static/llms.txt
+Allow: /llms-full.txt
 
 User-agent: Bytespider
+Disallow: /
+
+User-agent: Omgilibot
 Disallow: /
 
 Sitemap: https://www.acaciafund.org/sitemap-index.xml
