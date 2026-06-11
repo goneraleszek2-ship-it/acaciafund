@@ -64,7 +64,7 @@
       <div class="mt-2 flex items-center gap-2 text-sm" style="color:var(--color-text-muted)">
         <time datetime="{{ content.date_str }}">{{ content.date_str }}</time>
         <span aria-hidden="true">·</span>
-        <span>By {{ content.author | default("Leszek") }}</span>
+        <span>By {{ content.author | default("Leszek") }} <span style="color:var(--color-text-muted)">&middot; AML Specialist & Data Engineer</span></span>
         {%- if page_body %} · {{ page_body | reading_time }} min read{% endif %}
       </div>
       {%- endif %}

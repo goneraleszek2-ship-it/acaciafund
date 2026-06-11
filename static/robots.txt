@@ -1,4 +1,50 @@
 User-agent: *
 Allow: /
 
+# AI crawlers
+User-agent: GPTBot
+Allow: /
+Allow: /static/llms.txt
+Allow: /llms-full.txt
+
+User-agent: ChatGPT-User
+Allow: /
+Allow: /static/llms.txt
+Allow: /llms-full.txt
+
+User-agent: CCBot
+Allow: /
+Allow: /static/llms.txt
+Allow: /llms-full.txt
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+Allow: /static/llms.txt
+Allow: /llms-full.txt
+
+User-agent: ClaudeBot
+Allow: /
+Allow: /static/llms.txt
+Allow: /llms-full.txt
+
+User-agent: PerplexityBot
+Allow: /
+Allow: /static/llms.txt
+Allow: /llms-full.txt
+
+User-agent: YouBot
+Allow: /
+Allow: /static/llms.txt
+Allow: /llms-full.txt
+
+# Block AI training crawlers that scrape for model training
+User-agent: Omgilibot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
 Sitemap: https://www.acaciafund.org/sitemap-index.xml

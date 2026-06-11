@@ -1284,8 +1284,93 @@ def main():
     (OUTPUT_DIR / "sitemap.xml").write_text("\n".join(sm), encoding="utf-8")
 
     # --- ROBOTS ---
-    (OUTPUT_DIR / "robots.txt").write_text(
-        f"User-agent: *\nAllow: /\nSitemap: {SITE_URL}/sitemap.xml\n", encoding="utf-8")
+    robots_txt = f"""User-agent: *
+Allow: /
+
+# AI crawlers — allow content summarization
+User-agent: GPTBot
+Allow: /
+Allow: /static/llms.txt
+Allow: /llms-full.txt
+
+User-agent: ChatGPT-User
+Allow: /
+Allow: /static/llms.txt
+Allow: /llms-full.txt
+
+User-agent: CCBot
+Allow: /
+Allow: /static/llms.txt
+Allow: /llms-full.txt
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+Allow: /static/llms.txt
+Allow: /llms-full.txt
+
+User-agent: ClaudeBot
+Allow: /
+Allow: /static/llms.txt
+Allow: /llms-full.txt
+
+User-agent: PerplexityBot
+Allow: /
+Allow: /static/llms.txt
+Allow: /llms-full.txt
+
+User-agent: YouBot
+Allow: /
+Allow: /static/llms.txt
+Allow: /llms-full.txt
+
+# Block AI training scrapers
+User-agent: Omgilibot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+Sitemap: {SITE_URL}/sitemap.xml
+"""
+    (OUTPUT_DIR / "robots.txt").write_text(robots_txt, encoding="utf-8")
+
+    # --- LLMs-full.txt (comprehensive content index for AI crawlers) ---
+    llms_full_lines = [
+        "# AcaciaFund - Full Content Index",
+        "# Research synthesis and experimental learning platform",
+        "# All content is freely available for non-commercial educational use",
+        "",
+        "## Content Overview",
+        f"# Total articles: {len([c for c in all_content if not is_future_post(c)])}",
+        f"# Total learn lessons: {len([c for c in all_content if c.content_type == 'learn' and not is_future_post(c)])}",
+        f"# Pillars: AML (anti-money laundering), Markets (market analysis), Data Engineering",
+        "",
+        "## Research Briefings",
+    ]
+    for c in all_content:
+        if c.content_type in ("research",) and not is_future_post(c):
+            date_str = c.created_at.strftime("%Y-%m-%d") if c.created_at else "unknown"
+            sqi = c.signals.get("avg_sqi", 0) if c.signals else 0
+            llms_full_lines.append(f"- [{date_str}] {c.title} (SQI: {sqi:.1f}) - {SITE_URL}/{c.slug}/")
+    llms_full_lines.append("")
+    llms_full_lines.append("## Learn Lessons")
+    for c in all_content:
+        if c.content_type == "learn" and not is_future_post(c):
+            diff = getattr(c, "difficulty", "intermediate")
+            llms_full_lines.append(f"- [{diff}] {c.title} - {SITE_URL}/{c.slug}/")
+    llms_full_lines.append("")
+    llms_full_lines.append("## Tags")
+    for tag_slug in sorted(tag_items.keys()):
+        count = len(tag_items[tag_slug])
+        llms_full_lines.append(f"- {tag_slug} ({count} articles)")
+    llms_full_lines.append("")
+    llms_full_lines.append("---")
+    llms_full_lines.append(f"Generated: {now.isoformat()}")
+    llms_full_lines.append(f"Source: {SITE_URL}")
+    (OUTPUT_DIR / "llms-full.txt").write_text("\n".join(llms_full_lines), encoding="utf-8")
 
     # --- HEADERS ---
     (OUTPUT_DIR / "_headers").write_text("""/*
@@ -1306,6 +1391,14 @@ def main():
 
 /sitemap.xml
   Content-Type: application/xml; charset=utf-8
+
+/llms-full.txt
+  Cache-Control: public, max-age=3600
+  Content-Type: text/plain; charset=utf-8
+
+/static/llms.txt
+  Cache-Control: public, max-age=3600
+  Content-Type: text/plain; charset=utf-8
 """, encoding="utf-8")
 
     total = len(list(OUTPUT_DIR.rglob("*.html")))

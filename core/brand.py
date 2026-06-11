@@ -460,14 +460,15 @@ def brand_section_icon(index: int, size: int = 24, color: str = "#ffffff") -> st
 def section_pattern_svg(section_type: int, pillar: str, size: int = 160, opacity: float = 0.08) -> str:
     """Generate a repeating SVG tile for a section type.
 
-    Each section type gets a unique geometric pattern:
-      0 Overview       — concentric circles
-      1 Key Findings   — radial starburst
-      2 Applied Sce.   — pillar pattern (hex/wave/branch)
-      3 Source Analysis — dot grid
-      4 Domain Breakd. — stacked bars
-      5 Cross-Pillar   — connected nodes
-      6 Methodology    — converging lines
+    NVIDIA-inspired complex patterns — multiple layers, varying densities,
+    conceptually meaningful geometry for each section type:
+      0 Overview       — triangular tessellation (GPU parallel processing)
+      1 Key Findings   — bursting node network (discovery radiating outward)
+      2 Applied Sce.   — circuit board trace (implementation in your domain)
+      3 Source Analysis — constellation map (evidence connections)
+      4 Domain Breakd. — layered waveform (signal decomposition)
+      5 Cross-Pillar   — hexagonal mesh with highlighted paths
+      6 Methodology    — recursive L-system branching tree
 
     Args:
         section_type: Index 0-6.
@@ -478,96 +479,286 @@ def section_pattern_svg(section_type: int, pillar: str, size: int = 160, opacity
     key = _brand_key(pillar)
     palette = BRAND.get(key, BRAND["aml"])
     c = palette["primary"]
-
-    if section_type == 2:
-        # Applied scenario: reuse pillar pattern at this opacity
-        return brand_pattern(pillar, width=size, height=size, opacity=opacity)
+    accent = palette["accent"]
 
     s = size
     mid = s / 2
     elements = ""
 
     if section_type == 0:
-        # Concentric circles — synthesis
-        for r_frac in (0.15, 0.28, 0.42):
-            r = mid * r_frac * 2
-            elements += (
-                f'<circle cx="{mid}" cy="{mid}" r="{r}" '
-                f'fill="none" stroke="{c}" stroke-width="0.6" opacity="{opacity}"/>'
-            )
+        # ── Triangular tessellation — GPU parallel processing metaphor ──
+        # Three interlocking grids of equilateral triangles
+        tri_h = 26  # triangle height
+        tri_w = tri_h * 2 / math.sqrt(3)  # triangle width
+        # Layer 1: filled triangles (sparse, varying opacity)
+        fill_opacities = [0.03, 0.05, 0.07, 0.04, 0.06, 0.08]
+        fill_idx = 0
+        for row in range(-1, int(s / tri_h) + 2):
+            for col in range(-1, int(s / tri_w) + 2):
+                x_base = col * tri_w + (row % 2) * tri_w * 0.5
+                y_base = row * tri_h
+                # Upward triangle
+                pts_up = (
+                    f"{x_base:.1f},{(y_base + tri_h):.1f} "
+                    f"{(x_base + tri_w / 2):.1f},{y_base:.1f} "
+                    f"{(x_base + tri_w):.1f},{(y_base + tri_h):.1f}"
+                )
+                if (row + col) % 3 == 0:
+                    op = fill_opacities[fill_idx % len(fill_opacities)]
+                    elements += f'<polygon points="{pts_up}" fill="{c}" opacity="{op}"/>'
+                    fill_idx += 1
+                else:
+                    elements += f'<polygon points="{pts_up}" fill="none" stroke="{c}" stroke-width="0.3" opacity="{opacity * 0.4}"/>'
+                # Downward triangle
+                pts_down = (
+                    f"{x_base:.1f},{y_base:.1f} "
+                    f"{(x_base + tri_w / 2):.1f},{(y_base + tri_h):.1f} "
+                    f"{(x_base + tri_w):.1f},{y_base:.1f}"
+                )
+                if (row + col) % 5 == 0:
+                    elements += f'<polygon points="{pts_down}" fill="{accent}" opacity="{opacity * 0.3}"/>'
+                else:
+                    elements += f'<polygon points="{pts_down}" fill="none" stroke="{c}" stroke-width="0.2" opacity="{opacity * 0.25}"/>'
 
     elif section_type == 1:
-        # Radial starburst — discovery
-        for angle_deg in range(0, 360, 45):
-            rad = math.radians(angle_deg)
-            x2 = mid + mid * 0.45 * math.cos(rad)
-            y2 = mid + mid * 0.45 * math.sin(rad)
+        # ── Bursting node network — discovery radiating outward ──
+        # Central hub + radiating branches with sub-branches and glow nodes
+        branches = 6
+        for i in range(branches):
+            angle = math.radians(i * 360 / branches - 90)
+            # Primary branch
+            bx = mid + mid * 0.65 * math.cos(angle)
+            by = mid + mid * 0.65 * math.sin(angle)
             elements += (
-                f'<line x1="{mid}" y1="{mid}" x2="{x2:.1f}" y2="{y2:.1f}" '
-                f'stroke="{c}" stroke-width="0.6" opacity="{opacity}"/>'
+                f'<line x1="{mid}" y1="{mid}" x2="{bx:.1f}" y2="{by:.1f}" '
+                f'stroke="{c}" stroke-width="1.0" opacity="{opacity * 1.2}" stroke-linecap="round"/>'
             )
-        elements += f'<circle cx="{mid}" cy="{mid}" r="3" fill="{c}" opacity="{opacity * 1.5}"/>'
+            # Glow at branch end
+            elements += (
+                f'<circle cx="{bx:.1f}" cy="{by:.1f}" r="5" '
+                f'fill="{c}" opacity="{opacity * 0.15}"/>'
+            )
+            elements += (
+                f'<circle cx="{bx:.1f}" cy="{by:.1f}" r="2" '
+                f'fill="{accent}" opacity="{opacity * 2.0}"/>'
+            )
+            # Two sub-branches
+            for sub_offset in (-0.35, 0.35):
+                sub_angle = angle + sub_offset
+                mid_x = mid + mid * 0.35 * math.cos(angle)
+                mid_y = mid + mid * 0.35 * math.sin(angle)
+                sbx = mid_x + mid * 0.3 * math.cos(sub_angle)
+                sby = mid_y + mid * 0.3 * math.sin(sub_angle)
+                elements += (
+                    f'<line x1="{mid_x:.1f}" y1="{mid_y:.1f}" x2="{sbx:.1f}" y2="{sby:.1f}" '
+                    f'stroke="{c}" stroke-width="0.5" opacity="{opacity * 0.7}" stroke-linecap="round"/>'
+                )
+                elements += (
+                    f'<circle cx="{sbx:.1f}" cy="{sby:.1f}" r="1.5" '
+                    f'fill="{accent}" opacity="{opacity * 1.2}"/>'
+                )
+        # Center glow
+        elements += f'<circle cx="{mid}" cy="{mid}" r="8" fill="{c}" opacity="{opacity * 0.1}"/>'
+        elements += f'<circle cx="{mid}" cy="{mid}" r="3" fill="{accent}" opacity="{opacity * 1.8}"/>'
+
+    elif section_type == 2:
+        # ── Circuit board trace — implementation in your domain ──
+        # Horizontal + vertical traces with right-angle bends, component pads
+        # Layer 1: main traces (thicker, higher opacity)
+        traces_h = [0.15, 0.35, 0.55, 0.75, 0.95]
+        traces_v = [0.2, 0.4, 0.6, 0.8]
+        for y_frac in traces_h:
+            y = s * y_frac
+            x_start = s * (0.05 + (int(y_frac * 10) % 3) * 0.1)
+            x_end = s * (0.95 - (int(y_frac * 7) % 3) * 0.1)
+            elements += (
+                f'<line x1="{x_start:.1f}" y1="{y:.1f}" x2="{x_end:.1f}" y2="{y:.1f}" '
+                f'stroke="{c}" stroke-width="0.8" opacity="{opacity * 1.0}" stroke-linecap="round"/>'
+            )
+            # Right-angle bend to next horizontal
+            if y_frac < 0.9:
+                bend_x = x_end if int(y_frac * 10) % 2 == 0 else x_start
+                next_y = s * (y_frac + 0.2)
+                elements += (
+                    f'<line x1="{bend_x:.1f}" y1="{y:.1f}" x2="{bend_x:.1f}" y2="{next_y:.1f}" '
+                    f'stroke="{c}" stroke-width="0.6" opacity="{opacity * 0.7}"/>'
+                )
+        # Layer 2: vertical traces (thinner, lower opacity)
+        for x_frac in traces_v:
+            x = s * x_frac
+            elements += (
+                f'<line x1="{x:.1f}" y1="0" x2="{x:.1f}" y2="{s}" '
+                f'stroke="{c}" stroke-width="0.3" opacity="{opacity * 0.35}"/>'
+            )
+        # Component pads (small squares at intersections)
+        pad_positions = [
+            (0.2, 0.15), (0.6, 0.15), (0.8, 0.35),
+            (0.4, 0.55), (0.7, 0.55), (0.2, 0.75),
+            (0.5, 0.75), (0.9, 0.95),
+        ]
+        for px_frac, py_frac in pad_positions:
+            px, py = s * px_frac, s * py_frac
+            elements += (
+                f'<rect x="{px - 2:.1f}" y="{py - 2:.1f}" width="4" height="4" '
+                f'fill="{c}" opacity="{opacity * 1.5}" rx="0.5"/>'
+            )
+            elements += (
+                f'<rect x="{px - 1:.1f}" y="{py - 1:.1f}" width="2" height="2" '
+                f'fill="{accent}" opacity="{opacity * 2.0}" rx="0.3"/>'
+            )
 
     elif section_type == 3:
-        # Dot grid — data points
-        for row in range(4):
-            for col in range(5):
-                cx = size * (col + 1) / 6
-                cy = size * (row + 1) / 5
-                elements += (
-                    f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="1.8" '
-                    f'fill="{c}" opacity="{opacity}"/>'
-                )
+        # ── Constellation map — evidence connections ──
+        # Fixed star positions connected by thin lines, varying star sizes
+        stars = [
+            (20, 25, 2.0), (55, 15, 1.5), (90, 30, 2.5), (130, 20, 1.8),
+            (35, 60, 2.2), (75, 50, 1.2), (110, 65, 2.0), (145, 55, 1.5),
+            (15, 95, 1.8), (50, 90, 2.5), (85, 100, 1.5), (120, 85, 2.0),
+            (40, 130, 2.2), (70, 120, 1.8), (105, 135, 1.5), (140, 125, 2.0),
+            (25, 150, 1.2), (60, 145, 2.0), (95, 150, 1.8), (130, 148, 1.5),
+        ]
+        # Draw connecting lines first (behind stars)
+        connections = [
+            (0, 1), (1, 2), (2, 3), (0, 4), (1, 5), (2, 6), (3, 7),
+            (4, 5), (5, 6), (6, 7), (4, 8), (5, 9), (6, 10), (7, 11),
+            (8, 9), (9, 10), (10, 11), (8, 12), (9, 13), (10, 14), (11, 15),
+            (12, 13), (13, 14), (14, 15), (12, 16), (13, 17), (14, 18), (15, 19),
+            (16, 17), (17, 18), (18, 19),
+            (1, 5), (5, 9), (9, 13), (13, 17),  # vertical backbone
+            (4, 6), (6, 10), (10, 14),  # diagonal
+        ]
+        for i, j in connections:
+            x1, y1, _ = stars[i]
+            x2, y2, _ = stars[j]
+            elements += (
+                f'<line x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}" '
+                f'stroke="{c}" stroke-width="0.4" opacity="{opacity * 0.5}"/>'
+            )
+        # Draw stars
+        for x, y, r in stars:
+            elements += (
+                f'<circle cx="{x}" cy="{y}" r="{r}" '
+                f'fill="{c}" opacity="{opacity * 1.5}"/>'
+            )
+            # Glow halo
+            elements += (
+                f'<circle cx="{x}" cy="{y}" r="{r * 2.5}" '
+                f'fill="{c}" opacity="{opacity * 0.12}"/>'
+            )
 
     elif section_type == 4:
-        # Stacked horizontal bars — layer analysis
-        bar_heights = [0.25, 0.45, 0.65, 0.85]
-        bar_opacities = [0.6, 0.8, 1.0, 0.7]
-        for frac, op_mult in zip(bar_heights, bar_opacities):
-            y = s * frac
+        # ── Layered waveform — signal decomposition ──
+        # 7 sine waves with varying amplitude, frequency, and opacity
+        waves = [
+            (18, 0.015, 1.0, 0.0),   # amp, freq, op_mult, phase
+            (12, 0.025, 0.85, 0.8),
+            (8,  0.035, 0.7,  1.6),
+            (22, 0.012, 0.6,  2.4),
+            (6,  0.045, 0.9,  3.2),
+            (15, 0.020, 0.75, 4.0),
+            (10, 0.030, 0.65, 4.8),
+        ]
+        for i, (amp, freq, op_mult, phase) in enumerate(waves):
+            y_base = s * (i + 1) / (len(waves) + 1)
+            points = []
+            for x in range(0, s + 1, 3):
+                y = y_base + amp * math.sin(freq * x + phase)
+                points.append(f"{x},{y:.1f}")
             elements += (
-                f'<line x1="8" y1="{y:.1f}" x2="{s - 8}" y2="{y:.1f}" '
-                f'stroke="{c}" stroke-width="1.2" opacity="{opacity * op_mult}" '
-                f'stroke-linecap="round"/>'
+                f'<polyline points="{" ".join(points)}" '
+                f'fill="none" stroke="{c}" stroke-width="0.8" '
+                f'opacity="{opacity * op_mult}" stroke-linecap="round"/>'
             )
+            # Accent glow at wave peaks
+            if i % 2 == 0:
+                peak_x = int((math.pi / 2 - phase) / freq) % s
+                peak_y = y_base + amp
+                elements += (
+                    f'<circle cx="{peak_x}" cy="{peak_y:.1f}" r="2" '
+                    f'fill="{accent}" opacity="{opacity * op_mult * 0.8}"/>'
+                )
 
     elif section_type == 5:
-        # Connected nodes — bridge
-        node_positions = [(mid, mid * 0.5), (mid * 0.4, mid * 1.3), (mid * 1.6, mid * 1.3)]
-        for x, y in node_positions:
+        # ── Hexagonal mesh with highlighted paths — cross-domain ──
+        # Dense honeycomb: 2 opacity layers, 2 highlighted connection paths
+        hex_size = 16
+        hex_h = hex_size * 2
+        hex_w = hex_size * math.sqrt(3)
+        # Layer 1: background hexagons (low opacity)
+        for row in range(0, int(s / (hex_h * 0.75)) + 2):
+            for col in range(0, int(s / hex_w) + 2):
+                cx = col * hex_w + (row % 2) * hex_w * 0.5
+                cy = row * hex_h * 0.75
+                pts = []
+                for k in range(6):
+                    angle = math.pi / 3 * k + math.pi / 6
+                    px = cx + hex_size * 0.42 * math.cos(angle)
+                    py = cy + hex_size * 0.42 * math.sin(angle)
+                    pts.append(f"{px:.1f},{py:.1f}")
+                op = opacity * 0.5 if (row + col) % 4 != 0 else opacity * 1.0
+                elements += (
+                    f'<polygon points="{" ".join(pts)}" '
+                    f'fill="none" stroke="{c}" stroke-width="0.4" opacity="{op}"/>'
+                )
+        # Layer 2: highlighted path (trace between distant hexes)
+        path_coords = [
+            (hex_w * 0.5, hex_h * 0.375),
+            (hex_w * 1.5, hex_h * 0.375),
+            (hex_w * 2.0, hex_h * 1.125),
+            (hex_w * 2.5, hex_h * 1.875),
+            (hex_w * 3.0, hex_h * 1.875),
+            (hex_w * 3.5, hex_h * 2.625),
+        ]
+        for i in range(len(path_coords) - 1):
+            x1, y1 = path_coords[i]
+            x2, y2 = path_coords[i + 1]
             elements += (
-                f'<circle cx="{x:.1f}" cy="{y:.1f}" r="4" '
-                f'fill="none" stroke="{c}" stroke-width="0.8" opacity="{opacity}"/>'
+                f'<line x1="{x1:.1f}" y1="{y1:.1f}" x2="{x2:.1f}" y2="{y2:.1f}" '
+                f'stroke="{accent}" stroke-width="1.2" opacity="{opacity * 1.5}" '
+                f'stroke-linecap="round"/>'
             )
-        elements += (
-            f'<line x1="{node_positions[0][0]:.1f}" y1="{node_positions[0][1]:.1f}" '
-            f'x2="{node_positions[1][0]:.1f}" y2="{node_positions[1][1]:.1f}" '
-            f'stroke="{c}" stroke-width="0.5" opacity="{opacity * 0.6}"/>'
-        )
-        elements += (
-            f'<line x1="{node_positions[0][0]:.1f}" y1="{node_positions[0][1]:.1f}" '
-            f'x2="{node_positions[2][0]:.1f}" y2="{node_positions[2][1]:.1f}" '
-            f'stroke="{c}" stroke-width="0.5" opacity="{opacity * 0.6}"/>'
-        )
+        # Glow nodes at path vertices
+        for x, y in path_coords:
+            elements += (
+                f'<circle cx="{x:.1f}" cy="{y:.1f}" r="3" '
+                f'fill="{accent}" opacity="{opacity * 0.2}"/>'
+            )
+            elements += (
+                f'<circle cx="{x:.1f}" cy="{y:.1f}" r="1.2" '
+                f'fill="{accent}" opacity="{opacity * 3.0}"/>'
+            )
 
     elif section_type == 6:
-        # Converging lines — funnel
-        for i in range(5):
-            y_top = s * 0.1
-            y_bot = s * 0.85
-            x_top_left = s * 0.08 + i * s * 0.04
-            x_top_right = s * 0.92 - i * s * 0.04
-            x_bot = mid
-            elements += (
-                f'<line x1="{x_top_left:.1f}" y1="{y_top:.1f}" '
-                f'x2="{x_bot:.1f}" y2="{y_bot:.1f}" '
-                f'stroke="{c}" stroke-width="0.5" opacity="{opacity * (0.5 + i * 0.1)}"/>'
+        # ── Recursive L-system branching tree — process narrows to insight ──
+        # Dense L-system with depth 5, multiple sub-branches, color fading
+        elems = []  # mutable list for nested function
+
+        def _tree(x, y, angle, depth, length, sw):
+            if depth <= 0 or length < 2:
+                return
+            ex = x + length * math.cos(angle)
+            ey = y + length * math.sin(angle)
+            t = 1.0 - depth / 5.0
+            op_mult = 0.5 + t * 0.8
+            stroke_w = sw * (1.0 - t * 0.5)
+            elems.append(
+                f'<line x1="{x:.1f}" y1="{y:.1f}" x2="{ex:.1f}" y2="{ey:.1f}" '
+                f'stroke="{c}" stroke-width="{stroke_w:.2f}" '
+                f'opacity="{opacity * op_mult:.3f}" stroke-linecap="round"/>'
             )
-            elements += (
-                f'<line x1="{x_top_right:.1f}" y1="{y_top:.1f}" '
-                f'x2="{x_bot:.1f}" y2="{y_bot:.1f}" '
-                f'stroke="{c}" stroke-width="0.5" opacity="{opacity * (0.5 + i * 0.1)}"/>'
-            )
+            if depth <= 2:
+                elems.append(
+                    f'<circle cx="{ex:.1f}" cy="{ey:.1f}" r="{2 + t * 3:.1f}" '
+                    f'fill="{accent}" opacity="{opacity * 0.2:.3f}"/>'
+                )
+            spread = 0.4 + t * 0.2
+            n_branches = 2 if depth > 2 else 3
+            for i in range(n_branches):
+                off = (i - (n_branches - 1) / 2) * spread / max(n_branches - 1, 1)
+                _tree(ex, ey, angle + off, depth - 1, length * 0.68, stroke_w)
+
+        _tree(mid, s * 0.92, -math.pi / 2, 5, s * 0.18, 1.0)
+        elements += "".join(elems)
 
     return (
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{s}" height="{s}" '

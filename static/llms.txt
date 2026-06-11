@@ -1,0 +1,54 @@
+# AcaciaFund
+
+> Research synthesis & experimental learning platform. Static-first, privacy-preserving.
+
+AcaciaFund is a research-synthesis lab (not a fund) that scans arXiv and Hacker News, scores every piece for signal quality, and turns top results into 3-minute briefings and interactive lessons.
+
+## Content Pillars
+
+- **AML (Anti-Money Laundering)**: Regulatory updates, transaction monitoring, compliance patterns, financial crime analysis, SARs, KYC, beneficial ownership
+- **Markets**: Market analysis, algorithmic trading, semiconductor supply chains, industry trends, financial data engineering
+- **Data Engineering**: Data pipelines, orchestration, quality engineering, streaming, storage, analytics infrastructure, Kafka, Airflow, Spark
+
+## Content Types
+
+- **Research**: Signal-scored briefings synthesized from arXiv + HackerNews (~2-4 min reads). Each article includes SQI (Signal Quality Index), source breakdown, cross-pillar connections, and Bloom taxonomy classification.
+- **Learn**: Interactive lessons with Bloom taxonomy questions (Remember through Create), flashcards, quizzes, and knowledge checks. Difficulty levels: beginner, intermediate, advanced.
+- **Knowledge**: Platform guides, methodology references, glossaries, system architecture documentation.
+
+## Publishing Schedule
+
+- **Research articles**: Published daily, sourced automatically from arXiv API and HackerNews API
+- **Learn lessons**: New lessons added weekly across all three pillars
+- **Knowledge base**: Updated as needed when methodology or platform changes
+
+## All Content Is Free
+
+AcaciaFund is completely free and open. No paywalls, no premium tiers, no subscriptions required. All research briefings, interactive lessons, and knowledge base articles are freely accessible to everyone.
+
+## How It Works
+
+1. Automated scanning of arXiv and HackerNews feeds
+2. Signal Quality Index (SQI) scoring for each piece (source authority, freshness, consensus, relevance)
+3. Bloom taxonomy classification for learning content
+4. Synthesis into 3-minute briefings with cross-pillar connections
+5. Interactive learning with flashcards, quizzes, and spaced repetition
+
+## Author
+
+- **Leszek** — Research synthesis, content automation, platform architecture. Building automated research synthesis and experimental learning systems focused on AML compliance, financial markets, and data engineering.
+
+## Technical Details
+
+- Static site generated with Python (Jinja2 templates)
+- No JavaScript required for core reading experience
+- WCAG AA accessibility compliant
+- Privacy-preserving analytics (Plausible)
+- No cookies, no tracking
+
+## Contact
+
+- Website: https://www.acaciafund.org
+- Contact: https://www.acaciafund.org/knowledge/contact/
+- Feed: https://www.acaciafund.org/feed.xml
+- Sitemap: https://www.acaciafund.org/sitemap.xml

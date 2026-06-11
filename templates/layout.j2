@@ -9,6 +9,11 @@
   <meta name="generator" content="AcaciaFund Python-native Pipeline">
   <meta name="theme-color" content="#f5f0eb" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#1a1a2e" media="(prefers-color-scheme: dark)">
+  <meta name="author" content="Leszek - AML/Financial Crime Specialist">
+  {%- if content.content_type == "research" or content.category == "blog" %}
+  <meta property="article:author" content="Leszek">
+  <meta property="article:section" content="{{ pillar | default('AML') | capitalize }}">
+  {%- endif %}
   <link rel="canonical" href="{{ site_url }}/{{ page_path }}">
   <link rel="icon" href="/static/images/favicon.svg" type="image/svg+xml">
   <link rel="alternate" type="application/atom+xml" title="AcaciaFund Research" href="/feed.xml">
@@ -37,7 +42,12 @@
     "headline": {{ content.title | striptags | tojson }},
     "datePublished": "{{ content.created_at.isoformat() if content.created_at else '' }}",
     "image": "{{ og_image_url | default(site_url + '/static/images/og-card.png') }}",
-    "author": { "@type": "Person", "name": "{{ content.author | default('Leszek') }}" },
+    "author": {
+      "@type": "Person",
+      "name": "{{ content.author | default('Leszek') }}",
+      "jobTitle": "AML Specialist & Data Engineer",
+      "description": "Research analyst specializing in anti-money laundering compliance, financial crime investigation, and data engineering. Combines regulatory expertise with technical implementation."
+    },
     "publisher": { "@type": "Organization", "name": "AcaciaFund" }{% if sqi_val %},
     "review": {
       "@type": "Review",
@@ -81,6 +91,23 @@
     "name": "AcaciaFund",
     "url": "{{ site_url }}/",
     "description": {{ site_description | tojson }}
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "AcaciaFund",
+    "url": "{{ site_url }}/",
+    "logo": "{{ site_url }}/static/images/logo.svg",
+    "description": "Research synthesis and experimental learning platform covering AML compliance, market analysis, and data engineering.",
+    "foundingDate": "2024",
+    "sameAs": [],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer service",
+      "availableLanguage": ["English", "Polish"]
+    }
   }
   </script>
   {%- if page_path != "" %}
@@ -276,6 +303,7 @@
       </div>
       <div class="mt-8 pt-6 border-t text-center text-xs" style="border-color:var(--color-border);color:var(--color-text-muted)">
         <p>&copy; {{ year }} AcaciaFund. All rights reserved.</p>
+        <p class="mt-1">All content is freely available for non-commercial educational use. No cookies, no tracking, no paywalls.</p>
       </div>
     </div>
   </footer>

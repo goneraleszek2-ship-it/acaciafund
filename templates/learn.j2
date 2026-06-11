@@ -56,15 +56,17 @@
         {{ visual_fingerprint | default("") | safe }}
         <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">{{ content.title | striptags }}</h1>
       </div>
-      {%- if content.date_str or content.body_html %}
+      {%- set display_date = content.date_str or "" %}
+      {%- if not display_date and content.created_at %}{% set display_date = content.created_at.strftime('%Y-%m-%d') %}{% endif %}
+      {%- if display_date or content.body_html %}
       <div class="mt-2 flex items-center gap-3 text-sm" style="color:var(--color-text-muted)">
-        {%- if content.date_str %}
-        <time datetime="{{ content.date_str }}" class="inline-flex items-center gap-1">
+        {%- if display_date %}
+        <time datetime="{{ display_date }}" class="inline-flex items-center gap-1">
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-          {{ content.date_str }}
+          {{ display_date }}
         </time>
         <span aria-hidden="true">·</span>
-        <span class="inline-flex items-center gap-1">By {{ content.author | default("Leszek") }}</span>
+        <span class="inline-flex items-center gap-1">By {{ content.author | default("Leszek") }} <span style="color:var(--color-text-muted)">&middot; AML Specialist & Data Engineer</span></span>
         {%- endif %}
         {%- if content.body_html %}
         <span class="inline-flex items-center gap-1">
