@@ -451,3 +451,146 @@ def brand_section_icon(index: int, size: int = 24, color: str = "#ffffff") -> st
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{size}" height="{size}" '
         f'viewBox="0 0 24 24" fill="{color}" stroke="{color}">{paths}</svg>'
     )
+
+
+# ─────────────────────────────────────────────
+# 8. SECTION PATTERNS — repeating background tiles
+# ─────────────────────────────────────────────
+
+def section_pattern_svg(section_type: int, pillar: str, size: int = 160, opacity: float = 0.08) -> str:
+    """Generate a repeating SVG tile for a section type.
+
+    Each section type gets a unique geometric pattern:
+      0 Overview       — concentric circles
+      1 Key Findings   — radial starburst
+      2 Applied Sce.   — pillar pattern (hex/wave/branch)
+      3 Source Analysis — dot grid
+      4 Domain Breakd. — stacked bars
+      5 Cross-Pillar   — connected nodes
+      6 Methodology    — converging lines
+
+    Args:
+        section_type: Index 0-6.
+        pillar: Domain key for color.
+        size: Tile width/height.
+        opacity: Pattern opacity.
+    """
+    key = _brand_key(pillar)
+    palette = BRAND.get(key, BRAND["aml"])
+    c = palette["primary"]
+
+    if section_type == 2:
+        # Applied scenario: reuse pillar pattern at this opacity
+        return brand_pattern(pillar, width=size, height=size, opacity=opacity)
+
+    s = size
+    mid = s / 2
+    elements = ""
+
+    if section_type == 0:
+        # Concentric circles — synthesis
+        for r_frac in (0.15, 0.28, 0.42):
+            r = mid * r_frac * 2
+            elements += (
+                f'<circle cx="{mid}" cy="{mid}" r="{r}" '
+                f'fill="none" stroke="{c}" stroke-width="0.6" opacity="{opacity}"/>'
+            )
+
+    elif section_type == 1:
+        # Radial starburst — discovery
+        for angle_deg in range(0, 360, 45):
+            rad = math.radians(angle_deg)
+            x2 = mid + mid * 0.45 * math.cos(rad)
+            y2 = mid + mid * 0.45 * math.sin(rad)
+            elements += (
+                f'<line x1="{mid}" y1="{mid}" x2="{x2:.1f}" y2="{y2:.1f}" '
+                f'stroke="{c}" stroke-width="0.6" opacity="{opacity}"/>'
+            )
+        elements += f'<circle cx="{mid}" cy="{mid}" r="3" fill="{c}" opacity="{opacity * 1.5}"/>'
+
+    elif section_type == 3:
+        # Dot grid — data points
+        for row in range(4):
+            for col in range(5):
+                cx = size * (col + 1) / 6
+                cy = size * (row + 1) / 5
+                elements += (
+                    f'<circle cx="{cx:.1f}" cy="{cy:.1f}" r="1.8" '
+                    f'fill="{c}" opacity="{opacity}"/>'
+                )
+
+    elif section_type == 4:
+        # Stacked horizontal bars — layer analysis
+        bar_heights = [0.25, 0.45, 0.65, 0.85]
+        bar_opacities = [0.6, 0.8, 1.0, 0.7]
+        for frac, op_mult in zip(bar_heights, bar_opacities):
+            y = s * frac
+            elements += (
+                f'<line x1="8" y1="{y:.1f}" x2="{s - 8}" y2="{y:.1f}" '
+                f'stroke="{c}" stroke-width="1.2" opacity="{opacity * op_mult}" '
+                f'stroke-linecap="round"/>'
+            )
+
+    elif section_type == 5:
+        # Connected nodes — bridge
+        node_positions = [(mid, mid * 0.5), (mid * 0.4, mid * 1.3), (mid * 1.6, mid * 1.3)]
+        for x, y in node_positions:
+            elements += (
+                f'<circle cx="{x:.1f}" cy="{y:.1f}" r="4" '
+                f'fill="none" stroke="{c}" stroke-width="0.8" opacity="{opacity}"/>'
+            )
+        elements += (
+            f'<line x1="{node_positions[0][0]:.1f}" y1="{node_positions[0][1]:.1f}" '
+            f'x2="{node_positions[1][0]:.1f}" y2="{node_positions[1][1]:.1f}" '
+            f'stroke="{c}" stroke-width="0.5" opacity="{opacity * 0.6}"/>'
+        )
+        elements += (
+            f'<line x1="{node_positions[0][0]:.1f}" y1="{node_positions[0][1]:.1f}" '
+            f'x2="{node_positions[2][0]:.1f}" y2="{node_positions[2][1]:.1f}" '
+            f'stroke="{c}" stroke-width="0.5" opacity="{opacity * 0.6}"/>'
+        )
+
+    elif section_type == 6:
+        # Converging lines — funnel
+        for i in range(5):
+            y_top = s * 0.1
+            y_bot = s * 0.85
+            x_top_left = s * 0.08 + i * s * 0.04
+            x_top_right = s * 0.92 - i * s * 0.04
+            x_bot = mid
+            elements += (
+                f'<line x1="{x_top_left:.1f}" y1="{y_top:.1f}" '
+                f'x2="{x_bot:.1f}" y2="{y_bot:.1f}" '
+                f'stroke="{c}" stroke-width="0.5" opacity="{opacity * (0.5 + i * 0.1)}"/>'
+            )
+            elements += (
+                f'<line x1="{x_top_right:.1f}" y1="{y_top:.1f}" '
+                f'x2="{x_bot:.1f}" y2="{y_bot:.1f}" '
+                f'stroke="{c}" stroke-width="0.5" opacity="{opacity * (0.5 + i * 0.1)}"/>'
+            )
+
+    return (
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{s}" height="{s}" '
+        f'viewBox="0 0 {s} {s}">{elements}</svg>'
+    )
+
+
+def section_type_color(section_type: int, pillar: str) -> str:
+    """Return hex color for a section-type left border.
+
+    Args:
+        section_type: Index 0-6.
+        pillar: Domain key.
+    """
+    key = _brand_key(pillar)
+    palette = BRAND.get(key, BRAND["aml"])
+    colors = {
+        0: palette["primary"],       # Overview — pillar primary
+        1: palette["accent"],        # Key Findings — bright accent
+        2: palette["primary"],       # Applied Scenario — pillar primary
+        3: "#6b7280",                # Source Analysis — neutral gray
+        4: palette["secondary"],     # Domain Breakdown — secondary
+        5: palette["accent"],        # Cross-Pillar — bright accent
+        6: "#9ca3af",                # Methodology — lighter gray
+    }
+    return colors.get(section_type, palette["primary"])

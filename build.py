@@ -21,7 +21,7 @@ from urllib.parse import quote as urlquote
 from schemas import RegistryData
 from core.visuals import generate_thumbnail_svg, generate_og_image, TOPIC_ICONS, SUBTOPIC_CATEGORIES
 from core.images import generate_fallback_svg
-from core.brand import BRAND, brand_domain_icon, brand_micro_icon, brand_logo_svg
+from core.brand import BRAND, brand_domain_icon, brand_micro_icon, brand_logo_svg, section_pattern_svg, section_type_color
 
 from seed_learn import CURATED_RELATIONS, PREREQUISITES as LEARN_PREREQUISITES
 from config import (
@@ -99,6 +99,17 @@ PILLAR_CONFIG = {
 PILLAR_EMOJIS = {"aml": "🛡️", "stock": "📈", "data-engineering": "⚙️"}
 PILLAR_NAMES = {"aml": "AML", "stock": "Markets", "data-engineering": "Data Engineering"}
 DIFFICULTY_ORDER = {"beginner": 0, "intermediate": 1, "advanced": 2}
+
+# Section type mapping (positional index → semantic type)
+SECTION_TYPES = {
+    0: "overview",
+    1: "key_findings",
+    2: "applied_scenario",
+    3: "source_analysis",
+    4: "domain_breakdown",
+    5: "cross_pillar",
+    6: "methodology",
+}
 
 KNOWLEDGE_CATEGORIES = {
     "platform": {
@@ -398,6 +409,11 @@ def inject_section_images(body_html: str, section_images: list[dict],
                            article: dict | None = None) -> str:
     """Insert section-level images into body_html after matching <h2> headings.
 
+    For research/learn articles, wraps each section (h2 + content) in a
+    .section-harvester div with a fractal background pattern and colored
+    left border indicating section type. Section images are placed between
+    harvesters as visual transitions.
+
     Tier 1: Editorial manifest images (already resolved by fetch pipeline)
     Tier 2: Auto-fetched images from registry
     Tier 3: Inline SVG fallback generated from article + section context
@@ -416,24 +432,58 @@ def inject_section_images(body_html: str, section_images: list[dict],
             if idx is not None:
                 img_map[idx] = si
 
+    # Determine if we should wrap sections in harvesters
+    content_type = (article or {}).get("content_type", "research")
+    pillar = (article or {}).get("pillar", "aml")
+    use_harvesters = content_type in ("research", "learn")
+
     result: list[str] = [parts[0]]
 
     for i in range(1, len(parts), 2):
         h2_tag = parts[i]
         content = parts[i + 1] if i + 1 < len(parts) else ""
         section_idx = (i - 1) // 2
-        result.append(h2_tag)
 
         entry = img_map.get(section_idx)
+        section_type = SECTION_TYPES.get(section_idx, "overview")
 
-        if entry:
-            url = resolve_section_image(entry.get("image_url", ""))
-            credit = entry.get("image_credit", "")
-            alt_ = entry.get("image_alt", "")
-            w = entry.get("width", 1200)
-            h = entry.get("height", 675)
-            if not url:
-                if article:
+        if use_harvesters:
+            # Open harvester div with section pattern background
+            color = section_type_color(section_idx, pillar)
+            result.append(
+                f'<div class="section-harvester" data-section="{section_type}" '
+                f'style="--section-color:{color}">'
+            )
+            result.append(h2_tag)
+            result.append(content)
+            result.append('</div>')
+
+            # Section image goes OUTSIDE the harvester (as transition)
+            if entry:
+                url = resolve_section_image(entry.get("image_url", ""))
+                credit = entry.get("image_credit", "")
+                alt_ = entry.get("image_alt", "")
+                w = entry.get("width", 1200)
+                h = entry.get("height", 675)
+                if url:
+                    style_class = "section-image--full" if section_idx % 2 == 0 else "section-image--contained"
+                    figure_style = "background:var(--color-bg);border:1px solid var(--color-border)"
+                    f = [
+                        f'<figure class="section-image {style_class} my-6 rounded-lg overflow-hidden"',
+                        f' style="{figure_style}">',
+                        f'<img src="{url}" alt="{alt_}" width="{w}" height="{h}"',
+                        ' loading="lazy" decoding="async"',
+                        ' class="w-full h-auto object-cover">',
+                    ]
+                    if credit:
+                        f.append(
+                            '<figcaption class="px-3 py-1.5 text-xs"'
+                            ' style="color:var(--color-text-muted);border-top:1px solid var(--color-border)">'
+                            f'{credit}</figcaption>'
+                        )
+                    f.append("</figure>")
+                    result.append("".join(f))
+                elif article:
                     section = {"section_index": section_idx, "heading": strip_html_tag(h2_tag)}
                     try:
                         svg = generate_fallback_svg(section, article)
@@ -444,46 +494,45 @@ def inject_section_images(body_html: str, section_images: list[dict],
                         )
                     except Exception:
                         pass
-                result.append(content)
-                continue
-            credit = entry.get("image_credit", "")
-            alt_ = entry.get("image_alt", "")
-            w = entry.get("width", 1200)
-            h = entry.get("height", 675)
-            style_class = "section-image--full" if section_idx % 2 == 0 else "section-image--contained"
-            figure_style = "background:var(--color-bg);border:1px solid var(--color-border)"
-            f = [
-                f'<figure class="section-image {style_class} my-6 rounded-lg overflow-hidden"',
-                f' style="{figure_style}">',
-                f'<img src="{url}" alt="{alt_}" width="{w}" height="{h}"',
-                ' loading="lazy" decoding="async"',
-                ' class="w-full h-auto object-cover">',
-            ]
-            if credit:
-                f.append(
-                    '<figcaption class="px-3 py-1.5 text-xs"'
-                    ' style="color:var(--color-text-muted);border-top:1px solid var(--color-border)">'
-                    f'{credit}</figcaption>'
-                )
-            f.append("</figure>")
-            result.append("".join(f))
-        elif article:
-            # Tier 3: generate inline SVG fallback
-            section = {
-                "section_index": section_idx,
-                "heading": strip_html_tag(h2_tag),
-            }
-            try:
-                svg = generate_fallback_svg(section, article)
-                result.append(
-                    f'<figure class="section-image section-image--full section-fallback my-6 rounded-lg overflow-hidden"'
-                    f' style="background:var(--color-bg);border:1px solid var(--color-border)">'
-                    f'{svg}</figure>'
-                )
-            except Exception:
-                pass
-
-        result.append(content)
+        else:
+            # No harvester wrapping — original flat behavior
+            result.append(h2_tag)
+            if entry:
+                url = resolve_section_image(entry.get("image_url", ""))
+                credit = entry.get("image_credit", "")
+                alt_ = entry.get("image_alt", "")
+                w = entry.get("width", 1200)
+                h = entry.get("height", 675)
+                if url:
+                    style_class = "section-image--full" if section_idx % 2 == 0 else "section-image--contained"
+                    figure_style = "background:var(--color-bg);border:1px solid var(--color-border)"
+                    f = [
+                        f'<figure class="section-image {style_class} my-6 rounded-lg overflow-hidden"',
+                        f' style="{figure_style}">',
+                        f'<img src="{url}" alt="{alt_}" width="{w}" height="{h}"',
+                        ' loading="lazy" decoding="async"',
+                        ' class="w-full h-auto object-cover">',
+                    ]
+                    if credit:
+                        f.append(
+                            '<figcaption class="px-3 py-1.5 text-xs"'
+                            ' style="color:var(--color-text-muted);border-top:1px solid var(--color-border)">'
+                            f'{credit}</figcaption>'
+                        )
+                    f.append("</figure>")
+                    result.append("".join(f))
+                elif article:
+                    section = {"section_index": section_idx, "heading": strip_html_tag(h2_tag)}
+                    try:
+                        svg = generate_fallback_svg(section, article)
+                        result.append(
+                            f'<figure class="section-image section-image--full section-fallback my-6 rounded-lg overflow-hidden"'
+                            f' style="background:var(--color-bg);border:1px solid var(--color-border)">'
+                            f'{svg}</figure>'
+                        )
+                    except Exception:
+                        pass
+            result.append(content)
 
     return "".join(result)
 
@@ -803,7 +852,8 @@ def main():
         body = sanitize_domain_breakdown(body)
         body = sanitize_text(body, strip_emoji=False)
         body = inject_section_images(body, item.section_images,
-                                       article={"pillar": item.pillar, "title": item.title, "slug": item.slug})
+                                       article={"pillar": item.pillar, "title": item.title, "slug": item.slug,
+                                                "content_type": "learn"})
         item.description = sanitize_text(item.description, strip_emoji=False)
         item.body_html = body
 
@@ -910,7 +960,8 @@ def main():
         body = sanitize_domain_breakdown(body)
         body = sanitize_text(body, strip_emoji=True)
         body = inject_section_images(body, item.section_images,
-                                       article={"pillar": item.pillar, "title": item.title, "slug": item.slug})
+                                       article={"pillar": item.pillar, "title": item.title, "slug": item.slug,
+                                                "content_type": "research"})
         item.description = sanitize_text(item.description, strip_emoji=True)
 
         prev_post = research_items[i + 1] if i + 1 < len(research_items) else None
