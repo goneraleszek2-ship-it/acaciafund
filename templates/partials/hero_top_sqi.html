@@ -13,7 +13,7 @@
       {{ sqi_chip(ha.signals.get("avg_sqi", 0)) }}
       {%- endif %}
     </div>
-    <h3 class="text-base font-semibold leading-snug card-title-clamp group-hover:text-[var(--color-accent)] transition" style="color:var(--color-text)">{{ ha.title | striptags }}</h3>
+    <p class="text-base font-semibold leading-snug card-title-clamp group-hover:text-[var(--color-accent)] transition" style="color:var(--color-text)">{{ ha.title | striptags }}</p>
     <p class="mt-1 text-xs card-title-clamp" style="color:var(--color-text-secondary)">{{ ha.description[:160] }}{% if ha.description | length > 160 %}…{% endif %}</p>
     <div class="mt-2 flex items-center gap-3 text-xs" style="color:var(--color-text-muted)">
       {%- if ha.date_str %}<time datetime="{{ ha.date_str }}">{{ ha.date_str }}</time>{% endif %}

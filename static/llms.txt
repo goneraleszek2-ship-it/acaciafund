@@ -6,37 +6,41 @@ AcaciaFund is a research-synthesis lab (not a fund) that scans arXiv and Hacker 
 
 ## Content Pillars
 
-- **AML (Anti-Money Laundering)**: Regulatory updates, transaction monitoring, compliance patterns, financial crime analysis, SARs, KYC, beneficial ownership
-- **Markets**: Market analysis, algorithmic trading, semiconductor supply chains, industry trends, financial data engineering
-- **Data Engineering**: Data pipelines, orchestration, quality engineering, streaming, storage, analytics infrastructure, Kafka, Airflow, Spark
+- [AML Compliance](https://www.acaciafund.org/aml/): Regulatory updates, transaction monitoring, compliance patterns, financial crime analysis, SARs, KYC, beneficial ownership
+- [Financial Markets](https://www.acaciafund.org/stock/): Market analysis, algorithmic trading, semiconductor supply chains, industry trends, financial data engineering
+- [Data Engineering](https://www.acaciafund.org/data-engineering/): Data pipelines, orchestration, quality engineering, streaming, storage, analytics infrastructure
 
-## Content Types
+## Recent Research
 
-- **Research**: Signal-scored briefings synthesized from arXiv + HackerNews (~2-4 min reads). Each article includes SQI (Signal Quality Index), source breakdown, cross-pillar connections, and Bloom taxonomy classification.
-- **Learn**: Interactive lessons with Bloom taxonomy questions (Remember through Create), flashcards, quizzes, and knowledge checks. Difficulty levels: beginner, intermediate, advanced.
-- **Knowledge**: Platform guides, methodology references, glossaries, system architecture documentation.
+- [2027 Data Engineering Predictions](https://www.acaciafund.org/blog/2026-06-19-2027-data-engineering-predictions/): AI-Augmented Pipelines, Real-Time Universal Catalogs, and the Death of Batch
+- [Data Platform as a Product](https://www.acaciafund.org/blog/2026-06-18-data-platform-product-ux/): UX Patterns for Internal Developer Platforms
+- [The Rise of the Analytics Engineer](https://www.acaciafund.org/blog/2026-06-17-analytics-engineering-rise/): dbt, SQLMesh, and the Modern Data Stack
+- [Cost Optimization in Data Pipelines](https://www.acaciafund.org/blog/2026-06-16-cost-optimization-data-pipelines/): Engineering for Efficiency at Petabyte Scale
+- [Schema Registry Patterns](https://www.acaciafund.org/blog/2026-06-15-schema-registry-avro-protobuf/): Avro, Protobuf, and JSON Schema in Production
 
-## Publishing Schedule
+## Learn Lessons
 
-- **Research articles**: Published daily, sourced automatically from arXiv API and HackerNews API
-- **Learn lessons**: New lessons added weekly across all three pillars
-- **Knowledge base**: Updated as needed when methodology or platform changes
+- [AML Basics](https://www.acaciafund.org/learn/aml-basics/): Introduction to Anti-Money Laundering compliance
+- [Market Analysis](https://www.acaciafund.org/learn/market-analysis/): Financial market analysis fundamentals
+- [DataOps Introduction](https://www.acaciafund.org/learn/dataops-introduction/): Data Operations principles and practices
+- [Behavioral Finance](https://www.acaciafund.org/learn/behavioral-finance-portfolio/): Behavioral finance and portfolio theory
+- [Crypto AML](https://www.acaciafund.org/learn/crypto-aml/): Cryptocurrency anti-money laundering
+
+## Knowledge Base
+
+- [About AcaciaFund](https://www.acaciafund.org/knowledge/about/): Mission, methodology, and team
+- [System Architecture](https://www.acaciafund.org/knowledge/system-architecture/): Technical infrastructure and pipeline design
+- [Research Methodology](https://www.acaciafund.org/knowledge/research-methodology/): How we score and synthesize content
+- [Glossary](https://www.acaciafund.org/knowledge/glossary/): Definitions of key terms
+- [FAQ](https://www.acaciafund.org/knowledge/faq/): Frequently asked questions
 
 ## All Content Is Free
 
 AcaciaFund is completely free and open. No paywalls, no premium tiers, no subscriptions required. All research briefings, interactive lessons, and knowledge base articles are freely accessible to everyone.
 
-## How It Works
-
-1. Automated scanning of arXiv and HackerNews feeds
-2. Signal Quality Index (SQI) scoring for each piece (source authority, freshness, consensus, relevance)
-3. Bloom taxonomy classification for learning content
-4. Synthesis into 3-minute briefings with cross-pillar connections
-5. Interactive learning with flashcards, quizzes, and spaced repetition
-
 ## Author
 
-- **Leszek** — Research synthesis, content automation, platform architecture. Building automated research synthesis and experimental learning systems focused on AML compliance, financial markets, and data engineering.
+- **Leszek** — AML Specialist & Data Engineer. Research synthesis, content automation, platform architecture.
 
 ## Technical Details
 
