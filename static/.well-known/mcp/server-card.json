@@ -1,0 +1,86 @@
+{
+  "serverInfo": {
+    "name": "acaciafund",
+    "version": "1.0.0"
+  },
+  "endpoint": "https://www.acaciafund.org/mcp",
+  "capabilities": {
+    "tools": [
+      {
+        "name": "search_research",
+        "description": "Search AcaciaFund research articles by topic, pillar (AML, Markets, Data Engineering), or keyword",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "query": {
+              "type": "string",
+              "description": "Search query"
+            },
+            "pillar": {
+              "type": "string",
+              "enum": ["aml", "markets", "data-engineering"],
+              "description": "Filter by content pillar"
+            }
+          },
+          "required": ["query"]
+        }
+      },
+      {
+        "name": "get_article",
+        "description": "Retrieve a specific article by slug",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "slug": {
+              "type": "string",
+              "description": "Article slug (e.g., 'aml-risk-assessment')"
+            }
+          },
+          "required": ["slug"]
+        }
+      },
+      {
+        "name": "list_articles",
+        "description": "List articles with optional filtering",
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "content_type": {
+              "type": "string",
+              "enum": ["research", "learn", "knowledge"],
+              "description": "Filter by content type"
+            },
+            "pillar": {
+              "type": "string",
+              "enum": ["aml", "markets", "data-engineering"],
+              "description": "Filter by pillar"
+            },
+            "limit": {
+              "type": "integer",
+              "description": "Max articles to return",
+              "default": 10
+            }
+          }
+        }
+      }
+    ],
+    "resources": [
+      {
+        "uri": "https://www.acaciafund.org/llms.txt",
+        "name": "LLM Overview",
+        "description": "Site structure and content summary for AI agents"
+      },
+      {
+        "uri": "https://www.acaciafund.org/llms-full.txt",
+        "name": "Full Content",
+        "description": "Complete site content in text format"
+      }
+    ],
+    "prompts": [
+      {
+        "name": "research_synthesis",
+        "description": "Synthesize findings across multiple AcaciaFund articles on a given topic"
+      }
+    ]
+  }
+}

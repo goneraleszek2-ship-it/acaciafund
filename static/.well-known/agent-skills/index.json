@@ -1,0 +1,54 @@
+{
+  "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
+  "skills": [
+    {
+      "name": "link-headers",
+      "type": "skill-md",
+      "description": "Add Link response headers for agent discovery (RFC 8288)",
+      "url": "https://isitagentready.com/.well-known/agent-skills/link-headers/SKILL.md",
+      "digest": "sha256:90e89e75a88634a1f009813095fe5cf89d771c483dec3da074a108a998493d92"
+    },
+    {
+      "name": "api-catalog",
+      "type": "skill-md",
+      "description": "Publish an API catalog for automated API discovery (RFC 9727)",
+      "url": "https://isitagentready.com/.well-known/agent-skills/api-catalog/SKILL.md",
+      "digest": "sha256:1d702680dd6b8de8362b9dab02ba355016a8daac65b18749a462b7774699db42"
+    },
+    {
+      "name": "mcp-server-card",
+      "type": "skill-md",
+      "description": "Publish an MCP Server Card for agent discovery (SEP-1649)",
+      "url": "https://isitagentready.com/.well-known/agent-skills/mcp-server-card/SKILL.md",
+      "digest": "sha256:9a1af2376a9741bc29f97ff40120a7f115c1618188d40f2c9674b729485bd0d8"
+    },
+    {
+      "name": "agent-skills",
+      "type": "skill-md",
+      "description": "Publish an agent skills discovery index",
+      "url": "https://isitagentready.com/.well-known/agent-skills/agent-skills/SKILL.md",
+      "digest": "sha256:2cdda60ea052eb8af4ae8a4d96dc0d173151d5386ee724a4e98f93ed21adbae5"
+    },
+    {
+      "name": "auth-md",
+      "type": "skill-md",
+      "description": "Publish Auth.md metadata for agent registration",
+      "url": "https://isitagentready.com/.well-known/agent-skills/auth-md/SKILL.md",
+      "digest": "sha256:1794fff49d4ae401e782230c9aed1a268ce094b3200a02c5f7c98e72b21f1222"
+    },
+    {
+      "name": "webmcp",
+      "type": "skill-md",
+      "description": "Support WebMCP to expose site tools to AI agents via the browser",
+      "url": "https://isitagentready.com/.well-known/agent-skills/webmcp/SKILL.md",
+      "digest": "sha256:7084ef104e2cdac6a92a29622170c3c894628fbf6406597f86bf4349fa87732b"
+    },
+    {
+      "name": "markdown-negotiation",
+      "type": "skill-md",
+      "description": "Return HTML responses as markdown when agents request it",
+      "url": "https://isitagentready.com/.well-known/agent-skills/markdown-negotiation/SKILL.md",
+      "digest": "sha256:a230108a9586ed530945b91d49d86163e38a6687ad1b08f60ec08e2cb99f1ed7"
+    }
+  ]
+}

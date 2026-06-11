@@ -463,5 +463,59 @@
       }
     });
   </script>
+  <script>
+    (function(){
+      if (!navigator.modelContext) return;
+      var ctrl = new AbortController();
+      var siteUrl = 'https://www.acaciafund.org';
+      navigator.modelContext.registerTool({
+        name: 'search_research',
+        description: 'Search AcaciaFund research articles by topic or pillar (AML, Markets, Data Engineering)',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            query: { type: 'string', description: 'Search query' },
+            pillar: { type: 'string', enum: ['aml', 'markets', 'data-engineering'], description: 'Filter by content pillar' }
+          },
+          required: ['query']
+        },
+        execute: async function(args) {
+          var resp = await fetch(siteUrl + '/llms-full.txt');
+          var text = await resp.text();
+          var sections = text.split('\n\n');
+          var results = sections.filter(function(s) {
+            var q = (args.query || '').toLowerCase();
+            var p = (args.pillar || '').toLowerCase();
+            var matchQ = !q || s.toLowerCase().indexOf(q) !== -1;
+            var matchP = !p || s.toLowerCase().indexOf(p) !== -1;
+            return matchQ && matchP;
+          });
+          return { content: [{ type: 'text', text: results.slice(0, 5).join('\n\n') || 'No matching articles found.' }] };
+        },
+        signal: ctrl.signal
+      });
+      navigator.modelContext.registerTool({
+        name: 'list_articles',
+        description: 'List available articles by content type and pillar',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            content_type: { type: 'string', enum: ['research', 'learn', 'knowledge'], description: 'Filter by content type' },
+            pillar: { type: 'string', enum: ['aml', 'markets', 'data-engineering'], description: 'Filter by pillar' }
+          }
+        },
+        execute: async function(args) {
+          var resp = await fetch(siteUrl + '/sitemap.xml');
+          var xml = await resp.text();
+          var matches = xml.match(/<loc>[^<]+<\/loc>/g) || [];
+          var urls = matches.map(function(m) { return m.replace(/<\/?loc>/g, ''); });
+          if (args.pillar) urls = urls.filter(function(u) { return u.indexOf('/' + args.pillar + '/') !== -1; });
+          if (args.content_type) urls = urls.filter(function(u) { return u.indexOf('/' + args.content_type + '/') !== -1; });
+          return { content: [{ type: 'text', text: urls.slice(0, 20).join('\n') || 'No articles found.' }] };
+        },
+        signal: ctrl.signal
+      });
+    })();
+  </script>
 </body>
 </html>
