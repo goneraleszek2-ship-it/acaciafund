@@ -5,6 +5,9 @@ on:
     branches: [main]
   workflow_dispatch:
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
@@ -70,6 +73,9 @@ jobs:
               echo "✅ All content meets SQI quality threshold"
             fi
           fi
+
+      - name: Install wrangler
+        run: npm install -g wrangler@4
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3

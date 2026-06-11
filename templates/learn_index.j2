@@ -16,25 +16,10 @@
     <p class="mt-1 text-xs" style="color:var(--color-text-muted)" id="review-due"></p>
   </div>
 
-  {%- set learning_paths = {
-    "aml": {
-      "icon": "🛡️",
-      "name": "Anti-Money Laundering",
-      "color": "#c97d3e",
-      "desc": "Learn AML regulations, transaction monitoring, SAR filing, and risk-based approaches.",
-    },
-    "stock": {
-      "icon": "📈",
-      "name": "Financial Markets",
-      "color": "#3a7d5c",
-      "desc": "Understand market mechanics, securities analysis, trading strategies, and portfolio theory.",
-    },
-    "data-engineering": {
-      "icon": "⚙️",
-      "name": "Data Engineering",
-      "color": "#6366f1",
-      "desc": "Build data pipelines, warehouses, ETL processes, and learn big data architectures.",
-    },
+  {%- set pillar_meta = {
+    "aml": {"icon": "🛡️", "name": "Anti-Money Laundering", "color": "#c97d3e", "desc": "Learn AML regulations, transaction monitoring, SAR filing, and risk-based approaches."},
+    "stock": {"icon": "📈", "name": "Financial Markets", "color": "#3a7d5c", "desc": "Understand market mechanics, securities analysis, trading strategies, and portfolio theory."},
+    "data-engineering": {"icon": "⚙️", "name": "Data Engineering", "color": "#6366f1", "desc": "Build data pipelines, warehouses, ETL processes, and learn big data architectures."},
   } %}
     {# Bloom taxonomy path — visual progression L1→L6 #}
   {%- set bloom_levels = [
@@ -83,7 +68,7 @@
   </div>
 
   <div class="mb-10 grid gap-4 sm:grid-cols-3">
-    {%- for pkey, pinfo in learning_paths.items() %}
+    {%- for pkey, pinfo in pillar_meta.items() %}
     {%- set pcount = items | selectattr("pillar", "equalto", pkey) | list | length %}
     <div class="block rounded-xl p-4 transition hover:-translate-y-0.5 hover:shadow-md"
        style="background:var(--color-surface);border:1px solid var(--color-border)">
@@ -136,6 +121,76 @@
     </div>
   </div>
 
+  {%- if learning_paths_data %}
+  <div class="mb-12">
+    <h2 class="text-2xl font-bold mb-6" style="color:var(--color-text)">Learning Paths</h2>
+    {%- for pkey, ppath in learning_paths_data.items() %}
+    {%- set pm = pillar_meta.get(pkey, {}) %}
+    <div class="mb-8">
+      <h3 class="text-lg font-semibold mb-3" style="color:var(--color-text)">
+        <span>{{ pm.get("icon", "") }}</span> {{ ppath.label }}
+      </h3>
+      <div class="space-y-2">
+        {%- for step in ppath.steps %}
+        <div class="flex items-start gap-3 p-3 rounded-lg" style="background:var(--color-surface);border:1px solid var(--color-border)">
+          <div class="shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold"
+               style="background:{% if step.article_count > 0 %}{{ pm.get("color", "#6366f1") }}22{% else %}var(--color-bg){% endif %};color:{% if step.article_count > 0 %}{{ pm.get("color", "#6366f1") }}{% else %}var(--color-text-muted){% endif %}">
+            {{ step.bloom_num }}
+          </div>
+          <div class="min-w-0 flex-1">
+            <div class="text-sm font-medium" style="color:var(--color-text)">{{ step.label }}</div>
+            <div class="text-xs mt-1" style="color:var(--color-text-muted)">
+              {%- if step.articles %}
+                {%- for art in step.articles %}
+                <a href="/{{ art.slug }}/" class="inline-block mr-2 hover:text-[var(--color-accent)] transition">{{ art.title }}</a>
+                {%- endfor %}
+              {%- else %}
+                <span style="color:var(--color-text-muted);opacity:0.6">No lessons yet</span>
+              {%- endif %}
+            </div>
+          </div>
+          <span class="shrink-0 text-xs" style="color:var(--color-text-muted)">{{ step.article_count }} lesson{% if step.article_count != 1 %}s{% endif %}</span>
+        </div>
+        {%- endfor %}
+      </div>
+    </div>
+    {%- endfor %}
+  </div>
+  {%- endif %}
+
+  {%- if research_learn_items %}
+  <div class="mb-12">
+    <h2 class="text-2xl font-bold mb-1" style="color:var(--color-text)">Research-Based Articles</h2>
+    <p class="text-sm mb-4" style="color:var(--color-text-muted)">Recent articles with knowledge checks — explore emerging topics at your own pace.</p>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {%- for item in research_learn_items[:12] %}
+      {%- set p = item.pillar or "" %}
+      {%- set pc = pillar_config.get(p, none) %}
+      {%- set d_emoji = {"beginner": "🌱", "intermediate": "📘", "advanced": "🔥"} %}
+      {%- set bloom_names = {1:"L1 Remember",2:"L2 Understand",3:"L3 Apply",4:"L4 Analyze",5:"L5 Evaluate",6:"L6 Create"} %}
+      {%- set bloom_colors = {1:"#7eb8a4",2:"#8fa3c8",3:"#c8a96e",4:"#c87070",5:"#b87ab8",6:"#c87070"} %}
+      {%- set hb = item.highest_bloom | default(0) %}
+      <a href="/{{ item.slug }}/" class="learn-card block rounded-lg overflow-hidden transition hover:shadow-md" data-learn-slug="/{{ item.slug }}/"
+         data-bloom-level="{{ hb }}" data-pillar="{{ p }}" data-difficulty="{{ item.difficulty | default('beginner') }}"
+         style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+        <div class="p-4">
+          <div class="flex items-center gap-2 mb-2">
+            {%- if pc %}<span class="text-xs font-semibold px-2 py-0.5 rounded" style="background:{{ pc.color }}20;color:{{ pc.color }}">{{ pc.icon }} {{ pc.label }}</span>{% endif %}
+            {%- if hb >= 1 and hb <= 6 %}<span class="text-[10px] px-1.5 py-0.5 rounded font-medium" style="background:{{ bloom_colors[hb] }}22;color:{{ bloom_colors[hb] }}">{{ bloom_names[hb] }}</span>{% endif %}
+          </div>
+          <span class="block text-sm font-semibold" style="color:var(--color-text)">{{ item.title | striptags }}</span>
+          {%- if item.description %}<p class="mt-1 text-xs" style="color:var(--color-text-secondary)">{{ item.description[:120] }}</p>{% endif %}
+          <div class="flex items-center justify-between mt-2 text-xs">
+            <span style="color:var(--color-text-muted)">{{ d_emoji.get(item.difficulty, "") }} {{ item.difficulty | capitalize }}</span>
+            {%- if item.date_str %}<span style="color:var(--color-text-muted)">{{ item.date_str }}</span>{% endif %}
+          </div>
+        </div>
+      </a>
+      {%- endfor %}
+    </div>
+  </div>
+  {%- endif %}
+
   {%- if grouped and grouped | length > 0 %}
     {%- for group_name, group_items in grouped.items() %}
     <div class="mb-12 scroll-mt-20" id="{{ group_name | lower | replace(' ', '-') }}">
@@ -164,7 +219,7 @@
         {%- set hb = item.highest_bloom | default(0) %}
         <a href="/{{ item.slug }}/" class="learn-card block rounded-lg overflow-hidden transition hover:shadow-md" data-learn-slug="/{{ item.slug }}/"
            {%- if item.prerequisites and item.prerequisites | length > 0 %} data-prereqs="{{ item.prerequisites | join(',') }}"{% endif %}
-           data-bloom-level="{{ hb }}" data-pillar="{{ p }}"
+           data-bloom-level="{{ hb }}" data-pillar="{{ p }}" data-difficulty="{{ item.difficulty | default('beginner') }}"
            style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
           <div class="aspect-[600/340] overflow-hidden" style="background:var(--color-bg)">
             {%- if has_feat %}
@@ -408,6 +463,17 @@
       }
     });
   });
+
+  // Adaptive difficulty level indicator
+  try {
+    var ADAPTIVE_KEY = 'acacia_adaptive_v1';
+    var ad = JSON.parse(localStorage.getItem(ADAPTIVE_KEY) || 'null') || {scores: [], level: 'beginner'};
+    var summary = document.getElementById('progress-summary');
+    if (summary) {
+      var emojis = {beginner: '🌱', intermediate: '📘', advanced: '🔥'};
+      summary.textContent += ' · Current level: ' + (emojis[ad.level] || '') + ' ' + ad.level.charAt(0).toUpperCase() + ad.level.slice(1);
+    }
+  } catch(e){}
 })();
 </script>
 {% endblock %}

@@ -1,7 +1,8 @@
 import re
-from pydantic import BaseModel, Field, validator
 from typing import List, Optional, Any
 from datetime import datetime, timezone
+
+from pydantic import BaseModel, Field, validator
 
 PLACEHOLDER_PATTERNS = [
     r'Key Concept\s*\d',

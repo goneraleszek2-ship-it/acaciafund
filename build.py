@@ -9,6 +9,7 @@ import os
 import re
 import shutil
 import time
+import tomllib
 import unicodedata
 from collections import defaultdict
 from datetime import datetime, timedelta, timezone
@@ -694,6 +695,23 @@ def main():
     learn_items = [c for c in all_content if c.content_type == "learn"]
     knowledge_items = [c for c in all_content if c.content_type == "knowledge"]
 
+    # Research articles with bloom questions, mapped to learn-like items for cross-referencing
+    research_learn_items = []
+    for r in research_items:
+        if r.bloom_questions and r.highest_bloom > 0:
+            r_diff = "beginner" if r.highest_bloom <= 2 else "intermediate" if r.highest_bloom <= 4 else "advanced"
+            research_learn_items.append({
+                "slug": r.slug,
+                "title": r.title,
+                "pillar": r.pillar or "",
+                "difficulty": r.difficulty or r_diff,
+                "highest_bloom": r.highest_bloom or 0,
+                "description": r.description[:200] if r.description else "",
+                "date_str": r.date_str or "",
+                "tags": r.tags,
+                "prerequisites": [],
+            })
+
     pillar_groups = group_by_pillar(research_items)
 
     BLOOM_NAMES = {1: "Remember", 2: "Understand", 3: "Apply", 4: "Analyse", 5: "Evaluate", 6: "Create"}
@@ -743,9 +761,28 @@ def main():
         thumb_key = hashlib.md5(item.title.encode()).hexdigest()[:12]
         og_key = hashlib.md5(f"og_{item.title}".encode()).hexdigest()[:12]
         thumb_base = f"{SITE_URL}/static/images"
-        og_image_url = f"{SITE_URL}/static/images/og_{og_key}.svg"
+        feat_img_path = resolve_featured_image(item.featured_image or "")
+        og_image_url = feat_img_path if feat_img_path else f"{SITE_URL}/static/images/og_{og_key}.svg"
 
         layer_sub = item.knowledge_category.replace("_", " ").title() if item.knowledge_category else item.pillar or ""
+        # Serialize quiz data for knowledge articles too
+        k_quiz_json = ""
+        if item.bloom_questions:
+            k_quiz_data = {"questions": []}
+            for bq in item.bloom_questions[:10]:
+                if isinstance(bq, dict) and "question" in bq:
+                    qtype = bq.get("type", "mc")
+                    opts = bq.get("options", [])
+                    raw = bq.get("answer") if "answer" in bq else None
+                    if raw is None:
+                        correct_val = bq.get("correct", "")
+                        raw = opts.index(correct_val) if isinstance(correct_val, str) and correct_val and correct_val in opts else 0
+                    entry = {"q": bq["question"], "options": opts, "a": raw, "type": qtype}
+                    if qtype == "open-ended":
+                        entry["answer_text"] = bq.get("correct", opts[raw] if opts else "")
+                    k_quiz_data["questions"].append(entry)
+            if k_quiz_data["questions"]:
+                k_quiz_json = json.dumps(k_quiz_data, ensure_ascii=False)
         html = render_template("knowledge.j2",
             content=item, page_path=page_path,
             toc_items=toc_items, kcat=kcat,
@@ -754,6 +791,7 @@ def main():
             visual_fingerprint=visual_fingerprint, layer_badge=layer_badge,
             thumbnail_base=thumb_base, thumbnail_key=thumbnail_key,
             og_image_url=og_image_url,
+            quiz_json=k_quiz_json,
             is_index=False, page_type="knowledge", layer="knowledge",
             layer_icon=LAYER_ICONS["knowledge"], layer_sub=layer_sub, **ctx_base)
         out_file.write_text(html, encoding="utf-8")
@@ -867,7 +905,9 @@ def main():
         thumb_key = hashlib.md5(item.title.encode()).hexdigest()[:12]
         og_key = hashlib.md5(f"og_{item.title}".encode()).hexdigest()[:12]
         thumb_base = f"{SITE_URL}/static/images"
-        og_image_url = f"{SITE_URL}/static/images/og_{og_key}.svg"
+        feat_img_path = resolve_featured_image(item.featured_image or "")
+        og_image_url = feat_img_path if feat_img_path else f"{SITE_URL}/static/images/og_{og_key}.svg"
+        (out_static / f"og_{og_key}.svg").write_text(og_svg, encoding="utf-8")
 
         # Serialize quiz data for learning_hub.js
         quiz_json = ""
@@ -875,9 +915,20 @@ def main():
             quiz_data = {"questions": []}
             for bq in item.bloom_questions[:10]:
                 if isinstance(bq, dict) and "question" in bq:
+                    qtype = bq.get("type", "mc")
                     opts = bq.get("options", [])
-                    answer = bq.get("answer", 0)
-                    quiz_data["questions"].append({"q": bq["question"], "options": opts, "a": answer})
+                    # Normalize answer: supports both "answer" (int) and "correct" (string value)
+                    raw = bq.get("answer") if "answer" in bq else None
+                    if raw is None:
+                        correct_val = bq.get("correct", "")
+                        if isinstance(correct_val, str) and correct_val and opts:
+                            raw = opts.index(correct_val) if correct_val in opts else 0
+                        else:
+                            raw = 0
+                    entry = {"q": bq["question"], "options": opts, "a": raw, "type": qtype}
+                    if qtype == "open-ended":
+                        entry["answer_text"] = bq.get("correct", opts[raw] if opts else "")
+                    quiz_data["questions"].append(entry)
             if quiz_data["questions"]:
                 quiz_json = json.dumps(quiz_data, ensure_ascii=False)
 
@@ -930,6 +981,35 @@ def main():
         if bl > 0 and bl not in bloom_first_articles:
             bloom_first_articles[bl] = l_item.slug
     thumb_base = f"{SITE_URL}/static/images"
+
+    # Load learning paths from pillars.toml
+    toml_path = Path(__file__).parent / "etc" / "pillars.toml"
+    learning_paths_data = {}
+    if toml_path.exists():
+        with open(toml_path, "rb") as _tf:
+            _toml_cfg = tomllib.load(_tf)
+        for _pkey, _ppath in _toml_cfg.get("learning_paths", {}).items():
+            steps = []
+            for _step in _ppath.get("steps", []):
+                _bloom = _step.get("bloom", "")
+                _bloom_num = {"remember": 1, "understand": 2, "apply": 3,
+                              "analyze": 4, "evaluate": 5, "create": 6}.get(_bloom, 0)
+                _matching = [a for a in learn_items
+                             if a.pillar == _pkey and (a.highest_bloom or 0) == _bloom_num]
+                _articles = [{"slug": a.slug, "title": a.title, "difficulty": a.difficulty or ""}
+                             for a in sorted(_matching, key=lambda x: x.title or "")]
+                steps.append({
+                    "bloom": _bloom,
+                    "bloom_num": _bloom_num,
+                    "label": _step.get("label", ""),
+                    "articles": _articles,
+                    "article_count": len(_articles),
+                })
+            learning_paths_data[_pkey] = {
+                "label": _ppath.get("label", ""),
+                "steps": steps,
+            }
+
     html = render_template("learn_index.j2",
         content=_dummy("Learning Hub", "learn",
                        description="Interactive lessons, tutorials, and quizzes on AML compliance, financial markets, science, and DataOps — powered by Bloom taxonomy."),
@@ -939,6 +1019,8 @@ def main():
         is_index=False, page_path="learn/",
         layer="learn", layer_icon=LAYER_ICONS["learn"],
         bloom_first_articles=bloom_first_articles,
+        learning_paths_data=learning_paths_data,
+        research_learn_items=research_learn_items,
         **ctx_base)
     (learn_dir / "index.html").write_text(html, encoding="utf-8")
     print("  category: learn/index.html")
@@ -975,9 +1057,27 @@ def main():
         pconf = PILLAR_CONFIG.get(pillar, PILLAR_CONFIG["aml"])
         sqi_svg = generate_sqi_badge(item.signals.get("avg_sqi", SQI_DEFAULT)) if item.signals else ""
         og_key = hashlib.md5(f"og_{item.title}".encode()).hexdigest()[:12]
-        og_image_url = f"{SITE_URL}/static/images/og_{og_key}.svg"
+        feat_img_path = resolve_featured_image(item.featured_image or "")
+        og_image_url = feat_img_path if feat_img_path else f"{SITE_URL}/static/images/og_{og_key}.svg"
         thumb_base = f"{SITE_URL}/static/images"
-
+        # Serialize quiz data for research articles
+        r_quiz_json = ""
+        if item.bloom_questions:
+            r_quiz_data = {"questions": []}
+            for bq in item.bloom_questions[:10]:
+                if isinstance(bq, dict) and "question" in bq:
+                    qtype = bq.get("type", "mc")
+                    opts = bq.get("options", [])
+                    raw = bq.get("answer") if "answer" in bq else None
+                    if raw is None:
+                        correct_val = bq.get("correct", "")
+                        raw = opts.index(correct_val) if isinstance(correct_val, str) and correct_val and correct_val in opts else 0
+                    entry = {"q": bq["question"], "options": opts, "a": raw, "type": qtype}
+                    if qtype == "open-ended":
+                        entry["answer_text"] = bq.get("correct", opts[raw] if opts else "")
+                    r_quiz_data["questions"].append(entry)
+            if r_quiz_data["questions"]:
+                r_quiz_json = json.dumps(r_quiz_data, ensure_ascii=False)
         html = render_template("blog_post.j2",
             content=item, page_path=page_path, page_body=body,
             prev_post=prev_post, next_post=next_post,
@@ -989,6 +1089,7 @@ def main():
             visual_fingerprint=visual_fingerprint, layer_badge=layer_badge,
             featured_image=resolve_section_image(item.featured_image),
             image_credit=item.image_credit,
+            quiz_json=r_quiz_json,
             layer_sub=pconf["label"], **ctx_base)
         out_file.write_text(html, encoding="utf-8")
         print(f"  research: {out_file.relative_to(OUTPUT_DIR)}")

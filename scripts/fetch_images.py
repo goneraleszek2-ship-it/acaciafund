@@ -40,7 +40,7 @@ IMAGES_DIR = PROJECT_ROOT / "static" / "images" / "generated"
 USER_AGENT = "AcaciaFund/1.0 (image-fetcher; +https://acaciafund.org)"
 RATE_LIMIT_DELAY = 0.15
 MAX_WORKERS = 4
-MIN_SCORE = 35
+MIN_SCORE = 25
 MAX_IMAGE_WIDTH = 1200
 MAX_IMAGE_BYTES = 10 * 1024 * 1024  # 10MB cap per download
 TARGET_WORDS_PER_IMAGE = 150
@@ -93,28 +93,28 @@ SECTION_FALLBACK_QUERIES = {
         "data center server room",
     ],
     "methodology": [
-        "research analysis chart",
-        "scientist laboratory work",
+        "{pillar_kw} research analysis",
+        "{pillar_visual} chart diagram",
         "data visualization dashboard",
         "document report office",
     ],
     "domain_breakdown": [
-        "{pillar_kw} industry",
-        "business technology office",
-        "data analytics dashboard",
-        "market chart graph",
+        "{pillar_kw} industry sector",
+        "business technology office workspace",
+        "data analytics dashboard chart",
+        "market chart graph trading",
     ],
     "source_analysis": [
-        "document library archive",
-        "bookshelf knowledge",
-        "data report analysis",
-        "book reading study",
+        "{pillar_kw} document report",
+        "library archive books research",
+        "data report analysis document",
+        "book reading study knowledge",
     ],
     "cross_pillar": [
-        "network connection architecture",
-        "server room data center",
-        "technology infrastructure",
-        "system integration bridge",
+        "{pillar_kw} connection integration",
+        "network connection architecture system",
+        "server room data center technology",
+        "system integration bridge connection",
     ],
 }
 
@@ -129,9 +129,20 @@ def build_fallback_queries(section_type: str, pillar: str) -> list[str]:
         q = t.format(pillar_kw=pillar_kw, pillar_visual=pillar_visual)
         if q not in results:
             results.append(q)
+    # Add a catch-all visual query per pillar as final fallback
+    pillar_catchall = {
+        "aml": "compliance office document desk workspace",
+        "stock": "financial chart stock market trading computer screen",
+        "data-engineering": "server room data center network cables technology",
+        "science": "laboratory microscope scientific research equipment",
+    }
+    catchall = pillar_catchall.get(pillar, "technology office workspace computer")
+    if catchall not in results:
+        results.append(catchall)
     return results
 
 SECTION_PRIORITY = {
+    0: "conditional",  # overview sections for articles > 500 words
     1: "always",
     2: "always",
     3: "conditional",
@@ -141,6 +152,7 @@ SECTION_PRIORITY = {
 }
 
 SECTION_WORD_MIN = {
+    0: 500,  # overview needs 500+ word article
     1: 0,
     2: 0,
     3: 120,
@@ -241,45 +253,70 @@ CURATED_KNOWN = {
     "protein structure biology": "File:Protein structure visualization.jpg",
     "telescope astronomy space": "File:Telescope astronomy.jpg",
     "climate weather environmental": "File:Climate monitoring.jpg",
+
+    # === MATH & COMPUTER SCIENCE ===
+    "differential geometry manifold curvature": "File:Triangular mesh sphere.jpg",
+    "riemannian manifold tensor calculus": "File:Torus.jpg",
+    "gaussian curvature surface geometry": "File:Sphere wireframe.svg",
+
+    # === ABSTRACT / CROSS-PILLAR (visual fallbacks for section images) ===
+    "network connection architecture system integration": "File:Network switch.jpg",
+    "technology infrastructure server room": "File:Google data center.jpg",
+    "computer code programming screen": "File:Programming code - Pair programming.jpg",
+    "data center server rack hardware": "File:Virginia Tech - data center.jpg",
+    "office workspace desk computer": "File:Office workspace.jpg",
+    "connection bridge integration network": "File:Network switch.jpg",
+    "cloud computing technology infrastructure": "File:Cloud computing.jpg",
+    "circuit board processor semiconductor chip": "File:Motherboard closeup.jpg",
+    "semiconductor wafer chip fabrication": "File:Wafer 20110212.jpg",
+    "analytics dashboard data visualization": "File:Analytics dashboard.jpg",
+    "chart graph financial report document": "File:Stock market chart.svg",
+    "software architecture diagram blueprint": "File:Database schema.jpg",
+    "database schema table relationship": "File:Database schema.jpg",
+    "api integration web service connection": "File:REST API.png",
+    "cybersecurity lock encryption protection": "File:Cybersecurity.jpg",
+    "compliance regulation policy document": "File:Us-treasury-building.jpg",
+    "science laboratory research experiment": "File:Laboratory research.jpg",
+    "dna genome sequencing biology": "File:DNA sequencing.jpg",
 }
 
 # ── Semantic query expansion (Phase 3) ─────────────────────────────
 QUERY_EXPANSION = {
-    "money laundering": "money laundering financial crime illegal finance compliance",
-    "market risk": "market risk trading volatility financial risk investment",
-    "data pipeline": "data pipeline etl data engineering server infrastructure",
-    "machine learning": "machine learning artificial intelligence ai data science",
-    "deep learning": "deep learning neural network ai artificial intelligence",
-    "blockchain": "blockchain distributed ledger cryptocurrency crypto tokens",
-    "regulatory compliance": "regulatory compliance legal regulation policy audit law",
-    "cybersecurity": "cybersecurity hacking encryption security data protection network",
-    "supply chain": "supply chain logistics shipping distribution warehouse cargo",
-    "risk assessment": "risk assessment evaluation analysis compliance audit",
-    "data quality": "data quality validation testing accuracy monitoring",
-    "data observability": "data observability monitoring lineage tracking pipeline",
-    "data engineering": "data engineering pipeline etl infrastructure server",
-    "fraud detection": "fraud detection scam prevention security monitoring",
-    "beneficial ownership": "beneficial ownership transparency registry corporate",
-    "sanctions compliance": "sanctions compliance ofac embargo international trade",
-    "suspicious activity": "suspicious activity report sar filing compliance",
-    "financial crime": "financial crime fraud money laundering compliance",
-    "anti money laundering": "anti money laundering aml compliance regulation",
-    "know your customer": "know your customer kyc verification identity compliance",
-    "trading strategy": "trading strategy algorithm quantitative finance market",
-    "portfolio management": "portfolio management investment diversification assets",
-    "risk management": "risk management assessment mitigation control compliance",
-    "data governance": "data governance policy management quality stewardship",
-    "data architecture": "data architecture design infrastructure pipeline system",
-    "real time": "real time streaming data processing pipeline",
-    "artificial intelligence": "artificial intelligence ai machine learning automation",
-    "natural language processing": "natural language processing nlp text ai",
-    "computer vision": "computer vision image recognition ai deep learning",
-    "financial regulation": "financial regulation compliance policy banking law",
-    "central bank": "central bank monetary policy federal reserve currency",
-    "stock market": "stock market exchange trading finance investment",
-    "cryptocurrency": "cryptocurrency bitcoin crypto blockchain digital currency",
-    "algorithmic trading": "algorithmic trading quantitative automated finance market",
-    "compliance program": "compliance program regulatory policy audit management",
+    "money laundering": "money laundering financial crime illegal finance compliance office document",
+    "market risk": "market risk trading volatility financial risk investment chart trading",
+    "data pipeline": "data pipeline etl extract transform load server rack database",
+    "machine learning": "machine learning artificial intelligence ai data science computer server",
+    "deep learning": "deep learning neural network ai artificial intelligence brain network",
+    "blockchain": "blockchain distributed ledger cryptocurrency crypto tokens network chain",
+    "regulatory compliance": "regulatory compliance legal regulation policy audit law government building",
+    "cybersecurity": "cybersecurity hacking encryption security data protection network firewall",
+    "supply chain": "supply chain logistics shipping distribution warehouse cargo container ship",
+    "risk assessment": "risk assessment evaluation analysis compliance audit checklist document",
+    "data quality": "data quality validation testing accuracy monitoring dashboard analytics",
+    "data observability": "data observability monitoring lineage tracking pipeline dashboard screen",
+    "data engineering": "data engineering pipeline etl infrastructure server database code",
+    "fraud detection": "fraud detection scam prevention security monitoring alert dashboard",
+    "beneficial ownership": "beneficial ownership transparency registry corporate document filing",
+    "sanctions compliance": "sanctions compliance ofac embargo international trade map globe",
+    "suspicious activity": "suspicious activity report sar filing compliance alert document",
+    "financial crime": "financial crime fraud money laundering compliance investigation document",
+    "anti money laundering": "anti money laundering aml compliance regulation bank document",
+    "know your customer": "know your customer kyc verification identity compliance id card",
+    "trading strategy": "trading strategy algorithm quantitative finance market chart monitor",
+    "portfolio management": "portfolio management investment diversification assets chart growth",
+    "risk management": "risk management assessment mitigation control compliance spreadsheet",
+    "data governance": "data governance policy management quality stewardship database catalog",
+    "data architecture": "data architecture design infrastructure pipeline system diagram schema",
+    "real time": "real time streaming data processing pipeline dashboard analytics monitor",
+    "artificial intelligence": "artificial intelligence ai machine learning automation robot chip",
+    "natural language processing": "natural language processing nlp text ai language chat bot",
+    "computer vision": "computer vision image recognition ai deep learning camera vision",
+    "financial regulation": "financial regulation compliance policy banking law government building",
+    "central bank": "central bank monetary policy federal reserve currency note money",
+    "stock market": "stock market exchange trading finance investment ticker board floor",
+    "cryptocurrency": "cryptocurrency bitcoin crypto blockchain digital currency coin network",
+    "algorithmic trading": "algorithmic trading quantitative automated finance market screen chart",
+    "compliance program": "compliance program regulatory policy audit management office workspace",
 }
 
 
@@ -410,6 +447,18 @@ def build_section_query(section: dict, article: dict) -> str:
         if tl not in seen:
             seen.add(tl)
             unique_terms.append(t)
+    # Filter noise: remove known brand/proper nouns that have no visual representation
+    noise_terms = {"acaciafund", "neuralink", "alphafold", "fincen", "tsmc", "crispr",
+                   "jwst", "defi", "openmetadata", "dataops", "great_expectations",
+                   "dagster", "prefect", "dbt", "soda", "mlflow", "kafka", "airflow",
+                   "spark", "flink", "hudi", "iceberg", "databricks", "snowflake",
+                   "hadoop", "etl", "sqi", "aml", "kyc", "ofac", "sar", "fatf",
+                   "usdt", "usdc", "sec", "occ", "bis", "ecb", "fed", "finra",
+                   "nvidia", "asml", "amd", "intel", "apple", "google", "microsoft",
+                   "anthropic", "openai", "tesla", "spacex", "meta", "amazon"}
+    unique_terms = [t for t in unique_terms if t.lower() not in noise_terms]
+    if not unique_terms:
+        unique_terms = [pillar_kw.split()[0]] if pillar_kw else ["technology"]
 
     if section.get("section_index", 0) > 0:
         section_entities = section.get("entities", [])
@@ -709,8 +758,50 @@ def search_pixabay(query: str) -> list[dict]:
     return candidates
 
 
+def generate_svg_placeholder(prompt: str, dest: Path) -> tuple[bool, str, int, int, int]:
+    """Generate an SVG geometric placeholder when no photo or AI image is available."""
+    import hashlib
+    h = hashlib.md5(prompt.encode()).hexdigest()
+    # Extend the hex string to avoid slice issues
+    hx = (h * 4)[:96]
+    hue = int(h[:8], 16) % 360
+    hue2 = (hue + 40) % 360
+    bg_color = f"hsl({hue}, 30%, 15%)"
+    accent = f"hsl({hue2}, 50%, 50%)"
+    accent2 = f"hsl({hue}, 60%, 40%)"
+    n = (int(h[8:12], 16) % 6) + 4
+    shapes = []
+    for i in range(n):
+        p = 12 + 2*i
+        x = (int(hx[p:p+2], 16) % 80) + 10
+        y = (int(hx[p+2:p+4], 16) % 80) + 10
+        r = (int(hx[p+4:p+6], 16) % 15) + 5
+        opacity = 0.15 + (i % 4) * 0.1
+        shapes.append(f'<circle cx="{x}%" cy="{y}%" r="{r}%" fill="{accent}" opacity="{opacity}"/>')
+    for i in range(n // 2):
+        p = 40 + 8*i
+        x1 = (int(hx[p:p+2], 16) % 80) + 10
+        y1 = (int(hx[p+2:p+4], 16) % 80) + 10
+        w = (int(hx[p+4:p+6], 16) % 25) + 5
+        hr = (int(hx[p+6:p+8], 16) % 20) + 5
+        shapes.append(f'<rect x="{x1}%" y="{y1}%" width="{w}%" height="{hr}%" rx="4" fill="none" stroke="{accent2}" stroke-width="0.5" opacity="0.3"/>')
+    svg = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 675" width="1200" height="675">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="{bg_color}"/>
+      <stop offset="100%" stop-color="hsl({hue2}, 25%, 10%)"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#bg)"/>
+  {''.join(shapes)}
+</svg>'''
+    dest_path = dest.with_suffix(".svg")
+    dest_path.write_text(svg, encoding="utf-8")
+    return True, ".svg", 1200, 675, len(svg.encode("utf-8"))
+
+
 def generate_ai_illustration(prompt: str, dest: Path) -> tuple[bool, str, int, int, int]:
-    """Pollinations.ai — free AI image generation. Fallback when no photo found."""
+    """Pollinations.ai — free AI image generation. Falls back to SVG placeholder."""
     try:
         safe_prompt = re.sub(r'[^a-zA-Z0-9 ]', '', prompt)[:200]
         url = f"https://gen.pollinations.ai/image/{safe_prompt}?model=flux&width=1200&height=675&nologo=true"
@@ -718,7 +809,7 @@ def generate_ai_illustration(prompt: str, dest: Path) -> tuple[bool, str, int, i
         resp.raise_for_status()
         content = resp.content
         if not content or len(content) < 1000:
-            return False, "", 0, 0, 0
+            return generate_svg_placeholder(prompt, dest)
         if HAS_PIL:
             img = Image.open(BytesIO(content))
             if img.mode == "RGBA":
@@ -745,7 +836,7 @@ def generate_ai_illustration(prompt: str, dest: Path) -> tuple[bool, str, int, i
         dest_path.write_bytes(data)
         return True, ext, w, h, len(data)
     except Exception:
-        return False, "", 0, 0, 0
+        return generate_svg_placeholder(prompt, dest)
 
 
 # ── Global dedup: track images used across all articles ──────────────
@@ -912,7 +1003,7 @@ def build_credit(result: dict, backend_name: str) -> str:
     backend_labels = {"openverse": "Openverse", "loc": "Library of Congress",
                       "nasa": "NASA", "wikimedia": "Wikimedia Commons",
                       "unsplash": "Unsplash", "pexels": "Pexels",
-                      "pixabay": "Pixabay", "ai_generated": "AI-generated (Pollinations.ai)"}
+                      "pixabay": "Pixabay", "ai_generated": "SVG Placeholder"}
     label = backend_labels.get(backend_name, backend_name)
     parts = [f"Photo by {creator}"] if creator else ["Photo"]
     parts.append(f"via {label} ({license_name})")
@@ -1104,7 +1195,7 @@ def fetch_section_images(article: dict, force: bool = False) -> list[dict]:
                     "section_index": idx,
                     "heading": section["heading"],
                     "image_url": rel_path,
-                    "image_credit": "AI-generated via Pollinations.ai (MIT)",
+                    "image_credit": "SVG Placeholder (AcaciaFund)",
                     "image_alt": generate_alt_text(section),
                     "relevance_score": 50.0,
                     "source_api": "ai_generated",
@@ -1130,7 +1221,7 @@ def fetch_section_images(article: dict, force: bool = False) -> list[dict]:
                     "section_index": idx,
                     "heading": section["heading"],
                     "image_url": rel_path,
-                    "image_credit": "AI-generated via Pollinations.ai (MIT)",
+                    "image_credit": "SVG Placeholder (AcaciaFund)",
                     "image_alt": generate_alt_text(section),
                     "relevance_score": 50.0,
                     "source_api": "ai_generated",
@@ -1361,6 +1452,7 @@ def main():
     parser = argparse.ArgumentParser(description="Fetch section-level images for articles")
     parser.add_argument("--max", type=int, default=0, help="Max articles (0 = all)")
     parser.add_argument("--force", action="store_true", help="Re-fetch all images")
+    parser.add_argument("--re-evaluate", action="store_true", help="Re-score cached section images below 70 threshold and re-fetch if better")
     parser.add_argument("--cache", action="store_true", help="Skip articles that already have images")
     args = parser.parse_args()
 
@@ -1411,27 +1503,31 @@ def main():
         if use_cache and existing_images and not args.force:
             valid_images = [img for img in existing_images if img.get("image_url")]
             if valid_images:
-                # Still fetch featured image if missing (section images don't imply hero)
-                feat = article.get("featured_image", "")
-                if not feat or not (PROJECT_ROOT / feat.lstrip("/")).exists():
-                    fi = fetch_featured_image(article)
-                    if fi:
-                        article["featured_image"] = fi
-                        updated_count += 1
-                print(f"✓ cached ({len(valid_images)} images)")
-                stats["articles_with_images"] += 1
-                stats["filled_slots"] += len(valid_images)
-                for si in valid_images:
-                    backend = si.get("source_api", "unknown")
-                    stats["backend_hits"][backend] += 1
-                    score = si.get("relevance_score", 0)
-                    stats["relevance_scores"].append(score)
-                    stype = SECTION_TYPES.get(si.get("section_index", 0), "unknown")
-                    if stype not in stats["section_coverage"]:
-                        stats["section_coverage"][stype] = [0, 0]
-                    stats["section_coverage"][stype][0] += 1
-                    stats["section_coverage"][stype][1] += 1
-                continue
+                # Re-evaluate mode: re-fetch if any existing image is below threshold
+                if args.re_evaluate and any(img.get("relevance_score", 0) < 70 for img in valid_images):
+                    print(f"\u2192 low-score re-eval ({len(valid_images)} cached)", end=" ", flush=True)
+                else:
+                    # Still fetch featured image if missing (section images don't imply hero)
+                    feat = article.get("featured_image", "")
+                    if not feat or not (PROJECT_ROOT / feat.lstrip("/")).exists():
+                        fi = fetch_featured_image(article)
+                        if fi:
+                            article["featured_image"] = fi
+                            updated_count += 1
+                    print(f"\u2713 cached ({len(valid_images)} images)")
+                    stats["articles_with_images"] += 1
+                    stats["filled_slots"] += len(valid_images)
+                    for si in valid_images:
+                        backend = si.get("source_api", "unknown")
+                        stats["backend_hits"][backend] += 1
+                        score = si.get("relevance_score", 0)
+                        stats["relevance_scores"].append(score)
+                        stype = SECTION_TYPES.get(si.get("section_index", 0), "unknown")
+                        if stype not in stats["section_coverage"]:
+                            stats["section_coverage"][stype] = [0, 0]
+                        stats["section_coverage"][stype][0] += 1
+                        stats["section_coverage"][stype][1] += 1
+                    continue
 
         # Fetch featured image if missing
         feat = article.get("featured_image", "")

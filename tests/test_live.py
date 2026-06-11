@@ -33,9 +33,9 @@ def test_new_features_in_generated_output():
     # 5. Related Research section on learn page
     assert "Related Research" in learn_html
 
-    # 6. SM-2 quiz hook on learn page with questions
+    # 6. External learning_hub.js + quiz hook on learn page
     assert 'data-quiz-lesson="learn/aml-basics"' in learn_html
-    assert "acacia_sm2_v1" in learn_html
+    assert "learning_hub.js" in learn_html
 
     # 7. Learning path cards on /learn/ index
     li_html = (out / "learn" / "index.html").read_text(encoding="utf-8")
@@ -46,6 +46,8 @@ def test_new_features_in_generated_output():
     # 8. Quiz JSON is valid on a learn page with bloom_questions
     import re
     m = re.search(r"data-quiz='({.+?})'", learn_html)
+    if not m:
+        m = re.search(r'data-quiz="({.+?})"', learn_html)
     assert m, "data-quiz attribute found"
     quiz = json.loads(m.group(1))
     assert len(quiz["questions"]) > 0
@@ -57,3 +59,19 @@ def test_new_features_in_generated_output():
         if "inline-flex items-center gap-1" in html and "SQI" in html:
             stats_count += 1
     assert stats_count >= 1, "At least one research page has stats belt"
+
+    # 10. External learning_hub.js loaded on knowledge and research pages
+    assert "learning_hub.js" in knowledge_html
+    assert "learning_hub.js" in research_html
+
+    # 11. Quiz section on knowledge page (if questions exist)
+    if "data-quiz-lesson" in knowledge_html:
+        assert 'id="quiz-section"' in knowledge_html
+
+    # 12. Open-ended question type supported in serialized quiz
+    if m:
+        quiz = json.loads(m.group(1))
+        for q in quiz["questions"]:
+            assert "type" in q, "Each question has a type field"
+            if q.get("type") == "open-ended":
+                assert "answer_text" in q
