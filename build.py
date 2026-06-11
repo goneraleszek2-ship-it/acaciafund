@@ -1310,6 +1310,26 @@ Sitemap: {SITE_URL}/sitemap.xml
         root_src = STATIC_DST_DIR / root_file
         if root_src.exists():
             (OUTPUT_DIR / root_file).write_text(root_src.read_text(encoding="utf-8"), encoding="utf-8")
+    # --- Copy _headers to dist root (Cloudflare Pages reads this) ---
+    headers_src = STATIC_DST_DIR / "_headers"
+    if headers_src.exists():
+        (OUTPUT_DIR / "_headers").write_text(headers_src.read_text(encoding="utf-8"), encoding="utf-8")
+    # --- Copy auth.md to dist root ---
+    auth_src = STATIC_DST_DIR / "auth.md"
+    if auth_src.exists():
+        (OUTPUT_DIR / "auth.md").write_text(auth_src.read_text(encoding="utf-8"), encoding="utf-8")
+    # --- Copy .well-known agent-readiness files ---
+    well_known_files = [
+        (".well-known", "api-catalog"),
+        (".well-known/mcp", "server-card.json"),
+        (".well-known/agent-skills", "index.json"),
+    ]
+    for subdir, fname in well_known_files:
+        src = STATIC_DST_DIR / subdir / fname
+        if src.exists():
+            dst = OUTPUT_DIR / subdir / fname
+            dst.parent.mkdir(parents=True, exist_ok=True)
+            dst.write_text(src.read_text(encoding="utf-8"), encoding="utf-8")
 
     # --- LLMs-full.txt (comprehensive content index for AI crawlers) ---
     llms_full_lines = [
