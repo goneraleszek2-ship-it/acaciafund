@@ -1082,15 +1082,30 @@ def _build_featured_queries(article: dict) -> list[str]:
         if q2.strip():
             queries.append(q2)
 
-    # Query 3: pillar + first tag (broad fallback)
+    # Query 3: first meaningful tag + pillar keyword
     if tags and pillar:
         q3 = f"{tags[0]} {pillar.replace('-', ' ')}"[:80]
         queries.append(q3)
 
-    # Query 4: pillar keyword only (most broad fallback)
+    # Query 4: broad single-word tag + pillar
+    broad_tags = [t for t in tags if len(t) > 4 and t not in ('6amld', 'fatf', 'gafi', 'eu-regulation')]
+    if broad_tags:
+        queries.append(f"{broad_tags[0]} {pillar.replace('-', ' ')}"[:60])
+
+    # Query 5: pillar keyword only
     pk = PILLAR_KEYWORDS.get(pillar, "")
     if pk:
         queries.append(pk[:40])
+
+    # Query 6: ultra-broad single keywords per pillar
+    PILLAR_BROAD = {
+        "aml": ["finance", "office", "security", "audit"],
+        "stock": ["finance", "trading", "chart", "market"],
+        "data-engineering": ["server", "computer", "network", "data"],
+        "science": ["laboratory", "research", "science", "experiment"],
+    }
+    for kw in PILLAR_BROAD.get(pillar, []):
+        queries.append(kw)
 
     return queries
 
