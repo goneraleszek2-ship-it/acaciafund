@@ -300,6 +300,22 @@ def sanitize_domain_breakdown(html: str) -> str:
     return html
 
 
+def _resolve_ref_file(p: Path) -> str:
+    """If p is a REF: pointer file, return the URL of the original image."""
+    if p.exists() and p.is_file():
+        try:
+            content = p.read_text(encoding="utf-8").strip()
+            if content.startswith("REF:"):
+                original_name = content[4:]
+                original_path = p.parent / original_name
+                if original_path.exists():
+                    rel = str(original_path.relative_to(PROJECT_ROOT))
+                    return f"{SITE_URL}/{rel}"
+        except Exception:
+            pass
+    return ""
+
+
 def resolve_featured_image(raw_path: str) -> str:
     """Resolve featured_image path to absolute URL, trying multiple extensions."""
     if not raw_path:
@@ -307,18 +323,27 @@ def resolve_featured_image(raw_path: str) -> str:
     p = Path(PROJECT_ROOT / raw_path.lstrip("/"))
     # Try original path
     if p.exists():
+        ref = _resolve_ref_file(p)
+        if ref:
+            return ref
         return f"{SITE_URL}{raw_path}" if raw_path.startswith("/") else f"{SITE_URL}/{raw_path}"
     # Try alternate extensions: .webp, .png, .jpg, .jpeg
     stem = p.stem
     for ext in (".webp", ".png", ".jpg", ".jpeg"):
         alt = p.parent / f"{stem}{ext}"
         if alt.exists():
+            ref = _resolve_ref_file(alt)
+            if ref:
+                return ref
             resolved = raw_path.rsplit("/", 1)[0] + "/" + alt.name
             return f"{SITE_URL}{resolved}" if resolved.startswith("/") else f"{SITE_URL}/{resolved}"
     # Try _s1 variant with extensions
     for ext in (".webp", ".png", ".jpg", ".jpeg"):
         s1_path = p.parent / f"{stem}_s1{ext}"
         if s1_path.exists():
+            ref = _resolve_ref_file(s1_path)
+            if ref:
+                return ref
             resolved = raw_path.rsplit("/", 1)[0] + "/" + s1_path.name
             return f"{SITE_URL}{resolved}" if resolved.startswith("/") else f"{SITE_URL}/{resolved}"
     return ""
@@ -330,10 +355,16 @@ def resolve_section_image(url: str) -> str:
         return ""
     p = Path(PROJECT_ROOT / url.lstrip("/"))
     if p.exists():
+        ref = _resolve_ref_file(p)
+        if ref:
+            return ref
         return url
     for ext in (".webp", ".png", ".jpg", ".jpeg"):
         alt = p.with_suffix(ext)
         if alt.exists():
+            ref = _resolve_ref_file(alt)
+            if ref:
+                return ref
             return url.rsplit(".", 1)[0] + ext
     return ""
 

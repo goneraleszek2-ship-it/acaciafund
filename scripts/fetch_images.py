@@ -42,6 +42,7 @@ RATE_LIMIT_DELAY = 0.15
 MAX_WORKERS = 4
 MIN_SCORE = 10
 MAX_IMAGE_WIDTH = 1200
+MAX_IMAGE_BYTES = 10 * 1024 * 1024  # 10MB cap per download
 TARGET_WORDS_PER_IMAGE = 150
 
 PILLAR_KEYWORDS = {
@@ -197,6 +198,12 @@ STOP_WORDS = {
     'regulatory','academic','industry','healthcare','defense','policy',
     'sentiment','distribution','coverage','diversity','relevance','temporal',
     'key','main','top','core','deep','next','new',
+    'for','and','are','but','not','you','all','can','had','her',
+    'was','one','our','out','has','his','how','its','may','now',
+    'old','see','way','who','did','get','let','say','she','too','use',
+    'also','just','than','them','been','have','more','some',
+    'very','your','about','would','there','their','these','other',
+    'could','after','first','being','under','between',
 }
 
 
@@ -275,6 +282,8 @@ def build_section_query(section: dict, article: dict) -> str:
     title_core = re.sub(r'^\d{4}\s+', '', title)
     title_core = re.sub(r'[:\-].*', '', title_core).strip()[:40]
     title_core = re.sub(r'\d{4}', '', title_core).strip()
+    title_core = re.sub(r'[&%,#@!?)\]]+', '', title_core).strip()
+    title_core = re.sub(r'[,:;\-\u2013\u2014]+$', '', title_core).strip()
     if not title_core:
         title_core = pillar_kw.split()[0] if pillar_kw else ""
 
@@ -287,7 +296,25 @@ def build_section_query(section: dict, article: dict) -> str:
     query = " ".join(parts)
     terms = query.split()
     terms = [t for t in terms if len(t) > 2 and t.lower() not in STOP_WORDS]
-    return " ".join(terms[:4])
+
+    seen = set()
+    unique_terms = []
+    for t in terms:
+        tl = t.lower()
+        if tl not in seen:
+            seen.add(tl)
+            unique_terms.append(t)
+
+    if section.get("section_index", 0) > 0:
+        section_entities = section.get("entities", [])
+        if section_entities:
+            for ent in reversed(section_entities):
+                el = ent.lower()
+                if el not in seen and all(w not in STOP_WORDS for w in el.split()):
+                    unique_terms.insert(0, ent)
+                    seen.add(el)
+
+    return " ".join(unique_terms[:4])
 
 
 def resolve_curated(article: dict) -> str | None:
@@ -295,7 +322,7 @@ def resolve_curated(article: dict) -> str | None:
     body_text = strip_html(article.get("body_html", "")).lower()
     for phrase, filename in CURATED_KNOWN.items():
         keywords = phrase.split()
-        if any(kw in haystack for kw in keywords) or any(kw in body_text for kw in keywords):
+        if all(kw in haystack for kw in keywords) or all(kw in body_text for kw in keywords):
             return filename
     return None
 
@@ -618,6 +645,7 @@ def generate_ai_illustration(prompt: str, dest: Path) -> tuple[bool, str, int, i
 # ── Global dedup: track images used across all articles ──────────────
 _GLOBAL_USED_URLS: set[str] = set()
 _GLOBAL_USED_CREATORS: dict[str, int] = {}  # creator -> count
+_GLOBAL_CONTENT_HASHES: dict[str, str] = {}  # md5 -> existing filename
 MAX_IMAGES_PER_CREATOR = 5  # max images from same photographer across site
 
 
@@ -647,10 +675,13 @@ def normalize_query(query: str) -> tuple[set[str], str]:
 def download_image(url: str, dest: Path, retries: int = 2) -> tuple[bool, str, int, int, int]:
     for attempt in range(retries + 1):
         try:
-            resp = requests.get(url, headers={"User-Agent": USER_AGENT}, timeout=30)
+            resp = requests.get(url, headers={"User-Agent": USER_AGENT}, timeout=30, stream=True)
             resp.raise_for_status()
+            content_length = int(resp.headers.get("content-length", 0))
+            if content_length > MAX_IMAGE_BYTES:
+                return False, "", 0, 0, 0
             content = resp.content
-            if not content:
+            if not content or len(content) > MAX_IMAGE_BYTES:
                 return False, "", 0, 0, 0
             if HAS_PIL:
                 img = Image.open(BytesIO(content))
@@ -684,6 +715,15 @@ def download_image(url: str, dest: Path, retries: int = 2) -> tuple[bool, str, i
                     ext = ".jpg"
                 data = content
                 w, h = 0, 0
+            content_md5 = hashlib.md5(data).hexdigest()
+            if content_md5 in _GLOBAL_CONTENT_HASHES:
+                existing_name = _GLOBAL_CONTENT_HASHES[content_md5]
+                existing_path = dest.parent / existing_name
+                if existing_path.exists():
+                    dest_path = dest.with_suffix(ext)
+                    dest_path.write_text(f"REF:{existing_name}")
+                    return True, ext, w, h, len(data)
+            _GLOBAL_CONTENT_HASHES[content_md5] = dest.name
             dest_path = dest.with_suffix(ext)
             dest_path.write_bytes(data)
             if not HAS_PIL and w == 0:
@@ -1058,6 +1098,16 @@ def main():
     if not REGISTRY_PATH.exists():
         print(f"Registry not found at {REGISTRY_PATH}")
         return 1
+
+    if IMAGES_DIR.exists():
+        for f in IMAGES_DIR.rglob("*"):
+            if f.is_file() and f.suffix in (".jpg", ".webp", ".png", ".jpeg", ".gif"):
+                try:
+                    md5 = hashlib.md5(f.read_bytes()).hexdigest()
+                    _GLOBAL_CONTENT_HASHES[md5] = f.name
+                except Exception:
+                    pass
+        print(f"Loaded {len(_GLOBAL_CONTENT_HASHES)} existing image hashes for dedup")
 
     registry = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
     content_list = registry.get("content", [])
