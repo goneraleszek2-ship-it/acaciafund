@@ -10,7 +10,7 @@
   </nav>
 
   <div class="mb-6 flex items-center gap-4">
-    <img src="/static/images/icon-knowledge.svg" alt="" class="w-10 h-10 shrink-0">
+    <img src="/static/images/icon-knowledge.svg" alt="Knowledge Base" class="w-10 h-10 shrink-0">
     <div>
       <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">Knowledge Base</h1>
       <p class="mt-2 text-sm" style="color:var(--color-text-muted)">{{ items | length }} entries across {{ categories | length }} categories</p>
@@ -56,11 +56,11 @@
       <a href="/{{ item.slug }}/" class="kb-item block rounded-lg overflow-hidden transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none" data-title="{{ item.title | striptags | lower }}" data-desc="{{ (item.description or '') | striptags | lower }}">
         {%- if has_feat %}
         <div class="aspect-[3/1] overflow-hidden" style="background:var(--color-bg)">
-          <img src="{{ feat_img }}" alt="" class="w-full h-full object-cover" loading="lazy">
+          <img src="{{ feat_img }}" alt="{{ item.title | striptags | e }}" class="w-full h-full object-cover" loading="lazy">
         </div>
         {%- elif item.thumbnail_svg and thumb_key %}
         <div class="aspect-[3/1] overflow-hidden" style="background:#0f172a">
-          <img src="{{ thumbnail_base }}/thumb_{{ thumb_key }}.svg" alt="" class="w-full h-full object-cover" loading="lazy">
+          <img src="{{ thumbnail_base }}/thumb_{{ thumb_key }}.svg" alt="{{ item.title | striptags | e }}" class="w-full h-full object-cover" loading="lazy">
         </div>
         {%- endif %}
         <div class="p-4">

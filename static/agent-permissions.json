@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "site": "https://www.acaciafund.org",
+  "permissions": {
+    "read": true,
+    "summarize": true,
+    "cite": true,
+    "index": true,
+    "train": false
+  },
+  "allowed_crawlers": [
+    "GPTBot",
+    "ChatGPT-User",
+    "ClaudeBot",
+    "anthropic-ai",
+    "PerplexityBot",
+    "Google-Extended",
+    "YouBot",
+    "CCBot"
+  ],
+  "blocked_crawlers": [
+    "Bytespider",
+    "Omgilibot"
+  ],
+  "content_policy": {
+    "license": "CC BY-NC 4.0",
+    "commercial_use": false,
+    "attribution_required": true
+  }
+}

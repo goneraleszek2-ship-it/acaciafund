@@ -1284,58 +1284,32 @@ def main():
     (OUTPUT_DIR / "sitemap.xml").write_text("\n".join(sm), encoding="utf-8")
 
     # --- ROBOTS ---
+    # NOTE: Cloudflare Pages injects its own robots.txt rules at CDN level.
+    # Our rules come AFTER Cloudflare's, so first-match-wins means Cloudflare's
+    # Disallow rules take precedence. To fix AI crawler access, disable
+    # "AI Scrapers and Crawlers" in Cloudflare Dashboard > Security > Bots.
     robots_txt = f"""User-agent: *
 Allow: /
-
-# AI crawlers — allow content summarization
-User-agent: GPTBot
-Allow: /
-Allow: /static/llms.txt
-Allow: /llms-full.txt
-
-User-agent: ChatGPT-User
-Allow: /
-Allow: /static/llms.txt
-Allow: /llms-full.txt
-
-User-agent: CCBot
-Allow: /
-Allow: /static/llms.txt
-Allow: /llms-full.txt
-
-User-agent: Google-Extended
-Allow: /
-
-User-agent: anthropic-ai
-Allow: /
-Allow: /static/llms.txt
-Allow: /llms-full.txt
-
-User-agent: ClaudeBot
-Allow: /
-Allow: /static/llms.txt
-Allow: /llms-full.txt
-
-User-agent: PerplexityBot
-Allow: /
-Allow: /static/llms.txt
-Allow: /llms-full.txt
-
-User-agent: YouBot
-Allow: /
-Allow: /static/llms.txt
-Allow: /llms-full.txt
-
-# Block AI training scrapers
-User-agent: Omgilibot
-Disallow: /
-
-User-agent: Bytespider
-Disallow: /
 
 Sitemap: {SITE_URL}/sitemap.xml
 """
     (OUTPUT_DIR / "robots.txt").write_text(robots_txt, encoding="utf-8")
+
+    # --- Copy llms.txt to site root (geo-checker expects /llms.txt) ---
+    llms_src = STATIC_DST_DIR / "llms.txt"
+    if llms_src.exists():
+        (OUTPUT_DIR / "llms.txt").write_text(llms_src.read_text(encoding="utf-8"), encoding="utf-8")
+    # --- Copy ai-plugin.json to .well-known ---
+    ai_plugin_src = STATIC_DST_DIR / ".well-known" / "ai-plugin.json"
+    if ai_plugin_src.exists():
+        ai_plugin_dst = OUTPUT_DIR / ".well-known" / "ai-plugin.json"
+        ai_plugin_dst.parent.mkdir(parents=True, exist_ok=True)
+        ai_plugin_dst.write_text(ai_plugin_src.read_text(encoding="utf-8"), encoding="utf-8")
+    # --- Copy skill.md and agent-permissions.json to root ---
+    for root_file in ("skill.md", "agent-permissions.json"):
+        root_src = STATIC_DST_DIR / root_file
+        if root_src.exists():
+            (OUTPUT_DIR / root_file).write_text(root_src.read_text(encoding="utf-8"), encoding="utf-8")
 
     # --- LLMs-full.txt (comprehensive content index for AI crawlers) ---
     llms_full_lines = [

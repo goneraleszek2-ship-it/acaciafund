@@ -31,6 +31,10 @@
   <meta name="twitter:description" content="{{ content.description | default(site_description | default(content.body_html | striptags | truncate(160))) }}">
   <meta name="twitter:image" content="{{ og_image_url | default(site_url + '/static/images/og-card.png') }}">
 
+  {%- if not (content.content_type == "research" or content.category == "blog" or content.content_type == "learn" or content.content_type == "knowledge" or page_type == "index") %}
+  <meta property="og:type" content="website">
+  {%- endif %}
+
   {%- if content.content_type == "research" or content.category == "blog" %}
   <meta property="og:type" content="article">
   <meta property="article:published_time" content="{{ content.created_at.isoformat() if content.created_at else '' }}">
@@ -102,7 +106,9 @@
     "logo": "{{ site_url }}/static/images/logo.svg",
     "description": "Research synthesis and experimental learning platform covering AML compliance, market analysis, and data engineering.",
     "foundingDate": "2024",
-    "sameAs": [],
+    "sameAs": [
+      "https://github.com/goneraleszek2-ship-it/acaciafund"
+    ],
     "contactPoint": {
       "@type": "ContactPoint",
       "contactType": "customer service",
