@@ -1310,10 +1310,6 @@ Sitemap: {SITE_URL}/sitemap.xml
         root_src = STATIC_DST_DIR / root_file
         if root_src.exists():
             (OUTPUT_DIR / root_file).write_text(root_src.read_text(encoding="utf-8"), encoding="utf-8")
-    # --- Copy _headers to dist root (Cloudflare Pages reads this) ---
-    headers_src = STATIC_DST_DIR / "_headers"
-    if headers_src.exists():
-        (OUTPUT_DIR / "_headers").write_text(headers_src.read_text(encoding="utf-8"), encoding="utf-8")
     # --- Copy auth.md to dist root ---
     auth_src = STATIC_DST_DIR / "auth.md"
     if auth_src.exists():
@@ -1372,6 +1368,12 @@ Sitemap: {SITE_URL}/sitemap.xml
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Link: </.well-known/api-catalog>; rel="api-catalog"
+  Link: </.well-known/mcp/server-card.json>; rel="mcp-server-card"
+  Link: </.well-known/agent-skills/index.json>; rel="agent-skills"
+  Link: </llms.txt>; rel="service-doc"; title="LLM Overview"
+  Link: </llms-full.txt>; rel="service-desc"; title="Full LLM Content"
+  Link: </auth.md>; rel="auth-md"
 
 /static/*
   Cache-Control: public, max-age=31536000, immutable
@@ -1393,6 +1395,22 @@ Sitemap: {SITE_URL}/sitemap.xml
 /static/llms.txt
   Cache-Control: public, max-age=3600
   Content-Type: text/plain; charset=utf-8
+
+/.well-known/api-catalog
+  Content-Type: application/linkset+json
+  Cache-Control: public, max-age=3600
+
+/.well-known/mcp/server-card.json
+  Content-Type: application/json
+  Cache-Control: public, max-age=3600
+
+/.well-known/agent-skills/index.json
+  Content-Type: application/json
+  Cache-Control: public, max-age=3600
+
+/auth.md
+  Content-Type: text/markdown; charset=utf-8
+  Cache-Control: public, max-age=3600
 """, encoding="utf-8")
 
     total = len(list(OUTPUT_DIR.rglob("*.html")))
