@@ -1317,6 +1317,8 @@ Sitemap: {SITE_URL}/sitemap.xml
     # --- Copy .well-known agent-readiness files ---
     well_known_files = [
         (".well-known", "api-catalog"),
+        (".well-known", "oauth-protected-resource"),
+        (".well-known", "oauth-authorization-server"),
         (".well-known/mcp", "server-card.json"),
         (".well-known/agent-skills", "index.json"),
     ]
@@ -1398,6 +1400,14 @@ Sitemap: {SITE_URL}/sitemap.xml
 
 /.well-known/api-catalog
   Content-Type: application/linkset+json
+  Cache-Control: public, max-age=3600
+
+/.well-known/oauth-protected-resource
+  Content-Type: application/json
+  Cache-Control: public, max-age=3600
+
+/.well-known/oauth-authorization-server
+  Content-Type: application/json
   Cache-Control: public, max-age=3600
 
 /.well-known/mcp/server-card.json

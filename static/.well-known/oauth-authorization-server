@@ -1,0 +1,14 @@
+{
+  "issuer": "https://www.acaciafund.org",
+  "scopes_supported": ["public.read"],
+  "grant_types_supported": [],
+  "token_endpoint": "https://www.acaciafund.org/",
+  "agent_auth": {
+    "skill": "https://www.acaciafund.org/auth.md",
+    "identity_types_supported": ["anonymous"],
+    "anonymous": {
+      "credential_types_supported": ["none"]
+    },
+    "claim_uri": "https://www.acaciafund.org/auth.md#claim"
+  }
+}
