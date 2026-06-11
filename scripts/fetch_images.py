@@ -736,6 +736,10 @@ def download_image(url: str, dest: Path, retries: int = 2) -> tuple[bool, str, i
             content = resp.content
             if not content or len(content) > MAX_IMAGE_BYTES:
                 return False, "", 0, 0, 0
+            # Reject non-image content (e.g. PDFs saved with image extensions)
+            _MAGIC = content[:8]
+            if _MAGIC[:4] == b'%PDF' or _MAGIC[:5] == b'%!PS-':
+                return False, "", 0, 0, 0
             if HAS_PIL:
                 img = Image.open(BytesIO(content))
                 img_format = img.format or "JPEG"
