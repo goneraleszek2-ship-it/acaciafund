@@ -40,7 +40,7 @@ IMAGES_DIR = PROJECT_ROOT / "static" / "images" / "generated"
 USER_AGENT = "AcaciaFund/1.0 (image-fetcher; +https://acaciafund.org)"
 RATE_LIMIT_DELAY = 0.15
 MAX_WORKERS = 4
-MIN_SCORE = 5
+MIN_SCORE = 35
 MAX_IMAGE_WIDTH = 1200
 MAX_IMAGE_BYTES = 10 * 1024 * 1024  # 10MB cap per download
 TARGET_WORDS_PER_IMAGE = 150
@@ -243,6 +243,59 @@ CURATED_KNOWN = {
     "climate weather environmental": "File:Climate monitoring.jpg",
 }
 
+# ── Semantic query expansion (Phase 3) ─────────────────────────────
+QUERY_EXPANSION = {
+    "money laundering": "money laundering financial crime illegal finance compliance",
+    "market risk": "market risk trading volatility financial risk investment",
+    "data pipeline": "data pipeline etl data engineering server infrastructure",
+    "machine learning": "machine learning artificial intelligence ai data science",
+    "deep learning": "deep learning neural network ai artificial intelligence",
+    "blockchain": "blockchain distributed ledger cryptocurrency crypto tokens",
+    "regulatory compliance": "regulatory compliance legal regulation policy audit law",
+    "cybersecurity": "cybersecurity hacking encryption security data protection network",
+    "supply chain": "supply chain logistics shipping distribution warehouse cargo",
+    "risk assessment": "risk assessment evaluation analysis compliance audit",
+    "data quality": "data quality validation testing accuracy monitoring",
+    "data observability": "data observability monitoring lineage tracking pipeline",
+    "data engineering": "data engineering pipeline etl infrastructure server",
+    "fraud detection": "fraud detection scam prevention security monitoring",
+    "beneficial ownership": "beneficial ownership transparency registry corporate",
+    "sanctions compliance": "sanctions compliance ofac embargo international trade",
+    "suspicious activity": "suspicious activity report sar filing compliance",
+    "financial crime": "financial crime fraud money laundering compliance",
+    "anti money laundering": "anti money laundering aml compliance regulation",
+    "know your customer": "know your customer kyc verification identity compliance",
+    "trading strategy": "trading strategy algorithm quantitative finance market",
+    "portfolio management": "portfolio management investment diversification assets",
+    "risk management": "risk management assessment mitigation control compliance",
+    "data governance": "data governance policy management quality stewardship",
+    "data architecture": "data architecture design infrastructure pipeline system",
+    "real time": "real time streaming data processing pipeline",
+    "artificial intelligence": "artificial intelligence ai machine learning automation",
+    "natural language processing": "natural language processing nlp text ai",
+    "computer vision": "computer vision image recognition ai deep learning",
+    "financial regulation": "financial regulation compliance policy banking law",
+    "central bank": "central bank monetary policy federal reserve currency",
+    "stock market": "stock market exchange trading finance investment",
+    "cryptocurrency": "cryptocurrency bitcoin crypto blockchain digital currency",
+    "algorithmic trading": "algorithmic trading quantitative automated finance market",
+    "compliance program": "compliance program regulatory policy audit management",
+}
+
+
+def expand_query(query: str) -> str:
+    """Expand query using semantic expansion dictionary."""
+    q_lower = query.lower()
+    expanded = set(query.split())
+    for phrase, expansion in QUERY_EXPANSION.items():
+        if phrase in q_lower:
+            for word in expansion.split():
+                expanded.add(word)
+    orig = query.split()
+    seen = set(w.lower() for w in orig)
+    added = [w for w in expanded if w.lower() not in seen]
+    return " ".join(orig + added)
+
 STOP_WORDS = {
     'the','this','that','from','with','into','over','which','what','when','where',
     'analysis','context','overview','findings','primary','signal','summary',
@@ -367,7 +420,7 @@ def build_section_query(section: dict, article: dict) -> str:
                     unique_terms.insert(0, ent)
                     seen.add(el)
 
-    return " ".join(unique_terms[:4])
+    return expand_query(" ".join(unique_terms[:4]))
 
 
 def resolve_curated(article: dict) -> str | None:
@@ -701,16 +754,71 @@ _GLOBAL_USED_CREATORS: dict[str, int] = {}  # creator -> count
 _GLOBAL_CONTENT_HASHES: dict[str, str] = {}  # md5 -> existing filename
 MAX_IMAGES_PER_CREATOR = 5  # max images from same photographer across site
 
+# ── Backend quality weights (Phase 1) ─────────────────────────────
+BACKEND_QUALITY = {
+    "unsplash": 1.0,
+    "pexels": 0.9,
+    "pixabay": 0.8,
+    "openverse": 0.5,
+    "wikimedia": 0.4,
+    "loc": 0.3,
+    "nasa": 0.3,
+    "featured_unsplash": 1.0,
+    "featured_pexels": 0.9,
+    "featured_pixabay": 0.8,
+    "featured_openverse": 0.5,
+    "featured_wikimedia": 0.4,
+}
 
-def score_result(result: dict, query_terms: set[str]) -> float:
+# ── Content-type negative keywords (Phase 4) ──────────────────────
+NEGATIVE_KEYWORDS = {"screenshot", "logo", "icon", "diagram", "illustration", "drawing", "clip art", "cartoon"}
+
+
+def score_result(result: dict, query_terms: set[str],
+                 backend: str = "", width: int = 0, height: int = 0) -> float:
     text = (result.get("title", "") + " " + result.get("tags", "")).lower()
     if not query_terms:
         return 0.0
+
+    # Keyword coverage (40%)
     matched = sum(1 for t in query_terms if t in text)
-    match_score = (matched / len(query_terms)) * 100
-    title_bonus = 15 if any(t in result.get("title", "").lower() for t in query_terms) else 0
-    license_bonus = 10 if result.get("license") in ("pd", "cc0", "publicdomain") else 0
-    return match_score + title_bonus + license_bonus
+    keyword_score = (matched / len(query_terms)) * 100 if query_terms else 0
+
+    # Backend quality (25%)
+    backend_score = BACKEND_QUALITY.get(backend, 0.3) * 100
+
+    # Title exactness (15%)
+    query_str = " ".join(sorted(query_terms))
+    title_score = 15 if query_str in result.get("title", "").lower() else 0
+
+    # Image quality (12%)
+    quality_score = 0.0
+    if width > 0 and height > 0:
+        mx = max(width, height)
+        mn = min(width, height)
+        aspect = mx / mn if mn > 0 else 0
+        good_aspect = 1.0 if 1.3 <= aspect <= 2.0 else 0.5
+        res_bonus = 1.0 if mx >= 1200 else 0.6
+        quality_score = good_aspect * res_bonus * 12
+
+    # License openness (8%)
+    license_score = 8 if result.get("license") in ("pd", "cc0", "publicdomain") else 0
+
+    # Negative penalty (Phase 4)
+    tags_lower = result.get("tags", "").lower() + " " + result.get("title", "").lower()
+    negative_score = -20 if any(n in tags_lower for n in NEGATIVE_KEYWORDS) else 0
+
+    return keyword_score * 0.40 + backend_score * 0.25 + title_score + quality_score + license_score + negative_score
+
+
+def compute_color_hash(img_bytes: bytes) -> str:
+    """Compute a 4x4 average-color hash for near-dup detection."""
+    try:
+        img = Image.open(BytesIO(img_bytes)).resize((4, 4), Image.LANCZOS)
+        avg = ImageStat.Stat(img).mean
+        return hashlib.md5(f"{list(avg)}".encode()).hexdigest()[:8]
+    except Exception:
+        return ""
 
 
 def normalize_query(query: str) -> tuple[set[str], str]:
@@ -926,10 +1034,6 @@ def fetch_section_images(article: dict, force: bool = False) -> list[dict]:
         if not query_terms:
             continue
 
-        best: dict | None = None
-        best_score = 0.0
-        best_backend = ""
-
         all_backends = list(ALL_BACKENDS)
         if UNSPLASH_KEY:
             all_backends.append(("unsplash", search_unsplash))
@@ -944,13 +1048,12 @@ def fetch_section_images(article: dict, force: bool = False) -> list[dict]:
         if section_type in SECTION_FALLBACK_QUERIES:
             queries_to_try.extend(build_fallback_queries(section_type, article.get("pillar", "")))
 
+        # Phase 2: Cross-query candidate pool — search ALL queries + backends
+        pool: list[tuple[dict, str, str, int, int]] = []  # (candidate, backend, query_used, width, height)
         for try_query in queries_to_try:
-            if best is not None and best_score >= MIN_SCORE:
-                break
             try_terms, _ = normalize_query(try_query)
             if not try_terms:
                 continue
-
             for backend_name, search_fn in all_backends:
                 for attempt in range(3):
                     try:
@@ -965,17 +1068,29 @@ def fetch_section_images(article: dict, force: bool = False) -> list[dict]:
                             creator_key = creator[:20] if creator else ""
                             if creator_key and _GLOBAL_USED_CREATORS.get(creator_key, 0) >= MAX_IMAGES_PER_CREATOR:
                                 continue
-                            score = score_result(c, try_terms)
-                            if score > best_score:
-                                c["_score"] = score
-                                best = c
-                                best_score = score
-                                best_backend = backend_name
+                            # Pre-filter negative keywords (Phase 4)
+                            tags_lower = c.get("tags", "").lower() + " " + c.get("title", "").lower()
+                            if any(n in tags_lower for n in {"screenshot", "logo", "icon", "cartoon"}):
+                                continue
+                            pool.append((c, backend_name, try_query, 0, 0))
                         break
                     except Exception:
                         if attempt < 2:
                             time.sleep(1)
                         continue
+
+        # Score entire pool globally, pick best
+        best: dict | None = None
+        best_score = 0.0
+        best_backend = ""
+        if pool:
+            scored: list[tuple[float, dict, str]] = []
+            for c, backend_name, try_query, w, h in pool:
+                try_terms, _ = normalize_query(try_query)
+                score = score_result(c, try_terms, backend_name, w, h)
+                scored.append((score, c, backend_name))
+            scored.sort(key=lambda x: -x[0])
+            best_score, best, best_backend = scored[0]
 
         # Tier 3: AI fallback when no photo found
         if best is None or best_score < MIN_SCORE:
@@ -1027,6 +1142,20 @@ def fetch_section_images(article: dict, force: bool = False) -> list[dict]:
                 _GLOBAL_USED_URLS.add(rel_path)
             continue
 
+        # Phase 5: Perceptual hash near-dup check
+        dest_file = dest.with_suffix(ext)
+        if dest_file.exists():
+            try:
+                img_bytes = dest_file.read_bytes()
+                phash = compute_color_hash(img_bytes)
+                existing = _GLOBAL_CONTENT_HASHES.get(phash)
+                if existing and existing != dest_file.name:
+                    dest_file.unlink()
+                    continue
+                _GLOBAL_CONTENT_HASHES[phash] = dest_file.name
+            except Exception:
+                pass
+
         rel_path = f"/static/images/generated/{slug}_s{idx}{ext}"
         results.append({
             "section_index": idx,
@@ -1052,64 +1181,61 @@ def fetch_section_images(article: dict, force: bool = False) -> list[dict]:
 
 
 def _build_featured_queries(article: dict) -> list[str]:
-    """Build multiple query variations for featured image search.
+    """Build query variations for featured image search, most specific to broadest.
 
-    Returns a list of queries to try, from most specific to broadest.
+    Phase 6: single compound query combining all signals, with fallbacks.
     """
-    slug = article.get("slug", "")
     pillar = article.get("pillar", "")
     tags = article.get("tags", [])
     title = article.get("title", "")
+
+    skip_words = {'the','and','for','with','from','how','what','why','when','into',
+                  'your','that','this','does','make','using','best','guide','part',
+                  'series','new','top','guide','overview'}
+    title_words = [w for w in re.findall(r'[a-z]{3,}', title.lower()) if w not in skip_words]
+    title_phrase = " ".join(title_words[:4])
+
+    tag_phrase = " ".join(t[:3] for t in tags if len(t) > 2) if tags else ""
+
+    pillar_kw = PILLAR_KEYWORDS.get(pillar, "").split()[:2]
+    pillar_phrase = " ".join(pillar_kw)
+
+    visual_kw = PILLAR_VISUAL_KEYWORDS.get(pillar, "").split()[:2]
+    visual_phrase = " ".join(visual_kw)
+
+    broad_kw = {"aml": "finance office security audit",
+                "stock": "finance trading chart market",
+                "data-engineering": "server computer network technology",
+                "science": "laboratory research science experiment"}.get(pillar, "technology")
+
     queries = []
 
-    # Query 1: tags + first meaningful title word
-    if tags:
-        title_words = [w for w in re.findall(r'[a-z]{3,}', title.lower())
-                       if w not in ('the', 'and', 'for', 'with', 'from', 'how', 'what', 'why', 'when')]
-        q1_parts = tags[:3]
-        if title_words:
-            q1_parts.append(title_words[0])
-        pk = PILLAR_KEYWORDS.get(pillar, "")
-        if pk:
-            q1_parts.append(pk.split()[0])
-        q1 = " ".join(q1_parts)[:80]
-        if q1.strip():
-            queries.append(q1)
+    # Compound: all signals combined
+    compound = " ".join(filter(None, [title_phrase, tag_phrase, pillar_phrase]))
+    if compound.strip() and len(compound) > 5:
+        queries.append(compound.strip()[:100])
 
-    # Query 2: title keywords only (first 4 meaningful words)
-    if title:
-        title_words = [w for w in re.findall(r'[a-z]{3,}', title.lower())
-                       if w not in ('the', 'and', 'for', 'with', 'from', 'how', 'what', 'why', 'when',
-                                    'into', 'your', 'that', 'this', 'does', 'make', 'using', 'best',
-                                    'guide', 'part', 'series')]
-        q2 = " ".join(title_words[:4])[:80]
-        if q2.strip():
-            queries.append(q2)
+    # Title + visual
+    if title_phrase:
+        fallback = f"{title_phrase} {visual_phrase}".strip()[:100]
+        if fallback not in queries:
+            queries.append(fallback)
 
-    # Query 3: first meaningful tag + pillar keyword
-    if tags and pillar:
-        q3 = f"{tags[0]} {pillar.replace('-', ' ')}"[:80]
-        queries.append(q3)
+    # Tags + pillar
+    if tag_phrase and pillar_phrase:
+        tp = f"{tag_phrase} {pillar_phrase}".strip()[:80]
+        if tp not in queries:
+            queries.append(tp)
 
-    # Query 4: broad single-word tag + pillar
-    broad_tags = [t for t in tags if len(t) > 4 and t not in ('6amld', 'fatf', 'gafi', 'eu-regulation')]
-    if broad_tags:
-        queries.append(f"{broad_tags[0]} {pillar.replace('-', ' ')}"[:60])
+    # Pillar + visual
+    broad = f"{pillar_phrase} {visual_phrase}".strip()
+    if broad and broad not in queries:
+        queries.append(broad)
 
-    # Query 5: pillar keyword only
-    pk = PILLAR_KEYWORDS.get(pillar, "")
-    if pk:
-        queries.append(pk[:40])
-
-    # Query 6: ultra-broad single keywords per pillar
-    PILLAR_BROAD = {
-        "aml": ["finance", "office", "security", "audit"],
-        "stock": ["finance", "trading", "chart", "market"],
-        "data-engineering": ["server", "computer", "network", "data"],
-        "science": ["laboratory", "research", "science", "experiment"],
-    }
-    for kw in PILLAR_BROAD.get(pillar, []):
-        queries.append(kw)
+    # Ultra broad pillar keywords
+    for kw in broad_kw.split():
+        if kw not in queries:
+            queries.append(kw)
 
     return queries
 
@@ -1117,32 +1243,29 @@ def _build_featured_queries(article: dict) -> list[str]:
 def fetch_featured_image(article: dict) -> str | None:
     """Fetch a single featured image for an article's card/thumbnail.
 
-    Tries multiple query variations across all backends.
-    Downloads best match to static/images/generated/{slug}.{ext}.
+    Uses cross-query candidate pool (Phase 2) + multi-dimensional scoring (Phase 1).
     """
     slug = article.get("slug", "")
-    pillar = article.get("pillar", "")
 
     dest = IMAGES_DIR / slug
     dest.parent.mkdir(parents=True, exist_ok=True)
 
-    # Try backends
     all_backends = list(ALL_BACKENDS)
     if UNSPLASH_KEY:
         all_backends.append(("unsplash", search_unsplash))
     if PEXELS_KEY:
         all_backends.append(("pexels", search_pexels))
+    if PIXABAY_KEY:
+        all_backends.append(("pixabay", search_pixabay))
 
     queries = _build_featured_queries(article)
 
+    # Phase 2: Cross-query candidate pool
+    pool: list[tuple[dict, str, str]] = []
     for query in queries:
         query_terms, _ = normalize_query(query)
         if not query_terms:
             continue
-
-        best_url = None
-        best_score = 0.0
-
         for backend_name, search_fn in all_backends:
             try:
                 candidates = search_fn(query)
@@ -1150,19 +1273,45 @@ def fetch_featured_image(article: dict) -> str | None:
                     url = c.get("url", "")
                     if url in _GLOBAL_USED_URLS:
                         continue
-                    score = score_result(c, query_terms)
-                    if score > best_score:
-                        best_score = score
-                        best_url = url
+                    tags_lower = c.get("tags", "").lower() + " " + c.get("title", "").lower()
+                    if any(n in tags_lower for n in {"screenshot", "logo", "icon", "cartoon"}):
+                        continue
+                    pool.append((c, backend_name, query))
             except Exception:
                 continue
 
-        if best_url:
-            ok, ext, w, h, size = download_image(best_url, dest)
-            if ok:
-                _GLOBAL_USED_URLS.add(best_url)
-                rel_path = f"/static/images/generated/{slug}{ext}"
-                return rel_path
+    if not pool:
+        return None
+
+    scored: list[tuple[float, dict, str]] = []
+    for c, backend_name, query in pool:
+        query_terms, _ = normalize_query(query)
+        score = score_result(c, query_terms, backend_name)
+        scored.append((score, c, backend_name))
+    scored.sort(key=lambda x: -x[0])
+
+    best_score, best, best_backend = scored[0]
+    if best_score < MIN_SCORE:
+        return None
+
+    ok, ext, w, h, size = download_image(best["url"], dest)
+    if ok:
+        # Phase 5: Perceptual hash near-dup check
+        dest_file = dest.with_suffix(ext)
+        if dest_file.exists():
+            try:
+                img_bytes = dest_file.read_bytes()
+                phash = compute_color_hash(img_bytes)
+                existing = _GLOBAL_CONTENT_HASHES.get(phash)
+                if existing and existing != dest_file.name:
+                    dest_file.unlink()
+                    return None
+                _GLOBAL_CONTENT_HASHES[phash] = dest_file.name
+            except Exception:
+                pass
+        _GLOBAL_USED_URLS.add(best["url"])
+        rel_path = f"/static/images/generated/{slug}{ext}"
+        return rel_path
 
     return None
 
