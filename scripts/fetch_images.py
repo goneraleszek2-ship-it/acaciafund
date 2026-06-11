@@ -1243,6 +1243,13 @@ def main():
         if use_cache and existing_images and not args.force:
             valid_images = [img for img in existing_images if img.get("image_url")]
             if valid_images:
+                # Still fetch featured image if missing (section images don't imply hero)
+                feat = article.get("featured_image", "")
+                if not feat or not (PROJECT_ROOT / feat.lstrip("/")).exists():
+                    fi = fetch_featured_image(article)
+                    if fi:
+                        article["featured_image"] = fi
+                        updated_count += 1
                 print(f"✓ cached ({len(valid_images)} images)")
                 stats["articles_with_images"] += 1
                 stats["filled_slots"] += len(valid_images)
