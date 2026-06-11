@@ -9,6 +9,7 @@ from pathlib import Path
 REGISTRY_PATH = Path("registry.json")
 
 PILLAR_MAP = {
+    "learn/data-engineering-basics": "data-engineering",
     "learn/aml-basics": "aml",
     "learn/market-analysis": "stock",
     "learn/quiz-aml": "aml",
@@ -27,6 +28,7 @@ PILLAR_MAP = {
 }
 
 DIFFICULTY_MAP = {
+    "learn/data-engineering-basics": "beginner",
     "learn/aml-basics": "beginner",
     "learn/market-analysis": "intermediate",
     "learn/quiz-aml": "beginner",
@@ -45,6 +47,9 @@ DIFFICULTY_MAP = {
 }
 
 CURATED_RELATIONS = {
+    "learn/data-engineering-basics": [
+        {"slug": "learn/dataops-introduction", "type": "next", "label": "Next: DataOps introduction"},
+    ],
     "learn/aml-basics": [
         {"slug": "learn/quiz-aml", "type": "reinforcement", "label": "Test your AML knowledge"},
     ],
@@ -52,6 +57,7 @@ CURATED_RELATIONS = {
         {"slug": "learn/quiz-aml", "type": "related", "label": "Risk assessment concepts"},
     ],
     "learn/dataops-introduction": [
+        {"slug": "learn/data-engineering-basics", "type": "reinforcement", "label": "Review: data engineering basics"},
         {"slug": "learn/data-quality-engineering", "type": "next", "label": "Next: data quality"},
         {"slug": "learn/open-source-data-stack", "type": "related", "label": "Open-source tools"},
     ],
@@ -89,6 +95,8 @@ CURATED_RELATIONS = {
 }
 
 PREREQUISITES = {
+    "learn/data-engineering-basics": [],
+    "learn/dataops-introduction": ["learn/data-engineering-basics"],
     "learn/data-quality-engineering": ["learn/dataops-introduction"],
     "learn/open-source-data-stack": ["learn/data-quality-engineering"],
     "learn/data-ethics-privacy": ["learn/open-source-data-stack"],
