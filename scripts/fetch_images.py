@@ -1047,33 +1047,62 @@ def fetch_section_images(article: dict, force: bool = False) -> list[dict]:
     return results
 
 
-def fetch_featured_image(article: dict) -> str | None:
-    """Fetch a single featured image for an article's card/thumbnail.
+def _build_featured_queries(article: dict) -> list[str]:
+    """Build multiple query variations for featured image search.
 
-    Queries APIs using article tags + pillar keywords, downloads the best
-    match to static/images/generated/{slug}.jpg, returns the path.
+    Returns a list of queries to try, from most specific to broadest.
     """
     slug = article.get("slug", "")
     pillar = article.get("pillar", "")
     tags = article.get("tags", [])
     title = article.get("title", "")
+    queries = []
 
-    # Build a focused query from tags + title
-    query_parts = []
+    # Query 1: tags + first meaningful title word
     if tags:
-        query_parts.extend(tags[:3])
+        title_words = [w for w in re.findall(r'[a-z]{3,}', title.lower())
+                       if w not in ('the', 'and', 'for', 'with', 'from', 'how', 'what', 'why', 'when')]
+        q1_parts = tags[:3]
+        if title_words:
+            q1_parts.append(title_words[0])
+        pk = PILLAR_KEYWORDS.get(pillar, "")
+        if pk:
+            q1_parts.append(pk.split()[0])
+        q1 = " ".join(q1_parts)[:80]
+        if q1.strip():
+            queries.append(q1)
+
+    # Query 2: title keywords only (first 4 meaningful words)
     if title:
-        query_parts.append(title.split(":")[0][:40])
+        title_words = [w for w in re.findall(r'[a-z]{3,}', title.lower())
+                       if w not in ('the', 'and', 'for', 'with', 'from', 'how', 'what', 'why', 'when',
+                                    'into', 'your', 'that', 'this', 'does', 'make', 'using', 'best',
+                                    'guide', 'part', 'series')]
+        q2 = " ".join(title_words[:4])[:80]
+        if q2.strip():
+            queries.append(q2)
+
+    # Query 3: pillar + first tag (broad fallback)
+    if tags and pillar:
+        q3 = f"{tags[0]} {pillar.replace('-', ' ')}"[:80]
+        queries.append(q3)
+
+    # Query 4: pillar keyword only (most broad fallback)
     pk = PILLAR_KEYWORDS.get(pillar, "")
     if pk:
-        query_parts.append(pk.split()[0])
-    query = " ".join(query_parts)[:80]
-    if not query:
-        return None
+        queries.append(pk[:40])
 
-    query_terms, _ = normalize_query(query)
-    if not query_terms:
-        return None
+    return queries
+
+
+def fetch_featured_image(article: dict) -> str | None:
+    """Fetch a single featured image for an article's card/thumbnail.
+
+    Tries multiple query variations across all backends.
+    Downloads best match to static/images/generated/{slug}.{ext}.
+    """
+    slug = article.get("slug", "")
+    pillar = article.get("pillar", "")
 
     dest = IMAGES_DIR / slug
     dest.parent.mkdir(parents=True, exist_ok=True)
@@ -1085,32 +1114,38 @@ def fetch_featured_image(article: dict) -> str | None:
     if PEXELS_KEY:
         all_backends.append(("pexels", search_pexels))
 
-    best_url = None
-    best_score = 0.0
+    queries = _build_featured_queries(article)
 
-    for backend_name, search_fn in all_backends:
-        try:
-            candidates = search_fn(query)
-            for c in candidates:
-                url = c.get("url", "")
-                if url in _GLOBAL_USED_URLS:
-                    continue
-                score = score_result(c, query_terms)
-                if score > best_score:
-                    best_score = score
-                    best_url = url
-        except Exception:
+    for query in queries:
+        query_terms, _ = normalize_query(query)
+        if not query_terms:
             continue
 
-    if not best_url:
-        return None
+        best_url = None
+        best_score = 0.0
 
-    ok, ext, w, h, size = download_image(best_url, dest)
-    if not ok:
-        return None
+        for backend_name, search_fn in all_backends:
+            try:
+                candidates = search_fn(query)
+                for c in candidates:
+                    url = c.get("url", "")
+                    if url in _GLOBAL_USED_URLS:
+                        continue
+                    score = score_result(c, query_terms)
+                    if score > best_score:
+                        best_score = score
+                        best_url = url
+            except Exception:
+                continue
 
-    rel_path = f"/static/images/generated/{slug}{ext}"
-    return rel_path
+        if best_url:
+            ok, ext, w, h, size = download_image(best_url, dest)
+            if ok:
+                _GLOBAL_USED_URLS.add(best_url)
+                rel_path = f"/static/images/generated/{slug}{ext}"
+                return rel_path
+
+    return None
 
 
 def print_report(stats: dict):
