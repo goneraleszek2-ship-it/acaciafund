@@ -40,7 +40,7 @@ IMAGES_DIR = PROJECT_ROOT / "static" / "images" / "generated"
 USER_AGENT = "AcaciaFund/1.0 (image-fetcher; +https://acaciafund.org)"
 RATE_LIMIT_DELAY = 0.15
 MAX_WORKERS = 4
-MIN_SCORE = 10
+MIN_SCORE = 5
 MAX_IMAGE_WIDTH = 1200
 MAX_IMAGE_BYTES = 10 * 1024 * 1024  # 10MB cap per download
 TARGET_WORDS_PER_IMAGE = 150
@@ -77,6 +77,59 @@ PILLAR_CONTEXT_WORDS = {
     "data-engineering": "technology server data infrastructure",
     "science": "research laboratory analysis",
 }
+
+PILLAR_VISUAL_KEYWORDS = {
+    "aml": "shield security lock protection safety",
+    "stock": "chart graph trading stock market",
+    "data-engineering": "server data center cable network",
+    "science": "laboratory microscope research science",
+}
+
+SECTION_FALLBACK_QUERIES = {
+    "overview": [
+        "{pillar_kw}",
+        "{pillar_visual}",
+        "technology office workspace",
+        "data center server room",
+    ],
+    "methodology": [
+        "research analysis chart",
+        "scientist laboratory work",
+        "data visualization dashboard",
+        "document report office",
+    ],
+    "domain_breakdown": [
+        "{pillar_kw} industry",
+        "business technology office",
+        "data analytics dashboard",
+        "market chart graph",
+    ],
+    "source_analysis": [
+        "document library archive",
+        "bookshelf knowledge",
+        "data report analysis",
+        "book reading study",
+    ],
+    "cross_pillar": [
+        "network connection architecture",
+        "server room data center",
+        "technology infrastructure",
+        "system integration bridge",
+    ],
+}
+
+
+def build_fallback_queries(section_type: str, pillar: str) -> list[str]:
+    """Generate a list of progressively broader fallback queries for a section type."""
+    templates = SECTION_FALLBACK_QUERIES.get(section_type, [])
+    pillar_kw = PILLAR_KEYWORDS.get(pillar, "technology data").split()[0] if pillar else "technology"
+    pillar_visual = PILLAR_VISUAL_KEYWORDS.get(pillar, "technology data")
+    results = []
+    for t in templates:
+        q = t.format(pillar_kw=pillar_kw, pillar_visual=pillar_visual)
+        if q not in results:
+            results.append(q)
+    return results
 
 SECTION_PRIORITY = {
     1: "always",
@@ -514,7 +567,7 @@ ALL_BACKENDS: list[tuple[str, Any]] = [
 
 UNSPLASH_KEY = os.environ.get("UNSPLASH_ACCESS_KEY", "T9GA18EAw7oVqlloH4WzFQkOgG6-5HCpEGxsIPcRxlY")
 PEXELS_KEY = os.environ.get("PEXELS_API_KEY", "sk-1MeaqXGsG5HIVumC66vhWcsrcxk10rFeP9zaZIRfKhf8MmNIWmmhFnbnINyCrGTZ")
-PIXABAY_KEY = os.environ.get("PIXABAY_API_KEY", "")
+PIXABAY_KEY = os.environ.get("PIXABAY_API_KEY", "56251106-603eb94defbef357deaa15981")
 
 
 def search_unsplash(query: str) -> list[dict]:
@@ -881,32 +934,44 @@ def fetch_section_images(article: dict, force: bool = False) -> list[dict]:
         if PIXABAY_KEY:
             all_backends.append(("pixabay", search_pixabay))
 
-        for backend_name, search_fn in all_backends:
-            for attempt in range(3):
-                try:
-                    candidates = search_fn(query)
-                    for c in candidates:
-                        url = c.get("url", "")
-                        creator = c.get("creator", "").lower()[:30] if c.get("creator") else ""
-                        if url in used_urls or url in _GLOBAL_USED_URLS:
-                            continue
-                        if creator in used_creators:
-                            continue
-                        # Global creator limit — prevent one photographer dominating
-                        creator_key = creator[:20] if creator else ""
-                        if creator_key and _GLOBAL_USED_CREATORS.get(creator_key, 0) >= MAX_IMAGES_PER_CREATOR:
-                            continue
-                        score = score_result(c, query_terms)
-                        if score > best_score:
-                            c["_score"] = score
-                            best = c
-                            best_score = score
-                            best_backend = backend_name
-                    break
-                except Exception:
-                    if attempt < 2:
-                        time.sleep(1)
-                    continue
+        # Build query list: primary + fallbacks for low-coverage section types
+        section_type = SECTION_TYPES.get(section.get("section_index", 0), "unknown")
+        queries_to_try = [query]
+        if section_type in SECTION_FALLBACK_QUERIES:
+            queries_to_try.extend(build_fallback_queries(section_type, article.get("pillar", "")))
+
+        for try_query in queries_to_try:
+            if best is not None and best_score >= MIN_SCORE:
+                break
+            try_terms, _ = normalize_query(try_query)
+            if not try_terms:
+                continue
+
+            for backend_name, search_fn in all_backends:
+                for attempt in range(3):
+                    try:
+                        candidates = search_fn(try_query)
+                        for c in candidates:
+                            url = c.get("url", "")
+                            creator = c.get("creator", "").lower()[:30] if c.get("creator") else ""
+                            if url in used_urls or url in _GLOBAL_USED_URLS:
+                                continue
+                            if creator in used_creators:
+                                continue
+                            creator_key = creator[:20] if creator else ""
+                            if creator_key and _GLOBAL_USED_CREATORS.get(creator_key, 0) >= MAX_IMAGES_PER_CREATOR:
+                                continue
+                            score = score_result(c, try_terms)
+                            if score > best_score:
+                                c["_score"] = score
+                                best = c
+                                best_score = score
+                                best_backend = backend_name
+                        break
+                    except Exception:
+                        if attempt < 2:
+                            time.sleep(1)
+                        continue
 
         # Tier 3: AI fallback when no photo found
         if best is None or best_score < MIN_SCORE:
@@ -1093,7 +1158,11 @@ def main():
     parser = argparse.ArgumentParser(description="Fetch section-level images for articles")
     parser.add_argument("--max", type=int, default=0, help="Max articles (0 = all)")
     parser.add_argument("--force", action="store_true", help="Re-fetch all images")
+    parser.add_argument("--cache", action="store_true", help="Skip articles that already have images")
     args = parser.parse_args()
+
+    # --cache is the default when --force is not set
+    use_cache = args.cache or not args.force
 
     if not REGISTRY_PATH.exists():
         print(f"Registry not found at {REGISTRY_PATH}")
@@ -1133,6 +1202,26 @@ def main():
     for article in articles_to_process:
         slug = article.get("slug", "")
         print(f"  {slug} … ", end="", flush=True)
+
+        # Cache mode: skip articles that already have section images
+        existing_images = article.get("section_images", [])
+        if use_cache and existing_images and not args.force:
+            valid_images = [img for img in existing_images if img.get("image_url")]
+            if valid_images:
+                print(f"✓ cached ({len(valid_images)} images)")
+                stats["articles_with_images"] += 1
+                stats["filled_slots"] += len(valid_images)
+                for si in valid_images:
+                    backend = si.get("source_api", "unknown")
+                    stats["backend_hits"][backend] += 1
+                    score = si.get("relevance_score", 0)
+                    stats["relevance_scores"].append(score)
+                    stype = SECTION_TYPES.get(si.get("section_index", 0), "unknown")
+                    if stype not in stats["section_coverage"]:
+                        stats["section_coverage"][stype] = [0, 0]
+                    stats["section_coverage"][stype][0] += 1
+                    stats["section_coverage"][stype][1] += 1
+                continue
 
         # Fetch featured image if missing
         feat = article.get("featured_image", "")
