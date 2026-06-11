@@ -1,46 +1,35 @@
 # auth.md
 
-You are an agent. This service supports **anonymous agentic registration**: discover agent access → no authentication required.
-
-AcaciaFund is a public, static research synthesis platform. All content is freely available for non-commercial educational use. No registration or authentication is required.
+You are an agent. This service supports **anonymous agentic registration**: discover → register → access content. No authentication required.
 
 ## Step 1 — Discover
 
-This service has no protected APIs or authenticated endpoints. Every resource is publicly accessible:
+This service has no protected APIs. All content is publicly accessible.
 
-| Resource | Path | Format |
-|----------|------|--------|
-| Research articles | `/research/` | HTML |
-| Learning content | `/learn/` | HTML |
-| Knowledge base | `/knowledge/` | HTML |
-| LLM summary | `/llms.txt` | `text/plain` |
-| Full content dump | `/llms-full.txt` | `text/plain` |
-| Site map | `/sitemap.xml` | `application/xml` |
-| API catalog | `/.well-known/api-catalog` | `application/linkset+json` |
+### 1a. Fetch Protected Resource Metadata
 
-### Protected Resource Metadata
-
-Path: `/.well-known/oauth-protected-resource`
+```http
+GET /.well-known/oauth-protected-resource
+```
 
 ```json
 {
   "resource": "https://www.acaciafund.org/",
-  "authorization_servers": ["https://www.acaciafund.org/"],
+  "authorization_servers": ["https://www.acaciafund.org"],
   "scopes_supported": ["public.read"],
   "bearer_methods_supported": ["header"]
 }
 ```
 
-### Authorization Server Metadata
+### 1b. Fetch Authorization Server Metadata
 
-Path: `/.well-known/oauth-authorization-server`
+```http
+GET /.well-known/oauth-authorization-server
+```
 
 ```json
 {
   "issuer": "https://www.acaciafund.org",
-  "scopes_supported": ["public.read"],
-  "grant_types_supported": [],
-  "token_endpoint": "https://www.acaciafund.org/",
   "agent_auth": {
     "skill": "https://www.acaciafund.org/auth.md",
     "identity_types_supported": ["anonymous"],
@@ -54,7 +43,9 @@ Path: `/.well-known/oauth-authorization-server`
 
 ## Step 2 — Pick a method
 
-This service only supports **anonymous** access with no credentials required.
+This service supports only **anonymous** access — no identity assertion, no email, no credentials.
+
+**identity_types_supported**: `["anonymous"]`
 
 ## Step 3 — Register
 
@@ -73,27 +64,37 @@ Response (200):
 <html>...full research article...</html>
 ```
 
-## Step 4 — Access
+**identity_types_supported**: `["anonymous"]`
+**credential_type**: `none`
 
-All content is available immediately without any authentication:
+## Step 4 — Claim ceremony
 
-- **Rate limiting**: None enforced
-- **Content negotiation**: `Accept: text/html` or `text/plain`
-- **Authorization**: None required
+No claim ceremony needed. Anonymous access grants full read access immediately.
+
+### claim_uri
+
+`https://www.acaciafund.org/auth.md#claim`
+
+## Step 5 — Access content
+
+All resources are freely available:
+
+| Path | Content | Format |
+|------|---------|--------|
+| `/research/` | Research articles | HTML |
+| `/learn/` | Learning content | HTML |
+| `/knowledge/` | Quick references | HTML |
+| `/llms.txt` | Agent overview | `text/plain` |
+| `/llms-full.txt` | Full content dump | `text/plain` |
+| `/.well-known/api-catalog` | API catalog | `application/linkset+json` |
 
 ## Errors
 
-This service does not return authentication errors. All endpoints are public.
+| Code | Meaning |
+|------|---------|
+| `404` | Resource not found |
+| `5xx` | Server error — retry |
 
-| Code | Where | What to do |
-|------|-------|------------|
-| `404` | any | Resource not found. Check the URL or consult `/sitemap.xml`. |
-| `5xx` | any | Server error. Retry with exponential backoff. |
+## Crawling
 
-## Crawling Policy
-
-See `/robots.txt`. All major AI crawlers are explicitly allowed for indexing and training.
-
-## Contact
-
-For questions about automated access: contact@acaciafund.org
+See `/robots.txt`. All major AI crawlers are explicitly allowed. Contact: contact@acaciafund.org
