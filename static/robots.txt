@@ -1,66 +1,64 @@
 User-agent: *
 Allow: /
 
-# AI crawlers — explicit Allow for GEO visibility
+# AI crawlers — explicit Allow for GEO visibility (all 17 tracked bots)
+
+# OpenAI
 User-agent: GPTBot
 Allow: /
-Allow: /static/llms.txt
-Allow: /llms-full.txt
-
+User-agent: OAI-SearchBot
+Allow: /
 User-agent: ChatGPT-User
 Allow: /
-Allow: /static/llms.txt
-Allow: /llms-full.txt
 
-User-agent: CCBot
-Allow: /
-Allow: /static/llms.txt
-Allow: /llms-full.txt
-
+# Google / Gemini
 User-agent: Google-Extended
 Allow: /
-Allow: /static/llms.txt
-Allow: /llms-full.txt
-
-User-agent: anthropic-ai
+User-agent: Google-CloudVertexBot
 Allow: /
-Allow: /static/llms.txt
-Allow: /llms-full.txt
 
+# Anthropic
 User-agent: ClaudeBot
 Allow: /
-Allow: /static/llms.txt
-Allow: /llms-full.txt
+User-agent: anthropic-ai
+Allow: /
+User-agent: Claude-Web
+Allow: /
 
+# Perplexity
 User-agent: PerplexityBot
 Allow: /
-Allow: /static/llms.txt
-Allow: /llms-full.txt
 
-User-agent: YouBot
-Allow: /
-Allow: /static/llms.txt
-Allow: /llms-full.txt
-
+# Apple
 User-agent: Applebot-Extended
 Allow: /
-Allow: /static/llms.txt
-Allow: /llms-full.txt
 
+# Meta
 User-agent: Meta-ExternalAgent
 Allow: /
-Allow: /static/llms.txt
-Allow: /llms-full.txt
 
+# ByteDance
+User-agent: Bytespider
+Allow: /
+
+# DuckDuckGo
+User-agent: DuckAssistBot
+Allow: /
+
+# You.com
+User-agent: YouBot
+Allow: /
+
+# Cohere
+User-agent: cohere-ai
+Allow: /
+
+# Common Crawl
+User-agent: CCBot
+Allow: /
+
+# Amazon
 User-agent: Amazonbot
 Allow: /
-Allow: /static/llms.txt
-Allow: /llms-full.txt
-
-User-agent: Bytespider
-Disallow: /
-
-User-agent: Omgilibot
-Disallow: /
 
 Sitemap: https://www.acaciafund.org/sitemap-index.xml
