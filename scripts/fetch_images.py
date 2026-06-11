@@ -1068,8 +1068,9 @@ def fetch_section_images(article: dict, force: bool = False) -> list[dict]:
         if manifest_results:
             return manifest_results
 
-    existing = {s.get("section_index") for s in (article.get("section_images", []) or [])}
-    if not force and existing >= {s["section_index"] for s in break_sections}:
+    existing_raw = article.get("section_images", []) or []
+    existing_indices = {s.get("section_index") for s in existing_raw}
+    if not force and existing_indices >= {s["section_index"] for s in break_sections}:
         return article["section_images"]
 
     pillar = article.get("pillar", "")
@@ -1082,7 +1083,7 @@ def fetch_section_images(article: dict, force: bool = False) -> list[dict]:
 
     for section in break_sections:
         idx = section["section_index"]
-        if not force and idx in existing:
+        if not force and idx in existing_indices:
             existing_entry = next((s for s in (article.get("section_images", []) or [])
                                   if s.get("section_index") == idx), None)
             if existing_entry:
