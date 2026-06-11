@@ -32,6 +32,7 @@ GET /.well-known/oauth-authorization-server
   "issuer": "https://www.acaciafund.org",
   "agent_auth": {
     "skill": "https://www.acaciafund.org/auth.md",
+    "register_uri": "https://www.acaciafund.org/auth.md#register",
     "identity_types_supported": ["anonymous"],
     "anonymous": {
       "credential_types_supported": ["none"]
@@ -43,15 +44,18 @@ GET /.well-known/oauth-authorization-server
 
 ## Step 2 — Pick a method
 
-This service supports only **anonymous** access — no identity assertion, no email, no credentials.
+This service supports only **anonymous** access.
 
-**identity_types_supported**: `["anonymous"]`
+- `identity_types_supported`: `["anonymous"]`
+- `register_uri`: `https://www.acaciafund.org/auth.md#register`
+- `anonymous.credential_types_supported`: `["none"]`
+- `claim_uri`: `https://www.acaciafund.org/auth.md#claim`
 
-## Step 3 — Register
+## Step 3 — Register (register_uri)
 
-No registration required. Send direct HTTP GET requests to any public URL.
+No registration or credentials required. Send direct HTTP GET requests to any public URL.
 
-### anonymous
+### anonymous — register_uri
 
 ```http
 GET /research/aml-risk-assessment
@@ -67,22 +71,14 @@ Response (200):
 **identity_types_supported**: `["anonymous"]`
 **credential_type**: `none`
 
-## Step 4 — Claim ceremony
+## Step 4 — Access content
 
-No claim ceremony needed. Anonymous access grants full read access immediately.
-
-### claim_uri
-
-`https://www.acaciafund.org/auth.md#claim`
-
-## Step 5 — Access content
-
-All resources are freely available:
+All resources are freely available without authentication:
 
 | Path | Content | Format |
 |------|---------|--------|
 | `/research/` | Research articles | HTML |
-| `/learn/` | Learning content | HTML |
+| `/learn/` | Learning content | HTML with flashcards |
 | `/knowledge/` | Quick references | HTML |
 | `/llms.txt` | Agent overview | `text/plain` |
 | `/llms-full.txt` | Full content dump | `text/plain` |
@@ -93,8 +89,8 @@ All resources are freely available:
 | Code | Meaning |
 |------|---------|
 | `404` | Resource not found |
-| `5xx` | Server error — retry |
+| `5xx` | Server error — retry with backoff |
 
 ## Crawling
 
-See `/robots.txt`. All major AI crawlers are explicitly allowed. Contact: contact@acaciafund.org
+See `/robots.txt`. All major AI crawlers explicitly allowed. Contact: contact@acaciafund.org
