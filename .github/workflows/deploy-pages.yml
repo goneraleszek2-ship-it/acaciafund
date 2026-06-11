@@ -26,6 +26,7 @@ jobs:
         run: pip install jinja2 markdown2 pydantic pytest requests Pillow
 
       - name: Fetch section-level images for all articles
+        continue-on-error: true
         run: python3.13 scripts/fetch_images.py --cache
 
       - name: Commit updated registry and new images
