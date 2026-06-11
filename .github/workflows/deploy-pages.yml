@@ -25,6 +25,18 @@ jobs:
       - name: Fetch section-level images for all articles
         run: python3.13 scripts/fetch_images.py --cache
 
+      - name: Commit updated registry and new images
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add registry.json static/images/generated/
+          if git diff --cached --quiet; then
+            echo "No new images or registry changes to commit"
+          else
+            git commit -m "Auto-update registry: new featured images and section photos [skip ci]"
+            git push
+          fi
+
       - name: Run tests
         run: python -m pytest tests/ -q --ignore=tests/test_usability.py.stale
 
