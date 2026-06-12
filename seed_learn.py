@@ -13,6 +13,7 @@ PILLAR_MAP = {
     "learn/data-pipeline-architectures": "data-engineering",
     "learn/building-pipelines-dbt-dagster": "data-engineering",
     "learn/data-quality-observability-cost": "data-engineering",
+    "learn/designing-data-platform": "data-engineering",
     "learn/aml-basics": "aml",
     "learn/market-analysis": "stock",
     "learn/quiz-aml": "aml",
@@ -35,6 +36,7 @@ DIFFICULTY_MAP = {
     "learn/data-pipeline-architectures": "beginner",
     "learn/building-pipelines-dbt-dagster": "intermediate",
     "learn/data-quality-observability-cost": "intermediate",
+    "learn/designing-data-platform": "advanced",
     "learn/aml-basics": "beginner",
     "learn/market-analysis": "intermediate",
     "learn/quiz-aml": "beginner",
@@ -67,7 +69,11 @@ CURATED_RELATIONS = {
         {"slug": "learn/dataops-introduction", "type": "reinforcement", "label": "See also: DataOps principles"},
     ],
     "learn/data-quality-observability-cost": [
-        {"slug": "learn/open-source-data-stack", "type": "next", "label": "Next: open-source data stack"},
+        {"slug": "learn/designing-data-platform", "type": "next", "label": "Next: designing a data platform"},
+        {"slug": "learn/open-source-data-stack", "type": "reinforcement", "label": "See also: open-source data stack"},
+        {"slug": "learn/data-ethics-privacy", "type": "related", "label": "Related: data ethics"},
+    ],
+    "learn/designing-data-platform": [
         {"slug": "learn/data-ethics-privacy", "type": "related", "label": "Related: data ethics"},
     ],
     "learn/aml-basics": [
@@ -119,7 +125,8 @@ PREREQUISITES = {
     "learn/data-pipeline-architectures": ["learn/data-engineering-basics"],
     "learn/building-pipelines-dbt-dagster": ["learn/data-pipeline-architectures"],
     "learn/data-quality-observability-cost": ["learn/building-pipelines-dbt-dagster"],
-    "learn/dataops-introduction": ["learn/data-quality-observability-cost"],
+    "learn/designing-data-platform": ["learn/data-quality-observability-cost"],
+    "learn/dataops-introduction": ["learn/designing-data-platform"],
     "learn/data-quality-engineering": ["learn/dataops-introduction"],
     "learn/open-source-data-stack": ["learn/data-quality-engineering"],
     "learn/data-ethics-privacy": ["learn/open-source-data-stack"],
