@@ -20,6 +20,7 @@ PILLAR_MAP = {
     "learn/designing-aml-program": "aml",
     "learn/market-fundamentals": "stock",
     "learn/market-analysis-methods": "stock",
+    "learn/applying-market-analysis": "stock",
     "learn/aml-basics": "aml",
     "learn/market-analysis": "stock",
     "learn/quiz-aml": "aml",
@@ -49,6 +50,7 @@ DIFFICULTY_MAP = {
     "learn/designing-aml-program": "advanced",
     "learn/market-fundamentals": "beginner",
     "learn/market-analysis-methods": "beginner",
+    "learn/applying-market-analysis": "intermediate",
     "learn/aml-basics": "beginner",
     "learn/market-analysis": "intermediate",
     "learn/quiz-aml": "beginner",
@@ -110,8 +112,12 @@ CURATED_RELATIONS = {
         {"slug": "learn/science-method", "type": "related", "label": "Related: scientific reasoning"},
     ],
     "learn/market-analysis-methods": [
-        {"slug": "learn/market-analysis", "type": "next", "label": "Next: how to analyse markets"},
+        {"slug": "learn/applying-market-analysis", "type": "next", "label": "Next: applying market analysis"},
         {"slug": "learn/behavioral-design-learning", "type": "related", "label": "Related: behavioral factors"},
+    ],
+    "learn/applying-market-analysis": [
+        {"slug": "learn/market-analysis", "type": "next", "label": "Next: how to analyse markets"},
+        {"slug": "learn/semiconductor-supply-chain", "type": "related", "label": "Related: supply chain analysis"},
     ],
     "learn/aml-basics": [
         {"slug": "learn/quiz-aml", "type": "reinforcement", "label": "Test your AML knowledge"},
@@ -165,6 +171,7 @@ PREREQUISITES = {
     "learn/designing-aml-program": ["learn/aml-enforcement-cases"],
     "learn/market-fundamentals": [],
     "learn/market-analysis-methods": ["learn/market-fundamentals"],
+    "learn/applying-market-analysis": ["learn/market-analysis-methods"],
     "learn/data-pipeline-architectures": ["learn/data-engineering-basics"],
     "learn/building-pipelines-dbt-dagster": ["learn/data-pipeline-architectures"],
     "learn/data-quality-observability-cost": ["learn/building-pipelines-dbt-dagster"],
