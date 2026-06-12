@@ -137,13 +137,13 @@
     {%- set pc = pillar_config.get(p, pillar_config["aml"]) %}
     {%- set tkey = thumbnail_key(item.title) %}
     {%- set feat_img = item.featured_image or "" %}
-    {%- set has_feat = feat_img and feat_img.startswith("/static/images/generated/") %}
+    {%- set has_feat = feat_img %}
     <a href="/{{ item.slug }}/" class="group block rounded-xl overflow-hidden transition hover:shadow-lg" style="background:var(--color-surface);border:1px solid var(--color-border);border-left:3px solid var(--color-{{ p }});text-decoration:none">
       <div class="aspect-[600/340] overflow-hidden" style="background:var(--color-bg)">
         {%- if has_feat %}
-        <img src="{{ feat_img }}" alt="{{ item.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300" loading="lazy">
+        <img src="{{ feat_img }}" alt="{{ item.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300" loading="lazy" decoding="async">
         {%- else %}
-        <img src="{{ thumbnail_base }}/thumb_{{ tkey }}.svg" alt="{{ item.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300" loading="lazy">
+        <img src="{{ thumbnail_base }}/thumb_{{ tkey }}.svg" alt="{{ item.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-300" loading="lazy" decoding="async">
         {%- endif %}
       </div>
       <div class="p-4">
@@ -177,13 +177,13 @@
     {%- set pc = pillar_config.get(p, pillar_config["aml"]) %}
     {%- set tkey = thumbnail_key(item.title) %}
     {%- set feat_img = item.featured_image or "" %}
-    {%- set has_feat = feat_img and feat_img.startswith("/static/images/generated/") %}
+    {%- set has_feat = feat_img %}
     <article class="flex gap-4 rounded-lg p-4 transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);border-left:3px solid var(--color-{{ p }})">
       <div class="shrink-0 w-24 h-20 rounded-md overflow-hidden sm:block" style="background:var(--color-bg)">
         {%- if has_feat %}
-        <img src="{{ feat_img }}" alt="{{ item.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover" loading="lazy">
+        <img src="{{ feat_img }}" alt="{{ item.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
         {%- else %}
-        <img src="{{ thumbnail_base }}/thumb_{{ tkey }}.svg" alt="{{ item.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover" loading="lazy">
+        <img src="{{ thumbnail_base }}/thumb_{{ tkey }}.svg" alt="{{ item.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
         {%- endif %}
       </div>
       <div class="min-w-0 flex-1">
@@ -225,7 +225,7 @@
     {%- set tkey = thumbnail_key(item.title) %}
     <a href="/{{ item.slug }}/" class="block rounded-lg overflow-hidden transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
       <div class="aspect-[600/340] overflow-hidden" style="background:var(--color-bg)">
-        <img src="{{ thumbnail_base }}/thumb_{{ tkey }}.svg" alt="{{ item.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover" loading="lazy">
+        <img src="{{ thumbnail_base }}/thumb_{{ tkey }}.svg" alt="{{ item.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
       </div>
       <div class="p-4">
         <div class="flex items-center gap-2 mb-2">
@@ -348,22 +348,22 @@
   <h2 id="stack-heading" class="text-2xl font-bold mb-4" style="color:var(--color-text)">Stack</h2>
   <div class="flex flex-wrap justify-center gap-4 text-sm" style="color:var(--color-text-secondary)">
     <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full" style="background:var(--color-surface);border:1px solid var(--color-border)">
-      <img src="/static/images/tech/python.svg" alt="Python" class="w-5 h-5"> Python 3.13
+      <img src="/static/images/tech/python.svg" alt="Python" class="w-5 h-5" decoding="async"> Python 3.13
     </span>
     <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full" style="background:var(--color-surface);border:1px solid var(--color-border)">
-      <img src="/static/images/tech/pydantic.svg" alt="Pydantic" class="w-5 h-5"> Pydantic
+      <img src="/static/images/tech/pydantic.svg" alt="Pydantic" class="w-5 h-5" decoding="async"> Pydantic
     </span>
     <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full" style="background:var(--color-surface);border:1px solid var(--color-border)">
-      <img src="/static/images/tech/jinja2.svg" alt="Jinja2" class="w-5 h-5"> Jinja2
+      <img src="/static/images/tech/jinja2.svg" alt="Jinja2" class="w-5 h-5" decoding="async"> Jinja2
     </span>
     <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full" style="background:var(--color-surface);border:1px solid var(--color-border)">
-      <img src="/static/images/tech/markdown2.svg" alt="Markdown" class="w-5 h-5"> Markdown2
+      <img src="/static/images/tech/markdown2.svg" alt="Markdown" class="w-5 h-5" decoding="async"> Markdown2
     </span>
     <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full" style="background:var(--color-surface);border:1px solid var(--color-border)">
-      <img src="/static/images/tech/tailwind.svg" alt="Tailwind CSS" class="w-5 h-5"> Tailwind CSS
+      <img src="/static/images/tech/tailwind.svg" alt="Tailwind CSS" class="w-5 h-5" decoding="async"> Tailwind CSS
     </span>
     <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full" style="background:var(--color-surface);border:1px solid var(--color-border)">
-      <img src="/static/images/tech/cloudflare.svg" alt="Cloudflare" class="w-5 h-5"> Cloudflare Pages
+      <img src="/static/images/tech/cloudflare.svg" alt="Cloudflare" class="w-5 h-5" decoding="async"> Cloudflare Pages
     </span>
   </div>
 </section>

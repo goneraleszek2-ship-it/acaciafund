@@ -212,7 +212,7 @@
         {%- set pc = pillar_config.get(p, none) %}
         {%- set tkey = thumbnail_key(item.title) %}
         {%- set feat_img = item.featured_image or "" %}
-        {%- set has_feat = feat_img and feat_img.startswith("/static/images/generated/") %}
+        {%- set has_feat = feat_img %}
         {%- set d_emoji = {"beginner": "🌱", "intermediate": "📘", "advanced": "🔥"} %}
         {%- set bloom_names = {1:"L1 Remember",2:"L2 Understand",3:"L3 Apply",4:"L4 Analyze",5:"L5 Evaluate",6:"L6 Create"} %}
         {%- set bloom_colors = {1:"#7eb8a4",2:"#8fa3c8",3:"#c8a96e",4:"#c87070",5:"#b87ab8",6:"#c87070"} %}
@@ -223,9 +223,9 @@
            style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
           <div class="aspect-[600/340] overflow-hidden" style="background:var(--color-bg)">
             {%- if has_feat %}
-            <img src="{{ feat_img }}" alt="{{ item.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover" loading="lazy">
+            <img src="{{ feat_img }}" alt="{{ item.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
             {%- else %}
-            <img src="{{ thumbnail_base }}/thumb_{{ tkey }}.svg" alt="{{ item.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover" loading="lazy">
+            <img src="{{ thumbnail_base }}/thumb_{{ tkey }}.svg" alt="{{ item.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
             {%- endif %}
           </div>
           <div class="p-4">

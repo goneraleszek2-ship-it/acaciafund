@@ -256,13 +256,13 @@
         {%- set rpc = pillar_config.get(rpillar, pillar_config["aml"]) %}
         {%- set rtkey = thumbnail_key(rp.title) %}
         {%- set feat_img = rp.featured_image or "" %}
-        {%- set has_feat = feat_img and feat_img.startswith("/static/images/generated/") %}
+        {%- set has_feat = feat_img %}
         <a href="/{{ rp.slug }}/" class="block rounded-lg overflow-hidden transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);border-left:3px solid var(--color-{{ rpillar }});text-decoration:none">
           <div class="aspect-[600/340] bg-gray-800 overflow-hidden">
             {%- if has_feat %}
-            <img src="{{ feat_img }}" alt="{{ rp.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover" loading="lazy">
+            <img src="{{ feat_img }}" alt="{{ rp.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
             {%- else %}
-            <img src="{{ thumbnail_base }}/thumb_{{ rtkey }}.svg" alt="{{ rp.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover" loading="lazy">
+            <img src="{{ thumbnail_base }}/thumb_{{ rtkey }}.svg" alt="{{ rp.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
             {%- endif %}
           </div>
           <div class="p-3">
@@ -288,13 +288,13 @@
         {%- set rpc = pillar_config.get(rpillar, pillar_config["aml"]) %}
         {%- set rtkey = thumbnail_key(rl.title) %}
         {%- set feat_img = rl.featured_image or "" %}
-        {%- set has_feat = feat_img and feat_img.startswith("/static/images/generated/") %}
+        {%- set has_feat = feat_img %}
         <a href="/{{ rl.slug }}/" class="block rounded-lg overflow-hidden transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
           <div class="aspect-[600/340] bg-gray-800 overflow-hidden">
             {%- if has_feat %}
-            <img src="{{ feat_img }}" alt="{{ rl.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover" loading="lazy">
+            <img src="{{ feat_img }}" alt="{{ rl.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
             {%- else %}
-            <img src="{{ thumbnail_base }}/thumb_{{ rtkey }}.svg" alt="{{ rl.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover" loading="lazy">
+            <img src="{{ thumbnail_base }}/thumb_{{ rtkey }}.svg" alt="{{ rl.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
             {%- endif %}
           </div>
           <div class="p-3">

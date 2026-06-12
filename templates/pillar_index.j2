@@ -8,7 +8,7 @@
   {%- set hero_map = {"aml": "pillar-aml-hero", "stock": "pillar-stock-hero", "data-engineering": "pillar-data-engineering-hero"} %}
   {%- set hero = hero_map.get(pillar, "pillar-aml-hero") %}
   <div class="mb-8 rounded-xl overflow-hidden">
-    <img src="/static/images/{{ hero }}.svg" alt="{{ pconf.heading }} illustration" width="600" height="340" class="w-full h-auto" loading="lazy">
+    <img src="/static/images/{{ hero }}.svg" alt="{{ pconf.heading }} illustration" width="600" height="340" class="w-full h-auto" loading="lazy" decoding="async">
   </div>
 
   <div class="mb-8">

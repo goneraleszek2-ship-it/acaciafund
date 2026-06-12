@@ -1,25 +1,25 @@
 {%- if featured_image and thumbnail_base is defined and thumbnail_key is defined and content is defined %}
 {%- set fractal_key = thumbnail_key(content.title) %}
-<figure class="my-6 rounded-lg overflow-hidden" style="border:1px solid var(--color-border)">
+<figure class="my-6 rounded-lg overflow-hidden" style="border:1px solid var(--color-border)"{% if image_credit %} aria-describedby="fig-caption"{% endif %}>
   <div class="relative">
-    <img src="{{ thumbnail_base }}/thumb_{{ fractal_key }}.svg" alt="" width="600" height="340" loading="lazy" class="w-full h-auto object-cover">
+    <img src="{{ thumbnail_base }}/thumb_{{ fractal_key }}.svg" alt="" width="600" height="340" loading="lazy" decoding="async" class="w-full h-auto object-cover">
     <div class="absolute inset-0 flex items-center justify-center p-4">
-      <img src="{{ featured_image }}" alt="{{ image_alt | default('') }}" width="1200" height="675" loading="lazy" class="w-full h-auto object-cover rounded shadow-lg" style="max-height:280px">
+      <img src="{{ featured_image }}" alt="{{ image_alt | default('') }}" width="1200" height="675" loading="eager" decoding="async" class="w-full h-auto object-cover rounded shadow-lg" style="max-height:280px">
     </div>
   </div>
   {%- if image_credit %}
-  <figcaption class="px-3 py-1.5 text-xs" style="color:var(--color-text-muted);border-top:1px solid var(--color-border)">
+  <figcaption id="fig-caption" class="px-3 py-1.5 text-xs" style="color:var(--color-text-muted);border-top:1px solid var(--color-border)">
     {{ image_credit }}
   </figcaption>
   {%- endif %}
 </figure>
 {%- elif featured_image %}
-<figure class="my-6 rounded-lg overflow-hidden" style="background:var(--color-bg);border:1px solid var(--color-border)">
+<figure class="my-6 rounded-lg overflow-hidden" style="background:var(--color-bg);border:1px solid var(--color-border)"{% if image_credit %} aria-describedby="fig-caption"{% endif %}>
   <img src="{{ featured_image }}" alt="{{ image_alt | default('') }}"
-       width="1200" height="675" loading="lazy"
+       width="1200" height="675" loading="eager" decoding="async"
        class="w-full h-auto object-cover">
   {%- if image_credit %}
-  <figcaption class="px-3 py-1.5 text-xs" style="color:var(--color-text-muted);border-top:1px solid var(--color-border)">
+  <figcaption id="fig-caption" class="px-3 py-1.5 text-xs" style="color:var(--color-text-muted);border-top:1px solid var(--color-border)">
     {{ image_credit }}
   </figcaption>
   {%- endif %}
@@ -28,7 +28,7 @@
 {%- set fallback_key = thumbnail_key(content.title) %}
 <figure class="my-6 rounded-lg overflow-hidden" style="background:var(--color-bg);border:1px solid var(--color-border)">
   <img src="{{ thumbnail_base }}/thumb_{{ fallback_key }}.svg" alt="{{ image_alt | default('') }}"
-       width="600" height="340" loading="lazy"
+       width="600" height="340" loading="lazy" decoding="async"
        class="w-full h-auto object-contain" style="background:var(--color-surface)">
 </figure>
 {%- endif %}

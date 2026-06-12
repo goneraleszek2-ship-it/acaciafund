@@ -13,7 +13,7 @@
     {%- set icon_map = {"Research": "icon-research", "Learn": "icon-learn", "Knowledge": "icon-knowledge"} %}
     {%- set ct_icon = icon_map.get(content.title, "") %}
     {%- if ct_icon %}
-    <img src="/static/images/{{ ct_icon }}.svg" alt="{{ ct_label }}" class="w-10 h-10 shrink-0">
+    <img src="/static/images/{{ ct_icon }}.svg" alt="{{ ct_label }}" class="w-10 h-10 shrink-0" decoding="async">
     {%- endif %}
     <div>
       <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">{{ content.title }}</h1>

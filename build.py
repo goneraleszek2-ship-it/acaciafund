@@ -463,22 +463,24 @@ def inject_section_images(body_html: str, section_images: list[dict],
             if entry:
                 url = resolve_section_image(entry.get("image_url", ""))
                 credit = entry.get("image_credit", "")
-                alt_ = entry.get("image_alt", "")
+                alt_ = entry.get("image_alt", "") or f"Illustration for {strip_html_tag(h2_tag)}"
                 w = entry.get("width", 1200)
                 h = entry.get("height", 675)
                 if url:
                     style_class = "section-image--full" if section_idx % 2 == 0 else "section-image--contained"
                     figure_style = "background:var(--color-bg);border:1px solid var(--color-border)"
+                    caption_id = f"sec-caption-{section_idx}" if credit else ""
+                    aria_attr = f' aria-describedby="{caption_id}"' if credit else ""
                     f = [
                         f'<figure class="section-image {style_class} my-6 rounded-lg overflow-hidden"',
-                        f' style="{figure_style}">',
+                        f' style="{figure_style}"{aria_attr}>',
                         f'<img src="{url}" alt="{alt_}" width="{w}" height="{h}"',
                         ' loading="lazy" decoding="async"',
                         ' class="w-full h-auto object-cover">',
                     ]
                     if credit:
                         f.append(
-                            '<figcaption class="px-3 py-1.5 text-xs"'
+                            f'<figcaption id="{caption_id}" class="px-3 py-1.5 text-xs"'
                             ' style="color:var(--color-text-muted);border-top:1px solid var(--color-border)">'
                             f'{credit}</figcaption>'
                         )
@@ -501,22 +503,24 @@ def inject_section_images(body_html: str, section_images: list[dict],
             if entry:
                 url = resolve_section_image(entry.get("image_url", ""))
                 credit = entry.get("image_credit", "")
-                alt_ = entry.get("image_alt", "")
+                alt_ = entry.get("image_alt", "") or f"Illustration for {strip_html_tag(h2_tag)}"
                 w = entry.get("width", 1200)
                 h = entry.get("height", 675)
                 if url:
                     style_class = "section-image--full" if section_idx % 2 == 0 else "section-image--contained"
                     figure_style = "background:var(--color-bg);border:1px solid var(--color-border)"
+                    caption_id = f"sec-caption-{section_idx}" if credit else ""
+                    aria_attr = f' aria-describedby="{caption_id}"' if credit else ""
                     f = [
                         f'<figure class="section-image {style_class} my-6 rounded-lg overflow-hidden"',
-                        f' style="{figure_style}">',
+                        f' style="{figure_style}"{aria_attr}>',
                         f'<img src="{url}" alt="{alt_}" width="{w}" height="{h}"',
                         ' loading="lazy" decoding="async"',
                         ' class="w-full h-auto object-cover">',
                     ]
                     if credit:
                         f.append(
-                            '<figcaption class="px-3 py-1.5 text-xs"'
+                            f'<figcaption id="{caption_id}" class="px-3 py-1.5 text-xs"'
                             ' style="color:var(--color-text-muted);border-top:1px solid var(--color-border)">'
                             f'{credit}</figcaption>'
                         )
