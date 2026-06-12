@@ -11,6 +11,7 @@ REGISTRY_PATH = Path("registry.json")
 PILLAR_MAP = {
     "learn/data-engineering-basics": "data-engineering",
     "learn/data-pipeline-architectures": "data-engineering",
+    "learn/building-pipelines-dbt-dagster": "data-engineering",
     "learn/aml-basics": "aml",
     "learn/market-analysis": "stock",
     "learn/quiz-aml": "aml",
@@ -31,6 +32,7 @@ PILLAR_MAP = {
 DIFFICULTY_MAP = {
     "learn/data-engineering-basics": "beginner",
     "learn/data-pipeline-architectures": "beginner",
+    "learn/building-pipelines-dbt-dagster": "intermediate",
     "learn/aml-basics": "beginner",
     "learn/market-analysis": "intermediate",
     "learn/quiz-aml": "beginner",
@@ -54,7 +56,12 @@ CURATED_RELATIONS = {
         {"slug": "learn/dataops-introduction", "type": "next", "label": "Next: DataOps introduction"},
     ],
     "learn/data-pipeline-architectures": [
+        {"slug": "learn/building-pipelines-dbt-dagster", "type": "next", "label": "Next: building with dbt and Dagster"},
         {"slug": "learn/dataops-introduction", "type": "next", "label": "Next: DataOps introduction"},
+    ],
+    "learn/building-pipelines-dbt-dagster": [
+        {"slug": "learn/data-quality-engineering", "type": "next", "label": "Next: data quality"},
+        {"slug": "learn/dataops-introduction", "type": "reinforcement", "label": "See also: DataOps principles"},
     ],
     "learn/aml-basics": [
         {"slug": "learn/quiz-aml", "type": "reinforcement", "label": "Test your AML knowledge"},
@@ -103,7 +110,8 @@ CURATED_RELATIONS = {
 PREREQUISITES = {
     "learn/data-engineering-basics": [],
     "learn/data-pipeline-architectures": ["learn/data-engineering-basics"],
-    "learn/dataops-introduction": ["learn/data-pipeline-architectures"],
+    "learn/building-pipelines-dbt-dagster": ["learn/data-pipeline-architectures"],
+    "learn/dataops-introduction": ["learn/building-pipelines-dbt-dagster"],
     "learn/data-quality-engineering": ["learn/dataops-introduction"],
     "learn/open-source-data-stack": ["learn/data-quality-engineering"],
     "learn/data-ethics-privacy": ["learn/open-source-data-stack"],

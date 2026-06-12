@@ -3900,13 +3900,13 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
-        "orchestration",
-        "stock",
-        "best-practices",
-        "dataops",
         "pipeline",
+        "ci-cd",
         "data-engineering",
-        "ci-cd"
+        "stock",
+        "orchestration",
+        "dataops",
+        "best-practices"
       ],
       "created_at": "2026-06-08T16:26:44.310900+00:00",
       "updated_at": null,
@@ -4045,7 +4045,7 @@
         }
       ],
       "prerequisites": [
-        "learn/data-pipeline-architectures"
+        "learn/building-pipelines-dbt-dagster"
       ]
     },
     {
@@ -4057,14 +4057,14 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
-        "stock",
-        "testing",
         "data-quality",
-        "engineering",
-        "dataops",
-        "monitoring",
         "data-engineering",
-        "expectations"
+        "testing",
+        "monitoring",
+        "stock",
+        "expectations",
+        "engineering",
+        "dataops"
       ],
       "created_at": "2026-06-08T16:26:44.310900+00:00",
       "updated_at": null,
@@ -4201,14 +4201,14 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
-        "stock",
-        "architecture",
-        "dataops",
-        "lakehouse",
         "open-source",
+        "architecture",
         "ingestion",
+        "lakehouse",
         "data-engineering",
-        "data-stack"
+        "stock",
+        "data-stack",
+        "dataops"
       ],
       "created_at": "2026-06-08T16:26:44.310900+00:00",
       "updated_at": null,
@@ -4494,14 +4494,14 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
-        "beneficial-ownership",
-        "sanctions",
-        "trade-finance",
         "compliance",
         "financial-crime",
+        "beneficial-ownership",
         "aml",
         "tbml",
-        "ofac"
+        "ofac",
+        "sanctions",
+        "trade-finance"
       ],
       "created_at": "2026-06-07T15:28:22.450473+00:00",
       "updated_at": null,
@@ -4635,14 +4635,14 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
-        "portfolio-theory",
-        "stock",
-        "fed",
-        "psychology",
         "markets",
-        "behavioral-finance",
         "trading",
+        "behavioral-finance",
+        "stock",
+        "portfolio-theory",
+        "fed",
         "macro",
+        "psychology",
         "risk-management"
       ],
       "created_at": "2026-06-07T15:28:22.450473+00:00",
@@ -4777,15 +4777,15 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
-        "replication",
+        "meta-analysis",
+        "science",
+        "methodology",
+        "statistics",
+        "research",
+        "p-values",
         "bayesian",
         "stock",
-        "research",
-        "methodology",
-        "p-values",
-        "statistics",
-        "meta-analysis",
-        "science"
+        "replication"
       ],
       "created_at": "2026-06-07T15:28:22.450473+00:00",
       "updated_at": null,
@@ -4926,16 +4926,16 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
-        "regulation",
         "differential-privacy",
-        "gdpr",
+        "consent",
         "ethics",
-        "dataops",
+        "gdpr",
         "data-engineering",
         "security",
         "privacy",
+        "regulation",
         "ai-act",
-        "consent"
+        "dataops"
       ],
       "created_at": "2026-06-07T15:28:22.450473+00:00",
       "updated_at": null,
@@ -5068,11 +5068,11 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
-        "beginners",
-        "data-architecture",
-        "data-engineering",
         "etl",
+        "data-architecture",
         "pipeline",
+        "beginners",
+        "data-engineering",
         "data-stack"
       ],
       "created_at": "2026-06-11T20:50:09.126818+00:00",
@@ -5203,13 +5203,13 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
-        "streaming",
-        "batch-processing",
-        "cdc",
         "architecture",
-        "kafka",
+        "batch-processing",
+        "pipeline",
         "data-engineering",
-        "pipeline"
+        "cdc",
+        "kafka",
+        "streaming"
       ],
       "created_at": "2026-06-12T05:31:52.576779+00:00",
       "updated_at": null,
@@ -5319,6 +5319,11 @@
       "difficulty": "beginner",
       "curated_relations": [
         {
+          "slug": "learn/building-pipelines-dbt-dagster",
+          "type": "next",
+          "label": "Next: building with dbt and Dagster"
+        },
+        {
           "slug": "learn/dataops-introduction",
           "type": "next",
           "label": "Next: DataOps introduction"
@@ -5326,6 +5331,144 @@
       ],
       "prerequisites": [
         "learn/data-engineering-basics"
+      ]
+    },
+    {
+      "slug": "learn/building-pipelines-dbt-dagster",
+      "language": "en",
+      "title": "Building Data Pipelines with dbt and Dagster: From SQL to Orchestration",
+      "description": "Learn dbt fundamentals (models, tests, docs, sources), Dagster's software-defined asset approach, and how to build end-to-end pipelines combining both tools with best practices and a comparison of orchestration frameworks.",
+      "category": "lesson",
+      "content_type": "learn",
+      "tags": [
+        "pipeline",
+        "dagster",
+        "dbt",
+        "data-engineering",
+        "data-transformation",
+        "orchestration",
+        "sql"
+      ],
+      "created_at": "2026-06-12T08:13:46.363993+00:00",
+      "updated_at": null,
+      "date_str": "",
+      "author": "Leszek",
+      "body_html": "<h2>What is dbt?</h2>\n<p>dbt (data build tool) is the industry-standard SQL-first transformation framework. It enables analytics engineers and data analysts to define data transformations as version-controlled SQL SELECT statements. dbt handles the T in ELT — transforming data that is already loaded into your warehouse or lakehouse.</p>\n<ul>\n<li><strong>Models:</strong> The core unit of dbt. Each model is a <code>.sql</code> file containing a <code>SELECT</code> statement. dbt compiles and executes these against your warehouse, materializing the results as tables, views, or incremental models.</li>\n<li><strong>Tests:</strong> Built-in and custom data quality tests. Generic tests (unique, not_null, accepted_values, relationships) are defined in YAML. Custom tests are written as SQL <code>SELECT</code> statements that return failing rows.</li>\n<li><strong>Documentation:</strong> dbt auto-generates documentation from model definitions and inline <code>description</code> blocks. The docs site includes lineage graphs (Lineage DAG), column-level descriptions, and test coverage.</li>\n<li><strong>Sources and Freshness:</strong> Define source tables with freshness assertions. dbt tracks when each source was last loaded and alerts if data is stale.</li>\n<li><strong>Materializations:</strong> <code>table</code> (full refresh), <code>view</code> (no storage), <code>incremental</code> (append/merge new records), <code>ephemeral</code> (CTE), and <code>materialized_view</code> (database-native).</li>\n<li><strong>dbt Mesh:</strong> Decentralize dbt projects across domain teams while sharing a common cross-project reference layer. Each domain owns its models and contracts.</li>\n</ul>\n<p>A simple dbt model looks like this:</p>\n<pre style=\"background:var(--color-bg);padding:12px;border-radius:8px;overflow-x:auto;font-size:0.85em\">\n-- models/orders_summary.sql\n{<!-- -->{ config(materialized='incremental', unique_key='order_id') }}\n\nSELECT\n    o.order_id,\n    o.customer_id,\n    o.order_date,\n    o.total_amount,\n    c.customer_segment\nFROM {{ source('ecommerce', 'orders') }} o\nLEFT JOIN {{ ref('customer_segments') }} c\n    ON o.customer_id = c.customer_id\n{% if is_incremental() %}\n    WHERE o.order_date >= (SELECT max(order_date) FROM {{ this }})\n{% endif %}\n</pre>\n\n<h2>What is Dagster?</h2>\n<p>Dagster is a next-generation data orchestrator designed for the modern data stack. Unlike traditional orchestrators (Airflow) that treat pipelines as task DAGs, Dagster treats them as <strong>software-defined assets</strong> — each asset knows its upstream dependencies and how it is materialized.</p>\n<ul>\n<li><strong>Assets:</strong> The core abstraction. An asset is a data product (table, file, ML model) with a known producer function. Assets form a DAG based on their dependencies.</li>\n<li><strong>Ops and Jobs:</strong> Lower-level building blocks. An op is a single computation. A job is a graph of ops. Assets are built on top of ops.</li>\n<li><strong>Schedules and Sensors:</strong> Schedules trigger jobs on a cron interval (e.g., daily at 6 AM). Sensors trigger jobs based on external events (e.g., a file landing in S3).</li>\n<li><strong>dbt Integration:</strong> Dagster has a native dbt integration (<code>dagster-dbt</code>) that loads your dbt models as Dagster assets. Dagster orchestrates dbt runs, provides asset-level lineage, and enables cross-tool dependencies (e.g., \"run dbt model A, then run Python op B, then run dbt model C\").</li>\n<li><strong>Software-Defined Assets (SDA):</strong> Assets are declared in Python with their upstream dependencies, partition definitions, and freshness policies. Dagster materializes only what's stale or upstream of a changed asset.</li>\n<li><strong>Observability:</strong> Dagster's Dagit UI shows asset lineage, run history, logs, and alerts. Each asset has a \"last materialized\" timestamp, upstream/downstream lineage, and launch history.</li>\n</ul>\n\n<h2>Building a Pipeline with dbt + Dagster</h2>\n<p>The modern data stack often pairs dbt for transformations with Dagster for orchestration. Here's how they work together:</p>\n<pre style=\"background:var(--color-bg);padding:12px;border-radius:8px;overflow-x:auto;font-size:0.85em\">\n# definitions.py — Dagster project root\nfrom dagster import Definitions, load_assets_from_modules\nfrom dagster_dbt import dbt_assets, DbtCliResource\nfrom pathlib import Path\n\n@dbt_assets(manifest=Path(\"target\", \"manifest.json\"))\ndef my_dbt_assets(context, dbt: DbtCliResource):\n    yield from dbt.cli([\"build\"], context=context).stream()\n\ndefs = Definitions(assets=[my_dbt_assets])\n</pre>\n<p>This single file loads your entire dbt project as Dagster assets. Dagster handles scheduling, alerting, and lineage — dbt handles the actual SQL transformations.</p>\n\n<h2>A Complete Pipeline Example</h2>\n<p>Here's a practical pattern combining dbt, Dagster, and Python for a complete data pipeline:</p>\n<pre style=\"background:var(--color-bg);padding:12px;border-radius:8px;overflow-x:auto;font-size:0.85em\">\n# assets.py\nfrom dagster import asset, AssetIn\nimport pandas as pd\n\n@asset\ndef raw_transactions() -> pd.DataFrame:\n    \"\"\"Extract: load raw data from source\"\"\"\n    return pd.read_parquet(\"s3://landing/transactions/\")\n\n@asset\ndef cleaned_transactions(raw_transactions: pd.DataFrame) -> pd.DataFrame:\n    \"\"\"Transform: clean and validate\"\"\"\n    df = raw_transactions.dropna(subset=[\"amount\", \"timestamp\"])\n    df[\"amount\"] = df[\"amount\"].clip(lower=0)\n    return df\n\n# dbt models handle the SQL transformations (aggregations, joins, etc.)\n# defined in models/ directory as .sql files\n# loaded via @dbt_assets(...)\n\n@asset\ndef alerts(cleaned_transactions: pd.DataFrame) -> None:\n    \"\"\"Serve: check thresholds and send alerts\"\"\"\n    high_value = cleaned_transactions[\n        cleaned_transactions[\"amount\"] > 10_000\n    ]\n    if len(high_value) > 0:\n        print(f\"Alert: {len(high_value)} high-value transactions detected\")\n</pre>\n<p>Dagster's asset graph automatically determines execution order: <code>raw_transactions</code> → <code>cleaned_transactions</code> → dbt models → <code>alerts</code>. If a partition of <code>raw_transactions</code> is reprocessed, only downstream assets for that partition are re-materialized.</p>\n\n<h2>Key Patterns and Best Practices</h2>\n<ul>\n<li><strong>Start with dbt-first:</strong> Use dbt for all SQL transformations. Only bring in custom Python when SQL is insufficient (e.g., ML inference, API calls, complex business logic).</li>\n<li><strong>Use incremental models for large tables:</strong> dbt's <code>incremental</code> materialization appends or merges only new/changed records, avoiding full table scans.</li>\n<li><strong>Define data contracts:</strong> Use dbt's <code>contract</code> enforcement to guarantee column names, types, and constraints between dbt models.</li>\n<li><strong>Leverage Dagster partitions:</strong> Partition your assets by date, region, or other dimensions. Dagster tracks which partitions are materialized and can materialize only stale partitions.</li>\n<li><strong>Automate backfills:</strong> When upstream source data is corrected, Dagster's \"re-materialize upstream\" feature cascades the backfill through the entire dependency graph.</li>\n<li><strong>Test in CI:</strong> Run <code>dbt build --select state:modified</code> in CI to test only changed models. Use <code>dbt source freshness</code> to validate data recency.</li>\n</ul>\n\n<h2>Comparing the Orchestrators</h2>\n<table style=\"width:100%;border-collapse:collapse;font-size:0.9em\">\n<tr style=\"background:var(--color-bg)\"><th style=\"padding:8px;border:1px solid var(--color-border)\">Feature</th><th style=\"padding:8px;border:1px solid var(--color-border)\">Dagster</th><th style=\"padding:8px;border:1px solid var(--color-border)\">Airflow</th><th style=\"padding:8px;border:1px solid var(--color-border)\">Prefect</th></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">Asset abstraction</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Native (SDA)</td><td style=\"padding:8px;border:1px solid var(--color-border)\">No (task-only)</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Partial (flows)</td></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">dbt integration</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Deep (native)</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Via operators</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Via tasks</td></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">Partition support</td><td style=\"padding:8px;border:1px solid var(--color-border)\">First-class</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Manual</td><td style=\"padding:8px;border:1px solid var(--color-border)\">First-class</td></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">Local dev experience</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Excellent (Dagit)</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Good (local executor)</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Good (Orion)</td></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">Learning curve</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Moderate</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Low (basic) / High (advanced)</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Low</td></tr>\n</table>\n<p>Dagster's software-defined asset approach is a paradigm shift from traditional orchestrators. It treats data as the central concern, not task execution. For teams building modern data platforms, Dagster + dbt is becoming the default stack.</p>",
+      "section_images": [],
+      "bloom_questions": [
+        {
+          "bloom_level": "apply",
+          "type": "mc",
+          "question": "You need to add a new column to a dbt model without breaking downstream consumers. Which dbt feature should you use?",
+          "options": [
+            "Materializations",
+            "Data contracts",
+            "Source freshness",
+            "Ephemeral models"
+          ],
+          "answer": 1,
+          "correct": "Data contracts"
+        },
+        {
+          "bloom_level": "apply",
+          "type": "mc",
+          "question": "In Dagster, how do you define a data asset that depends on another asset?",
+          "options": [
+            "Using the @op decorator with a DAG definition",
+            "By declaring the dependency as a function parameter",
+            "Using the @schedule decorator",
+            "By defining it in a YAML configuration file"
+          ],
+          "answer": 1,
+          "correct": "By declaring the dependency as a function parameter"
+        },
+        {
+          "bloom_level": "apply",
+          "type": "mc",
+          "question": "A dbt model needs to process only new records since the last run. Which materialization should you choose?",
+          "options": [
+            "table",
+            "view",
+            "incremental",
+            "ephemeral"
+          ],
+          "answer": 2,
+          "correct": "incremental"
+        },
+        {
+          "bloom_level": "apply",
+          "type": "mc",
+          "question": "When a source table is corrected and old records need reprocessing, what is the best approach in a Dagster + dbt pipeline?",
+          "options": [
+            "Drop and recreate all tables",
+            "Use Dagster's re-materialize upstream from the source asset",
+            "Manually run dbt build --full-refresh",
+            "Write a custom Python script"
+          ],
+          "answer": 1,
+          "correct": "Use Dagster's re-materialize upstream from the source asset"
+        },
+        {
+          "bloom_level": "apply",
+          "type": "mc",
+          "question": "Your team has two dbt projects owned by different domain teams. Which dbt feature enables cross-project references?",
+          "options": [
+            "dbt Core",
+            "dbt Mesh",
+            "dbt Cloud",
+            "dbt Sources"
+          ],
+          "answer": 1,
+          "correct": "dbt Mesh"
+        }
+      ],
+      "flashcards": [
+        {
+          "term": "dbt Model",
+          "definition": "A .sql file with a SELECT statement that dbt compiles and materializes as a table, view, or incremental relation in the warehouse."
+        },
+        {
+          "term": "Software-Defined Asset (SDA)",
+          "definition": "Dagster abstraction where each data product (table, file, ML model) is declared with its producer function and upstream dependencies."
+        },
+        {
+          "term": "Incremental Materialization",
+          "definition": "A dbt materialization that appends or merges only new/changed records, avoiding full-table scans on large datasets."
+        },
+        {
+          "term": "Data Contract",
+          "definition": "A formal agreement defining column names, types, and constraints between dbt model producers and consumers, enforced at build time."
+        },
+        {
+          "term": "dbt Mesh",
+          "definition": "Decentralized dbt architecture allowing multiple domain teams to own separate dbt projects while sharing cross-project references."
+        },
+        {
+          "term": "Dagster dbt Integration",
+          "definition": "A native integration (dagster-dbt) that loads dbt models as Dagster assets, enabling cross-tool orchestration with lineage tracking and partitioned execution."
+        },
+        {
+          "term": "Source Freshness",
+          "definition": "A dbt feature that tracks when source tables were last loaded and alerts if data exceeds recency thresholds."
+        }
+      ],
+      "pillar": "data-engineering",
+      "thumbnail_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"600\" height=\"340\" viewBox=\"0 0 600 340\">\n<defs>\n<linearGradient id=\"lg-data-engineering\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\">\n<stop offset=\"0\" stop-color=\"#1e1b4b\"/>\n<stop offset=\"1\" stop-color=\"#0a0a1a\"/>\n</linearGradient>\n</defs>\n<rect width=\"600\" height=\"340\" fill=\"url(#lg-data-engineering)\"/>\n<circle cx=\"405\" cy=\"263\" r=\"47\" fill=\"#6366f1\" opacity=\"0.19\"/><circle cx=\"363\" cy=\"120\" r=\"47\" fill=\"#6366f1\" opacity=\"0.1\"/><circle cx=\"62\" cy=\"38\" r=\"47\" fill=\"#6366f1\" opacity=\"0.18\"/><circle cx=\"441\" cy=\"113\" r=\"30\" fill=\"#6366f1\" opacity=\"0.11\"/><circle cx=\"130\" cy=\"274\" r=\"21\" fill=\"#6366f1\" opacity=\"0.11\"/><circle cx=\"331\" cy=\"215\" r=\"11\" fill=\"#6366f1\" opacity=\"0.05\"/><line x1=\"148\" y1=\"31\" x2=\"332\" y2=\"189\" stroke=\"#818cf8\" stroke-width=\"2\" opacity=\"0.14\"/><line x1=\"96\" y1=\"312\" x2=\"301\" y2=\"88\" stroke=\"#818cf8\" stroke-width=\"1\" opacity=\"0.1\"/><line x1=\"99\" y1=\"230\" x2=\"331\" y2=\"62\" stroke=\"#818cf8\" stroke-width=\"1\" opacity=\"0.15\"/><line x1=\"210\" y1=\"290\" x2=\"389\" y2=\"34\" stroke=\"#818cf8\" stroke-width=\"1\" opacity=\"0.18\"/><circle cx=\"126\" cy=\"90\" r=\"6\" fill=\"#6366f1\" opacity=\"0.22\"/><circle cx=\"322\" cy=\"266\" r=\"5\" fill=\"#6366f1\" opacity=\"0.35\"/><circle cx=\"153\" cy=\"46\" r=\"4\" fill=\"#6366f1\" opacity=\"0.23\"/><circle cx=\"165\" cy=\"61\" r=\"4\" fill=\"#6366f1\" opacity=\"0.36\"/><circle cx=\"163\" cy=\"224\" r=\"3\" fill=\"#6366f1\" opacity=\"0.34\"/><circle cx=\"138\" cy=\"238\" r=\"3\" fill=\"#6366f1\" opacity=\"0.27\"/><circle cx=\"543\" cy=\"113\" r=\"4\" fill=\"#6366f1\" opacity=\"0.4\"/><circle cx=\"350\" cy=\"158\" r=\"3\" fill=\"#6366f1\" opacity=\"0.36\"/><circle cx=\"245\" cy=\"149\" r=\"3\" fill=\"#6366f1\" opacity=\"0.32\"/><circle cx=\"277\" cy=\"12\" r=\"5\" fill=\"#6366f1\" opacity=\"0.21\"/><circle cx=\"392\" cy=\"78\" r=\"2\" fill=\"#6366f1\" opacity=\"0.1\"/><circle cx=\"417\" cy=\"77\" r=\"2\" fill=\"#6366f1\" opacity=\"0.15\"/><circle cx=\"503\" cy=\"224\" r=\"3\" fill=\"#6366f1\" opacity=\"0.22\"/><circle cx=\"224\" cy=\"107\" r=\"5\" fill=\"#6366f1\" opacity=\"0.3\"/><circle cx=\"427\" cy=\"230\" r=\"3\" fill=\"#6366f1\" opacity=\"0.35\"/><circle cx=\"114\" cy=\"252\" r=\"6\" fill=\"#6366f1\" opacity=\"0.21\"/><circle cx=\"30\" cy=\"74\" r=\"4\" fill=\"#6366f1\" opacity=\"0.12\"/><circle cx=\"367\" cy=\"149\" r=\"4\" fill=\"#6366f1\" opacity=\"0.26\"/><circle cx=\"175\" cy=\"173\" r=\"4\" fill=\"#6366f1\" opacity=\"0.32\"/><circle cx=\"551\" cy=\"173\" r=\"6\" fill=\"#6366f1\" opacity=\"0.17\"/>\n<circle cx=\"300\" cy=\"170\" r=\"140\" fill=\"#6366f1\" opacity=\"0.04\"/>\n<circle cx=\"300\" cy=\"170\" r=\"80\" fill=\"#818cf8\" opacity=\"0.04\"/>\n</svg>",
+      "difficulty": "intermediate",
+      "curated_relations": [
+        {
+          "slug": "learn/data-quality-engineering",
+          "type": "next",
+          "label": "Next: data quality"
+        },
+        {
+          "slug": "learn/dataops-introduction",
+          "type": "reinforcement",
+          "label": "See also: DataOps principles"
+        }
+      ],
+      "prerequisites": [
+        "learn/data-pipeline-architectures"
       ]
     },
     {
@@ -5337,14 +5480,14 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
-        "blockchain",
         "stablecoins",
-        "travel-rule",
-        "crypto",
-        "fintech",
         "compliance",
+        "crypto",
+        "aml",
+        "blockchain",
+        "fintech",
         "defi",
-        "aml"
+        "travel-rule"
       ],
       "created_at": "2026-06-07T15:07:46.461093+00:00",
       "updated_at": null,
@@ -5497,13 +5640,13 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
+        "geopolitics",
+        "ai-hardware",
+        "markets",
+        "manufacturing",
+        "semiconductors",
         "trade",
         "stock",
-        "ai-hardware",
-        "manufacturing",
-        "geopolitics",
-        "markets",
-        "semiconductors",
         "supply-chain"
       ],
       "created_at": "2026-06-07T15:07:46.461093+00:00",
@@ -5646,14 +5789,14 @@
       "content_type": "learn",
       "tags": [
         "crispr",
-        "stock",
-        "fda",
-        "biotech",
-        "medicine",
-        "bioethics",
-        "gene-editing",
         "genomics",
-        "science"
+        "science",
+        "gene-editing",
+        "fda",
+        "medicine",
+        "stock",
+        "bioethics",
+        "biotech"
       ],
       "created_at": "2026-06-07T15:07:46.461093+00:00",
       "updated_at": null,
@@ -5794,15 +5937,15 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
-        "ux",
-        "behavioral-design",
         "habits",
-        "gamification",
+        "meta",
+        "education",
         "stock",
+        "behavioral-design",
         "psychology",
         "learning",
-        "meta",
-        "education"
+        "gamification",
+        "ux"
       ],
       "created_at": "2026-06-07T15:07:46.461093+00:00",
       "updated_at": null,
@@ -6141,11 +6284,11 @@
       "category": "learn",
       "content_type": "learn",
       "tags": [
-        "quiz",
-        "assessment",
         "compliance",
+        "knowledge-check",
         "aml",
-        "knowledge-check"
+        "assessment",
+        "quiz"
       ],
       "created_at": "2026-06-07T09:23:05.490994+00:00",
       "updated_at": null,
@@ -6278,13 +6421,13 @@
       "category": "learn",
       "content_type": "learn",
       "tags": [
-        "replication",
-        "stock",
-        "research",
-        "bloom-taxonomy",
+        "science",
         "reasoning",
+        "bloom-taxonomy",
         "methodology",
-        "science"
+        "research",
+        "stock",
+        "replication"
       ],
       "created_at": "2026-06-07T09:23:05.490984+00:00",
       "updated_at": null,
@@ -6422,11 +6565,11 @@
       "category": "learn",
       "content_type": "learn",
       "tags": [
-        "stock",
-        "signals",
         "fundamental-analysis",
         "markets",
+        "signals",
         "trading",
+        "stock",
         "technical-analysis"
       ],
       "created_at": "2026-06-07T09:23:05.490971+00:00",
@@ -6573,12 +6716,12 @@
       "category": "learn",
       "content_type": "learn",
       "tags": [
-        "regulations",
-        "kyc",
         "compliance",
-        "money-laundering",
+        "regulations",
+        "financial-crime",
         "aml",
-        "financial-crime"
+        "kyc",
+        "money-laundering"
       ],
       "created_at": "2026-06-07T09:23:05.490951+00:00",
       "updated_at": null,
@@ -11390,5 +11533,5 @@
       "description": "Get notified when new signals are detected."
     }
   ],
-  "last_updated": "2026-06-12T05:31:52.576974+00:00"
+  "last_updated": "2026-06-12T08:13:46.364158+00:00"
 }
