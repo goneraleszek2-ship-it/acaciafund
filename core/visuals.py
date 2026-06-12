@@ -26,23 +26,36 @@ PILLAR_PALETTES = {
 
 TOPIC_ICONS = {
     # AML
-    "regulation":     '<path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>',
-    "compliance":     '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 12l2 2 4-4"/>',
-    "crypto":         '<circle cx="12" cy="12" r="10"/><path d="M12 6v12M9 9h6l-3 6-3-6z"/>',
-    "fraud":          '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><circle cx="12" cy="12" r="3"/>',
-    "banking":        '<rect x="2" y="8" width="20" height="14" rx="2"/><path d="M12 2L2 8h20L12 2z"/><path d="M8 14v4M12 14v4M16 14v4"/>',
+    "regulation":     '<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>',
+    "compliance":     '<rect fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" x="3" y="3" width="18" height="18" rx="2"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4"/>',
+    "crypto":         '<circle fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" cx="12" cy="12" r="10"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 6v12M9 9h6l-3 6-3-6z"/>',
+    "fraud":          '<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><circle fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" cx="12" cy="12" r="3"/>',
+    "banking":        '<rect fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" x="2" y="8" width="20" height="14" rx="2"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 2L2 8h20L12 2z"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 14v4M12 14v4M16 14v4"/>',
     # Markets
-    "semiconductor":  '<path d="M6 6h12v12H6z"/><path d="M8 8h8v8H8z"/><path d="M10 10h4v4h-4z"/>',
-    "ai":             '<circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/><circle cx="12" cy="12" r="3"/>',
-    "stock_market":   '<path d="M2 20h20M6 16l4-4 4 4 4-8" fill="none" stroke-width="2"/>',
-    "startup":        '<path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M12 22V12"/>',
-    "manufacturing":  '<path d="M4 4h16v16H4z"/><circle cx="12" cy="12" r="4"/><path d="M12 8v8M8 12h8"/>',
+    "semiconductor":  '<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M6 6h12v12H6z"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 8h8v8H8z"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 10h4v4h-4z"/>',
+    "ai":             '<circle fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" cx="12" cy="12" r="10"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v8M8 12h8"/><circle fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" cx="12" cy="12" r="3"/>',
+    "stock_market":   '<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2 20h20M6 16l4-4 4 4 4-8"/>',
+    "startup":        '<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 2L2 7l10 5 10-5-10-5z"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2 17l10 5 10-5"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 22V12"/>',
+    "manufacturing":  '<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 4h16v16H4z"/><circle fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" cx="12" cy="12" r="4"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v8M8 12h8"/>',
     # Science
-    "dna":            '<path d="M8 2c0 0 0 20 8 20M16 2c0 0 0 20-8 20M8 12h8" fill="none" stroke-width="1.5"/>',
-    "quantum":        '<circle cx="12" cy="12" r="3" fill="none" stroke-width="2"/><circle cx="16" cy="8" r="1.5"/><circle cx="16" cy="16" r="1.5"/><circle cx="8" cy="8" r="1.5"/><circle cx="8" cy="16" r="1.5"/><path d="M12 3v2M12 19v2M3 12h2M19 12h2"/>',
-    "brain":          '<path d="M12 2C8 2 4 5 4 10c0 3 2 5 2 5s0 5 6 5 6-5 6-5 2-2 2-5c0-5-4-8-8-8z" fill="none" stroke-width="2"/><path d="M9 10h6M10.5 12h3M10 8h4"/>',
-    "space":          '<circle cx="12" cy="12" r="10" fill="none" stroke-width="2"/><path d="M2 12h20M12 2a16 16 0 010 20 16 16 0 010-20z"/><ellipse cx="12" cy="12" rx="4" ry="10"/>',
-    "climate":        '<circle cx="12" cy="12" r="10" fill="none" stroke-width="2"/><path d="M12 2a8 8 0 000 16"/><path d="M8 6l2 2M16 6l-2 2"/>',
+    "dna":            '<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 2c0 0 0 20 8 20M16 2c0 0 0 20-8 20M8 12h8"/>',
+    "quantum":        '<circle fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" cx="12" cy="12" r="3"/><circle fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" cx="16" cy="8" r="1.5"/><circle fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" cx="16" cy="16" r="1.5"/><circle fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" cx="8" cy="8" r="1.5"/><circle fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" cx="8" cy="16" r="1.5"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 3v2M12 19v2M3 12h2M19 12h2"/>',
+    "brain":          '<path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 2C8 2 4 5 4 10c0 3 2 5 2 5s0 5 6 5 6-5 6-5 2-2 2-5c0-5-4-8-8-8z"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 10h6M10.5 12h3M10 8h4"/>',
+    "space":          '<circle fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" cx="12" cy="12" r="10"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2 12h20M12 2a16 16 0 010 20 16 16 0 010-20z"/><ellipse fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" cx="12" cy="12" rx="4" ry="10"/>',
+    "climate":        '<circle fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" cx="12" cy="12" r="10"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 2a8 8 0 000 16"/><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 6l2 2M16 6l-2 2"/>',
+    # Tech brands (Simple Icons — filled, use currentColor)
+    "kafka":          '<path fill="currentColor" d="M9.71 2.136a1.43 1.43 0 0 0-2.047 0h-.007a1.48 1.48 0 0 0-.421 1.042c0 .41.161.777.422 1.039l.007.007c.257.264.616.426 1.019.426.404 0 .766-.162 1.027-.426l.003-.007c.261-.262.421-.629.421-1.039 0-.408-.159-.777-.421-1.042H9.71zM8.683 22.295c.404 0 .766-.167 1.027-.429l.003-.008c.261-.261.421-.631.421-1.036 0-.41-.159-.778-.421-1.044H9.71a1.42 1.42 0 0 0-1.027-.432 1.4 1.4 0 0 0-1.02.432h-.007c-.26.266-.422.634-.422 1.044 0 .406.161.775.422 1.036l.007.008c.258.262.617.429 1.02.429zm7.89-4.462c.359-.096.683-.33.882-.684l.027-.052a1.47 1.47 0 0 0 .114-1.067 1.454 1.454 0 0 0-.675-.896l-.021-.014a1.425 1.425 0 0 0-1.078-.132c-.36.091-.684.335-.881.686-.2.349-.241.75-.146 1.119.099.363.33.691.675.896h.002c.346.203.737.239 1.101.144zm-6.405-7.342a2.083 2.083 0 0 0-1.485-.627c-.58 0-1.103.242-1.482.627-.378.385-.612.916-.612 1.507s.233 1.124.612 1.514a2.08 2.08 0 0 0 2.967 0c.379-.39.612-.923.612-1.514s-.233-1.122-.612-1.507zm-.835-2.51c.843.141 1.6.552 2.178 1.144h.004c.092.093.182.196.265.299l1.446-.851a3.176 3.176 0 0 1-.047-1.808 3.149 3.149 0 0 1 1.456-1.926l.025-.016a3.062 3.062 0 0 1 2.345-.306c.77.21 1.465.721 1.898 1.482v.002c.431.757.518 1.626.313 2.408a3.145 3.145 0 0 1-1.456 1.928l-.198.118h-.02a3.095 3.095 0 0 1-2.154.201 3.127 3.127 0 0 1-1.514-.944l-1.444.848a4.162 4.162 0 0 1 0 2.879l1.444.846c.413-.47.939-.789 1.514-.944a3.041 3.041 0 0 1 2.371.319l.048.023v.002a3.17 3.17 0 0 1 1.408 1.906 3.215 3.215 0 0 1-.313 2.405l-.026.053-.003-.005a3.147 3.147 0 0 1-1.867 1.436 3.096 3.096 0 0 1-2.371-.318v-.006a3.156 3.156 0 0 1-1.456-1.927 3.175 3.175 0 0 1 .047-1.805l-1.446-.848a3.905 3.905 0 0 1-.265.294l-.004.005a3.938 3.938 0 0 1-2.178 1.138v1.699a3.09 3.09 0 0 1 1.56.862l.002.004c.565.572.914 1.368.914 2.243 0 .873-.35 1.664-.914 2.239l-.002.009a3.1 3.1 0 0 1-2.21.931 3.1 3.1 0 0 1-2.206-.93h-.002v-.009a3.186 3.186 0 0 1-.916-2.239c0-.875.35-1.672.916-2.243v-.004h.002a3.1 3.1 0 0 1 1.558-.862v-1.699a3.926 3.926 0 0 1-2.176-1.138l-.006-.005a4.098 4.098 0 0 1-1.173-2.874c0-1.122.452-2.136 1.173-2.872h.006a3.947 3.947 0 0 1 2.176-1.144V6.289a3.137 3.137 0 0 1-1.558-.864h-.002v-.004a3.192 3.192 0 0 1-.916-2.243c0-.871.35-1.669.916-2.243l.002-.002A3.084 3.084 0 0 1 8.683 0c.861 0 1.641.355 2.21.932v.002h.002c.565.574.914 1.372.914 2.243 0 .876-.35 1.667-.914 2.243l-.002.005a3.142 3.142 0 0 1-1.56.864v1.692zm8.121-1.129l-.012-.019a1.452 1.452 0 0 0-.87-.668 1.43 1.43 0 0 0-1.103.146h.002c-.347.2-.58.529-.677.896-.095.365-.054.768.146 1.119l.007.009c.2.347.519.579.874.673.357.103.755.059 1.098-.144l.019-.009a1.47 1.47 0 0 0 .657-.885 1.493 1.493 0 0 0-.141-1.118"/>',
+    "kubernetes":     '<path fill="currentColor" d="M10.204 14.35l.007.01-.999 2.413a5.171 5.171 0 0 1-2.075-2.597l2.578-.437.004.005a.44.44 0 0 1 .484.606zm-.833-2.129a.44.44 0 0 0 .173-.756l.002-.011L7.585 9.7a5.143 5.143 0 0 0-.73 3.255l2.514-.725.002-.009zm1.145-1.98a.44.44 0 0 0 .699-.337l.01-.005.15-2.62a5.144 5.144 0 0 0-3.01 1.442l2.147 1.523.004-.002zm.76 2.75l.723.349.722-.347.18-.78-.5-.623h-.804l-.5.623.179.779zm1.5-3.095a.44.44 0 0 0 .7.336l.008.003 2.134-1.513a5.188 5.188 0 0 0-2.992-1.442l.148 2.615.002.001zm10.876 5.97l-5.773 7.181a1.6 1.6 0 0 1-1.248.594l-9.261.003a1.6 1.6 0 0 1-1.247-.596l-5.776-7.18a1.583 1.583 0 0 1-.307-1.34L2.1 5.573c.108-.47.425-.864.863-1.073L11.305.513a1.606 1.606 0 0 1 1.385 0l8.345 3.985c.438.209.755.604.863 1.073l2.062 8.955c.108.47-.005.963-.308 1.34zm-3.289-2.057c-.042-.01-.103-.026-.145-.034-.174-.033-.315-.025-.479-.038-.35-.037-.638-.067-.895-.148-.105-.04-.18-.165-.216-.216l-.201-.059a6.45 6.45 0 0 0-.105-2.332 6.465 6.465 0 0 0-.936-2.163c.052-.047.15-.133.177-.159.008-.09.001-.183.094-.282.197-.185.444-.338.743-.522.142-.084.273-.137.415-.242.032-.024.076-.062.11-.089.24-.191.295-.52.123-.736-.172-.216-.506-.236-.745-.045-.034.027-.08.062-.111.088-.134.116-.217.23-.33.35-.246.25-.45.458-.673.609-.097.056-.239.037-.303.033l-.19.135a6.545 6.545 0 0 0-4.146-2.003l-.012-.223c-.065-.062-.143-.115-.163-.25-.022-.268.015-.557.057-.905.023-.163.061-.298.068-.475.001-.04-.001-.099-.001-.142 0-.306-.224-.555-.5-.555-.275 0-.499.249-.499.555l.001.014c0 .041-.002.092 0 .128.006.177.044.312.067.475.042.348.078.637.056.906a.545.545 0 0 1-.162.258l-.012.211a6.424 6.424 0 0 0-4.166 2.003 8.373 8.373 0 0 1-.18-.128c-.09.012-.18.04-.297-.029-.223-.15-.427-.358-.673-.608-.113-.12-.195-.234-.329-.349-.03-.026-.077-.062-.111-.088a.594.594 0 0 0-.348-.132.481.481 0 0 0-.398.176c-.172.216-.117.546.123.737l.007.005.104.083c.142.105.272.159.414.242.299.185.546.338.743.522.076.082.09.226.1.288l.16.143a6.462 6.462 0 0 0-1.02 4.506l-.208.06c-.055.072-.133.184-.215.217-.257.081-.546.11-.895.147-.164.014-.305.006-.48.039-.037.007-.09.02-.133.03l-.004.002-.007.002c-.295.071-.484.342-.423.608.061.267.349.429.645.365l.007-.001.01-.003.129-.029c.17-.046.294-.113.448-.172.33-.118.604-.217.87-.256.112-.009.23.069.288.101l.217-.037a6.5 6.5 0 0 0 2.88 3.596l-.09.218c.033.084.069.199.044.282-.097.252-.263.517-.452.813-.091.136-.185.242-.268.399-.02.037-.045.095-.064.134-.128.275-.034.591.213.71.248.12.556-.007.69-.282v-.002c.02-.039.046-.09.062-.127.07-.162.094-.301.144-.458.132-.332.205-.68.387-.897.05-.06.13-.082.215-.105l.113-.205a6.453 6.453 0 0 0 4.609.012l.106.192c.086.028.18.042.256.155.136.232.229.507.342.84.05.156.074.295.145.457.016.037.043.09.062.129.133.276.442.402.69.282.247-.118.341-.435.213-.71-.02-.039-.045-.096-.065-.134-.083-.156-.177-.261-.268-.398-.19-.296-.346-.541-.443-.793-.04-.13.007-.21.038-.294-.018-.022-.059-.144-.083-.202a6.499 6.499 0 0 0 2.88-3.622c.064.01.176.03.213.038.075-.05.144-.114.28-.104.266.039.54.138.87.256.154.06.277.128.448.173.036.01.088.019.13.028l.009.003.007.001c.297.064.584-.098.645-.365.06-.266-.128-.537-.423-.608zM16.4 9.701l-1.95 1.746v.005a.44.44 0 0 0 .173.757l.003.01 2.526.728a5.199 5.199 0 0 0-.108-1.674A5.208 5.208 0 0 0 16.4 9.7zm-4.013 5.325a.437.437 0 0 0-.404-.232.44.44 0 0 0-.372.233h-.002l-1.268 2.292a5.164 5.164 0 0 0 3.326.003l-1.27-2.296h-.01zm1.888-1.293a.44.44 0 0 0-.27.036.44.44 0 0 0-.214.572l-.003.004 1.01 2.438a5.15 5.15 0 0 0 2.081-2.615l-2.6-.44-.004.005z"/>',
+    "terraform":      '<path fill="currentColor" d="M1.44 0v7.575l6.561 3.79V3.787zm21.12 4.227l-6.561 3.791v7.574l6.56-3.787zM8.72 4.23v7.575l6.561 3.787V8.018zm0 8.405v7.575L15.28 24v-7.578z"/>',
+    "docker":         '<path fill="currentColor" d="M13.983 11.078h2.119a.186.186 0 0 0 .186-.185V9.006a.186.186 0 0 0-.186-.186h-2.119a.185.185 0 0 0-.185.185v1.888c0 .102.083.185.185.185m-2.954-5.43h2.118a.186.186 0 0 0 .186-.186V3.574a.186.186 0 0 0-.186-.185h-2.118a.185.185 0 0 0-.185.185v1.888c0 .102.082.185.185.185m0 2.716h2.118a.187.187 0 0 0 .186-.186V6.29a.186.186 0 0 0-.186-.185h-2.118a.185.185 0 0 0-.185.185v1.887c0 .102.082.185.185.186m-2.93 0h2.12a.186.186 0 0 0 .184-.186V6.29a.185.185 0 0 0-.185-.185H8.1a.185.185 0 0 0-.185.185v1.887c0 .102.083.185.185.186m-2.964 0h2.119a.186.186 0 0 0 .185-.186V6.29a.185.185 0 0 0-.185-.185H5.136a.186.186 0 0 0-.186.185v1.887c0 .102.084.185.186.186m5.893 2.715h2.118a.186.186 0 0 0 .186-.185V9.006a.186.186 0 0 0-.186-.186h-2.118a.185.185 0 0 0-.185.185v1.888c0 .102.082.185.185.185m-2.93 0h2.12a.185.185 0 0 0 .184-.185V9.006a.185.185 0 0 0-.184-.186h-2.12a.185.185 0 0 0-.184.185v1.888c0 .102.083.185.185.185m-2.964 0h2.119a.185.185 0 0 0 .185-.185V9.006a.185.185 0 0 0-.184-.186h-2.12a.186.186 0 0 0-.186.186v1.887c0 .102.084.185.186.185m-2.92 0h2.12a.185.185 0 0 0 .184-.185V9.006a.185.185 0 0 0-.184-.186h-2.12a.185.185 0 0 0-.184.185v1.888c0 .102.082.185.185.185M23.763 9.89c-.065-.051-.672-.51-1.954-.51-.338.001-.676.03-1.01.087-.248-1.7-1.653-2.53-1.716-2.566l-.344-.199-.226.327c-.284.438-.49.922-.612 1.43-.23.97-.09 1.882.403 2.661-.595.332-1.55.413-1.744.42H.751a.751.751 0 0 0-.75.748 11.376 11.376 0 0 0 .692 4.062c.545 1.428 1.355 2.48 2.41 3.124 1.18.723 3.1 1.137 5.275 1.137.983.003 1.963-.086 2.93-.266a12.248 12.248 0 0 0 3.823-1.389c.98-.567 1.86-1.288 2.61-2.136 1.252-1.418 1.998-2.997 2.553-4.4h.221c1.372 0 2.215-.549 2.68-1.009.309-.293.55-.65.707-1.046l.098-.288Z"/>',
+    "python":         '<path fill="currentColor" d="M14.25.18l.9.2.73.26.59.3.45.32.34.34.25.34.16.33.1.3.04.26.02.2-.01.13V8.5l-.05.63-.13.55-.21.46-.26.38-.3.31-.33.25-.35.19-.35.14-.33.1-.3.07-.26.04-.21.02H8.77l-.69.05-.59.14-.5.22-.41.27-.33.32-.27.35-.2.36-.15.37-.1.35-.07.32-.04.27-.02.21v3.06H3.17l-.21-.03-.28-.07-.32-.12-.35-.18-.36-.26-.36-.36-.35-.46-.32-.59-.28-.73-.21-.88-.14-1.05-.05-1.23.06-1.22.16-1.04.24-.87.32-.71.36-.57.4-.44.42-.33.42-.24.4-.16.36-.1.32-.05.24-.01h.16l.06.01h8.16v-.83H6.18l-.01-2.75-.02-.37.05-.34.11-.31.17-.28.25-.26.31-.23.38-.2.44-.18.51-.15.58-.12.64-.1.71-.06.77-.04.84-.02 1.27.05zm-6.3 1.98l-.23.33-.08.41.08.41.23.34.33.22.41.09.41-.09.33-.22.23-.34.08-.41-.08-.41-.23-.33-.33-.22-.41-.09-.41.09zm13.09 3.95l.28.06.32.12.35.18.36.27.36.35.35.47.32.59.28.73.21.88.14 1.04.05 1.23-.06 1.23-.16 1.04-.24.86-.32.71-.36.57-.4.45-.42.33-.42.24-.4.16-.36.09-.32.05-.24.02-.16-.01h-8.22v.82h5.84l.01 2.76.02.36-.05.34-.11.31-.17.29-.25.25-.31.24-.38.2-.44.17-.51.15-.58.13-.64.09-.71.07-.77.04-.84.01-1.27-.04-1.07-.14-.9-.2-.73-.25-.59-.3-.45-.33-.34-.34-.25-.34-.16-.33-.1-.3-.04-.25-.02-.2.01-.13v-5.34l.05-.64.13-.54.21-.46.26-.38.3-.32.33-.24.35-.2.35-.14.33-.1.3-.06.26-.04.21-.02.13-.01h5.84l.69-.05.59-.14.5-.21.41-.28.33-.32.27-.35.2-.36.15-.36.1-.35.07-.32.04-.28.02-.21V6.07h2.09l.14.01zm-6.47 14.25l-.23.33-.08.41.08.41.23.33.33.23.41.08.41-.08.33-.23.23-.33.08-.41-.08-.41-.23-.33-.33-.23-.41-.08-.41.08z"/>',
+    "postgresql":     '<path fill="currentColor" d="M23.5594 14.7228a.5269.5269 0 0 0-.0563-.1191c-.139-.2632-.4768-.3418-1.0074-.2321-1.6533.3411-2.2935.1312-2.5256-.0191 1.342-2.0482 2.445-4.522 3.0411-6.8297.2714-1.0507.7982-3.5237.1222-4.7316a1.5641 1.5641 0 0 0-.1509-.235C21.6931.9086 19.8007.0248 17.5099.0005c-1.4947-.0158-2.7705.3461-3.1161.4794a9.449 9.449 0 0 0-.5159-.0816 8.044 8.044 0 0 0-1.3114-.1278c-1.1822-.0184-2.2038.2642-3.0498.8406-.8573-.3211-4.7888-1.645-7.2219.0788C.9359 2.1526.3086 3.8733.4302 6.3043c.0409.818.5069 3.334 1.2423 5.7436.4598 1.5065.9387 2.7019 1.4334 3.582.553.9942 1.1259 1.5933 1.7143 1.7895.4474.1491 1.1327.1441 1.8581-.7279.8012-.9635 1.5903-1.8258 1.9446-2.2069.4351.2355.9064.3625 1.39.3772a.0569.0569 0 0 0 .0004.0041 11.0312 11.0312 0 0 0-.2472.3054c-.3389.4302-.4094.5197-1.5002.7443-.3102.064-1.1344.2339-1.1464.8115-.0025.1224.0329.2309.0919.3268.2269.4231.9216.6097 1.015.6331 1.3345.3335 2.5044.092 3.3714-.6787-.017 2.231.0775 4.4174.3454 5.0874.2212.5529.7618 1.9045 2.4692 1.9043.2505 0 .5263-.0291.8296-.0941 1.7819-.3821 2.5557-1.1696 2.855-2.9059.1503-.8707.4016-2.8753.5388-4.1012.0169-.0703.0357-.1207.057-.1362.0007-.0005.0697-.0471.4272.0307a.3673.3673 0 0 0 .0443.0068l.2539.0223.0149.001c.8468.0384 1.9114-.1426 2.5312-.4308.6438-.2988 1.8057-1.0323 1.5951-1.6698zM2.371 11.8765c-.7435-2.4358-1.1779-4.8851-1.2123-5.5719-.1086-2.1714.4171-3.6829 1.5623-4.4927 1.8367-1.2986 4.8398-.5408 6.108-.13-.0032.0032-.0066.0061-.0098.0094-2.0238 2.044-1.9758 5.536-1.9708 5.7495-.0002.0823.0066.1989.0162.3593.0348.5873.0996 1.6804-.0735 2.9184-.1609 1.1504.1937 2.2764.9728 3.0892.0806.0841.1648.1631.2518.2374-.3468.3714-1.1004 1.1926-1.9025 2.1576-.5677.6825-.9597.5517-1.0886.5087-.3919-.1307-.813-.5871-1.2381-1.3223-.4796-.839-.9635-2.0317-1.4155-3.5126zm6.0072 5.0871c-.1711-.0428-.3271-.1132-.4322-.1772.0889-.0394.2374-.0902.4833-.1409 1.2833-.2641 1.4815-.4506 1.9143-1.0002.0992-.126.2116-.2687.3673-.4426a.3549.3549 0 0 0 .0737-.1298c.1708-.1513.2724-.1099.4369-.0417.156.0646.3078.26.3695.4752.0291.1016.0619.2945-.0452.4444-.9043 1.2658-2.2216 1.2494-3.1676 1.0128zm2.094-3.988-.0525.141c-.133.3566-.2567.6881-.3334 1.003-.6674-.0021-1.3168-.2872-1.8105-.8024-.6279-.6551-.9131-1.5664-.7825-2.5004.1828-1.3079.1153-2.4468.079-3.0586-.005-.0857-.0095-.1607-.0122-.2199.2957-.2621 1.6659-.9962 2.6429-.7724.4459.1022.7176.4057.8305.928.5846 2.7038.0774 3.8307-.3302 4.7363-.084.1866-.1633.3629-.2311.5454zm7.3637 4.5725c-.0169.1768-.0358.376-.0618.5959l-.146.4383a.3547.3547 0 0 0-.0182.1077c-.0059.4747-.054.6489-.115.8693-.0634.2292-.1353.4891-.1794 1.0575-.11 1.4143-.8782 2.2267-2.4172 2.5565-1.5155.3251-1.7843-.4968-2.0212-1.2217a6.5824 6.5824 0 0 0-.0769-.2266c-.2154-.5858-.1911-1.4119-.1574-2.5551.0165-.5612-.0249-1.9013-.3302-2.6462.0044-.2932.0106-.5909.019-.8918a.3529.3529 0 0 0-.0153-.1126 1.4927 1.4927 0 0 0-.0439-.208c-.1226-.4283-.4213-.7866-.7797-.9351-.1424-.059-.4038-.1672-.7178-.0869.067-.276.1831-.5875.309-.9249l.0529-.142c.0595-.16.134-.3257.213-.5012.4265-.9476 1.0106-2.2453.3766-5.1772-.2374-1.0981-1.0304-1.6343-2.2324-1.5098-.7207.0746-1.3799.3654-1.7088.5321a5.6716 5.6716 0 0 0-.1958.1041c.0918-1.1064.4386-3.1741 1.7357-4.4823a4.0306 4.0306 0 0 1 .3033-.276.3532.3532 0 0 0 .1447-.0644c.7524-.5706 1.6945-.8506 2.802-.8325.4091.0067.8017.0339 1.1742.081 1.939.3544 3.2439 1.4468 4.0359 2.3827.8143.9623 1.2552 1.9315 1.4312 2.4543-1.3232-.1346-2.2234.1268-2.6797.779-.9926 1.4189.543 4.1729 1.2811 5.4964.1353.2426.2522.4522.2889.5413.2403.5825.5515.9713.7787 1.2552.0696.087.1372.1714.1885.245-.4008.1155-1.1208.3825-1.0552 1.717-.0123.1563-.0423.4469-.0834.8148-.0461.2077-.0702.4603-.0994.7662zm.8905-1.6211c-.0405-.8316.2691-.9185.5967-1.0105a2.8566 2.8566 0 0 0 .135-.0406 1.202 1.202 0 0 0 .1342.103c.5703.3765 1.5823.4213 3.0068.1344-.2016.1769-.5189.3994-.9533.6011-.4098.1903-1.0957.333-1.7473.3636-.7197.0336-1.0859-.0807-1.1721-.151zm.5695-9.2712c-.0059.3508-.0542.6692-.1054 1.0017-.055.3576-.112.7274-.1264 1.1762-.0142.4368.0404.8909.0932 1.3301.1066.887.216 1.8003-.2075 2.7014a3.5272 3.5272 0 0 1-.1876-.3856c-.0527-.1276-.1669-.3326-.3251-.6162-.6156-1.1041-2.0574-3.6896-1.3193-4.7446.3795-.5427 1.3408-.5661 2.1781-.463zm.2284 7.0137a12.3762 12.3762 0 0 0-.0853-.1074l-.0355-.0444c.7262-1.1995.5842-2.3862.4578-3.4385-.0519-.4318-.1009-.8396-.0885-1.2226.0129-.4061.0666-.7543.1185-1.0911.0639-.415.1288-.8443.1109-1.3505.0134-.0531.0188-.1158.0118-.1902-.0457-.4855-.5999-1.938-1.7294-3.253-.6076-.7073-1.4896-1.4972-2.6889-2.0395.5251-.1066 1.2328-.2035 2.0244-.1859 2.0515.0456 3.6746.8135 4.8242 2.2824a.908.908 0 0 1 .0667.1002c.7231 1.3556-.2762 6.2751-2.9867 10.5405zm-8.8166-6.1162c-.025.1794-.3089.4225-.6211.4225a.5821.5821 0 0 1-.0809-.0056c-.1873-.026-.3765-.144-.5059-.3156-.0458-.0605-.1203-.178-.1055-.2844.0055-.0401.0261-.0985.0925-.1488.1182-.0894.3518-.1226.6096-.0867.3163.0441.6426.1938.6113.4186zm7.9305-.4114c.0111.0792-.049.201-.1531.3102-.0683.0717-.212.1961-.4079.2232a.5456.5456 0 0 1-.075.0052c-.2935 0-.5414-.2344-.5607-.3717-.024-.1765.2641-.3106.5611-.352.297-.0414.6111.0088.6356.1851z"/>',
+    "snowflake":      '<path fill="currentColor" d="M24 3.459c0 .646-.418 1.18-1.141 1.18-.723 0-1.142-.534-1.142-1.18 0-.647.419-1.18 1.142-1.18.723 0 1.141.533 1.141 1.18zm-.228 0c0-.533-.38-.951-.913-.951s-.913.38-.913.95c0 .533.38.952.913.952.57 0 .913-.419.913-.951zm-1.37-.533h.495c.266 0 .456.152.456.38 0 .153-.076.229-.19.305l.19.266v.038h-.266l-.19-.266h-.229v.266h-.266zm.495.228h-.229v.267h.229c.114 0 .152-.038.152-.114.038-.077-.038-.153-.152-.153zM7.602 12.4c.038-.151.076-.304.076-.456 0-.114-.038-.228-.038-.342-.114-.343-.304-.647-.646-.838l-4.87-2.777c-.685-.38-1.56-.152-1.94.533-.381.685-.153 1.56.532 1.94l2.701 1.56-2.701 1.56c-.685.38-.913 1.256-.533 1.94.38.685 1.256.914 1.94.533l4.832-2.777c.343-.267.571-.533.647-.876zm1.332 2.626c-.266-.038-.57.038-.837.19l-4.832 2.777c-.685.38-.913 1.256-.532 1.94.38.686 1.255.914 1.94.533l2.701-1.56v3.12c0 .8.647 1.408 1.446 1.408.799 0 1.407-.647 1.407-1.408v-5.592c0-.761-.57-1.37-1.293-1.408zm4.946-6.088c.266.038.57-.038.837-.19l4.832-2.777c.685-.38.913-1.256.532-1.94-.38-.686-1.255-.914-1.94-.533l-2.701 1.56V1.975c0-.799-.647-1.408-1.446-1.408-.799 0-1.446.609-1.446 1.408V7.53c0 .76.609 1.37 1.332 1.407zM3.265 5.97l4.832 2.777c.266.152.533.19.837.19.723-.038 1.331-.684 1.331-1.407V1.975c0-.799-.646-1.408-1.407-1.408-.799 0-1.446.647-1.446 1.408v3.12l-2.701-1.56c-.685-.38-1.56-.152-1.94.533-.419.646-.19 1.521.494 1.902zm9.093 6.011a.412.412 0 0 0-.114-.266l-.57-.571a.346.346 0 0 0-.267-.114.412.412 0 0 0-.266.114l-.571.57a.411.411 0 0 0-.114.267c0 .076.038.19.114.267l.57.57a.345.345 0 0 0 .267.114c.076 0 .19-.038.266-.114l.571-.57a.412.412 0 0 0 .114-.267zm1.598.533L11.94 14.53c-.039.038-.153.114-.229.114h-.608a.411.411 0 0 1-.267-.114L8.82 12.514a.408.408 0 0 1-.076-.229v-.608c0-.076.038-.19.114-.267l2.016-2.016a.41.41 0 0 1 .267-.114h.608a.41.41 0 0 1 .267.114l2.016 2.016a.347.347 0 0 1 .114.267v.608c-.076.077-.114.19-.19.229zm5.593 5.44l-4.832-2.777c-.266-.152-.57-.19-.837-.152-.723.038-1.332.684-1.332 1.408v5.554c0 .8.647 1.408 1.408 1.408.799 0 1.446-.647 1.446-1.408v-3.12l2.7 1.56c.686.38 1.561.152 1.941-.533.419-.646.19-1.521-.494-1.94zm2.549-7.533l-2.701 1.56 2.7 1.56c.686.38.914 1.256.533 1.94-.38.685-1.255.913-1.94.533l-4.832-2.778a1.644 1.644 0 0 1-.647-.798c-.037-.153-.076-.305-.076-.457 0-.114.039-.228.039-.342.114-.343.342-.647.646-.837l4.832-2.778c.685-.38 1.56-.152 1.94.533.457.609.19 1.484-.494 1.864"/>',
+    "git":            '<path fill="currentColor" d="M13.09 23.549a1.54 1.54 0 0 1-2.18 0L.451 13.089a1.54 1.54 0 0 1 0-2.179l7.191-7.19 2.733 2.733a1.85 1.85 0 0 0 .964 2.326v6.66a1.849 1.849 0 1 0 1.54 0V8.957l2.508 2.508a1.85 1.85 0 1 0 1.09-1.09l-2.634-2.634a1.85 1.85 0 0 0-2.378-2.377L8.73 2.63 10.91.451a1.54 1.54 0 0 1 2.179 0l10.459 10.46a1.54 1.54 0 0 1 0 2.179z"/>',
+    "github":         '<path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>',
+    "apachespark":    '<path fill="currentColor" d="M10.812 0c-.425.013-.845.215-1.196.605a3.593 3.593 0 0 0-.493.722c-.355.667-.425 1.415-.556 2.143a551.9 551.9 0 0 0-.726 4.087c-.027.16-.096.227-.244.273C5.83 8.386 4.06 8.94 2.3 9.514c-.387.125-.773.289-1.114.506-1.042.665-1.196 1.753-.415 2.71.346.422.79.715 1.284.936 1.1.49 2.202.976 3.3 1.47.019.01.036.013.053.019h-.004l1.306.535c0 .023.002.045 0 .073-.2 2.03-.39 4.063-.58 6.095-.04.419-.012.831.134 1.23.317.87 1.065 1.148 1.881.701.372-.204.666-.497.937-.818 1.372-1.623 2.746-3.244 4.113-4.872.111-.133.205-.15.363-.098.349.117.697.231 1.045.347h.001c.02.012.045.02.073.03l.142.042c1.248.416 2.68.775 3.929 1.19.4.132.622.164 1.045.098.311-.048.592-.062.828-.236.602-.33.995-.957.988-1.682-.005-.427-.154-.813-.35-1.186-.82-1.556-1.637-3.113-2.461-4.666-.078-.148-.076-.243.037-.375 1.381-1.615 2.756-3.236 4.133-4.855.272-.32.513-.658.653-1.058.308-.878-.09-1.57-1-1.741a2.783 2.783 0 0 0-1.235.069c-1.974.521-3.947 1.041-5.918 1.57-.175.047-.26.015-.355-.144a353.08 353.08 0 0 0-2.421-4.018 4.61 4.61 0 0 0-.652-.849c-.371-.37-.802-.549-1.227-.536zm.172 3.703a.592.592 0 0 1 .189.211c.87 1.446 1.742 2.89 2.609 4.338.07.118.135.16.277.121 1.525-.41 3.052-.813 4.579-1.217.367-.098.735-.193 1.103-.289a.399.399 0 0 1-.1.2c-1.259 1.48-2.516 2.962-3.779 4.438-.11.13-.12.22-.04.37.937 1.803 1.768 3.309 2.498 4.76l-3.696-1.019c-.538-.18-1.077-.358-1.615-.539-.163-.055-.25-.03-.36.1-1.248 1.488-2.504 2.97-3.759 4.454a.398.398 0 0 1-.18.132c.035-.378.068-.757.104-1.136.149-1.572.297-3.144.451-4.716-.03-.318.117-.405-.322-.545-1.493-.593-3.346-1.321-4.816-1.905a.595.595 0 0 1 .24-.134c1.797-.57 3.595-1.14 5.394-1.705.127-.04.199-.092.211-.233.013-.148.05-.294.076-.441.241-1.363.483-2.726.726-4.088.068-.386.14-.771.21-1.157z"/>',
+    "tensorflow":     '<path fill="currentColor" d="M1.292 5.856L11.54 0v24l-4.095-2.378V7.603l-6.168 3.564.015-5.31zm21.43 5.311l-.014-5.31L12.46 0v24l4.095-2.378V14.87l3.092 1.788-.018-4.618-3.074-1.756V7.603l6.168 3.564z"/>',
+    "pytorch":        '<path fill="currentColor" d="M12.005 0L4.952 7.053a9.865 9.865 0 0 0 0 14.022 9.866 9.866 0 0 0 14.022 0c3.984-3.9 3.986-10.205.085-14.023l-1.744 1.743c2.904 2.905 2.904 7.634 0 10.538s-7.634 2.904-10.538 0-2.904-7.634 0-10.538l4.647-4.646.582-.665zm3.568 3.899a1.327 1.327 0 0 0-1.327 1.327 1.327 1.327 0 0 0 1.327 1.328A1.327 1.327 0 0 0 16.9 5.226 1.327 1.327 0 0 0 15.573 3.9z"/>',
 }
 
 SUBTOPIC_CATEGORIES: dict[str, dict[str, set[str]]] = {
@@ -91,9 +104,42 @@ def _content_hash(text: str) -> str:
     return hashlib.md5(text.encode()).hexdigest()
 
 
+# Brand icon keyword mappings — checked first so specific tech names
+# map directly to brand SVGs (Simple Icons) before falling back to
+# the general subtopic category matching.
+BRAND_ICON_KEYWORDS: dict[str, set[str]] = {
+    # Data engineering
+    "kafka":       {"kafka", "confluent", "debezium", "avro", "ksqldb", "schema registry"},
+    "kubernetes":  {"kubernetes", "k8s", "kube", "helm", "istio", "kubectl", "service mesh"},
+    "terraform":   {"terraform", "iac", "infrastructure as code", "hcl", "opentofu"},
+    "docker":      {"docker", "dockerfile", "docker compose"},
+    "python":      {"python", "pandas", "numpy", "pyspark"},
+    "postgresql":  {"postgresql", "postgres", "psql"},
+    "snowflake":   {"snowflake", "snowpipe", "snowsql"},
+    "git":         {"git", "version control"},
+    "github":      {"github", "github actions"},
+    "apachespark": {"spark", "apache spark", "pyspark", "databricks", "spark sql"},
+    # ML / AI
+    "tensorflow":  {"tensorflow", "keras"},
+    "pytorch":     {"pytorch", "torch", "jax"},
+}
+
+
 def _pick_subtopic(titles: list[str], pillar: str) -> str:
-    """Pick the most relevant subtopic/icon based on article titles."""
+    """Pick the most relevant subtopic/icon based on article titles.
+
+    Checks brand icon keywords first so specific tech names (Kafka, Kubernetes, etc.)
+    map directly to brand SVGs. Falls back to general subtopic category matching.
+    """
     text = " ".join(titles).lower()
+
+    # 1) Check brand icon keywords first (word-boundary matching to avoid false positives)
+    for icon, keywords in BRAND_ICON_KEYWORDS.items():
+        for kw in keywords:
+            if re.search(rf'(?<![a-z]){re.escape(kw)}(?![a-z])', text):
+                return icon
+
+    # 2) Fall back to general subtopic category matching
     subs = SUBTOPIC_CATEGORIES.get(pillar, {})
     best_sub = list(subs.keys())[0] if subs else "regulation"
     best_score = 0
@@ -210,7 +256,7 @@ def _fractal_tree(elems: list, seed: int, pal: dict, w: int, h: int,
                 f'<circle cx="{ex:.1f}" cy="{ey:.1f}" r="{glow_r:.0f}" '
                 f'fill="{pal["accent"]}" opacity="{op * 0.15:.2f}"/>'
             )
-        n = 2 + _det_rand_int(seed, d * 10 + int(x + y), 2, 3)
+        n = 1 + _det_rand_int(seed, d * 10 + int(x + y), 2, 3)
         for i in range(n):
             off = (i - (n - 1) / 2) * spread / (n - 1) if n > 1 else 0
             child_a = a + off + lean * (1 - t)
@@ -429,12 +475,17 @@ def _generate_mist(seed: int, pal: dict, w: int, h: int, count: int,
 
 
 def _overlay_panel_svg(featured_image_url: str, fallback_icons: list | None,
-                        layer: str, pal: dict, width: int, height: int) -> list:
+                        layer: str, pal: dict, width: int, height: int) -> tuple[list[str], list[str]]:
     """Generate SVG elements for the image/fallback overlay panel.
 
+    Returns (defs, elements) where defs go inside <defs> and elements are rendered in order.
+
     Research: image left (4/7 width), Learn: image right (4/7 width),
-    Knowledge: image top (4/7 height).
+    Knowledge: image top (4/7 height). Includes rounded background,
+    accent border, and a shadow gradient at the panel edge for seamless
+    transition between image and fractal background.
     """
+    defs = []
     elems = []
     if layer == "research":
         ix, iy, iw, ih = 0, 0, int(width * 4 / 7), height
@@ -443,17 +494,76 @@ def _overlay_panel_svg(featured_image_url: str, fallback_icons: list | None,
     elif layer == "knowledge":
         ix, iy, iw, ih = 0, 0, width, int(height * 4 / 7)
     else:
-        return elems
+        return defs, elems
+
+    r = 4
 
     if featured_image_url:
+        # Background fallback (shows if image fails to load)
+        elems.append(
+            f'<rect x="{ix}" y="{iy}" width="{iw}" height="{ih}"'
+            f' fill="{pal["bg"]}" rx="{r}" opacity="0.3"/>'
+        )
+        # Clip path for rounded image corners
+        clip_id = f"clip-{layer}-{ix}-{iy}"
+        defs.append(
+            f'<clipPath id="{clip_id}">'
+            f'  <rect x="{ix}" y="{iy}" width="{iw}" height="{ih}" rx="{r}"/>'
+            f'</clipPath>'
+        )
         elems.append(
             f'<image href="{featured_image_url}" x="{ix}" y="{iy}"'
-            f' width="{iw}" height="{ih}" preserveAspectRatio="xMidYMid slice"/>'
+            f' width="{iw}" height="{ih}"'
+            f' preserveAspectRatio="xMidYMid slice"'
+            f' clip-path="url(#{clip_id})"/>'
         )
+        # Accent border
+        elems.append(
+            f'<rect x="{ix}" y="{iy}" width="{iw}" height="{ih}"'
+            f' rx="{r}" fill="none" stroke="{pal["accent"]}"'
+            f' stroke-width="1.5" opacity="0.35"/>'
+        )
+        # Shadow gradient at panel edge — fade image into fractal
+        if layer == "research":
+            sid = f"shadow-{layer}"
+            defs.append(
+                f'<linearGradient id="{sid}" x1="0" y1="0" x2="1" y2="0">'
+                f'<stop offset="0" stop-color="{pal["bg"]}" stop-opacity="0"/>'
+                f'<stop offset="1" stop-color="{pal["bg"]}" stop-opacity="0.7"/>'
+                f'</linearGradient>'
+            )
+            elems.append(
+                f'<rect x="{ix + iw - 24}" y="{iy}" width="24" height="{ih}"'
+                f' fill="url(#{sid})"/>'
+            )
+        elif layer == "learn":
+            sid = f"shadow-{layer}"
+            defs.append(
+                f'<linearGradient id="{sid}" x1="1" y1="0" x2="0" y2="0">'
+                f'<stop offset="0" stop-color="{pal["bg"]}" stop-opacity="0"/>'
+                f'<stop offset="1" stop-color="{pal["bg"]}" stop-opacity="0.7"/>'
+                f'</linearGradient>'
+            )
+            elems.append(
+                f'<rect x="{ix}" y="{iy}" width="24" height="{ih}"'
+                f' fill="url(#{sid})"/>'
+            )
+        elif layer == "knowledge":
+            sid = f"shadow-{layer}"
+            defs.append(
+                f'<linearGradient id="{sid}" x1="0" y1="0" x2="0" y2="1">'
+                f'<stop offset="0" stop-color="{pal["bg"]}" stop-opacity="0"/>'
+                f'<stop offset="1" stop-color="{pal["bg"]}" stop-opacity="0.7"/>'
+                f'</linearGradient>'
+            )
+            elems.append(
+                f'<rect x="{ix}" y="{iy + ih - 24}" width="{iw}" height="24"'
+                f' fill="url(#{sid})"/>'
+            )
     elif fallback_icons:
         elems.append(
             f'<rect x="{ix}" y="{iy}" width="{iw}" height="{ih}"'
-            f' fill="{pal["bg"]}" opacity="0.85" rx="3"/>'
+            f' fill="{pal["bg"]}" opacity="0.85" rx="{r}"/>'
         )
         n = min(3, len(fallback_icons))
         for idx, path_data in enumerate(fallback_icons[:3]):
@@ -461,12 +571,11 @@ def _overlay_panel_svg(featured_image_url: str, fallback_icons: list | None,
             cy_pos = iy + ih / 2
             elems.append(
                 f'<g transform="translate({cx_pos:.0f}, {cy_pos:.0f}) scale(0.6)"'
-                f' stroke="{pal["accent"]}" fill="none"'
-                f' stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" opacity="0.6">'
+                f' color="{pal["accent"]}" opacity="0.8">'
                 f'  {path_data}'
                 f'</g>'
             )
-    return elems
+    return defs, elems
 
 
 def generate_thumbnail_svg(title: str, pillar: str, scores: dict,
@@ -534,11 +643,17 @@ def generate_thumbnail_svg(title: str, pillar: str, scores: dict,
     glow_op = 0.08 + _det_rand(seed, seq[0]) * 0.12
     seq[0] += 1
 
+    # Overlay panel defs/elems (must be before lines list since defs go in <defs>)
+    overlay_defs, overlay_elems = _overlay_panel_svg(
+        featured_image_url, fallback_icons, layer, pal, width, height
+    )
+
     lines = [
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{width}" height="{height}"'
         f' viewBox="0 0 {width} {height}">',
         '<defs>',
         bg,
+        *overlay_defs,
         (f'<radialGradient id="glow-{h[:8]}" cx="{glow_cx}%" cy="{glow_cy}%">'
          f'<stop offset="0" stop-color="{pal["accent"]}" stop-opacity="{glow_op:.2f}"/>'
          f'<stop offset="1" stop-color="{pal["bg"]}" stop-opacity="0"/>'
@@ -550,7 +665,7 @@ def generate_thumbnail_svg(title: str, pillar: str, scores: dict,
 
     # Mist layer 1 (background)
     mist1 = _generate_mist(seed, pal, width, height,
-                           15 + _det_rand_int(seed, seq[0], 0, 10), seq)
+                           8 + _det_rand_int(seed, seq[0], 0, 4), seq)
     seq[0] += 1
     lines.extend(mist1)
 
@@ -563,7 +678,7 @@ def generate_thumbnail_svg(title: str, pillar: str, scores: dict,
         tree_x = width / 2 + (_det_rand_range(seed, seq[0], -40, 40))
         tree_y = height * 0.92
         trunk = 60 + _det_rand_range(seed, seq[0] + 1, 30, 80)
-        depth = _det_rand_int(seed, seq[0] + 2, 4, 6)
+        depth = _det_rand_int(seed, seq[0] + 2, 3, 5)
         seq[0] += 3
         _fractal_tree(fractal_elems, seed, pal, width, height,
                        tree_x, tree_y, trunk, depth, mirror_x, mirror_y, seq)
@@ -613,8 +728,8 @@ def generate_thumbnail_svg(title: str, pillar: str, scores: dict,
                           width - x1, y1, width - x2, y2, depth, seq, 0)
 
     elif ftype == 3:
-        # Dragon Curve
-        depth = _det_rand_int(seed, seq[0], 6, 9)
+        # Dragon Curve (depth capped at 6 to avoid 5000+ line SVGs)
+        depth = _det_rand_int(seed, seq[0], 4, 6)
         seq[0] += 1
         start_x = width * _det_rand_range(seed, seq[0], 0.1, 0.4)
         start_y = height * _det_rand_range(seed, seq[0] + 1, 0.2, 0.8)
@@ -623,18 +738,12 @@ def generate_thumbnail_svg(title: str, pillar: str, scores: dict,
         seq[0] += 4
         _fractal_dragon(fractal_elems, seed, pal, width, height,
                         start_x, start_y, end_x, end_y, depth, seq)
-        if mirror_x:
-            _fractal_dragon(fractal_elems, seed + 999, pal, width, height,
-                            width - start_x, start_y, width - end_x, end_y,
-                            depth, seq)
 
     elif ftype == 4:
         # Barnsley Fern
-        count = 200 + _det_rand_int(seed, seq[0], 0, 200)
+        count = 60 + _det_rand_int(seed, seq[0], 0, 40)
         seq[0] += 1
         _fractal_fern(fractal_elems, seed, pal, width, height, seq, count)
-        if mirror_x:
-            _fractal_fern(fractal_elems, seed + 999, pal, width, height, seq, count)
 
     elif ftype == 5:
         # Spiraling Circles
@@ -644,38 +753,42 @@ def generate_thumbnail_svg(title: str, pillar: str, scores: dict,
                         width / 2, height / 2, seq, turns)
 
     else:
-        # Hilbert Curve (as point cloud)
-        depth = _det_rand_int(seed, seq[0], 3, 5)
+        # Hilbert Curve (as point cloud — depth capped at 3 to avoid 1000+ circles)
+        depth = _det_rand_int(seed, seq[0], 2, 3)
         seq[0] += 1
         size = min(width, height) * 0.5
         ox = (width - size) / 2
         oy = (height - size) / 2
         _fractal_hilbert(fractal_elems, seed, pal, width, height,
                          ox, oy, size, 0, 0, size, depth, seq)
-        if mirror_x:
-            _fractal_hilbert(fractal_elems, seed + 999, pal, width, height,
-                             width - ox - size, oy, -size, 0, 0, size, depth, seq)
 
     lines.extend(fractal_elems)
 
     # Mist layer 2 (foreground, over fractal)
     mist2 = _generate_mist(seed + 1000, pal, width, height,
-                           8 + _det_rand_int(seed, seq[0], 0, 8), seq)
+                           4 + _det_rand_int(seed, seq[0], 0, 4), seq)
     seq[0] += 1
     lines.extend(mist2)
 
-    # Image/fallback overlay panel (covers 4/7 of fractal, positioned per layer)
-    lines.extend(_overlay_panel_svg(featured_image_url, fallback_icons, layer, pal, width, height))
+    lines.extend(overlay_elems)
 
-    # Topic icon (bottom-left)
-    icon_x = 14 + _det_rand_int(seed, seq[0], 0, 20)
+    # Topic icon — positioned on the visible fractal area (opposite side of image panel)
+    panel_w = int(width * 4 / 7)
+    if layer == "learn":
+        # Image on right → icon on left side of fractal area
+        icon_x = 14 + _det_rand_int(seed, seq[0], 0, 20)
+    elif layer == "knowledge":
+        # Image on top → icon centered in bottom fractal strip
+        icon_x = width // 2 - 20 + _det_rand_int(seed, seq[0], -20, 20)
+    else:
+        # Research/default: image on left → icon on right side
+        icon_x = panel_w + 14 + _det_rand_int(seed, seq[0], 0, 20)
     icon_y = height - 56 + _det_rand_int(seed, seq[0] + 1, 0, 10)
-    icon_scale = 0.5 + _det_rand(seed, seq[0] + 2) * 0.3
+    icon_scale = 0.6 + _det_rand(seed, seq[0] + 2) * 0.3
     seq[0] += 3
     lines.extend([
         f'<g transform="translate({icon_x:.0f}, {icon_y:.0f}) scale({icon_scale:.2f})"'
-        f' stroke="{pal["accent"]}" fill="none" stroke-linecap="round"'
-        f' stroke-linejoin="round" stroke-width="1.5" opacity="0.35">',
+        f' color="{pal["accent"]}" opacity="0.8">',
         f'  {icon_path}',
         f'</g>',
     ])
@@ -781,21 +894,21 @@ def generate_og_image(title: str, pillar: str, scores: dict,
     seq[0] += 20
 
     # Subtle fractal mist overlay
-    mist = _generate_mist(seed, pal, 1200, 630, 20, seq)
+    mist = _generate_mist(seed, pal, 1200, 630, 12, seq)
 
     # Image/fallback overlay panel (before content, so text renders on top)
-    overlay_panel = _overlay_panel_svg(
+    overlay_defs, overlay_elems = _overlay_panel_svg(
         featured_image_url, fallback_icons, layer, pal, 1200, 630
     )
 
     parts = [
         f'<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">',
-        '<defs>', bg, '</defs>',
+        '<defs>', bg, *overlay_defs, '</defs>',
         f'<rect width="1200" height="630" fill="url(#ogbg)"/>',
-    ] + circles + mist + overlay_panel + [
+    ] + circles + mist + overlay_elems + [
         f'<!-- Icon -->',
-        f'<g transform="translate(50, 50) scale(1.8)" stroke="{pal["accent"]}"'
-        f' fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">',
+        f'<g transform="translate(50, 50) scale(1.8)"'
+        f' color="{pal["accent"]}">',
         f'  {icon_path}',
         f'</g>',
     ]

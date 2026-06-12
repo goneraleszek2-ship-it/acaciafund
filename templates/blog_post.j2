@@ -1,6 +1,5 @@
 {% extends "layout.j2" %}
 {% from "macros/pillar_badge.html" import pillar_badge %}
-{% from "macros/sqi_chip.html" import sqi_chip %}
 {% from "macros/breadcrumbs.html" import breadcrumbs %}
 {% block main_content %}
 {{ breadcrumbs(page_path, content.title) }}
@@ -45,9 +44,6 @@
       <div class="flex items-center gap-3 mb-3">
         {{ layer_badge | default("") | safe }}
         {{ pillar_badge(content.pillar) }}
-        {%- if content.signals and content.signals.get("avg_sqi") is defined %}
-        {{ sqi_chip(content.signals.get("avg_sqi", 0)) }}
-        {%- endif %}
         {%- if content.source_breakdown %}
         <span class="text-xs text-gray-400">
           {{ content.source_breakdown.get("hn", 0) }} HN
@@ -114,12 +110,7 @@
 
     {%- if content.quality_metrics and content.quality_metrics.get("avg_source_score") is defined %}
     <div class="mb-6 flex flex-wrap items-center gap-x-5 gap-y-1.5 text-xs" style="color:var(--color-text-muted)">
-      {%- set sqi = content.signals.get("avg_sqi", 0) if content.signals else 0 %}
       {%- set qm = content.quality_metrics %}
-      <span class="inline-flex items-center gap-1">
-        <span style="color:var(--color-text-secondary);font-weight:600">SQI</span>
-        {{ sqi_chip(sqi) }}
-      </span>
       <span class="inline-flex items-center gap-1">
         <span style="color:var(--color-text-secondary);font-weight:600">Authority</span>
         {{ "%.2f"|format(qm.get("avg_source_score", 0)) }}

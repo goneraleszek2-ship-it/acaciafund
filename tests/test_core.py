@@ -430,7 +430,7 @@ def test_pick_subtopic():
         "regulation", "crypto", "fraud", "banking",
     )
     assert _pick_subtopic(["Kafka streaming pipeline optimization"], "data-engineering") in (
-        "pipeline", "storage", "quality", "streaming", "infrastructure",
+        "pipeline", "storage", "quality", "streaming", "infrastructure", "kafka",
     )
 
 

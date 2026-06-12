@@ -81,8 +81,8 @@
         <span style="color:var(--color-text-muted)">{{ pcount }} lessons</span>
         <span class="path-progress-text" data-path="{{ pkey }}" style="color:var(--color-text-muted)">0%</span>
       </div>
-      <div class="sqi-bar mt-1">
-        <div class="sqi-bar-fill path-bar-fill" data-path="{{ pkey }}" style="width:0%;background:{{ pinfo.color }}"></div>
+      <div class="progress-bar mt-1">
+        <div class="progress-bar-fill path-bar-fill" data-path="{{ pkey }}" style="width:0%;background:{{ pinfo.color }}"></div>
       </div>
       <div class="bloom-progress-row mt-3 flex items-center gap-1 bloom-progress-{{ pkey }}" data-bloom-path="{{ pkey }}">
         {%- set bloom_labels = {1:"R",2:"U",3:"Ap",4:"An",5:"E",6:"C"} %}
@@ -112,8 +112,8 @@
           <span style="color:var(--color-text)">{{ pillar_icons.get(pkey, "") }} {{ pillar_names.get(pkey, pkey | capitalize) }}</span>
           <span class="pillar-count" style="color:var(--color-text-muted)">0/{{ pcount }}</span>
         </div>
-        <div class="sqi-bar">
-          <div class="sqi-bar-fill pillar-bar-fill" style="width:0%;background:{{ pillar_bar_colors.get(pkey, '#6366f1') }}"></div>
+        <div class="progress-bar">
+          <div class="progress-bar-fill pillar-bar-fill" style="width:0%;background:{{ pillar_bar_colors.get(pkey, '#6366f1') }}"></div>
         </div>
       </div>
       {%- endif %}

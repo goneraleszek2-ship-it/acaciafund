@@ -225,6 +225,29 @@ def find_related(posts: list, current: object, max_items: int = 3) -> list:
     return [p for _, p in scored[:max_items]]
 
 
+CARD_PICTOGRAM_KEYWORDS = {
+    "crypto": ["crypto", "blockchain", "cryptocurrency", "bitcoin", "ethereum", "digital signature",
+               "zk", "zero-knowledge", "wallet", "token", "defi"],
+    "bayes": ["bayesian", "bayes", "probability", "statistics", "inference", "prior", "posterior",
+              "monte carlo", "mcmc", "markov"],
+    "dp": ["privacy", "differential privacy", "data protection", "gdpr", "anonymization",
+           "de-identification", "k-anonymity"],
+    "mosa": ["modular", "architecture", "system", "graph", "pipeline", "integration",
+             "data engineering", "etl", "api", "microservice", "network", "mesh"],
+}
+
+def pick_card_pictogram(content) -> str | None:
+    tags = [t.lower() for t in (content.tags or [])]
+    if not tags:
+        return None
+    tag_text = " ".join(tags)
+    for img_name, keywords in CARD_PICTOGRAM_KEYWORDS.items():
+        for kw in keywords:
+            if kw.lower() in tag_text:
+                return f"{img_name}.svg"
+    return None
+
+
 def reading_time_minutes(html_or_text: str) -> int:
     text = re.sub(r'<[^>]+>', '', html_or_text)
     words = len(text.strip().split())
@@ -705,6 +728,7 @@ def main():
     )
     env.filters["reading_time"] = reading_time_minutes
     env.filters["urlencode"] = lambda s: urlquote(s or '', safe='')
+    env.filters["pictogram"] = pick_card_pictogram
 
     now = datetime.now(timezone.utc)
     year = now.year

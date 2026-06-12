@@ -25,19 +25,24 @@
 
   <div class="flex flex-col gap-2">
     {%- for post in posts %}
-    {%- set sqi = (post.signals.get("avg_sqi", 0.0) | float) if post.signals else 0.0 %}
+    {%- set pictogram = post | pictogram %}
     {%- set source_breakdown = post.source_breakdown or {} %}
     {%- set pillar_color = pillar_config.get(pillar, {}).get("color", "#6366f1") %}
     {%- set pillar_icon = pillar_emojis.get(pillar, "") %}
     {%- set risk_count = post.quality_flags | length if post.quality_flags else 0 %}
     <a href="/{{ post.slug }}/" class="card-research" style="text-decoration:none">
       <div class="card-research-left">
-        <span class="card-research-sqi">{{ "%.2f"|format(sqi) }}</span>
-        <span class="card-research-sqi-label">SQI</span>
+        {%- if pictogram %}
+        <img src="/static/images/{{ pictogram }}" alt="" class="card-pictogram" width="72" height="auto" decoding="async">
+        {%- else %}
+        <img src="/static/images/icon-research.svg" alt="" class="card-pictogram" width="40" height="40" decoding="async">
+        {%- endif %}
+        <div class="card-research-sources">
         {%- for src, count in source_breakdown.items() if count > 0 %}
         {%- set src_class = "src-hn" if src == "hn" or src == "hackernews" else "src-ar" if src == "arxiv" or src == "ar" else "src-pu" %}
         <span class="card-research-source {{ src_class }}">{{ src[:2].upper() }}</span>
         {%- endfor %}
+        </div>
       </div>
       <div class="card-research-body">
         <div class="card-research-meta">

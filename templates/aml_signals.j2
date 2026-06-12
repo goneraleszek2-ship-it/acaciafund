@@ -76,8 +76,8 @@
         <div class="flex items-center justify-between text-xs">
           <span style="color:var(--color-text-secondary)">{{ src }}</span>
           <div class="flex items-center gap-2">
-            <div class="sqi-bar" style="width:120px">
-              <div class="sqi-bar-fill" style="width:{{ "%.0f" | format(count / source_max * 100) }}%;background:var(--color-accent)"></div>
+            <div class="progress-bar" style="width:120px">
+              <div class="progress-bar-fill" style="width:{{ "%.0f" | format(count / source_max * 100) }}%;background:var(--color-accent)"></div>
             </div>
             <span style="color:var(--color-text-muted)">{{ count }}</span>
           </div>
@@ -135,11 +135,8 @@
       <div class="py-2.5 flex items-start gap-3">
         <div class="flex-1 min-w-0">
           <a href="/{{ a.slug }}/" class="text-sm font-medium hover:underline" style="color:var(--color-text)">{{ a.title }}</a>
-          <div class="flex items-center gap-2 mt-0.5 text-xs" style="color:var(--color-text-muted)">
-            <time datetime="{{ a.date_str }}">{{ a.date_str }}</time>
-            {%- if a.signals and a.signals.get('avg_sqi') %}
-            <a href="/knowledge/research-methodology/#sqi" class="sqi-chip" title="Signal Quality Index — see methodology" style="text-decoration:none"><span class="inline-flex items-center gap-0.5 px-1.5 py-0.5 rounded text-[10px]" style="background:rgba(217,119,6,0.1);color:#d97706">SQI {{ "%.0f" | format(a.signals.get('avg_sqi', 0) * 100) }}</span></a>
-            {%- endif %}
+            <div class="flex items-center gap-2 mt-0.5 text-xs" style="color:var(--color-text-muted)">
+              <time datetime="{{ a.date_str }}">{{ a.date_str }}</time>
             {%- if a.tags %}
             <span>{{ a.tags[:3] | join(', ') }}</span>
             {%- endif %}
