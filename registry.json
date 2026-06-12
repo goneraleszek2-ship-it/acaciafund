@@ -2,6 +2,151 @@
   "last_run": "2026-06-09T07:49:25.121314+00:00",
   "content": [
     {
+      "slug": "learn/sector-competitive-analysis",
+      "language": "en",
+      "title": "Sector and Competitive Analysis: Industry Frameworks, Moats, and TAM Analysis",
+      "description": "Analyze industries and competitive positioning: Porter's Five Forces, types of competitive moats (network effects, switching costs, intangibles, cost advantages, efficient scale), TAM/SAM/SOM market sizing, financial statement analysis by sector, and a case study of the semiconductor industry.",
+      "category": "lesson",
+      "content_type": "learn",
+      "tags": [
+        "strategy",
+        "markets",
+        "tam",
+        "semiconductors",
+        "industry-analysis",
+        "moats",
+        "stock",
+        "competitive-analysis"
+      ],
+      "created_at": "2026-06-12T09:43:21.987136+00:00",
+      "updated_at": null,
+      "date_str": "",
+      "author": "Leszek",
+      "body_html": "<h2>Industry Analysis Frameworks</h2>\n<p>Industry analysis evaluates the structural attractiveness of a sector to determine where to allocate capital. The most widely used framework is Porter's Five Forces, but several complementary approaches provide deeper insight.</p>\n<h3>Porter's Five Forces</h3>\n<table style=\"width:100%;border-collapse:collapse;font-size:0.9em\">\n<tr style=\"background:var(--color-bg)\"><th style=\"padding:8px;border:1px solid var(--color-border)\">Force</th><th style=\"padding:8px;border:1px solid var(--color-border)\">Question</th><th style=\"padding:8px;border:1px solid var(--color-border)\">High Threat \u2192 Low Profit</th><th style=\"padding:8px;border:1px solid var(--color-border)\">Low Threat \u2192 High Profit</th></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">Threat of New Entrants</td><td style=\"padding:8px;border:1px solid var(--color-border)\">How easy is it for new competitors to enter?</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Airlines (low barriers, high capital but easy to lease planes)</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Semiconductors (high R&D, fab costs, IP barriers)</td></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">Bargaining Power of Suppliers</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Can suppliers raise prices or reduce quality?</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Aerospace (single-source engine suppliers)</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Retail (many suppliers, retailers have choice)</td></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">Bargaining Power of Buyers</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Can customers demand lower prices?</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Commodity chemicals (undifferentiated products)</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Enterprise software (high switching costs)</td></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">Threat of Substitutes</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Can customers use alternative products?</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Taxi services (ride-sharing as substitute)</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Pharmaceuticals (no substitute for patented drug)</td></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">Rivalry Among Existing Firms</td><td style=\"padding:8px;border:1px solid var(--color-border)\">How intense is competition?</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Airlines (price wars, overcapacity)</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Credit ratings (oligopoly, Moody's/S&P/Fitch)</td></tr>\n</table>\n\n<h2>Competitive Moats</h2>\n<p>A competitive moat is a durable advantage that protects a company from competition and allows it to earn above-average returns for extended periods. Warren Buffett popularized the term, and Morningstar has systematized moat analysis.</p>\n<h3>Types of Moats</h3>\n<ul>\n<li><strong>Network Effects:</strong> Each new user adds value for all existing users. Examples: Meta (2.9B users create the platform), Visa/Mastercard (merchants accept because consumers use, consumers use because merchants accept). Network effects are the strongest and most durable moat \u2014 they create self-reinforcing feedback loops.</li>\n<li><strong>Intangible Assets:</strong> Patents (pharma: 10-20 years of exclusivity for blockbuster drugs), brands (Nike, Apple command premium pricing), regulatory licenses (casinos, telecom spectrum \u2014 government limits supply).</li>\n<li><strong>Switching Costs:</strong> The cost (time, money, effort) for a customer to switch providers. Enterprise software companies (Salesforce, Workday, SAP) have extremely high switching costs because of data migration, workflow retraining, and integration dependencies.</li>\n<li><strong>Cost Advantages:</strong> Lower input costs, scale advantages, or proprietary processes that allow a company to offer lower prices while maintaining margins. Examples: Walmart's logistics network, Southwest's single-aircraft-type operating model, ASML's monopoly on EUV lithography machines.</li>\n<li><strong>Efficient Scale:</strong> A market that is only large enough for one or a few players. Examples: Small-town newspaper, industrial gas market (Air Liquide, Linde \u2014 duopoly serves entire market).</li>\n</ul>\n\n<h2>Market Sizing and TAM Analysis</h2>\n<p>Total Addressable Market (TAM) analysis estimates the revenue opportunity for a product or service. It is critical for venture capital investing, growth equity decisions, and strategic planning.</p>\n<h3>TAM Calculation Approaches</h3>\n<ol>\n<li><strong>Top-Down:</strong> Start with a macro number and apply percentages. Example: Global healthcare spending = $10T. Digital health = 5% of healthcare = $500B. Telehealth = 10% of digital health = $50B. <strong>Danger</strong>: compounding assumptions can produce unrealistic numbers.</li>\n<li><strong>Bottom-Up:</strong> Start with unit economics and scale up. Example: A SaaS product costs $1,000/user/year. There are 50,000 potential customers globally. TAM = 50,000 \u00d7 $1,000 = $50M. <strong>Strength</strong>: more grounded in observable data.</li>\n<li><strong>Value Theory:</strong> Estimate the value created for customers and capture a percentage. Example: A logistics optimization tool saves customers $100M/year collective. At 20% value capture, TAM = $20M.</li>\n</ol>\n<h3>SAM, SOM, and Penetration</h3>\n<ul>\n<li><strong>SAM (Serviceable Addressable Market):</strong> The portion of TAM that the product/service can actually reach given geographic, regulatory, and channel constraints.</li>\n<li><strong>SOM (Serviceable Obtainable Market):</strong> The portion of SAM that can realistically be captured given competition, brand, and go-to-market capabilities.</li>\n<li><strong>Penetration Rate:</strong> Current SOM as a percentage of TAM. Used to assess growth runway \u2014 low penetration suggests long growth runway; high penetration suggests maturity.</li>\n</ul>\n\n<h2>Analyzing Financial Statements for Sector Comparison</h2>\n<p>Comparing companies within a sector requires normalized financial metrics:</p>\n<h3>Key Ratios by Sector</h3>\n<table style=\"width:100%;border-collapse:collapse;font-size:0.9em\">\n<tr style=\"background:var(--color-bg)\"><th style=\"padding:8px;border:1px solid var(--color-border)\">Sector</th><th style=\"padding:8px;border:1px solid var(--color-border)\">Primary Metrics</th><th style=\"padding:8px;border:1px solid var(--color-border)\">What to Look For</th></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">Software/SaaS</td><td style=\"padding:8px;border:1px solid var(--color-border)\">ARR, NDR, Gross Margin, CAC Payback, Burn Multiple</td><td style=\"padding:8px;border:1px solid var(--color-border)\">>75% gross margin, >100% NDR, <24mo CAC payback</td></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">Retail</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Same-Store Sales, Inventory Turn, GMROI, Foot Traffic</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Positive SSS growth, high inventory turns, expanding margins</td></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">Banks</td><td style=\"padding:8px;border:1px solid var(--color-border)\">NIM, ROE, CET1 Ratio, Efficiency Ratio, NPL Ratio</td><td style=\"padding:8px;border:1px solid var(--color-border)\">>10% ROE, >3% NIM, <60% efficiency ratio</td></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">Pharma</td><td style=\"padding:8px;border:1px solid var(--color-border)\">R&D Spend %, Pipeline Value, Patent Cliff, Peak Sales</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Diverse pipeline, limited patent cliff exposure, high peak sales for late-stage drugs</td></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">Energy</td><td style=\"padding:8px;border:1px solid var(--color-border)\">FCF Yield, Production Growth, Reserve Life, F&D Costs</td><td style=\"padding:8px;border:1px solid var(--color-border)\">High FCF yield, low finding & development costs, long reserve life</td></tr>\n</table>\n\n<h2>Case Study: Analyzing the Semiconductor Industry</h2>\n<p><strong>Context:</strong> The semiconductor industry generated $600B in revenue in 2024, projected to reach $1T by 2030 driven by AI, automotive, and IoT. It is structurally one of the most complex industries to analyze due to its capital intensity, cyclicality, and geopolitical sensitivity.</p>\n<h3>Structural Analysis</h3>\n<ul>\n<li><strong>Porter's Five Forces:</strong> Threat of entry is extremely low (ASML has monopoly on EUV lithography, fabs cost $10-20B). Supplier power is concentrated (Applied Materials, Lam Research for equipment). Buyer power varies: hyperscalers (AWS, Microsoft) have pricing leverage; automotive OEMs less so. Substitutes are limited. Rivalry is intense but segmented (Intel vs AMD in CPUs, NVIDIA vs AMD in GPUs, Qualcomm vs MediaTek in mobile).</li>\n<li><strong>Moats:</strong> Semiconductor companies have some of the widest moats \u2014 TSMC's process technology lead, NVIDIA's CUDA ecosystem (network effects + switching costs), ASML's monopolistic position (intangible assets + cost advantage from cumulative R&D).</li>\n<li><strong>Cyclicality:</strong> The industry undergoes boom-bust cycles driven by supply-demand imbalances. The 2023 downturn (memory prices collapsed, non-AI demand weak) was followed by the 2024 AI-driven recovery. Understanding where we are in the cycle is critical for timing entry and exit.</li>\n</ul>\n<h3>Key Sub-Sectors for Analysis</h3>\n<ol>\n<li><strong>AI Accelerators (NVIDIA, AMD, custom ASICs):</strong> The fastest-growing segment. NVIDIA has >80% market share in AI training. Analyze: data center revenue growth trajectory, supply availability (CoWoS packaging bottleneck), competitive threat from custom chips (Google TPU, AWS Trainium, Microsoft Maia).</li>\n<li><strong>Memory (Samsung, SK Hynix, Micron):</strong> Highly cyclical commodity business transitioning to HBM (High Bandwidth Memory) for AI \u2014 a more differentiated, higher-margin product. Analyze: HBM market share, bit shipment growth, ASP trends, capital spending discipline.</li>\n<li><strong>Foundry (TSMC, Samsung, Intel):</strong> Manufacturing services. TSMC has >60% market share and makes the world's most advanced chips. Analyze: technology node leadership (3nm, 2nm, 1.4nm), capacity utilization, capex intensity, geographic diversification (Arizona, Japan, Germany fabs to mitigate Taiwan risk).</li>\n</ol>",
+      "section_images": [],
+      "bloom_questions": [
+        {
+          "bloom_level": "analyze",
+          "type": "mc",
+          "question": "A company dominates its market because each new user makes the platform more valuable for all existing users. This competitive advantage is best classified as:",
+          "options": [
+            "Switching costs",
+            "Network effects",
+            "Intangible assets",
+            "Cost advantages"
+          ],
+          "answer": 1,
+          "correct": "Network effects"
+        },
+        {
+          "bloom_level": "analyze",
+          "type": "mc",
+          "question": "An analyst is evaluating enterprise software companies. Which metric best indicates that a company's product has high switching costs?",
+          "options": [
+            "High revenue growth rate",
+            "Net Dollar Retention (NDR) above 120%",
+            "Low gross margin",
+            "High inventory turnover"
+          ],
+          "answer": 1,
+          "correct": "NDR above 120% \u2014 existing customers are spending more over time, indicating it is difficult to replace the product"
+        },
+        {
+          "bloom_level": "analyze",
+          "type": "mc",
+          "question": "Using Porter's Five Forces, which industry structure would you expect to generate the highest average profitability?",
+          "options": [
+            "Airlines (low entry barriers, powerful suppliers, intense rivalry)",
+            "Credit rating agencies (oligopoly with regulatory barriers, low rivalry)",
+            "Retail grocery (many competitors, powerful buyers, thin margins)",
+            "Commodity chemicals (undifferentiated products, powerful buyers)"
+          ],
+          "answer": 1,
+          "correct": "Credit rating agencies (oligopoly with regulatory barriers, low rivalry)"
+        },
+        {
+          "bloom_level": "analyze",
+          "type": "mc",
+          "question": "A startup's bottom-up TAM analysis estimates 10,000 potential customers at $5,000/year = $50M TAM. A competitor uses a top-down approach starting with a $200B market and applying percentages to arrive at $5B TAM. What is the most likely issue with the top-down number?",
+          "options": [
+            "It is too conservative",
+            "Compound assumption errors can produce unrealistic, inflated estimates",
+            "It does not account for competition",
+            "It only applies to B2B markets"
+          ],
+          "answer": 1,
+          "correct": "Compound assumption errors can produce unrealistic, inflated estimates"
+        },
+        {
+          "bloom_level": "analyze",
+          "type": "mc",
+          "question": "A semiconductor company's stock has high P/E during a cyclical upswing but the P/E collapses during the downturn even though the company remains profitable. This pattern suggests:",
+          "options": [
+            "The company is poorly managed",
+            "The market correctly prices cyclical earnings \u2014 P/E looks low at the peak of earnings (high earnings) and high at the trough (low earnings)",
+            "The company should be valued on P/B instead of P/E",
+            "The stock is always overvalued"
+          ],
+          "answer": 1,
+          "correct": "The market correctly prices cyclical earnings \u2014 normalized or through-the-cycle earnings should be used instead of trailing P/E"
+        }
+      ],
+      "flashcards": [
+        {
+          "term": "Porter's Five Forces",
+          "definition": "Framework analyzing industry profitability through five competitive forces: threat of new entrants, supplier power, buyer power, threat of substitutes, and rivalry among existing firms."
+        },
+        {
+          "term": "Network Effects Moat",
+          "definition": "Each new user adds value for all existing users, creating a self-reinforcing feedback loop. The strongest and most durable type of competitive moat."
+        },
+        {
+          "term": "Switching Costs Moat",
+          "definition": "The cost (time, money, effort) for a customer to switch providers. High switching costs create sticky revenue and pricing power."
+        },
+        {
+          "term": "Total Addressable Market (TAM)",
+          "definition": "The total revenue opportunity for a product or service. Calculated via top-down (macro percentages), bottom-up (unit economics \u00d7 customers), or value theory (value created \u00d7 capture rate)."
+        },
+        {
+          "term": "SOM (Serviceable Obtainable Market)",
+          "definition": "The portion of TAM that can realistically be captured given competition, brand, and go-to-market capabilities."
+        },
+        {
+          "term": "Net Dollar Retention (NDR)",
+          "definition": "SaaS metric measuring revenue growth from existing customers (expansion minus churn). NDR >120% indicates strong switching costs and product stickiness."
+        },
+        {
+          "term": "Cyclical vs Secular Growth",
+          "definition": "Cyclical growth follows economic booms and busts (semiconductors, energy). Secular growth is independent of the economic cycle, driven by long-term structural trends (AI, healthcare, cloud computing)."
+        }
+      ],
+      "pillar": "stock",
+      "thumbnail_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"600\" height=\"340\" viewBox=\"0 0 600 340\">\n<defs>\n<linearGradient id=\"lg-stock\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\">\n<stop offset=\"0\" stop-color=\"#052e16\"/>\n<stop offset=\"1\" stop-color=\"#0a0a1a\"/>\n</linearGradient>\n</defs>\n<rect width=\"600\" height=\"340\" fill=\"url(#lg-stock)\"/>\n<circle cx=\"283\" cy=\"174\" r=\"40\" fill=\"#22c55e\" opacity=\"0.18\"/><circle cx=\"398\" cy=\"70\" r=\"36\" fill=\"#22c55e\" opacity=\"0.19\"/><circle cx=\"315\" cy=\"90\" r=\"11\" fill=\"#22c55e\" opacity=\"0.13\"/><circle cx=\"82\" cy=\"84\" r=\"36\" fill=\"#22c55e\" opacity=\"0.11\"/><circle cx=\"123\" cy=\"168\" r=\"38\" fill=\"#22c55e\" opacity=\"0.19\"/><circle cx=\"346\" cy=\"228\" r=\"26\" fill=\"#22c55e\" opacity=\"0.09\"/><line x1=\"64\" y1=\"274\" x2=\"398\" y2=\"237\" stroke=\"#4ade80\" stroke-width=\"3\" opacity=\"0.23\"/><line x1=\"43\" y1=\"35\" x2=\"422\" y2=\"117\" stroke=\"#4ade80\" stroke-width=\"3\" opacity=\"0.21\"/><line x1=\"121\" y1=\"88\" x2=\"451\" y2=\"175\" stroke=\"#4ade80\" stroke-width=\"1\" opacity=\"0.27\"/><line x1=\"199\" y1=\"113\" x2=\"426\" y2=\"297\" stroke=\"#4ade80\" stroke-width=\"1\" opacity=\"0.3\"/><circle cx=\"579\" cy=\"150\" r=\"5\" fill=\"#22c55e\" opacity=\"0.15\"/><circle cx=\"331\" cy=\"50\" r=\"6\" fill=\"#22c55e\" opacity=\"0.28\"/><circle cx=\"188\" cy=\"191\" r=\"3\" fill=\"#22c55e\" opacity=\"0.37\"/><circle cx=\"274\" cy=\"130\" r=\"6\" fill=\"#22c55e\" opacity=\"0.34\"/><circle cx=\"324\" cy=\"63\" r=\"3\" fill=\"#22c55e\" opacity=\"0.27\"/><circle cx=\"54\" cy=\"49\" r=\"4\" fill=\"#22c55e\" opacity=\"0.36\"/><circle cx=\"23\" cy=\"262\" r=\"5\" fill=\"#22c55e\" opacity=\"0.36\"/><circle cx=\"525\" cy=\"303\" r=\"3\" fill=\"#22c55e\" opacity=\"0.38\"/><circle cx=\"80\" cy=\"197\" r=\"2\" fill=\"#22c55e\" opacity=\"0.17\"/><circle cx=\"299\" cy=\"200\" r=\"5\" fill=\"#22c55e\" opacity=\"0.31\"/><circle cx=\"400\" cy=\"138\" r=\"5\" fill=\"#22c55e\" opacity=\"0.4\"/><circle cx=\"481\" cy=\"13\" r=\"5\" fill=\"#22c55e\" opacity=\"0.11\"/><circle cx=\"307\" cy=\"289\" r=\"3\" fill=\"#22c55e\" opacity=\"0.3\"/><circle cx=\"174\" cy=\"273\" r=\"6\" fill=\"#22c55e\" opacity=\"0.31\"/><circle cx=\"285\" cy=\"18\" r=\"3\" fill=\"#22c55e\" opacity=\"0.11\"/><circle cx=\"211\" cy=\"83\" r=\"2\" fill=\"#22c55e\" opacity=\"0.2\"/><circle cx=\"154\" cy=\"22\" r=\"3\" fill=\"#22c55e\" opacity=\"0.39\"/><circle cx=\"63\" cy=\"126\" r=\"6\" fill=\"#22c55e\" opacity=\"0.19\"/><circle cx=\"270\" cy=\"263\" r=\"5\" fill=\"#22c55e\" opacity=\"0.31\"/><circle cx=\"590\" cy=\"81\" r=\"3\" fill=\"#22c55e\" opacity=\"0.12\"/>\n<circle cx=\"300\" cy=\"170\" r=\"140\" fill=\"#22c55e\" opacity=\"0.04\"/>\n<circle cx=\"300\" cy=\"170\" r=\"80\" fill=\"#4ade80\" opacity=\"0.04\"/>\n</svg>",
+      "difficulty": "intermediate",
+      "curated_relations": [
+        {
+          "slug": "learn/market-analysis",
+          "type": "next",
+          "label": "Next: how to analyse markets"
+        },
+        {
+          "slug": "learn/semiconductor-supply-chain",
+          "type": "reinforcement",
+          "label": "See also: semiconductor supply chain"
+        },
+        {
+          "slug": "learn/crispr-gene-editing",
+          "type": "related",
+          "label": "Related: gene editing investing"
+        }
+      ],
+      "prerequisites": [
+        "learn/applying-market-analysis"
+      ],
+      "featured_image": "/static/images/generated/learn/sector-competitive-analysis.webp"
+    },
+    {
       "slug": "learn/applying-market-analysis",
       "language": "en",
       "title": "Applying Market Analysis: Investment Theses, Portfolio Construction, and Risk Management",
@@ -9,14 +154,14 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
-        "investment-thesis",
-        "portfolio",
+        "case-study",
         "sector-rotation",
-        "valuation",
+        "portfolio",
         "markets",
         "risk-management",
-        "case-study",
-        "stock"
+        "investment-thesis",
+        "stock",
+        "valuation"
       ],
       "created_at": "2026-06-12T09:41:59.805824+00:00",
       "updated_at": null,
@@ -151,9 +296,9 @@
       "difficulty": "intermediate",
       "curated_relations": [
         {
-          "slug": "learn/market-analysis",
+          "slug": "learn/sector-competitive-analysis",
           "type": "next",
-          "label": "Next: how to analyse markets"
+          "label": "Next: sector & competitive analysis"
         },
         {
           "slug": "learn/semiconductor-supply-chain",
@@ -163,8 +308,7 @@
       ],
       "prerequisites": [
         "learn/market-analysis-methods"
-      ],
-      "featured_image": "/static/images/generated/learn/applying-market-analysis.webp"
+      ]
     },
     {
       "slug": "learn/market-analysis-methods",
@@ -174,22 +318,47 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
-        "macroeconomics",
         "fundamental-analysis",
-        "sentiment",
-        "quantitative",
-        "valuation",
-        "behavioral-finance",
         "technical-analysis",
+        "behavioral-finance",
+        "sentiment",
         "markets",
-        "stock"
+        "quantitative",
+        "stock",
+        "macroeconomics",
+        "valuation"
       ],
       "created_at": "2026-06-12T09:40:37.422411+00:00",
       "updated_at": null,
       "date_str": "",
       "author": "Leszek",
       "body_html": "<h2>Fundamental Analysis</h2>\n<p>Fundamental analysis evaluates a security's intrinsic value by examining economic, financial, and qualitative factors. The core belief is that markets sometimes misprice securities in the short run but converge to fair value over time.</p>\n<h3>Top-Down vs Bottom-Up</h3>\n<ul>\n<li><strong>Top-Down:</strong> Start with macroeconomics (GDP growth, interest rates, inflation), then identify attractive sectors, then select specific companies within those sectors. Useful for understanding broad market movements and sector rotation.</li>\n<li><strong>Bottom-Up:</strong> Start with individual company analysis regardless of macro environment. Focus on competitive advantage, management quality, financial health, and valuation. Used by stock pickers like Warren Buffett (value) and Peter Lynch (growth at reasonable price).</li>\n</ul>\n<h3>Valuation Methods</h3>\n<table style=\"width:100%;border-collapse:collapse;font-size:0.9em\">\n<tr style=\"background:var(--color-bg)\"><th style=\"padding:8px;border:1px solid var(--color-border)\">Method</th><th style=\"padding:8px;border:1px solid var(--color-border)\">Formula</th><th style=\"padding:8px;border:1px solid var(--color-border)\">Best For</th><th style=\"padding:8px;border:1px solid var(--color-border)\">Limitation</th></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">DCF</td><td style=\"padding:8px;border:1px solid var(--color-border)\">\u03a3 FCF<sub>t</sub> / (1+r)<sup>t</sup></td><td style=\"padding:8px;border:1px solid var(--color-border)\">Stable, predictable cash flows</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Highly sensitive to terminal value assumption</td></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">P/E</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Price / Earnings per Share</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Profitable companies, peer comparison</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Doesn't account for debt or growth</td></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">EV/EBITDA</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Enterprise Value / EBITDA</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Comparing firms with different capital structures</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Ignores capex requirements</td></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">P/B</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Price / Book Value</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Financials, asset-heavy companies</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Book value less relevant for intangibles</td></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">PEG</td><td style=\"padding:8px;border:1px solid var(--color-border)\">P/E / Earnings Growth Rate</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Growth companies</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Growth rate is an estimate</td></tr>\n</table>\n\n<h2>Technical Analysis</h2>\n<p>Technical analysis studies historical price and volume data to forecast future price movements. It operates on three assumptions: (1) market action discounts everything, (2) prices move in trends, and (3) history repeats itself through recurring patterns.</p>\n<h3>Trend Analysis</h3>\n<ul>\n<li><strong>Uptrend:</strong> Series of higher highs and higher lows. Bullish signal. Support level: the lowest point in the pattern.</li>\n<li><strong>Downtrend:</strong> Series of lower highs and lower lows. Bearish signal. Resistance level: the highest point in the pattern.</li>\n<li><strong>Sideways/Range-Bound:</strong> Price oscillates between support and resistance without clear direction.</li>\n</ul>\n<h3>Chart Patterns</h3>\n<ul>\n<li><strong>Head and Shoulders:</strong> Three peaks, middle highest. Reversal pattern signaling trend change from bullish to bearish.</li>\n<li><strong>Double Top/Bottom:</strong> Price tests a level twice and fails to break through. Reversal signal.</li>\n<li><strong>Cup and Handle:</strong> U-shaped recovery (cup) followed by a short consolidation (handle). Continuation pattern, bullish.</li>\n<li><strong>Flags and Pennants:</strong> Short consolidation after a sharp move. Continuation patterns.</li>\n</ul>\n<h3>Indicators and Oscillators</h3>\n<ul>\n<li><strong>Moving Averages (SMA/EMA):</strong> Smooth price data to identify trend direction. Common periods: 20, 50, 200 days. Golden cross (50 above 200) = bullish; death cross = bearish.</li>\n<li><strong>RSI (Relative Strength Index):</strong> Measures speed and magnitude of price changes. Ranges 0-100. Above 70 = overbought, below 30 = oversold.</li>\n<li><strong>MACD:</strong> Shows relationship between two moving averages. Signal line crossovers indicate momentum shifts.</li>\n<li><strong>Bollinger Bands:</strong> Volatility bands around a moving average. Price touching outer bands suggests extreme conditions.</li>\n</ul>\n\n<h2>Quantitative Analysis</h2>\n<p>Quantitative analysis uses mathematical and statistical models to identify trading opportunities and manage risk. It has grown from niche hedge fund domain to mainstream adoption as computing power and data availability have expanded.</p>\n<h3>Key Quant Approaches</h3>\n<ul>\n<li><strong>Factor Investing:</strong> Systematically targeting specific return drivers: value (cheap stocks outperform), momentum (recent winners continue), size (small caps outperform), quality (profitable stable companies), low volatility (defensive stocks). The Fama-French 5-factor model is the standard framework.</li>\n<li><strong>Statistical Arbitrage:</strong> Pairs trading: find two historically correlated securities, go long the underperformer and short the outperformer when they diverge, betting on convergence. Requires high-frequency rebalancing and low transaction costs.</li>\n<li><strong>Machine Learning in Markets:</strong> Random forests, gradient boosting, and neural networks used for return prediction, risk modeling, and alternative data analysis. Key challenge: overfitting is pervasive due to low signal-to-noise ratio in financial data.</li>\n</ul>\n<h3>The Signal-to-Noise Problem</h3>\n<p>Financial markets have notoriously low signal-to-noise ratios. A typical equity strategy with an annualized Sharpe ratio of 0.5 is considered good. This means for every unit of return, there are two units of volatility. Compare this to manufacturing quality control where signal-to-noise ratios of 10+ are common. The implication: quantitative strategies require large datasets and out-of-sample testing to avoid false discoveries.</p>\n\n<h2>Sentiment and Behavioral Analysis</h2>\n<p>Sentiment analysis measures the mood of market participants, while behavioral analysis studies the psychological biases that drive investor decisions.</p>\n<ul>\n<li><strong>Fear & Greed Index:</strong> Composite of seven indicators (safe haven demand, junk bond demand, market volatility, put/call ratios, etc.) measuring market emotion.</li>\n<li><strong>Put/Call Ratio:</strong> Volume of put options divided by call options. High ratio indicates bearish sentiment (and vice versa). Contrarian indicator.</li>\n<li><strong>VIX (Volatility Index):</strong> \"Fear gauge\" \u2014 implied volatility of S&P 500 options. High VIX correlates with market bottoms (capitulation); low VIX with complacency.</li>\n<li><strong>Retail Flow Data:</strong> Order flow from retail brokerages (Robinhood, Schwab) can indicate crowd behavior. Retail tends to buy at tops and sell at bottoms.</li>\n</ul>\n<p>Behavioral biases include: confirmation bias (seeking information that confirms existing beliefs), anchoring (fixating on a specific price level), herding (following the crowd), loss aversion (feeling losses more than gains), and recency bias (overweighting recent events). Understanding these biases is critical for both self-awareness as an investor and for identifying market inefficiencies to exploit.</p>\n\n<h2>Macroeconomic Analysis</h2>\n<p>Macro analysis examines economy-wide factors that influence all asset classes. Key indicators:</p>\n<ul>\n<li><strong>GDP Growth:</strong> Broadest measure of economic output. Above-trend growth supports equities; recession risks support bonds and defensive sectors.</li>\n<li><strong>Inflation (CPI/PCE):</strong> Rising inflation erodes purchasing power and typically leads to higher interest rates, which compress valuation multiples. Moderate inflation (~2%) is considered healthy.</li>\n<li><strong>Interest Rates (Fed Funds):</strong> Central bank policy rate influences all discount rates. Rate cuts stimulate; rate hikes cool the economy. The yield curve (2yr vs 10yr Treasury) is a powerful recession predictor when inverted.</li>\n<li><strong>Employment:</strong> Non-farm payrolls, unemployment rate, and wage growth indicate labor market health. Strong employment supports consumer spending and corporate earnings.</li>\n<li><strong>PMI (Purchasing Managers Index):</strong> Survey of manufacturing/services activity. Above 50 = expansion; below 50 = contraction. Leading indicator.</li>\n</ul>",
-      "section_images": [],
+      "section_images": [
+        {
+          "section_index": 1,
+          "heading": "Technical Analysis",
+          "image_url": "/static/images/generated/learn/market-analysis-methods_s1.svg",
+          "image_credit": "SVG Placeholder (AcaciaFund)",
+          "image_alt": "Illustration of key findings about Technical Analysis Technical",
+          "relevance_score": 50.0,
+          "source_api": "ai_generated",
+          "width": 1200,
+          "height": 675,
+          "content_hash": "fb8e3ae3e5018d87"
+        },
+        {
+          "section_index": 2,
+          "heading": "Quantitative Analysis",
+          "image_url": "/static/images/generated/learn/market-analysis-methods_s2.svg",
+          "image_credit": "SVG Placeholder (AcaciaFund)",
+          "image_alt": "Scene related to Quantitative Analysis Quantitative",
+          "relevance_score": 50.0,
+          "source_api": "ai_generated",
+          "width": 1200,
+          "height": 675,
+          "content_hash": "7859f255e0e4f684"
+        }
+      ],
       "bloom_questions": [
         {
           "bloom_level": "understand",
@@ -314,15 +483,15 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
-        "beginners",
-        "bonds",
-        "stocks",
-        "investing",
-        "derivatives",
-        "forex",
         "exchanges",
+        "forex",
         "markets",
-        "stock"
+        "derivatives",
+        "investing",
+        "beginners",
+        "stock",
+        "stocks",
+        "bonds"
       ],
       "created_at": "2026-06-12T09:24:20.912953+00:00",
       "updated_at": null,
@@ -465,14 +634,14 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
-        "aml",
         "sar",
         "fintech",
         "risk-assessment",
         "financial-crime",
-        "governance",
         "compliance-program",
-        "advanced"
+        "advanced",
+        "governance",
+        "aml"
       ],
       "created_at": "2026-06-12T09:00:28.371926+00:00",
       "updated_at": null,
@@ -604,12 +773,12 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
-        "sar",
-        "aml",
-        "regulatory",
-        "financial-crime",
-        "compliance",
         "case-study",
+        "sar",
+        "financial-crime",
+        "regulatory",
+        "compliance",
+        "aml",
         "enforcement"
       ],
       "created_at": "2026-06-12T08:56:08.332287+00:00",
@@ -742,13 +911,13 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
-        "trade-based",
-        "aml",
         "money-laundering",
+        "shell-companies",
+        "real-estate",
         "financial-crime",
         "crypto",
-        "shell-companies",
-        "real-estate"
+        "aml",
+        "trade-based"
       ],
       "created_at": "2026-06-12T08:46:12.296270+00:00",
       "updated_at": null,
@@ -759,25 +928,25 @@
         {
           "section_index": 1,
           "heading": "Crypto and Digital Asset Laundering",
-          "image_url": "/static/images/generated/learn/money-laundering-mechanisms_s1.svg",
-          "image_credit": "SVG Placeholder (AcaciaFund)",
+          "image_url": "/static/images/generated/learn/money-laundering-mechanisms_s1.webp",
+          "image_credit": "Photo by B140970324 via Wikimedia Commons (BY-SA-4.0)  \u2014 https://creativecommons.org/licenses/by-sa/4.0",
           "image_alt": "Illustration of key findings about Crypto and Digital Asset Laundering The and Cryptocurrency Mixers",
-          "relevance_score": 50.0,
-          "source_api": "ai_generated",
+          "relevance_score": 100.0,
+          "source_api": "curated",
           "width": 1200,
-          "height": 675,
+          "height": 674,
           "content_hash": "d1d2a4344c07b28f"
         },
         {
           "section_index": 2,
           "heading": "Shell Companies and Complex Ownership Structures",
-          "image_url": "/static/images/generated/learn/money-laundering-mechanisms_s2.webp",
-          "image_credit": "Photo by B140970324 via Wikimedia Commons (BY-SA-4.0)  \u2014 https://creativecommons.org/licenses/by-sa/4.0",
+          "image_url": "/static/images/generated/learn/money-laundering-mechanisms_s2.svg",
+          "image_credit": "SVG Placeholder (AcaciaFund)",
           "image_alt": "Scene related to Shell Companies and Complex Ownership Structures Shell",
-          "relevance_score": 100.0,
-          "source_api": "curated",
+          "relevance_score": 50.0,
+          "source_api": "ai_generated",
           "width": 1200,
-          "height": 674,
+          "height": 675,
           "content_hash": "63a842c5d29c9a6e"
         }
       ],
@@ -905,13 +1074,13 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
-        "aml",
-        "beginners",
         "money-laundering",
         "kyc",
         "financial-crime",
         "compliance",
-        "regulations"
+        "regulations",
+        "beginners",
+        "aml"
       ],
       "created_at": "2026-06-12T08:43:30.122186+00:00",
       "updated_at": null,
@@ -1055,12 +1224,12 @@
       "content_type": "learn",
       "tags": [
         "architecture",
-        "production",
-        "design",
-        "data-platform",
-        "data-mesh",
         "data-engineering",
-        "data-product"
+        "data-product",
+        "production",
+        "data-platform",
+        "design",
+        "data-mesh"
       ],
       "created_at": "2026-06-12T08:39:15.408286+00:00",
       "updated_at": null,
@@ -1192,13 +1361,13 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
-        "cost-optimization",
         "great-expectations",
-        "observability",
         "feature-store",
-        "data-quality",
+        "cost-optimization",
         "data-engineering",
-        "lineage"
+        "lineage",
+        "observability",
+        "data-quality"
       ],
       "created_at": "2026-06-12T08:20:06.452630+00:00",
       "updated_at": null,
@@ -1351,10 +1520,10 @@
         "sql",
         "data-engineering",
         "pipeline",
-        "dagster",
-        "orchestration",
         "dbt",
-        "data-transformation"
+        "orchestration",
+        "data-transformation",
+        "dagster"
       ],
       "created_at": "2026-06-12T08:13:46.363993+00:00",
       "updated_at": null,
@@ -1491,13 +1660,13 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
-        "cdc",
-        "streaming",
-        "batch-processing",
         "architecture",
-        "pipeline",
         "kafka",
-        "data-engineering"
+        "data-engineering",
+        "pipeline",
+        "batch-processing",
+        "streaming",
+        "cdc"
       ],
       "created_at": "2026-06-12T05:31:52.576779+00:00",
       "updated_at": null,
@@ -1629,12 +1798,12 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
-        "beginners",
-        "pipeline",
-        "data-engineering",
-        "data-architecture",
         "data-stack",
-        "etl"
+        "etl",
+        "data-engineering",
+        "pipeline",
+        "data-architecture",
+        "beginners"
       ],
       "created_at": "2026-06-11T20:50:09.126818+00:00",
       "updated_at": null,
