@@ -19,6 +19,7 @@ PILLAR_MAP = {
     "learn/aml-enforcement-cases": "aml",
     "learn/designing-aml-program": "aml",
     "learn/market-fundamentals": "stock",
+    "learn/market-analysis-methods": "stock",
     "learn/aml-basics": "aml",
     "learn/market-analysis": "stock",
     "learn/quiz-aml": "aml",
@@ -47,6 +48,7 @@ DIFFICULTY_MAP = {
     "learn/aml-enforcement-cases": "intermediate",
     "learn/designing-aml-program": "advanced",
     "learn/market-fundamentals": "beginner",
+    "learn/market-analysis-methods": "beginner",
     "learn/aml-basics": "beginner",
     "learn/market-analysis": "intermediate",
     "learn/quiz-aml": "beginner",
@@ -104,8 +106,12 @@ CURATED_RELATIONS = {
         {"slug": "learn/trade-based-ml-sanctions", "type": "reinforcement", "label": "See also: trade-based ML"},
     ],
     "learn/market-fundamentals": [
-        {"slug": "learn/market-analysis", "type": "next", "label": "Next: how to analyse markets"},
+        {"slug": "learn/market-analysis-methods", "type": "next", "label": "Next: market analysis methods"},
         {"slug": "learn/science-method", "type": "related", "label": "Related: scientific reasoning"},
+    ],
+    "learn/market-analysis-methods": [
+        {"slug": "learn/market-analysis", "type": "next", "label": "Next: how to analyse markets"},
+        {"slug": "learn/behavioral-design-learning", "type": "related", "label": "Related: behavioral factors"},
     ],
     "learn/aml-basics": [
         {"slug": "learn/quiz-aml", "type": "reinforcement", "label": "Test your AML knowledge"},
@@ -158,6 +164,7 @@ PREREQUISITES = {
     "learn/aml-enforcement-cases": ["learn/money-laundering-mechanisms"],
     "learn/designing-aml-program": ["learn/aml-enforcement-cases"],
     "learn/market-fundamentals": [],
+    "learn/market-analysis-methods": ["learn/market-fundamentals"],
     "learn/data-pipeline-architectures": ["learn/data-engineering-basics"],
     "learn/building-pipelines-dbt-dagster": ["learn/data-pipeline-architectures"],
     "learn/data-quality-observability-cost": ["learn/building-pipelines-dbt-dagster"],
