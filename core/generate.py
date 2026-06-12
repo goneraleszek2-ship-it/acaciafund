@@ -17,7 +17,7 @@ from .bloom import (
 from .scraper import scrape_articles, _url_key
 from .visuals import (
     generate_thumbnail_svg, generate_og_image, generate_signal_meter,
-    _pick_subtopic, TOPIC_ICONS, PILLAR_COLORS,
+    _pick_subtopic, PILLAR_COLORS,
 )
 import urllib.request
 import urllib.error

@@ -44,6 +44,9 @@
       <div class="flex items-center gap-3 mb-3">
         {{ layer_badge | default("") | safe }}
         {{ pillar_badge(content.pillar) }}
+        {%- if topic_icon_html %}
+        <span class="article-topic-icon">{{ topic_icon_html | safe }}</span>
+        {%- endif %}
         {%- if content.source_breakdown %}
         <span class="text-xs text-gray-400">
           {{ content.source_breakdown.get("hn", 0) }} HN

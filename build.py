@@ -16,11 +16,13 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
+from PIL import Image
+
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 from urllib.parse import quote as urlquote
 
 from schemas import RegistryData
-from core.visuals import generate_thumbnail_svg, generate_og_image, TOPIC_ICONS, SUBTOPIC_CATEGORIES
+from core.visuals import generate_thumbnail_svg, generate_og_image, resolve_topic_icon, render_topic_icon, _pick_subtopic, TOPIC_ICONS, SUBTOPIC_CATEGORIES, PILLAR_COLORS
 from core.images import generate_fallback_svg
 from core.brand import BRAND, brand_domain_icon, brand_micro_icon, brand_logo_svg, section_type_color
 
@@ -34,7 +36,7 @@ from config import (
 )
 
 def get_topic_icons(tags: list[str]) -> list[str]:
-    """Map article tags to TOPIC_ICONS SVG path data, returning up to 3 matches."""
+    """Map article tags to resolved SVG path data, returning up to 3 matches."""
     if not tags:
         return []
     lower_tags = {t.lower() for t in tags}
@@ -42,18 +44,21 @@ def get_topic_icons(tags: list[str]) -> list[str]:
     seen = set()
     for tag in lower_tags:
         if tag in TOPIC_ICONS and tag not in seen:
-            matched.append(TOPIC_ICONS[tag])
-            seen.add(tag)
-            if len(matched) >= 3:
-                break
+            path = resolve_topic_icon(tag)
+            if path:
+                matched.append(path)
+                seen.add(tag)
+                if len(matched) >= 3:
+                    break
     if len(matched) < 3:
         for subs in SUBTOPIC_CATEGORIES.values():
             for key, keywords in subs.items():
                 if key in seen:
                     continue
                 if lower_tags & keywords:
-                    if key in TOPIC_ICONS:
-                        matched.append(TOPIC_ICONS[key])
+                    path = resolve_topic_icon(key)
+                    if path:
+                        matched.append(path)
                         seen.add(key)
                         if len(matched) >= 3:
                             break
@@ -65,10 +70,12 @@ def get_topic_icons(tags: list[str]) -> list[str]:
                 if tkey in seen:
                     continue
                 if tkey in tag or tag in tkey:
-                    matched.append(TOPIC_ICONS[tkey])
-                    seen.add(tkey)
-                    if len(matched) >= 3:
-                        break
+                    path = resolve_topic_icon(tkey)
+                    if path:
+                        matched.append(path)
+                        seen.add(tkey)
+                        if len(matched) >= 3:
+                            break
             if len(matched) >= 3:
                 break
     return matched
@@ -452,6 +459,31 @@ def resolve_section_image(url: str) -> str:
                 return ref
             return url.rsplit(".", 1)[0] + ext
     return ""
+
+
+def generate_card_thumbnail(source_url: str, slug: str) -> str:
+    """Generate a 200x150 card thumbnail from a featured image. Returns URL path or empty string."""
+    if not source_url:
+        return ""
+    raw = source_url.lstrip("/")
+    src = Path(PROJECT_ROOT / raw)
+    if not src.exists() or src.stat().st_size == 0:
+        return ""
+    prefix = source_url.rsplit("/", 1)[0]
+    stem = src.stem
+    ext = src.suffix if src.suffix else ".webp"
+    thumb_name = f"{stem}_card{ext}"
+    thumb_path = src.parent / thumb_name
+    thumb_url = f"{prefix}/{thumb_name}"
+    if not thumb_path.exists() or src.stat().st_mtime > thumb_path.stat().st_mtime:
+        try:
+            img = Image.open(src)
+            img.thumbnail((200, 150), Image.LANCZOS)
+            img.save(thumb_path, optimize=True)
+        except Exception as e:
+            print(f"  WARNING: card thumbnail failed for {slug}: {e}")
+            return ""
+    return thumb_url
 
 
 def generate_missing_ai_image(url: str) -> str:
@@ -1175,6 +1207,8 @@ def main():
                     r_quiz_data["questions"].append(entry)
             if r_quiz_data["questions"]:
                 r_quiz_json = json.dumps(r_quiz_data, ensure_ascii=False)
+        topic_sub = _pick_subtopic([item.title], pillar)
+        topic_icon_html = render_topic_icon(topic_sub, PILLAR_COLORS.get(pillar, PILLAR_COLORS["aml"])["accent"])
         html = render_template("blog_post.j2",
             content=item, page_path=page_path, page_body=body,
             prev_post=prev_post, next_post=next_post,
@@ -1187,6 +1221,7 @@ def main():
             featured_image=resolve_section_image(item.featured_image),
             image_credit=item.image_credit,
             quiz_json=r_quiz_json,
+            topic_icon_html=topic_icon_html,
             layer_sub=pconf["label"], **ctx_base)
         out_file.write_text(html, encoding="utf-8")
         print(f"  research: {out_file.relative_to(OUTPUT_DIR)}")
@@ -1209,6 +1244,33 @@ def main():
                                    fallback_icons=icons_r)
         (out_static / f"og_{og_key}.svg").write_text(og_svg, encoding="utf-8")
 
+    # --- CARD THUMBNAILS — generate 200x150 thumbnails for all articles with featured_image ---
+    card_images: dict[str, str] = {}
+    if (PIPELINE_STATIC_DIR / "images" / "generated").exists():
+        for article in all_content:
+            if article.featured_image:
+                img = generate_card_thumbnail(article.featured_image, article.slug)
+                if img:
+                    card_images[article.slug] = img
+        # Ensure thumbnails are also in dist/ (static copy happened before thumbnail gen)
+        gen_src = PIPELINE_STATIC_DIR / "images" / "generated"
+        gen_dst = STATIC_DST_DIR / "images" / "generated"
+        for card_file in gen_src.rglob("*_card.*"):
+            if card_file.is_file():
+                rel = card_file.relative_to(gen_src)
+                dest = gen_dst / rel
+                dest.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(card_file, dest)
+
+    # --- TOPIC ICONS FOR RESEARCH CARDS ---
+    card_topic_icons: dict[str, str] = {}
+    for article in research_items:
+        sub = _pick_subtopic([article.title], article.pillar or "aml")
+        accent = PILLAR_COLORS.get(article.pillar or "aml", PILLAR_COLORS["aml"])["accent"]
+        html_icon = render_topic_icon(sub, accent)
+        if html_icon:
+            card_topic_icons[article.slug] = html_icon
+
     # --- RESEARCH INDEX (/research/) ---
     research_dir = OUTPUT_DIR / "research"
     research_dir.mkdir(parents=True, exist_ok=True)
@@ -1221,7 +1283,8 @@ def main():
                        description="Quality-scored research articles on AML, financial markets, and science. Automatically classified from HackerNews and arXiv using Bloom taxonomy."),
         category="research", items=sorted_research,
         page_title="Research",
-        is_index=False, page_path="research/", **ctx_base)
+        is_index=False, page_path="research/", card_images=card_images,
+        card_topic_icons=card_topic_icons, **ctx_base)
     (research_dir / "index.html").write_text(html, encoding="utf-8")
     print("  category: research/index.html")
 
@@ -1238,7 +1301,8 @@ def main():
             posts=p_posts, is_index=False, page_path=f"{pillar}/",
             page_title=pconf["heading"],
             layer_sub=pconf["label"],
-            thumbnail_base=f"{SITE_URL}/static/images", thumbnail_key=thumbnail_key, **ctx_base)
+            thumbnail_base=f"{SITE_URL}/static/images", thumbnail_key=thumbnail_key,
+            card_images=card_images, card_topic_icons=card_topic_icons, **ctx_base)
         (out_dir / "index.html").write_text(html, encoding="utf-8")
         print(f"  pillar: {pillar}/index.html")
 

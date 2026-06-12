@@ -8,7 +8,7 @@ import re
 from datetime import datetime, timezone
 from pathlib import Path
 
-from core.visuals import _pick_subtopic, _extract_topic_words, TOPIC_ICONS
+from core.visuals import _pick_subtopic, _extract_topic_words, resolve_topic_icon, TOPIC_ICONS
 
 REGISTRY_PATH = Path("registry.json")
 
@@ -654,7 +654,7 @@ def generate_thumbnail_svg(slug: str, title: str, pillar: str) -> str:
 
     # Phase 3: Topic overlay — subtopic icon + keyword tags
     sub = _pick_subtopic([title], pillar)
-    icon_path_topic = TOPIC_ICONS.get(sub, TOPIC_ICONS.get("regulation", ""))
+    icon_path_topic = resolve_topic_icon(sub) or resolve_topic_icon("regulation") or ""
     words = _extract_topic_words([title], 2)
     overlay = ""
     if icon_path_topic:

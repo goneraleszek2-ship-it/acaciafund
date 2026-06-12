@@ -988,6 +988,42 @@ svg:not([class*="w-"]):not([class*="h-"]) {
   height: 100%;
   object-fit: contain;
 }
+.article-topic-icon,
+.card-topic-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+.article-topic-icon svg,
+.card-topic-icon svg {
+  width: 100%;
+  height: 100%;
+}
+.card-photo-wrap {
+  width: 76px;
+  height: 57px;
+  border-radius: 8px;
+  border: 1.5px solid color-mix(in srgb, var(--layer-research-badge) 40%, transparent);
+  background: var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+.card-research:hover .card-photo-wrap {
+  box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+  border-color: var(--layer-research-badge);
+}
+.card-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 .card-research-sources {
   display: flex;
   flex-wrap: wrap;
