@@ -17,6 +17,7 @@ PILLAR_MAP = {
     "learn/aml-compliance-glossary": "aml",
     "learn/money-laundering-mechanisms": "aml",
     "learn/aml-enforcement-cases": "aml",
+    "learn/designing-aml-program": "aml",
     "learn/aml-basics": "aml",
     "learn/market-analysis": "stock",
     "learn/quiz-aml": "aml",
@@ -43,6 +44,7 @@ DIFFICULTY_MAP = {
     "learn/aml-compliance-glossary": "beginner",
     "learn/money-laundering-mechanisms": "beginner",
     "learn/aml-enforcement-cases": "intermediate",
+    "learn/designing-aml-program": "advanced",
     "learn/aml-basics": "beginner",
     "learn/market-analysis": "intermediate",
     "learn/quiz-aml": "beginner",
@@ -92,8 +94,12 @@ CURATED_RELATIONS = {
         {"slug": "learn/quiz-aml", "type": "reinforcement", "label": "Test your AML knowledge"},
     ],
     "learn/aml-enforcement-cases": [
-        {"slug": "learn/aml-basics", "type": "next", "label": "Next: AML fundamentals"},
+        {"slug": "learn/designing-aml-program", "type": "next", "label": "Next: designing an AML program"},
         {"slug": "learn/quiz-aml", "type": "reinforcement", "label": "Test your AML knowledge"},
+    ],
+    "learn/designing-aml-program": [
+        {"slug": "learn/crypto-aml", "type": "reinforcement", "label": "See also: crypto AML"},
+        {"slug": "learn/trade-based-ml-sanctions", "type": "reinforcement", "label": "See also: trade-based ML"},
     ],
     "learn/aml-basics": [
         {"slug": "learn/quiz-aml", "type": "reinforcement", "label": "Test your AML knowledge"},
@@ -144,6 +150,7 @@ PREREQUISITES = {
     "learn/aml-compliance-glossary": [],
     "learn/money-laundering-mechanisms": ["learn/aml-compliance-glossary"],
     "learn/aml-enforcement-cases": ["learn/money-laundering-mechanisms"],
+    "learn/designing-aml-program": ["learn/aml-enforcement-cases"],
     "learn/data-pipeline-architectures": ["learn/data-engineering-basics"],
     "learn/building-pipelines-dbt-dagster": ["learn/data-pipeline-architectures"],
     "learn/data-quality-observability-cost": ["learn/building-pipelines-dbt-dagster"],
