@@ -1162,16 +1162,6 @@ svg:not([class*="w-"]):not([class*="h-"]) {
   display: block;
 }
 
-/* ── Brand System: Sparkline container ── */
-.sparkline {
-  display: inline-block;
-  vertical-align: middle;
-  line-height: 0;
-}
-.sparkline svg {
-  display: block;
-}
-
 /* ── Section Harvester: Visual section identity ── */
 .section-harvester {
   position: relative;
@@ -1220,35 +1210,6 @@ svg:not([class*="w-"]):not([class*="h-"]) {
 }
 .section-body {
   padding-top: 0.75rem;
-}
-
-/* ── Section Data Visualization ── */
-.section-viz {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  margin: 0.75rem 0;
-  padding: 0.5rem 0.75rem;
-  border-radius: 6px;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-}
-.section-viz-label {
-  font-size: 0.6875rem;
-  font-weight: 600;
-  color: var(--color-text-muted);
-  white-space: nowrap;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-.section-viz-chart {
-  flex: 1;
-  min-width: 0;
-  line-height: 0;
-}
-.section-viz-chart svg {
-  max-width: 100%;
-  height: auto;
 }
 
 /* ── Section read progress indicator ── */

@@ -21,7 +21,6 @@ from urllib.parse import quote as urlquote
 
 from schemas import RegistryData
 from core.visuals import generate_thumbnail_svg, generate_og_image, TOPIC_ICONS, SUBTOPIC_CATEGORIES
-from core.visuals import source_bar_svg, donut_svg, bloom_chart_svg, radar_svg, generate_signal_meter, sparkline_svg
 from core.images import generate_fallback_svg
 from core.brand import BRAND, brand_domain_icon, brand_micro_icon, brand_logo_svg, section_type_color
 
@@ -425,98 +424,7 @@ def _article_as_dict(article):
     return article.dict()
 
 
-def _section_viz_svg(section_type: str, article, pillar: str) -> str:
-    """Generate a context-relevant data visualization SVG for a section.
 
-    Maps each section type to a visualization from core/visuals.py
-    that uses the article's actual signal/source/bloom data.
-    """
-    if article is None:
-        return ""
-
-    signals = _get_article_attr(article, "signals") or {}
-    source_breakdown = _get_article_attr(article, "source_breakdown") or {}
-    quality_metrics = _get_article_attr(article, "quality_metrics") or {}
-    bloom_questions = _get_article_attr(article, "bloom_questions") or []
-
-    has_sources = any(source_breakdown.get(k, 0) > 0 for k in ("hn", "arxiv", "pubmed"))
-    has_bloom = len(bloom_questions) > 0
-    has_metrics = any(quality_metrics.get(k, 0) > 0 for k in ("avg_source_score", "source_diversity", "recency_score"))
-    has_sqi = signals.get("avg_sqi", 0) > 0
-
-    # Default: signal meter (most articles have SQI)
-    viz_svg = ""
-    viz_label = ""
-
-    if section_type == "overview":
-        if has_sqi:
-            viz_svg = generate_signal_meter(signals["avg_sqi"], 180)
-            viz_label = "Signal Quality"
-        elif has_sources:
-            viz_svg = source_bar_svg(source_breakdown, 240, 60)
-            viz_label = "Sources"
-
-    elif section_type == "key_findings":
-        if has_bloom:
-            viz_svg = bloom_chart_svg(bloom_questions, 240, 140)
-            viz_label = "Bloom Taxonomy"
-        elif has_sqi:
-            viz_svg = generate_signal_meter(signals["avg_sqi"], 180)
-            viz_label = "Signal Quality"
-
-    elif section_type == "applied_scenario":
-        if has_sources:
-            viz_svg = source_bar_svg(source_breakdown, 240, 60)
-            viz_label = "Source Distribution"
-        elif has_metrics:
-            viz_svg = radar_svg(quality_metrics, 140, 140)
-            viz_label = "Quality Metrics"
-
-    elif section_type == "source_analysis":
-        if has_sources:
-            viz_svg = donut_svg(source_breakdown, 120, 120)
-            viz_label = "Source Mix"
-        elif has_sqi:
-            viz_svg = generate_signal_meter(signals["avg_sqi"], 180)
-            viz_label = "Signal Quality"
-
-    elif section_type == "domain_breakdown":
-        domain_div = signals.get("domain_diversity", 0)
-        if domain_div:
-            viz_svg = source_bar_svg({"hn": domain_div, "arxiv": max(1, domain_div // 2)}, 200, 50)
-            viz_label = f"Domain Diversity: {domain_div}"
-        elif has_sqi:
-            viz_svg = generate_signal_meter(signals["avg_sqi"], 180)
-            viz_label = "Signal Quality"
-
-    elif section_type == "cross_pillar":
-        if has_metrics:
-            viz_svg = radar_svg(quality_metrics, 140, 140)
-            viz_label = "Quality Radar"
-        elif has_sqi:
-            viz_svg = generate_signal_meter(signals["avg_sqi"], 180)
-            viz_label = "Signal Quality"
-
-    elif section_type == "methodology":
-        if has_metrics:
-            avg = quality_metrics.get("avg_source_score", 0)
-            viz_svg = generate_signal_meter(avg, 180)
-            viz_label = "Source Score"
-        elif has_sqi:
-            viz_svg = generate_signal_meter(signals["avg_sqi"], 180)
-            viz_label = "Signal Quality"
-
-    if not viz_svg:
-        return ""
-
-    label_html = f'<span class="section-viz-label">{viz_label}</span>' if viz_label else ""
-
-    return (
-        f'<div class="section-viz">'
-        f'{label_html}'
-        f'<div class="section-viz-chart">{viz_svg}</div>'
-        f'</div>'
-    )
 
 
 def inject_section_images(body_html: str, section_images: list[dict],
@@ -559,17 +467,14 @@ def inject_section_images(body_html: str, section_images: list[dict],
 
         if use_harvesters:
             pillar_color = section_type_color(section_idx, pillar)
-            viz_html = _section_viz_svg(section_type, article, pillar)
 
-            # Collapsible section: summary = heading, details = content + viz
+            # Collapsible section: summary = heading, details = content
             result.append(
                 f'<div class="section-harvester" data-section="{section_type}" '
                 f'style="--section-color:{pillar_color}">'
             )
             result.append('<details class="section-collapse" open>')
             result.append(f'<summary class="section-summary">{h2_tag}</summary>')
-            if viz_html:
-                result.append(viz_html)
             result.append(f'<div class="section-body">{content}</div>')
             result.append('</details>')
             result.append('</div>')

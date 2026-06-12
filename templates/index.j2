@@ -1,6 +1,5 @@
 {% extends "layout.j2" %}
 {% from "macros/pillar_badge.html" import pillar_badge %}
-{% from "macros/sqi_chip.html" import sqi_chip %}
 {% from "macros/content_badge.html" import content_badge %}
 {% block main_content %}
 <section class="text-center py-8 sm:py-16" aria-labelledby="hero-heading">
@@ -159,9 +158,6 @@
           {%- if item.body_html %}
           <span>{{ item.body_html | reading_time }} min</span>
           {%- endif %}
-          {%- if item.signals and item.signals.get("avg_sqi") is defined %}
-          {{ sqi_chip(item.signals.get("avg_sqi", 0)) }}
-          {%- endif %}
         </div>
       </div>
     </a>
@@ -202,9 +198,6 @@
           {%- endif %}
           {%- if item.body_html %}
           <span>{{ item.body_html | reading_time }} min</span>
-          {%- endif %}
-          {%- if item.signals and item.signals.get("avg_sqi") is defined %}
-          {{ sqi_chip(item.signals.get("avg_sqi", 0)) }}
           {%- endif %}
         </div>
       </div>
