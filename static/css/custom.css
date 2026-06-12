@@ -942,48 +942,65 @@ svg:not([class*="w-"]):not([class*="h-"]) {
 /* Research card with pictogram */
 .card-research {
   display: grid;
-  grid-template-columns: 84px 1fr;
-  gap: 16px;
-  padding: 16px;
+  grid-template-columns: 100px 1fr;
+  gap: 0;
+  padding: 0;
   background: var(--layer-research-body);
   border: 1px solid var(--color-border);
   border-left: 3px solid var(--layer-research-badge);
-  border-radius: 8px;
-  transition: box-shadow 0.2s, transform 0.15s;
+  border-radius: 10px;
+  transition: box-shadow 0.25s, transform 0.2s;
   text-decoration: none;
+  overflow: hidden;
 }
 .card-research:hover {
-  box-shadow: 0 3px 14px rgba(0,0,0,0.07);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
   transform: translateY(-2px);
 }
 .card-research-left {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
-  padding-right: 14px;
-  border-right: 1px solid var(--color-border);
+  gap: 8px;
+  padding: 16px 10px;
+  background: color-mix(in srgb, var(--layer-research-badge) 6%, transparent);
   justify-content: flex-start;
 }
-.card-pictogram {
-  width: 72px;
-  height: auto;
+.card-pictogram-wrap {
+  width: 76px;
+  height: 57px;
   border-radius: 8px;
-  border: 1px solid var(--color-border);
+  border: 1.5px solid color-mix(in srgb, var(--layer-research-badge) 40%, transparent);
   background: #fff;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+.card-research:hover .card-pictogram-wrap {
+  box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+  border-color: var(--layer-research-badge);
+}
+.card-pictogram {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 .card-research-sources {
   display: flex;
   flex-wrap: wrap;
-  gap: 2px;
+  gap: 3px;
   justify-content: center;
 }
 .card-research-source {
   font-family: Inter, ui-sans-serif, system-ui, sans-serif;
   font-size: 0.5rem;
-  padding: 1px 4px;
-  border-radius: 2px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+  letter-spacing: 0.05em;
 }
 .card-research-body { min-width: 0; }
 .card-research-meta {

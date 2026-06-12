@@ -226,26 +226,76 @@ def find_related(posts: list, current: object, max_items: int = 3) -> list:
 
 
 CARD_PICTOGRAM_KEYWORDS = {
-    "crypto": ["crypto", "blockchain", "cryptocurrency", "bitcoin", "ethereum", "digital signature",
-               "zk", "zero-knowledge", "wallet", "token", "defi"],
-    "bayes": ["bayesian", "bayes", "probability", "statistics", "inference", "prior", "posterior",
-              "monte carlo", "mcmc", "markov"],
-    "dp": ["privacy", "differential privacy", "data protection", "gdpr", "anonymization",
-           "de-identification", "k-anonymity"],
-    "mosa": ["modular", "architecture", "system", "graph", "pipeline", "integration",
-             "data engineering", "etl", "api", "microservice", "network", "mesh"],
+    "crypto": [
+        "crypto", "blockchain", "cryptocurrency", "bitcoin", "ethereum", "defi",
+        "digital signature", "zero-knowledge", "zk", "wallet", "token", "mixer",
+        "digital asset",
+    ],
+    "bayes": [
+        "bayesian", "bayes", "probability", "statistics", "statistical",
+        "inference", "prior", "posterior", "monte carlo", "mcmc", "markov",
+        "meta-analysis", "meta analysis",
+        "fundamental analysis", "technical analysis", "quantitative",
+        "behavioral finance", "portfolio theory", "market analysis",
+        "valuation", "macroeconomic",
+    ],
+    "dp": [
+        "privacy", "differential privacy", "data protection", "gdpr",
+        "anonymization", "de-identification", "k-anonymity",
+        "data ethics", "ethics",
+        "compliance program", "regulatory", "regulation",
+        "fincen", "ofac", "sanctions", "beneficial ownership",
+        "money laundering", "kyc", "financial crime",
+        "enforcement", "directive", "trade finance",
+        "fatf", "gafi", "6amld", "7amld", "eu regulation",
+    ],
+    "mosa": [
+        "pipeline", "architecture", "orchestration", "data platform",
+        "data stack", "data product", "data mesh", "data engineering",
+        "integration", "etl", "streaming", "data pipeline",
+        "dataops", "data quality", "observability", "lineage",
+        "kafka", "flink", "dbt", "dagster", "airflow", "prefect",
+        "iceberg", "delta lake", "hudi", "lakehouse",
+        "schema registry", "avro", "protobuf", "cdc", "debezium",
+        "terraform", "kubernetes", "k8s", "infrastructure",
+        "feature store", "feast", "mlflow", "mlops",
+        "sqlmesh", "analytics engineering",
+        "microservice", "network", "mesh", "cloud", "api",
+        "deployment", "monitoring", "replication", "cost optimization",
+        "data contract", "soda", "great expectations",
+        "system diagram", "tool landscape", "open source",
+        "software-defined", "asset-based",
+    ],
+}
+
+_PICTOGRAM_PILLAR_DEFAULTS = {
+    "aml": "dp.svg",
+    "stock": "bayes.svg",
+    "data-engineering": "mosa.svg",
+}
+
+_PICTOGRAM_CONTENT_TYPE_FALLBACK = {
+    "research": "icon-research.svg",
+    "learn": "icon-learn.svg",
+    "knowledge": "icon-knowledge.svg",
 }
 
 def pick_card_pictogram(content) -> str | None:
-    tags = [t.lower() for t in (content.tags or [])]
-    if not tags:
-        return None
-    tag_text = " ".join(tags)
+    text = " ".join([
+        *(t.lower().replace("-", " ") for t in (content.tags or [])),
+        (content.title or "").lower(),
+    ])
     for img_name, keywords in CARD_PICTOGRAM_KEYWORDS.items():
         for kw in keywords:
-            if kw.lower() in tag_text:
+            if kw.lower() in text:
                 return f"{img_name}.svg"
-    return None
+    pillar = (content.pillar or "").lower()
+    if pillar in _PICTOGRAM_PILLAR_DEFAULTS:
+        return _PICTOGRAM_PILLAR_DEFAULTS[pillar]
+    ct = (content.content_type or "").lower()
+    if ct in _PICTOGRAM_CONTENT_TYPE_FALLBACK:
+        return _PICTOGRAM_CONTENT_TYPE_FALLBACK[ct]
+    return "icon-research.svg"
 
 
 def reading_time_minutes(html_or_text: str) -> int:
