@@ -58,15 +58,15 @@
   /* Layer identity tokens */
   --layer-research-badge: #c8a96e;
   --layer-research-bg: #faf6f0;
-  --layer-research-body: #f5efe5;
+  --layer-research-body: #f7ede0;
   --layer-research-accent: #b8944e;
   --layer-learn-badge: #7eb8a4;
   --layer-learn-bg: #f0f9f5;
-  --layer-learn-body: #e5f4ed;
+  --layer-learn-body: #e0f5e8;
   --layer-learn-accent: #5ba88e;
   --layer-knowledge-badge: #8fa3c8;
   --layer-knowledge-bg: #f0f3f9;
-  --layer-knowledge-body: #e5ecf4;
+  --layer-knowledge-body: #e0e8f5;
   --layer-knowledge-accent: #6b84b8;
 }
 
@@ -79,6 +79,17 @@ body {
 body[data-layer="research"] { background-color: var(--layer-research-body); }
 body[data-layer="learn"]     { background-color: var(--layer-learn-body); }
 body[data-layer="knowledge"] { background-color: var(--layer-knowledge-body); }
+
+.layer-strip {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 4px;
+  z-index: 200;
+  pointer-events: none;
+}
+.layer-strip--research { background: var(--layer-research-accent); }
+.layer-strip--learn    { background: var(--layer-learn-accent); }
+.layer-strip--knowledge { background: var(--layer-knowledge-accent); }
 
 .skip-link {
   position: absolute;
@@ -1167,21 +1178,88 @@ svg:not([class*="w-"]):not([class*="h-"]) {
   border-left: 3px solid var(--section-color, var(--color-border));
   padding-left: 1rem;
   margin-left: -1rem;
+  margin-bottom: 1.5rem;
 }
-.section-harvester::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  opacity: 0.06;
-  pointer-events: none;
-  background-repeat: repeat;
-  background-size: 160px 160px;
-  z-index: 0;
-  background-image: var(--section-pattern);
-}
-.section-harvester > * { position: relative; z-index: 1; }
 @media (max-width: 640px) {
   .section-harvester { padding-left: 0.75rem; margin-left: -0.75rem; }
+}
+
+/* ── Section Collapse: details/summary toggle ── */
+.section-collapse {
+  position: relative;
+  z-index: 1;
+}
+.section-summary {
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+.section-summary::-webkit-details-marker {
+  display: none;
+}
+.section-summary::before {
+  content: "▾";
+  display: inline-block;
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  transition: transform 0.2s;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.section-collapse[open] > .section-summary::before {
+  transform: rotate(0deg);
+}
+.section-collapse:not([open]) > .section-summary::before {
+  transform: rotate(-90deg);
+}
+.section-summary h2 {
+  display: inline;
+  margin: 0;
+}
+.section-body {
+  padding-top: 0.75rem;
+}
+
+/* ── Section Data Visualization ── */
+.section-viz {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 0.75rem 0;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+}
+.section-viz-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.section-viz-chart {
+  flex: 1;
+  min-width: 0;
+  line-height: 0;
+}
+.section-viz-chart svg {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ── Section read progress indicator ── */
+.section-harvester.section-read {
+  opacity: 1;
+}
+.section-harvester.section-read .section-summary h2::after {
+  content: " ✓";
+  font-size: 0.75rem;
+  color: var(--color-accent);
+  opacity: 0.6;
 }
 
 

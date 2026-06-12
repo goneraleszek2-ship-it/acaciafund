@@ -21,8 +21,9 @@ from urllib.parse import quote as urlquote
 
 from schemas import RegistryData
 from core.visuals import generate_thumbnail_svg, generate_og_image, TOPIC_ICONS, SUBTOPIC_CATEGORIES
+from core.visuals import source_bar_svg, donut_svg, bloom_chart_svg, radar_svg, generate_signal_meter, sparkline_svg
 from core.images import generate_fallback_svg
-from core.brand import BRAND, brand_domain_icon, brand_micro_icon, brand_logo_svg, section_pattern_svg, section_type_color
+from core.brand import BRAND, brand_domain_icon, brand_micro_icon, brand_logo_svg, section_type_color
 
 from seed_learn import CURATED_RELATIONS, PREREQUISITES as LEARN_PREREQUISITES
 from config import (
@@ -406,18 +407,127 @@ def generate_missing_ai_image(url: str) -> str:
     return url.rsplit(".", 1)[0] + ".svg"
 
 
+def _get_article_attr(article, key: str, default=None):
+    """Helper: get attribute from AcaciaContent or key from dict."""
+    if article is None:
+        return default
+    if isinstance(article, dict):
+        return article.get(key, default)
+    return getattr(article, key, default)
+
+
+def _article_as_dict(article):
+    """Convert article (AcaciaContent or dict) to a plain dict."""
+    if article is None:
+        return {}
+    if isinstance(article, dict):
+        return article
+    return article.dict()
+
+
+def _section_viz_svg(section_type: str, article, pillar: str) -> str:
+    """Generate a context-relevant data visualization SVG for a section.
+
+    Maps each section type to a visualization from core/visuals.py
+    that uses the article's actual signal/source/bloom data.
+    """
+    if article is None:
+        return ""
+
+    signals = _get_article_attr(article, "signals") or {}
+    source_breakdown = _get_article_attr(article, "source_breakdown") or {}
+    quality_metrics = _get_article_attr(article, "quality_metrics") or {}
+    bloom_questions = _get_article_attr(article, "bloom_questions") or []
+
+    has_sources = any(source_breakdown.get(k, 0) > 0 for k in ("hn", "arxiv", "pubmed"))
+    has_bloom = len(bloom_questions) > 0
+    has_metrics = any(quality_metrics.get(k, 0) > 0 for k in ("avg_source_score", "source_diversity", "recency_score"))
+    has_sqi = signals.get("avg_sqi", 0) > 0
+
+    # Default: signal meter (most articles have SQI)
+    viz_svg = ""
+    viz_label = ""
+
+    if section_type == "overview":
+        if has_sqi:
+            viz_svg = generate_signal_meter(signals["avg_sqi"], 180)
+            viz_label = "Signal Quality"
+        elif has_sources:
+            viz_svg = source_bar_svg(source_breakdown, 240, 60)
+            viz_label = "Sources"
+
+    elif section_type == "key_findings":
+        if has_bloom:
+            viz_svg = bloom_chart_svg(bloom_questions, 240, 140)
+            viz_label = "Bloom Taxonomy"
+        elif has_sqi:
+            viz_svg = generate_signal_meter(signals["avg_sqi"], 180)
+            viz_label = "Signal Quality"
+
+    elif section_type == "applied_scenario":
+        if has_sources:
+            viz_svg = source_bar_svg(source_breakdown, 240, 60)
+            viz_label = "Source Distribution"
+        elif has_metrics:
+            viz_svg = radar_svg(quality_metrics, 140, 140)
+            viz_label = "Quality Metrics"
+
+    elif section_type == "source_analysis":
+        if has_sources:
+            viz_svg = donut_svg(source_breakdown, 120, 120)
+            viz_label = "Source Mix"
+        elif has_sqi:
+            viz_svg = generate_signal_meter(signals["avg_sqi"], 180)
+            viz_label = "Signal Quality"
+
+    elif section_type == "domain_breakdown":
+        domain_div = signals.get("domain_diversity", 0)
+        if domain_div:
+            viz_svg = source_bar_svg({"hn": domain_div, "arxiv": max(1, domain_div // 2)}, 200, 50)
+            viz_label = f"Domain Diversity: {domain_div}"
+        elif has_sqi:
+            viz_svg = generate_signal_meter(signals["avg_sqi"], 180)
+            viz_label = "Signal Quality"
+
+    elif section_type == "cross_pillar":
+        if has_metrics:
+            viz_svg = radar_svg(quality_metrics, 140, 140)
+            viz_label = "Quality Radar"
+        elif has_sqi:
+            viz_svg = generate_signal_meter(signals["avg_sqi"], 180)
+            viz_label = "Signal Quality"
+
+    elif section_type == "methodology":
+        if has_metrics:
+            avg = quality_metrics.get("avg_source_score", 0)
+            viz_svg = generate_signal_meter(avg, 180)
+            viz_label = "Source Score"
+        elif has_sqi:
+            viz_svg = generate_signal_meter(signals["avg_sqi"], 180)
+            viz_label = "Signal Quality"
+
+    if not viz_svg:
+        return ""
+
+    label_html = f'<span class="section-viz-label">{viz_label}</span>' if viz_label else ""
+
+    return (
+        f'<div class="section-viz">'
+        f'{label_html}'
+        f'<div class="section-viz-chart">{viz_svg}</div>'
+        f'</div>'
+    )
+
+
 def inject_section_images(body_html: str, section_images: list[dict],
-                           article: dict | None = None) -> str:
-    """Insert section-level images into body_html after matching <h2> headings.
+                           article=None) -> str:
+    """Insert section-level images and data visualizations into body_html.
 
-    For research/learn articles, wraps each section (h2 + content) in a
-    .section-harvester div with a fractal background pattern and colored
-    left border indicating section type. Section images are placed between
-    harvesters as visual transitions.
-
-    Tier 1: Editorial manifest images (already resolved by fetch pipeline)
-    Tier 2: Auto-fetched images from registry
-    Tier 3: Inline SVG fallback generated from article + section context
+    Wraps each section in a .section-harvester div with:
+    - Colored left border for section identity
+    - Context-relevant data visualization (source bar, bloom chart, radar, etc.)
+    - Collapsible content via <details>/<summary>
+    - Section images placed between harvesters as visual transitions
 
     Matches by section_index (positional: 0 = first <h2>, 1 = second, etc.)
     """
@@ -433,9 +543,8 @@ def inject_section_images(body_html: str, section_images: list[dict],
             if idx is not None:
                 img_map[idx] = si
 
-    # Determine if we should wrap sections in harvesters
-    content_type = (article or {}).get("content_type", "research")
-    pillar = (article or {}).get("pillar", "aml")
+    content_type = _get_article_attr(article, "content_type", "research")
+    pillar = _get_article_attr(article, "pillar", "aml")
     use_harvesters = content_type in ("research", "learn", "knowledge")
 
     result: list[str] = [parts[0]]
@@ -449,17 +558,20 @@ def inject_section_images(body_html: str, section_images: list[dict],
         section_type = SECTION_TYPES.get(section_idx, "overview")
 
         if use_harvesters:
-            # Open harvester div with section pattern background
-            color = section_type_color(section_idx, pillar)
-            pattern_svg = section_pattern_svg(section_idx, pillar)
-            pattern_uri = urlquote(pattern_svg, safe='')
+            pillar_color = section_type_color(section_idx, pillar)
+            viz_html = _section_viz_svg(section_type, article, pillar)
+
+            # Collapsible section: summary = heading, details = content + viz
             result.append(
                 f'<div class="section-harvester" data-section="{section_type}" '
-                f'style="--section-color:{color};'
-                f'--section-pattern:url(\'data:image/svg+xml,{pattern_uri}\')">'
+                f'style="--section-color:{pillar_color}">'
             )
-            result.append(h2_tag)
-            result.append(content)
+            result.append('<details class="section-collapse" open>')
+            result.append(f'<summary class="section-summary">{h2_tag}</summary>')
+            if viz_html:
+                result.append(viz_html)
+            result.append(f'<div class="section-body">{content}</div>')
+            result.append('</details>')
             result.append('</div>')
 
             # Section image goes OUTSIDE the harvester (as transition)
@@ -491,8 +603,9 @@ def inject_section_images(body_html: str, section_images: list[dict],
                     result.append("".join(f))
                 elif article:
                     section = {"section_index": section_idx, "heading": strip_html_tag(h2_tag)}
+                    article_dict = _article_as_dict(article)
                     try:
-                        svg = generate_fallback_svg(section, article)
+                        svg = generate_fallback_svg(section, article_dict)
                         result.append(
                             f'<figure class="section-image section-image--full section-fallback my-6 rounded-lg overflow-hidden"'
                             f' style="background:var(--color-bg);border:1px solid var(--color-border)">'
@@ -531,8 +644,9 @@ def inject_section_images(body_html: str, section_images: list[dict],
                     result.append("".join(f))
                 elif article:
                     section = {"section_index": section_idx, "heading": strip_html_tag(h2_tag)}
+                    article_dict = _article_as_dict(article)
                     try:
-                        svg = generate_fallback_svg(section, article)
+                        svg = generate_fallback_svg(section, article_dict)
                         result.append(
                             f'<figure class="section-image section-image--full section-fallback my-6 rounded-lg overflow-hidden"'
                             f' style="background:var(--color-bg);border:1px solid var(--color-border)">'
@@ -752,8 +866,7 @@ def main():
         body, toc_items = extract_headings(body)
         body = re.sub(r'<h2[^>]*>\s*' + re.escape(item.title.strip()) + r'\s*</h2>\s*', '', body, count=1)
         body = sanitize_domain_breakdown(body)
-        body = inject_section_images(body, item.section_images,
-                                     {"content_type": "knowledge", "pillar": item.pillar or ""})
+        body = inject_section_images(body, item.section_images, item)
         body = sanitize_text(body, strip_emoji=False)
         item.description = sanitize_text(item.description, strip_emoji=False)
         item.body_html = body
@@ -898,9 +1011,7 @@ def main():
         body = re.sub(r'<h2[^>]*>\s*' + re.escape(item.title.strip()) + r'\s*</h2>\s*', '', body, count=1)
         body = sanitize_domain_breakdown(body)
         body = sanitize_text(body, strip_emoji=False)
-        body = inject_section_images(body, item.section_images,
-                                       article={"pillar": item.pillar, "title": item.title, "slug": item.slug,
-                                                "content_type": "learn"})
+        body = inject_section_images(body, item.section_images, item)
         item.description = sanitize_text(item.description, strip_emoji=False)
         item.body_html = body
 
@@ -1050,9 +1161,7 @@ def main():
         body = re.sub(r'<h2[^>]*>\s*' + re.escape(item.title.strip()) + r'\s*</h2>\s*', '', body, count=1)
         body = sanitize_domain_breakdown(body)
         body = sanitize_text(body, strip_emoji=True)
-        body = inject_section_images(body, item.section_images,
-                                       article={"pillar": item.pillar, "title": item.title, "slug": item.slug,
-                                                "content_type": "research"})
+        body = inject_section_images(body, item.section_images, item)
         item.description = sanitize_text(item.description, strip_emoji=True)
 
         prev_post = research_items[i + 1] if i + 1 < len(research_items) else None

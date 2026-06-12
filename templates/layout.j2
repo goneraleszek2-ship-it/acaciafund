@@ -151,6 +151,7 @@
 </head>
 {%- set layer = layer | default("research") %}
 <body class="antialiased" data-layer="{{ layer }}">
+  <div class="layer-strip layer-strip--{{ layer }}" role="none" aria-hidden="true"></div>
   <a href="#main" class="skip-link">Skip to content</a>
 
   <header class="sticky top-0 z-50 backdrop-blur border-b border-b-[var(--color-border)]" style="background:var(--color-header-bg)">

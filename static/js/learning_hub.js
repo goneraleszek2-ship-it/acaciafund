@@ -137,7 +137,38 @@
     });
   }
 
-  // ── 6. Flashcard review tracking ─────────────────────────────────────
+  // ── 6. Section collapse: open parent details on TOC click ────────────
+  function initSectionCollapse() {
+    document.querySelectorAll('.toc-link').forEach(function(link) {
+      link.addEventListener('click', function(e) {
+        var id = this.getAttribute('href').slice(1);
+        var target = document.getElementById(id);
+        if (target) {
+          var details = target.closest('details');
+          if (details) details.open = true;
+        }
+      });
+    });
+  }
+
+  // ── 7. Section progress tracking via IntersectionObserver ─────────────
+  function initSectionProgress() {
+    if (!('IntersectionObserver' in window)) return;
+    var sections = document.querySelectorAll('.section-harvester');
+    if (!sections.length) return;
+    var obs = new IntersectionObserver(function(entries) {
+      entries.forEach(function(entry) {
+        var harvester = entry.target.closest('.section-harvester');
+        if (!harvester) return;
+        if (entry.isIntersecting) {
+          harvester.classList.add('section-read');
+        }
+      });
+    }, {threshold: 0.3});
+    sections.forEach(function(s) { obs.observe(s); });
+  }
+
+  // ── 8. Flashcard review tracking ─────────────────────────────────────
   function initReviewTracking() {
     var btn = document.getElementById('mark-complete-btn');
     var slug = btn ? btn.getAttribute('data-track-lesson') : null;
@@ -467,6 +498,8 @@
     initReviewTracking();
     initMarkComplete();
     loadProgressFromAPI();
+    initSectionCollapse();
+    initSectionProgress();
     initQuiz();
     initFlashcardSM2();
   }
