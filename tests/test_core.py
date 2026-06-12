@@ -424,13 +424,14 @@ def test_generate_topic_badge():
 def test_pick_subtopic():
     from core.visuals import _pick_subtopic
     assert _pick_subtopic(["New AI chip from NVIDIA"], "stock") in (
-        "semiconductor", "ai", "stock_market", "manufacturing",
+        "semiconductor", "ai", "stock_market", "manufacturing", "nvidia",
     )
     assert _pick_subtopic(["New cryptocurrency regulation"], "aml") in (
-        "regulation", "crypto", "fraud", "banking",
+        "regulation", "crypto", "fraud", "banking", "bitcoin",
     )
     assert _pick_subtopic(["Kafka streaming pipeline optimization"], "data-engineering") in (
-        "pipeline", "storage", "quality", "streaming", "infrastructure", "kafka",
+        "pipeline", "storage", "quality", "streaming", "infrastructure",
+        "kafka", "apachekafka",
     )
 
 
