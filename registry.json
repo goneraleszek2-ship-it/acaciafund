@@ -3900,13 +3900,13 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
-        "pipeline",
+        "dataops",
         "ci-cd",
         "data-engineering",
-        "stock",
         "orchestration",
-        "dataops",
-        "best-practices"
+        "pipeline",
+        "best-practices",
+        "stock"
       ],
       "created_at": "2026-06-08T16:26:44.310900+00:00",
       "updated_at": null,
@@ -4045,7 +4045,7 @@
         }
       ],
       "prerequisites": [
-        "learn/building-pipelines-dbt-dagster"
+        "learn/data-quality-observability-cost"
       ]
     },
     {
@@ -4057,14 +4057,14 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
-        "data-quality",
+        "expectations",
+        "dataops",
+        "engineering",
         "data-engineering",
-        "testing",
+        "data-quality",
         "monitoring",
         "stock",
-        "expectations",
-        "engineering",
-        "dataops"
+        "testing"
       ],
       "created_at": "2026-06-08T16:26:44.310900+00:00",
       "updated_at": null,
@@ -4201,14 +4201,14 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
-        "open-source",
-        "architecture",
-        "ingestion",
+        "dataops",
         "lakehouse",
+        "architecture",
         "data-engineering",
-        "stock",
+        "open-source",
         "data-stack",
-        "dataops"
+        "ingestion",
+        "stock"
       ],
       "created_at": "2026-06-08T16:26:44.310900+00:00",
       "updated_at": null,
@@ -4494,13 +4494,13 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
-        "compliance",
-        "financial-crime",
         "beneficial-ownership",
         "aml",
+        "sanctions",
+        "compliance",
+        "financial-crime",
         "tbml",
         "ofac",
-        "sanctions",
         "trade-finance"
       ],
       "created_at": "2026-06-07T15:28:22.450473+00:00",
@@ -4635,15 +4635,15 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
-        "markets",
-        "trading",
-        "behavioral-finance",
-        "stock",
-        "portfolio-theory",
         "fed",
-        "macro",
+        "portfolio-theory",
+        "trading",
+        "risk-management",
+        "markets",
+        "stock",
+        "behavioral-finance",
         "psychology",
-        "risk-management"
+        "macro"
       ],
       "created_at": "2026-06-07T15:28:22.450473+00:00",
       "updated_at": null,
@@ -4777,15 +4777,15 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
-        "meta-analysis",
-        "science",
-        "methodology",
-        "statistics",
         "research",
+        "statistics",
+        "replication",
+        "methodology",
+        "meta-analysis",
         "p-values",
         "bayesian",
         "stock",
-        "replication"
+        "science"
       ],
       "created_at": "2026-06-07T15:28:22.450473+00:00",
       "updated_at": null,
@@ -4926,16 +4926,16 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
-        "differential-privacy",
-        "consent",
         "ethics",
-        "gdpr",
+        "dataops",
+        "consent",
+        "regulation",
+        "ai-act",
+        "differential-privacy",
         "data-engineering",
         "security",
         "privacy",
-        "regulation",
-        "ai-act",
-        "dataops"
+        "gdpr"
       ],
       "created_at": "2026-06-07T15:28:22.450473+00:00",
       "updated_at": null,
@@ -5069,11 +5069,11 @@
       "content_type": "learn",
       "tags": [
         "etl",
-        "data-architecture",
+        "data-engineering",
         "pipeline",
         "beginners",
-        "data-engineering",
-        "data-stack"
+        "data-stack",
+        "data-architecture"
       ],
       "created_at": "2026-06-11T20:50:09.126818+00:00",
       "updated_at": null,
@@ -5204,12 +5204,12 @@
       "content_type": "learn",
       "tags": [
         "architecture",
+        "data-engineering",
         "batch-processing",
         "pipeline",
-        "data-engineering",
         "cdc",
-        "kafka",
-        "streaming"
+        "streaming",
+        "kafka"
       ],
       "created_at": "2026-06-12T05:31:52.576779+00:00",
       "updated_at": null,
@@ -5341,13 +5341,13 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
+        "data-engineering",
+        "orchestration",
         "pipeline",
         "dagster",
         "dbt",
-        "data-engineering",
-        "data-transformation",
-        "orchestration",
-        "sql"
+        "sql",
+        "data-transformation"
       ],
       "created_at": "2026-06-12T08:13:46.363993+00:00",
       "updated_at": null,
@@ -5457,9 +5457,14 @@
       "difficulty": "intermediate",
       "curated_relations": [
         {
-          "slug": "learn/data-quality-engineering",
+          "slug": "learn/data-quality-observability-cost",
           "type": "next",
-          "label": "Next: data quality"
+          "label": "Next: quality and observability"
+        },
+        {
+          "slug": "learn/data-quality-engineering",
+          "type": "reinforcement",
+          "label": "See also: data quality engineering"
         },
         {
           "slug": "learn/dataops-introduction",
@@ -5472,6 +5477,144 @@
       ]
     },
     {
+      "slug": "learn/data-quality-observability-cost",
+      "language": "en",
+      "title": "Data Quality, Observability, and Cost Optimization at Scale",
+      "description": "Master data quality frameworks (Great Expectations, dbt tests), data observability (freshness, volume, schema, lineage), cost optimization strategies (partitioning, incremental, tiering), feature stores, and building a production observability-driven quality program.",
+      "category": "lesson",
+      "content_type": "learn",
+      "tags": [
+        "observability",
+        "feature-store",
+        "cost-optimization",
+        "great-expectations",
+        "lineage",
+        "data-engineering",
+        "data-quality"
+      ],
+      "created_at": "2026-06-12T08:20:06.452630+00:00",
+      "updated_at": null,
+      "date_str": "",
+      "author": "Leszek",
+      "body_html": "<h2>Data Quality: The Foundation of Trustworthy Pipelines</h2>\n<p>Data quality is not a one-time exercise — it is an ongoing practice embedded into every stage of the data pipeline. Poor data quality costs organizations an estimated 15-25% of revenue and erodes trust in data-driven decision making.</p>\n<ul>\n<li><strong>Completeness:</strong> Are all required fields present? Missing values can indicate source system issues or pipeline failures.</li>\n<li><strong>Uniqueness:</strong> Are there duplicate records? Duplicate detection prevents double-counting in aggregations and reporting.</li>\n<li><strong>Timeliness:</strong> Is the data fresh enough for its intended use? A dashboard that refreshes hourly needs different freshness guarantees than a monthly regulatory report.</li>\n<li><strong>Validity:</strong> Does the data conform to expected formats, types, and ranges? Invalid emails, negative ages, or future dates signal upstream problems.</li>\n<li><strong>Accuracy:</strong> Does the data reflect reality? This is the hardest dimension to measure — it often requires cross-referencing with trusted sources or manual sampling.</li>\n<li><strong>Consistency:</strong> Does the data agree across systems? The same customer name or product code should match across source, warehouse, and BI layer.</li>\n</ul>\n\n<h2>Great Expectations: Data Quality as Code</h2>\n<p>Great Expectations (GX) is the most widely adopted open-source data quality framework. It lets teams define, document, and test data expectations programmatically.</p>\n<ul>\n<li><strong>Expectations:</strong> The core abstraction. An expectation is a declarative, version-controlled statement about your data (e.g., <code>expect_column_values_to_not_be_null(\"order_id\")</code> or <code>expect_column_sum_to_be_between(\"revenue\", 100000, 500000)</code>).</li>\n<li><strong>Data Docs:</strong> Auto-generated HTML documentation showing expectation results, data samples, and pipeline health. Teams can browse data quality reports without writing code.</li>\n<li><strong>Suites and Checkpoints:</strong> An expectation suite groups related expectations for a dataset. A checkpoint runs a suite against a specific batch of data and produces validation results.</li>\n<li><strong>Integration:</strong> GX integrates with dbt (run expectations on dbt models), Airflow/Dagster (as a pipeline step), and most data warehouses via SQLAlchemy or Spark.</li>\n</ul>\n<p>A typical Great Expectations workflow:</p>\n<pre style=\"background:var(--color-bg);padding:12px;border-radius:8px;overflow-x:auto;font-size:0.85em\">\nimport great_expectations as gx\n\ncontext = gx.get_context()\ndatasource = context.sources.add_spark(\"my_spark\")\ndata_asset = datasource.add_csv_asset(\"orders\", \"s3://data/orders/\")\nbatch = data_asset.get_batch()\n\n# Define expectations\nbatch.expect_column_to_exist(\"order_id\")\nbatch.expect_column_values_to_not_be_null(\"amount\")\nbatch.expect_column_values_to_be_between(\"amount\", 0, 100000)\nbatch.expect_column_mean_to_be_between(\"amount\", 50, 200)\n\n# Validate\nresults = batch.validate()\nprint(f\"Passed: {results['statistics']['successful_expectations']}\")\n</pre>\n\n<h2>Data Observability: Monitoring the Pipeline Health</h2>\n<p>Data observability extends monitoring to the data itself — not just the infrastructure running the pipeline. It answers five key questions:</p>\n<ul>\n<li><strong>Freshness:</strong> Is the data arriving on time? Track scheduled vs actual arrival times for each table or topic.</li>\n<li><strong>Volume:</strong> Is the expected amount of data arriving? Sudden drops or spikes indicate upstream issues or schema changes.</li>\n<li><strong>Schema:</strong> Has the data structure changed? New columns, removed columns, or type changes must be detected automatically.</li>\n<li><strong>Quality:</strong> Are data quality expectations passing? Track pass/fail rates over time and alert on degradation.</li>\n<li><strong>Lineage:</strong> Where did this data come from, and what downstream reports does it feed? Full column-level lineage enables impact analysis.</li>\n</ul>\n<p>Key tools in the observability space:</p>\n<table style=\"width:100%;border-collapse:collapse;font-size:0.9em\">\n<tr style=\"background:var(--color-bg)\"><th style=\"padding:8px;border:1px solid var(--color-border)\">Tool</th><th style=\"padding:8px;border:1px solid var(--color-border)\">Category</th><th style=\"padding:8px;border:1px solid var(--color-border)\">Key Features</th></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">Monte Carlo</td><td style=\"padding:8px;border:1px solid var(--color-border)\">SaaS</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Automated lineage, freshness/volume/schema monitors, Slack integration, incident management</td></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">Sifflet</td><td style=\"padding:8px;border:1px solid var(--color-border)\">SaaS</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Column-level lineage, root cause analysis, data health scores</td></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">OpenLineage</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Open source</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Standardized lineage metadata collection, integrates with Airflow/Dagster/Spark</td></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">Datadog</td><td style=\"padding:8px;border:1px solid var(--color-border)\">SaaS</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Infrastructure + data pipeline monitoring, custom metrics, dashboards</td></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">Elementary</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Open source</td><td style=\"padding:8px;border:1px solid var(--color-border)\">dbt-native observability, anomaly detection, data reports in dbt docs</td></tr>\n</table>\n\n<h2>Cost Optimization: Engineering for Efficiency</h2>\n<p>Data infrastructure costs grow with data volume. Without deliberate optimization, cloud data costs can spiral 30-50% year over year. Here are the key strategies:</p>\n<ul>\n<li><strong>Partition Pruning:</strong> Organize tables by date, region, or other high-cardinality dimensions. Queries that filter on the partition key only scan relevant partitions, reducing cost and improving speed. Tools like Iceberg and Delta Lake support partition evolution — changing the partition scheme without rewriting data.</li>\n<li><strong>Incremental Processing:</strong> Process only new or changed records instead of full-table scans. dbt incremental models, Spark structured streaming with watermarks, and Kafka compacted topics all reduce per-run compute.</li>\n<li><strong>Storage Tiering:</strong> Move cold data to cheaper storage. Use lifecycle policies to transition data from hot (SSD) to warm (HDD) to cold (object store/Glacier) based on access patterns. Iceberg and Delta Lake support storage tiering transparently.</li>\n<li><strong>Compute Autoscaling:</strong> Use serverless or auto-scaling compute to match resources to workload. Snowflake auto-suspend, BigQuery slot reservations, and Spark dynamic allocation prevent over-provisioning.</li>\n<li><strong>Query Optimization:</strong> Identify and fix expensive queries. Use materialized views for frequent aggregations, sort keys/partitioning for common filter patterns, and avoid SELECT * in production pipelines.</li>\n<li><strong>Data Retention and Purging:</strong> Define retention policies per dataset. Raw source data may be retained for 30 days, transformed data for 6 months, and aggregated data indefinitely. Automate purging to prevent storage bloat.</li>\n</ul>\n\n<h2>Feature Stores: Quality-Controlled ML Data</h2>\n<p>Feature stores bridge the gap between data engineering and ML. They provide a centralized registry of features — pre-computed, versioned, and quality-controlled — that ML models consume in both training and inference.</p>\n<ul>\n<li><strong>Feast:</strong> Open-source feature store (LF AI & Data Foundation). Features are defined as Python functions or dbt models, stored in an online store (Redis, DynamoDB) for low-latency serving and an offline store (BigQuery, Snowflake) for training.</li>\n<li><strong>Tecton:</strong> Enterprise feature platform built on Feast's architecture. Adds automated feature engineering, streaming feature computation, point-in-time correctness guarantees, and governance controls.</li>\n<li><strong>Data Quality Integration:</strong> Feature stores enforce quality at the feature level — detecting drift between training and serving data, validating feature value ranges, and alerting on stale or missing features.</li>\n</ul>\n\n<h2>Building an Observability-Driven Quality Program</h2>\n<p>A production-grade data quality program combines multiple layers:</p>\n<pre style=\"background:var(--color-bg);padding:12px;border-radius:8px;overflow-x:auto;font-size:0.85em\">\nLayer 1: Source Validation (Great Expectations)\n- Check completeness, uniqueness, schema at ingestion\n- Alert on anomalies before they enter the pipeline\n\nLayer 2: Transformation Quality (dbt tests, Soda)\n- Test assumptions after each transformation stage\n- Enforce contracts between model layers\n\nLayer 3: Pipeline Health (Dagster + Elementary)\n- Track freshness, volume, and run status per asset\n- PagerDuty/Slack alerts on failures\n\nLayer 4: Cross-System Observability (Monte Carlo / OpenLineage)\n- Column-level lineage from source to dashboard\n- Impact analysis for schema changes\n- Incident management and root cause analysis\n\nLayer 5: Cost Governance (Budgets + Alerts)\n- Track compute and storage cost per team/dataset\n- Set budgets and auto-alert on >10% cost increase\n- Quarterly review of unused / cold data\n</pre>\n<p>The goal is not 100% data quality — that is neither achievable nor cost-effective. Instead, define quality SLOs for each data product based on its criticality. A board-level financial report needs higher quality guarantees than an internal experimentation dataset.</p>",
+      "section_images": [],
+      "bloom_questions": [
+        {
+          "bloom_level": "analyze",
+          "type": "mc",
+          "question": "A table's row count drops 80% overnight. Which observability dimension first detects this?",
+          "options": [
+            "Schema validation",
+            "Volume monitoring",
+            "Freshness tracking",
+            "Lineage analysis"
+          ],
+          "answer": 1,
+          "correct": "Volume monitoring"
+        },
+        {
+          "bloom_level": "analyze",
+          "type": "mc",
+          "question": "You notice a critical dashboard shows stale data. The upstream pipeline completed on time but the data quality check shows null rates spiked from 2% to 45%. What is the most likely root cause?",
+          "options": [
+            "The pipeline ran slower than usual",
+            "A source system changed its schema or data collection logic",
+            "The dashboard cache expired",
+            "The data warehouse was down"
+          ],
+          "answer": 1,
+          "correct": "A source system changed its schema or data collection logic"
+        },
+        {
+          "bloom_level": "analyze",
+          "type": "mc",
+          "question": "Your data warehouse bill increased 40% month-over-month. Queries are scanning full tables daily. Which optimization would have the largest immediate impact?",
+          "options": [
+            "Buying reserved compute instances",
+            "Implementing partition pruning and incremental processing",
+            "Switching to a different cloud provider",
+            "Adding more indexes"
+          ],
+          "answer": 1,
+          "correct": "Implementing partition pruning and incremental processing"
+        },
+        {
+          "bloom_level": "analyze",
+          "type": "mc",
+          "question": "A feature store detects that the distribution of a feature in production differs significantly from the training data distribution. This is an example of:",
+          "options": [
+            "Concept drift",
+            "Data drift",
+            "Schema evolution",
+            "Pipeline failure"
+          ],
+          "answer": 1,
+          "correct": "Data drift"
+        },
+        {
+          "bloom_level": "analyze",
+          "type": "mc",
+          "question": "A downstream BI report shows revenue numbers that don't match the source system. The pipeline logs show all steps completed successfully. What should you check first?",
+          "options": [
+            "The cloud provider's status page",
+            "The data quality expectations at the transformation layer",
+            "The network latency between systems",
+            "The dashboard caching configuration"
+          ],
+          "answer": 1,
+          "correct": "The data quality expectations at the transformation layer"
+        }
+      ],
+      "flashcards": [
+        {
+          "term": "Data Observability",
+          "definition": "The practice of monitoring five dimensions of data health: freshness, volume, schema, quality, and lineage — enabling automated detection of data incidents."
+        },
+        {
+          "term": "Great Expectations",
+          "definition": "An open-source data quality framework that lets teams define, document, and test data expectations as version-controlled code."
+        },
+        {
+          "term": "Partition Pruning",
+          "definition": "A query optimization technique where the engine skips irrelevant partitions (e.g., by date) to reduce scan volume and cost."
+        },
+        {
+          "term": "Feature Store",
+          "definition": "A centralized registry of pre-computed, versioned, quality-controlled ML features served for both training and inference."
+        },
+        {
+          "term": "OpenLineage",
+          "definition": "An open standard for collecting column-level lineage metadata across the data pipeline, enabling impact analysis and root cause detection."
+        },
+        {
+          "term": "Storage Tiering",
+          "definition": "Moving data across hot, warm, and cold storage tiers based on access patterns to optimize cost without sacrificing performance for active data."
+        },
+        {
+          "term": "Incremental Processing",
+          "definition": "Processing only new or changed records instead of full-table scans, reducing compute cost and pipeline runtime."
+        }
+      ],
+      "pillar": "data-engineering",
+      "thumbnail_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"600\" height=\"340\" viewBox=\"0 0 600 340\">\n<defs>\n<linearGradient id=\"lg-data-engineering\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\">\n<stop offset=\"0\" stop-color=\"#1e1b4b\"/>\n<stop offset=\"1\" stop-color=\"#0a0a1a\"/>\n</linearGradient>\n</defs>\n<rect width=\"600\" height=\"340\" fill=\"url(#lg-data-engineering)\"/>\n<circle cx=\"239\" cy=\"164\" r=\"14\" fill=\"#6366f1\" opacity=\"0.06\"/><circle cx=\"322\" cy=\"186\" r=\"17\" fill=\"#6366f1\" opacity=\"0.07\"/><circle cx=\"48\" cy=\"290\" r=\"19\" fill=\"#6366f1\" opacity=\"0.16\"/><circle cx=\"402\" cy=\"129\" r=\"13\" fill=\"#6366f1\" opacity=\"0.09\"/><circle cx=\"500\" cy=\"60\" r=\"40\" fill=\"#6366f1\" opacity=\"0.14\"/><circle cx=\"459\" cy=\"307\" r=\"42\" fill=\"#6366f1\" opacity=\"0.13\"/><line x1=\"156\" y1=\"251\" x2=\"442\" y2=\"20\" stroke=\"#818cf8\" stroke-width=\"1\" opacity=\"0.25\"/><line x1=\"83\" y1=\"279\" x2=\"370\" y2=\"117\" stroke=\"#818cf8\" stroke-width=\"1\" opacity=\"0.15\"/><line x1=\"234\" y1=\"99\" x2=\"534\" y2=\"210\" stroke=\"#818cf8\" stroke-width=\"2\" opacity=\"0.13\"/><line x1=\"115\" y1=\"204\" x2=\"536\" y2=\"244\" stroke=\"#818cf8\" stroke-width=\"3\" opacity=\"0.21\"/><circle cx=\"293\" cy=\"171\" r=\"4\" fill=\"#6366f1\" opacity=\"0.32\"/><circle cx=\"134\" cy=\"299\" r=\"3\" fill=\"#6366f1\" opacity=\"0.26\"/><circle cx=\"147\" cy=\"320\" r=\"2\" fill=\"#6366f1\" opacity=\"0.33\"/><circle cx=\"504\" cy=\"97\" r=\"4\" fill=\"#6366f1\" opacity=\"0.32\"/><circle cx=\"38\" cy=\"27\" r=\"4\" fill=\"#6366f1\" opacity=\"0.15\"/><circle cx=\"320\" cy=\"325\" r=\"6\" fill=\"#6366f1\" opacity=\"0.1\"/><circle cx=\"307\" cy=\"157\" r=\"2\" fill=\"#6366f1\" opacity=\"0.11\"/><circle cx=\"204\" cy=\"48\" r=\"6\" fill=\"#6366f1\" opacity=\"0.19\"/><circle cx=\"476\" cy=\"72\" r=\"5\" fill=\"#6366f1\" opacity=\"0.18\"/><circle cx=\"460\" cy=\"71\" r=\"4\" fill=\"#6366f1\" opacity=\"0.27\"/><circle cx=\"433\" cy=\"43\" r=\"3\" fill=\"#6366f1\" opacity=\"0.11\"/><circle cx=\"416\" cy=\"288\" r=\"2\" fill=\"#6366f1\" opacity=\"0.18\"/><circle cx=\"459\" cy=\"139\" r=\"4\" fill=\"#6366f1\" opacity=\"0.14\"/><circle cx=\"447\" cy=\"326\" r=\"6\" fill=\"#6366f1\" opacity=\"0.12\"/><circle cx=\"578\" cy=\"153\" r=\"2\" fill=\"#6366f1\" opacity=\"0.22\"/><circle cx=\"413\" cy=\"121\" r=\"5\" fill=\"#6366f1\" opacity=\"0.37\"/><circle cx=\"225\" cy=\"155\" r=\"6\" fill=\"#6366f1\" opacity=\"0.37\"/><circle cx=\"313\" cy=\"254\" r=\"4\" fill=\"#6366f1\" opacity=\"0.29\"/><circle cx=\"338\" cy=\"196\" r=\"2\" fill=\"#6366f1\" opacity=\"0.26\"/><circle cx=\"237\" cy=\"214\" r=\"2\" fill=\"#6366f1\" opacity=\"0.34\"/>\n<circle cx=\"300\" cy=\"170\" r=\"140\" fill=\"#6366f1\" opacity=\"0.04\"/>\n<circle cx=\"300\" cy=\"170\" r=\"80\" fill=\"#818cf8\" opacity=\"0.04\"/>\n</svg>",
+      "difficulty": "intermediate",
+      "curated_relations": [
+        {
+          "slug": "learn/open-source-data-stack",
+          "type": "next",
+          "label": "Next: open-source data stack"
+        },
+        {
+          "slug": "learn/data-ethics-privacy",
+          "type": "related",
+          "label": "Related: data ethics"
+        }
+      ],
+      "prerequisites": [
+        "learn/building-pipelines-dbt-dagster"
+      ]
+    },
+    {
       "slug": "learn/crypto-aml",
       "language": "en",
       "title": "Crypto AML & Digital Assets — Compliance in the Age of DeFi",
@@ -5480,14 +5623,14 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
-        "stablecoins",
-        "compliance",
-        "crypto",
-        "aml",
         "blockchain",
         "fintech",
-        "defi",
-        "travel-rule"
+        "crypto",
+        "aml",
+        "travel-rule",
+        "compliance",
+        "stablecoins",
+        "defi"
       ],
       "created_at": "2026-06-07T15:07:46.461093+00:00",
       "updated_at": null,
@@ -5640,12 +5783,12 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
-        "geopolitics",
-        "ai-hardware",
-        "markets",
-        "manufacturing",
         "semiconductors",
         "trade",
+        "manufacturing",
+        "ai-hardware",
+        "markets",
+        "geopolitics",
         "stock",
         "supply-chain"
       ],
@@ -5788,15 +5931,15 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
-        "crispr",
-        "genomics",
-        "science",
-        "gene-editing",
-        "fda",
-        "medicine",
-        "stock",
         "bioethics",
-        "biotech"
+        "fda",
+        "crispr",
+        "gene-editing",
+        "stock",
+        "medicine",
+        "biotech",
+        "genomics",
+        "science"
       ],
       "created_at": "2026-06-07T15:07:46.461093+00:00",
       "updated_at": null,
@@ -5937,15 +6080,15 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
-        "habits",
-        "meta",
-        "education",
-        "stock",
-        "behavioral-design",
-        "psychology",
         "learning",
         "gamification",
-        "ux"
+        "ux",
+        "behavioral-design",
+        "stock",
+        "psychology",
+        "meta",
+        "education",
+        "habits"
       ],
       "created_at": "2026-06-07T15:07:46.461093+00:00",
       "updated_at": null,
@@ -6284,11 +6427,11 @@
       "category": "learn",
       "content_type": "learn",
       "tags": [
-        "compliance",
-        "knowledge-check",
-        "aml",
+        "quiz",
         "assessment",
-        "quiz"
+        "aml",
+        "compliance",
+        "knowledge-check"
       ],
       "created_at": "2026-06-07T09:23:05.490994+00:00",
       "updated_at": null,
@@ -6421,13 +6564,13 @@
       "category": "learn",
       "content_type": "learn",
       "tags": [
-        "science",
-        "reasoning",
-        "bloom-taxonomy",
-        "methodology",
         "research",
+        "methodology",
         "stock",
-        "replication"
+        "replication",
+        "bloom-taxonomy",
+        "science",
+        "reasoning"
       ],
       "created_at": "2026-06-07T09:23:05.490984+00:00",
       "updated_at": null,
@@ -6565,11 +6708,11 @@
       "category": "learn",
       "content_type": "learn",
       "tags": [
-        "fundamental-analysis",
-        "markets",
-        "signals",
         "trading",
+        "markets",
+        "fundamental-analysis",
         "stock",
+        "signals",
         "technical-analysis"
       ],
       "created_at": "2026-06-07T09:23:05.490971+00:00",
@@ -6716,12 +6859,12 @@
       "category": "learn",
       "content_type": "learn",
       "tags": [
-        "compliance",
-        "regulations",
-        "financial-crime",
-        "aml",
         "kyc",
-        "money-laundering"
+        "aml",
+        "money-laundering",
+        "compliance",
+        "financial-crime",
+        "regulations"
       ],
       "created_at": "2026-06-07T09:23:05.490951+00:00",
       "updated_at": null,
@@ -11533,5 +11676,5 @@
       "description": "Get notified when new signals are detected."
     }
   ],
-  "last_updated": "2026-06-12T08:13:46.364158+00:00"
+  "last_updated": "2026-06-12T08:20:06.453189+00:00"
 }
