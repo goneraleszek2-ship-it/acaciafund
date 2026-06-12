@@ -14,6 +14,7 @@ PILLAR_MAP = {
     "learn/building-pipelines-dbt-dagster": "data-engineering",
     "learn/data-quality-observability-cost": "data-engineering",
     "learn/designing-data-platform": "data-engineering",
+    "learn/aml-compliance-glossary": "aml",
     "learn/aml-basics": "aml",
     "learn/market-analysis": "stock",
     "learn/quiz-aml": "aml",
@@ -37,6 +38,7 @@ DIFFICULTY_MAP = {
     "learn/building-pipelines-dbt-dagster": "intermediate",
     "learn/data-quality-observability-cost": "intermediate",
     "learn/designing-data-platform": "advanced",
+    "learn/aml-compliance-glossary": "beginner",
     "learn/aml-basics": "beginner",
     "learn/market-analysis": "intermediate",
     "learn/quiz-aml": "beginner",
@@ -74,7 +76,12 @@ CURATED_RELATIONS = {
         {"slug": "learn/data-ethics-privacy", "type": "related", "label": "Related: data ethics"},
     ],
     "learn/designing-data-platform": [
+        {"slug": "learn/aml-compliance-glossary", "type": "related", "label": "Related: AML compliance glossary"},
         {"slug": "learn/data-ethics-privacy", "type": "related", "label": "Related: data ethics"},
+    ],
+    "learn/aml-compliance-glossary": [
+        {"slug": "learn/aml-basics", "type": "next", "label": "Next: AML fundamentals"},
+        {"slug": "learn/quiz-aml", "type": "reinforcement", "label": "Test your AML knowledge"},
     ],
     "learn/aml-basics": [
         {"slug": "learn/quiz-aml", "type": "reinforcement", "label": "Test your AML knowledge"},
@@ -122,6 +129,7 @@ CURATED_RELATIONS = {
 
 PREREQUISITES = {
     "learn/data-engineering-basics": [],
+    "learn/aml-compliance-glossary": [],
     "learn/data-pipeline-architectures": ["learn/data-engineering-basics"],
     "learn/building-pipelines-dbt-dagster": ["learn/data-pipeline-architectures"],
     "learn/data-quality-observability-cost": ["learn/building-pipelines-dbt-dagster"],
