@@ -2,6 +2,146 @@
   "last_run": "2026-06-09T07:49:25.121314+00:00",
   "content": [
     {
+      "slug": "learn/designing-aml-program",
+      "language": "en",
+      "title": "Designing a Comprehensive AML Compliance Program",
+      "description": "Create a complete AML compliance program: risk assessment methodology with weighted scoring, transaction monitoring rule design, SAR governance frameworks, fintech compliance case study, training program design, and regulatory exam preparation. Advanced level.",
+      "category": "lesson",
+      "content_type": "learn",
+      "tags": [
+        "governance",
+        "risk-assessment",
+        "aml",
+        "fintech",
+        "compliance-program",
+        "advanced",
+        "financial-crime",
+        "sar"
+      ],
+      "created_at": "2026-06-12T09:00:28.371926+00:00",
+      "updated_at": null,
+      "date_str": "",
+      "author": "Leszek",
+      "body_html": "<h2>Designing the AML Risk Assessment Framework</h2>\n<p>A risk assessment is the foundation of any AML compliance program. Without a properly calibrated risk assessment, transaction monitoring thresholds will be arbitrary, CDD requirements will be misaligned, and regulatory scrutiny will be inevitable. The design must be systematic, defensible, and dynamic.</p>\n<h3>Risk Assessment Methodology</h3>\n<p>The standard approach uses a weighted scoring model across four risk dimensions:</p>\n<table style=\"width:100%;border-collapse:collapse;font-size:0.9em\">\n<tr style=\"background:var(--color-bg)\"><th style=\"padding:8px;border:1px solid var(--color-border)\">Risk Factor</th><th style=\"padding:8px;border:1px solid var(--color-border)\">Weight</th><th style=\"padding:8px;border:1px solid var(--color-border)\">Low (1)</th><th style=\"padding:8px;border:1px solid var(--color-border)\">Medium (2)</th><th style=\"padding:8px;border:1px solid var(--color-border)\">High (3)</th><th style=\"padding:8px;border:1px solid var(--color-border)\">Extreme (4)</th></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">Customer Type</td><td style=\"padding:8px;border:1px solid var(--color-border)\">30%</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Salaried employee</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Small business</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Trust / Foundation</td><td style=\"padding:8px;border:1px solid var(--color-border)\">PEP / Shell company</td></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">Geography</td><td style=\"padding:8px;border:1px solid var(--color-border)\">25%</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Domestic (low-risk)</td><td style=\"padding:8px;border:1px solid var(--color-border)\">FATF-compliant country</td><td style=\"padding:8px;border:1px solid var(--color-border)\">FATF grey list</td><td style=\"padding:8px;border:1px solid var(--color-border)\">FATF black list / sanctioned</td></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">Product/Service</td><td style=\"padding:8px;border:1px solid var(--color-border)\">25%</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Basic deposit account</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Credit card</td><td style=\"padding:8px;border:1px solid var(--color-border)\">International wire transfer</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Crypto / Private banking</td></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">Delivery Channel</td><td style=\"padding:8px;border:1px solid var(--color-border)\">20%</td><td style=\"padding:8px;border:1px solid var(--color-border)\">In-branch with ID</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Online with verification</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Remote account opening</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Third-party introducer</td></tr>\n</table>\n<p>The composite risk score is calculated as: <strong>\u03a3 (Factor Score \u00d7 Weight)</strong>. This produces a score from 1.0 to 4.0 that maps to risk tiers: Low (1.0-1.5), Medium (1.6-2.5), High (2.6-3.3), Extreme (3.4-4.0). Each tier triggers progressively stricter CDD/EDD requirements, monitoring thresholds, and management approval levels.</p>\n\n<h2>Designing Transaction Monitoring Rules</h2>\n<p>An effective transaction monitoring system requires carefully calibrated rules that balance catching suspicious activity with minimizing false positives. Typical monitoring rules include:</p>\n<h3>Core Rule Categories</h3>\n<ol>\n<li><strong>Structuring Detection:</strong> Multiple cash transactions just below the reporting threshold (e.g., $9,500 instead of $10,000). Design: flag any account with 3+ cash transactions between $8,000 and $9,999 within 7 consecutive days.</li>\n<li><strong>Velocity Rules:</strong> Rapid movement of funds through an account. Design: flag any account where total outbound wire transfers exceed 200% of expected monthly activity within a 48-hour window.</li>\n<li><strong>Jurisdiction Crossovers:</strong> Transactions involving high-risk jurisdictions that are unusual for the customer profile. Design: flag any transaction to/from a FATF grey-list country when the customer has no stated business nexus.</li>\n<li><strong>Round-Dollar Thresholds:</strong> Unusually round amounts in wire transfers. Design: flag any wire >$10,000 where the amount is a round number within 0.1% (e.g., $250,000.00 rather than $253,847.32).</li>\n<li><strong>Rapid In-and-Out:</strong> Funds that enter and leave an account within a short period. Design: flag any account where >80% of an incoming transfer is sent out within 72 hours.</li>\n</ol>\n<h3>Calibration and Tuning</h3>\n<p>Rules must be calibrated against historical data. Key performance metrics:</p>\n<ul>\n<li><strong>Alert Volume:</strong> Number of alerts generated per period. Target: manageable by available investigation staff.</li>\n<li><strong>SAR Conversion Rate:</strong> Percentage of alerts that result in SARs. Industry benchmark: 3-7% for well-calibrated systems.</li>\n<li><strong>False Positive Rate:</strong> Alerts that after investigation are determined to be legitimate. Target: <90% (i.e., at least 10% should merit investigation).</li>\n<li><strong>Detection Gap:</strong> Known suspicious activity that the system failed to flag. Measured through red-team testing and retrospective reviews.</li>\n</ul>\n\n<h2>SAR Governance Framework</h2>\n<p>A well-designed SAR governance framework ensures consistency, quality, and regulatory compliance in the reporting process. The framework should include:</p>\n<pre style=\"background:var(--color-bg);padding:12px;border-radius:8px;overflow-x:auto;font-size:0.85em\">\nSAR Governance Structure:\n\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502                    Board of Directors                 \u2502\n\u2502   Receives quarterly AML report including SAR metrics \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n                          \u2502\n\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u25bc\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502               AML Compliance Officer                  \u2502\n\u2502   Final SAR approval authority. Reports to Board.    \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n                          \u2502\n\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u25bc\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502             SAR Committee (Monthly)                   \u2502\n\u2502   VP Compliance, Head of Investigations, Legal,       \u2502\n\u2502   Head of Financial Crime Risk                       \u2502\n\u2502   Reviews: SAR quality, trends, emerging typologies, \u2502\n\u2502   backlog, regulatory feedback                       \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u252c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n                          \u2502\n\u250c\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u25bc\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2510\n\u2502           AML Investigations Team                     \u2502\n\u2502   Level 1: Triage (1-2 days) \u2192 Level 2: Investigate  \u2502\n\u2502   (5-15 days) \u2192 Level 3: SAR Draft (QC review)       \u2502\n\u2514\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2500\u2518\n</pre>\n<h3>SAR Quality Standards</h3>\n<p>Each SAR must contain sufficient factual detail for law enforcement to act. Design templates that capture:</p>\n<ul>\n<li><strong>Subject Information:</strong> Full legal name, DOB, address, occupation, identification documents, associated accounts.</li>\n<li><strong>Suspicious Activity Description:</strong> Chronological narrative of all relevant transactions, patterns, and red flags identified. Must be factual, objective, and avoid legal conclusions.</li>\n<li><strong>Supporting Documentation:</strong> Account statements, transaction records, correspondence, KYC documents, investigation notes.</li>\n<li><strong>Law Enforcement Sensitive:</strong> Additional detail that should not be part of the standard SAR form but is available upon request.</li>\n</ul>\n\n<h2>Case Study: Designing a Compliance Program for a Fintech Startup</h2>\n<p><strong>Scenario:</strong> You are the first AML compliance hire at a fintech startup that offers:\n- Consumer digital wallet accounts with instant P2P transfers\n- Cryptocurrency buying/selling (BTC, ETH, stablecoins)\n- Cross-border remittances to 50+ countries\n- A debit card that draws from the wallet\n- 500,000 active users, growing 15% month-over-month</p>\n<p>You have a budget of $500,000/year for AML compliance, a small team (you + 2 analysts), and must design a program from scratch that satisfies FinCEN requirements as a Money Services Business (MSB) and individual state money transmitter licenses.</p>\n<h3>Design Constraints and Decisions</h3>\n<table style=\"width:100%;border-collapse:collapse;font-size:0.9em\">\n<tr style=\"background:var(--color-bg)\"><th style=\"padding:8px;border:1px solid var(--color-border)\">Area</th><th style=\"padding:8px;border:1px solid var(--color-border)\">Low-Cost Option</th><th style=\"padding:8px;border:1px solid var(--color-border)\">Recommended Approach</th><th style=\"padding:8px;border:1px solid var(--color-border)\">Rationale</th></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">KYC/CIP</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Manual document review</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Automated identity verification (Persona, Onfido, Jumio) + eCBSV for government ID checks</td><td style=\"padding:8px;border:1px solid var(--color-border)\">500K users \u00d7 15% growth = 75K new/month. Manual is infeasible.</td></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">Transaction Monitoring</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Rule-based only</td><td style=\"padding:8px;border:1px solid var(--color-border)\">SaaS solution (ComplyAdvantage, Alloy, or NICE Actimize cloud) with 15-20 calibrated rules</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Crypto and cross-border present complex typologies requiring automated detection.</td></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">Sanctions Screening</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Manual check</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Automated screening (Sanction Scanner, World-Check) on onboarding and daily batch</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Regulatory requirement for OFAC screening. Real-time needed for crypto transactions.</td></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">Crypto-Specific</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Skip blockchain analytics</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Chainalysis or Elliptic for wallet screening and transaction tracing</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Crypto enables cross-chain laundering. FinCEN expects Travel Rule compliance for crypto.</td></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">SAR Filing</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Ad-hoc by compliance officer</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Structured workflow: Level 1 triage \u2192 Level 2 investigate \u2192 QC \u2192 Compliance Officer approves \u2192 eSAR3</td><td style=\"padding:8px;border:1px solid var(--color-border)\">With 2 analysts, prioritization and quality control are essential.</td></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">Training</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Generic off-the-shelf</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Custom module covering crypto risks, fintech-specific typologies, and regulatory obligations</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Generic training misses crypto-specific red flags (mixing, chain-hopping, DeFi).</td></tr>\n</table>\n\n<h2>Creating an AML Training Program</h2>\n<p>A comprehensive training program must be designed for different audiences within the organization. Each group needs tailored content:</p>\n<h3>Training Tiers</h3>\n<table style=\"width:100%;border-collapse:collapse;font-size:0.9em\">\n<tr style=\"background:var(--color-bg)\"><th style=\"padding:8px;border:1px solid var(--color-border)\">Tier</th><th style=\"padding:8px;border:1px solid var(--color-border)\">Audience</th><th style=\"padding:8px;border:1px solid var(--color-border)\">Content</th><th style=\"padding:8px;border:1px solid var(--color-border)\">Frequency</th><th style=\"padding:8px;border:1px solid var(--color-border)\">Delivery</th></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">1</td><td style=\"padding:8px;border:1px solid var(--color-border)\">All employees</td><td style=\"padding:8px;border:1px solid var(--color-border)\">AML basics, red flags, reporting obligations, no-tipping-off</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Annual + new hire</td><td style=\"padding:8px;border:1px solid var(--color-border)\">E-learning (20 min)</td></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">2</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Frontline staff (tellers, CS, sales)</td><td style=\"padding:8px;border:1px solid var(--color-border)\">CDD procedures, customer identification, red flag scenarios, when to escalate</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Annual + quarterly refresher</td><td style=\"padding:8px;border:1px solid var(--color-border)\">In-person workshop (90 min)</td></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">3</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Compliance team</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Advanced investigations, SAR writing, AML case law, regulatory trends, new typologies</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Quarterly + external conferences</td><td style=\"padding:8px;border:1px solid var(--color-border)\">External training + cert (CAMS)</td></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">4</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Board of directors</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Regulatory obligations, liability, program effectiveness, emerging risks</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Annual</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Board presentation (45 min)</td></tr>\n</table>\n<p>Training effectiveness should be measured through testing scores (minimum 85% pass rate), phishing-style red flag simulations, and mystery shopping programs that test whether staff actually apply training to real scenarios.</p>\n\n<h2>Regulatory Exam Preparation Design</h2>\n<p>Designing for regulatory readiness means building a program that can withstand examination. Key design elements:</p>\n<ul>\n<li><strong>Examination Binder:</strong> Maintain a current binder with policies, procedures, risk assessment, training records, independent testing reports, and SAR metrics \u2014 organized by examination workpaper standards.</li>\n<li><strong>Request Tracking:</strong> Design a regulatory request log that tracks all examiner requests, responses, and deadlines during an exam. This demonstrates control and responsiveness.</li>\n<li><strong>Self-Identified Deficiencies:</strong> Proactively disclose weaknesses found through internal testing. Regulators treat self-disclosed issues more favorably than discoveries made during an exam.</li>\n<li><strong>Governance Documentation:</strong> Board minutes, compliance committee meeting notes, and management reporting that demonstrate active oversight, not just rubber-stamping.</li>\n</ul>",
+      "section_images": [],
+      "bloom_questions": [
+        {
+          "bloom_level": "create",
+          "type": "mc",
+          "question": "You are designing a risk assessment framework for a bank. A corporate client has the following profile: operates in a FATF grey-list country, is a shell company (no physical operations), engages in international wire transfers, and was onboarded through a third-party introducer. Using the weighted model (Customer 30%, Geography 25%, Product 25%, Channel 20%), with scores Extreme(4) for customer and geography, High(3) for product and channel, what is the composite risk score?",
+          "options": [
+            "3.65 (Extreme)",
+            "3.00 (High)",
+            "3.50 (Extreme)",
+            "3.25 (High)"
+          ],
+          "answer": 0,
+          "correct": "3.65 (Calculation: 4\u00d70.30 + 4\u00d70.25 + 3\u00d70.25 + 3\u00d70.20 = 1.20 + 1.00 + 0.75 + 0.60 = 3.55... wait, let me recalculate: Customer=4\u00d70.30=1.20, Geography=4\u00d70.25=1.00, Product=3\u00d70.25=0.75, Channel=3\u00d70.20=0.60. Total = 3.55. That maps to Extreme. The closest option is 3.65 (Extreme)."
+        },
+        {
+          "bloom_level": "create",
+          "type": "mc",
+          "question": "Design a transaction monitoring rule for structuring detection. Which rule design is most effective?",
+          "options": [
+            "Flag any cash transaction over $10,000",
+            "Flag any account with 3+ cash transactions between $8,000 and $9,999 within 7 consecutive days",
+            "Flag any account with total daily cash deposits over $5,000",
+            "Flag any cash transaction under $10,000"
+          ],
+          "answer": 1,
+          "correct": "Flag any account with 3+ cash transactions between $8,000 and $9,999 within 7 consecutive days"
+        },
+        {
+          "bloom_level": "create",
+          "type": "mc",
+          "question": "You need to design a SAR conversion rate target for a new transaction monitoring system. What benchmark indicates a well-calibrated system?",
+          "options": [
+            "90-95% SAR conversion rate",
+            "50-60% SAR conversion rate",
+            "3-7% SAR conversion rate",
+            "Less than 1% SAR conversion rate"
+          ],
+          "answer": 2,
+          "correct": "3-7% SAR conversion rate"
+        },
+        {
+          "bloom_level": "create",
+          "type": "mc",
+          "question": "Designing a training program for a fintech's compliance team \u2014 what certification should the program require?",
+          "options": [
+            "CFA (Chartered Financial Analyst)",
+            "CAMS (Certified Anti-Money Laundering Specialist)",
+            "CPA (Certified Public Accountant)",
+            "FRM (Financial Risk Manager)"
+          ],
+          "answer": 1,
+          "correct": "CAMS (Certified Anti-Money Laundering Specialist)"
+        },
+        {
+          "bloom_level": "create",
+          "type": "mc",
+          "question": "As the first compliance hire at a fintech with 500K users growing 15% monthly and a $500K budget, which KYC approach should you design as the primary solution?",
+          "options": [
+            "Manual document review by the 3-person team",
+            "Automated identity verification (Persona/Onfido) with government ID checks",
+            "Defer all KYC to the first $10,000 transaction",
+            "Rely on third-party introducers for customer verification"
+          ],
+          "answer": 1,
+          "correct": "Automated identity verification (Persona/Onfido) with government ID checks"
+        }
+      ],
+      "flashcards": [
+        {
+          "term": "Composite Risk Score",
+          "definition": "Weighted sum of risk factor scores (Customer 30%, Geography 25%, Product 25%, Channel 20%), producing a score from 1.0-4.0 that maps to Low/Medium/High/Extreme risk tiers."
+        },
+        {
+          "term": "Structuring Detection Rule",
+          "definition": "A transaction monitoring rule that flags multiple cash transactions just below the reporting threshold (e.g., 3+ transactions between $8,000-$9,999 within 7 days) to detect deliberate evasion of $10,000 CTR requirements."
+        },
+        {
+          "term": "SAR Conversion Rate",
+          "definition": "Percentage of transaction monitoring alerts that result in a SAR filing. Industry benchmark: 3-7% for well-calibrated systems."
+        },
+        {
+          "term": "False Positive Rate (AML)",
+          "definition": "Percentage of alerts that are investigated and determined to be legitimate. Target: less than 90% (at least 10% should merit investigation)."
+        },
+        {
+          "term": "CAMS Certification",
+          "definition": "Certified Anti-Money Laundering Specialist \u2014 the global standard for AML professionals, covering risk assessment, compliance program design, investigations, and regulatory frameworks."
+        },
+        {
+          "term": "Travel Rule",
+          "definition": "FinCEN requirement that Virtual Asset Service Providers share sender and recipient information for crypto transactions above $3,000, extending traditional wire transfer rules to cryptocurrency."
+        },
+        {
+          "term": "SAR Governance Framework",
+          "definition": "Structured hierarchy for SAR decisions: Level 1 triage \u2192 Level 2 investigation \u2192 QC review \u2192 Compliance Officer approval \u2192 regulatory filing, with monthly SAR committee oversight."
+        }
+      ],
+      "pillar": "aml",
+      "thumbnail_svg": "<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"600\" height=\"340\" viewBox=\"0 0 600 340\">\n<defs>\n<linearGradient id=\"lg-aml\" x1=\"0\" y1=\"0\" x2=\"1\" y2=\"1\">\n<stop offset=\"0\" stop-color=\"#1c1917\"/>\n<stop offset=\"1\" stop-color=\"#0a0a1a\"/>\n</linearGradient>\n</defs>\n<rect width=\"600\" height=\"340\" fill=\"url(#lg-aml)\"/>\n<circle cx=\"176\" cy=\"278\" r=\"33\" fill=\"#d97706\" opacity=\"0.08\"/><circle cx=\"348\" cy=\"106\" r=\"50\" fill=\"#d97706\" opacity=\"0.17\"/><circle cx=\"362\" cy=\"188\" r=\"13\" fill=\"#d97706\" opacity=\"0.09\"/><circle cx=\"515\" cy=\"51\" r=\"43\" fill=\"#d97706\" opacity=\"0.11\"/><circle cx=\"212\" cy=\"172\" r=\"41\" fill=\"#d97706\" opacity=\"0.13\"/><circle cx=\"344\" cy=\"39\" r=\"17\" fill=\"#d97706\" opacity=\"0.1\"/><line x1=\"294\" y1=\"291\" x2=\"472\" y2=\"320\" stroke=\"#f59e0b\" stroke-width=\"1\" opacity=\"0.13\"/><line x1=\"152\" y1=\"244\" x2=\"532\" y2=\"181\" stroke=\"#f59e0b\" stroke-width=\"2\" opacity=\"0.23\"/><line x1=\"128\" y1=\"260\" x2=\"542\" y2=\"74\" stroke=\"#f59e0b\" stroke-width=\"2\" opacity=\"0.28\"/><line x1=\"116\" y1=\"110\" x2=\"403\" y2=\"34\" stroke=\"#f59e0b\" stroke-width=\"1\" opacity=\"0.19\"/><circle cx=\"401\" cy=\"192\" r=\"3\" fill=\"#d97706\" opacity=\"0.14\"/><circle cx=\"563\" cy=\"205\" r=\"5\" fill=\"#d97706\" opacity=\"0.21\"/><circle cx=\"94\" cy=\"275\" r=\"5\" fill=\"#d97706\" opacity=\"0.22\"/><circle cx=\"100\" cy=\"253\" r=\"6\" fill=\"#d97706\" opacity=\"0.15\"/><circle cx=\"343\" cy=\"122\" r=\"4\" fill=\"#d97706\" opacity=\"0.23\"/><circle cx=\"314\" cy=\"94\" r=\"6\" fill=\"#d97706\" opacity=\"0.21\"/><circle cx=\"528\" cy=\"327\" r=\"2\" fill=\"#d97706\" opacity=\"0.2\"/><circle cx=\"213\" cy=\"81\" r=\"4\" fill=\"#d97706\" opacity=\"0.23\"/><circle cx=\"466\" cy=\"147\" r=\"5\" fill=\"#d97706\" opacity=\"0.33\"/><circle cx=\"31\" cy=\"130\" r=\"4\" fill=\"#d97706\" opacity=\"0.31\"/><circle cx=\"341\" cy=\"81\" r=\"4\" fill=\"#d97706\" opacity=\"0.38\"/><circle cx=\"337\" cy=\"205\" r=\"6\" fill=\"#d97706\" opacity=\"0.28\"/><circle cx=\"12\" cy=\"54\" r=\"2\" fill=\"#d97706\" opacity=\"0.17\"/><circle cx=\"552\" cy=\"39\" r=\"5\" fill=\"#d97706\" opacity=\"0.2\"/><circle cx=\"535\" cy=\"203\" r=\"5\" fill=\"#d97706\" opacity=\"0.39\"/><circle cx=\"369\" cy=\"240\" r=\"2\" fill=\"#d97706\" opacity=\"0.24\"/><circle cx=\"60\" cy=\"295\" r=\"6\" fill=\"#d97706\" opacity=\"0.16\"/><circle cx=\"412\" cy=\"278\" r=\"5\" fill=\"#d97706\" opacity=\"0.14\"/><circle cx=\"413\" cy=\"38\" r=\"4\" fill=\"#d97706\" opacity=\"0.38\"/><circle cx=\"267\" cy=\"172\" r=\"2\" fill=\"#d97706\" opacity=\"0.18\"/>\n<circle cx=\"300\" cy=\"170\" r=\"140\" fill=\"#d97706\" opacity=\"0.04\"/>\n<circle cx=\"300\" cy=\"170\" r=\"80\" fill=\"#f59e0b\" opacity=\"0.04\"/>\n</svg>",
+      "difficulty": "advanced",
+      "curated_relations": [
+        {
+          "slug": "learn/crypto-aml",
+          "type": "reinforcement",
+          "label": "See also: crypto AML"
+        },
+        {
+          "slug": "learn/trade-based-ml-sanctions",
+          "type": "reinforcement",
+          "label": "See also: trade-based ML"
+        }
+      ],
+      "prerequisites": [
+        "learn/aml-enforcement-cases"
+      ],
+      "featured_image": "/static/images/generated/learn/designing-aml-program.webp"
+    },
+    {
       "slug": "learn/aml-enforcement-cases",
       "language": "en",
       "title": "AML Enforcement in Practice: Regulatory Actions and Compliance Implementation",
@@ -9,13 +149,13 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
-        "aml",
-        "sar",
-        "case-study",
-        "financial-crime",
-        "enforcement",
         "compliance",
-        "regulatory"
+        "aml",
+        "financial-crime",
+        "case-study",
+        "regulatory",
+        "sar",
+        "enforcement"
       ],
       "created_at": "2026-06-12T08:56:08.332287+00:00",
       "updated_at": null,
@@ -125,9 +265,9 @@
       "difficulty": "intermediate",
       "curated_relations": [
         {
-          "slug": "learn/aml-basics",
+          "slug": "learn/designing-aml-program",
           "type": "next",
-          "label": "Next: AML fundamentals"
+          "label": "Next: designing an AML program"
         },
         {
           "slug": "learn/quiz-aml",
@@ -137,8 +277,7 @@
       ],
       "prerequisites": [
         "learn/money-laundering-mechanisms"
-      ],
-      "featured_image": "/static/images/generated/learn/aml-enforcement-cases.webp"
+      ]
     },
     {
       "slug": "learn/money-laundering-mechanisms",
@@ -148,13 +287,13 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
-        "aml",
+        "real-estate",
         "crypto",
+        "aml",
         "trade-based",
         "shell-companies",
-        "real-estate",
-        "financial-crime",
-        "money-laundering"
+        "money-laundering",
+        "financial-crime"
       ],
       "created_at": "2026-06-12T08:46:12.296270+00:00",
       "updated_at": null,
@@ -173,18 +312,6 @@
           "width": 1200,
           "height": 674,
           "content_hash": "d1d2a4344c07b28f"
-        },
-        {
-          "section_index": 2,
-          "heading": "Shell Companies and Complex Ownership Structures",
-          "image_url": "/static/images/generated/learn/money-laundering-mechanisms_s2.svg",
-          "image_credit": "SVG Placeholder (AcaciaFund)",
-          "image_alt": "Scene related to Shell Companies and Complex Ownership Structures Shell",
-          "relevance_score": 50.0,
-          "source_api": "ai_generated",
-          "width": 1200,
-          "height": 675,
-          "content_hash": "63a842c5d29c9a6e"
         }
       ],
       "bloom_questions": [
@@ -311,13 +438,13 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
+        "compliance",
         "aml",
-        "kyc",
-        "beginners",
         "regulations",
-        "financial-crime",
         "money-laundering",
-        "compliance"
+        "beginners",
+        "financial-crime",
+        "kyc"
       ],
       "created_at": "2026-06-12T08:43:30.122186+00:00",
       "updated_at": null,
@@ -460,13 +587,13 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
-        "data-engineering",
-        "architecture",
-        "design",
         "data-product",
-        "data-platform",
+        "production",
         "data-mesh",
-        "production"
+        "design",
+        "data-engineering",
+        "data-platform",
+        "architecture"
       ],
       "created_at": "2026-06-12T08:39:15.408286+00:00",
       "updated_at": null,
@@ -598,12 +725,12 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
-        "data-engineering",
-        "feature-store",
-        "data-quality",
-        "observability",
         "great-expectations",
         "lineage",
+        "data-engineering",
+        "observability",
+        "data-quality",
+        "feature-store",
         "cost-optimization"
       ],
       "created_at": "2026-06-12T08:20:06.452630+00:00",
@@ -754,12 +881,12 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
-        "data-engineering",
-        "dbt",
-        "orchestration",
         "pipeline",
-        "data-transformation",
+        "orchestration",
         "sql",
+        "data-engineering",
+        "data-transformation",
+        "dbt",
         "dagster"
       ],
       "created_at": "2026-06-12T08:13:46.363993+00:00",
@@ -897,13 +1024,13 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
-        "kafka",
-        "data-engineering",
-        "architecture",
-        "cdc",
-        "batch-processing",
         "pipeline",
-        "streaming"
+        "cdc",
+        "data-engineering",
+        "kafka",
+        "streaming",
+        "architecture",
+        "batch-processing"
       ],
       "created_at": "2026-06-12T05:31:52.576779+00:00",
       "updated_at": null,
@@ -1035,19 +1162,32 @@
       "category": "lesson",
       "content_type": "learn",
       "tags": [
+        "pipeline",
+        "data-stack",
+        "data-engineering",
         "etl",
         "data-architecture",
-        "beginners",
-        "data-engineering",
-        "pipeline",
-        "data-stack"
+        "beginners"
       ],
       "created_at": "2026-06-11T20:50:09.126818+00:00",
       "updated_at": null,
       "date_str": "",
       "author": "Leszek",
       "body_html": "<h2>What is Data Engineering?</h2>\n<p>Data engineering is the discipline of designing, building, and maintaining systems that collect, store, transform, and make data available for analysis and machine learning. It sits at the foundation of the modern data stack, providing the infrastructure that data scientists, analysts, and business users rely on.</p>\n\n<h2>The Data Engineering Lifecycle</h2>\n<p>The data engineering lifecycle consists of several stages:</p>\n<ul>\n<li><strong>Generation:</strong> Data is produced by source systems \u2014 application databases, APIs, IoT devices, event streams, log files, and third-party services.</li>\n<li><strong>Ingestion:</strong> Data is extracted from sources and loaded into the data platform via batch jobs (daily/hourly exports) or streaming pipelines (real-time events via Kafka, Kinesis, or Pulsar).</li>\n<li><strong>Storage:</strong> Data lands in a lakehouse (e.g., S3 + Iceberg, Delta Lake) or warehouse (Snowflake, BigQuery, Redshift) where it is organized into raw, cleaned, and aggregated layers.</li>\n<li><strong>Transformation:</strong> Raw data is cleaned, normalized, joined, and reshaped using tools like dbt, Spark, or Flink. This produces analytics-ready tables and feature tables for ML.</li>\n<li><strong>Serving:</strong> Clean data is exposed via APIs, dashboards (Looker, Metabase), BI tools, or feature stores (Feast, Tecton) for downstream consumers.</li>\n<li><strong>Monitoring & Observability:</strong> Pipelines are tracked for freshness, volume, schema drift, data quality, and cost. Tools like Great Expectations, Soda, and Monte Carlo flag anomalies in real time.</li>\n</ul>\n\n<h2>Core Technologies in the Modern Data Stack</h2>\n<table style=\"width:100%;border-collapse:collapse;font-size:0.9em\">\n<tr style=\"background:var(--color-bg)\"><th style=\"padding:8px;border:1px solid var(--color-border)\">Category</th><th style=\"padding:8px;border:1px solid var(--color-border)\">Tools</th><th style=\"padding:8px;border:1px solid var(--color-border)\">Purpose</th></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">Ingestion</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Apache Kafka, Airbyte, Fivetran, Debezium</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Move data from sources to the platform</td></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">Storage</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Apache Iceberg, Delta Lake, Snowflake, BigQuery</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Reliable, queryable data storage</td></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">Transformation</td><td style=\"padding:8px;border:1px solid var(--color-border)\">dbt, Apache Spark, SQLMesh, Flink</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Clean, model, and reshape data</td></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">Orchestration</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Airflow, Dagster, Prefect</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Schedule, monitor, and manage pipeline DAGs</td></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">Data Quality</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Great Expectations, Soda, dbt tests</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Define and enforce data quality expectations</td></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">Observability</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Monte Carlo, Datadog, OpenLineage</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Monitor pipeline health and data lineage</td></tr>\n<tr><td style=\"padding:8px;border:1px solid var(--color-border)\">Serving</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Feast, Tecton, GraphQL, Metabase</td><td style=\"padding:8px;border:1px solid var(--color-border)\">Expose data to consumers</td></tr>\n</table>\n\n<h2>Key Architectural Patterns</h2>\n<ul>\n<li><strong>Medallion Architecture:</strong> Organizes data into Bronze (raw ingested), Silver (cleaned/validated), and Gold (aggregated/business-ready) layers. Each layer enforces increasing data quality standards.</li>\n<li><strong>Data Mesh:</strong> A decentralized architecture where domain teams own their data as products, with a shared infrastructure layer for cross-domain interoperability.</li>\n<li><strong>Lambda Architecture:</strong> Combines batch and stream processing paths to balance latency and completeness. The batch layer provides accurate historical views while the speed layer handles real-time data.</li>\n<li><strong>Kappa Architecture:</strong> A simplified approach where all data is treated as a stream, eliminating the separate batch layer. Stream processors handle both real-time and historical reprocessing.</li>\n</ul>\n\n<h2>Key Concepts Glossary</h2>\n<dl>\n<dt><strong>Pipeline DAG</strong></dt><dd>A directed acyclic graph of tasks representing a data pipeline. Each node is a step (extract, transform, load), and edges define execution order and dependencies.</dd>\n<dt><strong>Schema Drift</strong></dt><dd>When source data changes structure \u2014 new columns are added, types change, or fields are removed. Pipelines must handle drift gracefully to avoid breaking downstream consumers.</dd>\n<dt><strong>Idempotency</strong></dt><dd>The property that running the same pipeline multiple times produces the same result. Essential for reprocessing and backfills without data duplication.</dd>\n<dt><strong>Partition Pruning</strong></dt><dd>A query optimization technique where the engine skips irrelevant data partitions (e.g., by date or region) to reduce scan volume and improve query speed.</dd>\n<dt><strong>SLA / SLO</strong></dt><dd>Service Level Agreements and Objectives define freshness, completeness, and accuracy guarantees for data products (e.g., \"dashboard refreshes within 15 minutes of source update\").</dd>\n<dt><strong>Change Data Capture (CDC)</strong></dt><dd>A technique that captures row-level changes (inserts, updates, deletes) from databases in real time, enabling low-latency data synchronization.</dd>\n</dl>",
-      "section_images": [],
+      "section_images": [
+        {
+          "section_index": 2,
+          "heading": "Core Technologies in the Modern Data Stack",
+          "image_url": "/static/images/generated/learn/data-engineering-basics_s2.svg",
+          "image_credit": "SVG Placeholder (AcaciaFund)",
+          "image_alt": "Scene related to Core Technologies and Modern Data Stack CategoryToolsPurpose\nIngestionApache Kafka and Airbyte",
+          "relevance_score": 50.0,
+          "source_api": "ai_generated",
+          "width": 1200,
+          "height": 675,
+          "content_hash": "f186482b28360144"
+        }
+      ],
       "bloom_questions": [
         {
           "bloom_level": "remember",
