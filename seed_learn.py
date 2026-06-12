@@ -10,6 +10,7 @@ REGISTRY_PATH = Path("registry.json")
 
 PILLAR_MAP = {
     "learn/data-engineering-basics": "data-engineering",
+    "learn/data-pipeline-architectures": "data-engineering",
     "learn/aml-basics": "aml",
     "learn/market-analysis": "stock",
     "learn/quiz-aml": "aml",
@@ -29,6 +30,7 @@ PILLAR_MAP = {
 
 DIFFICULTY_MAP = {
     "learn/data-engineering-basics": "beginner",
+    "learn/data-pipeline-architectures": "beginner",
     "learn/aml-basics": "beginner",
     "learn/market-analysis": "intermediate",
     "learn/quiz-aml": "beginner",
@@ -48,6 +50,10 @@ DIFFICULTY_MAP = {
 
 CURATED_RELATIONS = {
     "learn/data-engineering-basics": [
+        {"slug": "learn/data-pipeline-architectures", "type": "next", "label": "Next: pipeline architectures"},
+        {"slug": "learn/dataops-introduction", "type": "next", "label": "Next: DataOps introduction"},
+    ],
+    "learn/data-pipeline-architectures": [
         {"slug": "learn/dataops-introduction", "type": "next", "label": "Next: DataOps introduction"},
     ],
     "learn/aml-basics": [
@@ -96,7 +102,8 @@ CURATED_RELATIONS = {
 
 PREREQUISITES = {
     "learn/data-engineering-basics": [],
-    "learn/dataops-introduction": ["learn/data-engineering-basics"],
+    "learn/data-pipeline-architectures": ["learn/data-engineering-basics"],
+    "learn/dataops-introduction": ["learn/data-pipeline-architectures"],
     "learn/data-quality-engineering": ["learn/dataops-introduction"],
     "learn/open-source-data-stack": ["learn/data-quality-engineering"],
     "learn/data-ethics-privacy": ["learn/open-source-data-stack"],
