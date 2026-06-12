@@ -436,7 +436,7 @@ def inject_section_images(body_html: str, section_images: list[dict],
     # Determine if we should wrap sections in harvesters
     content_type = (article or {}).get("content_type", "research")
     pillar = (article or {}).get("pillar", "aml")
-    use_harvesters = content_type in ("research", "learn")
+    use_harvesters = content_type in ("research", "learn", "knowledge")
 
     result: list[str] = [parts[0]]
 
@@ -451,9 +451,12 @@ def inject_section_images(body_html: str, section_images: list[dict],
         if use_harvesters:
             # Open harvester div with section pattern background
             color = section_type_color(section_idx, pillar)
+            pattern_svg = section_pattern_svg(section_idx, pillar)
+            pattern_uri = urlquote(pattern_svg, safe='')
             result.append(
                 f'<div class="section-harvester" data-section="{section_type}" '
-                f'style="--section-color:{color}">'
+                f'style="--section-color:{color};'
+                f'--section-pattern:url(\'data:image/svg+xml,{pattern_uri}\')">'
             )
             result.append(h2_tag)
             result.append(content)
@@ -749,6 +752,8 @@ def main():
         body, toc_items = extract_headings(body)
         body = re.sub(r'<h2[^>]*>\s*' + re.escape(item.title.strip()) + r'\s*</h2>\s*', '', body, count=1)
         body = sanitize_domain_breakdown(body)
+        body = inject_section_images(body, item.section_images,
+                                     {"content_type": "knowledge", "pillar": item.pillar or ""})
         body = sanitize_text(body, strip_emoji=False)
         item.description = sanitize_text(item.description, strip_emoji=False)
         item.body_html = body
@@ -805,7 +810,7 @@ def main():
         out_static = STATIC_DST_DIR / "images"
         out_static.mkdir(parents=True, exist_ok=True)
         pillar_k = item.pillar or "aml"
-        scores_k = {"sqi": SQI_DEFAULT}
+        scores_k = {}
         feat_k = resolve_featured_image(item.featured_image or "")
         icons_k = get_topic_icons(item.tags) if not feat_k else []
         svg_k = generate_thumbnail_svg(item.title, pillar_k, scores_k, width=600, height=340,
@@ -958,7 +963,7 @@ def main():
         out_static = STATIC_DST_DIR / "images"
         out_static.mkdir(parents=True, exist_ok=True)
         pillar_l = item.pillar or "aml"
-        scores_l = {"sqi": SQI_DEFAULT}
+        scores_l = {}
         feat_l = resolve_featured_image(item.featured_image or "")
         icons_l = get_topic_icons(item.tags) if not feat_l else []
         svg_l = generate_thumbnail_svg(item.title, pillar_l, scores_l, width=600, height=340,

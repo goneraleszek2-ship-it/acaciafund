@@ -779,9 +779,9 @@ def section_type_color(section_type: int, pillar: str) -> str:
         0: palette["primary"],       # Overview — pillar primary
         1: palette["accent"],        # Key Findings — bright accent
         2: palette["primary"],       # Applied Scenario — pillar primary
-        3: "#6b7280",                # Source Analysis — neutral gray
+        3: palette["primary"],       # Source Analysis — pillar primary
         4: palette["secondary"],     # Domain Breakdown — secondary
         5: palette["accent"],        # Cross-Pillar — bright accent
-        6: "#9ca3af",                # Methodology — lighter gray
+        6: palette["secondary"],     # Methodology — pillar secondary
     }
     return colors.get(section_type, palette["primary"])

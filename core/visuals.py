@@ -692,18 +692,19 @@ def generate_thumbnail_svg(title: str, pillar: str, scores: dict,
         )
     seq[0] += 20
 
-    # SQI indicator bar (subtle, bottom-center)
-    sqi = scores.get("sqi", 0.5)
-    bar_w = max(2, int(sqi * (width * 0.3)))
+    # SQI indicator bar (subtle, bottom-center; only when signal data exists)
     bar_y = height - 10
-    lines.append(
-        f'<rect x="{width / 2 - width * 0.15:.0f}" y="{bar_y}"'
-        f' width="{width * 0.3:.0f}" height="2" rx="1" fill="{pal["text"]}" opacity="0.06"/>'
-    )
-    lines.append(
-        f'<rect x="{width / 2 - width * 0.15:.0f}" y="{bar_y}"'
-        f' width="{bar_w}" height="2" rx="1" fill="{pal["accent"]}" opacity="0.4"/>'
-    )
+    if "sqi" in scores:
+        sqi = scores["sqi"]
+        bar_w = max(2, int(sqi * (width * 0.3)))
+        lines.append(
+            f'<rect x="{width / 2 - width * 0.15:.0f}" y="{bar_y}"'
+            f' width="{width * 0.3:.0f}" height="2" rx="1" fill="{pal["text"]}" opacity="0.06"/>'
+        )
+        lines.append(
+            f'<rect x="{width / 2 - width * 0.15:.0f}" y="{bar_y}"'
+            f' width="{bar_w}" height="2" rx="1" fill="{pal["accent"]}" opacity="0.4"/>'
+        )
 
     # Pillar label (subtle, bottom-center near SQI)
     lines.append(
@@ -809,18 +810,21 @@ def generate_og_image(title: str, pillar: str, scores: dict,
         )
         y += 52
 
-    # Meta info with accent glow bar
-    sqi = scores.get("sqi", 0.5)
+    # Meta info with accent glow bar (SQI bar only when signal data exists)
     parts.extend([
         f'<text x="50" y="500" fill="{pal["accent"]}" font-family="system-ui,sans-serif"'
         f' font-size="18" font-weight="600">AcaciaFund &nbsp;·&nbsp; {pillar.upper()}'
         f'{" &nbsp;·&nbsp; " + date_str if date_str else ""}</text>',
         f'<text x="50" y="540" fill="{pal["text"]}" font-family="system-ui,sans-serif"'
         f' font-size="14" opacity="0.5">Codzienna synteza badan — AML, rynki, nauka</text>',
-        f'<rect x="50" y="570" width="{int(min(1.0, sqi) * 200)}" height="4" rx="2"'
-        f' fill="{pal["accent"]}" opacity="0.8"/>',
-        '</svg>',
     ])
+    if "sqi" in scores:
+        sqi = scores["sqi"]
+        parts.append(
+            f'<rect x="50" y="570" width="{int(min(1.0, sqi) * 200)}" height="4" rx="2"'
+            f' fill="{pal["accent"]}" opacity="0.8"/>'
+        )
+    parts.append('</svg>')
 
     return "\n".join(parts)
 
