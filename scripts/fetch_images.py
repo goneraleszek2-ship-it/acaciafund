@@ -40,16 +40,16 @@ IMAGES_DIR = PROJECT_ROOT / "static" / "images" / "generated"
 USER_AGENT = "AcaciaFund/1.0 (image-fetcher; +https://acaciafund.org)"
 RATE_LIMIT_DELAY = 0.15
 MAX_WORKERS = 4
-MIN_SCORE = 25
+MIN_SCORE = 40
 MAX_IMAGE_WIDTH = 1200
 MAX_IMAGE_BYTES = 10 * 1024 * 1024  # 10MB cap per download
 TARGET_WORDS_PER_IMAGE = 150
 
 PILLAR_KEYWORDS = {
-    "aml": "compliance regulation security audit financial crime",
-    "stock": "market finance trading economy industry",
-    "data-engineering": "data pipeline server architecture infrastructure",
-    "science": "laboratory research experiment analysis",
+    "aml": "financial crime money laundering compliance regulation",
+    "stock": "stock market semiconductor trading investment",
+    "data-engineering": "data pipeline database cloud infrastructure",
+    "science": "laboratory research microscope experiment",
 }
 
 SECTION_TYPES = {
@@ -72,16 +72,16 @@ SECTION_QUERY_TEMPLATES = {
 }
 
 PILLAR_CONTEXT_WORDS = {
-    "aml": "compliance security financial regulation",
-    "stock": "finance market trading investment",
-    "data-engineering": "technology server data infrastructure",
-    "science": "research laboratory analysis",
+    "aml": "compliance regulation financial banking",
+    "stock": "market trading investment semiconductor",
+    "data-engineering": "technology data server database",
+    "science": "research laboratory analysis experiment",
 }
 
 PILLAR_VISUAL_KEYWORDS = {
-    "aml": "shield security lock protection safety",
-    "stock": "chart graph trading stock market",
-    "data-engineering": "server data center cable network",
+    "aml": "money financial banking regulation compliance",
+    "stock": "chart stock market semiconductor trading",
+    "data-engineering": "data server database cloud technology",
     "science": "laboratory microscope research science",
 }
 
@@ -89,32 +89,32 @@ SECTION_FALLBACK_QUERIES = {
     "overview": [
         "{pillar_kw}",
         "{pillar_visual}",
-        "technology office workspace",
-        "data center server room",
+        "technology abstract",
+        "data visualization",
     ],
     "methodology": [
         "{pillar_kw} research analysis",
         "{pillar_visual} chart diagram",
-        "data visualization dashboard",
-        "document report office",
+        "data visualization dashboard analytics",
+        "report document analysis",
     ],
     "domain_breakdown": [
         "{pillar_kw} industry sector",
-        "business technology office workspace",
+        "technology abstract digital",
         "data analytics dashboard chart",
         "market chart graph trading",
     ],
     "source_analysis": [
         "{pillar_kw} document report",
-        "library archive books research",
+        "archive database research",
         "data report analysis document",
-        "book reading study knowledge",
+        "abstract technology concept",
     ],
     "cross_pillar": [
         "{pillar_kw} connection integration",
-        "network connection architecture system",
-        "server room data center technology",
-        "system integration bridge connection",
+        "digital network abstract technology",
+        "technology system integration connection",
+        "digital transformation abstract",
     ],
 }
 
@@ -862,7 +862,15 @@ BACKEND_QUALITY = {
 }
 
 # ── Content-type negative keywords (Phase 4) ──────────────────────
-NEGATIVE_KEYWORDS = {"screenshot", "logo", "icon", "diagram", "illustration", "drawing", "clip art", "cartoon"}
+NEGATIVE_KEYWORDS = {"screenshot", "logo", "icon", "diagram", "illustration", "drawing", "clip art", "cartoon",
+                     "war", "military", "soldier", "weapon", "bomb", "missile", "tank", "conflict",
+                     "protest", "riot", "police", "handcuff", "jail", "prison", "courtroom", "judge",
+                     "building", "skyline", "cityscape", "architecture", "skyscraper", "office building",
+                     "crowd", "people", "person", "portrait", "man", "woman", "child", "family",
+                     "ukraine", "russia", "kyiv", "moscow", "kremlin", "capitol",
+                     "hospital", "ambulance", "doctor", "surgery", "patient",
+                     "fire", "flood", "earthquake", "disaster",
+                     "cat", "dog", "animal", "nature", "landscape", "forest", "mountain", "beach"}
 
 
 def score_result(result: dict, query_terms: set[str],
@@ -1295,10 +1303,10 @@ def _build_featured_queries(article: dict) -> list[str]:
     visual_kw = PILLAR_VISUAL_KEYWORDS.get(pillar, "").split()[:2]
     visual_phrase = " ".join(visual_kw)
 
-    broad_kw = {"aml": "finance office security audit",
-                "stock": "finance trading chart market",
-                "data-engineering": "server computer network technology",
-                "science": "laboratory research science experiment"}.get(pillar, "technology")
+    broad_kw = {"aml": "financial regulation banking compliance",
+                "stock": "market trading semiconductor investment",
+                "data-engineering": "data pipeline database technology",
+                "science": "research laboratory experiment science"}.get(pillar, "technology")
 
     queries = []
 

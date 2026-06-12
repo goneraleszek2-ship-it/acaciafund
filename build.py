@@ -469,6 +469,15 @@ def generate_card_thumbnail(source_url: str, slug: str) -> str:
     src = Path(PROJECT_ROOT / raw)
     if not src.exists() or src.stat().st_size == 0:
         return ""
+    # Follow REF: pointers (dedup symlinks from fetch_images.py)
+    try:
+        ref = _resolve_ref_file(src)
+        if ref:
+            resolved = Path(PROJECT_ROOT / ref.lstrip("/").replace(f"{SITE_URL}/", "", 1))
+            if resolved.exists():
+                src = resolved
+    except Exception:
+        pass
     prefix = source_url.rsplit("/", 1)[0]
     stem = src.stem
     ext = src.suffix if src.suffix else ".webp"
