@@ -23,7 +23,7 @@ jobs:
           python-version: "3.13"
 
       - name: Install dependencies
-        run: pip install jinja2 markdown2 pydantic pytest requests Pillow
+        run: pip install jinja2 markdown2 pydantic pytest requests Pillow simpleicons
 
       - name: Fetch section-level images for all articles
         continue-on-error: true
