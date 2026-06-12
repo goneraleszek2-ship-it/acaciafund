@@ -149,7 +149,8 @@
   {%- endif %}
   {%- block head_extra %}{% endblock %}
 </head>
-<body class="antialiased">
+{%- set layer = layer | default("research") %}
+<body class="antialiased" data-layer="{{ layer }}">
   <a href="#main" class="skip-link">Skip to content</a>
 
   <header class="sticky top-0 z-50 backdrop-blur border-b border-b-[var(--color-border)]" style="background:var(--color-header-bg)">
@@ -199,7 +200,6 @@
     </nav>
   </header>
 
-  {%- set layer = layer | default("research") %}
   {%- set layer_icon = layer_icon | default("◇") %}
   <div class="layer-indicator layer-{{ layer }}-indicator" role="status" aria-label="{{ layer }} layer">
     <span class="layer-icon" aria-hidden="true">{{ layer_icon }}</span>

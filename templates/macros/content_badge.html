@@ -1,0 +1,9 @@
+{% macro content_badge(content_type) -%}
+  {%- set labels = {
+    'research':  'Research',
+    'learn':     'Learn',
+    'knowledge': 'Knowledge',
+  } -%}
+  {%- set label = labels.get(content_type, 'Research') -%}
+  <span class="content-type-badge content-type-badge--{{ content_type }}">{{ label }}</span>
+{%- endmacro %}

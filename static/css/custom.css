@@ -76,6 +76,9 @@ body {
   color: var(--color-text);
   line-height: 1.6;
 }
+body[data-layer="research"] { background-color: var(--layer-research-body); }
+body[data-layer="learn"]     { background-color: var(--layer-learn-body); }
+body[data-layer="knowledge"] { background-color: var(--layer-knowledge-body); }
 
 .skip-link {
   position: absolute;
@@ -1201,6 +1204,24 @@ svg:not([class*="w-"]):not([class*="h-"]) {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+/* ── Card content-type badges ── */
+.content-type-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.125rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+}
+.content-type-badge--research  { background: var(--layer-research-badge); color: #1a1a2e; }
+.content-type-badge--learn     { background: var(--layer-learn-badge);    color: #1a1a2e; }
+.content-type-badge--knowledge { background: var(--layer-knowledge-badge); color: #1a1a2e; }
+.dark .content-type-badge--research  { background: color-mix(in srgb, var(--layer-research-badge) 25%, transparent); color: var(--layer-research-badge); }
+.dark .content-type-badge--learn     { background: color-mix(in srgb, var(--layer-learn-badge) 25%, transparent);    color: var(--layer-learn-badge); }
+.dark .content-type-badge--knowledge { background: color-mix(in srgb, var(--layer-knowledge-badge) 25%, transparent); color: var(--layer-knowledge-badge); }
 
 /* ── Dark-mode-aware color class remappings ── */
 .text-gray-700 { color: var(--color-text); }
