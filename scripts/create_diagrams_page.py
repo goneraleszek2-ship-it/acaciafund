@@ -1,11 +1,27 @@
 """Generate the System Diagrams knowledge page with Mermaid + ASCII representations."""
 import json
 import re
+import os
+
+DESCRIPTIONS = {
+    "system_architecture": ("System Architecture", "End-to-end system: user → CDN → build pipeline → 236 pages output", "Flowchart"),
+    "dataops_pipeline": ("DataOps Pipeline — 8 Stages", "8-stage pipeline: ingest → validate → transform → catalog → visualize → render → serve → observe", "Flowchart"),
+    "module_interconnections": ("Module Interconnections", "UML class diagram: config → validates → reads → invokes → renders", "Class Diagram"),
+    "content_model": ("Content Data Model", "Content data model: RegistryData → ContentItem → BloomQuestion + Flashcard", "Class Diagram"),
+    "build_sequence": ("Build Process — Sequence Diagram", "Build sequence: git push → CF Pages → generator → dist → deploy", "Sequence Diagram"),
+    "user_journey": ("User Journey — Site Navigation", "User navigation: Home → Research/Learn/Knowledge → Article/Lesson/Page", "Flowchart"),
+    "source_ingestion": ("Source Ingestion & Content Flow", "Source ingestion: APIs → seed_articles.py → NLP enrichment → registry.json", "Flowchart"),
+    "pillar_taxonomy": ("Pillar Taxonomy — Content Classification", "Mindmap of 3 pillars × 6-7 topics + cross-cutting: AML/Markets/Science/DataOps", "Mindmap"),
+    "pipeline_quality": ("Pipeline Quality Gates & Observability", "Quality gates: Pydantic validation → SQI → domain % → flags + observability", "Flowchart"),
+    "search_index": ("Search Index Architecture", "Search: build-time JSON generation → client-side fetch/filter", "Flowchart"),
+    "source_framework": ("Source Framework — Registry, Fetchers & Health", "Source registry architecture: etc/sources.toml → BaseFetcher ABC → 5 fetcher types → health + DLQ → admin dashboard", "Flowchart"),
+    "admin_panel": ("Admin Panel — Routes, API & Templates", "Flask admin panel: 11 page routes + 7 API endpoints + 12 Jinja2 templates + 4 data sources", "Flowchart"),
+    "rss_ingestion": ("RSS Ingestion Pipeline", "RSS ingestion flow: 8 feed sources → RSSFetcher → health/DLQ → ingest.py → pillar classification → build → pages", "Flowchart"),
+}
 
 def mmd_to_ascii(mmd_content):
     """Convert simple Mermaid flowchart TD to ASCII representation."""
     lines = mmd_content.strip().split('\n')
-    # Filter out non-flowchart lines
     nodes = {}
     edges = []
     subgraphs = []
@@ -41,7 +57,7 @@ def mmd_to_ascii(mmd_content):
     ascii.append('│          SYSTEM DIAGRAM              │')
     ascii.append('├──────────────────────────────────────┤')
     for nid, label in nodes.items():
-        label_clean = label.replace('<br/>', ' / ')
+        label_clean = label.replace('<br/>', ' / ')[:40]
         ascii.append(f'│ [{nid}] {label_clean}')
     ascii.append('├──────────────────────────────────────┤')
     ascii.append('│ FLOW:                                │')
@@ -54,18 +70,20 @@ def mmd_to_ascii(mmd_content):
 
 
 # Read the .mmd files
-import os
-docs_dir = '/root/acaciafund/docs'
-mmd_files = [f for f in os.listdir(docs_dir) if f.endswith('.mmd')]
+docs_dir = os.path.join(os.path.dirname(__file__), '..', 'docs')
+mmd_files = sorted([f for f in os.listdir(docs_dir) if f.endswith('.mmd')])
 
 page_sections = []
 page_sections.append("""<h2>System Diagrams</h2>
 <p>This page provides comprehensive architectural, pipeline, and flow diagrams for the AcaciaFund DataOps platform. Each diagram is available as a Mermaid definition (rendered below with JavaScript) and as a static ASCII representation (always visible). The source <code>.mmd</code> files are available in the <a href="https://github.com/goneraleszek2-ship-it/acaciafund/tree/main/docs">GitHub docs/ directory</a>.</p>
 
+<p>New for June 2026: diagrams for the <strong>Source Framework</strong> (registry, 5 fetcher types, health tracking), <strong>Admin Panel</strong> (Flask routes, API, templates), and <strong>RSS Ingestion Pipeline</strong> (8 feed sources → classification → build).</p>
+
 <p>Mermaid diagrams render client-side when JavaScript is enabled. The page is fully readable without JS via the ASCII fallback representations.</p>""")
 
-for mmd_file in sorted(mmd_files):
-    with open(os.path.join(docs_dir, mmd_file)) as f:
+for idx, mmd_file in enumerate(mmd_files, 1):
+    filepath = os.path.join(docs_dir, mmd_file)
+    with open(filepath) as f:
         content = f.read()
 
     title_match = re.search(r'title:\s*(.+?)$', content, re.MULTILINE)
@@ -84,37 +102,39 @@ for mmd_file in sorted(mmd_files):
     section_id = f'diagram-{slug_name}'
 
     section = f"""
-<h2 id="{section_id}">{title}</h2>
+<h2 id="{section_id}" style="margin-top:2rem">{idx}. {title}</h2>
 <p><a href="https://github.com/goneraleszek2-ship-it/acaciafund/blob/main/docs/{mmd_file}" target="_blank" rel="noopener">View source <code>{mmd_file}</code> on GitHub ↗</a></p>
 
-<h3>Mermaid Diagram</h3>
 <div class="mermaid" style="background:var(--color-bg);padding:16px;border-radius:8px;overflow-x:auto">
 {mermaid_content}
 </div>
 
-<h3>ASCII Representation</h3>
 <pre style="background:var(--color-bg);padding:16px;border-radius:8px;overflow-x:auto;font-size:0.85em;line-height:1.4">
 {ascii_art}
 </pre>"""
     page_sections.append(section)
 
+# Build the reference table rows from DESCRIPTIONS dict
+table_rows = []
+for mmd_file in mmd_files:
+    slug = mmd_file.replace('.mmd', '')
+    info = DESCRIPTIONS.get(slug, (slug.replace('_', ' ').title(), "", ""))
+    table_rows.append(f"""<tr><td style="padding:8px;border:1px solid var(--color-border)"><code>{mmd_file}</code></td><td style="padding:8px;border:1px solid var(--color-border)">{info[1]}</td><td style="padding:8px;border:1px solid var(--color-border)">{info[2]}</td></tr>""")
+
+table_html = f"""<h2>Diagram Reference</h2>
+<table style="width:100%;border-collapse:collapse;font-size:0.9em">
+<thead>
+<tr style="background:var(--color-bg)"><th style="padding:8px;border:1px solid var(--color-border);text-align:left">#</th><th style="padding:8px;border:1px solid var(--color-border);text-align:left">File</th><th style="padding:8px;border:1px solid var(--color-border);text-align:left">Description</th><th style="padding:8px;border:1px solid var(--color-border);text-align:left">Type</th></tr>
+</thead>
+<tbody>
+{chr(10).join(f'<tr><td style="padding:8px;border:1px solid var(--color-border)">{i}</td>{row}</tr>' for i, row in enumerate(table_rows, 1))}
+</tbody>
+</table>"""
+
+page_sections.append(table_html)
+
 # Add Mermaid init script
 mermaid_script = """
-<h2>About These Diagrams</h2>
-<table style="width:100%;border-collapse:collapse;font-size:0.9em">
-<tr style="background:var(--color-bg)"><th style="padding:8px;border:1px solid var(--color-border);text-align:left">File</th><th style="padding:8px;border:1px solid var(--color-border);text-align:left">Description</th><th style="padding:8px;border:1px solid var(--color-border);text-align:left">Type</th></tr>
-<tr><td style="padding:8px;border:1px solid var(--color-border)"><code>system_architecture.mmd</code></td><td style="padding:8px;border:1px solid var(--color-border)">End-to-end system from user browser through CDN to build pipeline and generated output</td><td style="padding:8px;border:1px solid var(--color-border)">Flowchart</td></tr>
-<tr><td style="padding:8px;border:1px solid var(--color-border)"><code>dataops_pipeline.mmd</code></td><td style="padding:8px;border:1px solid var(--color-border)">8-stage DataOps pipeline: ingestion → validation → transformation → catalog → visualization → rendering → serving → observability</td><td style="padding:8px;border:1px solid var(--color-border)">Flowchart</td></tr>
-<tr><td style="padding:8px;border:1px solid var(--color-border)"><code>module_interconnections.mmd</code></td><td style="padding:8px;border:1px solid var(--color-border)">UML class diagram showing Python module relationships: config.py, schemas.py, registry.json, build.py, visuals.py, templates</td><td style="padding:8px;border:1px solid var(--color-border)">Class Diagram</td></tr>
-<tr><td style="padding:8px;border:1px solid var(--color-border)"><code>content_model.mmd</code></td><td style="padding:8px;border:1px solid var(--color-border)">UML class diagram of the content data model: RegistryData → ContentItem → BloomQuestion + Flashcard</td><td style="padding:8px;border:1px solid var(--color-border)">Class Diagram</td></tr>
-<tr><td style="padding:8px;border:1px solid var(--color-border)"><code>build_sequence.mmd</code></td><td style="padding:8px;border:1px solid var(--color-border)">Sequence diagram of the build process: git push → Cloudflare Pages → build.py → registry → visuals → templates → dist → deploy</td><td style="padding:8px;border:1px solid var(--color-border)">Sequence Diagram</td></tr>
-<tr><td style="padding:8px;border:1px solid var(--color-border)"><code>user_journey.mmd</code></td><td style="padding:8px;border:1px solid var(--color-border)">User navigation flow through the site: Home → Research/Learn/Knowledge → Articles/Lessons with flashcards and quizzes</td><td style="padding:8px;border:1px solid var(--color-border)">Flowchart</td></tr>
-<tr><td style="padding:8px;border:1px solid var(--color-border)"><code>source_ingestion.mmd</code></td><td style="padding:8px;border:1px solid var(--color-border)">External source ingestion: HackerNews/arXiv/PubMed APIs → seed_articles.py → NLP enrichment → registry.json</td><td style="padding:8px;border:1px solid var(--color-border)">Flowchart</td></tr>
-<tr><td style="padding:8px;border:1px solid var(--color-border)"><code>pillar_taxonomy.mmd</code></td><td style="padding:8px;border:1px solid var(--color-border)">Mindmap of content pillar taxonomy: AML, Markets, Science (3 pillars × 6-7 topics each) plus cross-cutting categories</td><td style="padding:8px;border:1px solid var(--color-border)">Mindmap</td></tr>
-<tr><td style="padding:8px;border:1px solid var(--color-border)"><code>pipeline_quality.mmd</code></td><td style="padding:8px;border:1px solid var(--color-border)">Quality gates (Pydantic validation, SQI thresholds, domain sanitization) and observability metrics</td><td style="padding:8px;border:1px solid var(--color-border)">Flowchart</td></tr>
-<tr><td style="padding:8px;border:1px solid var(--color-border)"><code>search_index.mmd</code></td><td style="padding:8px;border:1px solid var(--color-border)">Search index architecture: build-time JSON generation → client-side filtering with JavaScript</td><td style="padding:8px;border:1px solid var(--color-border)">Flowchart</td></tr>
-</table>
-
 <script src="/static/js/mermaid.min.js" defer></script>
 <script defer>
 document.addEventListener('DOMContentLoaded', function(){
@@ -136,9 +156,6 @@ document.addEventListener('DOMContentLoaded', function(){
         clusterBorder: '#334155'
       }
     });
-    // Hide ASCII blocks when Mermaid renders successfully
-    var asciiBlocks = document.querySelectorAll('h3:contains(\"ASCII\")');
-    asciiBlocks.forEach(function(el) { el.style.display = 'none'; });
   }
 });
 </script>

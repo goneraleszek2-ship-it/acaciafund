@@ -1,0 +1,73 @@
+title: RSS Ingestion Pipeline
+
+flowchart LR
+    subgraph Sources["📡 RSS Feeds"]
+        TC[TechCrunch<br/>news.tech]
+        WIRED[Wired<br/>news.tech]
+        ARS[ArsTechnica<br/>news.tech]
+        GH[GitHub Blog<br/>engineering.blog]
+        CF[Cloudflare Blog<br/>engineering.blog]
+        KB[Krebs on Security<br/>news.security]
+        BL[Blloomberg Markets<br/>news.finance]
+        AI[Import AI<br/>news.ai]
+    end
+
+    subgraph Fetch["⚙️ RSSFetcher"]
+        HTTP[_cached_request<br/>User-Agent + retry 3x]
+        PARSE[_parse_feed<br/>xml.etree]
+        DETECT[Auto-detect<br/>RSS vs Atom]
+        FILTER[_is_recent<br/>since_hours filter]
+    end
+
+    subgraph Quality["🔬 Quality Layer"]
+        HEALTH[HealthRecord<br/>latency / item_count / error]
+        DLQ[Dead Letter Queue<br/>write_dlq on failure]
+        CACHE[cache_ttl_hours<br/>avoid re-fetch]
+    end
+
+    subgraph Pipeline["🏗️ ingest.py"]
+        REGISTRY[registry.enabled<br/>fetch all]
+        CLASSIFY[classify_story<br/>pillar assignment]
+        DIST[distribute to<br/>pillar_stories dict]
+        MERGE[merge with HN / arXiv / PubMed]
+    end
+
+    subgraph Output["📄 Generated Pages"]
+        BUILD[build.py<br/>Jinja2 render]
+        PAGES[236 static pages]
+    end
+
+    TC --> HTTP
+    WIRED --> HTTP
+    ARS --> HTTP
+    GH --> HTTP
+    CF --> HTTP
+    KB --> HTTP
+    BL --> HTTP
+    AI --> HTTP
+    HTTP --> PARSE
+    PARSE --> DETECT
+    DETECT --> FILTER
+    FILTER --> HEALTH
+    FILTER --> DLQ
+    FILTER --> CACHE
+    HEALTH --> REGISTRY
+    CACHE --> REGISTRY
+    REGISTRY --> CLASSIFY
+    CLASSIFY --> DIST
+    DIST --> MERGE
+    MERGE --> BUILD
+    BUILD --> PAGES
+
+    style TC fill:#1e293b,stroke:#64748b
+    style WIRED fill:#1e293b,stroke:#64748b
+    style ARS fill:#1e293b,stroke:#64748b
+    style GH fill:#1e293b,stroke:#64748b
+    style CF fill:#1e293b,stroke:#64748b
+    style KB fill:#1e293b,stroke:#64748b
+    style BL fill:#1e293b,stroke:#64748b
+    style AI fill:#1e293b,stroke:#64748b
+    style HTTP fill:#1e3a5f,stroke:#d97706
+    style REGISTRY fill:#0f172a,stroke:#22c55e
+    style DLQ fill:#7f1d1d,stroke:#ef4444
+    style BUILD fill:#166534,stroke:#22c55e

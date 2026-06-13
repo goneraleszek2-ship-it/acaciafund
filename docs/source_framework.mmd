@@ -1,0 +1,69 @@
+title: Source Framework — Registry, Fetchers & Health
+
+flowchart TD
+    subgraph Config["📋 Configuration"]
+        TOML[etc/sources.toml<br/>14 sources configured]
+    end
+
+    subgraph Registry["🏛️ Source Registry"]
+        REG[SourceRegistry<br/>singleton]
+        LOAD[tomllib.load<br/>lazy init]
+        CACHE[cached per session]
+    end
+
+    subgraph Base["🔧 BaseFetcher ABC"]
+        ABC[BaseFetcher]
+        SC[SourceConfig<br/>TOML -> dataclass]
+        FR[FetchResult]
+        HR[HealthRecord]
+    end
+
+    subgraph Fetchers["📡 Concrete Fetchers"]
+        HN[HNFetcher<br/>wraps fetch_hn_stories]
+        ARXIV[ArxivFetcher<br/>wraps fetch_arxiv]
+        PUBMED[PubMedFetcher<br/>wraps fetch_pubmed]
+        SS[SemanticScholar<br/>wraps fetch_semantic_scholar]
+        RSS[RSSFetcher<br/>xml.etree / Atom + RSS]
+    end
+
+    subgraph Observability["📊 Observability"]
+        HEALTH[source-health.json<br/>last 100 records/source]
+        DLQ[Dead Letter Queue<br/>failed fetches persisted]
+    end
+
+    subgraph Admin["🖥️ Admin Panel"]
+        SOURCES_PAGE[/admin/sources<br/>health dashboard]
+        API_REFRESH[/admin/api/&lt;name&gt;/refresh<br/>POST — live fetch]
+        API_HEALTH[/admin/api/&lt;name&gt;/health<br/>GET — history]
+    end
+
+    TOML --> REG
+    REG --> LOAD
+    LOAD --> ABC
+    ABC --> SC
+    ABC --> HN
+    ABC --> ARXIV
+    ABC --> PUBMED
+    ABC --> SS
+    ABC --> RSS
+    HN --> DLQ
+    ARXIV --> DLQ
+    PUBMED --> DLQ
+    SS --> DLQ
+    RSS --> DLQ
+    HN --> HEALTH
+    ARXIV --> HEALTH
+    PUBMED --> HEALTH
+    SS --> HEALTH
+    RSS --> HEALTH
+    HEALTH --> SOURCES_PAGE
+    DLQ --> API_REFRESH
+    HEALTH --> API_HEALTH
+    REG --> CACHE
+
+    style TOML fill:#0f172a,stroke:#d97706
+    style REG fill:#1e3a5f,stroke:#22c55e
+    style ABC fill:#1e293b,stroke:#64748b
+    style HEALTH fill:#166534,stroke:#22c55e
+    style DLQ fill:#7f1d1d,stroke:#ef4444
+    style SOURCES_PAGE fill:#1e3a5f,stroke:#3b82f6

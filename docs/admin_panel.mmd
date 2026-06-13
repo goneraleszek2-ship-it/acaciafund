@@ -1,0 +1,80 @@
+title: Admin Panel — Routes, API & Templates
+
+flowchart TD
+    subgraph Flask["🖥️ Flask App (app/admin.py)"]
+        APP[Flask(__name__)]
+        STATIC[/static/admin.css<br/>/static/admin.js]
+    end
+
+    subgraph Pages["📄 Page Routes"]
+        DASH[/admin/ — Dashboard]
+        GALLERY[/admin/gallery — Image Gallery]
+        ARTICLES[/admin/articles — Article List]
+        ARTICLE[/admin/articles/&lt;slug&gt; — Detail]
+        IMAGE[/admin/images/&lt;id&gt; — Image Detail]
+        MANIFEST[/admin/manifest — Run Manifest]
+        PIPELINE[/admin/pipeline — Pipeline Runs]
+        QUALITY[/admin/quality — Quality Metrics]
+        COVERAGE[/admin/coverage — Coverage Heatmap]
+        SOURCES[/admin/sources — Source Health]
+        CURATED[/admin/curated-test — Curated Tester]
+    end
+
+    subgraph API["🔌 API Endpoints"]
+        API_REFRESH[POST /admin/api/articles/&lt;slug&gt;/refresh]
+        API_CURATED[POST /admin/api/curated/score]
+        API_SOURCES[GET /admin/api/sources]
+        API_SOURCE_HEALTH[GET /admin/api/sources/&lt;name&gt;/health]
+        API_SOURCE_REFRESH[POST /admin/api/sources/&lt;name&gt;/refresh]
+        API_COVERAGE[GET /admin/api/coverage-summary]
+        API_MUTATE[POST /admin/api/mutate — image picker]
+    end
+
+    subgraph Templates["📝 Jinja2 Templates"]
+        BASE[templates/admin/base.html<br/>sidebar + nav]
+        DASH_T[admin/dashboard.html]
+        GALLERY_T[admin/gallery.html]
+        ARTICLE_T[admin/article_list.html]
+        DETAIL_T[admin/article_detail.html]
+        IMAGE_T[admin/image_detail.html]
+        MANIFEST_T[admin/manifest.html]
+        PIPELINE_T[admin/pipeline.html]
+        QUALITY_T[admin/quality.html]
+        COVERAGE_T[admin/coverage.html]
+        SOURCES_T[admin/sources.html]
+        CURATED_T[admin/curated_tester.html]
+    end
+
+    subgraph Data["💾 Data Sources"]
+        REGISTRY[registry.json<br/>content catalog]
+        IMAGES[static/images/generated/<br/>~450 images]
+        PIPELINE_RUNS[registry/<br/>image-pipeline-runs.json]
+        DLQ_DATA[registry/<br/>dlq/ — Dead Letter Queue]
+        SOURCE_HEALTH[registry/<br/>source-health.json]
+    end
+
+    APP --> Pages
+    APP --> API
+    APP --> STATIC
+    Pages --> Templates
+    BASE --> DASH_T
+    BASE --> GALLERY_T
+    BASE --> ARTICLE_T
+    BASE --> DETAIL_T
+    BASE --> IMAGE_T
+    BASE --> MANIFEST_T
+    BASE --> PIPELINE_T
+    BASE --> QUALITY_T
+    BASE --> COVERAGE_T
+    BASE --> SOURCES_T
+    BASE --> CURATED_T
+    API --> REGISTRY
+    API --> IMAGES
+    API --> PIPELINE_RUNS
+    API --> DLQ_DATA
+    API --> SOURCE_HEALTH
+
+    style APP fill:#1e3a5f,stroke:#d97706
+    style BASE fill:#1e293b,stroke:#64748b
+    style REGISTRY fill:#0f172a,stroke:#22c55e
+    style SOURCE_HEALTH fill:#166534,stroke:#22c55e
