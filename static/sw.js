@@ -1,5 +1,14 @@
-const CACHE = "acaciafund-v1";
-const ASSETS = ["/"];
+const CACHE = "acaciafund-v2";
+const ASSETS = [
+  "/",
+  "/index.html",
+  "/learn/",
+  "/learn.html",
+  "/static/css/tailwind.min.css",
+  "/static/css/custom.css",
+  "/static/js/learning_hub.js",
+  "/static/images/favicon.svg"
+];
 
 self.addEventListener("install", (e) => {
   e.waitUntil(

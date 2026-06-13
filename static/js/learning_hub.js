@@ -6,14 +6,149 @@
   var REVIEWS_KEY = 'acacia_reviews_v1';
   var FOCUS_KEY = 'acacia_focus_mode';
   var ADAPTIVE_KEY = 'acacia_adaptive_v1';
+  var XP_KEY = 'acacia_xp_v1';
+  var STREAK_KEY = 'acacia_streak_v1';
+  var BADGES_KEY = 'acacia_badges_v1';
+  var CONFIDENCE_KEY = 'acacia_confidence_v1';
 
-  // ── Helpers ──────────────────────────────────────────────────────────
-  function loadJSON(key, def) {
-    try { return JSON.parse(localStorage.getItem(key) || 'null') || def; }
-    catch(e) { return def; }
+  // ── Toast Notification System ────────────────────────────────────────
+  function showToast(message, type) {
+    var toast = document.createElement('div');
+    toast.className = 'toast-notification';
+    toast.style.cssText = 'position:fixed;bottom:24px;right:24px;z-index:9999;padding:16px 20px;border-radius:12px;font-size:14px;font-weight:500;box-shadow:0 4px 20px rgba(0,0,0,0.15);animation:toastSlide 0.3s ease;transition:all 0.3s;';
+    
+    if (type === 'success') {
+      toast.style.background = 'var(--color-surface)';
+      toast.style.border = '2px solid #22c55e';
+      toast.style.color = '#1a1a2e';
+    } else if (type === 'error') {
+      toast.style.background = 'var(--color-surface)';
+      toast.style.border = '2px solid #ef4444';
+      toast.style.color = '#1a1a2e';
+    } else {
+      toast.style.background = 'var(--color-surface)';
+      toast.style.border = '2px solid var(--color-accent)';
+      toast.style.color = '#1a1a2e';
+    }
+    
+    toast.textContent = message;
+    document.body.appendChild(toast);
+    
+    setTimeout(function() {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateY(20px)';
+      setTimeout(function() { toast.remove(); }, 300);
+    }, 3000);
   }
-  function saveJSON(key, val) {
-    try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) {}
+  
+  // Toast animation
+  var toastStyle = document.createElement('style');
+  toastStyle.textContent = '@keyframes toastSlide { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }';
+  document.head.appendChild(toastStyle);
+
+  // ── Gamification System ──────────────────────────────────────────────
+  function getXPTotal() {
+    var xp = loadJSON(XP_KEY, {total: 0, level: 1});
+    return xp.total || 0;
+  }
+  function addXP(amount) {
+    var xp = loadJSON(XP_KEY, {total: 0, level: 1});
+    var oldTotal = xp.total || 0;
+    var newTotal = oldTotal + amount;
+    var oldLevel = xp.level || 1;
+    var newLevel = Math.floor(newTotal / 100) + 1;
+    
+    xp.total = newTotal;
+    xp.level = newLevel;
+    saveJSON(XP_KEY, xp);
+    
+    // Level up animation
+    if (newLevel > oldLevel) {
+      showToast('Level Up! 🎉 You reached Level ' + newLevel, 'success');
+    }
+    
+    // Update display
+    updateXPDisplay();
+    return {total: newTotal, level: newLevel, oldLevel: oldLevel};
+  }
+  function updateXPDisplay() {
+    var xp = loadJSON(XP_KEY, {total: 0, level: 1});
+    var total = xp.total || 0;
+    var level = xp.level || 1;
+    var bar = document.getElementById('xp-progress-bar');
+    var text = document.getElementById('xp-text');
+    var levelEl = document.getElementById('level-text');
+    if (bar) {
+      var progress = (total % 100) + '%';
+      bar.style.width = progress;
+    }
+    if (text) text.textContent = total + ' XP';
+    if (levelEl) levelEl.textContent = 'Level ' + level;
+  }
+  function getXPLockLevel() {
+    var xp = loadJSON(XP_KEY, {total: 0, level: 1});
+    return (xp.total || 0) >= 50 ? 2 : 1;
+  }
+
+  function checkStreak() {
+    var streak = loadJSON(STREAK_KEY, {count: 0, lastDate: null});
+    var today = new Date().toISOString().slice(0, 10);
+    
+    if (streak.lastDate === today) return streak.count;
+    
+    var yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+    
+    if (streak.lastDate === yesterday) {
+      streak.count++;
+      streak.lastDate = today;
+      saveJSON(STREAK_KEY, streak);
+      return streak.count;
+    } else if (!streak.lastDate || streak.lastDate < yesterday) {
+      streak.count = 1;
+      streak.lastDate = today;
+      saveJSON(STREAK_KEY, streak);
+      return streak.count;
+    }
+    return streak.count;
+  }
+  function getStreakDisplay() {
+    var count = checkStreak();
+    var fire = count >= 7 ? '🔥' : count >= 3 ? '✨' : '📖';
+    return fire + ' ' + count + ' day' + (count !== 1 ? 's' : '');
+  }
+  function updateStreakDisplay() {
+    var el = document.getElementById('streak-text');
+    if (el) el.textContent = getStreakDisplay();
+  }
+
+  function checkBadge(badgeId, title, desc) {
+    var badges = loadJSON(BADGES_KEY, {});
+    if (badges[badgeId]) return false;
+    
+    badges[badgeId] = {
+      title: title,
+      desc: desc,
+      earned: Date.now()
+    };
+    saveJSON(BADGES_KEY, badges);
+    
+    showToast('🏆 Badge Unlocked: ' + title, 'success');
+    return true;
+  }
+  function getUnlockedBadges() {
+    var badges = loadJSON(BADGES_KEY, {});
+    return Object.keys(badges).filter(function(k) { return badges[k]; }).length;
+  }
+
+  function addConfidenceAnswer(cardId, rating) {
+    var conf = loadJSON(CONFIDENCE_KEY, {});
+    if (!conf[cardId]) conf[cardId] = {hard: 0, good: 0, easy: 0};
+    conf[cardId][rating]++;
+    saveJSON(CONFIDENCE_KEY, conf);
+  }
+  function getConfidenceStats(cardId) {
+    var conf = loadJSON(CONFIDENCE_KEY, {});
+    return conf[cardId] || {hard: 0, good: 0, easy: 0};
   }
 
   // ── Progress API sync (best-effort, localStorage fallback) ────────────
@@ -356,6 +491,14 @@
         p[slug].ts = Date.now();
         textEl.textContent = 'Completed \u2713';
         btn.style.background = 'var(--color-text-muted)';
+        
+        // Add XP for completing lesson
+        addXP(25);
+        
+        // Check for badge
+        var totalCompleted = Object.keys(p).filter(function(k) { return p[k].done; }).length;
+        if (totalCompleted === 1) checkBadge('first-step', 'First Step', 'Complete your first lesson');
+        if (totalCompleted === 10) checkBadge('bloom-advanced', 'Bloom Advanced', 'Complete 10 lessons');
       }
       saveProgress(p);
       syncProgress();
@@ -427,17 +570,19 @@
 
       function sm2Update(i, isCorrect) {
         var s = sm2[lessonSlug][i];
-        if (isCorrect) {
-          s.rep++;
-          if (s.rep === 1) s.interval = 1;
-          else if (s.rep === 2) s.interval = 6;
-          else s.interval = Math.round(s.interval * s.ef);
-          if (s.rep > 1) s.ef = Math.max(1.3, s.ef + 0.1);
-        } else {
-          s.rep = 0;
-          s.interval = 1;
-          s.ef = Math.max(1.3, s.ef - 0.2);
-        }
+      if (isCorrect) {
+        s.rep++;
+        if (s.rep === 1) s.interval = 1;
+        else if (s.rep === 2) s.interval = 6;
+        else s.interval = Math.round(s.interval * s.ef);
+        if (s.rep > 1) s.ef = Math.max(1.3, s.ef + 0.1);
+        // Add XP for correct answer
+        addXP(5);
+      } else {
+        s.rep = 0;
+        s.interval = 1;
+        s.ef = Math.max(1.3, s.ef - 0.2);
+      }
         s.nextReview = Date.now() + s.interval * 86400000;
         saveJSON(SM2_KEY, sm2);
         trackAdaptive(isCorrect);
@@ -538,16 +683,18 @@
                 if (questionStates[i]) return;
                 questionStates[i] = true;
                 answered++;
-                var isCorrect = (oi === q.a);
-                var parent = this.closest('.mb-6');
-                parent.querySelectorAll('label').forEach(function(l){ l.style.color = 'var(--color-text-secondary)'; });
-                parent.querySelectorAll('input').forEach(function(r){ r.style.outline = 'none'; });
-                if (isCorrect) {
-                  label.style.color = '#22c55e';
-                  label.style.fontWeight = '600';
-                  correct++;
-                } else {
-                  label.style.color = '#ef4444';
+        var isCorrect = (oi === q.a);
+        var parent = this.closest('.mb-6');
+        parent.querySelectorAll('label').forEach(function(l){ l.style.color = 'var(--color-text-secondary)'; });
+        parent.querySelectorAll('input').forEach(function(r){ r.style.outline = 'none'; });
+        if (isCorrect) {
+          label.style.color = '#22c55e';
+          label.style.fontWeight = '600';
+          correct++;
+          // Add XP for correct answer
+          addXP(5);
+        } else {
+          label.style.color = '#ef4444';
                   var correctLabel = parent.querySelector('input[value="' + q.a + '"]');
                   if (correctLabel) {
                     correctLabel = correctLabel.closest('label');
@@ -605,14 +752,20 @@
         btn.addEventListener('mouseleave', function() { this.style.borderColor = 'var(--color-border)'; });
         btn.addEventListener('click', function(e) {
           e.stopPropagation();
-          var s = sm2['fc_' + lessonSlug][key];
-          s.rep++;
-          if (s.rep === 1) s.interval = Math.round(1 * multipliers[li]);
-          else if (s.rep === 2) s.interval = Math.round(6 * multipliers[li]);
-          else s.interval = Math.round(s.interval * s.ef * multipliers[li] / 2.5);
-          s.ef = Math.max(1.3, s.ef + (li - 1) * 0.15);
-          s.nextReview = Date.now() + s.interval * 86400000;
-          saveJSON(SM2_KEY, sm2);
+        var s = sm2['fc_' + lessonSlug][key];
+        s.rep++;
+        if (s.rep === 1) s.interval = Math.round(1 * multipliers[li]);
+        else if (s.rep === 2) s.interval = Math.round(6 * multipliers[li]);
+        else s.interval = Math.round(s.interval * s.ef * multipliers[li] / 2.5);
+        s.ef = Math.max(1.3, s.ef + (li - 1) * 0.15);
+        s.nextReview = Date.now() + s.interval * 86400000;
+        saveJSON(SM2_KEY, sm2);
+        
+        // Add XP based on confidence rating
+        var xpAmount = li === 2 ? 5 : li === 3 ? 10 : 1;
+        addXP(xpAmount);
+        
+        addConfidenceAnswer('fc_' + idx, labels[li].toLowerCase());
           btn.textContent = '\u2713 ' + label;
           btn.style.opacity = '0.5';
           btn.style.pointerEvents = 'none';
@@ -652,6 +805,10 @@
     initQuiz();
     initFlashcardSM2();
     initEnhancedSearch();
+    
+    // Initialize gamification display
+    updateXPDisplay();
+    updateStreakDisplay();
   }
 
 })();

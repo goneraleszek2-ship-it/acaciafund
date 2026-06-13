@@ -11,10 +11,36 @@
   </nav>
 
    <div class="mb-8">
-    <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">Learning Hub</h1>
-    <p class="mt-2 text-sm" style="color:var(--color-text-muted)" id="progress-summary">{{ items | length }} lessons — structured learning across all pillars</p>
-    <p class="mt-1 text-xs" style="color:var(--color-text-muted)" id="review-due"></p>
-  </div>
+     <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">Learning Hub</h1>
+     <p class="mt-2 text-sm" style="color:var(--color-text-muted)" id="progress-summary">{{ items | length }} lessons — structured learning across all pillars</p>
+     <p class="mt-1 text-xs" style="color:var(--color-text-muted)" id="review-due"></p>
+     
+     <!-- Gamification Stats Dashboard (NEW) -->
+     <div class="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3" id="stats-dashboard">
+       <div class="p-3 rounded-lg" style="background:var(--color-surface);border:1px solid var(--color-border)">
+         <div class="text-xs font-semibold mb-1" style="color:var(--color-text-muted)">XP</div>
+         <div class="text-xl font-bold" id="xp-text">0 XP</div>
+         <div class="mt-2 h-1.5 rounded-full overflow-hidden" style="background:var(--color-bg)">
+           <div class="h-full bg-gradient-to-r from-teal-500 to-emerald-500 transition-all duration-500" id="xp-progress-bar" style="width:0%"></div>
+         </div>
+       </div>
+       <div class="p-3 rounded-lg" style="background:var(--color-surface);border:1px solid var(--color-border)">
+         <div class="text-xs font-semibold mb-1" style="color:var(--color-text-muted)">Level</div>
+         <div class="text-xl font-bold" id="level-text">Level 1</div>
+         <div class="mt-2 text-xs" style="color:var(--color-text-muted)">Next: 100 XP</div>
+       </div>
+       <div class="p-3 rounded-lg" style="background:var(--color-surface);border:1px solid var(--color-border)">
+         <div class="text-xs font-semibold mb-1" style="color:var(--color-text-muted)">Streak</div>
+         <div class="text-xl font-bold" id="streak-text">0 days</div>
+         <div class="mt-2 text-xs" style="color:var(--color-text-muted)">Daily learning</div>
+       </div>
+       <div class="p-3 rounded-lg" style="background:var(--color-surface);border:1px solid var(--color-border)">
+         <div class="text-xs font-semibold mb-1" style="color:var(--color-text-muted)">Completed</div>
+         <div class="text-xl font-bold" id="completed-count">0</div>
+         <div class="mt-2 text-xs" style="color:var(--color-text-muted)">Lessons done</div>
+       </div>
+     </div>
+   </div>
 
   {%- set pillar_meta = {
     "aml": {"icon": "🛡️", "name": "Anti-Money Laundering", "color": "#c97d3e", "desc": "Learn AML regulations, transaction monitoring, SAR filing, and risk-based approaches."},
@@ -474,6 +500,52 @@
       summary.textContent += ' · Current level: ' + (emojis[ad.level] || '') + ' ' + ad.level.charAt(0).toUpperCase() + ad.level.slice(1);
     }
   } catch(e){}
+  
+  // Update XP display
+  function getXPTotal() {
+    try {
+      var xp = JSON.parse(localStorage.getItem('acacia_xp_v1') || 'null');
+      return xp ? (xp.total || 0) : 0;
+    } catch(e) { return 0; }
+  }
+  function getStreak() {
+    try {
+      var streak = JSON.parse(localStorage.getItem('acacia_streak_v1') || 'null');
+      return streak ? (streak.count || 0) : 0;
+    } catch(e) { return 0; }
+  }
+  function getCompleted() {
+    var completed = 0;
+    document.querySelectorAll('.lesson-status').forEach(function(el) {
+      var slug = progressKey(el.getAttribute('data-slug'));
+      if(p[slug] && p[slug].done) completed++;
+    });
+    return completed;
+  }
+  
+  var xpTotal = getXPTotal();
+  var xpBar = document.getElementById('xp-progress-bar');
+  var xpText = document.getElementById('xp-text');
+  var levelText = document.getElementById('level-text');
+  var streakText = document.getElementById('streak-text');
+  var completedCount = document.getElementById('completed-count');
+  
+  if (xpBar) {
+    xpBar.style.width = (xpTotal % 100) + '%';
+  }
+  if (xpText) {
+    xpText.textContent = xpTotal + ' XP';
+  }
+  if (levelText) {
+    levelText.textContent = 'Level ' + (Math.floor(xpTotal / 100) + 1);
+  }
+  if (streakText) {
+    var fire = getStreak() >= 7 ? '🔥' : getStreak() >= 3 ? '✨' : '📖';
+    streakText.textContent = fire + ' ' + getStreak() + ' day' + (getStreak() !== 1 ? 's' : '');
+  }
+  if (completedCount) {
+    completedCount.textContent = getCompleted();
+  }
 })();
 </script>
 {% endblock %}
