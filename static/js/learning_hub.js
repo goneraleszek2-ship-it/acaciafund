@@ -137,6 +137,155 @@
     });
   }
 
+  // ── Enhanced Search ─────────────────────────────────────────────────
+  function initEnhancedSearch() {
+    var paletteInput = document.getElementById('palette-input');
+    var paletteResults = document.getElementById('palette-results');
+    var paletteDialog = document.getElementById('search-palette');
+    
+    if (!paletteInput || !paletteResults) return;
+    
+    var MIN_CHARS = 0;
+    var debounceTimer = null;
+    
+    // Open search on Cmd+K
+    document.addEventListener('keydown', function(e) {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        if (paletteDialog && !paletteDialog.open) {
+          paletteDialog.showModal();
+          setTimeout(function() {
+            paletteInput.focus();
+          }, 0);
+        }
+      }
+    });
+    
+    // Input handling
+    paletteInput.addEventListener('input', function(e) {
+      var query = e.target.value.trim();
+      
+      if (query.length < MIN_CHARS) {
+        paletteResults.innerHTML = '<p class="text-sm py-8 text-center text-gray-500">Start typing to search...</p>';
+        return;
+      }
+      
+      // Debounce search
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(function() {
+        performSearch(query);
+      }, 150);
+    });
+    
+    // ESC to close
+    paletteInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        if (paletteDialog && paletteDialog.open) {
+          paletteDialog.close();
+        }
+      }
+    });
+    
+    // Perform search
+    function performSearch(query) {
+      // Fetch from search index
+      fetch('/search/search-index.json')
+        .then(function(res) { return res.json(); })
+        .then(function(index) {
+          var results = searchIndex(query, index);
+          displayResults(results);
+        })
+        .catch(function() {
+          // Fallback
+          var results = searchClientSide(query);
+          displayResults(results);
+        });
+    }
+    
+    function searchIndex(query, index) {
+      var results = [];
+      var queryLower = query.toLowerCase();
+      
+      for (var slug in index) {
+        var entry = index[slug];
+        var title = (entry.title || '').toLowerCase();
+        var description = (entry.description || '').toLowerCase();
+        
+        if (title.includes(queryLower) || description.includes(queryLower)) {
+          results.push({
+            slug: slug,
+            title: entry.title || slug,
+            description: entry.description || '',
+            type: entry.type || 'research',
+            pillar: entry.pillar || 'general',
+            sqi: entry.sqi || 0.5,
+            url: '/' + slug + '/'
+          });
+        }
+      }
+      
+      return results.sort(function(a, b) {
+        return relevanceScore(b.title, b.description, query) - relevanceScore(a.title, a.description, query);
+      }).slice(0, 10);
+    }
+    
+    function searchClientSide(query) {
+      var results = [];
+      document.querySelectorAll('a[href^="/"]').forEach(function(link) {
+        var href = link.getAttribute('href');
+        if (href.startsWith('/')) {
+          results.push({
+            slug: href.substring(1),
+            title: link.textContent.trim().substring(0, 60),
+            description: '',
+            type: 'page',
+            pillar: 'general',
+            sqi: 0.5,
+            url: href
+          });
+        }
+      });
+      
+      return results.filter(function(r) { return r.title.toLowerCase().includes(query.toLowerCase()); }).slice(0, 10);
+    }
+    
+    function relevanceScore(title, description, query) {
+      var score = 0;
+      var queryLower = query.toLowerCase();
+      var titleLower = title.toLowerCase();
+      var descLower = description.toLowerCase();
+      
+      if (titleLower.includes(queryLower)) score += 10;
+      
+      var words = queryLower.split(/\s+/);
+      for (var i = 0; i < words.length; i++) {
+        var word = words[i];
+        if (titleLower.startsWith(word)) score += 5;
+        if (descLower.startsWith(word)) score += 3;
+      }
+      
+      if (titleLower === queryLower) score += 20;
+      
+      return score;
+    }
+    
+    function displayResults(results) {
+      if (!results || results.length === 0) {
+        paletteResults.innerHTML = '<p class="text-sm py-8 text-center text-gray-500">No results found</p>';
+        return;
+      }
+      
+      paletteResults.innerHTML = results.map(function(result, index) {
+        return '<a href="' + result.url + '" class="block px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-800 transition">\n' +
+               '  <div class="font-semibold text-sm dark:text-white mb-1">' + result.title + '</div>\n' +
+               '  <div class="text-xs text-gray-500">' + result.type + 
+               (result.pillar ? ' • ' + result.pillar.charAt(0).toUpperCase() + result.pillar.slice(1) : '') +
+               (result.sqi ? ' • SQI: ' + result.sqi.toFixed(2) : '') + '</div>\n' +
+               '</a>';
+      }).join('');
+    }
+  }
+
   // ── 6. Section collapse: open parent details on TOC click ────────────
   function initSectionCollapse() {
     document.querySelectorAll('.toc-link').forEach(function(link) {
@@ -502,6 +651,7 @@
     initSectionProgress();
     initQuiz();
     initFlashcardSM2();
+    initEnhancedSearch();
   }
 
 })();

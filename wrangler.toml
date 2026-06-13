@@ -1,7 +1,6 @@
 name = "acaciafund"
-pages_build_output_dir = "dist"
-compatibility_date = "2026-06-01"
+main = "dist/index.html"
+compatibility_date = "2024-01-01"
 
-[env.production]
-name = "acaciafund"
-pages_build_output_dir = "dist"
+[site]
+bucket = "dist"

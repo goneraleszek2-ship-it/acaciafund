@@ -1,4 +1,4 @@
-#!/usr/bin/env python3.13
+#!/usr/bin/env python3
 """
 Build script for AcaciaFund: converts registry.json to static HTML using Jinja2 templates.
 3-category taxonomy: research | learn | knowledge

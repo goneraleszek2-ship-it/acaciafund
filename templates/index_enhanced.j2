@@ -1,0 +1,732 @@
+{% extends "layout.j2" %}
+{% from "macros/pillar_badge.html" import pillar_badge %}
+{% from "macros/content_badge.html" import content_badge %}
+
+{% block extra_styles %}
+<style>
+/* Hero Section Enhancements */
+.hero-section {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+  position: relative;
+  overflow: hidden;
+  padding: 4rem 2rem 3rem;
+  min-height: 600px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(199, 125, 62, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(58, 125, 92, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 40% 40%, rgba(99, 102, 241, 0.15) 0%, transparent 50%);
+  animation: pulse-bg 8s ease-in-out infinite;
+}
+
+@keyframes pulse-bg {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.05); }
+}
+
+.hero-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  max-width: 900px;
+}
+
+.hero-title {
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: fade-in-up 0.8s ease-out;
+}
+
+.hero-title .highlight {
+  background: linear-gradient(135deg, #c97d3e 0%, #3a7d5c 50%, #6366f1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+}
+
+.hero-title .highlight::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  background: linear-gradient(135deg, #c97d3e 0%, #3a7d5c 50%, #6366f1 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: blur(10px);
+  opacity: 0.5;
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  color: #a0a0a0;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+  animation: fade-in-up 0.8s ease-out 0.2s both;
+}
+
+.hero-stats {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.hero-stat {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  animation: fade-in-up 0.8s ease-out 0.4s both;
+}
+
+.hero-stat-icon {
+  font-size: 1.5rem;
+}
+
+.hero-stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.hero-stat-label {
+  font-size: 0.875rem;
+  color: #a0a0a0;
+}
+
+.hero-cta {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: fade-in-up 0.8s ease-out 0.6s both;
+}
+
+.hero-cta .btn {
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-cta .btn-primary {
+  background: linear-gradient(135deg, #c97d3e 0%, #e89442 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(201, 125, 62, 0.4);
+}
+
+.hero-cta .btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(201, 125, 62, 0.5);
+}
+
+.hero-cta .btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.hero-cta .btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-3px);
+}
+
+/* Floating particles */
+.particle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  animation: float 20s infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+}
+
+/* Animated cards */
+.card-animate {
+  animation: card-float 6s ease-in-out infinite;
+}
+
+.card-animate:nth-child(2) { animation-delay: 1s; }
+.card-animate:nth-child(3) { animation-delay: 2s; }
+
+@keyframes card-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+/* Fade in animations */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Pillar showcase section */
+.pillar-showcase {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  margin: 4rem 0;
+}
+
+.pillar-card {
+  background: linear-gradient(145deg, var(--color-surface) 0%, var(--color-bg) 100%);
+  border: 1px solid var(--color-border);
+  border-radius: 16px;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.4s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.pillar-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, var(--color-aml) 0%, var(--color-markets) 50%, var(--color-data-engineering) 100%);
+  transform: scaleX(0);
+  transition: transform 0.4s ease;
+}
+
+.pillar-card:hover::before {
+  transform: scaleX(1);
+}
+
+.pillar-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.pillar-icon {
+  width: 80px;
+  height: 80px;
+  margin: 0 auto 1.5rem;
+  transition: transform 0.4s ease;
+}
+
+.pillar-card:hover .pillar-icon {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.pillar-name {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--color-text);
+}
+
+.pillar-count {
+  font-size: 3rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--color-aml) 0%, var(--color-data-engineering) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.5rem;
+}
+
+.pillar-desc {
+  color: var(--color-text-secondary);
+  font-size: 0.9375rem;
+}
+
+/* Newsletter enhancement */
+.newsletter-section {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  border-radius: 20px;
+  padding: 3rem 2rem;
+  text-align: center;
+  margin: 4rem 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.newsletter-section::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+  animation: rotate-bg 20s linear infinite;
+}
+
+@keyframes rotate-bg {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.newsletter-content {
+  position: relative;
+  z-index: 1;
+}
+
+.newsletter-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--color-text);
+}
+
+.newsletter-subtitle {
+  color: var(--color-text-secondary);
+  margin-bottom: 2rem;
+}
+
+.newsletter-form {
+  display: flex;
+  max-width: 500px;
+  margin: 0 auto;
+  gap: 0.5rem;
+}
+
+.newsletter-input {
+  flex: 1;
+  padding: 1rem 1.5rem;
+  border: 2px solid var(--color-border);
+  border-radius: 50px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.newsletter-input:focus {
+  outline: none;
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+}
+
+.newsletter-btn {
+  padding: 1rem 2rem;
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.newsletter-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.4);
+}
+
+/* Section headers */
+.section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.section-header h2 {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #1a1a2e 0%, #4a4a6a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.section-header p {
+  color: var(--color-text-secondary);
+  font-size: 1.125rem;
+}
+
+/* Card hover effects */
+.research-card {
+  transition: all 0.3s ease;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.research-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+/* Live indicator */
+.live-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.2);
+  border-radius: 20px;
+  font-size: 0.875rem;
+  color: #22c55e;
+  margin-bottom: 1rem;
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  background: #22c55e;
+  border-radius: 50%;
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(1.2); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero-stats {
+    gap: 1rem;
+  }
+  
+  .hero-stat {
+    padding: 0.75rem 1rem;
+  }
+  
+  .hero-stat-value {
+    font-size: 1.25rem;
+  }
+  
+  .newsletter-form {
+    flex-direction: column;
+  }
+  
+  .newsletter-btn {
+    width: 100%;
+  }
+}
+</style>
+{% endblock %}
+
+{% block main_content %}
+<!-- Hero Section -->
+<section class="hero-section" id="home" aria-labelledby="hero-heading">
+  <!-- Particles -->
+  <div class="particle" style="top: 10%; left: 10%; animation-duration: 15s; animation-delay: 0s;"></div>
+  <div class="particle" style="top: 20%; right: 20%; animation-duration: 18s; animation-delay: 2s; width: 5px; height: 5px;"></div>
+  <div class="particle" style="top: 50%; left: 5%; animation-duration: 22s; animation-delay: 4s; width: 6px; height: 6px;"></div>
+  <div class="particle" style="top: 70%; right: 10%; animation-duration: 20s; animation-delay: 1s; width: 4px; height: 4px;"></div>
+  <div class="particle" style="top: 85%; left: 30%; animation-duration: 25s; animation-delay: 3s; width: 7px; height: 7px;"></div>
+  
+  <div class="hero-content">
+    <div class="live-indicator">
+      <span class="live-dot"></span>
+      <span>Live: {{ "now" | date("%B %d, %Y") }}</span>
+    </div>
+    
+    <h1 class="hero-title" id="hero-heading">
+      Cut through the noise in
+      <span class="highlight" data-text="AML, Markets & Data Engineering">AML, Markets & Data Engineering</span>
+    </h1>
+    
+    <p class="hero-subtitle">
+      We continuously scan <strong>arXiv</strong> and <strong>Hacker News</strong>,
+      score every piece for signal quality, and turn the top results into
+      3-minute briefings and interactive lessons.
+    </p>
+    
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="hero-stat-icon">📄</span>
+        <div>
+          <div class="hero-stat-value">{{ recent_posts | length }}</div>
+          <div class="hero-stat-label">Research Briefings</div>
+        </div>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-icon">📚</span>
+        <div>
+          <div class="hero-stat-value">{{ learn_items | length }}</div>
+          <div class="hero-stat-label">Interactive Lessons</div>
+        </div>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-icon">🧠</span>
+        <div>
+          <div class="hero-stat-value">{{ knowledge_items | length }}</div>
+          <div class="hero-stat-label">Knowledge Articles</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="hero-cta">
+      <a href="/research/" class="btn btn-primary">Latest Briefings</a>
+      <a href="/learn/" class="btn btn-secondary">Interactive Lessons</a>
+      <a href="/knowledge/" class="btn btn-secondary">Knowledge Base</a>
+    </div>
+  </div>
+</section>
+
+<!-- Pillar Showcase -->
+<section class="py-12">
+  <div class="container mx-auto px-4">
+    <div class="pillar-showcase">
+      <div class="pillar-card" onclick="window.location.href='/aml/'">
+        <svg class="pillar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+        </svg>
+        <h3 class="pillar-name">AML Compliance</h3>
+        <div class="pillar-count">{{ aml_articles | length }}</div>
+        <p class="pillar-desc">Regulations, crypto, fraud detection</p>
+      </div>
+      
+      <div class="pillar-card" onclick="window.location.href='/stock/'">
+        <svg class="pillar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M2 20h20M6 16l4-4 4 4 4-8"/>
+        </svg>
+        <h3 class="pillar-name">Markets</h3>
+        <div class="pillar-count">{{ stock_articles | length }}</div>
+        <p class="pillar-desc">Trading, investment, semiconductor</p>
+      </div>
+      
+      <div class="pillar-card" onclick="window.location.href='/data-engineering/'">
+        <svg class="pillar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M3 12h18M3 8h14M3 16h10"/>
+        </svg>
+        <h3 class="pillar-name">Data Engineering</h3>
+        <div class="pillar-count">{{ de_articles | length }}</div>
+        <p class="pillar-desc">Pipelines, cloud, ML infrastructure</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% include 'partials/newsletter.html' %}
+
+<!-- Featured Articles with Animation -->
+{% if featured_posts %}
+<section class="py-12" aria-labelledby="featured-heading">
+  <div class="container mx-auto px-4">
+    <div class="section-header">
+      <h2 id="featured-heading">Featured Articles</h2>
+      <p>Hand-picked insights worth your time</p>
+    </div>
+    
+    <div class="grid gap-6 md:grid-cols-3">
+    {%- for item in featured_posts %}
+      {%- set p = item.pillar or "aml" %}
+      {%- set pc = pillar_config.get(p, pillar_config["aml"]) %}
+      {%- set tkey = thumbnail_key(item.title) %}
+      {%- set feat_img = item.featured_image or "" %}
+      {%- set has_feat = feat_img %}
+      <div class="research-card card-animate group">
+        <a href="/{{ item.slug }}/" class="block">
+          <div class="aspect-[600/340] overflow-hidden" style="background:var(--color-bg)">
+            {%- if has_feat %}
+            <img src="{{ feat_img }}" alt="{{ item.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+            {%- else %}
+            <img src="{{ thumbnail_base }}/thumb_{{ tkey }}.svg" alt="{{ item.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+            {%- endif %}
+          </div>
+          <div class="p-5">
+            <div class="flex items-center gap-2 mb-3">
+              {{ pillar_badge(item.pillar) }}
+              {{ content_badge(item.content_type) }}
+            </div>
+            <h3 class="text-lg font-semibold leading-snug mb-2" style="color:var(--color-text)">{{ item.title | striptags }}</h3>
+            <div class="flex items-center gap-3 text-sm" style="color:var(--color-text-secondary)">
+              {%- if item.date_str %}
+              <time datetime="{{ item.date_str }}">{{ item.date_str }}</time>
+              {%- endif %}
+              {%- if item.body_html %}
+              <span>{{ item.body_html | reading_time }} min read</span>
+              {%- endif %}
+            </div>
+          </div>
+        </a>
+      </div>
+    {%- endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- Latest Research with Carousel -->
+{% if recent_posts %}
+<section class="py-12" aria-labelledby="latest-heading">
+  <div class="container mx-auto px-4">
+    <div class="section-header">
+      <h2 id="latest-heading">Latest Research</h2>
+      <p>Fresh insights published this week</p>
+    </div>
+    
+    <div class="grid gap-5 md:grid-cols-2">
+    {%- for item in recent_posts %}
+      {%- set p = item.pillar or "aml" %}
+      {%- set tkey = thumbnail_key(item.title) %}
+      {%- set feat_img = item.featured_image or "" %}
+      {%- set has_feat = feat_img %}
+      <article class="research-card group" style="background:var(--color-surface);border:1px solid var(--color-border);border-left:3px solid var(--color-{{ p }})">
+        <a href="/{{ item.slug }}/" class="flex gap-4 p-4">
+          <div class="shrink-0 w-28 h-20 rounded-lg overflow-hidden" style="background:var(--color-bg)">
+            {%- if has_feat %}
+            <img src="{{ feat_img }}" alt="{{ item.title | striptags | e }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy">
+            {%- else %}
+            <img src="{{ thumbnail_base }}/thumb_{{ tkey }}.svg" alt="{{ item.title | striptags | e }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy">
+            {%- endif %}
+          </div>
+          <div class="min-w-0 flex-1">
+            <div class="flex items-center gap-2 mb-2">
+              {{ pillar_badge(item.pillar) }}
+              {{ content_badge(item.content_type) }}
+            </div>
+            <h3 class="text-base font-semibold leading-snug mb-2" style="color:var(--color-text)">
+              <a href="/{{ item.slug }}/" class="group-hover:underline decoration-2" style="color:var(--color-text);text-decoration:none">{{ item.title | striptags }}</a>
+            </h3>
+            <div class="flex items-center gap-3 text-xs" style="color:var(--color-text-secondary)">
+              {%- if item.date_str %}
+              <time datetime="{{ item.date_str }}">{{ item.date_str }}</time>
+              {%- endif %}
+              {%- if item.body_html %}
+              <span>{{ item.body_html | reading_time }} min</span>
+              {%- endif %}
+            </div>
+          </div>
+        </a>
+      </article>
+    {%- endfor %}
+    </div>
+    
+    <div class="mt-6 text-center">
+      <a href="/research/" class="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded-lg transition hover:opacity-80" style="color:var(--color-accent)">
+        View all research
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- Learning Hub -->
+{% if learn_items %}
+<section class="py-12" aria-labelledby="learn-heading">
+  <div class="container mx-auto px-4">
+    <div class="section-header">
+      <h2 id="learn-heading">Learning Hub</h2>
+      <p>Interactive lessons to deepen your understanding</p>
+    </div>
+    
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    {%- set d_emoji = {"beginner": "🌱", "intermediate": "📘", "advanced": "🔥"} %}
+    {%- for item in learn_items[:6] %}
+      {%- set p = item.pillar or "" %}
+      {%- set tkey = thumbnail_key(item.title) %}
+      <div class="research-card group" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+        <a href="/{{ item.slug }}/">
+          <div class="aspect-[600/340] overflow-hidden" style="background:var(--color-bg)">
+            <img src="{{ thumbnail_base }}/thumb_{{ tkey }}.svg" alt="{{ item.title | striptags | e }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy">
+          </div>
+          <div class="p-4">
+            <div class="flex items-center gap-2 mb-2">
+              {{ content_badge("learn") }}
+              {%- if pc %}
+              {{ pillar_badge(item.pillar) }}
+              {%- endif %}
+              {%- if item.difficulty %}
+              <span class="text-xs px-2 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted)">{{ d_emoji.get(item.difficulty, "📘") }} {{ item.difficulty | capitalize }}</span>
+              {%- endif %}
+            </div>
+            <h3 class="font-semibold card-title-clamp mb-2" style="color:var(--color-text)">{{ item.title | striptags }}</h3>
+            {%- if item.description %}
+            <p class="text-xs" style="color:var(--color-text-secondary)">{{ item.description[:150] }}</p>
+            {%- endif %}
+            {%- if item.body_html %}
+            <div class="mt-2 text-xs" style="color:var(--color-text-muted)">{{ item.body_html | reading_time }} min</div>
+            {%- endif %}
+          </div>
+        </a>
+      </div>
+    {%- endfor %}
+    </div>
+    
+    <div class="mt-4 text-center">
+      <a href="/learn/" class="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded-lg transition hover:opacity-80" style="color:var(--color-accent)">
+        View all lessons
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- Knowledge Base -->
+{% if knowledge_items %}
+<section class="py-12" aria-labelledby="knowledge-heading">
+  <div class="container mx-auto px-4">
+    <div class="section-header">
+      <h2 id="knowledge-heading">Knowledge Base</h2>
+      <p>Reference materials and glossaries</p>
+    </div>
+    
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    {%- for item in knowledge_items[:6] %}
+      <div class="research-card group" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+        <a href="/{{ item.slug }}/">
+          <div class="p-5">
+            <div class="flex items-center gap-2 mb-3">
+              {{ content_badge("knowledge") }}
+            </div>
+            <h3 class="font-semibold card-title-clamp mb-2" style="color:var(--color-text)">{{ item.title | striptags }}</h3>
+            <p class="text-sm" style="color:var(--color-text-secondary)">{{ item.description | truncate(100) }}</p>
+          </div>
+        </a>
+      </div>
+    {%- endfor %}
+    </div>
+    
+    <div class="mt-4 text-center">
+      <a href="/knowledge/" class="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded-lg transition hover:opacity-80" style="color:var(--color-accent)">
+        View all knowledge
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% endblock %}

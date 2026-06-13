@@ -219,7 +219,7 @@
       <div>
         <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6">
           <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-          <span class="text-sm text-gray-300">Live: {{ now.strftime("%B %d, %Y") if now else "Today" }}</span>
+          <span class="text-sm text-gray-300">Live: {{ datetime.now().strftime("%B %d, %Y") }}</span>
         </div>
         
         <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight mb-6" style="color:#ffffff">
@@ -248,15 +248,15 @@
         <!-- Trust Metrics -->
         <div class="trust-metrics">
           <div class="trust-metric">
-            <div class="trust-value">{{ recent_posts | length + 100 }}</div>
+            <div class="trust-value">{{ recent_posts | length | add(100) }}</div>
             <div class="trust-label">Research Briefings</div>
           </div>
           <div class="trust-metric">
-            <div class="trust-value">{{ learn_items | length + 100 }}</div>
+            <div class="trust-value">{{ learn_items | length | add(100) }}</div>
             <div class="trust-label">Learning Modules</div>
           </div>
           <div class="trust-metric">
-            <div class="trust-value">{{ knowledge_items | length + 100 }}</div>
+            <div class="trust-value">{{ knowledge_items | length | add(100) }}</div>
             <div class="trust-label">Knowledge Articles</div>
           </div>
           <div class="trust-metric">
@@ -502,6 +502,7 @@
   </div>
 </section>
 
+<!-- Newsletter (Moved Down) -->
 {% include 'partials/newsletter.html' %}
 
 {% endblock %}

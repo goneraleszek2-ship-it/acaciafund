@@ -26,7 +26,7 @@
 
   function render(query) {
     if (!idx) { resultsEl.innerHTML = '<p class="text-sm py-8 text-center" style="color:var(--color-text-muted)">Loading search index...</p>'; return; }
-    if (!query || query.length < 2) { resultsEl.innerHTML = ''; if (countEl) countEl.textContent = ''; return; }
+    if (!query) { resultsEl.innerHTML = ''; if (countEl) countEl.textContent = ''; return; }
     var results = [];
     idx.forEach(function(item){
       var s = score(query, item);
