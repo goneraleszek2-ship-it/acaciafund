@@ -1,0 +1,110 @@
+{% extends "admin/base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1>Dashboard</h1>
+    <div class="subtitle">Image pipeline overview</div>
+  </div>
+  <div>
+    <a href="/admin/gallery" class="btn btn-primary">Browse Gallery</a>
+  </div>
+</div>
+
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-value">{{ stats.total_images }}</div>
+    <div class="stat-label">Total Images</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">{{ stats.total_articles }}</div>
+    <div class="stat-label">Articles</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">{{ stats.with_images }}</div>
+    <div class="stat-label">Articles with images</div>
+    <span class="stat-badge success">{{ stats.with_images_pct }}%</span>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">{{ stats.without_images }}</div>
+    <div class="stat-label">Articles needing images</div>
+    {% if stats.without_images > 0 %}<span class="stat-badge danger">needs attention</span>{% endif %}
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">{{ stats.low_score }}</div>
+    <div class="stat-label">Low-score sections (&lt;70)</div>
+    {% if stats.low_score > 0 %}<span class="stat-badge warning">may need re-fetch</span>{% endif %}
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">{{ stats.orphan_images }}</div>
+    <div class="stat-label">Orphan images (unused)</div>
+    {% if stats.orphan_images > 50 %}<span class="stat-badge warning">cleanup candidates</span>{% endif %}
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">{{ stats.svg_fallbacks }}</div>
+    <div class="stat-label">SVG fallback sections</div>
+    {% if stats.svg_fallbacks > 0 %}<span class="stat-badge danger">needs real images</span>{% endif %}
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">{{ stats.manifest_entries }}</div>
+    <div class="stat-label">Manifest overrides</div>
+  </div>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+  <div class="card">
+    <div class="card-header">Articles by Content Type</div>
+    <div class="card-body">
+      <table>
+        <thead><tr><th>Type</th><th>Total</th><th>With Images</th><th>Needs Images</th></tr></thead>
+        <tbody>
+          {% for row in stats.by_type %}
+          <tr>
+            <td><span class="tag tag-content-type">{{ row.type }}</span></td>
+            <td>{{ row.total }}</td>
+            <td>{{ row.with_images }}</td>
+            <td>{% if row.without_images > 0 %}<span class="status-dot red" title="Needs images"></span> {{ row.without_images }}{% else %}<span class="status-dot green"></span> 0{% endif %}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">Image Sources</div>
+    <div class="card-body">
+      <table>
+        <thead><tr><th>Source</th><th>Count</th></tr></thead>
+        <tbody>
+          {% for src, count in stats.by_source %}
+          <tr><td><span class="tag tag-source">{{ src or 'unknown' }}</span></td><td>{{ count }}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+{% if stats.low_score_sections %}
+<div class="card" style="margin-top:20px">
+  <div class="card-header">Low-Score Sections (score &lt; 70)</div>
+  <div class="card-body" style="padding:0">
+    <table>
+      <thead><tr><th>Article</th><th>Section</th><th>Score</th><th>Source</th><th>Action</th></tr></thead>
+      <tbody>
+        {% for s in stats.low_score_sections %}
+        <tr>
+          <td><a href="/admin/article/{{ s.slug }}">{{ s.title }}</a></td>
+          <td>[{{ s.section_index }}] {{ s.heading }}</td>
+          <td>{{ s.score }}</td>
+          <td>{{ s.source }}</td>
+          <td><a href="/admin/article/{{ s.slug }}" class="btn btn-sm">View</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,62 @@
+{% extends "admin/base.html" %}
+{% block title %}Manifest Editor{% endblock %}
+{% block content %}
+<div class="page-header">
+  <h1>Manifest Editor</h1>
+  <div class="subtitle">Editorial image overrides — these take highest priority when fetching images</div>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+  <div class="card">
+    <div class="card-header">Existing Entries ({{ manifest|length }})</div>
+    <div class="card-body" style="padding:0">
+      {% if manifest %}
+      <table>
+        <thead><tr><th>Slug</th><th>Section</th><th>Image URL</th><th></th></tr></thead>
+        <tbody>
+          {% for entry in manifest %}
+          <tr>
+            <td><a href="/admin/article/{{ entry.slug }}" style="text-decoration:none;color:var(--admin-accent)">{{ entry.slug }}</a></td>
+            <td>{{ entry.section_index }}</td>
+            <td style="max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px">{{ entry.image_url }}</td>
+            <td><button class="btn btn-sm btn-danger" data-delete-manifest data-slug="{{ entry.slug }}_{{ entry.section_index }}">Delete</button></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <div class="empty-state" style="padding:30px"><p>No manifest entries yet.</p></div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">Add / Edit Entry</div>
+    <div class="card-body">
+      <form id="manifest-form">
+        <div style="margin-bottom:12px">
+          <label style="display:block;font-size:12px;font-weight:500;margin-bottom:4px">Article Slug</label>
+          <input type="text" name="slug" required style="width:100%;padding:8px 10px;border:1px solid var(--admin-border);border-radius:5px;font-size:13px" placeholder="e.g. 2026-06-11-kubernetes-data-pipelines">
+        </div>
+        <div style="margin-bottom:12px">
+          <label style="display:block;font-size:12px;font-weight:500;margin-bottom:4px">Section Index</label>
+          <select name="section_index" style="width:100%;padding:8px 10px;border:1px solid var(--admin-border);border-radius:5px;font-size:13px">
+            <option value="0">0 — Overview</option>
+            <option value="1">1 — Key Findings</option>
+            <option value="2">2 — Applied Scenario</option>
+            <option value="3">3 — Source Analysis</option>
+            <option value="4">4 — Domain Breakdown</option>
+            <option value="5">5 — Cross-Pillar</option>
+            <option value="6">6 — Methodology</option>
+          </select>
+        </div>
+        <div style="margin-bottom:16px">
+          <label style="display:block;font-size:12px;font-weight:500;margin-bottom:4px">Image URL</label>
+          <input type="url" name="image_url" required style="width:100%;padding:8px 10px;border:1px solid var(--admin-border);border-radius:5px;font-size:13px" placeholder="https://upload.wikimedia.org/...">
+        </div>
+        <button type="submit" class="btn btn-primary">Save Entry</button>
+      </form>
+    </div>
+  </div>
+</div>
+{% endblock %}

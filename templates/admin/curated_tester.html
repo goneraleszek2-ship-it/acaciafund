@@ -1,0 +1,56 @@
+{% extends "admin/base.html" %}
+{% block title %}Curated Tester{% endblock %}
+{% block content %}
+<div class="page-header">
+  <h1>Curated Match Tester</h1>
+  <div class="subtitle">Test CURATED_KNOWN phrase matching against article metadata</div>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+  <div class="card">
+    <div class="card-header">Test by Article Slug</div>
+    <div class="card-body">
+      <form id="curated-test-form">
+        <div style="margin-bottom:12px">
+          <label style="display:block;font-size:12px;font-weight:500;margin-bottom:4px">Article Slug</label>
+          <input type="text" name="slug" style="width:100%;padding:8px 10px;border:1px solid var(--admin-border);border-radius:5px;font-size:13px" placeholder="e.g. 2026-06-11-kubernetes-data-pipelines">
+        </div>
+        <div style="margin-bottom:4px">
+          <label style="display:block;font-size:12px;font-weight:500;margin-bottom:4px">Or enter raw text (comma-separated: title, tags, description, body)</label>
+          <textarea name="raw_text" rows="4" style="width:100%;padding:8px 10px;border:1px solid var(--admin-border);border-radius:5px;font-size:13px;font-family:monospace" placeholder="Paste article text here..."></textarea>
+        </div>
+        <div style="margin-bottom:4px">
+          <label style="font-size:11px;color:var(--admin-text-secondary)">
+            <input type="checkbox" name="show_all" value="1"> Show all {{ curated_count }} phrases (including non-matches)
+          </label>
+        </div>
+        <button type="submit" class="btn btn-primary">Test Match</button>
+      </form>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">Results</div>
+    <div class="card-body" id="curated-results">
+      <div class="empty-state"><p>Submit a slug or text to see matched CURATED_KNOWN phrases.</p></div>
+    </div>
+  </div>
+</div>
+
+<div class="card" style="margin-top:20px">
+  <div class="card-header">All CURATED_KNOWN Entries ({{ curated_count }})</div>
+  <div class="card-body" style="padding:0;max-height:400px;overflow-y:auto">
+    <table>
+      <thead><tr><th>Keywords</th><th>Wikimedia Filename</th></tr></thead>
+      <tbody>
+        {% for phrase, filename in curated_entries %}
+        <tr>
+          <td><code style="font-size:11px">{{ phrase }}</code></td>
+          <td><code style="font-size:11px;color:var(--admin-text-secondary)">{{ filename }}</code></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

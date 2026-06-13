@@ -1,0 +1,92 @@
+{% extends "admin/base.html" %}
+{% block title %}Image Coverage{% endblock %}
+{% block content %}
+<div class="page-header">
+  <h1>Image Coverage Heatmap</h1>
+  <div class="subtitle">Fill rate by pillar × section type</div>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+  <div class="card">
+    <div class="card-header">Coverage by Pillar</div>
+    <div class="card-body" style="padding:0">
+      <table>
+        <thead><tr><th>Pillar</th><th>Filled</th><th>Total</th><th>%</th></tr></thead>
+        <tbody>
+          {% for pillar, data in by_pillar.items()|sort(attribute='1.filled', reverse=True) %}
+          <tr>
+            <td><span class="tag tag-pillar">{{ pillar }}</span></td>
+            <td>{{ data.filled }}</td>
+            <td>{{ data.total }}</td>
+            <td>
+              {% set pct = (data.filled / data.total * 100)|round if data.total else 0 %}
+              <span style="color:{% if pct >= 80 %}var(--admin-success){% elif pct >= 50 %}var(--admin-warning){% else %}var(--admin-danger){% endif %}">
+                {{ pct }}%
+              </span>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">Coverage by Content Type</div>
+    <div class="card-body" style="padding:0">
+      <table>
+        <thead><tr><th>Type</th><th>Filled</th><th>Total</th><th>%</th></tr></thead>
+        <tbody>
+          {% for ct, data in by_type.items()|sort(attribute='1.filled', reverse=True) %}
+          <tr>
+            <td><span class="tag tag-content-type">{{ ct }}</span></td>
+            <td>{{ data.filled }}</td>
+            <td>{{ data.total }}</td>
+            <td>
+              {% set pct = (data.filled / data.total * 100)|round if data.total else 0 %}
+              <span style="color:{% if pct >= 80 %}var(--admin-success){% elif pct >= 50 %}var(--admin-warning){% else %}var(--admin-danger){% endif %}">
+                {{ pct }}%
+              </span>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">Heatmap: Pillar × Section Type (fill %)</div>
+  <div class="card-body" style="overflow-x:auto">
+    {% set section_labels = ["Overview","Key Findings","Applied Scenario","Source Analysis","Domain Breakdown","Cross-Pillar","Methodology"] %}
+    <table>
+      <thead>
+        <tr>
+          <th style="min-width:100px">Pillar</th>
+          {% for sl in section_labels %}
+          <th style="min-width:80px;text-align:center;font-size:10px">{{ sl }}</th>
+          {% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for pillar, sections in heatmap.items()|sort %}
+        <tr>
+          <td><span class="tag tag-pillar">{{ pillar }}</span></td>
+          {% for sl in section_labels %}
+            {% set pct = sections.get(sl) %}
+            <td style="text-align:center;background:{% if pct is none %}#f0eee8{% elif pct >= 80 %}#d1fae5{% elif pct >= 50 %}#fef9c3{% elif pct >= 1 %}#fee2e2{% else %}#f0eee8{% endif %};color:{% if pct is none %}#999{% elif pct >= 1 %}#333{% else %}#999{% endif %}">
+              {% if pct is not none %}
+                <strong>{{ pct }}%</strong>
+              {% else %}
+                —
+              {% endif %}
+            </td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

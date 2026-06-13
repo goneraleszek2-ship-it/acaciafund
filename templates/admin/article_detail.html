@@ -1,0 +1,141 @@
+{% extends "admin/base.html" %}
+{% block title %}{{ article.title }}{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1>{{ article.title }}</h1>
+    <div class="subtitle">{{ article.slug }} · {{ article.content_type }} · {{ article.pillar }}</div>
+  </div>
+  <div>
+    <a href="/admin/articles" class="btn">← Back to Articles</a>
+  </div>
+</div>
+
+<div class="card" style="margin-bottom:20px">
+  <div class="card-header">Article Info</div>
+  <div class="card-body">
+    <div class="meta-list">
+      <span class="label">Slug:</span> {{ article.slug }}<br>
+      <span class="label">Pillar:</span> <span class="tag tag-pillar">{{ article.pillar }}</span><br>
+      <span class="label">Type:</span> <span class="tag tag-content-type">{{ article.content_type }}</span><br>
+      <span class="label">Tags:</span> {% for t in article.tags %}<span class="tag">{{ t }}</span>{% endfor %}<br>
+      <span class="label">Created:</span> {{ article.created_at }}<br>
+      <span class="label">Description:</span> {{ article.description[:200] }}{% if article.description|length > 200 %}…{% endif %}
+    </div>
+  </div>
+</div>
+
+<div class="article-layout">
+  <div>
+    <h2 style="font-size:16px;font-weight:600;margin-bottom:12px">Featured Image</h2>
+    <div class="section-image-card">
+      {% if article.featured_image %}
+      <div class="section-head">
+        <span>Featured Image</span>
+        <span class="meta-list"><span class="label">URL:</span> {{ article.featured_image }}</span>
+      </div>
+      <div class="section-preview">
+        <img src="{{ article.featured_image }}" alt="Featured" style="width:240px;height:160px;object-fit:cover;border-radius:5px">
+        <div>
+          <div class="meta-list">
+            {% if article.image_credit %}<span class="label">Credit:</span> {{ article.image_credit }}<br>{% endif %}
+          </div>
+          <div class="section-actions">
+            <button class="btn btn-sm" data-pick-image data-article-slug="{{ article.slug }}" data-role="featured" data-section-index="0">Replace</button>
+            <button class="btn btn-sm btn-danger" data-remove-image data-article-slug="{{ article.slug }}" data-role="featured" data-section-index="0">Remove</button>
+          </div>
+        </div>
+      </div>
+      {% else %}
+      <div class="section-head"><span>Featured Image</span><span class="status-dot red"></span></div>
+      <div class="section-preview">
+        <div class="no-image">No featured image</div>
+        <div>
+          <div class="section-actions">
+            <button class="btn btn-sm btn-primary" data-pick-image data-article-slug="{{ article.slug }}" data-role="featured" data-section-index="0">Set Image</button>
+            <button class="btn btn-sm" data-suggest data-article-slug="{{ article.slug }}" data-section-index="0" data-role="featured">Auto-suggest</button>
+          </div>
+          <div id="suggest-{{ article.slug }}-0" style="display:none;margin-top:10px"></div>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+
+    <h2 style="font-size:16px;font-weight:600;margin:20px 0 12px">Section Images</h2>
+    {% for s in sections %}
+    <div class="section-image-card">
+      <div class="section-head">
+        <span>[{{ s.section_index }}] {{ s.heading }}</span>
+        {% if s.image %}
+          <span class="meta-list">
+            Score: {{ s.image.relevance_score }} ·
+            Source: {{ s.image.source_api }}
+          </span>
+        {% else %}
+          <span class="status-dot red"></span>
+        {% endif %}
+      </div>
+      <div class="section-preview">
+        {% if s.image %}
+        <img src="{{ s.image.image_url }}" alt="{{ s.image.image_alt }}" style="width:180px;height:120px;object-fit:cover;border-radius:5px">
+        <div>
+          <div class="meta-list">
+            <span class="label">Score:</span> {{ s.image.relevance_score }}<br>
+            <span class="label">Source:</span> {{ s.image.source_api }}<br>
+            <span class="label">Dimensions:</span> {{ s.image.width }}×{{ s.image.height }}<br>
+            {% if s.image.image_credit %}<span class="label">Credit:</span> {{ s.image.image_credit[:80] }}{% endif %}
+          </div>
+          <div class="section-actions">
+            <button class="btn btn-sm" data-pick-image data-article-slug="{{ article.slug }}" data-section-index="{{ s.section_index }}" data-role="section">Replace</button>
+            <button class="btn btn-sm" data-suggest data-article-slug="{{ article.slug }}" data-section-index="{{ s.section_index }}" data-role="section">Auto-suggest</button>
+            <button class="btn btn-sm btn-danger" data-remove-image data-article-slug="{{ article.slug }}" data-section-index="{{ s.section_index }}" data-role="section">Remove</button>
+          </div>
+          <div id="suggest-{{ article.slug }}-{{ s.section_index }}" style="display:none;margin-top:10px"></div>
+        </div>
+        {% else %}
+        <div class="no-image">No image</div>
+        <div>
+          <div class="section-actions">
+            <button class="btn btn-sm btn-primary" data-pick-image data-article-slug="{{ article.slug }}" data-section-index="{{ s.section_index }}" data-role="section">Pick Image</button>
+            <button class="btn btn-sm" data-suggest data-article-slug="{{ article.slug }}" data-section-index="{{ s.section_index }}" data-role="section">Auto-suggest</button>
+          </div>
+          <div id="suggest-{{ article.slug }}-{{ s.section_index }}" style="display:none;margin-top:10px"></div>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+
+  <div>
+    <div class="card">
+      <div class="card-header">Section Query Preview</div>
+      <div class="card-body">
+        {% for s in sections %}
+        <div style="margin-bottom:12px;padding-bottom:12px;border-bottom:1px solid var(--admin-border);font-size:12px">
+          <strong>[{{ s.section_index }}] {{ s.heading }}</strong><br>
+          <span class="label">Entities:</span> {{ s.entities|join(', ') if s.entities else 'none' }}<br>
+          <span class="label">Words:</span> {{ s.word_count }}<br>
+          <span class="label">Query:</span> <code>{{ s.query }}</code><br>
+          <span class="label">Type:</span> {{ s.section_type }}
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <div class="card-header">Quick Actions</div>
+      <div class="card-body">
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <form method="POST" action="/admin/api/article/{{ article.slug }}/re-fetch-all" style="display:inline">
+            <button class="btn btn-sm btn-primary" type="button" onclick="if(confirm('Re-fetch ALL sections? This may take a while.')){fetch('/admin/api/article/{{ article.slug }}/re-fetch-all',{method:'POST'}).then(r=>r.json()).then(d=>{alert(d.message||'Done');location.reload()})}">
+              🔄 Re-fetch All Sections
+            </button>
+          </form>
+          <a href="/admin/gallery?q={{ article.slug }}" class="btn btn-sm">🔍 Find images for this slug</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,116 @@
+{% extends "admin/base.html" %}
+{% block title %}Image Quality{% endblock %}
+{% block content %}
+<div class="page-header">
+  <h1>Image Quality Distribution</h1>
+  <div class="subtitle">{{ stats.total_scores }} scored sections · Avg {{ stats.avg_score }} · Median {{ stats.median_score }}</div>
+</div>
+
+<div class="stats-grid" style="margin-bottom:20px">
+  <div class="stat-card">
+    <div class="stat-value" style="color:{% if stats.avg_score >= 70 %}var(--admin-success){% elif stats.avg_score >= 40 %}var(--admin-warning){% else %}var(--admin-danger){% endif %}">{{ stats.avg_score }}</div>
+    <div class="stat-label">Average Score</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value" style="color:var(--admin-success)">{{ stats.above_70 }}</div>
+    <div class="stat-label">Above 70 (good)</div>
+    <span class="stat-badge success">{{ (stats.above_70 / stats.total_scores * 100)|round(1) if stats.total_scores else 0 }}%</span>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value" style="color:var(--admin-danger)">{{ stats.below_40 }}</div>
+    <div class="stat-label">Below 40 (poor)</div>
+    <span class="stat-badge danger">{{ (stats.below_40 / stats.total_scores * 100)|round(1) if stats.total_scores else 0 }}%</span>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">{{ stats.median_score }}</div>
+    <div class="stat-label">Median Score</div>
+  </div>
+</div>
+
+<!-- Score histogram -->
+<div class="card" style="margin-bottom:20px">
+  <div class="card-header">Score Histogram</div>
+  <div class="card-body">
+    {% set max_bucket = stats.buckets|max or 1 %}
+    <div style="display:flex;align-items:flex-end;gap:4px;height:160px;padding:10px 0">
+      {% for i in range(10) %}
+        {% set h = (stats.buckets[i] / max_bucket * 140)|round|int %}
+        <div style="flex:1;display:flex;flex-direction:column;align-items:center">
+          <div style="width:100%;height:{{ h }}px;background:{% if i * 10 >= 70 %}var(--admin-success){% elif i * 10 >= 40 %}var(--admin-warning){% else %}var(--admin-danger){% endif %};border-radius:3px 3px 0 0;transition:height .3s" title="{{ i * 10 }}-{{ (i+1) * 10 - 1 }}: {{ stats.buckets[i] }}"></div>
+          <div style="font-size:9px;color:var(--admin-text-secondary);margin-top:4px">{{ i * 10 }}-{{ (i+1) * 10 - 1 }}</div>
+        </div>
+      {% endfor %}
+    </div>
+    <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--admin-text-secondary);padding:0 4px">
+      <span>0</span>
+      <span>50</span>
+      <span>100</span>
+    </div>
+  </div>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px">
+  <div class="card">
+    <div class="card-header">Avg Score by Source</div>
+    <div class="card-body" style="padding:0">
+      <table>
+        <thead><tr><th>Source</th><th>Avg</th></tr></thead>
+        <tbody>
+          {% for src, avg in stats.source_avgs.items() %}
+          <tr>
+            <td><span class="tag tag-source">{{ src }}</span></td>
+            <td>
+              <span style="color:{% if avg >= 70 %}var(--admin-success){% elif avg >= 40 %}var(--admin-warning){% else %}var(--admin-danger){% endif %}">
+                {{ avg }}
+              </span>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">Avg Score by Section Type</div>
+    <div class="card-body" style="padding:0">
+      <table>
+        <thead><tr><th>Section</th><th>Avg</th></tr></thead>
+        <tbody>
+          {% for stype, avg in stats.section_avgs.items() %}
+          <tr>
+            <td style="font-size:12px">{{ stype }}</td>
+            <td>
+              <span style="color:{% if avg >= 70 %}var(--admin-success){% elif avg >= 40 %}var(--admin-warning){% else %}var(--admin-danger){% endif %}">
+                {{ avg }}
+              </span>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">Avg Score by Content Type</div>
+    <div class="card-body" style="padding:0">
+      <table>
+        <thead><tr><th>Type</th><th>Avg</th></tr></thead>
+        <tbody>
+          {% for ct, avg in stats.type_avgs.items() %}
+          <tr>
+            <td><span class="tag tag-content-type">{{ ct }}</span></td>
+            <td>
+              <span style="color:{% if avg >= 70 %}var(--admin-success){% elif avg >= 40 %}var(--admin-warning){% else %}var(--admin-danger){% endif %}">
+                {{ avg }}
+              </span>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

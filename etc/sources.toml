@@ -1,0 +1,105 @@
+# AcaciaFund Source Configuration
+# Every source listed here is loaded by core.sources.registry.
+# To add a new source: add a [source.<name>] block with the appropriate type.
+# Type must have a matching class in FETCHER_CLASSES (core/sources/__init__.py).
+#
+# Source types:
+#   hn              — Hacker News (Algolia API)
+#   arxiv           — arXiv API
+#   pubmed          — PubMed/MEDLINE
+#   semantic_scholar — Semantic Scholar API
+#   rss             — Generic RSS/Atom feed reader
+
+[source.hn]
+type = "hn"
+enabled = true
+category = "news.tech"
+quality_weight = 0.8
+params = { max_hits = 1000, min_points = 2, since_hours = 24 }
+[source.hn.schedule]
+every_hours = 24
+
+[source.arxiv]
+type = "arxiv"
+enabled = true
+category = "research.academic"
+quality_weight = 0.9
+params = { max_results = 100, since_hours = 72 }
+[source.arxiv.schedule]
+every_hours = 12
+
+[source.pubmed]
+type = "pubmed"
+enabled = true
+category = "research.biomedical"
+quality_weight = 0.7
+params = { max_results = 50, since_hours = 168 }
+[source.pubmed.schedule]
+every_hours = 24
+
+[source.semantic_scholar]
+type = "semantic_scholar"
+enabled = true
+category = "research.academic"
+quality_weight = 0.85
+params = { max_results = 50, since_hours = 168 }
+[source.semantic_scholar.schedule]
+every_hours = 12
+
+# ── RSS Feeds — all confirmed working from the build environment ──
+
+[source.techcrunch]
+type = "rss"
+enabled = true
+category = "news.tech"
+quality_weight = 0.5
+params = { url = "https://techcrunch.com/feed/", max_results = 20, cache_ttl_hours = 6 }
+
+[source.wired]
+type = "rss"
+enabled = true
+category = "news.tech"
+quality_weight = 0.5
+params = { url = "https://www.wired.com/feed/rss", max_results = 20, cache_ttl_hours = 6 }
+
+[source.arstechnica]
+type = "rss"
+enabled = true
+category = "news.tech"
+quality_weight = 0.6
+params = { url = "https://feeds.arstechnica.com/arstechnica/index", max_results = 20, cache_ttl_hours = 6 }
+
+[source.github_blog]
+type = "rss"
+enabled = true
+category = "engineering.blog"
+quality_weight = 0.85
+params = { url = "https://github.blog/feed/", max_results = 15, cache_ttl_hours = 6 }
+
+[source.cloudflare_blog]
+type = "rss"
+enabled = true
+category = "engineering.blog"
+quality_weight = 0.85
+params = { url = "https://blog.cloudflare.com/rss/", max_results = 15, cache_ttl_hours = 6 }
+
+[source.krebs_on_security]
+type = "rss"
+enabled = true
+category = "news.security"
+quality_weight = 0.8
+params = { url = "https://krebsonsecurity.com/feed/", max_results = 10, cache_ttl_hours = 6 }
+
+[source.bloomberg_markets]
+type = "rss"
+enabled = true
+category = "news.finance"
+quality_weight = 0.7
+params = { url = "https://feeds.bloomberg.com/markets/news.rss", max_results = 20, cache_ttl_hours = 6 }
+
+[source.import_ai]
+type = "rss"
+enabled = true
+category = "news.ai"
+quality_weight = 0.8
+params = { url = "https://jack-clark.net/feed/", max_results = 10, cache_ttl_hours = 12 }

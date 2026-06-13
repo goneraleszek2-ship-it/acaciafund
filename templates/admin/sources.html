@@ -1,0 +1,83 @@
+{% extends "admin/base.html" %}
+{% block title %}Sources{% endblock %}
+{% block content %}
+<div class="page-header">
+  <h1>Content Sources</h1>
+  <div class="subtitle">{{ sources|length }} sources configured · {{ sources|selectattr('enabled')|list|length }} enabled</div>
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px;margin-bottom:24px">
+  {% for s in sources %}
+  <div class="card" data-source="{{ s.name }}" style="border-left:4px solid {% if s.enabled %}var(--admin-success){% else %}var(--admin-text-secondary){% endif %}">
+    <div class="card-header">
+      <div style="display:flex;align-items:center;justify-content:space-between;width:100%">
+        <span><strong>{{ s.name }}</strong> <span class="tag tag-source">{{ s.type }}</span></span>
+        <span>
+          {% if s.enabled %}
+          <span class="tag" style="background:rgba(34,197,94,.15);color:var(--admin-success)">enabled</span>
+          {% else %}
+          <span class="tag" style="background:rgba(161,161,170,.15);color:var(--admin-text-secondary)">disabled</span>
+          {% endif %}
+        </span>
+      </div>
+    </div>
+    <div class="card-body" style="font-size:13px">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4px 16px">
+        <div>Category</div>
+        <div><span class="tag tag-pillar">{{ s.category }}</span></div>
+        <div>Quality Weight</div>
+        <div>{{ s.quality_weight }}</div>
+        <div>Schedule</div>
+        <div>{{ s.schedule_hours }}h</div>
+        <div>Total Runs</div>
+        <div>{{ s.total_runs or 0 }}</div>
+        <div>Success Rate</div>
+        <div>
+          {% set sr = s.success_rate|default(100) %}
+          <span style="color:{% if sr >= 90 %}var(--admin-success){% elif sr >= 50 %}var(--admin-warning){% else %}var(--admin-danger){% endif %}">
+            {{ sr }}%
+          </span>
+        </div>
+        <div>Avg Latency</div>
+        <div>{% if s.avg_latency_ms %}{{ s.avg_latency_ms|round(1) }}ms{% else %}—{% endif %}</div>
+        <div>Total Items</div>
+        <div>{{ s.total_items or 0 }}</div>
+      </div>
+      <div style="margin-top:12px;display:flex;gap:8px">
+        <button class="btn btn-sm btn-outline" onclick="refreshSource('{{ s.name }}')" id="refresh-{{ s.name }}">
+          ⟳ Refresh Now
+        </button>
+        <span id="status-{{ s.name }}" style="font-size:11px;align-self:center;color:var(--admin-text-secondary)"></span>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
+
+<script>
+async function refreshSource(name) {
+  const btn = document.getElementById('refresh-' + name);
+  const status = document.getElementById('status-' + name);
+  btn.disabled = true;
+  btn.textContent = '⟳ Running...';
+  status.textContent = '';
+  try {
+    const resp = await fetch('/admin/api/sources/' + name + '/refresh', { method: 'POST' });
+    const data = await resp.json();
+    if (data.success) {
+      status.textContent = data.item_count + ' items in ' + data.duration_s + 's (' + data.latency_ms + 'ms)';
+      status.style.color = 'var(--admin-success)';
+    } else {
+      status.textContent = 'Error: ' + (data.error || 'unknown');
+      status.style.color = 'var(--admin-danger)';
+    }
+  } catch (e) {
+    status.textContent = 'Network error';
+    status.style.color = 'var(--admin-danger)';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '⟳ Refresh Now';
+  }
+}
+</script>

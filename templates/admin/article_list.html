@@ -1,0 +1,95 @@
+{% extends "admin/base.html" %}
+{% block title %}Articles{% endblock %}
+{% block content %}
+<div class="page-header">
+  <h1>Articles</h1>
+  <div class="subtitle">{{ articles|length }} total · {{ needs_images }} need images</div>
+</div>
+
+<div class="filters-bar">
+  <label>Pillar</label>
+  <select id="pillar-filter" onchange="applyFilters()">
+    <option value="">All</option>
+    {% for p in pillars %}
+    <option value="{{ p }}">{{ p }}</option>
+    {% endfor %}
+  </select>
+  <label>Status</label>
+  <select id="status-filter" onchange="applyFilters()">
+    <option value="">All</option>
+    <option value="needs_images">Needs Images</option>
+    <option value="low_score">Low Score</option>
+    <option value="complete">Complete</option>
+  </select>
+  <label>Type</label>
+  <select id="type-filter" onchange="applyFilters()">
+    <option value="">All</option>
+    <option value="research">Research</option>
+    <option value="learn">Learn</option>
+    <option value="knowledge">Knowledge</option>
+  </select>
+  <input type="search" id="search-filter" placeholder="Search title..." oninput="applyFilters()" style="flex:1;min-width:150px">
+</div>
+
+<div class="card" style="padding:0;overflow:hidden">
+  <table id="article-table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Type</th>
+        <th>Pillar</th>
+        <th>Sections</th>
+        <th>Images</th>
+        <th>Featured</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for a in articles %}
+      <tr class="article-row" data-pillar="{{ a.pillar|lower }}" data-type="{{ a.content_type }}" data-status="{% if a.needs_images %}needs_images{% elif a.low_score %}low_score{% else %}complete{% endif %}" data-search="{{ a.title|lower }} {{ a.slug|lower }}">
+        <td><a href="/admin/article/{{ a.slug }}" style="font-weight:500;text-decoration:none;color:var(--admin-accent)">{{ a.title }}</a></td>
+        <td><span class="tag tag-content-type">{{ a.content_type }}</span></td>
+        <td><span class="tag tag-pillar">{{ a.pillar }}</span></td>
+        <td>{{ a.num_sections }}</td>
+        <td>
+          <div class="article-row-status">
+            {% if a.needs_images %}
+              <span class="status-dot red" title="Missing images"></span>
+              <span style="font-size:11px;color:var(--admin-danger)">{{ a.section_images_count }}/{{ a.num_sections }}</span>
+            {% elif a.low_score %}
+              <span class="status-dot yellow" title="Has low-score images"></span>
+              <span style="font-size:11px;color:var(--admin-warning)">{{ a.section_images_count }}/{{ a.num_sections }}</span>
+            {% else %}
+              <span class="status-dot green" title="Complete"></span>
+              <span style="font-size:11px;color:var(--admin-success)">{{ a.section_images_count }}/{{ a.num_sections }}</span>
+            {% endif %}
+          </div>
+        </td>
+        <td>
+          {% if a.featured_image %}
+            <span class="status-dot green" title="Has featured image"></span>
+          {% else %}
+            <span class="status-dot red" title="No featured image"></span>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<script>
+function applyFilters() {
+  const pillar = document.getElementById('pillar-filter').value.toLowerCase();
+  const status = document.getElementById('status-filter').value;
+  const type = document.getElementById('type-filter').value;
+  const search = document.getElementById('search-filter').value.toLowerCase();
+  document.querySelectorAll('.article-row').forEach(row => {
+    const showPillar = !pillar || row.dataset.pillar === pillar;
+    const showStatus = !status || row.dataset.status === status;
+    const showType = !type || row.dataset.type === type;
+    const showSearch = !search || row.dataset.search.includes(search);
+    row.style.display = showPillar && showStatus && showType && showSearch ? '' : 'none';
+  });
+}
+</script>
+{% endblock %}

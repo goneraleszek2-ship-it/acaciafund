@@ -6,69 +6,62 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from core.data import PILLARS, log
-from core.fetch import fetch_hn_stories, fetch_arxiv, fetch_pubmed
+from core.fetch import fetch_hn_stories
 from core.analyze import classify_story
 from core.generate import generate_post
 from core.metadata import build_run_manifest, write_json, iso_utc, write_registry_index
+from core.sources import registry
 
 
 def inject_external_sources(pillar_stories: dict[str, list[dict]]) -> dict[str, int]:
-    """Fetch from external sources (arXiv, PubMed, etc.) and distribute by pillar."""
-    counts = {"arxiv": 0, "pubmed": 0}
-    
-    # Fetch arXiv papers
-    log("Fetching from arXiv API...")
-    arxiv_papers = fetch_arxiv(since_hours=72)
-    counts["arxiv"] = len(arxiv_papers)
-    log(f"Fetched {len(arxiv_papers)} matching papers from arXiv")
-    for paper in arxiv_papers:
-        p = paper["pillar"]
-        pillar_stories[p].append({
-            "title": paper["title"],
-            "url": paper["url"],
-            "hn_url": "",
-            "points": 0,
-            "created_at": paper["published"],
-            "author": "arXiv",
-            "object_id": "",
-            "source": "arxiv"
-        })
-        log(f"  -> {p} [arXiv]: {paper['title'][:50]}")
-    
-    # Fetch PubMed papers
-    log("Fetching from PubMed...")
-    pubmed_papers = fetch_pubmed(since_hours=168)
-    counts["pubmed"] = len(pubmed_papers)
-    log(f"Fetched {len(pubmed_papers)} matching papers from PubMed")
-    for paper in pubmed_papers:
-        # Classify PubMed papers using existing logic
-        classifications = classify_story({
-            "title": paper["title"],
-            "url": paper["url"],
-            "points": 0,  # PubMed doesn't have points
-            "created_at": paper["published"],
-            "author": paper.get("author", ""),
-            "object_id": ""
-        })
-        if classifications:
-            best = max(classifications, key=lambda x: x[1])
-            p = best[0]
-        else:
-            # Default to archived (unclassified)
-            p = ""
-        
-        pillar_stories[p].append({
-            "title": paper["title"],
-            "url": paper["url"],
-            "hn_url": "",
-            "points": 0,
-            "created_at": paper["published"],
-            "author": paper.get("author", "PubMed"),
-            "object_id": "",
-            "source": "pubmed"
-        })
-        log(f"  -> {p} [PubMed]: {paper['title'][:50]}")
-    
+    """Fetch from all registry-enabled sources and distribute by pillar."""
+    counts: dict[str, int] = {}
+
+    for fetcher in registry.enabled:
+        log(f"Fetching from {fetcher.name} ({fetcher.config.type})...")
+        try:
+            result = fetcher.fetch(since_hours=fetcher.config.schedule_hours)
+        except Exception as e:
+            log(f"  Failed {fetcher.name}: {e}", ok=False)
+            counts[fetcher.name] = 0
+            continue
+
+        if not result.success or not result.items:
+            log(f"  {fetcher.name}: {result.item_count} items (error={result.error})")
+            counts[fetcher.name] = result.item_count
+            continue
+
+        counts[fetcher.name] = result.item_count
+        log(f"  Fetched {result.item_count} items from {fetcher.name}")
+
+        for item in result.items:
+            p = item.get("pillar", "")
+            if not p or p not in PILLARS:
+                classifications = classify_story({
+                    "title": item.get("title", ""),
+                    "url": item.get("url", ""),
+                    "points": 0,
+                    "created_at": item.get("published", ""),
+                    "author": item.get("author", ""),
+                    "object_id": "",
+                })
+                if classifications:
+                    p = max(classifications, key=lambda x: x[1])[0]
+                else:
+                    p = ""
+
+            pillar_stories[p].append({
+                "title": item.get("title", item.get("paper_url", "")),
+                "url": item.get("url", item.get("paper_url", "")),
+                "hn_url": item.get("hn_url", ""),
+                "points": 0,
+                "created_at": item.get("published", item.get("created_at", "")),
+                "author": item.get("author", fetcher.name),
+                "object_id": item.get("object_id", ""),
+                "source": fetcher.name,
+            })
+            log(f"  -> {p} [{fetcher.name}]: {item.get('title', '')[:50]}")
+
     return counts
 
 
@@ -133,11 +126,7 @@ def main():
         started_at=iso_utc(started_at),
         ended_at=iso_utc(ended_at),
         status="ok" if generated else "noop",
-        source_counts={
-            "hn": len(all_stories),
-            "arxiv": source_counts.get("arxiv", 0),
-            "pubmed": source_counts.get("pubmed", 0),
-        },
+        source_counts={"hn": len(all_stories), **source_counts},
         generated_pages=generated_pages,
         output_count=generated,
         notes=[],

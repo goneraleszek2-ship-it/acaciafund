@@ -1,0 +1,88 @@
+{% extends "admin/base.html" %}
+{% block title %}Image — {{ img.filename }}{% endblock %}
+{% block content %}
+<div class="page-header">
+  <div>
+    <h1>{{ img.filename }}</h1>
+    <div class="subtitle">{{ img.path }}</div>
+  </div>
+  <div>
+    <a href="/admin/gallery" class="btn">← Back to Gallery</a>
+  </div>
+</div>
+
+<div style="display:grid;grid-template-columns:2fr 1fr;gap:20px">
+  <div class="card">
+    <div class="card-header">Preview</div>
+    <div class="card-body" style="text-align:center;background:#f0eee8;display:flex;align-items:center;justify-content:center;min-height:300px">
+      {% if img.format == 'svg' %}
+      <img src="{{ img.url }}" alt="{{ img.filename }}" style="max-width:100%;max-height:500px;object-fit:contain">
+      {% else %}
+      <img src="{{ img.url }}" alt="{{ img.filename }}" style="max-width:100%;max-height:500px;object-fit:contain;border-radius:5px">
+      {% endif %}
+    </div>
+  </div>
+
+  <div>
+    <div class="card">
+      <div class="card-header">Metadata</div>
+      <div class="card-body">
+        <div class="meta-list">
+          <span class="label">Filename:</span> {{ img.filename }}<br>
+          <span class="label">Format:</span> {{ img.format }}<br>
+          <span class="label">Size:</span> {% if img.file_size >= 1024 %}{{ (img.file_size / 1024)|round(1) }} KB{% else %}{{ img.file_size }} B{% endif %}<br>
+          {% if img.width and img.height %}
+          <span class="label">Dimensions:</span> {{ img.width }} × {{ img.height }}<br>
+          {% endif %}
+          {% if img.section_index is not none %}
+          <span class="label">Section:</span> {{ img.section_index }}<br>
+          {% endif %}
+          <span class="label">Content type:</span> {{ img.content_type }}<br>
+          {% if img.source %}
+          <span class="label">Source:</span> <span class="tag tag-source">{{ img.source }}</span><br>
+          {% endif %}
+          <span class="label">Full path:</span><br>
+          <code style="font-size:11px;word-break:break-all">{{ img.path }}</code>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" style="margin-top:16px">
+      <div class="card-header">Usage & Lineage ({{ img.used_by|length }})</div>
+      <div class="card-body" style="padding:0">
+        {% if img.used_by %}
+        <table>
+          <thead><tr><th>Article</th><th>Section</th><th>Role</th><th>Score</th><th>Source</th></tr></thead>
+          <tbody>
+            {% for use in img.used_by %}
+            {% set score = use.get('relevance_score') if use.get('relevance_score') is not none else '—' %}
+            {% set source_api = use.get('source_api') or img.source or '—' %}
+            <tr>
+              <td><a href="/admin/article/{{ use.slug }}" style="text-decoration:none;color:var(--admin-accent)">{{ use.title }}</a></td>
+              <td>{% if use.section_index is not none %}[{{ use.section_index }}]{% else %}—{% endif %}</td>
+              <td><span class="tag">{{ use.role }}</span></td>
+              <td>
+                {% if score != '—' %}
+                <span style="color:{% if score >= 70 %}var(--admin-success){% elif score >= 40 %}var(--admin-warning){% else %}var(--admin-danger){% endif %}">
+                  {{ score }}
+                </span>
+                {% else %}—{% endif %}
+              </td>
+              <td><span class="tag tag-source">{{ source_api }}</span></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+        <div class="empty-state" style="padding:20px">
+          <p>This image is not currently used by any article.</p>
+          <p style="margin-top:8px">
+            <a href="/admin/articles?status=needs_images" class="btn btn-sm btn-primary">Find articles that need images</a>
+          </p>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

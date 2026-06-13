@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Admin{% endblock %} — AcaciaFund</title>
+<link rel="stylesheet" href="/static/admin.css">
+</head>
+<body>
+<nav class="sidebar">
+  <div class="sidebar-header">
+    <strong>AcaciaFund</strong> Admin
+  </div>
+  <div class="sidebar-nav">
+    <a href="/admin/" class="{{ 'active' if active_page == 'dashboard' else '' }}">
+      <span class="icon">📊</span> Dashboard
+    </a>
+    <a href="/admin/gallery" class="{{ 'active' if active_page == 'gallery' else '' }}">
+      <span class="icon">🖼</span> Gallery
+    </a>
+    <a href="/admin/articles" class="{{ 'active' if active_page == 'articles' else '' }}">
+      <span class="icon">📝</span> Articles
+    </a>
+    <a href="/admin/manifest" class="{{ 'active' if active_page == 'manifest' else '' }}">
+      <span class="icon">📄</span> Manifest
+    </a>
+    <a href="/admin/pipeline" class="{{ 'active' if active_page == 'pipeline' else '' }}">
+      <span class="icon">📈</span> Pipeline
+    </a>
+    <a href="/admin/quality" class="{{ 'active' if active_page == 'quality' else '' }}">
+      <span class="icon">🎯</span> Quality
+    </a>
+    <a href="/admin/coverage" class="{{ 'active' if active_page == 'coverage' else '' }}">
+      <span class="icon">🗺</span> Coverage
+    </a>
+    <a href="/admin/sources" class="{{ 'active' if active_page == 'sources' else '' }}">
+      <span class="icon">📡</span> Sources
+    </a>
+    <a href="/admin/curated-test" class="{{ 'active' if active_page == 'curated' else '' }}">
+      <span class="icon">🧪</span> Curated Tester
+    </a>
+  </div>
+  <div style="padding:12px 16px;font-size:11px;color:rgba(255,255,255,.3);border-top:1px solid rgba(255,255,255,.06)">
+    {{ image_count }} images · {{ article_count }} articles
+  </div>
+</nav>
+<div class="main">
+  {% block content %}{% endblock %}
+</div>
+<div class="toast-container"></div>
+
+<!-- Image Picker Modal -->
+<div class="modal-overlay" id="image-picker-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <span>Pick an Image</span>
+      <button class="modal-close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="empty-state"><p>Loading...</p></div>
+    </div>
+  </div>
+</div>
+
+<script src="/static/admin.js"></script>
+</body>
+</html>

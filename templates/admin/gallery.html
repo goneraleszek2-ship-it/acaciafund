@@ -1,0 +1,59 @@
+{% extends "admin/base.html" %}
+{% block title %}Gallery{% endblock %}
+{% block content %}
+<div class="page-header">
+  <h1>Image Gallery</h1>
+  <div class="subtitle">{{ stats.total_images }} images · {{ stats.orphan_images }} orphan</div>
+</div>
+
+<form id="gallery-filters" class="filters-bar" onsubmit="return false">
+  <label>Type</label>
+  <select name="type">
+    <option value="">All</option>
+    <option value="blog">Blog</option>
+    <option value="learn">Learn</option>
+    <option value="knowledge">Knowledge</option>
+  </select>
+
+  <label>Source</label>
+  <select name="source">
+    <option value="">All</option>
+    <option value="unsplash">Unsplash</option>
+    <option value="pexels">Pexels</option>
+    <option value="pixabay">Pixabay</option>
+    <option value="openverse">Openverse</option>
+    <option value="wikimedia">Wikimedia</option>
+    <option value="loc">LOC</option>
+    <option value="nasa">NASA</option>
+    <option value="curated">Curated</option>
+    <option value="ai_generated">AI Generated</option>
+    <option value="manifest">Manifest</option>
+    <option value="svgs">SVG Fallbacks</option>
+  </select>
+
+  <label>Section</label>
+  <select name="section">
+    <option value="">All</option>
+    <option value="0">0 — Overview</option>
+    <option value="1">1 — Key Findings</option>
+    <option value="2">2 — Applied Scenario</option>
+    <option value="3">3 — Source Analysis</option>
+    <option value="4">4 — Domain Breakdown</option>
+    <option value="5">5 — Cross-Pillar</option>
+    <option value="6">6 — Methodology</option>
+  </select>
+
+  <label>Status</label>
+  <select name="status">
+    <option value="">All</option>
+    <option value="used">In use</option>
+    <option value="orphan">Orphan</option>
+  </select>
+
+  <input type="search" name="q" placeholder="Search filename or article..." style="flex:1;min-width:150px">
+</form>
+
+<div id="gallery-grid" class="gallery-grid">
+  <div class="empty-state"><div class="spinner" style="margin:0 auto 12px"></div><p>Loading gallery...</p></div>
+</div>
+{% endblock %}
