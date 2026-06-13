@@ -382,7 +382,7 @@ def parse_sections(article: dict) -> list[dict]:
         content = parts[i + 1] if i + 1 < len(parts) else ""
         idx = (i - 1) // 2
         text_content = strip_html(content)
-        entities = extract_entities(heading + " " + text_content[:200])
+        entities = extract_entities(heading + " " + text_content[:500])
         sections.append({
             "section_index": idx,
             "heading": heading,
@@ -419,6 +419,7 @@ def build_section_query(section: dict, article: dict) -> str:
     title = article.get("title", "")
     tags = article.get("tags", [])
     pillar = article.get("pillar", "")
+    description = article.get("description", "")
     pillar_kw = PILLAR_KEYWORDS.get(pillar, "")
     pillar_ctx = PILLAR_CONTEXT_WORDS.get(pillar, "")
 
@@ -436,6 +437,13 @@ def build_section_query(section: dict, article: dict) -> str:
             tag_clean = tag.replace('-', ' ')
             if tag_clean.lower() not in title_core.lower():
                 parts.append(tag_clean)
+    if description:
+        desc_words = _description_keywords(description, 4)
+        if desc_words:
+            parts.append(desc_words)
+    if pillar_ctx:
+        ctx_words = pillar_ctx.split()[:2]
+        parts.extend(ctx_words)
     query = " ".join(parts)
     terms = query.split()
     terms = [t for t in terms if len(t) > 2 and t.lower() not in STOP_WORDS]
@@ -469,11 +477,11 @@ def build_section_query(section: dict, article: dict) -> str:
                     unique_terms.insert(0, ent)
                     seen.add(el)
 
-    return expand_query(" ".join(unique_terms[:4]))
+    return expand_query(" ".join(unique_terms[:5]))
 
 
 def resolve_curated(article: dict) -> str | None:
-    haystack = (article.get("title", "") + " " + " ".join(article.get("tags", []))).lower()
+    haystack = (article.get("title", "") + " " + " ".join(article.get("tags", [])) + " " + article.get("description", "")).lower()
     body_text = strip_html(article.get("body_html", "")).lower()
     for phrase, filename in CURATED_KNOWN.items():
         keywords = phrase.split()
@@ -875,7 +883,7 @@ NEGATIVE_KEYWORDS = {"screenshot", "logo", "icon", "diagram", "illustration", "d
 
 def score_result(result: dict, query_terms: set[str],
                  backend: str = "", width: int = 0, height: int = 0) -> float:
-    text = (result.get("title", "") + " " + result.get("tags", "")).lower()
+    text = (result.get("title", "") + " " + result.get("tags", "") + " " + result.get("description", "")).lower()
     if not query_terms:
         return 0.0
 
@@ -903,8 +911,8 @@ def score_result(result: dict, query_terms: set[str],
     # License openness (8%)
     license_score = 8 if result.get("license") in ("pd", "cc0", "publicdomain") else 0
 
-    # Negative penalty (Phase 4)
-    tags_lower = result.get("tags", "").lower() + " " + result.get("title", "").lower()
+    # Negative penalty
+    tags_lower = result.get("tags", "").lower() + " " + result.get("title", "").lower() + " " + result.get("description", "").lower()
     negative_score = -20 if any(n in tags_lower for n in NEGATIVE_KEYWORDS) else 0
 
     return keyword_score * 0.40 + backend_score * 0.25 + title_score + quality_score + license_score + negative_score
@@ -1280,14 +1288,32 @@ def fetch_section_images(article: dict, force: bool = False) -> list[dict]:
     return results
 
 
-def _build_featured_queries(article: dict) -> list[str]:
-    """Build query variations for featured image search, most specific to broadest.
+def _description_keywords(description: str, max_words: int = 6) -> str:
+    """Extract meaningful keywords from article description for image search."""
+    if not description:
+        return ""
+    skip = {'the','and','for','with','from','how','what','why','when','into','your',
+            'that','this','does','make','using','best','guide','part','series','new',
+            'top','overview','analysis','study','report','review','update','learn',
+            'about','also','its','than','them','been','have','more','some','very',
+            'their','other','could','after','first','being','under','between'}
+    words = re.findall(r'[a-zA-Z]{4,}', description.lower())
+    words = [w for w in words if w not in skip]
+    seen = set()
+    unique = []
+    for w in words:
+        if w not in seen:
+            seen.add(w)
+            unique.append(w)
+    return " ".join(unique[:max_words])
 
-    Phase 6: single compound query combining all signals, with fallbacks.
-    """
+
+def _build_featured_queries(article: dict) -> list[str]:
+    """Build query variations for featured image search, most specific to broadest."""
     pillar = article.get("pillar", "")
     tags = article.get("tags", [])
     title = article.get("title", "")
+    description = article.get("description", "")
 
     skip_words = {'the','and','for','with','from','how','what','why','when','into',
                   'your','that','this','does','make','using','best','guide','part',
@@ -1296,6 +1322,7 @@ def _build_featured_queries(article: dict) -> list[str]:
     title_phrase = " ".join(title_words[:4])
 
     tag_phrase = " ".join(t[:3] for t in tags if len(t) > 2) if tags else ""
+    desc_phrase = _description_keywords(description, 6)
 
     pillar_kw = PILLAR_KEYWORDS.get(pillar, "").split()[:2]
     pillar_phrase = " ".join(pillar_kw)
@@ -1310,10 +1337,16 @@ def _build_featured_queries(article: dict) -> list[str]:
 
     queries = []
 
-    # Compound: all signals combined
-    compound = " ".join(filter(None, [title_phrase, tag_phrase, pillar_phrase]))
+    # Compound: all signals combined + description + semantic expansion
+    compound = " ".join(filter(None, [title_phrase, tag_phrase, desc_phrase, pillar_phrase]))
     if compound.strip() and len(compound) > 5:
-        queries.append(compound.strip()[:100])
+        queries.append(expand_query(compound.strip()[:120]))
+
+    # Title + description
+    if title_phrase and desc_phrase:
+        td = f"{title_phrase} {desc_phrase}".strip()[:100]
+        if td not in queries:
+            queries.append(td)
 
     # Title + visual
     if title_phrase:
