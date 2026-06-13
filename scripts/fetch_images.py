@@ -27,6 +27,7 @@ import requests
 # core/images is the visual management system — Tier 1 (manifest), Tier 2 (auto-fetch), Tier 3 (SVG fallback)
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from core.images import load_manifest, get_manifest_entry
+from core.data import write_dlq
 
 try:
     from PIL import Image
@@ -40,10 +41,10 @@ IMAGES_DIR = PROJECT_ROOT / "static" / "images" / "generated"
 USER_AGENT = "AcaciaFund/1.0 (image-fetcher; +https://acaciafund.org)"
 RATE_LIMIT_DELAY = 0.15
 MAX_WORKERS = 4
-MIN_SCORE = 40
+MIN_SCORE = 35          # was 40 — allow more relevant images through
 MAX_IMAGE_WIDTH = 1200
 MAX_IMAGE_BYTES = 10 * 1024 * 1024  # 10MB cap per download
-TARGET_WORDS_PER_IMAGE = 150
+TARGET_WORDS_PER_IMAGE = 100  # was 150 — more images per article
 
 PILLAR_KEYWORDS = {
     "aml": "financial crime money laundering compliance regulation",
@@ -152,13 +153,13 @@ SECTION_PRIORITY = {
 }
 
 SECTION_WORD_MIN = {
-    0: 500,  # overview needs 500+ word article
+    0: 300,  # was 500 — more overview sections get images
     1: 0,
     2: 0,
-    3: 120,
-    4: 120,
+    3: 80,   # was 120
+    4: 80,   # was 120
     5: 0,
-    6: 160,
+    6: 100,  # was 160
 }
 
 CURATED_KNOWN = {
@@ -222,7 +223,7 @@ CURATED_KNOWN = {
     "binance crypto exchange": "File:Binance exchange.jpg",
     "wire transfer swift": "File:SWIFT payment system.jpg",
 
-    # === DATA ENGINEERING ===
+    # === DATA ENGINEERING (expanded) ===
     "apache spark hadoop big data": "File:Apache Spark logo.png",
     "airflow workflow dag scheduling": "File:Apache Airflow logo.png",
     "snowflake data warehouse": "File:Snowflake logo.svg",
@@ -241,6 +242,26 @@ CURATED_KNOWN = {
     "great expectations data quality": "File:Great Expectations logo.svg",
     "prefect workflow orchestration": "File:Prefect logo.svg",
     "dagster data orchestration": "File:Dagster logo.svg",
+    "etl pipeline data warehouse": "File:ETL process diagram.svg",
+    "data lake architecture storage": "File:Data lake architecture.svg",
+    "data catalog metadata management": "File:Data catalog.svg",
+    "data mesh domain ownership": "File:Data mesh architecture.svg",
+    "data platform architecture design": "File:Data platform architecture.svg",
+    "data pipeline streaming batch": "File:Data pipeline architecture.svg",
+    "data governance stewardship": "File:Data governance framework.svg",
+    "data lineage tracking provenance": "File:Data lineage diagram.svg",
+    "data observability monitoring": "File:Data observability dashboard.svg",
+    "olap cube analytics query": "File:OLAP cube.svg",
+    "data mining pattern discovery": "File:Data mining process.svg",
+    "data quality validation testing": "File:Data quality framework.svg",
+    "feature store ml pipeline": "File:Feature store architecture.svg",
+    "mlops machine learning operations": "File:MLOps pipeline.svg",
+    "kubernetes container orchestration": "File:Kubernetes logo.svg",
+    "docker container virtualization": "File:Docker logo (2013).svg",
+    "postgresql relational database": "File:PostgreSQL logo.svg",
+    "mongodb nosql document database": "File:MongoDB logo.svg",
+    "s3 object storage cloud": "File:Amazon S3 logo.svg",
+    "parquet columnar format": "File:Apache Parquet logo.svg",
 
     # === SUPPLY CHAIN & LOGISTICS ===
     "supply chain logistics shipping": "File:Container Ship at the Hai Phong International Container Terminal 03.jpg",
@@ -278,6 +299,89 @@ CURATED_KNOWN = {
     "compliance regulation policy document": "File:Us-treasury-building.jpg",
     "science laboratory research experiment": "File:Laboratory research.jpg",
     "dna genome sequencing biology": "File:DNA sequencing.jpg",
+    
+    # === AI / MACHINE LEARNING ===
+    "neural network deep learning": "File:Neural network diagram.svg",
+    "transformer model attention": "File:Transformer model architecture.svg",
+    "large language model": "File:Language model training.svg",
+    "reinforcement learning agent": "File:Reinforcement learning diagram.svg",
+    "computer vision object detection": "File:Computer vision object detection.jpg",
+    "natural language understanding": "File:Natural language processing.jpg",
+    "generative ai diffusion model": "File:Generative AI model.svg",
+    "recommender system collaborative filtering": "File:Recommender system diagram.svg",
+    "data labeling annotation": "File:Data labeling annotation.jpg",
+    "model evaluation metrics": "File:Model evaluation metrics.svg",
+    "training data dataset": "File:Training data dataset.jpg",
+    "ai ethics fairness bias": "File:AI ethics fairness.svg",
+    "vector database embedding": "File:Vector database embedding.svg",
+    "rag retrieval augmented generation": "File:RAG architecture.svg",
+
+    # === DATA ENGINEERING (more) ===
+    "data streaming kafka event": "File:Data streaming architecture.svg",
+    "change data capture cdc replication": "File:Change data capture diagram.svg",
+    "data warehouse schema star": "File:Data warehouse schema.svg",
+    "data lake architecture storage": "File:Data lake architecture.svg",
+    "analytics dashboard visualization": "File:Analytics dashboard.jpg",
+    "time series database monitoring": "File:Time series database chart.svg",
+    "data pipeline orchestration dag": "File:Data pipeline DAG.svg",
+    "ci cd pipeline devops automation": "File:CI CD pipeline diagram.svg",
+    "infrastructure as code terraform": "File:Terraform logo.svg",
+    "container kubernetes deployment": "File:Kubernetes logo.svg",
+    "microservices architecture api": "File:Microservices architecture diagram.svg",
+    "sql query database engine": "File:Database schema.jpg",
+    "nosql document database mongodb": "File:MongoDB logo.svg",
+    "graph database neo4j": "File:Graph database visualization.svg",
+    "in memory database redis cache": "File:Redis logo.svg",
+    "search engine elasticsearch": "File:Elasticsearch logo.svg",
+    "message queue rabbitmq": "File:Message queue architecture.svg",
+    "load balancing traffic distribution": "File:Load balancer diagram.svg",
+    "serverless computing function": "File:Serverless computing diagram.svg",
+    "edge computing iot device": "File:Edge computing diagram.svg",
+    "business intelligence analytics": "File:Business intelligence dashboard.svg",
+    "data science workflow": "File:Data science workflow diagram.svg",
+
+    # === FINANCE & MARKETS (more) ===
+    "interest rate monetary policy": "File:Interest rate chart.svg",
+    "inflation consumer price": "File:Inflation chart.svg",
+    "esg sustainable investing": "File:ESG investing diagram.svg",
+    "private equity leveraged buyout": "File:Private equity diagram.svg",
+    "merger acquisition deal": "File:Merger acquisition diagram.svg",
+    "initial public offering ipo": "File:IPO stock market.svg",
+    "derivatives options futures trading": "File:Derivatives trading diagram.svg",
+    "credit risk default analysis": "File:Credit risk assessment.svg",
+    "insurance underwriting risk": "File:Insurance underwriting diagram.svg",
+    "behavioral finance psychology": "File:Behavioral finance diagram.svg",
+
+    # === AML & COMPLIANCE (more) ===
+    "trade based money laundering": "File:Trade based money laundering.svg",
+    "shell company beneficial owner": "File:Shell company corporate structure.svg",
+    "politically exposed person pep": "File:PEP screening compliance.svg",
+    "aml transaction monitoring": "File:AML transaction monitoring.svg",
+    "counter terrorist financing": "File:Counter terrorist financing.svg",
+    "economic sanctions ofac": "File:Economic sanctions compliance.svg",
+    "anti bribery anti corruption": "File:Anti bribery compliance.svg",
+    "corporate governance board": "File:Corporate governance diagram.svg",
+    "whistleblower hotline reporting": "File:Whistleblower reporting.svg",
+    "third party due diligence": "File:Third party due diligence.svg",
+
+    # === SUPPLY CHAIN & LOGISTICS (more) ===
+    "just in time manufacturing": "File:Just in time manufacturing.svg",
+    "procurement sourcing supply": "File:Procurement supply chain.svg",
+    "inventory management warehouse": "File:Inventory warehouse management.svg",
+    "freight shipping container": "File:Freight container shipping.jpg",
+    "last mile delivery logistics": "File:Last mile delivery logistics.svg",
+
+    # === SCIENCE (more) ===
+    "crispr gene editing": "File:CRISPR gene editing.svg",
+    "quantum computing qubit": "File:Quantum computer qubit.jpg",
+    "particle accelerator physics": "File:Particle accelerator.jpg",
+    "satellite orbit space": "File:Satellite orbit space.jpg",
+    "neuroscience brain imaging": "File:Brain imaging neuroscience.jpg",
+    "climate change global warming": "File:Climate change global warming.jpg",
+    "renewable energy solar wind": "File:Renewable energy solar wind.jpg",
+    "biotechnology lab research": "File:Biotechnology laboratory.jpg",
+    "pharmaceutical drug development": "File:Pharmaceutical drug development.jpg",
+    "robot automation industry": "File:Robot automation industry.jpg",
 }
 
 # ── Semantic query expansion (Phase 3) ─────────────────────────────
@@ -317,6 +421,29 @@ QUERY_EXPANSION = {
     "cryptocurrency": "cryptocurrency bitcoin crypto blockchain digital currency coin network",
     "algorithmic trading": "algorithmic trading quantitative automated finance market screen chart",
     "compliance program": "compliance program regulatory policy audit management office workspace",
+    "data contracts": "data contracts schema agreement api interface specification document code",
+    "change data capture cdc": "change data capture cdc streaming database replication log events",
+    "data streaming": "data streaming real time kafka event queue pipeline flink spark",
+    "data warehousing": "data warehousing snowflake redshift bigquery storage analytics query",
+    "feature engineering": "feature engineering ml machine learning transformation pipeline data",
+    "model deployment": "model deployment ml serving inference api production monitoring",
+    "kubernetes cluster": "kubernetes k8s container orchestration cluster pod deployment docker",
+    "infrastructure code": "infrastructure code terraform cloud formation automation devops deployment",
+    "apache spark": "apache spark big data analytics cluster compute engine distributed",
+    "etl pipeline": "etl pipeline extract transform load data integration database warehouse",
+    "data lakehouse": "data lakehouse lakehouse delta iceberg hudi storage table format",
+    "semiconductor industry": "semiconductor chip fabrication wafer manufacturing factory equipment",
+    "supply chain risk": "supply chain risk logistics disruption vulnerability global trade map",
+    "interest rate": "interest rate monetary policy federal reserve inflation bond yield chart",
+    "inflation economics": "inflation economics consumer price index cost growth money chart",
+    "esg investing": "esg investing environmental social governance sustainable green finance",
+    "behavioral finance": "behavioral finance psychology bias investor irrational market sentiment",
+    "quantitative analysis": "quantitative analysis quantitative finance model algorithm trading strategy",
+    "geopolitical risk": "geopolitical risk global conflict sanctions trade war map policy",
+    "climate risk": "climate risk environmental climate change global warming carbon emissions",
+    "crypto regulation": "crypto regulation cryptocurrency digital asset sec policy compliance law",
+    "defi protocol": "defi protocol decentralized finance smart contract blockchain ethereum",
+    "nonprofit governance": "nonprofit governance board management ethics compliance transparency",
 }
 
 
@@ -551,8 +678,8 @@ def search_openverse(query: str) -> list[dict]:
                 "license_url": r.get("license_url", ""),
                 "source_api": "openverse",
             })
-    except (requests.RequestException, json.JSONDecodeError):
-        pass
+    except (requests.RequestException, json.JSONDecodeError) as e:
+        write_dlq("openverse", query, str(e), {"query": query})
     return candidates
 
 
@@ -582,8 +709,8 @@ def search_loc(query: str) -> list[dict]:
                 "license_url": "https://www.loc.gov/free-to-use/",
                 "source_api": "loc",
             })
-    except (requests.RequestException, json.JSONDecodeError):
-        pass
+    except (requests.RequestException, json.JSONDecodeError) as e:
+        write_dlq("loc", query, str(e), {"query": query})
     return candidates
 
 
@@ -612,8 +739,8 @@ def search_nasa(query: str) -> list[dict]:
                 "license_url": "https://www.nasa.gov/nasa-brand-center/images-and-media/",
                 "source_api": "nasa",
             })
-    except (requests.RequestException, json.JSONDecodeError):
-        pass
+    except (requests.RequestException, json.JSONDecodeError) as e:
+        write_dlq("nasa", query, str(e), {"query": query})
     return candidates
 
 
@@ -661,8 +788,8 @@ def search_wikimedia(query: str) -> list[dict]:
                 "license_url": license_url,
                 "source_api": "wikimedia",
             })
-    except (requests.RequestException, json.JSONDecodeError):
-        pass
+    except (requests.RequestException, json.JSONDecodeError) as e:
+        write_dlq("wikimedia", query, str(e), {"query": query})
     return candidates
 
 
@@ -882,23 +1009,63 @@ NEGATIVE_KEYWORDS = {"screenshot", "logo", "icon", "diagram", "illustration", "d
 
 
 def score_result(result: dict, query_terms: set[str],
-                 backend: str = "", width: int = 0, height: int = 0) -> float:
-    text = (result.get("title", "") + " " + result.get("tags", "") + " " + result.get("description", "")).lower()
+                 backend: str = "", width: int = 0, height: int = 0,
+                 section_context: str = "", pillar: str = "") -> float:
+    """Score image relevance using TF-weighted matching, context bonus, and quality signals."""
+    title = result.get("title", "").lower()
+    tags = result.get("tags", "").lower()
+    description = result.get("description", "").lower()
+    text = f"{title} {tags} {description}"
+
     if not query_terms:
         return 0.0
 
-    # Keyword coverage (40%)
-    matched = sum(1 for t in query_terms if t in text)
-    keyword_score = (matched / len(query_terms)) * 100 if query_terms else 0
+    # ── TF-weighted keyword coverage (45% — was 40%) ──
+    total_tf = 0
+    matched_tf = 0
+    for t in query_terms:
+        count = text.count(t)
+        total_tf += 1
+        if count > 0:
+            matched_tf += 1 + (count - 1) * 0.15  # diminishing returns per extra mention
+    tf_ratio = matched_tf / max(total_tf, 1)
+    keyword_score = tf_ratio * 100 * 0.45
 
-    # Backend quality (25%)
-    backend_score = BACKEND_QUALITY.get(backend, 0.3) * 100
+    # ── Phrase bonus (+10 max) ──
+    # Bigrams and trigrams from the query matching in title get bonus
+    query_words = sorted(query_terms)
+    phrase_bonus = 0.0
+    for n in (2, 3):
+        for i in range(len(query_words) - n + 1):
+            phrase = " ".join(query_words[i:i + n])
+            if phrase in title:
+                phrase_bonus += 4.0 / n
+    phrase_bonus = min(phrase_bonus, 10.0)
 
-    # Title exactness (15%)
+    # ── Section-context boost (+15 max) ──
+    context_bonus = 0.0
+    if section_context:
+        ctx_words = set(re.findall(r'[a-z]+', section_context.lower()))
+        ctx_matched = sum(1 for w in ctx_words if w in text and len(w) > 3)
+        if ctx_words:
+            context_bonus = min(15.0, (ctx_matched / max(len(ctx_words), 1)) * 20)
+
+    # ── Pillar-name boost (+5) ──
+    pillar_bonus = 5.0 if pillar and pillar.lower().replace("-", " ") in text else 0.0
+
+    # ── Backend quality (15% — was 25%) ──
+    backend_score = BACKEND_QUALITY.get(backend, 0.3) * 100 * 0.15
+
+    # ── Title exactness (10% — was 15%) ──
     query_str = " ".join(sorted(query_terms))
-    title_score = 15 if query_str in result.get("title", "").lower() else 0
+    if query_str in title:
+        title_score = 10.0
+    elif any(t in title for t in query_terms if len(t) > 4):
+        title_score = 5.0  # partial match
+    else:
+        title_score = 0.0
 
-    # Image quality (12%)
+    # ── Image quality (10% — was 12%) ──
     quality_score = 0.0
     if width > 0 and height > 0:
         mx = max(width, height)
@@ -906,16 +1073,18 @@ def score_result(result: dict, query_terms: set[str],
         aspect = mx / mn if mn > 0 else 0
         good_aspect = 1.0 if 1.3 <= aspect <= 2.0 else 0.5
         res_bonus = 1.0 if mx >= 1200 else 0.6
-        quality_score = good_aspect * res_bonus * 12
+        quality_score = good_aspect * res_bonus * 10
 
-    # License openness (8%)
-    license_score = 8 if result.get("license") in ("pd", "cc0", "publicdomain") else 0
+    # ── License openness (5% — was 8%) ──
+    license_score = 5 if result.get("license") in ("pd", "cc0", "publicdomain") else 0
 
-    # Negative penalty
-    tags_lower = result.get("tags", "").lower() + " " + result.get("title", "").lower() + " " + result.get("description", "").lower()
-    negative_score = -20 if any(n in tags_lower for n in NEGATIVE_KEYWORDS) else 0
+    # ── Weighted negative penalty ──
+    tags_lower = f"{tags} {title} {description}"
+    negative_count = sum(1 for n in NEGATIVE_KEYWORDS if n in tags_lower)
+    negative_score = max(-30, negative_count * -5)
 
-    return keyword_score * 0.40 + backend_score * 0.25 + title_score + quality_score + license_score + negative_score
+    return (keyword_score + backend_score + title_score + quality_score
+            + license_score + negative_score + phrase_bonus + context_bonus + pillar_bonus)
 
 
 def compute_color_hash(img_bytes: bytes) -> str:
@@ -1195,7 +1364,10 @@ def fetch_section_images(article: dict, force: bool = False) -> list[dict]:
             scored: list[tuple[float, dict, str]] = []
             for c, backend_name, try_query, w, h in pool:
                 try_terms, _ = normalize_query(try_query)
-                score = score_result(c, try_terms, backend_name, w, h)
+                section_heading = section.get("heading", "")
+                pillar_name = article.get("pillar", "")
+                score = score_result(c, try_terms, backend_name, w, h,
+                                     section_context=section_heading, pillar=pillar_name)
                 scored.append((score, c, backend_name))
             scored.sort(key=lambda x: -x[0])
             best_score, best, best_backend = scored[0]
@@ -1416,10 +1588,11 @@ def fetch_featured_image(article: dict) -> str | None:
     if not pool:
         return None
 
+    pillar_name = article.get("pillar", "")
     scored: list[tuple[float, dict, str]] = []
     for c, backend_name, query in pool:
         query_terms, _ = normalize_query(query)
-        score = score_result(c, query_terms, backend_name)
+        score = score_result(c, query_terms, backend_name, pillar=pillar_name)
         scored.append((score, c, backend_name))
     scored.sort(key=lambda x: -x[0])
 
@@ -1447,6 +1620,38 @@ def fetch_featured_image(article: dict) -> str | None:
         return rel_path
 
     return None
+
+
+PIPELINE_RUNS_PATH = PROJECT_ROOT / "registry" / "image-pipeline-runs.json"
+MAX_PIPELINE_RUNS = 50
+
+
+def save_pipeline_stats(stats: dict) -> None:
+    """Append this run's stats to the pipeline runs history file."""
+    record = {
+        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "total_articles": stats.get("total_articles", 0),
+        "articles_with_images": stats.get("articles_with_images", 0),
+        "total_section_slots": stats.get("total_section_slots", 0),
+        "filled_slots": stats.get("filled_slots", 0),
+        "backend_hits": dict(stats.get("backend_hits", {})),
+        "section_coverage": {k: {"filled": v[0], "total": v[1]} for k, v in stats.get("section_coverage", {}).items()},
+        "relevance_scores": stats.get("relevance_scores", []),
+        "avg_score": round(sum(stats.get("relevance_scores", [])) / max(len(stats.get("relevance_scores", [])), 1), 1),
+        "total_bytes": stats.get("total_bytes", 0),
+        "fill_rate": round(stats.get("filled_slots", 0) / max(stats.get("total_section_slots", 1), 1) * 100, 1),
+        "above_70_count": sum(1 for s in stats.get("relevance_scores", []) if s >= 70),
+    }
+    runs: list[dict] = []
+    if PIPELINE_RUNS_PATH.exists():
+        try:
+            runs = json.loads(PIPELINE_RUNS_PATH.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            runs = []
+    runs.append(record)
+    runs = runs[-MAX_PIPELINE_RUNS:]
+    PIPELINE_RUNS_PATH.parent.mkdir(parents=True, exist_ok=True)
+    PIPELINE_RUNS_PATH.write_text(json.dumps(runs, indent=2, default=str), encoding="utf-8")
 
 
 def print_report(stats: dict):
@@ -1624,6 +1829,7 @@ def main():
         print("\nNo articles updated")
 
     print_report(stats)
+    save_pipeline_stats(stats)
     return 0
 
 
