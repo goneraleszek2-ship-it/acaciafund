@@ -7,10 +7,16 @@
 <link rel="stylesheet" href="/static/admin.css">
 </head>
 <body>
-<nav class="sidebar">
-  <div class="sidebar-header">
-    <strong>AcaciaFund</strong> Admin
-  </div>
+<button id="sidebar-toggle" class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Toggle sidebar">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M3 12h18M3 6h18M3 18h18"/>
+  </svg>
+</button>
+<nav class="sidebar" id="sidebar">
+<div class="sidebar-header">
+  <button class="sidebar-close" onclick="toggleSidebar()" aria-label="Close sidebar">&times;</button>
+  <strong>AcaciaFund</strong> Admin
+</div>
   <div class="sidebar-nav">
     <a href="/admin/" class="{{ 'active' if active_page == 'dashboard' else '' }}">
       <span class="icon">📊</span> Dashboard

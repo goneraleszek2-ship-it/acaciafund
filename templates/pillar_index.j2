@@ -23,7 +23,7 @@
     {%- endif %}
   </div>
 
-  <div class="flex flex-col gap-2">
+  <div class="flex flex-col gap-2 card-list">
     {%- for post in posts %}
     {%- set pictogram = post | pictogram %}
     {%- set source_breakdown = post.source_breakdown or {} %}

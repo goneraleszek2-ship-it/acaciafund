@@ -56,6 +56,7 @@ app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 REGISTRY_PATH = PROJECT_ROOT / "registry.json"
 IMAGES_DIR = PROJECT_ROOT / "static" / "images" / "generated"
+TAGS_PATH = PROJECT_ROOT / "registry" / "image-tags.json"
 
 # ── Cached data ──
 _registry_data: dict[str, Any] | None = None
@@ -158,6 +159,7 @@ def _scan_images() -> dict[str, dict]:
 
     articles = _load_registry()
     idx: dict[str, dict] = {}
+    tags_db = _load_tags()
 
     # Build usage map: path → list of (slug, title, section_index, role)
     usage: dict[str, list[dict]] = {}
@@ -256,6 +258,7 @@ def _scan_images() -> dict[str, dict]:
                 "height": height,
                 "source": source,
                 "used_by": usage.get(rel, []),
+                "tags": tags_db.get(rel, []),
             }
 
     _image_index = idx
@@ -268,6 +271,20 @@ def _invalidate_cache() -> None:
     _registry_data = None
     _image_index = None
     _manifest = None
+
+
+# ── Image tags ─────────────────────────────────────────
+def _load_tags() -> dict[str, list[str]]:
+    if TAGS_PATH.exists():
+        try:
+            return json.loads(TAGS_PATH.read_text(encoding="utf-8"))
+        except Exception:
+            return {}
+    return {}
+
+def _save_tags(tags: dict[str, list[str]]) -> None:
+    TAGS_PATH.parent.mkdir(parents=True, exist_ok=True)
+    TAGS_PATH.write_text(json.dumps(tags, indent=2, ensure_ascii=False), encoding="utf-8")
 
 
 # ══════════════════════════════════════════════════════════════
@@ -641,9 +658,11 @@ def api_images():
     images = _scan_images()
     q = request.args.get("q", "").strip().lower()
     img_type = request.args.get("type", "").strip().lower()
+    pillar_filter = request.args.get("pillar", "").strip().lower()
     source = request.args.get("source", "").strip().lower()
     section_str = request.args.get("section", "").strip()
     status = request.args.get("status", "").strip().lower()
+    tag_filter = request.args.get("tag", "").strip().lower()
 
     results = list(images.values())
 
@@ -651,6 +670,8 @@ def api_images():
         results = [r for r in results if q in r["filename"].lower() or q in r["slug"].lower()]
     if img_type:
         results = [r for r in results if r["content_type"] == img_type]
+    if pillar_filter:
+        results = [r for r in results if pillar_filter in r.get("slug", "").lower()]
     if source:
         if source == "svgs":
             results = [r for r in results if r["format"] == "svg"]
@@ -666,11 +687,25 @@ def api_images():
         results = [r for r in results if r["used_by"]]
     elif status == "orphan":
         results = [r for r in results if not r["used_by"]]
+    if tag_filter:
+        results = [r for r in results if any(tag_filter in t.lower() for t in r.get("tags", []))]
 
-    # Sort: used first, then by file size desc
     results.sort(key=lambda r: (1 if r["used_by"] else 0, r.get("file_size", 0)), reverse=True)
 
-    return jsonify({"images": results, "total": len(results)})
+    per_page = min(int(request.args.get("per_page", 60)), 200)
+    page = max(int(request.args.get("page", 1)), 1)
+    total = len(results)
+    total_pages = max((total + per_page - 1) // per_page, 1)
+    start = (page - 1) * per_page
+    page_results = results[start:start + per_page]
+
+    return jsonify({
+        "images": page_results,
+        "total": total,
+        "page": page,
+        "per_page": per_page,
+        "total_pages": total_pages,
+    })
 
 
 @app.route("/admin/api/stats")
@@ -681,6 +716,46 @@ def api_stats():
         "total_images": len(images),
         "total_articles": len(articles),
     })
+
+
+# ══════════════════════════════════════════════════════════════
+# API — Image Tags
+# ══════════════════════════════════════════════════════════════
+
+@app.route("/admin/api/tags")
+def api_tags():
+    """Return all unique tags with counts and images per tag."""
+    images = _scan_images()
+    tag_counts: dict[str, int] = {}
+    for img in images.values():
+        for t in img.get("tags", []):
+            tag_counts[t] = tag_counts.get(t, 0) + 1
+    sorted_tags = sorted(tag_counts.items(), key=lambda x: -x[1])
+    return jsonify({
+        "tags": [{"name": t, "count": c} for t, c in sorted_tags],
+        "total": len(sorted_tags),
+    })
+
+
+@app.route("/admin/api/image/tags", methods=["POST"])
+def api_set_image_tags():
+    """Set tags for a specific image path."""
+    data = request.get_json(silent=True) or {}
+    path = data.get("path", "")
+    tags = data.get("tags", [])
+    if not path:
+        return jsonify({"error": "path required"}), 400
+    if not isinstance(tags, list):
+        return jsonify({"error": "tags must be a list"}), 400
+
+    tags_db = _load_tags()
+    if tags:
+        tags_db[path] = tags
+    else:
+        tags_db.pop(path, None)
+    _save_tags(tags_db)
+    _invalidate_cache()
+    return jsonify({"status": "ok", "path": path, "tags": tags})
 
 
 # ══════════════════════════════════════════════════════════════

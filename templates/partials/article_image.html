@@ -1,10 +1,20 @@
+{%- set is_first_image = loop is defined and loop.first | default(false) %}
 {%- if featured_image and thumbnail_base is defined and thumbnail_key is defined and content is defined %}
 {%- set fractal_key = thumbnail_key(content.title) %}
 <figure class="my-6 rounded-lg overflow-hidden" style="border:1px solid var(--color-border)"{% if image_credit %} aria-describedby="fig-caption"{% endif %}>
   <div class="relative">
-    <img src="{{ thumbnail_base }}/thumb_{{ fractal_key }}.svg" alt="" width="600" height="340" loading="lazy" decoding="async" class="w-full h-auto object-cover">
+    <picture>
+      <source srcset="{{ thumbnail_base }}/thumb_{{ fractal_key }}.svg" type="image/svg+xml">
+      <img src="{{ thumbnail_base }}/thumb_{{ fractal_key }}.svg" alt="" width="600" height="340" loading="lazy" decoding="async" class="w-full h-auto object-cover">
+    </picture>
     <div class="absolute inset-0 flex items-center justify-center p-4">
-      <img src="{{ featured_image }}" alt="{{ image_alt | default('') }}" width="1200" height="675" loading="eager" decoding="async" class="w-full h-auto object-cover rounded shadow-lg" style="max-height:280px">
+      <picture>
+        {%- set ext = featured_image.rsplit('.', 1)[-1] | lower %}
+        {%- if ext in ('jpg', 'jpeg') %}
+        <source srcset="{{ featured_image | replace('.jpg', '.webp') | replace('.jpeg', '.webp') }}" type="image/webp">
+        {%- endif %}
+        <img src="{{ featured_image }}" alt="{{ image_alt | default('') }}" width="1200" height="675" loading="lazy" fetchpriority="high" decoding="async" class="w-full h-auto object-cover rounded shadow-lg" style="max-height:280px">
+      </picture>
     </div>
   </div>
   {%- if image_credit %}
@@ -15,9 +25,15 @@
 </figure>
 {%- elif featured_image %}
 <figure class="my-6 rounded-lg overflow-hidden" style="background:var(--color-bg);border:1px solid var(--color-border)"{% if image_credit %} aria-describedby="fig-caption"{% endif %}>
-  <img src="{{ featured_image }}" alt="{{ image_alt | default('') }}"
-       width="1200" height="675" loading="eager" decoding="async"
-       class="w-full h-auto object-cover">
+  <picture>
+    {%- set ext = featured_image.rsplit('.', 1)[-1] | lower %}
+    {%- if ext in ('jpg', 'jpeg') %}
+    <source srcset="{{ featured_image | replace('.jpg', '.webp') | replace('.jpeg', '.webp') }}" type="image/webp">
+    {%- endif %}
+    <img src="{{ featured_image }}" alt="{{ image_alt | default('') }}"
+         width="1200" height="675" loading="lazy" fetchpriority="high" decoding="async"
+         class="w-full h-auto object-cover">
+  </picture>
   {%- if image_credit %}
   <figcaption id="fig-caption" class="px-3 py-1.5 text-xs" style="color:var(--color-text-muted);border-top:1px solid var(--color-border)">
     {{ image_credit }}
@@ -27,8 +43,11 @@
 {%- elif thumbnail_base is defined and thumbnail_key is defined and content is defined %}
 {%- set fallback_key = thumbnail_key(content.title) %}
 <figure class="my-6 rounded-lg overflow-hidden" style="background:var(--color-bg);border:1px solid var(--color-border)">
-  <img src="{{ thumbnail_base }}/thumb_{{ fallback_key }}.svg" alt="{{ image_alt | default('') }}"
-       width="600" height="340" loading="lazy" decoding="async"
-       class="w-full h-auto object-contain" style="background:var(--color-surface)">
+  <picture>
+    <source srcset="{{ thumbnail_base }}/thumb_{{ fallback_key }}.svg" type="image/svg+xml">
+    <img src="{{ thumbnail_base }}/thumb_{{ fallback_key }}.svg" alt="{{ image_alt | default('') }}"
+         width="600" height="340" loading="lazy" decoding="async"
+         class="w-full h-auto object-contain" style="background:var(--color-surface)">
+  </picture>
 </figure>
 {%- endif %}

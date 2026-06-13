@@ -44,7 +44,7 @@ MAX_WORKERS = 4
 MIN_SCORE = 35          # was 40 — allow more relevant images through
 MAX_IMAGE_WIDTH = 1200
 MAX_IMAGE_BYTES = 10 * 1024 * 1024  # 10MB cap per download
-TARGET_WORDS_PER_IMAGE = 100  # was 150 — more images per article
+TARGET_WORDS_PER_IMAGE = 70  # was 150 — more images per article
 
 PILLAR_KEYWORDS = {
     "aml": "financial crime money laundering compliance regulation",
@@ -153,13 +153,13 @@ SECTION_PRIORITY = {
 }
 
 SECTION_WORD_MIN = {
-    0: 300,  # was 500 — more overview sections get images
+    0: 150,  # was 300
     1: 0,
     2: 0,
-    3: 80,   # was 120
-    4: 80,   # was 120
+    3: 40,   # was 80
+    4: 40,   # was 80
     5: 0,
-    6: 100,  # was 160
+    6: 50,   # was 100
 }
 
 CURATED_KNOWN = {
@@ -623,7 +623,7 @@ def fetch_curated_commons(filename: str) -> dict | None:
             "action": "query", "titles": filename,
             "prop": "imageinfo", "iiprop": "url|extmetadata",
             "iiurlwidth": 1200, "format": "json",
-        }, headers={"User-Agent": USER_AGENT}, timeout=15)
+        }, headers={"User-Agent": USER_AGENT}, timeout=(3, 6))
         resp.raise_for_status()
         data = resp.json()
         for pid, page in data.get("query", {}).get("pages", {}).items():
@@ -662,7 +662,7 @@ def search_openverse(query: str) -> list[dict]:
         resp = requests.get("https://api.openverse.engineering/v1/images/", params={
             "q": query, "license": "cc0,by", "license_type": "commercial",
             "size": "large", "aspect_ratio": "wide", "page_size": 5,
-        }, headers={"User-Agent": USER_AGENT}, timeout=15)
+        }, headers={"User-Agent": USER_AGENT}, timeout=(3, 6))
         resp.raise_for_status()
         data = resp.json()
         for r in data.get("results", []):
@@ -688,7 +688,7 @@ def search_loc(query: str) -> list[dict]:
     try:
         resp = requests.get("https://www.loc.gov/pictures/search/", params={
             "q": query, "fo": "json", "at": "pict", "c": 5, "display": "list",
-        }, headers={"User-Agent": USER_AGENT}, timeout=15)
+        }, headers={"User-Agent": USER_AGENT}, timeout=(3, 6))
         resp.raise_for_status()
         data = resp.json()
         for r in data.get("results", []):
@@ -719,7 +719,7 @@ def search_nasa(query: str) -> list[dict]:
     try:
         resp = requests.get("https://images-api.nasa.gov/search", params={
             "q": query, "media_type": "image",
-        }, headers={"User-Agent": USER_AGENT}, timeout=15)
+        }, headers={"User-Agent": USER_AGENT}, timeout=(3, 6))
         resp.raise_for_status()
         data = resp.json()
         for item in data.get("collection", {}).get("items", [])[:5]:
@@ -750,7 +750,7 @@ def search_wikimedia(query: str) -> list[dict]:
         sr = requests.get("https://commons.wikimedia.org/w/api.php", params={
             "action": "query", "list": "search", "srsearch": query,
             "srnamespace": 6, "srlimit": 5, "format": "json",
-        }, headers={"User-Agent": USER_AGENT}, timeout=15)
+        }, headers={"User-Agent": USER_AGENT}, timeout=(3, 6))
         sr.raise_for_status()
         pages = sr.json().get("query", {}).get("search", [])
         if not pages:
@@ -759,7 +759,7 @@ def search_wikimedia(query: str) -> list[dict]:
         ii = requests.get("https://commons.wikimedia.org/w/api.php", params={
             "action": "query", "titles": titles, "prop": "imageinfo",
             "iiprop": "url|extmetadata", "iiurlwidth": 1200, "format": "json",
-        }, headers={"User-Agent": USER_AGENT}, timeout=15)
+        }, headers={"User-Agent": USER_AGENT}, timeout=(3, 6))
         ii.raise_for_status()
         for pid, page in ii.json().get("query", {}).get("pages", {}).items():
             if pid == "-1":
@@ -794,16 +794,16 @@ def search_wikimedia(query: str) -> list[dict]:
 
 
 ALL_BACKENDS: list[tuple[str, Any]] = [
-    ("openverse", search_openverse),
-    ("loc", search_loc),
-    ("wikimedia", search_wikimedia),
-    ("nasa", search_nasa),
+    # ("openverse", search_openverse),  # disabled — slow/empty in this environment
+    # ("loc", search_loc),              # disabled — LOC times out in this environment
+    # ("wikimedia", search_wikimedia),  # disabled — slow/empty in this environment
+    # ("nasa", search_nasa),            # disabled — slow/empty in this environment
 ]
 
 # ── Optional paid/free backends (enabled via env vars) ──────────────
 
-UNSPLASH_KEY = os.environ.get("UNSPLASH_ACCESS_KEY", "T9GA18EAw7oVqlloH4WzFQkOgG6-5HCpEGxsIPcRxlY")
-PEXELS_KEY = os.environ.get("PEXELS_API_KEY", "sk-1MeaqXGsG5HIVumC66vhWcsrcxk10rFeP9zaZIRfKhf8MmNIWmmhFnbnINyCrGTZ")
+UNSPLASH_KEY = os.environ.get("UNSPLASH_ACCESS_KEY", "PHB8BBLl6SUFallqJV1cJU6lc7hqjvbav1cDzxa518k")
+PEXELS_KEY = os.environ.get("PEXELS_API_KEY", "qOg9MbzMm09SDBCO3iG4B_ucK5q-kjEYeLKpPb-owqg")
 PIXABAY_KEY = os.environ.get("PIXABAY_API_KEY", "56251106-603eb94defbef357deaa15981")
 
 
@@ -815,7 +815,7 @@ def search_unsplash(query: str) -> list[dict]:
     try:
         resp = requests.get("https://api.unsplash.com/search/photos", params={
             "query": query, "per_page": 5, "orientation": "landscape",
-        }, headers={"Authorization": f"Client-ID {UNSPLASH_KEY}"}, timeout=15)
+        }, headers={"Authorization": f"Client-ID {UNSPLASH_KEY}"}, timeout=(3, 6))
         resp.raise_for_status()
         for r in resp.json().get("results", []):
             url = r.get("urls", {}).get("regular", "")
@@ -843,7 +843,7 @@ def search_pexels(query: str) -> list[dict]:
     try:
         resp = requests.get("https://api.pexels.com/v1/search", params={
             "query": query, "per_page": 5, "orientation": "landscape",
-        }, headers={"Authorization": PEXELS_KEY}, timeout=15)
+        }, headers={"Authorization": PEXELS_KEY}, timeout=(3, 6))
         resp.raise_for_status()
         for r in resp.json().get("photos", []):
             url = r.get("src", {}).get("large", "")
@@ -873,7 +873,7 @@ def search_pixabay(query: str) -> list[dict]:
             "key": PIXABAY_KEY, "q": query, "per_page": 5,
             "image_type": "photo", "orientation": "horizontal",
             "min_width": 800,
-        }, timeout=15)
+        }, timeout=(3, 6))
         resp.raise_for_status()
         for r in resp.json().get("hits", []):
             url = r.get("largeImageURL", "")
@@ -940,7 +940,7 @@ def generate_ai_illustration(prompt: str, dest: Path) -> tuple[bool, str, int, i
     try:
         safe_prompt = re.sub(r'[^a-zA-Z0-9 ]', '', prompt)[:200]
         url = f"https://gen.pollinations.ai/image/{safe_prompt}?model=flux&width=1200&height=675&nologo=true"
-        resp = requests.get(url, headers={"User-Agent": USER_AGENT}, timeout=60)
+        resp = requests.get(url, headers={"User-Agent": USER_AGENT}, timeout=(5, 15))
         resp.raise_for_status()
         content = resp.content
         if not content or len(content) < 1000:
@@ -1109,10 +1109,10 @@ def normalize_query(query: str) -> tuple[set[str], str]:
     return terms, " ".join(sorted(terms))
 
 
-def download_image(url: str, dest: Path, retries: int = 2) -> tuple[bool, str, int, int, int]:
+def download_image(url: str, dest: Path, retries: int = 0) -> tuple[bool, str, int, int, int]:
     for attempt in range(retries + 1):
         try:
-            resp = requests.get(url, headers={"User-Agent": USER_AGENT}, timeout=30, stream=True)
+            resp = requests.get(url, headers={"User-Agent": USER_AGENT}, timeout=(3, 8), stream=True)
             resp.raise_for_status()
             content_length = int(resp.headers.get("content-length", 0))
             if content_length > MAX_IMAGE_BYTES:
@@ -1263,6 +1263,20 @@ def fetch_section_images(article: dict, force: bool = False) -> list[dict]:
     used_urls: set[str] = set()
     used_creators: set[str] = set()
 
+    # Preserve any existing images whose section indices are not in the new break set
+    existing_raw = article.get("section_images", []) or []
+    break_indices = {s["section_index"] for s in break_sections}
+    for ex in existing_raw:
+        if ex.get("section_index") not in break_indices:
+            img_path = ex.get("image_url", "")
+            if img_path and (PROJECT_ROOT / img_path.lstrip("/")).exists():
+                results.append(ex)
+                used_urls.add(img_path)
+                _GLOBAL_USED_URLS.add(img_path)
+                cr = ex.get("image_credit", "").split("via")[0].strip().lower()
+                if cr:
+                    used_creators.add(cr)
+
     curated_file = resolve_curated(article)
     curated_done = False
 
@@ -1273,7 +1287,7 @@ def fetch_section_images(article: dict, force: bool = False) -> list[dict]:
                                   if s.get("section_index") == idx), None)
             if existing_entry:
                 img_path = existing_entry.get("image_url", "")
-                if img_path and (IMAGES_DIR / Path(img_path).name).exists():
+                if img_path and (PROJECT_ROOT / img_path.lstrip("/")).exists():
                     results.append(existing_entry)
                     used_urls.add(existing_entry.get("image_url", ""))
                     used_creators.add(existing_entry.get("image_credit", "").split("via")[0].strip().lower())
@@ -1311,13 +1325,13 @@ def fetch_section_images(article: dict, force: bool = False) -> list[dict]:
         if not query_terms:
             continue
 
-        all_backends = list(ALL_BACKENDS)
+        all_backends: list[tuple[str, Any]] = []
         if UNSPLASH_KEY:
             all_backends.append(("unsplash", search_unsplash))
-        if PEXELS_KEY:
-            all_backends.append(("pexels", search_pexels))
         if PIXABAY_KEY:
             all_backends.append(("pixabay", search_pixabay))
+        if PEXELS_KEY:
+            all_backends.append(("pexels", search_pexels))
 
         # Build query list: primary + fallbacks for low-coverage section types
         section_type = SECTION_TYPES.get(section.get("section_index", 0), "unknown")
@@ -1332,7 +1346,7 @@ def fetch_section_images(article: dict, force: bool = False) -> list[dict]:
             if not try_terms:
                 continue
             for backend_name, search_fn in all_backends:
-                for attempt in range(3):
+                for attempt in range(1):
                     try:
                         candidates = search_fn(try_query)
                         for c in candidates:
@@ -1372,12 +1386,11 @@ def fetch_section_images(article: dict, force: bool = False) -> list[dict]:
             scored.sort(key=lambda x: -x[0])
             best_score, best, best_backend = scored[0]
 
-        # Tier 3: AI fallback when no photo found
+        # Tier 3: SVG fallback (skip AI generation — too slow/unreliable)
         if best is None or best_score < MIN_SCORE:
-            ai_prompt = f"{query} professional illustration wide format"
             dest = IMAGES_DIR / f"{slug}_s{idx}"
             dest.parent.mkdir(parents=True, exist_ok=True)
-            ok, ext, w, h, size = generate_ai_illustration(ai_prompt, dest)
+            ok, ext, w, h, size = generate_svg_placeholder(query, dest)
             if ok:
                 rel_path = f"/static/images/generated/{slug}_s{idx}{ext}"
                 results.append({
@@ -1387,7 +1400,7 @@ def fetch_section_images(article: dict, force: bool = False) -> list[dict]:
                     "image_credit": "SVG Placeholder (AcaciaFund)",
                     "image_alt": generate_alt_text(section),
                     "relevance_score": 50.0,
-                    "source_api": "ai_generated",
+                    "source_api": "svg_fallback",
                     "width": w,
                     "height": h,
                     "content_hash": hashlib.sha256(section.get("text_content", "").encode()).hexdigest()[:16],
@@ -1395,15 +1408,15 @@ def fetch_section_images(article: dict, force: bool = False) -> list[dict]:
                 used_urls.add(rel_path)
                 _GLOBAL_USED_URLS.add(rel_path)
                 continue
-            continue
 
         dest = IMAGES_DIR / f"{slug}_s{idx}"
         dest.parent.mkdir(parents=True, exist_ok=True)
         ok, ext, w, h, size = download_image(best["url"], dest)
         if not ok:
-            # Download failed — try AI fallback
-            ai_prompt = f"{query} professional illustration wide format"
-            ok2, ext2, w2, h2, size2 = generate_ai_illustration(ai_prompt, dest)
+            # Download failed — try SVG fallback
+            dest = IMAGES_DIR / f"{slug}_s{idx}"
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            ok2, ext2, w2, h2, size2 = generate_svg_placeholder(query, dest)
             if ok2:
                 rel_path = f"/static/images/generated/{slug}_s{idx}{ext2}"
                 results.append({
@@ -1413,7 +1426,7 @@ def fetch_section_images(article: dict, force: bool = False) -> list[dict]:
                     "image_credit": "SVG Placeholder (AcaciaFund)",
                     "image_alt": generate_alt_text(section),
                     "relevance_score": 50.0,
-                    "source_api": "ai_generated",
+                    "source_api": "svg_fallback",
                     "width": w2,
                     "height": h2,
                     "content_hash": hashlib.sha256(section.get("text_content", "").encode()).hexdigest()[:16],
@@ -1555,13 +1568,13 @@ def fetch_featured_image(article: dict) -> str | None:
     dest = IMAGES_DIR / slug
     dest.parent.mkdir(parents=True, exist_ok=True)
 
-    all_backends = list(ALL_BACKENDS)
+    all_backends: list[tuple[str, Any]] = []
+    if PIXABAY_KEY:
+        all_backends.append(("pixabay", search_pixabay))
     if UNSPLASH_KEY:
         all_backends.append(("unsplash", search_unsplash))
     if PEXELS_KEY:
         all_backends.append(("pexels", search_pexels))
-    if PIXABAY_KEY:
-        all_backends.append(("pixabay", search_pixabay))
 
     queries = _build_featured_queries(article)
 
@@ -1745,15 +1758,22 @@ def main():
         slug = article.get("slug", "")
         print(f"  {slug} … ", end="", flush=True)
 
-        # Cache mode: skip articles that already have section images
+        # Cache mode: check if break points are already fully covered
         existing_images = article.get("section_images", [])
         if use_cache and existing_images and not args.force:
             valid_images = [img for img in existing_images if img.get("image_url")]
             if valid_images:
-                # Re-evaluate mode: re-fetch if any existing image is below threshold
-                if args.re_evaluate and any(img.get("relevance_score", 0) < 70 for img in valid_images):
-                    print(f"\u2192 low-score re-eval ({len(valid_images)} cached)", end=" ", flush=True)
+                # Compute break points to check if all are covered
+                sections = parse_sections(article)
+                if sections:
+                    break_sections = compute_break_points(sections, article)
+                    break_indices = {s["section_index"] for s in break_sections}
+                    existing_indices = {s.get("section_index") for s in valid_images}
+                    fully_covered = existing_indices >= break_indices
                 else:
+                    fully_covered = True
+
+                if fully_covered and not (args.re_evaluate and any(img.get("relevance_score", 0) < 70 for img in valid_images)):
                     # Still fetch featured image if missing (section images don't imply hero)
                     feat = article.get("featured_image", "")
                     if not feat or not (PROJECT_ROOT / feat.lstrip("/")).exists():

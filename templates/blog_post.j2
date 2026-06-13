@@ -5,9 +5,9 @@
 {{ breadcrumbs(page_path, content.title) }}
 <div id="reading-progress" style="position:fixed;top:0;left:0;height:3px;z-index:9999;width:0%;background:var(--color-accent)"></div>
 
-<div class="flex gap-8 {% if toc_items %}lg:flex-row{% endif %} flex-col">
+<div class="flex gap-8 {% if toc_items %}md:flex-row{% endif %} flex-col">
   {%- if toc_items %}
-  <aside class="toc-sidebar shrink-0 lg:sticky lg:top-20 lg:self-start lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto lg:w-56">
+  <aside class="toc-sidebar shrink-0 order-last md:order-first md:sticky md:top-20 md:self-start md:max-h-[calc(100vh-6rem)] md:overflow-y-auto md:w-52">
     <div class="flex items-center justify-between mb-3">
       <h2 class="text-xs font-semibold uppercase tracking-wide" style="color:var(--color-text-muted)">On this page</h2>
       <button id="focus-toggle" class="text-xs px-2 py-1 rounded" style="color:var(--color-text-muted);background:var(--color-bg)" title="Focus mode" aria-label="Toggle focus mode">

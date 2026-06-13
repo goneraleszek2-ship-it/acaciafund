@@ -141,6 +141,9 @@
   </script>
   <link rel="stylesheet" href="/static/css/tailwind.min.css{{ "?v=" + build_hash if build_hash else "" }}">
   <link rel="stylesheet" href="/static/css/custom.css{{ "?v=" + build_hash if build_hash else "" }}">
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+  <link rel="preconnect" href="https://upload.wikimedia.org" crossorigin>
+  <link rel="preconnect" href="https://pixabay.com" crossorigin>
   <link rel="preload" href="/static/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/static/fonts/Inter-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/static/fonts/Inter-Bold.woff2" as="font" type="font/woff2" crossorigin>
@@ -155,7 +158,7 @@
   <a href="#main" class="skip-link">Skip to content</a>
 
   <header class="sticky top-0 z-50 backdrop-blur border-b border-b-[var(--color-border)]" style="background:var(--color-header-bg)">
-    <nav class="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between" aria-label="Main navigation">
+    <nav class="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between" aria-label="Main navigation">
       <a href="/" class="flex items-center gap-2 text-lg font-bold tracking-tight whitespace-nowrap">
         <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 48 48" fill="none" aria-hidden="true">
           <defs><linearGradient id="navlg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c97d3e"/><stop offset="100%" stop-color="#fbbf24"/></linearGradient></defs>
@@ -249,12 +252,12 @@
     </div>
   </dialog>
 
-  <main id="main" class="max-w-5xl mx-auto px-5 py-8" tabindex="-1">
+  <main id="main" class="max-w-6xl mx-auto px-5 py-8" tabindex="-1">
     {%- block main_content %}{{ content.body_html | safe }}{% endblock %}
   </main>
 
   <footer class="mt-16 border-t" style="border-color:var(--color-border);background:var(--color-surface)">
-    <div class="max-w-5xl mx-auto px-4 py-10">
+    <div class="max-w-7xl mx-auto px-4 py-10">
       <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-sm" style="color:var(--color-text-secondary)">
         <div>
           <a href="/" class="text-lg font-bold tracking-tight" style="color:var(--color-text)">

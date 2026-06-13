@@ -419,9 +419,9 @@ def resolve_featured_image(raw_path: str) -> str:
         if ref:
             return ref
         return f"{SITE_URL}{raw_path}" if raw_path.startswith("/") else f"{SITE_URL}/{raw_path}"
-    # Try alternate extensions: .webp, .png, .jpg, .jpeg
+    # Try alternate extensions: .webp, .png, .jpg, .jpeg, .svg
     stem = p.stem
-    for ext in (".webp", ".png", ".jpg", ".jpeg"):
+    for ext in (".webp", ".png", ".jpg", ".jpeg", ".svg"):
         alt = p.parent / f"{stem}{ext}"
         if alt.exists():
             ref = _resolve_ref_file(alt)
@@ -430,7 +430,7 @@ def resolve_featured_image(raw_path: str) -> str:
             resolved = raw_path.rsplit("/", 1)[0] + "/" + alt.name
             return f"{SITE_URL}{resolved}" if resolved.startswith("/") else f"{SITE_URL}/{resolved}"
     # Try _s1 variant with extensions
-    for ext in (".webp", ".png", ".jpg", ".jpeg"):
+    for ext in (".webp", ".png", ".jpg", ".jpeg", ".svg"):
         s1_path = p.parent / f"{stem}_s1{ext}"
         if s1_path.exists():
             ref = _resolve_ref_file(s1_path)
@@ -451,7 +451,7 @@ def resolve_section_image(url: str) -> str:
         if ref:
             return ref
         return url
-    for ext in (".webp", ".png", ".jpg", ".jpeg"):
+    for ext in (".webp", ".png", ".jpg", ".jpeg", ".svg"):
         alt = p.with_suffix(ext)
         if alt.exists():
             ref = _resolve_ref_file(alt)
@@ -884,10 +884,9 @@ def main():
 
         body = add_lazy_loading(item.body_html)
         body, toc_items = extract_headings(body)
-        body = re.sub(r'<h2[^>]*>\s*' + re.escape(item.title.strip()) + r'\s*</h2>\s*', '', body, count=1)
         body = sanitize_domain_breakdown(body)
         body = inject_section_images(body, item.section_images, item)
-        body = sanitize_text(body, strip_emoji=False)
+        body = re.sub(r'<h2[^>]*>\s*' + re.escape(item.title.strip()) + r'\s*</h2>\s*', '', body, count=1)
         item.description = sanitize_text(item.description, strip_emoji=False)
         item.body_html = body
 
@@ -1028,10 +1027,10 @@ def main():
             out_file = OUTPUT_DIR / f"{slug}.html"
         body = add_lazy_loading(item.body_html)
         body, toc_items = extract_headings(body)
-        body = re.sub(r'<h2[^>]*>\s*' + re.escape(item.title.strip()) + r'\s*</h2>\s*', '', body, count=1)
         body = sanitize_domain_breakdown(body)
-        body = sanitize_text(body, strip_emoji=False)
         body = inject_section_images(body, item.section_images, item)
+        body = re.sub(r'<h2[^>]*>\s*' + re.escape(item.title.strip()) + r'\s*</h2>\s*', '', body, count=1)
+        body = sanitize_text(body, strip_emoji=False)
         item.description = sanitize_text(item.description, strip_emoji=False)
         item.body_html = body
 
@@ -1178,10 +1177,10 @@ def main():
 
         body = add_lazy_loading(item.body_html)
         body, toc_items = extract_headings(body)
-        body = re.sub(r'<h2[^>]*>\s*' + re.escape(item.title.strip()) + r'\s*</h2>\s*', '', body, count=1)
         body = sanitize_domain_breakdown(body)
-        body = sanitize_text(body, strip_emoji=True)
         body = inject_section_images(body, item.section_images, item)
+        body = re.sub(r'<h2[^>]*>\s*' + re.escape(item.title.strip()) + r'\s*</h2>\s*', '', body, count=1)
+        body = sanitize_text(body, strip_emoji=True)
         item.description = sanitize_text(item.description, strip_emoji=True)
 
         prev_post = research_items[i + 1] if i + 1 < len(research_items) else None

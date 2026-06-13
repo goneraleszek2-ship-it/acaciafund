@@ -27,17 +27,55 @@
   // --- Gallery page ---
   const galleryGrid = document.getElementById('gallery-grid');
   const filterForm = document.getElementById('gallery-filters');
+  const paginationEl = document.getElementById('gallery-pagination');
+  const pageInfoEl = document.getElementById('page-info');
+  const prevBtn = document.getElementById('page-prev');
+  const nextBtn = document.getElementById('page-next');
+  let galleryPage = 1;
+  let galleryTotalPages = 1;
+
+  window.galleryPrev = function() {
+    if (galleryPage > 1) { galleryPage--; loadGallery(); }
+  };
+  window.galleryNext = function() {
+    if (galleryPage < galleryTotalPages) { galleryPage++; loadGallery(); }
+  };
+
   if (galleryGrid && filterForm) {
+    // Populate tag dropdown
+    const tagSelect = filterForm.elements['tag'];
+    if (tagSelect) {
+      api('/admin/api/tags').then(data => {
+        if (data.tags) {
+          data.tags.forEach(t => {
+            const opt = document.createElement('option');
+            opt.value = t.name;
+            opt.textContent = `${t.name} (${t.count})`;
+            tagSelect.appendChild(opt);
+          });
+        }
+      }).catch(() => {});
+    }
+
     let debounceTimer;
     function loadGallery() {
       const params = new URLSearchParams();
-      ['type', 'pillar', 'source', 'section', 'status', 'q'].forEach(k => {
+      ['type', 'pillar', 'source', 'section', 'status', 'tag', 'q'].forEach(k => {
         const el = filterForm.elements[k];
         if (el && el.value) params.set(k, el.value);
       });
+      params.set('page', galleryPage);
+      params.set('per_page', 60);
       const url = `/admin/api/images?${params}`;
       galleryGrid.innerHTML = '<div class="empty-state"><div class="spinner" style="margin:0 auto 12px"></div><p>Loading...</p></div>';
       api(url).then(data => {
+        galleryTotalPages = data.total_pages || 1;
+        if (paginationEl) {
+          paginationEl.style.display = data.total > 0 ? 'flex' : 'none';
+          if (pageInfoEl) pageInfoEl.textContent = `Page ${data.page} of ${data.total_pages} (${data.total} images)`;
+          if (prevBtn) prevBtn.disabled = data.page <= 1;
+          if (nextBtn) nextBtn.disabled = data.page >= data.total_pages;
+        }
         if (!data.images || data.images.length === 0) {
           galleryGrid.innerHTML = '<div class="empty-state"><div class="empty-icon">🖼</div><p>No images found</p></div>';
           return;
@@ -48,12 +86,18 @@
           if (img.width && img.height) badges += `<span class="badge badge-score">${img.width}×${img.height}</span>`;
           if (img.used_by && img.used_by.length > 0) badges += `<span class="badge badge-used">${img.used_by.length} used</span>`;
           else badges += `<span class="badge badge-orphan">orphan</span>`;
+          let tagHtml = '';
+          if (img.tags && img.tags.length > 0) {
+            tagHtml = `<div class="gallery-tags">${img.tags.map(t => `<span class="tag-pill" onclick="event.stopPropagation();filterByTag('${t}')">${t}</span>`).join('')}</div>`;
+          }
           const thumbUrl = img.url.replace('/static/', '/static/');
           return `<div class="gallery-item" onclick="window.location='/admin/image/${encodeURIComponent(img.path)}'">
             <div class="thumb-wrap"><img src="${thumbUrl}" alt="${img.filename}" loading="lazy"></div>
             <div class="gallery-info">
               <div class="filename" title="${img.filename}">${img.filename}</div>
               <div class="meta">${badges}</div>
+              ${tagHtml}
+              <button class="btn-tag" onclick="event.stopPropagation();openTagEditor('${img.path.replace(/'/g, "\\'")}','${img.filename.replace(/'/g, "\\'")}',${JSON.stringify(img.tags || [])})">🏷️ Edit tags</button>
             </div>
           </div>`;
         }).join('');
@@ -63,11 +107,159 @@
     }
     filterForm.addEventListener('input', () => {
       clearTimeout(debounceTimer);
+      galleryPage = 1;
       debounceTimer = setTimeout(loadGallery, 250);
     });
-    filterForm.addEventListener('change', loadGallery);
+    filterForm.addEventListener('change', () => { galleryPage = 1; loadGallery(); });
     loadGallery();
   }
+
+  // --- Sidebar toggle ---
+  window.toggleSidebar = function() {
+    const sidebar = document.getElementById('sidebar');
+    if (sidebar) sidebar.classList.toggle('open');
+  };
+
+  // --- Tag management ---
+  let currentTagPath = '';
+  let currentTags = [];
+
+  window.openTagEditor = function(path, filename, tags) {
+    currentTagPath = path;
+    currentTags = [...tags];
+    document.getElementById('tag-path').value = path;
+    document.getElementById('tag-filename').textContent = filename;
+    renderTagList();
+    renderSuggestions();
+    document.getElementById('tag-modal').classList.add('open');
+  };
+
+  window.closeTagModal = function() {
+    document.getElementById('tag-modal').classList.remove('open');
+  };
+
+  function renderTagList() {
+    const container = document.getElementById('tag-list');
+    if (!container) return;
+    if (currentTags.length === 0) {
+      container.innerHTML = '<span style="color:var(--admin-text-secondary);font-size:13px">No tags</span>';
+      return;
+    }
+    container.innerHTML = currentTags.map(t =>
+      `<span class="tag-pill">${t} <button class="tag-remove" onclick="removeTag('${t.replace(/'/g, "\\'")}')">&times;</button></span>`
+    ).join('');
+  }
+
+  window.addTag = function() {
+    const input = document.getElementById('tag-input');
+    const tag = input.value.trim();
+    if (!tag) return;
+    if (!currentTags.includes(tag)) {
+      currentTags.push(tag);
+      renderTagList();
+      renderSuggestions();
+      saveTags();
+    }
+    input.value = '';
+  };
+
+  window.removeTag = function(tag) {
+    currentTags = currentTags.filter(t => t !== tag);
+    renderTagList();
+    renderSuggestions();
+    saveTags();
+  };
+
+  function saveTags() {
+    api('/admin/api/image/tags', {
+      method: 'POST',
+      body: JSON.stringify({ path: currentTagPath, tags: currentTags }),
+    }).then(() => {
+      // Reload gallery to reflect new tags
+      const filterForm = document.getElementById('gallery-filters');
+      if (filterForm) {
+        const params = new URLSearchParams();
+        ['type', 'pillar', 'source', 'section', 'status', 'tag', 'q'].forEach(k => {
+          const el = filterForm.elements[k];
+          if (el && el.value) params.set(k, el.value);
+        });
+        // Refresh tag dropdown
+        api('/admin/api/tags').then(data => {
+          const tagSelect = filterForm.elements['tag'];
+          if (tagSelect && data.tags) {
+            const currentVal = tagSelect.value;
+            tagSelect.innerHTML = '<option value="">All</option>';
+            data.tags.forEach(t => {
+              const opt = document.createElement('option');
+              opt.value = t.name;
+              opt.textContent = `${t.name} (${t.count})`;
+              tagSelect.appendChild(opt);
+            });
+            tagSelect.value = currentVal;
+          }
+        }).catch(() => {});
+      }
+    }).catch(err => toast(err.message, 'error'));
+  }
+
+  function renderSuggestions() {
+    const container = document.getElementById('tag-suggestions');
+    if (!container) return;
+    // Suggest common tags that aren't already added
+    api('/admin/api/tags').then(data => {
+      if (!data.tags) return;
+      const suggestions = data.tags
+        .filter(t => !currentTags.includes(t.name))
+        .slice(0, 10);
+      if (suggestions.length === 0) {
+        container.innerHTML = '';
+        return;
+      }
+      container.innerHTML = suggestions.map(t =>
+        `<button class="tag-suggest" onclick="addTagName('${t.name.replace(/'/g, "\\'")}')">+${t.name}</button>`
+      ).join('');
+    }).catch(() => {});
+  }
+
+  window.addTagName = function(name) {
+    if (!currentTags.includes(name)) {
+      currentTags.push(name);
+      renderTagList();
+      renderSuggestions();
+      saveTags();
+    }
+  };
+
+  window.filterByTag = function(tag) {
+    const tagSelect = document.getElementById('gallery-filters')?.elements['tag'];
+    if (tagSelect) {
+      // Find matching option
+      for (let opt of tagSelect.options) {
+        if (opt.value === tag) {
+          tagSelect.value = tag;
+          break;
+        }
+      }
+      tagSelect.dispatchEvent(new Event('change'));
+    }
+  };
+
+  // Enter key in tag input
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' && document.activeElement === document.getElementById('tag-input')) {
+      e.preventDefault();
+      addTag();
+    }
+    if (e.key === 'Escape') closeTagModal();
+  });
+
+  // Close tag modal on overlay click
+  document.addEventListener('click', function(e) {
+    const modal = document.getElementById('tag-modal');
+    if (modal && modal.classList.contains('open') && e.target === modal) {
+      closeTagModal();
+    }
+  });
 
   // --- Article detail image picker ---
   function initImagePicker() {

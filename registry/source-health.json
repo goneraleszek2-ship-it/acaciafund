@@ -1,0 +1,90 @@
+{
+  "hn": [
+    {
+      "source": "hn",
+      "timestamp": "2026-06-13T08:10:20.420578+00:00",
+      "success": true,
+      "latency_ms": 1598.5,
+      "item_count": 692,
+      "error": null
+    }
+  ],
+  "arstechnica": [
+    {
+      "source": "arstechnica",
+      "timestamp": "2026-06-13T08:26:09.730458+00:00",
+      "success": true,
+      "latency_ms": 247.5,
+      "item_count": 3,
+      "error": null
+    }
+  ],
+  "netflix_tech": [
+    {
+      "source": "netflix_tech",
+      "timestamp": "2026-06-13T08:26:21.908926+00:00",
+      "success": false,
+      "latency_ms": 7302.3,
+      "item_count": 0,
+      "error": "Failed to fetch RSS feed: https://netflixtechblog.com/feed"
+    }
+  ],
+  "the_gradient": [
+    {
+      "source": "the_gradient",
+      "timestamp": "2026-06-13T08:26:31.316367+00:00",
+      "success": false,
+      "latency_ms": 9398.8,
+      "item_count": 0,
+      "error": "Failed to fetch RSS feed: https://thegradient.pub/feed.xml"
+    }
+  ],
+  "import_ai": [
+    {
+      "source": "import_ai",
+      "timestamp": "2026-06-13T08:26:31.534828+00:00",
+      "success": true,
+      "latency_ms": 216.5,
+      "item_count": 3,
+      "error": null
+    },
+    {
+      "source": "import_ai",
+      "timestamp": "2026-06-13T08:27:17.530888+00:00",
+      "success": true,
+      "latency_ms": 10.0,
+      "item_count": 2,
+      "error": null
+    }
+  ],
+  "data_engineering_weekly": [
+    {
+      "source": "data_engineering_weekly",
+      "timestamp": "2026-06-13T08:27:17.518337+00:00",
+      "success": false,
+      "latency_ms": 841.2,
+      "item_count": 0,
+      "error": "not well-formed (invalid token): line 31, column 139"
+    }
+  ],
+  "github_blog": [
+    {
+      "source": "github_blog",
+      "timestamp": "2026-06-13T08:27:32.261937+00:00",
+      "success": true,
+      "latency_ms": 217.1,
+      "item_count": 2,
+      "error": null
+    }
+  ],
+  "cloudflare_blog": [
+    {
+      "source": "cloudflare_blog",
+      "timestamp": "2026-06-13T08:27:32.700218+00:00",
+      "success": true,
+      "latency_ms": 435.0,
+      "item_count": 2,
+      "error": null
+    }
+  ]
+}
