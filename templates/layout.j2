@@ -150,9 +150,9 @@
   <script src="/static/js/mermaid.min.js?v={{ build_hash }}"></script>
   <script>
     // ESM modules loaded via script don't auto-assign to window
-    // Mermaid v11 ESM exports to globalThis.__esbuild_esm_mermaid
-    if (typeof globalThis !== 'undefined' && globalThis.__esbuild_esm_mermaid && globalThis.__esbuild_esm_mermaid.mermaid) {
-      window.mermaid = globalThis.__esbuild_esm_mermaid.mermaid;
+    // Mermaid v11 ESM exports to globalThis.__esbuild_esm_mermaid.default
+    if (typeof globalThis !== 'undefined' && globalThis.__esbuild_esm_mermaid && globalThis.__esbuild_esm_mermaid.default) {
+      window.mermaid = globalThis.__esbuild_esm_mermaid.default;
     }
   </script>
   {%- if plausible_domain %}
