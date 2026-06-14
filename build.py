@@ -233,52 +233,103 @@ def find_related(posts: list, current: object, max_items: int = 3) -> list:
 
 
 CARD_PICTOGRAM_KEYWORDS = {
-    "crypto": [
-        "crypto", "blockchain", "cryptocurrency", "bitcoin", "ethereum", "defi",
-        "digital signature", "zero-knowledge", "zk", "wallet", "token", "mixer",
-        "digital asset",
+    # Core concepts (cross-pillar)
+    "ai": [
+        "ai", "artificial intelligence", "machine learning", "deep learning",
+        "neural", "llm", "large language model", "generative ai",
+        "openai", "anthropic", "google gemini", "claude", "gpt",
+        "transformer", "bert", "gpt-4", "gpt-5", "claude 3",
     ],
-    "bayes": [
-        "bayesian", "bayes", "probability", "statistics", "statistical",
-        "inference", "prior", "posterior", "monte carlo", "mcmc", "markov",
-        "meta-analysis", "meta analysis",
-        "fundamental analysis", "technical analysis", "quantitative",
-        "behavioral finance", "portfolio theory", "market analysis",
-        "valuation", "macroeconomic",
+    "realtime": [
+        "real-time", "realtime", "streaming", "stream",
+        "event-driven", "event streaming", "kafka", "kafka streams",
+        "flink", "spark streaming", "kinesis", "pulsar",
+        "cdc", "change data capture", "debezium",
+        "websockets", "sse", "server-sent events",
     ],
-    "dp": [
-        "privacy", "differential privacy", "data protection", "gdpr",
-        "anonymization", "de-identification", "k-anonymity",
-        "data ethics", "ethics",
-        "compliance program", "regulatory", "regulation",
-        "fincen", "ofac", "sanctions", "beneficial ownership",
-        "money laundering", "kyc", "financial crime",
-        "enforcement", "directive", "trade finance",
-        "fatf", "gafi", "6amld", "7amld", "eu regulation",
+    "platform": [
+        "platform", "data platform", "data stack", "data architecture",
+        "infrastructure", "cloud infrastructure", "kubernetes", "k8s",
+        "docker", "container", "orchestration", "terraform",
+        "aws", "azure", "gcp", "cloud", "serverless",
+        "infrastructure as code", "iac", "devops",
     ],
-    "mosa": [
-        "pipeline", "architecture", "orchestration", "data platform",
-        "data stack", "data product", "data mesh", "data engineering",
-        "integration", "etl", "streaming", "data pipeline",
-        "dataops", "data quality", "observability", "lineage",
-        "kafka", "flink", "dbt", "dagster", "airflow", "prefect",
-        "iceberg", "delta lake", "hudi", "lakehouse",
-        "schema registry", "avro", "protobuf", "cdc", "debezium",
-        "terraform", "kubernetes", "k8s", "infrastructure",
-        "feature store", "feast", "mlflow", "mlops",
-        "sqlmesh", "analytics engineering",
-        "microservice", "network", "mesh", "cloud", "api",
-        "deployment", "monitoring", "replication", "cost optimization",
-        "data contract", "soda", "great expectations",
-        "system diagram", "tool landscape", "open source",
-        "software-defined", "asset-based",
+    # Content types (cross-pillar)
+    "tutorial": [
+        "tutorial", "how-to", "guide", "step-by-step", "walkthrough",
+        "beginner", "introductory", "introduction", "getting started",
+        "learn", "teach", "educational", "instructional",
+    ],
+    "comparison": [
+        "comparison", "compare", "vs", "versus", "showdown",
+        "benchmark", "evaluation", "review", "analysis",
+        "trade-off", "pros and cons", "alternatives",
+    ],
+    "case-study": [
+        "case study", "case study", "real-world", "production",
+        "implementation", "deployment", "migration", "migration story",
+        "customer", "client", "enterprise", "success story",
+    ],
+    # AML-specific
+    "aml": [
+        "aml", "anti-money laundering", "compliance", "regulatory",
+        "regulation", "enforcement", "sanctions", "fatf", "fincen",
+        "kyc", "know your customer", "kyb", "know your business",
+        "sar", "suspicious activity report", "transaction monitoring",
+        "financial crime", "fraud detection", "risk assessment",
+    ],
+    "fraud": [
+        "fraud", "fraud detection", "fraud prevention",
+        "scam", "scam detection", "payment fraud",
+        "chargeback", "chargeback fraud", "synthetic identity",
+        "money laundering", "suspicious activity",
+    ],
+    # Markets-specific
+    "finance": [
+        "finance", "trading", "investment", "portfolio",
+        "stock market", "equities", "bonds", "derivatives",
+        "valuation", "financial modeling", "quantitative",
+        "algorithmic trading", "algo trading", "high frequency",
+        "market making", "market data", "financial technology",
+    ],
+    "market": [
+        "market", "trading", "market data", "market analysis",
+        "stock", "equity", "securities", "exchange",
+        "nasdaq", "nyse", "s&p 500", " Dow", "dow jones",
+        "market maker", "market structure", "market microstructure",
+    ],
+    # Data Engineering-specific
+    "pipeline": [
+        "pipeline", "etl", "elt", "orchestration", "workflow",
+        "dag", "directed acyclic graph", "airflow", "dagster", "prefect",
+        "kubeflow", "temporal", "kedro", "dbt", "sqlmesh",
+        "data pipeline", "pipeline orchestration", "workflow orchestration",
+    ],
+    "infrastructure": [
+        "infrastructure", "kubernetes", "k8s", "docker", "container",
+        "terraform", "infrastructure as code", "iac",
+        "cloud", "aws", "azure", "gcp", "serverless",
+        "deployment", "ci/cd", "continuous integration", "continuous delivery",
+    ],
+    # Technical (cross-pillar)
+    "database": [
+        "database", "db", "sql", "nosql", "postgresql", "mysql",
+        "mongodb", "cassandra", "redis", "memcached",
+        "storage", "data warehouse", "data lake", "lakehouse",
+        "iceberg", "delta lake", "hudi", "parquet", "avro",
+    ],
+    "api": [
+        "api", "api design", "rest", "graphql", "grpc",
+        "microservice", "service mesh", "istio", "linkerd",
+        "gateway", "gateway api", "openapi", "swagger",
+        "integration", "integration pattern", "event-driven",
     ],
 }
 
 _PICTOGRAM_PILLAR_DEFAULTS = {
-    "aml": "dp.svg",
-    "stock": "bayes.svg",
-    "data-engineering": "mosa.svg",
+    "aml": "aml.svg",
+    "stock": "finance.svg",
+    "data-engineering": "pipeline.svg",
 }
 
 _PICTOGRAM_CONTENT_TYPE_FALLBACK = {
@@ -288,20 +339,66 @@ _PICTOGRAM_CONTENT_TYPE_FALLBACK = {
 }
 
 def pick_card_pictogram(content) -> str | None:
+    """Pick the most relevant pictogram based on title, tags, pillar, and content type.
+    
+    Uses scoring system to find best match, with pillar-specific weighting.
+    Returns first match if no scoring is needed (backward compatible).
+    """
     text = " ".join([
         *(t.lower().replace("-", " ") for t in (content.tags or [])),
         (content.title or "").lower(),
     ])
+    pillar = (content.pillar or "").lower()
+    content_type = (content.content_type or "").lower()
+    
+    # First pass: exact keyword matches (backward compatible)
     for img_name, keywords in CARD_PICTOGRAM_KEYWORDS.items():
         for kw in keywords:
             if kw.lower() in text:
                 return f"{img_name}.svg"
-    pillar = (content.pillar or "").lower()
+    
+    # Second pass: use scoring for better matching
+    scores = {}
+    for img_name, keywords in CARD_PICTOGRAM_KEYWORDS.items():
+        score = 0
+        for kw in keywords:
+            if kw.lower() in text:
+                # Base score for keyword match
+                score += 10
+                # Bonus for exact phrase matches
+                if kw.lower() == text.strip():
+                    score += 50
+                # Bonus for multi-word keyword matches
+                if len(kw.split()) > 1 and kw.lower() in text:
+                    score += 20
+        
+        # Pillar-specific weighting
+        if pillar == "aml" and img_name in ["aml", "fraud", "dp"]:
+            score *= 1.5
+        elif pillar == "stock" and img_name in ["finance", "market"]:
+            score *= 1.5
+        elif pillar == "data-engineering" and img_name in ["pipeline", "infrastructure", "database", "api"]:
+            score *= 1.5
+        
+        # Content type weighting
+        if content_type == "learn" and img_name == "tutorial":
+            score *= 1.3
+        
+        if score > 0:
+            scores[img_name] = score
+    
+    if scores:
+        best_match = max(scores.items(), key=lambda x: x[1])
+        return f"{best_match[0]}.svg"
+    
+    # Fallback to pillar defaults
     if pillar in _PICTOGRAM_PILLAR_DEFAULTS:
         return _PICTOGRAM_PILLAR_DEFAULTS[pillar]
-    ct = (content.content_type or "").lower()
-    if ct in _PICTOGRAM_CONTENT_TYPE_FALLBACK:
-        return _PICTOGRAM_CONTENT_TYPE_FALLBACK[ct]
+    
+    # Content type fallback
+    if content_type in _PICTOGRAM_CONTENT_TYPE_FALLBACK:
+        return _PICTOGRAM_CONTENT_TYPE_FALLBACK[content_type]
+    
     return "icon-research.svg"
 
 

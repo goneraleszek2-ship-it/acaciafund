@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="fraud-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ef4444"/>
+      <stop offset="100%" stop-color="#f87171"/>
+    </linearGradient>
+  </defs>
+  <rect width="100" height="100" fill="url(#fraud-gradient)" rx="16"/>
+  <g fill="#fff" opacity="0.9">
+    <path d="M35 35L65 65M65 35L35 65" stroke="#fff" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="50" cy="50" r="20" stroke="#fff" stroke-width="2" fill="none"/>
+  </g>
+</svg>

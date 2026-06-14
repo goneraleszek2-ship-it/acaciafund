@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="market-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#60a5fa"/>
+    </linearGradient>
+  </defs>
+  <rect width="100" height="100" fill="url(#market-gradient)" rx="16"/>
+  <g fill="#fff" opacity="0.9">
+    <circle cx="50" cy="50" r="25" stroke="#fff" stroke-width="2" fill="none"/>
+    <path d="M50 25V75M25 50H75" stroke="#fff" stroke-width="1" stroke-dasharray="4,4"/>
+    <circle cx="50" cy="50" r="8" fill="#fff"/>
+  </g>
+</svg>

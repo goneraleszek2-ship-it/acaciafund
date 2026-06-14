@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="pipeline-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4"/>
+      <stop offset="100%" stop-color="#22d3ee"/>
+    </linearGradient>
+  </defs>
+  <rect width="100" height="100" fill="url(#pipeline-gradient)" rx="16"/>
+  <g fill="#fff" opacity="0.9">
+    <path d="M20 50H40L50 35L60 50H80" stroke="#fff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+    <circle cx="40" cy="50" r="4" fill="#fff"/>
+    <circle cx="60" cy="50" r="4" fill="#fff"/>
+    <path d="M50 35V20" stroke="#fff" stroke-width="2"/>
+  </g>
+</svg>
