@@ -1046,6 +1046,7 @@ def main():
         body = sanitize_domain_breakdown(body)
         body = inject_section_images(body, item.section_images, item)
         body = re.sub(r'<h2[^>]*>\s*' + re.escape(item.title.strip()) + r'\s*</h2>\s*', '', body, count=1)
+        body = sanitize_text(body, strip_emoji=False)
         item.description = sanitize_text(item.description, strip_emoji=False)
         item.body_html = body
 
