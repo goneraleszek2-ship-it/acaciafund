@@ -324,8 +324,9 @@
       {%- set tkey = thumbnail_key(item.title) %}
       {%- set feat_img = item.featured_image or "" %}
       {%- set has_feat = feat_img %}
-      <div class="research-card group" style="background:var(--color-surface);border:1px solid var(--color-border);border-left:3px solid var(--color-{{ p }})">
-        <a href="/{{ item.slug }}/">
+      {%- set sqi_val = item.signals.get("avg_sqi", "") if item.signals else "" %}
+      <div class="ghost-card" style="border-left-color:var(--color-{{ p }})">
+        <a href="/{{ item.slug }}/" class="block">
           <div class="flex gap-4 p-4">
             <div class="shrink-0 w-28 h-20 rounded-lg overflow-hidden" style="background:var(--color-bg)">
               {%- if has_feat %}
@@ -338,11 +339,14 @@
               <div class="flex items-center gap-2 mb-2">
                 {{ pillar_badge(item.pillar) }}
                 {{ content_badge(item.content_type) }}
+                {%- if sqi_val and sqi_val != "0.0" %}
+                <span class="badge badge-accent font-meta">SQI {{ sqi_val }}</span>
+                {%- endif %}
               </div>
               <h3 class="text-base font-semibold leading-snug mb-2" style="color:var(--color-text)">
                 <a href="/{{ item.slug }}/" class="group-hover:underline decoration-2" style="color:var(--color-text);text-decoration:none">{{ item.title | striptags }}</a>
               </h3>
-              <div class="flex items-center gap-3 text-xs" style="color:var(--color-text-secondary)">
+              <div class="flex items-center gap-3 text-xs font-meta" style="color:var(--color-text-muted)">
                 {%- if item.date_str %}
                 <time datetime="{{ item.date_str }}">{{ item.date_str }}</time>
                 {%- endif %}
@@ -477,11 +481,15 @@
     
     <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
     {%- for item in knowledge_items[:6] %}
-      <div class="research-card group" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+      {%- set sqi_val = item.signals.get("avg_sqi", "") if item.signals else "" %}
+      <div class="ghost-card" style="text-decoration:none">
         <a href="/{{ item.slug }}/">
           <div class="p-5">
             <div class="flex items-center gap-2 mb-3">
               {{ content_badge("knowledge") }}
+              {%- if sqi_val and sqi_val != "0.0" %}
+              <span class="badge badge-accent font-meta">SQI {{ sqi_val }}</span>
+              {%- endif %}
             </div>
             <h3 class="font-semibold card-title-clamp mb-2" style="color:var(--color-text)">{{ item.title | striptags }}</h3>
             <p class="text-sm" style="color:var(--color-text-secondary)">{{ item.description | truncate(100) }}</p>

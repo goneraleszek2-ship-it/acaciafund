@@ -59,6 +59,12 @@
         {{ visual_fingerprint | default("") | safe }}
         <h1 class="text-3xl font-extrabold text-gray-900 leading-tight">{{ content.title | striptags }}</h1>
       </div>
+      {%- set sqi_val = content.signals.get("avg_sqi", "") if content.signals else "" %}
+      {%- if sqi_val and sqi_val != "0.0" %}
+      <div class="mt-2">
+        <span class="badge badge-accent font-meta">SQI {{ sqi_val }}</span>
+      </div>
+      {%- endif %}
       {%- if content.date_str %}
       <div class="mt-2 flex items-center gap-2 text-sm" style="color:var(--color-text-muted)">
         <time datetime="{{ content.date_str }}">{{ content.date_str }}</time>
@@ -112,7 +118,7 @@
     </div>
 
     {%- if content.quality_metrics and content.quality_metrics.get("avg_source_score") is defined %}
-    <div class="mb-6 flex flex-wrap items-center gap-x-5 gap-y-1.5 text-xs" style="color:var(--color-text-muted)">
+    <div class="mb-6 flex flex-wrap items-center gap-x-5 gap-y-1.5 text-xs font-meta" style="color:var(--color-text-muted)">
       {%- set qm = content.quality_metrics %}
       <span class="inline-flex items-center gap-1">
         <span style="color:var(--color-text-secondary);font-weight:600">Authority</span>
@@ -143,7 +149,7 @@
     </div>
 
     {%- if content.bloom_questions and content.bloom_questions | length > 0 %}
-    <section class="mt-12 pt-8 border-t border-gray-200">
+    <section class="mt-12 pt-8 border-t">
       <h2 class="text-2xl font-bold text-gray-900 mb-4">Bloom Taxonomy Questions</h2>
       <div class="mb-6 flex flex-wrap items-center gap-2">
         {%- set levels = {"remember":"🔵","understand":"🟢","apply":"🟠","analyze":"🟣","evaluate":"🔴","create":"🟡"} %}
@@ -158,7 +164,7 @@
       </div>
       <div class="space-y-4">
         {%- for q in content.bloom_questions %}
-        <div class="bg-white rounded-lg border border-gray-200 p-4">
+        <div class="ghost-card p-4">
           <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded
             {%- if q.bloom_level == "remember" %} bg-blue-100 text-blue-700
             {%- elif q.bloom_level == "understand" %} bg-green-100 text-green-700
@@ -184,19 +190,19 @@
       </h2>
       <div class="grid gap-4 sm:grid-cols-2" id="flashcard-grid">
         {%- for fc in content.flashcards[:12] %}
-        <div class="flashcard-card-flip cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: {{ fc.term }}" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+        <div class="ghost-card cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: {{ fc.term }}" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
           <div class="flashcard-inner">
-            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border);box-shadow:0 1px 3px rgba(0,0,0,0.06)">
+            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
               <div class="flex items-start gap-2">
                 <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
                 <span class="font-semibold text-sm" style="color:var(--color-text)">{{ fc.term }}</span>
               </div>
               <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
             </div>
-            <div class="flashcard-back rounded-lg p-4">
+            <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);color:#fff">
               <div class="flex items-start gap-2">
-                <svg class="w-4 h-4 mt-0.5 shrink-0 flashcard-back-text opacity-80" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                <span class="text-sm flashcard-back-text">{{ fc.definition[:200] }}</span>
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm">{{ fc.definition[:200] }}</span>
               </div>
             </div>
           </div>
@@ -207,25 +213,25 @@
     {%- endif %}
 
     {%- if content.signals %}
-    <section class="mt-12 pt-8 border-t border-gray-200">
+    <section class="mt-12 pt-8 border-t">
       <h2 class="text-2xl font-bold text-gray-900 mb-4">Signal Analysis</h2>
       {%- set s = content.signals %}
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
-        <div class="bg-white rounded-lg border p-3">
+        <div class="ghost-card p-3">
           <div class="text-xl font-bold text-gray-900">{{ s.get("count", 0) }}</div>
-          <div class="text-xs text-gray-500">Articles</div>
+          <div class="text-xs text-gray-500 font-meta">Articles</div>
         </div>
-        <div class="bg-white rounded-lg border p-3">
+        <div class="ghost-card p-3">
           <div class="text-xl font-bold text-gray-900">{{ s.get("total_score", 0) }}</div>
-          <div class="text-xs text-gray-500">Total Points</div>
+          <div class="text-xs text-gray-500 font-meta">Total Points</div>
         </div>
-        <div class="bg-white rounded-lg border p-3">
+        <div class="ghost-card p-3">
           <div class="text-xl font-bold text-gray-900">{{ "%.2f"|format(s.get("avg_score", 0)) }}</div>
-          <div class="text-xs text-gray-500">Avg Points</div>
+          <div class="text-xs text-gray-500 font-meta">Avg Points</div>
         </div>
-        <div class="bg-white rounded-lg border p-3">
+        <div class="ghost-card p-3">
           <div class="text-xl font-bold text-gray-900">{{ s.get("domain_diversity", 0) }}</div>
-          <div class="text-xs text-gray-500">Domains</div>
+          <div class="text-xs text-gray-500 font-meta">Domains</div>
         </div>
       </div>
       {%- if s.get("top_entities") %}
@@ -242,7 +248,7 @@
     {%- endif %}
 
     {%- if related_posts %}
-    <section class="mt-12 pt-8 border-t border-gray-200">
+    <section class="mt-12 pt-8 border-t">
       <h2 class="text-2xl font-bold text-gray-900 mb-6">Related</h2>
       <div class="grid gap-4 sm:grid-cols-3">
         {%- for rp in related_posts %}
@@ -251,77 +257,77 @@
         {%- set rtkey = thumbnail_key(rp.title) %}
         {%- set feat_img = rp.featured_image or "" %}
         {%- set has_feat = feat_img %}
-        <a href="/{{ rp.slug }}/" class="block rounded-lg overflow-hidden transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);border-left:3px solid var(--color-{{ rpillar }});text-decoration:none">
-          <div class="aspect-[600/340] bg-gray-800 overflow-hidden">
-            {%- if has_feat %}
-            <img src="{{ feat_img }}" alt="{{ rp.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
-            {%- else %}
-            <img src="{{ thumbnail_base }}/thumb_{{ rtkey }}.svg" alt="{{ rp.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
-            {%- endif %}
-          </div>
-          <div class="p-3">
-            {{ pillar_badge(rp.pillar) }}
-            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">{{ rp.title | striptags }}</span>
-            {%- if rp.date_str %}
-            <span class="block mt-1 text-xs" style="color:var(--color-text-muted)">{{ rp.date_str }}</span>
-            {%- endif %}
-          </div>
-        </a>
-        {%- endfor %}
-      </div>
-    </section>
-    {%- endif %}
+         <a href="/{{ rp.slug }}/" class="ghost-card block text-decoration:none">
+           <div class="aspect-[600/340] bg-gray-800 overflow-hidden">
+             {%- if has_feat %}
+             <img src="{{ feat_img }}" alt="{{ rp.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
+             {%- else %}
+             <img src="{{ thumbnail_base }}/thumb_{{ rtkey }}.svg" alt="{{ rp.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
+             {%- endif %}
+           </div>
+           <div class="p-3">
+             {{ pillar_badge(rp.pillar) }}
+             <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">{{ rp.title | striptags }}</span>
+             {%- if rp.date_str %}
+             <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">{{ rp.date_str }}</span>
+             {%- endif %}
+           </div>
+         </a>
+         {%- endfor %}
+       </div>
+     </section>
+     {%- endif %}
 
-    {%- if related_learn %}
-    <section class="mt-12 pt-8 border-t border-gray-200">
-      <h2 class="text-2xl font-bold text-gray-900 mb-2">Related Lessons</h2>
-      <p class="text-sm text-gray-500 mb-6">Deepen your understanding of this topic with structured learning lessons.</p>
-      <div class="grid gap-4 sm:grid-cols-3">
-        {%- for rl in related_learn %}
-        {%- set rpillar = rl.pillar or "aml" %}
-        {%- set rpc = pillar_config.get(rpillar, pillar_config["aml"]) %}
-        {%- set rtkey = thumbnail_key(rl.title) %}
-        {%- set feat_img = rl.featured_image or "" %}
-        {%- set has_feat = feat_img %}
-        <a href="/{{ rl.slug }}/" class="block rounded-lg overflow-hidden transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
-          <div class="aspect-[600/340] bg-gray-800 overflow-hidden">
-            {%- if has_feat %}
-            <img src="{{ feat_img }}" alt="{{ rl.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
-            {%- else %}
-            <img src="{{ thumbnail_base }}/thumb_{{ rtkey }}.svg" alt="{{ rl.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
-            {%- endif %}
-          </div>
-          <div class="p-3">
-            {{ pillar_badge(rl.pillar) }}
-            {%- if rl.difficulty %}<span class="text-xs text-gray-400 ml-1">{{ rl.difficulty | capitalize }}</span>{% endif %}
-            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">{{ rl.title | striptags }}</span>
-            {%- if rl.date_str %}
-            <span class="block mt-1 text-xs" style="color:var(--color-text-muted)">{{ rl.date_str }}</span>
-            {%- endif %}
-          </div>
-        </a>
-        {%- endfor %}
-      </div>
-    </section>
-    {%- endif %}
+     {%- if related_learn %}
+     <section class="mt-12 pt-8 border-t">
+       <h2 class="text-2xl font-bold text-gray-900 mb-2">Related Lessons</h2>
+       <p class="text-sm text-gray-500 mb-6">Deepen your understanding of this topic with structured learning lessons.</p>
+       <div class="grid gap-4 sm:grid-cols-3">
+         {%- for rl in related_learn %}
+         {%- set rpillar = rl.pillar or "aml" %}
+         {%- set rpc = pillar_config.get(rpillar, pillar_config["aml"]) %}
+         {%- set rtkey = thumbnail_key(rl.title) %}
+         {%- set feat_img = rl.featured_image or "" %}
+         {%- set has_feat = feat_img %}
+         <a href="/{{ rl.slug }}/" class="ghost-card block text-decoration:none">
+           <div class="aspect-[600/340] bg-gray-800 overflow-hidden">
+             {%- if has_feat %}
+             <img src="{{ feat_img }}" alt="{{ rl.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
+             {%- else %}
+             <img src="{{ thumbnail_base }}/thumb_{{ rtkey }}.svg" alt="{{ rl.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
+             {%- endif %}
+           </div>
+           <div class="p-3">
+             {{ pillar_badge(rl.pillar) }}
+             {%- if rl.difficulty %}<span class="text-xs text-gray-400 ml-1">{{ rl.difficulty | capitalize }}</span>{% endif %}
+             <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">{{ rl.title | striptags }}</span>
+             {%- if rl.date_str %}
+             <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">{{ rl.date_str }}</span>
+             {%- endif %}
+           </div>
+         </a>
+         {%- endfor %}
+       </div>
+     </section>
+     {%- endif %}
 
-    {%- if prev_post or next_post %}
-    <nav class="mt-12 pt-6 border-t border-gray-200 grid grid-cols-2 gap-4" aria-label="Post navigation">
-      {%- if prev_post %}
-      <a href="/{{ prev_post.slug }}/" class="group">
-        <span class="text-xs text-gray-500">&larr; Previous</span>
-        <span class="block text-sm font-medium text-gray-900 group-hover:text-blue-600 truncate">{{ prev_post.title | striptags }}</span>
-      </a>
-      {%- endif %}
-      {%- if next_post %}
-      <a href="/{{ next_post.slug }}/" class="group text-right">
-        <span class="text-xs text-gray-500">Next &rarr;</span>
-        <span class="block text-sm font-medium text-gray-900 group-hover:text-blue-600 truncate">{{ next_post.title | striptags }}</span>
-      </a>
-      {%- endif %}
-    </nav>
-    {%- endif %}
-  </article>
+     {%- if prev_post or next_post %}
+     <nav class="mt-12 pt-6 border-t grid grid-cols-2 gap-4" aria-label="Post navigation">
+       {%- if prev_post %}
+       <a href="/{{ prev_post.slug }}/" class="ghost-card group block p-3 text-decoration:none">
+         <span class="text-xs text-gray-500">&larr; Previous</span>
+         <span class="block text-sm font-medium text-gray-900 group-hover:text-blue-600 truncate">{{ prev_post.title | striptags }}</span>
+       </a>
+       {%- endif %}
+       {%- if next_post %}
+       <a href="/{{ next_post.slug }}/" class="ghost-card group block p-3 text-decoration:none">
+         <span class="text-xs text-gray-500">Next &rarr;</span>
+         <span class="block text-sm font-medium text-gray-900 group-hover:text-blue-600 truncate">{{ next_post.title | striptags }}</span>
+       </a>
+       {%- endif %}
+     </nav>
+     {%- endif %}
+   </article>
 </div>
 
 <script src="/static/js/learning_hub.js" defer></script>
