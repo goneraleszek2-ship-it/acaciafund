@@ -148,6 +148,12 @@
   <link rel="preload" href="/static/fonts/Inter-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/static/fonts/Inter-Bold.woff2" as="font" type="font/woff2" crossorigin>
   <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
+  <script>
+    // Ensure mermaid global is available
+    if (typeof window !== 'undefined' && typeof window.mermaid === 'undefined') {
+      window.mermaid = typeof globalThis !== 'undefined' ? globalThis.mermaid : self.mermaid;
+    }
+  </script>
   {%- if plausible_domain %}
   <script defer data-domain="{{ plausible_domain }}" src="https://plausible.io/js/script.js"></script>
   {%- endif %}
