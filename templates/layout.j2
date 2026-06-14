@@ -150,7 +150,13 @@
   <script src="/static/js/mermaid.min.js?v={{ build_hash }}" defer></script>
   <script>
     if (typeof window !== 'undefined' && window.mermaid) {
-      window.mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
+      try {
+        window.mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
+      } catch (e) {
+        console.error('Mermaid init failed:', e);
+      }
+    } else {
+      console.error('Mermaid not loaded: window.mermaid is undefined');
     }
   </script>
   {%- if plausible_domain %}
