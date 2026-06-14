@@ -149,8 +149,8 @@
   <link rel="preload" href="/static/fonts/Inter-Bold.woff2" as="font" type="font/woff2" crossorigin>
   <script src="/static/js/mermaid.min.js?v={{ build_hash }}"></script>
   <script>
-    if (typeof mermaid !== 'undefined') {
-      mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
+    if (typeof window !== 'undefined' && window.mermaid) {
+      window.mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
     }
   </script>
   {%- if plausible_domain %}
