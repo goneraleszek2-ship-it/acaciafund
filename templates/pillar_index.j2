@@ -23,7 +23,7 @@
     {%- endif %}
   </div>
 
-  <div class="flex flex-col gap-2 card-list">
+  <div class="fluid-grid card-list">
     {%- for post in posts %}
     {%- set pictogram = post | pictogram %}
     {%- set source_breakdown = post.source_breakdown or {} %}
@@ -32,7 +32,7 @@
     {%- set risk_count = post.quality_flags | length if post.quality_flags else 0 %}
     {%- set card_img = card_images.get(post.slug, "") %}
       {%- set post_topic_icon = card_topic_icons.get(post.slug, "") %}
-      <a href="/{{ post.slug }}/" class="card-research" style="text-decoration:none">
+      <a href="/{{ post.slug }}/" class="ghost-card card-research" style="text-decoration:none">
       <div class="card-research-left">
         {%- if card_img %}
         <div class="card-photo-wrap">
