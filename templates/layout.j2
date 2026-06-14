@@ -149,15 +149,20 @@
   <link rel="preload" href="/static/fonts/Inter-Bold.woff2" as="font" type="font/woff2" crossorigin>
   <script src="/static/js/mermaid.min.js?v={{ build_hash }}" defer></script>
   <script>
-    if (typeof window !== 'undefined' && window.mermaid) {
-      try {
-        window.mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
-      } catch (e) {
-        console.error('Mermaid init failed:', e);
+    // Ensure mermaid runs after DOMContentLoaded so diagrams exist
+    document.addEventListener('DOMContentLoaded', function mermaidInitAfterReady() {
+      if (typeof window === 'undefined') return;
+      var m = window.mermaid;
+      if (m) {
+        try {
+          window.mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
+        } catch (e) {
+          console.error('Mermaid initialize() failed: ' + (e && e.message || String(e)));
+        }
+      } else {
+        console.error('Mermaid.js UMD bundle did not assign window.mermaid. Check /static/js/mermaid.min.js.');
       }
-    } else {
-      console.error('Mermaid not loaded: window.mermaid is undefined');
-    }
+    }, { once: true });
   </script>
   {%- if plausible_domain %}
   <script defer data-domain="{{ plausible_domain }}" src="https://plausible.io/js/script.js"></script>
