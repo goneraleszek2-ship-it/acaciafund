@@ -17,24 +17,24 @@
       
       <!-- Gamification Stats Dashboard (NEW) -->
       <div class="mt-6 stats-dashboard" id="stats-dashboard">
-        <div class="stat-card">
+        <div class="stat-card ghost-card">
           <div class="stat-label">XP</div>
           <div class="stat-value" id="xp-text">0 XP</div>
           <div class="mt-2 h-1.5 rounded-full overflow-hidden" style="background:var(--color-bg)">
             <div class="h-full bg-gradient-to-r from-teal-500 to-emerald-500 transition-all duration-500" id="xp-progress-bar" style="width:0%"></div>
           </div>
         </div>
-        <div class="stat-card">
+        <div class="stat-card ghost-card">
           <div class="stat-label">Level</div>
           <div class="stat-value" id="level-text">Level 1</div>
           <div class="mt-2 text-xs" style="color:var(--color-text-muted)">Next: 100 XP</div>
         </div>
-        <div class="stat-card">
+        <div class="stat-card ghost-card">
           <div class="stat-label">Streak</div>
           <div class="stat-value" id="streak-text">0 days</div>
           <div class="mt-2 text-xs" style="color:var(--color-text-muted)">Daily learning</div>
         </div>
-        <div class="stat-card">
+        <div class="stat-card ghost-card">
           <div class="stat-label">Completed</div>
           <div class="stat-value" id="completed-count">0</div>
           <div class="mt-2 text-xs" style="color:var(--color-text-muted)">Lessons done</div>
@@ -93,10 +93,10 @@
     {%- endfor %}
   </div>
 
-  <div class="mb-10 fluid-grid">
-    {%- for pkey, pinfo in pillar_meta.items() %}
-    {%- set pcount = items | selectattr("pillar", "equalto", pkey) | list | length %}
-    <div class="ghost-card">
+      <div class="mb-10 fluid-grid">
+        {%- for pkey, pinfo in pillar_meta.items() %}
+        {%- set pcount = items | selectattr("pillar", "equalto", pkey) | list | length %}
+        <div class="ghost-card pillar-card">
       <div class="flex items-center gap-2 mb-2">
         <span class="text-lg">{{ pinfo.icon }}</span>
         <span class="font-semibold text-sm" style="color:var(--color-text)">{{ pinfo.name }}</span>
@@ -187,8 +187,8 @@
   <div class="mb-12">
     <h2 class="text-2xl font-bold mb-1" style="color:var(--color-text)">Research-Based Articles</h2>
     <p class="text-sm mb-4" style="color:var(--color-text-muted)">Recent articles with knowledge checks — explore emerging topics at your own pace.</p>
-    <div class="fluid-grid">
-      {%- for item in research_learn_items[:12] %}
+      <div class="mb-12 fluid-grid">
+        {%- for item in research_learn_items[:12] %}
       {%- set p = item.pillar or "" %}
       {%- set pc = pillar_config.get(p, none) %}
       {%- set d_emoji = {"beginner": "🌱", "intermediate": "📘", "advanced": "🔥"} %}
