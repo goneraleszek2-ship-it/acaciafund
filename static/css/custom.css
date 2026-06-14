@@ -956,7 +956,7 @@ svg:not([class*="w-"]):not([class*="h-"]) {
 }
 .card-research {
   display: grid;
-  grid-template-columns: 100px 1fr;
+  grid-template-columns: 110px 1fr;
   gap: 0;
   padding: 0;
   background: var(--layer-research-body);
@@ -975,14 +975,14 @@ svg:not([class*="w-"]):not([class*="h-"]) {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  padding: 16px 10px;
-  background: color-mix(in srgb, var(--layer-research-badge) 6%, transparent);
-  justify-content: flex-start;
+  gap: 10px;
+  padding: 18px 12px;
+  background: color-mix(in srgb, var(--layer-research-badge) 8%, transparent);
+  justify-content: center;
 }
 .card-pictogram-wrap {
-  width: 76px;
-  height: 57px;
+  width: 84px;
+  height: 63px;
   border-radius: 8px;
   border: 1.5px solid color-mix(in srgb, var(--layer-research-badge) 40%, transparent);
   background: #fff;
@@ -1001,6 +1001,8 @@ svg:not([class*="w-"]):not([class*="h-"]) {
   width: 100%;
   height: 100%;
   object-fit: contain;
+  max-width: 100%;
+  max-height: 100%;
 }
 .article-topic-icon,
 .card-topic-icon {
@@ -1017,8 +1019,8 @@ svg:not([class*="w-"]):not([class*="h-"]) {
   height: 100%;
 }
 .card-photo-wrap {
-  width: 76px;
-  height: 57px;
+  width: 84px;
+  height: 63px;
   border-radius: 8px;
   border: 1.5px solid color-mix(in srgb, var(--layer-research-badge) 40%, transparent);
   background: var(--color-border);
@@ -1037,18 +1039,20 @@ svg:not([class*="w-"]):not([class*="h-"]) {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  max-width: 100%;
+  max-height: 100%;
 }
 .card-research-sources {
   display: flex;
   flex-wrap: wrap;
-  gap: 3px;
+  gap: 4px;
   justify-content: center;
 }
 .card-research-source {
   font-family: Inter, ui-sans-serif, system-ui, sans-serif;
-  font-size: 0.5rem;
+  font-size: 0.5625rem;
   font-weight: 600;
-  padding: 2px 6px;
+  padding: 3px 7px;
   border-radius: 4px;
   letter-spacing: 0.05em;
 }
@@ -1056,10 +1060,10 @@ svg:not([class*="w-"]):not([class*="h-"]) {
 .card-research-meta {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 0.6875rem;
+  gap: 10px;
+  font-size: 0.75rem;
   color: var(--color-text-muted);
-  margin-bottom: 4px;
+  margin-bottom: 6px;
 }
 .card-research-pillar {
   font-weight: 600;
@@ -1067,20 +1071,20 @@ svg:not([class*="w-"]):not([class*="h-"]) {
 .card-research-meta-right {
   margin-left: auto;
   display: flex;
-  gap: 8px;
+  gap: 10px;
 }
 .card-research-title {
   font-family: Inter, ui-sans-serif, system-ui, sans-serif;
-  font-size: 0.9375rem;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--color-text);
-  line-height: 1.3;
-  margin-bottom: 4px;
+  line-height: 1.35;
+  margin-bottom: 6px;
 }
 .card-research-summary {
-  font-size: 0.8125rem;
+  font-size: 0.875rem;
   color: var(--color-text-secondary);
-  line-height: 1.5;
+  line-height: 1.55;
 }
 @container card-list (max-width: 480px) {
   .card-research {
@@ -1088,12 +1092,12 @@ svg:not([class*="w-"]):not([class*="h-"]) {
   }
   .card-research-left {
     flex-direction: row;
-    padding: 10px 12px;
-    gap: 12px;
+    padding: 12px 14px;
+    gap: 14px;
   }
   .card-pictogram-wrap, .card-photo-wrap {
-    width: 48px;
-    height: 36px;
+    width: 56px;
+    height: 42px;
   }
   .card-research-sources {
     justify-content: flex-start;
@@ -1101,9 +1105,9 @@ svg:not([class*="w-"]):not([class*="h-"]) {
 }
 .card-research-risk {
   font-family: Inter, ui-sans-serif, system-ui, sans-serif;
-  font-size: 0.5625rem;
+  font-size: 0.625rem;
   color: var(--color-text-muted);
-  margin-top: 6px;
+  margin-top: 8px;
 }
 
 /* Bloom path visual for /learn/ */
@@ -1116,46 +1120,46 @@ svg:not([class*="w-"]):not([class*="h-"]) {
 }
 .bloom-node {
   display: grid;
-  grid-template-columns: 2px 34px 1fr auto;
-  gap: 12px;
+  grid-template-columns: 2px 42px 1fr auto;
+  gap: 14px;
   align-items: center;
-  padding: 10px 0;
+  padding: 12px 0;
   position: relative;
 }
 .bloom-connector {
   width: 2px;
-  height: 28px;
+  height: 34px;
   background: var(--color-border);
   margin: 0 auto;
   transition: background 0.3s;
 }
 .bloom-connector.active { background: var(--layer-learn-accent); }
 .bloom-circle {
-  width: 34px; height: 34px; border-radius: 50%;
+  width: 42px; height: 42px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-family: Inter, ui-sans-serif, system-ui, sans-serif;
-  font-size: 0.75rem; font-weight: 600;
+  font-size: 0.8125rem; font-weight: 600;
   border: 2px solid var(--layer-learn-accent);
   transition: background 0.3s, color 0.3s;
 }
 .bloom-done .bloom-circle { background: var(--layer-learn-accent); color: var(--layer-learn-body); }
 .bloom-current .bloom-circle { background: transparent; color: var(--layer-learn-accent); }
 .bloom-pending .bloom-circle { border-color: var(--color-border); color: var(--color-text-muted); }
-.bloom-name { font-size: 0.8125rem; color: var(--color-text); display: block; }
-.bloom-count { font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 0.5625rem; color: var(--color-text-muted); }
+.bloom-name { font-size: 0.875rem; color: var(--color-text); display: block; }
+.bloom-count { font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 0.625rem; color: var(--color-text-muted); }
 .bloom-cta {
   font-family: Inter, ui-sans-serif, system-ui, sans-serif;
-  font-size: 0.5625rem;
+  font-size: 0.625rem;
   color: var(--layer-learn-accent);
-  padding: 3px 10px;
+  padding: 4px 12px;
   border: 1px solid var(--layer-learn-accent);
   border-radius: 3px;
   text-decoration: none;
   transition: background 0.2s;
 }
 .bloom-cta:hover { background: var(--layer-learn-accent); color: var(--layer-learn-body); }
-.bloom-soon { font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 0.5625rem; color: var(--color-text-muted); }
-.bloom-complete-link { font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 0.5625rem; color: var(--color-text-muted); text-decoration: none; }
+.bloom-soon { font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 0.625rem; color: var(--color-text-muted); }
+.bloom-complete-link { font-family: Inter, ui-sans-serif, system-ui, sans-serif; font-size: 0.625rem; color: var(--color-text-muted); text-decoration: none; }
 .bloom-complete-link:hover { color: var(--layer-learn-accent); text-decoration: underline; }
 
 /* Knowledge hub redesign */
@@ -1919,16 +1923,16 @@ svg:not([class*="w-"]):not([class*="h-"]) {
 /* Responsive bloom nodes */
 .bloom-node {
   display: grid;
-  grid-template-columns: 2px 34px 1fr auto;
-  gap: 12px;
+  grid-template-columns: 2px 42px 1fr auto;
+  gap: 14px;
   align-items: center;
-  padding: clamp(8px, 3vw, 10px) 0;
+  padding: clamp(10px, 3vw, 12px) 0;
   position: relative;
 }
 
 .bloom-connector {
   width: 2px;
-  height: clamp(24px, 6vw, 28px);
+  height: clamp(30px, 6vw, 34px);
   background: var(--color-border);
   margin: 0 auto;
   transition: background 0.3s;
@@ -1937,12 +1941,12 @@ svg:not([class*="w-"]):not([class*="h-"]) {
 .bloom-connector.active { background: var(--color-accent); }
 
 .bloom-circle {
-  width: clamp(30px, 8vw, 34px);
-  height: clamp(30px, 8vw, 34px);
+  width: clamp(38px, 8vw, 42px);
+  height: clamp(38px, 8vw, 42px);
   border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-family: ui-monospace, 'SF Mono', 'Cascadia Code', 'JetBrains Mono', 'Consolas', monospace;
-  font-size: clamp(0.625rem, 2vw, 0.75rem);
+  font-size: clamp(0.6875rem, 2vw, 0.8125rem);
   font-weight: 600;
   border: 2px solid var(--color-accent);
   transition: background 0.3s, color 0.3s;
