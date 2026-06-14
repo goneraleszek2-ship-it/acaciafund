@@ -148,6 +148,13 @@
   <link rel="preload" href="/static/fonts/Inter-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/static/fonts/Inter-Bold.woff2" as="font" type="font/woff2" crossorigin>
   <script src="/static/js/mermaid.min.js"></script>
+  <script>
+    // ESM modules loaded via script don't auto-assign to window
+    // Manually expose mermaid global
+    if (typeof globalThis !== 'undefined' && globalThis.__esbuild_esm_mermaid) {
+      window.mermaid = globalThis.__esbuild_esm_mermaid.default;
+    }
+  </script>
   {%- if plausible_domain %}
   <script defer data-domain="{{ plausible_domain }}" src="https://plausible.io/js/script.js"></script>
   {%- endif %}
