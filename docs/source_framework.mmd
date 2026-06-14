@@ -2,39 +2,53 @@ title: Source Framework — Registry, Fetchers & Health
 
 flowchart TD
     subgraph Config["📋 Configuration"]
-        TOML[etc/sources.toml<br/>14 sources configured]
+        TOML[etc/sources.toml
+          14 sources configured]
     end
 
     subgraph Registry["🏛️ Source Registry"]
-        REG[SourceRegistry<br/>singleton]
-        LOAD[tomllib.load<br/>lazy init]
+        REG[SourceRegistry
+          singleton]
+        LOAD[tomllib.load
+          lazy init]
         CACHE[cached per session]
     end
 
     subgraph Base["🔧 BaseFetcher ABC"]
         ABC[BaseFetcher]
-        SC[SourceConfig<br/>TOML -> dataclass]
+        SC[SourceConfig
+          TOML -> dataclass]
         FR[FetchResult]
         HR[HealthRecord]
     end
 
     subgraph Fetchers["📡 Concrete Fetchers"]
-        HN[HNFetcher<br/>wraps fetch_hn_stories]
-        ARXIV[ArxivFetcher<br/>wraps fetch_arxiv]
-        PUBMED[PubMedFetcher<br/>wraps fetch_pubmed]
-        SS[SemanticScholar<br/>wraps fetch_semantic_scholar]
-        RSS[RSSFetcher<br/>xml.etree / Atom + RSS]
+        HN[HNFetcher
+          wraps fetch_hn_stories]
+        ARXIV[ArxivFetcher
+          wraps fetch_arxiv]
+        PUBMED[PubMedFetcher
+          wraps fetch_pubmed]
+        SS[SemanticScholar
+          wraps fetch_semantic_scholar]
+        RSS[RSSFetcher
+          xml.etree / Atom + RSS]
     end
 
     subgraph Observability["📊 Observability"]
-        HEALTH[source-health.json<br/>last 100 records/source]
-        DLQ[Dead Letter Queue<br/>failed fetches persisted]
+        HEALTH[source-health.json
+          last 100 records/source]
+        DLQ[Dead Letter Queue
+          failed fetches persisted]
     end
 
     subgraph Admin["🖥️ Admin Panel"]
-        SOURCES_PAGE[/admin/sources<br/>health dashboard]
-        API_REFRESH[/admin/api/&lt;name&gt;/refresh<br/>POST — live fetch]
-        API_HEALTH[/admin/api/&lt;name&gt;/health<br/>GET — history]
+        SOURCES_PAGE[/admin/sources
+          health dashboard]
+        API_REFRESH[/admin/api/{name}/refresh
+          POST — live fetch]
+        API_HEALTH[/admin/api/{name}/health
+          GET — history]
     end
 
     TOML --> REG

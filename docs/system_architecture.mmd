@@ -10,13 +10,19 @@ flowchart TD
     end
 
     subgraph Pipeline["⚙️ Build Pipeline"]
-        GIT[GitHub Repository<br/>main branch] --> CFW[Cloudflare Pages]
+        GIT[GitHub Repository
+          main branch] --> CFW[Cloudflare Pages]
         CFW --> BUILD[python3 generator.py]
-        BUILD --> REG[registry.json<br/>Content Catalog]
-        BUILD --> SCHEMA[schemas.py<br/>Validation]
-        BUILD --> VIZ[core/visuals.py<br/>SVG Generation]
-        BUILD --> TMPL[templates/*.j2<br/>Jinja2 Rendering]
-        BUILD --> DIST[dist/ directory<br/>Static HTML]
+        BUILD --> REG[registry.json
+          Content Catalog]
+        BUILD --> SCHEMA[schemas.py
+          Validation]
+        BUILD --> VIZ[core/visuals.py
+          SVG Generation]
+        BUILD --> TMPL[templates/*.j2
+          Jinja2 Rendering]
+        BUILD --> DIST[dist/ directory
+          Static HTML]
     end
 
     subgraph Output["📄 Generated Output"]

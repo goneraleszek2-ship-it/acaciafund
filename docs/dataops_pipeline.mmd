@@ -1,13 +1,21 @@
 title: DataOps Pipeline — 8 Stages
 
 flowchart LR
-    INGEST[1️⃣ Ingestion<br/>HackerNews / arXiv / PubMed] --> VALIDATE[2️⃣ Validation<br/>schemas.py Pydantic]
-    VALIDATE --> TRANSFORM[3️⃣ Transformation<br/>Entity Extraction / SQI / Bloom]
-    TRANSFORM --> STORE[4️⃣ Catalog<br/>registry.json]
-    STORE --> VIZ[5️⃣ Visualization<br/>core/visuals.py SVGs]
-    VIZ --> RENDER[6️⃣ Rendering<br/>generator.py + J2 Templates]
-    RENDER --> SERVE[7️⃣ Serving<br/>Cloudflare Pages CDN]
-    SERVE --> OBSERVE[8️⃣ Observability<br/>Build Metrics / Quality Flags]
+    INGEST[1️⃣ Ingestion
+          HackerNews / arXiv / PubMed] --> VALIDATE[2️⃣ Validation
+          schemas.py Pydantic]
+    VALIDATE --> TRANSFORM[3️⃣ Transformation
+          Entity Extraction / SQI / Bloom]
+    TRANSFORM --> STORE[4️⃣ Catalog
+          registry.json]
+    STORE --> VIZ[5️⃣ Visualization
+          core/visuals.py SVGs]
+    VIZ --> RENDER[6️⃣ Rendering
+          generator.py + J2 Templates]
+    RENDER --> SERVE[7️⃣ Serving
+          Cloudflare Pages CDN]
+    SERVE --> OBSERVE[8️⃣ Observability
+          Build Metrics / Quality Flags]
 
     style INGEST fill:#1e3a5f,stroke:#d97706,color:#fff
     style VALIDATE fill:#1e293b,stroke:#64748b,color:#fff

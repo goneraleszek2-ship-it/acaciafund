@@ -2,38 +2,57 @@ title: RSS Ingestion Pipeline
 
 flowchart LR
     subgraph Sources["📡 RSS Feeds"]
-        TC[TechCrunch<br/>news.tech]
-        WIRED[Wired<br/>news.tech]
-        ARS[ArsTechnica<br/>news.tech]
-        GH[GitHub Blog<br/>engineering.blog]
-        CF[Cloudflare Blog<br/>engineering.blog]
-        KB[Krebs on Security<br/>news.security]
-        BL[Blloomberg Markets<br/>news.finance]
-        AI[Import AI<br/>news.ai]
+        TC[TechCrunch
+          news.tech]
+        WIRED[Wired
+          news.tech]
+        ARS[ArsTechnica
+          news.tech]
+        GH[GitHub Blog
+          engineering.blog]
+        CF[Cloudflare Blog
+          engineering.blog]
+        KB[Krebs on Security
+          news.security]
+        BL[Blloomberg Markets
+          news.finance]
+        AI[Import AI
+          news.ai]
     end
 
     subgraph Fetch["⚙️ RSSFetcher"]
-        HTTP[_cached_request<br/>User-Agent + retry 3x]
-        PARSE[_parse_feed<br/>xml.etree]
-        DETECT[Auto-detect<br/>RSS vs Atom]
-        FILTER[_is_recent<br/>since_hours filter]
+        HTTP[_cached_request
+          User-Agent + retry 3x]
+        PARSE[_parse_feed
+          xml.etree]
+        DETECT[Auto-detect
+          RSS vs Atom]
+        FILTER[_is_recent
+          since_hours filter]
     end
 
     subgraph Quality["🔬 Quality Layer"]
-        HEALTH[HealthRecord<br/>latency / item_count / error]
-        DLQ[Dead Letter Queue<br/>write_dlq on failure]
-        CACHE[cache_ttl_hours<br/>avoid re-fetch]
+        HEALTH[HealthRecord
+          latency / item_count / error]
+        DLQ[Dead Letter Queue
+          write_dlq on failure]
+        CACHE[cache_ttl_hours
+          avoid re-fetch]
     end
 
     subgraph Pipeline["🏗️ ingest.py"]
-        REGISTRY[registry.enabled<br/>fetch all]
-        CLASSIFY[classify_story<br/>pillar assignment]
-        DIST[distribute to<br/>pillar_stories dict]
+        REGISTRY[registry.enabled
+          fetch all]
+        CLASSIFY[classify_story
+          pillar assignment]
+        DIST[distribute to
+          pillar_stories dict]
         MERGE[merge with HN / arXiv / PubMed]
     end
 
     subgraph Output["📄 Generated Pages"]
-        BUILD[build.py<br/>Jinja2 render]
+        BUILD[build.py
+          Jinja2 render]
         PAGES[236 static pages]
     end
 

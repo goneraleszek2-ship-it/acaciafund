@@ -10,13 +10,17 @@ flowchart LR
     subgraph Curation["✍️ Curation Layer"]
         MANUAL[Manual Curation]
         SEED[seed_articles.py]
-        NLP[NLP Processing<br/>Entities / Summaries]
+        NLP[NLP Processing
+          Entities / Summaries]
     end
 
     subgraph Enrichment["🔬 Enrichment Pipeline"]
-        BLOOM[Bloom Taxonomy<br/>Classification]
-        SQI[Signal Quality Index<br/>0.0 — 1.0]
-        DIV[Source Diversity<br/>Score]
+        BLOOM[Bloom Taxonomy
+          Classification]
+        SQI[Signal Quality Index
+          0.0 — 1.0]
+        DIV[Source Diversity
+          Score]
         DOMAIN[Domain Breakdown]
     end
 
