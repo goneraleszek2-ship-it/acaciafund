@@ -155,11 +155,9 @@
   <script src="/static/js/animations.js?v={{ build_hash }}"></script>
   {%- endblock %}
   <script>
-    document.addEventListener('DOMContentLoaded', function() {
-      if (typeof mermaid !== 'undefined') {
-        mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
-      }
-    });
+    if (typeof mermaid !== 'undefined') {
+      mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
+    }
   </script>
 </head>
 {%- set layer = layer | default("research") %}
