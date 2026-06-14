@@ -233,7 +233,7 @@ def find_related(posts: list, current: object, max_items: int = 3) -> list:
 
 
 CARD_PICTOGRAM_KEYWORDS = {
-    # Core concepts (cross-pillar)
+    # Core concepts (cross-pillar) - priority 1
     "ai": [
         "ai", "artificial intelligence", "machine learning", "deep learning",
         "neural", "llm", "large language model", "generative ai",
@@ -249,12 +249,12 @@ CARD_PICTOGRAM_KEYWORDS = {
     ],
     "platform": [
         "platform", "data platform", "data stack", "data architecture",
-        "infrastructure", "cloud infrastructure", "kubernetes", "k8s",
+        "cloud infrastructure", "kubernetes", "k8s",
         "docker", "container", "orchestration", "terraform",
-        "aws", "azure", "gcp", "cloud", "serverless",
-        "infrastructure as code", "iac", "devops",
+        "aws", "azure", "gcp", "serverless",
+        "infrastructure as code", "iac",
     ],
-    # Content types (cross-pillar)
+    # Content types (cross-pillar) - priority 2
     "tutorial": [
         "tutorial", "how-to", "guide", "step-by-step", "walkthrough",
         "beginner", "introductory", "introduction", "getting started",
@@ -266,17 +266,17 @@ CARD_PICTOGRAM_KEYWORDS = {
         "trade-off", "pros and cons", "alternatives",
     ],
     "case-study": [
-        "case study", "case study", "real-world", "production",
+        "case study", "real-world", "production",
         "implementation", "deployment", "migration", "migration story",
         "customer", "client", "enterprise", "success story",
     ],
-    # AML-specific
+    # AML-specific - priority 3
     "aml": [
         "aml", "anti-money laundering", "compliance", "regulatory",
         "regulation", "enforcement", "sanctions", "fatf", "fincen",
         "kyc", "know your customer", "kyb", "know your business",
         "sar", "suspicious activity report", "transaction monitoring",
-        "financial crime", "fraud detection", "risk assessment",
+        "financial crime", "risk assessment",
     ],
     "fraud": [
         "fraud", "fraud detection", "fraud prevention",
@@ -284,7 +284,47 @@ CARD_PICTOGRAM_KEYWORDS = {
         "chargeback", "chargeback fraud", "synthetic identity",
         "money laundering", "suspicious activity",
     ],
-    # Markets-specific
+    # Security - priority 4
+    "security": [
+        "security", "cybersecurity", "threat detection", "penetration",
+        "vulnerability", "exploit", "attack", "breach", "intrusion",
+        "malware", "ransomware", "phishing", "social engineering",
+        "zero trust", "iam", "identity access management",
+        "firewall", "waf", "web application firewall",
+        "siem", "security information", "soc", "security operations",
+    ],
+    # DevOps - priority 5
+    "devops": [
+        "devops", "ci/cd", "continuous integration", "continuous delivery",
+        "continuous deployment", "deployment", "build", "release",
+        "pipeline", "workflow", "automation", "infrastructure as code",
+        "terraform", "ansible", "puppet", "chef",
+        "gitops", "argocd", "tekton", "jenkins",
+    ],
+    # Analytics - priority 6
+    "analytics": [
+        "analytics", "business intelligence", "bi", "reporting",
+        "dashboard", "visualization", "data visualization", "chart",
+        "kpi", "metric", "dashboard", "kpi tracking",
+        "power bi", "tableau", "looker", "metabase",
+    ],
+    # Monitoring - priority 7
+    "monitoring": [
+        "monitoring", "observability", "logging", "tracing",
+        "metrics", "alerting", "alert", "incident",
+        "sre", "site reliability engineering", "slo", "sla",
+        "prometheus", "grafana", "datadog", "new relic",
+        "opentelemetry", "jaeger", "zipkin", "loki",
+    ],
+    # Cloud - priority 8
+    "cloud": [
+        "cloud", "aws", "azure", "gcp", "google cloud",
+        "serverless", "lambda", "cloud function", "cloud run",
+        "ec2", "s3", "rds", "dynamodb", "firestore",
+        "cloudformation", "cloudformation", "terraform",
+        "multi-cloud", "hybrid cloud", "cloud native",
+    ],
+    # Markets-specific - priority 9
     "finance": [
         "finance", "trading", "investment", "portfolio",
         "stock market", "equities", "bonds", "derivatives",
@@ -295,10 +335,10 @@ CARD_PICTOGRAM_KEYWORDS = {
     "market": [
         "market", "trading", "market data", "market analysis",
         "stock", "equity", "securities", "exchange",
-        "nasdaq", "nyse", "s&p 500", " Dow", "dow jones",
+        "nasdaq", "nyse", "s&p 500", "dow jones",
         "market maker", "market structure", "market microstructure",
     ],
-    # Data Engineering-specific
+    # Data Engineering-specific - priority 10
     "pipeline": [
         "pipeline", "etl", "elt", "orchestration", "workflow",
         "dag", "directed acyclic graph", "airflow", "dagster", "prefect",
@@ -307,11 +347,11 @@ CARD_PICTOGRAM_KEYWORDS = {
     ],
     "infrastructure": [
         "infrastructure", "kubernetes", "k8s", "docker", "container",
-        "terraform", "infrastructure as code", "iac",
+        "infrastructure as code", "iac",
         "cloud", "aws", "azure", "gcp", "serverless",
         "deployment", "ci/cd", "continuous integration", "continuous delivery",
     ],
-    # Technical (cross-pillar)
+    # Technical (cross-pillar) - priority 11
     "database": [
         "database", "db", "sql", "nosql", "postgresql", "mysql",
         "mongodb", "cassandra", "redis", "memcached",
@@ -341,8 +381,12 @@ _PICTOGRAM_CONTENT_TYPE_FALLBACK = {
 def pick_card_pictogram(content) -> str | None:
     """Pick the most relevant pictogram based on title, tags, pillar, and content type.
     
-    Uses scoring system to find best match, with pillar-specific weighting.
-    Returns first match if no scoring is needed (backward compatible).
+    Uses scoring system with priority levels to find best match:
+    - Priority 1: Core concepts (ai, realtime, platform)
+    - Priority 2: Content types (tutorial, comparison, case-study)
+    - Priority 3: AML-specific (aml, fraud)
+    - Priority 4-8: New categories (security, devops, analytics, monitoring, cloud)
+    - Priority 9-11: Markets & Data Engineering (finance, market, pipeline, infrastructure, database, api)
     """
     text = " ".join([
         *(t.lower().replace("-", " ") for t in (content.tags or [])),
@@ -351,11 +395,25 @@ def pick_card_pictogram(content) -> str | None:
     pillar = (content.pillar or "").lower()
     content_type = (content.content_type or "").lower()
     
-    # First pass: exact keyword matches (backward compatible)
-    for img_name, keywords in CARD_PICTOGRAM_KEYWORDS.items():
-        for kw in keywords:
-            if kw.lower() in text:
-                return f"{img_name}.svg"
+    # Priority levels for scoring
+    priority_map = {
+        "ai": 1, "realtime": 1, "platform": 1,
+        "tutorial": 2, "comparison": 2, "case-study": 2,
+        "aml": 3, "fraud": 3,
+        "security": 4, "devops": 5, "analytics": 6, "monitoring": 7, "cloud": 8,
+        "finance": 9, "market": 9,
+        "pipeline": 10, "infrastructure": 10,
+        "database": 11, "api": 11,
+    }
+    
+    # First pass: exact keyword matches with priority (backward compatible)
+    for priority in range(1, 12):
+        for img_name, keywords in CARD_PICTOGRAM_KEYWORDS.items():
+            if priority_map.get(img_name) != priority:
+                continue
+            for kw in keywords:
+                if kw.lower() in text:
+                    return f"{img_name}.svg"
     
     # Second pass: use scoring for better matching
     scores = {}
@@ -372,12 +430,16 @@ def pick_card_pictogram(content) -> str | None:
                 if len(kw.split()) > 1 and kw.lower() in text:
                     score += 20
         
+        # Priority multiplier (higher priority = higher base score)
+        priority_mult = (12 - priority_map.get(img_name, 6)) * 0.5
+        score *= (1 + priority_mult)
+        
         # Pillar-specific weighting
-        if pillar == "aml" and img_name in ["aml", "fraud", "dp"]:
+        if pillar == "aml" and img_name in ["aml", "fraud", "security"]:
             score *= 1.5
         elif pillar == "stock" and img_name in ["finance", "market"]:
             score *= 1.5
-        elif pillar == "data-engineering" and img_name in ["pipeline", "infrastructure", "database", "api"]:
+        elif pillar == "data-engineering" and img_name in ["pipeline", "infrastructure", "database", "api", "monitoring", "devops"]:
             score *= 1.5
         
         # Content type weighting

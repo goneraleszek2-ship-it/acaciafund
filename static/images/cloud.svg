@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="cloud-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#818cf8"/>
+    </linearGradient>
+  </defs>
+  <rect width="100" height="100" fill="url(#cloud-gradient)" rx="16"/>
+  <g fill="#fff" opacity="0.9">
+    <path d="M30 45C20 45 15 55 15 55C15 55 10 60 25 60H75C90 60 90 50 80 50C80 50 75 45 60 45C60 45 55 35 40 35C40 35 35 45 30 45Z" stroke="#fff" stroke-width="2" fill="none"/>
+    <path d="M30 55V65M70 55V65" stroke="#fff" stroke-width="2" stroke-dasharray="3,3"/>
+  </g>
+</svg>
