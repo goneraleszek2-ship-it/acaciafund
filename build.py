@@ -988,6 +988,8 @@ def main():
     css_hasher.update(registry_bytes)
     for css_file in sorted(Path("static/css").glob("*.css")):
         css_hasher.update(css_file.read_bytes())
+    for js_file in sorted(Path("static/js").glob("*.js")):
+        css_hasher.update(js_file.read_bytes())
     build_hash = css_hasher.hexdigest()[:12]
     all_content = registry.content
 
