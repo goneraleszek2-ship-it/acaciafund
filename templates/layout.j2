@@ -147,12 +147,20 @@
   <link rel="preload" href="/static/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/static/fonts/Inter-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/static/fonts/Inter-Bold.woff2" as="font" type="font/woff2" crossorigin>
-  <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
   <script>
-    // Ensure mermaid global is available
-    if (typeof window !== 'undefined' && typeof window.mermaid === 'undefined') {
-      window.mermaid = typeof globalThis !== 'undefined' ? globalThis.mermaid : self.mermaid;
-    }
+    // Mermaid v10.9.1 UMD wrapper doesn't expose window.mermaid when loaded via script
+    // Use a workaround: load via fetch and eval
+    (function() {
+      var script = document.createElement('script');
+      script.src = 'https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js';
+      script.onload = function() {
+        // Mermaid should be available as window.mermaid after load
+        if (typeof window.mermaid !== 'undefined') {
+          window.mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
+        }
+      };
+      document.head.appendChild(script);
+    })();
   </script>
   {%- if plausible_domain %}
   <script defer data-domain="{{ plausible_domain }}" src="https://plausible.io/js/script.js"></script>
