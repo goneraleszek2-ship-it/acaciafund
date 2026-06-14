@@ -10,37 +10,37 @@
     </ol>
   </nav>
 
-   <div class="mb-8">
-     <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">Learning Hub</h1>
-     <p class="mt-2 text-sm" style="color:var(--color-text-muted)" id="progress-summary">{{ items | length }} lessons — structured learning across all pillars</p>
-     <p class="mt-1 text-xs" style="color:var(--color-text-muted)" id="review-due"></p>
-     
-     <!-- Gamification Stats Dashboard (NEW) -->
-     <div class="mt-6 grid grid-cols-2 sm:grid-cols-4 gap-3" id="stats-dashboard">
-       <div class="p-3 rounded-lg" style="background:var(--color-surface);border:1px solid var(--color-border)">
-         <div class="text-xs font-semibold mb-1" style="color:var(--color-text-muted)">XP</div>
-         <div class="text-xl font-bold" id="xp-text">0 XP</div>
-         <div class="mt-2 h-1.5 rounded-full overflow-hidden" style="background:var(--color-bg)">
-           <div class="h-full bg-gradient-to-r from-teal-500 to-emerald-500 transition-all duration-500" id="xp-progress-bar" style="width:0%"></div>
-         </div>
-       </div>
-       <div class="p-3 rounded-lg" style="background:var(--color-surface);border:1px solid var(--color-border)">
-         <div class="text-xs font-semibold mb-1" style="color:var(--color-text-muted)">Level</div>
-         <div class="text-xl font-bold" id="level-text">Level 1</div>
-         <div class="mt-2 text-xs" style="color:var(--color-text-muted)">Next: 100 XP</div>
-       </div>
-       <div class="p-3 rounded-lg" style="background:var(--color-surface);border:1px solid var(--color-border)">
-         <div class="text-xs font-semibold mb-1" style="color:var(--color-text-muted)">Streak</div>
-         <div class="text-xl font-bold" id="streak-text">0 days</div>
-         <div class="mt-2 text-xs" style="color:var(--color-text-muted)">Daily learning</div>
-       </div>
-       <div class="p-3 rounded-lg" style="background:var(--color-surface);border:1px solid var(--color-border)">
-         <div class="text-xs font-semibold mb-1" style="color:var(--color-text-muted)">Completed</div>
-         <div class="text-xl font-bold" id="completed-count">0</div>
-         <div class="mt-2 text-xs" style="color:var(--color-text-muted)">Lessons done</div>
-       </div>
-     </div>
-   </div>
+    <div class="mb-8">
+      <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">Learning Hub</h1>
+      <p class="mt-2 text-sm" style="color:var(--color-text-muted)" id="progress-summary">{{ items | length }} lessons — structured learning across all pillars</p>
+      <p class="mt-1 text-xs" style="color:var(--color-text-muted)" id="review-due"></p>
+      
+      <!-- Gamification Stats Dashboard (NEW) -->
+      <div class="mt-6 stats-dashboard" id="stats-dashboard">
+        <div class="stat-card">
+          <div class="stat-label">XP</div>
+          <div class="stat-value" id="xp-text">0 XP</div>
+          <div class="mt-2 h-1.5 rounded-full overflow-hidden" style="background:var(--color-bg)">
+            <div class="h-full bg-gradient-to-r from-teal-500 to-emerald-500 transition-all duration-500" id="xp-progress-bar" style="width:0%"></div>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Level</div>
+          <div class="stat-value" id="level-text">Level 1</div>
+          <div class="mt-2 text-xs" style="color:var(--color-text-muted)">Next: 100 XP</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Streak</div>
+          <div class="stat-value" id="streak-text">0 days</div>
+          <div class="mt-2 text-xs" style="color:var(--color-text-muted)">Daily learning</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Completed</div>
+          <div class="stat-value" id="completed-count">0</div>
+          <div class="mt-2 text-xs" style="color:var(--color-text-muted)">Lessons done</div>
+        </div>
+      </div>
+    </div>
 
   {%- set pillar_meta = {
     "aml": {"icon": "🛡️", "name": "Anti-Money Laundering", "color": "#c97d3e", "desc": "Learn AML regulations, transaction monitoring, SAR filing, and risk-based approaches."},
@@ -93,11 +93,10 @@
     {%- endfor %}
   </div>
 
-  <div class="mb-10 grid gap-4 sm:grid-cols-3">
+  <div class="mb-10 fluid-grid">
     {%- for pkey, pinfo in pillar_meta.items() %}
     {%- set pcount = items | selectattr("pillar", "equalto", pkey) | list | length %}
-    <div class="block rounded-xl p-4 transition hover:-translate-y-0.5 hover:shadow-md"
-       style="background:var(--color-surface);border:1px solid var(--color-border)">
+    <div class="ghost-card">
       <div class="flex items-center gap-2 mb-2">
         <span class="text-lg">{{ pinfo.icon }}</span>
         <span class="font-semibold text-sm" style="color:var(--color-text)">{{ pinfo.name }}</span>
@@ -124,27 +123,27 @@
     {%- endfor %}
   </div>
 
-  <div class="mb-10 p-4 rounded-lg" style="background:var(--color-surface);border:1px solid var(--color-border)" id="pillar-progress-section">
-    <h2 class="text-sm font-semibold mb-3" style="color:var(--color-text)">Progress by Pillar</h2>
-    <div class="space-y-3" id="pillar-progress-bars">
-      {%- set pillar_icons = {"aml": "🛡️", "stock": "📈", "data-engineering": "⚙️"} %}
-      {%- set pillar_names = {"aml": "AML", "stock": "Markets", "data-engineering": "Data Engineering"} %}
-      {%- set pillar_bar_colors = {"aml": "#c97d3e", "stock": "#3a7d5c", "data-engineering": "#6366f1"} %}
-      {%- for pkey, pinfo in pillar_config.items() %}
-      {%- set pcount = items | selectattr("pillar", "equalto", pkey) | list | length %}
-      {%- if pcount > 0 %}
-      <div class="pillar-progress" data-pillar="{{ pkey }}">
-        <div class="flex items-center justify-between text-xs mb-1">
-          <span style="color:var(--color-text)">{{ pillar_icons.get(pkey, "") }} {{ pillar_names.get(pkey, pkey | capitalize) }}</span>
-          <span class="pillar-count" style="color:var(--color-text-muted)">0/{{ pcount }}</span>
-        </div>
-        <div class="progress-bar">
-          <div class="progress-bar-fill pillar-bar-fill" style="width:0%;background:{{ pillar_bar_colors.get(pkey, '#6366f1') }}"></div>
-        </div>
-      </div>
-      {%- endif %}
-      {%- endfor %}
+  <div class="mb-10 fluid-grid" id="pillar-progress-section">
+    <div class="col-span-full">
+      <h2 class="text-sm font-semibold mb-3" style="color:var(--color-text)">Progress by Pillar</h2>
     </div>
+    {%- set pillar_icons = {"aml": "🛡️", "stock": "📈", "data-engineering": "⚙️"} %}
+    {%- set pillar_names = {"aml": "AML", "stock": "Markets", "data-engineering": "Data Engineering"} %}
+    {%- set pillar_bar_colors = {"aml": "#c97d3e", "stock": "#3a7d5c", "data-engineering": "#6366f1"} %}
+    {%- for pkey, pinfo in pillar_config.items() %}
+    {%- set pcount = items | selectattr("pillar", "equalto", pkey) | list | length %}
+    {%- if pcount > 0 %}
+    <div class="pillar-progress ghost-card" data-pillar="{{ pkey }}">
+      <div class="flex items-center justify-between text-xs mb-1">
+        <span style="color:var(--color-text)">{{ pillar_icons.get(pkey, "") }} {{ pillar_names.get(pkey, pkey | capitalize) }}</span>
+        <span class="pillar-count" style="color:var(--color-text-muted)">0/{{ pcount }}</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-bar-fill pillar-bar-fill" style="width:0%;background:{{ pillar_bar_colors.get(pkey, '#6366f1') }}"></div>
+      </div>
+    </div>
+    {%- endif %}
+    {%- endfor %}
   </div>
 
   {%- if learning_paths_data %}
@@ -158,7 +157,7 @@
       </h3>
       <div class="space-y-2">
         {%- for step in ppath.steps %}
-        <div class="flex items-start gap-3 p-3 rounded-lg" style="background:var(--color-surface);border:1px solid var(--color-border)">
+        <div class="learning-path-card flex items-start gap-3">
           <div class="shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold"
                style="background:{% if step.article_count > 0 %}{{ pm.get("color", "#6366f1") }}22{% else %}var(--color-bg){% endif %};color:{% if step.article_count > 0 %}{{ pm.get("color", "#6366f1") }}{% else %}var(--color-text-muted){% endif %}">
             {{ step.bloom_num }}
@@ -188,7 +187,7 @@
   <div class="mb-12">
     <h2 class="text-2xl font-bold mb-1" style="color:var(--color-text)">Research-Based Articles</h2>
     <p class="text-sm mb-4" style="color:var(--color-text-muted)">Recent articles with knowledge checks — explore emerging topics at your own pace.</p>
-    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="fluid-grid">
       {%- for item in research_learn_items[:12] %}
       {%- set p = item.pillar or "" %}
       {%- set pc = pillar_config.get(p, none) %}
@@ -196,9 +195,8 @@
       {%- set bloom_names = {1:"L1 Remember",2:"L2 Understand",3:"L3 Apply",4:"L4 Analyze",5:"L5 Evaluate",6:"L6 Create"} %}
       {%- set bloom_colors = {1:"#7eb8a4",2:"#8fa3c8",3:"#c8a96e",4:"#c87070",5:"#b87ab8",6:"#c87070"} %}
       {%- set hb = item.highest_bloom | default(0) %}
-      <a href="/{{ item.slug }}/" class="learn-card block rounded-lg overflow-hidden transition hover:shadow-md" data-learn-slug="/{{ item.slug }}/"
-         data-bloom-level="{{ hb }}" data-pillar="{{ p }}" data-difficulty="{{ item.difficulty | default('beginner') }}"
-         style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+      <a href="/{{ item.slug }}/" class="ghost-card block" data-learn-slug="/{{ item.slug }}/"
+         data-bloom-level="{{ hb }}" data-pillar="{{ p }}" data-difficulty="{{ item.difficulty | default('beginner') }}">
         <div class="p-4">
           <div class="flex items-center gap-2 mb-2">
             {%- if pc %}<span class="text-xs font-semibold px-2 py-0.5 rounded" style="background:{{ pc.color }}20;color:{{ pc.color }}">{{ pc.icon }} {{ pc.label }}</span>{% endif %}
@@ -232,7 +230,7 @@
         } %}
         {{ group_descriptions.get(group_name, "") }}
       </p>
-      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="fluid-grid">
         {%- for item in group_items %}
         {%- set p = item.pillar or "" %}
         {%- set pc = pillar_config.get(p, none) %}
@@ -243,10 +241,9 @@
         {%- set bloom_names = {1:"L1 Remember",2:"L2 Understand",3:"L3 Apply",4:"L4 Analyze",5:"L5 Evaluate",6:"L6 Create"} %}
         {%- set bloom_colors = {1:"#7eb8a4",2:"#8fa3c8",3:"#c8a96e",4:"#c87070",5:"#b87ab8",6:"#c87070"} %}
         {%- set hb = item.highest_bloom | default(0) %}
-        <a href="/{{ item.slug }}/" class="learn-card block rounded-lg overflow-hidden transition hover:shadow-md" data-learn-slug="/{{ item.slug }}/"
+        <a href="/{{ item.slug }}/" class="ghost-card block" data-learn-slug="/{{ item.slug }}/"
            {%- if item.prerequisites and item.prerequisites | length > 0 %} data-prereqs="{{ item.prerequisites | join(',') }}"{% endif %}
-           data-bloom-level="{{ hb }}" data-pillar="{{ p }}" data-difficulty="{{ item.difficulty | default('beginner') }}"
-           style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+           data-bloom-level="{{ hb }}" data-pillar="{{ p }}" data-difficulty="{{ item.difficulty | default('beginner') }}">
           <div class="aspect-[600/340] overflow-hidden" style="background:var(--color-bg)">
             {%- if has_feat %}
             <img src="{{ feat_img }}" alt="{{ item.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">

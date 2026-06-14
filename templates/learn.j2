@@ -5,18 +5,18 @@
 {{ breadcrumbs(page_path, content.title) }}
 
 <!-- XP/Streak Dashboard (NEW) -->
-<div class="mb-6 grid grid-cols-3 gap-3 max-w-2xl" id="lesson-stats">
-  <div class="p-3 rounded-lg" style="background:var(--color-surface);border:1px solid var(--color-border)">
-    <div class="text-xs font-semibold mb-1" style="color:var(--color-text-muted)">XP Earned</div>
-    <div class="text-lg font-bold" id="lesson-xp">0</div>
+<div class="mb-6 stats-dashboard max-w-2xl" id="lesson-stats">
+  <div class="stat-card">
+    <div class="stat-label">XP Earned</div>
+    <div class="stat-value" id="lesson-xp">0</div>
   </div>
-  <div class="p-3 rounded-lg" style="background:var(--color-surface);border:1px solid var(--color-border)">
-    <div class="text-xs font-semibold mb-1" style="color:var(--color-text-muted)">Reading Time</div>
-    <div class="text-lg font-bold" id="lesson-time">{{ content.body_html | reading_time }} min</div>
+  <div class="stat-card">
+    <div class="stat-label">Reading Time</div>
+    <div class="stat-value" id="lesson-time">{{ content.body_html | reading_time }} min</div>
   </div>
-  <div class="p-3 rounded-lg" style="background:var(--color-surface);border:1px solid var(--color-border)">
-    <div class="text-xs font-semibold mb-1" style="color:var(--color-text-muted)">Streak</div>
-    <div class="text-lg font-bold" id="lesson-streak">0 days</div>
+  <div class="stat-card">
+    <div class="stat-label">Streak</div>
+    <div class="stat-value" id="lesson-streak">0 days</div>
   </div>
 </div>
 
