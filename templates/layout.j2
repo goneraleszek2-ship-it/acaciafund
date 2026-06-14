@@ -149,15 +149,30 @@
   <link rel="preload" href="/static/fonts/Inter-Bold.woff2" as="font" type="font/woff2" crossorigin>
   <script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.min.js"></script>
   <script>
-    // Mermaid v10.9.1 UMD uses globalThis/this, try to ensure it's available
+    // Mermaid UMD wrapper exports to JM which should be window
+    // But due to how the UMD is structured, we need to access it differently
     (function() {
-      if (typeof window !== 'undefined' && typeof window.mermaid === 'undefined') {
-        // Try to access globalThis from the script context
-        (function(global) {
-          if (global && typeof global.mermaid !== 'undefined') {
-            window.mermaid = global.mermaid;
+      // Check if mermaid is available on window first
+      if (typeof window.mermaid === 'undefined') {
+        // Try to find the mermaid object in the global scope
+        var candidates = [window, globalThis, self];
+        for (var i = 0; i < candidates.length; i++) {
+          var obj = candidates[i];
+          if (obj && typeof obj !== 'undefined') {
+            // Check if this object has mermaid
+            for (var key in obj) {
+              if (key === 'mermaid' || (obj[key] && typeof obj[key].mermaid !== 'undefined')) {
+                if (key === 'mermaid') {
+                  window.mermaid = obj[key];
+                } else if (typeof obj[key].mermaid !== 'undefined') {
+                  window.mermaid = obj[key].mermaid;
+                }
+                if (window.mermaid) break;
+              }
+            }
           }
-        })(typeof globalThis !== 'undefined' ? globalThis : window);
+          if (window.mermaid) break;
+        }
       }
       if (typeof window.mermaid !== 'undefined') {
         window.mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
