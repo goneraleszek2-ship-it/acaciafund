@@ -2,13 +2,12 @@ title: Admin Panel — Routes, API & Templates
 
 ```mermaid
 flowchart TD
-    subgraph Flask["🖥️ Flask App (app/admin.py)"]
+    subgraph Flask["Flask App (app/admin.py)"]
         APP[Flask(__name__)]
-        STATIC[/static/admin.css
-          /static/admin.js]
+        STATIC[/static/admin.css /static/admin.js]
     end
 
-    subgraph Pages["📄 Page Routes"]
+    subgraph Pages["Page Routes"]
         DASH[/admin/ — Dashboard]
         GALLERY[/admin/gallery — Image Gallery]
         ARTICLES[/admin/articles — Article List]
@@ -22,7 +21,7 @@ flowchart TD
         CURATED[/admin/curated-test — Curated Tester]
     end
 
-    subgraph API["🔌 API Endpoints"]
+    subgraph API["API Endpoints"]
         API_REFRESH[POST /admin/api/articles/{slug}/refresh]
         API_CURATED[POST /admin/api/curated/score]
         API_SOURCES[GET /admin/api/sources]
@@ -32,9 +31,8 @@ flowchart TD
         API_MUTATE[POST /admin/api/mutate — image picker]
     end
 
-    subgraph Templates["📝 Jinja2 Templates"]
-        BASE[templates/admin/base.html
-          sidebar + nav]
+    subgraph Templates["Jinja2 Templates"]
+        BASE[templates/admin/base.html sidebar + nav]
         DASH_T[admin/dashboard.html]
         GALLERY_T[admin/gallery.html]
         ARTICLE_T[admin/article_list.html]
@@ -48,17 +46,12 @@ flowchart TD
         CURATED_T[admin/curated_tester.html]
     end
 
-    subgraph Data["💾 Data Sources"]
-        REGISTRY[registry.json
-          content catalog]
-        IMAGES[static/images/generated/
-          ~450 images]
-        PIPELINE_RUNS[registry/
-          image-pipeline-runs.json]
-        DLQ_DATA[registry/
-          dlq/ — Dead Letter Queue]
-        SOURCE_HEALTH[registry/
-          source-health.json]
+    subgraph Data["Data Sources"]
+        REGISTRY[registry.json content catalog]
+        IMAGES[static/images/generated/ ~450 images]
+        PIPELINE_RUNS[registry/ image-pipeline-runs.json]
+        DLQ_DATA[registry/ dlq/ — Dead Letter Queue]
+        SOURCE_HEALTH[registry/ source-health.json]
     end
 
     APP --> Pages
