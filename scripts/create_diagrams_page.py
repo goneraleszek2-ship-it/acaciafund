@@ -115,11 +115,12 @@ for idx, mmd_file in enumerate(mmd_files, 1):
     page_sections.append(section)
 
 # Build the reference table rows from DESCRIPTIONS dict
-table_rows = []
+# table_rows now contains just the data, not full <tr> tags
+table_rows_data = []
 for mmd_file in mmd_files:
     slug = mmd_file.replace('.mmd', '')
     info = DESCRIPTIONS.get(slug, (slug.replace('_', ' ').title(), "", ""))
-    table_rows.append(f"""<tr><td style="padding:8px;border:1px solid var(--color-border)"><code>{mmd_file}</code></td><td style="padding:8px;border:1px solid var(--color-border)">{info[1]}</td><td style="padding:8px;border:1px solid var(--color-border)">{info[2]}</td></tr>""")
+    table_rows_data.append((mmd_file, info[1], info[2]))
 
 table_html = f"""<h2>Diagram Reference</h2>
 <table style="width:100%;border-collapse:collapse;font-size:0.9em">
@@ -127,7 +128,7 @@ table_html = f"""<h2>Diagram Reference</h2>
 <tr style="background:var(--color-bg)"><th style="padding:8px;border:1px solid var(--color-border);text-align:left">#</th><th style="padding:8px;border:1px solid var(--color-border);text-align:left">File</th><th style="padding:8px;border:1px solid var(--color-border);text-align:left">Description</th><th style="padding:8px;border:1px solid var(--color-border);text-align:left">Type</th></tr>
 </thead>
 <tbody>
-{chr(10).join(f'<tr><td style="padding:8px;border:1px solid var(--color-border)">{i}</td>{row}</tr>' for i, row in enumerate(table_rows, 1))}
+{chr(10).join(f'<tr><td style="padding:8px;border:1px solid var(--color-border)">{i}</td><td style="padding:8px;border:1px solid var(--color-border)"><code>{file}</code></td><td style="padding:8px;border:1px solid var(--color-border)">{desc}</td><td style="padding:8px;border:1px solid var(--color-border)">{typ}</td></tr>' for i, (file, desc, typ) in enumerate(table_rows_data, 1))}
 </tbody>
 </table>"""
 
