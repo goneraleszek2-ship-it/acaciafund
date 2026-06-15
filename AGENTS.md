@@ -1,5 +1,25 @@
 # AGENTS.md — Session State & Plan
 
+## Mem0 Context (Auto-Generated)
+
+### Current Session
+- **Session ID**: session_abc123
+- **Task**: Integrate Mem0 for session context management
+- **Status**: Active
+
+### Recent Deployments
+- `006d1e0` (2026-06-15): 376 pages, 12.0s build time
+
+### Key Insights
+- **Decision**: Self-hosted SQLite for Mem0 (no API costs, full control)
+- **Bug Fix**: Mermaid syntax errors fixed (emojis removed, multi-line nodes collapsed)
+- **Context**: Diagrams rebuild - HTML generation pipeline needs update
+
+### Quick Navigation
+- [Query Mem0](#query-mem0)
+- [Recent Deployments](#recent-deployments)
+- [Technical Insights](#technical-insights)
+
 ## Build
 ```
 python3 build.py        # Generates 376 pages into dist/ (~12s)
@@ -65,11 +85,38 @@ No lint/typecheck — pure Python + Jinja2 static site. Cloudflare Pages auto-de
 - `core/brand.py`: `section_pattern_svg()` — dead code; `section_type_color()` — still used for left border
 - `static/css/custom.css`: layer strip rules, section collapse rules, section read progress, layer body tints
 - `static/js/learning_hub.js`: `initSectionCollapse()`, `initSectionProgress()`
-- `templates/layout.j2`: `<div class="layer-strip">` after `<body>`; `data-layer` on `<body>`
-- `templates/index.j2`: content-type badges on homepage cards
-- `templates/partials/hero_top_sqi.html`: SQI chip removed from hero card
-- `templates/pillar_index.j2`: research cards with pictogram (no SQI)
-- `templates/category_index.j2`: research cards with pictogram (no SQI)
-- `templates/blog_post.j2`: no SQI chip in header or quality metrics
-- `templates/aml_signals.j2`: no SQI chip in recent article rows
-- `templates/learn_index.j2`: uses `progress-bar` (was `sqi-bar`)
+
+## Mem0 Integration
+- **Location**: `services/mem0/`
+- **Database**: `services/mem0/mem0.db` (SQLite)
+- **CLI Tool**: `scripts/mem0_query.py`
+- **Deployment Hook**: `scripts/mem0_log_deployment.py`
+- **Commit Parser**: `scripts/mem0_extract_insights.py`
+- **Admin UI**: `scripts/mem0_admin.py`
+
+### Query Mem0
+```bash
+# Show recent deployments
+python scripts/mem0_query.py --deployments
+
+# Search sessions and insights
+python scripts/mem0_query.py "diagrams rebuild"
+
+# Show all insights
+python scripts/mem0_query.py --insights
+```
+
+### Recent Deployments
+| Commit | Status | Pages | Duration |
+|--------|--------|-------|----------|
+| 006d1e0 | ✅ | 376 | 12.0s |
+
+### Technical Insights
+| Type | Title | Tags |
+|------|-------|------|
+| decision | Mem0 Integration Strategy | mem0, architecture |
+| bug_fix | Mermaid Syntax Errors | mermaid, syntax, fix |
+| context | Current Task: Diagrams Rebuild | diagrams, mermaid |
+| context | Project Stack | stack, architecture |
+
+## Build

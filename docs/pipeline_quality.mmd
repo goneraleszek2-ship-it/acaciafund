@@ -1,12 +1,9 @@
 title: Pipeline Quality Gates & Observability
 
-```mermaid
 flowchart TD
     subgraph Gates["Quality Gates"]
-        SCHEMA[Schema Validation
-          schemas.py Pydantic]
-        SQI_CK[SQI Threshold > 0.65
-          configurable in config.py]
+        SCHEMA[Schema Validation — schemas.py Pydantic]
+        SQI_CK[SQI Threshold > 0.65 — configurable in config.py]
         DOMAIN_CK[Domain percent capped at 100]
         FLAG_CK[Quality Flags at build time]
     end
@@ -24,8 +21,7 @@ flowchart TD
         FETCH --> INSTALL[Setup Python 3.13]
         INSTALL --> GEN[python3 generator.py]
         GEN --> DEPLOY[Deploy to CDN]
-        DEPLOY --> CACHE[Cache warm
-          Infinite TTL]
+        DEPLOY --> CACHE[Cache warm — Infinite TTL]
     end
 
     GEN --> SCHEMA
@@ -37,4 +33,3 @@ flowchart TD
     GEN -.-> SQI_DIST
     GEN -.-> PILLAR_COV
     GEN -.-> BLM_DIST
-```

@@ -35,6 +35,13 @@ from config import (
     INTEREST_SQI_WEIGHT, INTEREST_RECENCY_WEIGHT, INTEREST_RECENCY_DAYS,
 )
 
+# ── Mem0 integration for session context and deployment logging ──
+try:
+    from services.mem0 import log_deployment, save_insight
+    MEM0_AVAILABLE = True
+except ImportError:
+    MEM0_AVAILABLE = False
+
 def get_topic_icons(tags: list[str]) -> list[str]:
     """Map article tags to resolved SVG path data, returning up to 3 matches."""
     if not tags:
@@ -1857,7 +1864,27 @@ Sitemap: {SITE_URL}/sitemap.xml
 
     total = len(list(OUTPUT_DIR.rglob("*.html")))
     duration = time.time() - start_time
+    duration_ms = int(duration * 1000)
     print(f"Generation complete. Total pages: {total} ({duration:.2f}s)")
+
+    # ── Mem0: Log deployment ──
+    if MEM0_AVAILABLE:
+        try:
+            import subprocess
+            commit_hash = subprocess.check_output(
+                ["git", "rev-parse", "HEAD"],
+                cwd=str(PROJECT_ROOT),
+                text=True
+            ).strip()[:8]
+            log_deployment(
+                commit_hash=commit_hash,
+                status="success",
+                pages_generated=total,
+                build_duration_ms=duration_ms,
+            )
+            print(f"  mem0: logged deployment {commit_hash}")
+        except Exception as e:
+            print(f"  mem0: logging failed ({e})")
 
     # ── Build metrics (build-meta.json) ──
     sqi_values = [
@@ -1898,7 +1925,7 @@ Sitemap: {SITE_URL}/sitemap.xml
 
     build_meta = {
         "timestamp": datetime.now(timezone.utc).isoformat(),
-        "duration_seconds": round(duration, 2),
+        "duration_seconds": round(duration_ms / 1000, 2),
         "page_count": total,
         "registry_hash": build_hash,
         "sqi": {

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mem0 - AcaciaFund Context Manager</title>
+    <style>
+        :root {
+            --bg: #0f172a;
+            --card: #1e293b;
+            --text: #e2e8f0;
+            --text-muted: #94a3b8;
+            --accent: #6366f1;
+            --border: #334155;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 2rem;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 { margin-bottom: 2rem; font-size: 2rem; }
+        h2 { margin: 1.5rem 0 1rem; font-size: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; }
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+        .card h3 { margin-bottom: 0.5rem; color: var(--accent); }
+        .card p { color: var(--text-muted); font-size: 0.9rem; }
+        .tag {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-right: 0.3rem;
+        }
+        .status { font-weight: bold; }
+        .status.success { color: #4ade80; }
+        .status.failed { color: #f87171; }
+        .status.pending { color: #fbbf24; }
+        .timestamp { color: var(--text-muted); font-size: 0.85rem; }
+        .search-box {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .search-box input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--card);
+            color: var(--text);
+            font-size: 1rem;
+        }
+        .search-box button {
+            padding: 0.75rem 1.5rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 0.75rem; text-align: left; border-bottom: 1px solid var(--border); }
+        th { color: var(--text-muted); }
+        tr:hover { background: rgba(99, 102, 241, 0.1); }
+        .nav { margin-bottom: 2rem; }
+        .nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-right: 1.5rem;
+            padding-bottom: 0.25rem;
+            border-bottom: 2px solid transparent;
+        }
+        .nav a:hover, .nav a.active { color: var(--accent); border-color: var(--accent); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧠 Mem0 - AcaciaFund Context Manager</h1>
+        <div class="nav">
+            <a href="/mem0/" class="active">Dashboard</a>
+            <a href="/mem0/deployments">Deployments</a>
+            <a href="/mem0/insights">Insights</a>
+            <a href="/mem0/sessions">Sessions</a>
+        </div>
+        
+        <div class="search-box">
+            <input type="text" id="search" placeholder="Search sessions and insights...">
+            <button onclick="search()">Search</button>
+        </div>
+
+        <div class="grid">
+            <div class="card">
+                <h3>📊 Deployments</h3>
+                <p>Last 5 deployments</p>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem; color: var(--text-muted);">
+                    {% for d in deployments %}
+                    <li><span class="status {{ d.status }}">{{ '✅' if d.status == 'success' else '❌' }}</span> {{ d.commit_hash[:8] }} — {{ d.pages_generated }} pages</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3>💡 Insights</h3>
+                <p>Latest insights</p>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem; color: var(--text-muted);">
+                    {% for i in insights %}
+                    <li><span class="tag">{{ i.insight_type }}</span> {{ i.title[:50] }}...</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            
+            <div class="card">
+                <h3>📝 Sessions</h3>
+                <p>Active sessions</p>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem; color: var(--text-muted);">
+                    {% for s in sessions %}
+                    <li><span class="tag">{{ s.status }}</span> {{ s.task_description[:40] }}...</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+        <h2>Recent Activity</h2>
+        <div class="grid">
+            {% for d in deployments %}
+            <div class="card">
+                <h3>{{ d.commit_hash[:8] }}</h3>
+                <p><span class="status {{ d.status }}">{{ d.status }}</span> — {{ d.pages_generated }} pages</p>
+                <p class="timestamp">{{ d.created_at }}</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        <h2 style="margin-top: 2rem;">Quick Stats</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Deployments</h3>
+                <p>{{ deployments|length }} total</p>
+            </div>
+            <div class="card">
+                <h3>Insights</h3>
+                <p>{{ insights|length }} total</p>
+            </div>
+            <div class="card">
+                <h3>Sessions</h3>
+                <p>{{ sessions|length }} total</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function search() {
+            const query = document.getElementById('search').value;
+            const res = await fetch(`/mem0/api/search?q=${encodeURIComponent(query)}&limit=10`);
+            const data = await res.json();
+            alert(`Found ${data.total} results: ${data.sessions.length} sessions, ${data.insights.length} insights`);
+        }
+    </script>
+</body>
+</html>

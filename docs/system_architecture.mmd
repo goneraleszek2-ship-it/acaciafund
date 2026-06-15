@@ -1,32 +1,25 @@
 title: AcaciaFund System Architecture
 
-```mermaid
 flowchart TD
-    subgraph Users["👤 Users"]
+    subgraph Users["Users"]
         U[Browser / Visitor]
     end
 
-    subgraph CDN["🌐 Cloudflare"]
+    subgraph CDN["Cloudflare"]
         CF[Cloudflare CDN]
     end
 
-    subgraph Pipeline["⚙️ Build Pipeline"]
-        GIT[GitHub Repository
-          main branch] --> CFW[Cloudflare Pages]
+    subgraph Pipeline["Build Pipeline"]
+        GIT[GitHub Repository — main branch] --> CFW[Cloudflare Pages]
         CFW --> BUILD[python3 generator.py]
-        BUILD --> REG[registry.json
-          Content Catalog]
-        BUILD --> SCHEMA[schemas.py
-          Validation]
-        BUILD --> VIZ[core/visuals.py
-          SVG Generation]
-        BUILD --> TMPL[templates/*.j2
-          Jinja2 Rendering]
-        BUILD --> DIST[dist/ directory
-          Static HTML]
+        BUILD --> REG[registry.json — Content Catalog]
+        BUILD --> SCHEMA[schemas.py — Validation]
+        BUILD --> VIZ[core/visuals.py — SVG Generation]
+        BUILD --> TMPL[templates/*.j2 — Jinja2 Rendering]
+        BUILD --> DIST[dist/ directory — Static HTML]
     end
 
-    subgraph Output["📄 Generated Output"]
+    subgraph Output["Generated Output"]
         DIST --> PAGES[236 Static Pages]
         PAGES --> RESEARCH[33 Research Articles]
         PAGES --> LEARN[16 Learn Items]
@@ -44,4 +37,3 @@ flowchart TD
     style GIT fill:#1e293b,stroke:#64748b
     style BUILD fill:#0f172a,stroke:#d97706
     style DIST fill:#166534,stroke:#22c55e
-```

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deployments - Mem0</title>
+    <style>
+        :root { --bg: #0f172a; --card: #1e293b; --text: #e2e8f0; --text-muted: #94a3b8; --accent: #6366f1; --border: #334155; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: var(--bg); color: var(--text); padding: 2rem; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 { margin-bottom: 2rem; }
+        table { width: 100%; border-collapse: collapse; background: var(--card); border-radius: 8px; overflow: hidden; }
+        th, td { padding: 1rem; text-align: left; border-bottom: 1px solid var(--border); }
+        th { background: var(--accent); color: white; }
+        tr:hover { background: rgba(99, 102, 241, 0.1); }
+        .status { font-weight: bold; }
+        .status.success { color: #4ade80; }
+        .status.failed { color: #f87171; }
+        .status.pending { color: #fbbf24; }
+        .timestamp { color: var(--text-muted); font-size: 0.85rem; }
+        .nav { margin-bottom: 1.5rem; }
+        .nav a { color: var(--text-muted); text-decoration: none; margin-right: 1.5rem; }
+        .nav a:hover, .nav a.active { color: var(--accent); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Deployments</h1>
+        <div class="nav">
+            <a href="/mem0/">Dashboard</a>
+            <a href="/mem0/deployments" class="active">Deployments</a>
+            <a href="/mem0/insights">Insights</a>
+            <a href="/mem0/sessions">Sessions</a>
+        </div>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Commit</th>
+                    <th>Branch</th>
+                    <th>Status</th>
+                    <th>Pages</th>
+                    <th>Duration</th>
+                    <th>Timestamp</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for d in deployments %}
+                <tr>
+                    <td><code>{{ d.commit_hash[:8] }}</code></td>
+                    <td>{{ d.branch }}</td>
+                    <td><span class="status {{ d.status }}">{{ d.status }}</span></td>
+                    <td>{{ d.pages_generated }}</td>
+                    <td>{{ "%.1f"|format(d.build_duration_ms/1000) }}s</td>
+                    <td class="timestamp">{{ d.created_at }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

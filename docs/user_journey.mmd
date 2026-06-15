@@ -1,28 +1,27 @@
 title: User Journey — Site Navigation
 
-```mermaid
 flowchart TD
-    HOME[🏠 Home] --> RESEARCH[📊 Research Index]
-    HOME --> LEARN[🎓 Learn Hub]
-    HOME --> KNOWLEDGE[📚 Knowledge Base]
-    HOME --> SEARCH[🔍 Search]
+    HOME[Home] --> RESEARCH[Research Index]
+    HOME --> LEARN[Learn Hub]
+    HOME --> KNOWLEDGE[Knowledge Base]
+    HOME --> SEARCH[Search]
 
-    RESEARCH --> ARTICLE[📄 Research Article]
-    ARTICLE --> FLASHCARDS[🃏 Flashcards]
-    ARTICLE --> QUIZ[❓ Quiz Questions]
+    RESEARCH --> ARTICLE[Research Article]
+    ARTICLE --> FLASHCARDS[Flashcards]
+    ARTICLE --> QUIZ[Quiz Questions]
 
-    LEARN --> LESSON[📖 Lesson]
+    LEARN --> LESSON[Lesson]
     LESSON --> FLASHCARDS
     LESSON --> QUIZ
-    LESSON --> MARK[✅ Mark Complete]
-    LESSON --> FOCUS[🎯 Focus Mode]
+    LESSON --> MARK[Mark Complete]
+    LESSON --> FOCUS[Focus Mode]
 
-    KNOWLEDGE --> KPAGE[📝 Knowledge Page]
+    KNOWLEDGE --> KPAGE[Knowledge Page]
     KPAGE --> FLASHCARDS
 
-    HOME --> PILLAR_AML[🛡️ AML Pillar]
-    HOME --> PILLAR_MARKETS[📈 Markets Pillar]
-    HOME --> PILLAR_SCIENCE[🧬 Science Pillar]
+    HOME --> PILLAR_AML[AML Pillar]
+    HOME --> PILLAR_MARKETS[Markets Pillar]
+    HOME --> PILLAR_SCIENCE[Science Pillar]
 
     PILLAR_AML --> ARTICLE
     PILLAR_MARKETS --> ARTICLE
@@ -35,4 +34,3 @@ flowchart TD
     style PILLAR_AML fill:#1e3a5f,stroke:#d97706,color:#fff
     style PILLAR_MARKETS fill:#166534,stroke:#22c55e,color:#fff
     style PILLAR_SCIENCE fill:#5b21b6,stroke:#a855f7,color:#fff
-```

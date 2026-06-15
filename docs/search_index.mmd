@@ -1,6 +1,5 @@
 title: Search Index Architecture
 
-```mermaid
 flowchart LR
     REG[registry.json] --> GEN[generator.py]
     GEN --> INDEX[search-index-json]
@@ -8,4 +7,3 @@ flowchart LR
     QUERY[User Input] --> FILTER[JavaScript Filter]
     PAGE --> FILTER
     FILTER --> RESULTS[Filtered Results]
-```
