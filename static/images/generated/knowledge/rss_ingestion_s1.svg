@@ -1,6 +1,3 @@
-title: RSS Ingestion Pipeline
-
-```mermaid
 flowchart LR
     subgraph Sources["📡 RSS Feeds"]
         TC[TechCrunch
@@ -91,4 +88,3 @@ flowchart LR
     style REGISTRY fill:#0f172a,stroke:#22c55e
     style DLQ fill:#7f1d1d,stroke:#ef4444
     style BUILD fill:#166534,stroke:#22c55e
-```

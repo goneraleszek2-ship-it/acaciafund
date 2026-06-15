@@ -1,6 +1,3 @@
-title: Source Ingestion & Content Flow
-
-```mermaid
 flowchart LR
     subgraph Sources["📡 External Sources"]
         HN[HackerNews API]
@@ -44,4 +41,3 @@ flowchart LR
     style ARXIV fill:#1e293b,stroke:#64748b,color:#fff
     style PUBMED fill:#1e293b,stroke:#64748b,color:#fff
     style REG fill:#0f172a,stroke:#22c55e,color:#fff
-```

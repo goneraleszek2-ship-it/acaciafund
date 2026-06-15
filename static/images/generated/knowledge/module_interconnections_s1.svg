@@ -1,6 +1,3 @@
-title: Module Interconnections & Data Flow
-
-```mermaid
 classDiagram
     class config_py {
         +SITE_URL: str
@@ -67,4 +64,3 @@ classDiagram
     templates_j2 --> config_py : uses config
     visuals_py --> registry_json : reads content
     registry_json ..> visuals_py : missing content = empty SVGs
-```

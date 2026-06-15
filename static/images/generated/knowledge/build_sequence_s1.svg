@@ -1,6 +1,3 @@
-title: Build Process — Sequence Diagram
-
-```mermaid
 sequenceDiagram
     actor Dev as Developer
     participant Git as GitHub
@@ -26,4 +23,3 @@ sequenceDiagram
     DIST-->>CF: Deployment artifact
     CF->>CF: CDN cache warm
     CF-->>Dev: Site live at acaciafund.com
-```

@@ -1,6 +1,3 @@
-title: Content Model — UML Class Diagram
-
-```mermaid
 classDiagram
     class ContentItem {
         +slug: str
@@ -47,4 +44,3 @@ classDiagram
 
     class BloomQuestion ..|> Enum : bloom_level ∈ {remember, understand, apply, analyze, evaluate, create}
     class BloomQuestion ..|> Enum : type ∈ {mc, open-ended}
-```
