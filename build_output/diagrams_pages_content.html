@@ -1,0 +1,684 @@
+<h2>System Diagrams</h2>
+<article class="diagram-card" style="max-width:900px;margin:3rem auto 2rem;padding:2rem 1.5rem; background:var(--color-bg); border:1px solid var(--color-border); border-radius:var(--size-radius)">
+  <h3 style="margin-top:0">1. Admin Panel — Routes, API & Templates</h3>
+  <div class="mermaid-container"><div class="mermaid-wrapper" style="position:relative;overflow:hidden"><div class="mermaid-svg" style="width:100%;height:auto">
+```mermaid
+flowchart TD
+    subgraph Flask["Flask App (app/admin.py)"]
+        APP[Flask(__name__)]
+        STATIC[/static/admin.css /static/admin.js]
+    end
+
+    subgraph Pages["Page Routes"]
+        DASH[/admin/ — Dashboard]
+        GALLERY[/admin/gallery — Image Gallery]
+        ARTICLES[/admin/articles — Article List]
+        ARTICLE[/admin/articles/{slug} — Detail]
+        IMAGE[/admin/images/{id} — Image Detail]
+        MANIFEST[/admin/manifest — Run Manifest]
+        PIPELINE[/admin/pipeline — Pipeline Runs]
+        QUALITY[/admin/quality — Quality Metrics]
+        COVERAGE[/admin/coverage — Coverage Heatmap]
+        SOURCES[/admin/sources — Source Health]
+        CURATED[/admin/curated-test — Curated Tester]
+    end
+
+    subgraph API["API Endpoints"]
+        API_REFRESH[POST /admin/api/articles/{slug}/refresh]
+        API_CURATED[POST /admin/api/curated/score]
+        API_SOURCES[GET /admin/api/sources]
+        API_SOURCE_HEALTH[GET /admin/api/sources/{name}/health]
+        API_SOURCE_REFRESH[POST /admin/api/sources/{name}/refresh]
+        API_COVERAGE[GET /admin/api/coverage-summary]
+        API_MUTATE[POST /admin/api/mutate — image picker]
+    end
+
+    subgraph Templates["Jinja2 Templates"]
+        BASE[templates/admin/base.html sidebar + nav]
+        DASH_T[admin/dashboard.html]
+        GALLERY_T[admin/gallery.html]
+        ARTICLE_T[admin/article_list.html]
+        DETAIL_T[admin/article_detail.html]
+        IMAGE_T[admin/image_detail.html]
+        MANIFEST_T[admin/manifest.html]
+        PIPELINE_T[admin/pipeline.html]
+        QUALITY_T[admin/quality.html]
+        COVERAGE_T[admin/coverage.html]
+        SOURCES_T[admin/sources.html]
+        CURATED_T[admin/curated_tester.html]
+    end
+
+    subgraph Data["Data Sources"]
+        REGISTRY[registry.json content catalog]
+        IMAGES[static/images/generated/ ~450 images]
+        PIPELINE_RUNS[registry/ image-pipeline-runs.json]
+        DLQ_DATA[registry/ dlq/ — Dead Letter Queue]
+        SOURCE_HEALTH[registry/ source-health.json]
+    end
+
+    APP --> Pages
+    APP --> API
+    APP --> STATIC
+    Pages --> Templates
+    BASE --> DASH_T
+    BASE --> GALLERY_T
+    BASE --> ARTICLE_T
+    BASE --> DETAIL_T
+    BASE --> IMAGE_T
+    BASE --> MANIFEST_T
+    BASE --> PIPELINE_T
+    BASE --> QUALITY_T
+    BASE --> COVERAGE_T
+    BASE --> SOURCES_T
+    BASE --> CURATED_T
+    API --> REGISTRY
+    API --> IMAGES
+    API --> PIPELINE_RUNS
+    API --> DLQ_DATA
+    API --> SOURCE_HEALTH
+
+    style APP fill:#1e3a5f,stroke:#d97706
+    style BASE fill:#1e293b,stroke:#64748b
+    style REGISTRY fill:#0f172a,stroke:#22c55e
+    style SOURCE_HEALTH fill:#166534,stroke:#22c55e
+```</div></div></div>
+</article>
+<article class="diagram-card" style="max-width:900px;margin:3rem auto 2rem;padding:2rem 1.5rem; background:var(--color-bg); border:1px solid var(--color-border); border-radius:var(--size-radius)">
+  <h3 style="margin-top:0">2. Build Process — Sequence Diagram</h3>
+  <div class="mermaid-container"><div class="mermaid-wrapper" style="position:relative;overflow:hidden"><div class="mermaid-svg" style="width:100%;height:auto">
+```mermaid
+sequenceDiagram
+    actor Dev as Developer
+    participant Git as GitHub
+    participant CF as Cloudflare Pages
+    participant Build as generator.py
+    participant Reg as registry.json
+    participant VIZ as core/visuals.py
+    participant TPL as templates/*.j2
+    participant DIST as dist/
+
+    Dev->>Git: git push main
+    Git->>CF: Webhook trigger
+    CF->>Build: python3 generator.py
+    Build->>Reg: Read 60 content entries
+    Reg-->>Build: Return catalog data
+    Build->>Build: Validate with schemas.py
+    Build->>VIZ: Generate SVGs
+    VIZ-->>Build: 60 thumbnails + OG images
+    Build->>TPL: Render with Jinja2
+    TPL-->>Build: 236 HTML pages
+    Build->>DIST: Write output
+    Build->>Build: Smoke tests (12/12)
+    DIST-->>CF: Deployment artifact
+    CF->>CF: CDN cache warm
+    CF-->>Dev: Site live at acaciafund.com
+```</div></div></div>
+</article>
+<article class="diagram-card" style="max-width:900px;margin:3rem auto 2rem;padding:2rem 1.5rem; background:var(--color-bg); border:1px solid var(--color-border); border-radius:var(--size-radius)">
+  <h3 style="margin-top:0">3. Content Model — UML Class Diagram</h3>
+  <div class="mermaid-container"><div class="mermaid-wrapper" style="position:relative;overflow:hidden"><div class="mermaid-svg" style="width:100%;height:auto">
+```mermaid
+classDiagram
+    class ContentItem {
+        +slug: str
+        +language: str
+        +title: str
+        +description: str
+        +body_html: str
+        +content_type: str
+        +pillar: str
+        +knowledge_category: str
+        +difficulty: str
+        +tags: list[str]
+        +created_at: datetime
+        +date_str: str
+        +bloom_questions: list[BloomQuestion]
+        +flashcards: list[Flashcard]
+        +signals: dict
+        +source_breakdown: dict
+    }
+
+    class BloomQuestion {
+        +bloom_level: str
+        +type: str
+        +question: str
+        +options: list[str]
+        +correct: str
+    }
+
+    class Flashcard {
+        +term: str
+        +definition: str
+    }
+
+    class RegistryData {
+        +last_run: datetime
+        +content: list[ContentItem]
+        +pipeline_stages: list
+        +knowledge_categories: dict
+    }
+
+    RegistryData *-- ContentItem : contains
+    ContentItem *-- BloomQuestion : has
+    ContentItem *-- Flashcard : has
+
+    class BloomQuestion ..|> Enum : bloom_level in {remember, understand, apply, analyze, evaluate, create}
+    class BloomQuestion ..|> Enum : type in {mc, open-ended}
+```</div></div></div>
+</article>
+<article class="diagram-card" style="max-width:900px;margin:3rem auto 2rem;padding:2rem 1.5rem; background:var(--color-bg); border:1px solid var(--color-border); border-radius:var(--size-radius)">
+  <h3 style="margin-top:0">4. DataOps Pipeline — 8 Stages</h3>
+  <div class="mermaid-container"><div class="mermaid-wrapper" style="position:relative;overflow:hidden"><div class="mermaid-svg" style="width:100%;height:auto">
+```mermaid
+flowchart LR
+    INGEST[1️⃣ Ingestion
+          HackerNews / arXiv / PubMed] --> VALIDATE[2️⃣ Validation
+          schemas.py Pydantic]
+    VALIDATE --> TRANSFORM[3️⃣ Transformation
+          Entity Extraction / SQI / Bloom]
+    TRANSFORM --> STORE[4️⃣ Catalog
+          registry.json]
+    STORE --> VIZ[5️⃣ Visualization
+          core/visuals.py SVGs]
+    VIZ --> RENDER[6️⃣ Rendering
+          generator.py + J2 Templates]
+    RENDER --> SERVE[7️⃣ Serving
+          Cloudflare Pages CDN]
+    SERVE --> OBSERVE[8️⃣ Observability
+          Build Metrics / Quality Flags]
+
+    style INGEST fill:#1e3a5f,stroke:#d97706,color:#fff
+    style VALIDATE fill:#1e293b,stroke:#64748b,color:#fff
+    style TRANSFORM fill:#1e3a5f,stroke:#d97706,color:#fff
+    style STORE fill:#0f172a,stroke:#22c55e,color:#fff
+    style VIZ fill:#1e293b,stroke:#a855f7,color:#fff
+    style RENDER fill:#1e3a5f,stroke:#d97706,color:#fff
+    style SERVE fill:#166534,stroke:#22c55e,color:#fff
+    style OBSERVE fill:#1e293b,stroke:#64748b,color:#fff
+```</div></div></div>
+</article>
+<article class="diagram-card" style="max-width:900px;margin:3rem auto 2rem;padding:2rem 1.5rem; background:var(--color-bg); border:1px solid var(--color-border); border-radius:var(--size-radius)">
+  <h3 style="margin-top:0">5. Module Interconnections & Data Flow</h3>
+  <div class="mermaid-container"><div class="mermaid-wrapper" style="position:relative;overflow:hidden"><div class="mermaid-svg" style="width:100%;height:auto">
+```mermaid
+classDiagram
+    class config_py {
+        +SITE_URL: str
+        +THUMBNAIL_BASE: str
+        +PILLAR_CONFIG: dict
+        +build_hash: str
+        +get_out_dir()
+    }
+
+    class schemas_py {
+        +RegistryData
+        +ContentItem
+        +BloomQuestion
+        +Flashcard
+        +compute_quality_flags()
+        +sanitize_domain_breakdown()
+    }
+
+    class registry_json {
+        +content: list[ContentItem]
+        +pipeline_stages: list
+        +mcp_integrations: list
+        +last_run: datetime
+    }
+
+    class generator_py {
+        +load_registry()
+        +validate_schema()
+        +generate_thumbnails()
+        +render_templates()
+        +write_output()
+    }
+
+    class visuals_py {
+        +generate_fractal()
+        +source_bar_svg()
+        +bloom_chart_svg()
+        +radar_svg()
+        +donut_svg()
+        +topic_overlays()
+    }
+
+    class templates_j2 {
+        +layout.j2
+        +research.j2
+        +learn.j2
+        +learn_index.j2
+        +knowledge.j2
+        +knowledge_index.j2
+        +tags.j2
+        +search.j2
+    }
+
+    config_py --> generator_py : provides config
+    generator_py ..> config_py : uses SQI thresholds
+    schemas_py --> generator_py : validates
+    registry_json --> schemas_py : validated by
+    registry_json --> generator_py : read by
+    generator_py ..> schemas_py : needs schema
+    generator_py --> visuals_py : invokes
+    visuals_py ..> generator_py : breaks if missing
+    generator_py --> templates_j2 : renders
+    templates_j2 ..> generator_py : template not found
+    templates_j2 --> config_py : uses config
+    visuals_py --> registry_json : reads content
+    registry_json ..> visuals_py : missing content = empty SVGs
+```</div></div></div>
+</article>
+<article class="diagram-card" style="max-width:900px;margin:3rem auto 2rem;padding:2rem 1.5rem; background:var(--color-bg); border:1px solid var(--color-border); border-radius:var(--size-radius)">
+  <h3 style="margin-top:0">6. Pillar Taxonomy — Content Classification</h3>
+  <div class="mermaid-container"><div class="mermaid-wrapper" style="position:relative;overflow:hidden"><div class="mermaid-svg" style="width:100%;height:auto">
+```mermaid
+mindmap
+  root((AcaciaFund))
+    AML
+      Regulation
+      Compliance
+      Crypto
+      Fraud
+      Banking
+      Sanctions
+      Geopolitical Risk
+    Markets
+      Stock Market
+      Semiconductor
+      AI
+      ML
+      Startups
+      Manufacturing
+      Behavioral Finance
+    Science
+      Genomics
+      Biotechnology
+      Quantum Computing
+      Neuroscience
+      Climate Science
+      Space
+    Cross-Cutting
+      Data Engineering
+      DataOps
+      Open Source
+      Research
+      Data Ethics
+```</div></div></div>
+</article>
+<article class="diagram-card" style="max-width:900px;margin:3rem auto 2rem;padding:2rem 1.5rem; background:var(--color-bg); border:1px solid var(--color-border); border-radius:var(--size-radius)">
+  <h3 style="margin-top:0">7. Pipeline Quality Gates & Observability</h3>
+  <div class="mermaid-container"><div class="mermaid-wrapper" style="position:relative;overflow:hidden"><div class="mermaid-svg" style="width:100%;height:auto">
+```mermaid
+flowchart TD
+    subgraph Gates["Quality Gates"]
+        SCHEMA[Schema Validation
+          schemas.py Pydantic]
+        SQI_CK[SQI Threshold > 0.65
+          configurable in config.py]
+        DOMAIN_CK[Domain percent capped at 100]
+        FLAG_CK[Quality Flags at build time]
+    end
+
+    subgraph Observability["Observability"]
+        COUNTS[Content Counts]
+        PILLAR_COV[Pillar Coverage]
+        SQI_DIST[SQI Distribution]
+        BLM_DIST[Bloom Distribution]
+        TAG_COV[Tag Coverage]
+    end
+
+    subgraph CI["CI/CD Cloudflare Pages"]
+        PUSH[git push main] --> FETCH[Checkout repo]
+        FETCH --> INSTALL[Setup Python 3.13]
+        INSTALL --> GEN[python3 generator.py]
+        GEN --> DEPLOY[Deploy to CDN]
+        DEPLOY --> CACHE[Cache warm
+          Infinite TTL]
+    end
+
+    GEN --> SCHEMA
+    SCHEMA --> SQI_CK
+    SQI_CK --> DOMAIN_CK
+    DOMAIN_CK --> FLAG_CK
+
+    GEN -.-> COUNTS
+    GEN -.-> SQI_DIST
+    GEN -.-> PILLAR_COV
+    GEN -.-> BLM_DIST
+```</div></div></div>
+</article>
+<article class="diagram-card" style="max-width:900px;margin:3rem auto 2rem;padding:2rem 1.5rem; background:var(--color-bg); border:1px solid var(--color-border); border-radius:var(--size-radius)">
+  <h3 style="margin-top:0">8. RSS Ingestion Pipeline</h3>
+  <div class="mermaid-container"><div class="mermaid-wrapper" style="position:relative;overflow:hidden"><div class="mermaid-svg" style="width:100%;height:auto">
+```mermaid
+flowchart LR
+    subgraph Sources["📡 RSS Feeds"]
+        TC[TechCrunch
+          news.tech]
+        WIRED[Wired
+          news.tech]
+        ARS[ArsTechnica
+          news.tech]
+        GH[GitHub Blog
+          engineering.blog]
+        CF[Cloudflare Blog
+          engineering.blog]
+        KB[Krebs on Security
+          news.security]
+        BL[Blloomberg Markets
+          news.finance]
+        AI[Import AI
+          news.ai]
+    end
+
+    subgraph Fetch["⚙️ RSSFetcher"]
+        HTTP[_cached_request
+          User-Agent + retry 3x]
+        PARSE[_parse_feed
+          xml.etree]
+        DETECT[Auto-detect
+          RSS vs Atom]
+        FILTER[_is_recent
+          since_hours filter]
+    end
+
+    subgraph Quality["🔬 Quality Layer"]
+        HEALTH[HealthRecord
+          latency / item_count / error]
+        DLQ[Dead Letter Queue
+          write_dlq on failure]
+        CACHE[cache_ttl_hours
+          avoid re-fetch]
+    end
+
+    subgraph Pipeline["🏗️ ingest.py"]
+        REGISTRY[registry.enabled
+          fetch all]
+        CLASSIFY[classify_story
+          pillar assignment]
+        DIST[distribute to
+          pillar_stories dict]
+        MERGE[merge with HN / arXiv / PubMed]
+    end
+
+    subgraph Output["📄 Generated Pages"]
+        BUILD[build.py
+          Jinja2 render]
+        PAGES[236 static pages]
+    end
+
+    TC --> HTTP
+    WIRED --> HTTP
+    ARS --> HTTP
+    GH --> HTTP
+    CF --> HTTP
+    KB --> HTTP
+    BL --> HTTP
+    AI --> HTTP
+    HTTP --> PARSE
+    PARSE --> DETECT
+    DETECT --> FILTER
+    FILTER --> HEALTH
+    FILTER --> DLQ
+    FILTER --> CACHE
+    HEALTH --> REGISTRY
+    CACHE --> REGISTRY
+    REGISTRY --> CLASSIFY
+    CLASSIFY --> DIST
+    DIST --> MERGE
+    MERGE --> BUILD
+    BUILD --> PAGES
+
+    style TC fill:#1e293b,stroke:#64748b
+    style WIRED fill:#1e293b,stroke:#64748b
+    style ARS fill:#1e293b,stroke:#64748b
+    style GH fill:#1e293b,stroke:#64748b
+    style CF fill:#1e293b,stroke:#64748b
+    style KB fill:#1e293b,stroke:#64748b
+    style BL fill:#1e293b,stroke:#64748b
+    style AI fill:#1e293b,stroke:#64748b
+    style HTTP fill:#1e3a5f,stroke:#d97706
+    style REGISTRY fill:#0f172a,stroke:#22c55e
+    style DLQ fill:#7f1d1d,stroke:#ef4444
+    style BUILD fill:#166534,stroke:#22c55e
+```</div></div></div>
+</article>
+<article class="diagram-card" style="max-width:900px;margin:3rem auto 2rem;padding:2rem 1.5rem; background:var(--color-bg); border:1px solid var(--color-border); border-radius:var(--size-radius)">
+  <h3 style="margin-top:0">9. Search Index Architecture</h3>
+  <div class="mermaid-container"><div class="mermaid-wrapper" style="position:relative;overflow:hidden"><div class="mermaid-svg" style="width:100%;height:auto">
+```mermaid
+flowchart LR
+    REG[registry.json] --> GEN[generator.py]
+    GEN --> INDEX[search-index-json]
+    INDEX --> PAGE[Search Page]
+    QUERY[User Input] --> FILTER[JavaScript Filter]
+    PAGE --> FILTER
+    FILTER --> RESULTS[Filtered Results]
+```</div></div></div>
+</article>
+<article class="diagram-card" style="max-width:900px;margin:3rem auto 2rem;padding:2rem 1.5rem; background:var(--color-bg); border:1px solid var(--color-border); border-radius:var(--size-radius)">
+  <h3 style="margin-top:0">10. Source Framework — Registry, Fetchers & Health</h3>
+  <div class="mermaid-container"><div class="mermaid-wrapper" style="position:relative;overflow:hidden"><div class="mermaid-svg" style="width:100%;height:auto">
+```mermaid
+flowchart TD
+    subgraph Config["📋 Configuration"]
+        TOML[etc/sources.toml
+          14 sources configured]
+    end
+
+    subgraph Registry["🏛️ Source Registry"]
+        REG[SourceRegistry
+          singleton]
+        LOAD[tomllib.load
+          lazy init]
+        CACHE[cached per session]
+    end
+
+    subgraph Base["🔧 BaseFetcher ABC"]
+        ABC[BaseFetcher]
+        SC[SourceConfig
+          TOML -> dataclass]
+        FR[FetchResult]
+        HR[HealthRecord]
+    end
+
+    subgraph Fetchers["📡 Concrete Fetchers"]
+        HN[HNFetcher
+          wraps fetch_hn_stories]
+        ARXIV[ArxivFetcher
+          wraps fetch_arxiv]
+        PUBMED[PubMedFetcher
+          wraps fetch_pubmed]
+        SS[SemanticScholar
+          wraps fetch_semantic_scholar]
+        RSS[RSSFetcher
+          xml.etree / Atom + RSS]
+    end
+
+    subgraph Observability["📊 Observability"]
+        HEALTH[source-health.json
+          last 100 records/source]
+        DLQ[Dead Letter Queue
+          failed fetches persisted]
+    end
+
+    subgraph Admin["🖥️ Admin Panel"]
+        SOURCES_PAGE[/admin/sources
+          health dashboard]
+        API_REFRESH[/admin/api/{name}/refresh
+          POST — live fetch]
+        API_HEALTH[/admin/api/{name}/health
+          GET — history]
+    end
+
+    TOML --> REG
+    REG --> LOAD
+    LOAD --> ABC
+    ABC --> SC
+    ABC --> HN
+    ABC --> ARXIV
+    ABC --> PUBMED
+    ABC --> SS
+    ABC --> RSS
+    HN --> DLQ
+    ARXIV --> DLQ
+    PUBMED --> DLQ
+    SS --> DLQ
+    RSS --> DLQ
+    HN --> HEALTH
+    ARXIV --> HEALTH
+    PUBMED --> HEALTH
+    SS --> HEALTH
+    RSS --> HEALTH
+    HEALTH --> SOURCES_PAGE
+    DLQ --> API_REFRESH
+    HEALTH --> API_HEALTH
+    REG --> CACHE
+
+    style TOML fill:#0f172a,stroke:#d97706
+    style REG fill:#1e3a5f,stroke:#22c55e
+    style ABC fill:#1e293b,stroke:#64748b
+    style HEALTH fill:#166534,stroke:#22c55e
+    style DLQ fill:#7f1d1d,stroke:#ef4444
+    style SOURCES_PAGE fill:#1e3a5f,stroke:#3b82f6
+```</div></div></div>
+</article>
+<article class="diagram-card" style="max-width:900px;margin:3rem auto 2rem;padding:2rem 1.5rem; background:var(--color-bg); border:1px solid var(--color-border); border-radius:var(--size-radius)">
+  <h3 style="margin-top:0">11. Source Ingestion & Content Flow</h3>
+  <div class="mermaid-container"><div class="mermaid-wrapper" style="position:relative;overflow:hidden"><div class="mermaid-svg" style="width:100%;height:auto">
+```mermaid
+flowchart LR
+    subgraph Sources["📡 External Sources"]
+        HN[HackerNews API]
+        ARXIV[arXiv API]
+        PUBMED[PubMed]
+    end
+
+    subgraph Curation["✍️ Curation Layer"]
+        MANUAL[Manual Curation]
+        SEED[seed_articles.py]
+        NLP[NLP Processing
+          Entities / Summaries]
+    end
+
+    subgraph Enrichment["🔬 Enrichment Pipeline"]
+        BLOOM[Bloom Taxonomy
+          Classification]
+        SQI[Signal Quality Index
+          0.0 — 1.0]
+        DIV[Source Diversity
+          Score]
+        DOMAIN[Domain Breakdown]
+    end
+
+    subgraph Registry["💾 Data Catalog"]
+        REG[registry.json]
+    end
+
+    HN --> SEED
+    ARXIV --> SEED
+    PUBMED --> SEED
+    SEED --> REG
+    MANUAL --> REG
+    REG --> NLP
+    NLP --> BLOOM
+    NLP --> SQI
+    NLP --> DIV
+    REG --> DOMAIN
+
+    style HN fill:#1e3a5f,stroke:#d97706,color:#fff
+    style ARXIV fill:#1e293b,stroke:#64748b,color:#fff
+    style PUBMED fill:#1e293b,stroke:#64748b,color:#fff
+    style REG fill:#0f172a,stroke:#22c55e,color:#fff
+```</div></div></div>
+</article>
+<article class="diagram-card" style="max-width:900px;margin:3rem auto 2rem;padding:2rem 1.5rem; background:var(--color-bg); border:1px solid var(--color-border); border-radius:var(--size-radius)">
+  <h3 style="margin-top:0">12. AcaciaFund System Architecture</h3>
+  <div class="mermaid-container"><div class="mermaid-wrapper" style="position:relative;overflow:hidden"><div class="mermaid-svg" style="width:100%;height:auto">
+```mermaid
+flowchart TD
+    subgraph Users["👤 Users"]
+        U[Browser / Visitor]
+    end
+
+    subgraph CDN["🌐 Cloudflare"]
+        CF[Cloudflare CDN]
+    end
+
+    subgraph Pipeline["⚙️ Build Pipeline"]
+        GIT[GitHub Repository
+          main branch] --> CFW[Cloudflare Pages]
+        CFW --> BUILD[python3 generator.py]
+        BUILD --> REG[registry.json
+          Content Catalog]
+        BUILD --> SCHEMA[schemas.py
+          Validation]
+        BUILD --> VIZ[core/visuals.py
+          SVG Generation]
+        BUILD --> TMPL[templates/*.j2
+          Jinja2 Rendering]
+        BUILD --> DIST[dist/ directory
+          Static HTML]
+    end
+
+    subgraph Output["📄 Generated Output"]
+        DIST --> PAGES[236 Static Pages]
+        PAGES --> RESEARCH[33 Research Articles]
+        PAGES --> LEARN[16 Learn Items]
+        PAGES --> KNOWLEDGE[11 Knowledge Pages]
+        PAGES --> TAGS[166 Tag Archives]
+        PAGES --> SEARCH[Search Index]
+        PAGES --> FEED[RSS Feed]
+    end
+
+    U --> CF
+    CFW --> CF
+    GIT --> CFW
+
+    style U fill:#1e3a5f,stroke:#d97706
+    style GIT fill:#1e293b,stroke:#64748b
+    style BUILD fill:#0f172a,stroke:#d97706
+    style DIST fill:#166534,stroke:#22c55e
+```</div></div></div>
+</article>
+<article class="diagram-card" style="max-width:900px;margin:3rem auto 2rem;padding:2rem 1.5rem; background:var(--color-bg); border:1px solid var(--color-border); border-radius:var(--size-radius)">
+  <h3 style="margin-top:0">13. User Journey — Site Navigation</h3>
+  <div class="mermaid-container"><div class="mermaid-wrapper" style="position:relative;overflow:hidden"><div class="mermaid-svg" style="width:100%;height:auto">
+```mermaid
+flowchart TD
+    HOME[🏠 Home] --> RESEARCH[📊 Research Index]
+    HOME --> LEARN[🎓 Learn Hub]
+    HOME --> KNOWLEDGE[📚 Knowledge Base]
+    HOME --> SEARCH[🔍 Search]
+
+    RESEARCH --> ARTICLE[📄 Research Article]
+    ARTICLE --> FLASHCARDS[🃏 Flashcards]
+    ARTICLE --> QUIZ[❓ Quiz Questions]
+
+    LEARN --> LESSON[📖 Lesson]
+    LESSON --> FLASHCARDS
+    LESSON --> QUIZ
+    LESSON --> MARK[✅ Mark Complete]
+    LESSON --> FOCUS[🎯 Focus Mode]
+
+    KNOWLEDGE --> KPAGE[📝 Knowledge Page]
+    KPAGE --> FLASHCARDS
+
+    HOME --> PILLAR_AML[🛡️ AML Pillar]
+    HOME --> PILLAR_MARKETS[📈 Markets Pillar]
+    HOME --> PILLAR_SCIENCE[🧬 Science Pillar]
+
+    PILLAR_AML --> ARTICLE
+    PILLAR_MARKETS --> ARTICLE
+    PILLAR_SCIENCE --> ARTICLE
+
+    style HOME fill:#1e3a5f,stroke:#d97706,color:#fff
+    style RESEARCH fill:#1e293b,stroke:#64748b,color:#fff
+    style LEARN fill:#1e293b,stroke:#22c55e,color:#fff
+    style KNOWLEDGE fill:#1e293b,stroke:#a855f7,color:#fff
+    style PILLAR_AML fill:#1e3a5f,stroke:#d97706,color:#fff
+    style PILLAR_MARKETS fill:#166534,stroke:#22c55e,color:#fff
+    style PILLAR_SCIENCE fill:#5b21b6,stroke:#a855f7,color:#fff
+```</div></div></div>
+</article>
