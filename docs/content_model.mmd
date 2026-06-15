@@ -45,6 +45,6 @@ classDiagram
     ContentItem *-- BloomQuestion : has
     ContentItem *-- Flashcard : has
 
-    class BloomQuestion ..|> Enum : bloom_level ∈ {remember, understand, apply, analyze, evaluate, create}
-    class BloomQuestion ..|> Enum : type ∈ {mc, open-ended}
+    class BloomQuestion ..|> Enum : bloom_level in {remember, understand, apply, analyze, evaluate, create}
+    class BloomQuestion ..|> Enum : type in {mc, open-ended}
 ```
