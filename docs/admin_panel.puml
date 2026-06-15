@@ -1,0 +1,79 @@
+@startuml
+subgraph Flask
+        node APP: "Flask(__name__)"
+        node STATIC: "/static/admin.css /static/admin.js"
+    end
+
+    subgraph Pages
+        node DASH: "/admin/ — Dashboard"
+        node GALLERY: "/admin/gallery — Image Gallery"
+        node ARTICLES: "/admin/articles — Article List"
+        node ARTICLE: "/admin/articles/{slug} — Detail"
+        node IMAGE: "/admin/images/{id} — Image Detail"
+        node MANIFEST: "/admin/manifest — Run Manifest"
+        node PIPELINE: "/admin/pipeline — Pipeline Runs"
+        node QUALITY: "/admin/quality — Quality Metrics"
+        node COVERAGE: "/admin/coverage — Coverage Heatmap"
+        node SOURCES: "/admin/sources — Source Health"
+        node CURATED: "/admin/curated-test — Curated Tester"
+    end
+
+    subgraph API
+        node API_REFRESH: "POST /admin/api/articles/{slug}/refresh"
+        node API_CURATED: "POST /admin/api/curated/score"
+        node API_SOURCES: "GET /admin/api/sources"
+        node API_SOURCE_HEALTH: "GET /admin/api/sources/{name}/health"
+        node API_SOURCE_REFRESH: "POST /admin/api/sources/{name}/refresh"
+        node API_COVERAGE: "GET /admin/api/coverage-summary"
+        node API_MUTATE: "POST /admin/api/mutate — image picker"
+    end
+
+    subgraph Templates
+        node BASE: "templates/admin/base.html sidebar + nav"
+        node DASH_T: "admin/dashboard.html"
+        node GALLERY_T: "admin/gallery.html"
+        node ARTICLE_T: "admin/article_list.html"
+        node DETAIL_T: "admin/article_detail.html"
+        node IMAGE_T: "admin/image_detail.html"
+        node MANIFEST_T: "admin/manifest.html"
+        node PIPELINE_T: "admin/pipeline.html"
+        node QUALITY_T: "admin/quality.html"
+        node COVERAGE_T: "admin/coverage.html"
+        node SOURCES_T: "admin/sources.html"
+        node CURATED_T: "admin/curated_tester.html"
+    end
+
+    subgraph Data
+        node REGISTRY: "registry.json content catalog"
+        node IMAGES: "static/images/generated/ ~450 images"
+        node PIPELINE_RUNS: "registry/ image-pipeline-runs.json"
+        node DLQ_DATA: "registry/ dlq/ — Dead Letter Queue"
+        node SOURCE_HEALTH: "registry/ source-health.json"
+    end
+
+    APP --> Pages
+    APP --> API
+    APP --> STATIC
+    Pages --> Templates
+    BASE --> DASH_T
+    BASE --> GALLERY_T
+    BASE --> ARTICLE_T
+    BASE --> DETAIL_T
+    BASE --> IMAGE_T
+    BASE --> MANIFEST_T
+    BASE --> PIPELINE_T
+    BASE --> QUALITY_T
+    BASE --> COVERAGE_T
+    BASE --> SOURCES_T
+    BASE --> CURATED_T
+    API --> REGISTRY
+    API --> IMAGES
+    API --> PIPELINE_RUNS
+    API --> DLQ_DATA
+    API --> SOURCE_HEALTH
+
+    style APP fill:#1e3a5f,stroke:#d97706
+    style BASE fill:#1e293b,stroke:#64748b
+    style REGISTRY fill:#0f172a,stroke:#22c55e
+    style SOURCE_HEALTH fill:#166534,stroke:#22c55e
+@enduml

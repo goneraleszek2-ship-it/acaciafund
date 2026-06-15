@@ -1,0 +1,72 @@
+@startuml
+subgraph Sources
+        node TC: "TechCrunch — news.tech"
+        node WIRED: "Wired — news.tech"
+        node ARS: "ArsTechnica — news.tech"
+        node GH: "GitHub Blog — engineering.blog"
+        node CF: "Cloudflare Blog — engineering.blog"
+        node KB: "Krebs on Security — news.security"
+        node BL: "Bloomberg Markets — news.finance"
+        node AI: "Import AI — news.ai"
+    end
+
+    subgraph Fetch
+        node HTTP: "_cached_request — User-Agent + retry 3x"
+        node PARSE: "_parse_feed — xml.etree"
+        node DETECT: "Auto-detect — RSS vs Atom"
+        node FILTER: "_is_recent — since_hours filter"
+    end
+
+    subgraph Quality
+        node HEALTH: "HealthRecord — latency / item_count / error"
+        node DLQ: "Dead Letter Queue — write_dlq on failure"
+        node CACHE: "cache_ttl_hours — avoid re-fetch"
+    end
+
+    subgraph Pipeline
+        node REGISTRY: "registry.enabled — fetch all"
+        node CLASSIFY: "classify_story — pillar assignment"
+        node DIST: "distribute to — pillar_stories dict"
+        node MERGE: "merge with HN / arXiv / PubMed"
+    end
+
+    subgraph Output
+        node BUILD: "build.py — Jinja2 render"
+        node PAGES: "236 static pages"
+    end
+
+    TC --> HTTP
+    WIRED --> HTTP
+    ARS --> HTTP
+    GH --> HTTP
+    CF --> HTTP
+    KB --> HTTP
+    BL --> HTTP
+    AI --> HTTP
+    HTTP --> PARSE
+    PARSE --> DETECT
+    DETECT --> FILTER
+    FILTER --> HEALTH
+    FILTER --> DLQ
+    FILTER --> CACHE
+    HEALTH --> REGISTRY
+    CACHE --> REGISTRY
+    REGISTRY --> CLASSIFY
+    CLASSIFY --> DIST
+    DIST --> MERGE
+    MERGE --> BUILD
+    BUILD --> PAGES
+
+    style TC fill:#1e293b,stroke:#64748b
+    style WIRED fill:#1e293b,stroke:#64748b
+    style ARS fill:#1e293b,stroke:#64748b
+    style GH fill:#1e293b,stroke:#64748b
+    style CF fill:#1e293b,stroke:#64748b
+    style KB fill:#1e293b,stroke:#64748b
+    style BL fill:#1e293b,stroke:#64748b
+    style AI fill:#1e293b,stroke:#64748b
+    style HTTP fill:#1e3a5f,stroke:#d97706
+    style REGISTRY fill:#0f172a,stroke:#22c55e
+    style DLQ fill:#7f1d1d,stroke:#ef4444
+    style BUILD fill:#166534,stroke:#22c55e
+@enduml

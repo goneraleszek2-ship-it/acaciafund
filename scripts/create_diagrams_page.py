@@ -1,4 +1,5 @@
-"""Generate the System Diagrams knowledge page with Mermaid + ASCII representations."""
+#!/usr/bin/env python3
+"""Generate the System Diagrams knowledge page with PlantUML."""
 import json
 import re
 import os
@@ -24,34 +25,26 @@ def mmd_to_ascii(mmd_content):
     lines = mmd_content.strip().split('\n')
     nodes = {}
     edges = []
-    subgraphs = []
-    current_subgraph = None
 
     for line in lines:
         line = line.strip()
         if not line or line.startswith('title:') or line.startswith('flowchart') or line.startswith('---'):
             continue
         if line.startswith('subgraph '):
-            name = line.split('"')[1] if '"' in line else line.split('subgraph ')[1].strip()
-            current_subgraph = name
             continue
         if line.startswith('end'):
-            current_subgraph = None
             continue
         if line.startswith('style'):
             continue
 
-        # Match node definitions like U[Browser / Visitor]
         node_match = re.match(r'(\w+)\[(.+?)\]', line)
         if node_match:
             nodes[node_match.group(1)] = node_match.group(2)
 
-        # Match edges like U --> CF
         edge_match = re.match(r'(\w+)\s*-+>\s*(\w+)', line)
         if edge_match:
             edges.append((edge_match.group(1), edge_match.group(2)))
 
-    # Build ASCII
     ascii = []
     ascii.append('┌──────────────────────────────────────┐')
     ascii.append('│          SYSTEM DIAGRAM              │')
@@ -69,58 +62,59 @@ def mmd_to_ascii(mmd_content):
     return '\n'.join(ascii)
 
 
-# Read the .mmd files
+# Read the .puml files
 docs_dir = os.path.join(os.path.dirname(__file__), '..', 'docs')
-mmd_files = sorted([f for f in os.listdir(docs_dir) if f.endswith('.mmd')])
+puml_files = sorted([f for f in os.listdir(docs_dir) if f.endswith('.puml')])
 
 page_sections = []
 page_sections.append("""<h2>System Diagrams</h2>
-<p>This page provides comprehensive architectural, pipeline, and flow diagrams for the AcaciaFund DataOps platform. Each diagram is available as a Mermaid definition (rendered below with JavaScript) and as a static ASCII representation (always visible). The source <code>.mmd</code> files are available in the <a href="https://github.com/goneraleszek2-ship-it/acaciafund/tree/main/docs">GitHub docs/ directory</a>.</p>
+<p>This page provides comprehensive architectural, pipeline, and flow diagrams for the AcaciaFund DataOps platform. Each diagram is rendered using PlantUML with a simple, clear visual style.</p>
 
-<p>New for June 2026: diagrams for the <strong>Source Framework</strong> (registry, 5 fetcher types, health tracking), <strong>Admin Panel</strong> (Flask routes, API, templates), and <strong>RSS Ingestion Pipeline</strong> (8 feed sources → classification → build).</p>
+<p>New for June 2026: diagrams for the <strong>Source Framework</strong> (registry, 5 fetcher types, health tracking), <strong>Admin Panel</strong> (Flask routes, API, templates), and <strong>RSS Ingestion Pipeline</strong> (8 feed sources → classification → build).</p>""")
 
-<p>Mermaid diagrams render client-side when JavaScript is enabled. The page is fully readable without JS via the ASCII fallback representations.</p>""")
-
-for idx, mmd_file in enumerate(mmd_files, 1):
-    filepath = os.path.join(docs_dir, mmd_file)
+for idx, puml_file in enumerate(puml_files, 1):
+    filepath = os.path.join(docs_dir, puml_file)
     with open(filepath) as f:
         content = f.read()
 
-    title_match = re.search(r'title:\s*(.+?)$', content, re.MULTILINE)
-    title = title_match.group(1).strip() if title_match else mmd_file.replace('.mmd', '').replace('_', ' ').title()
+    # Extract title from PlantUML file
+    title_match = re.search(r'^title:\s*(.+?)$', content, re.MULTILINE)
+    title = title_match.group(1).strip() if title_match else puml_file.replace('.puml', '').replace('_', ' ').title()
 
-    # Remove the title line and frontmatter for the Mermaid block
-    mermaid_content = content
-    mermaid_content = re.sub(r'^title:.*$', '', mermaid_content, flags=re.MULTILINE)
-    mermaid_content = re.sub(r'^---.*$', '', mermaid_content, flags=re.MULTILINE)
-    mermaid_content = mermaid_content.strip()
+    # Remove PlantUML markers
+    puml_content = content
+    puml_content = re.sub(r'^@startuml', '', puml_content, flags=re.MULTILINE)
+    puml_content = re.sub(r'^@enduml', '', puml_content, flags=re.MULTILINE)
+    puml_content = re.sub(r'^title:.*$', '', puml_content, flags=re.MULTILINE)
+    puml_content = puml_content.strip()
 
-    # Generate ASCII representation
-    ascii_art = mmd_to_ascii(content)
+    # Generate ASCII representation from original .mmd file
+    mmd_filepath = os.path.join(docs_dir, puml_file.replace('.puml', '.mmd'))
+    if os.path.exists(mmd_filepath):
+        with open(mmd_filepath) as f:
+            mmd_content = f.read()
+        ascii_art = mmd_to_ascii(mmd_content)
+    else:
+        ascii_art = mmd_to_ascii(content)
 
-    slug_name = mmd_file.replace('.mmd', '')
+    slug_name = puml_file.replace('.puml', '')
     section_id = f'diagram-{slug_name}'
 
     section = f"""
 <h2 id="{section_id}" style="margin-top:2rem">{idx}. {title}</h2>
-<p><a href="https://github.com/goneraleszek2-ship-it/acaciafund/blob/main/docs/{mmd_file}" target="_blank" rel="noopener">View source <code>{mmd_file}</code> on GitHub ↗</a></p>
+<p><a href="https://github.com/goneraleszek2-ship-it/acaciafund/blob/main/docs/{puml_file}" target="_blank" rel="noopener">View source <code>{puml_file}</code> on GitHub ↗</a></p>
 
-<div class="mermaid" style="background:var(--color-bg);padding:16px;border-radius:8px;overflow-x:auto">
-{mermaid_content}
-</div>
-
-<pre style="background:var(--color-bg);padding:16px;border-radius:8px;overflow-x:auto;font-size:0.85em;line-height:1.4">
-{ascii_art}
-</pre>"""
+<div class="plantuml" style="background:var(--color-bg);padding:16px;border-radius:8px;overflow-x:auto">
+{puml_content}
+</div>"""
     page_sections.append(section)
 
-# Build the reference table rows from DESCRIPTIONS dict
-# table_rows now contains just the data, not full <tr> tags
+# Build the reference table
 table_rows_data = []
-for mmd_file in mmd_files:
-    slug = mmd_file.replace('.mmd', '')
+for puml_file in puml_files:
+    slug = puml_file.replace('.puml', '')
     info = DESCRIPTIONS.get(slug, (slug.replace('_', ' ').title(), "", ""))
-    table_rows_data.append((mmd_file, info[1], info[2]))
+    table_rows_data.append((puml_file, info[1], info[2]))
 
 table_html = f"""<h2>Diagram Reference</h2>
 <table style="width:100%;border-collapse:collapse;font-size:0.9em">
@@ -134,37 +128,19 @@ table_html = f"""<h2>Diagram Reference</h2>
 
 page_sections.append(table_html)
 
-# Add Mermaid init script
-mermaid_script = """
-<script src="/static/js/mermaid.min.js" defer></script>
+# Add PlantUML init script
+plantuml_script = """
+<script src="/static/js/plantuml/plantuml.min.js" defer></script>
 <script defer>
 document.addEventListener('DOMContentLoaded', function(){
-  if (typeof mermaid !== 'undefined') {
-    mermaid.initialize({
-      startOnLoad: true,
-      theme: 'dark',
-      themeVariables: {
-        background: '#0f172a',
-        primaryColor: '#1e3a5f',
-        secondaryColor: '#2d5a8e',
-        primaryBorderColor: '#d97706',
-        secondaryBorderColor: '#64748b',
-        lineColor: '#64748b',
-        textColor: '#e2e8f0',
-        mainBkg: '#1e293b',
-        nodeBorder: '#475569',
-        clusterBkg: '#0f172a',
-        clusterBorder: '#334155'
-      }
-    });
+  if (typeof plantuml !== 'undefined') {
+    console.log('PlantUML.js loaded successfully');
+  } else {
+    console.error('PlantUML.js failed to load');
   }
 });
-</script>
-<noscript>
-  <p style="color:var(--color-text-muted);font-size:0.9em">Mermaid interactive diagrams require JavaScript. The ASCII representations above provide the same information.</p>
-</noscript>"""
+</script>"""
 
-page_html = '\n'.join(page_sections) + '\n' + mermaid_script
+page_html = '\n'.join(page_sections) + '\n' + plantuml_script
 
-# Output to stdout for use in enrichment
 print(page_html)

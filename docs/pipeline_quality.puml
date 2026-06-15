@@ -1,0 +1,34 @@
+@startuml
+subgraph Gates
+        node SCHEMA: "Schema Validation — schemas.py Pydantic"
+        node ""SQI Threshold > 0.65 — configurable in config.py"" as SQI_CK
+        node DOMAIN_CK: "Domain percent capped at 100"
+        node FLAG_CK: "Quality Flags at build time"
+    end
+
+    subgraph Observability
+        node COUNTS: "Content Counts"
+        node PILLAR_COV: "Pillar Coverage"
+        node SQI_DIST: "SQI Distribution"
+        node BLM_DIST: "Bloom Distribution"
+        node TAG_COV: "Tag Coverage"
+    end
+
+    subgraph CI
+        node PUSH: "git push main" --> FETCH[Checkout repo]
+        FETCH --> INSTALL[Setup Python 3.13]
+        INSTALL --> GEN[python3 generator.py]
+        GEN --> DEPLOY[Deploy to CDN]
+        DEPLOY --> CACHE[Cache warm — Infinite TTL]
+    end
+
+    GEN --> SCHEMA
+    SCHEMA --> SQI_CK
+    SQI_CK --> DOMAIN_CK
+    DOMAIN_CK --> FLAG_CK
+
+    GEN -.-> COUNTS
+    GEN -.-> SQI_DIST
+    GEN -.-> PILLAR_COV
+    GEN -.-> BLM_DIST
+@enduml

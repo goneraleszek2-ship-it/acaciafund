@@ -1,0 +1,18 @@
+@startuml
+node INGEST: "1 Ingestion — HackerNews / arXiv / PubMed" --> VALIDATE[2 Validation — schemas.py Pydantic]
+    VALIDATE --> TRANSFORM[3 Transformation — Entity Extraction / SQI / Bloom]
+    TRANSFORM --> STORE[4 Catalog — registry.json]
+    STORE --> VIZ[5 Visualization — core/visuals.py SVGs]
+    VIZ --> RENDER[6 Rendering — generator.py + J2 Templates]
+    RENDER --> SERVE[7 Serving — Cloudflare Pages CDN]
+    SERVE --> OBSERVE[8 Observability — Build Metrics / Quality Flags]
+
+    style INGEST fill:#1e3a5f,stroke:#d97706,color:#fff
+    style VALIDATE fill:#1e293b,stroke:#64748b,color:#fff
+    style TRANSFORM fill:#1e3a5f,stroke:#d97706,color:#fff
+    style STORE fill:#0f172a,stroke:#22c55e,color:#fff
+    style VIZ fill:#1e293b,stroke:#a855f7,color:#fff
+    style RENDER fill:#1e3a5f,stroke:#d97706,color:#fff
+    style SERVE fill:#166534,stroke:#22c55e,color:#fff
+    style OBSERVE fill:#1e293b,stroke:#64748b,color:#fff
+@enduml

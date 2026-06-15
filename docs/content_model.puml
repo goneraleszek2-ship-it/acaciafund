@@ -1,0 +1,47 @@
+@startuml
+class ContentItem {
+        +slug: str
+        +language: str
+        +title: str
+        +description: str
+        +body_html: str
+        +content_type: str
+        +pillar: str
+        +knowledge_category: str
+        +difficulty: str
+        +tags: list[str]
+        +created_at: datetime
+        +date_str: str
+        +bloom_questions: list[BloomQuestion]
+        +flashcards: list[Flashcard]
+        +signals: dict
+        +source_breakdown: dict
+    }
+
+    class BloomQuestion {
+        +bloom_level: str
+        +type: str
+        +question: str
+        +options: list[str]
+        +correct: str
+    }
+
+    class Flashcard {
+        +term: str
+        +definition: str
+    }
+
+    class RegistryData {
+        +last_run: datetime
+        +content: list[ContentItem]
+        +pipeline_stages: list
+        +knowledge_categories: dict
+    }
+
+    RegistryData *-- ContentItem : contains
+    ContentItem *-- BloomQuestion : has
+    ContentItem *-- Flashcard : has
+
+    class BloomQuestion ..|> Enum : bloom_level in {remember, understand, apply, analyze, evaluate, create}
+    class BloomQuestion ..|> Enum : type in {mc, open-ended}
+@enduml

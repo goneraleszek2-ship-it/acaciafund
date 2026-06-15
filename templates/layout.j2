@@ -147,22 +147,17 @@
   <link rel="preload" href="/static/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/static/fonts/Inter-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/static/fonts/Inter-Bold.woff2" as="font" type="font/woff2" crossorigin>
-  <script src="/static/js/mermaid.min.js?v={{ build_hash }}" defer></script>
+  <script src="/static/js/plantuml/plantuml.min.js" defer></script>
   <script>
-    // Ensure mermaid runs after DOMContentLoaded so diagrams exist
-    document.addEventListener('DOMContentLoaded', function mermaidInitAfterReady() {
-      if (typeof window === 'undefined') return;
-      var m = window.mermaid;
-      if (m) {
-        try {
-          window.mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
-        } catch (e) {
-          console.error('Mermaid initialize() failed: ' + (e && e.message || String(e)));
-        }
-      } else {
-        console.error('Mermaid.js UMD bundle did not assign window.mermaid. Check /static/js/mermaid.min.js.');
+    // PlantUML renderer - auto-converts .plantuml divs to SVG
+    document.addEventListener('DOMContentLoaded', function plantumlInit() {
+      if (typeof plantuml === 'undefined') {
+        console.error('PlantUML.js failed to load. Check /static/js/plantuml/plantuml.min.js.');
+        return;
       }
-    }, { once: true });
+      // PlantUML.js auto-renders all .plantuml elements
+      console.log('PlantUML.js loaded successfully');
+    });
   </script>
   {%- if plausible_domain %}
   <script defer data-domain="{{ plausible_domain }}" src="https://plausible.io/js/script.js"></script>

@@ -1,0 +1,8 @@
+@startuml
+node REG: "registry.json" --> GEN[generator.py]
+    GEN --> INDEX[search-index-json]
+    INDEX --> PAGE[Search Page]
+    node QUERY: "User Input" --> FILTER[JavaScript Filter]
+    PAGE --> FILTER
+    FILTER --> RESULTS[Filtered Results]
+@enduml
