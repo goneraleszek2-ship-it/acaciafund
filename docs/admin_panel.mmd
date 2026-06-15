@@ -1,36 +1,36 @@
-title: Admin Panel — Routes, API & Templates
+title: Admin Panel - Routes, API & Templates
 
 flowchart TD
-    subgraph Flask["Flask App (app/admin.py)"]
+    subgraph Flask ["Flask App (app/admin.py)"]
         APP[Flask(__name__)]
         STATIC[/static/admin.css /static/admin.js]
     end
 
-    subgraph Pages["Page Routes"]
-        DASH[/admin/ — Dashboard]
-        GALLERY[/admin/gallery — Image Gallery]
-        ARTICLES[/admin/articles — Article List]
-        ARTICLE[/admin/articles/{slug} — Detail]
-        IMAGE[/admin/images/{id} — Image Detail]
-        MANIFEST[/admin/manifest — Run Manifest]
-        PIPELINE[/admin/pipeline — Pipeline Runs]
-        QUALITY[/admin/quality — Quality Metrics]
-        COVERAGE[/admin/coverage — Coverage Heatmap]
-        SOURCES[/admin/sources — Source Health]
-        CURATED[/admin/curated-test — Curated Tester]
+    subgraph Pages ["Page Routes"]
+        DASH[/admin/ - Dashboard]
+        GALLERY[/admin/gallery - Image Gallery]
+        ARTICLES[/admin/articles - Article List]
+        ARTICLE[/admin/articles/{slug} - Detail]
+        IMAGE[/admin/images/{id} - Image Detail]
+        MANIFEST[/admin/manifest - Run Manifest]
+        PIPELINE[/admin/pipeline - Pipeline Runs]
+        QUALITY[/admin/quality - Quality Metrics]
+        COVERAGE[/admin/coverage - Coverage Heatmap]
+        SOURCES[/admin/sources - Source Health]
+        CURATED[/admin/curated-test - Curated Tester]
     end
 
-    subgraph API["API Endpoints"]
+    subgraph API ["API Endpoints"]
         API_REFRESH[POST /admin/api/articles/{slug}/refresh]
         API_CURATED[POST /admin/api/curated/score]
         API_SOURCES[GET /admin/api/sources]
         API_SOURCE_HEALTH[GET /admin/api/sources/{name}/health]
         API_SOURCE_REFRESH[POST /admin/api/sources/{name}/refresh]
         API_COVERAGE[GET /admin/api/coverage-summary]
-        API_MUTATE[POST /admin/api/mutate — image picker]
+        API_MUTATE[POST /admin/api/mutate - image picker]
     end
 
-    subgraph Templates["Jinja2 Templates"]
+    subgraph Templates ["Jinja2 Templates"]
         BASE[templates/admin/base.html sidebar + nav]
         DASH_T[admin/dashboard.html]
         GALLERY_T[admin/gallery.html]
@@ -45,11 +45,11 @@ flowchart TD
         CURATED_T[admin/curated_tester.html]
     end
 
-    subgraph Data["Data Sources"]
+    subgraph Data ["Data Sources"]
         REGISTRY[registry.json content catalog]
         IMAGES[static/images/generated/ ~450 images]
         PIPELINE_RUNS[registry/ image-pipeline-runs.json]
-        DLQ_DATA[registry/ dlq/ — Dead Letter Queue]
+        DLQ_DATA[registry/ dlq/ - Dead Letter Queue]
         SOURCE_HEALTH[registry/ source-health.json]
     end
 

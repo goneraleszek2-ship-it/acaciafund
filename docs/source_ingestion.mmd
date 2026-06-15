@@ -1,26 +1,26 @@
 title: Source Ingestion & Content Flow
 
 flowchart LR
-    subgraph Sources["External Sources"]
+    subgraph Sources ["External Sources"]
         HN[HackerNews API]
         ARXIV[arXiv API]
         PUBMED[PubMed]
     end
 
-    subgraph Curation["Curation Layer"]
+    subgraph Curation ["Curation Layer"]
         MANUAL[Manual Curation]
         SEED[seed_articles.py]
-        NLP[NLP Processing — Entities / Summaries]
+        NLP[NLP Processing - Entities / Summaries]
     end
 
-    subgraph Enrichment["Enrichment Pipeline"]
-        BLOOM[Bloom Taxonomy — Classification]
-        SQI[Signal Quality Index — 0.0 — 1.0]
-        DIV[Source Diversity — Score]
+    subgraph Enrichment ["Enrichment Pipeline"]
+        BLOOM[Bloom Taxonomy - Classification]
+        SQI[Signal Quality Index - 0.0 - 1.0]
+        DIV[Source Diversity - Score]
         DOMAIN[Domain Breakdown]
     end
 
-    subgraph Registry["Data Catalog"]
+    subgraph Registry ["Data Catalog"]
         REG[registry.json]
     end
 

@@ -1,14 +1,14 @@
 title: Pipeline Quality Gates & Observability
 
 flowchart TD
-    subgraph Gates["Quality Gates"]
-        SCHEMA[Schema Validation — schemas.py Pydantic]
-        SQI_CK["SQI Threshold > 0.65 — configurable in config.py"]
+    subgraph Gates ["Quality Gates"]
+        SCHEMA[Schema Validation - schemas.py Pydantic]
+        SQI_CK["SQI Threshold > 0.65 - configurable in config.py"]
         DOMAIN_CK[Domain percent capped at 100]
         FLAG_CK[Quality Flags at build time]
     end
 
-    subgraph Observability["Observability"]
+    subgraph Observability ["Observability"]
         COUNTS[Content Counts]
         PILLAR_COV[Pillar Coverage]
         SQI_DIST[SQI Distribution]
@@ -16,12 +16,12 @@ flowchart TD
         TAG_COV[Tag Coverage]
     end
 
-    subgraph CI["CI/CD Cloudflare Pages"]
+    subgraph CI ["CI/CD Cloudflare Pages"]
         PUSH[git push main] --> FETCH[Checkout repo]
         FETCH --> INSTALL[Setup Python 3.13]
         INSTALL --> GEN[python3 generator.py]
         GEN --> DEPLOY[Deploy to CDN]
-        DEPLOY --> CACHE[Cache warm — Infinite TTL]
+        DEPLOY --> CACHE[Cache warm - Infinite TTL]
     end
 
     GEN --> SCHEMA
