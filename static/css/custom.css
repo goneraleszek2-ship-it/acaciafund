@@ -145,7 +145,7 @@ img[loading="lazy"] { background: var(--color-border); }
 
 .flashcard-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
   gap: 1rem;
 }
 .flashcard-card {
@@ -1621,26 +1621,26 @@ svg:not([class*="w-"]):not([class*="h-"]) {
 /* Container queries for adaptive layouts */
 @container (min-width: 320px) {
   .fluid-grid {
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
     gap: clamp(0.5rem, 2vw, 1rem);
   }
 }
 
 @container (min-width: 480px) {
   .fluid-grid {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
   }
 }
 
 @container (min-width: 768px) {
   .fluid-grid {
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
   }
 }
 
 @container (min-width: 1024px) {
   .fluid-grid {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
   }
 }
 
