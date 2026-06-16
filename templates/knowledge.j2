@@ -8,23 +8,48 @@
 <div class="flex gap-8 {% if toc_items %}lg:flex-row{% endif %} flex-col">
   {%- if toc_items %}
   <aside class="toc-sidebar shrink-0 lg:sticky lg:top-20 lg:self-start lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto lg:w-56">
-    <div class="flex items-center justify-between mb-3">
-      <h2 class="text-xs font-semibold uppercase tracking-wide" style="color:var(--color-text-muted)">On this page</h2>
-      <button id="focus-toggle" class="text-xs px-2 py-1 rounded" style="color:var(--color-text-muted);background:var(--color-bg)" title="Focus mode" aria-label="Toggle focus mode">
-        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 4h4M6 20h4M18 4h-4M18 20h-4M4 6v4M4 18v4M20 6v4M20 18v4"/></svg>
-      </button>
+    <!-- Mobile TOC toggle -->
+    <button id="toc-toggle" class="toc-toggle lg:hidden" aria-expanded="false" aria-controls="toc-panel">
+      <svg class="toc-icon-closed" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      <svg class="toc-icon-open hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+      <span>On this page</span>
+    </button>
+    
+    <!-- Mobile TOC panel -->
+    <div id="toc-panel" class="toc-panel">
+      <nav aria-label="Table of contents">
+        <ul class="space-y-1 text-sm">
+          {%- for item in toc_items %}
+          <li>
+            <a href="#{{ item.id }}" class="toc-link block py-1 {% if item.tag == 'h3' %}pl-4 text-xs{% endif %} rounded px-2 transition" style="color:var(--color-text-muted)">
+              {{ item.text }}
+            </a>
+          </li>
+          {%- endfor %}
+        </ul>
+      </nav>
     </div>
-    <nav aria-label="Table of contents">
-      <ul class="space-y-1 text-sm">
-        {%- for item in toc_items %}
-        <li>
-          <a href="#{{ item.id }}" class="toc-link block py-1 {% if item.tag == 'h3' %}pl-4 text-xs{% endif %} rounded px-2 transition" style="color:var(--color-text-muted)">
-            {{ item.text }}
-          </a>
-        </li>
-        {%- endfor %}
-      </ul>
-    </nav>
+    
+    <!-- Desktop TOC (hidden on mobile) -->
+    <div class="hidden lg:block">
+      <div class="flex items-center justify-between mb-3">
+        <h2 class="text-xs font-semibold uppercase tracking-wide" style="color:var(--color-text-muted)">On this page</h2>
+        <button id="focus-toggle" class="text-xs px-2 py-1 rounded" style="color:var(--color-text-muted);background:var(--color-bg)" title="Focus mode" aria-label="Toggle focus mode">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 4h4M6 20h4M18 4h-4M18 20h-4M4 6v4M4 18v4M20 6v4M20 18v4"/></svg>
+        </button>
+      </div>
+      <nav aria-label="Table of contents">
+        <ul class="space-y-1 text-sm">
+          {%- for item in toc_items %}
+          <li>
+            <a href="#{{ item.id }}" class="toc-link block py-1 {% if item.tag == 'h3' %}pl-4 text-xs{% endif %} rounded px-2 transition" style="color:var(--color-text-muted)">
+              {{ item.text }}
+            </a>
+          </li>
+          {%- endfor %}
+        </ul>
+      </nav>
+    </div>
   </aside>
   {%- endif %}
 
@@ -72,6 +97,45 @@
     </header>
 
     <div class="prose prose-lg max-w-none">
+      <script>
+        document.addEventListener('DOMContentLoaded', function() {
+          // Wrap all SVG images in responsive containers
+          const prose = document.querySelector('.prose');
+          if (prose) {
+            const svgs = prose.querySelectorAll('img[src$=".svg"]');
+            svgs.forEach(function(img) {
+              const container = document.createElement('div');
+              container.className = 'diagram-container';
+              img.parentNode.insertBefore(container, img);
+              container.appendChild(img);
+              
+              // Add accessible title
+              const src = img.getAttribute('src');
+              const title = src.split('/').pop().replace(/\.svg$/, '').replace(/_/g, ' ');
+              img.setAttribute('aria-label', title);
+              img.setAttribute('role', 'img');
+            });
+            
+            // Also handle inline SVGs
+            const inline_svgs = prose.querySelectorAll('svg:not([class*="w-"]):not([class*="h-"])');
+            inline_svgs.forEach(function(svg) {
+              const container = document.createElement('div');
+              container.className = 'diagram-container';
+              svg.parentNode.insertBefore(container, svg);
+              container.appendChild(svg);
+            });
+          }
+          
+          // Mobile section auto-expand
+          if (window.innerWidth < 640) {
+            const sections = document.querySelectorAll('.section-harvester details');
+            sections.forEach(function(section) {
+              section.open = true;
+            });
+          }
+        });
+      </script>
+      
       {{ content.body_html | safe }}
     </div>
 

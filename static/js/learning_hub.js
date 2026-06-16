@@ -805,10 +805,103 @@
     initQuiz();
     initFlashcardSM2();
     initEnhancedSearch();
+    initTocToggle();
+    initMobileSectionAutoExpand();
     
     // Initialize gamification display
     updateXPDisplay();
     updateStreakDisplay();
   }
 
+  // ── TOC Toggle for Mobile ────────────────────────────────────────────
+  function initTocToggle() {
+    var toggleBtn = document.getElementById('toc-toggle');
+    var tocPanel = document.getElementById('toc-panel');
+    
+    if (!toggleBtn || !tocPanel) return;
+    
+    // Check if TOC has items
+    var tocLinks = tocPanel.querySelectorAll('.toc-link');
+    if (!tocLinks.length) {
+      toggleBtn.style.display = 'none';
+      return;
+    }
+    
+    toggleBtn.addEventListener('click', function() {
+      var isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+      var newState = !isExpanded;
+      
+      toggleBtn.setAttribute('aria-expanded', newState);
+      toggleBtn.classList.toggle('active', newState);
+      tocPanel.classList.toggle('active', newState);
+      
+      // Toggle icons
+      toggleBtn.querySelector('.toc-icon-closed').classList.toggle('hidden', newState);
+      toggleBtn.querySelector('.toc-icon-open').classList.toggle('hidden', !newState);
+    });
+    
+    // Close TOC when clicking links
+    tocPanel.querySelectorAll('.toc-link').forEach(function(link) {
+      link.addEventListener('click', function() {
+        var isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+        if (isExpanded) {
+          toggleBtn.click();
+        }
+      });
+    });
+  }
+
+  // ── Mobile Section Auto-Expand ───────────────────────────────────────
+  function initMobileSectionAutoExpand() {
+    // Only apply to mobile devices
+    if (window.innerWidth >= 640) return;
+    
+    var sections = document.querySelectorAll('.section-harvester details');
+    if (!sections.length) return;
+    
+    // Auto-expand all sections on mobile
+    sections.forEach(function(section) {
+      if (!section.open) {
+        section.open = true;
+      }
+    });
+    
+    // Add "Read All" button for mobile
+    var article = document.querySelector('article');
+    if (!article) return;
+    
+    // Check if we have sections
+    var harvesterCount = article.querySelectorAll('.section-harvester').length;
+    if (harvesterCount < 2) return;
+    
+    var readAllBtn = document.createElement('button');
+    readAllBtn.className = 'mobile-read-all-btn';
+    readAllBtn.textContent = 'Read All Sections';
+    readAllBtn.style.cssText = 'display:none;margin:1.5rem 0 2rem;padding:0.75rem 1.5rem;background:var(--color-accent);color:#fff;border-radius:0.5rem;font-weight:600;cursor:pointer;border:none;transition:all 0.2s';
+    readAllBtn.addEventListener('click', function() {
+      var sections = article.querySelectorAll('.section-harvester details');
+      var shouldExpand = this.textContent === 'Read All Sections';
+      
+      sections.forEach(function(section) {
+        section.open = shouldExpand;
+      });
+      
+      this.textContent = shouldExpand ? 'Collapse All' : 'Read All Sections';
+      this.style.background = shouldExpand ? 'var(--color-text-muted)' : 'var(--color-accent)';
+    });
+    
+    article.insertBefore(readAllBtn, article.firstChild);
+    
+    // Show button only on mobile with multiple sections
+    function updateReadAllButton() {
+      if (window.innerWidth < 640 && harvesterCount >= 2) {
+        readAllBtn.style.display = 'block';
+      } else {
+        readAllBtn.style.display = 'none';
+      }
+    }
+    
+    window.addEventListener('resize', updateReadAllButton);
+    updateReadAllButton();
+  }
 })();
