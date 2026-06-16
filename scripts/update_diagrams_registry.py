@@ -14,16 +14,9 @@ sys.path.insert(0, str(PROJECT_ROOT))
 script_path = PROJECT_ROOT / "scripts" / "create_diagrams_page.py"
 result = os.popen(f"python3 {script_path}").read()
 
-# Extract the HTML content (everything before the mermaid init script)
-# The script outputs HTML with <script> tags at the end for mermaid init
-# We need just the HTML content for body_html
-
-# Find the position of the first <script> tag (mermaid init)
-mermaid_script_start = result.find('<script src="/static/js/mermaid.min.js"')
-if mermaid_script_start > 0:
-    body_html = result[:mermaid_script_start].strip()
-else:
-    body_html = result.strip()
+# The script now outputs clean HTML without mermaid init script
+# All content is the body_html
+body_html = result.strip()
 
 print(f"Generated body_html length: {len(body_html)} bytes")
 
@@ -55,17 +48,12 @@ with open(registry_path, "w") as f:
 print(f"✅ Updated registry.json with clean diagrams content")
 print(f"New body_html length: {len(body_html)} bytes")
 
-# Verify no emojis or multi-line nodes in Mermaid sections (not ASCII fallback)
-# Extract just the Mermaid content (between <div class="mermaid" and </div>)
-mermaid_sections = re.findall(r'<div class="mermaid".*?>(.*?)</div>', body_html, re.DOTALL)
-for section in mermaid_sections:
-    if "🖥️" in section or "📄" in section:
-        print("⚠️  WARNING: Emojis still present in Mermaid section!")
-        sys.exit(1)
-    # Check for actual multi-line node definitions - [label with \n inside]
-    # This would be like [label\n  continuation] which is invalid
-    if re.search(r'\[[^\]]*\n[^\]]*\]', section):
-        print("⚠️  WARNING: Multi-line nodes still present in Mermaid section!")
-        sys.exit(1)
+# Verify SVG references are present
+svg_count = body_html.count('<img src="/static/images/generated/knowledge/')
+print(f"Found {svg_count} SVG image references")
 
-print("✅ Verified: No emojis, no multi-line nodes in Mermaid sections")
+if svg_count == 0:
+    print("⚠️  WARNING: No SVG image references found!")
+    sys.exit(1)
+
+print(f"✅ Verified: {svg_count} SVG image references present")
