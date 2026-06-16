@@ -1213,9 +1213,8 @@ svg:not([class*="w-"]):not([class*="h-"]) {
 }
 .card-photo-wrap {
   width: 100%;
-  max-width: 120px;
+  max-width: 110px;
   height: auto;
-  aspect-ratio: 600/340;
   border-radius: 8px;
   border: 1.5px solid color-mix(in srgb, var(--layer-research-badge) 40%, transparent);
   background: var(--color-border);
