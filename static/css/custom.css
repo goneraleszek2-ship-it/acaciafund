@@ -1288,8 +1288,8 @@ svg:not([class*="w-"]):not([class*="h-"]) {
     gap: 14px;
   }
   .card-pictogram-wrap, .card-photo-wrap {
-    width: 56px;
-    height: 42px;
+    width: 112px;
+    height: 80px;
   }
   .card-research-sources {
     justify-content: flex-start;
@@ -1327,7 +1327,7 @@ svg:not([class*="w-"]):not([class*="h-"]) {
 }
 .bloom-connector.active { background: var(--layer-learn-accent); }
 .bloom-circle {
-  width: 42px; height: 42px; border-radius: 50%;
+  width: 42px; height: 80px; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-family: Inter, ui-sans-serif, system-ui, sans-serif;
   font-size: 0.8125rem; font-weight: 600;
