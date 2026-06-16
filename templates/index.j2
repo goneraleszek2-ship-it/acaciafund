@@ -305,12 +305,10 @@
 <!-- Latest Research (Moved Up) -->
 <section class="py-16 bg-white">
   <div class="max-w-7xl mx-auto px-4">
-    <div class="flex items-end justify-between mb-8">
-      <div>
-        <h2 class="text-3xl font-bold mb-2" style="color:var(--color-text)">Latest Research</h2>
-        <p class="text-gray-600">Fresh insights published this week</p>
-      </div>
-      <a href="/research/" class="text-teal-600 hover:text-teal-700 font-semibold flex items-center gap-1">
+    <div class="flex items-center justify-between mb-8">
+      <h2 class="text-3xl font-bold mb-0" style="color:var(--color-text)">Latest Research</h2>
+      <p class="text-gray-600 mb-0 mr-4">Fresh insights published this week</p>
+      <a href="/research/" class="text-teal-600 hover:text-teal-700 font-semibold flex items-center gap-1 whitespace-nowrap">
         View all
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M5 12h14M12 5l7 7-7 7"/>
@@ -327,21 +325,20 @@
       {%- set sqi_val = item.signals.get("avg_sqi", "") if item.signals else "" %}
       <div class="ghost-card" style="border-left-color:var(--color-{{ p }})">
         <a href="/{{ item.slug }}/" class="block">
-          <div class="flex gap-4 p-4">
-            <div class="shrink-0 w-28 h-20 rounded-lg overflow-hidden" style="background:var(--color-bg)">
+          <div class="flex flex-col md:flex-row gap-4 p-4">
+            <div class="shrink-0 w-28 h-20 md:w-full md:max-w-[112px] rounded-lg overflow-hidden" style="background:var(--color-bg)">
               {%- if has_feat %}
               <img src="{{ resolve_card_image(feat_img) }}" alt="{{ item.title | striptags | e }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy">
               {%- else %}
               <img src="{{ thumbnail_base }}/thumb_{{ tkey }}.svg" alt="{{ item.title | striptags | e }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy">
               {%- endif %}
             </div>
-            <div class="min-w-0 flex-1">
+            <div class="min-w-0 flex-1 md:w-full research-card-text">
               <div class="flex items-center gap-2 mb-2">
-                {{ pillar_badge(item.pillar) }}
-                {{ content_badge(item.content_type) }}
-                {%- if sqi_val and sqi_val != "0.0" %}
-                <span class="badge badge-accent font-meta">SQI {{ sqi_val }}</span>
-                {%- endif %}
+                <div class="flex items-center gap-2">
+                  {{ pillar_badge(item.pillar) }}
+                  {{ content_badge(item.content_type) }}
+                </div>
               </div>
               <h3 class="text-base font-semibold leading-snug mb-2" style="color:var(--color-text)">
                 <a href="/{{ item.slug }}/" class="group-hover:underline decoration-2" style="color:var(--color-text);text-decoration:none">{{ item.title | striptags }}</a>
@@ -485,12 +482,9 @@
       <div class="ghost-card" style="text-decoration:none">
         <a href="/{{ item.slug }}/">
           <div class="p-5">
-            <div class="flex items-center gap-2 mb-3">
-              {{ content_badge("knowledge") }}
-              {%- if sqi_val and sqi_val != "0.0" %}
-              <span class="badge badge-accent font-meta">SQI {{ sqi_val }}</span>
-              {%- endif %}
-            </div>
+              <div class="flex items-center gap-2 mb-3">
+                {{ content_badge("knowledge") }}
+              </div>
             <h3 class="font-semibold card-title-clamp mb-2" style="color:var(--color-text)">{{ item.title | striptags }}</h3>
             <p class="text-sm" style="color:var(--color-text-secondary)">{{ item.description | truncate(100) }}</p>
           </div>

@@ -75,6 +75,7 @@ body {
   background-color: var(--color-bg);
   color: var(--color-text);
   line-height: 1.6;
+  padding-bottom: env(safe-area-inset-bottom);
 }
 body[data-layer="research"] { background-color: var(--layer-research-body); }
 body[data-layer="learn"]     { background-color: var(--layer-learn-body); }
@@ -1547,6 +1548,21 @@ svg:not([class*="w-"]):not([class*="h-"]) {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+/* ── Responsive card text wrapping ── */
+.research-card-text {
+  hyphens: auto;
+  word-break: break-word;
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 768px) {
+  .research-card-text {
+    hyphens: auto;
+    word-break: break-word;
+    overflow-wrap: break-word;
+  }
 }
 
 /* ── Card content-type badges ── */
