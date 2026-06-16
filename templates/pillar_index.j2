@@ -11,20 +11,42 @@
     <img src="/static/images/{{ hero }}.svg" alt="{{ pconf.heading }} illustration" width="600" height="340" class="w-full h-auto" loading="lazy" decoding="async">
   </div>
 
-  <div class="mb-8">
-    {{ pillar_badge(pillar) }}
-    <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">{{ pconf.heading }}</h1>
-    <p class="mt-2 text-sm" style="color:var(--color-text-secondary)">{{ pconf.description }}</p>
-    <p class="mt-1 text-sm" style="color:var(--color-text-muted)">{{ posts | length }} posts</p>
-    {%- if pillar == "aml" %}
-    <a href="/aml/signals/" class="inline-flex items-center gap-1.5 mt-2 px-3 py-1.5 text-xs font-medium rounded transition hover:opacity-80" style="background:rgba(217,119,6,0.1);color:#d97706;border:1px solid rgba(217,119,6,0.2)">
-      🛡️ Signals Dashboard →
-    </a>
-    {%- endif %}
-  </div>
+   <div class="mb-8">
+     {{ pillar_badge(pillar) }}
+     <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">{{ pconf.heading }}</h1>
+     <p class="mt-2 text-sm" style="color:var(--color-text-secondary)">{{ pconf.description }}</p>
+     <p class="mt-1 text-sm" style="color:var(--color-text-muted)">{{ posts | length }} posts</p>
+     {%- if pillar == "aml" %}
+     <a href="/aml/signals/" class="inline-flex items-center gap-1.5 mt-2 px-3 py-1.5 text-xs font-medium rounded transition hover:opacity-80" style="background:rgba(217,119,6,0.1);color:#d97706;border:1px solid rgba(217,119,6,0.2)">
+       🛡️ Signals Dashboard →
+     </a>
+     {%- endif %}
+   </div>
 
-  <div class="fluid-grid card-list">
-    {%- for post in posts %}
+   <div class="mb-6 flex flex-wrap items-center gap-3">
+     <div class="flex items-center gap-2">
+       <label class="text-sm font-medium" style="color:var(--color-text)">Sort by:</label>
+       <select id="sort-select" class="px-3 py-1.5 text-sm rounded border" style="border-color:var(--color-border);background:var(--color-surface);color:var(--color-text)">
+         <option value="date-desc" selected>Newest first</option>
+         <option value="date-asc">Oldest first</option>
+         <option value="sqi-desc">Highest SQI</option>
+         <option value="reading-time-desc">Longest read</option>
+       </select>
+     </div>
+     <div class="flex items-center gap-2">
+       <label class="text-sm font-medium" style="color:var(--color-text)">Filter:</label>
+       <select id="filter-select" class="px-3 py-1.5 text-sm rounded border" style="border-color:var(--color-border);background:var(--color-surface);color:var(--color-text)">
+         <option value="all" selected>All content</option>
+         <option value="research">Research only</option>
+         <option value="learn">Learn only</option>
+         <option value="knowledge">Knowledge only</option>
+       </select>
+     </div>
+     <button id="reset-filters" class="px-3 py-1.5 text-sm rounded border transition hover:opacity-80" style="border-color:var(--color-border);background:var(--color-surface);color:var(--color-text)">Reset</button>
+   </div>
+
+     <div id="posts-container" class="fluid-grid card-list" data-posts='{{ pillar_posts_data | tojson | safe }}'>
+       {%- for post in posts %}
     {%- set pictogram = post | pictogram %}
     {%- set source_breakdown = post.source_breakdown or {} %}
      {%- set pillar_color = pillar_config.get(pillar, {}).get("color", "#6366f1") %}
@@ -76,7 +98,7 @@
       </div>
     </a>
     {%- endfor %}
-  </div>
+    </div>
 </section>
 
 {% include 'partials/newsletter.html' %}

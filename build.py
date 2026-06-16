@@ -1482,6 +1482,29 @@ def main():
         out_dir = OUTPUT_DIR / pillar
         out_dir.mkdir(parents=True, exist_ok=True)
         pconf = PILLAR_CONFIG.get(pillar, PILLAR_CONFIG["aml"])
+        # Prepare posts data for JavaScript
+        pillar_posts_data = []
+        for p in p_posts:
+            post_data = {
+                'slug': p.slug,
+                'title': p.title or '',
+                'description': p.description or '',
+                'date_str': p.date_str or '',
+                'content_type': p.content_type or 'research',
+                'pillar': p.pillar or '',
+                'pillar_icon': PILLAR_EMOJIS.get(p.pillar or '', ''),
+                'pillar_color': PILLAR_CONFIG.get(p.pillar or '', {}).get('color', '#6366f1'),
+                'pconf_label': pconf['label'],
+                'reading_time': reading_time_minutes(p.body_html or '') if p.body_html else None,
+                'risk_count': len(p.quality_flags or []),
+                'source_breakdown': p.source_breakdown or {},
+                'featured_image': p.featured_image or '',
+                'topic_icon': card_topic_icons.get(p.slug, ''),
+                'pictogram': pick_card_pictogram(p) or 'icon-research.svg',
+                'signals': p.signals or {}
+            }
+            pillar_posts_data.append(post_data)
+        
         html = render_template("pillar_index.j2",
             content=_dummy(pconf['heading'], "index",
                            description=pconf.get("description", f"{pconf['label']} research articles — quality-scored and Bloom-classified.")),
@@ -1490,7 +1513,8 @@ def main():
             page_title=pconf["heading"],
             layer_sub=pconf["label"],
             thumbnail_base=f"{SITE_URL}/static/images", thumbnail_key=thumbnail_key,
-            card_images=card_images, card_topic_icons=card_topic_icons, **ctx_base)
+            card_images=card_images, card_topic_icons=card_topic_icons,
+            pillar_posts_data=pillar_posts_data, **ctx_base)
         (out_dir / "index.html").write_text(html, encoding="utf-8")
         print(f"  pillar: {pillar}/index.html")
 

@@ -807,6 +807,7 @@
     initEnhancedSearch();
     initTocToggle();
     initMobileSectionAutoExpand();
+    initPillarPageFilters();
     
     // Initialize gamification display
     updateXPDisplay();
@@ -901,7 +902,110 @@
       }
     }
     
-    window.addEventListener('resize', updateReadAllButton);
-    updateReadAllButton();
-  }
-})();
+     window.addEventListener('resize', updateReadAllButton);
+     updateReadAllButton();
+   }
+
+   // ── Pillar Page Sorting and Filtering ────────────────────────────────
+   function initPillarPageFilters() {
+     var container = document.getElementById('posts-container');
+     if (!container) return;
+     
+     var postsData = container.dataset.posts;
+     if (!postsData) return;
+     
+     var posts = JSON.parse(postsData);
+     var sortSelect = document.getElementById('sort-select');
+     var filterSelect = document.getElementById('filter-select');
+     var resetBtn = document.getElementById('reset-filters');
+     
+     if (!sortSelect || !filterSelect || !resetBtn) return;
+     
+     function renderPosts(sortedPosts) {
+       container.innerHTML = '';
+       sortedPosts.forEach(function(post) {
+         var card = document.createElement('a');
+         card.href = '/' + post.slug + '/';
+         card.className = 'ghost-card card-research';
+         card.style.cssText = 'text-decoration:none';
+         
+         var hasFeat = post.featured_image && post.featured_image !== '';
+         var content = '<div class="card-research-left">';
+         
+         if (hasFeat) {
+           content += '<div class="card-photo-wrap"><img src="' + post.featured_image + '" alt="' + (post.title || '').replace(/"/g, '&quot;') + '" class="card-photo" loading="lazy" decoding="async"></div>';
+         } else {
+           content += '<div class="card-pictogram-wrap"><img src="/static/images/' + (post.pictogram || 'icon-research.svg') + '" alt="" class="card-pictogram" decoding="async"></div>';
+         }
+         
+         content += '<div class="card-research-sources">';
+         var sb = post.source_breakdown || {};
+         for (var src in sb) {
+           if (sb[src] > 0) {
+             var srcClass = (src === 'hn' || src === 'hackernews') ? 'src-hn' : (src === 'arxiv' || src === 'ar') ? 'src-ar' : 'src-pu';
+             content += '<span class="card-research-source ' + srcClass + '">' + src.substring(0, 2).toUpperCase() + '</span>';
+           }
+         }
+         content += '</div></div>';
+         
+         content += '<div class="card-research-body">';
+         content += '<div class="card-research-meta">';
+         content += '<span class="card-research-pillar" style="color:' + (post.pillar_color || '#6366f1') + '"><span>' + (post.pillar_icon || '') + '</span> ' + (post.pconf_label || 'Research') + '</span>';
+         if (post.topic_icon) content += '<span class="card-topic-icon">' + post.topic_icon + '</span>';
+         content += '<span class="card-research-meta-right">';
+         if (post.date_str) content += '<time datetime="' + post.date_str + '">' + post.date_str + '</time>';
+         if (post.reading_time) content += '<span>' + post.reading_time + ' min</span>';
+         content += '</span></div>';
+         content += '<h2 class="card-research-title">' + (post.title || '') + '</h2>';
+         if (post.description) content += '<p class="card-research-summary">' + post.description.substring(0, 200) + '</p>';
+         if (post.risk_count > 0) content += '<div class="card-research-risk">&#9888; ' + post.risk_count + ' quality flag(s)</div>';
+         content += '</div>';
+         
+         card.innerHTML = content;
+         container.appendChild(card);
+       });
+     }
+     
+     function getFilteredAndSortedPosts() {
+       var filterValue = filterSelect.value;
+       var sortValue = sortSelect.value;
+       
+       var filtered = posts.filter(function(post) {
+         if (filterValue === 'all') return true;
+         return post.content_type === filterValue;
+       });
+       
+       filtered.sort(function(a, b) {
+         if (sortValue === 'date-asc') {
+           return (a.date_str || '').localeCompare(b.date_str || '');
+         } else if (sortValue === 'date-desc') {
+           return (b.date_str || '').localeCompare(a.date_str || '');
+         } else if (sortValue === 'sqi-desc') {
+           return ((b.signals || {}).avg_sqi || 0) - ((a.signals || {}).avg_sqi || 0);
+         } else if (sortValue === 'reading-time-desc') {
+           return ((b.reading_time || 0) - (a.reading_time || 0)) * -1;
+         }
+         return 0;
+       });
+       
+       return filtered;
+     }
+     
+     function updatePosts() {
+       var filtered = getFilteredAndSortedPosts();
+       renderPosts(filtered);
+     }
+     
+     sortSelect.addEventListener('change', updatePosts);
+     filterSelect.addEventListener('change', updatePosts);
+     
+     resetBtn.addEventListener('click', function() {
+       sortSelect.value = 'date-desc';
+       filterSelect.value = 'all';
+       updatePosts();
+     });
+     
+     updatePosts();
+   }
+
+ })();
