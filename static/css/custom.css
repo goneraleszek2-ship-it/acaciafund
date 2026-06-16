@@ -1213,9 +1213,9 @@ svg:not([class*="w-"]):not([class*="h-"]) {
 }
 .card-photo-wrap {
   width: 100%;
-  max-width: 84px;
+  max-width: 120px;
   height: auto;
-  aspect-ratio: 4/3;
+  aspect-ratio: 600/340;
   border-radius: 8px;
   border: 1.5px solid color-mix(in srgb, var(--layer-research-badge) 40%, transparent);
   background: var(--color-border);
@@ -1227,8 +1227,8 @@ svg:not([class*="w-"]):not([class*="h-"]) {
 }
 @media (min-width: 768px) {
   .card-photo-wrap {
-    width: 84px;
-    height: 63px;
+    width: 110px;
+    height: auto;
   }
 }
 .card-research:hover .card-photo-wrap {
