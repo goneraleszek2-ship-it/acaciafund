@@ -121,7 +121,6 @@ def main():
     # Log deployment
     log_deployment(
         commit_hash=commit,
-        branch=args.branch,
         status=status,
         pages_generated=pages,
         build_duration_ms=duration,
