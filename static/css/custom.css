@@ -1170,6 +1170,7 @@ svg:not([class*="w-"]):not([class*="h-"]) {
 .card-pictogram-wrap {
   width: 100%;
   aspect-ratio: 14 / 10;
+  max-width: 112px;
   border-radius: 8px;
   border: 1.5px solid color-mix(in srgb, var(--layer-research-badge) 40%, transparent);
   background: #fff;
@@ -1206,6 +1207,7 @@ svg:not([class*="w-"]):not([class*="h-"]) {
 .card-photo-wrap {
   width: 100%;
   aspect-ratio: 14 / 10;
+  max-width: 112px;
   border-radius: 8px;
   border: 1.5px solid color-mix(in srgb, var(--layer-research-badge) 40%, transparent);
   background: var(--color-border);
