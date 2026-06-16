@@ -1282,7 +1282,9 @@ svg:not([class*="w-"]):not([class*="h-"]) {
     gap: 14px;
   }
   .card-pictogram-wrap, .card-photo-wrap {
+    width: 100%;
     aspect-ratio: 14 / 10;
+    max-width: 112px;
   }
   .card-research-sources {
     justify-content: flex-start;
@@ -1931,24 +1933,6 @@ svg:not([class*="w-"]):not([class*="h-"]) {
 .card-research:hover {
   box-shadow: 0 4px 20px rgba(0,0,0,0.08);
   transform: translateY(-2px);
-}
-
-@container card-list (max-width: 480px) {
-  .card-research {
-    grid-template-columns: 1fr;
-  }
-  .card-research-left {
-    flex-direction: row;
-    padding: 10px 12px;
-    gap: 12px;
-  }
-  .card-pictogram-wrap, .card-photo-wrap {
-    width: 48px;
-    height: 36px;
-  }
-  .card-research-sources {
-    justify-content: flex-start;
-  }
 }
 
 /* Responsive bloom nodes */
