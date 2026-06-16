@@ -130,7 +130,6 @@ page_sections.append(table_html)
 
 # Add PlantUML init script
 plantuml_script = """
-<script src="/static/js/plantuml/plantuml.min.js" defer></script>
 <script defer>
 document.addEventListener('DOMContentLoaded', function(){
   if (typeof plantuml !== 'undefined') {

@@ -159,6 +159,18 @@
       console.log('PlantUML.js loaded successfully');
     });
   </script>
+  <script src="/static/js/mermaid.min.js" defer></script>
+  <script>
+    // Mermaid renderer - auto-converts .mermaid divs to SVG
+    document.addEventListener('DOMContentLoaded', function mermaidInit() {
+      if (typeof mermaid !== 'undefined') {
+        mermaid.initialize({ startOnLoad: true, theme: 'default', securityLevel: 'loose' });
+        console.log('Mermaid.js loaded successfully');
+      } else {
+        console.error('Mermaid.js failed to load. Check /static/js/mermaid.min.js.');
+      }
+    });
+  </script>
   {%- if plausible_domain %}
   <script defer data-domain="{{ plausible_domain }}" src="https://plausible.io/js/script.js"></script>
   {%- endif %}
