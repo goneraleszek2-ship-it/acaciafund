@@ -1165,12 +1165,12 @@ svg:not([class*="w-"]):not([class*="h-"]) {
   background: color-mix(in srgb, var(--layer-research-badge) 8%, transparent);
   justify-content: center;
   width: 100%;
-  max-width: 110px;
+  max-width: 112px;
   flex-shrink: 0;
 }
 @media (min-width: 768px) {
   .card-research-left {
-    width: 110px;
+    width: 112px;
   }
 }
 .card-pictogram-wrap {
