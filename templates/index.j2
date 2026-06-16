@@ -330,7 +330,7 @@
           <div class="flex gap-4 p-4">
             <div class="shrink-0 w-28 h-20 rounded-lg overflow-hidden" style="background:var(--color-bg)">
               {%- if has_feat %}
-              <img src="{{ feat_img }}" alt="{{ item.title | striptags | e }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy">
+              <img src="{{ resolve_card_image(feat_img) }}" alt="{{ item.title | striptags | e }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy">
               {%- else %}
               <img src="{{ thumbnail_base }}/thumb_{{ tkey }}.svg" alt="{{ item.title | striptags | e }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy">
               {%- endif %}

@@ -257,14 +257,14 @@
         {%- set rtkey = thumbnail_key(rp.title) %}
         {%- set feat_img = rp.featured_image or "" %}
         {%- set has_feat = feat_img %}
-         <a href="/{{ rp.slug }}/" class="ghost-card block text-decoration:none">
-           <div class="aspect-[600/340] bg-gray-800 overflow-hidden">
-             {%- if has_feat %}
-             <img src="{{ feat_img }}" alt="{{ rp.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
-             {%- else %}
-             <img src="{{ thumbnail_base }}/thumb_{{ rtkey }}.svg" alt="{{ rp.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
-             {%- endif %}
-           </div>
+          <a href="/{{ rp.slug }}/" class="ghost-card block text-decoration:none">
+            <div class="aspect-[600/340] bg-gray-800 overflow-hidden">
+              {%- if has_feat %}
+              <img src="{{ resolve_card_image(feat_img) }}" alt="{{ rp.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
+              {%- else %}
+              <img src="{{ thumbnail_base }}/thumb_{{ rtkey }}.svg" alt="{{ rp.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
+              {%- endif %}
+            </div>
            <div class="p-3">
              {{ pillar_badge(rp.pillar) }}
              <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">{{ rp.title | striptags }}</span>
@@ -289,14 +289,14 @@
          {%- set rtkey = thumbnail_key(rl.title) %}
          {%- set feat_img = rl.featured_image or "" %}
          {%- set has_feat = feat_img %}
-         <a href="/{{ rl.slug }}/" class="ghost-card block text-decoration:none">
-           <div class="aspect-[600/340] bg-gray-800 overflow-hidden">
-             {%- if has_feat %}
-             <img src="{{ feat_img }}" alt="{{ rl.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
-             {%- else %}
-             <img src="{{ thumbnail_base }}/thumb_{{ rtkey }}.svg" alt="{{ rl.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
-             {%- endif %}
-           </div>
+          <a href="/{{ rl.slug }}/" class="ghost-card block text-decoration:none">
+            <div class="aspect-[600/340] bg-gray-800 overflow-hidden">
+              {%- if has_feat %}
+              <img src="{{ resolve_card_image(feat_img) }}" alt="{{ rl.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
+              {%- else %}
+              <img src="{{ thumbnail_base }}/thumb_{{ rtkey }}.svg" alt="{{ rl.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
+              {%- endif %}
+            </div>
            <div class="p-3">
              {{ pillar_badge(rl.pillar) }}
              {%- if rl.difficulty %}<span class="text-xs text-gray-400 ml-1">{{ rl.difficulty | capitalize }}</span>{% endif %}

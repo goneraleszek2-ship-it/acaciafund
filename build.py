@@ -1025,6 +1025,16 @@ def main():
 
     BLOOM_NAMES = {1: "Remember", 2: "Understand", 3: "Apply", 4: "Analyse", 5: "Evaluate", 6: "Create"}
 
+    def resolve_card_image(raw_path: str) -> str:
+        """Resolve card image path to URL, handling REF: pointers."""
+        if not raw_path:
+            return ""
+        p = Path(PROJECT_ROOT / raw_path.lstrip("/"))
+        ref = _resolve_ref_file(p)
+        if ref:
+            return ref
+        return f"{SITE_URL}{raw_path}" if raw_path.startswith("/") else f"{SITE_URL}/{raw_path}"
+
     ctx_base = {
         "build_hash": build_hash,
         "year": year,
@@ -1034,6 +1044,7 @@ def main():
         "pillar_emojis": PILLAR_EMOJIS,
         "pillar_names": PILLAR_NAMES,
         "site_description": SITE_DESCRIPTION,
+        "resolve_card_image": resolve_card_image,
     }
 
     def render_template(template_name, **kw):
