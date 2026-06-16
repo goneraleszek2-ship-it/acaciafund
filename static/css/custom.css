@@ -1168,8 +1168,8 @@ svg:not([class*="w-"]):not([class*="h-"]) {
   flex-shrink: 0;
 }
 .card-pictogram-wrap {
-  width: 100%;
-  max-width: 112px;
+  width: 112px;
+  height: 80px;
   aspect-ratio: 14 / 10;
   border-radius: 8px;
   border: 1.5px solid color-mix(in srgb, var(--layer-research-badge) 40%, transparent);
@@ -1207,8 +1207,8 @@ svg:not([class*="w-"]):not([class*="h-"]) {
   height: 100%;
 }
 .card-photo-wrap {
-  width: 100%;
-  max-width: 112px;
+  width: 112px;
+  height: 80px;
   aspect-ratio: 14 / 10;
   border-radius: 8px;
   border: 1.5px solid color-mix(in srgb, var(--layer-research-badge) 40%, transparent);
@@ -1284,8 +1284,9 @@ svg:not([class*="w-"]):not([class*="h-"]) {
     gap: 14px;
   }
   .card-pictogram-wrap, .card-photo-wrap {
+    width: 112px;
+    height: 80px;
     aspect-ratio: 14 / 10;
-    max-width: 100%;
   }
   .card-research-sources {
     justify-content: flex-start;
