@@ -1165,17 +1165,12 @@ svg:not([class*="w-"]):not([class*="h-"]) {
   background: color-mix(in srgb, var(--layer-research-badge) 8%, transparent);
   justify-content: center;
   width: 100%;
-  max-width: 112px;
   flex-shrink: 0;
 }
-@media (min-width: 768px) {
-  .card-research-left {
-    width: 112px;
-  }
-}
 .card-pictogram-wrap {
-  width: 112px;
-  height: 80px;
+  width: 100%;
+  max-width: 112px;
+  aspect-ratio: 14 / 10;
   border-radius: 8px;
   border: 1.5px solid color-mix(in srgb, var(--layer-research-badge) 40%, transparent);
   background: #fff;
@@ -1212,8 +1207,9 @@ svg:not([class*="w-"]):not([class*="h-"]) {
   height: 100%;
 }
 .card-photo-wrap {
-  width: 112px;
-  height: 80px;
+  width: 100%;
+  max-width: 112px;
+  aspect-ratio: 14 / 10;
   border-radius: 8px;
   border: 1.5px solid color-mix(in srgb, var(--layer-research-badge) 40%, transparent);
   background: var(--color-border);
@@ -1288,8 +1284,8 @@ svg:not([class*="w-"]):not([class*="h-"]) {
     gap: 14px;
   }
   .card-pictogram-wrap, .card-photo-wrap {
-    width: 112px;
-    height: 80px;
+    aspect-ratio: 14 / 10;
+    max-width: 100%;
   }
   .card-research-sources {
     justify-content: flex-start;
