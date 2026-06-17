@@ -121,9 +121,9 @@
     
     <script>
         // Simple client-side auth for static site
-        // Credentials are checked against stored values
-        const VALID_USERNAME = 'admin';
-        const VALID_PASSWORD = 'xZlFagqo8oR9dLt27V_0fw';
+        // Credentials are injected during build
+        const VALID_USERNAME = '{{ admin_username }}';
+        const VALID_PASSWORD = '{{ admin_password }}';
         
         document.getElementById('login-form').addEventListener('submit', (e) => {
             e.preventDefault();

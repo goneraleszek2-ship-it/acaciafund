@@ -42,6 +42,33 @@ try:
 except ImportError:
     MEM0_AVAILABLE = False
 
+# ── Admin credentials from .env ──
+def load_admin_credentials():
+    """Load admin credentials from .env file."""
+    env_path = PROJECT_ROOT / ".env"
+    username = "admin"
+    password = "admin"
+    
+    if env_path.exists():
+        try:
+            content = env_path.read_text()
+            for line in content.split("\n"):
+                line = line.strip()
+                if line.startswith("#") or not line:
+                    continue
+                if "=" in line:
+                    key, value = line.split("=", 1)
+                    key = key.strip()
+                    value = value.strip()
+                    if key == "ADMIN_USERNAME":
+                        username = value
+                    elif key == "ADMIN_PASSWORD":
+                        password = value
+        except Exception:
+            pass
+    
+    return username, password
+
 def get_topic_icons(tags: list[str]) -> list[str]:
     """Map article tags to resolved SVG path data, returning up to 3 matches."""
     if not tags:
@@ -1769,6 +1796,9 @@ def main():
         **ctx_base)
     (admin_dir / "articles.html").write_text(html, encoding="utf-8")
     
+    # Load admin credentials from .env
+    admin_username, admin_password = load_admin_credentials()
+    
     # Redirect index to login
     html = """<!DOCTYPE html>
 <html lang="en">
@@ -1789,6 +1819,8 @@ def main():
     # Login
     html = render_template("admin/login.html",
         content=_dummy("Admin Login", "admin"),
+        admin_username=admin_username,
+        admin_password=admin_password,
         **ctx_base)
     (admin_dir / "login.html").write_text(html, encoding="utf-8")
     
