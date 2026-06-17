@@ -996,21 +996,29 @@ def main():
         print(f"Error loading registry: {e}")
         return 1
 
-    # Preserve quality scores before deleting dist
+    # Preserve quality scores and source verification before deleting dist
     quality_scores_backup = None
     quality_scores_path = OUTPUT_DIR / "quality_scores.parquet"
     if quality_scores_path.exists():
         quality_scores_backup = quality_scores_path.read_bytes()
         quality_scores_path.unlink()
 
+    source_verification_backup = None
+    source_verification_path = OUTPUT_DIR / "source_verification.parquet"
+    if source_verification_path.exists():
+        source_verification_backup = source_verification_path.read_bytes()
+        source_verification_path.unlink()
+
     if OUTPUT_DIR.exists():
         shutil.rmtree(OUTPUT_DIR)
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     STATIC_DST_DIR.mkdir(parents=True, exist_ok=True)
 
-    # Restore quality scores
+    # Restore quality scores and source verification
     if quality_scores_backup:
         quality_scores_path.write_bytes(quality_scores_backup)
+    if source_verification_backup:
+        source_verification_path.write_bytes(source_verification_backup)
 
     if PIPELINE_STATIC_DIR.exists():
         for item in PIPELINE_STATIC_DIR.rglob("*"):
@@ -1026,6 +1034,28 @@ def main():
     env.filters["reading_time"] = reading_time_minutes
     env.filters["urlencode"] = lambda s: urlquote(s or '', safe='')
     env.filters["pictogram"] = pick_card_pictogram
+
+    # --- Source Verification Framework ---
+    source_verification_path = PROJECT_ROOT / "dist" / "source_verification.parquet"
+    source_verification = {}
+    if source_verification_path.exists():
+        df = pd.read_parquet(source_verification_path)
+        source_verification = {}
+        for _, row in df.iterrows():
+            evidence = row.get("evidence", [])
+            if isinstance(evidence, str):
+                try:
+                    evidence = json.loads(evidence)
+                except:
+                    evidence = []
+            source_verification[row["slug"]] = {
+                "source_score": row["source_score"],
+                "source_type": row["source_type"],
+                "verified": row["verified"],
+                "evidence_level": row["evidence_level"],
+                "evidence": evidence,
+            }
+        print(f"  Loaded source verification for {len(source_verification)} articles")
 
     # --- Quality Engine ---
     quality_scores_path = PROJECT_ROOT / "dist" / "quality_scores.parquet"
@@ -1174,6 +1204,12 @@ def main():
                     k_quiz_data["questions"].append(entry)
             if k_quiz_data["questions"]:
                 k_quiz_json = json.dumps(k_quiz_data, ensure_ascii=False)
+        
+        # Source verification
+        source_info = source_verification.get(item.slug, {})
+        source_verified = source_info.get("verified", False)
+        source_evidence = source_info.get("evidence", [])
+        
         html = render_template("knowledge.j2",
             content=item, page_path=page_path,
             toc_items=toc_items, kcat=kcat,
@@ -1184,6 +1220,7 @@ def main():
             og_image_url=og_image_url,
             quiz_json=k_quiz_json,
             quality_score=quality_score, quality_badge=quality_badge,
+            source_verified=source_verified, source_evidence=source_evidence,
             quality_metrics=quality_metrics,
             is_index=False, page_type="knowledge", layer="knowledge",
             layer_icon=LAYER_ICONS["knowledge"], layer_sub=layer_sub, **ctx_base)
@@ -1300,6 +1337,11 @@ def main():
         og_image_url = feat_img_path if feat_img_path else f"{SITE_URL}/static/images/og_{og_key}.svg"
         (out_static / f"og_{og_key}.svg").write_text(og_svg, encoding="utf-8")
 
+        # Source verification
+        source_info = source_verification.get(item.slug, {})
+        source_verified = source_info.get("verified", False)
+        source_evidence = source_info.get("evidence", [])
+        
         # Serialize quiz data for learning_hub.js
         quiz_json = ""
         if item.bloom_questions:
@@ -1353,6 +1395,7 @@ def main():
             image_credit=item.image_credit,
             quality_score=quality_score, quality_badge=quality_badge,
             quality_metrics=quality_metrics,
+            source_verified=source_verified, source_evidence=source_evidence,
             is_index=False, layer="learn",
             layer_icon=LAYER_ICONS["learn"], layer_sub=layer_sub, **ctx_base)
         out_file.write_text(html, encoding="utf-8")
