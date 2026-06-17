@@ -1775,7 +1775,7 @@ def main():
         stats_by_type=stats["by_type"],
         stats_by_source=stats["by_source"],
         **ctx_base)
-    (admin_dir / "index.html").write_text(html, encoding="utf-8")
+    (admin_dir / "dashboard.html").write_text(html, encoding="utf-8")
     
     # Gallery
     html = render_template("admin/gallery.html",
