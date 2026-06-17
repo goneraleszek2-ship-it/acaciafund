@@ -13,40 +13,40 @@
 
 <div class="stats-grid">
   <div class="stat-card">
-    <div class="stat-value">{{ stats.total_images }}</div>
+    <div class="stat-value">{{ stats_total_images }}</div>
     <div class="stat-label">Total Images</div>
   </div>
   <div class="stat-card">
-    <div class="stat-value">{{ stats.total_articles }}</div>
+    <div class="stat-value">{{ stats_total_articles }}</div>
     <div class="stat-label">Articles</div>
   </div>
   <div class="stat-card">
-    <div class="stat-value">{{ stats.with_images }}</div>
+    <div class="stat-value">{{ stats_with_images }}</div>
     <div class="stat-label">Articles with images</div>
-    <span class="stat-badge success">{{ stats.with_images_pct }}%</span>
+    <span class="stat-badge success">{{ stats_with_images_pct }}%</span>
   </div>
   <div class="stat-card">
-    <div class="stat-value">{{ stats.without_images }}</div>
+    <div class="stat-value">{{ stats_without_images }}</div>
     <div class="stat-label">Articles needing images</div>
-    {% if stats.without_images > 0 %}<span class="stat-badge danger">needs attention</span>{% endif %}
+    {% if stats_without_images > 0 %}<span class="stat-badge danger">needs attention</span>{% endif %}
   </div>
   <div class="stat-card">
-    <div class="stat-value">{{ stats.low_score }}</div>
+    <div class="stat-value">{{ stats_low_score }}</div>
     <div class="stat-label">Low-score sections (&lt;70)</div>
-    {% if stats.low_score > 0 %}<span class="stat-badge warning">may need re-fetch</span>{% endif %}
+    {% if stats_low_score > 0 %}<span class="stat-badge warning">may need re-fetch</span>{% endif %}
   </div>
   <div class="stat-card">
-    <div class="stat-value">{{ stats.orphan_images }}</div>
+    <div class="stat-value">{{ stats_orphan_images }}</div>
     <div class="stat-label">Orphan images (unused)</div>
-    {% if stats.orphan_images > 50 %}<span class="stat-badge warning">cleanup candidates</span>{% endif %}
+    {% if stats_orphan_images > 50 %}<span class="stat-badge warning">cleanup candidates</span>{% endif %}
   </div>
   <div class="stat-card">
-    <div class="stat-value">{{ stats.svg_fallbacks }}</div>
+    <div class="stat-value">{{ stats_svg_fallbacks }}</div>
     <div class="stat-label">SVG fallback sections</div>
-    {% if stats.svg_fallbacks > 0 %}<span class="stat-badge danger">needs real images</span>{% endif %}
+    {% if stats_svg_fallbacks > 0 %}<span class="stat-badge danger">needs real images</span>{% endif %}
   </div>
   <div class="stat-card">
-    <div class="stat-value">{{ stats.manifest_entries }}</div>
+    <div class="stat-value">{{ stats_manifest_entries }}</div>
     <div class="stat-label">Manifest overrides</div>
   </div>
 </div>
@@ -58,7 +58,7 @@
       <table>
         <thead><tr><th>Type</th><th>Total</th><th>With Images</th><th>Needs Images</th></tr></thead>
         <tbody>
-          {% for row in stats.by_type %}
+          {% for row in stats_by_type %}
           <tr>
             <td><span class="tag tag-content-type">{{ row.type }}</span></td>
             <td>{{ row.total }}</td>
@@ -77,7 +77,7 @@
       <table>
         <thead><tr><th>Source</th><th>Count</th></tr></thead>
         <tbody>
-          {% for src, count in stats.by_source %}
+          {% for src, count in stats_by_source.items() %}
           <tr><td><span class="tag tag-source">{{ src or 'unknown' }}</span></td><td>{{ count }}</td></tr>
           {% endfor %}
         </tbody>
@@ -86,14 +86,14 @@
   </div>
 </div>
 
-{% if stats.low_score_sections %}
+{% if stats_low_score_sections %}
 <div class="card" style="margin-top:20px">
   <div class="card-header">Low-Score Sections (score &lt; 70)</div>
   <div class="card-body" style="padding:0">
     <table>
       <thead><tr><th>Article</th><th>Section</th><th>Score</th><th>Source</th><th>Action</th></tr></thead>
       <tbody>
-        {% for s in stats.low_score_sections %}
+        {% for s in stats_low_score_sections %}
         <tr>
           <td><a href="/admin/article/{{ s.slug }}">{{ s.title }}</a></td>
           <td>[{{ s.section_index }}] {{ s.heading }}</td>

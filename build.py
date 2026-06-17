@@ -1678,6 +1678,99 @@ def main():
         tag_out.write_text(html, encoding="utf-8")
         print(f"  tags: {len(tag_items)} tag pages + index")
 
+    # --- ADMIN PANEL ---
+    admin_dir = OUTPUT_DIR / "admin"
+    admin_dir.mkdir(parents=True, exist_ok=True)
+    
+    # Image and article counts
+    image_count = len(list(STATIC_DST_DIR.glob("images/generated/**/*.webp")))
+    article_count = len(all_content)
+    
+    # Calculate stats for dashboard
+    articles_with_images = sum(1 for c in all_content if c.featured_image)
+    articles_needing_images = article_count - articles_with_images
+    low_score_sections = sum(1 for c in all_content if (c.signals or {}).get("avg_score", 100) < 70)
+    orphan_images = 0  # Would need to check which images are actually used
+    svg_fallbacks = 0  # Count articles using SVG fallbacks
+    manifest_entries = 0  # Count manifest overrides
+    
+    # Count by content type
+    by_type_list = []
+    by_type_dict = defaultdict(lambda: {"total": 0, "with_images": 0, "without_images": 0})
+    for c in all_content:
+        ct = c.content_type or "unknown"
+        by_type_dict[ct]["total"] += 1
+        if c.featured_image:
+            by_type_dict[ct]["with_images"] += 1
+        else:
+            by_type_dict[ct]["without_images"] += 1
+    for ct, data in sorted(by_type_dict.items()):
+        by_type_list.append({"type": ct, "total": data["total"], "with_images": data["with_images"], "without_images": data["without_images"]})
+    
+    # Count by source
+    by_source_dict = defaultdict(int)
+    for c in all_content:
+        sb = c.source_breakdown or {}
+        for src, count in sb.items():
+            by_source_dict[src] += count
+    by_source = dict(by_source_dict)
+    
+    stats = {
+        "total_images": image_count,
+        "total_articles": article_count,
+        "with_images": articles_with_images,
+        "without_images": articles_needing_images,
+        "with_images_pct": round(articles_with_images / article_count * 100, 1) if article_count > 0 else 0,
+        "low_score": low_score_sections,
+        "low_score_sections": low_score_sections,
+        "orphan_images": orphan_images,
+        "svg_fallbacks": svg_fallbacks,
+        "manifest_entries": manifest_entries,
+        "by_type": by_type_list,
+        "by_source": by_source,
+    }
+    
+    # Dashboard - pass stats fields directly
+    html = render_template("admin/dashboard.html",
+        content=_dummy("Admin Dashboard", "admin"),
+        active_page="dashboard",
+        image_count=image_count,
+        article_count=article_count,
+        stats_total_images=stats["total_images"],
+        stats_total_articles=stats["total_articles"],
+        stats_with_images=stats["with_images"],
+        stats_without_images=stats["without_images"],
+        stats_with_images_pct=stats["with_images_pct"],
+        stats_low_score=stats["low_score"],
+        stats_orphan_images=stats["orphan_images"],
+        stats_svg_fallbacks=stats["svg_fallbacks"],
+        stats_manifest_entries=stats["manifest_entries"],
+        stats_by_type=stats["by_type"],
+        stats_by_source=stats["by_source"],
+        **ctx_base)
+    (admin_dir / "index.html").write_text(html, encoding="utf-8")
+    
+    # Gallery
+    html = render_template("admin/gallery.html",
+        content=_dummy("Image Gallery", "admin"),
+        active_page="gallery",
+        image_count=image_count,
+        article_count=article_count,
+        **ctx_base)
+    (admin_dir / "gallery.html").write_text(html, encoding="utf-8")
+    
+    # Articles
+    html = render_template("admin/article_list.html",
+        content=_dummy("Articles", "admin"),
+        active_page="articles",
+        image_count=image_count,
+        article_count=article_count,
+        articles=all_content,
+        **ctx_base)
+    (admin_dir / "articles.html").write_text(html, encoding="utf-8")
+    
+    print("  admin: dashboard, gallery, articles")
+
     # --- SEARCH INDEX ---
     search_index = []
     for c in all_content:
