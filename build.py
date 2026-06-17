@@ -1078,7 +1078,9 @@ def main():
     quality_scores = {}
     if quality_scores_path.exists():
         df = pd.read_parquet(quality_scores_path)
-        quality_scores = {row["slug"]: row for _, row in df.iterrows()}
+        # Support both 'slug' and 'article_slug' column names
+        slug_col = "article_slug" if "article_slug" in df.columns else "slug"
+        quality_scores = {row[slug_col]: row for _, row in df.iterrows()}
         print(f"  Loaded quality scores for {len(quality_scores)} articles")
     else:
         # Try alternative location (if dist was just recreated)

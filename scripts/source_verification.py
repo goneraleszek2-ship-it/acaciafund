@@ -54,6 +54,12 @@ def classify_source_type(url: str = "", tags: list = [], content_type: str = "",
     if content_type == "research":
         return "research", 0.85
     
+    if content_type == "learn":
+        return "educational", 0.75
+    
+    if content_type == "knowledge":
+        return "reference", 0.8
+    
     ai_tags = {"ai", "machine-learning", "llm", "nlp", "deep-learning"}
     if any(tag in ai_tags for tag in tags):
         return "ai_generated", 0.6
@@ -88,6 +94,12 @@ def verify_source(source_type: str) -> dict[str, Any]:
     elif source_type == "research":
         verified = True
         evidence = ["Research content", "Citations included"]
+    elif source_type == "educational":
+        verified = True
+        evidence = ["Educational content", "Bloom questions included"]
+    elif source_type == "reference":
+        verified = True
+        evidence = ["Reference material", "Curated content"]
     elif source_type == "regulatory":
         verified = True
         evidence = ["Regulatory focus", "Official sources"]
