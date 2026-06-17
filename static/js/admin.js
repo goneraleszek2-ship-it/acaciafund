@@ -24,10 +24,6 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Gallery - static version (no API)
-// The gallery data is already rendered in the template
-// This file provides basic UI functionality
-
 // Tag editor modal
 function openTagModal(path) {
     document.getElementById('tag-path').value = path;
@@ -88,20 +84,16 @@ function showToast(message, type = 'info') {
 }
 
 // Gallery pagination (static - no API)
-// The gallery data is pre-rendered in the template, this provides basic UI
 let currentGalleryPage = 1;
 const GALLERY_ITEMS_PER_PAGE = 60;
 
 function galleryPrev() {
-    // Gallery data is static - no pagination needed
     showToast('Gallery data is pre-rendered. Use filters to search.', 'info');
 }
 
 function galleryNext() {
-    // Gallery data is static - no pagination needed
     showToast('Gallery data is pre-rendered. Use filters to search.', 'info');
 }
 
 function renderGalleryPage() {
-    // Placeholder for future API integration
 }
