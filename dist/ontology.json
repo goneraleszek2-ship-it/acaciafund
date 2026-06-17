@@ -1,0 +1,315 @@
+{
+  "entity_types": [
+    {
+      "id": "Article",
+      "name": "Article",
+      "properties": [
+        {
+          "id": "slug",
+          "name": "Slug",
+          "type": "string",
+          "required": true
+        },
+        {
+          "id": "language",
+          "name": "Language",
+          "type": "string",
+          "required": true
+        },
+        {
+          "id": "title",
+          "name": "Title",
+          "type": "string",
+          "required": true
+        },
+        {
+          "id": "description",
+          "name": "Description",
+          "type": "string"
+        },
+        {
+          "id": "category",
+          "name": "Category",
+          "type": "string"
+        },
+        {
+          "id": "content_type",
+          "name": "Content Type",
+          "type": "string",
+          "enum": ["research", "learn", "knowledge"]
+        },
+        {
+          "id": "tags",
+          "name": "Tags",
+          "type": "array",
+          "item_type": "string"
+        },
+        {
+          "id": "created_at",
+          "name": "Created At",
+          "type": "datetime"
+        },
+        {
+          "id": "updated_at",
+          "name": "Updated At",
+          "type": "datetime"
+        },
+        {
+          "id": "date_str",
+          "name": "Date String",
+          "type": "string"
+        },
+        {
+          "id": "author",
+          "name": "Author",
+          "type": "string"
+        },
+        {
+          "id": "body_html",
+          "name": "Body HTML",
+          "type": "string"
+        },
+        {
+          "id": "pillar",
+          "name": "Pillar",
+          "type": "string",
+          "enum": ["stock", "aml", "data-engineering"]
+        },
+        {
+          "id": "thumbnail_svg",
+          "name": "Thumbnail SVG",
+          "type": "string"
+        },
+        {
+          "id": "difficulty",
+          "name": "Difficulty",
+          "type": "string"
+        },
+        {
+          "id": "prerequisites",
+          "name": "Prerequisites",
+          "type": "array",
+          "item_type": "string"
+        },
+        {
+          "id": "featured_image",
+          "name": "Featured Image",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "id": "SectionImage",
+      "name": "Section Image",
+      "properties": [
+        {
+          "id": "section_index",
+          "name": "Section Index",
+          "type": "integer"
+        },
+        {
+          "id": "heading",
+          "name": "Heading",
+          "type": "string"
+        },
+        {
+          "id": "image_url",
+          "name": "Image URL",
+          "type": "string"
+        },
+        {
+          "id": "image_credit",
+          "name": "Image Credit",
+          "type": "string"
+        },
+        {
+          "id": "image_alt",
+          "name": "Image Alt Text",
+          "type": "string"
+        },
+        {
+          "id": "relevance_score",
+          "name": "Relevance Score",
+          "type": "float"
+        },
+        {
+          "id": "source_api",
+          "name": "Source API",
+          "type": "string",
+          "enum": ["hn", "arxiv", "pubmed", "openverse", "wikimedia", "nasa", "curated", "svg_fallback", "ai_generated", "manifest", "pixabay", "pexels", "unsplash"]
+        },
+        {
+          "id": "width",
+          "name": "Width",
+          "type": "integer"
+        },
+        {
+          "id": "height",
+          "name": "Height",
+          "type": "integer"
+        },
+        {
+          "id": "content_hash",
+          "name": "Content Hash",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "id": "BloomQuestion",
+      "name": "Bloom Question",
+      "properties": [
+        {
+          "id": "bloom_level",
+          "name": "Bloom Level",
+          "type": "string",
+          "enum": ["remember", "understand", "apply", "analyze", "evaluate", "create"]
+        },
+        {
+          "id": "type",
+          "name": "Question Type",
+          "type": "string"
+        },
+        {
+          "id": "question",
+          "name": "Question Text",
+          "type": "string"
+        },
+        {
+          "id": "options",
+          "name": "Options",
+          "type": "array",
+          "item_type": "string"
+        },
+        {
+          "id": "answer",
+          "name": "Answer Index",
+          "type": "integer"
+        },
+        {
+          "id": "correct",
+          "name": "Correct Answer",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "id": "Signal",
+      "name": "Signal",
+      "properties": [
+        {
+          "id": "signal_type",
+          "name": "Signal Type",
+          "type": "string"
+        },
+        {
+          "id": "value",
+          "name": "Value",
+          "type": "string"
+        },
+        {
+          "id": "source",
+          "name": "Source",
+          "type": "string"
+        },
+        {
+          "id": "timestamp",
+          "name": "Timestamp",
+          "type": "datetime"
+        }
+      ]
+    },
+    {
+      "id": "Pillar",
+      "name": "Pillar",
+      "properties": [
+        {
+          "id": "name",
+          "name": "Name",
+          "type": "string",
+          "enum": ["stock", "aml", "data-engineering"],
+          "required": true
+        },
+        {
+          "id": "label",
+          "name": "Label",
+          "type": "string"
+        },
+        {
+          "id": "description",
+          "name": "Description",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "id": "SourceAPI",
+      "name": "Source API",
+      "properties": [
+        {
+          "id": "name",
+          "name": "Name",
+          "type": "string",
+          "enum": ["hn", "arxiv", "pubmed", "openverse", "wikimedia", "nasa", "curated", "svg_fallback", "ai_generated", "manifest", "pixabay", "pexels", "unsplash"],
+          "required": true
+        },
+        {
+          "id": "label",
+          "name": "Label",
+          "type": "string"
+        },
+        {
+          "id": "description",
+          "name": "Description",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "id": "BloomLevel",
+      "name": "Bloom Level",
+      "properties": [
+        {
+          "id": "name",
+          "name": "Name",
+          "type": "string",
+          "enum": ["remember", "understand", "apply", "analyze", "evaluate", "create"],
+          "required": true
+        },
+        {
+          "id": "label",
+          "name": "Label",
+          "type": "string"
+        },
+        {
+          "id": "description",
+          "name": "Description",
+          "type": "string"
+        }
+      ]
+    }
+  ],
+  "relationship_types": [
+    {
+      "id": "ArticleHasSectionImage",
+      "name": "Article Has Section Image",
+      "source_entity": "Article",
+      "target_entity": "SectionImage",
+      "cardinality": "ONE_TO_MANY"
+    },
+    {
+      "id": "ArticleHasBloomQuestion",
+      "name": "Article Has Bloom Question",
+      "source_entity": "Article",
+      "target_entity": "BloomQuestion",
+      "cardinality": "ONE_TO_MANY"
+    },
+    {
+      "id": "ArticleHasSignal",
+      "name": "Article Has Signal",
+      "source_entity": "Article",
+      "target_entity": "Signal",
+      "cardinality": "ONE_TO_ONE"
+    }
+  ]
+}
