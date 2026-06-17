@@ -1769,7 +1769,30 @@ def main():
         **ctx_base)
     (admin_dir / "articles.html").write_text(html, encoding="utf-8")
     
-    print("  admin: dashboard, gallery, articles")
+    # Redirect index to login
+    html = """<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="refresh" content="0;url=login.html">
+    <title>Redirecting...</title>
+</head>
+<body>
+    <p>Redirecting to login page...</p>
+    <script>
+        window.location.href = 'login.html';
+    </script>
+</body>
+</html>"""
+    (admin_dir / "index.html").write_text(html, encoding="utf-8")
+    
+    # Login
+    html = render_template("admin/login.html",
+        content=_dummy("Admin Login", "admin"),
+        **ctx_base)
+    (admin_dir / "login.html").write_text(html, encoding="utf-8")
+    
+    print("  admin: login, dashboard, gallery, articles")
 
     # --- SEARCH INDEX ---
     search_index = []

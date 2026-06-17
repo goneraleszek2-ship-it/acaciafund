@@ -4,10 +4,16 @@ Usage:
     pip install flask
     python app/admin.py
     # Open http://localhost:5555/admin
+
+Security:
+    Set ADMIN_USERNAME and ADMIN_PASSWORD environment variables for basic auth.
+    If not set, basic auth is disabled (development mode only).
 """
 
 from __future__ import annotations
 
+import base64
+import hashlib
 import json
 import os
 import re
@@ -15,6 +21,7 @@ import shutil
 import sys
 import tempfile
 import traceback
+from functools import wraps
 from pathlib import Path
 from io import BytesIO
 from typing import Any
@@ -27,7 +34,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
 import flask
-from flask import Flask, render_template, request, jsonify, abort, redirect
+from flask import Flask, render_template, request, jsonify, abort, redirect, make_response
 
 # ── Import image-fetching machinery ──
 from scripts.fetch_images import (
@@ -44,6 +51,34 @@ BACKENDS: dict[str, callable] = {}
 for name, func in ALL_BACKENDS:
     BACKENDS[name] = func
 from core.images.manifest import load_manifest, get_manifest_entry, MANIFEST_PATH
+
+# ── Basic Auth Setup ──
+ADMIN_USERNAME = os.environ.get("ADMIN_USERNAME")
+ADMIN_PASSWORD = os.environ.get("ADMIN_PASSWORD")
+
+def check_auth(username, password):
+    """Check if username and password are valid."""
+    if not ADMIN_USERNAME or not ADMIN_PASSWORD:
+        return False
+    return username == ADMIN_USERNAME and password == ADMIN_PASSWORD
+
+def authenticate():
+    """Send 401 response with Basic Auth challenge."""
+    return make_response(
+        "Authorization required",
+        401,
+        {"WWW-Authenticate": 'Basic realm="AcaciaFund Admin"'}
+    )
+
+def requires_auth(f):
+    """Decorator to require basic auth."""
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        auth = request.authorization
+        if not auth or not check_auth(auth.username, auth.password):
+            return authenticate()
+        return f(*args, **kwargs)
+    return decorated
 
 # ── App setup ──
 app = Flask(
@@ -305,6 +340,7 @@ def _inject_global_stats():
 # Page routes
 # ══════════════════════════════════════════════════════════════
 
+@requires_auth
 @app.route("/admin/")
 def dashboard():
     articles = _load_registry()
@@ -375,6 +411,7 @@ def dashboard():
     return render_template("admin/dashboard.html", stats=stats, active_page="dashboard")
 
 
+@requires_auth
 @app.route("/admin/gallery")
 def gallery():
     images = _scan_images()
@@ -383,6 +420,7 @@ def gallery():
                            stats={"total_images": len(images), "orphan_images": orphan})
 
 
+@requires_auth
 @app.route("/admin/articles")
 def article_list():
     articles = _load_registry()
@@ -413,6 +451,7 @@ def article_list():
                            articles=rows, pillars=pillars, needs_images=needs_images)
 
 
+@requires_auth
 @app.route("/admin/article/<path:slug>")
 def article_detail(slug):
     article = _find_article(slug)
@@ -445,6 +484,7 @@ def article_detail(slug):
                            article=article, sections=section_data)
 
 
+@requires_auth
 @app.route("/admin/image/<path:image_path>")
 def image_detail(image_path):
     images = _scan_images()
@@ -469,6 +509,7 @@ def image_detail(image_path):
     return render_template("admin/image_detail.html", active_page="gallery", img=img)
 
 
+@requires_auth
 @app.route("/admin/manifest")
 def manifest_editor():
     manifest = _load_manifest_cache()
@@ -486,6 +527,7 @@ def manifest_editor():
                            manifest=entries)
 
 
+@requires_auth
 @app.route("/admin/curated-test")
 def curated_tester():
     curated_list = sorted(CURATED_KNOWN.items(), key=lambda x: x[0])
@@ -523,6 +565,7 @@ def _load_dlq_entries() -> list[dict]:
     return entries
 
 
+@requires_auth
 @app.route("/admin/pipeline")
 def pipeline():
     runs = _load_pipeline_runs()
@@ -531,6 +574,7 @@ def pipeline():
                            runs=runs, dlq=dlq, dlq_count=len(dlq))
 
 
+@requires_auth
 @app.route("/admin/quality")
 def quality():
     articles = _load_registry()
@@ -580,6 +624,7 @@ def quality():
     return render_template("admin/quality.html", active_page="quality", stats=stats)
 
 
+@requires_auth
 @app.route("/admin/coverage")
 def coverage():
     articles = _load_registry()
@@ -636,6 +681,7 @@ def coverage():
                                            "Methodology"])
 
 
+@requires_auth
 @app.route("/admin/sources")
 def sources():
     from core.sources import registry
@@ -653,6 +699,7 @@ def sources():
 # API — Images
 # ══════════════════════════════════════════════════════════════
 
+@requires_auth
 @app.route("/admin/api/images")
 def api_images():
     images = _scan_images()
@@ -708,6 +755,7 @@ def api_images():
     })
 
 
+@requires_auth
 @app.route("/admin/api/stats")
 def api_stats():
     articles = _load_registry()
@@ -722,6 +770,7 @@ def api_stats():
 # API — Image Tags
 # ══════════════════════════════════════════════════════════════
 
+@requires_auth
 @app.route("/admin/api/tags")
 def api_tags():
     """Return all unique tags with counts and images per tag."""
@@ -737,6 +786,7 @@ def api_tags():
     })
 
 
+@requires_auth
 @app.route("/admin/api/image/tags", methods=["POST"])
 def api_set_image_tags():
     """Set tags for a specific image path."""
@@ -762,6 +812,7 @@ def api_set_image_tags():
 # API — Articles
 # ══════════════════════════════════════════════════════════════
 
+@requires_auth
 @app.route("/admin/api/articles")
 def api_articles():
     articles = _load_registry()
@@ -778,6 +829,7 @@ def api_articles():
     return jsonify({"articles": rows})
 
 
+@requires_auth
 @app.route("/admin/api/article/<path:slug>")
 def api_article(slug):
     a = _find_article(slug)
@@ -848,6 +900,7 @@ def _remove_section_image(slug: str, section_index: int) -> None:
     _save_registry()
 
 
+@requires_auth
 @app.route("/admin/api/article/<path:slug>/assign-section-image", methods=["POST"])
 def api_assign_section_image(slug):
     data = request.get_json(force=True)
@@ -880,6 +933,7 @@ def api_assign_section_image(slug):
         return jsonify({"error": "image_path or external_url required"}), 400
 
 
+@requires_auth
 @app.route("/admin/api/article/<path:slug>/remove-section-image", methods=["POST"])
 def api_remove_section_image(slug):
     data = request.get_json(force=True)
@@ -890,6 +944,7 @@ def api_remove_section_image(slug):
     return jsonify({"success": True})
 
 
+@requires_auth
 @app.route("/admin/api/article/<path:slug>/set-featured", methods=["POST"])
 def api_set_featured(slug):
     article = _find_article(slug)
@@ -903,6 +958,7 @@ def api_set_featured(slug):
     return jsonify({"success": True, "featured_image": url})
 
 
+@requires_auth
 @app.route("/admin/api/article/<path:slug>/remove-featured", methods=["POST"])
 def api_remove_featured(slug):
     article = _find_article(slug)
@@ -913,6 +969,7 @@ def api_remove_featured(slug):
     return jsonify({"success": True})
 
 
+@requires_auth
 @app.route("/admin/api/article/<path:slug>/re-fetch-section", methods=["POST"])
 def api_refetch_section(slug):
     """Re-run the fetch pipeline for a single section."""
@@ -943,6 +1000,7 @@ def api_refetch_section(slug):
         return jsonify({"error": str(e), "traceback": traceback.format_exc()}), 500
 
 
+@requires_auth
 @app.route("/admin/api/article/<path:slug>/re-fetch-all", methods=["POST"])
 def api_refetch_all(slug):
     """Re-fetch section images for ALL sections of an article."""
@@ -962,6 +1020,7 @@ def api_refetch_all(slug):
 # API — Smart Suggest
 # ══════════════════════════════════════════════════════════════
 
+@requires_auth
 @app.route("/admin/api/article/<path:slug>/suggest", methods=["POST"])
 def api_suggest(slug):
     """Search backends for candidate images for a section, return top results."""
@@ -1031,6 +1090,7 @@ def api_suggest(slug):
 # API — Manifest
 # ══════════════════════════════════════════════════════════════
 
+@requires_auth
 @app.route("/admin/api/manifest", methods=["GET"])
 def api_get_manifest():
     m = _load_manifest_cache()
@@ -1048,6 +1108,7 @@ def api_get_manifest():
     return jsonify({"manifest": entries})
 
 
+@requires_auth
 @app.route("/admin/api/manifest", methods=["POST"])
 def api_add_manifest():
     data = request.get_json(force=True)
@@ -1087,6 +1148,7 @@ def api_add_manifest():
     return jsonify({"success": True, "key": key})
 
 
+@requires_auth
 @app.route("/admin/api/manifest/<path:entry_key>", methods=["DELETE"])
 def api_delete_manifest(entry_key):
     # entry_key is "{slug}_{section_index}"
@@ -1107,6 +1169,7 @@ def api_delete_manifest(entry_key):
 # API — Curated Tester
 # ══════════════════════════════════════════════════════════════
 
+@requires_auth
 @app.route("/admin/api/curated-test", methods=["POST"])
 def api_curated_test():
     data = request.get_json(force=True)
@@ -1161,18 +1224,21 @@ def api_curated_test():
 # Tier 1 — API: Pipeline / Quality / Coverage
 # ══════════════════════════════════════════════════════════════
 
+@requires_auth
 @app.route("/admin/api/pipeline/runs")
 def api_pipeline_runs():
     runs = _load_pipeline_runs()
     return jsonify({"runs": runs, "total": len(runs)})
 
 
+@requires_auth
 @app.route("/admin/api/pipeline/dlq")
 def api_pipeline_dlq():
     dlq = _load_dlq_entries()
     return jsonify({"entries": dlq, "total": len(dlq)})
 
 
+@requires_auth
 @app.route("/admin/api/quality/distribution")
 def api_quality_distribution():
     articles = _load_registry()
@@ -1210,6 +1276,7 @@ def api_quality_distribution():
     })
 
 
+@requires_auth
 @app.route("/admin/api/coverage/heatmap")
 def api_coverage_heatmap():
     articles = _load_registry()
@@ -1236,6 +1303,7 @@ def api_coverage_heatmap():
     return jsonify({"heatmap": heatmap})
 
 
+@requires_auth
 @app.route("/admin/api/coverage/summary")
 def api_coverage_summary():
     articles = _load_registry()
@@ -1272,6 +1340,7 @@ def api_coverage_summary():
 # API — Sources
 # ══════════════════════════════════════════════════════════════
 
+@requires_auth
 @app.route("/admin/api/sources")
 def api_sources():
     from core.sources import registry
@@ -1284,6 +1353,7 @@ def api_sources():
     return jsonify({"sources": rows})
 
 
+@requires_auth
 @app.route("/admin/api/sources/<name>/health")
 def api_source_health(name):
     from core.sources.base import load_health_records
@@ -1291,6 +1361,7 @@ def api_source_health(name):
     return jsonify({"name": name, "records": records[-50:], "total": len(records)})
 
 
+@requires_auth
 @app.route("/admin/api/sources/<name>/refresh", methods=["POST"])
 def api_source_refresh(name):
     from core.sources import registry
@@ -1376,6 +1447,22 @@ def _download_and_save(slug: str, section_index: int, url: str, source: str) -> 
         pass
 
     return {"url": url_path, "path": rel_path, "width": width, "height": height}
+
+
+# ══════════════════════════════════════════════════════════════
+# Login endpoint (for static site compatibility)
+# ══════════════════════════════════════════════════════════════
+
+@app.route("/login", methods=["POST"])
+def login():
+    """Handle login for static site compatibility."""
+    data = request.get_json(silent=True) or {}
+    username = data.get("username", "")
+    password = data.get("password", "")
+    
+    if check_auth(username, password):
+        return jsonify({"success": True, "message": "Login successful"})
+    return jsonify({"error": "Invalid credentials"}), 401
 
 
 # ══════════════════════════════════════════════════════════════
