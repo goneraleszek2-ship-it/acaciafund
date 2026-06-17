@@ -120,33 +120,29 @@
     </div>
     
     <script>
-        document.getElementById('login-form').addEventListener('submit', async (e) => {
+        // Simple client-side auth for static site
+        // Credentials are checked against stored values
+        const VALID_USERNAME = 'admin';
+        const VALID_PASSWORD = 'xZlFagqo8oR9dLt27V_0fw';
+        
+        document.getElementById('login-form').addEventListener('submit', (e) => {
             e.preventDefault();
             
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
             
-            try {
-                const response = await fetch('/login', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ username, password })
-                });
+            if (username === VALID_USERNAME && password === VALID_PASSWORD) {
+                document.getElementById('success').textContent = 'Login successful! Redirecting...';
+                document.getElementById('success').style.display = 'block';
+                document.getElementById('error').style.display = 'none';
                 
-                const data = await response.json();
-                
-                if (response.ok && data.success) {
-                    document.getElementById('success').style.display = 'block';
-                    setTimeout(() => {
-                        window.location.href = '/';
-                    }, 1000);
-                } else {
-                    document.getElementById('error').textContent = data.error || 'Login failed';
-                    document.getElementById('error').style.display = 'block';
-                }
-            } catch (error) {
-                document.getElementById('error').textContent = 'Network error. Please try again.';
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1000);
+            } else {
+                document.getElementById('error').textContent = 'Invalid username or password';
                 document.getElementById('error').style.display = 'block';
+                document.getElementById('success').style.display = 'none';
             }
         });
     </script>
