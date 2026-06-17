@@ -88,56 +88,20 @@ function showToast(message, type = 'info') {
 }
 
 // Gallery pagination (static - no API)
+// The gallery data is pre-rendered in the template, this provides basic UI
 let currentGalleryPage = 1;
 const GALLERY_ITEMS_PER_PAGE = 60;
 
 function galleryPrev() {
-    if (currentGalleryPage > 1) {
-        currentGalleryPage--;
-        renderGalleryPage();
-    }
+    // Gallery data is static - no pagination needed
+    showToast('Gallery data is pre-rendered. Use filters to search.', 'info');
 }
 
 function galleryNext() {
-    const totalPages = Math.ceil(galleryTotalItems / GALLERY_ITEMS_PER_PAGE);
-    if (currentGalleryPage < totalPages) {
-        currentGalleryPage++;
-        renderGalleryPage();
-    }
+    // Gallery data is static - no pagination needed
+    showToast('Gallery data is pre-rendered. Use filters to search.', 'info');
 }
 
 function renderGalleryPage() {
-    const grid = document.getElementById('gallery-grid');
-    const pagination = document.getElementById('gallery-pagination');
-    const pageInfo = document.getElementById('page-info');
-    
-    const totalPages = Math.ceil(galleryTotalItems / GALLERY_ITEMS_PER_PAGE);
-    
-    // Update pagination
-    pagination.style.display = totalPages > 1 ? 'flex' : 'none';
-    pageInfo.textContent = `Page ${currentGalleryPage} of ${totalPages}`;
-    
-    // Update buttons
-    document.getElementById('page-prev').disabled = currentGalleryPage === 1;
-    document.getElementById('page-next').disabled = currentGalleryPage === totalPages;
-    
-    // Render current page items
-    const start = (currentGalleryPage - 1) * GALLERY_ITEMS_PER_PAGE;
-    const end = Math.min(start + GALLERY_ITEMS_PER_PAGE, galleryTotalItems);
-    
-    grid.innerHTML = '<div class="empty-state"><div class="spinner" style="margin:0 auto 12px"></div><p>Loading gallery...</p></div>';
-    
-    // In a real app, we'd fetch paginated data here
-    // For now, show a message
-    setTimeout(() => {
-        grid.innerHTML = `
-            <div class="empty-state" style="text-align:center;padding:40px">
-                <p>Gallery loading...</p>
-                <p style="font-size:13px;color:var(--admin-text-secondary)">In a production environment, this would fetch from /admin/api/images</p>
-            </div>
-        `;
-    }, 100);
+    // Placeholder for future API integration
 }
-
-// Gallery data - populated from template
-let galleryTotalItems = {{ stats_total_images }} || 0;
