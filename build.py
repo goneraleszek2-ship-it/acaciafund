@@ -1009,16 +1009,24 @@ def main():
         source_verification_backup = source_verification_path.read_bytes()
         source_verification_path.unlink()
 
+    trend_detection_backup = None
+    trend_detection_path = OUTPUT_DIR / "trend_detection.parquet"
+    if trend_detection_path.exists():
+        trend_detection_backup = trend_detection_path.read_bytes()
+        trend_detection_path.unlink()
+
     if OUTPUT_DIR.exists():
         shutil.rmtree(OUTPUT_DIR)
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     STATIC_DST_DIR.mkdir(parents=True, exist_ok=True)
 
-    # Restore quality scores and source verification
+    # Restore quality scores, source verification, and trend detection
     if quality_scores_backup:
         quality_scores_path.write_bytes(quality_scores_backup)
     if source_verification_backup:
         source_verification_path.write_bytes(source_verification_backup)
+    if trend_detection_backup:
+        trend_detection_path.write_bytes(trend_detection_backup)
 
     if PIPELINE_STATIC_DIR.exists():
         for item in PIPELINE_STATIC_DIR.rglob("*"):
@@ -1034,6 +1042,14 @@ def main():
     env.filters["reading_time"] = reading_time_minutes
     env.filters["urlencode"] = lambda s: urlquote(s or '', safe='')
     env.filters["pictogram"] = pick_card_pictogram
+
+    # --- Trend Detection System ---
+    trend_detection_path = PROJECT_ROOT / "dist" / "trend_detection.parquet"
+    trend_detection = {}
+    if trend_detection_path.exists():
+        df = pd.read_parquet(trend_detection_path)
+        trend_detection = {row["slug"]: row for _, row in df.iterrows()}
+        print(f"  Loaded trend detection for {len(trend_detection)} articles")
 
     # --- Source Verification Framework ---
     source_verification_path = PROJECT_ROOT / "dist" / "source_verification.parquet"
@@ -1205,6 +1221,13 @@ def main():
             if k_quiz_data["questions"]:
                 k_quiz_json = json.dumps(k_quiz_data, ensure_ascii=False)
         
+        # Trend detection
+        trend_info = trend_detection.get(item.slug, {})
+        trend_strength = trend_info.get("trend_strength", 0)
+        adoption_level = trend_info.get("adoption_level", "mainstream")
+        impact_level = trend_info.get("impact_level", "low")
+        trend_categories = trend_info.get("trend_categories", "")
+        
         # Source verification
         source_info = source_verification.get(item.slug, {})
         source_verified = source_info.get("verified", False)
@@ -1222,6 +1245,7 @@ def main():
             quality_score=quality_score, quality_badge=quality_badge,
             source_verified=source_verified, source_evidence=source_evidence,
             quality_metrics=quality_metrics,
+            trend_strength=trend_strength, adoption_level=adoption_level, impact_level=impact_level, trend_categories=trend_categories,
             is_index=False, page_type="knowledge", layer="knowledge",
             layer_icon=LAYER_ICONS["knowledge"], layer_sub=layer_sub, **ctx_base)
         out_file.write_text(html, encoding="utf-8")
@@ -1306,6 +1330,13 @@ def main():
         else:
             prev_lesson = None
             next_lesson = None
+        # Trend detection
+        trend_info = trend_detection.get(item.slug, {})
+        trend_strength = trend_info.get("trend_strength", 0)
+        adoption_level = trend_info.get("adoption_level", "mainstream")
+        impact_level = trend_info.get("impact_level", "low")
+        trend_categories = trend_info.get("trend_categories", "")
+        
         slug = item.slug
         page_path = canonical_path(slug_to_path(slug))
         if "/" in slug:
@@ -1396,6 +1427,7 @@ def main():
             quality_score=quality_score, quality_badge=quality_badge,
             quality_metrics=quality_metrics,
             source_verified=source_verified, source_evidence=source_evidence,
+            trend_strength=trend_strength, adoption_level=adoption_level, impact_level=impact_level, trend_categories=trend_categories,
             is_index=False, layer="learn",
             layer_icon=LAYER_ICONS["learn"], layer_sub=layer_sub, **ctx_base)
         out_file.write_text(html, encoding="utf-8")
