@@ -1999,7 +1999,18 @@ def main():
         **ctx_base)
     (admin_dir / "sources.html").write_text(html, encoding="utf-8")
     
-    print("  admin: login, dashboard, gallery, articles, manifest, pipeline, quality, coverage, sources")
+    # Curated Tester
+    from scripts.fetch_images import CURATED_KNOWN
+    curated_list = sorted(CURATED_KNOWN.items(), key=lambda x: x[0])
+    html = render_template("admin/curated_tester.html",
+        content=_dummy("Curated Tester", "admin"),
+        active_page="curated",
+        curated_entries=curated_list,
+        curated_count=len(curated_list),
+        **ctx_base)
+    (admin_dir / "curated-test.html").write_text(html, encoding="utf-8")
+    
+    print("  admin: login, dashboard, gallery, articles, manifest, pipeline, quality, coverage, sources, curated-test")
 
     # --- SEARCH INDEX ---
     search_index = []

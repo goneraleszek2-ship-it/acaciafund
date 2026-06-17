@@ -46,7 +46,7 @@
     <tbody>
       {% for a in articles %}
       <tr class="article-row" data-pillar="{{ a.pillar|lower }}" data-type="{{ a.content_type }}" data-status="{% if a.needs_images %}needs_images{% elif a.low_score %}low_score{% else %}complete{% endif %}" data-search="{{ a.title|lower }} {{ a.slug|lower }}">
-        <td><a href="/admin/article/{{ a.slug }}" style="font-weight:500;text-decoration:none;color:var(--admin-accent)">{{ a.title }}</a></td>
+        <td><a href="article/{{ a.slug }}" style="font-weight:500;text-decoration:none;color:var(--admin-accent)">{{ a.title }}</a></td>
         <td><span class="tag tag-content-type">{{ a.content_type }}</span></td>
         <td><span class="tag tag-pillar">{{ a.pillar }}</span></td>
         <td>{{ a.num_sections }}</td>

@@ -7,7 +7,7 @@
     <div class="subtitle">Image pipeline overview</div>
   </div>
   <div>
-    <a href="/admin/gallery" class="btn btn-primary">Browse Gallery</a>
+    <a href="gallery" class="btn btn-primary">Browse Gallery</a>
   </div>
 </div>
 
@@ -95,11 +95,11 @@
       <tbody>
         {% for s in stats_low_score_sections %}
         <tr>
-          <td><a href="/admin/article/{{ s.slug }}">{{ s.title }}</a></td>
+          <td><a href="article/{{ s.slug }}">{{ s.title }}</a></td>
           <td>[{{ s.section_index }}] {{ s.heading }}</td>
           <td>{{ s.score }}</td>
           <td>{{ s.source }}</td>
-          <td><a href="/admin/article/{{ s.slug }}" class="btn btn-sm">View</a></td>
+          <td><a href="article/{{ s.slug }}" class="btn btn-sm">View</a></td>
         </tr>
         {% endfor %}
       </tbody>

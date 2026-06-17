@@ -16,7 +16,7 @@
         <tbody>
           {% for entry in manifest %}
           <tr>
-            <td><a href="/admin/article/{{ entry.slug }}" style="text-decoration:none;color:var(--admin-accent)">{{ entry.slug }}</a></td>
+            <td><a href="article/{{ entry.slug }}" style="text-decoration:none;color:var(--admin-accent)">{{ entry.slug }}</a></td>
             <td>{{ entry.section_index }}</td>
             <td style="max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px">{{ entry.image_url }}</td>
             <td><button class="btn btn-sm btn-danger" data-delete-manifest data-slug="{{ entry.slug }}_{{ entry.section_index }}">Delete</button></td>
