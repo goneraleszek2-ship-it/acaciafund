@@ -1783,6 +1783,8 @@ def main():
         active_page="gallery",
         image_count=image_count,
         article_count=article_count,
+        stats_total_images=image_count,
+        stats_orphan_images=0,
         **ctx_base)
     (admin_dir / "gallery.html").write_text(html, encoding="utf-8")
     
