@@ -808,6 +808,7 @@
     initTocToggle();
     initMobileSectionAutoExpand();
     initPillarPageFilters();
+    initHomepageCarousel();
     
     // Initialize gamification display
     updateXPDisplay();
@@ -1005,7 +1006,76 @@
        updatePosts();
      });
      
-     updatePosts();
-   }
+    updatePosts();
+  }
+
+  // ── Homepage Carousel ────────────────────────────────────────────────
+  function initHomepageCarousel() {
+    var track = document.getElementById('carouselTrack');
+    if (!track) return;
+    
+    var slides = track.querySelectorAll('.carousel-slide');
+    if (slides.length < 2) return;
+    
+    var indicatorsContainer = document.getElementById('carouselIndicators');
+    if (!indicatorsContainer) return;
+    
+    var currentIndex = 0;
+    var autoPlayInterval;
+    var isPaused = false;
+    
+    // Create indicators
+    slides.forEach(function(_, index) {
+      var indicator = document.createElement('div');
+      indicator.className = 'carousel-indicator' + (index === 0 ? ' active' : '');
+      indicator.addEventListener('click', function() {
+        goToSlide(index);
+      });
+      indicatorsContainer.appendChild(indicator);
+    });
+    
+    var indicators = indicatorsContainer.querySelectorAll('.carousel-indicator');
+    
+    function goToSlide(index) {
+      currentIndex = index;
+      var offset = -index * 100;
+      track.style.transform = 'translateX(' + offset + '%)';
+      
+      indicators.forEach(function(ind, i) {
+        ind.className = 'carousel-indicator' + (i === index ? ' active' : '');
+      });
+    }
+    
+    function nextSlide() {
+      var next = (currentIndex + 1) % slides.length;
+      goToSlide(next);
+    }
+    
+    function startAutoPlay() {
+      stopAutoPlay();
+      autoPlayInterval = setInterval(nextSlide, 5000);
+    }
+    
+    function stopAutoPlay() {
+      if (autoPlayInterval) {
+        clearInterval(autoPlayInterval);
+        autoPlayInterval = null;
+      }
+    }
+    
+    // Pause on hover
+    track.addEventListener('mouseenter', function() {
+      isPaused = true;
+      stopAutoPlay();
+    });
+    
+    track.addEventListener('mouseleave', function() {
+      isPaused = false;
+      startAutoPlay();
+    });
+    
+    // Start auto-play
+    startAutoPlay();
+  }
 
  })();
