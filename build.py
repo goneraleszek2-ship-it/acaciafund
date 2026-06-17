@@ -16,6 +16,8 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
+import pandas as pd
+
 from PIL import Image
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
@@ -994,10 +996,21 @@ def main():
         print(f"Error loading registry: {e}")
         return 1
 
+    # Preserve quality scores before deleting dist
+    quality_scores_backup = None
+    quality_scores_path = OUTPUT_DIR / "quality_scores.parquet"
+    if quality_scores_path.exists():
+        quality_scores_backup = quality_scores_path.read_bytes()
+        quality_scores_path.unlink()
+
     if OUTPUT_DIR.exists():
         shutil.rmtree(OUTPUT_DIR)
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     STATIC_DST_DIR.mkdir(parents=True, exist_ok=True)
+
+    # Restore quality scores
+    if quality_scores_backup:
+        quality_scores_path.write_bytes(quality_scores_backup)
 
     if PIPELINE_STATIC_DIR.exists():
         for item in PIPELINE_STATIC_DIR.rglob("*"):
@@ -1013,6 +1026,21 @@ def main():
     env.filters["reading_time"] = reading_time_minutes
     env.filters["urlencode"] = lambda s: urlquote(s or '', safe='')
     env.filters["pictogram"] = pick_card_pictogram
+
+    # --- Quality Engine ---
+    quality_scores_path = PROJECT_ROOT / "dist" / "quality_scores.parquet"
+    quality_scores = {}
+    if quality_scores_path.exists():
+        df = pd.read_parquet(quality_scores_path)
+        quality_scores = {row["slug"]: row for _, row in df.iterrows()}
+        print(f"  Loaded quality scores for {len(quality_scores)} articles")
+    else:
+        # Try alternative location (if dist was just recreated)
+        alt_path = PROJECT_ROOT / "dist" / "quality_scores.parquet"
+        if alt_path.exists():
+            df = pd.read_parquet(alt_path)
+            quality_scores = {row["slug"]: row for _, row in df.iterrows()}
+            print(f"  Loaded quality scores (alt path) for {len(quality_scores)} articles")
 
     now = datetime.now(timezone.utc)
     year = now.year
@@ -1113,6 +1141,21 @@ def main():
         og_image_url = feat_img_path if feat_img_path else f"{SITE_URL}/static/images/og_{og_key}.svg"
 
         layer_sub = item.knowledge_category.replace("_", " ").title() if item.knowledge_category else item.pillar or ""
+        # Quality metrics
+        quality_metrics = quality_scores.get(item.slug, {})
+        quality_score = quality_metrics.get("quality_score", 0)
+        quality_badge = ""
+        if quality_score >= 0.8:
+            quality_badge = "★★★★★"
+        elif quality_score >= 0.7:
+            quality_badge = "★★★★☆"
+        elif quality_score >= 0.6:
+            quality_badge = "★★★☆☆"
+        elif quality_score >= 0.5:
+            quality_badge = "★★☆☆☆"
+        else:
+            quality_badge = "★☆☆☆☆"
+
         # Serialize quiz data for knowledge articles too
         k_quiz_json = ""
         if item.bloom_questions:
@@ -1140,6 +1183,8 @@ def main():
             thumbnail_base=thumb_base, thumbnail_key=thumbnail_key,
             og_image_url=og_image_url,
             quiz_json=k_quiz_json,
+            quality_score=quality_score, quality_badge=quality_badge,
+            quality_metrics=quality_metrics,
             is_index=False, page_type="knowledge", layer="knowledge",
             layer_icon=LAYER_ICONS["knowledge"], layer_sub=layer_sub, **ctx_base)
         out_file.write_text(html, encoding="utf-8")
@@ -1278,6 +1323,21 @@ def main():
             if quiz_data["questions"]:
                 quiz_json = json.dumps(quiz_data, ensure_ascii=False)
 
+        # Quality metrics
+        quality_metrics = quality_scores.get(item.slug, {})
+        quality_score = quality_metrics.get("quality_score", 0)
+        quality_badge = ""
+        if quality_score >= 0.8:
+            quality_badge = "★★★★★"
+        elif quality_score >= 0.7:
+            quality_badge = "★★★★☆"
+        elif quality_score >= 0.6:
+            quality_badge = "★★★☆☆"
+        elif quality_score >= 0.5:
+            quality_badge = "★★☆☆☆"
+        else:
+            quality_badge = "★☆☆☆☆"
+
         bl_name = BLOOM_NAMES.get(item.highest_bloom or 0, "")
         layer_sub = f"Level {item.highest_bloom}: {bl_name}" if bl_name else ""
         html = render_template("learn.j2",
@@ -1291,6 +1351,8 @@ def main():
             og_image_url=og_image_url, quiz_json=quiz_json,
             featured_image=resolve_section_image(item.featured_image),
             image_credit=item.image_credit,
+            quality_score=quality_score, quality_badge=quality_badge,
+            quality_metrics=quality_metrics,
             is_index=False, layer="learn",
             layer_icon=LAYER_ICONS["learn"], layer_sub=layer_sub, **ctx_base)
         out_file.write_text(html, encoding="utf-8")
