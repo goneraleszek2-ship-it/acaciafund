@@ -70,7 +70,7 @@ def compute_file_checksum(filepath: Path) -> str:
 
 
 def update_registry_json() -> None:
-    """Update local registry.json from DuckDB cache."""
+    """Update local registry.json from DuckDB cache (partial data only)."""
     print("\nUpdating registry.json from DuckDB cache...")
     
     registry_path = PROJECT_ROOT / "registry.json"
@@ -82,7 +82,7 @@ def update_registry_json() -> None:
     
     conn = duckdb.connect(str(duckdb_path))
     
-    # Get all articles
+    # Get all articles (basic fields only - DuckDB doesn't have section_images, bloom_questions, signals)
     articles = conn.execute("""
         SELECT 
             slug,
@@ -122,17 +122,24 @@ def update_registry_json() -> None:
             "body_html": row[12],
         })
     
-    # Update registry
+    # Update registry (partial update - only basic fields)
     with open(registry_path) as f:
         registry = json.load(f)
     
-    registry["content"] = articles_list
+    # Merge: keep section_images, bloom_questions, signals from original
+    for i, item in enumerate(registry.get("content", [])):
+        if i < len(articles_list):
+            # Update basic fields from DuckDB
+            for key in articles_list[i]:
+                if key not in ['section_images', 'bloom_questions', 'signals', 'curated_relations', 'prerequisites', 'thumbnail_svg']:
+                    item[key] = articles_list[i][key]
+    
     registry["last_run"] = datetime.now(timezone.utc).isoformat()
     
     with open(registry_path, 'w') as f:
         json.dump(registry, f, indent=2)
     
-    print(f"  Updated {len(articles_list)} articles in registry.json")
+    print(f"  Updated {len(articles_list)} articles in registry.json (preserved section_images, bloom_questions, signals)")
 
 
 def update_duckdb_cache() -> None:

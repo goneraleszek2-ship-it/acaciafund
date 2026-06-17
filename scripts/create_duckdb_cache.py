@@ -75,8 +75,12 @@ def create_signals_table(conn: duckdb.DuckDBPyConnection, articles: list[dict]) 
             })
     
     df = pd.DataFrame(signals_data)
-    conn.execute("CREATE TABLE signals AS SELECT * FROM df")
-    print(f"Created signals table: {len(df)} rows")
+    if len(df) > 0:
+        conn.execute("CREATE TABLE signals AS SELECT * FROM df")
+        print(f"Created signals table: {len(df)} rows")
+    else:
+        conn.execute("CREATE TABLE signals (slug TEXT, avg_sqi FLOAT, avg_score FLOAT, count INTEGER, domain_diversity INTEGER, total_score INTEGER)")
+        print("Created empty signals table")
 
 
 def create_images_table(conn: duckdb.DuckDBPyConnection, articles: list[dict]) -> None:
