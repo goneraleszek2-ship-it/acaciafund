@@ -1840,7 +1840,166 @@ def main():
         **ctx_base)
     (admin_dir / "login.html").write_text(html, encoding="utf-8")
     
-    print("  admin: login, dashboard, gallery, articles")
+    # Manifest
+    from core.images.manifest import load_manifest
+    manifest = load_manifest()
+    manifest_entries = []
+    for key, entry in manifest.items():
+        for sec in entry.get("sections", []):
+            manifest_entries.append({
+                "key": key,
+                "slug": key.split("/", 1)[-1] if "/" in key else key,
+                "section_index": sec.get("section_index"),
+                "image_url": sec.get("image_url"),
+                "image_credit": sec.get("image_credit", ""),
+                "note": entry.get("note", ""),
+            })
+    manifest_entries.sort(key=lambda x: (x["slug"], x["section_index"]))
+    html = render_template("admin/manifest.html",
+        content=_dummy("Manifest", "admin"),
+        active_page="manifest",
+        manifest_entries=manifest_entries,
+        **ctx_base)
+    (admin_dir / "manifest.html").write_text(html, encoding="utf-8")
+    
+    # Pipeline
+    PIPELINE_RUNS_PATH = PROJECT_ROOT / "registry" / "image-pipeline-runs.json"
+    pipeline_runs = []
+    if PIPELINE_RUNS_PATH.exists():
+        try:
+            pipeline_runs = json.loads(PIPELINE_RUNS_PATH.read_text())
+        except Exception:
+            pass
+    dlq_dir = PROJECT_ROOT / ".dlq"
+    dlq_entries = []
+    if dlq_dir.exists():
+        for f in sorted(dlq_dir.glob("*.json"), reverse=True)[:100]:
+            try:
+                dlq_entries.append(json.loads(f.read_text()))
+            except Exception:
+                pass
+    html = render_template("admin/pipeline.html",
+        content=_dummy("Pipeline", "admin"),
+        active_page="pipeline",
+        runs=pipeline_runs,
+        dlq=dlq_entries,
+        dlq_count=len(dlq_entries),
+        **ctx_base)
+    (admin_dir / "pipeline.html").write_text(html, encoding="utf-8")
+    
+    # Quality
+    all_scores = []
+    scores_by_source = {}
+    scores_by_section = {}
+    scores_by_type = {}
+    for c in all_content:
+        ct = c.content_type or "unknown"
+        for s in c.section_images or []:
+            score = s.get("relevance_score", 0)
+            if score:
+                all_scores.append(score)
+                src = s.get("source_api", "unknown")
+                scores_by_source.setdefault(src, []).append(score)
+                stype = s.get("section_index", 0)
+                scores_by_section.setdefault(stype, []).append(score)
+                scores_by_type.setdefault(ct, []).append(score)
+    
+    buckets = [0] * 10
+    for s in all_scores:
+        buckets[min(int(s / 10), 9)] += 1
+    
+    source_avgs = {src: round(sum(v) / len(v), 1) for src, v in sorted(scores_by_source.items(), key=lambda x: -sum(x[1]) / len(x[1]))} if scores_by_source else {}
+    section_avgs = {str(k): round(sum(v) / len(v), 1) for k, v in sorted(scores_by_section.items(), key=lambda x: -sum(x[1]) / len(x[1]))} if scores_by_section else {}
+    type_avgs = {k: round(sum(v) / len(v), 1) for k, v in sorted(scores_by_type.items(), key=lambda x: -sum(x[1]) / len(x[1]))} if scores_by_type else {}
+    
+    total_scores = len(all_scores)
+    avg_score = round(sum(all_scores) / len(all_scores), 1) if all_scores else 0
+    median_score = round(sorted(all_scores)[len(all_scores) // 2], 1) if all_scores else 0
+    above_70 = sum(1 for s in all_scores if s >= 70)
+    below_40 = sum(1 for s in all_scores if s < 40)
+    
+    html = render_template("admin/quality.html",
+        content=_dummy("Quality", "admin"),
+        active_page="quality",
+        stats_total_scores=total_scores,
+        stats_avg_score=avg_score,
+        stats_median_score=median_score,
+        stats_above_70=above_70,
+        stats_below_40=below_40,
+        stats_buckets=buckets,
+        stats_source_avgs=source_avgs,
+        stats_section_avgs=section_avgs,
+        stats_type_avgs=type_avgs,
+        **ctx_base)
+    (admin_dir / "quality.html").write_text(html, encoding="utf-8")
+    
+    # Coverage
+    from core.images import generate_fallback_svg
+    from scripts.fetch_images import SECTION_TYPES, SECTION_FALLBACK_QUERIES, PILLAR_KEYWORDS, SECTION_TYPES
+    
+    # Build coverage data
+    coverage_by_type = {}
+    coverage_by_pillar = {}
+    heatmap = {}
+    
+    for c in all_content:
+        pillar = c.pillar or "unknown"
+        ct = c.content_type or "unknown"
+        if pillar not in coverage_by_pillar:
+            coverage_by_pillar[pillar] = {"filled": 0, "total": 0}
+        if pillar not in heatmap:
+            heatmap[pillar] = {}
+        if ct not in coverage_by_type:
+            coverage_by_type[ct] = {"filled": 0, "total": 0}
+        
+        for s in c.section_images or []:
+            section_idx = s.get("section_index", 0)
+            section_type = SECTION_TYPES.get(section_idx, f"section_{section_idx}")
+            if section_type not in heatmap[pillar]:
+                heatmap[pillar][section_type] = {"filled": 0, "total": 0}
+            
+            coverage_by_pillar[pillar]["total"] += 1
+            coverage_by_type[ct]["total"] += 1
+            heatmap[pillar][section_type]["total"] += 1
+            
+            if s.get("image_url"):
+                coverage_by_pillar[pillar]["filled"] += 1
+                coverage_by_type[ct]["filled"] += 1
+                heatmap[pillar][section_type]["filled"] += 1
+    
+    # Calculate percentages for heatmap
+    heatmap_pct = {}
+    for pillar, sections in heatmap.items():
+        heatmap_pct[pillar] = {}
+        for section_type, data in sections.items():
+            pct = round(data["filled"] / data["total"] * 100, 0) if data["total"] else 0
+            heatmap_pct[pillar][section_type] = pct
+    
+    html = render_template("admin/coverage.html",
+        content=_dummy("Coverage", "admin"),
+        active_page="coverage",
+        heatmap=heatmap_pct,
+        by_pillar=coverage_by_pillar,
+        by_type=coverage_by_type,
+        **ctx_base)
+    (admin_dir / "coverage.html").write_text(html, encoding="utf-8")
+    
+    # Sources
+    from core.sources import registry
+    source_list = registry.source_list()
+    summaries = registry.summaries()
+    sources = []
+    for s in source_list:
+        summary = next((sm for sm in summaries if sm["name"] == s["name"]), {})
+        sources.append({**s, **summary})
+    html = render_template("admin/sources.html",
+        content=_dummy("Sources", "admin"),
+        active_page="sources",
+        sources=sources,
+        **ctx_base)
+    (admin_dir / "sources.html").write_text(html, encoding="utf-8")
+    
+    print("  admin: login, dashboard, gallery, articles, manifest, pipeline, quality, coverage, sources")
 
     # --- SEARCH INDEX ---
     search_index = []
