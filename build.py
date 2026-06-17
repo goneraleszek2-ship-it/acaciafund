@@ -1777,14 +1777,28 @@ def main():
         **ctx_base)
     (admin_dir / "dashboard.html").write_text(html, encoding="utf-8")
     
-    # Gallery
+    # Gallery - pass image data from manifest
+    from core.images.manifest import load_manifest
+    manifest = load_manifest()
+    gallery_images = []
+    for key, entry in manifest.items():
+        for sec in entry.get("sections", []):
+            img_url = sec.get("image_url", "")
+            if img_url:
+                gallery_images.append({
+                    "url": img_url,
+                    "slug": key.split("/", 1)[-1] if "/" in key else key,
+                    "section_index": sec.get("section_index"),
+                })
+    
     html = render_template("admin/gallery.html",
         content=_dummy("Image Gallery", "admin"),
         active_page="gallery",
         image_count=image_count,
         article_count=article_count,
-        stats_total_images=image_count,
+        stats_total_images=len(gallery_images),
         stats_orphan_images=0,
+        gallery_images=gallery_images,
         **ctx_base)
     (admin_dir / "gallery.html").write_text(html, encoding="utf-8")
     

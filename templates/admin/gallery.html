@@ -68,7 +68,19 @@
 </form>
 
 <div id="gallery-grid" class="gallery-grid">
-  <div class="empty-state"><div class="spinner" style="margin:0 auto 12px"></div><p>Loading gallery...</p></div>
+{% for img in gallery_images %}
+  <div class="gallery-item">
+    <a href="{{ img.url }}" target="_blank">
+      <img src="{{ img.url }}" alt="Image for {{ img.slug }}">
+    </a>
+    <div class="gallery-info">
+      <span class="gallery-slug">{{ img.slug }}</span>
+      <span class="gallery-section">Section {{ img.section_index }}</span>
+    </div>
+  </div>
+{% else %}
+  <div class="empty-state"><p>No images in gallery</p></div>
+{% endfor %}
 </div>
 
 <div id="gallery-pagination" class="pagination" style="display:none">
