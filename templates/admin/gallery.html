@@ -70,9 +70,9 @@
 <div id="gallery-grid" class="gallery-grid">
 {% for img in gallery_images %}
   <div class="gallery-item">
-    <a href="{{ img.url }}" target="_blank">
+    <div class="thumb-wrap">
       <img src="{{ img.url }}" alt="Image for {{ img.slug }}">
-    </a>
+    </div>
     <div class="gallery-info">
       <span class="gallery-slug">{{ img.slug }}</span>
       <span class="gallery-section">Section {{ img.section_index }}</span>
