@@ -1806,13 +1806,13 @@ def main():
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0;url=login.html">
+    <meta http-equiv="refresh" content="0;url=login">
     <title>Redirecting...</title>
 </head>
 <body>
     <p>Redirecting to login page...</p>
     <script>
-        window.location.href = 'login.html';
+        window.location.href = 'login';
     </script>
 </body>
 </html>"""
