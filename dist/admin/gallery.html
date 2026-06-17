@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gallery — AcaciaFund</title>
+<link rel="stylesheet" href="/static/admin.css">
+<script>
+// Simple client-side auth check
+const AUTH_CHECKED = sessionStorage.getItem('admin_auth') === 'true';
+if (!AUTH_CHECKED && window.location.pathname !== '/admin/login' && !window.location.pathname.startsWith('/admin/login')) {
+    window.location.href = '/admin/login';
+}
+</script>
+</head>
+<body>
+<button id="sidebar-toggle" class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Toggle sidebar">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M3 12h18M3 6h18M3 18h18"/>
+  </svg>
+</button>
+<nav class="sidebar" id="sidebar">
+<div class="sidebar-header">
+  <button class="sidebar-close" onclick="toggleSidebar()" aria-label="Close sidebar">&times;</button>
+  <strong>AcaciaFund</strong> Admin
+</div>
+  <div class="sidebar-nav">
+    <a href="." class="">
+      <span class="icon">📊</span> Dashboard
+    </a>
+    <a href="gallery" class="active">
+      <span class="icon">🖼</span> Gallery
+    </a>
+    <a href="articles" class="">
+      <span class="icon">📝</span> Articles
+    </a>
+    <a href="manifest" class="">
+      <span class="icon">📄</span> Manifest
+    </a>
+    <a href="pipeline" class="">
+      <span class="icon">📈</span> Pipeline
+    </a>
+    <a href="quality" class="">
+      <span class="icon">🎯</span> Quality
+    </a>
+    <a href="coverage" class="">
+      <span class="icon">🗺</span> Coverage
+    </a>
+    <a href="sources" class="">
+      <span class="icon">📡</span> Sources
+    </a>
+    <a href="curated-test" class="">
+      <span class="icon">🧪</span> Curated Tester
+    </a>
+  </div>
+  <div style="padding:12px 16px;font-size:11px;color:rgba(255,255,255,.3);border-top:1px solid rgba(255,255,255,.06)">
+    293 images · 97 articles
+  </div>
+</nav>
+<div class="main">
+  
+<div class="page-header">
+  <h1>Image Gallery</h1>
+  <div class="subtitle"> images ·  orphan</div>
+</div>
+
+<form id="gallery-filters" class="filters-bar" onsubmit="return false">
+  <label>Type</label>
+  <select name="type">
+    <option value="">All</option>
+    <option value="blog">Blog</option>
+    <option value="learn">Learn</option>
+    <option value="knowledge">Knowledge</option>
+  </select>
+
+  <label>Pillar</label>
+  <select name="pillar">
+    <option value="">All</option>
+    <option value="aml">AML</option>
+    <option value="stock">Stock</option>
+    <option value="data-engineering">Data Engineering</option>
+    <option value="science">Science</option>
+  </select>
+
+  <label>Tag</label>
+  <select name="tag">
+    <option value="">All</option>
+  </select>
+
+  <label>Source</label>
+  <select name="source">
+    <option value="">All</option>
+    <option value="unsplash">Unsplash</option>
+    <option value="pexels">Pexels</option>
+    <option value="pixabay">Pixabay</option>
+    <option value="openverse">Openverse</option>
+    <option value="wikimedia">Wikimedia</option>
+    <option value="loc">LOC</option>
+    <option value="nasa">NASA</option>
+    <option value="curated">Curated</option>
+    <option value="ai_generated">AI Generated</option>
+    <option value="manifest">Manifest</option>
+    <option value="svgs">SVG Fallbacks</option>
+  </select>
+
+  <label>Section</label>
+  <select name="section">
+    <option value="">All</option>
+    <option value="0">0 — Overview</option>
+    <option value="1">1 — Key Findings</option>
+    <option value="2">2 — Applied Scenario</option>
+    <option value="3">3 — Source Analysis</option>
+    <option value="4">4 — Domain Breakdown</option>
+    <option value="5">5 — Cross-Pillar</option>
+    <option value="6">6 — Methodology</option>
+  </select>
+
+  <label>Status</label>
+  <select name="status">
+    <option value="">All</option>
+    <option value="used">In use</option>
+    <option value="orphan">Orphan</option>
+  </select>
+
+  <input type="search" name="q" placeholder="Search filename or article..." style="flex:1;min-width:150px">
+</form>
+
+<div id="gallery-grid" class="gallery-grid">
+  <div class="empty-state"><div class="spinner" style="margin:0 auto 12px"></div><p>Loading gallery...</p></div>
+</div>
+
+<div id="gallery-pagination" class="pagination" style="display:none">
+  <button id="page-prev" class="btn btn-sm" onclick="galleryPrev()">← Prev</button>
+  <span id="page-info" class="page-info"></span>
+  <button id="page-next" class="btn btn-sm" onclick="galleryNext()">Next →</button>
+</div>
+
+<!-- Tag editor modal -->
+<div id="tag-modal" class="modal-overlay">
+  <div class="modal-dialog" style="max-width:400px">
+    <div class="modal-header"><h3>Edit Tags</h3><button class="modal-close" onclick="closeTagModal()">&times;</button></div>
+    <div class="modal-body">
+      <input type="hidden" id="tag-path" value="">
+      <div style="margin-bottom:12px;font-size:13px;color:var(--admin-text-secondary)" id="tag-filename"></div>
+      <div id="tag-list" style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px;min-height:32px"></div>
+      <div style="display:flex;gap:6px">
+        <input type="text" id="tag-input" placeholder="Add tag..." style="flex:1;padding:6px 10px;border:1px solid var(--admin-border);border-radius:6px;font-size:13px">
+        <button onclick="addTag()" class="btn btn-sm">Add</button>
+      </div>
+      <div id="tag-suggestions" style="margin-top:8px;display:flex;flex-wrap:wrap;gap:4px"></div>
+    </div>
+  </div>
+</div>
+
+</div>
+<div class="toast-container"></div>
+
+<!-- Image Picker Modal -->
+<div class="modal-overlay" id="image-picker-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <span>Pick an Image</span>
+      <button class="modal-close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="empty-state"><p>Loading...</p></div>
+    </div>
+  </div>
+</div>
+
+<script src="/static/admin.js"></script>
+<script>
+// Logout function
+function logout() {
+    sessionStorage.removeItem('admin_auth');
+    window.location.href = 'login';
+}
+</script>
+<div style="position:fixed;bottom:10px;right:10px;">
+    <button onclick="logout()" style="padding:8px 16px;background:#dc3545;color:white;border:none;border-radius:4px;cursor:pointer;">Logout</button>
+</div>
+</body>
+</html>
