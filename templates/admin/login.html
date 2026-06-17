@@ -132,6 +132,7 @@
             const password = document.getElementById('password').value.trim();
             
             if (username === VALID_USERNAME && password === VALID_PASSWORD) {
+                sessionStorage.setItem('admin_auth', 'true');
                 window.location.href = 'dashboard';
             } else {
                 alert('Invalid username or password');

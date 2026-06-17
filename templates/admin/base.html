@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{% block title %}Admin{% endblock %} — AcaciaFund</title>
 <link rel="stylesheet" href="/static/admin.css">
+<script>
+// Simple client-side auth check
+const AUTH_CHECKED = sessionStorage.getItem('admin_auth') === 'true';
+if (!AUTH_CHECKED && window.location.pathname !== '/admin/login' && !window.location.pathname.startsWith('/admin/login')) {
+    window.location.href = '/admin/login';
+}
+</script>
 </head>
 <body>
 <button id="sidebar-toggle" class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Toggle sidebar">
@@ -18,31 +25,31 @@
   <strong>AcaciaFund</strong> Admin
 </div>
   <div class="sidebar-nav">
-    <a href="/admin/" class="{{ 'active' if active_page == 'dashboard' else '' }}">
+    <a href="." class="{{ 'active' if active_page == 'dashboard' else '' }}">
       <span class="icon">📊</span> Dashboard
     </a>
-    <a href="/admin/gallery" class="{{ 'active' if active_page == 'gallery' else '' }}">
+    <a href="gallery" class="{{ 'active' if active_page == 'gallery' else '' }}">
       <span class="icon">🖼</span> Gallery
     </a>
-    <a href="/admin/articles" class="{{ 'active' if active_page == 'articles' else '' }}">
+    <a href="articles" class="{{ 'active' if active_page == 'articles' else '' }}">
       <span class="icon">📝</span> Articles
     </a>
-    <a href="/admin/manifest" class="{{ 'active' if active_page == 'manifest' else '' }}">
+    <a href="manifest" class="{{ 'active' if active_page == 'manifest' else '' }}">
       <span class="icon">📄</span> Manifest
     </a>
-    <a href="/admin/pipeline" class="{{ 'active' if active_page == 'pipeline' else '' }}">
+    <a href="pipeline" class="{{ 'active' if active_page == 'pipeline' else '' }}">
       <span class="icon">📈</span> Pipeline
     </a>
-    <a href="/admin/quality" class="{{ 'active' if active_page == 'quality' else '' }}">
+    <a href="quality" class="{{ 'active' if active_page == 'quality' else '' }}">
       <span class="icon">🎯</span> Quality
     </a>
-    <a href="/admin/coverage" class="{{ 'active' if active_page == 'coverage' else '' }}">
+    <a href="coverage" class="{{ 'active' if active_page == 'coverage' else '' }}">
       <span class="icon">🗺</span> Coverage
     </a>
-    <a href="/admin/sources" class="{{ 'active' if active_page == 'sources' else '' }}">
+    <a href="sources" class="{{ 'active' if active_page == 'sources' else '' }}">
       <span class="icon">📡</span> Sources
     </a>
-    <a href="/admin/curated-test" class="{{ 'active' if active_page == 'curated' else '' }}">
+    <a href="curated-test" class="{{ 'active' if active_page == 'curated' else '' }}">
       <span class="icon">🧪</span> Curated Tester
     </a>
   </div>
@@ -69,5 +76,15 @@
 </div>
 
 <script src="/static/admin.js"></script>
+<script>
+// Logout function
+function logout() {
+    sessionStorage.removeItem('admin_auth');
+    window.location.href = 'login';
+}
+</script>
+<div style="position:fixed;bottom:10px;right:10px;">
+    <button onclick="logout()" style="padding:8px 16px;background:#dc3545;color:white;border:none;border-radius:4px;cursor:pointer;">Logout</button>
+</div>
 </body>
 </html>
