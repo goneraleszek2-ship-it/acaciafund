@@ -8,23 +8,23 @@ from transforms.api import transform, Output
 
 
 @transform(
-    test_source=Output("/TierPalan-95733d/Acacia/SOURCE_DATASET_PATH")
+    test_source=Output("SOURCE_DATASET_PATH")
 )
 def create_test_data(test_source):
     """
-    Creates comprehensive test dataset for AcaciaFund portal
-    Includes: articles, sources, tags, pillars, quality metrics
+    Creates comprehensive test dataset for AcaciaFund portal.
+    Includes: articles, sources, tags, pillars, quality metrics.
     """
     df = pl.DataFrame({
         "source_id": [f"article_{i:04d}" for i in range(1, 101)],
         "title": [f"Article Title {i}" for i in range(1, 101)],
         "description": [f"Description for article {i}" for i in range(1, 101)],
         "url": [f"https://acaciafund.org/article/{i}" for i in range(1, 101)],
-        "source_api": ["arxiv" if i % 5 == 0 else "pubmed" if i % 5 == 1 else "curated" 
+        "source_api": ["arxiv" if i % 5 == 0 else "pubmed" if i % 5 == 1 else "curated"
                        for i in range(1, 101)],
         "domain": ["acaciafund.org"] * 100,
         "tags": [[f"tag_{j}" for j in range(1, (i % 5) + 2)] for i in range(1, 101)],
-        "pillar": ["AML" if i % 3 == 0 else "Markets" if i % 3 == 1 else "Data Engineering" 
+        "pillar": ["AML" if i % 3 == 0 else "Markets" if i % 3 == 1 else "Data Engineering"
                    for i in range(1, 101)],
         "credibility_score": [round(0.5 + (i % 5) * 0.1, 2) for i in range(1, 101)],
         "technical_accuracy_score": [round(0.6 + (i % 4) * 0.05, 2) for i in range(1, 101)],
@@ -33,7 +33,7 @@ def create_test_data(test_source):
         "trend_relevance_score": [round(0.65 + (i % 7) * 0.05, 2) for i in range(1, 101)],
         "educational_quality_score": [round(0.6 + (i % 5) * 0.08, 2) for i in range(1, 101)],
         "trend_strength": [round(80 + (i % 20), 1) for i in range(1, 101)],
-        "adoption_level": ["emerging" if i % 3 == 0 else "experimental" if i % 3 == 1 else "mainstream" 
+        "adoption_level": ["emerging" if i % 3 == 0 else "experimental" if i % 3 == 1 else "mainstream"
                            for i in range(1, 101)],
         "impact_level": ["high" if i % 2 == 0 else "medium" for i in range(1, 101)],
         "inferred_at": [f"2026-06-{15 + (i % 10):02d}T12:00:00+00:00" for i in range(1, 101)],
@@ -41,5 +41,5 @@ def create_test_data(test_source):
         "is_active": [True if i % 10 != 0 else False for i in range(1, 101)],
         "is_published": [True] * 100,
     })
-    
+
     test_source.write_table(df)

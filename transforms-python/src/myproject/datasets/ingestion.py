@@ -10,7 +10,7 @@ from transforms.api import transform, Input, Output, LightweightInput, Lightweig
 
 @transform.using(
     output=Output("acacia_portal_clean_data"),
-    sources=Input("/TierPalan-95733d/Acacia/SOURCE_DATASET_PATH"),
+    sources=Input("SOURCE_DATASET_PATH"),
 )
 def compute(
     sources: LightweightInput,

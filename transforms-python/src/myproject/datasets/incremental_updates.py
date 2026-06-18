@@ -10,7 +10,7 @@ from transforms.api import transform, Input, Output, incremental
 
 @incremental()
 @transform(
-    source_data=Input("/TierPalan-95733d/Acacia/SOURCE_DATASET_PATH"),
+    source_data=Input("SOURCE_DATASET_PATH"),
     incremental_output=Output("incremental_fund_updates")
 )
 def process_incremental_updates(source_data, incremental_output):
