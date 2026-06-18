@@ -6,12 +6,13 @@ Generates source synthesis records for articles.
 import polars as pl
 from datetime import datetime, timezone
 from transforms.api import transform, Input, Output, LightweightInput, LightweightOutput
+from myproject.config import DatasetPaths
 
 
 @transform.using(
-    output=Output("/TierPalan-95733d/Acacia/acaciafund-pipeline/source_synthesis"),
-    quality=Input("/TierPalan-95733d/Acacia/acaciafund-pipeline/quality_scores"),
-    verification=Input("/TierPalan-95733d/Acacia/acaciafund-pipeline/source_verification"),
+    output=Output(DatasetPaths.SOURCE_SYNTHESIS),
+    quality=Input(DatasetPaths.QUALITY_SCORES),
+    verification=Input(DatasetPaths.SOURCE_VERIFICATION),
 )
 def source_synthesis(
     quality: LightweightInput,
@@ -21,15 +22,22 @@ def source_synthesis(
     """
     Generate source synthesis records for all articles.
     """
-    df_quality = quality.polars(lazy=True)
-    df_verification = verification.polars(lazy=True)
-    
-    df = df_quality.join(df_verification, on="source_id", how="left")
-    
-    df = df.with_columns([
-        pl.lit("research").alias("source_type"),
-        pl.lit(0.652).alias("synthesis_score"),
-        pl.lit(datetime.now(timezone.utc)).alias("synthesis_timestamp"),
-    ])
-    
-    output.write_table(df)
+    try:
+        df_quality = quality.polars(lazy=True)
+        df_verification = verification.polars(lazy=True)
+        
+        df = df_quality.join(df_verification, on="source_id", how="left")
+        
+        df = df.with_columns([
+            pl.lit("research").alias("source_type"),
+            pl.lit(0.652).alias("synthesis_score"),
+            pl.lit(datetime.now(timezone.utc)).alias("synthesis_timestamp"),
+        ])
+        
+        output.write_table(df)
+        
+        print(f"Source synthesis completed: {df.select(pl.len()).collect()} records")
+        
+    except Exception as e:
+        print(f"Error in source_synthesis: {str(e)}")
+        raise
