@@ -25,7 +25,7 @@ from urllib.parse import quote as urlquote
 
 from schemas import RegistryData
 from core.visuals import generate_thumbnail_svg, generate_og_image, resolve_topic_icon, render_topic_icon, _pick_subtopic, TOPIC_ICONS, SUBTOPIC_CATEGORIES, PILLAR_COLORS
-from core.images import generate_fallback_svg
+from core.images.templates import generate_fallback_svg
 from core.brand import BRAND, brand_domain_icon, brand_micro_icon, brand_logo_svg, section_type_color
 
 from seed_learn import CURATED_RELATIONS, PREREQUISITES as LEARN_PREREQUISITES
