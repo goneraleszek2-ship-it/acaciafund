@@ -1015,18 +1015,26 @@ def main():
         trend_detection_backup = trend_detection_path.read_bytes()
         trend_detection_path.unlink()
 
+    source_synthesis_backup = None
+    source_synthesis_path = OUTPUT_DIR / "source_synthesis.parquet"
+    if source_synthesis_path.exists():
+        source_synthesis_backup = source_synthesis_path.read_bytes()
+        source_synthesis_path.unlink()
+
     if OUTPUT_DIR.exists():
         shutil.rmtree(OUTPUT_DIR)
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     STATIC_DST_DIR.mkdir(parents=True, exist_ok=True)
 
-    # Restore quality scores, source verification, and trend detection
+    # Restore quality scores, source verification, trend detection, and source synthesis
     if quality_scores_backup:
         quality_scores_path.write_bytes(quality_scores_backup)
     if source_verification_backup:
         source_verification_path.write_bytes(source_verification_backup)
     if trend_detection_backup:
         trend_detection_path.write_bytes(trend_detection_backup)
+    if source_synthesis_backup:
+        source_synthesis_path.write_bytes(source_synthesis_backup)
 
     if PIPELINE_STATIC_DIR.exists():
         for item in PIPELINE_STATIC_DIR.rglob("*"):
@@ -1072,6 +1080,21 @@ def main():
                 "evidence": evidence,
             }
         print(f"  Loaded source verification for {len(source_verification)} articles")
+
+    # --- Source Synthesis Framework ---
+    synthesis_path = PROJECT_ROOT / "dist" / "source_synthesis.parquet"
+    source_synthesis = {}
+    if synthesis_path.exists():
+        df = pd.read_parquet(synthesis_path)
+        source_synthesis = {}
+        for slug, group in df.groupby("article_slug"):
+            records = group.to_dict('records')
+            # Convert numpy arrays back to Python lists
+            for rec in records:
+                if 'key_insights' in rec and hasattr(rec['key_insights'], '__iter__') and not isinstance(rec['key_insights'], str):
+                    rec['key_insights'] = list(rec['key_insights'])
+            source_synthesis[slug] = records
+        print(f"  Loaded source synthesis for {len(source_synthesis)} articles")
 
     # --- Quality Engine ---
     quality_scores_path = PROJECT_ROOT / "dist" / "quality_scores.parquet"
@@ -1248,6 +1271,7 @@ def main():
             source_verified=source_verified, source_evidence=source_evidence,
             quality_metrics=quality_metrics,
             trend_strength=trend_strength, adoption_level=adoption_level, impact_level=impact_level, trend_categories=trend_categories,
+            source_synthesis=source_synthesis.get(item.slug, []),
             is_index=False, page_type="knowledge", layer="knowledge",
             layer_icon=LAYER_ICONS["knowledge"], layer_sub=layer_sub, **ctx_base)
         out_file.write_text(html, encoding="utf-8")
@@ -1430,6 +1454,7 @@ def main():
             quality_metrics=quality_metrics,
             source_verified=source_verified, source_evidence=source_evidence,
             trend_strength=trend_strength, adoption_level=adoption_level, impact_level=impact_level, trend_categories=trend_categories,
+            source_synthesis=source_synthesis.get(item.slug, []),
             is_index=False, layer="learn",
             layer_icon=LAYER_ICONS["learn"], layer_sub=layer_sub, **ctx_base)
         out_file.write_text(html, encoding="utf-8")
@@ -1576,7 +1601,9 @@ def main():
             image_credit=item.image_credit,
             quiz_json=r_quiz_json,
             topic_icon_html=topic_icon_html,
-            layer_sub=pconf["label"], **ctx_base)
+            layer_sub=pconf["label"],
+            source_synthesis=source_synthesis.get(item.slug, []),
+            **ctx_base)
         out_file.write_text(html, encoding="utf-8")
         print(f"  research: {out_file.relative_to(OUTPUT_DIR)}")
 
