@@ -10,8 +10,8 @@ from transforms import expectations as E
 
 
 @transform.using(
-    input_dataset=Input("/TierPalan-95733d/Acacia/SOURCE_DATASET_PATH"),
-    output_dataset=Output("/TierPalan-95733d/Acacia/acaciafund-pipeline/acacia_portal_clean_data"),
+    input_dataset=Input("SOURCE_DATASET_PATH"),
+    output_dataset=Output("acacia_portal_clean_data"),
 )
 def clean_and_standardize(
     input_dataset: LightweightInput,
@@ -132,8 +132,8 @@ def clean_and_standardize(
 
 # Additional transform for data quality monitoring
 @transform.using(
-    output=Output("/TierPalan-95733d/Acacia/acaciafund-pipeline/cleaning_quality_metrics"),
-    input_dataset=Input("/TierPalan-95733d/Acacia/SOURCE_DATASET_PATH"),
+    output=Output("cleaning_quality_metrics"),
+    input_dataset=Input("SOURCE_DATASET_PATH"),
 )
 def cleaning_quality_metrics(
     input_dataset: LightweightInput,
