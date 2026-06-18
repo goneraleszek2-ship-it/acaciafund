@@ -6,12 +6,11 @@ Collects and ingests articles from multiple sources into Foundry datasets.
 import polars as pl
 from datetime import datetime, timezone
 from transforms.api import transform, Input, Output, LightweightInput, LightweightOutput
-from myproject.config import DatasetPaths
 
 
 @transform.using(
-    output=Output(DatasetPaths.CLEANED_DATA),
-    sources=Input(DatasetPaths.SOURCE_DATASET),
+    output=Output("acacia_portal_clean_data"),
+    sources=Input("/TierPalan-95733d/Acacia/SOURCE_DATASET_PATH"),
 )
 def compute(
     sources: LightweightInput,

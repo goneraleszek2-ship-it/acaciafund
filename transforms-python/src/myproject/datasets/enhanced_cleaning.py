@@ -6,12 +6,11 @@ Advanced data cleaning with validation and enrichment.
 import polars as pl
 from transforms.api import transform, Input, Output
 from transforms import expectations as E
-from myproject.config import DatasetPaths
 
 
 @transform(
-    raw_data=Input("SOURCE_DATASET_PATH"),
-    cleaned_data=Output(DatasetPaths.CLEANED_DATA),
+    raw_data=Input("/TierPalan-95733d/Acacia/SOURCE_DATASET_PATH"),
+    cleaned_data=Output("acacia_portal_clean_data"),
     expectations=E.expectations(
         E.col("source_id").is_not_null(),
         E.col("title").is_not_null(),

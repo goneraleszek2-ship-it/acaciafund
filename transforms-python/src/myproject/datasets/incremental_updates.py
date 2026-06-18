@@ -6,13 +6,12 @@ Processes only new data since last build.
 import polars as pl
 from datetime import datetime, timezone
 from transforms.api import transform, Input, Output, incremental
-from myproject.config import DatasetPaths
 
 
 @incremental()
 @transform(
-    source_data=Input("SOURCE_DATASET_PATH"),
-    incremental_output=Output(DatasetPaths.INCREMENTAL_UPDATES)
+    source_data=Input("/TierPalan-95733d/Acacia/SOURCE_DATASET_PATH"),
+    incremental_output=Output("incremental_fund_updates")
 )
 def process_incremental_updates(source_data, incremental_output):
     """Process only new data since last build"""

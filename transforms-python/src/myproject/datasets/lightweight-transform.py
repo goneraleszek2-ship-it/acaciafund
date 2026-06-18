@@ -10,7 +10,7 @@ from transforms import expectations as E
 
 
 @transform.using(
-    input_dataset=Input("SOURCE_DATASET_PATH"),
+    input_dataset=Input("/TierPalan-95733d/Acacia/SOURCE_DATASET_PATH"),
     output_dataset=Output("acacia_portal_clean_data"),
 )
 def clean_and_standardize(
@@ -133,7 +133,7 @@ def clean_and_standardize(
 # Additional transform for data quality monitoring
 @transform.using(
     output=Output("cleaning_quality_metrics"),
-    input_dataset=Input("SOURCE_DATASET_PATH"),
+    input_dataset=Input("/TierPalan-95733d/Acacia/SOURCE_DATASET_PATH"),
 )
 def cleaning_quality_metrics(
     input_dataset: LightweightInput,
