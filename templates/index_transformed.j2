@@ -245,64 +245,24 @@
           </a>
         </div>
         
-        <!-- Trust Metrics -->
+        <!-- Trust Metrics (simplified) -->
         <div class="trust-metrics">
           <div class="trust-metric">
-            <div class="trust-value">{{ recent_posts | length | add(100) }}</div>
-            <div class="trust-label">Research Briefings</div>
+            <div class="trust-value">{{ recent_posts | length }}</div>
+            <div class="trust-label">Articles</div>
           </div>
           <div class="trust-metric">
-            <div class="trust-value">{{ learn_items | length | add(100) }}</div>
-            <div class="trust-label">Learning Modules</div>
+            <div class="trust-value">{{ learn_items | length }}</div>
+            <div class="trust-label">Lessons</div>
           </div>
           <div class="trust-metric">
-            <div class="trust-value">{{ knowledge_items | length | add(100) }}</div>
-            <div class="trust-label">Knowledge Articles</div>
-          </div>
-          <div class="trust-metric">
-            <div class="trust-value">0.85</div>
-            <div class="trust-label">Avg SQI Score</div>
+            <div class="trust-value">{{ knowledge_items | length }}</div>
+            <div class="trust-label">Knowledge</div>
           </div>
         </div>
       </div>
       
-      <!-- Right: Dashboard -->
-      <div class="hero-dashboard">
-        <h3 class="text-sm font-semibold text-gray-300 mb-4 uppercase tracking-wider">Research Pipeline</h3>
-        <div class="dashboard-grid">
-          <div class="dashboard-stat">
-            <div class="dashboard-value">12K+</div>
-            <div class="dashboard-label">Papers Analyzed</div>
-          </div>
-          <div class="dashboard-stat">
-            <div class="dashboard-value">400+</div>
-            <div class="dashboard-label">Research Summaries</div>
-          </div>
-          <div class="dashboard-stat">
-            <div class="dashboard-value">150+</div>
-            <div class="dashboard-label">Learning Paths</div>
-          </div>
-          <div class="dashboard-stat">
-            <div class="dashboard-value">300+</div>
-            <div class="dashboard-label">Knowledge Nodes</div>
-          </div>
-        </div>
-        
-        <div class="mt-6">
-          <div class="flex items-center justify-between mb-2">
-            <span class="text-sm text-gray-400">Weekly Updates</span>
-            <span class="text-sm font-semibold text-teal-400">2-4 new briefings</span>
-          </div>
-          <div class="progress-bar">
-            <div class="progress-fill" style="width: 75%"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- Latest Research (Moved Up) -->
+      <!-- Latest Research (Moved Up) -->
 <section class="py-16 bg-white">
   <div class="max-w-7xl mx-auto px-4">
     <div class="flex items-end justify-between mb-8">

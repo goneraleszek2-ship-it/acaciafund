@@ -319,118 +319,39 @@
   AcaciaFund - Invest in Understanding to build Resilience.
 </div>
 
-<!-- Consolidated Statistics Bar -->
+<!-- Consolidated Statistics Bar (simplified) -->
 <div class="stats-bar">
   <div class="stats-bar-inner">
     <div class="stat-item">
       <span class="stat-value">{{ recent_posts | length }}</span>
-      <span class="stat-label">Latest Research</span>
+      <span class="stat-label">Articles</span>
     </div>
     <div class="stat-item">
       <span class="stat-value">{{ learn_items | length }}</span>
-      <span class="stat-label">Learning Modules</span>
+      <span class="stat-label">Lessons</span>
     </div>
     <div class="stat-item">
       <span class="stat-value">{{ knowledge_items | length }}</span>
-      <span class="stat-label">Knowledge Base</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-value">0.85</span>
-      <span class="stat-label">Avg SQI</span>
+      <span class="stat-label">Knowledge</span>
     </div>
   </div>
 </div>
 
-<!-- Hero Section with Dashboard -->
-<section class="hero-gradient py-16 md:py-24" id="home" aria-labelledby="hero-heading">
-  <div class="hero-content max-w-7xl mx-auto px-4">
-    <div class="grid lg:grid-cols-2 gap-12 items-center">
-      <!-- Left: Content -->
-      <div>
-        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-6">
-          <span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-          <span class="text-sm text-gray-300">Live: {{ now.strftime("%B %d, %Y") if now else "Today" }}</span>
-        </div>
-        
-        <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight leading-tight mb-6" style="color:#ffffff">
-          Research Intelligence for
-          <span style="background: linear-gradient(135deg, #14B8A6 0%, #F59E0B 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
-            AML, Markets & Data Engineering
-          </span>
-        </h1>
-        
-        <p class="text-lg md:text-xl text-gray-300 mb-8 max-w-xl leading-relaxed">
-          Transform high-signal research into actionable knowledge, structured learning paths, and architecture blueprints.
-        </p>
-        
-        <div class="flex flex-wrap gap-4 mb-8">
-          <a href="/learn/" class="inline-flex items-center gap-2 px-6 py-3.5 bg-gradient-to-r from-teal-500 to-teal-600 hover:from-teal-400 hover:to-teal-500 text-white font-semibold rounded-xl transition-all transform hover:scale-105 shadow-lg shadow-teal-500/25">
-            Start Learning
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </a>
-          <a href="/research/" class="inline-flex items-center gap-2 px-6 py-3.5 bg-white/5 hover:bg-white/10 border border-white/10 text-white font-semibold rounded-xl transition-all">
-            Explore Research
-          </a>
-        </div>
-        
-        <!-- Trust Metrics -->
-        <div class="trust-metrics">
-          <div class="trust-metric">
-            <div class="trust-value">{{ recent_posts | length + 100 }}</div>
-            <div class="trust-label">Research Briefings</div>
-          </div>
-          <div class="trust-metric">
-            <div class="trust-value">{{ learn_items | length + 100 }}</div>
-            <div class="trust-label">Learning Modules</div>
-          </div>
-          <div class="trust-metric">
-            <div class="trust-value">{{ knowledge_items | length + 100 }}</div>
-            <div class="trust-label">Knowledge Articles</div>
-          </div>
-          <div class="trust-metric">
-            <div class="trust-value">0.85</div>
-            <div class="trust-label">Avg SQI Score</div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Right: Dashboard -->
-      <div class="hero-dashboard">
-        <h3 class="text-sm font-semibold text-gray-300 mb-4 uppercase tracking-wider">Research Pipeline</h3>
-        <div class="fluid-grid">
-          <div class="hero-stat">
-            <div class="hero-value">12K+</div>
-            <div class="hero-label">Papers Analyzed</div>
-          </div>
-          <div class="hero-stat">
-            <div class="hero-value">400+</div>
-            <div class="hero-label">Research Summaries</div>
-          </div>
-          <div class="hero-stat">
-            <div class="hero-value">150+</div>
-            <div class="hero-label">Learning Paths</div>
-          </div>
-          <div class="hero-stat">
-            <div class="hero-value">300+</div>
-            <div class="hero-label">Knowledge Nodes</div>
-          </div>
-        </div>
-        
-        <div class="mt-6">
-          <div class="flex items-center justify-between mb-2">
-            <span class="text-sm text-gray-400">Weekly Updates</span>
-            <span class="text-sm font-semibold text-teal-400">2-4 new briefings</span>
-          </div>
-          <div class="progress-bar">
-            <div class="progress-fill" style="width: 75%"></div>
-          </div>
-        </div>
-      </div>
-    </div>
+<!-- Trust Metrics (simplified) -->
+<div class="trust-metrics">
+  <div class="trust-metric">
+    <div class="trust-value">{{ recent_posts | length }}</div>
+    <div class="trust-label">Articles</div>
   </div>
-</section>
+  <div class="trust-metric">
+    <div class="trust-value">{{ learn_items | length }}</div>
+    <div class="trust-label">Lessons</div>
+  </div>
+  <div class="trust-metric">
+    <div class="trust-value">{{ knowledge_items | length }}</div>
+    <div class="trust-label">Knowledge</div>
+  </div>
+</div>
 
 <!-- Carousel: Latest Articles -->
 <section class="py-16 bg-gray-50">
