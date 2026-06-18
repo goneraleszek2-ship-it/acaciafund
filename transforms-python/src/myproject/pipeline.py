@@ -1,3 +1,8 @@
+"""
+AcaciaFund Pipeline Configuration
+Registers all transforms and datasets.
+"""
+
 from transforms.api import Pipeline
 
 from myproject import datasets
