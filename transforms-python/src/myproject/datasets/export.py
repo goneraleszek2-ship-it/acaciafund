@@ -22,25 +22,18 @@ def quality_metrics(
     """
     Export quality metrics for static site consumption.
     """
-    try:
-        df_scoring = scoring.polars(lazy=True)
-        df_analysis = analysis.polars(lazy=True)
-        
-        df = df_scoring.join(df_analysis, on="source_id", how="left")
-        
-        df = df.with_columns([
-            pl.lit("curated").alias("source_type"),
-            pl.col("verified").fill_null(pl.lit(True)).alias("source_verified"),
-            pl.lit(datetime.now(timezone.utc)).alias("export_timestamp"),
-        ])
-        
-        output.write_table(df)
-        
-        print(f"Quality metrics export completed: {df.select(pl.len()).collect()} records")
-        
-    except Exception as e:
-        print(f"Error in quality_metrics: {str(e)}")
-        raise
+    df_scoring = scoring.polars(lazy=True)
+    df_analysis = analysis.polars(lazy=True)
+    
+    df = df_scoring.join(df_analysis, on="source_id", how="left")
+    
+    df = df.with_columns([
+        pl.lit("curated").alias("source_type"),
+        pl.col("verified").fill_null(pl.lit(True)).alias("source_verified"),
+        pl.lit(datetime.now(timezone.utc)).alias("export_timestamp"),
+    ])
+    
+    output.write_table(df)
 
 
 @transform.using(
@@ -56,36 +49,29 @@ def technology_radar(
     """
     Export technology radar recommendations.
     """
-    try:
-        df_scoring = scoring.polars(lazy=True)
-        df_analysis = analysis.polars(lazy=True)
-        
-        df = df_scoring.join(df_analysis, on="source_id", how="left")
-        
-        df = df.with_columns([
-            pl.when((pl.col("overall_quality_score") >= 0.8) & (pl.col("trend_strength") >= 50))
-            .then(pl.lit("adopt"))
-            .when((pl.col("overall_quality_score") >= 0.6) & (pl.col("trend_strength") >= 30))
-            .then(pl.lit("trial"))
-            .when(pl.col("overall_quality_score") >= 0.5)
-            .then(pl.lit("assess"))
-            .otherwise(pl.lit("hold"))
-            .alias("recommendation"),
-        ])
-        
-        df = df.with_columns([
-            pl.lit("AcaciaFund Technology Radar - Q2 2026").alias("radar_name"),
-            pl.lit(datetime.now(timezone.utc).strftime("%Y-%m-%d")).alias("radar_date"),
-            pl.lit(datetime.now(timezone.utc)).alias("export_timestamp"),
-        ])
-        
-        output.write_table(df)
-        
-        print(f"Technology radar export completed: {df.select(pl.len()).collect()} records")
-        
-    except Exception as e:
-        print(f"Error in technology_radar: {str(e)}")
-        raise
+    df_scoring = scoring.polars(lazy=True)
+    df_analysis = analysis.polars(lazy=True)
+    
+    df = df_scoring.join(df_analysis, on="source_id", how="left")
+    
+    df = df.with_columns([
+        pl.when((pl.col("overall_quality_score") >= 0.8) & (pl.col("trend_strength") >= 50))
+        .then(pl.lit("adopt"))
+        .when((pl.col("overall_quality_score") >= 0.6) & (pl.col("trend_strength") >= 30))
+        .then(pl.lit("trial"))
+        .when(pl.col("overall_quality_score") >= 0.5)
+        .then(pl.lit("assess"))
+        .otherwise(pl.lit("hold"))
+        .alias("recommendation"),
+    ])
+    
+    df = df.with_columns([
+        pl.lit("AcaciaFund Technology Radar - Q2 2026").alias("radar_name"),
+        pl.lit(datetime.now(timezone.utc).strftime("%Y-%m-%d")).alias("radar_date"),
+        pl.lit(datetime.now(timezone.utc)).alias("export_timestamp"),
+    ])
+    
+    output.write_table(df)
 
 
 @transform.using(
@@ -101,22 +87,15 @@ def source_synthesis(
     """
     Export source synthesis records.
     """
-    try:
-        df_scoring = scoring.polars(lazy=True)
-        df_verification = verification.polars(lazy=True)
-        
-        df = df_scoring.join(df_verification, on="source_id", how="left")
-        
-        df = df.with_columns([
-            pl.lit("research").alias("source_type"),
-            pl.lit(0.652).alias("synthesis_score"),
-            pl.lit(datetime.now(timezone.utc)).alias("synthesis_timestamp"),
-        ])
-        
-        output.write_table(df)
-        
-        print(f"Source synthesis export completed: {df.select(pl.len()).collect()} records")
-        
-    except Exception as e:
-        print(f"Error in source_synthesis export: {str(e)}")
-        raise
+    df_scoring = scoring.polars(lazy=True)
+    df_verification = verification.polars(lazy=True)
+    
+    df = df_scoring.join(df_verification, on="source_id", how="left")
+    
+    df = df.with_columns([
+        pl.lit("research").alias("source_type"),
+        pl.lit(0.652).alias("synthesis_score"),
+        pl.lit(datetime.now(timezone.utc)).alias("synthesis_timestamp"),
+    ])
+    
+    output.write_table(df)

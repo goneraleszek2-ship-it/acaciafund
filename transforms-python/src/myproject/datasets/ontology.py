@@ -20,45 +20,38 @@ def compute(
     """
     Extract concepts from articles and build ontology.
     """
-    try:
-        df = sources.polars(lazy=True)
-        
-        df_concepts = df.select([
-            pl.col("tags").explode().alias("concept_name"),
-        ]).unique()
-        
-        df_pillars = pl.DataFrame({
-            "concept_name": ["AML", "Markets", "Data Engineering"],
-        })
-        
-        df_concepts = pl.concat([
-            df_pillars.with_columns([
-                pl.lit("pillar").alias("concept_type"),
-                pl.lit("").alias("parent_concept_id"),
-                pl.lit([]).alias("child_concepts"),
-                pl.lit([]).alias("related_concepts"),
-                pl.lit(1.0).alias("domain_coverage"),
-            ]),
-            df_concepts.with_columns([
-                pl.lit("technology").alias("concept_type"),
-                pl.lit("").alias("parent_concept_id"),
-                pl.lit([]).alias("child_concepts"),
-                pl.lit([]).alias("related_concepts"),
-                pl.lit(0.0).alias("domain_coverage"),
-            ]),
-        ])
-        
-        df_concepts = df_concepts.with_columns([
-            pl.lit(datetime.now(timezone.utc)).alias("last_updated"),
-        ])
-        
-        output.write_table(df_concepts)
-        
-        print(f"Ontology concepts completed: {df_concepts.select(pl.len()).collect()} records")
-        
-    except Exception as e:
-        print(f"Error in ontology compute: {str(e)}")
-        raise
+    df = sources.polars(lazy=True)
+    
+    df_concepts = df.select([
+        pl.col("tags").explode().alias("concept_name"),
+    ]).unique()
+    
+    df_pillars = pl.DataFrame({
+        "concept_name": ["AML", "Markets", "Data Engineering"],
+    })
+    
+    df_concepts = pl.concat([
+        df_pillars.with_columns([
+            pl.lit("pillar").alias("concept_type"),
+            pl.lit("").alias("parent_concept_id"),
+            pl.lit([]).alias("child_concepts"),
+            pl.lit([]).alias("related_concepts"),
+            pl.lit(1.0).alias("domain_coverage"),
+        ]),
+        df_concepts.with_columns([
+            pl.lit("technology").alias("concept_type"),
+            pl.lit("").alias("parent_concept_id"),
+            pl.lit([]).alias("child_concepts"),
+            pl.lit([]).alias("related_concepts"),
+            pl.lit(0.0).alias("domain_coverage"),
+        ]),
+    ])
+    
+    df_concepts = df_concepts.with_columns([
+        pl.lit(datetime.now(timezone.utc)).alias("last_updated"),
+    ])
+    
+    output.write_table(df_concepts)
 
 
 @transform.using(
@@ -72,33 +65,26 @@ def relationships(
     """
     Extract concept relationships from co-occurrences.
     """
-    try:
-        df = sources.polars(lazy=True)
-        
-        df_pairs = df.select([
-            pl.col("tags").alias("tags_list"),
-        ]).filter(pl.col("tags").list.length() > 1)
-        
-        df_pairs = df_pairs.with_columns([
-            pl.col("tags_list").explode().alias("tag1"),
-            pl.col("tags_list").explode().alias("tag2"),
-        ]).filter(pl.col("tag1") < pl.col("tag2"))
-        
-        df_pairs = df_pairs.select([
-            pl.col("tag1").alias("source_concept"),
-            pl.col("tag2").alias("target_concept"),
-        ]).unique()
-        
-        df_pairs = df_pairs.with_columns([
-            pl.lit("cooccurs_with").alias("relationship_type"),
-            pl.lit(0.5).alias("strength"),
-            pl.lit(datetime.now(timezone.utc)).alias("created_at"),
-        ])
-        
-        output.write_table(df_pairs)
-        
-        print(f"Ontology relationships completed: {df_pairs.select(pl.len()).collect()} records")
-        
-    except Exception as e:
-        print(f"Error in ontology relationships: {str(e)}")
-        raise
+    df = sources.polars(lazy=True)
+    
+    df_pairs = df.select([
+        pl.col("tags").alias("tags_list"),
+    ]).filter(pl.col("tags").list.length() > 1)
+    
+    df_pairs = df_pairs.with_columns([
+        pl.col("tags_list").explode().alias("tag1"),
+        pl.col("tags_list").explode().alias("tag2"),
+    ]).filter(pl.col("tag1") < pl.col("tag2"))
+    
+    df_pairs = df_pairs.select([
+        pl.col("tag1").alias("source_concept"),
+        pl.col("tag2").alias("target_concept"),
+    ]).unique()
+    
+    df_pairs = df_pairs.with_columns([
+        pl.lit("cooccurs_with").alias("relationship_type"),
+        pl.lit(0.5).alias("strength"),
+        pl.lit(datetime.now(timezone.utc)).alias("created_at"),
+    ])
+    
+    output.write_table(df_pairs)

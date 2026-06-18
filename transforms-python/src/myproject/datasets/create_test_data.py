@@ -8,7 +8,7 @@ from transforms.api import transform, Output
 
 
 @transform(
-    test_source=Output("/TierPalan-95733d/Acacia/SOURCE_DATASET_PATH")
+    test_source=Output("SOURCE_DATASET_PATH")
 )
 def create_test_data(test_source):
     """

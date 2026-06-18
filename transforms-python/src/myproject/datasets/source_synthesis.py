@@ -22,22 +22,15 @@ def source_synthesis(
     """
     Generate source synthesis records for all articles.
     """
-    try:
-        df_quality = quality.polars(lazy=True)
-        df_verification = verification.polars(lazy=True)
-        
-        df = df_quality.join(df_verification, on="source_id", how="left")
-        
-        df = df.with_columns([
-            pl.lit("research").alias("source_type"),
-            pl.lit(0.652).alias("synthesis_score"),
-            pl.lit(datetime.now(timezone.utc)).alias("synthesis_timestamp"),
-        ])
-        
-        output.write_table(df)
-        
-        print(f"Source synthesis completed: {df.select(pl.len()).collect()} records")
-        
-    except Exception as e:
-        print(f"Error in source_synthesis: {str(e)}")
-        raise
+    df_quality = quality.polars(lazy=True)
+    df_verification = verification.polars(lazy=True)
+    
+    df = df_quality.join(df_verification, on="source_id", how="left")
+    
+    df = df.with_columns([
+        pl.lit("research").alias("source_type"),
+        pl.lit(0.652).alias("synthesis_score"),
+        pl.lit(datetime.now(timezone.utc)).alias("synthesis_timestamp"),
+    ])
+    
+    output.write_table(df)

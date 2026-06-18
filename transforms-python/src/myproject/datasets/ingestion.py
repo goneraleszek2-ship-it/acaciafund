@@ -39,7 +39,7 @@ def compute(
 
 
 @transform.using(
-    output=Output("/TierPalan-95733d/Acacia/acaciafund-pipeline/source_metadata"),
+    output=Output("source_metadata"),
 )
 def source_metadata(output: Output) -> None:
     """

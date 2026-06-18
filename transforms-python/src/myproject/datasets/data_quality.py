@@ -7,6 +7,7 @@ import polars as pl
 from datetime import datetime, timezone
 from transforms.api import transform, Input, Output, LightweightInput, LightweightOutput
 from transforms import expectations as E
+from myproject.config import DatasetPaths
 
 
 def create_quality_expectations():
@@ -34,8 +35,8 @@ def create_quality_expectations():
 
 
 @transform.using(
-    output=Output("/TierPalan-95733d/Acacia/acaciafund-pipeline/data_quality_report"),
-    input_dataset=Input("/TierPalan-95733d/Acacia/acaciafund-pipeline/acacia_portal_clean_data"),
+    output=Output(DatasetPaths.DATA_QUALITY_REPORT),
+    input_dataset=Input(DatasetPaths.CLEANED_DATA),
 )
 def data_quality_report(
     input_dataset: LightweightInput,
@@ -84,8 +85,8 @@ def data_quality_report(
 
 
 @transform.using(
-    output=Output("/TierPalan-95733d/Acacia/acaciafund-pipeline/data_quality_alerts"),
-    input_dataset=Input("/TierPalan-95733d/Acacia/acaciafund-pipeline/acacia_portal_clean_data"),
+    output=Output(DatasetPaths.DATA_QUALITY_ALERTS),
+    input_dataset=Input(DatasetPaths.CLEANED_DATA),
 )
 def data_quality_alerts(
     input_dataset: LightweightInput,
