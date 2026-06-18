@@ -1,7 +1,10 @@
-import polars as pl
-from transforms.api import transform, Output, LightweightOutput
+from transforms.api import transform, Input, Output
 
-@transform.using(acacia_portal_clean_data=Output("/TierPalan-95733d/Acacia/acaciafund-pipeline/acacia_portal_clean_data"))
-def compute(acacia_portal_clean_data: LightweightOutput) -> None:
-    df = pl.DataFrame({"phrase": ["Hello", "World"]})
+@transform(
+    input_dataset=Input("/TierPalan-95733d/Acacia/SOURCE_DATASET_PATH"),
+    acacia_portal_clean_data=Output("/TierPalan-95733d/Acacia/acacia_portal_clean_data")
+)
+def compute(input_dataset, acacia_portal_clean_data):
+    """Clean and standardize AcaciaFund portal data"""
+    df = input_dataset.polars(lazy=True)
     acacia_portal_clean_data.write_table(df)
