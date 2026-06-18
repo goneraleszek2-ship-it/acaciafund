@@ -1206,7 +1206,7 @@ svg:not([class*="w-"]):not([class*="h-"]) {
 }
 .card-photo-wrap {
   width: 100%;
-  aspect-ratio: 14 / 10;
+  aspect-ratio: 16 / 9;
   max-width: 112px;
   border-radius: 8px;
   border: 1.5px solid color-mix(in srgb, var(--layer-research-badge) 40%, transparent);
@@ -1269,6 +1269,20 @@ svg:not([class*="w-"]):not([class*="h-"]) {
   font-size: 0.875rem;
   color: var(--color-text-secondary);
   line-height: 1.55;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.card-research-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 @container card-list (max-width: 480px) {
   .card-research {
@@ -1281,7 +1295,7 @@ svg:not([class*="w-"]):not([class*="h-"]) {
   }
   .card-pictogram-wrap, .card-photo-wrap {
     width: 100%;
-    aspect-ratio: 14 / 10;
+    aspect-ratio: 16 / 9;
     max-width: 112px;
   }
   .card-research-sources {
@@ -1588,6 +1602,22 @@ svg:not([class*="w-"]):not([class*="h-"]) {
 .dark .content-type-badge--learn     { background: color-mix(in srgb, var(--layer-learn-badge) 25%, transparent);    color: var(--layer-learn-badge); }
 .dark .content-type-badge--knowledge { background: color-mix(in srgb, var(--layer-knowledge-badge) 25%, transparent); color: var(--layer-knowledge-badge); }
 
+/* ── Card complexity indicators ── */
+.complexity-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0.125rem 0.5rem;
+  border-radius: 9999px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+.complexity-badge--beginner  { background: #dcfce7; color: #166534; }
+.complexity-badge--intermediate { background: #fef3c7; color: #92400e; }
+.complexity-badge--deep-dive { background: #fee2e2; color: #991b1b; }
+.complexity-badge svg { width: 12px; height: 12px; }
+
 /* ── Dark-mode-aware color class remappings ── */
 .text-gray-700 { color: var(--color-text); }
 .text-gray-500 { color: var(--color-text-secondary); }
@@ -1617,26 +1647,26 @@ svg:not([class*="w-"]):not([class*="h-"]) {
 /* Container queries for adaptive layouts */
 @container (min-width: 320px) {
   .fluid-grid {
-    grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
-    gap: clamp(0.5rem, 2vw, 1rem);
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: clamp(1rem, 2vw, 1.5rem);
   }
 }
 
 @container (min-width: 480px) {
   .fluid-grid {
-    grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   }
 }
 
 @container (min-width: 768px) {
   .fluid-grid {
-    grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   }
 }
 
 @container (min-width: 1024px) {
   .fluid-grid {
-    grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   }
 }
 
