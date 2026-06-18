@@ -1076,6 +1076,32 @@
     
     // Start auto-play
     startAutoPlay();
+    
+    // Add click handlers to carousel cards to open articles
+    slides.forEach(function(slide, index) {
+      var card = slide.querySelector('.carousel-card');
+      if (card) {
+        card.addEventListener('click', function(e) {
+          // Don't navigate if clicking on indicators
+          if (e.target.closest('.carousel-indicator')) return;
+          
+          // Find the article link in the slide
+          var articleLink = slide.querySelector('a');
+          if (articleLink && articleLink.href) {
+            window.location.href = articleLink.href;
+          }
+        });
+        
+        // Make card look clickable
+        card.style.cursor = 'pointer';
+        card.addEventListener('mouseenter', function() {
+          card.style.transform = 'translateY(-4px)';
+        });
+        card.addEventListener('mouseleave', function() {
+          card.style.transform = 'translateY(-4px)';
+        });
+      }
+    });
   }
 
  })();

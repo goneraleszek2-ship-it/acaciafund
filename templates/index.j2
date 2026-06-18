@@ -23,6 +23,7 @@
       border-radius: 12px;
       overflow: hidden;
       transition: transform 0.3s ease;
+      cursor: pointer;
     }
     .carousel-card:hover {
       transform: translateY(-4px);
@@ -360,7 +361,7 @@
             {%- set tkey = thumbnail_key(item.title) %}
             {%- set has_feat = feat_img %}
             <div class="carousel-slide">
-              <div class="carousel-card">
+              <a href="/{{ item.slug }}/" class="carousel-card block text-decoration:none">
                 {%- if has_feat %}
                   <img src="{{ resolve_card_image(feat_img) }}" alt="{{ item.title | striptags | e }}" loading="lazy">
                 {%- else %}
@@ -376,7 +377,7 @@
                     <span>{{ item.body_html | reading_time }} min</span>
                   </div>
                 </div>
-              </div>
+              </a>
             </div>
           {%- endif %}
         {%- endfor %}
