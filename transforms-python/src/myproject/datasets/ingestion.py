@@ -27,18 +27,9 @@ def compute(
     - HackerNews discussions
     """
     
-    df = pl.DataFrame({
-        "source_id": pl.Series([], dtype=pl.Utf8),
-        "title": pl.Series([], dtype=pl.Utf8),
-        "description": pl.Series([], dtype=pl.Utf8),
-        "url": pl.Series([], dtype=pl.Utf8),
-        "source_type": pl.Series([], dtype=pl.Utf8),
-        "domain": pl.Series([], dtype=pl.Utf8),
-        "tags": pl.Series([], dtype=pl.List(pl.Utf8)),
-        "pillar": pl.Series([], dtype=pl.Utf8),
-        "inferred_at": pl.Series([], dtype=pl.Datetime),
-    })
+    df = sources.polars(lazy=True)
     
+    # Add ingestion metadata
     df = df.with_columns([
         pl.lit(datetime.now(timezone.utc)).alias("ingestion_timestamp"),
         pl.lit("v1.0").alias("ingestion_version"),

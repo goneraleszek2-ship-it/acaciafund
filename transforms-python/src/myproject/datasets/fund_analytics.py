@@ -15,7 +15,6 @@ def analyze_funds(cleaned_data, analytics):
     """Multi-dimensional fund analysis"""
     df = cleaned_data.polars(lazy=True)
     
-    # Pillar-level aggregations
     pillar_analysis = df.group_by("pillar").agg([
         pl.col("source_id").count().alias("article_count"),
         pl.col("overall_quality_score").mean().alias("avg_quality"),
@@ -26,19 +25,16 @@ def analyze_funds(cleaned_data, analytics):
         (pl.col("article_count") / pl.col("article_count").sum() * 100).alias("market_share_pct")
     ])
     
-    # Trend category analysis
     trend_analysis = df.group_by("trend_category").agg([
         pl.col("source_id").count().alias("article_count"),
         pl.col("overall_quality_score").mean().alias("avg_quality"),
         pl.col("trend_strength").mean().alias("avg_trend"),
     ])
     
-    # Top articles by quality
     top_articles = df.sort("overall_quality_score", descending=True).head(10).select([
         "source_id", "title", "pillar", "overall_quality_score", "trend_strength"
     ])
     
-    # Combine results
     result = pl.DataFrame({
         "analysis_type": ["pillar", "trend", "top_articles"],
         "article_count": [pillar_analysis["article_count"].sum(), 

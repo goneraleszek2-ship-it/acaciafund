@@ -5,7 +5,7 @@ Generates source synthesis records for articles.
 
 import polars as pl
 from datetime import datetime, timezone
-from transforms.api import transform, Input, Output
+from transforms.api import transform, Input, Output, LightweightInput, LightweightOutput
 
 
 @transform.using(
@@ -14,8 +14,8 @@ from transforms.api import transform, Input, Output
     verification=Input("/TierPalan-95733d/Acacia/acaciafund-pipeline/source_verification"),
 )
 def source_synthesis(
-    quality: Input,
-    verification: Input,
+    quality: LightweightInput,
+    verification: LightweightInput,
     output: Output
 ) -> None:
     """

@@ -24,7 +24,6 @@ def quality_metrics(
     df_scoring = scoring.polars(lazy=True)
     df_analysis = analysis.polars(lazy=True)
     
-    # Merge scoring and analysis
     df = df_scoring.join(df_analysis, on="source_id", how="left")
     
     df = df.with_columns([
@@ -54,7 +53,6 @@ def technology_radar(
     
     df = df_scoring.join(df_analysis, on="source_id", how="left")
     
-    # Determine recommendation based on scores
     df = df.with_columns([
         pl.when((pl.col("overall_quality_score") >= 0.8) & (pl.col("trend_strength") >= 50))
         .then(pl.lit("adopt"))
@@ -93,7 +91,6 @@ def source_synthesis(
     
     df = df_scoring.join(df_verification, on="source_id", how="left")
     
-    # Generate synthesis records
     df = df.with_columns([
         pl.lit("research").alias("source_type"),
         pl.lit(0.652).alias("synthesis_score"),

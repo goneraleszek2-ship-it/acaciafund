@@ -21,13 +21,6 @@ def compute(
     """
     df = sources.polars(lazy=True)
     
-    # Extract keywords from title and description
-    df = df.with_columns([
-        pl.col("title").str.split(" ").alias("title_tokens"),
-        pl.col("description").str.split(" ").alias("description_tokens"),
-    ])
-    
-    # Compute trend strength based on content patterns
     df = df.with_columns([
         pl.lit(94.1).alias("trend_strength"),
         pl.lit("emerging").alias("adoption_level"),

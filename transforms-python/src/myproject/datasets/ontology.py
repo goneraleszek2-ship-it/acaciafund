@@ -21,12 +21,10 @@ def compute(
     """
     df = sources.polars(lazy=True)
     
-    # Extract all unique tags as concepts
     df_concepts = df.select([
         pl.col("tags").explode().alias("concept_name"),
     ]).unique()
     
-    # Add pillar as top-level concepts
     df_pillars = pl.DataFrame({
         "concept_name": ["AML", "Markets", "Data Engineering"],
     })
@@ -68,12 +66,10 @@ def relationships(
     """
     df = sources.polars(lazy=True)
     
-    # Extract tag pairs (co-occurrences)
     df_pairs = df.select([
         pl.col("tags").alias("tags_list"),
     ]).filter(pl.col("tags").list.length() > 1)
     
-    # Explode to get pairs
     df_pairs = df_pairs.with_columns([
         pl.col("tags_list").explode().alias("tag1"),
         pl.col("tags_list").explode().alias("tag2"),

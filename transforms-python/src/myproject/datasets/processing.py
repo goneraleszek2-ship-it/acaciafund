@@ -27,10 +27,8 @@ def process(
     df_trends = trends.polars(lazy=True)
     df_concepts = concepts.polars(lazy=True)
     
-    # Join quality and trends
     df = df_quality.join(df_trends, on="source_id", how="left")
     
-    # Add concept count
     concept_count = df_concepts.group_by("concept_type").agg(
         pl.len().alias("concept_count")
     )
@@ -53,7 +51,6 @@ def content_clusters(processed: LightweightInput, output: Output) -> None:
     """
     df = processed.polars(lazy=True)
     
-    # Group by pillar for content clusters
     df_clusters = df.group_by("pillar").agg([
         pl.len().alias("article_count"),
         pl.col("overall_quality_score").mean().alias("avg_quality"),
@@ -77,7 +74,6 @@ def learning_paths(processed: LightweightInput, output: Output) -> None:
     """
     df = processed.polars(lazy=True)
     
-    # Create learning paths based on trend strength
     df_paths = df.group_by("pillar").agg([
         pl.col("source_id").sort_by(pl.col("trend_strength"), descending=True).head(5).alias("top_articles"),
         pl.col("trend_strength").mean().alias("pillar_strength"),
