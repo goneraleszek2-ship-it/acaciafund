@@ -6,14 +6,13 @@ Processes and enriches data for the static site.
 import polars as pl
 from datetime import datetime, timezone
 from transforms.api import transform, Input, Output, LightweightInput, LightweightOutput
-from myproject.config import DatasetPaths
 
 
 @transform.using(
-    output=Output(DatasetPaths.PROCESSED_DATA),
-    quality=Input(DatasetPaths.QUALITY_SCORES),
-    trends=Input(DatasetPaths.TREND_ANALYSIS),
-    concepts=Input(DatasetPaths.ONTOLOGY_CONCEPTS),
+    output=Output("processed_data"),
+    quality=Input("quality_scores"),
+    trends=Input("trend_analysis"),
+    concepts=Input("ontology_concepts"),
 )
 def process(
     quality: LightweightInput,
@@ -43,8 +42,8 @@ def process(
 
 
 @transform.using(
-    output=Output(DatasetPaths.CONTENT_CLUSTERS),
-    processed=Input(DatasetPaths.PROCESSED_DATA),
+    output=Output("content_clusters"),
+    processed=Input("processed_data"),
 )
 def content_clusters(processed: LightweightInput, output: Output) -> None:
     """
@@ -66,8 +65,8 @@ def content_clusters(processed: LightweightInput, output: Output) -> None:
 
 
 @transform.using(
-    output=Output(DatasetPaths.LEARNING_PATHS),
-    processed=Input(DatasetPaths.PROCESSED_DATA),
+    output=Output("learning_paths"),
+    processed=Input("processed_data"),
 )
 def learning_paths(processed: LightweightInput, output: Output) -> None:
     """

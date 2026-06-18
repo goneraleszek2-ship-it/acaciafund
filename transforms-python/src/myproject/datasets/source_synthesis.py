@@ -6,13 +6,12 @@ Generates source synthesis records for articles.
 import polars as pl
 from datetime import datetime, timezone
 from transforms.api import transform, Input, Output, LightweightInput, LightweightOutput
-from myproject.config import DatasetPaths
 
 
 @transform.using(
-    output=Output(DatasetPaths.SOURCE_SYNTHESIS),
-    quality=Input(DatasetPaths.QUALITY_SCORES),
-    verification=Input(DatasetPaths.SOURCE_VERIFICATION),
+    output=Output("source_synthesis"),
+    quality=Input("quality_scores"),
+    verification=Input("source_verification"),
 )
 def source_synthesis(
     quality: LightweightInput,

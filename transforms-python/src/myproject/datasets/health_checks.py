@@ -6,11 +6,10 @@ Pipeline health monitoring and alerting.
 import polars as pl
 from datetime import datetime, timezone
 from transforms.api import transform, Input, Output, LightweightInput, LightweightOutput
-from myproject.config import DatasetPaths
 
 
 @transform.using(
-    output=Output(DatasetPaths.PIPELINE_HEALTH),
+    output=Output("pipeline_health"),
 )
 def pipeline_health(output: Output) -> None:
     """
@@ -74,8 +73,8 @@ def pipeline_health(output: Output) -> None:
 
 
 @transform.using(
-    output=Output(DatasetPaths.TRANSFORM_HEALTH),
-    cleaned_data=Input(DatasetPaths.CLEANED_DATA),
+    output=Output("transform_health"),
+    cleaned_data=Input("acacia_portal_clean_data"),
     scoring_data=Input("quality_scores"),
 )
 def transform_health(

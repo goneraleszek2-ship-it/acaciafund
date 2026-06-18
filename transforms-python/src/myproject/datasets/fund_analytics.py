@@ -5,12 +5,11 @@ Multi-dimensional analysis of articles and sources.
 
 import polars as pl
 from transforms.api import transform, Input, Output
-from myproject.config import DatasetPaths
 
 
 @transform(
-    cleaned_data=Input(DatasetPaths.CLEANED_DATA),
-    analytics=Output(DatasetPaths.FUND_ANALYTICS)
+    cleaned_data=Input("acacia_portal_clean_data"),
+    analytics=Output("fund_analytics")
 )
 def analyze_funds(cleaned_data, analytics):
     """Multi-dimensional fund analysis"""

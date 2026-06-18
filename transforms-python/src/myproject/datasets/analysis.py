@@ -6,12 +6,11 @@ Detects emerging trends and technology adoption patterns.
 import polars as pl
 from datetime import datetime, timezone
 from transforms.api import transform, Input, Output, LightweightInput, LightweightOutput
-from myproject.config import DatasetPaths
 
 
 @transform.using(
-    output=Output(DatasetPaths.TREND_ANALYSIS),
-    sources=Input(DatasetPaths.CLEANED_DATA),
+    output=Output("trend_analysis"),
+    sources=Input("acacia_portal_clean_data"),
 )
 def compute(
     sources: LightweightInput,

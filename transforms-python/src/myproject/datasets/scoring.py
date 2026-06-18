@@ -6,12 +6,11 @@ Computes 6-dimension quality scores for all ingested articles.
 import polars as pl
 from datetime import datetime, timezone
 from transforms.api import transform, Input, Output, LightweightInput, LightweightOutput
-from myproject.config import DatasetPaths
 
 
 @transform.using(
-    output=Output(DatasetPaths.QUALITY_SCORES),
-    sources=Input(DatasetPaths.CLEANED_DATA),
+    output=Output("quality_scores"),
+    sources=Input("acacia_portal_clean_data"),
 )
 def compute(
     sources: LightweightInput,
@@ -69,7 +68,7 @@ def compute(
 
 
 @transform.using(
-    output=Output(DatasetPaths.SOURCE_VERIFICATION),
+    output=Output("source_verification"),
     sources=Input("source_metadata"),
 )
 def source_verification(

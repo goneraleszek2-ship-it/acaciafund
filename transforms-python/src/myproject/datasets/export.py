@@ -6,13 +6,12 @@ Generates static outputs for the website.
 import polars as pl
 from datetime import datetime, timezone
 from transforms.api import transform, Input, Output, LightweightInput, LightweightOutput
-from myproject.config import DatasetPaths
 
 
 @transform.using(
-    output=Output(DatasetPaths.EXPORT_QUALITY_METRICS),
-    scoring=Input(DatasetPaths.QUALITY_SCORES),
-    analysis=Input(DatasetPaths.TREND_ANALYSIS),
+    output=Output("export_quality_metrics"),
+    scoring=Input("quality_scores"),
+    analysis=Input("trend_analysis"),
 )
 def quality_metrics(
     scoring: LightweightInput,
@@ -37,9 +36,9 @@ def quality_metrics(
 
 
 @transform.using(
-    output=Output(DatasetPaths.EXPORT_TECHNOLOGY_RADAR),
-    scoring=Input(DatasetPaths.QUALITY_SCORES),
-    analysis=Input(DatasetPaths.TREND_ANALYSIS),
+    output=Output("export_technology_radar"),
+    scoring=Input("quality_scores"),
+    analysis=Input("trend_analysis"),
 )
 def technology_radar(
     scoring: LightweightInput,
@@ -75,9 +74,9 @@ def technology_radar(
 
 
 @transform.using(
-    output=Output(DatasetPaths.EXPORT_SOURCE_SYNTHESIS),
-    scoring=Input(DatasetPaths.QUALITY_SCORES),
-    verification=Input(DatasetPaths.SOURCE_VERIFICATION),
+    output=Output("export_source_synthesis"),
+    scoring=Input("quality_scores"),
+    verification=Input("source_verification"),
 )
 def source_synthesis(
     scoring: LightweightInput,

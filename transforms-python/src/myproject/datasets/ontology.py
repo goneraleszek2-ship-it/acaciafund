@@ -6,12 +6,11 @@ Maintains technology ontology and concept relationships.
 import polars as pl
 from datetime import datetime, timezone
 from transforms.api import transform, Input, Output, LightweightInput, LightweightOutput
-from myproject.config import DatasetPaths
 
 
 @transform.using(
-    output=Output(DatasetPaths.ONTOLOGY_CONCEPTS),
-    sources=Input(DatasetPaths.CLEANED_DATA),
+    output=Output("ontology_concepts"),
+    sources=Input("acacia_portal_clean_data"),
 )
 def compute(
     sources: LightweightInput,
@@ -55,8 +54,8 @@ def compute(
 
 
 @transform.using(
-    output=Output(DatasetPaths.ONTOLOGY_RELATIONSHIPS),
-    sources=Input(DatasetPaths.CLEANED_DATA),
+    output=Output("ontology_relationships"),
+    sources=Input("acacia_portal_clean_data"),
 )
 def relationships(
     sources: LightweightInput,
