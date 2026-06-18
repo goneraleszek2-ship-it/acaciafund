@@ -18,16 +18,7 @@ def compute(
 ) -> None:
     """
     Compute 6-dimension quality scores for all articles.
-    
-    Dimensions (weighted):
-    - Source Credibility: 25%
-    - Technical Accuracy: 25%
-    - Practical Value: 20%
-    - Freshness: 15%
-    - Trend Relevance: 10%
-    - Educational Quality: 5%
     """
-    
     df = sources.polars(lazy=True)
     
     df = df.with_columns([

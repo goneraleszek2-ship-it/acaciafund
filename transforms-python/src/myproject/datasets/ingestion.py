@@ -18,18 +18,9 @@ def compute(
 ) -> None:
     """
     Ingest articles from multiple sources into Foundry dataset.
-    
-    Sources:
-    - arXiv (academic preprints)
-    - PubMed (biomedical literature)
-    - Semantic Scholar (academic papers)
-    - GitHub/Stack Overflow (technical content)
-    - HackerNews discussions
     """
-    
     df = sources.polars(lazy=True)
     
-    # Add ingestion metadata
     df = df.with_columns([
         pl.lit(datetime.now(timezone.utc)).alias("ingestion_timestamp"),
         pl.lit("v1.0").alias("ingestion_version"),
