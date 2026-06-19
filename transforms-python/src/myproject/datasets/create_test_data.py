@@ -14,6 +14,9 @@ def create_test_data(test_source):
     """
     Creates comprehensive test dataset for AcaciaFund portal.
     Includes: articles, sources, tags, pillars, quality metrics.
+    
+    This is the first transform in the pipeline - it creates the source dataset
+    that all other transforms depend on.
     """
     df = pl.DataFrame({
         "source_id": [f"article_{i:04d}" for i in range(1, 101)],
@@ -34,7 +37,7 @@ def create_test_data(test_source):
         "educational_quality_score": [round(0.6 + (i % 5) * 0.08, 2) for i in range(1, 101)],
         "trend_strength": [round(80 + (i % 20), 1) for i in range(1, 101)],
         "adoption_level": ["emerging" if i % 3 == 0 else "experimental" if i % 3 == 1 else "mainstream"
-                           for i in range(1, 101)],
+                   for i in range(1, 101)],
         "impact_level": ["high" if i % 2 == 0 else "medium" for i in range(1, 101)],
         "inferred_at": [f"2026-06-{15 + (i % 10):02d}T12:00:00+00:00" for i in range(1, 101)],
         "last_updated": ["2026-06-15T12:00:00+00:00"] * 100,
