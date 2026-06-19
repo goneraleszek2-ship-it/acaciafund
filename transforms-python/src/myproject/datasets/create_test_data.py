@@ -2,12 +2,17 @@
 AcaciaFund Test Data Source
 Generates realistic test data for the AcaciaFund portal.
 """
+import os
 import pandas as pd
 from transforms.api import transform, Output, TransformOutput
 
+# 1. Automatically fetch the current repository's exact absolute root path
+# This handles the project scope strings dynamically behind the scenes!
+PROJECT_ROOT = os.environ.get("TRANSFORMS_TARGET_PROJECT_PATH", "")
+
 @transform(
-    # FIX: Prepended a leading '/' to make this a valid absolute path for Shrinkwrap
-    test_source=Output("/Acacia/acaciafund-pipeline/mock_source_data")
+    # 2. Combine the dynamic root with your local project subfolder 
+    test_source=Output(f"{PROJECT_ROOT}/acaciafund-pipeline/mock_source_data")
 )
 def create_test_data(test_source: TransformOutput) -> None:                  
     df = pd.DataFrame({
@@ -34,7 +39,7 @@ def create_test_data(test_source: TransformOutput) -> None:
         "is_published": [True] * 100,
     })
     
-    # Run the quality mapping calculation
+    # Run quality monitoring math
     df["composite_quality_score"] = (
         (df["credibility_score"] * 0.4) + 
         (df["technical_accuracy_score"] * 0.4) + 
