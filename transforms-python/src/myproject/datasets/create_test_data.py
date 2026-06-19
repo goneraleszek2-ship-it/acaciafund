@@ -34,15 +34,4 @@ def create_test_data(test_source):
         "practical_value_score": [round(0.55 + (i % 6) * 0.05, 2) for i in range(1, 101)],
         "freshness_score": [round(0.7 + (i % 3) * 0.1, 2) for i in range(1, 101)],
         "trend_relevance_score": [round(0.65 + (i % 7) * 0.05, 2) for i in range(1, 101)],
-        "educational_quality_score": [round(0.6 + (i % 5) * 0.08, 2) for i in range(1, 101)],
-        "trend_strength": [round(80 + (i % 20), 1) for i in range(1, 101)],
-        "adoption_level": ["emerging" if i % 3 == 0 else "experimental" if i % 3 == 1 else "mainstream"
-                   for i in range(1, 101)],
-        "impact_level": ["high" if i % 2 == 0 else "medium" for i in range(1, 101)],
-        "inferred_at": [f"2026-06-{15 + (i % 10):02d}T12:00:00+00:00" for i in range(1, 101)],
-        "last_updated": ["2026-06-15T12:00:00+00:00"] * 100,
-        "is_active": [True if i % 10 != 0 else False for i in range(1, 101)],
-        "is_published": [True] * 100,
-    })
-
-    test_source.write_table(df)
+        "educational_quality_score": [round(0.6 + (i % 5) * 0.08, 2) for i in r
