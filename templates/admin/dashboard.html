@@ -90,6 +90,7 @@
 <div class="card" style="margin-top:20px;">
   <div class="card-header">Foundry Metrics Trend</div>
   <div class="card-body" style="padding:0;">
+    <div id="data-timestamp" class="data-timestamp"></div>
     <canvas id="trendChart" width="400" height="200"></canvas>
   </div>
 </div>
@@ -119,9 +120,13 @@
 {% block extra_js %}
 <!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  .stale { color: red; }
+</style>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
   const ctx = document.getElementById('trendChart').getContext('2d');
+  const timestampEl = document.getElementById('data-timestamp');
   // Fetch local JSON
   fetch('../data/foundry_metrics.json')
     .then(response => {
@@ -129,11 +134,28 @@ document.addEventListener('DOMContentLoaded', function() {
       return response.json();
     })
     .then(data => {
+      // Update timestamp label
+      const generatedAt = data.generated_at ? new Date(data.generated_at) : null;
+      if (generatedAt) {
+        const now = new Date();
+        const diffHours = (now - generatedAt) / (1000 * 60 * 60);
+        timestampEl.textContent = `Data last updated: ${generatedAt.toLocaleString()}`;
+        if (diffHours > 24) {
+          timestampEl.classList.add('stale');
+        } else {
+          timestampEl.classList.remove('stale');
+        }
+      } else {
+        timestampEl.textContent = 'Data last updated: unknown';
+        timestampEl.classList.add('stale');
+      }
+
       // Expect data to be an array of objects with numeric 'value' and optional 'label' or timestamp
       let labels = [];
       let values = [];
-      if (Array.isArray(data) && data.length > 0) {
-        data.forEach((item, idx) => {
+      const dataArray = data.data || [];
+      if (Array.isArray(dataArray) && dataArray.length > 0) {
+        dataArray.forEach((item, idx) => {
           // If item has a label/date field, use it; otherwise use index
           if (item.label) {
             labels.push(item.label);
@@ -178,6 +200,8 @@ document.addEventListener('DOMContentLoaded', function() {
     .catch(err => {
       console.error('Could not load Foundry metrics:', err);
       // Show error state
+      timestampEl.textContent = 'Data last updated: error';
+      timestampEl.classList.add('stale');
       new Chart(ctx, {
         type: 'line',
         data: {
