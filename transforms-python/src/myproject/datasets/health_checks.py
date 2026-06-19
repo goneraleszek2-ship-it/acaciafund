@@ -3,7 +3,7 @@ AcaciaFund Health Checks Module
 Pipeline health monitoring and alerting.
 """
 
-import polars as pl
+import pandas as pd
 from datetime import datetime, timezone
 from transforms.api import transform, Input, Output, LightweightInput, LightweightOutput
 
@@ -15,8 +15,7 @@ def pipeline_health(output: Output) -> None:
     """
     Generate pipeline health metrics.
     """
-    # Define pipeline health metrics
-    health_metrics = pl.DataFrame({
+    health_metrics = pd.DataFrame({
         "metric_name": [
             "pipeline_status",
             "last_run_timestamp",
@@ -28,14 +27,14 @@ def pipeline_health(output: Output) -> None:
             "alert_count",
         ],
         "metric_value": [
-            "healthy",  # pipeline_status
-            datetime.now(timezone.utc).isoformat(),  # last_run_timestamp
-            0.0,  # last_run_duration_seconds
-            0,  # records_processed
-            0,  # records_failed
-            100.0,  # success_rate_percent
-            0.0,  # data_quality_score
-            0,  # alert_count
+            "healthy",
+            datetime.now(timezone.utc).isoformat(),
+            0.0,
+            0,
+            0,
+            100.0,
+            0.0,
+            0,
         ],
         "metric_type": [
             "status",
@@ -50,7 +49,7 @@ def pipeline_health(output: Output) -> None:
         "threshold": [
             "healthy",
             None,
-            300,  # 5 minutes
+            300,
             None,
             0,
             95.0,
@@ -69,7 +68,7 @@ def pipeline_health(output: Output) -> None:
         ],
     })
     
-    output.write_table(health_metrics)
+    output.write_dataframe(health_metrics)
 
 
 @transform.using(
@@ -85,18 +84,15 @@ def transform_health(
     """
     Generate health metrics for individual transforms.
     """
-    df_cleaned = cleaned_data.polars(lazy=True)
-    df_scoring = scoring_data.polars(lazy=True)
+    df_cleaned = cleaned_data.pandas()
+    df_scoring = scoring_data.pandas()
     
-    # Get record counts
-    cleaned_count = df_cleaned.select(pl.len()).collect()[0, 0]
-    scoring_count = df_scoring.select(pl.len()).collect()[0, 0]
+    cleaned_count = len(df_cleaned)
+    scoring_count = len(df_scoring)
     
-    # Calculate data freshness
     current_time = datetime.now(timezone.utc)
     
-    # Generate transform health metrics
-    health_metrics = pl.DataFrame({
+    health_metrics = pd.DataFrame({
         "transform_name": [
             "cleaning",
             "scoring",
@@ -123,4 +119,4 @@ def transform_health(
         ],
     })
     
-    output.write_table(health_metrics)
+    output.write_dataframe(health_metrics)

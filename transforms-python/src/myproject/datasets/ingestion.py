@@ -3,14 +3,14 @@ AcaciaFund Ingestion Transform
 Collects and ingests articles from multiple sources into Foundry datasets.
 """
 
-import polars as pl
+import pandas as pd
 from datetime import datetime, timezone
 from transforms.api import transform, Input, Output, LightweightInput, LightweightOutput
 
 
 @transform.using(
     output=Output("acacia_portal_clean_data"),
-    sources=Input("SOURCE_DATASET_PATH"),
+    sources=Input("source_dataset"),
 )
 def compute(
     sources: LightweightInput,
@@ -20,17 +20,15 @@ def compute(
     Ingest articles from multiple sources into Foundry dataset.
     """
     try:
-        df = sources.polars(lazy=True)
+        df = sources.pandas()
         
-        df = df.with_columns([
-            pl.lit(datetime.now(timezone.utc)).alias("ingestion_timestamp"),
-            pl.lit("v2.0").alias("ingestion_version"),
-        ])
+        df = df.copy()
+        df["ingestion_timestamp"] = datetime.now(timezone.utc)
+        df["ingestion_version"] = "v2.0"
         
-        output.write_table(df)
+        output.write_dataframe(df)
         
-        # Log success
-        print(f"Ingestion completed: {df.select(pl.len()).collect()} records")
+        print(f"Ingestion completed: {len(df)} records")
         
     except Exception as e:
         print(f"Error in ingestion: {str(e)}")
@@ -45,21 +43,21 @@ def source_metadata(output: Output) -> None:
     Generate source metadata for all ingested articles.
     """
     try:
-        df = pl.DataFrame({
-            "source_id": pl.Series([], dtype=pl.Utf8),
-            "source_api": pl.Series([], dtype=pl.Utf8),
-            "source_url": pl.Series([], dtype=pl.Utf8),
-            "source_title": pl.Series([], dtype=pl.Utf8),
-            "source_domain": pl.Series([], dtype=pl.Utf8),
-            "source_type": pl.Series([], dtype=pl.Utf8),
-            "source_credibility": pl.Series([], dtype=pl.Float64),
-            "source_verified": pl.Series([], dtype=pl.Boolean),
-            "source_evidence": pl.Series([], dtype=pl.Utf8),
-            "metadata_json": pl.Series([], dtype=pl.Utf8),
-            "source_timestamp": pl.Series([], dtype=pl.Datetime),
+        df = pd.DataFrame({
+            "source_id": pd.Series([], dtype=str),
+            "source_api": pd.Series([], dtype=str),
+            "source_url": pd.Series([], dtype=str),
+            "source_title": pd.Series([], dtype=str),
+            "source_domain": pd.Series([], dtype=str),
+            "source_type": pd.Series([], dtype=str),
+            "source_credibility": pd.Series([], dtype=float),
+            "source_verified": pd.Series([], dtype=bool),
+            "source_evidence": pd.Series([], dtype=str),
+            "metadata_json": pd.Series([], dtype=str),
+            "source_timestamp": pd.Series([], dtype="datetime64[ns, UTC]"),
         })
         
-        output.write_table(df)
+        output.write_dataframe(df)
         
     except Exception as e:
         print(f"Error in source_metadata: {str(e)}")

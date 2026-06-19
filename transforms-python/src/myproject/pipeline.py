@@ -51,22 +51,21 @@ my_pipeline.set_config("dataset_paths", {
 })
 
 # Configure transform execution order (implicit via dependencies)
-# Transforms will execute in dependency order automatically
 my_pipeline.set_config("execution_order", [
     "create_test_data",
     "ingestion",
-    "lightweight-transform",  # Clean and standardize
+    "lightweight-transform",
     "enhanced_cleaning",
     "scoring",
     "analysis",
     "ontology",
-    "processing",  # Data enrichment
+    "processing",
     "source_synthesis",
-    "export",  # Static exports
+    "export",
     "fund_analytics",
     "incremental_updates",
-    "data_quality",  # Quality checks
-    "health_checks",  # Health monitoring
+    "data_quality",
+    "health_checks",
 ])
 
 print(f"AcaciaFund Pipeline configured successfully (v{PipelineConfig.VERSION})")
