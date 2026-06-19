@@ -4,77 +4,69 @@ Processes and enriches data for the static site.
 """
 
 import pandas as pd
-from datetime import datetime, timezone
-from transforms.api import transform, Input, Output, LightweightInput, LightweightOutput
+from transforms.api import transform, Input, Output
 
 
-@transform.using(
-    output=Output("processed_data"),
-    quality=Input("quality_scores"),
-    trends=Input("trend_analysis"),
-    concepts=Input("ontology_concepts"),
+@transform(
+    quality_data=Input("quality_scores"),
+    trends_data=Input("trend_analysis"),
+    concepts_data=Input("ontology_concepts"),
+    processed_output=Output("processed_data"),
 )
-def process(
-    quality: LightweightInput,
-    trends: LightweightInput,
-    concepts: LightweightInput,
-    output: Output
-) -> None:
-    """
-    Process and enrich data for static site.
-    """
-    df_quality = quality.pandas()
-    df_trends = trends.pandas()
-    df_concepts = concepts.pandas()
-    
+def process_data(quality_data, trends_data, concepts_data, processed_output):
+    df_quality = quality_data.pandas()
+    df_trends = trends_data.pandas()
+
     df = df_quality.merge(df_trends, on="source_id", how="left")
-    
-    concept_count = df_concepts.groupby("concept_type").size().reset_index(name="concept_count")
-    
-    df["processed_timestamp"] = datetime.now(timezone.utc)
+
     df["processed_version"] = "v1.0"
-    
-    output.write_dataframe(df)
+
+    processed_output.write_dataframe(df)
 
 
-@transform.using(
-    output=Output("content_clusters"),
-    processed=Input("processed_data"),
+@transform(
+    processed_data=Input("processed_data"),
+    clusters_output=Output("content_clusters"),
 )
-def content_clusters(processed: LightweightInput, output: Output) -> None:
-    """
-    Generate content clusters based on tags and topics.
-    """
-    df = processed.pandas()
-    
-    df_clusters = df.groupby("pillar").agg({
-        "source_id": "count",
-        "overall_quality_score": "mean",
-        "trend_strength": "mean",
-    }).reset_index()
-    df_clusters.columns = ["pillar", "article_count", "avg_quality", "avg_trend"]
-    
-    df_clusters["cluster_timestamp"] = datetime.now(timezone.utc)
-    
-    output.write_dataframe(df_clusters)
+def generate_clusters(processed_data, clusters_output):
+    df = processed_data.pandas()
+
+    if "pillar" in df.columns:
+        df_clusters = df.groupby("pillar").agg({
+            "source_id": "count",
+            "overall_quality_score": "mean",
+            "trend_strength": "mean",
+        }).reset_index()
+        df_clusters.columns = ["pillar", "article_count", "avg_quality", "avg_trend"]
+    else:
+        df_clusters = pd.DataFrame({
+            "pillar": pd.Series([], dtype=str),
+            "article_count": pd.Series([], dtype=int),
+            "avg_quality": pd.Series([], dtype=float),
+            "avg_trend": pd.Series([], dtype=float),
+        })
+
+    clusters_output.write_dataframe(df_clusters)
 
 
-@transform.using(
-    output=Output("learning_paths"),
-    processed=Input("processed_data"),
+@transform(
+    processed_data=Input("processed_data"),
+    paths_output=Output("learning_paths"),
 )
-def learning_paths(processed: LightweightInput, output: Output) -> None:
-    """
-    Generate learning paths based on content relationships.
-    """
-    df = processed.pandas()
-    
-    df_paths = df.groupby("pillar").agg({
-        "source_id": lambda x: list(x.nlargest(5)),
-        "trend_strength": "mean",
-    }).reset_index()
-    df_paths.columns = ["pillar", "top_articles", "pillar_strength"]
-    
-    df_paths["paths_timestamp"] = datetime.now(timezone.utc)
-    
-    output.write_dataframe(df_paths)
+def generate_learning_paths(processed_data, paths_output):
+    df = processed_data.pandas()
+
+    if "pillar" in df.columns:
+        df_paths = df.groupby("pillar").agg({
+            "source_id": "count",
+            "trend_strength": "mean",
+        }).reset_index()
+        df_paths.columns = ["pillar", "article_count", "pillar_strength"]
+    else:
+        df_paths = pd.DataFrame({
+            "pillar": pd.Series([], dtype=str),
+            "article_count": pd.Series([], dtype=int),
+            "pillar_strength": pd.Series([], dtype=float),
+        })
+
+    paths_output.write_dataframe(df_paths)
