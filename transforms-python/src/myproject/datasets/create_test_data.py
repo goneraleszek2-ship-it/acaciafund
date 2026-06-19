@@ -6,7 +6,7 @@ import pandas as pd
 from transforms.api import lightweight, LightweightOutput
 from myproject.config import DatasetPaths  # <--- ADD THIS LINE
 
-@lightweight(test_source=LightweightOutput(DatasetPaths.SOURCE_DATASET))
+@lightweight(test_source=LightweightOutput(rid=DatasetPaths.SOURCE_DATASET_RID))
 def create_test_data(test_source):
 
     df = pd.DataFrame({
