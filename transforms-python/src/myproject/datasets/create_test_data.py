@@ -4,6 +4,7 @@ Generates realistic test data for the AcaciaFund portal.
 """
 
 import polars as pl
+import pandas as pd
 from transforms.api import transform, Output
 
 
@@ -44,5 +45,9 @@ def create_test_data(test_source):
         "is_active": [True if i % 10 != 0 else False for i in range(1, 101)],
         "is_published": [True] * 100,
     })
-
-    test_source.write_table(df)
+    
+    # Convert Polars DataFrame to Pandas DataFrame for Foundry compatibility
+    pandas_df = df.to_pandas()
+    
+    # Write the Pandas DataFrame to the output
+    test_source.write_dataframe(pandas_df)
