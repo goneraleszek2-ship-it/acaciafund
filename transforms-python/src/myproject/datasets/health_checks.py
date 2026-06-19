@@ -4,22 +4,16 @@ Pipeline health monitoring and alerting.
 """
 
 import pandas as pd
-from datetime import datetime, timezone
-from transforms.api import transform, Input, Output, LightweightInput, LightweightOutput
+from transforms.api import transform, Input, Output
 
 
-@transform.using(
-    output=Output("pipeline_health"),
+@transform(
+    health_output=Output("pipeline_health"),
 )
-def pipeline_health(output: Output) -> None:
-    """
-    Generate pipeline health metrics.
-    """
+def pipeline_health(health_output):
     health_metrics = pd.DataFrame({
         "metric_name": [
             "pipeline_status",
-            "last_run_timestamp",
-            "last_run_duration_seconds",
             "records_processed",
             "records_failed",
             "success_rate_percent",
@@ -28,8 +22,6 @@ def pipeline_health(output: Output) -> None:
         ],
         "metric_value": [
             "healthy",
-            datetime.now(timezone.utc).isoformat(),
-            0.0,
             0,
             0,
             100.0,
@@ -38,8 +30,6 @@ def pipeline_health(output: Output) -> None:
         ],
         "metric_type": [
             "status",
-            "timestamp",
-            "duration",
             "count",
             "count",
             "percentage",
@@ -49,8 +39,6 @@ def pipeline_health(output: Output) -> None:
         "threshold": [
             "healthy",
             None,
-            300,
-            None,
             0,
             95.0,
             0.7,
@@ -59,47 +47,33 @@ def pipeline_health(output: Output) -> None:
         "severity": [
             "info",
             "info",
-            "info",
-            "info",
             "warning",
             "info",
             "info",
             "warning",
         ],
+        "health_version": ["v1.0"] * 6,
     })
-    
-    output.write_dataframe(health_metrics)
+
+    health_output.write_dataframe(health_metrics)
 
 
-@transform.using(
-    output=Output("transform_health"),
+@transform(
     cleaned_data=Input("acacia_portal_clean_data"),
     scoring_data=Input("quality_scores"),
+    health_output=Output("transform_health"),
 )
-def transform_health(
-    cleaned_data: LightweightInput,
-    scoring_data: LightweightInput,
-    output: Output
-) -> None:
-    """
-    Generate health metrics for individual transforms.
-    """
+def transform_health(cleaned_data, scoring_data, health_output):
     df_cleaned = cleaned_data.pandas()
     df_scoring = scoring_data.pandas()
-    
+
     cleaned_count = len(df_cleaned)
     scoring_count = len(df_scoring)
-    
-    current_time = datetime.now(timezone.utc)
-    
+
     health_metrics = pd.DataFrame({
         "transform_name": [
             "cleaning",
             "scoring",
-        ],
-        "last_run_timestamp": [
-            current_time.isoformat(),
-            current_time.isoformat(),
         ],
         "record_count": [
             cleaned_count,
@@ -109,14 +83,11 @@ def transform_health(
             "completed" if cleaned_count > 0 else "failed",
             "completed" if scoring_count > 0 else "failed",
         ],
-        "data_freshness_minutes": [
-            0.0,
-            0.0,
-        ],
         "health_score": [
             0.9 if cleaned_count > 0 else 0.0,
             0.9 if scoring_count > 0 else 0.0,
         ],
+        "health_version": ["v1.0", "v1.0"],
     })
-    
-    output.write_dataframe(health_metrics)
+
+    health_output.write_dataframe(health_metrics)
