@@ -776,58 +776,80 @@
    </div>
  </section>
 
-<!-- Projects & Experiments -->
-<section class="py-16 bg-white">
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="text-center mb-12">
-      <h2 class="text-3xl font-bold mb-4" style="color:var(--color-text)">Projects & Experiments</h2>
-      <p class="text-gray-600 max-w-2xl mx-auto">Building practical intelligence systems</p>
-    </div>
-    
-    <div class="grid md:grid-cols-2 gap-6">
-      <div class="bg-slate-50 dark:bg-slate-900 rounded-xl p-6 border border-slate-200 dark:border-slate-800">
-        <div class="flex items-start justify-between mb-4">
-          <div>
-            <h3 class="text-lg font-semibold" style="color:var(--color-text)">DataOps Playground</h3>
-            <p class="text-xs text-slate-500">Experimental pipeline architecture</p>
-          </div>
-          <span class="px-2 py-1 text-xs rounded bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300">Active</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">Building scalable data platforms with modern orchestration tools.</p>
-        <div class="flex gap-2 flex-wrap">
-          <span class="text-xs px-2 py-1 rounded bg-slate-200 dark:bg-slate-700">Airflow</span>
-          <span class="text-xs px-2 py-1 rounded bg-slate-200 dark:bg-slate-700">Prefect</span>
-          <span class="text-xs px-2 py-1 rounded bg-slate-200 dark:bg-slate-700">Dagster</span>
-        </div>
-      </div>
-      
-      <div class="bg-slate-50 dark:bg-slate-900 rounded-xl p-6 border border-slate-200 dark:border-slate-800">
-        <div class="flex items-start justify-between mb-4">
-          <div>
-            <h3 class="text-lg font-semibold" style="color:var(--color-text)">Agent Evaluation Framework</h3>
-            <p class="text-xs text-slate-500">AI system quality metrics</p>
-          </div>
-          <span class="px-2 py-1 text-xs rounded bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300">In Progress</span>
-        </div>
-        <p class="text-sm text-slate-600 dark:text-slate-400 mb-4">Measuring agent performance with quality scores and anomaly detection.</p>
-        <div class="flex gap-2 flex-wrap">
-          <span class="text-xs px-2 py-1 rounded bg-slate-200 dark:bg-slate-700">LLM</span>
-          <span class="text-xs px-2 py-1 rounded bg-slate-200 dark:bg-slate-700">Agents</span>
-          <span class="text-xs px-2 py-1 rounded bg-slate-200 dark:bg-slate-700">Evaluation</span>
-        </div>
-      </div>
-    </div>
-    
-    <div class="mt-8 text-center">
-      <a href="/tags/" class="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded-lg transition hover:opacity-80" style="color:var(--color-accent)">
-        Explore all projects
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M5 12h14M12 5l7 7-7 7"/>
-        </svg>
-      </a>
-    </div>
-  </div>
-</section>
+ <!-- Projects & Experiments -->
+ <section class="py-16 bg-white">
+   <div class="max-w-7xl mx-auto px-4">
+     <div class="text-center mb-12">
+       <h2 class="text-3xl md:text-4xl font-bold mb-4" style="color:var(--color-text)">Projects & Experiments</h2>
+       <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">Building practical intelligence systems through experimentation</p>
+     </div>
+     
+     <div class="grid md:grid-cols-3 gap-6">
+       <div class="bg-slate-50 dark:bg-slate-900 rounded-xl p-6 border border-slate-200 dark:border-slate-800 hover:border-amber-400 dark:hover:border-amber-500 transition-all">
+         <div class="flex items-start justify-between mb-4">
+           <div>
+             <div class="text-xs font-bold uppercase tracking-wider text-amber-600 dark:text-amber-500 mb-1">Featured Project</div>
+             <h3 class="text-lg font-semibold" style="color:var(--color-text)">DataOps Playground</h3>
+             <p class="text-xs text-slate-500">Production pipeline architecture</p>
+           </div>
+           <span class="px-2 py-1 text-xs rounded bg-green-100 text-green-700 dark:bg-green-900 dark:text-green-300">Active</span>
+         </div>
+         <p class="text-sm text-slate-600 dark:text-slate-400 mb-4"><strong>What:</strong> Scalable data platforms with modern orchestration</p>
+         <p class="text-sm text-slate-600 dark:text-slate-400 mb-4"><strong>Why:</strong> Production-grade pipelines for real-world data engineering</p>
+         <div class="flex gap-2 flex-wrap">
+           <span class="text-xs px-2 py-1 rounded bg-slate-200 dark:bg-slate-700">Airflow</span>
+           <span class="text-xs px-2 py-1 rounded bg-slate-200 dark:bg-slate-700">Prefect</span>
+           <span class="text-xs px-2 py-1 rounded bg-slate-200 dark:bg-slate-700">Dagster</span>
+         </div>
+       </div>
+       
+       <div class="bg-slate-50 dark:bg-slate-900 rounded-xl p-6 border border-slate-200 dark:border-slate-800 hover:border-blue-400 dark:hover:border-blue-500 transition-all">
+         <div class="flex items-start justify-between mb-4">
+           <div>
+             <div class="text-xs font-bold uppercase tracking-wider text-blue-600 dark:text-blue-500 mb-1">AI System</div>
+             <h3 class="text-lg font-semibold" style="color:var(--color-text)">Agent Evaluation Framework</h3>
+             <p class="text-xs text-slate-500">LLM system quality metrics</p>
+           </div>
+           <span class="px-2 py-1 text-xs rounded bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300">In Progress</span>
+         </div>
+         <p class="text-sm text-slate-600 dark:text-slate-400 mb-4"><strong>What:</strong> Agent performance measurement and evaluation</p>
+         <p class="text-sm text-slate-600 dark:text-slate-400 mb-4"><strong>Why:</strong> Data-driven feedback for continuous improvement</p>
+         <div class="flex gap-2 flex-wrap">
+           <span class="text-xs px-2 py-1 rounded bg-slate-200 dark:bg-slate-700">LLM</span>
+           <span class="text-xs px-2 py-1 rounded bg-slate-200 dark:bg-slate-700">Agents</span>
+           <span class="text-xs px-2 py-1 rounded bg-slate-200 dark:bg-slate-700">Evaluation</span>
+         </div>
+       </div>
+       
+       <div class="bg-slate-50 dark:bg-slate-900 rounded-xl p-6 border border-slate-200 dark:border-slate-800 hover:border-emerald-400 dark:hover:border-emerald-500 transition-all">
+         <div class="flex items-start justify-between mb-4">
+           <div>
+             <div class="text-xs font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-500 mb-1">Research</div>
+             <h3 class="text-lg font-semibold" style="color:var(--color-text)">Knowledge Graph</h3>
+             <p class="text-xs text-slate-500">Concept relationships & learning paths</p>
+           </div>
+           <span class="px-2 py-1 text-xs rounded bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300">Live</span>
+         </div>
+         <p class="text-sm text-slate-600 dark:text-slate-400 mb-4"><strong>What:</strong> 266+ topic relationships with Bloom taxonomy</p>
+         <p class="text-sm text-slate-600 dark:text-slate-400 mb-4"><strong>Why:</strong> Progressive mastery from remember to create</p>
+         <div class="flex gap-2 flex-wrap">
+           <span class="text-xs px-2 py-1 rounded bg-slate-200 dark:bg-slate-700">Knowledge Graph</span>
+           <span class="text-xs px-2 py-1 rounded bg-slate-200 dark:bg-slate-700">Bloom Taxonomy</span>
+           <span class="text-xs px-2 py-1 rounded bg-slate-200 dark:bg-slate-700">266+ Topics</span>
+         </div>
+       </div>
+     </div>
+     
+     <div class="mt-8 text-center">
+       <a href="/tags/" class="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded-lg transition hover:opacity-80" style="color:var(--color-accent)">
+         Explore all projects
+         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+           <path d="M5 12h14M12 5l7 7-7 7"/>
+         </svg>
+       </a>
+     </div>
+   </div>
+ </section>
 
 {% include 'partials/newsletter.html' %}
 
