@@ -48,154 +48,160 @@ def get_foundry_client() -> FoundryContext:
     return FoundryContext(config=config, token_provider=token_provider)
 
 
-def fetch_datasets(ctx: FoundryContext) -> list[dict]:
-    """Fetch dataset information from Foundry using ctx.compass."""
-    # Use compass to search for all projects
+def fetch_dataset_schema(ctx, dataset_path: str) -> dict | None:
+    """Fetch and return the registered schema for a dataset."""
     try:
-        # Get all projects from compass
-        projects = list(ctx.compass.search_projects())
+        if dataset_path.startswith("ri.foundry.main.dataset."):
+            dataset_rid = dataset_path
+        else:
+            res = ctx.catalog.api_get_dataset(dataset_path)
+            dataset_rid = res.json()['rid'] if hasattr(res, 'json') else res['rid']
         
-        datasets = []
-        for project in projects:
-            try:
-                resource = project.get('resource', {})
-                datasets.append({
-                    "rid": resource.get('rid', ''),
-                    "path": resource.get('path', []),
-                    "name": resource.get('name', ''),
-                    "type": 'project',
-                })
-            except Exception as e:
-                print(f"Error fetching project: {e}")
-        
-        return datasets
+        # Pull schema safely via REST client
+        schema = ctx.foundry_rest_client.get_dataset_schema(dataset_rid=dataset_rid, branch="master")
+        return schema
     except Exception as e:
-        print(f"Error fetching resources: {e}")
-        return []
+        print(f"Error fetching schema for {dataset_path}: {e}")
+        return None
 
 
-def fetch_project_datasets(ctx: FoundryContext, project_rid: str) -> list[dict]:
-    """Fetch datasets within a project using ctx.catalog."""
+def download_dataset_data(ctx, dataset_path: str, output_dir: str) -> list[str]:
+    """Download raw files from a Foundry dataset to a local folder."""
     try:
-        # Use catalog to get datasets in the project
-        datasets = ctx.catalog.api_get_dataset_paths() or []
+        if dataset_path.startswith("ri.foundry.main.dataset."):
+            dataset_rid = dataset_path
+        else:
+            res = ctx.catalog.api_get_dataset(dataset_path)
+            dataset_rid = res.json()['rid'] if hasattr(res, 'json') else res['rid']
         
-        dataset_list = []
-        for path in datasets:
-            try:
-                dataset_rid = ctx.catalog.api_get_dataset_rid(path)
-                dataset_info = ctx.catalog.api_get_dataset(dataset_rid)
-                dataset_list.append({
-                    "path": path,
-                    "rid": dataset_rid,
-                    "name": dataset_info.get('name', path),
-                    "type": dataset_info.get('type', 'unknown'),
-                })
-            except Exception as e:
-                print(f"Error fetching dataset {path}: {e}")
-        
-        return dataset_list
-    except Exception as e:
-        print(f"Error fetching project datasets: {e}")
-        return []
-
-
-def fetch_dataset_data(ctx: FoundryContext, path: list[str]) -> list[dict]:
-    """Fetch dataset data from Foundry using ctx.catalog."""
-    try:
-        # Get dataset rid from path
-        dataset_rid = ctx.catalog.api_get_dataset(path[-1])['rid']
-        
-        # Use SQL query to fetch data
-        query = "SELECT * FROM this LIMIT 100"
-        result = ctx.catalog.api_request(
-            method="POST",
-            path=f"/foundry-api/catalog/datasets/{dataset_rid}/sql",
-            json={"query": query}
+        os.makedirs(output_dir, exist_ok=True)
+        files = ctx.foundry_rest_client.download_dataset_files(
+            dataset_rid=dataset_rid,
+            output_directory=output_dir,
+            view="master"
         )
-        return result.get("data", [])
+        return files
     except Exception as e:
-        print(f"Error fetching data for {path}: {e}")
+        print(f"Error downloading data for {dataset_path}: {e}")
         return []
 
 
-def push_data_to_foundry(
-    ctx: FoundryContext, 
-    path: list[str], 
-    data: list[dict]
-) -> bool:
-    """Push data to a Foundry dataset using ctx.catalog."""
+def push_file_to_foundry(ctx, dataset_path: str, local_file_path: str) -> bool:
+    """Push a local file to a Foundry dataset via an atomic transaction."""
     try:
-        # Get dataset rid from path
-        dataset_rid = ctx.catalog.api_get_dataset(path[-1])['rid']
-        
-        # Create a temporary CSV file
-        import tempfile
-        with tempfile.NamedTemporaryFile(mode='w', suffix='.csv', delete=False) as f:
-            if data:
-                import csv
-                writer = csv.DictWriter(f, fieldnames=data[0].keys())
-                writer.writeheader()
-                writer.writerows(data)
-            temp_path = f.name
-        
-        # Upload the file using catalog API
-        with open(temp_path, 'rb') as f:
-            ctx.catalog.api_upload_dataset_file(dataset_rid, f, "data.csv")
-        
-        # Clean up
-        os.unlink(temp_path)
-        
+        from pathlib import Path
+        if dataset_path.startswith("ri.foundry.main.dataset."):
+            dataset_rid = dataset_path
+        else:
+            res = ctx.catalog.api_get_dataset(dataset_path)
+            dataset_rid = res.json()['rid'] if hasattr(res, 'json') else res['rid']
+
+        filename = os.path.basename(local_file_path)
+
+        tx_res = ctx.catalog.api_start_transaction(dataset_rid=dataset_rid, branch_id="master")
+        tx_data = tx_res.json() if hasattr(tx_res, "json") else tx_res
+        tx_rid = tx_data["rid"]
+
+        ctx.data_proxy.upload_dataset_file(
+            dataset_rid=dataset_rid,
+            transaction_rid=tx_rid,
+            path=Path(local_file_path),
+            path_in_foundry_dataset=filename
+        )
+
+        ctx.catalog.api_commit_transaction(dataset_rid=dataset_rid, transaction_rid=tx_rid)
         return True
     except Exception as e:
-        print(f"Error pushing data to {path}: {e}")
+        print(f"Error pushing file {local_file_path} to {dataset_path}: {e}")
+        try:
+            if 'tx_rid' in locals():
+                ctx.catalog.api_abort_transaction(dataset_rid=dataset_rid, transaction_rid=tx_rid)
+        except:
+            pass
         return False
 
 
 def main():
-    """Main entry point."""
+    import sys
     if len(sys.argv) < 2:
         print("Usage: python foundry_integration.py [fetch|push|test]")
-        print("  fetch  - Fetch datasets from Foundry")
-        print("  push   - Push data to Foundry")
-        print("  test   - Test Foundry connection")
+        print("  fetch <dataset_path> [output_dir]  - Verify schema and pull down dataset files")
+        print("  push  <dataset_path> <local_file>  - Push a local file via atomic transaction")
+        print("  test                               - Test Foundry client connection")
         sys.exit(1)
-    
+
     command = sys.argv[1]
-    
+
     try:
+        from scripts.foundry_integration import get_foundry_client
         ctx = get_foundry_client()
     except ValueError as e:
         print(f"Error: {e}")
         sys.exit(1)
-    
+
     if command == "test":
         print("Testing Foundry connection...")
         try:
             user_info = ctx.get_user_info()
             print(f"✓ Connected as: {user_info.username}")
-            print(f"  Organization: {getattr(user_info, 'organization', 'unknown')}")
             print(f"  Host: {ctx.host}")
         except Exception as e:
             print(f"✗ Connection failed: {e}")
             sys.exit(1)
-    
+
     elif command == "fetch":
-        print("Fetching datasets from Foundry...")
-        datasets = fetch_datasets(ctx)
-        print(f"Found {len(datasets)} datasets")
-        for ds in datasets:
-            print(f"  - {ds['path']}")
-    
+        if len(sys.argv) < 3:
+            print("Usage: python foundry_integration.py fetch <dataset_path> [output_dir]")
+            sys.exit(1)
+        dataset_path = sys.argv[2]
+        output_dir = sys.argv[3] if len(sys.argv) > 3 else "dist/fetched"
+        
+        print(f"Fetching schema for target dataset: {dataset_path}...")
+        schema = fetch_dataset_schema(ctx, dataset_path)
+        if schema:
+            print("✓ Schema registration verified:")
+            try:
+                # Handle standard schema structure mappings if present
+                fields = schema.get("fieldSchemaList", schema.get("schema", {}).get("fieldSchemaList", []))
+                if fields:
+                    for field in fields:
+                        print(f"  - {field.get('name')}: {field.get('type')}")
+                else:
+                    print(f"  {schema}")
+            except Exception:
+                print(f"  {schema}")
+        else:
+            print("! Could not extract formal schema metadata (dataset may be raw/un-structured).")
+
+        print(f"\nDownloading dataset files to local folder: '{output_dir}'...")
+        files = download_dataset_data(ctx, dataset_path, output_dir)
+        if files:
+            print(f"✓ Download complete! Pulled {len(files)} file(s):")
+            for f in files:
+                print(f"  - {f}")
+        else:
+            print("✗ Fetch failed or target dataset contains no committed files.")
+
     elif command == "push":
-        print("Pushing data to Foundry...")
-        # TODO: Implement push logic
-        print("Push not yet implemented")
-    
+        if len(sys.argv) != 4:
+            print("Usage: python foundry_integration.py push <dataset_path> <local_file>")
+            sys.exit(1)
+        dataset_path = sys.argv[2]
+        local_file = sys.argv[3]
+        if not os.path.isfile(local_file):
+            print(f"Local file not found: {local_file}")
+            sys.exit(1)
+        print(f"Pushing {local_file} to Foundry dataset {dataset_path}...")
+        success = push_file_to_foundry(ctx, dataset_path, local_file)
+        if success:
+            print("✓ Push successful")
+        else:
+            print("✗ Push failed")
+            sys.exit(1)
     else:
         print(f"Unknown command: {command}")
         sys.exit(1)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

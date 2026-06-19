@@ -1,0 +1,31 @@
+name: Foundry Sync
+
+on:
+  schedule:
+    - cron: '0 6 * * *'  # Daily at 06:00 UTC
+  workflow_dispatch:
+
+jobs:
+  foundry-sync:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./acaciafund
+    env:
+      FOUNDRY_HOST: tierpalan.euw-3.palantirfoundry.co.uk
+      FOUNDRY_TOKEN: ${{ secrets.FOUNDRY_TOKEN }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.14'
+      - name: Install dependencies
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install foundry-dev-tools pandas pyarrow
+      - name: Run Foundry full workflow
+        run: |
+          source venv/bin/activate
+          python scripts/foundry_workflow.py full
