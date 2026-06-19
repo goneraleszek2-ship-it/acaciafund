@@ -6,8 +6,8 @@ import pandas as pd
 from transforms.api import transform, Output, TransformOutput
 
 @transform(
-    # Project-relative path fixes the Shrinkwrap security boundary issue
-    test_source=Output("acaciafund-pipeline/mock_source_data")
+    # FIX: Prepended a leading '/' to make this a valid absolute path for Shrinkwrap
+    test_source=Output("/Acacia/acaciafund-pipeline/mock_source_data")
 )
 def create_test_data(test_source: TransformOutput) -> None:                  
     df = pd.DataFrame({
@@ -34,12 +34,11 @@ def create_test_data(test_source: TransformOutput) -> None:
         "is_published": [True] * 100,
     })
     
-    # 3. Integrate your verified quality scoring metrics natively
+    # Run the quality mapping calculation
     df["composite_quality_score"] = (
         (df["credibility_score"] * 0.4) + 
         (df["technical_accuracy_score"] * 0.4) + 
         (df["practical_value_score"] * 0.2)
     ).round(2)
     
-    # Write cleanly to the dataset target
     test_source.write_pandas(df)
