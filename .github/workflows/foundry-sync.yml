@@ -29,3 +29,7 @@ jobs:
         run: |
           source venv/bin/activate
           python scripts/foundry_workflow.py full
+      - name: Export metrics from Foundry
+        run: |
+          source venv/bin/activate
+          python scripts/export_metrics.py
