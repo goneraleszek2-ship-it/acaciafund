@@ -3,14 +3,15 @@ AcaciaFund Pipeline Configuration
 Registers all transforms and datasets with proper dependencies.
 """
 
+from transforms.api import Pipelin"""""""""
+AcaciaFund Pipeline Configuration
+Registers all transforms and datasets automatically.
+"""
+
 from transforms.api import Pipeline
-
 from myproject import datasets
-from myproject.config import PipelineConfig
 
-
+# Define the pipeline entry point cleanly without manual config setters
 my_pipeline = Pipeline()
-
 my_pipeline.discover_transforms(datasets)
-
-my_pipeline.set_config("version", PipelineConfig.VERSION)
+"""
