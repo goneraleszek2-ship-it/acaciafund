@@ -7,9 +7,7 @@ from transforms.api import transform_df, Output
 from myproject.config import DatasetPaths
 
 
-@transform_df(
-    Output(DatasetPaths.SOURCE_DATASET)
-)
+@transform_df(Output(DatasetPaths.SOURCE_DATASET))
 def create_test_data():
     return pd.DataFrame({
         "source_id": [f"article_{i:04d}" for i in range(1, 101)],
