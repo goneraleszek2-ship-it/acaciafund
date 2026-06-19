@@ -4,11 +4,11 @@ Generates realistic test data for the AcaciaFund portal.
 """
 
 import pandas as pd
-from transforms.api import transform, Output, TransformOutput
+from transforms.api import lightweight, Output, TransformOutput
 from myproject.config import DatasetPaths
 
 
-@transform(
+@lightweight(
     test_source=Output(DatasetPaths.SOURCE_DATASET)
 )
 def create_test_data(test_source: TransformOutput):
@@ -16,7 +16,7 @@ def create_test_data(test_source: TransformOutput):
         "source_id": [f"article_{i:04d}" for i in range(1, 101)],
         "title": [f"Article Title {i}" for i in range(1, 101)],
         "description": [f"Description for article {i}" for i in range(1, 101)],
-        "url": [f"https://acaciafund.org{i}" for i in range(1, 101)],
+        "url": [f"https://acaciafund.org/article/{i}" for i in range(1, 101)],
         "source_api": ["arxiv" if i % 5 == 0 else "pubmed" if i % 5 == 1 else "curated" for i in range(1, 101)],
         "domain": ["acaciafund.org"] * 100,
         "tags": [[f"tag_{j}" for j in range(1, (i % 5) + 2)] for i in range(1, 101)],
