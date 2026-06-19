@@ -46,7 +46,7 @@ jobs:
           fi
 
       - name: Run tests
-        run: python -m pytest tests/ -q --ignore=tests/test_usability.py.stale
+        run: python3 -m pytest tests/ -q --ignore=tests/test_usability.py.stale
 
       - name: Build static site
         run: python3.13 build.py
