@@ -3,16 +3,15 @@ AcaciaFund Test Data Source
 Generates realistic test data for the AcaciaFund portal.
 """
 import pandas as pd
-from transforms.api import lightweight, LightweightOutput
+from transforms.api import transform_df, Output
 from myproject.config import DatasetPaths
 
 
-@lightweight(test_source=LightweightOutput(
-    rid=DatasetPaths.SOURCE_DATASET,
-    alias="test_source"
-))
-def create_test_data(test_source):
-    df = pd.DataFrame({
+@transform_df(
+    Output(DatasetPaths.SOURCE_DATASET)
+)
+def create_test_data():
+    return pd.DataFrame({
         "source_id": [f"article_{i:04d}" for i in range(1, 101)],
         "title": [f"Article Title {i}" for i in range(1, 101)],
         "description": [f"Description for article {i}" for i in range(1, 101)],
@@ -35,5 +34,3 @@ def create_test_data(test_source):
         "is_active": [i % 10 != 0 for i in range(1, 101)],
         "is_published": [True] * 100,
     })
-
-    test_source.write(df)
