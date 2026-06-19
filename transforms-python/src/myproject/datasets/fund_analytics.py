@@ -3,7 +3,7 @@ AcaciaFund Fund Analytics Transform
 """
 
 import pandas as pd
-from transforms.api import transform, Input, Output
+from transforms.api import transform, Input, Output, TransformInput, TransformOutput
 from myproject.config import DatasetPaths
 
 
@@ -11,7 +11,7 @@ from myproject.config import DatasetPaths
     cleaned_data=Input(DatasetPaths.CLEANED_DATA),
     analytics_output=Output(DatasetPaths.FUND_ANALYTICS),
 )
-def analyze_funds(cleaned_data, analytics_output):
+def analyze_funds(cleaned_data: TransformInput, analytics_output: TransformOutput):
     df = cleaned_data.pandas()
     pillar_col = "pillar_clean" if "pillar_clean" in df.columns else "pillar"
 

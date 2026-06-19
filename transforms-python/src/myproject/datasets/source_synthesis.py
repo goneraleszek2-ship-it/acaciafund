@@ -3,7 +3,7 @@ AcaciaFund Source Synthesis Transform
 """
 
 import pandas as pd
-from transforms.api import transform, Input, Output
+from transforms.api import transform, Input, Output, TransformInput, TransformOutput
 from myproject.config import DatasetPaths
 
 
@@ -12,7 +12,7 @@ from myproject.config import DatasetPaths
     verification_data=Input(DatasetPaths.SOURCE_VERIFICATION),
     synthesis_output=Output(DatasetPaths.SOURCE_SYNTHESIS),
 )
-def generate_source_synthesis(quality_data, verification_data, synthesis_output):
+def generate_source_synthesis(quality_data: TransformInput, verification_data: TransformInput, synthesis_output: TransformOutput):
     df_quality = quality_data.pandas()
     df_verification = verification_data.pandas()
 

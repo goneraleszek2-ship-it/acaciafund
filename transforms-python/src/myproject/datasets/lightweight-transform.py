@@ -4,7 +4,7 @@ Clean and standardize AcaciaFund portal data.
 """
 
 import pandas as pd
-from transforms.api import transform, Input, Output
+from transforms.api import transform, Input, Output, TransformInput, TransformOutput
 from myproject.config import DatasetPaths
 
 
@@ -12,7 +12,7 @@ from myproject.config import DatasetPaths
     raw_data=Input(DatasetPaths.SOURCE_DATASET),
     cleaned_data=Output(DatasetPaths.CLEANED_DATA),
 )
-def clean_and_standardize(raw_data, cleaned_data):
+def clean_and_standardize(raw_data: TransformInput, cleaned_data: TransformOutput):
     df = raw_data.pandas()
 
     required_columns = ["source_id", "title", "description", "url", "source_api"]
@@ -65,7 +65,7 @@ def clean_and_standardize(raw_data, cleaned_data):
     raw_data=Input(DatasetPaths.SOURCE_DATASET),
     metrics_output=Output(DatasetPaths.CLEANING_QUALITY_METRICS),
 )
-def cleaning_quality_metrics(raw_data, metrics_output):
+def cleaning_quality_metrics(raw_data: TransformInput, metrics_output: TransformOutput):
     df = raw_data.pandas()
 
     metrics = pd.DataFrame({

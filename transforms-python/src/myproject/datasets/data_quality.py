@@ -3,7 +3,7 @@ AcaciaFund Data Quality Module
 """
 
 import pandas as pd
-from transforms.api import transform, Input, Output
+from transforms.api import transform, Input, Output, TransformInput, TransformOutput
 from myproject.config import DatasetPaths
 
 
@@ -11,7 +11,7 @@ from myproject.config import DatasetPaths
     input_data=Input(DatasetPaths.CLEANED_DATA),
     report_output=Output(DatasetPaths.DATA_QUALITY_REPORT),
 )
-def generate_quality_report(input_data, report_output):
+def generate_quality_report(input_data: TransformInput, report_output: TransformOutput):
     df = input_data.pandas()
 
     metrics = pd.DataFrame({
@@ -34,7 +34,7 @@ def generate_quality_report(input_data, report_output):
     input_data=Input(DatasetPaths.CLEANED_DATA),
     alerts_output=Output(DatasetPaths.DATA_QUALITY_ALERTS),
 )
-def generate_quality_alerts(input_data, alerts_output):
+def generate_quality_alerts(input_data: TransformInput, alerts_output: TransformOutput):
     df = input_data.pandas()
     total_records = len(df)
     alerts = []

@@ -3,7 +3,7 @@ AcaciaFund Data Processing Transform
 """
 
 import pandas as pd
-from transforms.api import transform, Input, Output
+from transforms.api import transform, Input, Output, TransformInput, TransformOutput
 from myproject.config import DatasetPaths
 
 
@@ -13,7 +13,7 @@ from myproject.config import DatasetPaths
     concepts_data=Input(DatasetPaths.ONTOLOGY_CONCEPTS),
     processed_output=Output(DatasetPaths.PROCESSED_DATA),
 )
-def process_data(quality_data, trends_data, concepts_data, processed_output):
+def process_data(quality_data: TransformInput, trends_data: TransformInput, concepts_data: TransformInput, processed_output: TransformOutput):
     df_quality = quality_data.pandas()
     df_trends = trends_data.pandas()
 
@@ -27,7 +27,7 @@ def process_data(quality_data, trends_data, concepts_data, processed_output):
     processed_data=Input(DatasetPaths.PROCESSED_DATA),
     clusters_output=Output(DatasetPaths.CONTENT_CLUSTERS),
 )
-def generate_clusters(processed_data, clusters_output):
+def generate_clusters(processed_data: TransformInput, clusters_output: TransformOutput):
     df = processed_data.pandas()
 
     if "pillar" in df.columns:
@@ -52,7 +52,7 @@ def generate_clusters(processed_data, clusters_output):
     processed_data=Input(DatasetPaths.PROCESSED_DATA),
     paths_output=Output(DatasetPaths.LEARNING_PATHS),
 )
-def generate_learning_paths(processed_data, paths_output):
+def generate_learning_paths(processed_data: TransformInput, paths_output: TransformOutput):
     df = processed_data.pandas()
 
     if "pillar" in df.columns:

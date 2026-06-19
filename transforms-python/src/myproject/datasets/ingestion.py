@@ -3,7 +3,7 @@ AcaciaFund Ingestion Transform
 """
 
 import pandas as pd
-from transforms.api import transform, Input, Output
+from transforms.api import transform, Input, Output, TransformInput, TransformOutput
 from myproject.config import DatasetPaths
 
 
@@ -11,7 +11,7 @@ from myproject.config import DatasetPaths
     source_data=Input(DatasetPaths.SOURCE_DATASET),
     ingested_output=Output(DatasetPaths.CLEANED_DATA),
 )
-def ingest_articles(source_data, ingested_output):
+def ingest_articles(source_data: TransformInput, ingested_output: TransformOutput):
     df = source_data.pandas()
     df = df.copy()
     df["ingestion_version"] = "v2.0"
@@ -21,7 +21,7 @@ def ingest_articles(source_data, ingested_output):
 @transform(
     metadata_output=Output(DatasetPaths.SOURCE_METADATA),
 )
-def create_source_metadata(metadata_output):
+def create_source_metadata(metadata_output: TransformOutput):
     df = pd.DataFrame({
         "source_id": pd.Series([], dtype=str),
         "source_api": pd.Series([], dtype=str),

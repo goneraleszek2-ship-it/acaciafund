@@ -3,7 +3,7 @@ AcaciaFund Export Transform
 """
 
 import pandas as pd
-from transforms.api import transform, Input, Output
+from transforms.api import transform, Input, Output, TransformInput, TransformOutput
 from myproject.config import DatasetPaths
 
 
@@ -12,7 +12,7 @@ from myproject.config import DatasetPaths
     analysis_data=Input(DatasetPaths.TREND_ANALYSIS),
     export_output=Output(DatasetPaths.EXPORT_QUALITY_METRICS),
 )
-def export_quality_metrics(scoring_data, analysis_data, export_output):
+def export_quality_metrics(scoring_data: TransformInput, analysis_data: TransformInput, export_output: TransformOutput):
     df_scoring = scoring_data.pandas()
     df_analysis = analysis_data.pandas()
 
@@ -28,7 +28,7 @@ def export_quality_metrics(scoring_data, analysis_data, export_output):
     analysis_data=Input(DatasetPaths.TREND_ANALYSIS),
     radar_output=Output(DatasetPaths.EXPORT_TECHNOLOGY_RADAR),
 )
-def export_technology_radar(scoring_data, analysis_data, radar_output):
+def export_technology_radar(scoring_data: TransformInput, analysis_data: TransformInput, radar_output: TransformOutput):
     df_scoring = scoring_data.pandas()
     df_analysis = analysis_data.pandas()
 
@@ -56,7 +56,7 @@ def export_technology_radar(scoring_data, analysis_data, radar_output):
     verification_data=Input(DatasetPaths.SOURCE_VERIFICATION),
     synthesis_output=Output(DatasetPaths.EXPORT_SOURCE_SYNTHESIS),
 )
-def export_source_synthesis(scoring_data, verification_data, synthesis_output):
+def export_source_synthesis(scoring_data: TransformInput, verification_data: TransformInput, synthesis_output: TransformOutput):
     df_scoring = scoring_data.pandas()
     df_verification = verification_data.pandas()
 

@@ -3,7 +3,7 @@ AcaciaFund Trend Detection Transform
 """
 
 import pandas as pd
-from transforms.api import transform, Input, Output
+from transforms.api import transform, Input, Output, TransformInput, TransformOutput
 from myproject.config import DatasetPaths
 
 
@@ -11,7 +11,7 @@ from myproject.config import DatasetPaths
     clean_data=Input(DatasetPaths.CLEANED_DATA),
     trends_output=Output(DatasetPaths.TREND_ANALYSIS),
 )
-def detect_trends(clean_data, trends_output):
+def detect_trends(clean_data: TransformInput, trends_output: TransformOutput):
     df = clean_data.pandas()
 
     df["trend_strength"] = 94.1
@@ -31,7 +31,7 @@ def detect_trends(clean_data, trends_output):
 @transform(
     radar_output=Output(DatasetPaths.TECHNOLOGY_RADAR),
 )
-def generate_radar(radar_output):
+def generate_radar(radar_output: TransformOutput):
     df = pd.DataFrame({
         "concept_name": pd.Series([], dtype=str),
         "adoption_level": pd.Series([], dtype=str),

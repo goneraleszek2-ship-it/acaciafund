@@ -3,7 +3,7 @@ AcaciaFund Enhanced Data Cleaning Transform
 """
 
 import pandas as pd
-from transforms.api import transform, Input, Output
+from transforms.api import transform, Input, Output, TransformInput, TransformOutput
 from myproject.config import DatasetPaths
 
 
@@ -11,7 +11,7 @@ from myproject.config import DatasetPaths
     raw_data=Input(DatasetPaths.SOURCE_DATASET),
     cleaned_data=Output(DatasetPaths.CLEANED_DATA_ENHANCED),
 )
-def clean_portal_data(raw_data, cleaned_data):
+def clean_portal_data(raw_data: TransformInput, cleaned_data: TransformOutput):
     df = raw_data.pandas()
     df = df.drop_duplicates(subset=["source_id"], keep="last")
     df["title"] = df["title"].str.strip().str.title()

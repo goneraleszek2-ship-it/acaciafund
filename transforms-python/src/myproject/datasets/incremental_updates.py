@@ -3,7 +3,7 @@ AcaciaFund Incremental Processing Transform
 """
 
 import pandas as pd
-from transforms.api import transform, Input, Output
+from transforms.api import transform, Input, Output, TransformInput, TransformOutput
 from myproject.config import DatasetPaths
 
 
@@ -11,7 +11,7 @@ from myproject.config import DatasetPaths
     source_data=Input(DatasetPaths.SOURCE_DATASET),
     incremental_output=Output(DatasetPaths.INCREMENTAL_UPDATES),
 )
-def process_incremental_updates(source_data, incremental_output):
+def process_incremental_updates(source_data: TransformInput, incremental_output: TransformOutput):
     df = source_data.pandas()
     df = df.copy()
     df["record_status"] = "NEW"

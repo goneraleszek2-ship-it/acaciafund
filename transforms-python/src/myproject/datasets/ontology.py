@@ -3,7 +3,7 @@ AcaciaFund Ontology Transform
 """
 
 import pandas as pd
-from transforms.api import transform, Input, Output
+from transforms.api import transform, Input, Output, TransformInput, TransformOutput
 from myproject.config import DatasetPaths
 
 
@@ -11,7 +11,7 @@ from myproject.config import DatasetPaths
     clean_data=Input(DatasetPaths.CLEANED_DATA),
     concepts_output=Output(DatasetPaths.ONTOLOGY_CONCEPTS),
 )
-def extract_concepts(clean_data, concepts_output):
+def extract_concepts(clean_data: TransformInput, concepts_output: TransformOutput):
     df = clean_data.pandas()
 
     all_tags = []
@@ -44,7 +44,7 @@ def extract_concepts(clean_data, concepts_output):
     clean_data=Input(DatasetPaths.CLEANED_DATA),
     relationships_output=Output(DatasetPaths.ONTOLOGY_RELATIONSHIPS),
 )
-def extract_relationships(clean_data, relationships_output):
+def extract_relationships(clean_data: TransformInput, relationships_output: TransformOutput):
     df = clean_data.pandas()
 
     pairs = []

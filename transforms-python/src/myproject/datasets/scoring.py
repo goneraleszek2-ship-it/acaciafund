@@ -3,7 +3,7 @@ AcaciaFund Quality Scoring Transform
 """
 
 import pandas as pd
-from transforms.api import transform, Input, Output
+from transforms.api import transform, Input, Output, TransformInput, TransformOutput
 from myproject.config import DatasetPaths
 
 
@@ -11,7 +11,7 @@ from myproject.config import DatasetPaths
     clean_data=Input(DatasetPaths.CLEANED_DATA),
     scores_output=Output(DatasetPaths.QUALITY_SCORES),
 )
-def compute_scores(clean_data, scores_output):
+def compute_scores(clean_data: TransformInput, scores_output: TransformOutput):
     df = clean_data.pandas()
 
     df["credibility_score"] = df["source_api"].apply(
@@ -48,7 +48,7 @@ def compute_scores(clean_data, scores_output):
     source_meta=Input(DatasetPaths.SOURCE_METADATA),
     verification_output=Output(DatasetPaths.SOURCE_VERIFICATION),
 )
-def verify_sources(source_meta, verification_output):
+def verify_sources(source_meta: TransformInput, verification_output: TransformOutput):
     df = source_meta.pandas()
 
     if len(df) == 0:

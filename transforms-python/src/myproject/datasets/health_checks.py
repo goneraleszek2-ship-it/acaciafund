@@ -3,14 +3,14 @@ AcaciaFund Health Checks Module
 """
 
 import pandas as pd
-from transforms.api import transform, Input, Output
+from transforms.api import transform, Input, Output, TransformInput, TransformOutput
 from myproject.config import DatasetPaths
 
 
 @transform(
     health_output=Output(DatasetPaths.PIPELINE_HEALTH),
 )
-def pipeline_health(health_output):
+def pipeline_health(health_output: TransformOutput):
     health_metrics = pd.DataFrame({
         "metric_name": ["pipeline_status", "records_processed", "records_failed", "success_rate_percent", "data_quality_score", "alert_count"],
         "metric_value": ["healthy", 0, 0, 100.0, 0.0, 0],
@@ -28,7 +28,7 @@ def pipeline_health(health_output):
     scoring_data=Input(DatasetPaths.QUALITY_SCORES),
     health_output=Output(DatasetPaths.TRANSFORM_HEALTH),
 )
-def transform_health(cleaned_data, scoring_data, health_output):
+def transform_health(cleaned_data: TransformInput, scoring_data: TransformInput, health_output: TransformOutput):
     df_cleaned = cleaned_data.pandas()
     df_scoring = scoring_data.pandas()
 
