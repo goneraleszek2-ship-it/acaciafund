@@ -1,28 +1,27 @@
 """
 AcaciaFund Lightweight Transform
-Clean and standardize AcaciaFund portal data with comprehensive validation.
+Clean and standardize AcaciaFund portal data.
 """
 
 import pandas as pd
 from transforms.api import transform, Input, Output
+from myproject.config import DatasetPaths
 
 
 @transform(
-    raw_data=Input("source_dataset"),
-    cleaned_data=Output("acacia_portal_clean_data"),
+    raw_data=Input(DatasetPaths.SOURCE_DATASET),
+    cleaned_data=Output(DatasetPaths.CLEANED_DATA),
 )
 def clean_and_standardize(raw_data, cleaned_data):
     df = raw_data.pandas()
 
     required_columns = ["source_id", "title", "description", "url", "source_api"]
-    current_columns = df.columns.tolist()
-    missing_columns = set(required_columns) - set(current_columns)
+    missing_columns = set(required_columns) - set(df.columns.tolist())
     if missing_columns:
         raise ValueError(f"Missing required columns: {missing_columns}")
 
     df["source_id_valid"] = ~df["source_id"].isnull()
     df["title_valid"] = ~(df["title"].isnull() | (df["title"].str.len() == 0))
-
     df["title_clean"] = df["title"].str.strip().str.title()
     df["pillar_clean"] = df["pillar"].str.strip().str.title()
 
@@ -47,44 +46,24 @@ def clean_and_standardize(raw_data, cleaned_data):
             return "low_trend"
 
     df["trend_category"] = df["trend_strength"].apply(categorize_trend)
-
     df["cleaning_version"] = "v2.0"
 
     result = df[[
-        "source_id",
-        "title_clean",
-        "description",
-        "url",
-        "source_api",
-        "domain",
-        "tags",
-        "pillar_clean",
-        "credibility_score",
-        "technical_accuracy_score",
-        "practical_value_score",
-        "freshness_score",
-        "trend_relevance_score",
-        "educational_quality_score",
-        "overall_quality_score",
-        "trend_strength",
-        "trend_category",
-        "adoption_level",
-        "impact_level",
-        "inferred_at",
-        "last_updated",
-        "is_active",
-        "is_published",
-        "source_id_valid",
-        "title_valid",
-        "cleaning_version",
+        "source_id", "title_clean", "description", "url", "source_api",
+        "domain", "tags", "pillar_clean", "credibility_score",
+        "technical_accuracy_score", "practical_value_score", "freshness_score",
+        "trend_relevance_score", "educational_quality_score", "overall_quality_score",
+        "trend_strength", "trend_category", "adoption_level", "impact_level",
+        "inferred_at", "last_updated", "is_active", "is_published",
+        "source_id_valid", "title_valid", "cleaning_version",
     ]].copy()
 
     cleaned_data.write_dataframe(result)
 
 
 @transform(
-    raw_data=Input("source_dataset"),
-    metrics_output=Output("cleaning_quality_metrics"),
+    raw_data=Input(DatasetPaths.SOURCE_DATASET),
+    metrics_output=Output(DatasetPaths.CLEANING_QUALITY_METRICS),
 )
 def cleaning_quality_metrics(raw_data, metrics_output):
     df = raw_data.pandas()

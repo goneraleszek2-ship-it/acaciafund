@@ -3,32 +3,34 @@ AcaciaFund Pipeline Configuration
 Centralized configuration for all transforms.
 """
 
+_PREFIX = "/TierPalan-95733d/Acacia/acaciafund-pipeline"
+
 
 class DatasetPaths:
-    SOURCE_DATASET = "source_dataset"
-    CLEANED_DATA = "acacia_portal_clean_data"
-    CLEANED_DATA_ENHANCED = "acacia_portal_clean_data_enhanced"
-    QUALITY_SCORES = "quality_scores"
-    SOURCE_VERIFICATION = "source_verification"
-    SOURCE_METADATA = "source_metadata"
-    TREND_ANALYSIS = "trend_analysis"
-    TECHNOLOGY_RADAR = "technology_radar"
-    ONTOLOGY_CONCEPTS = "ontology_concepts"
-    ONTOLOGY_RELATIONSHIPS = "ontology_relationships"
-    PROCESSED_DATA = "processed_data"
-    CONTENT_CLUSTERS = "content_clusters"
-    LEARNING_PATHS = "learning_paths"
-    SOURCE_SYNTHESIS = "source_synthesis"
-    EXPORT_QUALITY_METRICS = "export_quality_metrics"
-    EXPORT_TECHNOLOGY_RADAR = "export_technology_radar"
-    EXPORT_SOURCE_SYNTHESIS = "export_source_synthesis"
-    INCREMENTAL_UPDATES = "incremental_fund_updates"
-    CLEANING_QUALITY_METRICS = "cleaning_quality_metrics"
-    DATA_QUALITY_REPORT = "data_quality_report"
-    DATA_QUALITY_ALERTS = "data_quality_alerts"
-    PIPELINE_HEALTH = "pipeline_health"
-    TRANSFORM_HEALTH = "transform_health"
-    FUND_ANALYTICS = "fund_analytics"
+    SOURCE_DATASET = f"{_PREFIX}/source_dataset"
+    CLEANED_DATA = f"{_PREFIX}/acacia_portal_clean_data"
+    CLEANED_DATA_ENHANCED = f"{_PREFIX}/acacia_portal_clean_data_enhanced"
+    QUALITY_SCORES = f"{_PREFIX}/quality_scores"
+    SOURCE_VERIFICATION = f"{_PREFIX}/source_verification"
+    SOURCE_METADATA = f"{_PREFIX}/source_metadata"
+    TREND_ANALYSIS = f"{_PREFIX}/trend_analysis"
+    TECHNOLOGY_RADAR = f"{_PREFIX}/technology_radar"
+    ONTOLOGY_CONCEPTS = f"{_PREFIX}/ontology_concepts"
+    ONTOLOGY_RELATIONSHIPS = f"{_PREFIX}/ontology_relationships"
+    PROCESSED_DATA = f"{_PREFIX}/processed_data"
+    CONTENT_CLUSTERS = f"{_PREFIX}/content_clusters"
+    LEARNING_PATHS = f"{_PREFIX}/learning_paths"
+    SOURCE_SYNTHESIS = f"{_PREFIX}/source_synthesis"
+    EXPORT_QUALITY_METRICS = f"{_PREFIX}/export_quality_metrics"
+    EXPORT_TECHNOLOGY_RADAR = f"{_PREFIX}/export_technology_radar"
+    EXPORT_SOURCE_SYNTHESIS = f"{_PREFIX}/export_source_synthesis"
+    INCREMENTAL_UPDATES = f"{_PREFIX}/incremental_fund_updates"
+    CLEANING_QUALITY_METRICS = f"{_PREFIX}/cleaning_quality_metrics"
+    DATA_QUALITY_REPORT = f"{_PREFIX}/data_quality_report"
+    DATA_QUALITY_ALERTS = f"{_PREFIX}/data_quality_alerts"
+    PIPELINE_HEALTH = f"{_PREFIX}/pipeline_health"
+    TRANSFORM_HEALTH = f"{_PREFIX}/transform_health"
+    FUND_ANALYTICS = f"{_PREFIX}/fund_analytics"
 
 
 class QualityThresholds:
@@ -40,4 +42,4 @@ class QualityThresholds:
 
 
 class PipelineConfig:
-    VERSION = "3.0.0"
+    VERSION = "4.0.0"

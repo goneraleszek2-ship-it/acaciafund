@@ -1,16 +1,16 @@
 """
 AcaciaFund Source Synthesis Transform
-Generates source synthesis records for articles.
 """
 
 import pandas as pd
 from transforms.api import transform, Input, Output
+from myproject.config import DatasetPaths
 
 
 @transform(
-    quality_data=Input("quality_scores"),
-    verification_data=Input("source_verification"),
-    synthesis_output=Output("source_synthesis"),
+    quality_data=Input(DatasetPaths.QUALITY_SCORES),
+    verification_data=Input(DatasetPaths.SOURCE_VERIFICATION),
+    synthesis_output=Output(DatasetPaths.SOURCE_SYNTHESIS),
 )
 def generate_source_synthesis(quality_data, verification_data, synthesis_output):
     df_quality = quality_data.pandas()

@@ -1,15 +1,15 @@
 """
 AcaciaFund Quality Scoring Transform
-Computes 6-dimension quality scores for all ingested articles.
 """
 
 import pandas as pd
 from transforms.api import transform, Input, Output
+from myproject.config import DatasetPaths
 
 
 @transform(
-    clean_data=Input("acacia_portal_clean_data"),
-    scores_output=Output("quality_scores"),
+    clean_data=Input(DatasetPaths.CLEANED_DATA),
+    scores_output=Output(DatasetPaths.QUALITY_SCORES),
 )
 def compute_scores(clean_data, scores_output):
     df = clean_data.pandas()
@@ -36,23 +36,17 @@ def compute_scores(clean_data, scores_output):
     df["scoring_version"] = "v1.0"
 
     result = df[[
-        "source_id",
-        "credibility_score",
-        "technical_accuracy_score",
-        "practical_value_score",
-        "freshness_score",
-        "trend_relevance_score",
-        "educational_quality_score",
-        "overall_quality_score",
-        "scoring_version",
+        "source_id", "credibility_score", "technical_accuracy_score",
+        "practical_value_score", "freshness_score", "trend_relevance_score",
+        "educational_quality_score", "overall_quality_score", "scoring_version",
     ]].copy()
 
     scores_output.write_dataframe(result)
 
 
 @transform(
-    source_meta=Input("source_metadata"),
-    verification_output=Output("source_verification"),
+    source_meta=Input(DatasetPaths.SOURCE_METADATA),
+    verification_output=Output(DatasetPaths.SOURCE_VERIFICATION),
 )
 def verify_sources(source_meta, verification_output):
     df = source_meta.pandas()
@@ -68,21 +62,15 @@ def verify_sources(source_meta, verification_output):
     df["verified"] = df["source_api"].apply(
         lambda x: True if x in ["arxiv", "pubmed", "curated"] else False
     )
-
     df["source_type"] = df["source_api"].apply(
         lambda x: "academic" if x in ["arxiv", "pubmed"] else "code_repository" if x in ["github", "gitlab"] else "curated"
     )
-
     df["evidence_level"] = "evidence_available"
     df["verification_version"] = "v1.0"
 
     result = df[[
-        "source_id",
-        "source_type",
-        "source_credibility",
-        "verified",
-        "evidence_level",
-        "verification_version",
+        "source_id", "source_type", "source_credibility",
+        "verified", "evidence_level", "verification_version",
     ]].copy()
 
     verification_output.write_dataframe(result)

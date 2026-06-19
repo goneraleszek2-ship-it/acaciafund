@@ -1,32 +1,31 @@
 """
 AcaciaFund Data Processing Transform
-Processes and enriches data for the static site.
 """
 
 import pandas as pd
 from transforms.api import transform, Input, Output
+from myproject.config import DatasetPaths
 
 
 @transform(
-    quality_data=Input("quality_scores"),
-    trends_data=Input("trend_analysis"),
-    concepts_data=Input("ontology_concepts"),
-    processed_output=Output("processed_data"),
+    quality_data=Input(DatasetPaths.QUALITY_SCORES),
+    trends_data=Input(DatasetPaths.TREND_ANALYSIS),
+    concepts_data=Input(DatasetPaths.ONTOLOGY_CONCEPTS),
+    processed_output=Output(DatasetPaths.PROCESSED_DATA),
 )
 def process_data(quality_data, trends_data, concepts_data, processed_output):
     df_quality = quality_data.pandas()
     df_trends = trends_data.pandas()
 
     df = df_quality.merge(df_trends, on="source_id", how="left")
-
     df["processed_version"] = "v1.0"
 
     processed_output.write_dataframe(df)
 
 
 @transform(
-    processed_data=Input("processed_data"),
-    clusters_output=Output("content_clusters"),
+    processed_data=Input(DatasetPaths.PROCESSED_DATA),
+    clusters_output=Output(DatasetPaths.CONTENT_CLUSTERS),
 )
 def generate_clusters(processed_data, clusters_output):
     df = processed_data.pandas()
@@ -50,8 +49,8 @@ def generate_clusters(processed_data, clusters_output):
 
 
 @transform(
-    processed_data=Input("processed_data"),
-    paths_output=Output("learning_paths"),
+    processed_data=Input(DatasetPaths.PROCESSED_DATA),
+    paths_output=Output(DatasetPaths.LEARNING_PATHS),
 )
 def generate_learning_paths(processed_data, paths_output):
     df = processed_data.pandas()

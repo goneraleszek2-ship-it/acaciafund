@@ -1,21 +1,19 @@
 """
 AcaciaFund Enhanced Data Cleaning Transform
-Advanced data cleaning with validation and enrichment.
 """
 
 import pandas as pd
 from transforms.api import transform, Input, Output
+from myproject.config import DatasetPaths
 
 
 @transform(
-    raw_data=Input("source_dataset"),
-    cleaned_data=Output("acacia_portal_clean_data_enhanced"),
+    raw_data=Input(DatasetPaths.SOURCE_DATASET),
+    cleaned_data=Output(DatasetPaths.CLEANED_DATA_ENHANCED),
 )
 def clean_portal_data(raw_data, cleaned_data):
     df = raw_data.pandas()
-
     df = df.drop_duplicates(subset=["source_id"], keep="last")
-
     df["title"] = df["title"].str.strip().str.title()
     df["pillar"] = df["pillar"].str.strip().str.title()
 

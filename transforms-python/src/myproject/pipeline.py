@@ -6,7 +6,7 @@ Registers all transforms and datasets with proper dependencies.
 from transforms.api import Pipeline
 
 from myproject import datasets
-from myproject.config import DatasetPaths, PipelineConfig
+from myproject.config import PipelineConfig
 
 
 my_pipeline = Pipeline()

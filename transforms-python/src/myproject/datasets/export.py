@@ -1,23 +1,22 @@
 """
 AcaciaFund Export Transform
-Generates static outputs for the website.
 """
 
 import pandas as pd
 from transforms.api import transform, Input, Output
+from myproject.config import DatasetPaths
 
 
 @transform(
-    scoring_data=Input("quality_scores"),
-    analysis_data=Input("trend_analysis"),
-    export_output=Output("export_quality_metrics"),
+    scoring_data=Input(DatasetPaths.QUALITY_SCORES),
+    analysis_data=Input(DatasetPaths.TREND_ANALYSIS),
+    export_output=Output(DatasetPaths.EXPORT_QUALITY_METRICS),
 )
 def export_quality_metrics(scoring_data, analysis_data, export_output):
     df_scoring = scoring_data.pandas()
     df_analysis = analysis_data.pandas()
 
     df = df_scoring.merge(df_analysis, on="source_id", how="left")
-
     df["source_type"] = "curated"
     df["export_version"] = "v1.0"
 
@@ -25,9 +24,9 @@ def export_quality_metrics(scoring_data, analysis_data, export_output):
 
 
 @transform(
-    scoring_data=Input("quality_scores"),
-    analysis_data=Input("trend_analysis"),
-    radar_output=Output("export_technology_radar"),
+    scoring_data=Input(DatasetPaths.QUALITY_SCORES),
+    analysis_data=Input(DatasetPaths.TREND_ANALYSIS),
+    radar_output=Output(DatasetPaths.EXPORT_TECHNOLOGY_RADAR),
 )
 def export_technology_radar(scoring_data, analysis_data, radar_output):
     df_scoring = scoring_data.pandas()
@@ -46,7 +45,6 @@ def export_technology_radar(scoring_data, analysis_data, radar_output):
             return "hold"
 
     df["recommendation"] = df.apply(get_recommendation, axis=1)
-
     df["radar_name"] = "AcaciaFund Technology Radar - Q2 2026"
     df["radar_version"] = "v1.0"
 
@@ -54,9 +52,9 @@ def export_technology_radar(scoring_data, analysis_data, radar_output):
 
 
 @transform(
-    scoring_data=Input("quality_scores"),
-    verification_data=Input("source_verification"),
-    synthesis_output=Output("export_source_synthesis"),
+    scoring_data=Input(DatasetPaths.QUALITY_SCORES),
+    verification_data=Input(DatasetPaths.SOURCE_VERIFICATION),
+    synthesis_output=Output(DatasetPaths.EXPORT_SOURCE_SYNTHESIS),
 )
 def export_source_synthesis(scoring_data, verification_data, synthesis_output):
     df_scoring = scoring_data.pandas()
