@@ -3,7 +3,7 @@ AcaciaFund Quality Scoring Transform
 Computes 6-dimension quality scores for all ingested articles.
 """
 
-import polars as pl
+import pandas as pd
 from datetime import datetime, timezone
 from transforms.api import transform, Input, Output, LightweightInput, LightweightOutput
 
@@ -19,39 +19,31 @@ def compute(
     """
     Compute 6-dimension quality scores for all articles.
     """
-    df = sources.polars(lazy=True)
+    df = sources.pandas()
     
-    df = df.with_columns([
-        pl.when(pl.col("source_api").is_in(["arxiv", "pubmed", "curated"]))
-        .then(pl.lit(0.95))
-        .when(pl.col("source_api").is_in(["github", "gitlab"]))
-        .then(pl.lit(0.70))
-        .otherwise(pl.lit(0.50))
-        .alias("credibility_score"),
-        
-        pl.lit(0.75).alias("technical_accuracy_score"),
-        pl.lit(0.70).alias("practical_value_score"),
-        pl.lit(0.80).alias("freshness_score"),
-        pl.lit(0.75).alias("trend_relevance_score"),
-        pl.lit(0.70).alias("educational_quality_score"),
-    ])
+    df["credibility_score"] = df["source_api"].apply(
+        lambda x: 0.95 if x in ["arxiv", "pubmed", "curated"] else 0.70 if x in ["github", "gitlab"] else 0.50
+    )
     
-    df = df.with_columns([
-        ((pl.col("credibility_score") * 0.25) +
-         (pl.col("technical_accuracy_score") * 0.25) +
-         (pl.col("practical_value_score") * 0.20) +
-         (pl.col("freshness_score") * 0.15) +
-         (pl.col("trend_relevance_score") * 0.10) +
-         (pl.col("educational_quality_score") * 0.05))
-        .alias("overall_quality_score")
-    ])
+    df["technical_accuracy_score"] = 0.75
+    df["practical_value_score"] = 0.70
+    df["freshness_score"] = 0.80
+    df["trend_relevance_score"] = 0.75
+    df["educational_quality_score"] = 0.70
     
-    df = df.with_columns([
-        pl.lit(datetime.now(timezone.utc)).alias("scoring_timestamp"),
-        pl.lit("v1.0").alias("scoring_version"),
-    ])
+    df["overall_quality_score"] = (
+        df["credibility_score"] * 0.25 +
+        df["technical_accuracy_score"] * 0.25 +
+        df["practical_value_score"] * 0.20 +
+        df["freshness_score"] * 0.15 +
+        df["trend_relevance_score"] * 0.10 +
+        df["educational_quality_score"] * 0.05
+    )
     
-    df = df.select([
+    df["scoring_timestamp"] = datetime.now(timezone.utc)
+    df["scoring_version"] = "v1.0"
+    
+    result = df[[
         "source_id",
         "credibility_score",
         "technical_accuracy_score",
@@ -62,9 +54,9 @@ def compute(
         "overall_quality_score",
         "scoring_timestamp",
         "scoring_version",
-    ])
+    ]].copy()
     
-    output.write_table(df)
+    output.write_dataframe(result)
 
 
 @transform.using(
@@ -78,32 +70,22 @@ def source_verification(
     """
     Verify sources and compute verification status.
     """
-    df = sources.polars(lazy=True)
+    df = sources.pandas()
     
-    df = df.with_columns([
-        pl.when(pl.col("source_api").is_in(["arxiv", "pubmed", "curated"]))
-        .then(pl.lit(True))
-        .otherwise(pl.lit(False))
-        .alias("verified"),
-        
-        pl.when(pl.col("source_api").is_in(["arxiv", "pubmed"]))
-        .then(pl.lit("academic"))
-        .when(pl.col("source_api").is_in(["github", "gitlab"]))
-        .then(pl.lit("code_repository"))
-        .when(pl.col("source_api").is_in(["openverse", "wikimedia"]))
-        .then(pl.lit("media"))
-        .otherwise(pl.lit("curated"))
-        .alias("source_type"),
-        
-        pl.lit("evidence_available").alias("evidence_level"),
-    ])
+    df["verified"] = df["source_api"].apply(
+        lambda x: True if x in ["arxiv", "pubmed", "curated"] else False
+    )
     
-    df = df.with_columns([
-        pl.lit(datetime.now(timezone.utc)).alias("verification_timestamp"),
-        pl.lit("v1.0").alias("verification_version"),
-    ])
+    df["source_type"] = df["source_api"].apply(
+        lambda x: "academic" if x in ["arxiv", "pubmed"] else "code_repository" if x in ["github", "gitlab"] else "media" if x in ["openverse", "wikimedia"] else "curated"
+    )
     
-    df = df.select([
+    df["evidence_level"] = "evidence_available"
+    
+    df["verification_timestamp"] = datetime.now(timezone.utc)
+    df["verification_version"] = "v1.0"
+    
+    result = df[[
         "source_id",
         "source_type",
         "source_credibility",
@@ -111,6 +93,6 @@ def source_verification(
         "evidence_level",
         "verification_timestamp",
         "verification_version",
-    ])
+    ]].copy()
     
-    output.write_table(df)
+    output.write_dataframe(result)

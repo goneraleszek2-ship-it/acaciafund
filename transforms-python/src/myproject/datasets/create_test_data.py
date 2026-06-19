@@ -3,13 +3,13 @@ AcaciaFund Test Data Source
 Generates realistic test data for the AcaciaFund portal.
 """
 
-import polars as pl
 import pandas as pd
+from datetime import datetime, timezone
 from transforms.api import transform, Output
 
 
 @transform(
-    test_source=Output("SOURCE_DATASET_PATH")
+    test_source=Output("source_dataset")
 )
 def create_test_data(test_source):
     """
@@ -19,7 +19,7 @@ def create_test_data(test_source):
     This is the first transform in the pipeline - it creates the source dataset
     that all other transforms depend on.
     """
-    df = pl.DataFrame({
+    df = pd.DataFrame({
         "source_id": [f"article_{i:04d}" for i in range(1, 101)],
         "title": [f"Article Title {i}" for i in range(1, 101)],
         "description": [f"Description for article {i}" for i in range(1, 101)],
@@ -46,8 +46,4 @@ def create_test_data(test_source):
         "is_published": [True] * 100,
     })
     
-    # Convert Polars DataFrame to Pandas DataFrame for Foundry compatibility
-    pandas_df = df.to_pandas()
-    
-    # Write the Pandas DataFrame to the output
-    test_source.write_dataframe(pandas_df)
+    test_source.write_dataframe(df)

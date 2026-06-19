@@ -3,13 +3,13 @@ AcaciaFund Lightweight Transform
 Clean and standardize AcaciaFund portal data with comprehensive validation.
 """
 
-import polars as pl
+import pandas as pd
 from datetime import datetime, timezone
 from transforms.api import transform, Input, Output, LightweightInput, LightweightOutput
 
 
 @transform.using(
-    input_dataset=Input("SOURCE_DATASET_PATH"),
+    input_dataset=Input("source_dataset"),
     output_dataset=Output("acacia_portal_clean_data"),
 )
 def clean_and_standardize(
@@ -27,69 +27,47 @@ def clean_and_standardize(
     - Generates quality metrics
     """
     try:
-        # Read input data
-        df = input_dataset.polars(lazy=True)
+        df = input_dataset.pandas()
 
-        # Validate required columns exist
         required_columns = ["source_id", "title", "description", "url", "source_api"]
-        current_columns = df.columns
+        current_columns = df.columns.tolist()
 
         missing_columns = set(required_columns) - set(current_columns)
         if missing_columns:
             raise ValueError(f"Missing required columns: {missing_columns}")
 
-        # Data Quality Checks with Expectations
-        # Note: These expectations will be validated during pipeline execution
-        df = df.with_columns([
-            # Ensure source_id is not null
-            pl.when(pl.col("source_id").is_null())
-            .then(pl.lit(False))
-            .otherwise(pl.lit(True))
-            .alias("source_id_valid"),
+        df["source_id_valid"] = ~df["source_id"].isnull()
+        df["title_valid"] = ~(df["title"].isnull() | (df["title"].str.len() == 0))
 
-            # Ensure title is not null or empty
-            pl.when(pl.col("title").is_null() | (pl.col("title").str.lengths() == 0))
-            .then(pl.lit(False))
-            .otherwise(pl.lit(True))
-            .alias("title_valid"),
+        df["title_clean"] = df["title"].str.strip().str.title()
+        df["pillar_clean"] = df["pillar"].str.strip().str.title()
 
-            # Standardize title case
-            pl.col("title").str.strip_chars().str.to_titlecase().alias("title_clean"),
+        df = df[df["is_active"] == True]
+        df = df[df["is_published"] == True]
 
-            # Standardize pillar values
-            pl.col("pillar").str.strip_chars().str.to_titlecase().alias("pillar_clean"),
-        ])
-
-        # Apply business rules
-        df = df.filter(
-            (pl.col("is_active") == True) &
-            (pl.col("is_published") == True)
+        df["overall_quality_score"] = (
+            df["credibility_score"] * 0.25 +
+            df["technical_accuracy_score"] * 0.25 +
+            df["practical_value_score"] * 0.20 +
+            df["freshness_score"] * 0.15 +
+            df["trend_relevance_score"] * 0.10 +
+            df["educational_quality_score"] * 0.05
         )
 
-        # Calculate overall quality score
-        df = df.with_columns([
-            ((pl.col("credibility_score") * 0.25) +
-             (pl.col("technical_accuracy_score") * 0.25) +
-             (pl.col("practical_value_score") * 0.20) +
-             (pl.col("freshness_score") * 0.15) +
-             (pl.col("trend_relevance_score") * 0.10) +
-             (pl.col("educational_quality_score") * 0.05))
-            .alias("overall_quality_score"),
+        def categorize_trend(x):
+            if x >= 90:
+                return "high_trend"
+            elif x >= 70:
+                return "medium_trend"
+            else:
+                return "low_trend"
 
-            # Categorize trend strength
-            pl.when(pl.col("trend_strength") >= 90).then("high_trend")
-            .when(pl.col("trend_strength") >= 70).then("medium_trend")
-            .otherwise("low_trend").alias("trend_category"),
-        ])
+        df["trend_category"] = df["trend_strength"].apply(categorize_trend)
 
-        # Add processing metadata
-        df = df.with_columns([
-            pl.lit(datetime.now(timezone.utc)).alias("cleaned_timestamp"),
-            pl.lit("v2.0").alias("cleaning_version"),
-        ])
+        df["cleaned_timestamp"] = datetime.now(timezone.utc)
+        df["cleaning_version"] = "v2.0"
 
-        # Select final columns
-        df = df.select([
+        result = df[[
             "source_id",
             "title_clean",
             "description",
@@ -116,23 +94,20 @@ def clean_and_standardize(
             "title_valid",
             "cleaned_timestamp",
             "cleaning_version",
-        ])
+        ]].copy()
 
-        # Write output
-        output_dataset.write_table(df)
+        output_dataset.write_dataframe(result)
 
-        # Log success
-        print(f"Successfully processed {df.select(pl.len()).collect()} records")
+        print(f"Successfully processed {len(result)} records")
 
     except Exception as e:
         print(f"Error in lightweight-transform: {str(e)}")
         raise
 
 
-# Additional transform for data quality monitoring
 @transform.using(
     output=Output("cleaning_quality_metrics"),
-    input_dataset=Input("SOURCE_DATASET_PATH"),
+    input_dataset=Input("source_dataset"),
 )
 def cleaning_quality_metrics(
     input_dataset: LightweightInput,
@@ -141,24 +116,20 @@ def cleaning_quality_metrics(
     """
     Generate data quality metrics for the cleaning process.
     """
-    df = input_dataset.polars(lazy=True)
+    df = input_dataset.pandas()
 
-    # Calculate quality metrics
-    metrics = df.select([
-        pl.len().alias("total_records"),
-        pl.col("source_id").is_null().sum().alias("null_source_ids"),
-        pl.col("title").is_null().sum().alias("null_titles"),
-        pl.col("title").str.lengths().mean().alias("avg_title_length"),
-        pl.col("source_api").n_unique().alias("unique_sources"),
-        pl.col("pillar").n_unique().alias("unique_pillars"),
-        pl.col("credibility_score").mean().alias("avg_credibility"),
-        pl.col("overall_quality_score").mean().alias("avg_overall_quality"),
-    ])
+    metrics = pd.DataFrame({
+        "total_records": [len(df)],
+        "null_source_ids": [df["source_id"].isnull().sum()],
+        "null_titles": [df["title"].isnull().sum()],
+        "avg_title_length": [df["title"].str.len().mean()],
+        "unique_sources": [df["source_api"].nunique()],
+        "unique_pillars": [df["pillar"].nunique()],
+        "avg_credibility": [df["credibility_score"].mean()],
+        "avg_overall_quality": [df["overall_quality_score"].mean()],
+    })
 
-    # Add timestamp and version
-    metrics = metrics.with_columns([
-        pl.lit(datetime.now(timezone.utc)).alias("metric_timestamp"),
-        pl.lit("v1.0").alias("metric_version"),
-    ])
+    metrics["metric_timestamp"] = datetime.now(timezone.utc)
+    metrics["metric_version"] = "v1.0"
 
-    output.write_table(metrics)
+    output.write_dataframe(metrics)

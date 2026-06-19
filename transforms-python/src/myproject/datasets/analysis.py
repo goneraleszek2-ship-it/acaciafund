@@ -3,7 +3,7 @@ AcaciaFund Trend Detection Transform
 Detects emerging trends and technology adoption patterns.
 """
 
-import polars as pl
+import pandas as pd
 from datetime import datetime, timezone
 from transforms.api import transform, Input, Output, LightweightInput, LightweightOutput
 
@@ -19,21 +19,17 @@ def compute(
     """
     Analyze trends and detect adoption patterns.
     """
-    df = sources.polars(lazy=True)
+    df = sources.pandas()
     
-    df = df.with_columns([
-        pl.lit(94.1).alias("trend_strength"),
-        pl.lit("emerging").alias("adoption_level"),
-        pl.lit("high").alias("impact_level"),
-        pl.lit(["AI/ML", "DataOps", "Cloud", "Security", "Finance", "Infrastructure"]).alias("trend_categories"),
-    ])
+    df["trend_strength"] = 94.1
+    df["adoption_level"] = "emerging"
+    df["impact_level"] = "high"
+    df["trend_categories"] = ["AI/ML", "DataOps", "Cloud", "Security", "Finance", "Infrastructure"]
     
-    df = df.with_columns([
-        pl.lit(datetime.now(timezone.utc)).alias("analysis_timestamp"),
-        pl.lit("v1.0").alias("analysis_version"),
-    ])
+    df["analysis_timestamp"] = datetime.now(timezone.utc)
+    df["analysis_version"] = "v1.0"
     
-    df = df.select([
+    result = df[[
         "source_id",
         "trend_strength",
         "adoption_level",
@@ -41,9 +37,9 @@ def compute(
         "trend_categories",
         "analysis_timestamp",
         "analysis_version",
-    ])
+    ]].copy()
     
-    output.write_table(df)
+    output.write_dataframe(result)
 
 
 @transform.using(
@@ -53,14 +49,14 @@ def technology_radar(output: Output) -> None:
     """
     Generate technology radar recommendations.
     """
-    df = pl.DataFrame({
-        "concept_name": pl.Series([], dtype=pl.Utf8),
-        "adoption_level": pl.Series([], dtype=pl.Utf8),
-        "impact_level": pl.Series([], dtype=pl.Utf8),
-        "trend_strength": pl.Series([], dtype=pl.Float64),
-        "recommendation": pl.Series([], dtype=pl.Utf8),
-        "rationale": pl.Series([], dtype=pl.Utf8),
-        "evidence_count": pl.Series([], dtype=pl.Int64),
+    df = pd.DataFrame({
+        "concept_name": pd.Series([], dtype=str),
+        "adoption_level": pd.Series([], dtype=str),
+        "impact_level": pd.Series([], dtype=str),
+        "trend_strength": pd.Series([], dtype=float),
+        "recommendation": pd.Series([], dtype=str),
+        "rationale": pd.Series([], dtype=str),
+        "evidence_count": pd.Series([], dtype=int),
     })
     
-    output.write_table(df)
+    output.write_dataframe(df)

@@ -3,7 +3,7 @@ AcaciaFund Source Synthesis Transform
 Generates source synthesis records for articles.
 """
 
-import polars as pl
+import pandas as pd
 from datetime import datetime, timezone
 from transforms.api import transform, Input, Output, LightweightInput, LightweightOutput
 
@@ -21,15 +21,13 @@ def source_synthesis(
     """
     Generate source synthesis records for all articles.
     """
-    df_quality = quality.polars(lazy=True)
-    df_verification = verification.polars(lazy=True)
+    df_quality = quality.pandas()
+    df_verification = verification.pandas()
     
-    df = df_quality.join(df_verification, on="source_id", how="left")
+    df = df_quality.merge(df_verification, on="source_id", how="left")
     
-    df = df.with_columns([
-        pl.lit("research").alias("source_type"),
-        pl.lit(0.652).alias("synthesis_score"),
-        pl.lit(datetime.now(timezone.utc)).alias("synthesis_timestamp"),
-    ])
+    df["source_type"] = "research"
+    df["synthesis_score"] = 0.652
+    df["synthesis_timestamp"] = datetime.now(timezone.utc)
     
-    output.write_table(df)
+    output.write_dataframe(df)

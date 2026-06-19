@@ -7,8 +7,8 @@ Centralized configuration for all transforms.
 class DatasetPaths:
     """Centralized dataset path definitions"""
     
-    # Input datasets
-    SOURCE_DATASET = "SOURCE_DATASET_PATH"
+    # Input datasets (relative dataset names)
+    SOURCE_DATASET = "source_dataset"
     
     # Output datasets (relative paths within project)
     CLEANED_DATA = "acacia_portal_clean_data"

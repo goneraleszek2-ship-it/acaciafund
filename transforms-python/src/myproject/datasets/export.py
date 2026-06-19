@@ -3,7 +3,7 @@ AcaciaFund Export Transform
 Generates static outputs for the website.
 """
 
-import polars as pl
+import pandas as pd
 from datetime import datetime, timezone
 from transforms.api import transform, Input, Output, LightweightInput, LightweightOutput
 
@@ -21,18 +21,16 @@ def quality_metrics(
     """
     Export quality metrics for static site consumption.
     """
-    df_scoring = scoring.polars(lazy=True)
-    df_analysis = analysis.polars(lazy=True)
+    df_scoring = scoring.pandas()
+    df_analysis = analysis.pandas()
     
-    df = df_scoring.join(df_analysis, on="source_id", how="left")
+    df = df_scoring.merge(df_analysis, on="source_id", how="left")
     
-    df = df.with_columns([
-        pl.lit("curated").alias("source_type"),
-        pl.col("verified").fill_null(pl.lit(True)).alias("source_verified"),
-        pl.lit(datetime.now(timezone.utc)).alias("export_timestamp"),
-    ])
+    df["source_type"] = "curated"
+    df["source_verified"] = df["verified"].fillna(True)
+    df["export_timestamp"] = datetime.now(timezone.utc)
     
-    output.write_table(df)
+    output.write_dataframe(df)
 
 
 @transform.using(
@@ -48,29 +46,28 @@ def technology_radar(
     """
     Export technology radar recommendations.
     """
-    df_scoring = scoring.polars(lazy=True)
-    df_analysis = analysis.polars(lazy=True)
+    df_scoring = scoring.pandas()
+    df_analysis = analysis.pandas()
     
-    df = df_scoring.join(df_analysis, on="source_id", how="left")
+    df = df_scoring.merge(df_analysis, on="source_id", how="left")
     
-    df = df.with_columns([
-        pl.when((pl.col("overall_quality_score") >= 0.8) & (pl.col("trend_strength") >= 50))
-        .then(pl.lit("adopt"))
-        .when((pl.col("overall_quality_score") >= 0.6) & (pl.col("trend_strength") >= 30))
-        .then(pl.lit("trial"))
-        .when(pl.col("overall_quality_score") >= 0.5)
-        .then(pl.lit("assess"))
-        .otherwise(pl.lit("hold"))
-        .alias("recommendation"),
-    ])
+    def get_recommendation(row):
+        if row["overall_quality_score"] >= 0.8 and row["trend_strength"] >= 50:
+            return "adopt"
+        elif row["overall_quality_score"] >= 0.6 and row["trend_strength"] >= 30:
+            return "trial"
+        elif row["overall_quality_score"] >= 0.5:
+            return "assess"
+        else:
+            return "hold"
     
-    df = df.with_columns([
-        pl.lit("AcaciaFund Technology Radar - Q2 2026").alias("radar_name"),
-        pl.lit(datetime.now(timezone.utc).strftime("%Y-%m-%d")).alias("radar_date"),
-        pl.lit(datetime.now(timezone.utc)).alias("export_timestamp"),
-    ])
+    df["recommendation"] = df.apply(get_recommendation, axis=1)
     
-    output.write_table(df)
+    df["radar_name"] = "AcaciaFund Technology Radar - Q2 2026"
+    df["radar_date"] = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    df["export_timestamp"] = datetime.now(timezone.utc)
+    
+    output.write_dataframe(df)
 
 
 @transform.using(
@@ -86,15 +83,13 @@ def source_synthesis(
     """
     Export source synthesis records.
     """
-    df_scoring = scoring.polars(lazy=True)
-    df_verification = verification.polars(lazy=True)
+    df_scoring = scoring.pandas()
+    df_verification = verification.pandas()
     
-    df = df_scoring.join(df_verification, on="source_id", how="left")
+    df = df_scoring.merge(df_verification, on="source_id", how="left")
     
-    df = df.with_columns([
-        pl.lit("research").alias("source_type"),
-        pl.lit(0.652).alias("synthesis_score"),
-        pl.lit(datetime.now(timezone.utc)).alias("synthesis_timestamp"),
-    ])
+    df["source_type"] = "research"
+    df["synthesis_score"] = 0.652
+    df["synthesis_timestamp"] = datetime.now(timezone.utc)
     
-    output.write_table(df)
+    output.write_dataframe(df)
