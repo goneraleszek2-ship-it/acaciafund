@@ -8,8 +8,7 @@ from transforms.api import lightweight, Output, TransformOutput
 from myproject.config import DatasetPaths
 
 
-@lightweight(
-    test_source=Output(DatasetPaths.SOURCE_DATASET)
+@lightweight(test_source=Output(DatasetPaths.SOURCE_DATASET)
 )
 def create_test_data(test_source: TransformOutput):
     df = pd.DataFrame({
