@@ -670,56 +670,111 @@
   </div>
 </section>
 
-<!-- Architecture & Systems -->
-<section class="py-16 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-950">
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="text-center mb-12">
-      <h2 class="text-3xl font-bold mb-4" style="color:var(--color-text)">Architecture & Systems</h2>
-      <p class="text-gray-600 max-w-2xl mx-auto">How AcaciaFund is built</p>
-    </div>
-    
-    <div class="grid md:grid-cols-3 gap-6">
-      <div class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
-        <div class="w-12 h-12 rounded-lg mb-4 flex items-center justify-center" style="background:var(--color-aml)20">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-aml)" stroke-width="2">
-            <path d="M12 2L2 7v10l10 5 10-5V7L12 2z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-          </svg>
-        </div>
-        <h3 class="text-lg font-semibold mb-2" style="color:var(--color-text)">Knowledge Graph</h3>
-        <p class="text-sm text-slate-600 dark:text-slate-400">Structured relationships between concepts, topics, and learning paths. Built with Bloom taxonomy for progressive mastery.</p>
-      </div>
-      
-      <div class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
-        <div class="w-12 h-12 rounded-lg mb-4 flex items-center justify-center" style="background:var(--color-markets)20">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-markets)" stroke-width="2">
-            <path d="M12 22V12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
-          </svg>
-        </div>
-        <h3 class="text-lg font-semibold mb-2" style="color:var(--color-text)">Data Layer</h3>
-        <p class="text-sm text-slate-600 dark:text-slate-400">Pipeline architecture with quality scoring, source verification, and trend detection across 97+ articles.</p>
-      </div>
-      
-      <div class="bg-white dark:bg-slate-800 rounded-xl p-6 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
-        <div class="w-12 h-12 rounded-lg mb-4 flex items-center justify-center" style="background:var(--color-data-engineering)20">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--color-data-engineering)" stroke-width="2">
-            <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
-          </svg>
-        </div>
-        <h3 class="text-lg font-semibold mb-2" style="color:var(--color-text)">Agentic Layer</h3>
-        <p class="text-sm text-slate-600 dark:text-slate-400">AI-native evaluation framework with quality metrics, anomaly detection, and drift monitoring.</p>
-      </div>
-    </div>
-    
-    <div class="mt-8 text-center">
-      <a href="/knowledge/system-architecture/" class="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded-lg transition hover:opacity-80" style="color:var(--color-accent)">
-        View full architecture
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M5 12h14M12 5l7 7-7 7"/>
-        </svg>
-      </a>
-    </div>
-  </div>
-</section>
+ <!-- Architecture & Systems -->
+ <section class="py-16 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-950">
+   <div class="max-w-7xl mx-auto px-4">
+     <div class="text-center mb-12">
+       <h2 class="text-3xl md:text-4xl font-bold mb-4" style="color:var(--color-text)">Architecture & Systems</h2>
+       <p class="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">A 5-layer platform for building and evaluating AI-native intelligence systems</p>
+     </div>
+     
+     <div class="grid md:grid-cols-5 gap-4">
+       <div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
+         <div class="flex items-center gap-3 mb-3">
+           <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background:var(--color-aml)20">
+             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-aml)" stroke-width="2">
+               <path d="M12 2L2 7v10l10 5 10-5V7L12 2z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+             </svg>
+           </div>
+           <div>
+             <div class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Layer 1</div>
+             <h3 class="text-base font-semibold" style="color:var(--color-text)">Knowledge Graph</h3>
+           </div>
+         </div>
+         <p class="text-sm text-slate-600 dark:text-slate-400 mb-2"><strong>What:</strong> Structured relationships between concepts and learning paths</p>
+         <p class="text-sm text-slate-600 dark:text-slate-400 mb-2"><strong>Why:</strong> Bloom taxonomy enables progressive mastery from remember to create</p>
+         <p class="text-xs text-slate-500"><strong>How:</strong> 266+ topic relationships, 97+ curated articles</p>
+       </div>
+       
+       <div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
+         <div class="flex items-center gap-3 mb-3">
+           <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background:var(--color-markets)20">
+             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-markets)" stroke-width="2">
+               <path d="M12 22V12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+             </svg>
+           </div>
+           <div>
+             <div class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Layer 2</div>
+             <h3 class="text-base font-semibold" style="color:var(--color-text)">Data Layer</h3>
+           </div>
+         </div>
+         <p class="text-sm text-slate-600 dark:text-slate-400 mb-2"><strong>What:</strong> Pipeline architecture for content ingestion and processing</p>
+         <p class="text-sm text-slate-600 dark:text-slate-400 mb-2"><strong>Why:</strong> Quality scoring and source verification ensure reliable information</p>
+         <p class="text-xs text-slate-500"><strong>How:</strong> 97+ articles scored, trend detection, source breakdown analysis</p>
+       </div>
+       
+       <div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
+         <div class="flex items-center gap-3 mb-3">
+           <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background:var(--color-data-engineering)20">
+             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-data-engineering)" stroke-width="2">
+               <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/>
+             </svg>
+           </div>
+           <div>
+             <div class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Layer 3</div>
+             <h3 class="text-base font-semibold" style="color:var(--color-text)">Agentic Layer</h3>
+           </div>
+         </div>
+         <p class="text-sm text-slate-600 dark:text-slate-400 mb-2"><strong>What:</strong> AI-native evaluation and orchestration framework</p>
+         <p class="text-sm text-slate-600 dark:text-slate-400 mb-2"><strong>Why:</strong> Automates quality assessment and anomaly detection</p>
+         <p class="text-xs text-slate-500"><strong>How:</strong> 6-dimension scoring, z-score outlier detection, drift monitoring</p>
+       </div>
+       
+       <div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
+         <div class="flex items-center gap-3 mb-3">
+           <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background:#22c55e20">
+             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2">
+               <path d="M22 12h-4l-3 9L9 3l-3 9H2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+             </svg>
+           </div>
+           <div>
+             <div class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Layer 4</div>
+             <h3 class="text-base font-semibold" style="color:var(--color-text)">Evaluation</h3>
+           </div>
+         </div>
+         <p class="text-sm text-slate-600 dark:text-slate-400 mb-2"><strong>What:</strong> Quality metrics and agent performance measurement</p>
+         <p class="text-sm text-slate-600 dark:text-slate-400 mb-2"><strong>Why:</strong> Continuous improvement through data-driven feedback</p>
+         <p class="text-xs text-slate-500"><strong>How:</strong> SQI scoring, trend detection, source verification evidence</p>
+       </div>
+       
+       <div class="bg-white dark:bg-slate-800 rounded-xl p-5 border border-slate-200 dark:border-slate-700 shadow-sm hover:shadow-md transition-shadow">
+         <div class="flex items-center gap-3 mb-3">
+           <div class="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0" style="background:#6366f120">
+             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#6366f1" stroke-width="2">
+               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+             </svg>
+           </div>
+           <div>
+             <div class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-1">Layer 5</div>
+             <h3 class="text-base font-semibold" style="color:var(--color-text)">Human Oversight</h3>
+           </div>
+         </div>
+         <p class="text-sm text-slate-600 dark:text-slate-400 mb-2"><strong>What:</strong> Human-in-the-loop validation and curation</p>
+         <p class="text-sm text-slate-600 dark:text-slate-400 mb-2"><strong>Why:</strong> Domain expertise ensures relevance and accuracy</p>
+         <p class="text-xs text-slate-500"><strong>How:</strong> Expert review, curated relations, quality flags</p>
+       </div>
+     </div>
+     
+     <div class="mt-8 text-center">
+       <a href="/knowledge/system-architecture/" class="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded-lg transition hover:opacity-80" style="color:var(--color-accent)">
+         View full architecture
+         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+           <path d="M5 12h14M12 5l7 7-7 7"/>
+         </svg>
+       </a>
+     </div>
+   </div>
+ </section>
 
 <!-- Projects & Experiments -->
 <section class="py-16 bg-white">
