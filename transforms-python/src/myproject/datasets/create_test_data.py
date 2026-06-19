@@ -4,7 +4,7 @@ Generates realistic test data for the AcaciaFund portal.
 """
 
 import pandas as pd
-from transforms.api import transform, Output
+from transforms.api import transform, Output, TransformInput
 
 # Importujemy centralną konfigurację ścieżek projektu
 from myproject.config import DatasetPaths
@@ -13,7 +13,6 @@ from myproject.config import DatasetPaths
 @transform(
     test_source=Output(DatasetPaths.SOURCE_DATASET)
 )
-from transforms.api import transform, Output, TransformInput
 def create_test_data(test_source: TransformInput):
     df = pd.DataFrame({
         "source_id": [f"article_{i:04d}" for i in range(1, 101)],
