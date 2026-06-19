@@ -170,4 +170,48 @@
     document.head.appendChild(style);
   }
 
+  // ── Save to Library (localStorage) ───────────────────────────
+  function toggleSaveToLibrary(slug, element) {
+    if (!slug) return;
+    let savedItems = [];
+    try {
+      savedItems = JSON.parse(localStorage.getItem('acaciafund_saved') || '[]');
+    } catch(e) {
+      console.error('Local storage unavailable');
+      return;
+    }
+    
+    const index = savedItems.indexOf(slug);
+    const starSpan = element.querySelector('.star-icon');
+    
+    if (index === -1) {
+      savedItems.push(slug);
+      if (starSpan) { starSpan.textContent = '★'; starSpan.style.color = '#d97706'; }
+      element.setAttribute('title', 'Remove from library');
+    } else {
+      savedItems.splice(index, 1);
+      if (starSpan) { starSpan.textContent = '☆'; starSpan.style.color = ''; }
+      element.setAttribute('title', 'Save to library');
+    }
+    localStorage.setItem('acaciafund_saved', JSON.stringify(savedItems));
+    
+    // Micro-animation
+    element.style.transform = 'scale(1.25)';
+    setTimeout(() => { element.style.transform = ''; }, 150);
+  }
+
+  // Restore saved items on DOM load
+  document.addEventListener('DOMContentLoaded', function() {
+    try {
+      const savedItems = JSON.parse(localStorage.getItem('acaciafund_saved') || '[]');
+      document.querySelectorAll('[onclick^="toggleSaveToLibrary"]').forEach(function(btn) {
+        const match = btn.getAttribute('onclick').match(/'([^']+)'/);
+        if (match && savedItems.includes(match[1])) {
+          const starSpan = btn.querySelector('.star-icon');
+          if (starSpan) { starSpan.textContent = '★'; starSpan.style.color = '#d97706'; }
+        }
+      });
+    } catch(e) {}
+  });
+
 })();

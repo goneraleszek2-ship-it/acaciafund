@@ -1791,14 +1791,39 @@ def main():
     hero_article = max(recent_articles, key=lambda x: (x.signals or {}).get("avg_sqi", 0)) if recent_articles else None
     home_og_key = hashlib.md5(b"AcaciaFund homepage").hexdigest()[:12]
     home_og_url = f"{SITE_URL}/static/images/og_{home_og_key}.svg"
+    
+    # Homepage social proof aggregators
+    unique_source_domains = set()
+    unique_topic_tags = set()
+    for c in all_content:
+        for src in (c.source_breakdown or {}).keys():
+            unique_source_domains.add(src)
+        for t in (c.tags or []):
+            unique_topic_tags.add(t)
+    
+    # Top 3 trending by interest score (reuse sorted_research which is already scored)
+    trending_slugs = set()
+    for p in sorted_research[:3]:
+        trending_slugs.add(p.slug)
+    
+    # Pictogram filenames for homepage research cards
+    recent_pictograms = {}
+    for p in fresh_posts[:6]:
+        recent_pictograms[p.slug] = pick_card_pictogram(p)
+    
     index_html = render_template("index.j2",
         content=_dummy("Research Synthesis & Learning", "index",
                        description="AcaciaFund — research synthesis & experimental learning platform. Automated classification of HackerNews + arXiv content using Bloom taxonomy."),
         is_index=True, page_path="",
         og_image_url=home_og_url,
-        featured_posts=featured, recent_posts=fresh_posts[:12],
+        featured_posts=featured, recent_posts=fresh_posts[:6],
         learn_items=learn_items[:6], knowledge_items=knowledge_items[:6],
         hero_article=hero_article,
+        stat_article_count=len(all_content),
+        stat_source_count=len(unique_source_domains),
+        stat_topic_count=len(unique_topic_tags),
+        trending_slugs=trending_slugs,
+        recent_pictograms=recent_pictograms,
         thumbnail_base=f"{SITE_URL}/static/images", thumbnail_key=thumbnail_key, **ctx_base)
     (OUTPUT_DIR / "index.html").write_text(index_html, encoding="utf-8")
     # Write homepage OG image

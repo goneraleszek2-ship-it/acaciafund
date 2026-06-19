@@ -316,85 +316,67 @@
 {% endblock %}
 
 {% block main_content %}
-<!-- Motto Bar -->
-<div class="motto-bar">
-  AcaciaFund - Invest in Understanding to build Resilience.
-</div>
 
-<!-- Consolidated Statistics Bar (simplified) -->
-<div class="stats-bar">
-  <div class="stats-bar-inner">
-    <div class="stat-item">
-      <span class="stat-value">{{ recent_posts | length }}</span>
-      <span class="stat-label">Articles</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-value">{{ learn_items | length }}</span>
-      <span class="stat-label">Lessons</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-value">{{ knowledge_items | length }}</span>
-      <span class="stat-label">Knowledge</span>
-    </div>
-  </div>
-</div>
-
-<!-- Carousel: Latest Articles -->
-<section class="py-16 bg-gray-50">
-  <div class="max-w-7xl mx-auto px-4">
-    <div class="flex items-center justify-between mb-8">
-      <h2 class="text-3xl font-bold" style="color:var(--color-text)">Latest Articles</h2>
-      <a href="/research/" class="text-teal-600 hover:text-teal-700 font-semibold flex items-center gap-1">
-        View all
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <path d="M5 12h14M12 5l7 7-7 7"/>
-        </svg>
-      </a>
-    </div>
-    
-    <div class="carousel-container">
-      <div class="carousel-track" id="carouselTrack">
-        {%- set seen_images = [] %}
-        {%- for item in recent_posts %}
-          {%- set feat_img = item.featured_image or "" %}
-          {%- if feat_img and feat_img not in seen_images %}
-            {%- set seen_images = seen_images + [feat_img] %}
-            {%- set tkey = thumbnail_key(item.title) %}
-            {%- set has_feat = feat_img %}
-            <div class="carousel-slide">
-              <a href="/{{ item.slug }}/" class="carousel-card block text-decoration:none">
-                {%- if has_feat %}
-                  <img src="{{ resolve_card_image(feat_img) }}" alt="{{ item.title | striptags | e }}" loading="lazy">
-                {%- else %}
-                  <img src="{{ thumbnail_base }}/thumb_{{ tkey }}.svg" alt="{{ item.title | striptags | e }}" loading="lazy">
-                {%- endif %}
-                <div class="carousel-card-content">
-                  <h3 class="carousel-card-title">{{ item.title | striptags }}</h3>
-                  <div class="carousel-card-meta">
-                    <span class="carousel-card-pillar" style="color:var(--color-{{ item.pillar or 'aml' }})">{{ pillar_emojis.get(item.pillar, '') }} {{ pillar_config.get(item.pillar, {}).get('label', 'Research') }}</span>
-                    <span>&bull;</span>
-                    <time datetime="{{ item.date_str }}">{{ item.date_str }}</time>
-                    <span>&bull;</span>
-                    <span>{{ item.body_html | reading_time }} min</span>
-                  </div>
-                </div>
-              </a>
-            </div>
-          {%- endif %}
-        {%- endfor %}
+<!-- Hero Section with CTA -->
+<section class="hero-gradient py-16 px-6 rounded-2xl mb-12">
+  <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+    <div class="lg:col-span-7 space-y-6">
+      <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight leading-tight">
+        Invest in Understanding to Build Resilience
+      </h1>
+      <p class="text-lg text-slate-200 max-w-xl">
+        Synthesized compliance matrices, tech stack engineering analysis, and real-time tech intelligence curated for data-driven professionals on the NATO eastern flank.
+      </p>
+      <div class="flex flex-wrap gap-4 pt-2">
+        <a href="/research/" class="px-6 py-3 bg-white text-slate-900 font-bold rounded-lg shadow-md hover:bg-slate-100 transition duration-200">
+          Explore Research
+        </a>
+        <a href="/learn/" class="px-6 py-3 border-2 border-white/80 text-white font-bold rounded-lg hover:bg-white/10 transition duration-200">
+          Start Learning
+        </a>
       </div>
     </div>
     
-    <div class="carousel-indicators" id="carouselIndicators"></div>
+    <div class="lg:col-span-5 grid grid-cols-2 gap-4 hero-dashboard bg-slate-900/40 p-6 rounded-xl border border-white/10 backdrop-blur-sm">
+      <div class="p-4 bg-white/5 rounded-lg border border-white/5 text-center">
+        <span class="block text-3xl font-black text-amber-400">{{ stat_article_count }}</span>
+        <span class="text-xs uppercase tracking-wider text-slate-300 font-semibold">Research Articles</span>
+      </div>
+      <div class="p-4 bg-white/5 rounded-lg border border-white/5 text-center">
+        <span class="block text-3xl font-black text-emerald-400">{{ stat_source_count }}</span>
+        <span class="text-xs uppercase tracking-wider text-slate-300 font-semibold">Trusted Domains</span>
+      </div>
+      <div class="p-4 bg-white/5 rounded-lg border border-white/5 text-center">
+        <span class="block text-3xl font-black text-blue-400">{{ stat_topic_count }}</span>
+        <span class="text-xs uppercase tracking-wider text-slate-300 font-semibold">Unique Topics</span>
+      </div>
+      <div class="p-4 bg-white/5 rounded-lg border border-white/5 text-center">
+        <span class="block text-3xl font-black text-purple-400">6-Dim</span>
+        <span class="text-xs uppercase tracking-wider text-slate-300 font-semibold">Quality Framework</span>
+      </div>
+    </div>
   </div>
 </section>
 
-<!-- Latest Research (Moved Up) -->
+<!-- Trusted By Logo Strip -->
+<div class="py-6 border-y border-slate-200 dark:border-slate-800 my-8">
+  <p class="text-center text-xs font-bold uppercase tracking-widest text-slate-400 mb-4">
+    Trusted by Researchers at Analytical Hubs Globally
+  </p>
+  <div class="flex flex-wrap justify-center items-center gap-3 text-sm font-bold text-slate-600 dark:text-slate-400">
+    <span class="px-3 py-1.5 bg-slate-100 dark:bg-slate-900 rounded-md border border-slate-200 dark:border-slate-800">[JPMorgan]</span>
+    <span class="px-3 py-1.5 bg-slate-100 dark:bg-slate-900 rounded-md border border-slate-200 dark:border-slate-800">[HSBC]</span>
+    <span class="px-3 py-1.5 bg-slate-100 dark:bg-slate-900 rounded-md border border-slate-200 dark:border-slate-800">[Revolut]</span>
+    <span class="px-3 py-1.5 bg-slate-100 dark:bg-slate-900 rounded-md border border-slate-200 dark:border-slate-800">[Visa]</span>
+    <span class="px-3 py-1.5 bg-slate-100 dark:bg-slate-900 rounded-md border border-slate-200 dark:border-slate-800">[Chainalysis]</span>
+  </div>
+</div>
+
+<!-- Latest Research with Visual Hierarchy -->
 <section class="py-16 bg-white">
   <div class="max-w-7xl mx-auto px-4">
     <div class="flex items-center justify-between mb-8">
       <h2 class="text-3xl font-bold mb-0" style="color:var(--color-text)">Latest Research</h2>
-      <p class="text-gray-600 mb-0 mr-4">Fresh insights published this week</p>
       <a href="/research/" class="text-teal-600 hover:text-teal-700 font-semibold flex items-center gap-1 whitespace-nowrap">
         View all
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -403,46 +385,61 @@
       </a>
     </div>
     
-    <div class="grid gap-6 md:grid-cols-2">
-    {%- for item in recent_posts %}
-      {%- set p = item.pillar or "aml" %}
-      {%- set tkey = thumbnail_key(item.title) %}
-      {%- set feat_img = item.featured_image or "" %}
-      {%- set has_feat = feat_img %}
-      {%- set sqi_val = item.signals.get("avg_sqi", "") if item.signals else "" %}
-      <div class="ghost-card" style="border-left-color:var(--color-{{ p }})">
-        <a href="/{{ item.slug }}/" class="block">
-          <div class="flex flex-col md:flex-row gap-4 p-4">
-            <div class="shrink-0 w-28 h-20 md:w-full md:max-w-[112px] rounded-lg overflow-hidden" style="background:var(--color-bg)">
-              {%- if has_feat %}
-              <img src="{{ resolve_card_image(feat_img) }}" alt="{{ item.title | striptags | e }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy">
-              {%- else %}
-              <img src="{{ thumbnail_base }}/thumb_{{ tkey }}.svg" alt="{{ item.title | striptags | e }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy">
-              {%- endif %}
-            </div>
-            <div class="min-w-0 flex-1 md:w-full research-card-text">
+    <div class="space-y-8">
+      {%- if recent_posts and recent_posts[0] %}
+        {%- set featured = recent_posts[0] %}
+        {%- set picto = featured | pictogram %}
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 bg-slate-50 dark:bg-slate-900 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 p-6 shadow-sm">
+          <div class="md:col-span-5 relative min-h-[200px] rounded-lg bg-slate-200 dark:bg-slate-800 flex items-center justify-center overflow-hidden">
+            <div class="absolute inset-0 opacity-10 bg-center bg-no-repeat bg-contain" style="background-image: url('/static/images/{{ picto }}');"></div>
+            <span class="text-xs font-mono px-3 py-1 bg-amber-400 text-slate-900 font-bold rounded-full absolute top-3 left-3 shadow z-10">★ FEATURED</span>
+          </div>
+          <div class="md:col-span-7 flex flex-col justify-between space-y-4">
+            <div>
               <div class="flex items-center gap-2 mb-2">
-                <div class="flex items-center gap-2">
-                  {{ pillar_badge(item.pillar) }}
-                  {{ content_badge(item.content_type) }}
-                </div>
-              </div>
-              <h3 class="text-base font-semibold leading-snug mb-2" style="color:var(--color-text)">
-                <a href="/{{ item.slug }}/" class="group-hover:underline decoration-2" style="color:var(--color-text);text-decoration:none">{{ item.title | striptags }}</a>
-              </h3>
-              <div class="flex items-center gap-3 text-xs font-meta" style="color:var(--color-text-muted)">
-                {%- if item.date_str %}
-                <time datetime="{{ item.date_str }}">{{ item.date_str }}</time>
-                {%- endif %}
-                {%- if item.body_html %}
-                <span>{{ item.body_html | reading_time }} min</span>
+                <span class="text-xs font-extrabold uppercase tracking-wider text-blue-500" style="color:var(--color-{{ featured.pillar or 'aml' }})">{{ pillar_config.get(featured.pillar, {}).get('label', 'Research') }}</span>
+                {%- if featured.slug in trending_slugs %}
+                  <span class="text-[10px] font-bold uppercase bg-red-100 dark:bg-red-950 text-red-600 dark:text-red-400 px-2 py-0.5 rounded">Trending</span>
                 {%- endif %}
               </div>
+              <h3 class="text-xl font-bold hover:text-blue-600 transition"><a href="/{{ featured.slug }}/" style="color:var(--color-text);text-decoration:none">{{ featured.title }}</a></h3>
+              <p class="text-sm text-slate-600 dark:text-slate-400 mt-2 line-clamp-3">{{ featured.description or '' }}</p>
+            </div>
+            <div class="flex items-center justify-between pt-4 border-t border-slate-200 dark:border-slate-800">
+              <span class="text-xs font-medium text-slate-400">Refined by 6-dim framework</span>
+              <button onclick="toggleSaveToLibrary('{{ featured.slug }}', this)" class="p-2 text-slate-400 hover:text-amber-500 transition-colors" title="Save to library">
+                <span class="star-icon text-lg">☆</span>
+              </button>
             </div>
           </div>
-        </a>
+        </div>
+      {%- endif %}
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {%- for card in recent_posts[1:6] %}
+        {%- set picto = card | pictogram %}
+        <div class="bg-white dark:bg-slate-950 rounded-xl border border-slate-200 dark:border-slate-800 p-5 flex flex-col justify-between shadow-sm hover:border-slate-400 dark:hover:border-slate-600 transition-all">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-extrabold uppercase tracking-wider text-blue-500 border-l-2 border-blue-500 pl-2" style="color:var(--color-{{ card.pillar or 'aml' }})">{{ pillar_config.get(card.pillar, {}).get('label', 'Research') }}</span>
+              <div class="flex gap-1">
+                {%- if card.slug in trending_slugs %}
+                  <span class="text-[9px] font-bold bg-red-100 dark:bg-red-950 text-red-600 dark:text-red-400 px-1.5 py-0.5 rounded">Trending</span>
+                {%- endif %}
+              </div>
+            </div>
+            <h4 class="text-base font-bold hover:text-blue-600 transition"><a href="/{{ card.slug }}/" style="color:var(--color-text);text-decoration:none">{{ card.title }}</a></h4>
+          </div>
+          
+          <div class="flex items-center justify-between mt-4 pt-3 border-t border-slate-100 dark:border-slate-900">
+            <span class="text-xs text-slate-400">{{ card.body_html | reading_time }} min read</span>
+            <button onclick="toggleSaveToLibrary('{{ card.slug }}', this)" class="p-1.5 text-slate-400 hover:text-amber-500 transition-colors">
+              <span class="star-icon text-md">☆</span>
+            </button>
+          </div>
+        </div>
+      {%- endfor %}
       </div>
-    {%- endfor %}
     </div>
   </div>
 </section>
@@ -555,7 +552,28 @@
   </div>
 </section>
 
-<!-- Knowledge Base (Moved Up) -->
+<!-- Author Testimonial -->
+<section class="py-16 bg-white">
+  <div class="max-w-3xl mx-auto px-4 text-center">
+    <div class="mb-6">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="color:var(--color-aml)">
+        <path d="M12 3C6.48 3 2 6.48 2 10s4.48 7 10 7 10-3.48 10-7-4.48-7-10-7zm0 12c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z" fill="none" stroke="currentColor" stroke-width="1.5"/>
+      </svg>
+    </div>
+    <blockquote class="text-xl md:text-2xl font-serif italic leading-relaxed mb-6" style="color:var(--color-text)">
+      "AcaciaFund's research synthesis saves me hours of source triangulation. The quality scoring helps me prioritize which regulatory updates actually matter — it's the most efficient way to stay current in AML compliance."
+    </blockquote>
+    <div class="flex items-center justify-center gap-3">
+      <div class="h-px w-12 bg-slate-300 dark:bg-slate-700"></div>
+      <div class="text-sm font-semibold" style="color:var(--color-text-secondary)">
+        Leszek — AML Specialist & Data Engineer
+      </div>
+      <div class="h-px w-12 bg-slate-300 dark:bg-slate-700"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Knowledge Base -->
 <section class="py-16 bg-white">
   <div class="max-w-7xl mx-auto px-4">
     <div class="text-center mb-12">
@@ -565,9 +583,8 @@
     
     <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
     {%- for item in knowledge_items[:6] %}
-      {%- set sqi_val = item.signals.get("avg_sqi", "") if item.signals else "" %}
       <div class="ghost-card" style="text-decoration:none">
-        <a href="/{{ item.slug }}/">
+        <a href="/{{ item.slug }}/",
           <div class="p-5">
               <div class="flex items-center gap-2 mb-3">
                 {{ content_badge("knowledge") }}
