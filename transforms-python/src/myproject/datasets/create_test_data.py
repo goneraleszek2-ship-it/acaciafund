@@ -13,7 +13,9 @@ from myproject.config import DatasetPaths
 @transform(
     test_source=Output(DatasetPaths.SOURCE_DATASET)
 )
-def create_test_data(test_source):
+from transforms.api import transform, Output, TransformInput
+
+def create_test_data(test_source: TransformInput):
     df = pd.DataFrame({
         "source_id": [f"article_{i:04d}" for i in range(1, 101)],
         "title": [f"Article Title {i}" for i in range(1, 101)],
