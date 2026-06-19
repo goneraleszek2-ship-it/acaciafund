@@ -86,6 +86,14 @@
   </div>
 </div>
 
+<!-- Foundry Metrics Trend Chart -->
+<div class="card" style="margin-top:20px;">
+  <div class="card-header">Foundry Metrics Trend</div>
+  <div class="card-body" style="padding:0;">
+    <canvas id="trendChart" width="400" height="200"></canvas>
+  </div>
+</div>
+
 {% if stats_low_score_sections %}
 <div class="card" style="margin-top:20px">
   <div class="card-header">Low-Score Sections (score &lt; 70)</div>
@@ -107,4 +115,83 @@
   </div>
 </div>
 {% endif %}
+{% endblock %}
+{% block extra_js %}
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const ctx = document.getElementById('trendChart').getContext('2d');
+  // Fetch local JSON
+  fetch('../data/foundry_metrics.json')
+    .then(response => {
+      if (!response.ok) throw new Error('Failed to fetch metrics');
+      return response.json();
+    })
+    .then(data => {
+      // Expect data to be an array of objects with numeric 'value' and optional 'label' or timestamp
+      let labels = [];
+      let values = [];
+      if (Array.isArray(data) && data.length > 0) {
+        data.forEach((item, idx) => {
+          // If item has a label/date field, use it; otherwise use index
+          if (item.label) {
+            labels.push(item.label);
+          } else if (item.timestamp) {
+            labels.push(new Date(item.timestamp).toLocaleDateString());
+          } else {
+            labels.push(idx + 1);
+          }
+          // Assume numeric value field named 'value', fallback to first numeric
+          const num = typeof item.value === 'number' ? item.value :
+                      Object.values(item).find(v => typeof v === 'number') || 0;
+          values.push(num);
+        });
+      } else {
+        // No data: show placeholder
+        labels = ['No data'];
+        values = [0];
+      }
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Metric Value',
+            data: values,
+            borderColor: 'rgb(75, 192, 192)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            tension: 0.1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    })
+    .catch(err => {
+      console.error('Could not load Foundry metrics:', err);
+      // Show error state
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['Error'],
+          datasets: [{
+            label: 'Metric Value',
+            data: [0],
+            borderColor: 'rgb(255, 99, 132)',
+            backgroundColor: 'rgba(255, 99, 132, 0.2)'
+          }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+      });
+    });
+});
+</script>
 {% endblock %}

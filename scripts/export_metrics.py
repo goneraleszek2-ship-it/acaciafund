@@ -21,11 +21,31 @@ def get_foundry_client():
 
 def main():
     ctx = get_foundry_client()
-    # Example: query dataset /TierPalan-96733d/Acacia for latest metrics
-    dataset_path = "/TierPalan-96733d/Acacia"  # adjust as needed
-    # Get dataset rid
-    dataset_info = ctx.catalog.api_get_dataset(dataset_path)
-    dataset_rid = dataset_info['rid']
+    base_path = "/TierPalan-96733d/Acacia"
+    # Try common dataset names
+    candidates = ["default", "metrics", "quality_scores", "foundry_metrics"]
+    dataset_rid = None
+    used_path = None
+    for ds in candidates:
+        ds_path = f"{base_path}/{ds}"
+        try:
+            info = ctx.catalog.api_get_dataset(ds_path)
+            dataset_rid = info['rid']
+            used_path = ds_path
+            print(f"Found dataset at {used_path}")
+            break
+        except Exception as e:
+            # Not found, try next
+            continue
+    if dataset_rid is None:
+        # Fallback to base path as dataset (maybe it's a dataset)
+        try:
+            info = ctx.catalog.api_get_dataset(base_path)
+            dataset_rid = info['rid']
+            used_path = base_path
+            print(f"Using base path as dataset: {used_path}")
+        except Exception as e:
+            raise RuntimeError(f"Could not find any dataset under {base_path}") from e
     # Query data (limit 1000 rows)
     query = "SELECT * FROM this LIMIT 1000"
     result = ctx.catalog.api_request(
