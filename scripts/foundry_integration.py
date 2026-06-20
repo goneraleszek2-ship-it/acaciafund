@@ -86,7 +86,7 @@ def download_dataset_data(ctx, dataset_path: str, output_dir: str) -> list[str]:
         return []
 
 
-def push_file_to_foundry(ctx, dataset_path: str, local_file_path: str) -> bool:
+def push_file_to_foundry(ctx, dataset_path: str, local_file_path: str, transaction_type: str = "SNAPSHOT") -> bool:
     """Push a local file to a Foundry dataset via an atomic transaction."""
     try:
         from pathlib import Path
@@ -98,7 +98,7 @@ def push_file_to_foundry(ctx, dataset_path: str, local_file_path: str) -> bool:
 
         filename = os.path.basename(local_file_path)
 
-        tx_res = ctx.catalog.api_start_transaction(dataset_rid=dataset_rid, branch_id="master")
+        tx_res = ctx.catalog.api_start_transaction(dataset_rid=dataset_rid, branch_id="master", start_transaction_type=transaction_type)
         tx_data = tx_res.json() if hasattr(tx_res, "json") else tx_res
         tx_rid = tx_data["rid"]
 
@@ -120,6 +120,94 @@ def push_file_to_foundry(ctx, dataset_path: str, local_file_path: str) -> bool:
             pass
         return False
 
+
+
+def upsert_matrix_to_foundry(ctx, dataset_path: str, local_new_file_path: str) -> bool:
+    """Fetches the current dataset state, merges new records, deduplicates by article_slug, and pushes atomically."""
+    import pandas as pd
+    import tempfile
+    from pathlib import Path
+
+    temp_dir = tempfile.mkdtemp()
+    local_merged_path = os.path.join(temp_dir, "merged_matrix.parquet")
+    
+    try:
+        print("1. Fetching current master matrix state from Foundry...")
+        # Resolve RID
+        if dataset_path.startswith("ri.foundry.main.dataset."):
+            dataset_rid = dataset_path
+        else:
+            res = ctx.catalog.api_get_dataset(dataset_path)
+            dataset_rid = res.json()['rid'] if hasattr(res, 'json') else res['rid']
+            
+        # Download existing files to temp directory
+        try:
+            files = ctx.foundry_rest_client.download_dataset_files(
+                dataset_rid=dataset_rid,
+                output_directory=temp_dir,
+                view="master"
+            )
+        except Exception:
+            files = []
+
+        # 2. Read existing data if present, otherwise initialize empty
+        existing_parquet = next((f for f in files if f.endswith(".parquet")), None)
+        if existing_parquet and os.path.exists(os.path.join(temp_dir, existing_parquet)):
+            print(f"   Found existing matrix file: {existing_parquet}")
+            df_old = pd.read_parquet(os.path.join(temp_dir, existing_parquet))
+        else:
+            print("   No active matrix file found on master branch. Starting fresh.")
+            df_old = pd.DataFrame()
+
+        # 3. Read incoming new data
+        print(f"2. Parsing incoming update file: {local_new_file_path}")
+        if local_new_file_path.endswith(".parquet"):
+            df_new = pd.read_parquet(local_new_file_path)
+        elif local_new_file_path.endswith(".csv"):
+            df_new = pd.read_csv(local_new_file_path)
+        else:
+            raise ValueError("Unsupported local file format. Must be .parquet or .csv")
+
+        # 4. Merge and Deduplicate on primary key (article_slug)
+        print("3. Executing merge and deduplication rules...")
+        if not df_old.empty:
+            # Combine both blocks; incoming new data takes precedence ('keep=last')
+            df_combined = pd.concat([df_old, df_new], ignore_index=True)
+            df_combined = df_combined.drop_duplicates(subset=["article_slug"], keep="last")
+        else:
+            df_combined = df_new
+
+        # Write the clean merged state locally
+        df_combined.to_parquet(local_merged_path, index=False)
+        print(f"   Sync Matrix Shape: {df_combined.shape[0]} unique rows, {df_combined.shape[1]} metrics.")
+
+        # 5. Push the finalized atomic state back up
+        print("4. Uploading merged matrix via atomic transaction...")
+        success = push_file_to_foundry(ctx, dataset_rid, local_merged_path, transaction_type="SNAPSHOT")
+        
+        if success:
+            # Re-trigger backend schema inference to ensure compliance
+            try:
+                from foundry_dev_tools.clients.schema_inference import SchemaInferenceClient
+                tx_rid = ctx.foundry_rest_client.get_dataset_last_transaction_rid(dataset_rid=dataset_rid, branch='master')
+                inf_client = SchemaInferenceClient(ctx.foundry_rest_client.ctx)
+                inferred_schema = inf_client.infer_dataset_schema(dataset_rid=dataset_rid, branch='master')
+                ctx.foundry_rest_client.upload_dataset_schema(
+                    dataset_rid=dataset_rid, transaction_rid=tx_rid, schema=inferred_schema, branch='master'
+                )
+                print("   ✓ Metadata schema synced and locked.")
+            except Exception as e:
+                print(f"   ! Metadata warning: Schema auto-sync bypassed ({e})")
+            return True
+        return False
+
+    except Exception as e:
+        print(f"✗ Upsert pipeline failed: {e}")
+        return False
+    finally:
+        # Clean up local temporary files
+        import shutil
+        shutil.rmtree(temp_dir, ignore_errors=True)
 
 def main():
     import sys
@@ -182,6 +270,22 @@ def main():
         else:
             print("✗ Fetch failed or target dataset contains no committed files.")
 
+    elif command == "upsert":
+        import sys, os
+        if len(sys.argv) != 4:
+            print("Usage: python foundry_integration.py upsert <dataset_path> <local_file>")
+            sys.exit(1)
+        dataset_path = sys.argv[2]
+        local_file = sys.argv[3]
+        if not os.path.isfile(local_file):
+            print(f"Local file not found: {local_file}")
+            sys.exit(1)
+        success = upsert_matrix_to_foundry(ctx, dataset_path, local_file)
+        if success:
+            print("✓ Upsert pipeline successfully completed.")
+        else:
+            print("✗ Upsert pipeline execution failed.")
+            sys.exit(1)
     elif command == "push":
         if len(sys.argv) != 4:
             print("Usage: python foundry_integration.py push <dataset_path> <local_file>")

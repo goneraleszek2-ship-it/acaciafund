@@ -1,50 +1,306 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard — AcaciaFund</title>
+<link rel="stylesheet" href="/static/admin.css">
+<script>
+// Simple client-side auth check
+const AUTH_CHECKED = sessionStorage.getItem('admin_auth') === 'true';
+if (!AUTH_CHECKED && window.location.pathname !== '/admin/login' && !window.location.pathname.startsWith('/admin/login')) {
+    window.location.href = '/admin/login';
+}
+</script>
 </head>
 <body>
-    <div id="status-text" style="color: #666; margin-bottom: 10px;">Loading data...</div>
-    <canvas id="metricsChart" style="max-height: 400px;"></canvas>
+<button id="sidebar-toggle" class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Toggle sidebar">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <path d="M3 12h18M3 6h18M3 18h18"/>
+  </svg>
+</button>
+<nav class="sidebar" id="sidebar">
+<div class="sidebar-header">
+  <button class="sidebar-close" onclick="toggleSidebar()" aria-label="Close sidebar">&times;</button>
+  <strong>AcaciaFund</strong> Admin
+</div>
+  <div class="sidebar-nav">
+    <a href="." class="active">
+      <span class="icon">📊</span> Dashboard
+    </a>
+    <a href="gallery" class="">
+      <span class="icon">🖼</span> Gallery
+    </a>
+    <a href="articles" class="">
+      <span class="icon">📝</span> Articles
+    </a>
+    <a href="manifest" class="">
+      <span class="icon">📄</span> Manifest
+    </a>
+    <a href="pipeline" class="">
+      <span class="icon">📈</span> Pipeline
+    </a>
+    <a href="quality" class="">
+      <span class="icon">🎯</span> Quality
+    </a>
+    <a href="coverage" class="">
+      <span class="icon">🗺</span> Coverage
+    </a>
+    <a href="sources" class="">
+      <span class="icon">📡</span> Sources
+    </a>
+    <a href="curated-test" class="">
+      <span class="icon">🧪</span> Curated Tester
+    </a>
+  </div>
+  <div style="padding:12px 16px;font-size:11px;color:rgba(255,255,255,.3);border-top:1px solid rgba(255,255,255,.06)">
+    302 images · 97 articles
+  </div>
+</nav>
+<div class="main">
+  
+<div class="page-header">
+  <div>
+    <h1>Dashboard</h1>
+    <div class="subtitle">Image pipeline overview</div>
+  </div>
+  <div>
+    <a href="gallery" class="btn btn-primary">Browse Gallery</a>
+  </div>
+</div>
 
-    <script>
-    const embeddedData = {
-        "generated_at": "2026-06-20T06:16:36.499315+00:00",
-        "data": [
-            { "article_slug": "learn/sector-competitive-analysis", "quality_score": 0.715 },
-            { "article_slug": "learn/applying-market-analysis", "quality_score": 0.69 },
-            { "article_slug": "learn/market-analysis-methods", "quality_score": 0.76 },
-            { "article_slug": "learn/market-fundamentals", "quality_score": 0.708 },
-            { "article_slug": "learn/designing-aml-program", "quality_score": 0.765 }
-        ]
-    };
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-value">302</div>
+    <div class="stat-label">Total Images</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">97</div>
+    <div class="stat-label">Articles</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">85</div>
+    <div class="stat-label">Articles with images</div>
+    <span class="stat-badge success">87.6%</span>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">12</div>
+    <div class="stat-label">Articles needing images</div>
+    <span class="stat-badge danger">needs attention</span>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">3</div>
+    <div class="stat-label">Low-score sections (&lt;70)</div>
+    <span class="stat-badge warning">may need re-fetch</span>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">0</div>
+    <div class="stat-label">Orphan images (unused)</div>
+    
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">0</div>
+    <div class="stat-label">SVG fallback sections</div>
+    
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">0</div>
+    <div class="stat-label">Manifest overrides</div>
+  </div>
+</div>
 
-    function initDashboard() {
-        const ctx = document.getElementById('metricsChart').getContext('2d');
-        const labels = embeddedData.data.map(item => item.article_slug.split('/')[1]);
-        const values = embeddedData.data.map(item => item.quality_score);
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:20px">
+  <div class="card">
+    <div class="card-header">Articles by Content Type</div>
+    <div class="card-body">
+      <table>
+        <thead><tr><th>Type</th><th>Total</th><th>With Images</th><th>Needs Images</th></tr></thead>
+        <tbody>
+          
+          <tr>
+            <td><span class="tag tag-content-type">knowledge</span></td>
+            <td>12</td>
+            <td>11</td>
+            <td><span class="status-dot red" title="Needs images"></span> 1</td>
+          </tr>
+          
+          <tr>
+            <td><span class="tag tag-content-type">learn</span></td>
+            <td>29</td>
+            <td>24</td>
+            <td><span class="status-dot red" title="Needs images"></span> 5</td>
+          </tr>
+          
+          <tr>
+            <td><span class="tag tag-content-type">research</span></td>
+            <td>56</td>
+            <td>50</td>
+            <td><span class="status-dot red" title="Needs images"></span> 6</td>
+          </tr>
+          
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: labels,
-                datasets: [{ label: 'Quality Score', data: values, backgroundColor: 'red' }]
-            },
-            options: { scales: { y: { beginAtZero: true, max: 1 } } }
-        });
-        document.getElementById('status-text').innerText = "Data Updated: Success";
-        document.getElementById('status-text').style.color = "green";
-    }
+  <div class="card">
+    <div class="card-header">Image Sources</div>
+    <div class="card-body">
+      <table>
+        <thead><tr><th>Source</th><th>Count</th></tr></thead>
+        <tbody>
+          
+          <tr><td><span class="tag tag-source">hn</span></td><td>423</td></tr>
+          
+          <tr><td><span class="tag tag-source">arxiv</span></td><td>151</td></tr>
+          
+          <tr><td><span class="tag tag-source">pubmed</span></td><td>126</td></tr>
+          
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
 
-    function waitForLibrary() {
-        if (typeof Chart !== 'undefined') {
-            initDashboard();
+<!-- Foundry Metrics Trend Chart -->
+<div class="card" style="margin-top:20px;">
+  <div class="card-header">Foundry Metrics Trend</div>
+  <div class="card-body" style="padding:0;">
+    <div id="data-timestamp" class="data-timestamp"></div>
+    <canvas id="trendChart" width="400" height="200"></canvas>
+  </div>
+</div>
+
+
+
+</div>
+<div class="toast-container"></div>
+
+<!-- Image Picker Modal -->
+<div class="modal-overlay" id="image-picker-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <span>Pick an Image</span>
+      <button class="modal-close">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="empty-state"><p>Loading...</p></div>
+    </div>
+  </div>
+</div>
+
+<script src="/static/admin.js"></script>
+<script>
+// Logout function
+function logout() {
+    sessionStorage.removeItem('admin_auth');
+    window.location.href = 'login';
+}
+</script>
+<div style="position:fixed;bottom:10px;right:10px;">
+    <button onclick="logout()" style="padding:8px 16px;background:#dc3545;color:white;border:none;border-radius:4px;cursor:pointer;">Logout</button>
+</div>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  .stale { color: red; }
+</style>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const ctx = document.getElementById('trendChart').getContext('2d');
+  const timestampEl = document.getElementById('data-timestamp');
+  // Fetch local JSON
+  fetch('../data/foundry_metrics.json')
+    .then(response => {
+      if (!response.ok) throw new Error('Failed to fetch metrics');
+      return response.json();
+    })
+    .then(data => {
+      // Update timestamp label
+      const generatedAt = data.generated_at ? new Date(data.generated_at) : null;
+      if (generatedAt) {
+        const now = new Date();
+        const diffHours = (now - generatedAt) / (1000 * 60 * 60);
+        timestampEl.textContent = `Data last updated: ${generatedAt.toLocaleString()}`;
+        if (diffHours > 24) {
+          timestampEl.classList.add('stale');
         } else {
-            setTimeout(waitForLibrary, 500);
+          timestampEl.classList.remove('stale');
         }
-    }
-    waitForLibrary();
-    </script>
+      } else {
+        timestampEl.textContent = 'Data last updated: unknown';
+        timestampEl.classList.add('stale');
+      }
+
+      // Expect data to be an array of objects with numeric 'value' and optional 'label' or timestamp
+      let labels = [];
+      let values = [];
+      const dataArray = data.data || [];
+      if (Array.isArray(dataArray) && dataArray.length > 0) {
+        dataArray.forEach((item, idx) => {
+          // If item has a label/date field, use it; otherwise use index
+          if (item.label) {
+            labels.push(item.label);
+          } else if (item.timestamp) {
+            labels.push(new Date(item.timestamp).toLocaleDateString());
+          } else {
+            labels.push(idx + 1);
+          }
+          // Assume numeric value field named 'value', fallback to first numeric
+          const num = typeof item.value === 'number' ? item.value :
+                      Object.values(item).find(v => typeof v === 'number') || 0;
+          values.push(num);
+        });
+      } else {
+        // No data: show placeholder
+        labels = ['No data'];
+        values = [0];
+      }
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Metric Value',
+            data: values,
+            borderColor: 'rgb(75, 192, 192)',
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            tension: 0.1
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    })
+    .catch(err => {
+      console.error('Could not load Foundry metrics:', err);
+      // Show error state
+      timestampEl.textContent = 'Data last updated: error';
+      timestampEl.classList.add('stale');
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['Error'],
+          datasets: [{
+            label: 'Metric Value',
+            data: [0],
+            borderColor: 'rgb(255, 99, 132)',
+            backgroundColor: 'rgba(255, 99, 132, 0.2)'
+          }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+      });
+    });
+});
+</script>
+
 </body>
 </html>
