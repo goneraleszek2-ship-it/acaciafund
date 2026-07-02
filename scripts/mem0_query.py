@@ -26,6 +26,7 @@ from services.mem0 import (  # noqa: E402
     get_insights,
     query_insights_by_content,
     query_sessions,
+    save_insight,
 )
 
 
@@ -78,11 +79,14 @@ def main():
     parser.add_argument(
         "--limit", type=int, default=10, help="Maximum number of results (default: 10)"
     )
+    parser.add_argument("--add", help="Add a new insight (format: [type] title | content)")
+    parser.add_argument("--type", dest="insight_type", help="Insight type for --add (bug_fix, decision, feature, pattern, architecture, performance)")
+    parser.add_argument("--tags", help="Comma-separated tags for --add")
 
     args = parser.parse_args()
 
     # Default: show deployments if no specific flag
-    if not any([args.query, args.deployments, args.sessions, args.insights, args.conversations]):
+    if not any([args.query, args.deployments, args.sessions, args.insights, args.conversations, args.add]):
         args.deployments = True
 
     if args.deployments:
@@ -145,6 +149,46 @@ def main():
 
             if not sessions and not insights:
                 print("No results found.")
+
+    elif args.add:
+        # Parse insight format: [type] title | content
+        import re
+        
+        insight_text = args.add.strip()
+        
+        # Extract type from brackets
+        type_match = re.match(r'\[([^\]]+)\]\s*(.+)', insight_text)
+        if type_match:
+            insight_type = type_match.group(1)
+            rest = type_match.group(2)
+        else:
+            insight_type = args.insight_type or "context"
+            rest = insight_text
+        
+        # Split title and content
+        if "|" in rest:
+            title, content = rest.split("|", 1)
+            title = title.strip()
+            content = content.strip()
+        else:
+            title = rest.split("\n")[0].strip()
+            content = rest.strip()
+        
+        # Parse tags
+        tags = [t.strip() for t in (args.tags or "").split(",")] if args.tags else []
+        
+        # Save insight
+        insight_id = save_insight(
+            user_id="developer_1",
+            insight_type=insight_type,
+            title=title,
+            content=content,
+            tags=tags if tags else None
+        )
+        
+        print(f"✅ Insight saved with ID: {insight_id}")
+        print(f"   Type: {insight_type}")
+        print(f"   Title: {title}")
 
     else:
         parser.print_help()
