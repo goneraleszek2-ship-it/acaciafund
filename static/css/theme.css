@@ -1,0 +1,199 @@
+/* ══════════════════════════════════════════════
+   AcaciaFund Design System — theme.css
+   Spacing, component tokens, and layout utilities
+   ══════════════════════════════════════════════ */
+
+/* ── Spacing Scale ── */
+:root {
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+}
+
+/* ── Form & Input Theme Variables ── */
+:root {
+  --color-input-bg: #ffffff;
+  --color-input-text: #1a1a2e;
+  --color-input-placeholder: #9ca3af;
+  --color-input-focus-border: #1d4ed8;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-input-bg: #1a1a1a;
+    --color-input-text: #f5f5f5;
+    --color-input-placeholder: #525252;
+    --color-input-focus-border: #3b82f6;
+  }
+}
+
+.dark {
+  --color-input-bg: #1a1a1a;
+  --color-input-text: #f5f5f5;
+  --color-input-placeholder: #525252;
+  --color-input-focus-border: #3b82f6;
+}
+
+/* ── Dark Mode Contrast (WCAG AA Compliance) ── */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-text: #f4f4f5;
+    --color-text-secondary: #a1a1aa;
+    --color-text-muted: #71717a;
+    --color-bg: #0a0a0a;
+    --color-surface: #171717;
+    --color-surface-hover: #1f1f1f;
+    --color-border: #262626;
+    --color-accent: #60a5fa;
+    --color-accent-hover: #3b82f6;
+    --color-focus: #60a5fa;
+    --color-aml: #f97316;
+    --color-markets: #34d399;
+    --color-data-engineering: #818cf8;
+  }
+}
+
+.dark {
+  --color-text: #f4f4f5;
+  --color-text-secondary: #a1a1aa;
+  --color-text-muted: #71717a;
+  --color-bg: #0a0a0a;
+  --color-surface: #171717;
+  --color-surface-hover: #1f1f1f;
+  --color-border: #262626;
+  --color-accent: #60a5fa;
+  --color-accent-hover: #3b82f6;
+  --color-focus: #60a5fa;
+  --color-aml: #f97316;
+  --color-markets: #34d399;
+  --color-data-engineering: #818cf8;
+}
+
+/* ── Global Element Styles ── */
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+/* Form Invariance Layer */
+input, textarea, select {
+  background-color: var(--color-input-bg) !important;
+  color: var(--color-input-text) !important;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: var(--space-xs) var(--space-sm);
+  font-family: inherit;
+}
+
+input::placeholder, textarea::placeholder {
+  color: var(--color-input-placeholder);
+}
+
+input:focus, textarea:focus {
+  border-color: var(--color-input-focus-border);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+/* ── Button System ── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-sm);
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  line-height: 1.25;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  transition: all 0.15s ease;
+  cursor: pointer;
+  border: 1px solid transparent;
+  font-family: inherit;
+}
+.btn-primary {
+  background: var(--color-accent);
+  color: #fff;
+}
+.btn-primary:hover {
+  opacity: 0.9;
+}
+.btn-ghost {
+  background: transparent;
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+.btn-ghost:hover {
+  background: var(--color-surface);
+  border-color: var(--color-accent);
+}
+.btn-sm {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.8125rem;
+}
+
+/* ── Aspect Ratio Utilities (CLS prevention) ── */
+.aspect-w-16 {
+  aspect-ratio: 16 / 9;
+}
+.aspect-w-4 {
+  aspect-ratio: 4 / 3;
+}
+.aspect-w-1 {
+  aspect-ratio: 1 / 1;
+}
+.aspect-w-21 {
+  aspect-ratio: 21 / 9;
+}
+
+/* ── Card Component Base ── */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+.card:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+  transform: translateY(-2px);
+}
+
+/* ── Prose Constraints ── */
+.prose {
+  max-width: 66ch;
+}
+.prose-wide {
+  max-width: 85ch;
+}
+
+/* ── Focus Ring ── */
+.focus-ring:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ── Reduced Motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .transition,
+  .transition-all,
+  .transition-colors,
+  .transition-opacity,
+  .transition-shadow,
+  .transition-transform {
+    transition: none !important;
+  }
+}
+
+/* ── Print ── */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+}
