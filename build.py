@@ -50,6 +50,7 @@ from core.brand import (
     BRAND,
     section_type_color,
 )
+from core.content import Content
 
 # ── Page generation helpers (new modular structure) ──
 from core.images.templates import generate_fallback_svg
@@ -328,7 +329,7 @@ def extract_headings(html: str) -> tuple[str, list[dict]]:
     return html, toc
 
 
-def find_related(posts: list, current: object, max_items: int = 3) -> list:
+def find_related(posts: list, current: Content, max_items: int = 3) -> list:
     """Score relatedness by pillar match (40%), tag overlap (40%), curated relations (20%).
 
     Curated relations (from current.curated_relations) always appear first
@@ -1723,7 +1724,8 @@ def main():
     for js_file in sorted(Path("static/js").glob("*.js")):
         css_hasher.update(js_file.read_bytes())
     build_hash = css_hasher.hexdigest()[:12]
-    all_content = registry.content
+    # Convert dict content to Content objects
+    all_content = [Content.from_dict(c) if isinstance(c, dict) else c for c in registry.content]
 
     # Initialize logging first (needed for validation logging)
     log_path = OUTPUT_DIR / "build_errors.log"
@@ -2122,7 +2124,7 @@ def main():
     for item in learn_items:
         slug = item.slug
         if slug in CURATED_RELATIONS:
-            item.curated_relations = CURATED_RELATIONS[slug]
+            item.curated_relations = [{"slug": s} for s in CURATED_RELATIONS[slug]]
         if slug in LEARN_PREREQUISITES:
             item.prerequisites = LEARN_PREREQUISITES[slug]
 
@@ -2937,7 +2939,7 @@ def main():
         if is_future_post(c):
             continue
         lastmod = (
-            c.updated_at.date().isoformat()
+            c.updated_at[:10] if c.updated_at else ""
             if c.updated_at
             else (c.created_at.date().isoformat() if c.created_at else today)
         )
@@ -3115,8 +3117,14 @@ Sitemap: {SITE_URL}/sitemap.xml
             commit_hash = subprocess.check_output(
                 ["git", "rev-parse", "HEAD"], cwd=str(PROJECT_ROOT), text=True
             ).strip()[:8]
+            branch = subprocess.check_output(
+                ["git", "rev-parse", "--abbrev-ref", "HEAD"],
+                cwd=str(PROJECT_ROOT),
+                text=True,
+            ).strip()
             log_deployment(
                 commit_hash=commit_hash,
+                branch=branch,
                 status="success",
                 pages_generated=total,
                 build_duration_ms=duration_ms,
