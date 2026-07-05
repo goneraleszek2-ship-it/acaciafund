@@ -1,0 +1,41 @@
+[pillars]
+aml.label = "AML"
+aml.emoji = "🛡️"
+aml.folder = "content/aml"
+aml.tags = ["aml", "anti-money-laundering", "compliance"]
+aml.description = "Anti-Money Laundering research, regulations, and best practices"
+aml.keywords = ["aml", "kyc", "compliance", "regulations", "financial crime"]
+aml.domain_scores = { "aml" = 1.0, "compliance" = 0.9, "regulations" = 0.85 }
+
+data-engineering.label = "Data Engineering"
+data-engineering.emoji = "📊"
+data-engineering.folder = "content/data-engineering"
+data-engineering.tags = ["data-engineering", "pipelines", "etl", "data-warehousing"]
+data-engineering.description = "Data engineering patterns, tools, and architecture"
+data-engineering.keywords = ["data", "pipelines", "etl", "warehousing", "analytics"]
+data-engineering.domain_scores = { "data" = 1.0, "pipelines" = 0.95, "etl" = 0.9 }
+
+docs.label = "Documentation"
+docs.emoji = "📚"
+docs.folder = "content/docs"
+docs.tags = ["docs", "documentation", "guides", "reference"]
+docs.description = "Technical documentation and reference materials"
+docs.keywords = ["docs", "documentation", "guides", "reference", "api"]
+docs.domain_scores = { "docs" = 1.0, "documentation" = 0.95, "api" = 0.8 }
+
+[domain_taxonomy]
+technical = ["python", "javascript", "sql", "docker", "kubernetes", "aws", "azure", "gcp"]
+concepts = ["architecture", "design", "patterns", "best-practices", "optimization"]
+tools = ["pandas", "numpy", "scikit-learn", "tensorflow", "pytorch", "langchain", "crewai"]
+
+[entities]
+aml.values = ["AML", "KYC", "CDD", "EDD", "PEP", "SANCTIONS", "FATF", "FINTRAC", "FIU", "SAR", "CTR", "BSA", "DPA", "GDPR", "MiFID II", "Basel III"]
+
+data-engineering.values = ["SQL", "NoSQL", "ETL", "ELT", "CDC", "Data Lake", "Data Warehouse", "Data Mesh", "Data Fabric", "Stream Processing", "Batch Processing", "Delta Lake", "Iceberg", "Hudi"]
+
+docs.values = ["API", "SDK", "CLI", "Tutorial", "Guide", "Reference", "Example", "Best Practice", "FAQ", "Changelog"]
+
+[source_tiers]
+tier_1 = ["hacker-news", "arxiv"]
+tier_2 = ["github-trending", "reddit"]
+tier_3 = ["blogs", "newsletters"]
