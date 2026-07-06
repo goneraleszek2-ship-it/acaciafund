@@ -351,7 +351,13 @@ def count_analytical_keywords(text: str, extra_keywords: set[str] | None = None)
         "empirical", "framework", "model", "parameter", "metric", "statistical",
         "probability", "confidence", "interval", "regression", "distribution",
         "variance", "deviation", "threshold", "algorithm", "complexity",
-        "architecture", "schema", "contract", "validation", "verification"
+        "architecture", "schema", "contract", "validation", "verification",
+        # Domain-specific analytical vocabulary
+        "pipeline", "automation", "optimization", "evaluation", "benchmark",
+        "assessment", "baseline", "throughput", "forecast", "projection",
+        "indicator", "classification", "inference", "calibration",
+        "quantification", "normalization", "risk", "audit", "monitoring",
+        "screening",
     }
     if extra_keywords:
         analytical_keywords.update(extra_keywords)
