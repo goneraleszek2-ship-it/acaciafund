@@ -14,11 +14,13 @@ Where:
 
 Evidence signals and likelihood ratios:
   - Governance Gate PASS: LR = 1.5
-  - Governance Gate FAIL: LR = 0.3
+  - Governance Gate FAIL (structural: too_short / boilerplate_dominated): LR = 0.20
+  - Governance Gate FAIL (analysis: low_analytical_coverage):      LR = 0.50
+  - Governance Gate FAIL (topical overlap: high_similarity):       LR = 0.80
   - Human Correction PASS: LR = 2.0
   - Human Correction FAIL: LR = 0.2
 
-Daily decay: 1% compound decay applied to prior before Bayesian update.
+Daily decay: 0.2% compound decay applied to prior before Bayesian update.
 
 Deprecation trigger: SQI < 0.50 marks item as deprecated.
 """
@@ -39,16 +41,36 @@ HUMAN_CORRECTIONS_PATH = ROOT / "registry" / "human_corrections.json"
 GOVERNANCE_REPORT_PATH = ROOT / "registry" / "governance_report.json"
 
 # Bayesian parameters
-DECAY_RATE_DAILY = 0.01  # 1% daily decay
+DECAY_RATE_DAILY = 0.002  # 0.2% daily decay (~345-day half-life)
 DEPRECATION_THRESHOLD = 0.50
 SQI_MIN = 0.01
 SQI_MAX = 0.99
 
 # Likelihood ratios
 LR_GOV_PASS = 1.5
-LR_GOV_FAIL = 0.3
 LR_HUMAN_PASS = 2.0
 LR_HUMAN_FAIL = 0.2
+
+# Failure-specific likelihood ratios (applied when governance fails)
+# Structural / critical failures
+LR_FAIL_TOO_SHORT = 0.20
+LR_FAIL_BOILERPLATE = 0.20
+# Content quality deficits
+LR_FAIL_LOW_ANALYTICAL = 0.50
+# Topical overlap (mild penalty) — higher threshold (0.85 Jaccard)
+# means only near-duplicates are caught; keeping the penalty mild
+# avoids collateral deprecation of domain-similar content.
+LR_FAIL_HIGH_SIMILARITY = 0.90
+# Default for other failures (e.g. high_entropy — diverse vocabulary is
+# a legitimate feature of technical research, not a quality defect)
+LR_FAIL_DEFAULT = 0.85
+
+FAILURE_LR_MAP: dict[str, float] = {
+    "too_short": LR_FAIL_TOO_SHORT,
+    "boilerplate_dominated": LR_FAIL_BOILERPLATE,
+    "low_analytical_coverage": LR_FAIL_LOW_ANALYTICAL,
+    "high_similarity": LR_FAIL_HIGH_SIMILARITY,
+}
 
 
 def load_registry() -> dict:
@@ -104,15 +126,29 @@ def apply_decay(prior: float, days: float) -> float:
     return max(prior * decay_factor, SQI_MIN)
 
 
-def compute_likelihood_ratio(gov_passed: bool | None, human_correction: str | None) -> float:
-    """Compute cumulative likelihood ratio from evidence."""
+def compute_likelihood_ratio(
+    gov_passed: bool | None,
+    failures: list[str] | None,
+    human_correction: str | None,
+) -> float:
+    """Compute cumulative likelihood ratio from evidence.
+
+    Applies failure-specific likelihood ratios when governance fails,
+    rather than a blanket penalty.  The most severe (lowest) LR among
+    the current item's failures is used.
+    """
     lr = 1.0  # Neutral baseline
 
     # Governance gate evidence
     if gov_passed is True:
         lr *= LR_GOV_PASS
-    elif gov_passed is False:
-        lr *= LR_GOV_FAIL
+    elif gov_passed is False and failures:
+        # Apply the most severe (lowest) LR among the failures
+        failure_lrs = [
+            FAILURE_LR_MAP.get(f, LR_FAIL_DEFAULT)
+            for f in failures
+        ]
+        lr *= min(failure_lrs)
 
     # Human correction evidence (overrides governance)
     if human_correction == "pass":
@@ -165,10 +201,11 @@ def update_sqi_for_item(
     # Apply daily decay
     decayed_prior = apply_decay(prior, days_since_update)
 
-    # Compute likelihood ratio from evidence
+    # Compute likelihood ratio from evidence (failure-specific LRs)
     lr = compute_likelihood_ratio(
         gov_result.get("passed") if gov_result else None,
-        human_correction
+        gov_result.get("failures", []) if gov_result else None,
+        human_correction,
     )
 
     # Bayesian update
@@ -183,7 +220,11 @@ def update_sqi_for_item(
         reasons.append(f"decay:{prior:.3f}->{decayed_prior:.3f} ({days_since_update:.1f}d)")
     if gov_result:
         status = "pass" if gov_result.get("passed") else "fail"
-        reasons.append(f"gov_{status}")
+        failures = gov_result.get("failures", [])
+        if failures:
+            reasons.append(f"gov_{status}({','.join(failures)})")
+        else:
+            reasons.append(f"gov_{status}")
     if human_correction:
         reasons.append(f"human_{human_correction}")
     reasons.append(f"posterior:{posterior:.3f}")
@@ -232,7 +273,7 @@ def main() -> int:
     # Build lookup for governance results
     gov_results = {}
     for item in gov_report.get("results", []):
-        slug = item.get("path", "")
+        slug = item.get("slug", "") or item.get("path", "")
         if slug:
             gov_results[slug] = item
 
