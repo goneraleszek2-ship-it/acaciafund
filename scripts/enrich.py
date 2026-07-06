@@ -89,6 +89,16 @@ CONCEPT_PATTERNS: list[tuple[re.Pattern, str]] = [
     (re.compile(r"(?i)\b(stock|market|equity|trading)\b"), "markets"),
     (re.compile(r"(?i)\b(risk|volatility|portfolio|hedge)\b"), "risk-management"),
     (re.compile(r"(?i)\b(blockchain|crypto|defi|nft)\b"), "crypto-finance"),
+    # --- Infrastructure / Cloud ---
+    (re.compile(r"(?i)\b(k8s|kubernetes|docker|container|terraform|iac)\b"), "infrastructure"),
+    (re.compile(r"(?i)\b(serverless|lambda|cloud|aws|gcp|azure)\b"), "cloud-infrastructure"),
+    # --- Cybersecurity / Privacy ---
+    (re.compile(r"(?i)\b(security|vulnerability|zero.day|penetration|threat|cyber)\b"), "cybersecurity"),
+    (re.compile(r"(?i)\b(gdpr|privacy|consent|differential.privacy|ethics)\b"), "privacy-ethics"),
+    # --- Biotech / Genomics ---
+    (re.compile(r"(?i)\b(genomics|crispr|bioinformatics|clinical.trial|gene)\b"), "biotech-genomics"),
+    # --- Semiconductors / Hardware ---
+    (re.compile(r"(?i)\b(semiconductor|chip|foundry|tsmc|wafer|fabrication)\b"), "semiconductors"),
 ]
 
 # Terms whose presence signals high information density
