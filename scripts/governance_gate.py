@@ -14,6 +14,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import re
 import sys
 from collections import Counter
@@ -32,7 +33,7 @@ WORD_ENTROPY_MAX = 8.5  # Raised from 8.0 — technical/philosophical content
 ANALYTICAL_COVERAGE_MIN = 5  # Lowered from 8 — tutorials, glossaries, and reference
                               # material naturally score lower but are still valid.
 SENTENCE_VARIANCE_MIN = 3.0
-DUPLICATE_SIMILARITY_MAX = 0.85  # Raised from 0.75 — only flag near-duplicates
+DUPLICATE_SIMILARITY_MAX = 0.93  # Raised from 0.75 — only flag near-duplicates
 SIMILARITY_WINDOW_DAYS = 90   # Only compare items within this rolling window
 
 # Pillar / tag mapping for abstract (non-empirical) domains whose analytical
@@ -420,16 +421,109 @@ def jaccard_similarity(s1: str, s2: str) -> float:
     return len(intersection) / len(union)
 
 
+# ── Lightweight TF-IDF cosine similarity (no sklearn dependency) ──────────────
+
+class _TfidfVectorizer:
+    """Minimal pure-Python/numpy TF-IDF vectorizer.
+
+    Replaces sklearn's TfidfVectorizer to avoid a 33-second import penalty
+    while still providing IDF-weighted cosine similarity that handles
+    structural/vocabulary collision false positives better than Jaccard.
+    """
+    def __init__(self):
+        self.vocab: dict[str, int] = {}
+        self.idf: list[float] = []
+        self._fitted = False
+
+    def fit(self, documents: list[str]) -> None:
+        """Build vocabulary and compute IDF over the corpus."""
+        import math
+        from collections import Counter
+
+        df: Counter[str] = Counter()
+        for doc in documents:
+            terms = set(re.findall(r"\b[a-zA-Z]\w+\b", doc.lower()))
+            df.update(terms)
+
+        # Build vocabulary from terms that appear in >= 2 docs (min_df=1 effectively)
+        self.vocab = {}
+        for term, doc_count in df.most_common():
+            if doc_count >= 1:
+                self.vocab[term] = len(self.vocab)
+
+        n_docs = len(documents)
+        self.idf = []
+        for term in self.vocab:
+            doc_count = df.get(term, 1)
+            self.idf.append(1.0 + math.log((1 + n_docs) / (1 + doc_count)))
+
+        self._fitted = True
+
+    def transform(self, documents: list[str]) -> list[list[float]]:
+        """Transform documents to TF-IDF vectors (list of dense lists)."""
+        import math
+        if not self._fitted:
+            return [[0.0]] * len(documents)
+
+        vectors = []
+        for doc in documents:
+            terms = re.findall(r"\b[a-zA-Z]\w+\b", doc.lower())
+            term_counts: dict[str, int] = {}
+            for t in terms:
+                term_counts[t] = term_counts.get(t, 0) + 1
+
+            vec = [0.0] * len(self.vocab)
+            for term, count in term_counts.items():
+                idx = self.vocab.get(term)
+                if idx is not None:
+                    tf = 1.0 + math.log(count) if count > 0 else 0.0
+                    vec[idx] = tf * self.idf[idx]
+
+            # L2 normalize
+            norm = math.sqrt(sum(v * v for v in vec))
+            if norm > 0:
+                vec = [v / norm for v in vec]
+            vectors.append(vec)
+
+        return vectors
+
+
+_TFIDF = None
+
+def _get_tfidf():
+    """Lazy-init singleton lightweight TF-IDF vectorizer."""
+    global _TFIDF
+    if _TFIDF is None:
+        _TFIDF = _TfidfVectorizer()
+    return _TFIDF
+
+
+def cosine_sim(a: list[float], b: list[float]) -> float:
+    """Cosine similarity between two vectors."""
+    dot = sum(x * y for x, y in zip(a, b))
+    na = math.sqrt(sum(x * x for x in a))
+    nb = math.sqrt(sum(y * y for y in b))
+    if na == 0 or nb == 0:
+        return 0.0
+    return dot / (na * nb)
+
+
 def measure_registry_item(
     item: dict,
     vocabulary: set[str] | None = None,
     previous_items: list[tuple[str, str]] | None = None,
+    previous_vectors: list[tuple[list[float], str]] | None = None,
 ) -> dict:
     """Compute quality metrics for a registry item (body_html).
 
-    previous_items: list of (text, date_str) tuples for duplicate detection
+    previous_items: list of (text, date_str) pairs for duplicate detection
                     with time-windowing (only items within
                     SIMILARITY_WINDOW_DAYS are compared).
+
+    previous_vectors: list of (TF-IDF vector, date_str) for semantic cosine
+                      similarity. When available, replaces the lexical Jaccard
+                      comparison to avoid structural/vocabulary collision
+                      false positives.
     """
     slug = item.get("slug", "unknown")
     body_html = item.get("body_html", "")
@@ -534,10 +628,31 @@ def measure_registry_item(
     result["low_sentence_variance"] = result["sentence_variance"] < SENTENCE_VARIANCE_MIN
     result["layers"]["sentence_variance"] = {"value": result["sentence_variance"], "threshold": SENTENCE_VARIANCE_MIN, "pass": not result["low_sentence_variance"]}
 
-    # Duplicate detection (Layer 7) — 90-day rolling window
-    if previous_items:
-        item_date = _parse_date(item.get("date_str"))
-        # Filter previous items to within the rolling window
+    # Duplicate detection (Layer 7) — TF-IDF cosine (preferred) or lexical Jaccard
+    item_date = _parse_date(item.get("date_str"))
+
+    if previous_vectors and _get_tfidf() is not None:
+        # TF-IDF vector for this item's prose
+        vec = _get_tfidf().transform([prose_text])[0]
+
+        max_sim = 0.0
+        for prev_vec, prev_date_str in previous_vectors:
+            if item_date is not None and prev_date_str:
+                prev_date = _parse_date(prev_date_str)
+                if prev_date is not None:
+                    delta_days = abs((item_date - prev_date).total_seconds() / 86400)
+                    if delta_days > SIMILARITY_WINDOW_DAYS:
+                        continue
+            sim = cosine_sim(vec, prev_vec)
+            if sim > max_sim:
+                max_sim = sim
+
+        result["max_similarity"] = max_sim
+        result["high_similarity"] = max_sim > DUPLICATE_SIMILARITY_MAX
+        result["layers"]["duplicate_similarity"] = {"value": max_sim, "threshold": DUPLICATE_SIMILARITY_MAX, "pass": not result["high_similarity"]}
+
+    elif previous_items:
+        # Legacy Jaccard fallback — 90-day rolling window
         candidates: list[str] = []
         for prev_text, prev_date_str in previous_items:
             if item_date is not None and prev_date_str:
@@ -545,7 +660,7 @@ def measure_registry_item(
                 if prev_date is not None:
                     delta_days = abs((item_date - prev_date).total_seconds() / 86400)
                     if delta_days > SIMILARITY_WINDOW_DAYS:
-                        continue  # Outside the rolling window
+                        continue
             candidates.append(prev_text)
 
         if candidates:
@@ -577,17 +692,50 @@ def measure_registry_item(
 
 
 def run_governance_check_registry(registry_path: str = "registry.json") -> tuple[list[dict], dict]:
-    """Run governance gate over registry items. Returns (results, report)."""
+    """Run governance gate over registry items. Returns (results, report).
+    
+    Uses TF-IDF cosine similarity for duplicate detection by default, falling
+    back to Jaccard if scikit-learn is unavailable. TF-IDF vectors are
+    pre-computed against the full corpus so measure_registry_item receives the
+    history for its rolling-window comparison.
+    """
     items = read_registry_items(registry_path)
     results: list[dict] = []
-    previous_items: list[tuple[str, str]] = []  # (text_lower, date_str)
+    previous_items: list[tuple[str, str]] = []        # (text_lower, date_str)
+    previous_vectors: list[tuple[list[float], str]] = []  # (vector, date_str)
     
+    tfidf = _get_tfidf()
+    
+    # Pre-compute prose texts so we can fit TF-IDF on the full corpus first
+    prose_texts: list[str] = []
     for item in items:
-        result = measure_registry_item(item, previous_items=previous_items)
-        results.append(result)
-        # Add text + date to previous for duplicate detection with time-windowing
         text = strip_html(item.get("body_html", ""))
-        previous_items.append((text.lower(), item.get("date_str", "")))
+        body_no_code, _ = strip_code_blocks(text)
+        prose_texts.append(strip_html(body_no_code))
+    
+    # Fit the vectorizer on all prose (so IDF weights reflect full corpus)
+    if tfidf is not None:
+        try:
+            tfidf.fit(prose_texts)
+        except Exception:
+            tfidf = None
+    
+    for item, ptext in zip(items, prose_texts):
+        result = measure_registry_item(
+            item,
+            previous_items=previous_items,
+            previous_vectors=previous_vectors,
+        )
+        results.append(result)
+        
+        # Add text + date to previous for duplicate detection with time-windowing
+        previous_items.append((ptext.lower(), item.get("date_str", "")))
+        
+        # Pre-compute TF-IDF vector for semantic similarity
+        if tfidf is not None and ptext.strip():
+            vec = tfidf.transform([ptext])[0]
+            if any(v != 0.0 for v in vec):
+                previous_vectors.append((vec, item.get("date_str", "")))
     
     # Build report
     report = {

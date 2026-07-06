@@ -1,0 +1,6442 @@
+{
+  "mode": "registry",
+  "registry_path": "registry.json",
+  "total_items": 100,
+  "passed": 95,
+  "failed": 5,
+  "results": [
+    {
+      "slug": "blog/2026-06-19-2027-data-engineering-predictions",
+      "title": "2027 Data Engineering Predictions: AI-Augmented Pipelines, R",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 4138,
+      "text_len": 3584,
+      "total_chars": 3542,
+      "substantive_chars_prose": 3542,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 26,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.452566585999971,
+      "analytical_coverage": 9,
+      "sentence_variance": 13.891006413201227,
+      "max_similarity": 0.0,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.452566585999971,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 9,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 13.891006413201227,
+          "threshold": 3.0,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-06-18-data-platform-product-ux",
+      "title": "Data Platform as a Product: UX Patterns for Internal Develop",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 7772,
+      "text_len": 6791,
+      "total_chars": 6488,
+      "substantive_chars_prose": 6488,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 30,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.676903035858859,
+      "analytical_coverage": 14,
+      "sentence_variance": 33.2410221797639,
+      "max_similarity": 0.5201449619323721,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.676903035858859,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 14,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 33.2410221797639,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.5201449619323721,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-06-17-analytics-engineering-rise",
+      "title": "The Rise of the Analytics Engineer: dbt, SQLMesh, and the Mo",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 8016,
+      "text_len": 6968,
+      "total_chars": 6661,
+      "substantive_chars_prose": 6661,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 30,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.677967495731234,
+      "analytical_coverage": 15,
+      "sentence_variance": 33.34139902416947,
+      "max_similarity": 0.7899694279620972,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.677967495731234,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 15,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 33.34139902416947,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.7899694279620972,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-06-16-cost-optimization-data-pipelines",
+      "title": "Cost Optimization in Data Pipelines: Engineering for Efficie",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 7856,
+      "text_len": 6866,
+      "total_chars": 6562,
+      "substantive_chars_prose": 6562,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 29,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.693305866705707,
+      "analytical_coverage": 14,
+      "sentence_variance": 33.69598994549142,
+      "max_similarity": 0.7997013592417821,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.693305866705707,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 14,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 33.69598994549142,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.7997013592417821,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-06-15-schema-registry-avro-protobuf",
+      "title": "Schema Registry Patterns: Avro, Protobuf, and JSON Schema in",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 15683,
+      "text_len": 15683,
+      "total_chars": 14042,
+      "substantive_chars_prose": 8765,
+      "code_chars": 5277,
+      "boilerplate_sentences": 0,
+      "total_sentences": 55,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 0.624198832075203,
+      "word_entropy": 7.869927425047426,
+      "analytical_coverage": 6,
+      "sentence_variance": 37.90133341163824,
+      "max_similarity": 0.10152597668756301,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.37580116792479706,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 0.624198832075203,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.869927425047426,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 6,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 37.90133341163824,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.10152597668756301,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-06-14-data-products-api-design",
+      "title": "Data Products: Designing APIs for the Internal Data Platform",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 8206,
+      "text_len": 7091,
+      "total_chars": 6779,
+      "substantive_chars_prose": 6779,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 33,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.723737456882968,
+      "analytical_coverage": 15,
+      "sentence_variance": 32.219574952208944,
+      "max_similarity": 0.8187585760843434,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.723737456882968,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 15,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 32.219574952208944,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.8187585760843434,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-06-13-data-mesh-implementation",
+      "title": "Data Mesh in Practice: Implementing Domain Ownership Without",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 8250,
+      "text_len": 7126,
+      "total_chars": 6813,
+      "substantive_chars_prose": 6813,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 33,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.70238366637817,
+      "analytical_coverage": 15,
+      "sentence_variance": 32.314825295586814,
+      "max_similarity": 0.8300365643671841,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.70238366637817,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 15,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 32.314825295586814,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.8300365643671841,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-06-12-terraform-data-infrastructure",
+      "title": "Terraform for Data Infrastructure: Infrastructure as Code fo",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 8255,
+      "text_len": 7140,
+      "total_chars": 6828,
+      "substantive_chars_prose": 6828,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 33,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.729532616043352,
+      "analytical_coverage": 15,
+      "sentence_variance": 32.206804202134066,
+      "max_similarity": 0.814003638271126,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.729532616043352,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 15,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 32.206804202134066,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.814003638271126,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-06-11-kubernetes-data-pipelines",
+      "title": "Kubernetes for Data Engineering: Running Data Pipelines on K",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 7835,
+      "text_len": 6845,
+      "total_chars": 6541,
+      "substantive_chars_prose": 6541,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 30,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.687852551889389,
+      "analytical_coverage": 14,
+      "sentence_variance": 33.37657195632223,
+      "max_similarity": 0.7968672854715521,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.687852551889389,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 14,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 33.37657195632223,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.7968672854715521,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-06-10-feature-store-feast-vs-tecton",
+      "title": "Feature Stores at Scale: Feast vs Tecton in Production Deplo",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 7765,
+      "text_len": 6784,
+      "total_chars": 6481,
+      "substantive_chars_prose": 6481,
+      "code_chars": 0,
+      "boilerplate_sentences": 1,
+      "total_sentences": 30,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 0.9833333333333333,
+      "word_entropy": 7.730808800189337,
+      "analytical_coverage": 14,
+      "sentence_variance": 33.30440411316998,
+      "max_similarity": 0.7949390515189911,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.03333333333333333,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 0.9833333333333333,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.730808800189337,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 14,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 33.30440411316998,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.7949390515189911,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-06-09-ml-pipeline-orchestration-feast-mlflow",
+      "title": "ML Pipeline Orchestration: From Notebook to Production with ",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 8283,
+      "text_len": 7159,
+      "total_chars": 6846,
+      "substantive_chars_prose": 6846,
+      "code_chars": 0,
+      "boilerplate_sentences": 1,
+      "total_sentences": 33,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 0.9848484848484849,
+      "word_entropy": 7.715372774955592,
+      "analytical_coverage": 15,
+      "sentence_variance": 32.33445512239912,
+      "max_similarity": 0.8218142408817061,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.030303030303030304,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 0.9848484848484849,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.715372774955592,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 15,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 32.33445512239912,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.8218142408817061,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-08-31-data-observability-lineage",
+      "title": "Data Observability: Monitoring, Lineage, and Incident Respon",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 8243,
+      "text_len": 7119,
+      "total_chars": 6806,
+      "substantive_chars_prose": 6806,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 33,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.699867259912086,
+      "analytical_coverage": 15,
+      "sentence_variance": 32.357961141262706,
+      "max_similarity": 0.8482338436880582,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.699867259912086,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 15,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 32.357961141262706,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.8482338436880582,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-08-24-open-source-data-platform",
+      "title": "Building a Data Platform on a Budget: The Open Source Stack ",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 7833,
+      "text_len": 6834,
+      "total_chars": 6529,
+      "substantive_chars_prose": 6529,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 31,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.666100938816388,
+      "analytical_coverage": 14,
+      "sentence_variance": 33.0792885961451,
+      "max_similarity": 0.8182626131357779,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.666100938816388,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 14,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 33.0792885961451,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.8182626131357779,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-08-17-sqlmesh-data-transformation",
+      "title": "SQLMesh: The SQL-First Data Transformation Framework Challen",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 8175,
+      "text_len": 7069,
+      "total_chars": 6758,
+      "substantive_chars_prose": 6758,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 33,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.7517418183332,
+      "analytical_coverage": 15,
+      "sentence_variance": 32.210253943997756,
+      "max_similarity": 0.8421249490906513,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.7517418183332,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 15,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 32.210253943997756,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.8421249490906513,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-08-10-dbt-mesh-enterprise-scale",
+      "title": "dbt Mesh: Decentralizing Data Transformation at Enterprise S",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 8199,
+      "text_len": 7084,
+      "total_chars": 6772,
+      "substantive_chars_prose": 6772,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 33,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.7370255114435045,
+      "analytical_coverage": 15,
+      "sentence_variance": 32.26952608963427,
+      "max_similarity": 0.8478201291552425,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.7370255114435045,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 15,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 32.26952608963427,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.8478201291552425,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-08-03-delta-lake-iceberg-hudi-comparison",
+      "title": "Delta Lake vs Apache Iceberg vs Apache Hudi: Lakehouse Forma",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 7879,
+      "text_len": 6880,
+      "total_chars": 6575,
+      "substantive_chars_prose": 6575,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 30,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.7346668560447105,
+      "analytical_coverage": 14,
+      "sentence_variance": 33.48432469081615,
+      "max_similarity": 0.7918642794571693,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.7346668560447105,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 14,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 33.48432469081615,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.7918642794571693,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-07-27-debezium-cdc-change-data-capture",
+      "title": "Debezium and CDC: Capturing Database Changes at Scale",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 8208,
+      "text_len": 7093,
+      "total_chars": 6781,
+      "substantive_chars_prose": 6781,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 33,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.717873627215724,
+      "analytical_coverage": 15,
+      "sentence_variance": 32.24683838546945,
+      "max_similarity": 0.8331776753280653,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.717873627215724,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 15,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 32.24683838546945,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.8331776753280653,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-07-20-apache-iceberg-lakehouse",
+      "title": "Apache Iceberg Deep Dive: Table Formats for the Lakehouse Er",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 7817,
+      "text_len": 6827,
+      "total_chars": 6523,
+      "substantive_chars_prose": 6523,
+      "code_chars": 0,
+      "boilerplate_sentences": 1,
+      "total_sentences": 30,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 0.9833333333333333,
+      "word_entropy": 7.711825940570709,
+      "analytical_coverage": 14,
+      "sentence_variance": 33.325349043766806,
+      "max_similarity": 0.8078491217944184,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.03333333333333333,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 0.9833333333333333,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.711825940570709,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 14,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 33.325349043766806,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.8078491217944184,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-07-13-kafka-streaming-event-driven",
+      "title": "Real-Time Streaming with Apache Kafka: From Pub/Sub to Event",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 8298,
+      "text_len": 7174,
+      "total_chars": 6861,
+      "substantive_chars_prose": 6861,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 33,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.737107167675782,
+      "analytical_coverage": 15,
+      "sentence_variance": 32.33331913322229,
+      "max_similarity": 0.8277840182965714,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.737107167675782,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 15,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 32.33331913322229,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.8277840182965714,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-07-06-data-contracts",
+      "title": "Data Contracts: Schema as API for the Analytics Team",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 8198,
+      "text_len": 7083,
+      "total_chars": 6771,
+      "substantive_chars_prose": 6771,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 33,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.710051346104028,
+      "analytical_coverage": 15,
+      "sentence_variance": 32.24646819023444,
+      "max_similarity": 0.8629604358204854,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.710051346104028,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 15,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 32.24646819023444,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.8629604358204854,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-06-29-airflow-prefect-dagster-comparison",
+      "title": "Airflow vs Prefect vs Dagster: Choosing the Right Orchestrat",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 8098,
+      "text_len": 7032,
+      "total_chars": 6723,
+      "substantive_chars_prose": 6723,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 31,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.7514943611729175,
+      "analytical_coverage": 15,
+      "sentence_variance": 33.22395860818417,
+      "max_similarity": 0.820692645671756,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.7514943611729175,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 15,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 33.22395860818417,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.820692645671756,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-06-22-data-quality-great-expectations",
+      "title": "Data Quality at Scale: Great Expectations Beyond Unit Tests ",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 8259,
+      "text_len": 7135,
+      "total_chars": 6822,
+      "substantive_chars_prose": 6822,
+      "code_chars": 0,
+      "boilerplate_sentences": 1,
+      "total_sentences": 32,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 0.984375,
+      "word_entropy": 7.698339117239311,
+      "analytical_coverage": 16,
+      "sentence_variance": 32.679059020074305,
+      "max_similarity": 0.8729150730321636,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.03125,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 0.984375,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.698339117239311,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 16,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 32.679059020074305,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.8729150730321636,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-06-15-dagster-2",
+      "title": "Dagster 2.0: Next-Gen Data Pipeline Orchestration for the Mo",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 8175,
+      "text_len": 7060,
+      "total_chars": 6748,
+      "substantive_chars_prose": 6748,
+      "code_chars": 0,
+      "boilerplate_sentences": 1,
+      "total_sentences": 36,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 0.9861111111111112,
+      "word_entropy": 7.719383164833407,
+      "analytical_coverage": 15,
+      "sentence_variance": 31.476953650426704,
+      "max_similarity": 0.8566575014840477,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.027777777777777776,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 0.9861111111111112,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.719383164833407,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 15,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 31.476953650426704,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.8566575014840477,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-06-08-science-dataeng",
+      "title": "Data Pipeline Patterns for High-Throughput Genomics: Orchest",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 8294,
+      "text_len": 7161,
+      "total_chars": 6847,
+      "substantive_chars_prose": 6847,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 32,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.739547590006824,
+      "analytical_coverage": 15,
+      "sentence_variance": 32.77764517834525,
+      "max_similarity": 0.851571961033367,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.739547590006824,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 15,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 32.77764517834525,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.851571961033367,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-06-08-stock-dataeng",
+      "title": "Feature Engineering at Scale: Building ML-Ready Market Data ",
+      "pillar": "stock",
+      "is_abstract": false,
+      "body_len": 6995,
+      "text_len": 6137,
+      "total_chars": 5785,
+      "substantive_chars_prose": 5785,
+      "code_chars": 0,
+      "boilerplate_sentences": 1,
+      "total_sentences": 41,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 0.9878048780487805,
+      "word_entropy": 7.722833428621312,
+      "analytical_coverage": 11,
+      "sentence_variance": 15.761608943197606,
+      "max_similarity": 0.4265632416252686,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.024390243902439025,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 0.9878048780487805,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.722833428621312,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 11,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 15.761608943197606,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.4265632416252686,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-06-08-aml-dataeng",
+      "title": "Streaming ETL for Suspicious Activity Reports: Real-Time AML",
+      "pillar": "aml",
+      "is_abstract": false,
+      "body_len": 6782,
+      "text_len": 5725,
+      "total_chars": 5514,
+      "substantive_chars_prose": 5514,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 54,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.668775146486084,
+      "analytical_coverage": 11,
+      "sentence_variance": 12.352740264568657,
+      "max_similarity": 0.4280888060638421,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.668775146486084,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 11,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 12.352740264568657,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.4280888060638421,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-06-08-dataops-science",
+      "title": "Reproducible ML Pipelines in Computational Biology: MLOps fo",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 8273,
+      "text_len": 7140,
+      "total_chars": 6825,
+      "substantive_chars_prose": 6825,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 31,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.749662030229754,
+      "analytical_coverage": 15,
+      "sentence_variance": 33.375110829670966,
+      "max_similarity": 0.8327281802458314,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.749662030229754,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 15,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 33.375110829670966,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.8327281802458314,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-06-08-dataops-markets",
+      "title": "Real-Time Data Engineering for Algorithmic Trading: From Tic",
+      "pillar": "stock",
+      "is_abstract": false,
+      "body_len": 7216,
+      "text_len": 6291,
+      "total_chars": 5935,
+      "substantive_chars_prose": 5935,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 41,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.750908810162728,
+      "analytical_coverage": 14,
+      "sentence_variance": 15.943460483321187,
+      "max_similarity": 0.8675844529256794,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.750908810162728,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 14,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 15.943460483321187,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.8675844529256794,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-06-08-dataops-aml",
+      "title": "Data Pipeline Observability in Financial Crime Compliance: R",
+      "pillar": "aml",
+      "is_abstract": false,
+      "body_len": 6988,
+      "text_len": 5864,
+      "total_chars": 5649,
+      "substantive_chars_prose": 5649,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 54,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.670672502274133,
+      "analytical_coverage": 11,
+      "sentence_variance": 12.57925491915112,
+      "max_similarity": 0.9259110422973298,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.670672502274133,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 11,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 12.57925491915112,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.9259110422973298,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-06-07-science",
+      "title": "S&P 500 rejects SpaceX, also blocking entry for OpenAI and A",
+      "pillar": "stock",
+      "is_abstract": true,
+      "body_len": 5783,
+      "text_len": 3407,
+      "total_chars": 3361,
+      "substantive_chars_prose": 3361,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 19,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.588756758511385,
+      "analytical_coverage": 7,
+      "sentence_variance": 39.957733902399404,
+      "max_similarity": 0.10492224907851269,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.588756758511385,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 7,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 39.957733902399404,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.10492224907851269,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-06-07-stock",
+      "title": "Meta confirms 1000s of Instagram accounts were hacked by abu",
+      "pillar": "stock",
+      "is_abstract": false,
+      "body_len": 6877,
+      "text_len": 4086,
+      "total_chars": 4022,
+      "substantive_chars_prose": 4022,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 21,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.795420840744179,
+      "analytical_coverage": 10,
+      "sentence_variance": 46.279149054279394,
+      "max_similarity": 0.3714003341678598,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.795420840744179,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 10,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 46.279149054279394,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.3714003341678598,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-06-07-aml",
+      "title": "Gov.uk has replaced Stripe with Dutch provider Adyen -- 🛡️ A",
+      "pillar": "stock",
+      "is_abstract": false,
+      "body_len": 6645,
+      "text_len": 3923,
+      "total_chars": 3859,
+      "substantive_chars_prose": 3859,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 27,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.818492728152415,
+      "analytical_coverage": 10,
+      "sentence_variance": 26.410861547510255,
+      "max_similarity": 0.3721302576334449,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.818492728152415,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 10,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 26.410861547510255,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.3721302576334449,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-06-02-stock",
+      "title": "Nvidia RTX Spark -- 📈 STOCK 2026-06-02",
+      "pillar": "stock",
+      "is_abstract": false,
+      "body_len": 5998,
+      "text_len": 3623,
+      "total_chars": 3564,
+      "substantive_chars_prose": 3564,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 25,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.5917443153430035,
+      "analytical_coverage": 10,
+      "sentence_variance": 32.4468796650772,
+      "max_similarity": 0.4031303181189852,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.5917443153430035,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 10,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 32.4468796650772,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.4031303181189852,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-06-02-science",
+      "title": "Can the stockmarket swallow Anthropic, SpaceX and OpenAI? --",
+      "pillar": "stock",
+      "is_abstract": true,
+      "body_len": 4720,
+      "text_len": 2923,
+      "total_chars": 2887,
+      "substantive_chars_prose": 2887,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 26,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.4057655671544484,
+      "analytical_coverage": 6,
+      "sentence_variance": 19.770427979313123,
+      "max_similarity": 0.34328973802873175,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.4057655671544484,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 6,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 19.770427979313123,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.34328973802873175,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-06-02-aml",
+      "title": "Iran stops negotiations with U.S., vows to completely block ",
+      "pillar": "stock",
+      "is_abstract": false,
+      "body_len": 5493,
+      "text_len": 3395,
+      "total_chars": 3336,
+      "substantive_chars_prose": 3336,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 28,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.580673934483194,
+      "analytical_coverage": 9,
+      "sentence_variance": 24.05889351451677,
+      "max_similarity": 0.39838728137486534,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.580673934483194,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 9,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 24.05889351451677,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.39838728137486534,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-06-01-stock",
+      "title": "Microsoft Office 2019 and 2021 for Mac view-only conversion ",
+      "pillar": "stock",
+      "is_abstract": false,
+      "body_len": 7352,
+      "text_len": 5183,
+      "total_chars": 4842,
+      "substantive_chars_prose": 4842,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 34,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.642493909817626,
+      "analytical_coverage": 5,
+      "sentence_variance": 28.357212272881714,
+      "max_similarity": 0.4727119262103673,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.642493909817626,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 5,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 28.357212272881714,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.4727119262103673,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-06-01-science",
+      "title": "A pictorial introduction to differential geometry (2017) -- ",
+      "pillar": "data-engineering",
+      "is_abstract": true,
+      "body_len": 4636,
+      "text_len": 2839,
+      "total_chars": 2807,
+      "substantive_chars_prose": 2807,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 22,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.49111272610116,
+      "analytical_coverage": 6,
+      "sentence_variance": 28.280947358090298,
+      "max_similarity": 0.36261327949604144,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.49111272610116,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 6,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 28.280947358090298,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.36261327949604144,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-06-01-aml",
+      "title": "EY Canada published a cybersecurity report and most citation",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 6581,
+      "text_len": 4557,
+      "total_chars": 4394,
+      "substantive_chars_prose": 4394,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 30,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.8446944645138,
+      "analytical_coverage": 8,
+      "sentence_variance": 33.86870072631793,
+      "max_similarity": 0.5308993862110457,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.8446944645138,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 8,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 33.86870072631793,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.5308993862110457,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-05-27-science",
+      "title": "CRISPR-based gene therapy receives expanded FDA approval for",
+      "pillar": "stock",
+      "is_abstract": false,
+      "body_len": 6979,
+      "text_len": 6121,
+      "total_chars": 5769,
+      "substantive_chars_prose": 5769,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 40,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.765287652434878,
+      "analytical_coverage": 11,
+      "sentence_variance": 16.362132348810775,
+      "max_similarity": 0.8163958941412172,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.765287652434878,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 11,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 16.362132348810775,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.8163958941412172,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-05-23-science",
+      "title": "Bun Runtime Support Now Limited and Deprecated — SCIENCE 202",
+      "pillar": "data-engineering",
+      "is_abstract": true,
+      "body_len": 5148,
+      "text_len": 3097,
+      "total_chars": 3065,
+      "substantive_chars_prose": 3065,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 32,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.564262623528384,
+      "analytical_coverage": 8,
+      "sentence_variance": 21.59207663559714,
+      "max_similarity": 0.3104716455464577,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.564262623528384,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 8,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 21.59207663559714,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.3104716455464577,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-05-18-aml",
+      "title": "Cryptocurrency mixers under global regulatory spotlight afte",
+      "pillar": "aml",
+      "is_abstract": false,
+      "body_len": 7396,
+      "text_len": 6264,
+      "total_chars": 6053,
+      "substantive_chars_prose": 6053,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 57,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.787375685519053,
+      "analytical_coverage": 11,
+      "sentence_variance": 12.340131888773216,
+      "max_similarity": 0.8277589837565122,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.787375685519053,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 11,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 12.340131888773216,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.8277589837565122,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-05-10-stock-market",
+      "title": "Global Stock Markets Volatility Amid Interest Rate Uncertain",
+      "pillar": "stock",
+      "is_abstract": false,
+      "body_len": 6889,
+      "text_len": 6058,
+      "total_chars": 5707,
+      "substantive_chars_prose": 5707,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 40,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.760106554377793,
+      "analytical_coverage": 11,
+      "sentence_variance": 15.43502510525979,
+      "max_similarity": 0.8550398398189649,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.760106554377793,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 11,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 15.43502510525979,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.8550398398189649,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-05-09-stock",
+      "title": "Quantum computing startups see record $4.2B in venture fundi",
+      "pillar": "stock",
+      "is_abstract": false,
+      "body_len": 6943,
+      "text_len": 6103,
+      "total_chars": 5753,
+      "substantive_chars_prose": 5753,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 43,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.730318497811068,
+      "analytical_coverage": 12,
+      "sentence_variance": 14.733507981348234,
+      "max_similarity": 0.816091216555787,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.730318497811068,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 12,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 14.733507981348234,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.816091216555787,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-04-22-science",
+      "title": "JWST detects unexpected atmospheric chemistry on temperate e",
+      "pillar": "stock",
+      "is_abstract": false,
+      "body_len": 6952,
+      "text_len": 6103,
+      "total_chars": 5752,
+      "substantive_chars_prose": 5752,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 40,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.7499919428013735,
+      "analytical_coverage": 12,
+      "sentence_variance": 15.978031793684728,
+      "max_similarity": 0.8099191281072521,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.7499919428013735,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 12,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 15.978031793684728,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.8099191281072521,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-04-19-stock",
+      "title": "EV battery supply chain diversification accelerates with 12 ",
+      "pillar": "stock",
+      "is_abstract": false,
+      "body_len": 6898,
+      "text_len": 6058,
+      "total_chars": 5708,
+      "substantive_chars_prose": 5708,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 41,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.711311120192452,
+      "analytical_coverage": 12,
+      "sentence_variance": 14.998869677816913,
+      "max_similarity": 0.8454140680131198,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.711311120192452,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 12,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 14.998869677816913,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.8454140680131198,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-04-15-ai-regulation",
+      "title": "EU AI Act Enters Force — Global Implications for Tech",
+      "pillar": "stock",
+      "is_abstract": false,
+      "body_len": 6893,
+      "text_len": 6062,
+      "total_chars": 5711,
+      "substantive_chars_prose": 5711,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 40,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.743039445645495,
+      "analytical_coverage": 12,
+      "sentence_variance": 15.470920302296177,
+      "max_similarity": 0.8418723530438327,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.743039445645495,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 12,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 15.470920302296177,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.8418723530438327,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-04-05-aml",
+      "title": "AI-powered transaction monitoring: 80% false positive reduct",
+      "pillar": "aml",
+      "is_abstract": false,
+      "body_len": 7344,
+      "text_len": 6238,
+      "total_chars": 6028,
+      "substantive_chars_prose": 6028,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 57,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.801661824880175,
+      "analytical_coverage": 11,
+      "sentence_variance": 12.037261324867023,
+      "max_similarity": 0.8529520792301956,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.801661824880175,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 11,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 12.037261324867023,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.8529520792301956,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-03-28-stock",
+      "title": "AI hardware spending reaches $300B annual run rate: who bene",
+      "pillar": "stock",
+      "is_abstract": false,
+      "body_len": 6999,
+      "text_len": 6141,
+      "total_chars": 5789,
+      "substantive_chars_prose": 5789,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 41,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.721706882729869,
+      "analytical_coverage": 12,
+      "sentence_variance": 15.846977954534205,
+      "max_similarity": 0.8397074635278221,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.721706882729869,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 12,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 15.846977954534205,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.8397074635278221,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-03-15-science",
+      "title": "Neuralink first human trial results: 12 patients achieve bra",
+      "pillar": "stock",
+      "is_abstract": false,
+      "body_len": 6920,
+      "text_len": 6071,
+      "total_chars": 5720,
+      "substantive_chars_prose": 5720,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 40,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.75404179685811,
+      "analytical_coverage": 11,
+      "sentence_variance": 16.0062292561365,
+      "max_similarity": 0.8242954250218382,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.75404179685811,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 11,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 16.0062292561365,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.8242954250218382,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-03-10-aml",
+      "title": "DeFi platforms face unprecedented AML enforcement actions gl",
+      "pillar": "aml",
+      "is_abstract": false,
+      "body_len": 7153,
+      "text_len": 5962,
+      "total_chars": 5742,
+      "substantive_chars_prose": 5742,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 57,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.69897807371462,
+      "analytical_coverage": 11,
+      "sentence_variance": 11.828647323634481,
+      "max_similarity": 0.9141112984639771,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.69897807371462,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 11,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 11.828647323634481,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.9141112984639771,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-02-25-science",
+      "title": "New room temperature superconductivity claim: LK-99 replicat",
+      "pillar": "stock",
+      "is_abstract": false,
+      "body_len": 6998,
+      "text_len": 6140,
+      "total_chars": 5788,
+      "substantive_chars_prose": 5788,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 40,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.733247526951958,
+      "analytical_coverage": 13,
+      "sentence_variance": 16.309429787702577,
+      "max_similarity": 0.8115463064099722,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.733247526951958,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 13,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 16.309429787702577,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.8115463064099722,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-02-20-aml",
+      "title": "FinCEN beneficial ownership reporting: one year of data reve",
+      "pillar": "aml",
+      "is_abstract": false,
+      "body_len": 7219,
+      "text_len": 6122,
+      "total_chars": 5913,
+      "substantive_chars_prose": 5913,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 57,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.827500618537626,
+      "analytical_coverage": 10,
+      "sentence_variance": 11.616631924659016,
+      "max_similarity": 0.7931152145485658,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.827500618537626,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 10,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 11.616631924659016,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.7931152145485658,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-02-14-stock",
+      "title": "Global semiconductor supply chain reshuffling: the post-Taiw",
+      "pillar": "stock",
+      "is_abstract": false,
+      "body_len": 6945,
+      "text_len": 6096,
+      "total_chars": 5745,
+      "substantive_chars_prose": 5745,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 41,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.700909144526844,
+      "analytical_coverage": 11,
+      "sentence_variance": 15.324761159006908,
+      "max_similarity": 0.8568381617782512,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.700909144526844,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 11,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 15.324761159006908,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.8568381617782512,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-01-29-science",
+      "title": "AlphaFold 3 predicts 200 million protein structures in large",
+      "pillar": "stock",
+      "is_abstract": false,
+      "body_len": 6995,
+      "text_len": 6128,
+      "total_chars": 5775,
+      "substantive_chars_prose": 5775,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 41,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.741331766707825,
+      "analytical_coverage": 11,
+      "sentence_variance": 15.98541869785917,
+      "max_similarity": 0.8184190981222236,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.741331766707825,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 11,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 15.98541869785917,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.8184190981222236,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-01-22-stock",
+      "title": "TSMC 2nm process enters volume production: what it means for",
+      "pillar": "stock",
+      "is_abstract": false,
+      "body_len": 6984,
+      "text_len": 6126,
+      "total_chars": 5774,
+      "substantive_chars_prose": 5774,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 41,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.705045122210629,
+      "analytical_coverage": 12,
+      "sentence_variance": 15.682073337167196,
+      "max_similarity": 0.8774387589577598,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.705045122210629,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 12,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 15.682073337167196,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.8774387589577598,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "blog/2026-01-15-aml",
+      "title": "EU 7th AML Directive implementation challenges across member",
+      "pillar": "aml",
+      "is_abstract": false,
+      "body_len": 7259,
+      "text_len": 6153,
+      "total_chars": 5943,
+      "substantive_chars_prose": 5943,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 56,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.791489376981883,
+      "analytical_coverage": 11,
+      "sentence_variance": 12.043236309909664,
+      "max_similarity": 0.8000836847190693,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.791489376981883,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 11,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 12.043236309909664,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.8000836847190693,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "learn/sector-competitive-analysis",
+      "title": "Sector and Competitive Analysis: Industry Frameworks, Moats,",
+      "pillar": "stock",
+      "is_abstract": false,
+      "body_len": 10815,
+      "text_len": 6996,
+      "total_chars": 6976,
+      "substantive_chars_prose": 6976,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 59,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": true,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 8.541051736961863,
+      "analytical_coverage": 6,
+      "sentence_variance": 16.01039234459498,
+      "max_similarity": 0.11105837154668258,
+      "passed": false,
+      "failures": [
+        "high_entropy"
+      ],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 8.541051736961863,
+          "threshold": 8.5,
+          "pass": false
+        },
+        "analytical_coverage": {
+          "value": 6,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 16.01039234459498,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.11105837154668258,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "learn/applying-market-analysis",
+      "title": "Applying Market Analysis: Investment Theses, Portfolio Const",
+      "pillar": "stock",
+      "is_abstract": false,
+      "body_len": 8394,
+      "text_len": 6219,
+      "total_chars": 6202,
+      "substantive_chars_prose": 6202,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 81,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 8.360224638702265,
+      "analytical_coverage": 9,
+      "sentence_variance": 9.880076528474099,
+      "max_similarity": 0.19730848470875936,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 8.360224638702265,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 9,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 9.880076528474099,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.19730848470875936,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "learn/market-analysis-methods",
+      "title": "Market Analysis Methods: Fundamental, Technical, Quant, Sent",
+      "pillar": "stock",
+      "is_abstract": false,
+      "body_len": 9247,
+      "text_len": 6607,
+      "total_chars": 6587,
+      "substantive_chars_prose": 6587,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 73,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": true,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 8.513092961252042,
+      "analytical_coverage": 7,
+      "sentence_variance": 9.896954538577774,
+      "max_similarity": 0.22871439675380545,
+      "passed": false,
+      "failures": [
+        "high_entropy"
+      ],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 8.513092961252042,
+          "threshold": 8.5,
+          "pass": false
+        },
+        "analytical_coverage": {
+          "value": 7,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 9.896954538577774,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.22871439675380545,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "learn/market-fundamentals",
+      "title": "Market Fundamentals: Asset Classes, Participants, and Market",
+      "pillar": "stock",
+      "is_abstract": false,
+      "body_len": 9817,
+      "text_len": 5560,
+      "total_chars": 5544,
+      "substantive_chars_prose": 5544,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 52,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 8.340793943424684,
+      "analytical_coverage": 6,
+      "sentence_variance": 8.157904469006963,
+      "max_similarity": 0.16792512635758491,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 8.340793943424684,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 6,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 8.157904469006963,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.16792512635758491,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "learn/designing-aml-program",
+      "title": "Designing a Comprehensive AML Compliance Program",
+      "pillar": "aml",
+      "is_abstract": false,
+      "body_len": 15765,
+      "text_len": 8937,
+      "total_chars": 8635,
+      "substantive_chars_prose": 8635,
+      "code_chars": 0,
+      "boilerplate_sentences": 1,
+      "total_sentences": 70,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": true,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 0.992857142857143,
+      "word_entropy": 8.517281391684865,
+      "analytical_coverage": 7,
+      "sentence_variance": 19.810742293111623,
+      "max_similarity": 0.16242916810362598,
+      "passed": false,
+      "failures": [
+        "high_entropy"
+      ],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.014285714285714285,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 0.992857142857143,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 8.517281391684865,
+          "threshold": 8.5,
+          "pass": false
+        },
+        "analytical_coverage": {
+          "value": 7,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 19.810742293111623,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.16242916810362598,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "learn/aml-enforcement-cases",
+      "title": "AML Enforcement in Practice: Regulatory Actions and Complian",
+      "pillar": "aml",
+      "is_abstract": false,
+      "body_len": 12115,
+      "text_len": 8877,
+      "total_chars": 8825,
+      "substantive_chars_prose": 8825,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 70,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 8.33954544340646,
+      "analytical_coverage": 11,
+      "sentence_variance": 15.337854997305437,
+      "max_similarity": 0.28456271854432774,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 8.33954544340646,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 11,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 15.337854997305437,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.28456271854432774,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "learn/money-laundering-mechanisms",
+      "title": "Money Laundering Mechanisms: Trade, Crypto, Shell Companies,",
+      "pillar": "aml",
+      "is_abstract": false,
+      "body_len": 11319,
+      "text_len": 8706,
+      "total_chars": 8531,
+      "substantive_chars_prose": 8531,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 63,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 8.411275222997944,
+      "analytical_coverage": 10,
+      "sentence_variance": 15.185391662036684,
+      "max_similarity": 0.21249598218506305,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 8.411275222997944,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 10,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 15.185391662036684,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.21249598218506305,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "learn/aml-compliance-glossary",
+      "title": "AML & Compliance Glossary: Key Terms, Frameworks, and Red Fl",
+      "pillar": "aml",
+      "is_abstract": false,
+      "body_len": 8450,
+      "text_len": 5964,
+      "total_chars": 5949,
+      "substantive_chars_prose": 5949,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 43,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 8.066312275011732,
+      "analytical_coverage": 6,
+      "sentence_variance": 13.22603754820804,
+      "max_similarity": 0.318713854227323,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 8.066312275011732,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 6,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 13.22603754820804,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.318713854227323,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "learn/designing-data-platform",
+      "title": "Designing a Production Data Platform: From Requirements to A",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 11044,
+      "text_len": 7193,
+      "total_chars": 7176,
+      "substantive_chars_prose": 7176,
+      "code_chars": 0,
+      "boilerplate_sentences": 2,
+      "total_sentences": 61,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 0.9836065573770493,
+      "word_entropy": 8.247323497571255,
+      "analytical_coverage": 7,
+      "sentence_variance": 13.661138797667146,
+      "max_similarity": 0.175299414137394,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.03278688524590164,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 0.9836065573770493,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 8.247323497571255,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 7,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 13.661138797667146,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.175299414137394,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "learn/data-quality-observability-cost",
+      "title": "Data Quality, Observability, and Cost Optimization at Scale",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 10066,
+      "text_len": 7682,
+      "total_chars": 7654,
+      "substantive_chars_prose": 7654,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 73,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 8.252176886130066,
+      "analytical_coverage": 10,
+      "sentence_variance": 18.21221413926329,
+      "max_similarity": 0.26941807528759815,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 8.252176886130066,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 10,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 18.21221413926329,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.26941807528759815,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "learn/building-pipelines-dbt-dagster",
+      "title": "Building Data Pipelines with dbt and Dagster: From SQL to Or",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 9767,
+      "text_len": 6825,
+      "total_chars": 6711,
+      "substantive_chars_prose": 6711,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 85,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.89915303861414,
+      "analytical_coverage": 7,
+      "sentence_variance": 7.183930548904819,
+      "max_similarity": 0.232946444967457,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.89915303861414,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 7,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 7.183930548904819,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.232946444967457,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "learn/data-pipeline-architectures",
+      "title": "Data Pipeline Patterns: Batch, Streaming, and Event-Driven A",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 9529,
+      "text_len": 6588,
+      "total_chars": 6403,
+      "substantive_chars_prose": 6403,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 49,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.870519372690939,
+      "analytical_coverage": 6,
+      "sentence_variance": 10.290369856655081,
+      "max_similarity": 0.20265594965206915,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.870519372690939,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 6,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 10.290369856655081,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.20265594965206915,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "learn/data-engineering-basics",
+      "title": "Data Engineering Basics: Glossary and Tool Landscape",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 6264,
+      "text_len": 3942,
+      "total_chars": 3930,
+      "substantive_chars_prose": 3930,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 33,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.679824043867457,
+      "analytical_coverage": 6,
+      "sentence_variance": 14.77122758510553,
+      "max_similarity": 0.2971884534694446,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.679824043867457,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 6,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 14.77122758510553,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.2971884534694446,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "learn/quiz-aml",
+      "title": "AML Knowledge Check — Interactive Quiz",
+      "pillar": "aml",
+      "is_abstract": false,
+      "body_len": 2269,
+      "text_len": 1705,
+      "total_chars": 1678,
+      "substantive_chars_prose": 1678,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 14,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 6.721028736355632,
+      "analytical_coverage": 9,
+      "sentence_variance": 9.001417121991494,
+      "max_similarity": 0.1902154998177674,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 6.721028736355632,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 9,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 9.001417121991494,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.1902154998177674,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "learn/science-method",
+      "title": "Scientific Reasoning in Research Synthesis",
+      "pillar": "stock",
+      "is_abstract": false,
+      "body_len": 3549,
+      "text_len": 3003,
+      "total_chars": 2994,
+      "substantive_chars_prose": 2994,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 22,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.585363674861925,
+      "analytical_coverage": 10,
+      "sentence_variance": 7.200923953571789,
+      "max_similarity": 0.12073345923860428,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.585363674861925,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 10,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 7.200923953571789,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.12073345923860428,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "learn/market-analysis",
+      "title": "How to Analyse Market Signals — Interactive Tutorial",
+      "pillar": "stock",
+      "is_abstract": true,
+      "body_len": 3169,
+      "text_len": 2709,
+      "total_chars": 2701,
+      "substantive_chars_prose": 2701,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 22,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.474041620760711,
+      "analytical_coverage": 8,
+      "sentence_variance": 9.605546779107364,
+      "max_similarity": 0.34196194757013537,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.474041620760711,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 8,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 9.605546779107364,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.34196194757013537,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "learn/aml-basics",
+      "title": "AML Fundamentals — A Beginner's Guide",
+      "pillar": "aml",
+      "is_abstract": false,
+      "body_len": 4132,
+      "text_len": 3530,
+      "total_chars": 3497,
+      "substantive_chars_prose": 3497,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 29,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.580486909811798,
+      "analytical_coverage": 11,
+      "sentence_variance": 8.790195597623006,
+      "max_similarity": 0.38602338471681924,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.580486909811798,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 11,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 8.790195597623006,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.38602338471681924,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "learn",
+      "title": "Learning Hub",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 4338,
+      "text_len": 3522,
+      "total_chars": 3499,
+      "substantive_chars_prose": 3499,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 34,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.781722447623688,
+      "analytical_coverage": 9,
+      "sentence_variance": 21.74277511947805,
+      "max_similarity": 0.17024570048082766,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.781722447623688,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 9,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 21.74277511947805,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.17024570048082766,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "learn/trade-based-ml-sanctions",
+      "title": "Trade-Based Money Laundering & Sanctions — The $2 Trillion B",
+      "pillar": "aml",
+      "is_abstract": false,
+      "body_len": 4573,
+      "text_len": 3860,
+      "total_chars": 3827,
+      "substantive_chars_prose": 3827,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 29,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.544748754817424,
+      "analytical_coverage": 10,
+      "sentence_variance": 5.294198471478967,
+      "max_similarity": 0.2742737611375847,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.544748754817424,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 10,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 5.294198471478967,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.2742737611375847,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "learn/behavioral-finance-portfolio",
+      "title": "Behavioral Finance & Portfolio Theory — Mind, Market, and Mo",
+      "pillar": "stock",
+      "is_abstract": false,
+      "body_len": 3622,
+      "text_len": 3277,
+      "total_chars": 3270,
+      "substantive_chars_prose": 3270,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 31,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.797050653271067,
+      "analytical_coverage": 6,
+      "sentence_variance": 8.406924453812605,
+      "max_similarity": 0.253366365314649,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.797050653271067,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 6,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 8.406924453812605,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.253366365314649,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "learn/meta-analysis-statistics",
+      "title": "Meta-Analysis & Statistical Literacy — Reading Research That",
+      "pillar": "stock",
+      "is_abstract": true,
+      "body_len": 3706,
+      "text_len": 3265,
+      "total_chars": 3257,
+      "substantive_chars_prose": 3257,
+      "code_chars": 0,
+      "boilerplate_sentences": 1,
+      "total_sentences": 33,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 0.9848484848484848,
+      "word_entropy": 7.420455144301814,
+      "analytical_coverage": 15,
+      "sentence_variance": 6.490227166170936,
+      "max_similarity": 0.3250817225905647,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.030303030303030304,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 0.9848484848484848,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.420455144301814,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 15,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 6.490227166170936,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.3250817225905647,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "learn/data-ethics-privacy",
+      "title": "Data Ethics & Privacy Engineering — Building Trustworthy Dat",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 4375,
+      "text_len": 3896,
+      "total_chars": 3887,
+      "substantive_chars_prose": 3887,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 35,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.741650615371868,
+      "analytical_coverage": 7,
+      "sentence_variance": 7.178425727021723,
+      "max_similarity": 0.14092708200007772,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.741650615371868,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 7,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 7.178425727021723,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.14092708200007772,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "learn/crypto-aml",
+      "title": "Crypto AML & Digital Assets — Compliance in the Age of DeFi",
+      "pillar": "aml",
+      "is_abstract": false,
+      "body_len": 3900,
+      "text_len": 3429,
+      "total_chars": 3420,
+      "substantive_chars_prose": 3420,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 26,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.6739436528020395,
+      "analytical_coverage": 5,
+      "sentence_variance": 6.158291663523071,
+      "max_similarity": 0.23949513559111774,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.6739436528020395,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 5,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 6.158291663523071,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.23949513559111774,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "learn/semiconductor-supply-chain",
+      "title": "Semiconductor Supply Chain — Geopolitics, Markets, and the $",
+      "pillar": "stock",
+      "is_abstract": false,
+      "body_len": 4191,
+      "text_len": 3603,
+      "total_chars": 3571,
+      "substantive_chars_prose": 3571,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 31,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.675947747872631,
+      "analytical_coverage": 11,
+      "sentence_variance": 8.03206373647554,
+      "max_similarity": 0.19196552309800707,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.675947747872631,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 11,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 8.03206373647554,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.19196552309800707,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "learn/crispr-gene-editing",
+      "title": "Gene Editing & CRISPR — From Lab Bench to Approved Medicine",
+      "pillar": "stock",
+      "is_abstract": false,
+      "body_len": 4340,
+      "text_len": 3568,
+      "total_chars": 3535,
+      "substantive_chars_prose": 3535,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 28,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.5490221363734165,
+      "analytical_coverage": 9,
+      "sentence_variance": 8.011073331231424,
+      "max_similarity": 0.14455392111910315,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.5490221363734165,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 9,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 8.011073331231424,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.14455392111910315,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "learn/behavioral-design-learning",
+      "title": "Behavioral Design for Learning — Psychology Behind Effective",
+      "pillar": "stock",
+      "is_abstract": false,
+      "body_len": 5982,
+      "text_len": 4986,
+      "total_chars": 4948,
+      "substantive_chars_prose": 4948,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 49,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 8.033524690593607,
+      "analytical_coverage": 11,
+      "sentence_variance": 5.915692569394856,
+      "max_similarity": 0.205348969234619,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 8.033524690593607,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 11,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 5.915692569394856,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.205348969234619,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "knowledge/dataops-trends-2026",
+      "title": "DataOps Trends & Tool Landscape 2026",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 7581,
+      "text_len": 4393,
+      "total_chars": 4370,
+      "substantive_chars_prose": 4370,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 30,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 8.004667772234459,
+      "analytical_coverage": 12,
+      "sentence_variance": 18.01607307070242,
+      "max_similarity": 0.22910743548603948,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 8.004667772234459,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 12,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 18.01607307070242,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.22910743548603948,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "learn/dataops-introduction",
+      "title": "Introduction to DataOps: Principles, Practices, and Pipeline",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 4255,
+      "text_len": 2257,
+      "total_chars": 2245,
+      "substantive_chars_prose": 2245,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 12,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.238243257851592,
+      "analytical_coverage": 7,
+      "sentence_variance": 34.06448133890914,
+      "max_similarity": 0.27797823213799544,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.238243257851592,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 7,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 34.06448133890914,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.27797823213799544,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "learn/data-quality-engineering",
+      "title": "Data Quality Engineering: Testing, Monitoring, and Expectati",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 2406,
+      "text_len": 2123,
+      "total_chars": 2105,
+      "substantive_chars_prose": 2105,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 20,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.14824994316655,
+      "analytical_coverage": 6,
+      "sentence_variance": 15.156186855538564,
+      "max_similarity": 0.2140064875345568,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.14824994316655,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 6,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 15.156186855538564,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.2140064875345568,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "learn/open-source-data-stack",
+      "title": "Building an Open Source Data Stack: From Ingestion to Analyt",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 2550,
+      "text_len": 2187,
+      "total_chars": 2179,
+      "substantive_chars_prose": 2159,
+      "code_chars": 20,
+      "boilerplate_sentences": 0,
+      "total_sentences": 24,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 0.9908214777420835,
+      "word_entropy": 7.381371199576434,
+      "analytical_coverage": 5,
+      "sentence_variance": 4.163123493510878,
+      "max_similarity": 0.28214458582728097,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.009178522257916476,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 0.9908214777420835,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.381371199576434,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 5,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 4.163123493510878,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.28214458582728097,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "knowledge/dataops-glossary",
+      "title": "DataOps Glossary",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 2704,
+      "text_len": 2165,
+      "total_chars": 2149,
+      "substantive_chars_prose": 2149,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 17,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.274823735279687,
+      "analytical_coverage": 10,
+      "sentence_variance": 4.372768832951953,
+      "max_similarity": 0.2826119359052147,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.274823735279687,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 10,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 4.372768832951953,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.2826119359052147,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "knowledge/open-source-tools",
+      "title": "Open Source Data Engineering Tool Landscape",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 4292,
+      "text_len": 3334,
+      "total_chars": 3307,
+      "substantive_chars_prose": 3307,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 52,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.547472060639119,
+      "analytical_coverage": 5,
+      "sentence_variance": 4.161806830533411,
+      "max_similarity": 0.3784085103128787,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.547472060639119,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 5,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 4.161806830533411,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.3784085103128787,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "knowledge/system-architecture",
+      "title": "AcaciaFund System Architecture: A DataOps Perspective",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 8131,
+      "text_len": 5629,
+      "total_chars": 4905,
+      "substantive_chars_prose": 4905,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 43,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.635652643098342,
+      "analytical_coverage": 7,
+      "sentence_variance": 20.091919651001593,
+      "max_similarity": 0.21635248435734647,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.635652643098342,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 7,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 20.091919651001593,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.21635248435734647,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "knowledge/about",
+      "title": "About AcaciaFund",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 3258,
+      "text_len": 2490,
+      "total_chars": 2455,
+      "substantive_chars_prose": 2455,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 17,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.171788034693674,
+      "analytical_coverage": 9,
+      "sentence_variance": 12.977222526344763,
+      "max_similarity": 0.2938964298187941,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.171788034693674,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 9,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 12.977222526344763,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.2938964298187941,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "knowledge/contact",
+      "title": "Contact Us",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 2030,
+      "text_len": 1471,
+      "total_chars": 1442,
+      "substantive_chars_prose": 1442,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 12,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 6.386083993502353,
+      "analytical_coverage": 7,
+      "sentence_variance": 6.0707632688704525,
+      "max_similarity": 0.23280450714933568,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 6.386083993502353,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 7,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 6.0707632688704525,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.23280450714933568,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "knowledge/research-methodology",
+      "title": "Research Methodology",
+      "pillar": "data-engineering",
+      "is_abstract": true,
+      "body_len": 5289,
+      "text_len": 3050,
+      "total_chars": 3008,
+      "substantive_chars_prose": 3008,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 37,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.628263527797799,
+      "analytical_coverage": 14,
+      "sentence_variance": 13.341937812847847,
+      "max_similarity": 0.24475487774449636,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.628263527797799,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 14,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 13.341937812847847,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.24475487774449636,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "knowledge/pillar-taxonomy",
+      "title": "Pillar Taxonomy Guide",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 6320,
+      "text_len": 2870,
+      "total_chars": 2833,
+      "substantive_chars_prose": 2833,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 6,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.081346593566923,
+      "analytical_coverage": 9,
+      "sentence_variance": 54.06092242399618,
+      "max_similarity": 0.19308358240471282,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.081346593566923,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 9,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 54.06092242399618,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.19308358240471282,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "knowledge/changelog",
+      "title": "Changelog",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 3516,
+      "text_len": 2744,
+      "total_chars": 2704,
+      "substantive_chars_prose": 2704,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 10,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.0873212412497,
+      "analytical_coverage": 9,
+      "sentence_variance": 32.4328537134801,
+      "max_similarity": 0.3415933210007516,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.0873212412497,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 9,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 32.4328537134801,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.3415933210007516,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "knowledge/faq",
+      "title": "Frequently Asked Questions",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 3966,
+      "text_len": 3234,
+      "total_chars": 3201,
+      "substantive_chars_prose": 3201,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 38,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 7.526497777307598,
+      "analytical_coverage": 10,
+      "sentence_variance": 5.609709133733848,
+      "max_similarity": 0.2852372710738955,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 7.526497777307598,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 10,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 5.609709133733848,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.2852372710738955,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "knowledge/glossary",
+      "title": "Glossary — Research & Financial Crime Terminology",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 5286,
+      "text_len": 4125,
+      "total_chars": 4112,
+      "substantive_chars_prose": 4112,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 43,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 8.235574595086144,
+      "analytical_coverage": 8,
+      "sentence_variance": 5.624734835406172,
+      "max_similarity": 0.27048543415923276,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 8.235574595086144,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 8,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 5.624734835406172,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.27048543415923276,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "knowledge/diagrams",
+      "title": "System Diagrams — Architecture, Pipeline & Data Flow",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 11896,
+      "text_len": 3003,
+      "total_chars": 2957,
+      "substantive_chars_prose": 2957,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 47,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 1.0,
+      "word_entropy": 6.756428446310628,
+      "analytical_coverage": 5,
+      "sentence_variance": 5.36668124094157,
+      "max_similarity": 0.2106403969157912,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.0,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 1.0,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 6.756428446310628,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 5,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 5.36668124094157,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.2106403969157912,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    },
+    {
+      "slug": "docs/platform-architecture",
+      "title": "Platform Architecture Deep Dive",
+      "pillar": "data-engineering",
+      "is_abstract": false,
+      "body_len": 0,
+      "text_len": 0,
+      "total_chars": 0,
+      "substantive_chars_prose": 0,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 0,
+      "code_dominated": false,
+      "too_short": true,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 0.0,
+      "word_entropy": 0.0,
+      "analytical_coverage": 0,
+      "sentence_variance": 0.0,
+      "max_similarity": 0.0,
+      "passed": false,
+      "failures": [
+        "too_short"
+      ],
+      "layers": {}
+    },
+    {
+      "slug": "blog/transaction-monitoring-foundations",
+      "title": "Transaction Monitoring Foundations",
+      "pillar": "aml",
+      "is_abstract": false,
+      "body_len": 0,
+      "text_len": 0,
+      "total_chars": 0,
+      "substantive_chars_prose": 0,
+      "code_chars": 0,
+      "boilerplate_sentences": 0,
+      "total_sentences": 0,
+      "code_dominated": false,
+      "too_short": true,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 0.0,
+      "word_entropy": 0.0,
+      "analytical_coverage": 0,
+      "sentence_variance": 0.0,
+      "max_similarity": 0.0,
+      "passed": false,
+      "failures": [
+        "too_short"
+      ],
+      "layers": {}
+    },
+    {
+      "slug": "docs/cybernetic-foundations",
+      "title": "Cybernetic Foundations of the Knowledge Fabric — Wienerian F",
+      "pillar": "data-engineering",
+      "is_abstract": true,
+      "body_len": 15376,
+      "text_len": 13775,
+      "total_chars": 13400,
+      "substantive_chars_prose": 11734,
+      "code_chars": 1666,
+      "boilerplate_sentences": 0,
+      "total_sentences": 153,
+      "code_dominated": false,
+      "too_short": false,
+      "boilerplate_dominated": false,
+      "low_density": false,
+      "high_entropy": false,
+      "low_analytical_coverage": false,
+      "low_sentence_variance": false,
+      "high_similarity": false,
+      "overall_density": 0.8756716417910447,
+      "word_entropy": 8.044686831157644,
+      "analytical_coverage": 39,
+      "sentence_variance": 10.678914536893462,
+      "max_similarity": 0.1470649537238303,
+      "passed": true,
+      "failures": [],
+      "layers": {
+        "code_ratio": {
+          "value": 0.12432835820895523,
+          "threshold": 0.6,
+          "pass": true
+        },
+        "boilerplate_ratio": {
+          "value": 0.0,
+          "threshold": 0.3,
+          "pass": true
+        },
+        "density": {
+          "value": 0.8756716417910447,
+          "threshold": 0.4,
+          "pass": true
+        },
+        "word_entropy": {
+          "value": 8.044686831157644,
+          "threshold": 8.5,
+          "pass": true
+        },
+        "analytical_coverage": {
+          "value": 39,
+          "threshold": 5,
+          "pass": true
+        },
+        "sentence_variance": {
+          "value": 10.678914536893462,
+          "threshold": 3.0,
+          "pass": true
+        },
+        "duplicate_similarity": {
+          "value": 0.1470649537238303,
+          "threshold": 0.93,
+          "pass": true
+        }
+      }
+    }
+  ]
+}
