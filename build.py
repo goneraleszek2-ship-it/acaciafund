@@ -1017,6 +1017,23 @@ def resolve_section_image(url: str) -> str:
             if ref:
                 return ref
             return url.rsplit(".", 1)[0] + ext
+    # Try with _s1 suffix (for blog section images)
+    stem = p.stem
+    ext = p.suffix if p.suffix else ".webp"
+    s1_path = p.parent / f"{stem}_s1{ext}"
+    if s1_path.exists():
+        ref = _resolve_ref_file(s1_path)
+        if ref:
+            return ref
+        return url.rsplit(".", 1)[0] + "_s1" + ext
+    # Try alternate extensions with _s1 suffix
+    for ext in (".webp", ".png", ".jpg", ".jpeg", ".svg"):
+        s1_alt = p.parent / f"{stem}_s1{ext}"
+        if s1_alt.exists():
+            ref = _resolve_ref_file(s1_alt)
+            if ref:
+                return ref
+            return url.rsplit(".", 1)[0] + "_s1" + ext
     return ""
 
 
@@ -2613,6 +2630,7 @@ def main():
         ),
         category="research",
         items=sorted_research,
+        grouped=pillar_groups,
         page_title="Research",
         is_index=False,
         page_path="research/",

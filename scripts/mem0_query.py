@@ -36,14 +36,15 @@ def format_deployment(dep: dict) -> str:
         "success": "✅",
         "failed": "❌",
         "pending": "⏳",
-    }.get(dep["status"], "❓")
+    }.get(dep.get("status"), "❓")
 
-    duration_s = dep["build_duration_ms"] / 1000 if dep["build_duration_ms"] else 0
-    pages = dep["pages_generated"] or 0
+    pages = dep.get("pages_generated") or dep.get("pages") or 0
+    duration_ms = dep.get("build_duration_ms") or dep.get("duration_ms") or 0
+    duration_s = duration_ms / 1000
 
     return (
-        f"{status_emoji} [{dep['commit_hash'][:8]}] {dep['branch']} | "
-        f"{pages} pages | {duration_s:.1f}s | {dep['created_at']}"
+        f"{status_emoji} [{dep.get('commit_hash', 'unknown')[:8]}] {dep.get('branch', 'main')} | "
+        f"{pages} pages | {duration_s:.1f}s | {dep.get('created_at', 'N/A')}"
     )
 
 

@@ -49,6 +49,7 @@ class Content:
     updated_at: Optional[str] = None
     prerequisites: Optional[List[str]] = None
     curated_relations: Optional[List[Dict[str, Any]]] = None
+    quality_flags: List[str] = field(default_factory=list)
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "Content":
@@ -100,4 +101,5 @@ class Content:
             updated_at=data.get("updated_at"),
             prerequisites=data.get("prerequisites"),
             curated_relations=data.get("curated_relations"),
+            quality_flags=data.get("quality_flags", []),
         )
