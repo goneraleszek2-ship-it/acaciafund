@@ -180,12 +180,23 @@ class ResearchEnricher:
         title: str,
         description: str,
         body: str | None = None,
+        max_body_chars: int = 2000,
     ) -> list[str]:
-        """LLM-powered tag extraction via mem0."""
+        """LLM-powered tag extraction via mem0 with retry and validation.
+
+        Args:
+            title: Article title.
+            description: Short summary.
+            body: Full body HTML (truncated to max_body_chars).
+            max_body_chars: Max body characters to include in prompt.
+
+        Returns:
+            List of 3-6 kebab-case tags, or empty list on failure.
+        """
         # Build a compact input for the model
         text = f"Title: {title}\nSummary: {description}"
         if body:
-            text += f"\nBody: {body[:2000]}"
+            text += f"\nBody: {body[:max_body_chars]}"
 
         # Query mem0 for relevant context from the knowledge fabric
         context = ""
@@ -193,40 +204,99 @@ class ResearchEnricher:
             try:
                 results = self._memory.search(text, limit=3)
                 if results and isinstance(results, list):
-                    snippets = [
-                        r.get("metadata", {}).get("title", "")
-                        for r in results
-                        if isinstance(r, dict)
-                    ]
+                    snippets = []
+                    for r in results:
+                        if isinstance(r, dict):
+                            meta = r.get("metadata", {})
+                            t = meta.get("title", "")
+                            d = meta.get("description", "")
+                            part = t
+                            if d:
+                                part += f": {d[:120]}"
+                            snippets.append(part)
                     if snippets:
-                        context = "Related context: " + "; ".join(snippets)
+                        context = "Related context:\n" + "\n".join(
+                            f"- {s}" for s in snippets
+                        )
             except Exception:
                 pass
 
-        prompt = f"""Extract 3-5 cross-domain tags from the following research content.
-Tags should bridge technical domains and reflect the content's core concepts.
+        system_prompt = (
+            "You are a research tag extractor. Given an article title, "
+            "summary, and optional body text, identify 3-5 cross-domain "
+            "tags that bridge technical domains and reflect core concepts. "
+            "Tags must be short, specific, kebab-case (e.g. "
+            "'data-engineering', 'machine-learning', 'financial-crime'). "
+            "Respond with ONLY a JSON array of strings."
+        )
 
-{context}
+        user_prompt = f"""{context}
 
 Title: {title}
 Description: {description[:1000]}
 
-Respond with a JSON array of tags only, nothing else.
-Tags should be short, specific, and use kebab-case."""
+Respond with a JSON array of 3-5 kebab-case tags:"""
 
-        try:
-            messages = [{"role": "user", "content": prompt}]
-            response = self._memory.chat(messages)
-            # Parse response as JSON array
-            raw = response.get("response", "") if isinstance(response, dict) else str(response)
-            # Try to find a JSON array in the response
-            match = re.search(r'\[.*?\]', raw, re.DOTALL)
-            if match:
-                tags = json.loads(match.group())
-                if isinstance(tags, list):
-                    return [t for t in tags if isinstance(t, str) and len(t) > 1][:6]
-        except Exception:
-            pass
+        def _parse_json_array(raw: str) -> list[str] | None:
+            """Extract a JSON array from LLM response, handling markdown fences
+            and trailing commas."""
+            import json
+            # Strip markdown code fences
+            clean = re.sub(r"```(?:json)?\s*", "", raw).strip()
+            # Find the first [ ... ] block
+            start = clean.find("[")
+            end = clean.rfind("]")
+            if start == -1 or end == -1 or end <= start:
+                return None
+            candidate = clean[start : end + 1]
+            # Remove trailing commas before closing bracket
+            candidate = re.sub(r",\s*]", "]", candidate)
+            try:
+                parsed = json.loads(candidate)
+                if isinstance(parsed, list):
+                    return parsed
+            except json.JSONDecodeError:
+                pass
+            return None
+
+        def _validate_tags(tags: list[str]) -> list[str]:
+            """Filter to valid kebab-case tags, minimum length 3."""
+            valid = []
+            for t in tags:
+                t = t.strip()
+                if len(t) > 2 and re.match(r"^[a-z][a-z0-9-]*[a-z0-9]$", t):
+                    valid.append(t)
+            return valid[:6]
+
+        prompts_to_try = [
+            # Primary: full prompt with context
+            [{"role": "system", "content": system_prompt},
+             {"role": "user", "content": user_prompt}],
+            # Fallback: no system message, simplified prompt
+            [{"role": "user", "content": (
+                f"Extract 3-5 kebab-case tags from this article.\n\n"
+                f"Title: {title}\nDescription: {description[:500]}\n\n"
+                f"Return ONLY a JSON array like [\"tag1\", \"tag2\", \"tag3\"]."
+            )}],
+        ]
+
+        for messages in prompts_to_try:
+            if not self._memory:
+                break
+            try:
+                response = self._memory.chat(messages)
+                raw = (
+                    response.get("response", "")
+                    if isinstance(response, dict)
+                    else str(response)
+                )
+                parsed = _parse_json_array(raw)
+                if parsed:
+                    tags = _validate_tags(parsed)
+                    if len(tags) >= 3:
+                        return tags
+            except Exception:
+                continue
 
         return []
 
