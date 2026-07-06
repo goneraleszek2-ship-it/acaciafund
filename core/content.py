@@ -68,6 +68,11 @@ class Content:
         if "date_str" in data and data["date_str"]:
             date_str = data["date_str"]
         
+        # Multi-tag migration: fall back to wrapping single category if tags are empty
+        tags: List[str] = data.get("tags", [])
+        if not tags and "category" in data and data["category"]:
+            tags = [data["category"]]
+
         return cls(
             slug=data.get("slug", ""),
             title=data.get("title", ""),
@@ -75,7 +80,7 @@ class Content:
             content_type=data.get("content_type", "research"),
             created_at=created_at,
             date_str=date_str,
-            tags=data.get("tags", []),
+            tags=tags,
             body_html=data.get("body_html", ""),
             description=data.get("description", ""),
             bloom_questions=data.get("bloom_questions", []),

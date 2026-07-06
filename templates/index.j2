@@ -15,6 +15,13 @@
         <p>{{ item.description }}</p>
       </hgroup>
       <footer>
+        {% if item.tags %}
+        <div style="margin-bottom: var(--pico-spacing); display: flex; flex-wrap: wrap; gap: 0.25rem;">
+          {% for tag in item.tags[:4] %}
+          <a href="/tags/{{ tag | lower | replace(' ', '-') }}/"><kbd>{{ tag }}</kbd></a>
+          {% endfor %}
+        </div>
+        {% endif %}
         <a href="/{{ item.slug }}/" role="button" class="outline">Read more →</a>
       </footer>
     </article>
