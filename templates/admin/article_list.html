@@ -1,0 +1,11 @@
+{% extends "layout.j2" %}
+{% block main_content %}
+<section class="admin-articles">
+  <h1>Articles</h1>
+  <ul>
+    {% for article in articles %}
+    <li><a href="/{{ article.slug }}/">{{ article.title }}</a> - {{ article.pillar }}</li>
+    {% endfor %}
+  </ul>
+</section>
+{% endblock %}

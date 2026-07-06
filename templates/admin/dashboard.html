@@ -1,0 +1,28 @@
+{% extends "layout.j2" %}
+{% block main_content %}
+<section class="admin-dashboard">
+  <h1>Admin Dashboard</h1>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <h3>{{ stats_total_articles }}</h3>
+      <p>Articles</p>
+    </div>
+    <div class="stat-card">
+      <h3>{{ stats_total_images }}</h3>
+      <p>Images</p>
+    </div>
+    <div class="stat-card">
+      <h3>{{ stats_with_images_pct }}%</h3>
+      <p>With Images</p>
+    </div>
+  </div>
+  <nav class="admin-nav">
+    <a href="/admin/dashboard.html">Dashboard</a>
+    <a href="/admin/gallery.html">Gallery</a>
+    <a href="/admin/articles.html">Articles</a>
+    <a href="/admin/manifest.html">Manifest</a>
+    <a href="/admin/quality.html">Quality</a>
+    <a href="/admin/sources.html">Sources</a>
+  </nav>
+</section>
+{% endblock %}

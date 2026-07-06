@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ content.title | default(site_name) }}</title>
+  <meta name="description" content="{{ content.description | default(site_description) }}">
+  <link rel="icon" href="/favicon.ico">
+  <link rel="stylesheet" href="{{ 'css/style.css' | asset }}">
+</head>
+<body>
+  <header class="site-header">
+    <nav aria-label="Main navigation">
+      <a href="/" class="logo">AcaciaFund</a>
+      <ul>
+        <li><a href="/research/">Research</a></li>
+        <li><a href="/learn/">Learn</a></li>
+        <li><a href="/knowledge/">Knowledge</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main>
+    {% block main_content %}{% endblock %}
+  </main>
+  <footer>
+    <p>&copy; {{ year }} AcaciaFund. All rights reserved.</p>
+  </footer>
+  <script src="{{ 'js/main.js' | asset }}"></script>
+</body>
+</html>

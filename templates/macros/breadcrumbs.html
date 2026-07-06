@@ -1,0 +1,11 @@
+{% macro breadcrumbs(page_path, title) %}
+<nav aria-label="Breadcrumb">
+  <ol>
+    <li><a href="/">Home</a></li>
+    {% if page_path %}
+    <li aria-hidden="true">/</li>
+    <li aria-current="page">{{ title | striptags }}</li>
+    {% endif %}
+  </ol>
+</nav>
+{% endmacro %}

@@ -1,0 +1,14 @@
+{% extends "layout.j2" %}
+{% block main_content %}
+<section class="admin-gallery">
+  <h1>Image Gallery</h1>
+  <div class="gallery-grid">
+    {% for img in gallery_images %}
+    <div class="gallery-item">
+      <img src="{{ img.url }}" alt="Section image">
+      <p>{{ img.slug }} - Section {{ img.section_index }}</p>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

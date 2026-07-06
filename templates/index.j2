@@ -1,0 +1,29 @@
+{% extends "layout.j2" %}
+{% block main_content %}
+<section class="hero">
+  <h1>{{ site_name }}</h1>
+  <p>{{ site_description }}</p>
+</section>
+
+<section class="recent-content">
+  <h2>Recent Research</h2>
+  <div class="content-grid">
+    {% for item in recent_posts %}
+    <article class="card">
+      <h3><a href="/{{ item.slug }}/">{{ item.title }}</a></h3>
+      <p>{{ item.description }}</p>
+      <a href="/{{ item.slug }}/" class="read-more">Read more →</a>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="categories">
+  <h2>Explore by Category</h2>
+  <div class="category-links">
+    <a href="/research/" class="category-link">Research</a>
+    <a href="/learn/" class="category-link">Learn</a>
+    <a href="/knowledge/" class="category-link">Knowledge</a>
+  </div>
+</section>
+{% endblock %}

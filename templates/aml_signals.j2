@@ -1,0 +1,10 @@
+{% extends "layout.j2" %}
+{% block main_content %}
+<section>
+  <h1>{{ page_title }}</h1>
+  <p>{{ description }}</p>
+  <div class="signals-content">
+    {{ signals_html | safe }}
+  </div>
+</section>
+{% endblock %}

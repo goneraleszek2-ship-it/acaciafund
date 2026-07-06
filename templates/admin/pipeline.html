@@ -1,0 +1,8 @@
+{% extends "layout.j2" %}
+{% block main_content %}
+<section class="admin-pipeline">
+  <h1>Pipeline Status</h1>
+  <p>Pipeline runs: {{ runs | length }}</p>
+  <p>DLQ entries: {{ dlq_count }}</p>
+</section>
+{% endblock %}

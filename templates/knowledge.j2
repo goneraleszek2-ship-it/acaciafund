@@ -1,0 +1,7 @@
+{% extends "layout.j2" %}
+{% block main_content %}
+<article>
+  <h1>{{ content.title }}</h1>
+  <div class="content">{{ content.body_html | safe }}</div>
+</article>
+{% endblock %}

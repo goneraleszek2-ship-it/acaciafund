@@ -1,0 +1,11 @@
+{% extends "layout.j2" %}
+{% block main_content %}
+<section class="admin-sources">
+  <h1>Sources</h1>
+  <ul>
+    {% for source in sources %}
+    <li>{{ source.name }} - {{ source.url }}</li>
+    {% endfor %}
+  </ul>
+</section>
+{% endblock %}

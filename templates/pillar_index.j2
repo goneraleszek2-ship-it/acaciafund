@@ -1,0 +1,19 @@
+{% extends "layout.j2" %}
+{% block main_content %}
+<section>
+  <h1>{{ page_title }}</h1>
+  <div class="pillar-posts">
+    {% for post in posts %}
+    <article class="post-card">
+      <h2><a href="/{{ post.slug }}/">{{ post.title }}</a></h2>
+      <p class="post-meta">
+        <span>{{ post.date_str }}</span>
+        <span>•</span>
+        <span>{{ post.pillar | replace('-', ' ') | title }}</span>
+      </p>
+      <p>{{ post.description }}</p>
+    </article>
+    {% endfor %}
+  </div>
+</section>
+{% endblock %}

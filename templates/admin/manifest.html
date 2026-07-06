@@ -1,0 +1,21 @@
+{% extends "layout.j2" %}
+{% block main_content %}
+<section class="admin-manifest">
+  <h1>Manifest</h1>
+  <table>
+    <thead>
+      <tr><th>Slug</th><th>Section</th><th>Image URL</th><th>Credit</th></tr>
+    </thead>
+    <tbody>
+      {% for entry in manifest_entries %}
+      <tr>
+        <td>{{ entry.slug }}</td>
+        <td>{{ entry.section_index }}</td>
+        <td>{{ entry.image_url }}</td>
+        <td>{{ entry.image_credit }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</section>
+{% endblock %}
