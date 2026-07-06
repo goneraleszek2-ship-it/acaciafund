@@ -394,10 +394,12 @@ Tags should be short, specific, and use kebab-case."""
         baseline_sqi = self.calculate_sqi(item)
 
         # 3. Store enrichment outputs
-        # Always set the baseline SQI — the Bayesian update engine
-        # will refine it from here.
+        # Set baseline SQI only if not already present — the Bayesian
+        # update engine refines from here. Preserving an existing SQI
+        # on re-enrich (--force) avoids wiping out Bayesian posteriors.
+        if "sqi" not in item:
+            item["sqi"] = baseline_sqi
         item["tags"] = enriched_tags
-        item["sqi"] = baseline_sqi
         item["enriched"] = True
         item["enriched_at"] = (
             datetime.now(timezone.utc)
