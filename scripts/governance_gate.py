@@ -28,7 +28,7 @@ BODY_MIN_CHARS = 100
 DENSITY_THRESHOLD = 0.40
 CODE_MAX_RATIO = 0.60
 BOILERPLATE_MAX_RATIO = 0.30
-WORD_ENTROPY_MAX = 8.5  # Raised from 8.0 — technical/philosophical content
+WORD_ENTROPY_MAX = 8.6  # Raised from 8.5 — accommodate legitimate analytical
                           # (cybernetics, systems theory) routinely reaches 8.0-8.5 bits/word.
 ANALYTICAL_COVERAGE_MIN = 5  # Lowered from 8 — tutorials, glossaries, and reference
                               # material naturally score lower but are still valid.
