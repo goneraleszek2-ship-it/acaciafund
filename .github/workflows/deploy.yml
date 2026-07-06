@@ -6,18 +6,10 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: "pages"
-  cancel-in-progress: false
+  deployments: write
 
 jobs:
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deploy.outputs.url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -39,19 +31,9 @@ jobs:
           cd acaciafund
           python build.py
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: acaciafund/dist
-
       - name: Deploy to Cloudflare Pages
-        uses: cloudflare/pages-action@v2
+        uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: acaciafund
-          directory: acaciafund/dist
-          workingDirectory: acaciafund
+          command: pages deploy acaciafund/dist --project-name=acaciafund
