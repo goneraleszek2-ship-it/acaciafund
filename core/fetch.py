@@ -133,7 +133,11 @@ def fetch_hn_stories(
 # ── arXiv ──
 
 ARXIV_CATEGORIES = {
-    "aml": ["q-fin.GN", "q-fin.RM", "cs.CY", "cs.CR", "q-fin.PM", "q-fin.EC"],
+    "aml": [
+        "q-fin.GN", "q-fin.RM", "cs.CY", "cs.CR", "q-fin.PM", "q-fin.EC",
+        "cs.IR", "stat.AP", "q-fin.ST", "cs.SI", "cs.MA", "cs.GT",
+        "q-fin.MF", "q-fin.CP", "q-fin.RM", "q-fin.TR",
+    ],
     "stock": ["q-fin.ST", "q-fin.PM", "cs.AR", "cs.ET", "cs.CE", "eess.SP"],
     "data-engineering": [
         "cs.DB",
@@ -165,6 +169,20 @@ ARXIV_KEYWORDS = {
         "sanctions",
         "transaction monitoring",
         "suspicious activity",
+        "beneficial ownership",
+        "shell company",
+        "trade based money laundering",
+        "entity resolution",
+        "financial intelligence",
+        "regtech",
+        "correspondent banking",
+        "travel rule",
+        "virtual asset",
+        "politically exposed",
+        "adverse media",
+        "sar filing",
+        "ctr reporting",
+        "watchlist screening",
     ],
     "stock": [
         "semiconductor",

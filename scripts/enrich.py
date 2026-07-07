@@ -91,6 +91,11 @@ CONCEPT_PATTERNS: list[tuple[re.Pattern, str]] = [
     (re.compile(r"(?i)\b(aml|anti.money.launder|kyc|sanctions)\b"), "aml"),
     (re.compile(r"(?i)\b(transaction|fraud|anomaly|suspicious)\b"), "transaction-monitoring"),
     (re.compile(r"(?i)\b(regtech|regulatory|compliance)\b"), "regtech"),
+    (re.compile(r"(?i)\b(beneficial.ownership|shell.company|offshore|pep|cdd|edd)\b"), "aml"),
+    (re.compile(r"(?i)\b(financial.intelligence|fiu|str|adverse.media)\b"), "financial-intelligence"),
+    (re.compile(r"(?i)\b(crypto.aml|virtual.asset|vas.p|travel.rule|blockchain.forensic)\b"), "crypto-aml"),
+    (re.compile(r"(?i)\b(trade.based|trade.finance|export.control|dual.use)\b"), "trade-finance-crime"),
+    (re.compile(r"(?i)\b(entity.resolution|network.analysis|watchlist|screening)\b"), "transaction-monitoring"),
     # --- Markets / Finance ---
     (re.compile(r"(?i)\b(stock|market|equity|trading)\b"), "markets"),
     (re.compile(r"(?i)\b(risk|volatility|portfolio|hedge)\b"), "risk-management"),

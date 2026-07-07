@@ -3,6 +3,8 @@ on:
   push:
     branches: ["main"]
   workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * *"  # Daily at 06:00 UTC – AML content ingestion + deploy
 
 permissions:
   contents: read
@@ -25,6 +27,12 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+
+      - name: AML content ingestion (arXiv/HN)
+        run: python scripts/aml_ingester.py --days 7
+
+      - name: Enrich registry
+        run: python scripts/enrich.py
 
       - name: Build
         run: python build.py
