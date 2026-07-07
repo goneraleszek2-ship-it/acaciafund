@@ -28,11 +28,17 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import os
 import re
 import sys
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from typing import Any, Dict, List, Optional
+
+# Force offline mode for fastembed/HuggingFace Hub — prevents network
+# hangs when querying snapshot metadata in restricted environments.
+# Must be set before mem0/fastembed is initialized (happens lazily).
+os.environ.setdefault("HF_HUB_OFFLINE", "1")
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
@@ -130,24 +136,49 @@ class ResearchEnricher:
             self._init_memory()
 
     def _init_memory(self) -> None:
-        """Initialize mem0 memory backend (only when infer=True)."""
+        """Initialize mem0 memory backend + OpenAI client for NVIDIA NIM.
+
+        Uses the NVIDIA_API_KEY env var (OpenAI-compatible endpoint) for
+        LLM chat, and fastembed for local vector embeddings.
+        """
+        self._api_key = os.environ.get("NVIDIA_API_KEY") or os.environ.get("OPENAI_API_KEY") or ""
+        self._api_base = "https://integrate.api.nvidia.com/v1"
+        self._llm_model = "meta/llama-3.1-70b-instruct"
+
+        if not self._api_key:
+            print("  [warn] No NVIDIA_API_KEY set, falling back to deterministic mode")
+            self.infer_mode = False
+            return
+
         try:
             from mem0 import Memory
             config = {
                 "llm": {
                     "provider": "openai",
                     "config": {
-                        "model": "gpt-4o",
+                        "model": self._llm_model,
                         "temperature": 0.3,
+                        "openai_base_url": self._api_base,
+                        "api_key": self._api_key,
                     },
                 },
                 "embedder": {
                     "provider": "fastembed",
+                    "config": {
+                        "model": "sentence-transformers/all-MiniLM-L6-v2",
+                    },
                 },
             }
             self._memory = Memory.from_config(config)
-        except ImportError:
-            print("  [warn] mem0ai not installed, falling back to deterministic mode")
+
+            # Also create a raw OpenAI client (mem0.chat() is not implemented)
+            from openai import OpenAI
+            self._llm_client = OpenAI(
+                api_key=self._api_key,
+                base_url=self._api_base,
+            )
+        except ImportError as e:
+            print(f"  [warn] Failed to initialize LLM: {e}, falling back to deterministic")
             self.infer_mode = False
 
     # ------------------------------------------------------------------
@@ -171,7 +202,11 @@ class ResearchEnricher:
         dictionary.
         """
         if self.infer_mode and self._memory:
-            return self._extract_with_llm(title, description, body)
+            llm_tags = self._extract_with_llm(title, description, body)
+            # Fall back to deterministic extraction if LLM returns nothing
+            if llm_tags:
+                return llm_tags
+            return self._extract_deterministic(title, description, existing_tags)
 
         return self._extract_deterministic(title, description, existing_tags)
 
@@ -238,31 +273,53 @@ Description: {description[:1000]}
 Respond with a JSON array of 3-5 kebab-case tags:"""
 
         def _parse_json_array(raw: str) -> list[str] | None:
-            """Extract a JSON array from LLM response, handling markdown fences
-            and trailing commas."""
-            import json
-            # Strip markdown code fences
-            clean = re.sub(r"```(?:json)?\s*", "", raw).strip()
-            # Find the first [ ... ] block
-            start = clean.find("[")
-            end = clean.rfind("]")
-            if start == -1 or end == -1 or end <= start:
+            """Extract a JSON array from LLM response, handling markdown
+            fences, trailing commas, single quotes, and preamble text."""
+            if not raw or not isinstance(raw, str):
                 return None
-            candidate = clean[start : end + 1]
+            cleaned = raw.strip()
+            # Strip markdown code fences
+            cleaned = re.sub(r"```(?:json)?\s*", "", cleaned).strip()
+            # Find the first [ ... ] block
+            start = cleaned.find("[")
+            end = cleaned.rfind("]")
+            if start == -1 or end == -1 or end <= start:
+                # Try to match a list-like pattern as last resort
+                m = re.search(r'\[([^\]]*)\]', cleaned)
+                if m:
+                    start = m.start()
+                    end = m.end()
+                else:
+                    return None
+            candidate = cleaned[start : end + 1]
             # Remove trailing commas before closing bracket
             candidate = re.sub(r",\s*]", "]", candidate)
+            # Replace single quotes with double quotes for valid JSON
+            candidate = candidate.replace("'", '"')
+            # Fix unquoted strings (bare words without quotes)
+            candidate = re.sub(r'(?<=[\[,])\s*([a-zA-Z][a-zA-Z0-9_-]*)\s*(?=[,\]])', r'"\1"', candidate)
             try:
                 parsed = json.loads(candidate)
                 if isinstance(parsed, list):
                     return parsed
             except json.JSONDecodeError:
                 pass
+            # Fallback: extract all quoted strings
+            strings = re.findall(r'"([^"]+)"', candidate)
+            if strings:
+                return strings
             return None
 
         def _validate_tags(tags: list[str]) -> list[str]:
             """Filter to valid kebab-case tags, minimum length 3."""
             valid = []
             for t in tags:
+                if isinstance(t, list):
+                    # LLM sometimes returns nested [[...]] arrays — flatten
+                    valid.extend(_validate_tags(t))
+                    continue
+                if not isinstance(t, str):
+                    continue
                 t = t.strip()
                 if len(t) > 2 and re.match(r"^[a-z][a-z0-9-]*[a-z0-9]$", t):
                     valid.append(t)
@@ -281,15 +338,16 @@ Respond with a JSON array of 3-5 kebab-case tags:"""
         ]
 
         for messages in prompts_to_try:
-            if not self._memory:
+            if not self._llm_client:
                 break
             try:
-                response = self._memory.chat(messages)
-                raw = (
-                    response.get("response", "")
-                    if isinstance(response, dict)
-                    else str(response)
+                response = self._llm_client.chat.completions.create(
+                    model=self._llm_model,
+                    messages=messages,
+                    temperature=0.3,
+                    max_tokens=200,
                 )
+                raw = response.choices[0].message.content or ""
                 parsed = _parse_json_array(raw)
                 if parsed:
                     tags = _validate_tags(parsed)
