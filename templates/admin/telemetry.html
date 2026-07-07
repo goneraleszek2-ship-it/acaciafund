@@ -1,0 +1,289 @@
+{% extends "layout.j2" %}
+{% block main_content %}
+<style>
+  .telemetry-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0; }
+  .telemetry-card { border: 1px solid var(--pico-muted-border-color); border-radius: 8px; padding: 1.25rem; background: var(--pico-card-background-color); }
+  .telemetry-card.full { grid-column: 1 / -1; }
+  .telemetry-card h2 { font-size: 1.1rem; margin-bottom: 0.75rem; color: var(--pico-primary); border-bottom: 1px solid var(--pico-muted-border-color); padding-bottom: 0.5rem; }
+  .stat-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .stat-badge { padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; background: var(--pico-card-background-color); border: 1px solid var(--pico-muted-border-color); white-space: nowrap; }
+  .stat-badge strong { font-size: 1.1rem; }
+  .tag-pill { padding: 0.15rem 0.6rem; border-radius: 12px; font-size: 0.78rem; background: var(--pico-primary); color: var(--pico-primary-inverse); white-space: nowrap; }
+  .bar-row { display: flex; align-items: center; gap: 0.5rem; margin: 0.25rem 0; font-size: 0.82rem; }
+  .bar-label { width: 9rem; text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex-shrink: 0; }
+  .bar-track { flex: 1; height: 1.2rem; background: var(--pico-muted-border-color); border-radius: 6px; overflow: hidden; }
+  .bar-fill { height: 100%; background: var(--pico-primary); border-radius: 6px; transition: width 0.3s; }
+  .bar-value { width: 3rem; font-size: 0.78rem; color: var(--pico-muted-color); }
+  .decile-chart { display: flex; align-items: flex-end; gap: 3px; height: 100px; margin: 0.5rem 0; padding: 0 0.25rem; }
+  .decile-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; min-width: 0; }
+  .decile-fill { width: 100%; min-height: 2px; border-radius: 3px 3px 0 0; }
+  .decile-label { font-size: 0.6rem; margin-top: 0.15rem; color: var(--pico-muted-color); }
+  table.telemetry-table { width: 100%; font-size: 0.85rem; border-collapse: collapse; }
+  table.telemetry-table th { text-align: left; padding: 0.3rem 0.5rem; border-bottom: 1px solid var(--pico-muted-border-color); }
+  table.telemetry-table td { padding: 0.3rem 0.5rem; }
+  .tag-network-container { width: 100%; height: 450px; border-radius: 8px; border: 1px solid var(--pico-muted-border-color); background: #1a1a2e; }
+  .section-nav { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--pico-muted-border-color); }
+  .section-nav a { font-size: 0.85rem; padding: 0.3rem 0.75rem; border-radius: 6px; text-decoration: none; border: 1px solid var(--pico-muted-border-color); color: var(--pico-primary); }
+  .section-nav a:hover { background: var(--pico-primary); color: var(--pico-primary-inverse); }
+  .pillar-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 0.25rem; vertical-align: middle; }
+</style>
+
+<div class="section-nav">
+  <a href="#tag-grid">Tags</a>
+  <a href="#sqi-grid">SQI</a>
+  <a href="#enrichment-grid">Enrichment</a>
+  <a href="#velocity-grid">Velocity</a>
+  <a href="#source-grid">Sources</a>
+  <a href="#tag-network">Co-occurrence</a>
+</div>
+
+<h1>Telemetry Grids</h1>
+<p>Live analytics on semantic enrichment, tag distribution, SQI trends, content velocity, and source diversity across {{ article_count }} items.</p>
+
+<hgroup>
+  <h2>Summary</h2>
+</hgroup>
+<div class="stat-row">
+  <span class="stat-badge"><strong>{{ telemetry.tag.total_tags }}</strong> unique tags</span>
+  <span class="stat-badge"><strong>{{ telemetry.tag.total_assignments }}</strong> tag assignments</span>
+  <span class="stat-badge"><strong>{{ telemetry.tag.crossover_count }}</strong> cross-pillar tags</span>
+  <span class="stat-badge"><strong>{{ telemetry.sqi.avg }}</strong> avg SQI</span>
+  <span class="stat-badge"><strong>{{ telemetry.enrichment.llm_likely }}</strong> LLM-enriched</span>
+  <span class="stat-badge"><strong>{{ telemetry.enrichment.deterministic_likely }}</strong> deterministic</span>
+  <span class="stat-badge"><strong>{{ telemetry.velocity.total_months }}</strong> active months</span>
+</div>
+
+<!-- Tag Grid -->
+<hgroup id="tag-grid">
+  <h2>Tag Intelligence</h2>
+</hgroup>
+<div class="telemetry-grid">
+  <div class="telemetry-card">
+    <h2>Top Tags by Frequency</h2>
+    <div>
+{% for tag, count in telemetry.tag.top_tags %}
+      <div class="bar-row">
+        <span class="bar-label">{{ tag }}</span>
+        <div class="bar-track"><div class="bar-fill" style="width:{{ (count / telemetry.tag.top_tags_max_count * 100)|int }}%"></div></div>
+        <span class="bar-value">{{ count }}</span>
+      </div>
+{% endfor %}
+    </div>
+  </div>
+
+  <div class="telemetry-card">
+    <h2>Cross-Pillar Tags</h2>
+{% if telemetry.tag.crossover_tags %}
+    <table class="telemetry-table">
+      <thead><tr><th>Tag</th><th>Pillars</th></tr></thead>
+      <tbody>
+{% for tag, pillars in telemetry.tag.crossover_tags.items() %}
+      <tr>
+        <td><span class="tag-pill">{{ tag }}</span></td>
+        <td>
+{% for p in pillars.keys() %}
+          <span class="pillar-dot" style="background:{% if p == 'aml' %}#f59e0b{% elif p == 'stock' %}#22c55e{% elif p == 'data-engineering' %}#6366f1{% else %}#a855f7{% endif %}"></span>{{ p }}
+{% endfor %}
+        </td>
+      </tr>
+{% endfor %}
+      </tbody>
+    </table>
+{% else %}
+    <p>No cross-pillar tags found.</p>
+{% endif %}
+  </div>
+</div>
+
+<!-- SQI Grid -->
+<hgroup id="sqi-grid">
+  <h2>Signal Quality Index</h2>
+</hgroup>
+<div class="telemetry-grid">
+  <div class="telemetry-card">
+    <h2>Distribution ({{ telemetry.sqi.count }} items)</h2>
+    <div class="stat-row">
+      <span class="stat-badge">Avg: <strong>{{ telemetry.sqi.avg }}</strong></span>
+      <span class="stat-badge">Min: <strong>{{ telemetry.sqi.min }}</strong></span>
+      <span class="stat-badge">Max: <strong>{{ telemetry.sqi.max }}</strong></span>
+      <span class="stat-badge">&ge;0.8: <strong>{{ telemetry.sqi.above_08 }}</strong></span>
+      <span class="stat-badge">&lt;0.5: <strong>{{ telemetry.sqi.below_05 }}</strong></span>
+    </div>
+    <div class="decile-chart">
+{% for d in telemetry.sqi.deciles %}
+{% set dh = (d / telemetry.sqi.decile_max * 85)|int %}
+{% if dh < 2 %}{% set dh = 2 %}{% endif %}
+      <div class="decile-col">
+        <div class="decile-fill" style="height:{{ dh }}px;background:{% if loop.index0 < 3 %}#ef4444{% elif loop.index0 < 6 %}#f59e0b{% else %}#22c55e{% endif %}"></div>
+        <span class="decile-label">{{ d|int }}</span>
+        <span class="decile-label">{{ '%.1f' % (loop.index0 / 10) }}</span>
+      </div>
+{% endfor %}
+    </div>
+  </div>
+
+  <div class="telemetry-card">
+    <h2>By Pillar</h2>
+    <table class="telemetry-table">
+      <thead><tr><th>Pillar</th><th>Items</th><th>Avg</th><th>Min</th><th>Max</th></tr></thead>
+      <tbody>
+{% for pillar, data in telemetry.sqi.pillar_avgs.items() %}
+      <tr>
+        <td><span class="pillar-dot" style="background:{% if pillar == 'aml' %}#f59e0b{% elif pillar == 'stock' %}#22c55e{% elif pillar == 'data-engineering' %}#6366f1{% else %}#a855f7{% endif %}"></span>{{ pillar }}</td>
+        <td>{{ data.count }}</td>
+        <td><strong>{{ data.avg }}</strong></td>
+        <td>{{ data.min }}</td>
+        <td>{{ data.max }}</td>
+      </tr>
+{% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Enrichment Grid -->
+<hgroup id="enrichment-grid">
+  <h2>Enrichment Sources</h2>
+</hgroup>
+<div class="telemetry-grid">
+  <div class="telemetry-card">
+    <h2>LLM vs Deterministic</h2>
+    <div style="display:flex;gap:1rem;align-items:center;margin:0.5rem 0;">
+      <div style="flex:1;height:2rem;border-radius:8px;overflow:hidden;display:flex;">
+        <div style="width:{{ telemetry.enrichment.llm_pct }}%;background:#6366f1;display:flex;align-items:center;justify-content:center;font-size:0.75rem;color:white;">
+{% if telemetry.enrichment.llm_pct > 10 %}{{ telemetry.enrichment.llm_pct }}%{% endif %}
+        </div>
+        <div style="width:{{ telemetry.enrichment.det_pct }}%;background:#f59e0b;display:flex;align-items:center;justify-content:center;font-size:0.75rem;color:white;">
+{% if telemetry.enrichment.det_pct > 10 %}{{ telemetry.enrichment.det_pct }}%{% endif %}
+        </div>
+      </div>
+    </div>
+    <table class="telemetry-table">
+      <thead><tr><th>Source</th><th>Count</th><th>%</th></tr></thead>
+      <tbody>
+        <tr><td>LLM-extracted (4+ tags)</td><td>{{ telemetry.enrichment.llm_likely }}</td><td>{{ telemetry.enrichment.llm_pct }}%</td></tr>
+        <tr><td>Deterministic (&le;3 tags)</td><td>{{ telemetry.enrichment.deterministic_likely }}</td><td>{{ telemetry.enrichment.det_pct }}%</td></tr>
+        <tr><td>Total enriched</td><td>{{ telemetry.enrichment.total_enriched }}</td><td>{{ telemetry.enrichment.total_enriched_pct }}%</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Velocity Grid -->
+<hgroup id="velocity-grid">
+  <h2>Content Velocity</h2>
+</hgroup>
+<div class="telemetry-grid">
+  <div class="telemetry-card">
+    <h2>Monthly Publishing ({{ telemetry.velocity.monthly|length }} months)</h2>
+    <div>
+{% for m in telemetry.velocity.monthly %}
+      <div class="bar-row">
+        <span class="bar-label" style="width:5rem;">{{ m.period }}</span>
+        <div class="bar-track"><div class="bar-fill" style="width:{{ (m.count / telemetry.velocity.monthly_max * 100)|int }}%"></div></div>
+        <span class="bar-value">{{ m.count }}</span>
+      </div>
+{% endfor %}
+    </div>
+  </div>
+</div>
+
+<!-- Source Grid -->
+<hgroup id="source-grid">
+  <h2>Source Distribution</h2>
+</hgroup>
+<div class="telemetry-grid">
+  <div class="telemetry-card">
+    <h2>Aggregate Sources</h2>
+    <table class="telemetry-table">
+      <thead><tr><th>Source</th><th>Total References</th></tr></thead>
+      <tbody>
+{% for src, count in telemetry.source.source_totals.items() %}
+      <tr><td>{{ src }}</td><td><strong>{{ count }}</strong></td></tr>
+{% endfor %}
+      </tbody>
+    </table>
+    <p style="margin-top:0.5rem;font-size:0.82rem;">{{ telemetry.source.items_with_sources }} items have source breakdown data; {{ telemetry.source.items_wo_sources }} do not.</p>
+  </div>
+</div>
+
+<!-- Tag Co-occurrence Network -->
+<hgroup id="tag-network">
+  <h2>Tag Co-occurrence Network</h2>
+  <p>Force-directed graph showing tags that appear together across articles. Node size = frequency, edge thickness = co-occurrence strength.</p>
+</hgroup>
+<div class="telemetry-card full">
+  <div id="tag-cy" class="tag-network-container"></div>
+</div>
+
+<script src="https://unpkg.com/cytoscape@3.30.4/dist/cytoscape.min.js"></script>
+<script src="https://unpkg.com/cytoscape-cose-bilkent@4.1.0/cytoscape-cose-bilkent.js"></script>
+<script>
+var telemetryTagNodes = {{ telemetry.tag.cooccurrence_nodes|tojson }};
+var telemetryTagEdges = {{ telemetry.tag.cooccurrence_edges|tojson }};
+var telemetryMaxFreq = {{ telemetry.tag.cooccurrence_max_freq }};
+var telemetryMaxWeight = {{ telemetry.tag.cooccurrence_max_weight }};
+
+(function() {
+  var elements = [];
+  telemetryTagNodes.forEach(function(n) {
+    elements.push({
+      data: { id: n.id, label: n.id, weight: n.frequency }
+    });
+  });
+  telemetryTagEdges.forEach(function(e) {
+    elements.push({
+      data: { source: e.source, target: e.target, weight: e.weight }
+    });
+  });
+
+  function initGraph() {
+    if (elements.length === 0) return;
+    if (typeof cytoscapeCoseBilkent !== 'undefined') {
+      cytoscape.use(cytoscapeCoseBilkent);
+    }
+    var cy = cytoscape({
+      container: document.getElementById('tag-cy'),
+      elements: elements,
+      style: [
+        { selector: 'node', style: {
+            'background-color': '#6366f1',
+            'label': 'data(label)',
+            'font-size': '10px',
+            'color': '#e2e8f0',
+            'text-valign': 'center',
+            'text-halign': 'center',
+            'width': 'mapData(weight, 0, ' + telemetryMaxFreq + ', 20, 70)',
+            'height': 'mapData(weight, 0, ' + telemetryMaxFreq + ', 20, 70)'
+        }},
+        { selector: 'edge', style: {
+            'width': 'mapData(weight, 0, ' + telemetryMaxWeight + ', 1, 6)',
+            'line-color': '#4f46e5',
+            'opacity': 0.5,
+            'curve-style': 'bezier'
+        }},
+        { selector: 'node:selected', style: { 'background-color': '#f59e0b', 'border-width': 2, 'border-color': '#fff' }},
+        { selector: 'edge.highlighted', style: { 'opacity': 0.8, 'line-color': '#22c55e' }}
+      ],
+      layout: { name: 'cose-bilkent', idealEdgeLength: 80, nodeRepulsion: 6000, gravity: 0.25, numIter: 1000 },
+      userZoomingEnabled: true,
+      userPanningEnabled: true
+    });
+
+    cy.on('tap', 'node', function(evt) {
+      cy.elements().removeClass('highlighted');
+      evt.target.addClass('highlighted');
+      evt.target.neighbourhood().addClass('highlighted');
+    });
+
+    cy.on('tap', function(evt) {
+      if (evt.target === cy) {
+        cy.elements().removeClass('highlighted');
+      }
+    });
+  }
+
+  initGraph();
+})();
+</script>
+{% endblock %}

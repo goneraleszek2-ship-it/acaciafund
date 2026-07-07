@@ -216,6 +216,225 @@ def _compute_coverage_data(all_content: List[Any], section_types: Dict[int, str]
     }
 
 
+# ── Telemetry Data Collectors ───────────────────────────────────────────
+
+def _compute_tag_telemetry(all_content: List[Any]) -> Dict[str, Any]:
+    """Tag distribution, co-occurrence, and pillar crossover statistics."""
+    tag_counts: Dict[str, int] = {}
+    tag_by_pillar: Dict[str, Dict[str, int]] = defaultdict(lambda: defaultdict(int))
+    tag_cooccurrence: Dict[str, Dict[str, int]] = defaultdict(lambda: defaultdict(int))
+    tag_content_types: Dict[str, Dict[str, int]] = defaultdict(lambda: defaultdict(int))
+    tag_first_seen: Dict[str, str] = {}
+    tag_last_seen: Dict[str, str] = {}
+
+    for c in all_content:
+        tags = list(dict.fromkeys(t.lower() for t in (getattr(c, "tags", None) or [])))
+        pillar = getattr(c, "pillar", None) or "unknown"
+        ct = getattr(c, "content_type", None) or "unknown"
+        ds = getattr(c, "date_str", None) or ""
+
+        for t in tags:
+            tag_counts[t] = tag_counts.get(t, 0) + 1
+            tag_by_pillar[t][pillar] += 1
+            tag_content_types[t][ct] += 1
+            if ds:
+                tag_first_seen.setdefault(t, ds)
+                if ds > tag_last_seen.get(t, ""):
+                    tag_last_seen[t] = ds
+
+        for i, t1 in enumerate(tags):
+            for t2 in tags[i + 1:]:
+                if t1 < t2:
+                    tag_cooccurrence[t1][t2] += 1
+                else:
+                    tag_cooccurrence[t2][t1] += 1
+
+    # Top tags
+    top_tags = sorted(tag_counts.items(), key=lambda x: -x[1])[:50]
+
+    # Tags with pillar crossover (appear in 2+ pillars)
+    crossover_tags = {
+        t: dict(pillars)
+        for t, pillars in tag_by_pillar.items()
+        if len(pillars) >= 2
+    }
+
+    # Co-occurrence edges for network graph
+    cooc_edges = []
+    for t1, neighbors in tag_cooccurrence.items():
+        for t2, count in neighbors.items():
+            if count >= 2:  # filter noise
+                cooc_edges.append({"source": t1, "target": t2, "weight": count})
+
+    # Token co-occurrence data for network viz
+    cooc_nodes = [{"id": t, "frequency": tag_counts[t]} for t in tag_counts]
+
+    top_tags_sorted = sorted(tag_counts.items(), key=lambda x: -x[1])
+
+    edges_sorted = sorted(cooc_edges, key=lambda x: -x["weight"])[:200]
+    return {
+        "total_tags": len(tag_counts),
+        "total_assignments": sum(tag_counts.values()),
+        "top_tags": top_tags_sorted[:20],
+        "top_tags_max_count": top_tags_sorted[0][1] if top_tags_sorted else 1,
+        "crossover_tags": dict(list(crossover_tags.items())[:20]),
+        "crossover_count": len(crossover_tags),
+        "cooccurrence_nodes": cooc_nodes,
+        "cooccurrence_max_freq": max(cooc_nodes, key=lambda n: n["frequency"]).get("frequency", 1) if cooc_nodes else 1,
+        "cooccurrence_edges": edges_sorted,
+        "cooccurrence_max_weight": max(e["weight"] for e in edges_sorted) if edges_sorted else 1,
+        "tag_by_pillar": {t: dict(p) for t, p in tag_by_pillar.items()},
+    }
+
+
+def _compute_sqi_telemetry(all_content: List[Any]) -> Dict[str, Any]:
+    """SQI distribution and per-pillar averages."""
+    sqi_values: list[float] = []
+    sqi_by_pillar: Dict[str, list[float]] = defaultdict(list)
+    sqi_by_content_type: Dict[str, list[float]] = defaultdict(list)
+
+    for c in all_content:
+        # sqi may be a direct attribute or in signals
+        sqi = getattr(c, "sqi", None)
+        if sqi is None:
+            signals = getattr(c, "signals", None) or {}
+            sqi = signals.get("avg_sqi", 0.5) if isinstance(signals, dict) else 0.5
+        sqi = float(sqi) if sqi else 0.5
+        sqi = max(0.0, min(1.0, sqi))
+        sqi_values.append(sqi)
+
+        pillar = getattr(c, "pillar", None) or "unknown"
+        sqi_by_pillar[pillar].append(sqi)
+
+        ct = getattr(c, "content_type", None) or "unknown"
+        sqi_by_content_type[ct].append(sqi)
+
+    # Distribution deciles
+    deciles = [0.0] * 10
+    for s in sqi_values:
+        idx = min(int(s * 10), 9)
+        deciles[idx] += 1
+
+    pillar_avgs = {
+        p: {"avg": round(sum(v) / len(v), 3), "count": len(v), "min": round(min(v), 3), "max": round(max(v), 3)}
+        for p, v in sorted(sqi_by_pillar.items())
+    }
+
+    type_avgs = {
+        t: {"avg": round(sum(v) / len(v), 3), "count": len(v)}
+        for t, v in sorted(sqi_by_content_type.items())
+    }
+
+    return {
+        "count": len(sqi_values),
+        "avg": round(sum(sqi_values) / len(sqi_values), 3) if sqi_values else 0,
+        "min": round(min(sqi_values), 3) if sqi_values else 0,
+        "max": round(max(sqi_values), 3) if sqi_values else 0,
+        "deciles": deciles,
+        "decile_max": max(deciles) if deciles else 1,
+        "pillar_avgs": pillar_avgs,
+        "type_avgs": type_avgs,
+        "above_08": sum(1 for s in sqi_values if s >= 0.8),
+        "below_05": sum(1 for s in sqi_values if s < 0.5),
+    }
+
+
+def _compute_enrichment_telemetry(all_content: List[Any]) -> Dict[str, Any]:
+    """Enrichment source tracking — LLM vs deterministic tags."""
+    llm_item_count = 0
+    det_item_count = 0
+    total_enriched = 0
+    tag_sources: Dict[str, int] = defaultdict(int)
+
+    for c in all_content:
+        enriched = getattr(c, "enriched", False) or getattr(c, "enriched_at", None) is not None
+        if enriched:
+            total_enriched += 1
+
+        tags = getattr(c, "tags", None) or []
+        # Items with 5+ specific tags likely LLM-enriched; fewer generic tags likely deterministic
+        if len(tags) >= 4:
+            llm_item_count += 1
+        else:
+            det_item_count += 1
+
+        for t in tags:
+            tag_sources[t] += 1
+
+    total = len(all_content)
+    return {
+        "total_enriched": total_enriched,
+        "total_enriched_pct": round(total_enriched / total * 100, 1) if total else 0,
+        "llm_likely": llm_item_count,
+        "deterministic_likely": det_item_count,
+        "llm_pct": round(llm_item_count / total * 100, 1) if total else 0,
+        "det_pct": round(det_item_count / total * 100, 1) if total else 0,
+    }
+
+
+def _compute_velocity_telemetry(all_content: List[Any]) -> Dict[str, Any]:
+    """Content publishing velocity — items over time."""
+    monthly: Dict[str, int] = defaultdict(int)
+    weekly: Dict[str, int] = defaultdict(int)
+
+    for c in all_content:
+        dt = getattr(c, "created_at", None)
+        if dt and hasattr(dt, "strftime"):
+            try:
+                month_key = dt.strftime("%Y-%m")
+                weekly_key = dt.strftime("%Y-W%W")
+                monthly[month_key] += 1
+                weekly[weekly_key] += 1
+            except Exception:
+                pass
+
+    monthly_sorted = sorted(monthly.items())
+    weekly_sorted = sorted(weekly.items())
+
+    monthly_list = [{"period": k, "count": v} for k, v in monthly_sorted]
+    return {
+        "monthly": monthly_list,
+        "monthly_max": max((m["count"] for m in monthly_list), default=1),
+        "weekly": [{"period": k, "count": v} for k, v in weekly_sorted],
+        "total_months": len(monthly),
+        "total_weeks": len(weekly),
+    }
+
+
+def _compute_source_telemetry(all_content: List[Any]) -> Dict[str, Any]:
+    """Source breakdown telemetry — HN, ArXiv, PubMed distribution."""
+    source_totals: Dict[str, int] = defaultdict(int)
+    source_by_pillar: Dict[str, Dict[str, int]] = defaultdict(lambda: defaultdict(int))
+    items_with_sources = 0
+
+    for c in all_content:
+        sb = getattr(c, "source_breakdown", None) or {}
+        if sb:
+            items_with_sources += 1
+            pillar = getattr(c, "pillar", None) or "unknown"
+            for src, count in sb.items():
+                source_totals[src] += count
+                source_by_pillar[pillar][src] += count
+
+    return {
+        "source_totals": dict(source_totals),
+        "source_by_pillar": dict(source_by_pillar),
+        "items_with_sources": items_with_sources,
+        "items_wo_sources": len(all_content) - items_with_sources,
+    }
+
+
+def _compute_telemetry(all_content: List[Any]) -> Dict[str, Any]:
+    """Compute all telemetry data at once."""
+    return {
+        "tag": _compute_tag_telemetry(all_content),
+        "sqi": _compute_sqi_telemetry(all_content),
+        "enrichment": _compute_enrichment_telemetry(all_content),
+        "velocity": _compute_velocity_telemetry(all_content),
+        "source": _compute_source_telemetry(all_content),
+    }
+
+
 def generate_admin_pages(
     output_dir: Path,
     all_content: List[Any],
@@ -473,8 +692,22 @@ def generate_admin_pages(
     (admin_dir / "curated-test.html").write_text(html, encoding="utf-8")
     pages_generated += 1
 
+    # Telemetry
+    telemetry = _compute_telemetry(all_content)
+    html = render_template(
+        "admin/telemetry.html",
+        content=_dummy("Telemetry — AcaciaFund", "admin"),
+        active_page="telemetry",
+        image_count=image_count,
+        article_count=stats["total_articles"],
+        telemetry=telemetry,
+        **ctx_base,
+    )
+    (admin_dir / "telemetry.html").write_text(html, encoding="utf-8")
+    pages_generated += 1
+
     print(
-        "  admin: login, dashboard, gallery, articles, manifest, pipeline, quality, coverage, sources, curated-test"
+        "  admin: login, dashboard, gallery, articles, manifest, pipeline, quality, coverage, sources, curated-test, telemetry"
     )
     return pages_generated
 
