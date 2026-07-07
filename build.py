@@ -1432,8 +1432,12 @@ def _cleanup_partial_output(item):
     """Clean up partial output files for a failed item."""
     try:
         slug = item.slug
-        canonical_path(slug_to_path(slug))
-        if "/" in slug:
+        if hasattr(item, "content_type") and item.content_type == "knowledge":
+            clean_slug = slug[10:] if slug.startswith("knowledge/") else slug
+            out_dir = OUTPUT_DIR / "knowledge" / clean_slug
+            if out_dir.exists():
+                shutil.rmtree(out_dir)
+        elif "/" in slug:
             out_dir = OUTPUT_DIR / slug
             if out_dir.exists():
                 shutil.rmtree(out_dir)
@@ -1956,13 +1960,11 @@ def main():
                 print(f"  knowledge: {slug} (skipped - unchanged)")
                 continue
             slug = item.slug
-            page_path = canonical_path(slug_to_path(slug))
-            if "/" in slug:
-                out_dir = OUTPUT_DIR / slug
-                out_dir.mkdir(parents=True, exist_ok=True)
-                out_file = out_dir / "index.html"
-            else:
-                out_file = OUTPUT_DIR / f"{slug}.html"
+            clean_slug = slug[10:] if slug.startswith("knowledge/") else slug
+            page_path = canonical_path(slug_to_path(clean_slug))
+            out_dir = OUTPUT_DIR / "knowledge" / clean_slug
+            out_dir.mkdir(parents=True, exist_ok=True)
+            out_file = out_dir / "index.html"
 
             body = add_lazy_loading(item.body_html)
             body, toc_items = extract_headings(body)

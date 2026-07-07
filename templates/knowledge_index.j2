@@ -8,7 +8,7 @@
       <h2>{{ cat | replace('_', ' ') | title }}</h2>
       <ul>
         {% for item in items %}
-        <li><a href="/knowledge/{{ item.slug }}/">{{ item.title }}</a></li>
+        <li><a href="/knowledge/{{ item.slug.split('/')[-1] }}/">{{ item.title }}</a></li>
         {% endfor %}
       </ul>
     </div>
