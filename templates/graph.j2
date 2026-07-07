@@ -1,0 +1,260 @@
+{% extends "layout.j2" %}
+{% block main_content %}
+<section>
+  <hgroup>
+    <h1>Knowledge Graph</h1>
+    <p>Interactive topology of {{ node_count }} semantic nodes and {{ edge_count }} relationships across the Acacia knowledge repository.</p>
+  </hgroup>
+
+  <div id="cy" class="graph-container"></div>
+
+  <details class="graph-legend">
+    <summary>Legend</summary>
+    <ul class="legend-list">
+      <li><span class="legend-dot" style="background:#6366f1"></span> Blog (research articles)</li>
+      <li><span class="legend-dot" style="background:#22c55e"></span> Learn (educational content)</li>
+      <li><span class="legend-dot" style="background:#d97706"></span> Knowledge (reference pages)</li>
+      <li><span class="legend-dot" style="background:#a855f7"></span> Docs (system documentation)</li>
+      <li><span class="legend-dot" style="background:#14b8a6"></span> Semantic Tag (concept)</li>
+    </ul>
+    <p><small>Click a node to highlight its neighbours. Hover to see details. Drag to rearrange.</small></p>
+  </details>
+
+  <div class="graph-controls">
+    <button id="btn-reset" class="outline">Reset Layout</button>
+    <button id="btn-download" class="outline">Download PNG</button>
+  </div>
+</section>
+
+<script src="https://unpkg.com/cytoscape@3.30.4/dist/cytoscape.min.js"></script>
+<script src="https://unpkg.com/cytoscape-cose-bilkent@4.1.0/cytoscape-cose-bilkent.js"></script>
+<script>
+  (function() {
+    var cy;
+
+    function initGraph(data) {
+      cytoscape.use(require ? require('cytoscape-cose-bilkent') : window.cytoscapeCoseBilkent);
+
+      cy = cytoscape({
+        container: document.getElementById('cy'),
+        elements: data,
+        style: [
+          {
+            selector: 'node[type = "document"]',
+            style: {
+              'background-color': 'data(color)',
+              'label': 'data(label)',
+              'width': 'data(size)',
+              'height': 'data(size)',
+              'font-size': '4px',
+              'text-valign': 'bottom',
+              'text-halign': 'center',
+              'text-margin-y': 4,
+              'color': '#e2e8f0',
+              'text-wrap': 'ellipsis',
+              'text-max-width': '80px',
+            }
+          },
+          {
+            selector: 'node[type = "concept"]',
+            style: {
+              'background-color': 'data(color)',
+              'shape': 'diamond',
+              'label': 'data(label)',
+              'width': 'data(size)',
+              'height': 'data(size)',
+              'font-size': '5px',
+              'text-valign': 'top',
+              'text-halign': 'center',
+              'text-margin-y': -4,
+              'color': '#94a3b8',
+            }
+          },
+          {
+            selector: 'edge',
+            style: {
+              'width': 0.5,
+              'line-color': '#475569',
+              'target-arrow-color': '#475569',
+              'curve-style': 'haystack',
+              'haystack-radius': 0.5,
+              'opacity': 0.4,
+            }
+          },
+          {
+            selector: 'node:selected',
+            style: {
+              'border-width': 2,
+              'border-color': '#fbbf24',
+            }
+          },
+          {
+            selector: 'node.highlighted',
+            style: {
+              'border-width': 2,
+              'border-color': '#fbbf24',
+            }
+          },
+          {
+            selector: 'edge.highlighted',
+            style: {
+              'width': 1.5,
+              'line-color': '#fbbf24',
+              'opacity': 0.8,
+            }
+          },
+          {
+            selector: 'node.faded, edge.faded',
+            style: {
+              'opacity': 0.15,
+            }
+          },
+        ],
+        layout: {
+          name: 'cose-bilkent',
+          animate: true,
+          animationDuration: 800,
+          fit: true,
+          padding: 30,
+          nodeRepulsion: function() { return 204800; },
+          idealEdgeLength: function() { return 80; },
+          gravity: 0.25,
+          numIter: 1000,
+        },
+        wheelSensitivity: 0.3,
+      });
+
+      // Hover tooltip
+      cy.on('mouseover', 'node', function(evt) {
+        var n = evt.target;
+        var data = n.data();
+        var info = data.label;
+        if (data.type === 'document') {
+          info += ' [' + data.domain + ']';
+        } else {
+          info += ' (' + data.count + ' docs)';
+        }
+        n.style({ 'border-width': 1, 'border-color': '#fbbf24', 'border-opacity': 0.6 });
+        document.getElementById('cy').title = info;
+      });
+      cy.on('mouseout', 'node', function(evt) {
+        evt.target.style({ 'border-width': 0 });
+        document.getElementById('cy').title = '';
+      });
+
+      // Click — highlight neighbourhood
+      cy.on('tap', 'node', function(evt) {
+        var n = evt.target;
+        var nbrs = n.neighborhood().add(n);
+        cy.elements().addClass('faded');
+        nbrs.removeClass('faded');
+        nbrs.addClass('highlighted');
+      });
+      cy.on('tap', function(evt) {
+        if (evt.target === cy) {
+          cy.elements().removeClass('faded highlighted');
+        }
+      });
+
+      // Search by label
+      window.filterGraph = function(query) {
+        var q = query.toLowerCase().trim();
+        cy.elements().removeClass('faded highlighted');
+        if (!q) return;
+        var matched = cy.nodes().filter(function(n) {
+          return n.data('label').toLowerCase().indexOf(q) !== -1;
+        });
+        if (matched.length) {
+          var nbrs = matched.add(matched.neighborhood());
+          cy.elements().addClass('faded');
+          nbrs.removeClass('faded');
+          nbrs.addClass('highlighted');
+          cy.animate({ fit: { eles: matched, padding: 50 }, duration: 400 });
+        }
+      };
+    }
+
+    fetch('/graph-data.json')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        initGraph(data);
+      })
+      .catch(function(err) {
+        document.getElementById('cy').innerHTML =
+          '<p style="color:#ef4444;padding:2rem">Failed to load graph data: ' + err.message + '</p>';
+      });
+
+    document.getElementById('btn-reset').addEventListener('click', function() {
+      if (cy) cy.layout({ name: 'cose-bilkent', animate: true, animationDuration: 500, fit: true }).run();
+    });
+
+    document.getElementById('btn-download').addEventListener('click', function() {
+      if (cy) {
+        var png = cy.png({ full: true, scale: 2 });
+        var a = document.createElement('a');
+        a.download = 'acacia-knowledge-graph.png';
+        a.href = png;
+        a.click();
+      }
+    });
+  })();
+</script>
+
+<style>
+  .graph-container {
+    width: 100%;
+    height: 600px;
+    border: 1px solid var(--pico-muted-border-color, #334155);
+    border-radius: 8px;
+    background: #0f172a;
+    margin: 1rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .graph-container:empty::after {
+    content: 'Loading graph...';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+    font-style: italic;
+  }
+  .graph-legend {
+    margin: 1rem 0;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--pico-muted-border-color, #334155);
+    border-radius: 6px;
+    background: var(--pico-card-background-color, transparent);
+  }
+  .legend-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 1.5rem;
+  }
+  .legend-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.85rem;
+  }
+  .legend-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .graph-controls {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 0.75rem;
+  }
+  .graph-controls button {
+    --pico-font-size: 0.85rem;
+  }
+</style>
+{% endblock %}

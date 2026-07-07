@@ -7,8 +7,9 @@ Outputs JSON mapping each article slug to top 3 related articles by tag overlap.
 import json
 from pathlib import Path
 
-REGISTRY_PATH = Path("/root/acaciafund/registry.json")
-OUTPUT_PATH = Path("/root/acaciafund/data/knowledge_graph.json")
+ROOT = Path(__file__).resolve().parent.parent
+REGISTRY_PATH = ROOT / "registry.json"
+OUTPUT_PATH = ROOT / "data" / "knowledge_graph.json"
 
 
 def load_registry():
