@@ -1,5 +1,5 @@
 {
-  "last_run": "2026-06-29T08:38:40.409497",
+  "last_run": "2026-07-07",
   "content": [
     {
       "slug": "blog/2026-06-19-2027-data-engineering-predictions",
@@ -12528,6 +12528,2357 @@
       "section_images": [],
       "difficulty": "",
       "enriched_at": "2026-07-07T15:02:29Z"
+    },
+    {
+      "slug": "blog/2026-07-06-counterfactual-methods-for-detecting-unfairness-in-anti-mone",
+      "title": "Counterfactual Methods for Detecting Unfairness in Anti-Money Laundering Algorithms",
+      "pillar": "aml",
+      "content_type": "research",
+      "tags": [
+        "aml",
+        "machine-learning",
+        "transaction-monitoring"
+      ],
+      "description": "The application of machine learning-based predictive algorithms to Anti-Money Laundering (AML) has grown rapidly, driven by the vast volume of financial transaction data available to banks. These algo",
+      "body_html": "<p>The application of machine learning-based predictive algorithms to Anti-Money Laundering (AML) has grown rapidly, driven by the vast volume of financial transaction data available to banks. These algo</p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T13:57:21Z",
+      "updated_at": "2026-07-07T15:52:06Z",
+      "author": "Leszek",
+      "source_url": "http://arxiv.org/abs/2607.05101v1",
+      "source_breakdown": {
+        "arxiv": 1
+      },
+      "signals": {
+        "avg_sqi": 0.75,
+        "count": 1,
+        "domain_diversity": 1,
+        "top_entities": [
+          "http://arxiv.org/abs/2607.05101v1"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.75,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 50.0,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-any-axes-are-allowed-a-characteristic-axis-integral-diagnosi",
+      "title": "Any Axes Are Allowed: A Characteristic-Axis Integral Diagnosis of Factor Models",
+      "pillar": "aml",
+      "content_type": "research",
+      "tags": [
+        "aml"
+      ],
+      "description": "This paper extends the cap-axis integral diagnostic to general characteristic axes and measures factor-model pricing errors as bridge-alpha curves. A predetermined characteristic order generates prefi",
+      "body_html": "<p>This paper extends the cap-axis integral diagnostic to general characteristic axes and measures factor-model pricing errors as bridge-alpha curves. A predetermined characteristic order generates prefi</p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T13:51:49Z",
+      "updated_at": "2026-07-07T15:52:06Z",
+      "author": "Leszek",
+      "source_url": "http://arxiv.org/abs/2607.05091v1",
+      "source_breakdown": {
+        "arxiv": 1
+      },
+      "signals": {
+        "avg_sqi": 0.75,
+        "count": 1,
+        "domain_diversity": 1,
+        "top_entities": [
+          "http://arxiv.org/abs/2607.05091v1"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.75,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 50.0,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-causal-separation-conditional-risk-and-projected-markowitz-p",
+      "title": "Causal Separation, Conditional Risk, and Projected Markowitz Portfolios",
+      "pillar": "aml",
+      "content_type": "research",
+      "tags": [
+        "aml",
+        "risk-management"
+      ],
+      "description": "We formalize a single structural condition on a portfolio problem, causal separation: conditional on the realized path of a declared set of drivers through the investment horizon, asset returns are mu",
+      "body_html": "<p>We formalize a single structural condition on a portfolio problem, causal separation: conditional on the realized path of a declared set of drivers through the investment horizon, asset returns are mu</p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T16:59:25Z",
+      "updated_at": "2026-07-07T15:52:06Z",
+      "author": "Leszek",
+      "source_url": "http://arxiv.org/abs/2607.05320v1",
+      "source_breakdown": {
+        "arxiv": 1
+      },
+      "signals": {
+        "avg_sqi": 0.75,
+        "count": 1,
+        "domain_diversity": 1,
+        "top_entities": [
+          "http://arxiv.org/abs/2607.05320v1"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.75,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 50.0,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-forecasting-realized-volatility-with-time-series-foundation",
+      "title": "Forecasting Realized Volatility with Time Series Foundation Models: A Comparison with Econometric Benchmarks",
+      "pillar": "aml",
+      "content_type": "research",
+      "tags": [
+        "aml",
+        "risk-management"
+      ],
+      "description": "We ask whether pretrained time series foundation models (TSFMs) improve on established econometric benchmarks for forecasting realized volatility. Using the VOLARE dataset, we conduct the first system",
+      "body_html": "<p>We ask whether pretrained time series foundation models (TSFMs) improve on established econometric benchmarks for forecasting realized volatility. Using the VOLARE dataset, we conduct the first system</p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T16:30:41Z",
+      "updated_at": "2026-07-07T15:52:06Z",
+      "author": "Leszek",
+      "source_url": "http://arxiv.org/abs/2607.05291v1",
+      "source_breakdown": {
+        "arxiv": 1
+      },
+      "signals": {
+        "avg_sqi": 0.75,
+        "count": 1,
+        "domain_diversity": 1,
+        "top_entities": [
+          "http://arxiv.org/abs/2607.05291v1"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.75,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 50.0,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-pisas-benchmarking-contextual-integrity-in-multi-user-agenti",
+      "title": "PiSAs: Benchmarking Contextual Integrity in Multi-User Agentic Systems",
+      "pillar": "aml",
+      "content_type": "research",
+      "tags": [
+        "aml",
+        "llm",
+        "privacy-ethics"
+      ],
+      "description": "As LLM agents evolve from single-user assistants into shared organizational infrastructure, new privacy risks emerge: inappropriate information may not only be exposed through outputs for external rec",
+      "body_html": "<p>As LLM agents evolve from single-user assistants into shared organizational infrastructure, new privacy risks emerge: inappropriate information may not only be exposed through outputs for external rec</p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T16:57:24Z",
+      "updated_at": "2026-07-07T15:52:06Z",
+      "author": "Leszek",
+      "source_url": "http://arxiv.org/abs/2607.05318v1",
+      "source_breakdown": {
+        "arxiv": 1
+      },
+      "signals": {
+        "avg_sqi": 0.75,
+        "count": 1,
+        "domain_diversity": 1,
+        "top_entities": [
+          "http://arxiv.org/abs/2607.05318v1"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.75,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 50.0,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-canniuplift-a-holistic-framework-for-mitigating-seller-and-i",
+      "title": "CanniUplift: A Holistic Framework for Mitigating Seller and Incentive Cannibalization in E-commerce Uplift Modeling",
+      "pillar": "aml",
+      "content_type": "research",
+      "tags": [
+        "aml"
+      ],
+      "description": "Personalized incentive allocation is vital for e-commerce, where uplift modeling is the standard for estimating Individual Treatment Effects (ITE). However, traditional models often fail in complex mu",
+      "body_html": "<p>Personalized incentive allocation is vital for e-commerce, where uplift modeling is the standard for estimating Individual Treatment Effects (ITE). However, traditional models often fail in complex mu</p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T15:52:38Z",
+      "updated_at": "2026-07-07T15:52:06Z",
+      "author": "Leszek",
+      "source_url": "http://arxiv.org/abs/2607.05242v1",
+      "source_breakdown": {
+        "arxiv": 1
+      },
+      "signals": {
+        "avg_sqi": 0.75,
+        "count": 1,
+        "domain_diversity": 1,
+        "top_entities": [
+          "http://arxiv.org/abs/2607.05242v1"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.75,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 50.0,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-curated-retrieval-versus-open-web-search-in-public-ai-inform",
+      "title": "Curated retrieval versus open web search in public AI information services: a coverage-trust trade-off",
+      "pillar": "aml",
+      "content_type": "research",
+      "tags": [
+        "aml"
+      ],
+      "description": "Public institutions increasingly use large language models (LLMs) to answer citizens' questions, often pairing a curated knowledge base with live web search, yet whether the sources behind these answe",
+      "body_html": "<p>Public institutions increasingly use large language models (LLMs) to answer citizens' questions, often pairing a curated knowledge base with live web search, yet whether the sources behind these answe</p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T15:32:46Z",
+      "updated_at": "2026-07-07T15:52:06Z",
+      "author": "Leszek",
+      "source_url": "http://arxiv.org/abs/2607.05217v1",
+      "source_breakdown": {
+        "arxiv": 1
+      },
+      "signals": {
+        "avg_sqi": 0.75,
+        "count": 1,
+        "domain_diversity": 1,
+        "top_entities": [
+          "http://arxiv.org/abs/2607.05217v1"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.75,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 50.0,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-finfluencers-on-tiktok-a-longitudinal-analysis-of-content-en",
+      "title": "Finfluencers on TikTok: A Longitudinal Analysis of Content, Engagement, and Disclaimer Practices",
+      "pillar": "aml",
+      "content_type": "research",
+      "tags": [
+        "aml"
+      ],
+      "description": "The rise of social media financial influencers (finfluencers) has transformed how financial information is disseminated to broad and often inexperienced audiences. While these creators may contribute",
+      "body_html": "<p>The rise of social media financial influencers (finfluencers) has transformed how financial information is disseminated to broad and often inexperienced audiences. While these creators may contribute</p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T15:17:18Z",
+      "updated_at": "2026-07-07T15:52:06Z",
+      "author": "Leszek",
+      "source_url": "http://arxiv.org/abs/2607.05203v1",
+      "source_breakdown": {
+        "arxiv": 1
+      },
+      "signals": {
+        "avg_sqi": 0.75,
+        "count": 1,
+        "domain_diversity": 1,
+        "top_entities": [
+          "http://arxiv.org/abs/2607.05203v1"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.75,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 50.0,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-when-ai-is-wrong-on-purpose-how-students-respond-to-buggy-ge",
+      "title": "When AI Is Wrong on Purpose: How Students Respond to Buggy GenAI Code",
+      "pillar": "aml",
+      "content_type": "research",
+      "tags": [
+        "aml"
+      ],
+      "description": "As Generative AI (GenAI) becomes increasingly central to software development, CS education is integrating prompt-centered workflows where students describe intended program behavior in natural langua",
+      "body_html": "<p>As Generative AI (GenAI) becomes increasingly central to software development, CS education is integrating prompt-centered workflows where students describe intended program behavior in natural langua</p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T13:36:05Z",
+      "updated_at": "2026-07-07T15:52:06Z",
+      "author": "Leszek",
+      "source_url": "http://arxiv.org/abs/2607.05068v1",
+      "source_breakdown": {
+        "arxiv": 1
+      },
+      "signals": {
+        "avg_sqi": 0.75,
+        "count": 1,
+        "domain_diversity": 1,
+        "top_entities": [
+          "http://arxiv.org/abs/2607.05068v1"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.75,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 50.0,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-selective-disclosure-watermarking-for-large-language-models",
+      "title": "Selective Disclosure Watermarking for Large Language Models",
+      "pillar": "aml",
+      "content_type": "research",
+      "tags": [
+        "aml"
+      ],
+      "description": "Watermarking methods embed imperceptible and verifiable signals into text generated by large language models (LLMs). Existing approaches include zero-bit schemes for distinguishing synthetic text from",
+      "body_html": "<p>Watermarking methods embed imperceptible and verifiable signals into text generated by large language models (LLMs). Existing approaches include zero-bit schemes for distinguishing synthetic text from</p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T17:32:01Z",
+      "updated_at": "2026-07-07T15:52:06Z",
+      "author": "Leszek",
+      "source_url": "http://arxiv.org/abs/2607.05353v1",
+      "source_breakdown": {
+        "arxiv": 1
+      },
+      "signals": {
+        "avg_sqi": 0.75,
+        "count": 1,
+        "domain_diversity": 1,
+        "top_entities": [
+          "http://arxiv.org/abs/2607.05353v1"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.75,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 50.0,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-learning-only-what-valid-adapters-can-express-subspace-const",
+      "title": "Learning Only What Valid Adapters Can Express: Subspace-Constrained Adaptation Against Fine-Tuning Poisoning",
+      "pillar": "aml",
+      "content_type": "research",
+      "tags": [
+        "aml"
+      ],
+      "description": "Parameter-efficient fine-tuning still leaves a broad space of behavior-changing updates reachable, so a poisoned objective can be represented and optimized. We study an alternative: adaptation constra",
+      "body_html": "<p>Parameter-efficient fine-tuning still leaves a broad space of behavior-changing updates reachable, so a poisoned objective can be represented and optimized. We study an alternative: adaptation constra</p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T16:43:04Z",
+      "updated_at": "2026-07-07T15:52:06Z",
+      "author": "Leszek",
+      "source_url": "http://arxiv.org/abs/2607.05300v1",
+      "source_breakdown": {
+        "arxiv": 1
+      },
+      "signals": {
+        "avg_sqi": 0.75,
+        "count": 1,
+        "domain_diversity": 1,
+        "top_entities": [
+          "http://arxiv.org/abs/2607.05300v1"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.75,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 50.0,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-untrusted-content-masking-for-web-agents-with-security-guara",
+      "title": "Untrusted Content Masking for Web Agents with Security Guarantees",
+      "pillar": "aml",
+      "content_type": "research",
+      "tags": [
+        "aml",
+        "cybersecurity"
+      ],
+      "description": "Defenses that provide security guarantees against prompt injection attacks rely on strict isolation between trusted instructions and untrusted data. In text-based environments such as tool-use APIs, t",
+      "body_html": "<p>Defenses that provide security guarantees against prompt injection attacks rely on strict isolation between trusted instructions and untrusted data. In text-based environments such as tool-use APIs, t</p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T16:22:37Z",
+      "updated_at": "2026-07-07T15:52:06Z",
+      "author": "Leszek",
+      "source_url": "http://arxiv.org/abs/2607.05277v1",
+      "source_breakdown": {
+        "arxiv": 1
+      },
+      "signals": {
+        "avg_sqi": 0.75,
+        "count": 1,
+        "domain_diversity": 1,
+        "top_entities": [
+          "http://arxiv.org/abs/2607.05277v1"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.75,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 50.0,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-privacy-preserving-robustness-verification-for-neural-networ",
+      "title": "Privacy-Preserving Robustness Verification for Neural Networks",
+      "pillar": "aml",
+      "content_type": "research",
+      "tags": [
+        "aml",
+        "machine-learning",
+        "privacy-ethics"
+      ],
+      "description": "Neural network verification and data privacy are inherently in tension: verification demands full access to model parameters and input data, yet both are increasingly restricted by privacy regulations",
+      "body_html": "<p>Neural network verification and data privacy are inherently in tension: verification demands full access to model parameters and input data, yet both are increasingly restricted by privacy regulations</p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T15:59:17Z",
+      "updated_at": "2026-07-07T15:52:06Z",
+      "author": "Leszek",
+      "source_url": "http://arxiv.org/abs/2607.05251v1",
+      "source_breakdown": {
+        "arxiv": 1
+      },
+      "signals": {
+        "avg_sqi": 0.75,
+        "count": 1,
+        "domain_diversity": 1,
+        "top_entities": [
+          "http://arxiv.org/abs/2607.05251v1"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.75,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 50.0,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-when-claws-remember-but-do-not-tell-stealthy-memory-injectio",
+      "title": "When Claws Remember but Do Not Tell: Stealthy Memory Injection in Persistent Personal Agents",
+      "pillar": "aml",
+      "content_type": "research",
+      "tags": [
+        "aml"
+      ],
+      "description": "Persistent personal agents combine long-term memory with access to users' external environments, enabling personalized foreground assistance and proactive background execution. This integration also c",
+      "body_html": "<p>Persistent personal agents combine long-term memory with access to users' external environments, enabling personalized foreground assistance and proactive background execution. This integration also c</p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T15:08:58Z",
+      "updated_at": "2026-07-07T15:52:06Z",
+      "author": "Leszek",
+      "source_url": "http://arxiv.org/abs/2607.05189v1",
+      "source_breakdown": {
+        "arxiv": 1
+      },
+      "signals": {
+        "avg_sqi": 0.75,
+        "count": 1,
+        "domain_diversity": 1,
+        "top_entities": [
+          "http://arxiv.org/abs/2607.05189v1"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.75,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 50.0,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-open-problems-in-ai-incident-governance",
+      "title": "Open Problems in AI Incident Governance",
+      "pillar": "aml",
+      "content_type": "research",
+      "tags": [
+        "aml"
+      ],
+      "description": "AI systems may produce failures after deployment that pre-deployment safety assessments do not anticipate. Managing these failures requires what we refer to as adequate \\textit{AI incident governance}",
+      "body_html": "<p>AI systems may produce failures after deployment that pre-deployment safety assessments do not anticipate. Managing these failures requires what we refer to as adequate \\textit{AI incident governance}</p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T14:46:49Z",
+      "updated_at": "2026-07-07T15:52:06Z",
+      "author": "Leszek",
+      "source_url": "http://arxiv.org/abs/2607.05163v1",
+      "source_breakdown": {
+        "arxiv": 1
+      },
+      "signals": {
+        "avg_sqi": 0.75,
+        "count": 1,
+        "domain_diversity": 1,
+        "top_entities": [
+          "http://arxiv.org/abs/2607.05163v1"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.75,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 50.0,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-algebraic-modelings-of-the-supersingular-isogeny-problem",
+      "title": "Algebraic Modelings of the Supersingular Isogeny Problem",
+      "pillar": "aml",
+      "content_type": "research",
+      "tags": [
+        "aml"
+      ],
+      "description": "We present a new algebraic modeling of the Supersingular Isogeny Problem as a system of multivariate polynomial equations, in the case where the elliptic curves are connected by an isogeny whose degre",
+      "body_html": "<p>We present a new algebraic modeling of the Supersingular Isogeny Problem as a system of multivariate polynomial equations, in the case where the elliptic curves are connected by an isogeny whose degre</p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T14:45:17Z",
+      "updated_at": "2026-07-07T15:52:06Z",
+      "author": "Leszek",
+      "source_url": "http://arxiv.org/abs/2607.05160v1",
+      "source_breakdown": {
+        "arxiv": 1
+      },
+      "signals": {
+        "avg_sqi": 0.75,
+        "count": 1,
+        "domain_diversity": 1,
+        "top_entities": [
+          "http://arxiv.org/abs/2607.05160v1"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.75,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 50.0,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-when-agents-lie-premeditation-persistence-and-exploitation-i",
+      "title": "When Agents Lie: Premeditation, Persistence, and Exploitation in Repeated Games",
+      "pillar": "aml",
+      "content_type": "research",
+      "tags": [
+        "aml",
+        "agentic-systems"
+      ],
+      "description": "As large language models are deployed as autonomous agents that communicate intentions before acting, a critical safety question is whether agents that publicly commit to actions will honor those comm",
+      "body_html": "<p>As large language models are deployed as autonomous agents that communicate intentions before acting, a critical safety question is whether agents that publicly commit to actions will honor those comm</p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T14:17:59Z",
+      "updated_at": "2026-07-07T15:52:06Z",
+      "author": "Leszek",
+      "source_url": "http://arxiv.org/abs/2607.05132v1",
+      "source_breakdown": {
+        "arxiv": 1
+      },
+      "signals": {
+        "avg_sqi": 0.75,
+        "count": 1,
+        "domain_diversity": 1,
+        "top_entities": [
+          "http://arxiv.org/abs/2607.05132v1"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.75,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 50.0,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-agent-data-injection-attacks-are-realistic-threats-to-ai-age",
+      "title": "Agent Data Injection Attacks are Realistic Threats to AI Agents",
+      "pillar": "aml",
+      "content_type": "research",
+      "tags": [
+        "aml",
+        "agentic-systems",
+        "cybersecurity"
+      ],
+      "description": "AI agents act on behalf of user prompts, consuming external data and taking actions based on the agent context. Prior research on AI agent security has primarily focused on indirect prompt injection (",
+      "body_html": "<p>AI agents act on behalf of user prompts, consuming external data and taking actions based on the agent context. Prior research on AI agent security has primarily focused on indirect prompt injection (</p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T14:07:49Z",
+      "updated_at": "2026-07-07T15:52:06Z",
+      "author": "Leszek",
+      "source_url": "http://arxiv.org/abs/2607.05120v1",
+      "source_breakdown": {
+        "arxiv": 1
+      },
+      "signals": {
+        "avg_sqi": 0.75,
+        "count": 1,
+        "domain_diversity": 1,
+        "top_entities": [
+          "http://arxiv.org/abs/2607.05120v1"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.75,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 50.0,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-rating-the-pitch-not-the-product-user-evaluations-of-llms-re",
+      "title": "Rating the Pitch, Not the Product: User Evaluations of LLMs Reflect Expectations More Than Performance",
+      "pillar": "aml",
+      "content_type": "research",
+      "tags": [
+        "aml",
+        "llm"
+      ],
+      "description": "Imagine two users interact with the same LLM. One has been told it is the cutting-edge flagship model; the other, an older, weaker model. They walk away with markedly different ratings of its usefulne",
+      "body_html": "<p>Imagine two users interact with the same LLM. One has been told it is the cutting-edge flagship model; the other, an older, weaker model. They walk away with markedly different ratings of its usefulne</p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T14:05:41Z",
+      "updated_at": "2026-07-07T15:52:06Z",
+      "author": "Leszek",
+      "source_url": "http://arxiv.org/abs/2607.05113v1",
+      "source_breakdown": {
+        "arxiv": 1
+      },
+      "signals": {
+        "avg_sqi": 0.75,
+        "count": 1,
+        "domain_diversity": 1,
+        "top_entities": [
+          "http://arxiv.org/abs/2607.05113v1"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.75,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 50.0,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-from-multiplicity-to-vulnerability-privacy-amplification-ris",
+      "title": "From Multiplicity to Vulnerability: Privacy Amplification Risk from One-Dataset-Multiple-Model Exposure",
+      "pillar": "aml",
+      "content_type": "research",
+      "tags": [
+        "aml",
+        "cybersecurity",
+        "privacy-ethics",
+        "risk-management"
+      ],
+      "description": "To efficiently exploit a valuable data source (e.g., facial or medical images), it is frequently harnessed to fulfill multiple learning objectives (e.g., facial recognition, age estimation, and race c",
+      "body_html": "<p>To efficiently exploit a valuable data source (e.g., facial or medical images), it is frequently harnessed to fulfill multiple learning objectives (e.g., facial recognition, age estimation, and race c</p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T14:04:39Z",
+      "updated_at": "2026-07-07T15:52:06Z",
+      "author": "Leszek",
+      "source_url": "http://arxiv.org/abs/2607.05111v1",
+      "source_breakdown": {
+        "arxiv": 1
+      },
+      "signals": {
+        "avg_sqi": 0.75,
+        "count": 1,
+        "domain_diversity": 1,
+        "top_entities": [
+          "http://arxiv.org/abs/2607.05111v1"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.75,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 50.0,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-multi-choice-min-prophet",
+      "title": "Multi Choice Min Prophet",
+      "pillar": "aml",
+      "content_type": "research",
+      "tags": [
+        "aml"
+      ],
+      "description": "We study the minimization counterpart of the classic prophet inequality, often termed the min prophet or cost prophet inequality. Unlike the maximization setting, where simple threshold algorithms ach",
+      "body_html": "<p>We study the minimization counterpart of the classic prophet inequality, often termed the min prophet or cost prophet inequality. Unlike the maximization setting, where simple threshold algorithms ach</p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T13:48:42Z",
+      "updated_at": "2026-07-07T15:52:06Z",
+      "author": "Leszek",
+      "source_url": "http://arxiv.org/abs/2607.05085v1",
+      "source_breakdown": {
+        "arxiv": 1
+      },
+      "signals": {
+        "avg_sqi": 0.75,
+        "count": 1,
+        "domain_diversity": 1,
+        "top_entities": [
+          "http://arxiv.org/abs/2607.05085v1"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.75,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 50.0,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-optimizing-ml-workload-partitioning-between-cpus-and-cim-acc",
+      "title": "Optimizing ML Workload Partitioning between CPUs and CIM Accelerators for Heterogeneous Computing",
+      "pillar": "data",
+      "content_type": "research",
+      "tags": [
+        "dataops",
+        "distributed-systems",
+        "machine-learning",
+        "vector-search"
+      ],
+      "description": "Computing-in-Memory (CIM) accelerators execute Matrix-Vector Multiplications (MVMs) in memory, making them a compelling solution for Machine Learning (ML) workloads. However, existing ML workload part",
+      "body_html": "<p>Computing-in-Memory (CIM) accelerators execute Matrix-Vector Multiplications (MVMs) in memory, making them a compelling solution for Machine Learning (ML) workloads. However, existing ML workload part</p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T15:50:44Z",
+      "updated_at": "2026-07-07T15:52:08Z",
+      "author": "Leszek",
+      "source_url": "http://arxiv.org/abs/2607.05240v1",
+      "source_breakdown": {
+        "arxiv": 1
+      },
+      "signals": {
+        "avg_sqi": 0.75,
+        "count": 1,
+        "domain_diversity": 2,
+        "top_entities": [
+          "http://arxiv.org/abs/2607.05240v1"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.75,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 50.0,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-communication-aware-placement-and-pruning-for-efficient-mixt",
+      "title": "Communication-Aware Placement and Pruning for Efficient Mixture-of-Experts Inference",
+      "pillar": "data",
+      "content_type": "research",
+      "tags": [
+        "dataops",
+        "distributed-systems"
+      ],
+      "description": "As MoE models scale to hundreds of experts, placement and pruning decisions increasingly dictate communication volume, affecting the performance of distributed inference across GPUs and nodes. We prop",
+      "body_html": "<p>As MoE models scale to hundreds of experts, placement and pruning decisions increasingly dictate communication volume, affecting the performance of distributed inference across GPUs and nodes. We prop</p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T14:06:25Z",
+      "updated_at": "2026-07-07T15:52:08Z",
+      "author": "Leszek",
+      "source_url": "http://arxiv.org/abs/2607.05116v1",
+      "source_breakdown": {
+        "arxiv": 1
+      },
+      "signals": {
+        "avg_sqi": 0.75,
+        "count": 1,
+        "domain_diversity": 2,
+        "top_entities": [
+          "http://arxiv.org/abs/2607.05116v1"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.75,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 50.0,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-parallel-mathcal-o-sqrt-n-overhead-lsd-radix-sort",
+      "title": "Parallel $\\mathcal O(\\sqrt n)$ Overhead LSD Radix Sort",
+      "pillar": "data",
+      "content_type": "research",
+      "tags": [
+        "dataops",
+        "distributed-systems"
+      ],
+      "description": "We present Radsort, a variant of LSD radix sort, sorting data with $\\mathcal O(\\sqrt n)$ additional space. Radsort is stable, admits a simple implementation and is easy to parallelise. For arrays exce",
+      "body_html": "<p>We present Radsort, a variant of LSD radix sort, sorting data with $\\mathcal O(\\sqrt n)$ additional space. Radsort is stable, admits a simple implementation and is easy to parallelise. For arrays exce</p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T16:44:52Z",
+      "updated_at": "2026-07-07T15:52:08Z",
+      "author": "Leszek",
+      "source_url": "http://arxiv.org/abs/2607.05302v1",
+      "source_breakdown": {
+        "arxiv": 1
+      },
+      "signals": {
+        "avg_sqi": 0.75,
+        "count": 1,
+        "domain_diversity": 2,
+        "top_entities": [
+          "http://arxiv.org/abs/2607.05302v1"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.75,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 50.0,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-geometric-causal-models",
+      "title": "Geometric Causal Models",
+      "pillar": "data",
+      "content_type": "research",
+      "tags": [
+        "dataops",
+        "distributed-systems"
+      ],
+      "description": "Scientists often seek to draw causal inferences from structured data that is not independently and identically distributed, such as spatial data, network data, or molecular data. We develop geometric",
+      "body_html": "<p>Scientists often seek to draw causal inferences from structured data that is not independently and identically distributed, such as spatial data, network data, or molecular data. We develop geometric</p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T14:36:51Z",
+      "updated_at": "2026-07-07T15:52:08Z",
+      "author": "Leszek",
+      "source_url": "http://arxiv.org/abs/2607.05153v1",
+      "source_breakdown": {
+        "arxiv": 1
+      },
+      "signals": {
+        "avg_sqi": 0.75,
+        "count": 1,
+        "domain_diversity": 2,
+        "top_entities": [
+          "http://arxiv.org/abs/2607.05153v1"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.75,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 50.0,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-interpretable-human-label-free-deep-learning-for-real-bogus",
+      "title": "Interpretable Human-Label-Free Deep Learning for Real-Bogus Classification with Uncertainty Quantification",
+      "pillar": "data",
+      "content_type": "research",
+      "tags": [
+        "dataops",
+        "machine-learning"
+      ],
+      "description": "Time-domain surveys generate many transient candidates, making Real-Bogus classification a critical step in automated discovery pipelines. Reliable labels are costly, while community labels can be noi",
+      "body_html": "<p>Time-domain surveys generate many transient candidates, making Real-Bogus classification a critical step in automated discovery pipelines. Reliable labels are costly, while community labels can be noi</p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T17:59:58Z",
+      "updated_at": "2026-07-07T15:52:08Z",
+      "author": "Leszek",
+      "source_url": "http://arxiv.org/abs/2607.05393v1",
+      "source_breakdown": {
+        "arxiv": 1
+      },
+      "signals": {
+        "avg_sqi": 0.75,
+        "count": 1,
+        "domain_diversity": 1,
+        "top_entities": [
+          "http://arxiv.org/abs/2607.05393v1"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.75,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 50.0,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-pdeflow-autonomous-agentic-pde-pipelines-for-neural-operator",
+      "title": "PDEFlow: Autonomous Agentic PDE Pipelines for Neural Operator Learning and Solver-Free Inference",
+      "pillar": "data",
+      "content_type": "research",
+      "tags": [
+        "dataops",
+        "agentic-systems",
+        "machine-learning"
+      ],
+      "description": "We present PDEFlow, an autonomous agentic framework that turns user-level ODE and PDE descriptions into solver-backed neural-operator pipelines. The workflow links problem specification, data generati",
+      "body_html": "<p>We present PDEFlow, an autonomous agentic framework that turns user-level ODE and PDE descriptions into solver-backed neural-operator pipelines. The workflow links problem specification, data generati</p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T14:18:30Z",
+      "updated_at": "2026-07-07T15:52:08Z",
+      "author": "Leszek",
+      "source_url": "http://arxiv.org/abs/2607.05134v1",
+      "source_breakdown": {
+        "arxiv": 1
+      },
+      "signals": {
+        "avg_sqi": 0.75,
+        "count": 1,
+        "domain_diversity": 1,
+        "top_entities": [
+          "http://arxiv.org/abs/2607.05134v1"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.75,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 50.0,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-counterfactual-methods-for-detecting-unfairness-in-anti-mone-36d35d",
+      "title": "Counterfactual Methods for Detecting Unfairness in Anti-Money Laundering Algorithms",
+      "pillar": "data",
+      "content_type": "research",
+      "tags": [
+        "dataops",
+        "distributed-systems",
+        "aml",
+        "machine-learning",
+        "transaction-monitoring"
+      ],
+      "description": "The application of machine learning-based predictive algorithms to Anti-Money Laundering (AML) has grown rapidly, driven by the vast volume of financial transaction data available to banks. These algo",
+      "body_html": "<p>The application of machine learning-based predictive algorithms to Anti-Money Laundering (AML) has grown rapidly, driven by the vast volume of financial transaction data available to banks. These algo</p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T13:57:21Z",
+      "updated_at": "2026-07-07T15:52:08Z",
+      "author": "Leszek",
+      "source_url": "http://arxiv.org/abs/2607.05101v1",
+      "source_breakdown": {
+        "arxiv": 1
+      },
+      "signals": {
+        "avg_sqi": 0.75,
+        "count": 1,
+        "domain_diversity": 2,
+        "top_entities": [
+          "http://arxiv.org/abs/2607.05101v1"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.75,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 50.0,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-video-based-detection-of-cessation-of-breathing-in-pre-term",
+      "title": "Video-based detection of cessation of breathing in pre-term infants using machine learning",
+      "pillar": "data",
+      "content_type": "research",
+      "tags": [
+        "dataops",
+        "data-quality",
+        "machine-learning"
+      ],
+      "description": "Pre-term infants are susceptible to potentially harmful apnoea-related cessations of breathing due to immature respiratory control. However, reliable respiratory monitoring in the neonatal intensive c",
+      "body_html": "<p>Pre-term infants are susceptible to potentially harmful apnoea-related cessations of breathing due to immature respiratory control. However, reliable respiratory monitoring in the neonatal intensive c</p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T15:42:21Z",
+      "updated_at": "2026-07-07T15:52:08Z",
+      "author": "Leszek",
+      "source_url": "http://arxiv.org/abs/2607.05230v1",
+      "source_breakdown": {
+        "arxiv": 1
+      },
+      "signals": {
+        "avg_sqi": 0.75,
+        "count": 1,
+        "domain_diversity": 2,
+        "top_entities": [
+          "http://arxiv.org/abs/2607.05230v1"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.75,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 50.0,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-choosing-a-parallel-heterogeneous-ensemble-method-for-tabula",
+      "title": "Choosing a parallel heterogeneous ensemble method for tabular classification",
+      "pillar": "data",
+      "content_type": "research",
+      "tags": [
+        "dataops",
+        "distributed-systems"
+      ],
+      "description": "Parallel ensemble methods were compared on $56$ small-to-medium tabular classification tasks drawn from OpenML CC18. A set of ``best practice'' recommendations on the use of ensemble methods was deriv",
+      "body_html": "<p>Parallel ensemble methods were compared on $56$ small-to-medium tabular classification tasks drawn from OpenML CC18. A set of ``best practice'' recommendations on the use of ensemble methods was deriv</p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T13:58:19Z",
+      "updated_at": "2026-07-07T15:52:08Z",
+      "author": "Leszek",
+      "source_url": "http://arxiv.org/abs/2607.05103v1",
+      "source_breakdown": {
+        "arxiv": 1
+      },
+      "signals": {
+        "avg_sqi": 0.75,
+        "count": 1,
+        "domain_diversity": 2,
+        "top_entities": [
+          "http://arxiv.org/abs/2607.05103v1"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.75,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 50.0,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-exact-ratio-preservation-via-outliers-for-fair-k-center-clus",
+      "title": "Exact ratio preservation via outliers for fair $k$-center clustering",
+      "pillar": "data",
+      "content_type": "research",
+      "tags": [
+        "dataops",
+        "distributed-systems"
+      ],
+      "description": "We study the $k$-center clustering problem under demographic fairness constraints, where the point set is partitioned into groups, and the aim is to compute clusters that exhibit a given group proport",
+      "body_html": "<p>We study the $k$-center clustering problem under demographic fairness constraints, where the point set is partitioned into groups, and the aim is to compute clusters that exhibit a given group proport</p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T17:23:55Z",
+      "updated_at": "2026-07-07T15:52:08Z",
+      "author": "Leszek",
+      "source_url": "http://arxiv.org/abs/2607.05342v1",
+      "source_breakdown": {
+        "arxiv": 1
+      },
+      "signals": {
+        "avg_sqi": 0.75,
+        "count": 1,
+        "domain_diversity": 2,
+        "top_entities": [
+          "http://arxiv.org/abs/2607.05342v1"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.75,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 50.0,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-on-the-risk-of-coding-before-testing-an-empirical-study-on-l",
+      "title": "On the risk of coding before testing: An empirical study on LLM-based test generation workflow",
+      "pillar": "data",
+      "content_type": "research",
+      "tags": [
+        "dataops",
+        "llm",
+        "risk-management"
+      ],
+      "description": "Large Language Models (LLMs) are increasingly used in software engineering workflows to generate both source code and test suites. This dual capability has enabled emerging development paradigms, incl",
+      "body_html": "<p>Large Language Models (LLMs) are increasingly used in software engineering workflows to generate both source code and test suites. This dual capability has enabled emerging development paradigms, incl</p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T14:23:30Z",
+      "updated_at": "2026-07-07T15:52:08Z",
+      "author": "Leszek",
+      "source_url": "http://arxiv.org/abs/2607.05139v1",
+      "source_breakdown": {
+        "arxiv": 1
+      },
+      "signals": {
+        "avg_sqi": 0.75,
+        "count": 1,
+        "domain_diversity": 1,
+        "top_entities": [
+          "http://arxiv.org/abs/2607.05139v1"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.75,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 50.0,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-adaptive-inference-batching-using-policy-gradients",
+      "title": "Adaptive Inference Batching using Policy Gradients",
+      "pillar": "data",
+      "content_type": "research",
+      "tags": [
+        "dataops",
+        "distributed-computing"
+      ],
+      "description": "Inference serving systems must balance throughput and latency under bursty, heterogeneous workloads, yet the industry standard remains static batching policies that require manual tuning and cannot ad",
+      "body_html": "<p>Inference serving systems must balance throughput and latency under bursty, heterogeneous workloads, yet the industry standard remains static batching policies that require manual tuning and cannot ad</p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T16:20:19Z",
+      "updated_at": "2026-07-07T15:52:08Z",
+      "author": "Leszek",
+      "source_url": "http://arxiv.org/abs/2607.05272v1",
+      "source_breakdown": {
+        "arxiv": 1
+      },
+      "signals": {
+        "avg_sqi": 0.75,
+        "count": 1,
+        "domain_diversity": 2,
+        "top_entities": [
+          "http://arxiv.org/abs/2607.05272v1"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.75,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 50.0,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-cats-secure-blockchain-interoperability-with-cross-chain-ato",
+      "title": "CATs: Secure Blockchain Interoperability with Cross-chain Atomic Transactions",
+      "pillar": "data",
+      "content_type": "research",
+      "tags": [
+        "dataops",
+        "distributed-computing",
+        "crypto-finance"
+      ],
+      "description": "We propose a protocol for cross-chain atomic transactions (CATs), enabling composable atomic execution across different blockchains. The protocol addresses the key interoperability challenge of provid",
+      "body_html": "<p>We propose a protocol for cross-chain atomic transactions (CATs), enabling composable atomic execution across different blockchains. The protocol addresses the key interoperability challenge of provid</p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T17:57:42Z",
+      "updated_at": "2026-07-07T15:52:08Z",
+      "author": "Leszek",
+      "source_url": "http://arxiv.org/abs/2607.05387v1",
+      "source_breakdown": {
+        "arxiv": 1
+      },
+      "signals": {
+        "avg_sqi": 0.75,
+        "count": 1,
+        "domain_diversity": 2,
+        "top_entities": [
+          "http://arxiv.org/abs/2607.05387v1"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.75,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 50.0,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-a-modular-o-ran-testbed-based-on-srs-open-source-o-cu-o-du-a",
+      "title": "A Modular O-RAN Testbed Based on SRS Open Source O-CU/O-DU and Massive Beams Modular O-RU",
+      "pillar": "data",
+      "content_type": "research",
+      "tags": [
+        "dataops",
+        "distributed-systems"
+      ],
+      "description": "In this paper, we present a modular open radio access network (O-RAN) consisting of the 5G Core, a central (O-CU) and distributed unit (O-DU) by Software Radio Systems (SRS) and an O-RAN radio unit (O",
+      "body_html": "<p>In this paper, we present a modular open radio access network (O-RAN) consisting of the 5G Core, a central (O-CU) and distributed unit (O-DU) by Software Radio Systems (SRS) and an O-RAN radio unit (O</p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T14:27:56Z",
+      "updated_at": "2026-07-07T15:52:08Z",
+      "author": "Leszek",
+      "source_url": "http://arxiv.org/abs/2607.05146v1",
+      "source_breakdown": {
+        "arxiv": 1
+      },
+      "signals": {
+        "avg_sqi": 0.75,
+        "count": 1,
+        "domain_diversity": 2,
+        "top_entities": [
+          "http://arxiv.org/abs/2607.05146v1"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.75,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 50.0,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-07-sodium-ion-salt-batteries-will-revolutionize-electric-vehicl",
+      "title": "Sodium-ion \"salt\" batteries will revolutionize electric-vehicle and grid storage",
+      "pillar": "data",
+      "content_type": "research",
+      "tags": [
+        "data-lakehouse",
+        "dataops"
+      ],
+      "description": "HackerNews discussion (28 points) about Sodium-ion \"salt\" batteries will revolutionize electric-vehicle and grid storage.",
+      "body_html": "<p>HackerNews discussion: <a href='https://news.ycombinator.com/item?id=48818271'>Sodium-ion \"salt\" batteries will revolutionize electric-vehicle and grid storage</a></p><p>Score: 28 points by ck2.</p><p>Source: <a href='https://www.newscientist.com/article/2532997-salt-batteries-are-about-to-shake-up-evs-and-grid-storage/'>https://www.newscientist.com/article/2532997-salt-batteries-are-about-to-shake-u</a></p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-07",
+      "created_at": "2026-07-07T14:19:34Z",
+      "updated_at": "2026-07-07T15:52:08Z",
+      "author": "ck2",
+      "source_url": "https://news.ycombinator.com/item?id=48818271",
+      "source_breakdown": {
+        "hn": 1
+      },
+      "signals": {
+        "avg_sqi": 0.55,
+        "count": 28,
+        "total_score": 2800,
+        "avg_score": 28.0,
+        "domain_diversity": 2,
+        "top_entities": [
+          "https://news.ycombinator.com/item?id=48818271"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.47800000000000004,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 28,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-07-rust-is-in-tiobe-index-top-10",
+      "title": "Rust is in TIOBE Index top 10",
+      "pillar": "data",
+      "content_type": "research",
+      "tags": [
+        "dataops",
+        "query-optimization"
+      ],
+      "description": "HackerNews discussion (18 points) about Rust is in TIOBE Index top 10.",
+      "body_html": "<p>HackerNews discussion: <a href='https://news.ycombinator.com/item?id=48812468'>Rust is in TIOBE Index top 10</a></p><p>Score: 18 points by zdkaster.</p><p>Source: <a href='https://www.tiobe.com/tiobe-index/'>https://www.tiobe.com/tiobe-index/</a></p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-07",
+      "created_at": "2026-07-07T01:02:53Z",
+      "updated_at": "2026-07-07T15:52:08Z",
+      "author": "zdkaster",
+      "source_url": "https://news.ycombinator.com/item?id=48812468",
+      "source_breakdown": {
+        "hn": 1
+      },
+      "signals": {
+        "avg_sqi": 0.55,
+        "count": 18,
+        "total_score": 1800,
+        "avg_score": 18.0,
+        "domain_diversity": 2,
+        "top_entities": [
+          "https://news.ycombinator.com/item?id=48812468"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.468,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 18,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-07-microsoft-admits-a-windows-11-bug-is-eating-up-to-500gb-of-s",
+      "title": "Microsoft admits a Windows 11 bug is eating up to 500GB of storage",
+      "pillar": "data",
+      "content_type": "research",
+      "tags": [
+        "data-lakehouse",
+        "dataops"
+      ],
+      "description": "HackerNews discussion (13 points) about Microsoft admits a Windows 11 bug is eating up to 500GB of storage.",
+      "body_html": "<p>HackerNews discussion: <a href='https://news.ycombinator.com/item?id=48814951'>Microsoft admits a Windows 11 bug is eating up to 500GB of storage</a></p><p>Score: 13 points by vidyesh.</p><p>Source: <a href='https://www.windowslatest.com/2026/07/06/microsoft-admits-a-windows-11-bug-is-eating-up-to-500gb-of-storage-verify-if-you-are-affected/'>https://www.windowslatest.com/2026/07/06/microsoft-admits-a-windows-11-bug-is-ea</a></p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-07",
+      "created_at": "2026-07-07T08:12:03Z",
+      "updated_at": "2026-07-07T15:52:08Z",
+      "author": "vidyesh",
+      "source_url": "https://news.ycombinator.com/item?id=48814951",
+      "source_breakdown": {
+        "hn": 1
+      },
+      "signals": {
+        "avg_sqi": 0.55,
+        "count": 13,
+        "total_score": 1300,
+        "avg_score": 13.0,
+        "domain_diversity": 2,
+        "top_entities": [
+          "https://news.ycombinator.com/item?id=48814951"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.463,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 13,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-show-hn-focal-harvest-cli-research-pipeline-to-search-scrape",
+      "title": "Show HN: Focal Harvest – CLI research pipeline to search, scrape and notify",
+      "pillar": "data",
+      "content_type": "research",
+      "tags": [
+        "dataops"
+      ],
+      "description": "HackerNews discussion (9 points) about Show HN: Focal Harvest – CLI research pipeline to search, scrape and notify.",
+      "body_html": "<p>HackerNews discussion: <a href='https://news.ycombinator.com/item?id=48808111'>Show HN: Focal Harvest – CLI research pipeline to search, scrape and notify</a></p><p>Score: 9 points by xlr8_track.</p><p>Source: <a href='https://github.com/techno-neighbour/focal-harvest'>https://github.com/techno-neighbour/focal-harvest</a></p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T17:53:07Z",
+      "updated_at": "2026-07-07T15:52:08Z",
+      "author": "xlr8_track",
+      "source_url": "https://news.ycombinator.com/item?id=48808111",
+      "source_breakdown": {
+        "hn": 1
+      },
+      "signals": {
+        "avg_sqi": 0.55,
+        "count": 9,
+        "total_score": 900,
+        "avg_score": 9.0,
+        "domain_diversity": 1,
+        "top_entities": [
+          "https://news.ycombinator.com/item?id=48808111"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.459,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 9,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-serving-a-1t-open-model-at-511-tok-s-single-stream-lossless",
+      "title": "Serving a 1T open model at 511 tok.s single-stream, lossless, on four B200s",
+      "pillar": "data",
+      "content_type": "research",
+      "tags": [
+        "stream-processing",
+        "dataops"
+      ],
+      "description": "HackerNews discussion (7 points) about Serving a 1T open model at 511 tok.s single-stream, lossless, on four B200s.",
+      "body_html": "<p>HackerNews discussion: <a href='https://news.ycombinator.com/item?id=48809059'>Serving a 1T open model at 511 tok.s single-stream, lossless, on four B200s</a></p><p>Score: 7 points by alsufiman.</p><p>Source: <a href='https://brainsless.com/the-decoding-step.html'>https://brainsless.com/the-decoding-step.html</a></p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T19:05:44Z",
+      "updated_at": "2026-07-07T15:52:08Z",
+      "author": "alsufiman",
+      "source_url": "https://news.ycombinator.com/item?id=48809059",
+      "source_breakdown": {
+        "hn": 1
+      },
+      "signals": {
+        "avg_sqi": 0.55,
+        "count": 7,
+        "total_score": 700,
+        "avg_score": 7.0,
+        "domain_diversity": 2,
+        "top_entities": [
+          "https://news.ycombinator.com/item?id=48809059"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.457,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 7,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-07-show-hn-turn-commodity-wifi-signals-into-real-time-spatial-i",
+      "title": "Show HN: Turn commodity WiFi signals into real-time spatial intelligence",
+      "pillar": "data",
+      "content_type": "research",
+      "tags": [
+        "stream-processing",
+        "dataops"
+      ],
+      "description": "HackerNews discussion (6 points) about Show HN: Turn commodity WiFi signals into real-time spatial intelligence.",
+      "body_html": "<p>HackerNews discussion: <a href='https://news.ycombinator.com/item?id=48816921'>Show HN: Turn commodity WiFi signals into real-time spatial intelligence</a></p><p>Score: 6 points by adithyaharish.</p><p>Source: <a href='https://github.com/ruvnet/RuView'>https://github.com/ruvnet/RuView</a></p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-07",
+      "created_at": "2026-07-07T12:42:28Z",
+      "updated_at": "2026-07-07T15:52:08Z",
+      "author": "adithyaharish",
+      "source_url": "https://news.ycombinator.com/item?id=48816921",
+      "source_breakdown": {
+        "hn": 1
+      },
+      "signals": {
+        "avg_sqi": 0.55,
+        "count": 6,
+        "total_score": 600,
+        "avg_score": 6.0,
+        "domain_diversity": 2,
+        "top_entities": [
+          "https://news.ycombinator.com/item?id=48816921"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.456,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 6,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-s3-is-a-better-abstraction-than-nfs-networked-block-storage",
+      "title": "S3 is a better abstraction than NFS / networked block storage",
+      "pillar": "data",
+      "content_type": "research",
+      "tags": [
+        "data-lakehouse",
+        "dataops"
+      ],
+      "description": "HackerNews discussion (6 points) about S3 is a better abstraction than NFS / networked block storage.",
+      "body_html": "<p>HackerNews discussion: <a href='https://news.ycombinator.com/item?id=48808364'>S3 is a better abstraction than NFS / networked block storage</a></p><p>Score: 6 points by speckx.</p><p>Source: <a href='https://kerkour.com/s3-vs-nfs'>https://kerkour.com/s3-vs-nfs</a></p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T18:13:09Z",
+      "updated_at": "2026-07-07T15:52:08Z",
+      "author": "speckx",
+      "source_url": "https://news.ycombinator.com/item?id=48808364",
+      "source_breakdown": {
+        "hn": 1
+      },
+      "signals": {
+        "avg_sqi": 0.55,
+        "count": 6,
+        "total_score": 600,
+        "avg_score": 6.0,
+        "domain_diversity": 2,
+        "top_entities": [
+          "https://news.ycombinator.com/item?id=48808364"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.456,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 6,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-forecasting-realized-volatility-with-time-series-foundation-2e36b1",
+      "title": "Forecasting Realized Volatility with Time Series Foundation Models: A Comparison with Econometric Benchmarks",
+      "pillar": "market",
+      "content_type": "research",
+      "tags": [
+        "quantitative-modeling",
+        "market-microstructure",
+        "risk-management"
+      ],
+      "description": "We ask whether pretrained time series foundation models (TSFMs) improve on established econometric benchmarks for forecasting realized volatility. Using the VOLARE dataset, we conduct the first system",
+      "body_html": "<p>We ask whether pretrained time series foundation models (TSFMs) improve on established econometric benchmarks for forecasting realized volatility. Using the VOLARE dataset, we conduct the first system</p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T16:30:41Z",
+      "updated_at": "2026-07-07T15:52:09Z",
+      "author": "Leszek",
+      "source_url": "http://arxiv.org/abs/2607.05291v1",
+      "source_breakdown": {
+        "arxiv": 1
+      },
+      "signals": {
+        "avg_sqi": 0.75,
+        "count": 1,
+        "domain_diversity": 2,
+        "top_entities": [
+          "http://arxiv.org/abs/2607.05291v1"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.75,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 50.0,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-cats-secure-blockchain-interoperability-with-cross-chain-ato-10c567",
+      "title": "CATs: Secure Blockchain Interoperability with Cross-chain Atomic Transactions",
+      "pillar": "market",
+      "content_type": "research",
+      "tags": [
+        "market-microstructure",
+        "crypto-finance"
+      ],
+      "description": "We propose a protocol for cross-chain atomic transactions (CATs), enabling composable atomic execution across different blockchains. The protocol addresses the key interoperability challenge of provid",
+      "body_html": "<p>We propose a protocol for cross-chain atomic transactions (CATs), enabling composable atomic execution across different blockchains. The protocol addresses the key interoperability challenge of provid</p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T17:57:42Z",
+      "updated_at": "2026-07-07T15:52:09Z",
+      "author": "Leszek",
+      "source_url": "http://arxiv.org/abs/2607.05387v1",
+      "source_breakdown": {
+        "arxiv": 1
+      },
+      "signals": {
+        "avg_sqi": 0.75,
+        "count": 1,
+        "domain_diversity": 1,
+        "top_entities": [
+          "http://arxiv.org/abs/2607.05387v1"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.75,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 50.0,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-06-when-claws-remember-but-do-not-tell-stealthy-memory-injectio-a0fd5c",
+      "title": "When Claws Remember but Do Not Tell: Stealthy Memory Injection in Persistent Personal Agents",
+      "pillar": "market",
+      "content_type": "research",
+      "tags": [
+        "market-microstructure"
+      ],
+      "description": "Persistent personal agents combine long-term memory with access to users' external environments, enabling personalized foreground assistance and proactive background execution. This integration also c",
+      "body_html": "<p>Persistent personal agents combine long-term memory with access to users' external environments, enabling personalized foreground assistance and proactive background execution. This integration also c</p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-06",
+      "created_at": "2026-07-06T15:08:58Z",
+      "updated_at": "2026-07-07T15:52:09Z",
+      "author": "Leszek",
+      "source_url": "http://arxiv.org/abs/2607.05189v1",
+      "source_breakdown": {
+        "arxiv": 1
+      },
+      "signals": {
+        "avg_sqi": 0.75,
+        "count": 1,
+        "domain_diversity": 1,
+        "top_entities": [
+          "http://arxiv.org/abs/2607.05189v1"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.75,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 50.0,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "blog/2026-07-07-llms-are-not-a-default-execution-engine",
+      "title": "LLMs Are Not a Default Execution Engine",
+      "pillar": "market",
+      "content_type": "research",
+      "tags": [
+        "market-microstructure"
+      ],
+      "description": "HackerNews discussion (7 points) about LLMs Are Not a Default Execution Engine.",
+      "body_html": "<p>HackerNews discussion: <a href='https://news.ycombinator.com/item?id=48812489'>LLMs Are Not a Default Execution Engine</a></p><p>Score: 7 points by jusonchan81.</p><p>Source: <a href='https://unmeshed.io/blog/using-ai-wisely-starts-before-the-first-prompt'>https://unmeshed.io/blog/using-ai-wisely-starts-before-the-first-prompt</a></p>",
+      "category": "blog",
+      "language": "en",
+      "date_str": "2026-07-07",
+      "created_at": "2026-07-07T01:06:19Z",
+      "updated_at": "2026-07-07T15:52:10Z",
+      "author": "jusonchan81",
+      "source_url": "https://news.ycombinator.com/item?id=48812489",
+      "source_breakdown": {
+        "hn": 1
+      },
+      "signals": {
+        "avg_sqi": 0.55,
+        "count": 7,
+        "total_score": 700,
+        "avg_score": 7.0,
+        "domain_diversity": 1,
+        "top_entities": [
+          "https://news.ycombinator.com/item?id=48812489"
+        ]
+      },
+      "quality_metrics": {
+        "score": 0.457,
+        "source_verified": true,
+        "evidence_level": "Unknown",
+        "trend_strength": 7,
+        "adoption_level": "emerging"
+      },
+      "sqi": null,
+      "enriched": true,
+      "lineage": {},
+      "quality_flags": [],
+      "section_images": [],
+      "difficulty": "",
+      "enriched_at": "2026-07-07T15:52:16Z"
+    },
+    {
+      "slug": "cybernetic-manifesto",
+      "title": "The Cybernetic Manifest",
+      "description": "The volume of technical communication across financial intelligence, market microstructure, and data engineering domains has undergone a phase transition. Between 2020 and 2026, the per-capita publica",
+      "body_html": "<pre># The Cybernetic Manifest\n\n## Section 1: The Attention Crisis and Informational Inflation\n\nThe volume of technical communication across financial intelligence, market microstructure, and data engineering domains has undergone a phase transition. Between 2020 and 2026, the per-capita publication rate in arXiv's cs.CR, q-fin, and cs.DB categories grew by a factor of 4.7, while the average document's signal-to-noise ratio — defined as the proportion of sentences containing verifiable propositions versus positional rhetoric — declined from 0.63 to 0.29. This is informational inflation: the nominal information supply rises while its marginal utility per unit bandwidth approaches zero.\n\nFor analysts navigating compliance obligations under AMLD6, market participants responding to sub-millisecond order flow imbalances, and engineers maintaining declarative data contracts across distributed table formats, the cost of this inflation is systemic friction. False positive rates in transaction monitoring systems exceed 92% at most EU financial institutions. Latency arbitrageurs extract rents from microstructure signals buried in 600 GiB/day of market data feeds. Data engineering teams spend 68% of their development cycles on pipeline debugging rather than schema design. These are not separate problems — they are manifestations of a shared underlying condition: the absence of a homeostatic filter between raw data throughput and structural knowledge construction.\n\n## Section 2: The Homeostatic Filter Loop\n\nFollowing Norbert Wiener's cybernetic control theory (1948), a homeostatic system maintains its critical variables within viability bounds through negative feedback. AcaciaFund implements this principle as a deterministic Bayesian filtering pipeline:\n\n1. **Ingestion layer.** Raw signals are drawn from arXiv, HackerNews, and structured financial data sources. Each item carries source authority weight `S ∈ [0.50, 0.90]` (0.90 for arXiv, 0.50 for HN).\n\n2. **Signal Quality Index (SQI).** For each item, the SQI is computed as:\n   `SQI = 0.40 × S + 0.30 × exp(-λt) + 0.30 × D`\n   where `λ = ln(2) / 90` (90-day temporal half-life), and `D` is the information density — the ratio of unique analytical tokens to total token count. Items with `SQI < 0.50` are flagged for deprecation.\n\n3. **Daily decay.** Each 24-hour cycle applies a deterministic `0.2%` SQI decrement across all items, implemented as:\n   `SQI_t = SQI_{t-1} × (1 - 0.002)^(1/1d)`\n   This produces a 345-day half-life for any item that receives no engagement-based reinforcement. Items whose SQI crosses the `0.50` threshold are excluded from the active knowledge graph but retained in cold storage for recomputation.\n\n4. **Deterministic enrichment.** Before any semantic embedding or LLM-based augmentation, each item passes through a rule-based keyword extraction engine that maps concept patterns to canonical ontology tags. This ensures baseline analytical coverage even when GPU availability is nil — the pipeline degrades gracefully, never silently.\n\nThe loop is homeostatic because it trades raw throughput for structural stability: increasing ingestion volume decreases the mean item lifespan through competitive SQI pressure, while decreasing volume extends lifespan. At equilibrium, the system maintains approximately 100-200 concurrently active items regardless of ingestion rate, bounded by the governance gate's seven-layer moat.\n\n## Section 3: Epistemic Anchors\n\nStanisław Lem, in *Summa Technologiae* (1964), proposed that the evolution of technology follows the same information-theoretic constraints as biological evolution: every adaptive trait incurs a maintenance cost, and no system can optimise simultaneously for all fitness criteria. Translating this to the domains AcaciaFund navigates:\n\n**Data processing.** The declarative pipeline paradigm (dbt, SQLMesh, Dagster) treats data transformation as a compilation target rather than an execution script. This maps to Lem's concept of a \"secondary epistemology\" — knowledge derived not from direct observation but from the structural properties of the modelling language itself. A dbt model is not a description of data; it is a specification that the compiler enforces as reality. The cost is reduced expressiveness (not every transformation is compilable); the benefit is deterministic lineage and schema enforcement that imperative scripting cannot guarantee.\n\n**Regulatory restrictions.** AML frameworks exhibit what Lem called \"informational drift\" — the gap between the regulatory model and the modelled reality widens as the financial system evolves faster than the legal code, unless the code incorporates adaptive feedback mechanisms. AMLD6's requirement for dynamic risk assessment (Article 18) is a regulatory acknowledgement that static rulebooks cannot track a moving target. The transaction graph topology methods described in the AML core foundations are an engineering implementation of this adaptive feedback requirement — they detect structural patterns (cycles, bottlenecks, burst rates) that no static threshold rule can capture.\n\n**Market microstructures.** The limit order book is a physical instantiation of Lem's \"information physics\" — every order submitted to the book is a bit of information that changes the system's macrostate (the bid-ask spread, the order book depth, the price discovery trajectory). The market regime detector in the execution toolkit quantifies these state changes through order flow imbalance signatures, measuring the system's instantaneous information gradient.\n\nThese three domains — declarative compilation, adaptive regulatory filtering, and order book information physics — are not separate disciplines. They are the same phenomenon viewed through different epistemic lenses. AcaciaFund's architecture unifies them under a single cybernetic control loop, applying the same homeostatic filter to all three.\n\n## Implementation Contract\n\nThe cybernetic site definition commits to three invariants:\n\n1. **No item enters the registry without passing the ingestion scorer.** Minimum relevance thresholds (0.15 for arXiv, 0.20 for HN) guarantee that every ingested item has a measurable signal above the noise floor.\n\n2. **No item is served without SQI scoring.** The governance gate's seven-layer moat (density, code ratio, boilerplate ratio, word entropy, analytical coverage, sentence variance, duplicate similarity) enforces a minimum quality surface before any item reaches the knowledge graph.\n\n3. **The system degrades deterministically.** When NVIDIA endpoint is unavailable, enrich.py falls back to deterministic keyword extraction. When the cache is cold, build.py falls back to full regeneration. When SQI drops below threshold, the item is archived, not deleted — the data is preserved for retrospective analysis under adjusted parameters.\n\nThese invariants transform AcaciaFund from a content site into a homeostatic knowledge filter, applying Wiener's cybernetic principles to the problem of structural intelligence in high-noise domains.\n\n---\n\n**Last Updated:** 2026-07-07\n**Version:** 1.0.0\n**Classification:** Site Definition\n**Primary Sources:** Wiener, N. (1948) *Cybernetics*; Lem, S. (1964) *Summa Technologiae*\n**Confidence Score:** 1.00\n**Ontology Tag:** system/cybernetic-manifesto</pre>",
+      "category": "knowledge",
+      "content_type": "knowledge",
+      "tags": [
+        "system",
+        "foundations",
+        "core-architecture"
+      ],
+      "pillar": "system",
+      "author": "AcaciaFund",
+      "date_str": "2026-07-07",
+      "sqi": 1.0,
+      "language": "en",
+      "created_at": "2026-07-07T16:06:20.413657+00:00",
+      "updated_at": "2026-07-07T16:06:20.413657+00:00",
+      "deprecated": false,
+      "enriched": true,
+      "enriched_at": "2026-07-07"
+    },
+    {
+      "slug": "aml-core-foundations",
+      "title": "Foundations of Financial Intelligence and Network Topology",
+      "description": "The European Union's anti-money laundering framework has undergone a structural phase transition between 2018 and 2026, evolving from a decentralised network of national Financial Intelligence Units (",
+      "body_html": "<pre># Foundations of Financial Intelligence and Network Topology\n\n## Section 1: Legal Evolutions — From Local FIU Mandates to Centralised AMLA Supervision\n\nThe European Union's anti-money laundering framework has undergone a structural phase transition between 2018 and 2026, evolving from a decentralised network of national Financial Intelligence Units (FIUs) operating under minimum-harmonisation directives to a centralised supervisory architecture under the Anti-Money Laundering Authority (AMLA).\n\n### AMLD5 (2018) — Transparency Without Enforcement\n\nThe 5th Anti-Money Laundering Directive (2018/843) introduced beneficial ownership registers and extended customer due diligence obligations to virtual asset service providers (VASPs). Its structural weakness was enforcement asymmetry: member states with under-resourced FIUs transposed the directive at varying speeds and operational depths, creating jurisdictional arbitrage windows that professional money launderers exploited. The FATF's 2022 mutual evaluation report on the EU found that 12 of 27 member states had \"significant deficiencies\" in beneficial ownership verification, and cross-border STR exchange rates varied by a factor of 40 between the most and least active FIUs.\n\n### AMLD6 (2021) — Graph Mandates and Harmonised Thresholds\n\nThe 6th Anti-Money Laundering Directive (2021/2022) addressed enforcement asymmetry through three mechanisms:\n\n1. **Mandatory graph-based detection.** Article 18 requires institutions to maintain dynamic risk assessments that incorporate entity-level behavioural models and transaction network context. This is the first EU regulation to implicitly mandate graph topology analysis — a static rule engine cannot satisfy Article 18 because it cannot update per-entity risk scores as new edges are added to the transaction network.\n\n2. **Expanded predicate offences.** The directive added cybercrime, environmental crime, and tax evasion to the list of predicate offences, expanding the detection surface from 22 to 34 predicate categories. Each category requires distinct transaction graph signatures that threshold-based systems cannot discriminate.\n\n3. **Extended criminal liability.** Legal persons can now be held criminally liable for money laundering committed on their behalf, regardless of whether a natural person is convicted. This shifts the compliance burden from individual compliance officers to institutional graph infrastructure — the institution must prove that its detection systems could not reasonably have identified the pattern in question.\n\n### AMLA Regulation (2024) — The Centralised Supervisor\n\nThe establishment of AMLA, operational from mid-2025, represents a regulatory regime change. AMLA has three structural powers that reshape the compliance engineering landscape:\n\n1. **Direct supervision of 200+ largest financial institutions.** These institutions must now satisfy AMLA's technical standards directly, rather than through national competent authorities. AMLA's forthcoming Technical Standards on Transaction Monitoring (expected 2027) are expected to mandate minimum graph-traversal capabilities, including `k`-hop neighbourhood queries and cycle enumeration, for all directly supervised entities.\n\n2. **Binding mediation.** When two member states' FIUs disagree on jurisdiction over a cross-border STR, AMLA's mediation is binding. This eliminates the regulatory arbitrage strategy of structuring transactions to fall between FIU jurisdictions.\n\n3. **Harmonised reporting formats.** AMLA has mandated the ISO 20022 XML schema for all STR filings from 2027 onward. The schema includes dedicated fields for transaction graph fragments, counterparty chain metadata, and network centrality scores — regulatory codification of topology-aware detection.\n\nThe trajectory is clear: from 2021 to 2028, EU AML regulation is moving from rule-based to graph-based detection standards. Institutions whose transaction monitoring systems cannot enumerate cycles, compute betweenness centrality, or traverse k-hop neighbourhoods by 2028 will face structural non-compliance.\n\n## Section 2: Transaction Graph Topologies\n\nFinancial crime architectures produce distinctive graph signatures that are measurable independently of transaction values. The following typologies are defined in terms of network topology rather than monetary thresholds, enabling detection without reliance on value-based rules.\n\n### Structuring (Smurfing) — Multi-Edge Star\n\nA structuring operation distributes a single large transaction across multiple sub-threshold transactions. In graph terms, this produces a star subgraph centred on the originator node `u`, where each edge `(u, v_i)` has weight `w_i < T` (the reporting threshold, 15,000 EUR under KNF regulations) but the sum `Σw_i > T`. The distinguishing characteristic is channel diversity: each `v_i` receives funds through a distinct channel `c_i ∈ {wire, card, cash, crypto}`, and the timestamps `t_i` are separated by intervals `δt ≥ 6h` to evade temporal aggregation rules.\n\nDetection complexity: `O(d(u))` per customer, where `d(u)` is the out-degree of the originator node. For retail portfolios with average out-degree below 20, this is a constant-time operation per customer per window. The hard problem is not detecting the star — it is distinguishing legitimate multi-channel disbursement (e.g., a parent disbursing allowances to children via different channels) from structured layering. The distinguishing metric is the counterparty risk score entropy:\n\n`H(u) = -Σ p_c × log(p_c)`\n\nwhere `p_c` is the proportion of outbound value directed to counterparty `c`. Low entropy (`H(u) < 1.5` bits) indicates concentration among few counterparties — consistent with layering. High entropy (`H(u) > 3.0` bits) indicates diversified disbursement — consistent with legitimate economic activity.\n\n### Trade-Based Money Laundering (TBML) — Directed Cycle\n\nTBML involves over-invoicing or under-invoicing goods and services to transfer value across borders without corresponding financial flows. The graph signature is a directed cycle of length 3-5 involving entities in at least two jurisdictions. Each edge `(A, B)` represents a trade document rather than a direct financial transfer, and the edge weight `w(A, B)` is the invoiced amount.\n\nDetection requires constructing a bipartite trade document graph `G = (U, V, E)` where `U` is the set of exporting entities, `V` is the set of importing entities, and edges carry invoice amounts and commodity codes (HS codes). A TBML cycle is a directed alternating path `(u₁, v₁, u₂, v₂, ..., u₁)` where:\n- `amount(u_i, v_i) ≠ amount(v_i, u_{i+1})` by more than 20% (the mispricing margin)\n- The commodities in each direction belong to different HS chapters (to evade customs correlation)\n- At least one jurisdiction on the cycle is on the FATF grey list\n\nThe TBML detection algorithm is a constrained cycle enumeration on the bipartite trade document graph, filtered by the mispricing margin and HS chapter divergence. For trade portfolios with fewer than 50,000 entities, enumeration completes within minutes using modified Johnson's algorithm.\n\n### Cross-Border VASP Intermediation — Multi-Hop Path with Crypto Gateway\n\nVirtual asset transfers involving multiple VASPs create graph paths that span both fiat and crypto ecosystems. The canonical structure is:\n\n`Fiat_Originator → VASP_A → Blockchain_Tx → VASP_B → Fiat_Beneficiary`\n\nEach hop transforms the value representation: fiat → crypto at VASP_A, crypto → fiat at VASP_B. The transaction is opaque to both fiat-only and crypto-only monitoring systems because neither sees the complete path.\n\nThe Travel Rule (FATF Recommendation 16, implemented in the EU via the Transfer of Funds Regulation 2023/1113) requires VASPs to transmit originator and beneficiary information for all transfers above 1,000 EUR. In graph terms, this creates a path `(originator, VASP_A, on-chain_address, VASP_B, beneficiary)` where the on-chain address is the only visible element to blockchain analytics. The missing link is the mapping `on-chain_address → VASP_A` and `on-chain_address → VASP_B`, which requires either Travel Rule data sharing agreements between VASPs or heuristic clustering of on-chain addresses.\n\nThe Topological detection approach: construct a hybrid graph `G = (F ∪ C, E)` where `F` is the set of fiat entities (banks, VASPs, corporates) and `C` is the set of on-chain addresses. Edges crossing the `F↔C` boundary are Travel Rule disclosures (when available) or heuristic cluster assignments (when not). A suspicious VASP-intermediated transfer is any path from a high-risk `f_i` to a high-risk `f_j` that passes through at least one unregulated or minimally regulated VASP.\n\n## Section 3: Cryptographic and VASP Intermediation — Data Format Structures for Travel Rule Compliance\n\nThe Crypto Travel Rule requires VASPs to transmit and receive structured originator and beneficiary information. The data interchange format is specified by the IVMS 101 standard (InterVASP Messaging Standard 101), which defines a JSON schema for beneficiary and originator data.\n\n### IVMS 101 — Required Fields\n\n```json\n{\n  \"originator\": {\n    \"natural_person\": {\n      \"name\": {\n        \"primary_identifier\": \"string\",\n        \"secondary_identifier\": \"string (optional)\"\n      },\n      \"geographic_address\": {\n        \"address_type\": \"string\",\n        \"street\": \"string\",\n        \"town\": \"string\",\n        \"country\": \"ISO 3166-1 alpha-2\"\n      },\n      \"national_identifier\": {\n        \"national_identifier_type\": \"string (e.g., PESEL, SSN)\",\n        \"national_identifier_value\": \"string\",\n        \"country_of_issue\": \"ISO 3166-1 alpha-2\"\n      }\n    },\n    \"legal_person\": {\n      \"name\": {\n        \"primary_identifier\": \"string\",\n        \"legal_name\": \"string\"\n      },\n      \"geographic_address\": { /* same as above */ },\n      \"national_identifier\": {\n        \"national_identifier_type\": \"string (e.g., LEI, EIN, NIP)\",\n        \"national_identifier_value\": \"string\",\n        \"country_of_issue\": \"ISO 3166-1 alpha-2\"\n      }\n    }\n  },\n  \"beneficiary\": { /* same structure as originator */ },\n  \"transfer\": {\n    \"amount\": \"numeric\",\n    \"asset_type\": \"ISO 24165 DTI (Digital Token Identifier)\",\n    \"blockchain_tx_id\": \"string (optional)\",\n    \"vasp_identifier\": \"string (VASP LEI or registration number)\"\n  }\n}\n```\n\nThe critical field for graph analysis is `vasp_identifier` — connecting the on-chain transaction to the off-chain VASP. Without this field (populated via Travel Rule data sharing), the hybrid graph described in Section 2 cannot be constructed, and cross-border VASP intermediation remains opaque.\n\n### Multi-Layered Ownership Verification\n\nCorporate structures involving shell companies, trusts, and multi-jurisdictional holding entities create layered ownership graphs that conceal beneficial ownership. Each layer in the ownership chain adds an edge `(legal_entity, beneficial_owner)` with an ownership percentage. The ultimate beneficial owner (UBO) is the natural person who owns or controls more than 25% of the entity, directly or indirectly.\n\nThe ownership graph `G_o = (E ∪ N, E_o)` where `E` is the set of legal entities, `N` is the set of natural persons, and ownership edges are weighted by percentage. The UBO detection algorithm traverses this graph following edges where `w(e) > 0.25`, computing the cumulative ownership path:\n\n`Ownership_path(n, e) = Π_{edges ∈ path(n, e)} w(edge)`\n\nIf any path from a natural person `n` to a legal entity `e` has cumulative ownership `≥ 0.25`, that person is a UBO of that entity. The computational complexity is `O(|E| + |N| + |E_o|)` — linear in the size of the ownership graph — when using breadth-first search from each entity.\n\n---\n\n**Last Updated:** 2026-07-07\n**Version:** 1.0.0\n**Classification:** AML Technical Foundations\n**Primary Sources:** EU AMLD5 (2018/843), AMLD6 (2021/2022), AMLA Regulation (2024/2025), FATF Recommendation 16, IVMS 101\n**Confidence Score:** 1.00\n**Ontology Tag:** aml/core-foundations</pre>",
+      "category": "knowledge",
+      "content_type": "knowledge",
+      "tags": [
+        "aml",
+        "foundations",
+        "core-architecture"
+      ],
+      "pillar": "aml",
+      "author": "AcaciaFund",
+      "date_str": "2026-07-07",
+      "sqi": 1.0,
+      "language": "en",
+      "created_at": "2026-07-07T16:06:20.413657+00:00",
+      "updated_at": "2026-07-07T16:06:20.413657+00:00",
+      "deprecated": false,
+      "enriched": true,
+      "enriched_at": "2026-07-07"
+    },
+    {
+      "slug": "market-core-foundations",
+      "title": "Limit Order Book Physics and Systemic Risk Mechanics",
+      "description": "A modern electronic Limit Order Book (LOB) implements a continuous double auction — the canonical mechanism for price discovery in equity, futures, and foreign exchange markets. The LOB model is not m",
+      "body_html": "<pre># Limit Order Book Physics and Systemic Risk Mechanics\n\n## Section 1: Market Microstructure Physics — The Continuous Double Auction\n\nA modern electronic Limit Order Book (LOB) implements a continuous double auction — the canonical mechanism for price discovery in equity, futures, and foreign exchange markets. The LOB model is not merely a queue of pending orders; it is a physical information engine whose state vector evolves deterministically in response to each message submitted by market participants. The analysis below decomposes this model into its constituent state variables and matching mechanics.\n\n### LOB State Vector\n\nThe LOB at time `t` is fully described by:\n\n`LOB(t) = (B(t), A(t), p_last(t), v(t))`\n\nwhere:\n- `B(t) = {(p_i, q_i, t_i, id_i)}` — the set of bid orders, each with price, quantity, timestamp, and order identifier\n- `A(t) = {(p_j, q_j, t_j, id_j)}` — the set of ask orders\n- `p_last(t)` — the last traded price\n- `v(t)` — the last traded volume\n\nThe bid-ask spread at time `t` is:\n`s(t) = min({p | (p, q) ∈ A(t)}) - max({p | (p, q) ∈ B(t)})`\n\nWhen `s(t) = 0` (a crossed market), a trade executes at the crossing price using the standard price-time priority matching algorithm:\n\n```\nwhile exists b ∈ B, a ∈ A where b.price >= a.price:\n    trade_price = b.price if b.timestamp < a.timestamp else a.price\n    trade_volume = min(b.quantity, a.quantity)\n    b.quantity -= trade_volume\n    a.quantity -= trade_volume\n    if b.quantity == 0: remove b from B\n    if a.quantity == 0: remove a from A\n    p_last(t) = trade_price\n    v(t) = trade_volume\n```\n\nThis is the deterministic kernel of the market. Every trade that ever executes is the deterministic output of this algorithm applied to the order stream. The apparent unpredictability of prices arises not from the matching engine but from the order submission process, which is a stochastic process governed by participant strategies (liquidity provision, momentum trading, arbitrage, hedging).\n\n### Order Arrival as a Marked Point Process\n\nOrder submissions to the LOB follow a doubly stochastic Poisson process (Cox process) with intensity:\n\n`λ(t) = λ_0 + λ_1 × s(t)^(-1) + λ_2 × |δp(t) / p(t)|`\n\nwhere:\n- `λ_0` is the baseline arrival rate (approximately 200-500 events/second for large-cap equities)\n- `λ_1 × s(t)^(-1)` captures the inverse relationship between spread and submission rate — narrower spreads attract more orders\n- `λ_2 × |δp(t) / p(t)|` captures volatility-driven order clustering — larger price changes attract follow-on orders\n\nThe marked point process includes order type (limit, market, cancel), side (buy, sell), price, and quantity as marks. Each mark has a conditional distribution that depends on the current LOB state, making the joint process path-dependent.\n\n### Price Discovery Mechanics\n\nPrice discovery is the process by which the LOB incorporates new information into the equilibrium price. In efficient market theory (Fama, 1970), this occurs instantaneously. In microstructure reality, information is incorporated through the following sequence:\n\n1. An informed trader submits a market order to buy (sell) `q` shares.\n2. The order walks up (down) the book, consuming visible liquidity at each price level.\n3. The transaction price `p_exec` is the volume-weighted average price of consumed levels.\n4. The mid-quote `p_mid(t) = (best_bid + best_ask) / 2` shifts in the direction of the trade.\n5. Liquidity providers update their quotes based on the information signal in the trade — the price impact.\n\nThe permanent price impact of a market order of size `q` is:\n\n`Δp_permanent(q) = γ × σ × (q / Q)^(1/2)`\n\nwhere `σ` is the volatility of the asset, `Q` is the total visible liquidity in the book, and `γ` is the Kyle's lambda parameter (Kyle, 1985) — the market's estimate of the probability that the trade is informed versus uninformed. A higher `γ` means the market attributes more information content to each trade, producing larger permanent price moves for the same order size.\n\nThe temporary (transient) price impact is:\n\n`Δp_temporary(q) = η × (q / Q)^(3/2)`\n\nwhich decays exponentially with time constant `τ ≈ 10-100 milliseconds` as liquidity providers re-enter the book. The difference between permanent and temporary impact is the liquidity provider's profit — they earn the temporary impact premium for supplying immediacy.\n\n## Section 2: Liquidity Fragmentation\n\n### The Fragmentation Topology\n\nPost-MiFID II (2018), European equity trading is dispersed across three venue types:\n- **Regulated markets (RM):** Primary exchanges (e.g., Xetra, Euronext, LSE) with pre-trade transparency\n- **Multilateral trading facilities (MTFs):** Alternative venues (e.g., Chi-X, Turquoise, Cboe Europe) competing with RMs on fee structure and latency\n- **Systematic internalisers (SIs):** Investment firms that execute client orders against their own inventory without pre-trade transparency\n\nDark pools — trading venues without pre-trade transparency — account for approximately 12-15% of European equity volume as of 2026. They exist in two structural variants:\n- **Continuous dark pools:** Match orders at the mid-point of the lit exchange's best bid and offer (PBBO). The PBBO mid-point provides a reference price that eliminates adverse selection for liquidity demanders.\n- **Periodic auctions:** Batch auctions (e.g., Cboe Europe's periodic auction book) that execute at the mid-point at fixed intervals (every 10-100 milliseconds). The batching interval introduces intentional latency, reducing the information advantage of fast traders.\n\n### Liquidity Fragmentation Impact on Price Discovery\n\nThe fragmentation of liquidity across multiple venues degrades price discovery efficiency through three mechanisms:\n\n1. **Quote snipping.** A market order on venue `A` executes against visible liquidity at that venue. If the same stock is traded on venue `B` and `C` with stale quotes (not updated because the inter-venue latency exceeds the trading latency), the market order books the stale quotes on `B` and `C` before liquidity providers can cancel them. This creates phantom liquidity — displayed volume that is no longer available because the reference price has moved — and generates adverse selection for liquidity providers, widening spreads across all venues.\n\n2. **Latency arbitrage.** Fast traders co-located at multiple venues observe a price move on venue `A` and trade against stale quotes on venue `B` within 5-10 microseconds. This is not front-running (the trader has no knowledge of a specific order) but latency arbitrage (the trader exploits the price discovery asynchrony). The cost of latency arbitrage is borne by liquidity providers who cannot cancel quotes fast enough — a form of taxation on slow capital.\n\n3. **Dark pool information leakage.** While dark pools do not display quotes, their order flow is observable through trade reporting (trade reports are published within microseconds of execution). A sequence of mid-point executions concentrated near the bid or ask reveals that a large buyer or seller is working an order in the dark. This information is used by fast traders to position quotes in the lit market ahead of the dark order flow, increasing the execution shortfall for the dark order.\n\n### Liquidity Fragmentation Metrics\n\nThe assessment of fragmentation requires a quantitative metric. This analysis uses the Herfindahl-Hirschman Index (HHI) of volume concentration as the baseline measurement framework:\n\n`HHI = Σ_i (V_i / V_total)^2`\n\nwhere `V_i` is the volume executed on venue `i`. An HHI below 0.2 indicates highly fragmented trading (typical for European large-cap equities post-MiFID II). The fragmentation-adjusted spread is:\n\n`s_effective = s_lit + κ × (1 / HHI - 1) × s_lit`\n\nwhere `κ ≈ 0.15` is the fragmentation cost coefficient estimated from European equity data (2019-2026). For a stock with `HHI = 0.15` and `s_lit = 0.02%`, the effective spread is `s_effective = 0.02% + 0.15 × (1/0.15 - 1) × 0.02% = 0.037%` — nearly double the lit spread.\n\n## Section 3: Systemic Counterparty Risk — Bipartite Exposure Networks\n\n### NBFI Intermediation Risk\n\nNon-Bank Financial Institutions (NBFIs) — hedge funds, mutual funds, pension funds, insurance companies, and money market funds — now account for 51% of global financial assets (FSB, 2025). Their interconnectedness through derivative contracts, securities lending, and repo agreements creates a structured channel for shock propagation that operates outside the traditional banking sector's regulatory perimeter.\n\n### Bipartite Exposure Network\n\nThe financial system is modelled as a bipartite graph `G = (N ∪ A, E)` where:\n\n- `N = {n_1, ..., n_k}` is the set of NBFIs\n- `A = {a_1, ..., a_m}` is the set of asset classes (equities, government bonds, corporate bonds, structured products, derivatives)\n- Each edge `(n_i, a_j) ∈ E` has weight `w_{ij}` representing the exposure of institution `i` to asset class `j`\n\nA shock to asset class `a_j` (e.g., a 20% decline in corporate bonds) propagates through the network as follows:\n\n1. **Mark-to-market losses.** Each institution `n_i` with exposure `w_{ij} > 0` suffers an immediate loss `L_i = w_{ij} × δ_j` where `δ_j` is the shock magnitude.\n\n2. **Margin calls.** If `n_i` uses leverage `λ_i = total_assets / equity`, the loss triggers margin calls when `L_i / equity_i > margin_threshold`. The margin call forces asset sales at depressed prices, creating a feedback loop.\n\n3. **Contagion.** Institutions that are counterparties to `n_i` in derivative contracts face counterparty credit risk: if `n_i` defaults, the replacement cost of the derivative position must be funded, potentially triggering further defaults.\n\n### Contagion Simulation\n\nThe systemic risk simulation iterates:\n\n```\ndef simulate_contagion(G, shock_asset, shock_magnitude, max_iterations=10):\n    defaults = set()\n    losses = {n: 0.0 for n in G.NBFIs}\n    \n    for iteration in range(max_iterations):\n        for n in G.NBFIs:\n            if n in defaults:\n                continue\n            loss_this_round = sum(\n                G.w[n][a] * shock_magnitude[a]\n                for a in G.assets_held_by(n)\n                if a not in defaults\n            )\n            losses[n] += loss_this_round\n            if losses[n] / G.equity[n] > G.default_threshold[n]:\n                defaults.add(n)\n                # Default triggers: mark all assets held by n to fire-sale prices\n                for a in G.assets_held_by(n):\n                    shock_magnitude[a] *= (1 + fire_sale_discount)\n    \n    return defaults, losses\n```\n\nThe critical parameter is the fire sale discount — the additional price decline caused by forced asset sales from defaulting institutions. Empirical estimates (FSB, 2024) put the fire sale discount at 5-15% for liquid assets and 25-40% for illiquid structured products. The contagion threshold is reached when the number of defaults exceeds a critical value `D_crit` — beyond this point, the fire sale discount self-amplifies through the network, producing a systemic cascade.\n\n### Regulatory Mitigation — CCP Resilience\n\nCentral Counterparties (CCPs) sit between NBFI counterparties in derivative trades, mutualising counterparty risk. A CCP is a node in the bipartite exposure network that guarantees trade settlement: if institution `A` defaults on a derivative with institution `B`, the CCP steps in to fulfil the contract.\n\nCCP resilience depends on:\n- **Margin adequacy:** Initial margin must cover potential future exposure at 99% confidence over the liquidation period\n- **Default fund size:** The CCP's default fund must cover the simultaneous default of its two largest clearing members\n- **Waterfall structure:** The CCP's financial resources are deployed in order: defaulter's margin → defaulter's default fund contribution → CCP skin in the game → mutualised default fund contributions\n\nThe 2025 stress test of EU CCPs (ESMA, 2025) found that the two-cover rule (largest two members defaulting simultaneously) would exhaust the default fund for CCPs clearing less-liquid asset classes (corporate credit, commodity derivatives) in a 3-sigma stress scenario. This is the structural vulnerability: CCPs are resilient for liquid assets but become a contagion channel themselves when the assets they clear become illiquid.\n\n---\n\n**Last Updated:** 2026-07-07\n**Version:** 1.0.0\n**Classification:** Market Microstructure Foundations\n**Primary Sources:** Kyle (1985) *Continuous Auctions and Insider Trading*; Fama (1970) *Efficient Capital Markets*; MiFID II (2014/65/EU); FSB 2025 NBFI Monitor; ESMA 2025 CCP Stress Test\n**Confidence Score:** 1.00\n**Ontology Tag:** market/core-foundations</pre>",
+      "category": "knowledge",
+      "content_type": "knowledge",
+      "tags": [
+        "market",
+        "foundations",
+        "core-architecture"
+      ],
+      "pillar": "market",
+      "author": "AcaciaFund",
+      "date_str": "2026-07-07",
+      "sqi": 1.0,
+      "language": "en",
+      "created_at": "2026-07-07T16:06:20.413657+00:00",
+      "updated_at": "2026-07-07T16:06:20.413657+00:00",
+      "deprecated": false,
+      "enriched": true,
+      "enriched_at": "2026-07-07"
+    },
+    {
+      "slug": "data-core-foundations",
+      "title": "Declarative DataOps and Schema Governance Architectures",
+      "description": "Data engineering has undergone a paradigm shift from imperative scripting to declarative compilation. In the imperative paradigm (Python scripts, shell pipelines, manually scheduled cron jobs), each d",
+      "body_html": "<pre># Declarative DataOps and Schema Governance Architectures\n\n## Section 1: The Declarative Ingestion Paradigm\n\nData engineering has undergone a paradigm shift from imperative scripting to declarative compilation. In the imperative paradigm (Python scripts, shell pipelines, manually scheduled cron jobs), each data transformation is a procedural specification: \"run this function, then that function, then persist the result.\" The order matters, the execution environment matters, and the developer is responsible for tracking which transformations depend on which inputs. This approach produces what Barr Moses termed \"the data pipeline debt spiral\": as the number of pipelines grows linearly, the debugging cost grows superlinearly because each pipeline's dependencies are implicit.\n\n### Declarative Models as Compilation Targets\n\nIn the declarative paradigm (dbt, SQLMesh, Dagster with software-defined assets), each transformation is a SELECT statement or a Python function annotated with its input and output dependencies. The orchestration engine compiles the full dependency graph before executing any node:\n\n```\n# Declarative model — data/product_metrics.sql\nSELECT\n    product_id,\n    COUNT(DISTINCT user_id) AS active_users,\n    SUM(revenue) AS total_revenue,\n    AVG(session_duration) AS avg_session_duration\nFROM raw.events\nWHERE event_date >= CURRENT_DATE - INTERVAL '30 days'\nGROUP BY product_id\n```\n\nThe orchestration engine performs static analysis at compile time:\n1. **Dependency resolution.** Parse the FROM clause to determine upstream dependencies (`raw.events`). Construct the Directed Acyclic Graph (DAG) of all models.\n2. **Lineage tracking.** For each column in the SELECT clause, trace its origin to the source table's columns. A column-level lineage graph `G_c = (C, E)` where each edge `(c_i, c_j)` indicates that column `c_j` is derived from column `c_i`. This graph supports impact analysis: \"if we rename `raw.events.revenue`, which downstream reports break?\"\n3. **Type checking.** Ensure that the SELECT statement produces a schema consistent with the declared model schema. Mismatched types raise a compile-time error, not a runtime failure — this is the critical advantage over imperative scripting, where type mismatches surface when the pipeline runs at 3 AM on a Saturday.\n4. **Incremental computation.** If the model is declared as incremental (`WHERE event_date >= CURRENT_DATE - INTERVAL '30 days'`), the engine generates two execution plans: a full-refresh plan (for initial load) and an incremental plan (for daily updates using the model's unique key). The incremental plan applies only changed records, reducing execution time by orders of magnitude for append-only event streams.\n\n### Static Compilation Testing\n\nDeclarative orchestration enables static compilation testing — verifying the DAG without executing it. The test suite:\n\n```python\ndef test_model_compiles():\n    from dbt.compilation import compile_project\n    manifest = compile_project(\"/path/to/project\")\n    assert len(manifest.nodes) > 0, \"No models found\"\n    assert all(not n.has_compile_error for n in manifest.nodes)\n\ndef test_no_cycles():\n    from dbt.graph import perform_graph_operations\n    graph = perform_graph_operations(manifest)\n    assert not graph.has_cycles, \"DAG contains cycles\"\n\ndef test_column_lineage():\n    for model in manifest.nodes:\n        for column in model.columns:\n            assert column.lineage is not None, f\"{model.name}.{column.name} has no lineage\"\n```\n\nThese tests execute in under 10 seconds for a project with 500 models. They catch 60-70% of deployment-blocking issues (missing sources, circular dependencies, type mismatches) before any data is processed — the declarative paradigm's fundamental efficiency advantage.\n\n### Section 2: Distributed Table Storage Topologies\n\n### Decoupled Storage Architecture\n\nModern data lakehouse architectures decouple storage from compute, persisting data in open formats (Apache Iceberg, Delta Lake, Apache Hudi) on object storage (S3, GCS, Azure Blob) while compute engines (Spark, Trino, DuckDB) read and write through a metadata coordination layer.\n\nThe storage topology for an Iceberg table is a three-level tree:\n\n```\nTable root (database.table_name)\n├── Metadata layer\n│   ├── v1.metadata.json       — Current table snapshot\n│   ├── v2.metadata.json       — Updated after append\n│   └── v3.metadata.json       — Updated after compaction\n├── Manifest list\n│   ├── snap-12345.avro        — Manifests for snapshot v2\n│   └── snap-12346.avro        — Manifests for snapshot v3\n└── Data files (Parquet)\n    ├── partition=2026-07-01/\n    │   ├── 000000-001.parquet\n    │   └── 000000-002.parquet\n    ├── partition=2026-07-02/\n    │   └── 000001-001.parquet\n    └── partition=2026-07-03/\n        └── 000002-001.parquet\n```\n\nEach metadata JSON file contains:\n- The schema (column names, types, nullable constraints)\n- The partition spec (how data is physically organised: `PARTITION BY date`)\n- The sort order (how data within each partition is ordered: `ORDER BY transaction_id`)\n- The snapshot's manifest list — a set of Avro files that each track a collection of data files\n\nThis three-level indirection enables atomic operations: when a query engine commits a write, it creates a new metadata file and atomically switches the table's current snapshot pointer. Readers see either the old snapshot or the new one, never an intermediate state. The atomic switch is implemented via a file system operation or a catalog transaction (Hive Metastore, AWS Glue, Nessie).\n\n### File Compaction Tactics\n\nThe data lakehouse write pattern — append-only streaming inserts — produces a large number of small files over time. A streaming pipeline writing 1,000 events/second with a 60-second checkpoint interval produces 86,400 files per day per table. Each file incurs a listing overhead on object storage (approximately 5-10 milliseconds per file on S3) and a planning overhead in the query engine (opening each file to read its metadata footer).\n\nCompaction is the process of merging small files into larger ones. The compaction policy for a production Iceberg table with 100 GB/day ingestion:\n\n1. **Target file size:** 512 MB per Parquet file after compaction. This balances query parallelism (more files = more concurrent readers) with planning overhead (fewer files = faster planning).\n2. **Compaction trigger:** Automatic compaction activates when the ratio of small files (<128 MB) to total files exceeds 0.3, or when total file count exceeds 10,000.\n3. **Compaction execution:** A rewrite operation reads all data files in a partition, sorts them by the table's sort order, and writes new files of the target size. The operation is ACID: the rewrite creates new metadata and manifests atomically, and old files are eventually garbage-collected when no snapshot references them.\n\n### Metadata Coordination — The Concurrency Problem\n\nWhen multiple engines write to the same Iceberg table concurrently (e.g., a Spark batch job and a Flink streaming job), they contend on the metadata file. Iceberg's optimistic concurrency control uses a compare-and-swap (CAS) on the current metadata pointer:\n\n```\n1. Engine A reads current metadata (v2)\n2. Engine B reads current metadata (v2)\n3. Engine A writes data, creates v3, attempts to CAS: v2 → v3\n4. CAS succeeds (current is v2)\n5. Engine B writes data, creates v4, attempts to CAS: v2 → v4\n6. CAS fails (current is now v3)\n7. Engine B retries: re-reads v3, merges its changes, creates v5, CAS: v3 → v5\n8. CAS succeeds\n```\n\nIf Engine B's writes conflict with Engine A's (e.g., both modified the same data file), the merge fails and Engine B must resolve the conflict. Iceberg's default conflict resolution is \"last writer wins\" — Engine B's write overwrites Engine A's if they touched the same file. For streaming ingestion where writers append to different data files, conflicts are rare. For concurrent compaction operations that both rewrite the same partition, conflicts are frequent and require explicit coordination (e.g., a distributed lock via ZooKeeper).\n\n## Section 3: Stateful Stream Processing\n\n### Stateful Stream Joins in Apache Flink\n\nStream processing systems perform stateful operations — aggregations, joins, pattern matching — by maintaining operator state in local embedded key-value stores (RocksDB for Flink) or remote stores (Redis, mem0). The state is checkpointed periodically to durable storage for fault tolerance.\n\nA stream-stream join (enriching a transaction stream with a customer profile stream) requires maintaining both sides in state:\n\n```sql\n-- Flink SQL: Stream-stream interval join\nSELECT\n    t.transaction_id,\n    t.amount,\n    c.customer_risk_rating,\n    c.jurisdiction\nFROM transactions t\nJOIN customers c\n    ON t.customer_id = c.customer_id\n    AND t.event_time BETWEEN c.profile_valid_from AND c.profile_valid_to\n```\n\nThis join requires Flink to maintain:\n- The `transactions` stream's state: keys and event times for the past N minutes (the join interval)\n- The `customers` stream's state: complete profile history (because profiles can change over time)\n\n### State Compaction Strategies\n\nWithout state management, the `customers` join state grows without bound as new profiles are added. Production deployments use three compaction tactics:\n\n1. **Time-to-live (TTL) watermarking.** Each state entry carries a TTL. For the transaction side, TTL equals the join interval (typically 5-60 minutes). For the customer side, TTL is the maximum expected profile validity period (typically 7-30 days). State entries exceeding TTL are garbage-collected during checkpointing.\n\n2. **Versioned state with compaction.** For the customer side, only the most recent profile per `customer_id` is needed for correct join semantics (assuming profile updates supersede previous ones). Flink's RocksDB backend supports compaction filters that discard obsolete entries during RocksDB's LSM-tree compaction cycle:\n\n```java\n// Flink compaction filter: discard customer profiles superseded by newer ones\npublic class CustomerProfileCompactionFilter\n    implements KeyedStateCompactionFilter<String, CustomerProfile> {\n    \n    @Override\n    public boolean filter(String key, CustomerProfile value, long timestamp) {\n        return value.isSuperseded();  // true = discard\n    }\n}\n```\n\n3. **Event-time alignment.** The join operation must handle out-of-order events — a transaction emitted with a 5-second latency must still join with the correct customer profile. Flink uses watermarks (event-time progress markers) to determine when no more events with timestamp `t < watermark` will arrive. Events arriving after the watermark are \"late data\" and can be discarded or routed to a side output for offline reprocessing.\n\n### State Backend Configuration for Production\n\nThe Flink state backend configuration for a production stream join processing 50,000 events/second:\n\n```yaml\nstate.backend: rocksdb\nstate.backend.rocksdb.timer-service-factory: ROCKSDB\nstate.backend.rocksdb.ttl.compaction.filter.enabled: true\nstate.backend.incremental: true\nstate.checkpoints.dir: s3://acaciafund-checkpoints/stream-joins/\nstate.checkpoints.num-retained: 3\nstate.backend.local-recovery: true\n```\n\nThis configuration:\n- Uses RocksDB (disk-based) rather than Heap (memory-based) because the join state exceeds 100 GB for a 30-day customer profile retention window\n- Enables RocksDB's TTL compaction filter to automatically discard expired state entries\n- Configures incremental checkpointing (only changed state entries are persisted per checkpoint, reducing checkpoint time from minutes to seconds)\n- Retains 3 checkpoints for recovery: enough for at-least-once semantics, not enough to overflow S3 storage\n- Enables local recovery (state is restored from local disk rather than re-downloading from S3 on restart), reducing failover time from 30 minutes to 2 minutes for a 100 GB state backend\n\n---\n\n**Last Updated:** 2026-07-07\n**Version:** 1.0.0\n**Classification:** Data Engineering Foundations\n**Primary Sources:** Apache Iceberg Specification v2; Flink State Backend Tuning Guide; Barr Moses — *Data Quality Fundamentals*\n**Confidence Score:** 1.00\n**Ontology Tag:** data/core-foundations</pre>",
+      "category": "knowledge",
+      "content_type": "knowledge",
+      "tags": [
+        "data",
+        "foundations",
+        "core-architecture"
+      ],
+      "pillar": "data",
+      "author": "AcaciaFund",
+      "date_str": "2026-07-07",
+      "sqi": 1.0,
+      "language": "en",
+      "created_at": "2026-07-07T16:06:20.413657+00:00",
+      "updated_at": "2026-07-07T16:06:20.413657+00:00",
+      "deprecated": false,
+      "enriched": true,
+      "enriched_at": "2026-07-07"
+    },
+    {
+      "slug": "temporal-graph-aml",
+      "title": "Temporal Graph Networks and Multi-Hop Link Prediction for Layering Detection",
+      "description": "Traditional transaction monitoring infrastructure relies on static graph representations where transactional vectors are aggregated over arbitrary windows (e.g., 30-day buckets). Let $G = (V, E)$ be a static directed graph where an edge $e_{ij} = (v_",
+      "body_html": "<pre># Temporal Graph Networks and Multi-Hop Link Prediction for Layering Detection\n\n## 1. Temporal Graph Topologies vs. Static Snapshots\n\nTraditional transaction monitoring infrastructure relies on static graph representations where transactional vectors are aggregated over arbitrary windows (e.g., 30-day buckets). Let $G = (V, E)$ be a static directed graph where an edge $e_{ij} = (v_i, v_j) \\in E$ represents the sum total of capital transferred from entity $v_i$ to entity $v_j$. This abstraction introduces critical structural vulnerabilities: it entirely discards the causal sequencing of transactions, enabling money laundering networks to exploit time-dependent transaction sequencing invariants.\n\nTo programmatically expose advanced financial crime patterns such as structured peeling and smurfing, financial intelligence must model transaction ledgers as a Continuous-Time Directed Graph (CTDG). We formally define a CTDG as:\n\n$$G(t) = (V(t), E(t))$$\n\nwhere each edge is mapped as an event tuple:\n\n$$e = (u, v, t, a, \\omega)$$\n\nHere, $u \\in V$ represents the originating node (source), $v \\in V$ represents the destination node (target), $t \\in \\mathbb{R}^+$ denotes the high-resolution timestamp, $a \\in \\mathbb{R}^+$ represents the numerical asset volume (monetary value), and $\\omega$ represents an arbitrary dimensional feature vector characterizing the transaction topology (e.g., routing channel, country code, asset type). \n\nIn a peeling cluster, a large illicit primary deposit at node $v_0$ is rapidly disaggregated through a series of multi-hop paths to obscure the audit trail. A static representation merges these sequential bursts with legitimate systemic noise. In contrast, a temporal framework preserves the causal sequence invariant:\n\n$$\\Delta t_n = t_n - t_{n-1} > 0 \\quad \\text{where} \\quad \\sum_{n=1}^{N} a_n = a_0 - \\epsilon$$\n\nIf $\\Delta t_n$ approach microsecond or uniform minute bounds while asset volume $a_n$ hovers just under regulatory reporting thresholds, the sub-graph registers a massive directional anomaly that static classification architectures completely fail to detect.\n\n## 2. Mathematical Modeling of Time-Decayed Accumulation Functions\n\nTo accurately capture fast-moving structuring loops without incurring unbounded memory consumption across millions of active ledger nodes, we construct a time-decayed directed edge weight centrality. For any node pair $(u, v)$, the dynamic edge intensity $I_{u,v}(t)$ at evaluation time $t$ is defined by an exponential attenuation function:\n\n$$I_{u,v}(t) = \\sum_{e_i \\in E_{u,v}(t)} a_i \\cdot \\exp\\left(-\\alpha (t - t_i)\\right)$$\n\nWhere $E_{u,v}(t) = \\{e = (u, v, t_i, a_i) \\mid t_i \\le t\\}$ constitutes the localized history of directed transactions, and $\\alpha \\in \\mathbb{R}^+$ represents the structural decay velocity parameter. The half-life of a transaction's analytical relevance within the alert matrix is governed by:\n\n$$t_{1/2} = \\frac{\\ln(2)}{\\alpha}$$\n\nFor long-tail behaviors where illicit structures park funds for extended intervals before consolidation, we implement a power-law attenuation function to maintain long-range temporal dependencies:\n\n$$I_{u,v}^{\\text{power}}(t) = \\sum_{e_i \\in E_{u,v}(t)} a_i \\cdot \\left(1 + \\gamma (t - t_i)\\right)^{-\\beta}$$\n\nWhere $\\gamma$ and $\\beta$ scale the calibration curve to evaluate historical entity affinity profiles. When computing network wide entity resolution and transaction graph embeddings, these attenuation profiles are updated using online recursive steps, ensuring that the global memory-state complexity remains bounded at $\\mathcal{O}(|E|)$ instead of scaling quadratically over time.\n\n## 3. Algorithmic Multi-Hop Link Prediction Frameworks\n\nTo intercept sophisticated structuring before final integration into legitimate asset pools, we deploy Temporal Graph Networks (TGNs) to execute multi-hop link prediction. Let $h_u(t)$ and $h_v(t)$ be the dynamic, deep-vector embeddings of nodes $u$ and $v$ at time $t$, derived via temporal graph attention layers. The probability $P$ of an unobserved structuring or consolidation link forming between seemingly decoupled legal entities is modeled as an operational sigmoid function over the structural affinity metric:\n\n$$P(e_{u,v}(t) = 1) = \\sigma\\left( \\mathbf{W}_2 \\cdot \\text{ReLU}\\left( \\mathbf{W}_1 \\cdot \\left[ h_u(t) \\parallel h_v(t) \\parallel (h_u(t) \\odot h_v(t)) \\right] + \\mathbf{b}_1 \\right) + \\mathbf{b}_2 \\right)$$\n\nWhere $\\parallel$ denotes vector concatenation, $\\odot$ represents the Hadamard element-wise product, and $\\mathbf{W}_1, \\mathbf{W}_2, \\mathbf{b}_1, \\mathbf{b}_2$ constitute optimized model weights. \n\nThe node embeddings are dynamically updated by aggregating information from adjacent multi-hop neighborhoods using temporal attention coefficients $\\alpha_{ij}$:\n\n$$\\alpha_{ij} = \\frac{\\exp\\left(\\text{LeakyReLU}\\left(\\mathbf{a}^T \\left[ \\mathbf{V}h_i(t) \\parallel \\mathbf{V}h_j(t) \\parallel \\mathbf{\\Phi}(t - t_{ij}) \\right]\\right)\\right)}{\\sum_{k \\in \\mathcal{N}_i} \\exp\\left(\\text{LeakyReLU}\\left(\\mathbf{a}^T \\left[ \\mathbf{V}h_i(t) \\parallel \\mathbf{V}h_k(t) \\parallel \\mathbf{\\Phi}(t - t_{ik}) \\right]\\right)\\right)}$$\n\nWhere $\\mathbf{\\Phi}(\\cdot)$ represents a sinusoidal functional time encoding projection that maps temporal latency signatures directly into a continuous vector space. By calculating these multi-hop attention coefficients over high-velocity paths, the machine learning isolation engine isolates hidden structural dependencies, flagging institutional evasion cells with near-zero false-positive rates.</pre>",
+      "category": "knowledge",
+      "content_type": "knowledge",
+      "tags": [
+        "aml",
+        "advanced-analytics",
+        "specialist-module"
+      ],
+      "pillar": "aml",
+      "author": "AcaciaFund",
+      "date_str": "2026-07-07",
+      "sqi": 1.0,
+      "language": "en",
+      "created_at": "2026-07-07T17:43:58.393790+00:00",
+      "updated_at": "2026-07-07T17:43:58.393790+00:00",
+      "deprecated": false,
+      "enriched": true,
+      "enriched_at": "2026-07-07"
+    },
+    {
+      "slug": "hawkes-microstructure",
+      "title": "Stochastic Point Processes and Hawkes Self-Exciting Intensity Functions in LOB Dynamics",
+      "description": "Electronic financial markets operate as discrete, high-frequency asynchronous systems where state modifications are dictated by incoming Limit Order Book (LOB) events. Let $\\{t_i\\}_{i \\in \\mathbb{N}}$ be an ordered sequence of sub-millisecond timesta",
+      "body_html": "<pre># Stochastic Point Processes and Hawkes Self-Exciting Intensity Functions in LOB Dynamics\n\n## 1. Limit Order Book Arrival Physics and Endogenous Clustering\n\nElectronic financial markets operate as discrete, high-frequency asynchronous systems where state modifications are dictated by incoming Limit Order Book (LOB) events. Let $\\{t_i\\}_{i \\in \\mathbb{N}}$ be an ordered sequence of sub-millisecond timestamps representing execution events, classified into three discrete action spaces:\n\n$$\\mathcal{A} = \\{\\text{Limit Inflow } (L), \\text{Cancellation } (C), \\text{Market Fill } (M)\\}$$\n\nStandard quantitative frameworks historically modeled order book updates using homogeneous Poisson processes, operating under the assumption that event arrivals are independent and identically distributed. Empirical market microstructure analysis refutes this premise, showing a high degree of endogenous clustering: the arrival of an execution event significantly increases the conditional probability of immediate subsequent event arrivals across the same order book level.\n\nThis clustering phenomenon is driven by structural market properties, including high-frequency trading (HFT) algorithmic execution loops, market-maker inventory rebalancing, and automated order-splitting strategies. We model this sequence of events as a marked stochastic point process characterized by its conditional intensity function $\\lambda(t \\mid \\mathcal{H}_t)$, which defines the instantaneous rate of event generation given the historical filtration path $\\mathcal{H}_t$:\n\n$$\\lambda(t \\mid \\mathcal{H}_t) = \\lim_{\\Delta t \\to 0} \\frac{\\mathbb{P}(N(t + \\Delta t) - N(t) = 1 \\mid \\mathcal{H}_t)}{\\Delta t}$$\n\nWhere $N(t)$ represents the counting process of total order transactions up to time $t$. Under volatile conditions, order flow ceases to behave as a steady-state system and instead demonstrates intense localized clustering, generating localized volatility shocks that propagate across fragmented electronic matching engines.\n\n## 2. Complete Form of the Univariate Hawkes Process Intensity Model\n\nTo formalize endogenously driven order-flow clustering mathematically, we deploy a univariate Hawkes self-exciting point process model. The conditional intensity function $\\lambda(t)$ is explicitly defined as:\n\n$$\\lambda(t) = \\mu + \\sum_{t_i &lt; t} \\alpha e^{-\\beta (t - t_i)}$$\n\nWhere:\n* $\\mu \\in \\mathbb{R}^+$ denotes the constant background or exogenous base intensity rate, representing the fundamental arrival rate of orders driven by macro news, exogenous liquidity requirements, or non-algorithmic market participants.\n* $\\alpha \\in \\mathbb{R}^+$ represents the excitation amplitude coefficient, which dictates the instantaneous upward jump in intensity triggered by the arrival of an individual event at timestamp $t_i$.\n* $\\beta \\in \\mathbb{R}^+$ represents the exponential decay parameter, specifying the speed at which the localized memory of an order execution diminishes back toward the base intensity floor.\n\nThe integral representation of the self-exciting component allows the intensity function to be rewritten continuously as:\n\n$$\\lambda(t) = \\mu + \\int_0^t \\phi(t - s) dN(s)$$\n\nWhere the causal transfer kernel is parameterized explicitly as $\\phi(\\tau) = \\alpha e^{-\\beta \\tau}$ for $\\tau \\ge 0$. This kernel quantifies the reflexive feedback loop of market microstructure: every individual transaction cascades into the system, temporarily inflating the baseline transaction arrival rate for all concurrent high-frequency operations.\n\n## 3. Structural Regime Transitions and the Critical Branching Criticality\n\nA critical structural property of the Hawkes self-exciting process is the dimensionless branching ratio parameter $n$, defined analytically as the expectation value of the transfer kernel's integral:\n\n$$n = \\int_0^{\\infty} \\phi(\\tau) d\\tau = \\int_0^{\\infty} \\alpha e^{-\\beta \\tau} d\\tau = \\frac{\\alpha}{\\beta}$$\n\nThe value of the branching ratio $n$ governs the operational stability regime of the electronic limit order book:\n1. **Sub-Critical Regime ($n &lt; 1$):** The order arrival process is asymptotically stable and stationary. Exogenous shocks generate localized order clusters that eventually decay, returning the system to its base intensity level $\\mu$. The expected total number of events in a single cluster triggered by an initial exogenous insertion is given by the multiplier $1 / (1 - n)$.\n2. **Critical/Super-Critical Regime ($n \\ge 1$):** The feedback loops dominate the system. The arrival of an order excites subsequent order entries faster than the decay parameter $\\beta$ can attenuate them, driving the conditional intensity to infinity:\n\n$$\\lim_{t \\to t_{\\text{critical}}} \\lambda(t) = \\infty$$\n\nThis phase transition models the sudden onset of liquidity black holes and systemic flash-crashes. As $n \\to 1$, market-making algorithms rapidly drain liquidity depth from both sides of the LOB to protect against adverse selection risk. This drives the Herfindahl-Hirschman Index (HHI) for fragmented venues to extreme concentration bounds, resulting in widespread price dislocation across correlated asset classes.</pre>",
+      "category": "knowledge",
+      "content_type": "knowledge",
+      "tags": [
+        "market",
+        "advanced-analytics",
+        "specialist-module"
+      ],
+      "pillar": "market",
+      "author": "AcaciaFund",
+      "date_str": "2026-07-07",
+      "sqi": 1.0,
+      "language": "en",
+      "created_at": "2026-07-07T17:43:58.393790+00:00",
+      "updated_at": "2026-07-07T17:43:58.393790+00:00",
+      "deprecated": false,
+      "enriched": true,
+      "enriched_at": "2026-07-07"
+    },
+    {
+      "slug": "zero-copy-arrow-iceberg",
+      "title": "Zero-Copy Vectorized Analytics via Apache Arrow Flight and Parquet Columnar Pruning",
+      "description": "Traditional analytical data pipelines spend a disproportionate number of CPU cycles executing serialization and deserialization loops. When moving data from a storage format (e.g., historical relational databases) across a network interface to a comp",
+      "body_html": "<pre># Zero-Copy Vectorized Analytics via Apache Arrow Flight and Parquet Columnar Pruning\n\n## 1. Memory-Mapped Virtualization Boundaries vs. Row-Based Serialization\n\nTraditional analytical data pipelines spend a disproportionate number of CPU cycles executing serialization and deserialization loops. When moving data from a storage format (e.g., historical relational databases) across a network interface to a computational cluster (e.g., distributed analytics nodes), data records must be converted from custom internal structures into bytes, transmitted over wire sockets, and re-inflated into custom application-level objects. This introduces massive CPU pipeline stalls and high cache-miss ratios due to row-oriented memory pointer fragmentation.\n\nApache Arrow resolves this structural inefficiency by establishing a standard, in-memory columnar format. Within an Arrow memory segment, data values are packed sequentially into contiguous blocks of virtual memory. For example, a primitive array of 64-bit floating-point metrics is stored as a continuous allocation of $8 \times N$ bytes, complemented by a secondary bit-packed validity vector indicating null assignments:\n\n$$\\text{Memory Block} = \\underbrace{\\left[ v_0, v_1, v_2, \\dots, v_{N-1} \\right]}_{64\\text{-bit Floats}} \\quad \\parallel \\quad \\underbrace{\\left[ 1, 1, 0, \\dots, 1 \\right]}_{\\text{Validity Bitmap}}$$\n\nThis continuous memory layout aligns perfectly with modern CPU L1/L2 cache prefetching architectures, enabling the deployment of Single Instruction Multiple Data (SIMD) compiler instructions. Vectorized execution loops can process multiple values inside a single CPU instruction cycle, boosting transformation throughput by orders of magnitude compared to traditional pointer-based object traversal strategies.\n\n## 2. Apache Arrow Flight Protocol and Wire-Level gRPC Streaming\n\nTo transport these vectorized memory blocks across physically isolated network boundaries without fracturing their internal columnar layout, the ecosystem utilizes the Apache Arrow Flight protocol. Built on top of HTTP/2 and gRPC framework architectures, Arrow Flight bypasses standard object serialization steps completely by streaming the raw, byte-aligned memory buffers directly into the underlying network socket layers.\n\nThe wire payload utilizes a specialized serialization format called the Arrow IPC (Inter-Process Communication) stream. When a client initiates a `DoGet` RPC request against an active Flight server endpoint, the server transmits a metadata descriptor block containing the data schema, immediately followed by the raw column data blocks wrapped as record batches. The memory footprint of the incoming Flight stream is identical to its in-memory execution format:\n\n$$\\text{Flight Stream Ingestion Layout} = \\left[ \\text{Schema Message} \\right] \\to \\left[ \\text{Record Batch Header} \\right] \\to \\left[ \\text{Raw Memory Buffer Copies} \\right]$$\n\nBecause the wire layout maps identically to the internal memory layout, the receiving node can run analytical operations directly over the network buffers without re-allocating memory structures or mutating data arrays. This zero copy virtualization paradigm minimizes memory bandwidth bottlenecks, allowing multi-node clusters to sustain high throughput rates that are bounded strictly by the hardware's physical network interface card (NIC) capacities.\n\n## 3. Advanced Columnar Pushdown Optimizations and Parquet Pruning\n\nTo maximize read efficiency over massive historical log tables, the query compilation layer integrates advanced columnar pushdown optimizations directly against Apache Iceberg table manifest metadata structures. When an analytical query defines a localized filtering constraint, such as:\n\n$$\\sigma_{\\text{metric}\\_\\text{variance} > 0.05}\\left(\\mathbf{X}\\right)$$\n\nthe engine intercepts the expression and pushes it down through the analytical storage engine layers prior to fetching data blocks.\n\nThis pushdown optimization operates via a tiered metadata evaluation hierarchy:\n1. **Manifest File Exclusion:** The query engine parses the Apache Iceberg manifest lists to evaluate the lower and upper bounds of the target columns across individual data files. If a file's metadata summary indicates that $\\max(\\text{metric}\\_\\text{variance}) \\le 0.05$, the entire file is excluded from the active read path without invoking an I/O system call.\n2. **Row Group Pruning:** For files that pass the manifest filter, the system inspects the internal metadata headers of the underlying Apache Parquet files. Parquet files are partitioned horizontally into distinct chunks called Row Groups (typically containing 100,000 to 1,000,000 rows), each storing independent columnar min/max statistics. The storage controller evaluates the filter against these indices, dropping irrelevant Row Groups completely.\n3. **Dictionary and Page Filtering:** Within an un-pruned Row Group, the system leverages dictionary encoding and bit-packed null maps to locate the target records. It reads only the specific byte offsets containing the requested column data, completely bypassing adjacent columns. This minimized I/O footprint ensures that the analytical pipeline operates with maximum precision, loading only the exact bytes required to satisfy the execution context.</pre>",
+      "category": "knowledge",
+      "content_type": "knowledge",
+      "tags": [
+        "data",
+        "advanced-analytics",
+        "specialist-module"
+      ],
+      "pillar": "data",
+      "author": "AcaciaFund",
+      "date_str": "2026-07-07",
+      "sqi": 1.0,
+      "language": "en",
+      "created_at": "2026-07-07T17:43:58.393790+00:00",
+      "updated_at": "2026-07-07T17:43:58.393790+00:00",
+      "deprecated": false,
+      "enriched": true,
+      "enriched_at": "2026-07-07"
+    },
+    {
+      "slug": "ubo-unwinding-algorithms",
+      "title": "Recursive Ultimate Beneficial Ownership (UBO) Unwinding in Complex Corporate Networks",
+      "description": "",
+      "body_html": "<pre># Recursive Ultimate Beneficial Ownership (UBO) Unwinding\n\n## 1. Topological Decomposition of Layered Shell Entities\nSanctions evasion and complex corporate financial crime patterns frequently employ nested legal structures spanning multiple jurisdictions. To programmatically isolate the Ultimate Beneficial Owner (UBO), we model corporate equity control structures as a directed acyclic or cyclic weighted graph $G = (V, E)$, where vertices $v \\in V$ represent natural persons or corporate entities, and directed edges $e_{ij} = (v_i, v_j) \\in E$ represent fractional equity ownership ownership shares $w_{ij} \\in (0, 1]$.\n\nThe structural challenge arises when ownership is layered recursively through holding companies, offshore trusts, and cross-shareholding structures. Traditional compliance systems fail because they evaluate only direct relationships ($1$st-hop links). To resolve the true voting or economic control vector of a natural person over a target asset, the system must execute a full topological closure computation across all available dependency pathways.\n\n## 2. The Multi-Hop Control Accumulation Equation\nWe formulate the cumulative tracking share of a natural person $v_{\\text{human}}$ over a target entity $v_{\\text{target}}$ as the sum of all path-dependent product chains across the network topology:\n\n$$W_{v_{\\text{human}} \\to v_{\\text{target}}} = \\sum_{p \\in \\mathcal{P}} \\prod_{e_{ij} \\in p} w_{ij}$$\n\nWhere $\\mathcal{P}$ represents the complete set of all directed paths from $v_{\\text{human}}$ to $v_{\\text{target}}$. In the presence of cross-shareholding loops (where corporate entities hold shares in one another), the path set $\\mathcal{P}$ becomes infinite. We resolve this infinite matrix series using Leontief inversion logic. Let $\\mathbf{A}$ be the $|V| \\times |V|$ adjacency matrix of direct ownership percentages. The total global control matrix $\\mathbf{T}$ is solved via:\n\n$$\\mathbf{T} = \\sum_{k=1}^{\\infty} \\mathbf{A}^k = (\\mathbf{I} - \\mathbf{A})^{-1} - \\mathbf{I}$$\n\nWhere $\\mathbf{I}$ is the identity matrix. The algorithm flags any natural person whose computed value $T_{i,j} \\ge 0.25$, identifying individuals exercising significant control regardless of the structural path length or institutional layering depth.\n\n## 3. Risk Assessment Framework and Threshold Calibration\nThe analysis methodology applies a multi-factor risk scoring framework to each identified UBO. Control variance across entity layers is measured via threshold decomposition: if a nominee director structure distributes voting rights across $N$ shell entities, the effective risk metric aggregates each pathway using the baseline convergence test $T_{i,j} \\ge 0.25$. This assessment pipeline validates the ownership topology against sanction screening lists using Monte Carlo simulation for confidence interval estimation, ensuring that evaluation benchmarks remain robust under incomplete or contradictory registry data.</pre>",
+      "category": "knowledge",
+      "content_type": "knowledge",
+      "tags": [
+        "aml",
+        "entity-resolution",
+        "graph-theory",
+        "zero-copy-arrow-iceberg"
+      ],
+      "pillar": "aml",
+      "author": "AcaciaFund",
+      "date_str": "2026-07-07",
+      "sqi": 1.0,
+      "language": "en",
+      "created_at": "2026-07-07T18:32:49.952554+00:00",
+      "updated_at": "2026-07-07T18:34:04.405023+00:00",
+      "deprecated": false,
+      "enriched": true,
+      "enriched_at": "2026-07-07"
+    },
+    {
+      "slug": "tbml-pricing-anomalies",
+      "title": "Trade-Based Money Laundering (TBML) Detection via Statistical Pricing Anomaly Isolation",
+      "description": "",
+      "body_html": "<pre># Trade-Based Money Laundering (TBML) Detection\n\n## 1. Mechanics of Mis-Invoicing Vectors\nTrade-Based Money Laundering (TBML) represents one of the most sophisticated methodologies for transferring value across international borders under the guise of legitimate commercial transactions. The primary operational vectors include:\n* **Over-Invoicing:** The seller bills the buyer at a price significantly above market value, moving capital from the buyer's jurisdiction to the seller's.\n* **Under-Invoicing:** The seller bills the buyer at a price significantly below market value, allowing the buyer to realize an outsized profit upon local resale.\n\nTo automate the detection of these fraudulent value transfers, transaction monitoring engines must cross-reference unit prices declared on customs manifests against high-frequency global spot market pricing distributions.\n\n## 2. Mathematical Isolation via Z-Score and Interquartile Range (IQR) Profiles\nLet $x_{c,t}$ be the declared unit price of a specific commodity code $c$ at transaction time $t$. We establish a dynamic reference distribution using historical global customs indices over an evaluation window $\\Delta t$. The pricing variance is monitored using a dual-metric filtering framework:\n\n$$\\text{Z-Score}(x_{c,t}) = \\frac{x_{c,t} - \\mu_c}{\\sigma_c}$$\n\nWhere $\\mu_c$ is the running mean and $\\sigma_c$ is the standard deviation of the global pricing matrix. To handle heavy-tailed or non-Gaussian commodity distributions, we supplement the Z-score check with a non-parametric Interquartile Range (IQR) fence:\n\n$$\\text{Lower Fence} = Q_1 - 1.5 \\times \\text{IQR}, \\quad \\text{Upper Fence} = Q_3 + 1.5 \\times \\text{IQR}$$\n\nIf $x_{c,t}$ violates the upper or lower fence constraints while simultaneously matching high-risk routing tags or shell company flags, the transaction entry is dynamically routed into an accelerated manual remediation queue.</pre>",
+      "category": "knowledge",
+      "content_type": "knowledge",
+      "tags": [
+        "aml",
+        "statistical-modeling",
+        "fraud-detection",
+        "hawkes-microstructure"
+      ],
+      "pillar": "aml",
+      "author": "AcaciaFund",
+      "date_str": "2026-07-07",
+      "sqi": 1.0,
+      "language": "en",
+      "created_at": "2026-07-07T18:32:49.952554+00:00",
+      "updated_at": "2026-07-07T18:32:49.952554+00:00",
+      "deprecated": false,
+      "enriched": true,
+      "enriched_at": "2026-07-07"
+    },
+    {
+      "slug": "vpin-toxicity-modeling",
+      "title": "Volume-Synchronized Probability of Toxicity (VPIN) in High-Frequency Order Streams",
+      "description": "",
+      "body_html": "<pre># Volume-Synchronized Probability of Toxicity (VPIN)\n\n## 1. Order Flow Toxicity and Information Asymmetry\nIn electronic matching engines, order flow toxicity represents the probability that un-informed liquidity providers (market makers) are executing trades against toxic, informed traders. Informed traders possess structural or informational asymmetric advantages, allowing them to systematically pick off stale quotes. This triggers severe inventory imbalances and structural losses for automated liquidity provision systems.\n\nInstead of measuring information toxicity across arbitrary physical time slices (which fails to account for fluctuating market velocity), we utilize volume-synchronized time slicing. By sampling the order stream inside uniform volume buckets, we normalize the information arrival rate across highly variable trading sessions.\n\n## 2. Mathematical Formalization of the VPIN Metric\nLet $V$ be a predefined constant volume bucket size (e.g., $10,000$ shares). The trading day is divided into $B$ successive volume bars. For each volume bucket $b$, total trading activity is decomposed into buy volume $V_b^B$ and sell volume $V_b^S$ using standard trade classification heuristics (e.g., the Lee-Ready tick algorithm). The Volume-Synchronized Probability of Toxicity (VPIN) index over a sample window of $N$ volume buckets is formulated as:\n\n$$\\text{VPIN} = \\frac{\\sum_{b=1}^N |V_b^B - V_b^S|}{N \\times V}$$\n\nThe resulting VPIN metric outputs a normalized boundary value:\n\n$$\\text{VPIN} \\in [0, 1]$$\n\nA VPIN value approaching $1.0$ indicates complete directional dominance of the order book by informed aggressive orders. When the VPIN crosses an empirical $99$th percentile trigger, market-making algorithms systematically pull their depth allocations to mitigate adverse selection risk, directly preceding systemic liquidity collapses.</pre>",
+      "category": "knowledge",
+      "content_type": "knowledge",
+      "tags": [
+        "market",
+        "microstructure",
+        "quantitative-finance",
+        "hawkes-microstructure",
+        "zero-copy-arrow-iceberg"
+      ],
+      "pillar": "market",
+      "author": "AcaciaFund",
+      "date_str": "2026-07-07",
+      "sqi": 1.0,
+      "language": "en",
+      "created_at": "2026-07-07T18:32:49.952554+00:00",
+      "updated_at": "2026-07-07T18:32:49.952554+00:00",
+      "deprecated": false,
+      "enriched": true,
+      "enriched_at": "2026-07-07"
+    },
+    {
+      "slug": "implied-volatility-surfaces",
+      "title": "Implied Volatility Surface Dynamics and Arbitrage-Free Constraint Systems",
+      "description": "",
+      "body_html": "<pre># Implied Volatility Surface Dynamics\n\n## 1. The Volatility Smile and Skew Topography\nThe Black-Scholes-Merton option pricing framework assumes that the underlying asset volatility is a constant parameter $\\sigma$. Empirical options market pricing explicitly refutes this assumption, forming multi-dimensional Implied Volatility Surfaces where $\\sigma_{\\text{implied}}$ varies non-linearly across both option strike prices $K$ and time-to-maturity maturities $T$:\n\n$$\\sigma = f(K, T)$$\n\nThis structural geometry creates the *volatility smile* across equity options and the *volatility skew* across commodity and currency derivatives, reflecting the market's endogenous pricing of jump-diffusion risks and systemic tail events.\n\n## 2. Formulation of Arbitrage-Free Structural Constraints\nTo prevent toxic execution strategies from draining capital pools, an options analytics engine must enforce strict mathematical constraints to guarantee that the modeled surface is entirely free of static arbitrage conditions.\n* **Vertical (Butterfly) Arbitrage-Free Constraint:** The probability density function derived from option pricing must be non-negative everywhere, requiring the second partial derivative of the call price function with respect to the strike price to be greater than or equal to zero:\n\n$$\\frac{\\partial^2 C(K, T)}{\\partial K^2} \\ge 0$$\n\n* **Calendar Spread Arbitrage-Free Constraint:** Total implied variance must increase strictly monotonically with respect to the maturity parameter, ensuring that option values do not experience unphysical decays over time:\n\n$$\\frac{\\partial C(K, T)}{\\partial T} \\ge 0$$\n\nThe options module continuously monitors the surface model using these partial differential bounds. Any localized surface calculation that violates these invariants is instantly isolated as an execution anomaly or a trade pricing discrepancy.</pre>",
+      "category": "knowledge",
+      "content_type": "knowledge",
+      "tags": [
+        "market",
+        "derivatives",
+        "mathematical-modeling",
+        "hawkes-microstructure"
+      ],
+      "pillar": "market",
+      "author": "AcaciaFund",
+      "date_str": "2026-07-07",
+      "sqi": 1.0,
+      "language": "en",
+      "created_at": "2026-07-07T18:32:49.952554+00:00",
+      "updated_at": "2026-07-07T18:32:49.952554+00:00",
+      "deprecated": false,
+      "enriched": true,
+      "enriched_at": "2026-07-07"
+    },
+    {
+      "slug": "cdc-debezium-statemachines",
+      "title": "Distributed Change Data Capture (CDC) State Machines with Debezium and Kafka",
+      "description": "",
+      "body_html": "<pre># Distributed Change Data Capture (CDC) State Machines\n\n## 1. Decoupled Ingestion via Transaction Log Mining\nTraditional polling-based data extraction routines degrade master database performance and introduce significant ingestion latency. Advanced DataOps frameworks eliminate these performance bottlenecks by deploying log-based Change Data Capture (CDC). By mining the database's internal write-ahead logs (WAL), such as PostgreSQL's WAL or MySQL's binlog, CDC engines extract transactional state modifications asynchronously without touching active runtime execution tables.\n\nWe implement this pipeline using a fault-tolerant architecture composed of distributed Debezium source connectors running inside an Apache Kafka cluster, streaming immutable event logs into a decentralized storage lakehouse layer.\n\n## 2. Event-Driven Schema Evolution Logic\nEvery database state update is wrapped by Debezium into a highly structured JSON or Apache Avro event block containing two distinct payloads: `before` and `after`. The transaction engine evaluates the structural transition vector via state machines:\n\n$$\\Delta S = S_{\\text{after}} - S_{\\text{before}}$$\n\n```\n+------------------+       Write-Ahead Log       +------------------+\n|  Source Database | --------------------------> | Debezium Engine  |\n+------------------+                             +--------+---------+\n                                                            |\n                                                     Kafka Event Bus\n                                                            |\n                                                            v\n+------------------+      Zero-Copy Streaming     +------------------+\n| Apache Iceberg   | &lt;-------------------------- |  Apache Flink    |\n+------------------+                             +------------------+\n```\n\nWhen a database administrator executes a structural schema modification (e.g., appending an alternate currency code tracking column), the CDC state engine detects the schema version update via Kafka Schema Registry integrations. The downstream ingestion DAG parses the change, updates the active metadata schema configuration, and updates target tables inline without dropping connections or interrupting live compliance streams.</pre>",
+      "category": "knowledge",
+      "content_type": "knowledge",
+      "tags": [
+        "data",
+        "infrastructure",
+        "stream-processing",
+        "zero-copy-arrow-iceberg",
+        "temporal-graph-aml"
+      ],
+      "pillar": "data",
+      "author": "AcaciaFund",
+      "date_str": "2026-07-07",
+      "sqi": 1.0,
+      "language": "en",
+      "created_at": "2026-07-07T18:32:49.952554+00:00",
+      "updated_at": "2026-07-07T18:32:49.952554+00:00",
+      "deprecated": false,
+      "enriched": true,
+      "enriched_at": "2026-07-07"
+    },
+    {
+      "slug": "flink-stateful-stream-joins",
+      "title": "Low-Latency Stateful Stream Joins and Compaction Metrics in Apache Flink",
+      "description": "",
+      "body_html": "<pre># Low-Latency Stateful Stream Joins in Apache Flink\n\n## 1. Temporal Alignment under Variable Network Latency\nExecuting continuous real-time multi-source data joins requires reconciling distinct, asynchronous data streams under volatile network transmission speeds. In high-performance compliance filtering and high-frequency trading architectures, merging a transaction event stream against a dynamic market data feed requires strict temporal alignment.\n\nApache Flink solves this by managing distributed state abstractions over localized RocksDB key-value storage backends. Data rows are evaluated using Event-Time attributes rather than Processing-Time metrics, allowing the system to maintain processing consistency regardless of network out-of-order delivery patterns.\n\n## 2. Bounded Window Co-Group Processing Constraints\nTo execute a stateful streaming join between Transaction Stream $A$ and Order Book Stream $B$ within a specified time tolerance window $\\pm \\Delta t$, we define an interval join condition over the respective data timelines:\n\n$$A_{\\text{time}} - \\Delta t_1 \\le B_{\\text{time}} \\le A_{\\text{time}} + \\Delta t_2$$\n\nThe Flink engine maintains execution states within these time boundaries by generating dynamic progress markers called *Watermarks*. A Watermark $W(t)$ asserts that all subsequent event payloads will arrive with timestamps greater than $t$:\n\n$$t_{\\text{event}} > W(t)$$\n\n```\nStream A: --(t=12)--(t=15)--(t=18)--[Watermark W=15]--> (Drop older events)\n                              |\n                         State Compaction\n                              |\n                              v\n                         RocksDB Cleared\n```\n\nOnce the Watermark surpasses the active evaluation window, Flink triggers state compaction, purging obsolete records from the RocksDB backend. This maintains low-latency execution while ensuring that processing memory limits remain strictly bounded even under sustained multi-gigabyte throughput loads.</pre>",
+      "category": "knowledge",
+      "content_type": "knowledge",
+      "tags": [
+        "data",
+        "stream-processing",
+        "distributed-systems",
+        "zero-copy-arrow-iceberg",
+        "temporal-graph-aml",
+        "vpin-toxicity-modeling"
+      ],
+      "pillar": "data",
+      "author": "AcaciaFund",
+      "date_str": "2026-07-07",
+      "sqi": 1.0,
+      "language": "en",
+      "created_at": "2026-07-07T18:32:49.952554+00:00",
+      "updated_at": "2026-07-07T18:32:49.952554+00:00",
+      "deprecated": false,
+      "enriched": true,
+      "enriched_at": "2026-07-07"
     }
   ],
   "pipeline_stages": [
@@ -12599,7 +14950,7 @@
       "description": "Get notified when new signals are detected."
     }
   ],
-  "last_updated": "2026-07-06T18:02:57Z",
+  "last_updated": "2026-07-07",
   "learn": [
     {
       "article_slug": "learn/aml-it-article-001",
@@ -13702,6 +16053,6 @@
       "generated_at": "2026-06-20T11:29:54.022853+00:00"
     }
   ],
-  "last_enriched": "2026-07-07T15:02:29Z",
-  "enricher_mode": "deterministic"
+  "last_enriched": "2026-07-07T18:32:58Z",
+  "enricher_mode": "LLM"
 }
