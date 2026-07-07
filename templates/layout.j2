@@ -10,6 +10,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
     <link rel="stylesheet" href="{{ 'css/style.css' | asset }}">
 
+{% if jsonld is defined and jsonld %}
+    <script type="application/ld+json">
+{{ jsonld | tojson }}
+    </script>
+{% endif %}
+
     <style>
         nav { border-bottom: 1px solid var(--pico-muted-border-color); margin-bottom: 2rem; }
         footer hr { margin-bottom: var(--pico-spacing); }

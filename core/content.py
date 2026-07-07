@@ -43,6 +43,10 @@ class Content:
     difficulty: Optional[str] = None
     featured_image: Optional[str] = None
     image_credit: Optional[str] = None
+    author: str = "AcaciaFund"
+    sqi: float = 0.0
+    enriched: bool = False
+    enriched_at: Optional[str] = None
     signals: Optional[Dict[str, Any]] = None
     source_breakdown: Optional[Dict[str, Any]] = None
     cross_pillar_html: Optional[str] = None
@@ -100,6 +104,10 @@ class Content:
             difficulty=data.get("difficulty"),
             featured_image=data.get("featured_image"),
             image_credit=data.get("image_credit"),
+            author=data.get("author", "AcaciaFund"),
+            sqi=data.get("sqi", 0.0),
+            enriched=data.get("enriched", False),
+            enriched_at=data.get("enriched_at"),
             signals=data.get("signals"),
             source_breakdown=data.get("source_breakdown"),
             cross_pillar_html=data.get("cross_pillar_html"),

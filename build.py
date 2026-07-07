@@ -1772,6 +1772,28 @@ def main():
 
     # Generate knowledge graph for semantic cross-linking
     generate_knowledge_graph()
+
+    # Export cytoscape graph data for /graph/ visualization
+    def export_cytograph():
+        import subprocess as _sp
+        script_path = PROJECT_ROOT / "scripts" / "export_graph.py"
+        if script_path.exists():
+            result = _sp.run(
+                [sys.executable, str(script_path)],
+                cwd=PROJECT_ROOT,
+                capture_output=True,
+                text=True,
+            )
+            if result.returncode != 0:
+                print(f"Warning: CytoGraph export failed: {result.stderr}")
+            else:
+                for line in result.stdout.strip().split("\n"):
+                    print(f"  {line}")
+        else:
+            print("Warning: CytoGraph script not found.")
+
+    export_cytograph()
+
     # Load knowledge graph for semantic cross-linking
     knowledge_graph_path = PROJECT_ROOT / "data" / "knowledge_graph.json"
     if knowledge_graph_path.exists():
@@ -2033,6 +2055,7 @@ def main():
                 "knowledge.j2",
                 content=item,
                 page_path=page_path,
+                jsonld=_build_jsonld(item, SITE_URL, page_path),
                 toc_items=toc_items,
                 kcat=kcat,
                 related_research=related_research,
@@ -2277,6 +2300,7 @@ def main():
                 "learn.j2",
                 content=item,
                 page_path=page_path,
+                jsonld=_build_jsonld(item, SITE_URL, page_path),
                 toc_items=toc_items,
                 pconf=pconf,
                 prev_lesson=prev_lesson,
@@ -2502,6 +2526,7 @@ def main():
                 "blog_post.j2",
                 content=item,
                 page_path=page_path,
+                jsonld=_build_jsonld(item, SITE_URL, page_path),
                 page_body=body,
                 prev_post=prev_post,
                 next_post=next_post,
@@ -2877,6 +2902,41 @@ def main():
     )
     print("  redirect: /science/ → /research/")
 
+    # --- Knowledge Graph Page (/graph/) ---
+    cytograph_src = PROJECT_ROOT / "data" / "cytograph.json"
+    if cytograph_src.exists():
+        cytograph_dst = OUTPUT_DIR / "graph-data.json"
+        cytograph_dst.write_text(cytograph_src.read_text(encoding="utf-8"), encoding="utf-8")
+        try:
+            graph_data = json.loads(cytograph_src.read_text(encoding="utf-8"))
+            node_count = len(graph_data.get("nodes", []))
+            edge_count = len(graph_data.get("edges", []))
+        except Exception:
+            node_count = 0
+            edge_count = 0
+    else:
+        node_count = 0
+        edge_count = 0
+
+    graph_dir = OUTPUT_DIR / "graph"
+    graph_dir.mkdir(parents=True, exist_ok=True)
+    graph_html = render_template(
+        "graph.j2",
+        content=_dummy(
+            "Knowledge Graph — AcaciaFund",
+            "index",
+            description="Interactive knowledge graph visualization of 98 research items, 102 semantic tags, and 228 document-to-tag relationships across the AcaciaFund knowledge repository.",
+        ),
+        node_count=node_count,
+        edge_count=edge_count,
+        is_index=False,
+        page_path="graph/",
+        page_title="Knowledge Graph",
+        **ctx_base,
+    )
+    (graph_dir / "index.html").write_text(graph_html, encoding="utf-8")
+    print("  graph: graph/index.html")
+
     # --- 404 ---
     _suggestions = sorted(all_content, key=lambda c: hashlib.md5(c.slug.encode()).hexdigest())[:3]
     html = render_template(
@@ -3220,6 +3280,33 @@ Sitemap: {SITE_URL}/sitemap.xml
     build_meta_path.write_text(json.dumps(build_meta, indent=2, default=str), encoding="utf-8")
     print(f"  build-meta: build-meta.json ({build_meta_path.stat().st_size} bytes)")
 
+    # ── LLMs.txt generation ──
+    llms_lines = [f"# {SITE_NAME}", f"> {SITE_DESCRIPTION}", ""]
+    llms_full_lines = [f"# {SITE_NAME} — Full Content", f"> {SITE_DESCRIPTION}", ""]
+    for c in all_content:
+        slug = getattr(c, "slug", None) or ""
+        title = getattr(c, "title", None) or ""
+        desc = (getattr(c, "description", None) or "")[:200]
+        if not slug or not title:
+            continue
+        url = f"{SITE_URL}/{slug}/"
+        llms_lines.append(f"- [{title}]({url}): {desc}")
+        body_text = re.sub(r"<[^>]+>", "", getattr(c, "body_html", None) or "")
+        body_text = re.sub(r"\s+", " ", body_text).strip()
+        llms_full_lines.append(f"## {title}")
+        llms_full_lines.append(f"> Source: {url}")
+        llms_full_lines.append(f"> Tags: {', '.join(getattr(c, 'tags', None) or [])}")
+        llms_full_lines.append(f"> SQI: {getattr(c, 'sqi', 0.0) or 0.0}")
+        llms_full_lines.append("")
+        llms_full_lines.append(body_text[:5000])
+        llms_full_lines.append("")
+
+    llms_lines.append(f"- [Knowledge Graph]({SITE_URL}/graph/): Interactive knowledge graph visualization of {len(all_content)} items")
+    (OUTPUT_DIR / "llms.txt").write_text("\n".join(llms_lines), encoding="utf-8")
+    (OUTPUT_DIR / "llms-full.txt").write_text("\n".join(llms_full_lines), encoding="utf-8")
+    print(f"  llms: llms.txt ({len(llms_lines)} lines, {len(all_content)} items)")
+    print(f"  llms: llms-full.txt ({len(llms_full_lines)} lines, {len(all_content)} items)")
+
     if low_sqi_items:
         log_text = "; ".join(f"{i['slug']} (SQI={i['sqi']})" for i in low_sqi_items)
         print(f"  quality gate: {len(low_sqi_items)} items below SQI {SQI_THRESHOLD_MIN}")
@@ -3305,6 +3392,71 @@ Sitemap: {SITE_URL}/sitemap.xml
     return 0
 
 
+def _build_jsonld(item: Any, site_url: str, page_path: str = "") -> dict[str, Any]:
+    """Build JSON-LD schema.org Article dict for a content item."""
+    author_name = getattr(item, "author", None) or "AcaciaFund"
+    tags = getattr(item, "tags", None) or []
+    sqi_val = getattr(item, "sqi", 0.0) or 0.0
+    signals = getattr(item, "signals", None) or {}
+    sqi_avg = signals.get("avg_sqi", 0.0) if isinstance(signals, dict) else 0.0
+    source_breakdown = getattr(item, "source_breakdown", None) or {}
+    sources = []
+    if isinstance(source_breakdown, dict):
+        for src, cnt in source_breakdown.items():
+            sources.append({"@type": "Organization", "name": src, "description": f"{cnt} references"})
+
+    schema: dict[str, Any] = {
+        "@context": "https://schema.org",
+        "@type": "TechArticle",
+        "headline": getattr(item, "title", ""),
+        "description": (getattr(item, "description", None) or "")[:300],
+        "author": {"@type": "Person", "name": author_name},
+        "keywords": ", ".join(tags[:10]),
+        "inLanguage": "en",
+        "proficiencyLevel": getattr(item, "difficulty", None) or "",
+    }
+
+    dt = getattr(item, "created_at", None)
+    if dt:
+        try:
+            schema["datePublished"] = dt.isoformat() if hasattr(dt, "isoformat") else str(dt)
+        except Exception:
+            pass
+    updated = getattr(item, "updated_at", None)
+    if updated:
+        schema["dateModified"] = str(updated)
+
+    ds = getattr(item, "date_str", None)
+    if ds:
+        schema["datePublished"] = ds
+
+    if page_path:
+        schema["mainEntityOfPage"] = {"@type": "WebPage", "@id": f"{site_url}/{page_path}"}
+    elif hasattr(item, "slug") and item.slug:
+        schema["mainEntityOfPage"] = {"@type": "WebPage", "@id": f"{site_url}/{item.slug}/"}
+
+    sqi_display = sqi_avg if sqi_avg > 0 else sqi_val
+    if sqi_display > 0:
+        schema["sqi"] = round(sqi_display, 3)
+        schema["signalQualityIndex"] = round(sqi_display, 3)
+
+    pillar = getattr(item, "pillar", None)
+    if pillar:
+        schema["about"] = {"@type": "Thing", "name": pillar}
+
+    if sources:
+        schema["citation"] = sources
+
+    enriched = getattr(item, "enriched", False)
+    if enriched:
+        schema["semanticEnrichment"] = "completed"
+        en_at = getattr(item, "enriched_at", None)
+        if en_at:
+            schema["semanticEnrichmentDate"] = str(en_at)
+
+    return schema
+
+
 def _dummy(title="", category="post", body_html="", description=""):
     return type(
         "obj",
@@ -3334,6 +3486,10 @@ def _dummy(title="", category="post", body_html="", description=""):
             "cross_pillar_html": "",
             "quality_flags": [],
             "knowledge_category": "",
+            "author": "AcaciaFund",
+            "sqi": 0.0,
+            "enriched": False,
+            "enriched_at": None,
         },
     )
 
