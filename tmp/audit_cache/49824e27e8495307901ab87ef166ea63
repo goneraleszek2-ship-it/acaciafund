@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open Source Data Engineering Tool Landscape</title>
+    <meta name="description" content="Curated reference of open source tools for modern data platforms.">
+    <link rel="icon" href="/favicon.ico">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+
+
+    <script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "data-engineering"}, "author": {"@type": "Person", "name": "Leszek"}, "dateModified": "2026-07-06T18:02:57Z", "datePublished": "2026-06-08", "description": "Curated reference of open source tools for modern data platforms.", "headline": "Open Source Data Engineering Tool Landscape", "inLanguage": "en", "keywords": "page", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/open-source-tools/", "@type": "WebPage"}, "proficiencyLevel": "", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-07T08:00:29Z", "signalQualityIndex": 0.887, "sqi": 0.887}
+    </script>
+
+
+    <style>
+        nav { border-bottom: 1px solid var(--pico-muted-border-color); margin-bottom: 2rem; }
+        footer hr { margin-bottom: var(--pico-spacing); }
+        .logo { font-size: 1.25rem; font-weight: 700; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <header class="container">
+        <nav>
+            <ul>
+                <li><strong><a href="/" class="contrast logo">Acacia</a></strong></li>
+            </ul>
+            <ul>
+                <li><a href="/research/">Research</a></li>
+                <li><a href="/learn/">Learn</a></li>
+                <li><a href="/knowledge/">Knowledge</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        
+<article>
+  <h1>Open Source Data Engineering Tool Landscape</h1>
+  <div class="content"><div class="section-harvester" data-section="overview" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="open-source-data-engineering-tools-2026">Open Source Data Engineering Tools 2026</h2></summary><div class="section-body"><p>Curated reference of production-grade open source tools for each data platform layer.</p></div></details></div><div class="section-harvester" data-section="key_findings" style="--section-color:#a5b4fc"><details class="section-collapse" open><summary class="section-summary"><h2 id="orchestration">Orchestration</h2></summary><div class="section-body"><ul><li><strong>Apache Airflow</strong> — Mature DAG-based scheduler. Largest ecosystem of operators and integrations. Best for teams that need battle-tested stability.</li><li><strong>Dagster</strong> — Asset-centric orchestrator with software-defined assets, explicit lineage, and first-class testability. Growing rapidly in 2026.</li><li><strong>Prefect</strong> — Python-native orchestration with automatic retries, caching, and cloud UI. Strong DX for smaller teams.</li></ul></div></details></div><div class="section-harvester" data-section="applied_scenario" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="data-integration-elt">Data Integration (ELT)</h2></summary><div class="section-body"><ul><li><strong>Airbyte</strong> — 600+ connectors, protocol-level schema handling, incremental syncs. Deploy self-hosted or Cloud.</li><li><strong>Meltano</strong> — Singer-based integration platform with CI/CD for pipelines. Git-native pipeline management.</li><li><strong>Apache NiFi</strong> — Visual data flow designer with real-time routing and transformation. Best for complex topologies.</li><li><strong>Debezium</strong> — CDC platform for MySQL, PostgreSQL, MongoDB, etc. Streams changes to Kafka.</li></ul></div></details></div><div class="section-harvester" data-section="source_analysis" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="transformation">Transformation</h2></summary><div class="section-body"><ul><li><strong>dbt</strong> — SQL transformation framework with testing, documentation, and package management. Industry standard.</li><li><strong>SQLMesh</strong> — SQL transformation with automatic diff-based reconciliation, virtual data environments, and backfill optimization.</li></ul></div></details></div><div class="section-harvester" data-section="domain_breakdown" style="--section-color:#818cf8"><details class="section-collapse" open><summary class="section-summary"><h2 id="data-quality">Data Quality</h2></summary><div class="section-body"><ul><li><strong>Great Expectations</strong> — Python expectation framework with automatic profiling, data docs, and suite management.</li><li><strong>Soda</strong> — YAML-defined quality checks with built-in anomaly detection and Slack/API integrations.</li><li><strong>dbt Tests</strong> — Built-in uniqueness, not-null, accepted-values, foreign-key tests plus custom generic tests.</li></ul></div></details></div><div class="section-harvester" data-section="cross_pillar" style="--section-color:#a5b4fc"><details class="section-collapse" open><summary class="section-summary"><h2 id="catalog-governance">Catalog & Governance</h2></summary><div class="section-body"><ul><li><strong>OpenMetadata</strong> — Unified metadata platform with data discovery, lineage, glossary, and data quality integration.</li><li><strong>DataHub</strong> — LinkedIn's metadata platform. Strong lineage and search. Kubernetes-native.</li><li><strong>Amundsen</strong> — Lyft's data discovery platform. Lighter weight, simpler deployment.</li></ul></div></details></div><div class="section-harvester" data-section="methodology" style="--section-color:#818cf8"><details class="section-collapse" open><summary class="section-summary"><h2 id="stream-processing">Stream Processing</h2></summary><div class="section-body"><ul><li><strong>Apache Kafka</strong> — Distributed event store and stream processing. De facto standard for data streaming.</li><li><strong>Apache Flink</strong> — True stream processing with exactly-once semantics, event-time processing, and state management.</li><li><strong>RisingWave</strong> — Streaming SQL database. Materialized views on streams with PostgreSQL-compatible interface.</li></ul></div></details></div><div class="section-harvester" data-section="overview" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="storage-query">Storage & Query</h2></summary><div class="section-body"><ul><li><strong>Apache Iceberg</strong> — Open table format with ACID, time travel, partition evolution. The 2026 standard for lakehouse tables.</li><li><strong>Delta Lake</strong> — Linux Foundation table format with ACID, schema enforcement, and unified batch/streaming.</li><li><strong>Trino</strong> — Distributed SQL query engine for federated queries across data sources. Extremely fast.</li><li><strong>DuckDB</strong> — Embedded OLAP database. Ideal for local analytics and embedded use cases.</li><li><strong>MinIO</strong> — S3-compatible object storage for on-premise and edge deployments.</li></ul></div></details></div><div class="section-harvester" data-section="overview" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="ml-platform">ML Platform</h2></summary><div class="section-body"><ul><li><strong>MLflow</strong> — Experiment tracking, model registry, deployment. De facto standard for ML lifecycle.</li><li><strong>Feast</strong> — Feature store for ML. Consistent feature computation across training and serving.</li><li><strong>BentoML</strong> — Model serving framework with Python-native APIs and Kubernetes deployment.</li><li><strong>Kubeflow</strong> — MLOps platform on Kubernetes for end-to-end ML workflows.</li></ul></div></details></div><div class="section-harvester" data-section="overview" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="observability">Observability</h2></summary><div class="section-body"><ul><li><strong>Prometheus + Grafana</strong> — Metrics collection and dashboarding. Standard for infrastructure and pipeline monitoring.</li><li><strong>OpenTelemetry</strong> — Vendor-neutral observability framework for traces, metrics, and logs.</li><li><strong>Grafana Loki</strong> — Log aggregation system. Lightweight, cost-effective, Grafana-native.</li></ul></div></details></div></div>
+</article>
+
+    </main>
+
+    <footer class="container">
+        <hr>
+        <small>&copy; 2026 AcaciaFund &middot; Generated by the Acacia pipeline.</small>
+    </footer>
+
+    <script src="/static/js/main.d41d8cd9.js"></script>
+<!-- Cloudflare Pages Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7a451e6216a44a7eba43b43cb495e68e"}'></script><!-- Cloudflare Pages Analytics --><script defer src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"544a3353becb48febea6c33a8a4b4315","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>

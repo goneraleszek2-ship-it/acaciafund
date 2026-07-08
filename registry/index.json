@@ -1,13 +1,16 @@
 {
   "manifest_type": "registry-index",
-  "generated_at": "2026-07-03T08:13:11Z",
+  "generated_at": "2026-07-08T14:56:58Z",
   "counts": {
     "runs": 0,
-    "pages": 377,
+    "pages": 288,
     "pillars": {
       "data-engineering": 43,
       "stock": 32,
-      "aml": 16
+      "aml": 44,
+      "data": 25,
+      "market": 8,
+      "system": 1
     }
   },
   "latest_by_pillar": {},
@@ -77,6 +80,12 @@
       "content_id": "blog/2026-06-09-ml-pipeline-orchestration-feast-mlflow",
       "pillar": "data-engineering",
       "title": "ML Pipeline Orchestration: From Notebook to Production with Feast and MLflow",
+      "published_at": "2026-06-09"
+    },
+    {
+      "content_id": "blog/2026-07-06-data-contracts",
+      "pillar": "data-engineering",
+      "title": "Data Contracts: Schema as API for the Analytics Team",
       "published_at": "2026-06-09"
     },
     {
@@ -542,22 +551,388 @@
       "published_at": "2026-06-13"
     },
     {
-      "content_id": "docs/platform-architecture",
-      "pillar": "data-engineering",
-      "title": "Platform Architecture Deep Dive",
-      "published_at": "2026-06-29"
-    },
-    {
-      "content_id": "blog/transaction-monitoring-foundations",
-      "pillar": "aml",
-      "title": "Transaction Monitoring Foundations",
-      "published_at": "2026-06-29"
-    },
-    {
       "content_id": "docs/cybernetic-foundations",
       "pillar": "data-engineering",
       "title": "Cybernetic Foundations of the Knowledge Fabric — Wienerian Feedback, Lem's Aintellectronics, and Bayesian SQI Revision",
       "published_at": "2026-06-30"
+    },
+    {
+      "content_id": "blog/2026-07-06-quantum-spectral-anomaly-detection",
+      "pillar": "aml",
+      "title": "Quantum Spectral Anomaly Detection",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-06-square-root-price-impact-is-necessary-for-endogenous-manipul",
+      "pillar": "aml",
+      "title": "Square-Root Price Impact Is Necessary for Endogenous Manipulation Cycles in Learning-Agent Markets",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-06-30-department-of-commerce-has-lifted-export-controls-on-claude",
+      "pillar": "aml",
+      "title": "Department of Commerce has lifted export controls on Claude Fable 5 and Mythos 5",
+      "published_at": "2026-06-30"
+    },
+    {
+      "content_id": "blog/2026-07-03-international-chess-federation-sanctions-kramnik",
+      "pillar": "aml",
+      "title": "International chess federation sanctions Kramnik",
+      "published_at": "2026-07-03"
+    },
+    {
+      "content_id": "blog/2026-07-06-counterfactual-methods-for-detecting-unfairness-in-anti-mone",
+      "pillar": "aml",
+      "title": "Counterfactual Methods for Detecting Unfairness in Anti-Money Laundering Algorithms",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-06-any-axes-are-allowed-a-characteristic-axis-integral-diagnosi",
+      "pillar": "aml",
+      "title": "Any Axes Are Allowed: A Characteristic-Axis Integral Diagnosis of Factor Models",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-06-causal-separation-conditional-risk-and-projected-markowitz-p",
+      "pillar": "aml",
+      "title": "Causal Separation, Conditional Risk, and Projected Markowitz Portfolios",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-06-forecasting-realized-volatility-with-time-series-foundation",
+      "pillar": "aml",
+      "title": "Forecasting Realized Volatility with Time Series Foundation Models: A Comparison with Econometric Benchmarks",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-06-pisas-benchmarking-contextual-integrity-in-multi-user-agenti",
+      "pillar": "aml",
+      "title": "PiSAs: Benchmarking Contextual Integrity in Multi-User Agentic Systems",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-06-canniuplift-a-holistic-framework-for-mitigating-seller-and-i",
+      "pillar": "aml",
+      "title": "CanniUplift: A Holistic Framework for Mitigating Seller and Incentive Cannibalization in E-commerce Uplift Modeling",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-06-curated-retrieval-versus-open-web-search-in-public-ai-inform",
+      "pillar": "aml",
+      "title": "Curated retrieval versus open web search in public AI information services: a coverage-trust trade-off",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-06-finfluencers-on-tiktok-a-longitudinal-analysis-of-content-en",
+      "pillar": "aml",
+      "title": "Finfluencers on TikTok: A Longitudinal Analysis of Content, Engagement, and Disclaimer Practices",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-06-when-ai-is-wrong-on-purpose-how-students-respond-to-buggy-ge",
+      "pillar": "aml",
+      "title": "When AI Is Wrong on Purpose: How Students Respond to Buggy GenAI Code",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-06-selective-disclosure-watermarking-for-large-language-models",
+      "pillar": "aml",
+      "title": "Selective Disclosure Watermarking for Large Language Models",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-06-learning-only-what-valid-adapters-can-express-subspace-const",
+      "pillar": "aml",
+      "title": "Learning Only What Valid Adapters Can Express: Subspace-Constrained Adaptation Against Fine-Tuning Poisoning",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-06-untrusted-content-masking-for-web-agents-with-security-guara",
+      "pillar": "aml",
+      "title": "Untrusted Content Masking for Web Agents with Security Guarantees",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-06-privacy-preserving-robustness-verification-for-neural-networ",
+      "pillar": "aml",
+      "title": "Privacy-Preserving Robustness Verification for Neural Networks",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-06-when-claws-remember-but-do-not-tell-stealthy-memory-injectio",
+      "pillar": "aml",
+      "title": "When Claws Remember but Do Not Tell: Stealthy Memory Injection in Persistent Personal Agents",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-06-open-problems-in-ai-incident-governance",
+      "pillar": "aml",
+      "title": "Open Problems in AI Incident Governance",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-06-algebraic-modelings-of-the-supersingular-isogeny-problem",
+      "pillar": "aml",
+      "title": "Algebraic Modelings of the Supersingular Isogeny Problem",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-06-when-agents-lie-premeditation-persistence-and-exploitation-i",
+      "pillar": "aml",
+      "title": "When Agents Lie: Premeditation, Persistence, and Exploitation in Repeated Games",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-06-agent-data-injection-attacks-are-realistic-threats-to-ai-age",
+      "pillar": "aml",
+      "title": "Agent Data Injection Attacks are Realistic Threats to AI Agents",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-06-rating-the-pitch-not-the-product-user-evaluations-of-llms-re",
+      "pillar": "aml",
+      "title": "Rating the Pitch, Not the Product: User Evaluations of LLMs Reflect Expectations More Than Performance",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-06-from-multiplicity-to-vulnerability-privacy-amplification-ris",
+      "pillar": "aml",
+      "title": "From Multiplicity to Vulnerability: Privacy Amplification Risk from One-Dataset-Multiple-Model Exposure",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-06-multi-choice-min-prophet",
+      "pillar": "aml",
+      "title": "Multi Choice Min Prophet",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-06-optimizing-ml-workload-partitioning-between-cpus-and-cim-acc",
+      "pillar": "data",
+      "title": "Optimizing ML Workload Partitioning between CPUs and CIM Accelerators for Heterogeneous Computing",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-06-communication-aware-placement-and-pruning-for-efficient-mixt",
+      "pillar": "data",
+      "title": "Communication-Aware Placement and Pruning for Efficient Mixture-of-Experts Inference",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-06-parallel-mathcal-o-sqrt-n-overhead-lsd-radix-sort",
+      "pillar": "data",
+      "title": "Parallel $\\mathcal O(\\sqrt n)$ Overhead LSD Radix Sort",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-06-geometric-causal-models",
+      "pillar": "data",
+      "title": "Geometric Causal Models",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-06-interpretable-human-label-free-deep-learning-for-real-bogus",
+      "pillar": "data",
+      "title": "Interpretable Human-Label-Free Deep Learning for Real-Bogus Classification with Uncertainty Quantification",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-06-pdeflow-autonomous-agentic-pde-pipelines-for-neural-operator",
+      "pillar": "data",
+      "title": "PDEFlow: Autonomous Agentic PDE Pipelines for Neural Operator Learning and Solver-Free Inference",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-06-counterfactual-methods-for-detecting-unfairness-in-anti-mone-36d35d",
+      "pillar": "data",
+      "title": "Counterfactual Methods for Detecting Unfairness in Anti-Money Laundering Algorithms",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-06-video-based-detection-of-cessation-of-breathing-in-pre-term",
+      "pillar": "data",
+      "title": "Video-based detection of cessation of breathing in pre-term infants using machine learning",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-06-choosing-a-parallel-heterogeneous-ensemble-method-for-tabula",
+      "pillar": "data",
+      "title": "Choosing a parallel heterogeneous ensemble method for tabular classification",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-06-exact-ratio-preservation-via-outliers-for-fair-k-center-clus",
+      "pillar": "data",
+      "title": "Exact ratio preservation via outliers for fair $k$-center clustering",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-06-on-the-risk-of-coding-before-testing-an-empirical-study-on-l",
+      "pillar": "data",
+      "title": "On the risk of coding before testing: An empirical study on LLM-based test generation workflow",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-06-adaptive-inference-batching-using-policy-gradients",
+      "pillar": "data",
+      "title": "Adaptive Inference Batching using Policy Gradients",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-06-cats-secure-blockchain-interoperability-with-cross-chain-ato",
+      "pillar": "data",
+      "title": "CATs: Secure Blockchain Interoperability with Cross-chain Atomic Transactions",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-06-a-modular-o-ran-testbed-based-on-srs-open-source-o-cu-o-du-a",
+      "pillar": "data",
+      "title": "A Modular O-RAN Testbed Based on SRS Open Source O-CU/O-DU and Massive Beams Modular O-RU",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-07-sodium-ion-salt-batteries-will-revolutionize-electric-vehicl",
+      "pillar": "data",
+      "title": "Sodium-ion \"salt\" batteries will revolutionize electric-vehicle and grid storage",
+      "published_at": "2026-07-07"
+    },
+    {
+      "content_id": "blog/2026-07-07-rust-is-in-tiobe-index-top-10",
+      "pillar": "data",
+      "title": "Rust is in TIOBE Index top 10",
+      "published_at": "2026-07-07"
+    },
+    {
+      "content_id": "blog/2026-07-07-microsoft-admits-a-windows-11-bug-is-eating-up-to-500gb-of-s",
+      "pillar": "data",
+      "title": "Microsoft admits a Windows 11 bug is eating up to 500GB of storage",
+      "published_at": "2026-07-07"
+    },
+    {
+      "content_id": "blog/2026-07-06-show-hn-focal-harvest-cli-research-pipeline-to-search-scrape",
+      "pillar": "data",
+      "title": "Show HN: Focal Harvest – CLI research pipeline to search, scrape and notify",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-06-serving-a-1t-open-model-at-511-tok-s-single-stream-lossless",
+      "pillar": "data",
+      "title": "Serving a 1T open model at 511 tok.s single-stream, lossless, on four B200s",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-07-show-hn-turn-commodity-wifi-signals-into-real-time-spatial-i",
+      "pillar": "data",
+      "title": "Show HN: Turn commodity WiFi signals into real-time spatial intelligence",
+      "published_at": "2026-07-07"
+    },
+    {
+      "content_id": "blog/2026-07-06-s3-is-a-better-abstraction-than-nfs-networked-block-storage",
+      "pillar": "data",
+      "title": "S3 is a better abstraction than NFS / networked block storage",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-06-forecasting-realized-volatility-with-time-series-foundation-2e36b1",
+      "pillar": "market",
+      "title": "Forecasting Realized Volatility with Time Series Foundation Models: A Comparison with Econometric Benchmarks",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-06-cats-secure-blockchain-interoperability-with-cross-chain-ato-10c567",
+      "pillar": "market",
+      "title": "CATs: Secure Blockchain Interoperability with Cross-chain Atomic Transactions",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-06-when-claws-remember-but-do-not-tell-stealthy-memory-injectio-a0fd5c",
+      "pillar": "market",
+      "title": "When Claws Remember but Do Not Tell: Stealthy Memory Injection in Persistent Personal Agents",
+      "published_at": "2026-07-06"
+    },
+    {
+      "content_id": "blog/2026-07-07-llms-are-not-a-default-execution-engine",
+      "pillar": "market",
+      "title": "LLMs Are Not a Default Execution Engine",
+      "published_at": "2026-07-07"
+    },
+    {
+      "content_id": "cybernetic-manifesto",
+      "pillar": "system",
+      "title": "The Cybernetic Manifest",
+      "published_at": "2026-07-07"
+    },
+    {
+      "content_id": "aml-core-foundations",
+      "pillar": "aml",
+      "title": "Foundations of Financial Intelligence and Network Topology",
+      "published_at": "2026-07-07"
+    },
+    {
+      "content_id": "market-core-foundations",
+      "pillar": "market",
+      "title": "Limit Order Book Physics and Systemic Risk Mechanics",
+      "published_at": "2026-07-07"
+    },
+    {
+      "content_id": "data-core-foundations",
+      "pillar": "data",
+      "title": "Declarative DataOps and Schema Governance Architectures",
+      "published_at": "2026-07-07"
+    },
+    {
+      "content_id": "temporal-graph-aml",
+      "pillar": "aml",
+      "title": "Temporal Graph Networks and Multi-Hop Link Prediction for Layering Detection",
+      "published_at": "2026-07-07"
+    },
+    {
+      "content_id": "hawkes-microstructure",
+      "pillar": "market",
+      "title": "Stochastic Point Processes and Hawkes Self-Exciting Intensity Functions in LOB Dynamics",
+      "published_at": "2026-07-07"
+    },
+    {
+      "content_id": "zero-copy-arrow-iceberg",
+      "pillar": "data",
+      "title": "Zero-Copy Vectorized Analytics via Apache Arrow Flight and Parquet Columnar Pruning",
+      "published_at": "2026-07-07"
+    },
+    {
+      "content_id": "ubo-unwinding-algorithms",
+      "pillar": "aml",
+      "title": "Recursive Ultimate Beneficial Ownership (UBO) Unwinding in Complex Corporate Networks",
+      "published_at": "2026-07-07"
+    },
+    {
+      "content_id": "tbml-pricing-anomalies",
+      "pillar": "aml",
+      "title": "Trade-Based Money Laundering (TBML) Detection via Statistical Pricing Anomaly Isolation",
+      "published_at": "2026-07-07"
+    },
+    {
+      "content_id": "vpin-toxicity-modeling",
+      "pillar": "market",
+      "title": "Volume-Synchronized Probability of Toxicity (VPIN) in High-Frequency Order Streams",
+      "published_at": "2026-07-07"
+    },
+    {
+      "content_id": "implied-volatility-surfaces",
+      "pillar": "market",
+      "title": "Implied Volatility Surface Dynamics and Arbitrage-Free Constraint Systems",
+      "published_at": "2026-07-07"
+    },
+    {
+      "content_id": "cdc-debezium-statemachines",
+      "pillar": "data",
+      "title": "Distributed Change Data Capture (CDC) State Machines with Debezium and Kafka",
+      "published_at": "2026-07-07"
+    },
+    {
+      "content_id": "flink-stateful-stream-joins",
+      "pillar": "data",
+      "title": "Low-Latency Stateful Stream Joins and Compaction Metrics in Apache Flink",
+      "published_at": "2026-07-07"
     }
   ],
   "by_content_id": {
@@ -615,6 +990,11 @@
       "content_id": "blog/2026-06-09-ml-pipeline-orchestration-feast-mlflow",
       "pillar": "data-engineering",
       "title": "ML Pipeline Orchestration: From Notebook to Production with Feast and MLflow"
+    },
+    "blog/2026-07-06-data-contracts": {
+      "content_id": "blog/2026-07-06-data-contracts",
+      "pillar": "data-engineering",
+      "title": "Data Contracts: Schema as API for the Analytics Team"
     },
     "blog/2026-06-29-airflow-prefect-dagster-comparison": {
       "content_id": "blog/2026-06-29-airflow-prefect-dagster-comparison",
@@ -1001,22 +1381,327 @@
       "pillar": "data-engineering",
       "title": "System Diagrams — Architecture, Pipeline & Data Flow"
     },
-    "docs/platform-architecture": {
-      "content_id": "docs/platform-architecture",
-      "pillar": "data-engineering",
-      "title": "Platform Architecture Deep Dive"
-    },
-    "blog/transaction-monitoring-foundations": {
-      "content_id": "blog/transaction-monitoring-foundations",
-      "pillar": "aml",
-      "title": "Transaction Monitoring Foundations"
-    },
     "docs/cybernetic-foundations": {
       "content_id": "docs/cybernetic-foundations",
       "pillar": "data-engineering",
       "title": "Cybernetic Foundations of the Knowledge Fabric — Wienerian Feedback, Lem's Aintellectronics, and Bayesian SQI Revision"
+    },
+    "blog/2026-07-06-quantum-spectral-anomaly-detection": {
+      "content_id": "blog/2026-07-06-quantum-spectral-anomaly-detection",
+      "pillar": "aml",
+      "title": "Quantum Spectral Anomaly Detection"
+    },
+    "blog/2026-07-06-square-root-price-impact-is-necessary-for-endogenous-manipul": {
+      "content_id": "blog/2026-07-06-square-root-price-impact-is-necessary-for-endogenous-manipul",
+      "pillar": "aml",
+      "title": "Square-Root Price Impact Is Necessary for Endogenous Manipulation Cycles in Learning-Agent Markets"
+    },
+    "blog/2026-06-30-department-of-commerce-has-lifted-export-controls-on-claude": {
+      "content_id": "blog/2026-06-30-department-of-commerce-has-lifted-export-controls-on-claude",
+      "pillar": "aml",
+      "title": "Department of Commerce has lifted export controls on Claude Fable 5 and Mythos 5"
+    },
+    "blog/2026-07-03-international-chess-federation-sanctions-kramnik": {
+      "content_id": "blog/2026-07-03-international-chess-federation-sanctions-kramnik",
+      "pillar": "aml",
+      "title": "International chess federation sanctions Kramnik"
+    },
+    "blog/2026-07-06-counterfactual-methods-for-detecting-unfairness-in-anti-mone": {
+      "content_id": "blog/2026-07-06-counterfactual-methods-for-detecting-unfairness-in-anti-mone",
+      "pillar": "aml",
+      "title": "Counterfactual Methods for Detecting Unfairness in Anti-Money Laundering Algorithms"
+    },
+    "blog/2026-07-06-any-axes-are-allowed-a-characteristic-axis-integral-diagnosi": {
+      "content_id": "blog/2026-07-06-any-axes-are-allowed-a-characteristic-axis-integral-diagnosi",
+      "pillar": "aml",
+      "title": "Any Axes Are Allowed: A Characteristic-Axis Integral Diagnosis of Factor Models"
+    },
+    "blog/2026-07-06-causal-separation-conditional-risk-and-projected-markowitz-p": {
+      "content_id": "blog/2026-07-06-causal-separation-conditional-risk-and-projected-markowitz-p",
+      "pillar": "aml",
+      "title": "Causal Separation, Conditional Risk, and Projected Markowitz Portfolios"
+    },
+    "blog/2026-07-06-forecasting-realized-volatility-with-time-series-foundation": {
+      "content_id": "blog/2026-07-06-forecasting-realized-volatility-with-time-series-foundation",
+      "pillar": "aml",
+      "title": "Forecasting Realized Volatility with Time Series Foundation Models: A Comparison with Econometric Benchmarks"
+    },
+    "blog/2026-07-06-pisas-benchmarking-contextual-integrity-in-multi-user-agenti": {
+      "content_id": "blog/2026-07-06-pisas-benchmarking-contextual-integrity-in-multi-user-agenti",
+      "pillar": "aml",
+      "title": "PiSAs: Benchmarking Contextual Integrity in Multi-User Agentic Systems"
+    },
+    "blog/2026-07-06-canniuplift-a-holistic-framework-for-mitigating-seller-and-i": {
+      "content_id": "blog/2026-07-06-canniuplift-a-holistic-framework-for-mitigating-seller-and-i",
+      "pillar": "aml",
+      "title": "CanniUplift: A Holistic Framework for Mitigating Seller and Incentive Cannibalization in E-commerce Uplift Modeling"
+    },
+    "blog/2026-07-06-curated-retrieval-versus-open-web-search-in-public-ai-inform": {
+      "content_id": "blog/2026-07-06-curated-retrieval-versus-open-web-search-in-public-ai-inform",
+      "pillar": "aml",
+      "title": "Curated retrieval versus open web search in public AI information services: a coverage-trust trade-off"
+    },
+    "blog/2026-07-06-finfluencers-on-tiktok-a-longitudinal-analysis-of-content-en": {
+      "content_id": "blog/2026-07-06-finfluencers-on-tiktok-a-longitudinal-analysis-of-content-en",
+      "pillar": "aml",
+      "title": "Finfluencers on TikTok: A Longitudinal Analysis of Content, Engagement, and Disclaimer Practices"
+    },
+    "blog/2026-07-06-when-ai-is-wrong-on-purpose-how-students-respond-to-buggy-ge": {
+      "content_id": "blog/2026-07-06-when-ai-is-wrong-on-purpose-how-students-respond-to-buggy-ge",
+      "pillar": "aml",
+      "title": "When AI Is Wrong on Purpose: How Students Respond to Buggy GenAI Code"
+    },
+    "blog/2026-07-06-selective-disclosure-watermarking-for-large-language-models": {
+      "content_id": "blog/2026-07-06-selective-disclosure-watermarking-for-large-language-models",
+      "pillar": "aml",
+      "title": "Selective Disclosure Watermarking for Large Language Models"
+    },
+    "blog/2026-07-06-learning-only-what-valid-adapters-can-express-subspace-const": {
+      "content_id": "blog/2026-07-06-learning-only-what-valid-adapters-can-express-subspace-const",
+      "pillar": "aml",
+      "title": "Learning Only What Valid Adapters Can Express: Subspace-Constrained Adaptation Against Fine-Tuning Poisoning"
+    },
+    "blog/2026-07-06-untrusted-content-masking-for-web-agents-with-security-guara": {
+      "content_id": "blog/2026-07-06-untrusted-content-masking-for-web-agents-with-security-guara",
+      "pillar": "aml",
+      "title": "Untrusted Content Masking for Web Agents with Security Guarantees"
+    },
+    "blog/2026-07-06-privacy-preserving-robustness-verification-for-neural-networ": {
+      "content_id": "blog/2026-07-06-privacy-preserving-robustness-verification-for-neural-networ",
+      "pillar": "aml",
+      "title": "Privacy-Preserving Robustness Verification for Neural Networks"
+    },
+    "blog/2026-07-06-when-claws-remember-but-do-not-tell-stealthy-memory-injectio": {
+      "content_id": "blog/2026-07-06-when-claws-remember-but-do-not-tell-stealthy-memory-injectio",
+      "pillar": "aml",
+      "title": "When Claws Remember but Do Not Tell: Stealthy Memory Injection in Persistent Personal Agents"
+    },
+    "blog/2026-07-06-open-problems-in-ai-incident-governance": {
+      "content_id": "blog/2026-07-06-open-problems-in-ai-incident-governance",
+      "pillar": "aml",
+      "title": "Open Problems in AI Incident Governance"
+    },
+    "blog/2026-07-06-algebraic-modelings-of-the-supersingular-isogeny-problem": {
+      "content_id": "blog/2026-07-06-algebraic-modelings-of-the-supersingular-isogeny-problem",
+      "pillar": "aml",
+      "title": "Algebraic Modelings of the Supersingular Isogeny Problem"
+    },
+    "blog/2026-07-06-when-agents-lie-premeditation-persistence-and-exploitation-i": {
+      "content_id": "blog/2026-07-06-when-agents-lie-premeditation-persistence-and-exploitation-i",
+      "pillar": "aml",
+      "title": "When Agents Lie: Premeditation, Persistence, and Exploitation in Repeated Games"
+    },
+    "blog/2026-07-06-agent-data-injection-attacks-are-realistic-threats-to-ai-age": {
+      "content_id": "blog/2026-07-06-agent-data-injection-attacks-are-realistic-threats-to-ai-age",
+      "pillar": "aml",
+      "title": "Agent Data Injection Attacks are Realistic Threats to AI Agents"
+    },
+    "blog/2026-07-06-rating-the-pitch-not-the-product-user-evaluations-of-llms-re": {
+      "content_id": "blog/2026-07-06-rating-the-pitch-not-the-product-user-evaluations-of-llms-re",
+      "pillar": "aml",
+      "title": "Rating the Pitch, Not the Product: User Evaluations of LLMs Reflect Expectations More Than Performance"
+    },
+    "blog/2026-07-06-from-multiplicity-to-vulnerability-privacy-amplification-ris": {
+      "content_id": "blog/2026-07-06-from-multiplicity-to-vulnerability-privacy-amplification-ris",
+      "pillar": "aml",
+      "title": "From Multiplicity to Vulnerability: Privacy Amplification Risk from One-Dataset-Multiple-Model Exposure"
+    },
+    "blog/2026-07-06-multi-choice-min-prophet": {
+      "content_id": "blog/2026-07-06-multi-choice-min-prophet",
+      "pillar": "aml",
+      "title": "Multi Choice Min Prophet"
+    },
+    "blog/2026-07-06-optimizing-ml-workload-partitioning-between-cpus-and-cim-acc": {
+      "content_id": "blog/2026-07-06-optimizing-ml-workload-partitioning-between-cpus-and-cim-acc",
+      "pillar": "data",
+      "title": "Optimizing ML Workload Partitioning between CPUs and CIM Accelerators for Heterogeneous Computing"
+    },
+    "blog/2026-07-06-communication-aware-placement-and-pruning-for-efficient-mixt": {
+      "content_id": "blog/2026-07-06-communication-aware-placement-and-pruning-for-efficient-mixt",
+      "pillar": "data",
+      "title": "Communication-Aware Placement and Pruning for Efficient Mixture-of-Experts Inference"
+    },
+    "blog/2026-07-06-parallel-mathcal-o-sqrt-n-overhead-lsd-radix-sort": {
+      "content_id": "blog/2026-07-06-parallel-mathcal-o-sqrt-n-overhead-lsd-radix-sort",
+      "pillar": "data",
+      "title": "Parallel $\\mathcal O(\\sqrt n)$ Overhead LSD Radix Sort"
+    },
+    "blog/2026-07-06-geometric-causal-models": {
+      "content_id": "blog/2026-07-06-geometric-causal-models",
+      "pillar": "data",
+      "title": "Geometric Causal Models"
+    },
+    "blog/2026-07-06-interpretable-human-label-free-deep-learning-for-real-bogus": {
+      "content_id": "blog/2026-07-06-interpretable-human-label-free-deep-learning-for-real-bogus",
+      "pillar": "data",
+      "title": "Interpretable Human-Label-Free Deep Learning for Real-Bogus Classification with Uncertainty Quantification"
+    },
+    "blog/2026-07-06-pdeflow-autonomous-agentic-pde-pipelines-for-neural-operator": {
+      "content_id": "blog/2026-07-06-pdeflow-autonomous-agentic-pde-pipelines-for-neural-operator",
+      "pillar": "data",
+      "title": "PDEFlow: Autonomous Agentic PDE Pipelines for Neural Operator Learning and Solver-Free Inference"
+    },
+    "blog/2026-07-06-counterfactual-methods-for-detecting-unfairness-in-anti-mone-36d35d": {
+      "content_id": "blog/2026-07-06-counterfactual-methods-for-detecting-unfairness-in-anti-mone-36d35d",
+      "pillar": "data",
+      "title": "Counterfactual Methods for Detecting Unfairness in Anti-Money Laundering Algorithms"
+    },
+    "blog/2026-07-06-video-based-detection-of-cessation-of-breathing-in-pre-term": {
+      "content_id": "blog/2026-07-06-video-based-detection-of-cessation-of-breathing-in-pre-term",
+      "pillar": "data",
+      "title": "Video-based detection of cessation of breathing in pre-term infants using machine learning"
+    },
+    "blog/2026-07-06-choosing-a-parallel-heterogeneous-ensemble-method-for-tabula": {
+      "content_id": "blog/2026-07-06-choosing-a-parallel-heterogeneous-ensemble-method-for-tabula",
+      "pillar": "data",
+      "title": "Choosing a parallel heterogeneous ensemble method for tabular classification"
+    },
+    "blog/2026-07-06-exact-ratio-preservation-via-outliers-for-fair-k-center-clus": {
+      "content_id": "blog/2026-07-06-exact-ratio-preservation-via-outliers-for-fair-k-center-clus",
+      "pillar": "data",
+      "title": "Exact ratio preservation via outliers for fair $k$-center clustering"
+    },
+    "blog/2026-07-06-on-the-risk-of-coding-before-testing-an-empirical-study-on-l": {
+      "content_id": "blog/2026-07-06-on-the-risk-of-coding-before-testing-an-empirical-study-on-l",
+      "pillar": "data",
+      "title": "On the risk of coding before testing: An empirical study on LLM-based test generation workflow"
+    },
+    "blog/2026-07-06-adaptive-inference-batching-using-policy-gradients": {
+      "content_id": "blog/2026-07-06-adaptive-inference-batching-using-policy-gradients",
+      "pillar": "data",
+      "title": "Adaptive Inference Batching using Policy Gradients"
+    },
+    "blog/2026-07-06-cats-secure-blockchain-interoperability-with-cross-chain-ato": {
+      "content_id": "blog/2026-07-06-cats-secure-blockchain-interoperability-with-cross-chain-ato",
+      "pillar": "data",
+      "title": "CATs: Secure Blockchain Interoperability with Cross-chain Atomic Transactions"
+    },
+    "blog/2026-07-06-a-modular-o-ran-testbed-based-on-srs-open-source-o-cu-o-du-a": {
+      "content_id": "blog/2026-07-06-a-modular-o-ran-testbed-based-on-srs-open-source-o-cu-o-du-a",
+      "pillar": "data",
+      "title": "A Modular O-RAN Testbed Based on SRS Open Source O-CU/O-DU and Massive Beams Modular O-RU"
+    },
+    "blog/2026-07-07-sodium-ion-salt-batteries-will-revolutionize-electric-vehicl": {
+      "content_id": "blog/2026-07-07-sodium-ion-salt-batteries-will-revolutionize-electric-vehicl",
+      "pillar": "data",
+      "title": "Sodium-ion \"salt\" batteries will revolutionize electric-vehicle and grid storage"
+    },
+    "blog/2026-07-07-rust-is-in-tiobe-index-top-10": {
+      "content_id": "blog/2026-07-07-rust-is-in-tiobe-index-top-10",
+      "pillar": "data",
+      "title": "Rust is in TIOBE Index top 10"
+    },
+    "blog/2026-07-07-microsoft-admits-a-windows-11-bug-is-eating-up-to-500gb-of-s": {
+      "content_id": "blog/2026-07-07-microsoft-admits-a-windows-11-bug-is-eating-up-to-500gb-of-s",
+      "pillar": "data",
+      "title": "Microsoft admits a Windows 11 bug is eating up to 500GB of storage"
+    },
+    "blog/2026-07-06-show-hn-focal-harvest-cli-research-pipeline-to-search-scrape": {
+      "content_id": "blog/2026-07-06-show-hn-focal-harvest-cli-research-pipeline-to-search-scrape",
+      "pillar": "data",
+      "title": "Show HN: Focal Harvest – CLI research pipeline to search, scrape and notify"
+    },
+    "blog/2026-07-06-serving-a-1t-open-model-at-511-tok-s-single-stream-lossless": {
+      "content_id": "blog/2026-07-06-serving-a-1t-open-model-at-511-tok-s-single-stream-lossless",
+      "pillar": "data",
+      "title": "Serving a 1T open model at 511 tok.s single-stream, lossless, on four B200s"
+    },
+    "blog/2026-07-07-show-hn-turn-commodity-wifi-signals-into-real-time-spatial-i": {
+      "content_id": "blog/2026-07-07-show-hn-turn-commodity-wifi-signals-into-real-time-spatial-i",
+      "pillar": "data",
+      "title": "Show HN: Turn commodity WiFi signals into real-time spatial intelligence"
+    },
+    "blog/2026-07-06-s3-is-a-better-abstraction-than-nfs-networked-block-storage": {
+      "content_id": "blog/2026-07-06-s3-is-a-better-abstraction-than-nfs-networked-block-storage",
+      "pillar": "data",
+      "title": "S3 is a better abstraction than NFS / networked block storage"
+    },
+    "blog/2026-07-06-forecasting-realized-volatility-with-time-series-foundation-2e36b1": {
+      "content_id": "blog/2026-07-06-forecasting-realized-volatility-with-time-series-foundation-2e36b1",
+      "pillar": "market",
+      "title": "Forecasting Realized Volatility with Time Series Foundation Models: A Comparison with Econometric Benchmarks"
+    },
+    "blog/2026-07-06-cats-secure-blockchain-interoperability-with-cross-chain-ato-10c567": {
+      "content_id": "blog/2026-07-06-cats-secure-blockchain-interoperability-with-cross-chain-ato-10c567",
+      "pillar": "market",
+      "title": "CATs: Secure Blockchain Interoperability with Cross-chain Atomic Transactions"
+    },
+    "blog/2026-07-06-when-claws-remember-but-do-not-tell-stealthy-memory-injectio-a0fd5c": {
+      "content_id": "blog/2026-07-06-when-claws-remember-but-do-not-tell-stealthy-memory-injectio-a0fd5c",
+      "pillar": "market",
+      "title": "When Claws Remember but Do Not Tell: Stealthy Memory Injection in Persistent Personal Agents"
+    },
+    "blog/2026-07-07-llms-are-not-a-default-execution-engine": {
+      "content_id": "blog/2026-07-07-llms-are-not-a-default-execution-engine",
+      "pillar": "market",
+      "title": "LLMs Are Not a Default Execution Engine"
+    },
+    "cybernetic-manifesto": {
+      "content_id": "cybernetic-manifesto",
+      "pillar": "system",
+      "title": "The Cybernetic Manifest"
+    },
+    "aml-core-foundations": {
+      "content_id": "aml-core-foundations",
+      "pillar": "aml",
+      "title": "Foundations of Financial Intelligence and Network Topology"
+    },
+    "market-core-foundations": {
+      "content_id": "market-core-foundations",
+      "pillar": "market",
+      "title": "Limit Order Book Physics and Systemic Risk Mechanics"
+    },
+    "data-core-foundations": {
+      "content_id": "data-core-foundations",
+      "pillar": "data",
+      "title": "Declarative DataOps and Schema Governance Architectures"
+    },
+    "temporal-graph-aml": {
+      "content_id": "temporal-graph-aml",
+      "pillar": "aml",
+      "title": "Temporal Graph Networks and Multi-Hop Link Prediction for Layering Detection"
+    },
+    "hawkes-microstructure": {
+      "content_id": "hawkes-microstructure",
+      "pillar": "market",
+      "title": "Stochastic Point Processes and Hawkes Self-Exciting Intensity Functions in LOB Dynamics"
+    },
+    "zero-copy-arrow-iceberg": {
+      "content_id": "zero-copy-arrow-iceberg",
+      "pillar": "data",
+      "title": "Zero-Copy Vectorized Analytics via Apache Arrow Flight and Parquet Columnar Pruning"
+    },
+    "ubo-unwinding-algorithms": {
+      "content_id": "ubo-unwinding-algorithms",
+      "pillar": "aml",
+      "title": "Recursive Ultimate Beneficial Ownership (UBO) Unwinding in Complex Corporate Networks"
+    },
+    "tbml-pricing-anomalies": {
+      "content_id": "tbml-pricing-anomalies",
+      "pillar": "aml",
+      "title": "Trade-Based Money Laundering (TBML) Detection via Statistical Pricing Anomaly Isolation"
+    },
+    "vpin-toxicity-modeling": {
+      "content_id": "vpin-toxicity-modeling",
+      "pillar": "market",
+      "title": "Volume-Synchronized Probability of Toxicity (VPIN) in High-Frequency Order Streams"
+    },
+    "implied-volatility-surfaces": {
+      "content_id": "implied-volatility-surfaces",
+      "pillar": "market",
+      "title": "Implied Volatility Surface Dynamics and Arbitrage-Free Constraint Systems"
+    },
+    "cdc-debezium-statemachines": {
+      "content_id": "cdc-debezium-statemachines",
+      "pillar": "data",
+      "title": "Distributed Change Data Capture (CDC) State Machines with Debezium and Kafka"
+    },
+    "flink-stateful-stream-joins": {
+      "content_id": "flink-stateful-stream-joins",
+      "pillar": "data",
+      "title": "Low-Latency Stateful Stream Joins and Compaction Metrics in Apache Flink"
     }
   },
   "by_run_id": {},
-  "checksum": "ee5c037e4c8f960a893e2804ac4ac40d4ef5f436cf63ca7cae08afbc0757f6ba"
+  "checksum": "dbd3e08e02d22bb4e78f1f70964d0e55e00f1f4e1d566a33a4aeecddf2516350"
 }

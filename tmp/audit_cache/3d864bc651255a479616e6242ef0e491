@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Quality Engineering: Testing, Monitoring, and Expectations at Scale</title>
+    <meta name="description" content="<h2>Why Data Quality Engineering Matters</h2><p>In a DataOps culture, data quality is not discovered after the fact — it is engineered into the pipeline from day one. Every time data moves between st">
+    <link rel="icon" href="/favicon.ico">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+
+
+    <script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "data-engineering"}, "author": {"@type": "Person", "name": "Leszek"}, "dateModified": "2026-07-06T18:02:57Z", "datePublished": "2026-06-08", "description": "\u003ch2\u003eWhy Data Quality Engineering Matters\u003c/h2\u003e\u003cp\u003eIn a DataOps culture, data quality is not discovered after the fact \u2014 it is engineered into the pipeline from day one. Every time data moves between st", "headline": "Data Quality Engineering: Testing, Monitoring, and Expectations at Scale", "inLanguage": "en", "keywords": "dataops", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/learn/data-quality-engineering/", "@type": "WebPage"}, "proficiencyLevel": "intermediate", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-07T08:00:20Z", "signalQualityIndex": 0.938, "sqi": 0.938}
+    </script>
+
+
+    <style>
+        nav { border-bottom: 1px solid var(--pico-muted-border-color); margin-bottom: 2rem; }
+        footer hr { margin-bottom: var(--pico-spacing); }
+        .logo { font-size: 1.25rem; font-weight: 700; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <header class="container">
+        <nav>
+            <ul>
+                <li><strong><a href="/" class="contrast logo">Acacia</a></strong></li>
+            </ul>
+            <ul>
+                <li><a href="/research/">Research</a></li>
+                <li><a href="/learn/">Learn</a></li>
+                <li><a href="/knowledge/">Knowledge</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        
+<article>
+  <h1>Data Quality Engineering: Testing, Monitoring, and Expectations at Scale</h1>
+  <div class="content"><div class="section-harvester" data-section="overview" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="why-data-quality-engineering-matters">Why Data Quality Engineering Matters</h2></summary><div class="section-body"><p>In a DataOps culture, data quality is not discovered after the fact — it is engineered into the pipeline from day one. Every time data moves between stages, there is a risk of corruption, drift, or silent failure. Data quality engineering applies software testing principles to data.</p></div></details></div><div class="section-harvester" data-section="key_findings" style="--section-color:#a5b4fc"><details class="section-collapse" open><summary class="section-summary"><h2 id="three-layers-of-data-quality">Three Layers of Data Quality</h2></summary><div class="section-body"><h3 id="1-freshness">1. Freshness</h3><p>Is the data current? A pipeline SLO might state: "All source data must be ingested within 5 minutes of production." Violations trigger alerts and page the on-call data engineer. Freshness checks compare the max timestamp of incoming records against the current time.</p><h3 id="2-completeness">2. Completeness</h3><p>Are all expected records present? Row count checks compare expected vs actual counts. A sudden drop of 30% in event volume usually means a source connector failed or schema changed.</p><h3 id="3-accuracy">3. Accuracy</h3><p>Do the values make sense? Accuracy checks include: NULL ratio thresholds, reference integrity (every foreign key has a matching primary key), domain constraints (age between 0 and 120), and statistical distribution checks (z-score outlier detection).</p></div></details></div><div class="section-harvester" data-section="applied_scenario" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="expectations-as-code">Expectations as Code</h2></summary><div class="section-body"><p>Great Expectations lets you define expectations as Python objects:</p><pre style="background:var(--color-bg);padding:16px;border-radius:8px;overflow-x:auto;font-size:0.85em">
+expectation_suite = ExpectationSuite("transactions_clean")
+expectation_suite.add_expectation(
+ ExpectColumnValuesToBeBetween("amount", 0, 1000000)
+)
+expectation_suite.add_expectation(
+ ExpectColumnValuesToNotBeNull("transaction_id")
+)
+</pre><p>These expectations run on every pipeline execution. If they fail, the pipeline either halts (hard gate) or proceeds with a warning (soft gate) depending on severity.</p></div></details></div><div class="section-harvester" data-section="source_analysis" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="monitoring-dashboard">Monitoring Dashboard</h2></summary><div class="section-body"><p>A production data quality dashboard tracks:</p><ul><li>Pass/fail rate per expectation over time</li><li>Data freshness (minutes since last successful ingestion) per source</li><li>Row count trends with anomaly detection (sudden drops/spikes)</li><li>Schema change events (new columns, dropped columns, type changes)</li><li>Pipeline DAG health (success rate, duration, backlog)</li></ul><p>The AcaciaFund SQI (Signal Quality Index) is itself a data quality metric — combining source authority, freshness, consensus, and relevance into a single composable score.</p></div></details></div></div>
+</article>
+
+    </main>
+
+    <footer class="container">
+        <hr>
+        <small>&copy; 2026 AcaciaFund &middot; Generated by the Acacia pipeline.</small>
+    </footer>
+
+    <script src="/static/js/main.d41d8cd9.js"></script>
+<!-- Cloudflare Pages Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7a451e6216a44a7eba43b43cb495e68e"}'></script><!-- Cloudflare Pages Analytics --><script defer src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"544a3353becb48febea6c33a8a4b4315","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>

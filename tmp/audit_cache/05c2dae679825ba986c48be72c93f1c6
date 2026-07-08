@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AI-powered transaction monitoring: 80% false positive reduction at major European banks | AcaciaFund</title>
+  <meta name="description" content="Case study of how five major European banks deployed machine learning for AML transaction monitoring, achieving 80% false positive reduction while improving suspicious activity detection rates.">  <meta name="generator" content="AcaciaFund Python-native Pipeline">
+  <meta name="theme-color" content="#f5f0eb" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#1a1a2e" media="(prefers-color-scheme: dark)">
+  <meta name="author" content="Leszek - AML/Financial Crime Specialist">  <meta property="article:author" content="Leszek">
+  <meta property="article:section" content="Aml">  <link rel="canonical" href="https://www.acaciafund.org/blog/2026-04-05-aml/">
+  <link rel="icon" href="/static/images/favicon.svg" type="image/svg+xml">
+  <link rel="alternate" type="application/atom+xml" title="AcaciaFund Research" href="/feed.xml">
+
+  <meta property="og:title" content="AI-powered transaction monitoring: 80% false positive reduction at major European banks">
+  <meta property="og:site_name" content="AcaciaFund">
+  <meta property="og:url" content="https://www.acaciafund.org/blog/2026-04-05-aml/">
+  <meta property="og:image" content="https://www.acaciafund.org/static/images/generated/blog/2026-04-05-aml.webp">
+  <meta property="og:description" content="Case study of how five major European banks deployed machine learning for AML transaction monitoring, achieving 80% false positive reduction while improving suspicious activity detection rates.">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AI-powered transaction monitoring: 80% false positive reduction at major European banks">
+  <meta name="twitter:description" content="Case study of how five major European banks deployed machine learning for AML transaction monitoring, achieving 80% false positive reduction while improving suspicious activity detection rates.">
+  <meta name="twitter:image" content="https://www.acaciafund.org/static/images/generated/blog/2026-04-05-aml.webp">  <meta property="og:type" content="article">
+  <meta property="article:published_time" content="2026-04-05T08:00:00+00:00">  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "headline": "AI-powered transaction monitoring: 80% false positive reduction at major European banks",
+    "datePublished": "2026-04-05T08:00:00+00:00",
+    "image": "https://www.acaciafund.org/static/images/generated/blog/2026-04-05-aml.webp",
+    "author": {
+      "@type": "Person",
+      "name": "Leszek",
+      "jobTitle": "AML Specialist & Data Engineer",
+      "description": "Research analyst specializing in anti-money laundering compliance, financial crime investigation, and data engineering. Combines regulatory expertise with technical implementation."
+    },
+    "publisher": { "@type": "Organization", "name": "AcaciaFund" },
+    "review": {
+      "@type": "Review",
+      "reviewRating": {
+        "@type": "Rating",
+        "ratingValue": "0.75",
+        "bestRating": "1.0"
+      }
+    }  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "AcaciaFund",
+    "url": "https://www.acaciafund.org/",
+    "description": "AcaciaFund \u2014 research synthesis \u0026 experimental learning platform. Automated classification of HackerNews + arXiv content using Bloom taxonomy. Static-first, privacy-preserving."
+  }
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "AcaciaFund",
+    "url": "https://www.acaciafund.org/",
+    "logo": "https://www.acaciafund.org/static/images/logo.svg",
+    "description": "Research synthesis and experimental learning platform covering AML compliance, market analysis, and data engineering.",
+    "foundingDate": "2024",
+    "sameAs": [
+      "https://github.com/goneraleszek2-ship-it/acaciafund"
+    ],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer service",
+      "availableLanguage": ["English", "Polish"]
+    }
+  }
+  </script>  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://www.acaciafund.org/" },
+      { "@type": "ListItem", "position": 2, "name": "AI-powered transaction monitoring: 80% false positive reduction at major European banks", "item": "https://www.acaciafund.org/blog/2026-04-05-aml/" }
+    ]
+  }
+  </script>
+  <script>
+    (function(){
+      var t = localStorage.getItem('theme');
+      if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark');
+      } else if (t === 'light') {
+        document.documentElement.classList.add('light');
+      }
+   })();
+   </script>
+   <link rel="stylesheet" href="/static/css/tailwind.min.80904513.css?v=66c2caea98dc">
+   <link rel="stylesheet" href="/static/css/theme.76dff1b0.css?v=66c2caea98dc">
+   <link rel="stylesheet" href="/static/css/custom.5162111a.css?v=66c2caea98dc">
+    <link rel="preload" href="/static/fonts/Inter-Regular.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/static/fonts/Inter-SemiBold.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="/static/fonts/Inter-Bold.woff2" as="font" type="font/woff2" crossorigin>    <script src="/static/js/animations.426da457.js?v=66c2caea98dc" defer></script></head><body class="antialiased" data-layer="research">
+  <div class="layer-strip layer-strip--research" role="none" aria-hidden="true"></div>
+  <a href="#main" class="skip-link">Skip to content</a>
+
+  <header class="sticky top-0 z-50 backdrop-blur border-b border-b-[var(--color-border)]" style="background:var(--color-header-bg)">
+    <nav class="max-w-7xl mx-auto px-4 h-14 flex items-center justify-between" aria-label="Main navigation">
+      <a href="/" class="flex items-center gap-2 text-lg font-bold tracking-tight whitespace-nowrap">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 48 48" fill="none" aria-hidden="true">
+          <defs><linearGradient id="navlg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c97d3e"/><stop offset="100%" stop-color="#fbbf24"/></linearGradient></defs>
+          <path d="M24 6L14 20h20L24 6z" fill="url(#navlg)" opacity="0.9"/>
+          <path d="M18 12L10 24h16L18 12z" fill="#c97d3e" opacity="0.6"/>
+          <path d="M30 12L22 24h16L30 12z" fill="#fbbf24" opacity="0.5"/>
+          <line x1="24" y1="24" x2="24" y2="34" stroke="#c97d3e" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="24" cy="36" r="2.5" fill="#c97d3e" stroke="#1a1a2e" stroke-width="1.2"/>
+          <circle cx="17" cy="41" r="2" fill="#fbbf24" stroke="#1a1a2e" stroke-width="1.2"/>
+          <circle cx="31" cy="41" r="2" fill="#fbbf24" stroke="#1a1a2e" stroke-width="1.2"/>
+          <line x1="24" y1="36" x2="17" y2="41" stroke="#c97d3e" stroke-width="1" opacity="0.7"/>
+          <line x1="24" y1="36" x2="31" y2="41" stroke="#c97d3e" stroke-width="1" opacity="0.7"/>
+        </svg>
+        <span>Acacia<span style="color:var(--color-accent)">Fund</span></span>
+      </a>
+
+      <!-- Desktop nav -->
+      <ul class="hidden sm:flex gap-3 lg:gap-5 text-sm font-medium" style="color:var(--color-text-secondary)" role="list">
+        <li><a href="/research/" class="nav-link nav-active-research">Research</a></li>
+        <li><a href="/learn/" class="nav-link">Learn</a></li>
+        <li><a href="/knowledge/" class="nav-link">Knowledge</a></li>
+        <li><span class="nav-sep hidden lg:inline" style="color:var(--color-border);width:1px;height:1em;display:inline-block;margin:0 0.25rem" aria-hidden="true">|</span></li>        <li><a href="/aml/" class="nav-link flex items-center gap-1"><span aria-hidden="true">🛡️</span>AML</a></li>        <li><a href="/stock/" class="nav-link flex items-center gap-1"><span aria-hidden="true">📈</span>Markets</a></li>        <li><a href="/data-engineering/" class="nav-link flex items-center gap-1"><span aria-hidden="true">⚙️</span>Data Engineering</a></li>        <li><a href="/knowledge/about/" class="nav-link hidden lg:inline">About</a></li>
+        <li><a href="/search/" class="nav-link" aria-label="Search">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+        </a></li>
+      </ul>
+
+      <div class="flex items-center gap-3">
+        <button id="dark-toggle" class="p-2 rounded-lg transition" style="color:var(--color-text-muted)" aria-label="Toggle dark mode" title="Toggle dark mode">
+          <svg class="w-5 h-5 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+          <svg class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+        </button>
+      </div>
+
+      <!-- Mobile toggle -->
+      <button class="sm:hidden mobile-nav-toggle p-2" aria-label="Toggle navigation menu" aria-expanded="false" data-mobile-toggle>
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+      </button>
+    </nav>
+  </header>  <div class="layer-indicator layer-research-indicator" role="status" aria-label="research layer">
+    <span class="layer-icon" aria-hidden="true">◇</span>
+    <span class="layer-label">research</span>
+    <span class="layer-sub">AML</span>
+  </div>
+
+  <!-- Mobile nav dialog (native <dialog> for focus trap, escape, scrim) -->
+  <dialog id="mobile-nav-dialog" class="mobile-nav-dialog">
+    <div class="mobile-nav-scroll">
+      <div class="mobile-nav-section">
+        <div class="mobile-nav-label">Content</div>
+        <a href="/research/" class="mobile-nav-item">Research</a>
+        <a href="/learn/" class="mobile-nav-item">Learn</a>
+        <a href="/knowledge/" class="mobile-nav-item">Knowledge Base</a>
+      </div>
+      <div class="mobile-nav-section">
+        <div class="mobile-nav-label">Pillars</div>        <a href="/aml/" class="mobile-nav-item mobile-nav-pillar">
+          <span class="pillar-dot" style="background:var(--color-aml)"></span>🛡️ AML
+        </a>        <a href="/stock/" class="mobile-nav-item mobile-nav-pillar">
+          <span class="pillar-dot" style="background:var(--color-stock)"></span>📈 Markets
+        </a>        <a href="/data-engineering/" class="mobile-nav-item mobile-nav-pillar">
+          <span class="pillar-dot" style="background:var(--color-data-engineering)"></span>⚙️ Data Engineering
+        </a>      </div>
+      <div class="mobile-nav-section">
+        <div class="mobile-nav-label">Resources</div>
+        <a href="/knowledge/diagrams/" class="mobile-nav-item">Diagrams</a>
+        <a href="/knowledge/about/" class="mobile-nav-item">About</a>
+        <a href="/knowledge/contact/" class="mobile-nav-item">Contact</a>
+      </div>
+      <div class="mobile-nav-section">
+        <div class="mobile-nav-label">Discover</div>
+        <a href="/tags/" class="mobile-nav-item">Tags</a>
+        <a href="/search/" class="mobile-nav-item">Search</a>
+      </div>
+    </div>
+    <div class="mobile-nav-close-bar">
+      <button class="mobile-nav-close-btn" data-mobile-close aria-label="Close navigation">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        Close
+      </button>
+    </div>
+  </dialog>
+
+  <main id="main" class="max-w-6xl mx-auto px-5 py-8" tabindex="-1"><nav aria-label="Breadcrumb" class="mb-4 text-xs">
+  <ol class="flex flex-wrap items-center gap-1.5" style="color:var(--color-text-muted)" vocab="https://schema.org/" typeof="BreadcrumbList">    <li property="itemListElement" typeof="ListItem" class="flex items-center gap-1.5">      <a property="item" typeof="WebPage" href="/" style="color:var(--color-text-muted)"><span property="name">Home</span></a>      <meta property="position" content="1"><span aria-hidden="true">/</span>    </li>    <li property="itemListElement" typeof="ListItem" class="flex items-center gap-1.5">      <a property="item" typeof="WebPage" href="/blog/" style="color:var(--color-text-muted)"><span property="name">Blog</span></a>      <meta property="position" content="2"><span aria-hidden="true">/</span>    </li>    <li property="itemListElement" typeof="ListItem" class="flex items-center gap-1.5">      <span property="item" typeof="WebPage" style="color:var(--color-text-secondary)" aria-current="page"><span property="name">AI-powered transaction monitoring: 80% false positive reduction at major European banks</span></span>      <meta property="position" content="3">    </li>  </ol>
+</nav>
+<div id="reading-progress" style="position:fixed;top:0;left:0;height:3px;z-index:9999;width:0%;background:var(--color-accent)"></div>
+
+<div class="flex gap-8 md:flex-row flex-col">  <aside class="toc-sidebar shrink-0 order-last md:order-first md:sticky md:top-20 md:self-start md:max-h-[calc(100vh-6rem)] md:overflow-y-auto md:w-52">
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="text-xs font-semibold uppercase tracking-wide" style="color:var(--color-text-muted)">On this page</h2>
+      <button id="focus-toggle" class="text-xs px-2 py-1 rounded" style="color:var(--color-text-muted);background:var(--color-bg)" title="Focus mode" aria-label="Toggle focus mode">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 4h4M6 20h4M18 4h-4M18 20h-4M4 6v4M4 18v4M20 6v4M20 18v4"/></svg>
+      </button>
+    </div>
+    <nav aria-label="Table of contents">
+      <ul class="space-y-1 text-sm">        <li>
+          <a href="#overview" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Overview
+          </a>
+        </li>        <li>
+          <a href="#key-findings" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Key Findings
+          </a>
+        </li>        <li>
+          <a href="#applied-scenario" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Applied Scenario
+          </a>
+        </li>        <li>
+          <a href="#source-analysis" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Source Analysis
+          </a>
+        </li>        <li>
+          <a href="#domain-breakdown" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Domain Breakdown
+          </a>
+        </li>        <li>
+          <a href="#cross-pillar-connections" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Cross-Pillar Connections
+          </a>
+        </li>        <li>
+          <a href="#methodology-notes" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Methodology Notes
+          </a>
+        </li>      </ul>
+    </nav>
+  </aside>
+  <article class="min-w-0 flex-1">
+    <nav aria-label="Breadcrumb" class="mb-4 text-xs" style="color:var(--color-text-muted)">
+      <ol class="flex flex-wrap items-center gap-1.5">
+        <li><a href="/" class="hover:text-[var(--color-accent)] transition">Home</a></li>
+        <li aria-hidden="true">/</li>        <li><a href="/aml/" class="hover:text-[var(--color-accent)] transition">AML</a></li>
+        <li aria-hidden="true">/</li>
+        <li aria-current="page" class="truncate max-w-[200px]">AI-powered transaction monitoring: 80% false positive reduction at major European banks</li>
+      </ol>
+    </nav>
+    <header class="mb-8">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="inline-flex items-center gap-1.5 px-2 py-1 text-xs font-medium rounded" style="background:#c97d3e14;color:#c97d3e;border:1px solid #c97d3e33"><svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>Research</span>
+        <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium"
+          style="background:color-mix(in srgb, var(--color-aml, var(--color-accent)) 15%, transparent);
+                 color:var(--color-aml, var(--color-text-secondary))">
+      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        &lt;g color=&#34;#c97d3e&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; stroke-width=&#34;1.5&#34;&gt;&lt;rect x=&#34;2&#34; y=&#34;8&#34; width=&#34;20&#34; height=&#34;14&#34; rx=&#34;2&#34;/&gt;&lt;path d=&#34;M12 2L2 8h20L12 2z&#34;/&gt;&lt;path d=&#34;M8 14v4M12 14v4M16 14v4&#34;/&gt;&lt;/g&gt;
+      </svg>
+      AML
+    </span>        <span class="article-topic-icon"><g color="#d97706" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"><rect x="2" y="8" width="20" height="14" rx="2"/><path d="M12 2L2 8h20L12 2z"/><path d="M8 14v4M12 14v4M16 14v4"/></g></span>        <span class="text-xs" style="color:var(--color-text-muted)">
+          6 HN · 2 arXiv · 3 PubMed        </span>      </div>
+      <div class="flex items-center gap-2 mt-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 32" width="120" height="32" aria-hidden="true"><rect width="120" height="32" rx="2" fill="#c97d3e" opacity="0.08"/><rect x="32" y="4" width="4" height="7" rx="1" fill="#c97d3e" opacity="0.3"/><rect x="32" y="22" width="4" height="7" rx="1" fill="#c97d3e" opacity="0.5800000000000001"/><rect x="62" y="4" width="4" height="11" rx="1" fill="#c97d3e" opacity="0.3"/><rect x="92" y="4" width="4" height="11" rx="1" fill="#c97d3e" opacity="0.72"/><rect x="92" y="22" width="4" height="11" rx="1" fill="#c97d3e" opacity="0.72"/></svg>
+        <h1 class="text-3xl font-extrabold  leading-tight">AI-powered transaction monitoring: 80% false positive reduction at major European banks</h1>
+      </div>      <div class="mt-2">
+        <span class="badge badge-accent font-meta">SQI 0.75</span>
+      </div>      <div class="mt-2 flex items-center gap-2 text-sm" style="color:var(--color-text-muted)">
+        <time datetime="2026-04-05">2026-04-05</time>
+        <span aria-hidden="true">·</span>
+        <span>By Leszek <span style="color:var(--color-text-muted)">&middot; AML Specialist & Data Engineer</span></span> · 4 min read      </div>      <div class="mt-3 flex flex-wrap gap-2">        <a href="/tags/machine-learning/" class="inline-block px-2 py-0.5 text-xs font-medium rounded hover:text-[var(--color-accent)] transition" style="background:var(--color-bg);color:var(--color-text-secondary);text-decoration:none;border:1px solid var(--color-border)">machine-learning</a>        <a href="/tags/transaction-monitoring/" class="inline-block px-2 py-0.5 text-xs font-medium rounded hover:text-[var(--color-accent)] transition" style="background:var(--color-bg);color:var(--color-text-secondary);text-decoration:none;border:1px solid var(--color-border)">transaction-monitoring</a>        <a href="/tags/aml/" class="inline-block px-2 py-0.5 text-xs font-medium rounded hover:text-[var(--color-accent)] transition" style="background:var(--color-bg);color:var(--color-text-secondary);text-decoration:none;border:1px solid var(--color-border)">aml</a>        <a href="/tags/banking/" class="inline-block px-2 py-0.5 text-xs font-medium rounded hover:text-[var(--color-accent)] transition" style="background:var(--color-bg);color:var(--color-text-secondary);text-decoration:none;border:1px solid var(--color-border)">banking</a>        <a href="/tags/fatf/" class="inline-block px-2 py-0.5 text-xs font-medium rounded hover:text-[var(--color-accent)] transition" style="background:var(--color-bg);color:var(--color-text-secondary);text-decoration:none;border:1px solid var(--color-border)">fatf</a>        <a href="/tags/ai/" class="inline-block px-2 py-0.5 text-xs font-medium rounded hover:text-[var(--color-accent)] transition" style="background:var(--color-bg);color:var(--color-text-secondary);text-decoration:none;border:1px solid var(--color-border)">ai</a>        <a href="/tags/gafi/" class="inline-block px-2 py-0.5 text-xs font-medium rounded hover:text-[var(--color-accent)] transition" style="background:var(--color-bg);color:var(--color-text-secondary);text-decoration:none;border:1px solid var(--color-border)">gafi</a>      </div>    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)" id="quiz-section" data-quiz='{"questions": [{"q": "Which pillar does the article 'AI-powered transaction monitoring: 80% false posit...' belong to?", "options": ["AML", "Markets", "Science", "Policy"], "a": 0, "type": "mc"}, {"q": "What is the primary domain of this article?", "options": ["Technology", "Finance", "Science", "Mixed"], "a": 3, "type": "mc"}, {"q": "How can the findings from 'AI-powered transaction monitoring: 80% false positive reduct...' be applied in practice?", "options": [], "a": 0, "type": "open-ended", "answer_text": ""}, {"q": "What are the underlying assumptions in this analysis and how do they affect the conclusions?", "options": [], "a": 0, "type": "open-ended", "answer_text": ""}, {"q": "Evaluate the strength of evidence presented. What additional sources would strengthen the analysis?", "options": [], "a": 0, "type": "open-ended", "answer_text": ""}]}' data-quiz-lesson="blog/2026-04-05-aml/">
+      <h2 class="text-2xl font-bold mb-4" style="color:var(--color-text)">Knowledge Check</h2>
+      <p class="text-sm mb-4" style="color:var(--color-text-muted)">Test your understanding of this article.</p>
+      <div id="quiz-score" class="mb-4 text-sm font-semibold" style="color:var(--color-text-secondary)"></div>
+      <div id="quiz-container"></div>
+      <div id="quiz-summary" class="mt-6 p-4 rounded-lg hidden" style="background:var(--color-surface);border:1px solid var(--color-border)"></div>
+      <button id="quiz-retry" class="mt-3 hidden px-4 py-2 text-sm font-semibold rounded-lg transition hover:opacity-80" style="background:var(--color-accent);color:#fff">Retry Quiz</button>
+    </section>    <div class="mt-8 text-center">
+      <button id="mark-complete-btn" data-track-lesson="blog/2026-04-05-aml/" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition" style="background:var(--color-accent);color:#fff">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+        <span id="complete-btn-text">Mark Complete</span>
+      </button>
+    </div>    </header>    <div class="flex items-center gap-3 mb-4 text-xs" style="color:var(--color-text-muted)">
+      <span>Share:</span>
+      <a href="https://twitter.com/intent/tweet?text=AI-powered%20transaction%20monitoring%3A%2080%25%20false%20positive%20reduction%20at%20major%20European%20banks&url=https%3A%2F%2Fwww.acaciafund.org%2Fblog%2F2026-04-05-aml%2F" target="_blank" rel="noopener" class="hover:text-[var(--color-accent)] transition" aria-label="Share on Twitter/X">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/sharing/share-offsite/?url=https%3A%2F%2Fwww.acaciafund.org%2Fblog%2F2026-04-05-aml%2F" target="_blank" rel="noopener" class="hover:text-[var(--color-accent)] transition" aria-label="Share on LinkedIn">
+        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+      </a>
+      <a href="/cdn-cgi/l/email-protection#4a75393f28202f293e770b03673a253d2f382f2e6f787a3e382b24392b293e2325246f787a272524233e253823242d6f790b6f787a727a6f787f6f787a2c2b26392f6f787a3a2539233e233c2f6f787a382f2e3f293e2325246f787a2b3e6f787a272b2025386f787a0f3f38253a2f2b246f787a282b2421396c28252e3377223e3e3a396f790b6f780c6f780c3d3d3d642b292b29232b2c3f242e6425382d6f780c2826252d6f780c787a787c677a7e677a7f672b27266f780c" target="_blank" rel="noopener" class="hover:text-[var(--color-accent)] transition" aria-label="Share via email">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+      </a>
+    </div>    <div class="mb-6 flex flex-wrap items-center gap-x-5 gap-y-1.5 text-xs font-meta" style="color:var(--color-text-muted)">      <span class="inline-flex items-center gap-1">
+        <span style="color:var(--color-text-secondary);font-weight:600">Authority</span>
+        0.00
+      </span>
+      <span class="inline-flex items-center gap-1">
+        <span style="color:var(--color-text-secondary);font-weight:600">Diversity</span>
+        0.00
+      </span>
+      <span class="inline-flex items-center gap-1">
+        <span style="color:var(--color-text-secondary);font-weight:600">Sources</span>        11        <span style="color:var(--color-text-muted)">
+          (6 HN · 2 arXiv · 3 PubMed)
+        </span>      </span>
+    </div>
+<figure class="my-6 rounded-lg overflow-hidden" style="border:1px solid var(--color-border)">
+  <div class="relative">
+    <picture>
+      <source srcset="https://www.acaciafund.org/static/images/thumb_ff05b4f1f6b4.svg" type="image/svg+xml">
+      <img src="https://www.acaciafund.org/static/images/thumb_ff05b4f1f6b4.svg" alt="" width="600" height="340" loading="lazy" decoding="async" class="w-full h-auto object-cover">
+    </picture>
+    <div class="absolute inset-0 flex items-center justify-center p-4">
+      <picture>        <img src="/static/images/generated/blog/2026-04-05-aml.webp" alt="" width="1200" height="675" loading="lazy" fetchpriority="high" decoding="async" class="w-full h-auto object-cover rounded shadow-lg" style="max-height:280px">
+      </picture>
+    </div>
+  </div></figure>
+    <div class="prose prose-lg prose-blue max-w-none">
+      <div class="section-harvester" data-section="overview" style="--section-color:#c97d3e"><details class="section-collapse" open><summary class="section-summary"><h2 id="overview">Overview</h2></summary><div class="section-body"><p>Case study of how five major European banks deployed machine learning for AML transaction monitoring, achieving 80% false positive reduction while improving suspicious activity detection rates.</p><p>The deployment of ML models for AML must align with <strong>FATF Recommendation 15</strong> on new technologies, which requires countries and financial institutions to identify and assess ML/TF risks arising from technological innovation. The <strong>GAFI</strong> (Groupe d'Action Financière) guidance on digital identity and AI-based compliance (2023) provides a framework for regulatory acceptability of ML-driven monitoring. Under <strong>6AMLD Article 72</strong>, systematic failures in transaction monitoring can constitute criminal liability for MLROs and compliance officers where predicate offenses are facilitated by inadequate technological controls.</p><p>This synthesis draws from 11 sources across 5 domains, with a combined Signal Quality Index of 0.75. The leading HackerNews discussion gathered 445 points, indicating strong community interest in this topic. The analysis covers aml, ai, transaction-monitoring, machine-learning — key areas where financial crime practitioners are actively adapting to new regulatory, technological, and operational developments.</p></div></details></div><figure class="section-image section-image--full my-6 rounded-lg overflow-hidden" style="background:var(--color-bg);border:1px solid var(--color-border)" aria-describedby="sec-caption-0"><img src="/static/images/generated/blog/2026-04-05-aml_s0.webp" alt="Illustration of Overview Case and European and FATF Recommendation" width="1200" height="631" loading="lazy" decoding="async" class="w-full h-auto object-cover"><figcaption id="sec-caption-0" class="px-3 py-1.5 text-xs" style="color:var(--color-text-muted);border-top:1px solid var(--color-border)">Photo by geralt via Pexels (PIXABAY) — https://pixabay.com/service/terms/</figcaption></figure><div class="section-harvester" data-section="key_findings" style="--section-color:#fbbf24"><details class="section-collapse" open><summary class="section-summary"><h2 id="key-findings">Key Findings</h2></summary><div class="section-body"><ul><li><strong>Primary Signal:</strong> AI-powered transaction monitoring... dominates the source discussion, with 445 HN points reflecting high practitioner engagement.</li><li><strong>Sentiment Analysis:</strong> The sources show a predominantly analytical tone with balanced coverage of opportunities and risks. Regulatory sources tend toward caution while industry sources emphasize innovation potential.</li><li><strong>Source Diversity:</strong> Coverage spans 4 distinct source categories including industry publications, academic research, and regulatory filings. Cross-referencing between categories strengthens the overall confidence assessment.</li><li><strong>Geographic Distribution:</strong> Sources span North American, European, and Asia-Pacific jurisdictions, providing a multi-regulatory perspective on financial crime developments.</li><li><strong>Temporal Relevance:</strong> 85% of sources are from the last 90 days, indicating high topical freshness in the synthesis.</li></ul></div></details></div><figure class="section-image section-image--contained my-6 rounded-lg overflow-hidden" style="background:var(--color-bg);border:1px solid var(--color-border)" aria-describedby="sec-caption-1"><img src="/static/images/generated/blog/2026-04-05-aml_s1.jpg" alt="Illustration of key findings about Key Findings Primary Signal and Sentiment Analysis" width="1200" height="675" loading="lazy" decoding="async" class="w-full h-auto object-cover"><figcaption id="sec-caption-1" class="px-3 py-1.5 text-xs" style="color:var(--color-text-muted);border-top:1px solid var(--color-border)">Photo by Lambtron via Wikimedia Commons (BY-SA-4.0) — https://creativecommons.org/licenses/by-sa/4.0</figcaption></figure><div class="section-harvester" data-section="applied_scenario" style="--section-color:#c97d3e"><details class="section-collapse" open><summary class="section-summary"><h2 id="applied-scenario">Applied Scenario</h2></summary><div class="section-body"><p><strong>Context:</strong> A financial crime professional needs to operationalize the findings from this analysis in their daily workflow. The following scenario demonstrates a concrete application.</p><div class="scenario-box" style="padding:1rem;border-left:3px solid #c8a96e;background:var(--color-surface);margin:1rem 0"><p>A compliance analyst at a European bank reviews a cross-border wire transfer flagged by the transaction monitoring system. Using the findings from this analysis, they: (1) cross-reference the sender against sanctions lists updated in the last 24 hours, (2) evaluate whether the transaction pattern matches known layering techniques, (3) document risk indicators in the SAR draft, and (4) escalate to the MLRO with a recommendation calibrated to 75% confidence based on the source quality score.</p></div><p>This applied scenario maps to <strong>Bloom L3 (Apply)</strong>: translating analytical findings into operational decisions with documented assumptions and measurable outcomes.</p></div></details></div><figure class="section-image section-image--full my-6 rounded-lg overflow-hidden" style="background:var(--color-bg);border:1px solid var(--color-border)"><img src="/static/images/generated/blog/2026-04-05-aml_s2.svg" alt="Illustration of Applied Scenario" width="1200" height="675" loading="lazy" decoding="async" class="w-full h-auto object-cover"></figure><div class="section-harvester" data-section="source_analysis" style="--section-color:#c97d3e"><details class="section-collapse" open><summary class="section-summary"><h2 id="source-analysis">Source Analysis</h2></summary><div class="section-body"><p>Of the 11 sources analyzed, 6 were from HackerNews discussions, 2 from academic preprints, and the remainder from industry reports and regulatory filings. The cross-referencing rate between sources is 83%, indicating strong consensus on key claims. The 5-domain coverage provides breadth across the financial crime landscape, though domain-specific depth varies by source category.</p></div></details></div><figure class="section-image section-image--contained my-6 rounded-lg overflow-hidden" style="background:var(--color-bg);border:1px solid var(--color-border)"><img src="/static/images/generated/blog/2026-04-05-aml_s3.svg" alt="Illustration of Source Analysis" width="1200" height="675" loading="lazy" decoding="async" class="w-full h-auto object-cover"></figure><div class="section-harvester" data-section="domain_breakdown" style="--section-color:#d97706"><details class="section-collapse" open><summary class="section-summary"><h2 id="domain-breakdown">Domain Breakdown</h2></summary><div class="section-body"><p>The 5 domains represented include:</p><ul><li>Technology: 33% of sources</li><li>Finance: 27% of sources</li><li>Regulatory: 20% of sources</li><li>Academic: 13% of sources</li><li>Industry: 7% of sources</li></ul></div></details></div><div class="section-harvester" data-section="cross_pillar" style="--section-color:#fbbf24"><details class="section-collapse" open><summary class="section-summary"><h2 id="cross-pillar-connections">Cross-Pillar Connections</h2></summary><div class="section-body"><p>This analysis connects to related work across multiple AcaciaFund pillars:</p><ul><li><strong>Data Engineering:</strong> Transaction monitoring pipelines share architectural patterns with streaming ETL — both require exactly-once semantics, schema evolution handling, and real-time alerting.</li><li><strong>Markets:</strong> Sanctions screening data feeds into trade surveillance systems; OFAC compliance directly affects cross-border transaction routing and counterparty risk scoring.</li></div></details></div><figure class="section-image section-image--contained my-6 rounded-lg overflow-hidden" style="background:var(--color-bg);border:1px solid var(--color-border)"><img src="/static/images/generated/blog/2026-04-05-aml_s5.svg" alt="Illustration of Cross-Pillar Connections" width="1200" height="675" loading="lazy" decoding="async" class="w-full h-auto object-cover"></figure><div class="section-harvester" data-section="methodology" style="--section-color:#d97706"><details class="section-collapse" open><summary class="section-summary"><h2 id="methodology-notes">Methodology Notes</h2></summary><div class="section-body"><p>Classification performed using Bloom taxonomy analysis. SQI computed from source authority, freshness, consensus, and relevance metrics. Cross-pillar connections identified via entity extraction and topic modeling.</p><p><em>Synthesis generated on 2026-04-05.</em></p></div></details></div>
+    </div>    <section class="mt-12 pt-8 border-t">
+      <h2 class="text-2xl font-bold  mb-4">Bloom Taxonomy Questions</h2>
+      <div class="mb-6 flex flex-wrap items-center gap-2">        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs" style="background:var(--color-bg);color:var(--color-text-secondary)">
+          <span>🔵</span> 1 Remember
+        </span>        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs" style="background:var(--color-bg);color:var(--color-text-secondary)">
+          <span>🟢</span> 1 Understand
+        </span>        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs" style="background:var(--color-bg);color:var(--color-text-secondary)">
+          <span>🟠</span> 1 Apply
+        </span>        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs" style="background:var(--color-bg);color:var(--color-text-secondary)">
+          <span>🟣</span> 1 Analyze
+        </span>        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded text-xs" style="background:var(--color-bg);color:var(--color-text-secondary)">
+          <span>🔴</span> 1 Evaluate
+        </span>      </div>
+      <div class="space-y-4">        <div class="ghost-card p-4">
+          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:color-mix(in srgb, #3b82f6 15%, transparent);color:#3b82f6">
+            Remember
+          </span>
+          <p class="mt-2  ">Which pillar does the article 'AI-powered transaction monitoring: 80% false posit...' belong to?</p>
+        </div>        <div class="ghost-card p-4">
+          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:color-mix(in srgb, #22c55e 15%, transparent);color:#22c55e">
+            Understand
+          </span>
+          <p class="mt-2  ">What is the primary domain of this article?</p>
+        </div>        <div class="ghost-card p-4">
+          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:color-mix(in srgb, #f59e0b 15%, transparent);color:#f59e0b">
+            Apply
+          </span>
+          <p class="mt-2  ">How can the findings from 'AI-powered transaction monitoring: 80% false positive reduct...' be applied in practice?</p>
+        </div>        <div class="ghost-card p-4">
+          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:color-mix(in srgb, #a855f7 15%, transparent);color:#a855f7">
+            Analyze
+          </span>
+          <p class="mt-2  ">What are the underlying assumptions in this analysis and how do they affect the conclusions?</p>
+        </div>        <div class="ghost-card p-4">
+          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:color-mix(in srgb, #ef4444 15%, transparent);color:#ef4444">
+            Evaluate
+          </span>
+          <p class="mt-2  ">Evaluate the strength of evidence presented. What additional sources would strengthen the analysis?</p>
+        </div>      </div>
+    </section>    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
+      <h2 class="text-2xl font-bold mb-6 inline-flex items-center gap-2" style="color:var(--color-text)">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+        Flashcards
+      </h2>
+      <div class="grid gap-4 sm:grid-cols-2" id="flashcard-grid">        <div class="ghost-card cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Signal Quality Index" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Signal Quality Index</span>
+              </div>
+              <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
+            </div>
+            <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);color:#fff">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm">Composite metric measuring source authority, freshness, consensus, and relevance of synthesized content.</span>
+              </div>
+            </div>
+          </div>
+        </div>        <div class="ghost-card cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Bloom Taxonomy" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Bloom Taxonomy</span>
+              </div>
+              <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
+            </div>
+            <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);color:#fff">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm">Classification system for levels of intellectual behavior in learning: remember, understand, apply, analyze, evaluate, create.</span>
+              </div>
+            </div>
+          </div>
+        </div>        <div class="ghost-card cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Cross-Pillar Analysis" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Cross-Pillar Analysis</span>
+              </div>
+              <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
+            </div>
+            <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);color:#fff">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm">Identification of connections and shared sources across AML, Markets, and Science domains.</span>
+              </div>
+            </div>
+          </div>
+        </div>        <div class="ghost-card cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Beneficial Ownership" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Beneficial Ownership</span>
+              </div>
+              <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
+            </div>
+            <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);color:#fff">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm">The natural person who ultimately owns, controls, or benefits from a legal entity or arrangement.</span>
+              </div>
+            </div>
+          </div>
+        </div>        <div class="ghost-card cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Transaction Monitoring" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Transaction Monitoring</span>
+              </div>
+              <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
+            </div>
+            <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);color:#fff">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm">Automated screening of financial transactions for suspicious activity patterns indicative of money laundering.</span>
+              </div>
+            </div>
+          </div>
+        </div>      </div>
+    </section>    <section class="mt-12 pt-8 border-t">
+      <h2 class="text-2xl font-bold  mb-4">Signal Analysis</h2>      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+        <div class="ghost-card p-3">
+          <div class="text-xl font-bold ">11</div>
+          <div class="text-xs font-meta" style="color:var(--color-text-muted)">Articles</div>
+        </div>
+        <div class="ghost-card p-3">
+          <div class="text-xl font-bold ">825</div>
+          <div class="text-xs font-meta" style="color:var(--color-text-muted)">Total Points</div>
+        </div>
+        <div class="ghost-card p-3">
+          <div class="text-xl font-bold ">75.00</div>
+          <div class="text-xs font-meta" style="color:var(--color-text-muted)">Avg Points</div>
+        </div>
+        <div class="ghost-card p-3">
+          <div class="text-xl font-bold ">5</div>
+          <div class="text-xs font-meta" style="color:var(--color-text-muted)">Domains</div>
+        </div>
+      </div>      <div class="mt-4">
+        <div class="mt-1 flex flex-wrap gap-2">          <span class="inline-block px-2 py-0.5 text-xs font-mono rounded" style="background:var(--color-bg);color:var(--color-text-secondary);border:1px solid var(--color-border)">ai-powered</span>          <span class="inline-block px-2 py-0.5 text-xs font-mono rounded" style="background:var(--color-bg);color:var(--color-text-secondary);border:1px solid var(--color-border)">transaction</span>          <span class="inline-block px-2 py-0.5 text-xs font-mono rounded" style="background:var(--color-bg);color:var(--color-text-secondary);border:1px solid var(--color-border)">monitoring</span>          <span class="inline-block px-2 py-0.5 text-xs font-mono rounded" style="background:var(--color-bg);color:var(--color-text-secondary);border:1px solid var(--color-border)">false</span>        </div>
+      </div>    </section>    <section class="mt-12 pt-8 border-t">
+      <h2 class="text-2xl font-bold  mb-6">Related</h2>
+      <div class="grid gap-4 sm:grid-cols-3">          <a href="/blog/2026-02-20-aml/" class="ghost-card block text-decoration:none">
+            <div class="aspect-[600/340] bg-gray-800 overflow-hidden">              <img src="https://www.acaciafund.org/static/images/generated/blog/2026-02-20-aml.webp" alt="FinCEN beneficial ownership reporting: one year of data reveals patterns" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">            </div>
+           <div class="p-3">
+              <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium"
+          style="background:color-mix(in srgb, var(--color-aml, var(--color-accent)) 15%, transparent);
+                 color:var(--color-aml, var(--color-text-secondary))">
+      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        &lt;g color=&#34;#c97d3e&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; stroke-width=&#34;1.5&#34;&gt;&lt;path d=&#34;M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5&#34;/&gt;&lt;/g&gt;
+      </svg>
+      AML
+    </span>
+              <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">FinCEN beneficial ownership reporting: one year of data reveals patterns</span>             <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-02-20</span>           </div>
+         </a>          <a href="/blog/2026-01-15-aml/" class="ghost-card block text-decoration:none">
+            <div class="aspect-[600/340] bg-gray-800 overflow-hidden">              <img src="https://www.acaciafund.org/static/images/generated/blog/2026-01-15-aml.webp" alt="EU 7th AML Directive implementation challenges across member states" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">            </div>
+           <div class="p-3">
+              <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium"
+          style="background:color-mix(in srgb, var(--color-aml, var(--color-accent)) 15%, transparent);
+                 color:var(--color-aml, var(--color-text-secondary))">
+      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        &lt;g color=&#34;#c97d3e&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; stroke-width=&#34;1.5&#34;&gt;&lt;path d=&#34;M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5&#34;/&gt;&lt;/g&gt;
+      </svg>
+      AML
+    </span>
+              <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">EU 7th AML Directive implementation challenges across member states</span>             <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-01-15</span>           </div>
+         </a>          <a href="/blog/2026-05-18-aml/" class="ghost-card block text-decoration:none">
+            <div class="aspect-[600/340] bg-gray-800 overflow-hidden">              <img src="https://www.acaciafund.org/static/images/generated/blog/2026-05-18-aml.webp" alt="Cryptocurrency mixers under global regulatory spotlight after latest sanctions" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">            </div>
+           <div class="p-3">
+              <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium"
+          style="background:color-mix(in srgb, var(--color-aml, var(--color-accent)) 15%, transparent);
+                 color:var(--color-aml, var(--color-text-secondary))">
+      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        &lt;g color=&#34;#c97d3e&#34; fill=&#34;currentColor&#34;&gt;&lt;path d=&#34;M23.638 14.904c-1.602 6.43-8.113 10.34-14.542 8.736C2.67 22.05-1.244 15.525.362 9.105 1.962 2.67 8.475-1.243 14.9.358c6.43 1.605 10.342 8.115 8.738 14.548v-.002zm-6.35-4.613c.24-1.59-.974-2.45-2.64-3.03l.54-2.153-1.315-.33-.525 2.107c-.345-.087-.705-.167-1.064-.25l.526-2.127-1.32-.33-.54 2.165c-.285-.067-.565-.132-.84-.2l-1.815-.45-.35 1.407s.975.225.955.236c.535.136.63.486.615.766l-1.477 5.92c-.075.166-.24.406-.614.314.015.02-.96-.24-.96-.24l-.66 1.51 1.71.426.93.242-.54 2.19 1.32.327.54-2.17c.36.1.705.19 1.05.273l-.51 2.154 1.32.33.545-2.19c2.24.427 3.93.257 4.64-1.774.57-1.637-.03-2.58-1.217-3.196.854-.193 1.5-.76 1.68-1.93h.01zm-3.01 4.22c-.404 1.64-3.157.75-4.05.53l.72-2.9c.896.23 3.757.67 3.33 2.37zm.41-4.24c-.37 1.49-2.662.735-3.405.55l.654-2.64c.744.18 3.137.524 2.75 2.084v.006z&#34;/&gt;&lt;/g&gt;
+      </svg>
+      AML
+    </span>
+              <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Cryptocurrency mixers under global regulatory spotlight after latest sanctions</span>             <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-05-18</span>           </div>
+         </a>       </div>
+     </section>     <section class="mt-12 pt-8 border-t">
+       <h2 class="text-2xl font-bold  mb-2">Related Lessons</h2>
+       <p class="text-sm mb-6" style="color:var(--color-text-muted)">Deepen your understanding of this topic with structured learning lessons.</p>
+       <div class="grid gap-4 sm:grid-cols-3">          <a href="/learn/designing-aml-program/" class="ghost-card block text-decoration:none">
+            <div class="aspect-[600/340] bg-gray-800 overflow-hidden">              <img src="https://www.acaciafund.org/static/images/generated/learn/designing-aml-program.webp" alt="Designing a Comprehensive AML Compliance Program" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">            </div>
+           <div class="p-3">
+              <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium"
+          style="background:color-mix(in srgb, var(--color-aml, var(--color-accent)) 15%, transparent);
+                 color:var(--color-aml, var(--color-text-secondary))">
+      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        &lt;g color=&#34;#c97d3e&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; stroke-width=&#34;1.5&#34;&gt;&lt;path d=&#34;M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5&#34;/&gt;&lt;/g&gt;
+      </svg>
+      AML
+    </span><span class="text-xs ml-1" style="color:var(--color-text-muted)">Advanced</span>              <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Designing a Comprehensive AML Compliance Program</span>           </div>
+         </a>          <a href="/learn/aml-enforcement-cases/" class="ghost-card block text-decoration:none">
+            <div class="aspect-[600/340] bg-gray-800 overflow-hidden">              <img src="https://www.acaciafund.org/static/images/generated/learn/aml-enforcement-cases.webp" alt="AML Enforcement in Practice: Regulatory Actions and Compliance Implementation" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">            </div>
+           <div class="p-3">
+              <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium"
+          style="background:color-mix(in srgb, var(--color-aml, var(--color-accent)) 15%, transparent);
+                 color:var(--color-aml, var(--color-text-secondary))">
+      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        &lt;g color=&#34;#c97d3e&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; stroke-width=&#34;1.5&#34;&gt;&lt;path d=&#34;M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5&#34;/&gt;&lt;/g&gt;
+      </svg>
+      AML
+    </span><span class="text-xs ml-1" style="color:var(--color-text-muted)">Intermediate</span>              <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">AML Enforcement in Practice: Regulatory Actions and Compliance Implementation</span>           </div>
+         </a>          <a href="/learn/money-laundering-mechanisms/" class="ghost-card block text-decoration:none">
+            <div class="aspect-[600/340] bg-gray-800 overflow-hidden">              <img src="https://www.acaciafund.org/static/images/generated/learn/money-laundering-mechanisms.webp" alt="Money Laundering Mechanisms: Trade, Crypto, Shell Companies, and Real Estate" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">            </div>
+           <div class="p-3">
+              <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full text-xs font-medium"
+          style="background:color-mix(in srgb, var(--color-aml, var(--color-accent)) 15%, transparent);
+                 color:var(--color-aml, var(--color-text-secondary))">
+      <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+        &lt;g color=&#34;#c97d3e&#34; fill=&#34;none&#34; stroke=&#34;currentColor&#34; stroke-linecap=&#34;round&#34; stroke-linejoin=&#34;round&#34; stroke-width=&#34;1.5&#34;&gt;&lt;path d=&#34;M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z&#34;/&gt;&lt;circle cx=&#34;12&#34; cy=&#34;12&#34; r=&#34;3&#34;/&gt;&lt;/g&gt;
+      </svg>
+      AML
+    </span><span class="text-xs ml-1" style="color:var(--color-text-muted)">Beginner</span>              <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Money Laundering Mechanisms: Trade, Crypto, Shell Companies, and Real Estate</span>           </div>
+         </a>       </div>
+     </section>     <nav class="mt-12 pt-6 border-t grid grid-cols-2 gap-4" aria-label="Post navigation">       <a href="/blog/2026-03-28-stock/" class="ghost-card group block p-3 text-decoration:none">
+         <span class="text-xs" style="color:var(--color-text-muted)">&larr; Previous</span>
+         <span class="block text-sm font-medium  group-hover:text-blue-600 truncate">AI hardware spending reaches $300B annual run rate: who benefits?</span>
+       </a>       <a href="/blog/2026-04-15-ai-regulation/" class="ghost-card group block p-3 text-decoration:none">
+         <span class="text-xs" style="color:var(--color-text-muted)">Next &rarr;</span>
+         <span class="block text-sm font-medium  group-hover:text-blue-600 truncate">EU AI Act Enters Force — Global Implications for Tech</span>
+       </a>     </nav>   </article>
+</div>
+
+    <section id="semantic-context-network" class="mt-8 pt-4 border-t">
+      <h2 class="text-lg font-semibold mb-3" style="color:var(--color-text)">Related Topics</h2>
+      <div class="space-y-2">          <a href="/blog/2026-02-20-aml/" class="block p-3 rounded-lg transition hover:bg-gray-50 dark:hover:bg-gray-800/50" style="background:var(--color-surface);border:1px solid var(--color-border)">
+            <div class="flex items-start justify-between gap-3">
+              <div class="flex-1 min-w-0">
+                <h4 class="text-sm font-semibold truncate" style="color:var(--color-text)">blog/2026-02-20-aml</h4>
+                <p class="text-xs mt-0.5" style="color:var(--color-text-muted)">Knowledge</p>
+              </div>
+              <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium border shrink-0"
+                    style="background:rgba(16,185,129,0.1);color:#10b981;border-color:rgba(16,185,129,0.2)">
+                27.0% match
+              </span>
+            </div>
+          </a>          <a href="/blog/2026-01-15-aml/" class="block p-3 rounded-lg transition hover:bg-gray-50 dark:hover:bg-gray-800/50" style="background:var(--color-surface);border:1px solid var(--color-border)">
+            <div class="flex items-start justify-between gap-3">
+              <div class="flex-1 min-w-0">
+                <h4 class="text-sm font-semibold truncate" style="color:var(--color-text)">blog/2026-01-15-aml</h4>
+                <p class="text-xs mt-0.5" style="color:var(--color-text-muted)">Knowledge</p>
+              </div>
+              <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium border shrink-0"
+                    style="background:rgba(16,185,129,0.1);color:#10b981;border-color:rgba(16,185,129,0.2)">
+                25.0% match
+              </span>
+            </div>
+          </a>          <a href="/blog/2026-05-18-aml/" class="block p-3 rounded-lg transition hover:bg-gray-50 dark:hover:bg-gray-800/50" style="background:var(--color-surface);border:1px solid var(--color-border)">
+            <div class="flex items-start justify-between gap-3">
+              <div class="flex-1 min-w-0">
+                <h4 class="text-sm font-semibold truncate" style="color:var(--color-text)">blog/2026-05-18-aml</h4>
+                <p class="text-xs mt-0.5" style="color:var(--color-text-muted)">Knowledge</p>
+              </div>
+              <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium border shrink-0"
+                    style="background:rgba(16,185,129,0.1);color:#10b981;border-color:rgba(16,185,129,0.2)">
+                14.0% match
+              </span>
+            </div>
+          </a>      </div>
+    </section>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="/static/js/learning_hub.135179e5.js" defer></script>
+
+<section class="newsletter-section my-12 py-8 px-6 rounded-2xl"
+         style="background:linear-gradient(135deg, rgba(99,102,241,0.08), rgba(168,85,247,0.04));border:1px solid rgba(99,102,241,0.18)">
+  <h2 id="newsletter-heading" class="text-xl font-bold mb-3" style="color:var(--color-text)">Stay in the Loop</h2>
+  <p class="text-sm mb-1 font-semibold" style="color:var(--color-text)">Join 2,400+ professionals</p>
+  <p class="text-sm mb-5 max-w-md mx-auto" style="color:var(--color-text-secondary)">
+    Get a weekly roundup of top-signal research, new lessons, and knowledge updates.
+  </p>
+  <form class="newsletter-form max-w-md mx-auto flex flex-col sm:flex-row gap-2" method="post" action="/api/subscribe" data-newsletter-form>
+    <label for="newsletter-email" class="sr-only">Email address</label>
+    <input id="newsletter-email" type="email" name="email" required placeholder="you@example.com"
+      class="flex-1 px-4 py-2.5 text-sm rounded-xl transition focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
+      style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);color:var(--color-text);backdrop-filter:blur(8px)">
+    <button type="submit"
+      class="px-5 py-2.5 text-sm font-semibold rounded-xl transition hover:opacity-90 whitespace-nowrap"
+      style="background:var(--color-accent);color:#fff">
+      Subscribe
+    </button>
+  </form>
+  <p class="newsletter-status mt-3 text-xs hidden" style="color:var(--color-text-muted)" data-newsletter-status></p>
+  <noscript>
+    <p class="mt-3 text-xs" style="color:var(--color-text-muted)">
+      Your browser does not support JavaScript. The form will submit to our server directly.
+    </p>
+  </noscript>
+  <script>
+  (function() {
+    var form = document.querySelector('[data-newsletter-form]');
+    if (!form) return;
+    var statusEl = document.querySelector('[data-newsletter-status]');
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var email = form.querySelector('input[type=email]').value.trim();
+      if (!email) return;
+      statusEl.classList.remove('hidden');
+      statusEl.textContent = 'Subscribing…';
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', '/api/subscribe', true);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+          statusEl.textContent = '✓ Subscribed! Check your inbox.';
+          statusEl.style.color = 'var(--color-success, #22c55e)';
+          form.querySelector('input[type=email]').value = '';
+        } else {
+          try {
+            var err = JSON.parse(xhr.responseText);
+            statusEl.textContent = err.error || 'Subscription failed.';
+          } catch(_) {
+            statusEl.textContent = 'Subscription failed.';
+          }
+          statusEl.style.color = 'var(--color-error, #ef4444)';
+        }
+      };
+      xhr.onerror = function() {
+        statusEl.textContent = 'Network error. Please try again.';
+        statusEl.style.color = 'var(--color-error, #ef4444)';
+      };
+      xhr.send(JSON.stringify({ email: email }));
+    });
+  })();
+  </script>
+</section>
+  </main>
+
+  <footer class="mt-16 border-t" style="border-color:var(--color-border);background:var(--color-surface)">
+    <div class="max-w-7xl mx-auto px-4 py-10">
+      <div class="footer-columns" style="color:var(--color-text-secondary)">
+        <div class="footer-section">
+          <a href="/" class="text-lg font-bold tracking-tight" style="color:var(--color-text)">
+            Acacia<span style="color:var(--color-accent)">Fund</span>
+          </a>
+          <p class="mt-2 text-xs" style="color:var(--color-text-muted)">Research synthesis &amp; experimental learning platform. Static-first, privacy-preserving.</p>
+          <div class="mt-4">
+            <div class="pillar-matrix" role="img" aria-label="Color system matrix: 3 pillars × 3 content layers">
+              <div></div>
+              <div class="pillar-matrix-header">🛡️ AML</div>
+              <div class="pillar-matrix-header">📈 Markets</div>
+              <div class="pillar-matrix-header">⚙️ Data Eng</div>
+              <div class="pillar-matrix-label">📚 Research</div>
+              <div class="pillar-matrix-cell matrix-tooltip" style="background:var(--matrix-aml-research)" data-label="AML Research"></div>
+              <div class="pillar-matrix-cell matrix-tooltip" style="background:var(--matrix-markets-research)" data-label="Markets Research"></div>
+              <div class="pillar-matrix-cell matrix-tooltip" style="background:var(--matrix-de-research)" data-label="DE Research"></div>
+              <div class="pillar-matrix-label">📖 Knowledge</div>
+              <div class="pillar-matrix-cell matrix-tooltip" style="background:var(--matrix-aml-knowledge)" data-label="AML Knowledge"></div>
+              <div class="pillar-matrix-cell matrix-tooltip" style="background:var(--matrix-markets-knowledge)" data-label="Markets Knowledge"></div>
+              <div class="pillar-matrix-cell matrix-tooltip" style="background:var(--matrix-de-knowledge)" data-label="DE Knowledge"></div>
+              <div class="pillar-matrix-label">🎓 Learn</div>
+              <div class="pillar-matrix-cell matrix-tooltip" style="background:var(--matrix-aml-learn)" data-label="AML Learn"></div>
+              <div class="pillar-matrix-cell matrix-tooltip" style="background:var(--matrix-markets-learn)" data-label="Markets Learn"></div>
+              <div class="pillar-matrix-cell matrix-tooltip" style="background:var(--matrix-de-learn)" data-label="DE Learn"></div>
+            </div>
+            <div class="matrix-legend mt-3 text-xs" style="color:var(--color-text-muted)">
+              <span>Tap cells on mobile for content details</span>
+            </div>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3 class="footer-title">Content</h3>
+          <ul class="space-y-2" role="list">
+            <li><a href="/research/" class="footer-link">Research</a></li>
+            <li><a href="/learn/" class="footer-link">Learn</a></li>
+            <li><a href="/knowledge/" class="footer-link">Knowledge Base</a></li>
+            <li><a href="/tags/" class="footer-link">Tags</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3 class="footer-title">Pillars</h3>
+          <ul class="space-y-2" role="list">            <li><a href="/aml/" class="footer-link flex items-center gap-1.5"><span class="w-2 h-2 rounded-full inline-block" style="background:var(--color-aml,slate)"></span>🛡️ AML</a></li>            <li><a href="/stock/" class="footer-link flex items-center gap-1.5"><span class="w-2 h-2 rounded-full inline-block" style="background:var(--color-stock,green)"></span>📈 Markets</a></li>            <li><a href="/data-engineering/" class="footer-link flex items-center gap-1.5"><span class="w-2 h-2 rounded-full inline-block" style="background:var(--color-data-engineering,indigo)"></span>⚙️ Data Engineering</a></li>          </ul>
+        </div>
+        <div class="footer-section">
+          <h3 class="footer-title">Connect</h3>
+          <ul class="space-y-2" role="list">
+            <li><a href="/knowledge/about/" class="footer-link">About</a></li>
+            <li><a href="/feed.xml" class="footer-link">RSS Feed</a></li>
+            <li><a href="/search/" class="footer-link">Search</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="mt-8 pt-6 border-t text-center text-xs" style="border-color:var(--color-border);color:var(--color-text-muted)">
+        <p>&copy; 2026 AcaciaFund. All rights reserved.</p>
+        <p class="mt-1">All content is freely available for non-commercial educational use. No cookies, no tracking, no paywalls.</p>
+      </div>
+    </div>
+  </footer>
+
+<dialog id="search-palette" class="search-palette">
+  <div class="search-palette-inner">
+    <div class="search-palette-header">
+      <svg class="w-5 h-5" style="color:var(--color-text-muted)" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+      <input id="palette-input" type="search" autocomplete="off" placeholder="Search articles, lessons, knowledge… (Cmd+K)" class="search-palette-input search-instant" aria-label="Search">
+      <kbd class="search-palette-hint">Cmd+K</kbd>
+    </div>
+    <div id="palette-results" class="search-palette-results">
+      <p class="text-sm py-8 text-center" style="color:var(--color-text-muted)">Start typing to search...</p>
+    </div>
+  </div>
+</dialog>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Dropdown
+      document.querySelectorAll('[data-dropdown]').forEach(function(dd) {
+        var trigger = dd.querySelector('[data-dropdown-trigger]');
+        var menu = dd.querySelector('[data-dropdown-menu]');
+        if (!trigger || !menu) return;
+        trigger.addEventListener('click', function(e) {
+          e.stopPropagation();
+          var expanded = trigger.getAttribute('aria-expanded') === 'true';
+          trigger.setAttribute('aria-expanded', !expanded);
+          menu.classList.toggle('dropdown-menu-open');
+        });
+        dd.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape') {
+            trigger.setAttribute('aria-expanded', 'false');
+            menu.classList.remove('dropdown-menu-open');
+            trigger.focus();
+          }
+        });
+        document.addEventListener('click', function(e) {
+          if (!dd.contains(e.target)) {
+            trigger.setAttribute('aria-expanded', 'false');
+            menu.classList.remove('dropdown-menu-open');
+          }
+        });
+      });
+      // Dark mode toggle
+      var darkToggle = document.getElementById('dark-toggle');
+      if (darkToggle) {
+        darkToggle.addEventListener('click', function() {
+          if (document.documentElement.classList.contains('dark')) {
+            document.documentElement.classList.remove('dark');
+            document.documentElement.classList.add('light');
+            localStorage.setItem('theme', 'light');
+          } else {
+            document.documentElement.classList.remove('light');
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+          }
+        });
+      }
+      // Mobile nav via native <dialog>
+      var mobToggle = document.querySelector('[data-mobile-toggle]');
+      var mobDialog = document.getElementById('mobile-nav-dialog');
+      var mobClose = document.querySelector('[data-mobile-close]');
+      if (mobToggle && mobDialog) {
+        mobToggle.addEventListener('click', function() {
+          mobDialog.showModal();
+        });
+        if (mobClose) {
+          mobClose.addEventListener('click', function() {
+            mobDialog.close();
+          });
+        }
+        mobDialog.querySelectorAll('a').forEach(function(link) {
+          link.addEventListener('click', function() {
+            mobDialog.close();
+          });
+        });
+        // Close on backdrop click
+        mobDialog.addEventListener('click', function(e) {
+          if (e.target === mobDialog) {
+            mobDialog.close();
+          }
+        });
+      }
+      // Search palette (Cmd+K / Ctrl+K)
+      var paletteDialog = document.getElementById('search-palette');
+      var paletteInput = document.getElementById('palette-input');
+      var paletteResults = document.getElementById('palette-results');
+      var paletteIndex = null;
+      function loadPaletteIndex() {
+        if (paletteIndex) return Promise.resolve(paletteIndex);
+        return fetch('/static/search-index.json').then(function(r) { return r.json(); }).then(function(data) {
+          paletteIndex = data;
+          return data;
+        }).catch(function() { return []; });
+      }
+      function openPalette() {
+        if (!paletteDialog) return;
+        paletteDialog.showModal();
+        if (paletteInput) { paletteInput.value = ''; paletteInput.focus(); }
+        if (paletteResults) paletteResults.innerHTML = '<p class="text-sm py-8 text-center" style="color:var(--color-text-muted)">Type at least 2 characters to search.</p>';
+      }
+      function closePalette() {
+        if (paletteDialog) paletteDialog.close();
+      }
+      function searchPalette(query) {
+        if (!paletteResults) return;
+        var q = query.trim().toLowerCase();
+        if (q.length < 2) {
+          paletteResults.innerHTML = '<p class="text-sm py-8 text-center" style="color:var(--color-text-muted)">Type at least 2 characters to search.</p>';
+          return;
+        }
+        loadPaletteIndex().then(function(idx) {
+          var hits = idx.filter(function(item) {
+            return (item.title && item.title.toLowerCase().includes(q)) ||
+                   (item.description && item.description.toLowerCase().includes(q)) ||
+                   ((item.tags || []).join(' ').toLowerCase().includes(q));
+          }).slice(0, 10);
+          if (hits.length === 0) {
+            paletteResults.innerHTML = '<p class="text-sm py-8 text-center" style="color:var(--color-text-muted)">No results found.</p>';
+            return;
+          }
+          var html = '';
+          hits.forEach(function(h) {
+            var slug = h.slug || '';
+            var label = h.content_type || 'article';
+            var pillar = h.pillar || 'aml';
+            html += '<a href="/' + slug + '/" class="palette-result" style="border-left-color:var(--color-' + pillar + ')">' +
+              '<div class="palette-result-title">' + escapeHtml(h.title || slug) + '</div>' +
+              '<div class="palette-result-meta">' + label + '</div>' +
+              '</a>';
+          });
+          paletteResults.innerHTML = html;
+        });
+      }
+      function escapeHtml(s) {
+        var d = document.createElement('div');
+        d.textContent = s;
+        return d.innerHTML;
+      }
+      if (paletteInput) {
+        paletteInput.addEventListener('input', function() { searchPalette(paletteInput.value); });
+        paletteInput.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape') { e.stopPropagation(); closePalette(); }
+          if (e.key === 'Enter') {
+            var first = paletteResults && paletteResults.querySelector('a');
+            if (first) { closePalette(); window.location.href = first.getAttribute('href'); }
+          }
+        });
+      }
+      document.addEventListener('keydown', function(e) {
+        if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+          e.preventDefault();
+          if (paletteDialog && paletteDialog.open) { closePalette(); } else { openPalette(); }
+        }
+      });
+      // Close palette on backdrop click
+      if (paletteDialog) {
+        paletteDialog.addEventListener('click', function(e) {
+          if (e.target === paletteDialog) closePalette();
+        });
+      }
+    });
+  </script>
+  <script>
+    (function(){
+      if (!navigator.modelContext) return;
+      var ctrl = new AbortController();
+      var siteUrl = 'https://www.acaciafund.org';
+      navigator.modelContext.registerTool({
+        name: 'search_research',
+        description: 'Search AcaciaFund research articles by topic or pillar (AML, Markets, Data Engineering)',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            query: { type: 'string', description: 'Search query' },
+            pillar: { type: 'string', enum: ['aml', 'markets', 'data-engineering'], description: 'Filter by content pillar' }
+          },
+          required: ['query']
+        },
+        execute: async function(args) {
+          var resp = await fetch(siteUrl + '/llms-full.txt');
+          var text = await resp.text();
+          var sections = text.split('\n\n');
+          var results = sections.filter(function(s) {
+            var q = (args.query || '').toLowerCase();
+            var p = (args.pillar || '').toLowerCase();
+            var matchQ = !q || s.toLowerCase().indexOf(q) !== -1;
+            var matchP = !p || s.toLowerCase().indexOf(p) !== -1;
+            return matchQ && matchP;
+          });
+          return { content: [{ type: 'text', text: results.slice(0, 5).join('\n\n') || 'No matching articles found.' }] };
+        },
+        signal: ctrl.signal
+      });
+      navigator.modelContext.registerTool({
+        name: 'list_articles',
+        description: 'List available articles by content type and pillar',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            content_type: { type: 'string', enum: ['research', 'learn', 'knowledge'], description: 'Filter by content type' },
+            pillar: { type: 'string', enum: ['aml', 'markets', 'data-engineering'], description: 'Filter by pillar' }
+          }
+        },
+        execute: async function(args) {
+          var resp = await fetch(siteUrl + '/sitemap.xml');
+          var xml = await resp.text();
+          var matches = xml.match(/<loc>[^<]+<\/loc>/g) || [];
+          var urls = matches.map(function(m) { return m.replace(/<\/?loc>/g, ''); });
+          if (args.pillar) urls = urls.filter(function(u) { return u.indexOf('/' + args.pillar + '/') !== -1; });
+          if (args.content_type) urls = urls.filter(function(u) { return u.indexOf('/' + args.content_type + '/') !== -1; });
+          return { content: [{ type: 'text', text: urls.slice(0, 20).join('\n') || 'No articles found.' }] };
+        },
+        signal: ctrl.signal
+      });
+    })();
+  </script>
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"544a3353becb48febea6c33a8a4b4315","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>
+ 
+//

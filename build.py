@@ -7,6 +7,7 @@ Build script for AcaciaFund: converts registry.json to static HTML using Jinja2 
 import hashlib
 import json
 import logging
+import os
 import re
 import shutil
 import subprocess
@@ -1558,7 +1559,7 @@ def main():
                 dest.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(item, dest)
 
-    bytecode_cache = FileSystemBytecodeCache(PROJECT_ROOT / ".cache" / "jinja2", prefix="jb_")
+    bytecode_cache = FileSystemBytecodeCache(str(PROJECT_ROOT / ".cache" / "jinja2"))
     env = Environment(
         loader=FileSystemLoader(TEMPLATE_DIR),
         autoescape=select_autoescape(["html", "xml"]),
@@ -3043,8 +3044,14 @@ def main():
             if c.updated_at
             else (c.created_at.date().isoformat() if c.created_at else today)
         )
+        # Generate correct URL based on content type
+        if c.content_type == "knowledge":
+            clean_slug = c.slug[10:] if c.slug.startswith("knowledge/") else c.slug
+            loc = f"{SITE_URL}/knowledge/{clean_slug}/"
+        else:
+            loc = slug_to_url(c.slug)
         sm.append(
-            f"  <url><loc>{slug_to_url(c.slug)}</loc><lastmod>{lastmod}</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>"
+            f"  <url><loc>{loc}</loc><lastmod>{lastmod}</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>"
         )
     for p in section_pages:
         sm.append(

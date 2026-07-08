@@ -1,0 +1,54 @@
+# Data Contract — transaction_feed
+# Defines schema boundaries and invariant rules for the compliance
+# transaction ingestion pipeline. Each contract is enforced at compile
+# time by the declarative orchestration layer and at runtime by the
+# streaming validation gateway.
+version: 1.0.0
+entity: transaction_feed
+pillar: compliance
+schema:
+  fields:
+    - name: transaction_id
+      type: string
+      required: true
+      description: "UUID v4 assigned by the originating system at event creation time."
+    - name: source_routing_number
+      type: string
+      required: true
+      description: "ABA routing number (9 digits) or BIC-11 for non-US originators."
+    - name: target_routing_number
+      type: string
+      required: true
+      description: "Routing number of the receiving institution."
+    - name: asset_value
+      type: numeric
+      required: true
+      constraints:
+        min_value: 0.0001
+      description: "Transaction amount in the settlement currency (ISO 4217 minor units * 10^4). Must be strictly positive."
+    - name: currency_code
+      type: string
+      required: true
+      constraints:
+        pattern: "^[A-Z]{3}$"
+      description: "ISO 4217 three-letter currency code."
+    - name: timestamp
+      type: datetime
+      required: true
+      description: "Transaction execution time in UTC with microsecond precision (ISO 8601)."
+    - name: channel
+      type: string
+      required: false
+      constraints:
+        enum: ["wire", "ach", "card", "crypto", "internal"]
+      description: "Originating channel for the transaction."
+  invariants:
+    - expression: "source_routing_number != target_routing_number"
+      severity: error
+      description: "Self-referential transfers are structurally impossible; reject at ingestion."
+    - expression: "asset_value > 0"
+      severity: error
+      description: "Zero or negative values indicate data corruption or manipulation."
+    - expression: "timestamp <= now()"
+      severity: warn
+      description: "Future-dated transactions are permitted for scheduled payments but must be flagged for review."

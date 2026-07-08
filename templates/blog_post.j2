@@ -1,5 +1,5 @@
 {% extends "layout.j2" %}
-{% from "macros/pillar_badge.html" import pillar_badge %}
+{% include "macros/pillar_badge.html" %}
 {% from "macros/breadcrumbs.html" import breadcrumbs %}
 {% block main_content %}
 {{ breadcrumbs(page_path, content.title) }}
@@ -43,7 +43,8 @@
     <header class="mb-8">
       <div class="flex items-center gap-3 mb-3">
         {{ layer_badge | default("") | safe }}
-        {{ pillar_badge(content.pillar, title=content.title) }}
+        {% set pillar = content.pillar %}
+        {% include "macros/pillar_badge.html" %}
         {%- if topic_icon_html %}
         <span class="article-topic-icon">{{ topic_icon_html | safe }}</span>
         {%- endif %}
@@ -342,7 +343,8 @@
               {%- endif %}
             </div>
            <div class="p-3">
-              {{ pillar_badge(rp.pillar, title=rp.title) }}
+              {% set pillar = rp.pillar %}
+              {% include "macros/pillar_badge.html" %}
               <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">{{ rp.title | striptags }}</span>
              {%- if rp.date_str %}
              <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">{{ rp.date_str }}</span>
@@ -374,7 +376,8 @@
               {%- endif %}
             </div>
            <div class="p-3">
-              {{ pillar_badge(rl.pillar, title=rl.title) }}
+              {% set pillar = rl.pillar %}
+              {% include "macros/pillar_badge.html" %}
               {%- if rl.difficulty %}<span class="text-xs ml-1" style="color:var(--color-text-muted)">{{ rl.difficulty | capitalize }}</span>{% endif %}
               <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">{{ rl.title | striptags }}</span>
              {%- if rl.date_str %}

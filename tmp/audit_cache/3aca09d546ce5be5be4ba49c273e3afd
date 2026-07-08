@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Ethics & Privacy Engineering — Building Trustworthy Data Systems</title>
+    <meta name="description" content="Navigate the ethical and privacy challenges of data-driven systems: privacy-by-design principles, differential privacy, consent management, AI ethics frameworks, and the 2026 regulatory landscape.">
+    <link rel="icon" href="/favicon.ico">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+
+
+    <script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "data-engineering"}, "author": {"@type": "Person", "name": "Leszek"}, "dateModified": "2026-07-06T18:02:57Z", "datePublished": "2026-06-07", "description": "Navigate the ethical and privacy challenges of data-driven systems: privacy-by-design principles, differential privacy, consent management, AI ethics frameworks, and the 2026 regulatory landscape.", "headline": "Data Ethics \u0026 Privacy Engineering \u2014 Building Trustworthy Data Systems", "inLanguage": "en", "keywords": "privacy-ethics, regtech", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/learn/data-ethics-privacy/", "@type": "WebPage"}, "proficiencyLevel": "intermediate", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-07T07:59:58Z", "signalQualityIndex": 0.938, "sqi": 0.938}
+    </script>
+
+
+    <style>
+        nav { border-bottom: 1px solid var(--pico-muted-border-color); margin-bottom: 2rem; }
+        footer hr { margin-bottom: var(--pico-spacing); }
+        .logo { font-size: 1.25rem; font-weight: 700; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <header class="container">
+        <nav>
+            <ul>
+                <li><strong><a href="/" class="contrast logo">Acacia</a></strong></li>
+            </ul>
+            <ul>
+                <li><a href="/research/">Research</a></li>
+                <li><a href="/learn/">Learn</a></li>
+                <li><a href="/knowledge/">Knowledge</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        
+<article>
+  <h1>Data Ethics & Privacy Engineering — Building Trustworthy Data Systems</h1>
+  <div class="content"><p>In 2026, 75% of the world's population lives in a jurisdiction with a comprehensive data protection law. AI regulation — the EU AI Act, US executive orders, China's AI regulations — is creating binding requirements for algorithmic transparency, fairness, and accountability. Data ethics is no longer a philosophical exercise; it is a compliance and engineering discipline.</p><div class="section-harvester" data-section="overview" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="the-ethical-data-lifecycle">The Ethical Data Lifecycle</h2></summary><div class="section-body"><p>Every stage of the data lifecycle carries ethical obligations:</p><ul><li><strong>Collection:</strong> Consent must be informed, specific, and revocable. Purpose limitation — data collected for one use cannot be arbitrarily repurposed. Minimization — collect only what is necessary.</li><li><strong>Storage:</strong> Encryption at rest and in transit. Access controls based on least privilege. Retention limits — delete data when the purpose is fulfilled.</li><li><strong>Processing:</strong> Fairness — algorithms must not discriminate based on protected characteristics. Transparency — subjects should know how their data is being used. Explainability — automated decisions must be explainable on request.</li><li><strong>Sharing:</strong> Data sharing agreements with clear use restrictions. Anonymization or pseudonymization before sharing. Audit trails for all data access and transfers.</li><li><strong>Deletion:</strong> Right to erasure (GDPR Article 17) — individuals can request deletion of their data. The engineering challenge is implementing deletion across distributed systems, backups, and ML training datasets.</li></ul></div></details></div><div class="section-harvester" data-section="key_findings" style="--section-color:#a5b4fc"><details class="section-collapse" open><summary class="section-summary"><h2 id="privacy-enhancing-technologies-pets">Privacy-Enhancing Technologies (PETs)</h2></summary><div class="section-body"><ul><li><strong>Differential Privacy:</strong> Adds calibrated noise to query results so that the presence or absence of any single individual's data does not meaningfully affect the output. Used by Apple (iOS analytics), Google (RAPPOR), and the US Census Bureau (2020 Census). The privacy parameter ε (epsilon) controls the trade-off: lower ε = more privacy, more noise, less accuracy.</li><li><strong>Federated Learning:</strong> ML models are trained across decentralized data sources without raw data leaving each source. Only model updates (gradients) are shared, not the underlying data. Used by Google (Gboard keyboard suggestions), Apple (Siri), and healthcare consortia.</li><li><strong>Synthetic Data:</strong> Artificially generated data that preserves the statistical properties of the original dataset without containing identifiable records. Increasingly used for ML training, testing, and sharing when real data cannot be distributed.</li><li><strong>Homomorphic Encryption:</strong> Computation on encrypted data — the data never needs to be decrypted for processing. Computationally expensive but rapidly improving; used in healthcare and financial services for secure multi-party computation.</li></ul></div></details></div><div class="section-harvester" data-section="applied_scenario" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="ai-ethics-regulation-in-2026">AI Ethics & Regulation in 2026</h2></summary><div class="section-body"><p>The EU AI Act (effective 2025-2026) classifies AI systems by risk level: unacceptable (banned), high-risk (conformity assessment required), limited (transparency obligations), and minimal (voluntary codes). High-risk systems include credit scoring, hiring, law enforcement, and biometric identification. Requirements include: risk management, data governance, transparency, human oversight, and accuracy/robustness standards. The US has taken a sectoral approach with executive orders on AI safety and agency-specific guidance, while China requires algorithm filing and approval for recommendation and synthesis algorithms.</p></div></details></div><div class="section-harvester" data-section="source_analysis" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="consent-management">Consent Management</h2></summary><div class="section-body"><p>Consent is the legal basis for most data processing, but the 2026 standard has moved beyond the "cookie banner" era. Key principles: <strong>granularity</strong> (separate consents for different purposes), <strong>affirmative action</strong> (pre-ticked boxes are illegal under GDPR), <strong>easy withdrawal</strong> (revocation must be as easy as granting), and <strong>continuous consent</strong> (consent expires and must be refreshed periodically). Consent Management Platforms (CMPs) have become standard infrastructure, integrated via the IAB Transparency & Consent Framework.</p><p>For the data pipeline infrastructure that must implement these privacy controls, see <a href="/learn/dataops-introduction/">Introduction to DataOps</a> and <a href="/learn/open-source-data-stack/">Building an Open Source Data Stack</a>.</p></div></details></div></div>
+</article>
+
+    </main>
+
+    <footer class="container">
+        <hr>
+        <small>&copy; 2026 AcaciaFund &middot; Generated by the Acacia pipeline.</small>
+    </footer>
+
+    <script src="/static/js/main.d41d8cd9.js"></script>
+<!-- Cloudflare Pages Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7a451e6216a44a7eba43b43cb495e68e"}'></script><!-- Cloudflare Pages Analytics --><script defer src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"544a3353becb48febea6c33a8a4b4315","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>

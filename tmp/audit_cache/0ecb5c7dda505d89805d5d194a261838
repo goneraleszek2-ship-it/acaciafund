@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Changelog</title>
+    <meta name="description" content="Platform version history and notable changes.">
+    <link rel="icon" href="/favicon.ico">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+
+
+    <script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "data-engineering"}, "author": {"@type": "Person", "name": "Leszek"}, "dateModified": "2026-07-06T18:02:57Z", "datePublished": "2026-06-08", "description": "Platform version history and notable changes.", "headline": "Changelog", "inLanguage": "en", "keywords": "page", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/changelog/", "@type": "WebPage"}, "proficiencyLevel": "", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-07T08:00:48Z", "signalQualityIndex": 0.881, "sqi": 0.881}
+    </script>
+
+
+    <style>
+        nav { border-bottom: 1px solid var(--pico-muted-border-color); margin-bottom: 2rem; }
+        footer hr { margin-bottom: var(--pico-spacing); }
+        .logo { font-size: 1.25rem; font-weight: 700; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <header class="container">
+        <nav>
+            <ul>
+                <li><strong><a href="/" class="contrast logo">Acacia</a></strong></li>
+            </ul>
+            <ul>
+                <li><a href="/research/">Research</a></li>
+                <li><a href="/learn/">Learn</a></li>
+                <li><a href="/knowledge/">Knowledge</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        
+<article>
+  <h1>Changelog</h1>
+  <div class="content"><div class="section-harvester" data-section="overview" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"></summary><div class="section-body"><p>Platform version history and notable changes to AcaciaFund.</p><h3 id="2026-06-08-knowledge-base-overhaul">2026-06-08 — Knowledge Base Overhaul</h3><ul><li>Added dedicated <code>knowledge.j2</code> template with TOC, breadcrumbs, cross-references, and progress bar</li><li>Reorganized knowledge entries into categories: Platform, Guides, Reference, Architecture</li><li>Expanded glossary to 30+ terms across all categories (AML, Markets, Data Engineering, DataOps)</li><li>Added Research Methodology guide with full SQI formula and pipeline description</li><li>Added Pillar Taxonomy guide with per-pillar scope, sources, and tag examples</li><li>Migrated all knowledge slugs under <code>/knowledge/</code> namespace</li><li>Added cross-referencing between knowledge and research/learn content via tag matching</li><li>Generated category-specific thumbnail SVGs for knowledge sub-categories</li></ul><h3 id="2026-06-08-dataops-system-architecture">2026-06-08 — DataOps System Architecture</h3><ul><li>Added system architecture knowledge page</li><li>Added DataOps glossary and open source tool landscape</li><li>Updated README with full system architecture diagram</li><li>Added <code>seed_dataops.py</code> for DataOps/engineering content seeding</li></ul><h3 id="2026-06-08-3-category-taxonomy-launch">2026-06-08 — 3-Category Taxonomy Launch</h3><ul><li>Introduced <code>content_type</code> field (research | learn | knowledge)</li><li>Reclassified all registry entries</li><li>Created category index pages for research/, learn/, knowledge/</li><li>Created dedicated <code>learn.j2</code> template</li><li>Added learning hub entries (AML basics, market analysis, science method, quiz)</li><li>Added static knowledge pages (about, research overview, scholarship, contact, glossary, FAQ)</li></ul><h3 id="2026-06-07-fractal-thumbnails-amp-interest-ranking">2026-06-07 — Fractal Thumbnails &amp; Interest Ranking</h3><ul><li>Implemented seed-based fractal tree SVGs for per-article unique thumbnails</li><li>Added OG image generation for social sharing</li><li>Homepage now ranks articles by interest score (SQI × 0.6 + recency × 0.4)</li><li>Added 15 new articles (Jan–May 2026, 5 per pillar)</li></ul><h3 id="2026-06-01-initial-platform-launch">2026-06-01 — Initial Platform Launch</h3><ul><li>Python-native static generator with Jinja2 + Pydantic</li><li>Dark mode with FOUC prevention and localStorage persistence</li><li>Accessible dropdown navigation and mobile menu</li><li>Reading progress bar, TOC sidebar, focus mode</li><li>Self-hosted Tailwind and Inter font</li><li>Cloudflare Pages deployment via GitHub</li><li>12 initial research articles (daily digest format)</li></ul><p><em>Last updated: 2026-06-08</em></p><hr /><section class="analytics-index"><small><strong>DataOps Telemetry Index:</strong> This technical brief addresses architectural patterns matching components: changelog, dataengineering, history, version.</small></section><hr /><section class="analytics-index"><small><strong>DataOps Telemetry Index:</strong> This technical brief addresses architectural patterns matching components: changelog, dataengineering, history, version.</small></section><hr /><section class="analytics-index"><small><strong>DataOps Telemetry Index:</strong> This technical brief addresses architectural patterns matching components: changelog, dataengineering, history, version.</small></section><hr /><section class="analytics-index"><small><strong>DataOps Telemetry Index:</strong> This analysis validates Data Engineering, History, Changelog using algorithm, bias, causation, complexity, confidence methodology.</small></section></div></details></div></div>
+</article>
+
+    </main>
+
+    <footer class="container">
+        <hr>
+        <small>&copy; 2026 AcaciaFund &middot; Generated by the Acacia pipeline.</small>
+    </footer>
+
+    <script src="/static/js/main.d41d8cd9.js"></script>
+<!-- Cloudflare Pages Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7a451e6216a44a7eba43b43cb495e68e"}'></script><!-- Cloudflare Pages Analytics --><script defer src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"544a3353becb48febea6c33a8a4b4315","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>

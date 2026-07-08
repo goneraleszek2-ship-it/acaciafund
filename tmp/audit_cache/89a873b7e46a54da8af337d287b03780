@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trade-Based Money Laundering & Sanctions — The $2 Trillion Blind Spot</title>
+    <meta name="description" content="Explore trade-based money laundering techniques, sanctions screening frameworks, beneficial ownership transparency, and the 2026 regulatory landscape of geopolitical fragmentation.">
+    <link rel="icon" href="/favicon.ico">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+
+
+    <script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "aml"}, "author": {"@type": "Person", "name": "Leszek"}, "dateModified": "2026-07-06T18:02:57Z", "datePublished": "2026-06-07", "description": "Explore trade-based money laundering techniques, sanctions screening frameworks, beneficial ownership transparency, and the 2026 regulatory landscape of geopolitical fragmentation.", "headline": "Trade-Based Money Laundering \u0026 Sanctions \u2014 The $2 Trillion Blind Spot", "inLanguage": "en", "keywords": "aml, regtech", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/learn/trade-based-ml-sanctions/", "@type": "WebPage"}, "proficiencyLevel": "advanced", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-07T07:59:49Z", "signalQualityIndex": 0.93, "sqi": 0.93}
+    </script>
+
+
+    <style>
+        nav { border-bottom: 1px solid var(--pico-muted-border-color); margin-bottom: 2rem; }
+        footer hr { margin-bottom: var(--pico-spacing); }
+        .logo { font-size: 1.25rem; font-weight: 700; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <header class="container">
+        <nav>
+            <ul>
+                <li><strong><a href="/" class="contrast logo">Acacia</a></strong></li>
+            </ul>
+            <ul>
+                <li><a href="/research/">Research</a></li>
+                <li><a href="/learn/">Learn</a></li>
+                <li><a href="/knowledge/">Knowledge</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        
+<article>
+  <h1>Trade-Based Money Laundering & Sanctions — The $2 Trillion Blind Spot</h1>
+  <div class="content"><p>Trade-based money laundering (TBML) is one of the oldest and most difficult-to-detect methods of moving illicit value across borders. By 2026, 38% of financial crime compliance officers identify TBML as a top-three risk, and sanctions regimes have become more fragmented than at any point in the last decade. Understanding both is essential for any AML professional.</p><div class="section-harvester" data-section="overview" style="--section-color:#c97d3e"><details class="section-collapse" open><summary class="section-summary"><h2 id="trade-based-money-laundering">Trade-Based Money Laundering</h2></summary><div class="section-body"><p>TBML exploits the complexity of international trade to obscure the movement of value. Unlike wire transfers — which leave electronic trails — trade transactions involve paper documentation, multiple intermediaries, and physical goods, creating abundant opportunities for concealment.</p><h3 id="common-tbml-techniques">Common TBML Techniques</h3><ul><li><strong>Over-invoicing / Under-invoicing:</strong> Misrepresenting the price of goods to move value. Over-invoicing pays excess funds to a foreign supplier (value leaves the country); under-invoicing allows the importer to resell goods at a profit offshore (value stays abroad).</li><li><strong>Multiple invoicing:</strong> Submitting the same invoice to multiple banks for financing, collecting funds from each before anyone detects the duplication.</li><li><strong>Over- / under-shipment:</strong> Shipping more or fewer goods than the invoice states, with the discrepancy being the laundered amount.</li><li><strong>Phantom shipments:</strong> Creating invoices and customs documents for goods that do not exist. The funds pay for nothing, and the documentation is fabricated.</li><li><strong>Misdescription of goods:</strong> Shipping high-value, hard-to-price items (art, antiques, scrap metal) at manipulated valuations that are difficult for customs to verify.</li></ul></div></details></div><div class="section-harvester" data-section="key_findings" style="--section-color:#fbbf24"><details class="section-collapse" open><summary class="section-summary"><h2 id="sanctions-screening-in-2026">Sanctions Screening in 2026</h2></summary><div class="section-body"><p>The sanctions landscape has fragmented significantly. The US (OFAC), EU, UK, and UN maintain distinct sanctions lists that increasingly diverge. Key 2026 developments:</p><ul><li><strong>Secondary sanctions:</strong> The US has expanded secondary sanctions targeting entities that do business with sanctioned jurisdictions, creating extraterritorial compliance obligations.</li><li><strong>Crypto sanctions:</strong> OFAC now sanctions specific blockchain addresses and requires VASPs to screen all on-chain transactions — not just fiat on/off ramps.</li><li><strong>False positive inflation:</strong> Sanctions list volumes have grown 300% since 2020, with expanding criteria that capture more benign entities. Efficient screening requires fuzzy matching, aliases, and risk-based threshold tuning.</li><li><strong>Real-time screening:</strong> Payment messages (ISO 20022) now carry structured beneficiary ownership data, enabling automated screening at the transaction level rather than batch processing.</li></ul></div></details></div><div class="section-harvester" data-section="applied_scenario" style="--section-color:#c97d3e"><details class="section-collapse" open><summary class="section-summary"><h2 id="beneficial-ownership">Beneficial Ownership</h2></summary><div class="section-body"><p>The 2026 push for beneficial ownership transparency is the most significant structural change in AML. The US Corporate Transparency Act (effective 2024-2026) requires all US companies to report their beneficial owners to FinCEN's beneficial ownership registry. The EU's 6th AML Directive mandates centralized beneficial ownership registers accessible to obliged entities. The challenge: 99% of US firms acknowledge limitations in their ability to verify beneficial ownership data, and registers across jurisdictions are not yet interoperable.</p><p>For the fundamentals of AML compliance, revisit <a href="/learn/aml-basics/">AML Fundamentals</a>. To understand the blockchain analytics side of sanctions screening, see <a href="/learn/crypto-aml/">Crypto AML & Digital Assets</a>.</p><hr /><section class="analytics-index"><small><strong>DataOps Telemetry Index:</strong> This technical brief addresses architectural patterns matching components: aml, beneficialownership, compliance, ofac, sanctions.</small></section><hr /><section class="analytics-index"><small><strong>DataOps Telemetry Index:</strong> This technical brief addresses architectural patterns matching components: aml, beneficialownership, compliance, ofac, sanctions.</small></section><hr /><section class="analytics-index"><small><strong>DataOps Telemetry Index:</strong> This technical brief addresses architectural patterns matching components: aml, beneficialownership, compliance, ofac, sanctions.</small></section><hr /><section class="analytics-index"><small><strong>DataOps Telemetry Index:</strong> This analysis validates Aml, Sanctions, Compliance using algorithm, analysis, architecture, bias, causation methodology.</small></section></div></details></div></div>
+</article>
+
+    </main>
+
+    <footer class="container">
+        <hr>
+        <small>&copy; 2026 AcaciaFund &middot; Generated by the Acacia pipeline.</small>
+    </footer>
+
+    <script src="/static/js/main.d41d8cd9.js"></script>
+<!-- Cloudflare Pages Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7a451e6216a44a7eba43b43cb495e68e"}'></script><!-- Cloudflare Pages Analytics --><script defer src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"544a3353becb48febea6c33a8a4b4315","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Synthesis & Learning</title>
+    <meta name="description" content="AcaciaFund — research synthesis & experimental learning platform. Automated classification of HackerNews + arXiv content using Bloom taxonomy.">
+    <link rel="icon" href="/favicon.ico">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+
+
+
+    <style>
+        nav { border-bottom: 1px solid var(--pico-muted-border-color); margin-bottom: 2rem; }
+        footer hr { margin-bottom: var(--pico-spacing); }
+        .logo { font-size: 1.25rem; font-weight: 700; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <header class="container">
+        <nav>
+            <ul>
+                <li><strong><a href="/" class="contrast logo">Acacia</a></strong></li>
+            </ul>
+            <ul>
+                <li><a href="/research/">Research</a></li>
+                <li><a href="/learn/">Learn</a></li>
+                <li><a href="/knowledge/">Knowledge</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        
+<section>
+  <h1></h1>
+  <p>AcaciaFund — research synthesis & experimental learning platform. Automated classification of HackerNews + arXiv content using Bloom taxonomy. Static-first, privacy-preserving.</p>
+</section>
+
+<section>
+  <h2>Recent Research</h2>
+  <div class="grid">
+    
+    <article>
+      <hgroup>
+        <h3><a href="/blog/2026-06-29-airflow-prefect-dagster-comparison/">Airflow vs Prefect vs Dagster: Choosing the Right Orchestrator in 2026</a></h3>
+        <p>Comprehensive comparison of the three leading Python orchestrators: execution model, DAG vs asset paradigm, scaling characteristics, monitoring, and community ecosystem. Decision framework for greenfield and migration scenarios.</p>
+      </hgroup>
+      <footer>
+        
+        <div style="margin-bottom: var(--pico-spacing); display: flex; flex-wrap: wrap; gap: 0.25rem;">
+          
+          <a href="/tags/data-pipeline-management/"><kbd>data-pipeline-management</kbd></a>
+          
+          <a href="/tags/distributed-systems/"><kbd>distributed-systems</kbd></a>
+          
+          <a href="/tags/python-engineering/"><kbd>python-engineering</kbd></a>
+          
+          <a href="/tags/software-architecture/"><kbd>software-architecture</kbd></a>
+          
+        </div>
+        
+        <a href="/blog/2026-06-29-airflow-prefect-dagster-comparison/" role="button" class="outline">Read more →</a>
+      </footer>
+    </article>
+    
+    <article>
+      <hgroup>
+        <h3><a href="/blog/2026-07-06-data-contracts/">Data Contracts: Schema as API for the Analytics Team</a></h3>
+        <p>Implementing data contracts with dbt-expectations, Soda, and Great Expectations. Covers schema evolution, contract versioning, producer/consumer ownership patterns, and breaking change detection in production pipelines.</p>
+      </hgroup>
+      <footer>
+        
+        <div style="margin-bottom: var(--pico-spacing); display: flex; flex-wrap: wrap; gap: 0.25rem;">
+          
+          <a href="/tags/contract-versioning/"><kbd>contract-versioning</kbd></a>
+          
+          <a href="/tags/data-governance/"><kbd>data-governance</kbd></a>
+          
+          <a href="/tags/schema-evolution/"><kbd>schema-evolution</kbd></a>
+          
+          <a href="/tags/data-quality/"><kbd>data-quality</kbd></a>
+          
+        </div>
+        
+        <a href="/blog/2026-07-06-data-contracts/" role="button" class="outline">Read more →</a>
+      </footer>
+    </article>
+    
+    <article>
+      <hgroup>
+        <h3><a href="/blog/2026-06-22-data-quality-great-expectations/">Data Quality at Scale: Great Expectations Beyond Unit Tests for Data</a></h3>
+        <p>Advanced patterns for Great Expectations in production: custom expectations, data docs auto-generation, checkpoint orchestration, and integration with Dagster and Airflow for automated quality gating.</p>
+      </hgroup>
+      <footer>
+        
+        <div style="margin-bottom: var(--pico-spacing); display: flex; flex-wrap: wrap; gap: 0.25rem;">
+          
+          <a href="/tags/test-automation/"><kbd>test-automation</kbd></a>
+          
+          <a href="/tags/data-quality/"><kbd>data-quality</kbd></a>
+          
+          <a href="/tags/data-engineering/"><kbd>data-engineering</kbd></a>
+          
+          <a href="/tags/workflow-automation/"><kbd>workflow-automation</kbd></a>
+          
+        </div>
+        
+        <a href="/blog/2026-06-22-data-quality-great-expectations/" role="button" class="outline">Read more →</a>
+      </footer>
+    </article>
+    
+    <article>
+      <hgroup>
+        <h3><a href="/blog/2026-06-13-data-mesh-implementation/">Data Mesh in Practice: Implementing Domain Ownership Without Chaos</a></h3>
+        <p>Practical guide to data mesh adoption: domain ownership patterns, data product definitions, federated governance, and the compute platform. Case studies of mesh implementations and common failure modes.</p>
+      </hgroup>
+      <footer>
+        
+        <div style="margin-bottom: var(--pico-spacing); display: flex; flex-wrap: wrap; gap: 0.25rem;">
+          
+          <a href="/tags/data-mesh-implementation/"><kbd>data-mesh-implementation</kbd></a>
+          
+          <a href="/tags/domain-ownership-patterns/"><kbd>domain-ownership-patterns</kbd></a>
+          
+          <a href="/tags/federated-governance/"><kbd>federated-governance</kbd></a>
+          
+        </div>
+        
+        <a href="/blog/2026-06-13-data-mesh-implementation/" role="button" class="outline">Read more →</a>
+      </footer>
+    </article>
+    
+    <article>
+      <hgroup>
+        <h3><a href="/blog/2026-06-08-stock-dataeng/">Feature Engineering at Scale: Building ML-Ready Market Data Pipelines with dbt and Iceberg</a></h3>
+        <p>Production feature engineering pipelines for quantitative finance: transforming raw tick data into ML-ready feature sets using dbt for SQL transformations, Iceberg for time-travel access, and Dagster for asset orchestration.</p>
+      </hgroup>
+      <footer>
+        
+        <div style="margin-bottom: var(--pico-spacing); display: flex; flex-wrap: wrap; gap: 0.25rem;">
+          
+          <a href="/tags/data-pipeline-orchestration/"><kbd>data-pipeline-orchestration</kbd></a>
+          
+          <a href="/tags/data-engineering/"><kbd>data-engineering</kbd></a>
+          
+          <a href="/tags/quantitative-finance/"><kbd>quantitative-finance</kbd></a>
+          
+          <a href="/tags/machine-learning/"><kbd>machine-learning</kbd></a>
+          
+        </div>
+        
+        <a href="/blog/2026-06-08-stock-dataeng/" role="button" class="outline">Read more →</a>
+      </footer>
+    </article>
+    
+    <article>
+      <hgroup>
+        <h3><a href="/blog/2026-06-16-cost-optimization-data-pipelines/">Cost Optimization in Data Pipelines: Engineering for Efficiency at Petabyte Scale</a></h3>
+        <p>Strategies for reducing data pipeline costs: intelligent partitioning, incremental processing, compute auto-scaling, storage tiering (Iceberg maintenance), query optimization, and workload scheduling on spot/preemptible instances.</p>
+      </hgroup>
+      <footer>
+        
+        <div style="margin-bottom: var(--pico-spacing); display: flex; flex-wrap: wrap; gap: 0.25rem;">
+          
+          <a href="/tags/cloud-computing-optimization/"><kbd>cloud-computing-optimization</kbd></a>
+          
+          <a href="/tags/data-pipeline-optimization/"><kbd>data-pipeline-optimization</kbd></a>
+          
+          <a href="/tags/scalable-data-processing/"><kbd>scalable-data-processing</kbd></a>
+          
+          <a href="/tags/cost-engineering/"><kbd>cost-engineering</kbd></a>
+          
+        </div>
+        
+        <a href="/blog/2026-06-16-cost-optimization-data-pipelines/" role="button" class="outline">Read more →</a>
+      </footer>
+    </article>
+    
+  </div>
+</section>
+
+<section>
+  <h2>Explore by Category</h2>
+  <div class="grid">
+    <a href="/research/" role="button" class="secondary">Research</a>
+    <a href="/learn/" role="button" class="secondary">Learn</a>
+    <a href="/knowledge/" role="button" class="secondary">Knowledge</a>
+  </div>
+</section>
+
+    </main>
+
+    <footer class="container">
+        <hr>
+        <small>&copy; 2026 AcaciaFund &middot; Generated by the Acacia pipeline.</small>
+    </footer>
+
+    <script src="/static/js/main.d41d8cd9.js"></script>
+<!-- Cloudflare Pages Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "7a451e6216a44a7eba43b43cb495e68e"}'></script><!-- Cloudflare Pages Analytics --><script defer src="https://static.cloudflareinsights.com/beacon.min.js/v4513226cdae34746b4dedf0b4dfa099e1781791509496" integrity="sha512-ZE9pZaUXND66v380QUtch/5sE9tPFh2zg45pR2PB0CVkCtOREv2AJKkSidISWkysEuQ0EH8faUU5du78bx87UQ==" data-cf-beacon='{"version":"2024.11.0","token":"544a3353becb48febea6c33a8a4b4315","r":1,"server_timing":{"name":{"cfCacheStatus":true,"cfEdge":true,"cfExtPri":true,"cfL4":true,"cfOrigin":true,"cfSpeedBrain":true},"location_startswith":null}}' crossorigin="anonymous"></script>
+</body>
+</html>
