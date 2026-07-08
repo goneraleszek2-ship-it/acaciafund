@@ -417,14 +417,12 @@ def _is_abstract_item(tags: list[str] | None, pillar: str | None) -> bool:
 
 
 def jaccard_similarity(s1: str, s2: str) -> float:
-    """Compute Jaccard similarity between two strings."""
+    """Token-level Jaccard similarity using word-boundary tokenization."""
     words1 = set(re.findall(r"\b\w+\b", s1.lower()))
     words2 = set(re.findall(r"\b\w+\b", s2.lower()))
     if not words1 or not words2:
         return 0.0
-    intersection = words1 & words2
-    union = words1 | words2
-    return len(intersection) / len(union)
+    return len(words1 & words2) / len(words1 | words2)
 
 
 # ── Lightweight TF-IDF cosine similarity (no sklearn dependency) ──────────────

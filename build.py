@@ -75,7 +75,7 @@ def generate_knowledge_graph():
 
 
 # ── Content validation ──
-from core.validator import validate_content  # noqa: E402  # noqa: E402
+from core.validator import validate_content  # noqa: E402
 from core.visuals import (  # noqa: E402
     PILLAR_COLORS,
     SUBTOPIC_CATEGORIES,
@@ -118,28 +118,33 @@ from core.build_taxonomies import (  # noqa: E402
 
 # ── Admin credentials from .env ──
 def load_admin_credentials():
-    """Load admin credentials from .env file."""
+    """Load admin credentials from .env file. Exits if not set."""
     env_path = PROJECT_ROOT / ".env"
-    username = "admin"
-    password = "admin"
+    username = os.environ.get("ADMIN_USERNAME")
+    password = os.environ.get("ADMIN_PASSWORD")
 
-    if env_path.exists():
-        try:
-            content = env_path.read_text()
-            for line in content.split("\n"):
-                line = line.strip()
-                if line.startswith("#") or not line:
-                    continue
-                if "=" in line:
-                    key, value = line.split("=", 1)
-                    key = key.strip()
-                    value = value.strip()
-                    if key == "ADMIN_USERNAME":
-                        username = value
-                    elif key == "ADMIN_PASSWORD":
-                        password = value
-        except Exception:
-            pass
+    if not username or not password:
+        if env_path.exists():
+            try:
+                content = env_path.read_text()
+                for line in content.split("\n"):
+                    line = line.strip()
+                    if line.startswith("#") or not line:
+                        continue
+                    if "=" in line:
+                        key, value = line.split("=", 1)
+                        key = key.strip()
+                        value = value.strip()
+                        if key == "ADMIN_USERNAME":
+                            username = value
+                        elif key == "ADMIN_PASSWORD":
+                            password = value
+            except Exception:
+                pass
+
+    if not username or not password:
+        print("ERROR: ADMIN_USERNAME and ADMIN_PASSWORD must be set in .env or environment.")
+        sys.exit(1)
 
     return username, password
 
@@ -1762,16 +1767,17 @@ def main():
     # Temporal filter: drop future-dated content
     all_content = [c for c in all_content if not is_future_post(c)]
     
-    # Validate content before processing
-    is_valid, validation_errors = validate_content(all_content)
-    if not is_valid:
+    # Validate content before processing (skip-and-continue mode)
+    _, validation_errors, skipped_slugs = validate_content(all_content, strict=False)
+    if validation_errors:
         for error in validation_errors:
-            logger.error(error)
-        for error in validation_errors:
-            print(f"  [ERROR] {error}")
-        print(
-            f"\nValidation failed with {len(validation_errors)} error(s). See build_errors.log for details."
-        )
+            logger.warning(error)
+            print(f"  [WARN] {error}")
+    if skipped_slugs:
+        print(f"  Skipping {len(skipped_slugs)} invalid item(s): {', '.join(skipped_slugs)}")
+        all_content = [c for c in all_content if c.slug not in set(skipped_slugs)]
+    if not all_content:
+        print("ERROR: No valid content items remaining after validation.")
         sys.exit(1)
 
     # Generate knowledge graph for semantic cross-linking
@@ -3129,6 +3135,10 @@ Sitemap: {SITE_URL}/sitemap.xml
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Content-Security-Policy: default-src 'self'; img-src 'self' https: data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Resource-Policy: same-origin
   Link: </.well-known/api-catalog>; rel="api-catalog"
   Link: </.well-known/mcp/server-card.json>; rel="mcp-server-card"
   Link: </.well-known/agent-skills/index.json>; rel="agent-skills"

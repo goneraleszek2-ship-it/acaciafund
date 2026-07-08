@@ -41,8 +41,8 @@ if not diagrams_entry:
 diagrams_entry["body_html"] = body_html
 
 # Save updated registry
-with open(registry_path, "w") as f:
-    json.dump(registry, f, indent=2, ensure_ascii=False)
+from core.registry_io import save_registry as _atomic_save
+_atomic_save(registry, registry_path)
 
 print("✅ Updated registry.json with clean diagrams content")
 print(f"New body_html length: {len(body_html)} bytes")

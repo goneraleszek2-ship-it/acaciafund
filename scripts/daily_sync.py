@@ -139,8 +139,8 @@ def update_registry_json() -> None:
 
     registry["last_run"] = datetime.now(timezone.utc).isoformat()
 
-    with open(registry_path, "w") as f:
-        json.dump(registry, f, indent=2)
+    from core.registry_io import save_registry as _atomic_save
+    _atomic_save(registry, registry_path)
 
     print(
         f"  Updated {len(articles_list)} articles in registry.json (preserved section_images, bloom_questions, signals)"

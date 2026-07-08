@@ -277,8 +277,8 @@ def main():
     registry["last_updated"] = today
     registry["last_run"] = today
 
-    with open(reg_path, "w", encoding="utf-8") as f:
-        json.dump(registry, f, indent=2, ensure_ascii=False)
+    from core.registry_io import save_registry as _atomic_save
+    _atomic_save(registry, reg_path)
 
     print(f"\nDone — {added} new vault entries integrated into registry.json")
     if added > 0:

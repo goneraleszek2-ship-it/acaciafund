@@ -104,54 +104,62 @@ def _image_exists_with_any_extension(img_url: str) -> bool:
     return False
 
 
-def validate_content(content_items: list[Any]) -> tuple[bool, list[str]]:
+def validate_content(
+    content_items: list[Any],
+    *,
+    strict: bool = False,
+) -> tuple[bool, list[str], list[str]]:
     """Validate content items before build.
+
+    In strict mode (default for backward compat), all errors block the build.
+    In non-strict mode, items with errors are skipped and the rest proceed.
 
     Args:
         content_items: List of content items (dict or object).
+        strict: If True, all errors block the build (compat mode).
+                If False, invalid items are filtered out.
 
     Returns:
-        Tuple of (is_valid, errors) where is_valid is True if all items pass,
-        and errors is a list of error messages.
+        Tuple of (is_valid, errors, skipped_slugs) where is_valid is True if
+        no critical errors exist (in strict mode), errors is a list of error
+        messages, and skipped_slugs lists items excluded from the build.
     """
     errors: list[str] = []
     seen_slugs: set[str] = set()
+    slugs_to_skip: set[str] = set()
 
     for item in content_items:
         slug = _get_attr(item, "slug", "")
         title = _get_attr(item, "title", "")
+        item_errors: list[str] = []
 
         # Check mandatory fields
         if not slug:
-            error_msg = "Missing or empty 'slug' in item"
-            errors.append(error_msg)
-            logger.error(error_msg)
+            msg = "Missing or empty 'slug' in item"
+            item_errors.append(msg)
         if not title:
-            error_msg = f"Missing or empty 'title' for slug '{slug}'"
-            errors.append(error_msg)
-            logger.error(error_msg)
+            msg = f"Missing or empty 'title' for slug '{slug}'"
+            item_errors.append(msg)
 
         # Check slug uniqueness
-        if slug in seen_slugs:
-            error_msg = f"Duplicate slug '{slug}' found"
-            errors.append(error_msg)
-            logger.error(error_msg)
-        seen_slugs.add(slug)
+        if slug and slug in seen_slugs:
+            msg = f"Duplicate slug '{slug}' found"
+            item_errors.append(msg)
+        if slug:
+            seen_slugs.add(slug)
 
         # Check content_type if present
         content_type = _get_attr(item, "content_type", "")
         if content_type and content_type not in ALLOWED_CONTENT_TYPES:
-            error_msg = f"Invalid content_type '{content_type}' for slug '{slug}'"
-            errors.append(error_msg)
-            logger.error(error_msg)
+            msg = f"Invalid content_type '{content_type}' for slug '{slug}'"
+            item_errors.append(msg)
 
         # Check referenced assets (featured_image)
         featured_image = _get_attr(item, "featured_image", "")
         if featured_image:
             if not _image_exists_with_any_extension(featured_image):
-                error_msg = f"Referenced image not found: {featured_image} for slug '{slug}'"
-                errors.append(error_msg)
-                logger.error(error_msg)
+                msg = f"Referenced image not found: {featured_image} for slug '{slug}'"
+                item_errors.append(msg)
 
         # Check section_images if present
         section_images = _get_attr(item, "section_images", [])
@@ -161,11 +169,8 @@ def validate_content(content_items: list[Any]) -> tuple[bool, list[str]]:
                     img_url = sec_img.get("image_url", "")
                     if img_url:
                         if not _image_exists_with_any_extension(img_url):
-                            error_msg = (
-                                f"Referenced section image not found: {img_url} for slug '{slug}'"
-                            )
-                            errors.append(error_msg)
-                            logger.error(error_msg)
+                            msg = f"Referenced section image not found: {img_url} for slug '{slug}'"
+                            item_errors.append(msg)
 
         # Check signals if present
         signals = _get_attr(item, "signals", {})
@@ -175,14 +180,19 @@ def validate_content(content_items: list[Any]) -> tuple[bool, list[str]]:
                 try:
                     avg_sqi_val = float(avg_sqi)
                     if not (0 <= avg_sqi_val <= 1):
-                        error_msg = (
-                            f"Invalid avg_sqi value {avg_sqi} (must be 0-1) for slug '{slug}'"
-                        )
-                        errors.append(error_msg)
-                        logger.error(error_msg)
+                        msg = f"Invalid avg_sqi value {avg_sqi} (must be 0-1) for slug '{slug}'"
+                        item_errors.append(msg)
                 except (ValueError, TypeError):
-                    error_msg = f"Invalid avg_sqi type for slug '{slug}'"
-                    errors.append(error_msg)
-                    logger.error(error_msg)
+                    msg = f"Invalid avg_sqi type for slug '{slug}'"
+                    item_errors.append(msg)
 
-    return len(errors) == 0, errors
+        if item_errors:
+            for err in item_errors:
+                logger.error(err)
+                errors.append(err)
+            if slug:
+                slugs_to_skip.add(slug)
+
+    if strict:
+        return len(errors) == 0, errors, []
+    return len(errors) == 0, errors, list(slugs_to_skip)

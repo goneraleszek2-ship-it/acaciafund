@@ -5,3 +5,15 @@ dist/
 __pycache__/
 *.pyc
 .env
+*.bak
+*.tmp
+*.lock
+
+# Registry artifacts
+.registry-archive/
+registry.json.bak
+
+# Cache directories
+.cache/
+.build_cache.json
+.build_manifest.json

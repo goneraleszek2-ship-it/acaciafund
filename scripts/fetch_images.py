@@ -31,6 +31,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from core.data import write_dlq
 from core.images import get_manifest_entry
 from core.images.validator import validate_image_for_article
+from core.registry_io import save_registry as _atomic_save_registry
 
 try:
     from PIL import Image
@@ -1003,9 +1004,9 @@ ALL_BACKENDS: list[tuple[str, Any]] = [
 
 # ── Optional paid/free backends (enabled via env vars) ──────────────
 
-UNSPLASH_KEY = os.environ.get("UNSPLASH_ACCESS_KEY", "***REMOVED***")
-PEXELS_KEY = os.environ.get("PEXELS_API_KEY", "***REMOVED***")
-PIXABAY_KEY = os.environ.get("PIXABAY_API_KEY", "***REMOVED***")
+UNSPLASH_KEY = os.environ.get("UNSPLASH_ACCESS_KEY")
+PEXELS_KEY = os.environ.get("PEXELS_API_KEY")
+PIXABAY_KEY = os.environ.get("PIXABAY_API_KEY")
 
 
 def search_unsplash(query: str) -> list[dict]:
@@ -2294,7 +2295,7 @@ def main():
 
     if updated_count > 0:
         registry["content"] = content_list
-        REGISTRY_PATH.write_text(json.dumps(registry, indent=2, default=str), encoding="utf-8")
+        _atomic_save_registry(registry, REGISTRY_PATH)
         print(f"\nUpdated {updated_count} articles in registry")
     else:
         print("\nNo articles updated")

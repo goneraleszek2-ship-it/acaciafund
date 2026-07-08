@@ -27,6 +27,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import logging
 import math
 import os
 import re
@@ -34,6 +35,29 @@ import sys
 from datetime import datetime, timezone, timedelta
 from pathlib import Path
 from typing import Any, Dict, List, Optional
+
+logger = logging.getLogger("acaciafund.enrich")
+logging.basicConfig(level=logging.WARNING, format="%(levelname)s:%(name)s:%(message)s")
+
+# ── Environment bootstrap: propagate .env to os.environ ──
+def _bootstrap_environment():
+    """Force-load /root/.env into os.environ so child processes
+    inherit variables like NVIDIA_API_KEY without shell export."""
+    env_path = Path("/root/.env")
+    if env_path.exists():
+        with open(env_path, "r", encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line or line.startswith("#"):
+                    continue
+                if line.startswith("export "):
+                    line = line[7:]
+                if "=" in line:
+                    key, value = line.split("=", 1)
+                    value = value.strip("'\"")
+                    os.environ[key.strip()] = value
+
+_bootstrap_environment()
 
 # Force offline mode for fastembed/HuggingFace Hub — prevents network
 # hangs when querying snapshot metadata in restricted environments.
@@ -258,8 +282,8 @@ class ResearchEnricher:
                         context = "Related context:\n" + "\n".join(
                             f"- {s}" for s in snippets
                         )
-            except Exception:
-                pass
+            except Exception as e:
+                logger.warning("mem0 search failed for %s: %s", title, e)
 
         system_prompt = (
             "You are a research tag extractor. Given an article title, "
@@ -351,6 +375,7 @@ Respond with a JSON array of 3-5 kebab-case tags:"""
                     messages=messages,
                     temperature=0.3,
                     max_tokens=200,
+                    timeout=30,
                 )
                 raw = response.choices[0].message.content or ""
                 parsed = _parse_json_array(raw)
@@ -358,7 +383,8 @@ Respond with a JSON array of 3-5 kebab-case tags:"""
                     tags = _validate_tags(parsed)
                     if len(tags) >= 3:
                         return tags
-            except Exception:
+            except Exception as e:
+                logger.warning("LLM API call failed for %s: %s", title, e)
                 continue
 
         return []
@@ -559,9 +585,9 @@ def load_registry() -> dict:
 
 
 def save_registry(reg: dict) -> None:
-    """Save registry.json."""
-    with open(REGISTRY_PATH, "w", encoding="utf-8") as f:
-        json.dump(reg, f, indent=2, ensure_ascii=False)
+    """Save registry.json atomically."""
+    from core.registry_io import save_registry as _atomic_save
+    _atomic_save(reg, REGISTRY_PATH)
 
 
 def main() -> int:

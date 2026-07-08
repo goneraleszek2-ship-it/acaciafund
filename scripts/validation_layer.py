@@ -252,8 +252,8 @@ def pipeline_health():
                     )
                     # Optionally update registry
                     registry["masterOntologyChecksum"] = current_hash
-                    with REGISTRY_PATH.open("w") as f:
-                        json.dump(registry, f, indent=2)
+                    from core.registry_io import save_registry as _atomic_save
+                    _atomic_save(registry, REGISTRY_PATH)
                 elif stored_hash != current_hash:
                     health["errors"].append(
                         "Critical Drift: master ontology schema checksum mismatch!"

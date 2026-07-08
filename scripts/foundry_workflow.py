@@ -454,8 +454,8 @@ def run_sync() -> None:
                 "adoption_level": quality_dict[slug]["adoption_level"],
             }
 
-    with open(registry_path, "w") as f:
-        json.dump(registry, f, indent=2)
+    from core.registry_io import save_registry as _atomic_save
+    _atomic_save(registry, registry_path)
 
     print(f"  Updated registry.json with quality metrics for {len(quality_dict)} articles")
 

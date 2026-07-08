@@ -83,9 +83,9 @@ def load_registry() -> dict:
 
 
 def save_registry(reg: dict) -> None:
-    """Save registry.json."""
-    with open(REGISTRY_PATH, "w", encoding="utf-8") as f:
-        json.dump(reg, f, indent=2, ensure_ascii=False)
+    """Save registry.json atomically."""
+    from core.registry_io import save_registry as _atomic_save
+    _atomic_save(reg, REGISTRY_PATH)
 
 
 def load_governance_report() -> dict:

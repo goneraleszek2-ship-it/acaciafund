@@ -28,8 +28,10 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: AML content ingestion (arXiv/HN)
-        run: python scripts/aml_ingester.py --days 7
+      - name: Multi-pillar knowledge ingestion
+        env:
+          HF_HUB_OFFLINE: "1"
+        run: python scripts/knowledge_ingester.py --pillar all --source all --days 3
 
       - name: Enrich registry
         run: python scripts/enrich.py
