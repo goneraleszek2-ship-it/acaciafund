@@ -36,6 +36,9 @@ jobs:
       - name: Enrich registry
         run: python scripts/enrich.py
 
+      - name: Smoke tests
+        run: python -m pytest tests/test_smoke.py -v
+
       - name: Build
         run: python build.py
 

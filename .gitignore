@@ -8,6 +8,7 @@ __pycache__/
 *.bak
 *.tmp
 *.lock
+!requirements.lock
 
 # Registry artifacts
 .registry-archive/
@@ -17,3 +18,4 @@ registry.json.bak
 .cache/
 .build_cache.json
 .build_manifest.json
+.pytest_cache/

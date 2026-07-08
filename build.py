@@ -21,7 +21,7 @@ from typing import Any
 from urllib.parse import quote as urlquote
 
 import pandas as pd
-from jinja2 import Environment, FileSystemLoader, select_autoescape
+from jinja2 import Environment, FileSystemLoader, FileSystemBytecodeCache, select_autoescape
 from PIL import Image
 
 from config import (
@@ -1457,9 +1457,14 @@ def _cleanup_partial_output(item):
 def main():
     print("Starting AcaciaFund generator...")
     start_time = time.time()
+    _timings: dict[str, float] = {}
 
-    # Initialize build cache
+    def _record_timing(label: str, t: float) -> None:
+        _timings[label] = round(t, 3)
+
+    # Initialize build cache and worker pool
     cache = get_cache()
+    _pool = get_worker_pool()
     
     # Check for template changes — compute both content-only and full template hashes
     content_hash = cache.compute_templates_hash(TEMPLATE_DIR, content_only=True)
@@ -1489,6 +1494,7 @@ def main():
             old.unlink()
         print(f"  registry archived: {archive_path.name}")
 
+    _t0 = time.time()
     try:
         with open(REGISTRY_PATH, "r", encoding="utf-8") as f:
             registry_data = json.load(f)
@@ -1496,6 +1502,7 @@ def main():
     except Exception as e:
         print(f"Error loading registry: {e}")
         return 1
+    _record_timing("registry_load", time.time() - _t0)
 
     # Preserve quality scores and source verification before deleting dist
     quality_scores_backup = None
@@ -1551,9 +1558,11 @@ def main():
                 dest.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(item, dest)
 
+    bytecode_cache = FileSystemBytecodeCache(PROJECT_ROOT / ".cache" / "jinja2", prefix="jb_")
     env = Environment(
         loader=FileSystemLoader(TEMPLATE_DIR),
         autoescape=select_autoescape(["html", "xml"]),
+        bytecode_cache=bytecode_cache,
     )
     env.filters["reading_time"] = reading_time_minutes
     env.filters["urlencode"] = lambda s: urlquote(s or "", safe="")
@@ -1780,6 +1789,7 @@ def main():
         print("ERROR: No valid content items remaining after validation.")
         sys.exit(1)
 
+    _t0 = time.time()
     # Generate knowledge graph for semantic cross-linking
     generate_knowledge_graph()
 
@@ -1815,6 +1825,7 @@ def main():
             knowledge_graph = {}
     else:
         knowledge_graph = {}
+    _record_timing("graph_build", time.time() - _t0)
     # Map slug to content object for potential lookup
     __slug_to_content = {item.slug: item for item in all_content}
 
@@ -1822,11 +1833,13 @@ def main():
 
     # --- Asset Pipeline (fingerprinting and minification) ---
     # Must be after build_hash is computed but before template rendering
+    _t0 = time.time()
     asset_manager = create_asset_manager(STATIC_DST_DIR, build_hash)
     asset_map = asset_manager.process_directory(PIPELINE_STATIC_DIR)
     print(f"  Asset pipeline: {len(asset_map)} assets processed")
     # Add asset resolver filter to env
     env.filters["asset"] = asset_manager.resolve_path
+    _record_timing("asset_pipeline", time.time() - _t0)
 
     # --- Incremental Build System ---
     # Load previous manifest to enable incremental builds
@@ -1849,15 +1862,15 @@ def main():
     # the skip check and the cache update — preventing drift from mutations.
     content_hashes: dict[str, str] = {}
 
-    # Compute hashes and compare with previous manifest and build cache
+    # Compute hashes in parallel, then check cache sequentially
     current_manifest: dict[str, dict] = {}
-    for item in all_content:
+    _computed_hashes: list[str] = parallel_map(_get_content_hash, all_content, pool=_pool)
+    for item, current_hash in zip(all_content, _computed_hashes):
         slug = getattr(item, "slug", "")
         if not slug:
             items_to_process.append(item)
             continue
 
-        current_hash = _get_content_hash(item)
         content_hashes[slug] = current_hash
         current_manifest[slug] = {"hash": current_hash, "processed": False}
 
@@ -1957,6 +1970,7 @@ def main():
         if slug:
             cache.update_entry(filepath, html_content, metadata or {"slug": slug}, is_content=True)
 
+    _t_render = time.time()
     # --- KNOWLEDGE PAGES ---
     for item in knowledge_items:
         try:
@@ -3054,6 +3068,7 @@ Allow: /
 Sitemap: {SITE_URL}/sitemap.xml
 """
     (OUTPUT_DIR / "robots.txt").write_text(robots_txt, encoding="utf-8")
+    _record_timing("content_rendering", time.time() - _t_render)
 
     # --- Copy llms.txt to site root (geo-checker expects /llms.txt) ---
     llms_src = STATIC_DST_DIR / "llms.txt"
@@ -3264,6 +3279,7 @@ Sitemap: {SITE_URL}/sitemap.xml
     build_meta = {
         "timestamp": datetime.now(timezone.utc).isoformat(),
         "duration_seconds": round(duration_ms / 1000, 2),
+        "steps": _timings,
         "page_count": total,
         "registry_hash": build_hash,
         "sqi": {
@@ -3350,9 +3366,11 @@ Sitemap: {SITE_URL}/sitemap.xml
                                  is_content=True)
     
     # Save build cache with both hash types
+    _t0 = time.time()
     cache.content_templates_hash = cache.compute_templates_hash(TEMPLATE_DIR, content_only=True)
     cache.templates_hash = cache.compute_templates_hash(TEMPLATE_DIR, content_only=False)
     cache.save()
+    _record_timing("cache_save", time.time() - _t0)
 
     # Write registry index to reflect actual generated pages
     # (no local imports - use globals)
@@ -3399,6 +3417,9 @@ Sitemap: {SITE_URL}/sitemap.xml
     
     # Print total build time
     total_time = time.time() - start_time
+    if _pool is not None:
+        _pool.close()
+
     print(f"\n✅ Build complete: {total} pages in {total_time:.2f}s ({total/total_time:.1f} pages/s)")
 
     return 0
