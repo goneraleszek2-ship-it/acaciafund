@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telemetry — AcaciaFund</title>
+    <meta name="description" content="">
+    <link rel="icon" href="/favicon.ico">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+
+
+
+    <style>
+        nav { border-bottom: 1px solid var(--pico-muted-border-color); margin-bottom: 2rem; }
+        footer hr { margin-bottom: var(--pico-spacing); }
+        .logo { font-size: 1.25rem; font-weight: 700; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <header class="container">
+        <nav>
+            <ul>
+                <li><strong><a href="/" class="contrast logo">Acacia</a></strong></li>
+            </ul>
+            <ul>
+                <li><a href="/research/">Research</a></li>
+                <li><a href="/learn/">Learn</a></li>
+                <li><a href="/knowledge/">Knowledge</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        
+<style>
+  .telemetry-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0; }
+  .telemetry-card { border: 1px solid var(--pico-muted-border-color); border-radius: 8px; padding: 1.25rem; background: var(--pico-card-background-color); }
+  .telemetry-card.full { grid-column: 1 / -1; }
+  .telemetry-card h2 { font-size: 1.1rem; margin-bottom: 0.75rem; color: var(--pico-primary); border-bottom: 1px solid var(--pico-muted-border-color); padding-bottom: 0.5rem; }
+  .stat-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .stat-badge { padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.8rem; background: var(--pico-card-background-color); border: 1px solid var(--pico-muted-border-color); white-space: nowrap; }
+  .stat-badge strong { font-size: 1.1rem; }
+  .tag-pill { padding: 0.15rem 0.6rem; border-radius: 12px; font-size: 0.78rem; background: var(--pico-primary); color: var(--pico-primary-inverse); white-space: nowrap; }
+  .bar-row { display: flex; align-items: center; gap: 0.5rem; margin: 0.25rem 0; font-size: 0.82rem; }
+  .bar-label { width: 9rem; text-align: right; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex-shrink: 0; }
+  .bar-track { flex: 1; height: 1.2rem; background: var(--pico-muted-border-color); border-radius: 6px; overflow: hidden; }
+  .bar-fill { height: 100%; background: var(--pico-primary); border-radius: 6px; transition: width 0.3s; }
+  .bar-value { width: 3rem; font-size: 0.78rem; color: var(--pico-muted-color); }
+  .decile-chart { display: flex; align-items: flex-end; gap: 3px; height: 100px; margin: 0.5rem 0; padding: 0 0.25rem; }
+  .decile-col { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; min-width: 0; }
+  .decile-fill { width: 100%; min-height: 2px; border-radius: 3px 3px 0 0; }
+  .decile-label { font-size: 0.6rem; margin-top: 0.15rem; color: var(--pico-muted-color); }
+  table.telemetry-table { width: 100%; font-size: 0.85rem; border-collapse: collapse; }
+  table.telemetry-table th { text-align: left; padding: 0.3rem 0.5rem; border-bottom: 1px solid var(--pico-muted-border-color); }
+  table.telemetry-table td { padding: 0.3rem 0.5rem; }
+  .tag-network-container { width: 100%; height: 450px; border-radius: 8px; border: 1px solid var(--pico-muted-border-color); background: #1a1a2e; }
+  .section-nav { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--pico-muted-border-color); }
+  .section-nav a { font-size: 0.85rem; padding: 0.3rem 0.75rem; border-radius: 6px; text-decoration: none; border: 1px solid var(--pico-muted-border-color); color: var(--pico-primary); }
+  .section-nav a:hover { background: var(--pico-primary); color: var(--pico-primary-inverse); }
+  .pillar-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 0.25rem; vertical-align: middle; }
+</style>
+
+<div class="section-nav">
+  <a href="#tag-grid">Tags</a>
+  <a href="#sqi-grid">SQI</a>
+  <a href="#enrichment-grid">Enrichment</a>
+  <a href="#velocity-grid">Velocity</a>
+  <a href="#source-grid">Sources</a>
+  <a href="#tag-network">Co-occurrence</a>
+</div>
+
+<h1>Telemetry Grids</h1>
+<p>Live analytics on semantic enrichment, tag distribution, SQI trends, content velocity, and source diversity across 153 items.</p>
+
+<hgroup>
+  <h2>Summary</h2>
+</hgroup>
+<div class="stat-row">
+  <span class="stat-badge"><strong>107</strong> unique tags</span>
+  <span class="stat-badge"><strong>352</strong> tag assignments</span>
+  <span class="stat-badge"><strong>29</strong> cross-pillar tags</span>
+  <span class="stat-badge"><strong>0.856</strong> avg SQI</span>
+  <span class="stat-badge"><strong>28</strong> LLM-enriched</span>
+  <span class="stat-badge"><strong>125</strong> deterministic</span>
+  <span class="stat-badge"><strong>7</strong> active months</span>
+</div>
+
+<!-- Tag Grid -->
+<hgroup id="tag-grid">
+  <h2>Tag Intelligence</h2>
+</hgroup>
+<div class="telemetry-grid">
+  <div class="telemetry-card">
+    <h2>Top Tags by Frequency</h2>
+    <div>
+
+      <div class="bar-row">
+        <span class="bar-label">aml</span>
+        <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+        <span class="bar-value">49</span>
+      </div>
+
+      <div class="bar-row">
+        <span class="bar-label">dataops</span>
+        <div class="bar-track"><div class="bar-fill" style="width:91%"></div></div>
+        <span class="bar-value">45</span>
+      </div>
+
+      <div class="bar-row">
+        <span class="bar-label">markets</span>
+        <div class="bar-track"><div class="bar-fill" style="width:28%"></div></div>
+        <span class="bar-value">14</span>
+      </div>
+
+      <div class="bar-row">
+        <span class="bar-label">machine-learning</span>
+        <div class="bar-track"><div class="bar-fill" style="width:24%"></div></div>
+        <span class="bar-value">12</span>
+      </div>
+
+      <div class="bar-row">
+        <span class="bar-label">data-engineering</span>
+        <div class="bar-track"><div class="bar-fill" style="width:22%"></div></div>
+        <span class="bar-value">11</span>
+      </div>
+
+      <div class="bar-row">
+        <span class="bar-label">distributed-systems</span>
+        <div class="bar-track"><div class="bar-fill" style="width:22%"></div></div>
+        <span class="bar-value">11</span>
+      </div>
+
+      <div class="bar-row">
+        <span class="bar-label">regtech</span>
+        <div class="bar-track"><div class="bar-fill" style="width:22%"></div></div>
+        <span class="bar-value">11</span>
+      </div>
+
+      <div class="bar-row">
+        <span class="bar-label">risk-management</span>
+        <div class="bar-track"><div class="bar-fill" style="width:20%"></div></div>
+        <span class="bar-value">10</span>
+      </div>
+
+      <div class="bar-row">
+        <span class="bar-label">transaction-monitoring</span>
+        <div class="bar-track"><div class="bar-fill" style="width:18%"></div></div>
+        <span class="bar-value">9</span>
+      </div>
+
+      <div class="bar-row">
+        <span class="bar-label">blog</span>
+        <div class="bar-track"><div class="bar-fill" style="width:18%"></div></div>
+        <span class="bar-value">9</span>
+      </div>
+
+      <div class="bar-row">
+        <span class="bar-label">page</span>
+        <div class="bar-track"><div class="bar-fill" style="width:12%"></div></div>
+        <span class="bar-value">6</span>
+      </div>
+
+      <div class="bar-row">
+        <span class="bar-label">biotech-genomics</span>
+        <div class="bar-track"><div class="bar-fill" style="width:10%"></div></div>
+        <span class="bar-value">5</span>
+      </div>
+
+      <div class="bar-row">
+        <span class="bar-label">crypto-finance</span>
+        <div class="bar-track"><div class="bar-fill" style="width:10%"></div></div>
+        <span class="bar-value">5</span>
+      </div>
+
+      <div class="bar-row">
+        <span class="bar-label">cloud-infrastructure</span>
+        <div class="bar-track"><div class="bar-fill" style="width:8%"></div></div>
+        <span class="bar-value">4</span>
+      </div>
+
+      <div class="bar-row">
+        <span class="bar-label">llm</span>
+        <div class="bar-track"><div class="bar-fill" style="width:8%"></div></div>
+        <span class="bar-value">4</span>
+      </div>
+
+      <div class="bar-row">
+        <span class="bar-label">semiconductors</span>
+        <div class="bar-track"><div class="bar-fill" style="width:8%"></div></div>
+        <span class="bar-value">4</span>
+      </div>
+
+      <div class="bar-row">
+        <span class="bar-label">signal-quality</span>
+        <div class="bar-track"><div class="bar-fill" style="width:8%"></div></div>
+        <span class="bar-value">4</span>
+      </div>
+
+      <div class="bar-row">
+        <span class="bar-label">privacy-ethics</span>
+        <div class="bar-track"><div class="bar-fill" style="width:8%"></div></div>
+        <span class="bar-value">4</span>
+      </div>
+
+      <div class="bar-row">
+        <span class="bar-label">agentic-systems</span>
+        <div class="bar-track"><div class="bar-fill" style="width:8%"></div></div>
+        <span class="bar-value">4</span>
+      </div>
+
+      <div class="bar-row">
+        <span class="bar-label">stream-processing</span>
+        <div class="bar-track"><div class="bar-fill" style="width:8%"></div></div>
+        <span class="bar-value">4</span>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="telemetry-card">
+    <h2>Cross-Pillar Tags</h2>
+
+    <table class="telemetry-table">
+      <thead><tr><th>Tag</th><th>Pillars</th></tr></thead>
+      <tbody>
+
+      <tr>
+        <td><span class="tag-pill">data-engineering</span></td>
+        <td>
+
+          <span class="pillar-dot" style="background:#6366f1"></span>data-engineering
+
+          <span class="pillar-dot" style="background:#22c55e"></span>stock
+
+          <span class="pillar-dot" style="background:#f59e0b"></span>aml
+
+        </td>
+      </tr>
+
+      <tr>
+        <td><span class="tag-pill">machine-learning</span></td>
+        <td>
+
+          <span class="pillar-dot" style="background:#6366f1"></span>data-engineering
+
+          <span class="pillar-dot" style="background:#22c55e"></span>stock
+
+          <span class="pillar-dot" style="background:#f59e0b"></span>aml
+
+          <span class="pillar-dot" style="background:#a855f7"></span>data
+
+        </td>
+      </tr>
+
+      <tr>
+        <td><span class="tag-pill">dataops</span></td>
+        <td>
+
+          <span class="pillar-dot" style="background:#6366f1"></span>data-engineering
+
+          <span class="pillar-dot" style="background:#22c55e"></span>stock
+
+          <span class="pillar-dot" style="background:#f59e0b"></span>aml
+
+          <span class="pillar-dot" style="background:#a855f7"></span>data
+
+        </td>
+      </tr>
+
+      <tr>
+        <td><span class="tag-pill">distributed-systems</span></td>
+        <td>
+
+          <span class="pillar-dot" style="background:#6366f1"></span>data-engineering
+
+          <span class="pillar-dot" style="background:#a855f7"></span>data
+
+        </td>
+      </tr>
+
+      <tr>
+        <td><span class="tag-pill">cloud-infrastructure</span></td>
+        <td>
+
+          <span class="pillar-dot" style="background:#6366f1"></span>data-engineering
+
+          <span class="pillar-dot" style="background:#22c55e"></span>stock
+
+        </td>
+      </tr>
+
+      <tr>
+        <td><span class="tag-pill">infrastructure</span></td>
+        <td>
+
+          <span class="pillar-dot" style="background:#6366f1"></span>data-engineering
+
+          <span class="pillar-dot" style="background:#a855f7"></span>data
+
+        </td>
+      </tr>
+
+      <tr>
+        <td><span class="tag-pill">distributed-computing</span></td>
+        <td>
+
+          <span class="pillar-dot" style="background:#6366f1"></span>data-engineering
+
+          <span class="pillar-dot" style="background:#a855f7"></span>data
+
+        </td>
+      </tr>
+
+      <tr>
+        <td><span class="tag-pill">feature-engineering</span></td>
+        <td>
+
+          <span class="pillar-dot" style="background:#6366f1"></span>data-engineering
+
+          <span class="pillar-dot" style="background:#22c55e"></span>stock
+
+        </td>
+      </tr>
+
+      <tr>
+        <td><span class="tag-pill">data-quality</span></td>
+        <td>
+
+          <span class="pillar-dot" style="background:#6366f1"></span>data-engineering
+
+          <span class="pillar-dot" style="background:#a855f7"></span>data
+
+        </td>
+      </tr>
+
+      <tr>
+        <td><span class="tag-pill">biotech-genomics</span></td>
+        <td>
+
+          <span class="pillar-dot" style="background:#6366f1"></span>data-engineering
+
+          <span class="pillar-dot" style="background:#22c55e"></span>stock
+
+        </td>
+      </tr>
+
+      <tr>
+        <td><span class="tag-pill">quantitative-finance</span></td>
+        <td>
+
+          <span class="pillar-dot" style="background:#22c55e"></span>stock
+
+          <span class="pillar-dot" style="background:#a855f7"></span>market
+
+        </td>
+      </tr>
+
+      <tr>
+        <td><span class="tag-pill">markets</span></td>
+        <td>
+
+          <span class="pillar-dot" style="background:#22c55e"></span>stock
+
+          <span class="pillar-dot" style="background:#f59e0b"></span>aml
+
+        </td>
+      </tr>
+
+      <tr>
+        <td><span class="tag-pill">aml</span></td>
+        <td>
+
+          <span class="pillar-dot" style="background:#f59e0b"></span>aml
+
+          <span class="pillar-dot" style="background:#22c55e"></span>stock
+
+          <span class="pillar-dot" style="background:#6366f1"></span>data-engineering
+
+          <span class="pillar-dot" style="background:#a855f7"></span>data
+
+        </td>
+      </tr>
+
+      <tr>
+        <td><span class="tag-pill">transaction-monitoring</span></td>
+        <td>
+
+          <span class="pillar-dot" style="background:#f59e0b"></span>aml
+
+          <span class="pillar-dot" style="background:#a855f7"></span>data
+
+        </td>
+      </tr>
+
+      <tr>
+        <td><span class="tag-pill">regtech</span></td>
+        <td>
+
+          <span class="pillar-dot" style="background:#f59e0b"></span>aml
+
+          <span class="pillar-dot" style="background:#6366f1"></span>data-engineering
+
+        </td>
+      </tr>
+
+      <tr>
+        <td><span class="tag-pill">blog</span></td>
+        <td>
+
+          <span class="pillar-dot" style="background:#22c55e"></span>stock
+
+          <span class="pillar-dot" style="background:#6366f1"></span>data-engineering
+
+        </td>
+      </tr>
+
+      <tr>
+        <td><span class="tag-pill">risk-management</span></td>
+        <td>
+
+          <span class="pillar-dot" style="background:#22c55e"></span>stock
+
+          <span class="pillar-dot" style="background:#f59e0b"></span>aml
+
+          <span class="pillar-dot" style="background:#a855f7"></span>data
+
+          <span class="pillar-dot" style="background:#a855f7"></span>market
+
+        </td>
+      </tr>
+
+      <tr>
+        <td><span class="tag-pill">llm</span></td>
+        <td>
+
+          <span class="pillar-dot" style="background:#22c55e"></span>stock
+
+          <span class="pillar-dot" style="background:#f59e0b"></span>aml
+
+          <span class="pillar-dot" style="background:#a855f7"></span>data
+
+        </td>
+      </tr>
+
+      <tr>
+        <td><span class="tag-pill">crypto-finance</span></td>
+        <td>
+
+          <span class="pillar-dot" style="background:#f59e0b"></span>aml
+
+          <span class="pillar-dot" style="background:#a855f7"></span>data
+
+          <span class="pillar-dot" style="background:#a855f7"></span>market
+
+        </td>
+      </tr>
+
+      <tr>
+        <td><span class="tag-pill">lesson</span></td>
+        <td>
+
+          <span class="pillar-dot" style="background:#6366f1"></span>data-engineering
+
+          <span class="pillar-dot" style="background:#22c55e"></span>stock
+
+        </td>
+      </tr>
+
+      </tbody>
+    </table>
+
+  </div>
+</div>
+
+<!-- SQI Grid -->
+<hgroup id="sqi-grid">
+  <h2>Signal Quality Index</h2>
+</hgroup>
+<div class="telemetry-grid">
+  <div class="telemetry-card">
+    <h2>Distribution (153 items)</h2>
+    <div class="stat-row">
+      <span class="stat-badge">Avg: <strong>0.856</strong></span>
+      <span class="stat-badge">Min: <strong>0.55</strong></span>
+      <span class="stat-badge">Max: <strong>1.0</strong></span>
+      <span class="stat-badge">&ge;0.8: <strong>103</strong></span>
+      <span class="stat-badge">&lt;0.5: <strong>0</strong></span>
+    </div>
+    <div class="decile-chart">
+
+
+
+      <div class="decile-col">
+        <div class="decile-fill" style="height:2px;background:#ef4444"></div>
+        <span class="decile-label">0</span>
+        <span class="decile-label">0.0</span>
+      </div>
+
+
+
+      <div class="decile-col">
+        <div class="decile-fill" style="height:2px;background:#ef4444"></div>
+        <span class="decile-label">0</span>
+        <span class="decile-label">0.1</span>
+      </div>
+
+
+
+      <div class="decile-col">
+        <div class="decile-fill" style="height:2px;background:#ef4444"></div>
+        <span class="decile-label">0</span>
+        <span class="decile-label">0.2</span>
+      </div>
+
+
+
+      <div class="decile-col">
+        <div class="decile-fill" style="height:2px;background:#f59e0b"></div>
+        <span class="decile-label">0</span>
+        <span class="decile-label">0.3</span>
+      </div>
+
+
+
+      <div class="decile-col">
+        <div class="decile-fill" style="height:2px;background:#f59e0b"></div>
+        <span class="decile-label">0</span>
+        <span class="decile-label">0.4</span>
+      </div>
+
+
+
+      <div class="decile-col">
+        <div class="decile-fill" style="height:10px;background:#f59e0b"></div>
+        <span class="decile-label">10</span>
+        <span class="decile-label">0.5</span>
+      </div>
+
+
+
+      <div class="decile-col">
+        <div class="decile-fill" style="height:2px;background:#22c55e"></div>
+        <span class="decile-label">0</span>
+        <span class="decile-label">0.6</span>
+      </div>
+
+
+
+      <div class="decile-col">
+        <div class="decile-fill" style="height:43px;background:#22c55e"></div>
+        <span class="decile-label">40</span>
+        <span class="decile-label">0.7</span>
+      </div>
+
+
+
+      <div class="decile-col">
+        <div class="decile-fill" style="height:25px;background:#22c55e"></div>
+        <span class="decile-label">24</span>
+        <span class="decile-label">0.8</span>
+      </div>
+
+
+
+      <div class="decile-col">
+        <div class="decile-fill" style="height:85px;background:#22c55e"></div>
+        <span class="decile-label">79</span>
+        <span class="decile-label">0.9</span>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="telemetry-card">
+    <h2>By Pillar</h2>
+    <table class="telemetry-table">
+      <thead><tr><th>Pillar</th><th>Items</th><th>Avg</th><th>Min</th><th>Max</th></tr></thead>
+      <tbody>
+
+      <tr>
+        <td><span class="pillar-dot" style="background:#f59e0b"></span>aml</td>
+        <td>44</td>
+        <td><strong>0.821</strong></td>
+        <td>0.55</td>
+        <td>1.0</td>
+      </tr>
+
+      <tr>
+        <td><span class="pillar-dot" style="background:#a855f7"></span>data</td>
+        <td>25</td>
+        <td><strong>0.734</strong></td>
+        <td>0.55</td>
+        <td>1.0</td>
+      </tr>
+
+      <tr>
+        <td><span class="pillar-dot" style="background:#6366f1"></span>data-engineering</td>
+        <td>43</td>
+        <td><strong>0.921</strong></td>
+        <td>0.875</td>
+        <td>0.955</td>
+      </tr>
+
+      <tr>
+        <td><span class="pillar-dot" style="background:#a855f7"></span>market</td>
+        <td>8</td>
+        <td><strong>0.85</strong></td>
+        <td>0.55</td>
+        <td>1.0</td>
+      </tr>
+
+      <tr>
+        <td><span class="pillar-dot" style="background:#22c55e"></span>stock</td>
+        <td>32</td>
+        <td><strong>0.91</strong></td>
+        <td>0.862</td>
+        <td>0.947</td>
+      </tr>
+
+      <tr>
+        <td><span class="pillar-dot" style="background:#a855f7"></span>system</td>
+        <td>1</td>
+        <td><strong>1.0</strong></td>
+        <td>1.0</td>
+        <td>1.0</td>
+      </tr>
+
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Enrichment Grid -->
+<hgroup id="enrichment-grid">
+  <h2>Enrichment Sources</h2>
+</hgroup>
+<div class="telemetry-grid">
+  <div class="telemetry-card">
+    <h2>LLM vs Deterministic</h2>
+    <div style="display:flex;gap:1rem;align-items:center;margin:0.5rem 0;">
+      <div style="flex:1;height:2rem;border-radius:8px;overflow:hidden;display:flex;">
+        <div style="width:18.3%;background:#6366f1;display:flex;align-items:center;justify-content:center;font-size:0.75rem;color:white;">
+18.3%
+        </div>
+        <div style="width:81.7%;background:#f59e0b;display:flex;align-items:center;justify-content:center;font-size:0.75rem;color:white;">
+81.7%
+        </div>
+      </div>
+    </div>
+    <table class="telemetry-table">
+      <thead><tr><th>Source</th><th>Count</th><th>%</th></tr></thead>
+      <tbody>
+        <tr><td>LLM-extracted (4+ tags)</td><td>28</td><td>18.3%</td></tr>
+        <tr><td>Deterministic (&le;3 tags)</td><td>125</td><td>81.7%</td></tr>
+        <tr><td>Total enriched</td><td>153</td><td>100.0%</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Velocity Grid -->
+<hgroup id="velocity-grid">
+  <h2>Content Velocity</h2>
+</hgroup>
+<div class="telemetry-grid">
+  <div class="telemetry-card">
+    <h2>Monthly Publishing (7 months)</h2>
+    <div>
+
+      <div class="bar-row">
+        <span class="bar-label" style="width:5rem;">2026-01</span>
+        <div class="bar-track"><div class="bar-fill" style="width:4%"></div></div>
+        <span class="bar-value">3</span>
+      </div>
+
+      <div class="bar-row">
+        <span class="bar-label" style="width:5rem;">2026-02</span>
+        <div class="bar-track"><div class="bar-fill" style="width:4%"></div></div>
+        <span class="bar-value">3</span>
+      </div>
+
+      <div class="bar-row">
+        <span class="bar-label" style="width:5rem;">2026-03</span>
+        <div class="bar-track"><div class="bar-fill" style="width:4%"></div></div>
+        <span class="bar-value">3</span>
+      </div>
+
+      <div class="bar-row">
+        <span class="bar-label" style="width:5rem;">2026-04</span>
+        <div class="bar-track"><div class="bar-fill" style="width:5%"></div></div>
+        <span class="bar-value">4</span>
+      </div>
+
+      <div class="bar-row">
+        <span class="bar-label" style="width:5rem;">2026-05</span>
+        <div class="bar-track"><div class="bar-fill" style="width:6%"></div></div>
+        <span class="bar-value">5</span>
+      </div>
+
+      <div class="bar-row">
+        <span class="bar-label" style="width:5rem;">2026-06</span>
+        <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
+        <span class="bar-value">72</span>
+      </div>
+
+      <div class="bar-row">
+        <span class="bar-label" style="width:5rem;">2026-07</span>
+        <div class="bar-track"><div class="bar-fill" style="width:87%"></div></div>
+        <span class="bar-value">63</span>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Source Grid -->
+<hgroup id="source-grid">
+  <h2>Source Distribution</h2>
+</hgroup>
+<div class="telemetry-grid">
+  <div class="telemetry-card">
+    <h2>Aggregate Sources</h2>
+    <table class="telemetry-table">
+      <thead><tr><th>Source</th><th>Total References</th></tr></thead>
+      <tbody>
+
+      <tr><td>hn</td><td><strong>370</strong></td></tr>
+
+      <tr><td>arxiv</td><td><strong>167</strong></td></tr>
+
+      <tr><td>pubmed</td><td><strong>102</strong></td></tr>
+
+      </tbody>
+    </table>
+    <p style="margin-top:0.5rem;font-size:0.82rem;">89 items have source breakdown data; 64 do not.</p>
+  </div>
+</div>
+
+<!-- Tag Co-occurrence Network -->
+<hgroup id="tag-network">
+  <h2>Tag Co-occurrence Network</h2>
+  <p>Force-directed graph showing tags that appear together across articles. Node size = frequency, edge thickness = co-occurrence strength.</p>
+</hgroup>
+<div class="telemetry-card full">
+  <div id="tag-cy" class="tag-network-container"></div>
+</div>
+
+<script src="https://unpkg.com/cytoscape@3.30.4/dist/cytoscape.min.js"></script>
+<script src="https://unpkg.com/cytoscape-cose-bilkent@4.1.0/cytoscape-cose-bilkent.js"></script>
+<script>
+var telemetryTagNodes = [{"frequency": 1, "id": "data-cataloging"}, {"frequency": 11, "id": "data-engineering"}, {"frequency": 1, "id": "real-time-streaming"}, {"frequency": 1, "id": "ai-automation"}, {"frequency": 12, "id": "machine-learning"}, {"frequency": 45, "id": "dataops"}, {"frequency": 1, "id": "developer-experience"}, {"frequency": 1, "id": "ux-design-patterns"}, {"frequency": 1, "id": "self-service-analytics"}, {"frequency": 1, "id": "data-platform"}, {"frequency": 1, "id": "internal-product-development"}, {"frequency": 1, "id": "data-transformation"}, {"frequency": 1, "id": "analytics-engineering"}, {"frequency": 1, "id": "cloud-computing-optimization"}, {"frequency": 1, "id": "data-pipeline-optimization"}, {"frequency": 1, "id": "scalable-data-processing"}, {"frequency": 1, "id": "cost-engineering"}, {"frequency": 1, "id": "big-data-engineering"}, {"frequency": 1, "id": "data-serialization"}, {"frequency": 1, "id": "schema-management"}, {"frequency": 11, "id": "distributed-systems"}, {"frequency": 2, "id": "data-governance"}, {"frequency": 1, "id": "data-products"}, {"frequency": 1, "id": "api-design"}, {"frequency": 1, "id": "internal-data-platform"}, {"frequency": 1, "id": "data-mesh-implementation"}, {"frequency": 1, "id": "domain-ownership-patterns"}, {"frequency": 1, "id": "federated-governance"}, {"frequency": 1, "id": "cloud-architecture"}, {"frequency": 1, "id": "continuous-integration"}, {"frequency": 1, "id": "infrastructure-as-code"}, {"frequency": 1, "id": "devops-practices"}, {"frequency": 4, "id": "cloud-infrastructure"}, {"frequency": 2, "id": "infrastructure"}, {"frequency": 1, "id": "container-orchestration"}, {"frequency": 3, "id": "distributed-computing"}, {"frequency": 1, "id": "resource-management"}, {"frequency": 1, "id": "cost-optimization"}, {"frequency": 3, "id": "feature-engineering"}, {"frequency": 1, "id": "model-serving"}, {"frequency": 1, "id": "machine-learning-infrastructure"}, {"frequency": 1, "id": "pipeline-orchestration"}, {"frequency": 1, "id": "model-deployment"}, {"frequency": 1, "id": "contract-versioning"}, {"frequency": 1, "id": "schema-evolution"}, {"frequency": 3, "id": "data-quality"}, {"frequency": 1, "id": "data-contracts"}, {"frequency": 1, "id": "data-pipeline-management"}, {"frequency": 1, "id": "python-engineering"}, {"frequency": 1, "id": "software-architecture"}, {"frequency": 1, "id": "workflow-orchestration"}, {"frequency": 1, "id": "test-automation"}, {"frequency": 1, "id": "workflow-automation"}, {"frequency": 1, "id": "data-ops"}, {"frequency": 1, "id": "genomics-workflows"}, {"frequency": 1, "id": "bioinformatics-pipelines"}, {"frequency": 5, "id": "biotech-genomics"}, {"frequency": 1, "id": "data-pipeline-orchestration"}, {"frequency": 2, "id": "quantitative-finance"}, {"frequency": 14, "id": "markets"}, {"frequency": 1, "id": "real-time-data-processing"}, {"frequency": 1, "id": "streaming-etl"}, {"frequency": 1, "id": "anti-money-laundering"}, {"frequency": 1, "id": "financial-crime-analytics"}, {"frequency": 49, "id": "aml"}, {"frequency": 9, "id": "transaction-monitoring"}, {"frequency": 11, "id": "regtech"}, {"frequency": 1, "id": "s-p-500-rejects-spacex"}, {"frequency": 1, "id": "openai-blocked-from-s-p-500"}, {"frequency": 1, "id": "anthropic-denied-s-p-500-entry"}, {"frequency": 9, "id": "blog"}, {"frequency": 10, "id": "risk-management"}, {"frequency": 4, "id": "llm"}, {"frequency": 5, "id": "crypto-finance"}, {"frequency": 4, "id": "semiconductors"}, {"frequency": 2, "id": "lesson"}, {"frequency": 1, "id": "learn"}, {"frequency": 4, "id": "signal-quality"}, {"frequency": 4, "id": "privacy-ethics"}, {"frequency": 6, "id": "page"}, {"frequency": 2, "id": "trade-finance-crime"}, {"frequency": 4, "id": "agentic-systems"}, {"frequency": 3, "id": "cybersecurity"}, {"frequency": 1, "id": "vector-search"}, {"frequency": 3, "id": "data-lakehouse"}, {"frequency": 1, "id": "query-optimization"}, {"frequency": 4, "id": "stream-processing"}, {"frequency": 1, "id": "quantitative-modeling"}, {"frequency": 4, "id": "market-microstructure"}, {"frequency": 1, "id": "system"}, {"frequency": 4, "id": "foundations"}, {"frequency": 4, "id": "core-architecture"}, {"frequency": 4, "id": "market"}, {"frequency": 4, "id": "data"}, {"frequency": 3, "id": "advanced-analytics"}, {"frequency": 3, "id": "specialist-module"}, {"frequency": 1, "id": "entity-resolution"}, {"frequency": 1, "id": "graph-theory"}, {"frequency": 4, "id": "zero-copy-arrow-iceberg"}, {"frequency": 1, "id": "statistical-modeling"}, {"frequency": 1, "id": "fraud-detection"}, {"frequency": 3, "id": "hawkes-microstructure"}, {"frequency": 1, "id": "microstructure"}, {"frequency": 1, "id": "derivatives"}, {"frequency": 1, "id": "mathematical-modeling"}, {"frequency": 2, "id": "temporal-graph-aml"}, {"frequency": 1, "id": "vpin-toxicity-modeling"}];
+var telemetryTagEdges = [{"source": "aml", "target": "transaction-monitoring", "weight": 9}, {"source": "aml", "target": "regtech", "weight": 9}, {"source": "dataops", "target": "machine-learning", "weight": 8}, {"source": "dataops", "target": "distributed-systems", "weight": 8}, {"source": "data-engineering", "target": "dataops", "weight": 6}, {"source": "markets", "target": "risk-management", "weight": 4}, {"source": "aml", "target": "machine-learning", "weight": 4}, {"source": "aml", "target": "risk-management", "weight": 4}, {"source": "regtech", "target": "transaction-monitoring", "weight": 4}, {"source": "core-architecture", "target": "foundations", "weight": 4}, {"source": "data-engineering", "target": "machine-learning", "weight": 3}, {"source": "data-engineering", "target": "feature-engineering", "weight": 3}, {"source": "machine-learning", "target": "transaction-monitoring", "weight": 3}, {"source": "dataops", "target": "transaction-monitoring", "weight": 3}, {"source": "data-quality", "target": "dataops", "weight": 3}, {"source": "aml", "target": "dataops", "weight": 3}, {"source": "aml", "target": "privacy-ethics", "weight": 3}, {"source": "aml", "target": "cybersecurity", "weight": 3}, {"source": "agentic-systems", "target": "aml", "weight": 3}, {"source": "data-lakehouse", "target": "dataops", "weight": 3}, {"source": "advanced-analytics", "target": "specialist-module", "weight": 3}, {"source": "dataops", "target": "markets", "weight": 2}, {"source": "dataops", "target": "distributed-computing", "weight": 2}, {"source": "dataops", "target": "stream-processing", "weight": 2}, {"source": "distributed-systems", "target": "machine-learning", "weight": 2}, {"source": "cloud-infrastructure", "target": "dataops", "weight": 2}, {"source": "feature-engineering", "target": "machine-learning", "weight": 2}, {"source": "biotech-genomics", "target": "dataops", "weight": 2}, {"source": "markets", "target": "semiconductors", "weight": 2}, {"source": "aml", "target": "crypto-finance", "weight": 2}, {"source": "aml", "target": "trade-finance-crime", "weight": 2}, {"source": "aml", "target": "llm", "weight": 2}, {"source": "data", "target": "stream-processing", "weight": 2}, {"source": "data", "target": "zero-copy-arrow-iceberg", "weight": 2}, {"source": "data", "target": "temporal-graph-aml", "weight": 2}, {"source": "hawkes-microstructure", "target": "market", "weight": 2}, {"source": "stream-processing", "target": "zero-copy-arrow-iceberg", "weight": 2}, {"source": "stream-processing", "target": "temporal-graph-aml", "weight": 2}, {"source": "temporal-graph-aml", "target": "zero-copy-arrow-iceberg", "weight": 2}];
+var telemetryMaxFreq = 49;
+var telemetryMaxWeight = 9;
+
+(function() {
+  var elements = [];
+  telemetryTagNodes.forEach(function(n) {
+    elements.push({
+      data: { id: n.id, label: n.id, weight: n.frequency }
+    });
+  });
+  telemetryTagEdges.forEach(function(e) {
+    elements.push({
+      data: { source: e.source, target: e.target, weight: e.weight }
+    });
+  });
+
+  function initGraph() {
+    if (elements.length === 0) return;
+    if (typeof cytoscapeCoseBilkent !== 'undefined') {
+      cytoscape.use(cytoscapeCoseBilkent);
+    }
+    var cy = cytoscape({
+      container: document.getElementById('tag-cy'),
+      elements: elements,
+      style: [
+        { selector: 'node', style: {
+            'background-color': '#6366f1',
+            'label': 'data(label)',
+            'font-size': '10px',
+            'color': '#e2e8f0',
+            'text-valign': 'center',
+            'text-halign': 'center',
+            'width': 'mapData(weight, 0, ' + telemetryMaxFreq + ', 20, 70)',
+            'height': 'mapData(weight, 0, ' + telemetryMaxFreq + ', 20, 70)'
+        }},
+        { selector: 'edge', style: {
+            'width': 'mapData(weight, 0, ' + telemetryMaxWeight + ', 1, 6)',
+            'line-color': '#4f46e5',
+            'opacity': 0.5,
+            'curve-style': 'bezier'
+        }},
+        { selector: 'node:selected', style: { 'background-color': '#f59e0b', 'border-width': 2, 'border-color': '#fff' }},
+        { selector: 'edge.highlighted', style: { 'opacity': 0.8, 'line-color': '#22c55e' }}
+      ],
+      layout: { name: 'cose-bilkent', idealEdgeLength: 80, nodeRepulsion: 6000, gravity: 0.25, numIter: 1000 },
+      userZoomingEnabled: true,
+      userPanningEnabled: true
+    });
+
+    cy.on('tap', 'node', function(evt) {
+      cy.elements().removeClass('highlighted');
+      evt.target.addClass('highlighted');
+      evt.target.neighbourhood().addClass('highlighted');
+    });
+
+    cy.on('tap', function(evt) {
+      if (evt.target === cy) {
+        cy.elements().removeClass('highlighted');
+      }
+    });
+  }
+
+  initGraph();
+})();
+</script>
+
+    </main>
+
+    <footer class="container">
+        <hr>
+        <small>&copy; 2026 AcaciaFund &middot; Generated by the Acacia pipeline.</small>
+    </footer>
+
+    <script src="/static/js/main.d41d8cd9.js"></script>
+</body>
+</html>

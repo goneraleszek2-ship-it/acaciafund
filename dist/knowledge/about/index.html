@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About AcaciaFund</title>
+    <meta name="description" content="Mission, vision, and architecture of the AcaciaFund research synthesis platform.">
+    <link rel="icon" href="/favicon.ico">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+
+
+    <script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "data-engineering"}, "author": {"@type": "Person", "name": "Leszek"}, "dateModified": "2026-07-06T18:02:57Z", "datePublished": "2026-06-08", "description": "Mission, vision, and architecture of the AcaciaFund research synthesis platform.", "headline": "About AcaciaFund", "inLanguage": "en", "keywords": "page", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/about/", "@type": "WebPage"}, "proficiencyLevel": "", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-07T08:00:36Z", "signalQualityIndex": 0.893, "sqi": 0.893}
+    </script>
+
+
+    <style>
+        nav { border-bottom: 1px solid var(--pico-muted-border-color); margin-bottom: 2rem; }
+        footer hr { margin-bottom: var(--pico-spacing); }
+        .logo { font-size: 1.25rem; font-weight: 700; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <header class="container">
+        <nav>
+            <ul>
+                <li><strong><a href="/" class="contrast logo">Acacia</a></strong></li>
+            </ul>
+            <ul>
+                <li><a href="/research/">Research</a></li>
+                <li><a href="/learn/">Learn</a></li>
+                <li><a href="/knowledge/">Knowledge</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        
+<article>
+  <h1>About AcaciaFund</h1>
+  <div class="content"><div class="section-harvester" data-section="overview" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"></summary><div class="section-body"><p>AcaciaFund is an automated research synthesis platform that applies <strong>DataOps principles</strong> to the content lifecycle: ingesting from HackerNews and arXiv, classifying via Bloom taxonomy, scoring with the Signal Quality Index (SQI), and serving as a static data product.</p><h3 id="mission">Mission</h3><p>To make high-quality, multi-perspective research synthesis accessible — bridging anti-money laundering (AML), financial markets, and data engineering infrastructure through automated classification and transparent quality metrics.</p><h3 id="how-it-works">How It Works</h3><ul><li><strong>Ingestion:</strong> Daily stories from HackerNews, academic preprints from arXiv, and biomedical research from PubMed are collected and analyzed.</li><li><strong>Classification:</strong> Each article is classified using Bloom taxonomy (remember → create) to determine its cognitive depth and learning value.</li><li><strong>Scoring:</strong> The Signal Quality Index (SQI) combines source authority, freshness, consensus, and relevance into a composable [0,1] metric.</li><li><strong>Serving:</strong> A deterministic Python-native generator (Jinja2 + Pydantic) transforms structured data into static HTML, deployed via Cloudflare Pages.</li></ul><h3 id="content-taxonomy">Content Taxonomy</h3><ul><li><strong>Research:</strong> Bloom-classified articles with SQI, signals, flashcards, and source breakdowns. Organized by pillar (AML, Markets, Data Engineering).</li><li><strong>Learn:</strong> Structured lessons with flashcards, code examples, and practical exercises for self-directed study.</li><li><strong>Knowledge:</strong> Reference documentation — glossaries, architecture, tools landscape, methodology guides, and platform information.</li></ul><h3 id="tech-stack">Tech Stack</h3><ul><li><strong>Generator:</strong> Python 3.13, Pydantic, Jinja2, Markdown2</li><li><strong>Styling:</strong> Tailwind CSS 3.4.19 (self-hosted, 28KB), custom CSS with CSS variables for dark mode</li><li><strong>Fonts:</strong> Inter (Regular/SemiBold/Bold — self-hosted WOFF2, zero external requests)</li><li><strong>Hosting:</strong> Cloudflare Pages (static) + Railway (FastAPI service for progress tracking)</li><li><strong>CI/CD:</strong> GitHub → Cloudflare Pages auto-deploy from <code>main</code></li></ul><p><em>Last updated: 2026-06-08</em></p><hr /><section class="analytics-index"><small><strong>DataOps Telemetry Index:</strong> This technical brief addresses architectural patterns matching components: about, dataengineering, info, platform.</small></section><hr /><section class="analytics-index"><small><strong>DataOps Telemetry Index:</strong> This technical brief addresses architectural patterns matching components: about, dataengineering, info, platform.</small></section><hr /><section class="analytics-index"><small><strong>DataOps Telemetry Index:</strong> This technical brief addresses architectural patterns matching components: about, dataengineering, info, platform.</small></section><hr /><section class="analytics-index"><small><strong>DataOps Telemetry Index:</strong> This analysis validates Data Engineering, Platform, About using algorithm, analysis, bias, causation, complexity methodology.</small></section></div></details></div></div>
+</article>
+
+    </main>
+
+    <footer class="container">
+        <hr>
+        <small>&copy; 2026 AcaciaFund &middot; Generated by the Acacia pipeline.</small>
+    </footer>
+
+    <script src="/static/js/main.d41d8cd9.js"></script>
+</body>
+</html>

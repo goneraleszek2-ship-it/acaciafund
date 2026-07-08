@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Research Methodology</title>
+    <meta name="description" content="How AcaciaFund transforms raw signals into quality-scored research — SQI, Bloom taxonomy, pipeline stages.">
+    <link rel="icon" href="/favicon.ico">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+
+
+    <script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "data-engineering"}, "author": {"@type": "Person", "name": "Leszek"}, "dateModified": "2026-07-06T18:02:57Z", "datePublished": "2026-06-08", "description": "How AcaciaFund transforms raw signals into quality-scored research \u2014 SQI, Bloom taxonomy, pipeline stages.", "headline": "Research Methodology", "inLanguage": "en", "keywords": "dataops, signal-quality", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/research-methodology/", "@type": "WebPage"}, "proficiencyLevel": "", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-07T08:00:42Z", "signalQualityIndex": 0.899, "sqi": 0.899}
+    </script>
+
+
+    <style>
+        nav { border-bottom: 1px solid var(--pico-muted-border-color); margin-bottom: 2rem; }
+        footer hr { margin-bottom: var(--pico-spacing); }
+        .logo { font-size: 1.25rem; font-weight: 700; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <header class="container">
+        <nav>
+            <ul>
+                <li><strong><a href="/" class="contrast logo">Acacia</a></strong></li>
+            </ul>
+            <ul>
+                <li><a href="/research/">Research</a></li>
+                <li><a href="/learn/">Learn</a></li>
+                <li><a href="/knowledge/">Knowledge</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        
+<article>
+  <h1>Research Methodology</h1>
+  <div class="content"><div class="section-harvester" data-section="overview" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"></summary><div class="section-body"><p>How AcaciaFund transforms raw signals into structured, quality-scored research articles.</p><h3 id="pipeline-stages">Pipeline Stages</h3><h4>1. Source Ingestion</h4><p>Content is drawn from three primary feeds:</p><ul><li><strong>HackerNews API</strong> (news.ycombinator.com) — technology, business, and science stories ranked by community engagement (points, comments). Top ~30 stories per day are analyzed.</li><li><strong>arXiv API</strong> (arxiv.org) — academic preprints across computer science, physics, mathematics, quantitative biology, and finance. Filtered by relevance to pillar topics.</li><li><strong>PubMed</strong> — biomedical literature (archived — science pillar discontinued).</li></ul><h4>2. Entity Extraction &amp; Summarization</h4><p>Each source is processed through NLP pipelines for:</p><ul><li><strong>Named Entity Recognition (NER)</strong> — extracting organizations, people, technologies, regulations, and financial instruments.</li><li><strong>Automatic Summarization</strong> — extractive summarization identifying key claims, numerical data, and conclusions.</li><li><strong>Topic Modeling</strong> — LDA-based classification into pillar-relevant topics and subtopics.</li></ul><h4>3. Bloom Taxonomy Classification</h4><p>Every article is assessed across six cognitive levels:</p><table style="width:100%;border-collapse:collapse;font-size:0.9em"><tr style="background:var(--color-bg)"><th style="padding:8px;border:1px solid var(--color-border);text-align:left">Level</th><th style="padding:8px;border:1px solid var(--color-border);text-align:left">Description</th><th style="padding:8px;border:1px solid var(--color-border);text-align:left">Example Question</th></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Remember</td><td style="padding:8px;border:1px solid var(--color-border)">Recall facts and basic concepts</td><td style="padding:8px;border:1px solid var(--color-border)">Which pillar does this article belong to?</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Understand</td><td style="padding:8px;border:1px solid var(--color-border)">Explain ideas and concepts</td><td style="padding:8px;border:1px solid var(--color-border)">What is the primary domain of this article?</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Apply</td><td style="padding:8px;border:1px solid var(--color-border)">Use information in new situations</td><td style="padding:8px;border:1px solid var(--color-border)">How can these findings be applied in practice?</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Analyze</td><td style="padding:8px;border:1px solid var(--color-border)">Draw connections among ideas</td><td style="padding:8px;border:1px solid var(--color-border)">What assumptions underlie this analysis?</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Evaluate</td><td style="padding:8px;border:1px solid var(--color-border)">Justify a stand or decision</td><td style="padding:8px;border:1px solid var(--color-border)">How strong is the evidence presented?</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Create</td><td style="padding:8px;border:1px solid var(--color-border)">Produce new or original work</td><td style="padding:8px;border:1px solid var(--color-border)">Design an experiment to test this hypothesis.</td></tr></table><h4>4. Signal Quality Index (SQI) Computation</h4><p>SQI is a composable metric computed per article as a weighted combination:</p><pre style="background:var(--color-bg);padding:16px;border-radius:8px;font-size:0.85em">
+SQI = w1 · Authority + w2 · Freshness + w3 · Consensus + w4 · Relevance
+
+where:
+ Authority = domain reputation score (0–1)
+ Freshness = 1 - (days_since_publication / freshness_window)
+ Consensus = cross-source agreement rate
+ Relevance = keyword overlap with pillar taxonomy
+
+Default weights: w1=0.35, w2=0.25, w3=0.25, w4=0.15
+</pre><p>Weights are adjustable per pillar to prioritize different quality dimensions (e.g., AML favors authority, Data Engineering favors freshness).</p><h4>5. Cross-Pillar Analysis</h4><p>Each article is analyzed for connections to other pillars via:</p><ul><li><strong>Shared entity references</strong> — organizations, regulations, or technologies that appear across pillars</li><li><strong>Source overlap</strong> — articles from different pillars citing the same source</li><li><strong>Topic bridging</strong> — latent topic modeling revealing cross-domain themes</li></ul><h4>6. Quality Gates &amp; Serving</h4><p>Before publication, each article passes through quality gates:</p><ul><li><strong>Schema validation</strong> — Pydantic ensures all required fields are present and correctly typed</li><li><strong>Source diversity check</strong> — minimum source count and domain diversity thresholds</li><li><strong>SQI threshold</strong> — minimum SQI of 0.35 for publication</li><li><strong>Deterministic build</strong> — same registry.json always produces identical output</li></ul><p>The final artifact is static HTML deployed to Cloudflare Pages via <code>python3.13 build.py</code>.</p><p><em>Last updated: 2026-06-08</em></p></div></details></div></div>
+</article>
+
+    </main>
+
+    <footer class="container">
+        <hr>
+        <small>&copy; 2026 AcaciaFund &middot; Generated by the Acacia pipeline.</small>
+    </footer>
+
+    <script src="/static/js/main.d41d8cd9.js"></script>
+</body>
+</html>

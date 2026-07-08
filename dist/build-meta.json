@@ -1,0 +1,91 @@
+{
+  "timestamp": "2026-07-08T20:05:39.597210+00:00",
+  "duration_seconds": 13.31,
+  "steps": {
+    "registry_load": 0.127,
+    "graph_build": 0.645,
+    "asset_pipeline": 0.073,
+    "content_rendering": 5.909
+  },
+  "page_count": 258,
+  "registry_hash": "7b1ad7e07e54",
+  "sqi": {
+    "min": 0.55,
+    "max": 0.95,
+    "avg": 0.755,
+    "median": 0.75,
+    "q1": 0.75,
+    "q3": 0.82,
+    "sample_count": 90
+  },
+  "sources": {
+    "last_build": "2026-07-08T20:05:39.597248+00:00",
+    "source_type_counts": {
+      "hn": 370,
+      "arxiv": 167,
+      "pubmed": 102
+    }
+  },
+  "content_counts": {
+    "research": 98,
+    "learn": 29,
+    "knowledge": 26
+  },
+  "quality": {
+    "gate_min_sqi": 0.65,
+    "gate_passed": false,
+    "low_sqi_count": 10,
+    "low_sqi_items": [
+      {
+        "slug": "blog/2026-06-30-department-of-commerce-has-lifted-export-controls-on-claude",
+        "title": "Department of Commerce has lifted export controls on Claude Fable 5 and Mythos 5",
+        "sqi": 0.55
+      },
+      {
+        "slug": "blog/2026-07-03-international-chess-federation-sanctions-kramnik",
+        "title": "International chess federation sanctions Kramnik",
+        "sqi": 0.55
+      },
+      {
+        "slug": "blog/2026-07-07-sodium-ion-salt-batteries-will-revolutionize-electric-vehicl",
+        "title": "Sodium-ion \"salt\" batteries will revolutionize electric-vehicle and grid storage",
+        "sqi": 0.55
+      },
+      {
+        "slug": "blog/2026-07-07-rust-is-in-tiobe-index-top-10",
+        "title": "Rust is in TIOBE Index top 10",
+        "sqi": 0.55
+      },
+      {
+        "slug": "blog/2026-07-07-microsoft-admits-a-windows-11-bug-is-eating-up-to-500gb-of-s",
+        "title": "Microsoft admits a Windows 11 bug is eating up to 500GB of storage",
+        "sqi": 0.55
+      },
+      {
+        "slug": "blog/2026-07-06-show-hn-focal-harvest-cli-research-pipeline-to-search-scrape",
+        "title": "Show HN: Focal Harvest \u2013 CLI research pipeline to search, scrape and notify",
+        "sqi": 0.55
+      },
+      {
+        "slug": "blog/2026-07-06-serving-a-1t-open-model-at-511-tok-s-single-stream-lossless",
+        "title": "Serving a 1T open model at 511 tok.s single-stream, lossless, on four B200s",
+        "sqi": 0.55
+      },
+      {
+        "slug": "blog/2026-07-07-show-hn-turn-commodity-wifi-signals-into-real-time-spatial-i",
+        "title": "Show HN: Turn commodity WiFi signals into real-time spatial intelligence",
+        "sqi": 0.55
+      },
+      {
+        "slug": "blog/2026-07-06-s3-is-a-better-abstraction-than-nfs-networked-block-storage",
+        "title": "S3 is a better abstraction than NFS / networked block storage",
+        "sqi": 0.55
+      },
+      {
+        "slug": "blog/2026-07-07-llms-are-not-a-default-execution-engine",
+        "title": "LLMs Are Not a Default Execution Engine",
+        "sqi": 0.55
+      }
+    ]
+  }
+}

@@ -1877,10 +1877,8 @@ def main():
 
         # Check if item can be skipped using build cache
         # First check template changes, then content hash
-        if "/" in slug:
-            output_path = OUTPUT_DIR / slug / "index.html"
-        else:
-            output_path = OUTPUT_DIR / f"{slug}.html"
+        # All items now use .html extension directly (no directory/index.html)
+        output_path = OUTPUT_DIR / f"{slug}.html"
             
         if slug in items_to_skip:
             continue
@@ -1902,6 +1900,7 @@ def main():
     research_items = [c for c in all_content if c.content_type == "research"]
     learn_items = [c for c in all_content if c.content_type == "learn"]
     knowledge_items = [c for c in all_content if c.content_type == "knowledge"]
+    print(f"DEBUG: research_items={len(research_items)}, learn_items={len(learn_items)}, knowledge_items={len(knowledge_items)}")
 
     # Research articles with bloom questions, mapped to learn-like items for cross-referencing
     research_learn_items = []
@@ -2240,12 +2239,7 @@ def main():
 
             slug = item.slug
             page_path = canonical_path(slug_to_path(slug))
-            if "/" in slug:
-                out_dir = OUTPUT_DIR / slug
-                out_dir.mkdir(parents=True, exist_ok=True)
-                out_file = out_dir / "index.html"
-            else:
-                out_file = OUTPUT_DIR / f"{slug}.html"
+            out_file = OUTPUT_DIR / f"{slug}.html"
             body = add_lazy_loading(item.body_html)
             body, toc_items = extract_headings(body)
             body = sanitize_domain_breakdown(body)
@@ -2472,7 +2466,9 @@ def main():
     print("  category: learn/index.html")
 
     # --- RESEARCH PAGES (blog posts) ---
+    print(f"DEBUG: Starting research loop with {len(research_items)} items")
     for i, item in enumerate(research_items):
+        print(f"DEBUG: Processing research item {i+1}/{len(research_items)}: {item.slug}")
         try:
             slug = item.slug
             # Skip if already processed (incremental build)
@@ -2480,12 +2476,7 @@ def main():
                 print(f"  research: {slug} (skipped - unchanged)")
                 continue
             page_path = canonical_path(slug_to_path(slug))
-            if "/" in slug:
-                out_dir = OUTPUT_DIR / slug
-                out_dir.mkdir(parents=True, exist_ok=True)
-                out_file = out_dir / "index.html"
-            else:
-                out_file = OUTPUT_DIR / f"{slug}.html"
+            out_file = OUTPUT_DIR / f"{slug}.html"
 
             body = add_lazy_loading(item.body_html)
             body, toc_items = extract_headings(body)
@@ -2572,8 +2563,16 @@ def main():
                 source_synthesis=source_synthesis.get(item.slug, []),
                 **ctx_base,
             )
-            out_file.write_text(html, encoding="utf-8")
-            print(f"  research: {out_file.relative_to(OUTPUT_DIR)}")
+            print(f"DEBUG: About to write {out_file}")
+            # Create parent directory if it doesn't exist
+            out_file.parent.mkdir(parents=True, exist_ok=True)
+            try:
+                out_file.write_text(html, encoding="utf-8")
+                print(f"  research: {out_file.relative_to(OUTPUT_DIR)}")
+                print(f"DEBUG: Written {out_file}")
+            except Exception as e:
+                print(f"DEBUG: Write failed: {e}")
+                raise
 
             # Write SVGs (fractal engine — thumbnail + OG image)
             out_static = STATIC_DST_DIR / "images"
@@ -3048,6 +3047,8 @@ def main():
         if c.content_type == "knowledge":
             clean_slug = c.slug[10:] if c.slug.startswith("knowledge/") else c.slug
             loc = f"{SITE_URL}/knowledge/{clean_slug}/"
+        elif c.content_type in ("research", "learn"):
+            loc = f"{SITE_URL}/{c.slug}.html"
         else:
             loc = slug_to_url(c.slug)
         sm.append(
