@@ -66,6 +66,7 @@ def generate_knowledge_graph():
             cwd=PROJECT_ROOT,
             capture_output=True,
             text=True,
+            timeout=120,
         )
         if result.returncode != 0:
             print(f"Warning: Knowledge graph generation failed: {result.stderr}")
@@ -127,7 +128,7 @@ def load_admin_credentials():
     if not username or not password:
         if env_path.exists():
             try:
-                content = env_path.read_text()
+                content = env_path.read_text(encoding="utf-8")
                 for line in content.split("\n"):
                     line = line.strip()
                     if line.startswith("#") or not line:
@@ -345,7 +346,6 @@ def find_related(posts: list, current: Content, max_items: int = 3) -> list:
     """
     current_tags = set(t.lower() for t in current.tags)
     current_pillar = current.pillar or ""
-    {r.get("slug", "") for r in (current.curated_relations or [])}
 
     scored: list[tuple[float, object]] = []
     seen_slugs: set[str] = set()
@@ -376,13 +376,13 @@ def find_related(posts: list, current: Content, max_items: int = 3) -> list:
 
 
 # ── Visual rules loaded from external config ──
-VISUAL_RULES = json.loads((Path(__file__).parent / "config" / "visual_rules.json").read_text())
+VISUAL_RULES = json.loads((Path(__file__).parent / "config" / "visual_rules.json").read_text(encoding="utf-8"))
 CARD_PICTOGRAM_KEYWORDS = VISUAL_RULES["card_pictogram_keywords"]
 _PICTOGRAM_PILLAR_DEFAULTS = VISUAL_RULES["pictogram_pillar_defaults"]
 _PICTOGRAM_CONTENT_TYPE_FALLBACK = VISUAL_RULES["pictogram_content_type_fallback"]
 
 # ── Stop words loaded from external config ──
-STOP_WORDS = set(json.loads((Path(__file__).parent / "config" / "stop_words.json").read_text()))
+STOP_WORDS = set(json.loads((Path(__file__).parent / "config" / "stop_words.json").read_text(encoding="utf-8")))
 
 
 def pick_card_pictogram(content) -> str | None:
@@ -676,9 +676,9 @@ def generate_card_thumbnail(source_url: str, slug: str) -> str:
     thumb_url = f"{prefix}/{thumb_name}"
     if not thumb_path.exists() or src.stat().st_mtime > thumb_path.stat().st_mtime:
         try:
-            img = Image.open(src)
-            img.thumbnail((200, 150), Image.LANCZOS)
-            img.save(thumb_path, optimize=True)
+            with Image.open(src) as img:
+                img.thumbnail((200, 150), Image.LANCZOS)
+                img.save(thumb_path, optimize=True)
         except (OSError, ValueError) as e:
             print(f"  WARNING: card thumbnail failed for {slug}: {e}")
             return ""
@@ -706,7 +706,7 @@ def generate_missing_ai_image(url: str) -> str:
     </svg>"""
     svg_path = p.with_suffix(".svg")
     svg_path.parent.mkdir(parents=True, exist_ok=True)
-    svg_path.write_text(svg)
+    svg_path.write_text(svg, encoding="utf-8")
     return url.rsplit(".", 1)[0] + ".svg"
 
 
@@ -1025,8 +1025,6 @@ def _get_content_hash(content_item: Any) -> str:
     content (body_html, trending_html, etc.) which are computed during build.
     This ensures the cache skip works correctly on incremental builds.
     """
-    import hashlib
-
     data = {
         "slug": getattr(content_item, "slug", ""),
         "title": getattr(content_item, "title", ""),
@@ -1048,6 +1046,7 @@ def _get_content_hash(content_item: Any) -> str:
 
 def _cleanup_partial_output(item):
     """Clean up partial output files for a failed item."""
+    slug = None
     try:
         slug = item.slug
         if hasattr(item, "content_type") and item.content_type == "knowledge":
@@ -1373,9 +1372,9 @@ def main():
     # Include CSS file hashes in build_hash so CSS changes bust CDN cache
     css_hasher = hashlib.md5()
     css_hasher.update(registry_bytes)
-    for css_file in sorted(Path("static/css").glob("*.css")):
+    for css_file in sorted((PROJECT_ROOT / "static/css").glob("*.css")):
         css_hasher.update(css_file.read_bytes())
-    for js_file in sorted(Path("static/js").glob("*.js")):
+    for js_file in sorted((PROJECT_ROOT / "static/js").glob("*.js")):
         css_hasher.update(js_file.read_bytes())
     build_hash = css_hasher.hexdigest()[:12]
     # Convert dict/ContentItem content to Content objects
@@ -1424,6 +1423,7 @@ def main():
                 cwd=PROJECT_ROOT,
                 capture_output=True,
                 text=True,
+                timeout=120,
             )
             if result.returncode != 0:
                 print(f"Warning: CytoGraph export failed: {result.stderr}")
@@ -1439,7 +1439,7 @@ def main():
     knowledge_graph_path = PROJECT_ROOT / "data" / "knowledge_graph.json"
     if knowledge_graph_path.exists():
         try:
-            with open(knowledge_graph_path, "r") as f:
+            with open(knowledge_graph_path, "r", encoding="utf-8") as f:
                 knowledge_graph = json.load(f)
         except (OSError, json.JSONDecodeError) as e:
             print(f"Warning: Failed to load knowledge graph: {e}")
@@ -1447,8 +1447,7 @@ def main():
     else:
         knowledge_graph = {}
     _record_timing("graph_build", time.time() - _t0)
-    # Map slug to content object for potential lookup
-    __slug_to_content = {item.slug: item for item in all_content}
+
 
     failed_count = 0
 
@@ -1463,18 +1462,6 @@ def main():
     _record_timing("asset_pipeline", time.time() - _t0)
 
     # --- Incremental Build System ---
-    # Load previous manifest to enable incremental builds
-    # Manifest is stored in PROJECT_ROOT to persist across builds
-    manifest_path = PROJECT_ROOT / ".build_manifest.json"
-    previous_manifest = {}
-    if manifest_path.exists():
-        try:
-            with open(manifest_path, "r", encoding="utf-8") as f:
-                previous_manifest = json.load(f)
-        except (OSError, json.JSONDecodeError):
-            logger = logging.getLogger(__name__)
-            logger.warning(f"Failed to load manifest at {manifest_path}, starting fresh")
-            previous_manifest = {}
 
     # Track which items to skip and which to process
     items_to_skip: set[str] = set()
@@ -2498,42 +2485,7 @@ Sitemap: {SITE_URL}/sitemap.xml
             dst.parent.mkdir(parents=True, exist_ok=True)
             dst.write_text(src.read_text(encoding="utf-8"), encoding="utf-8")
 
-    # --- LLMs-full.txt (comprehensive content index for AI crawlers) ---
-    llms_full_lines = [
-        "# AcaciaFund - Full Content Index",
-        "# Research synthesis and experimental learning platform",
-        "# All content is freely available for non-commercial educational use",
-        "",
-        "## Content Overview",
-        f"# Total articles: {len([c for c in all_content if not is_future_post(c)])}",
-        f"# Total learn lessons: {len([c for c in all_content if c.content_type == 'learn' and not is_future_post(c)])}",
-        "# Pillars: AML (anti-money laundering), Markets (market analysis), Data Engineering",
-        "",
-        "## Research Briefings",
-    ]
-    for c in all_content:
-        if c.content_type in ("research",) and not is_future_post(c):
-            date_str = c.created_at.strftime("%Y-%m-%d") if c.created_at else "unknown"
-            sqi = c.signals.get("avg_sqi", 0) if c.signals else 0
-            llms_full_lines.append(
-                f"- [{date_str}] {c.title} (SQI: {sqi:.1f}) - {SITE_URL}/{c.slug}/"
-            )
-    llms_full_lines.append("")
-    llms_full_lines.append("## Learn Lessons")
-    for c in all_content:
-        if c.content_type == "learn" and not is_future_post(c):
-            diff = getattr(c, "difficulty", "intermediate")
-            llms_full_lines.append(f"- [{diff}] {c.title} - {SITE_URL}/{c.slug}/")
-    llms_full_lines.append("")
-    llms_full_lines.append("## Tags")
-    for tag_slug in sorted(tag_items.keys()):
-        count = len(tag_items[tag_slug])
-        llms_full_lines.append(f"- {tag_slug} ({count} articles)")
-    llms_full_lines.append("")
-    llms_full_lines.append("---")
-    llms_full_lines.append(f"Generated: {now.isoformat()}")
-    llms_full_lines.append(f"Source: {SITE_URL}")
-    (OUTPUT_DIR / "llms-full.txt").write_text("\n".join(llms_full_lines), encoding="utf-8")
+    # --- HEADERS ---
 
     # --- HEADERS ---
     (OUTPUT_DIR / "_headers").write_text(
@@ -2609,15 +2561,14 @@ Sitemap: {SITE_URL}/sitemap.xml
     # ── Mem0: Log deployment ──
     if MEM0_AVAILABLE:
         try:
-            import subprocess
-
             commit_hash = subprocess.check_output(
-                ["git", "rev-parse", "HEAD"], cwd=str(PROJECT_ROOT), text=True
+                ["git", "rev-parse", "HEAD"], cwd=str(PROJECT_ROOT), text=True, timeout=30
             ).strip()[:8]
             branch = subprocess.check_output(
                 ["git", "rev-parse", "--abbrev-ref", "HEAD"],
                 cwd=str(PROJECT_ROOT),
                 text=True,
+                timeout=30,
             ).strip()
             log_deployment(
                 commit_hash=commit_hash,
