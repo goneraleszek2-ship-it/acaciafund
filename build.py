@@ -1559,11 +1559,12 @@ def main():
                 dest.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(item, dest)
 
-    bytecode_cache = FileSystemBytecodeCache(str(PROJECT_ROOT / ".cache" / "jinja2"))
+    # Bytecode cache disabled for CI/CD compatibility
+    # bytecode_cache = FileSystemBytecodeCache(str(PROJECT_ROOT / ".cache" / "jinja2"))
     env = Environment(
         loader=FileSystemLoader(TEMPLATE_DIR),
         autoescape=select_autoescape(["html", "xml"]),
-        bytecode_cache=bytecode_cache,
+        # bytecode_cache=bytecode_cache,
     )
     env.filters["reading_time"] = reading_time_minutes
     env.filters["urlencode"] = lambda s: urlquote(s or "", safe="")
