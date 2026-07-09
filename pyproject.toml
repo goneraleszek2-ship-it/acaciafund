@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=68.0"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "acaciafund"
+version = "0.1.0"
+description = "AcaciaFund — research synthesis & experimental learning platform"
+requires-python = ">=3.10"
+dependencies = [
+    "jinja2>=3.1",
+    "Pillow>=10.0",
+    "pydantic>=2.0",
+    "pandas>=2.0",
+    "pyarrow>=14.0",
+    "simpleicons>=7.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "ruff>=0.1.0",
+    "pyright>=1.1.300",
+]
+
+[tool.setuptools.packages.find]
+include = ["acaciafund*"]
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+
+[tool.pyright]
+pythonVersion = "3.10"
+typeCheckingMode = "basic"
+include = ["build.py", "config.py", "schemas.py", "core", "scripts/enrich.py"]
+exclude = ["dist", "venv", "tmp"]

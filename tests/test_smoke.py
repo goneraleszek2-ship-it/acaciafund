@@ -49,8 +49,8 @@ def test_registry_content_items_have_mandatory_fields():
     raw = json.loads(REGISTRY_PATH.read_text(encoding="utf-8"))
     registry = RegistryData(**raw)
     for item in registry.content or []:
-        assert item.get("slug"), f"Missing slug in {item}"
-        assert item.get("title"), f"Missing title in {item}"
+        assert item.slug, f"Missing slug in {item}"
+        assert item.title, f"Missing title in {item}"
 
 
 def test_registry_content_items_parse_as_content():

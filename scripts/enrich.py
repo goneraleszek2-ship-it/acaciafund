@@ -39,11 +39,13 @@ from typing import Any, Dict, List, Optional
 logger = logging.getLogger("acaciafund.enrich")
 logging.basicConfig(level=logging.WARNING, format="%(levelname)s:%(name)s:%(message)s")
 
+ROOT = Path(__file__).resolve().parent.parent
+
 # ── Environment bootstrap: propagate .env to os.environ ──
 def _bootstrap_environment():
-    """Force-load /root/.env into os.environ so child processes
+    """Force-load project .env into os.environ so child processes
     inherit variables like NVIDIA_API_KEY without shell export."""
-    env_path = Path("/root/.env")
+    env_path = ROOT / ".env"
     if env_path.exists():
         with open(env_path, "r", encoding="utf-8") as f:
             for line in f:
@@ -63,8 +65,6 @@ _bootstrap_environment()
 # hangs when querying snapshot metadata in restricted environments.
 # Must be set before mem0/fastembed is initialized (happens lazily).
 os.environ.setdefault("HF_HUB_OFFLINE", "1")
-
-ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
 REGISTRY_PATH = ROOT / "registry.json"

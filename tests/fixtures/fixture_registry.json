@@ -1,0 +1,58 @@
+{
+  "content": [
+    {
+      "slug": "test-aml-research",
+      "title": "Test AML Research Paper",
+      "content_type": "research",
+      "pillar": "aml",
+      "tags": ["aml", "machine-learning"],
+      "body_html": "<p>Test body</p>",
+      "description": "A test research paper about AML",
+      "date_str": "2026-06-01T00:00:00Z",
+      "source_breakdown": {"arxiv": 1},
+      "sqi": 0.75,
+      "enriched": true,
+      "enriched_at": "2026-07-01T00:00:00Z"
+    },
+    {
+      "slug": "test-learn-article",
+      "title": "Test Learn Article",
+      "content_type": "learn",
+      "pillar": "data-engineering",
+      "tags": ["dataops", "pipeline"],
+      "body_html": "<p>Test learn body</p>",
+      "description": "A test learn article about data engineering",
+      "date_str": "2026-05-15T00:00:00Z",
+      "sqi": 0.60,
+      "enriched": true,
+      "enriched_at": "2026-07-01T00:00:00Z"
+    },
+    {
+      "slug": "test-knowledge-base",
+      "title": "Test Knowledge Base Entry",
+      "content_type": "knowledge",
+      "pillar": "stock",
+      "tags": ["markets", "risk-management"],
+      "body_html": "<p>Test knowledge body</p>",
+      "description": "A test knowledge entry about stock markets"
+    },
+    {
+      "slug": "test-minimal-item",
+      "title": "Minimal Item",
+      "content_type": "research",
+      "pillar": "aml",
+      "tags": [],
+      "body_html": "",
+      "description": ""
+    },
+    {
+      "slug": "test-unenriched-item",
+      "title": "Unenriched Item",
+      "content_type": "research",
+      "pillar": "aml",
+      "tags": ["test"],
+      "body_html": "<p>No SQI yet</p>",
+      "description": "This item has no SQI"
+    }
+  ]
+}

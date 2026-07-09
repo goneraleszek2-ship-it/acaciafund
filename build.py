@@ -1379,6 +1379,8 @@ def main():
 
     # Initialize logging first (needed for validation logging)
     log_path = OUTPUT_DIR / "build_errors.log"
+    if log_path.exists() and log_path.stat().st_size > 1_048_576:
+        log_path.unlink()
     logging.basicConfig(
         filename=log_path,
         level=logging.ERROR,
