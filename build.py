@@ -140,7 +140,7 @@ def load_admin_credentials():
                             username = value
                         elif key == "ADMIN_PASSWORD":
                             password = value
-            except Exception:
+            except (OSError, ValueError):
                 pass
 
     if not username or not password:
@@ -375,387 +375,14 @@ def find_related(posts: list, current: Content, max_items: int = 3) -> list:
     return [p for _, p in scored[:max_items]]
 
 
-CARD_PICTOGRAM_KEYWORDS = {
-    # Core concepts (cross-pillar) - priority 1
-    "ai": [
-        "ai",
-        "artificial intelligence",
-        "machine learning",
-        "deep learning",
-        "neural",
-        "llm",
-        "large language model",
-        "generative ai",
-        "openai",
-        "anthropic",
-        "google gemini",
-        "claude",
-        "gpt",
-        "transformer",
-        "bert",
-        "gpt-4",
-        "gpt-5",
-        "claude 3",
-    ],
-    "realtime": [
-        "real-time",
-        "realtime",
-        "streaming",
-        "stream",
-        "event-driven",
-        "event streaming",
-        "kafka",
-        "kafka streams",
-        "flink",
-        "spark streaming",
-        "kinesis",
-        "pulsar",
-        "cdc",
-        "change data capture",
-        "debezium",
-        "websockets",
-        "sse",
-        "server-sent events",
-    ],
-    "platform": [
-        "platform",
-        "data platform",
-        "data stack",
-        "data architecture",
-        "cloud infrastructure",
-        "kubernetes",
-        "k8s",
-        "docker",
-        "container",
-        "orchestration",
-        "terraform",
-        "aws",
-        "azure",
-        "gcp",
-        "serverless",
-        "infrastructure as code",
-        "iac",
-    ],
-    # Content types (cross-pillar) - priority 2
-    "tutorial": [
-        "tutorial",
-        "how-to",
-        "guide",
-        "step-by-step",
-        "walkthrough",
-        "beginner",
-        "introductory",
-        "introduction",
-        "getting started",
-        "learn",
-        "teach",
-        "educational",
-        "instructional",
-    ],
-    "comparison": [
-        "comparison",
-        "compare",
-        "vs",
-        "versus",
-        "showdown",
-        "benchmark",
-        "evaluation",
-        "review",
-        "analysis",
-        "trade-off",
-        "pros and cons",
-        "alternatives",
-    ],
-    "case-study": [
-        "case study",
-        "real-world",
-        "production",
-        "implementation",
-        "deployment",
-        "migration",
-        "migration story",
-        "customer",
-        "client",
-        "enterprise",
-        "success story",
-    ],
-    # AML-specific - priority 3
-    "aml": [
-        "aml",
-        "anti-money laundering",
-        "compliance",
-        "regulatory",
-        "regulation",
-        "enforcement",
-        "sanctions",
-        "fatf",
-        "fincen",
-        "kyc",
-        "know your customer",
-        "kyb",
-        "know your business",
-        "sar",
-        "suspicious activity report",
-        "transaction monitoring",
-        "financial crime",
-        "risk assessment",
-    ],
-    "fraud": [
-        "fraud",
-        "fraud detection",
-        "fraud prevention",
-        "scam",
-        "scam detection",
-        "payment fraud",
-        "chargeback",
-        "chargeback fraud",
-        "synthetic identity",
-        "money laundering",
-        "suspicious activity",
-    ],
-    # Security - priority 4
-    "security": [
-        "security",
-        "cybersecurity",
-        "threat detection",
-        "penetration",
-        "vulnerability",
-        "exploit",
-        "attack",
-        "breach",
-        "intrusion",
-        "malware",
-        "ransomware",
-        "phishing",
-        "social engineering",
-        "zero trust",
-        "iam",
-        "identity access management",
-        "firewall",
-        "waf",
-        "web application firewall",
-        "siem",
-        "security information",
-        "soc",
-        "security operations",
-    ],
-    # DevOps - priority 5
-    "devops": [
-        "devops",
-        "ci/cd",
-        "continuous integration",
-        "continuous delivery",
-        "continuous deployment",
-        "deployment",
-        "build",
-        "release",
-        "pipeline",
-        "workflow",
-        "automation",
-        "infrastructure as code",
-        "terraform",
-        "ansible",
-        "puppet",
-        "chef",
-        "gitops",
-        "argocd",
-        "tekton",
-        "jenkins",
-    ],
-    # Analytics - priority 6
-    "analytics": [
-        "analytics",
-        "business intelligence",
-        "bi",
-        "reporting",
-        "dashboard",
-        "visualization",
-        "data visualization",
-        "chart",
-        "kpi",
-        "metric",
-        "dashboard",
-        "kpi tracking",
-        "power bi",
-        "tableau",
-        "looker",
-        "metabase",
-    ],
-    # Monitoring - priority 7
-    "monitoring": [
-        "monitoring",
-        "observability",
-        "logging",
-        "tracing",
-        "metrics",
-        "alerting",
-        "alert",
-        "incident",
-        "sre",
-        "site reliability engineering",
-        "slo",
-        "sla",
-        "prometheus",
-        "grafana",
-        "datadog",
-        "new relic",
-        "opentelemetry",
-        "jaeger",
-        "zipkin",
-        "loki",
-    ],
-    # Cloud - priority 8
-    "cloud": [
-        "cloud",
-        "aws",
-        "azure",
-        "gcp",
-        "google cloud",
-        "serverless",
-        "lambda",
-        "cloud function",
-        "cloud run",
-        "ec2",
-        "s3",
-        "rds",
-        "dynamodb",
-        "firestore",
-        "cloudformation",
-        "cloudformation",
-        "terraform",
-        "multi-cloud",
-        "hybrid cloud",
-        "cloud native",
-    ],
-    # Markets-specific - priority 9
-    "finance": [
-        "finance",
-        "trading",
-        "investment",
-        "portfolio",
-        "stock market",
-        "equities",
-        "bonds",
-        "derivatives",
-        "valuation",
-        "financial modeling",
-        "quantitative",
-        "algorithmic trading",
-        "algo trading",
-        "high frequency",
-        "market making",
-        "market data",
-        "financial technology",
-    ],
-    "market": [
-        "market",
-        "trading",
-        "market data",
-        "market analysis",
-        "stock",
-        "equity",
-        "securities",
-        "exchange",
-        "nasdaq",
-        "nyse",
-        "s&p 500",
-        "dow jones",
-        "market maker",
-        "market structure",
-        "market microstructure",
-    ],
-    # Data Engineering-specific - priority 10
-    "pipeline": [
-        "pipeline",
-        "etl",
-        "elt",
-        "orchestration",
-        "workflow",
-        "dag",
-        "directed acyclic graph",
-        "airflow",
-        "dagster",
-        "prefect",
-        "kubeflow",
-        "temporal",
-        "kedro",
-        "dbt",
-        "sqlmesh",
-        "data pipeline",
-        "pipeline orchestration",
-        "workflow orchestration",
-    ],
-    "infrastructure": [
-        "infrastructure",
-        "kubernetes",
-        "k8s",
-        "docker",
-        "container",
-        "infrastructure as code",
-        "iac",
-        "cloud",
-        "aws",
-        "azure",
-        "gcp",
-        "serverless",
-        "deployment",
-        "ci/cd",
-        "continuous integration",
-        "continuous delivery",
-    ],
-    # Technical (cross-pillar) - priority 11
-    "database": [
-        "database",
-        "db",
-        "sql",
-        "nosql",
-        "postgresql",
-        "mysql",
-        "mongodb",
-        "cassandra",
-        "redis",
-        "memcached",
-        "storage",
-        "data warehouse",
-        "data lake",
-        "lakehouse",
-        "iceberg",
-        "delta lake",
-        "hudi",
-        "parquet",
-        "avro",
-    ],
-    "api": [
-        "api",
-        "api design",
-        "rest",
-        "graphql",
-        "grpc",
-        "microservice",
-        "service mesh",
-        "istio",
-        "linkerd",
-        "gateway",
-        "gateway api",
-        "openapi",
-        "swagger",
-        "integration",
-        "integration pattern",
-        "event-driven",
-    ],
-}
+# ── Visual rules loaded from external config ──
+VISUAL_RULES = json.loads((Path(__file__).parent / "config" / "visual_rules.json").read_text())
+CARD_PICTOGRAM_KEYWORDS = VISUAL_RULES["card_pictogram_keywords"]
+_PICTOGRAM_PILLAR_DEFAULTS = VISUAL_RULES["pictogram_pillar_defaults"]
+_PICTOGRAM_CONTENT_TYPE_FALLBACK = VISUAL_RULES["pictogram_content_type_fallback"]
 
-_PICTOGRAM_PILLAR_DEFAULTS = {
-    "aml": "aml.svg",
-    "stock": "finance.svg",
-    "data-engineering": "pipeline.svg",
-}
-
-_PICTOGRAM_CONTENT_TYPE_FALLBACK = {
-    "research": "icon-research.svg",
-    "learn": "icon-learn.svg",
-    "knowledge": "icon-knowledge.svg",
-}
+# ── Stop words loaded from external config ──
+STOP_WORDS = set(json.loads((Path(__file__).parent / "config" / "stop_words.json").read_text()))
 
 
 def pick_card_pictogram(content) -> str | None:
@@ -777,28 +404,7 @@ def pick_card_pictogram(content) -> str | None:
     pillar = (content.pillar or "").lower()
     content_type = (content.content_type or "").lower()
 
-    # Priority levels for scoring
-    priority_map = {
-        "ai": 1,
-        "realtime": 1,
-        "platform": 1,
-        "tutorial": 2,
-        "comparison": 2,
-        "case-study": 2,
-        "aml": 3,
-        "fraud": 3,
-        "security": 4,
-        "devops": 5,
-        "analytics": 6,
-        "monitoring": 7,
-        "cloud": 8,
-        "finance": 9,
-        "market": 9,
-        "pipeline": 10,
-        "infrastructure": 10,
-        "database": 11,
-        "api": 11,
-    }
+    priority_map = VISUAL_RULES["priority_map"]
 
     # First pass: exact keyword matches with priority (backward compatible)
     for priority in range(1, 12):
@@ -970,7 +576,7 @@ def _resolve_ref_file(p: Path) -> str:
                 if original_path.exists():
                     rel = str(original_path.relative_to(PROJECT_ROOT))
                     return f"{SITE_URL}/{rel}"
-        except Exception:
+        except (OSError, UnicodeDecodeError):
             pass
     return ""
 
@@ -1060,7 +666,7 @@ def generate_card_thumbnail(source_url: str, slug: str) -> str:
             resolved = Path(PROJECT_ROOT / ref.lstrip("/").replace(f"{SITE_URL}/", "", 1))
             if resolved.exists():
                 src = resolved
-    except Exception:
+    except (OSError, AttributeError):
         pass
     prefix = source_url.rsplit("/", 1)[0]
     stem = src.stem
@@ -1073,7 +679,7 @@ def generate_card_thumbnail(source_url: str, slug: str) -> str:
             img = Image.open(src)
             img.thumbnail((200, 150), Image.LANCZOS)
             img.save(thumb_path, optimize=True)
-        except Exception as e:
+        except (OSError, ValueError) as e:
             print(f"  WARNING: card thumbnail failed for {slug}: {e}")
             return ""
     return thumb_url
@@ -1214,7 +820,7 @@ def inject_section_images(body_html: str, section_images: list[dict], article=No
                             f' style="background:var(--color-bg);border:1px solid var(--color-border)">'
                             f"{svg}</figure>"
                         )
-                    except Exception:
+                    except (ValueError, TypeError, OSError):
                         pass
         else:
             # No harvester wrapping — original flat behavior
@@ -1259,7 +865,7 @@ def inject_section_images(body_html: str, section_images: list[dict], article=No
                             f' style="background:var(--color-bg);border:1px solid var(--color-border)">'
                             f"{svg}</figure>"
                         )
-                    except Exception:
+                    except (ValueError, TypeError, OSError):
                         pass
             result.append(content)
 
@@ -1453,8 +1059,104 @@ def _cleanup_partial_output(item):
             out_file = OUTPUT_DIR / f"{slug}.html"
             if out_file.exists():
                 out_file.unlink()
-    except Exception:
-        pass
+    except (OSError, shutil.Error) as e:
+        logger = logging.getLogger(__name__)
+        logger.warning(f"Cleanup failed for {slug}: {e}")
+
+
+# ── Shared rendering helpers ──
+
+def _serialize_quiz(item) -> str:
+    """Serialize bloom questions into a JSON string for the quiz JS."""
+    if not item.bloom_questions:
+        return ""
+    quiz_data = {"questions": []}
+    for bq in item.bloom_questions[:10]:
+        if isinstance(bq, dict) and "question" in bq:
+            qtype = bq.get("type", "mc")
+            opts = bq.get("options", [])
+            raw = bq.get("answer") if "answer" in bq else None
+            if raw is None:
+                correct_val = bq.get("correct", "")
+                if isinstance(correct_val, str) and correct_val and opts:
+                    raw = opts.index(correct_val) if correct_val in opts else 0
+                else:
+                    raw = 0
+            entry = {"q": bq["question"], "options": opts, "a": raw, "type": qtype}
+            if qtype == "open-ended":
+                entry["answer_text"] = bq.get("correct", opts[raw] if opts else "")
+            quiz_data["questions"].append(entry)
+    if quiz_data["questions"]:
+        return json.dumps(quiz_data, ensure_ascii=False)
+    return ""
+
+
+def _compute_quality(quality_scores: dict, slug: str) -> tuple[float, str, dict]:
+    """Compute quality score, badge stars, and metrics dict for an item."""
+    metrics = _get_quality_metrics_with_fail_safes(quality_scores.get(slug, {}))
+    score = metrics.get("quality_score", 0)
+    if score >= 0.8:
+        badge = "★★★★★"
+    elif score >= 0.7:
+        badge = "★★★★☆"
+    elif score >= 0.6:
+        badge = "★★★☆☆"
+    elif score >= 0.5:
+        badge = "★★☆☆☆"
+    else:
+        badge = "★☆☆☆☆"
+    return score, badge, metrics
+
+
+def _process_item_body(item, strip_emoji: bool = False) -> tuple[str, list]:
+    """Process item body HTML: lazy loading, headings, sanitization.
+    Returns (processed_html, toc_items). Also mutates item.body_html and item.description.
+    """
+    body = add_lazy_loading(item.body_html)
+    body, toc_items = extract_headings(body)
+    body = sanitize_domain_breakdown(body)
+    body = inject_section_images(body, item.section_images, item)
+    body = re.sub(
+        r"<h2[^>]*>\s*" + re.escape(item.title.strip()) + r"\s*</h2>\s*", "", body, count=1
+    )
+    body = sanitize_text(body, strip_emoji=strip_emoji)
+    item.description = sanitize_text(item.description, strip_emoji=strip_emoji)
+    item.body_html = body
+    return body, toc_items
+
+
+def _generate_page_images(item, layer: str) -> tuple[str, str, str, str, str]:
+    """Generate thumbnail key, OG key, featured image path, OG URL, and thumb base URL."""
+    thumb_key = hashlib.md5(item.title.encode()).hexdigest()[:12]
+    og_key = hashlib.md5(f"og_{item.title}".encode()).hexdigest()[:12]
+    thumb_base = f"{SITE_URL}/static/images"
+    feat_img_path = resolve_featured_image(item.featured_image or "")
+    og_image_url = (
+        feat_img_path if feat_img_path else f"{SITE_URL}/static/images/og_{og_key}.svg"
+    )
+    return thumb_key, og_key, feat_img_path, og_image_url, thumb_base
+
+
+def _generate_page_svgs(item, layer: str, thumb_key: str, og_key: str) -> None:
+    """Generate and write thumbnail and OG image SVGs for a content item."""
+    out_static = STATIC_DST_DIR / "images"
+    out_static.mkdir(parents=True, exist_ok=True)
+    pillar = item.pillar or "aml"
+    scores = item.signals or {"sqi": SQI_DEFAULT}
+    if not isinstance(scores, dict):
+        scores = {"sqi": SQI_DEFAULT}
+    feat = resolve_featured_image(item.featured_image or "")
+    icons = get_topic_icons(item.tags) if not feat else []
+    svg_thumb = generate_thumbnail_svg(
+        item.title, pillar, scores, width=600, height=340,
+        featured_image_url=feat, layer=layer, fallback_icons=icons,
+    )
+    (out_static / f"thumb_{thumb_key}.svg").write_text(svg_thumb, encoding="utf-8")
+    svg_og = generate_og_image(
+        item.title, pillar, scores, featured_image_url=feat,
+        layer=layer, fallback_icons=icons,
+    )
+    (out_static / f"og_{og_key}.svg").write_text(svg_og, encoding="utf-8")
 
 
 def main():
@@ -1502,7 +1204,7 @@ def main():
         with open(REGISTRY_PATH, "r", encoding="utf-8") as f:
             registry_data = json.load(f)
         registry = RegistryData(**registry_data)
-    except Exception as e:
+    except (OSError, json.JSONDecodeError, ValueError) as e:
         print(f"Error loading registry: {e}")
         return 1
     _record_timing("registry_load", time.time() - _t0)
@@ -1575,97 +1277,6 @@ def main():
     env.globals["render_topic_icon"] = render_topic_icon
     env.globals["_pick_subtopic"] = _pick_subtopic
 
-    STOP_WORDS = {
-        "the",
-        "a",
-        "an",
-        "at",
-        "by",
-        "for",
-        "in",
-        "is",
-        "it",
-        "of",
-        "on",
-        "to",
-        "and",
-        "or",
-        "with",
-        "as",
-        "be",
-        "but",
-        "not",
-        "so",
-        "than",
-        "that",
-        "this",
-        "was",
-        "are",
-        "its",
-        "from",
-        "has",
-        "had",
-        "have",
-        "been",
-        "were",
-        "can",
-        "will",
-        "would",
-        "could",
-        "should",
-        "may",
-        "might",
-        "shall",
-        "about",
-        "into",
-        "over",
-        "such",
-        "only",
-        "also",
-        "very",
-        "just",
-        "more",
-        "some",
-        "these",
-        "those",
-        "each",
-        "both",
-        "all",
-        "any",
-        "too",
-        "much",
-        "many",
-        "great",
-        "good",
-        "new",
-        "first",
-        "last",
-        "next",
-        "other",
-        "same",
-        "own",
-        "old",
-        "high",
-        "low",
-        "long",
-        "small",
-        "large",
-        "big",
-        "top",
-        "key",
-        "main",
-        "primary",
-        "major",
-        "brief",
-        "short",
-        "full",
-        "clear",
-        "best",
-        "better",
-        "most",
-        "least",
-    }
-
     def filter_entities(entities):
         result = []
         for e in entities or []:
@@ -1705,7 +1316,7 @@ def main():
             if isinstance(evidence, str):
                 try:
                     evidence = json.loads(evidence)
-                except Exception:
+                except (json.JSONDecodeError, TypeError):
                     evidence = []
             source_verification[row["slug"]] = {
                 "source_score": row["source_score"],
@@ -1773,7 +1384,7 @@ def main():
         level=logging.ERROR,
         format="%(asctime)s %(levelname)s %(message)s",
         datefmt="%Y-%m-%d %H:%M:%S",
-        filemode="w",
+        filemode="a",
     )
     logger = logging.getLogger(__name__)
 
@@ -1791,7 +1402,7 @@ def main():
         all_content = [c for c in all_content if c.slug not in set(skipped_slugs)]
     if not all_content:
         print("ERROR: No valid content items remaining after validation.")
-        sys.exit(1)
+        return 1
 
     _t0 = time.time()
     # Generate knowledge graph for semantic cross-linking
@@ -1824,7 +1435,7 @@ def main():
         try:
             with open(knowledge_graph_path, "r") as f:
                 knowledge_graph = json.load(f)
-        except Exception as e:
+        except (OSError, json.JSONDecodeError) as e:
             print(f"Warning: Failed to load knowledge graph: {e}")
             knowledge_graph = {}
     else:
@@ -1854,7 +1465,9 @@ def main():
         try:
             with open(manifest_path, "r", encoding="utf-8") as f:
                 previous_manifest = json.load(f)
-        except Exception:
+        except (OSError, json.JSONDecodeError):
+            logger = logging.getLogger(__name__)
+            logger.warning(f"Failed to load manifest at {manifest_path}, starting fresh")
             previous_manifest = {}
 
     # Track which items to skip and which to process
@@ -1978,27 +1591,16 @@ def main():
     for item in knowledge_items:
         try:
             slug = item.slug
-            # Skip if already processed (incremental build)
             if slug in items_to_skip:
                 print(f"  knowledge: {slug} (skipped - unchanged)")
                 continue
-            slug = item.slug
             clean_slug = slug[10:] if slug.startswith("knowledge/") else slug
             page_path = canonical_path(slug_to_path(clean_slug))
             out_dir = OUTPUT_DIR / "knowledge" / clean_slug
             out_dir.mkdir(parents=True, exist_ok=True)
             out_file = out_dir / "index.html"
 
-            body = add_lazy_loading(item.body_html)
-            body, toc_items = extract_headings(body)
-            body = sanitize_domain_breakdown(body)
-            body = inject_section_images(body, item.section_images, item)
-            body = re.sub(
-                r"<h2[^>]*>\s*" + re.escape(item.title.strip()) + r"\s*</h2>\s*", "", body, count=1
-            )
-            body = sanitize_text(body, strip_emoji=False)
-            item.description = sanitize_text(item.description, strip_emoji=False)
-            item.body_html = body
+            body, toc_items = _process_item_body(item, strip_emoji=False)
 
             kcat = KNOWLEDGE_CATEGORIES.get(item.knowledge_category, {})
             if kcat:
@@ -2011,67 +1613,22 @@ def main():
             )
             layer_badge = layer_indicator_html("knowledge", item.pillar or "")
 
-            thumb_key = hashlib.md5(item.title.encode()).hexdigest()[:12]
-            og_key = hashlib.md5(f"og_{item.title}".encode()).hexdigest()[:12]
-            thumb_base = f"{SITE_URL}/static/images"
-            feat_img_path = resolve_featured_image(item.featured_image or "")
-            og_image_url = (
-                feat_img_path if feat_img_path else f"{SITE_URL}/static/images/og_{og_key}.svg"
-            )
+            thumb_key, og_key, feat_img_path, og_image_url, thumb_base = _generate_page_images(item, "knowledge")
 
             layer_sub = (
                 item.knowledge_category.replace("_", " ").title()
                 if item.knowledge_category
                 else item.pillar or ""
             )
-            # Quality metrics with fail-safes
-            quality_metrics = _get_quality_metrics_with_fail_safes(quality_scores.get(item.slug, {}))
-            quality_score = quality_metrics.get("quality_score", 0)
-            quality_badge = ""
-            if quality_score and quality_score >= 0.8:
-                quality_badge = "★★★★★"
-            elif quality_score and quality_score >= 0.7:
-                quality_badge = "★★★★☆"
-            elif quality_score and quality_score >= 0.6:
-                quality_badge = "★★★☆☆"
-            elif quality_score and quality_score >= 0.5:
-                quality_badge = "★★☆☆☆"
-            else:
-                quality_badge = "★☆☆☆☆"
+            quality_score, quality_badge, quality_metrics = _compute_quality(quality_scores, item.slug)
+            quiz_json = _serialize_quiz(item)
 
-            # Serialize quiz data for knowledge articles too
-            k_quiz_json = ""
-            if item.bloom_questions:
-                k_quiz_data = {"questions": []}
-                for bq in item.bloom_questions[:10]:
-                    if isinstance(bq, dict) and "question" in bq:
-                        qtype = bq.get("type", "mc")
-                        opts = bq.get("options", [])
-                        raw = bq.get("answer") if "answer" in bq else None
-                        if raw is None:
-                            correct_val = bq.get("correct", "")
-                            raw = (
-                                opts.index(correct_val)
-                                if isinstance(correct_val, str)
-                                and correct_val
-                                and correct_val in opts
-                                else 0
-                            )
-                        entry = {"q": bq["question"], "options": opts, "a": raw, "type": qtype}
-                        if qtype == "open-ended":
-                            entry["answer_text"] = bq.get("correct", opts[raw] if opts else "")
-                        k_quiz_data["questions"].append(entry)
-                if k_quiz_data["questions"]:
-                    k_quiz_json = json.dumps(k_quiz_data, ensure_ascii=False)
-
-            # Trend detection
             trend_info = trend_detection.get(item.slug, {})
             trend_strength = trend_info.get("trend_strength", 0)
             adoption_level = trend_info.get("adoption_level", "mainstream")
             impact_level = trend_info.get("impact_level", "low")
             trend_categories = trend_info.get("trend_categories", "")
 
-            # Source verification
             source_info = source_verification.get(item.slug, {})
             source_verified = source_info.get("verified", False)
             source_evidence = source_info.get("evidence", [])
@@ -2088,9 +1645,9 @@ def main():
                 visual_fingerprint=visual_fingerprint,
                 layer_badge=layer_badge,
                 thumbnail_base=thumb_base,
-                thumbnail_key=thumbnail_key,
+                thumbnail_key=thumb_key,
                 og_image_url=og_image_url,
-                quiz_json=k_quiz_json,
+                quiz_json=quiz_json,
                 quality_score=quality_score,
                 quality_badge=quality_badge,
                 source_verified=source_verified,
@@ -2111,35 +1668,9 @@ def main():
             out_file.write_text(html, encoding="utf-8")
             print(f"  knowledge: {out_file.relative_to(OUTPUT_DIR)}")
 
-            # Write knowledge thumbnail SVGs + OG images (fractal engine)
-            out_static = STATIC_DST_DIR / "images"
-            out_static.mkdir(parents=True, exist_ok=True)
-            pillar_k = item.pillar or "aml"
-            scores_k = {}
-            feat_k = resolve_featured_image(item.featured_image or "")
-            icons_k = get_topic_icons(item.tags) if not feat_k else []
-            svg_k = generate_thumbnail_svg(
-                item.title,
-                pillar_k,
-                scores_k,
-                width=600,
-                height=340,
-                featured_image_url=feat_k,
-                layer="knowledge",
-                fallback_icons=icons_k,
-            )
-            (out_static / f"thumb_{thumb_key}.svg").write_text(svg_k, encoding="utf-8")
-            og_svg = generate_og_image(
-                item.title,
-                pillar_k,
-                scores_k,
-                featured_image_url=feat_k,
-                layer="knowledge",
-                fallback_icons=icons_k,
-            )
-            (out_static / f"og_{og_key}.svg").write_text(og_svg, encoding="utf-8")
+            _generate_page_svgs(item, "knowledge", thumb_key, og_key)
 
-        except Exception:
+        except (ValueError, TypeError, OSError, KeyError):
             failed_count += 1
             logger.error(f"Failed to process knowledge item {item.slug}", exc_info=True)
             _cleanup_partial_output(item)
@@ -2217,42 +1748,13 @@ def main():
     for i, item in enumerate(learn_items):
         try:
             slug = item.slug
-            # Skip if already processed (incremental build)
             if slug in items_to_skip:
                 print(f"  learn: {slug} (skipped - unchanged)")
                 continue
-            # Determine prev/next only among actual lessons (exclude meta "learn" page)
-            li = None
-            for j, lli in enumerate(learn_lessons):
-                if lli.slug == item.slug:
-                    li = j
-                    break
-            if li is not None:
-                prev_lesson = learn_lessons[li - 1] if li > 0 else None
-                next_lesson = learn_lessons[li + 1] if li + 1 < len(learn_lessons) else None
-            else:
-                prev_lesson = None
-                next_lesson = None
-            # Trend detection
-            trend_info = trend_detection.get(item.slug, {})
-            trend_strength = trend_info.get("trend_strength", 0)
-            adoption_level = trend_info.get("adoption_level", "mainstream")
-            impact_level = trend_info.get("impact_level", "low")
-            trend_categories = trend_info.get("trend_categories", "")
-
-            slug = item.slug
             page_path = canonical_path(slug_to_path(slug))
             out_file = OUTPUT_DIR / f"{slug}.html"
-            body = add_lazy_loading(item.body_html)
-            body, toc_items = extract_headings(body)
-            body = sanitize_domain_breakdown(body)
-            body = inject_section_images(body, item.section_images, item)
-            body = re.sub(
-                r"<h2[^>]*>\s*" + re.escape(item.title.strip()) + r"\s*</h2>\s*", "", body, count=1
-            )
-            body = sanitize_text(body, strip_emoji=False)
-            item.description = sanitize_text(item.description, strip_emoji=False)
-            item.body_html = body
+
+            body, toc_items = _process_item_body(item, strip_emoji=False)
 
             pillar = item.pillar or ""
             pconf = PILLAR_CONFIG.get(pillar) if pillar else None
@@ -2262,60 +1764,30 @@ def main():
                 item.slug, item.title, pillar, "learn", item.tags
             )
             layer_badge = layer_indicator_html("learn", pillar)
-            thumb_key = hashlib.md5(item.title.encode()).hexdigest()[:12]
-            og_key = hashlib.md5(f"og_{item.title}".encode()).hexdigest()[:12]
-            thumb_base = f"{SITE_URL}/static/images"
-            feat_img_path = resolve_featured_image(item.featured_image or "")
-            og_image_url = (
-                feat_img_path if feat_img_path else f"{SITE_URL}/static/images/og_{og_key}.svg"
-            )
-            (out_static / f"og_{og_key}.svg").write_text(og_svg, encoding="utf-8")
 
-            # Source verification
+            thumb_key, og_key, feat_img_path, og_image_url, thumb_base = _generate_page_images(item, "learn")
+
             source_info = source_verification.get(item.slug, {})
             source_verified = source_info.get("verified", False)
             source_evidence = source_info.get("evidence", [])
 
-            # Serialize quiz data for learning_hub.js
-            quiz_json = ""
-            if item.bloom_questions:
-                quiz_data = {"questions": []}
-                for bq in item.bloom_questions[:10]:
-                    if isinstance(bq, dict) and "question" in bq:
-                        qtype = bq.get("type", "mc")
-                        opts = bq.get("options", [])
-                        # Normalize answer: supports both "answer" (int) and "correct" (string value)
-                        raw = bq.get("answer") if "answer" in bq else None
-                        if raw is None:
-                            correct_val = bq.get("correct", "")
-                            if isinstance(correct_val, str) and correct_val and opts:
-                                raw = opts.index(correct_val) if correct_val in opts else 0
-                            else:
-                                raw = 0
-                        entry = {"q": bq["question"], "options": opts, "a": raw, "type": qtype}
-                        if qtype == "open-ended":
-                            entry["answer_text"] = bq.get("correct", opts[raw] if opts else "")
-                        quiz_data["questions"].append(entry)
-                if quiz_data["questions"]:
-                    quiz_json = json.dumps(quiz_data, ensure_ascii=False)
-
-            # Quality metrics with fail-safes
-            quality_metrics = _get_quality_metrics_with_fail_safes(quality_scores.get(item.slug, {}))
-            quality_score = quality_metrics.get("quality_score", 0)
-            quality_badge = ""
-            if quality_score and quality_score >= 0.8:
-                quality_badge = "★★★★★"
-            elif quality_score and quality_score >= 0.7:
-                quality_badge = "★★★★☆"
-            elif quality_score and quality_score >= 0.6:
-                quality_badge = "★★★☆☆"
-            elif quality_score and quality_score >= 0.5:
-                quality_badge = "★★☆☆☆"
-            else:
-                quality_badge = "★☆☆☆☆"
+            quiz_json = _serialize_quiz(item)
+            quality_score, quality_badge, quality_metrics = _compute_quality(quality_scores, item.slug)
 
             bl_name = BLOOM_NAMES.get(item.highest_bloom or 0, "")
             layer_sub = f"Level {item.highest_bloom}: {bl_name}" if bl_name else ""
+
+            # Determine prev/next only among actual lessons (exclude meta "learn" page)
+            li = next((j for j, lli in enumerate(learn_lessons) if lli.slug == item.slug), None)
+            prev_lesson = learn_lessons[li - 1] if li is not None and li > 0 else None
+            next_lesson = learn_lessons[li + 1] if li is not None and li + 1 < len(learn_lessons) else None
+
+            trend_info = trend_detection.get(item.slug, {})
+            trend_strength = trend_info.get("trend_strength", 0)
+            adoption_level = trend_info.get("adoption_level", "mainstream")
+            impact_level = trend_info.get("impact_level", "low")
+            trend_categories = trend_info.get("trend_categories", "")
+
             html = render_template(
                 "learn.j2",
                 content=item,
@@ -2330,7 +1802,7 @@ def main():
                 visual_fingerprint=visual_fingerprint,
                 layer_badge=layer_badge,
                 thumbnail_base=thumb_base,
-                thumbnail_key=thumbnail_key,
+                thumbnail_key=thumb_key,
                 og_image_url=og_image_url,
                 quiz_json=quiz_json,
                 featured_image=resolve_section_image(item.featured_image),
@@ -2354,35 +1826,9 @@ def main():
             out_file.write_text(html, encoding="utf-8")
             print(f"  learn: {out_file.relative_to(OUTPUT_DIR)}")
 
-            # Write learn thumbnail SVGs + OG images (fractal engine)
-            out_static = STATIC_DST_DIR / "images"
-            out_static.mkdir(parents=True, exist_ok=True)
-            pillar_l = item.pillar or "aml"
-            scores_l = {}
-            feat_l = resolve_featured_image(item.featured_image or "")
-            icons_l = get_topic_icons(item.tags) if not feat_l else []
-            svg_l = generate_thumbnail_svg(
-                item.title,
-                pillar_l,
-                scores_l,
-                width=600,
-                height=340,
-                featured_image_url=feat_l,
-                layer="learn",
-                fallback_icons=icons_l,
-            )
-            (out_static / f"thumb_{thumb_key}.svg").write_text(svg_l, encoding="utf-8")
-            og_svg = generate_og_image(
-                item.title,
-                pillar_l,
-                scores_l,
-                featured_image_url=feat_l,
-                layer="learn",
-                fallback_icons=icons_l,
-            )
-            (out_static / f"og_{og_key}.svg").write_text(og_svg, encoding="utf-8")
+            _generate_page_svgs(item, "learn", thumb_key, og_key)
 
-        except Exception:
+        except (ValueError, TypeError, OSError, KeyError):
             failed_count += 1
             logger.error(f"Failed to process learn item {item.slug}", exc_info=True)
             _cleanup_partial_output(item)
@@ -2469,27 +1915,16 @@ def main():
     print("  category: learn/index.html")
 
     # --- RESEARCH PAGES (blog posts) ---
-    print(f"DEBUG: Starting research loop with {len(research_items)} items")
     for i, item in enumerate(research_items):
-        print(f"DEBUG: Processing research item {i+1}/{len(research_items)}: {item.slug}")
         try:
             slug = item.slug
-            # Skip if already processed (incremental build)
             if slug in items_to_skip:
                 print(f"  research: {slug} (skipped - unchanged)")
                 continue
             page_path = canonical_path(slug_to_path(slug))
             out_file = OUTPUT_DIR / f"{slug}.html"
 
-            body = add_lazy_loading(item.body_html)
-            body, toc_items = extract_headings(body)
-            body = sanitize_domain_breakdown(body)
-            body = inject_section_images(body, item.section_images, item)
-            body = re.sub(
-                r"<h2[^>]*>\s*" + re.escape(item.title.strip()) + r"\s*</h2>\s*", "", body, count=1
-            )
-            body = sanitize_text(body, strip_emoji=True)
-            item.description = sanitize_text(item.description, strip_emoji=True)
+            body, toc_items = _process_item_body(item, strip_emoji=True)
 
             prev_post = research_items[i + 1] if i + 1 < len(research_items) else None
             next_post = research_items[i - 1] if i > 0 else None
@@ -2505,36 +1940,8 @@ def main():
             sqi_svg = (
                 generate_sqi_badge(item.signals.get("avg_sqi", SQI_DEFAULT)) if item.signals else ""
             )
-            og_key = hashlib.md5(f"og_{item.title}".encode()).hexdigest()[:12]
-            feat_img_path = resolve_featured_image(item.featured_image or "")
-            og_image_url = (
-                feat_img_path if feat_img_path else f"{SITE_URL}/static/images/og_{og_key}.svg"
-            )
-            thumb_base = f"{SITE_URL}/static/images"
-            # Serialize quiz data for research articles
-            r_quiz_json = ""
-            if item.bloom_questions:
-                r_quiz_data = {"questions": []}
-                for bq in item.bloom_questions[:10]:
-                    if isinstance(bq, dict) and "question" in bq:
-                        qtype = bq.get("type", "mc")
-                        opts = bq.get("options", [])
-                        raw = bq.get("answer") if "answer" in bq else None
-                        if raw is None:
-                            correct_val = bq.get("correct", "")
-                            raw = (
-                                opts.index(correct_val)
-                                if isinstance(correct_val, str)
-                                and correct_val
-                                and correct_val in opts
-                                else 0
-                            )
-                        entry = {"q": bq["question"], "options": opts, "a": raw, "type": qtype}
-                        if qtype == "open-ended":
-                            entry["answer_text"] = bq.get("correct", opts[raw] if opts else "")
-                        r_quiz_data["questions"].append(entry)
-                if r_quiz_data["questions"]:
-                    r_quiz_json = json.dumps(r_quiz_data, ensure_ascii=False)
+            thumb_key, og_key, feat_img_path, og_image_url, thumb_base = _generate_page_images(item, "research")
+            quiz_json = _serialize_quiz(item)
             topic_sub = _pick_subtopic([item.title], pillar)
             topic_icon_html = render_topic_icon(
                 topic_sub, PILLAR_COLORS.get(pillar, PILLAR_COLORS["aml"])["accent"]
@@ -2551,7 +1958,7 @@ def main():
                 sqi_svg=sqi_svg,
                 og_image_url=og_image_url,
                 thumbnail_base=thumb_base,
-                thumbnail_key=thumbnail_key,
+                thumbnail_key=thumb_key,
                 toc_items=toc_items,
                 related_posts=related,
                 related_learn=related_learn,
@@ -2560,54 +1967,19 @@ def main():
                 layer_badge=layer_badge,
                 featured_image=resolve_section_image(item.featured_image),
                 image_credit=item.image_credit,
-                quiz_json=r_quiz_json,
+                quiz_json=quiz_json,
                 topic_icon_html=topic_icon_html,
                 layer_sub=pconf["label"],
                 source_synthesis=source_synthesis.get(item.slug, []),
                 **ctx_base,
             )
-            print(f"DEBUG: About to write {out_file}")
-            # Create parent directory if it doesn't exist
             out_file.parent.mkdir(parents=True, exist_ok=True)
-            try:
-                out_file.write_text(html, encoding="utf-8")
-                print(f"  research: {out_file.relative_to(OUTPUT_DIR)}")
-                print(f"DEBUG: Written {out_file}")
-            except Exception as e:
-                print(f"DEBUG: Write failed: {e}")
-                raise
+            out_file.write_text(html, encoding="utf-8")
+            print(f"  research: {out_file.relative_to(OUTPUT_DIR)}")
 
-            # Write SVGs (fractal engine — thumbnail + OG image)
-            out_static = STATIC_DST_DIR / "images"
-            out_static.mkdir(parents=True, exist_ok=True)
-            key = hashlib.md5(item.title.encode()).hexdigest()[:12]
-            scores_r = item.signals or {"sqi": SQI_DEFAULT}
-            if not isinstance(scores_r, dict):
-                scores_r = {"sqi": SQI_DEFAULT}
-            feat_r = resolve_featured_image(item.featured_image or "")
-            icons_r = get_topic_icons(item.tags) if not feat_r else []
-            svg_r = generate_thumbnail_svg(
-                item.title,
-                pillar,
-                scores_r,
-                width=600,
-                height=340,
-                featured_image_url=feat_r,
-                layer="research",
-                fallback_icons=icons_r,
-            )
-            (out_static / f"thumb_{key}.svg").write_text(svg_r, encoding="utf-8")
-            og_svg = generate_og_image(
-                item.title,
-                pillar,
-                scores_r,
-                featured_image_url=feat_r,
-                layer="research",
-                fallback_icons=icons_r,
-            )
-            (out_static / f"og_{og_key}.svg").write_text(og_svg, encoding="utf-8")
+            _generate_page_svgs(item, "research", thumb_key, og_key)
 
-        except Exception:
+        except (ValueError, TypeError, OSError, KeyError):
             failed_count += 1
             logger.error(f"Failed to process research item {item.slug}", exc_info=True)
             _cleanup_partial_output(item)
@@ -2936,7 +2308,7 @@ def main():
             graph_data = json.loads(cytograph_src.read_text(encoding="utf-8"))
             node_count = len(graph_data.get("nodes", []))
             edge_count = len(graph_data.get("edges", []))
-        except Exception:
+        except (json.JSONDecodeError, TypeError, KeyError):
             node_count = 0
             edge_count = 0
     else:
@@ -3246,7 +2618,7 @@ Sitemap: {SITE_URL}/sitemap.xml
                 build_duration_ms=duration_ms,
             )
             print(f"  mem0: logged deployment {commit_hash}")
-        except Exception as e:
+        except (OSError, ValueError) as e:
             print(f"  mem0: logging failed ({e})")
 
     # ── Build metrics (build-meta.json) ──
@@ -3464,7 +2836,7 @@ def _build_jsonld(item: Any, site_url: str, page_path: str = "") -> dict[str, An
     if dt:
         try:
             schema["datePublished"] = dt.isoformat() if hasattr(dt, "isoformat") else str(dt)
-        except Exception:
+        except (ValueError, TypeError, AttributeError):
             pass
     updated = getattr(item, "updated_at", None)
     if updated:
