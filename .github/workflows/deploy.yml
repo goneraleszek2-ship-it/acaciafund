@@ -26,7 +26,7 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt
+          pip install --no-cache-dir -r requirements.txt
 
       - name: Multi-pillar knowledge ingestion
         env:
@@ -36,11 +36,20 @@ jobs:
       - name: Enrich registry
         run: python scripts/enrich.py
 
+      - name: Clean build artifacts
+        run: |
+          rm -rf dist/ __pycache__ .pytest_cache
+          find . -type d -name "__pycache__" -exec rm -rf {} + 2>/dev/null || true
+          rm -f .build_cache.json data/cytograph.json registry/index.json 2>/dev/null || true
+
       - name: Smoke tests
         run: python -m pytest tests/test_smoke.py -v
 
       - name: Build
+        timeout-minutes: 20
         run: python build.py
+        env:
+          PYTHONUNBUFFERED: "1"
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
