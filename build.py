@@ -888,9 +888,13 @@ def is_future_post(post) -> bool:
         if post.date_str > today:
             return True
     
-    # Fallback to created_at
-    if post.created_at and post.created_at > datetime.now(timezone.utc):
-        return True
+    # Fallback to created_at (may be str from Pydantic or datetime from Content.from_dict)
+    if post.created_at:
+        dt = post.created_at
+        if isinstance(dt, str):
+            dt = datetime.fromisoformat(dt.replace("Z", "+00:00"))
+        if dt > datetime.now(timezone.utc):
+            return True
     
     return False
 
