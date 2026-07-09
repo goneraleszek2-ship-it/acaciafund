@@ -47,7 +47,7 @@ jobs:
 
       - name: Build
         timeout-minutes: 20
-        run: python build.py
+        run: python3 build.py
         env:
           PYTHONUNBUFFERED: "1"
 
