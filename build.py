@@ -1499,8 +1499,11 @@ def main():
 
         # Check if item can be skipped using build cache
         # First check template changes, then content hash
-        # All items now use .html extension directly (no directory/index.html)
-        output_path = OUTPUT_DIR / f"{slug}.html"
+        # Handle both flat files and directory-based pages
+        if "/" in slug:
+            output_path = OUTPUT_DIR / slug / "index.html"
+        else:
+            output_path = OUTPUT_DIR / f"{slug}.html"
             
         if slug in items_to_skip:
             continue
@@ -1522,7 +1525,7 @@ def main():
     research_items = [c for c in all_content if c.content_type == "research"]
     learn_items = [c for c in all_content if c.content_type == "learn"]
     knowledge_items = [c for c in all_content if c.content_type == "knowledge"]
-    print(f"DEBUG: research_items={len(research_items)}, learn_items={len(learn_items)}, knowledge_items={len(knowledge_items)}")
+    # research_items/learn_items/knowledge_items counts logged implicitly via processing below
 
     # Research articles with bloom questions, mapped to learn-like items for cross-referencing
     research_learn_items = []

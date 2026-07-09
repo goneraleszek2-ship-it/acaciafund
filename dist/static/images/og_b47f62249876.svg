@@ -1,37 +1,38 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
 <defs>
-<linearGradient id="ogbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f0a3a"/><stop offset=".5" stop-color="#1c1950"/><stop offset="1" stop-color="#1e1b4b"/></linearGradient>
+<radialGradient id="ogbg" cx="55%" cy="54%"><stop offset="0" stop-color="#1c1950"/><stop offset="1" stop-color="#0f0a3a"/></radialGradient>
 <clipPath id="clip-learn-514-0">  <rect x="514" y="0" width="685" height="630" rx="4"/></clipPath>
 <linearGradient id="shadow-learn" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#0f0a3a" stop-opacity="0"/><stop offset="1" stop-color="#0f0a3a" stop-opacity="0.7"/></linearGradient>
 </defs>
 <rect width="1200" height="630" fill="url(#ogbg)"/>
-<ellipse cx="889" cy="328" rx="168" ry="204" fill="#818cf8" opacity="0.03"/>
-<ellipse cx="118" cy="386" rx="191" ry="145" fill="#818cf8" opacity="0.03"/>
-<ellipse cx="489" cy="262" rx="214" ry="162" fill="#818cf8" opacity="0.03"/>
-<ellipse cx="998" cy="257" rx="165" ry="152" fill="#818cf8" opacity="0.02"/>
-<ellipse cx="474" cy="240" rx="163" ry="96" fill="#818cf8" opacity="0.03"/>
-<ellipse cx="403" cy="174" rx="156" ry="164" fill="#818cf8" opacity="0.02"/>
-<circle cx="1038.3" cy="271.6" r="1.1" fill="#8792f8" opacity="0.03"/>
-<circle cx="516.9" cy="140.7" r="1.0" fill="#a9b1fa" opacity="0.06"/>
-<circle cx="853.6" cy="603.6" r="5.5" fill="#cfd5fd" opacity="0.02"/>
-<circle cx="818.5" cy="487.3" r="1.5" fill="#bcc3fb" opacity="0.06"/>
-<circle cx="609.1" cy="313.4" r="3.6" fill="#8c97f8" opacity="0.06"/>
-<circle cx="850.7" cy="244.1" r="3.9" fill="#aab2fa" opacity="0.04"/>
-<circle cx="1172.5" cy="436.5" r="4.0" fill="#8691f8" opacity="0.06"/>
-<circle cx="478.4" cy="428.0" r="3.5" fill="#8d97f8" opacity="0.03"/>
-<circle cx="586.9" cy="56.3" r="3.8" fill="#99a2f9" opacity="0.06"/>
-<circle cx="453.7" cy="392.2" r="1.4" fill="#929cf9" opacity="0.02"/>
-<circle cx="84.1" cy="280.8" r="3.4" fill="#d1d6fd" opacity="0.04"/>
-<circle cx="612.3" cy="255.6" r="3.8" fill="#d1d7fd" opacity="0.08"/>
+<ellipse cx="104" cy="92" rx="275" ry="158" fill="#818cf8" opacity="0.03"/>
+<ellipse cx="683" cy="419" rx="96" ry="167" fill="#818cf8" opacity="0.03"/>
+<ellipse cx="644" cy="175" rx="228" ry="151" fill="#818cf8" opacity="0.02"/>
+<ellipse cx="203" cy="241" rx="130" ry="89" fill="#818cf8" opacity="0.04"/>
+<ellipse cx="525" cy="236" rx="156" ry="227" fill="#818cf8" opacity="0.03"/>
+<ellipse cx="300" cy="406" rx="154" ry="160" fill="#818cf8" opacity="0.04"/>
+<circle cx="149.6" cy="533.6" r="1.7" fill="#8690f8" opacity="0.05"/>
+<circle cx="483.2" cy="13.5" r="2.6" fill="#cfd5fd" opacity="0.04"/>
+<circle cx="734.4" cy="91.5" r="2.6" fill="#cfd5fd" opacity="0.03"/>
+<circle cx="403.1" cy="380.2" r="5.5" fill="#b9c0fb" opacity="0.04"/>
+<circle cx="1181.2" cy="487.9" r="4.7" fill="#e4e9fe" opacity="0.06"/>
+<circle cx="506.4" cy="131.1" r="1.4" fill="#e7ecfe" opacity="0.05"/>
+<circle cx="862.9" cy="273.6" r="5.3" fill="#cdd3fc" opacity="0.04"/>
+<circle cx="927.3" cy="191.7" r="3.6" fill="#8993f8" opacity="0.01"/>
+<circle cx="1181.9" cy="480.5" r="3.5" fill="#bbc2fb" opacity="0.03"/>
+<circle cx="855.5" cy="333.8" r="4.5" fill="#c7cdfc" opacity="0.06"/>
+<circle cx="540.4" cy="311.4" r="4.5" fill="#929cf9" opacity="0.02"/>
+<circle cx="984.0" cy="164.8" r="4.2" fill="#aeb6fa" opacity="0.05"/>
 <rect x="514" y="0" width="685" height="630" fill="#0f0a3a" rx="4" opacity="0.3"/>
-<image href="https://www.acaciafund.org/static/images/generated/learn.svg" x="514" y="0" width="685" height="630" preserveAspectRatio="xMidYMid slice" clip-path="url(#clip-learn-514-0)"/>
+<image href="https://www.acaciafund.org/static/images/generated/learn/dataops-introduction.svg" x="514" y="0" width="685" height="630" preserveAspectRatio="xMidYMid slice" clip-path="url(#clip-learn-514-0)"/>
 <rect x="514" y="0" width="685" height="630" rx="4" fill="none" stroke="#818cf8" stroke-width="1.5" opacity="0.35"/>
 <rect x="514" y="0" width="24" height="630" fill="url(#shadow-learn)"/>
 <!-- Icon -->
 <g transform="translate(50, 50) scale(1.8)" color="#818cf8">
   <path d="M3 12h5l2-3 4 6 2-3h5"/><circle cx="3" cy="12" r="2"/><circle cx="21" cy="12" r="2"/><path d="M10 6h4M10 18h4"/>
 </g>
-<text x="50" y="260" fill="#eef2ff" font-family="system-ui,sans-serif" font-size="44" font-weight="700">Learning Hub</text>
+<text x="50" y="260" fill="#eef2ff" font-family="system-ui,sans-serif" font-size="36" font-weight="700">Introduction to DataOps: Principles,</text>
+<text x="50" y="312" fill="#eef2ff" font-family="system-ui,sans-serif" font-size="36" font-weight="700">Practices, and Pipeline Architecture</text>
 <text x="50" y="500" fill="#818cf8" font-family="system-ui,sans-serif" font-size="18" font-weight="600">AcaciaFund &nbsp;·&nbsp; DATA-ENGINEERING</text>
 <text x="50" y="540" fill="#eef2ff" font-family="system-ui,sans-serif" font-size="14" opacity="0.5">Codzienna synteza badan — AML, rynki, nauka</text>
 </svg>

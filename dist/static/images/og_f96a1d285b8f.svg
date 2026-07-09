@@ -1,37 +1,38 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
 <defs>
-<linearGradient id="ogbg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0f0a3a"/><stop offset=".5" stop-color="#1c1950"/><stop offset="1" stop-color="#1e1b4b"/></linearGradient>
+<radialGradient id="ogbg" cx="57%" cy="46%"><stop offset="0" stop-color="#053e29"/><stop offset="1" stop-color="#022c22"/></radialGradient>
 <clipPath id="clip-learn-514-0">  <rect x="514" y="0" width="685" height="630" rx="4"/></clipPath>
-<linearGradient id="shadow-learn" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#0f0a3a" stop-opacity="0"/><stop offset="1" stop-color="#0f0a3a" stop-opacity="0.7"/></linearGradient>
+<linearGradient id="shadow-learn" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#022c22" stop-opacity="0"/><stop offset="1" stop-color="#022c22" stop-opacity="0.7"/></linearGradient>
 </defs>
 <rect width="1200" height="630" fill="url(#ogbg)"/>
-<ellipse cx="889" cy="328" rx="168" ry="204" fill="#818cf8" opacity="0.03"/>
-<ellipse cx="118" cy="386" rx="191" ry="145" fill="#818cf8" opacity="0.03"/>
-<ellipse cx="489" cy="262" rx="214" ry="162" fill="#818cf8" opacity="0.03"/>
-<ellipse cx="998" cy="257" rx="165" ry="152" fill="#818cf8" opacity="0.02"/>
-<ellipse cx="474" cy="240" rx="163" ry="96" fill="#818cf8" opacity="0.03"/>
-<ellipse cx="403" cy="174" rx="156" ry="164" fill="#818cf8" opacity="0.02"/>
-<circle cx="1038.3" cy="271.6" r="1.1" fill="#8792f8" opacity="0.03"/>
-<circle cx="516.9" cy="140.7" r="1.0" fill="#a9b1fa" opacity="0.06"/>
-<circle cx="853.6" cy="603.6" r="5.5" fill="#cfd5fd" opacity="0.02"/>
-<circle cx="818.5" cy="487.3" r="1.5" fill="#bcc3fb" opacity="0.06"/>
-<circle cx="609.1" cy="313.4" r="3.6" fill="#8c97f8" opacity="0.06"/>
-<circle cx="850.7" cy="244.1" r="3.9" fill="#aab2fa" opacity="0.04"/>
-<circle cx="1172.5" cy="436.5" r="4.0" fill="#8691f8" opacity="0.06"/>
-<circle cx="478.4" cy="428.0" r="3.5" fill="#8d97f8" opacity="0.03"/>
-<circle cx="586.9" cy="56.3" r="3.8" fill="#99a2f9" opacity="0.06"/>
-<circle cx="453.7" cy="392.2" r="1.4" fill="#929cf9" opacity="0.02"/>
-<circle cx="84.1" cy="280.8" r="3.4" fill="#d1d6fd" opacity="0.04"/>
-<circle cx="612.3" cy="255.6" r="3.8" fill="#d1d7fd" opacity="0.08"/>
-<rect x="514" y="0" width="685" height="630" fill="#0f0a3a" rx="4" opacity="0.3"/>
-<image href="https://www.acaciafund.org/static/images/generated/learn.svg" x="514" y="0" width="685" height="630" preserveAspectRatio="xMidYMid slice" clip-path="url(#clip-learn-514-0)"/>
-<rect x="514" y="0" width="685" height="630" rx="4" fill="none" stroke="#818cf8" stroke-width="1.5" opacity="0.35"/>
+<ellipse cx="396" cy="448" rx="250" ry="208" fill="#22c55e" opacity="0.04"/>
+<ellipse cx="223" cy="512" rx="239" ry="216" fill="#22c55e" opacity="0.03"/>
+<ellipse cx="757" cy="226" rx="265" ry="158" fill="#22c55e" opacity="0.02"/>
+<ellipse cx="349" cy="304" rx="150" ry="98" fill="#22c55e" opacity="0.04"/>
+<ellipse cx="245" cy="213" rx="182" ry="198" fill="#22c55e" opacity="0.03"/>
+<ellipse cx="894" cy="467" rx="145" ry="148" fill="#22c55e" opacity="0.03"/>
+<circle cx="86.0" cy="212.9" r="2.0" fill="#85e0a6" opacity="0.03"/>
+<circle cx="250.7" cy="294.8" r="2.3" fill="#2bc765" opacity="0.06"/>
+<circle cx="1149.4" cy="403.5" r="4.7" fill="#e8faee" opacity="0.04"/>
+<circle cx="508.1" cy="173.2" r="2.2" fill="#7bdd9f" opacity="0.07"/>
+<circle cx="727.1" cy="422.5" r="3.3" fill="#84dfa5" opacity="0.07"/>
+<circle cx="1128.3" cy="195.5" r="4.4" fill="#bdefcf" opacity="0.05"/>
+<circle cx="836.5" cy="450.9" r="4.8" fill="#5fd58a" opacity="0.07"/>
+<circle cx="334.1" cy="340.8" r="1.7" fill="#3acb70" opacity="0.06"/>
+<circle cx="446.2" cy="438.3" r="3.5" fill="#c8f2d7" opacity="0.07"/>
+<circle cx="105.0" cy="174.8" r="5.4" fill="#a9e9c0" opacity="0.01"/>
+<circle cx="115.9" cy="498.6" r="3.5" fill="#89e1a9" opacity="0.02"/>
+<circle cx="615.9" cy="282.7" r="5.1" fill="#d9f7e3" opacity="0.01"/>
+<rect x="514" y="0" width="685" height="630" fill="#022c22" rx="4" opacity="0.3"/>
+<image href="https://www.acaciafund.org/static/images/generated/learn/crispr-gene-editing.svg" x="514" y="0" width="685" height="630" preserveAspectRatio="xMidYMid slice" clip-path="url(#clip-learn-514-0)"/>
+<rect x="514" y="0" width="685" height="630" rx="4" fill="none" stroke="#22c55e" stroke-width="1.5" opacity="0.35"/>
 <rect x="514" y="0" width="24" height="630" fill="url(#shadow-learn)"/>
 <!-- Icon -->
-<g transform="translate(50, 50) scale(1.8)" color="#818cf8">
-  <path d="M3 12h5l2-3 4 6 2-3h5"/><circle cx="3" cy="12" r="2"/><circle cx="21" cy="12" r="2"/><path d="M10 6h4M10 18h4"/>
+<g transform="translate(50, 50) scale(1.8)" color="#22c55e">
+  <path d="M6 6h12v12H6z"/><path d="M8 8h8v8H8z"/><path d="M10 10h4v4h-4z"/>
 </g>
-<text x="50" y="260" fill="#eef2ff" font-family="system-ui,sans-serif" font-size="44" font-weight="700">Learning Hub</text>
-<text x="50" y="500" fill="#818cf8" font-family="system-ui,sans-serif" font-size="18" font-weight="600">AcaciaFund &nbsp;·&nbsp; DATA-ENGINEERING</text>
-<text x="50" y="540" fill="#eef2ff" font-family="system-ui,sans-serif" font-size="14" opacity="0.5">Codzienna synteza badan — AML, rynki, nauka</text>
+<text x="50" y="260" fill="#f0fdf4" font-family="system-ui,sans-serif" font-size="36" font-weight="700">Gene Editing &amp; CRISPR — From Lab Bench</text>
+<text x="50" y="312" fill="#f0fdf4" font-family="system-ui,sans-serif" font-size="44" font-weight="700">to Approved Medicine</text>
+<text x="50" y="500" fill="#22c55e" font-family="system-ui,sans-serif" font-size="18" font-weight="600">AcaciaFund &nbsp;·&nbsp; STOCK</text>
+<text x="50" y="540" fill="#f0fdf4" font-family="system-ui,sans-serif" font-size="14" opacity="0.5">Codzienna synteza badan — AML, rynki, nauka</text>
 </svg>

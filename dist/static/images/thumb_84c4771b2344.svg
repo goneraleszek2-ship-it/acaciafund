@@ -1,6 +1,8 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="600" height="340" viewBox="0 0 600 340">
 <defs>
 <linearGradient id="bg-84c4771b" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#020617"/><stop offset="0.4" stop-color="#1b1314"/><stop offset="0.7" stop-color="#281a13"/><stop offset="1" stop-color="#0f172a"/></linearGradient>
+<clipPath id="clip-learn-257-0">  <rect x="257" y="0" width="342" height="340" rx="4"/></clipPath>
+<linearGradient id="shadow-learn" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#020617" stop-opacity="0"/><stop offset="1" stop-color="#020617" stop-opacity="0.7"/></linearGradient>
 <radialGradient id="glow-84c4771b" cx="33%" cy="21%"><stop offset="0" stop-color="#d97706" stop-opacity="0.13"/><stop offset="1" stop-color="#020617" stop-opacity="0"/></radialGradient>
 </defs>
 <rect width="600" height="340" fill="url(#bg-84c4771b)"/>
@@ -278,12 +280,14 @@
 <circle cx="177.4" cy="190.1" r="6.0" fill="#f2e2cf" opacity="0.08"/>
 <circle cx="510.0" cy="79.0" r="1.9" fill="#eac08f" opacity="0.07"/>
 <circle cx="439.4" cy="81.5" r="4.5" fill="#f7f7f8" opacity="0.06"/>
+<rect x="257" y="0" width="342" height="340" fill="#020617" rx="4" opacity="0.3"/>
+<image href="https://www.acaciafund.org/static/images/generated/learn/designing-aml-program.svg" x="257" y="0" width="342" height="340" preserveAspectRatio="xMidYMid slice" clip-path="url(#clip-learn-257-0)"/>
+<rect x="257" y="0" width="342" height="340" rx="4" fill="none" stroke="#d97706" stroke-width="1.5" opacity="0.35"/>
+<rect x="257" y="0" width="24" height="340" fill="url(#shadow-learn)"/>
 <g transform="translate(25, 290) scale(0.72)" color="#d97706" opacity="0.8">
   <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
 </g>
 <text x="492" y="310" fill="#d97706" font-family="system-ui,sans-serif" font-size="11" font-weight="600" opacity="0.23">Designing</text>
 <text x="539" y="328" fill="#d97706" font-family="system-ui,sans-serif" font-size="11" font-weight="600" opacity="0.20">Comprehensive</text>
-<rect x="210" y="330" width="180" height="2" rx="1" fill="#f8fafc" opacity="0.06"/>
-<rect x="210" y="330" width="90" height="2" rx="1" fill="#d97706" opacity="0.4"/>
 <text x="396" y="340" fill="#d97706" font-family="system-ui,sans-serif" font-size="8" font-weight="600" opacity="0.25">AML</text>
 </svg>

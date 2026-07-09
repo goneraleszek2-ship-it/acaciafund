@@ -3055,13 +3055,6 @@
   "edges": [
     {
       "data": {
-        "id": "edge:blog/2026-06-19-2027-data-engineering-predictions:ai-automation",
-        "source": "doc:blog/2026-06-19-2027-data-engineering-predictions",
-        "target": "tag:ai-automation"
-      }
-    },
-    {
-      "data": {
         "id": "edge:blog/2026-06-19-2027-data-engineering-predictions:data-cataloging",
         "source": "doc:blog/2026-06-19-2027-data-engineering-predictions",
         "target": "tag:data-cataloging"
@@ -3076,6 +3069,13 @@
     },
     {
       "data": {
+        "id": "edge:blog/2026-06-19-2027-data-engineering-predictions:machine-learning",
+        "source": "doc:blog/2026-06-19-2027-data-engineering-predictions",
+        "target": "tag:machine-learning"
+      }
+    },
+    {
+      "data": {
         "id": "edge:blog/2026-06-19-2027-data-engineering-predictions:real-time-streaming",
         "source": "doc:blog/2026-06-19-2027-data-engineering-predictions",
         "target": "tag:real-time-streaming"
@@ -3083,9 +3083,9 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-06-19-2027-data-engineering-predictions:machine-learning",
+        "id": "edge:blog/2026-06-19-2027-data-engineering-predictions:ai-automation",
         "source": "doc:blog/2026-06-19-2027-data-engineering-predictions",
-        "target": "tag:machine-learning"
+        "target": "tag:ai-automation"
       }
     },
     {
@@ -3104,13 +3104,6 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-06-18-data-platform-product-ux:developer-experience",
-        "source": "doc:blog/2026-06-18-data-platform-product-ux",
-        "target": "tag:developer-experience"
-      }
-    },
-    {
-      "data": {
         "id": "edge:blog/2026-06-18-data-platform-product-ux:dataops",
         "source": "doc:blog/2026-06-18-data-platform-product-ux",
         "target": "tag:dataops"
@@ -3125,13 +3118,6 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-06-18-data-platform-product-ux:ux-design-patterns",
-        "source": "doc:blog/2026-06-18-data-platform-product-ux",
-        "target": "tag:ux-design-patterns"
-      }
-    },
-    {
-      "data": {
         "id": "edge:blog/2026-06-18-data-platform-product-ux:self-service-analytics",
         "source": "doc:blog/2026-06-18-data-platform-product-ux",
         "target": "tag:self-service-analytics"
@@ -3139,16 +3125,16 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-06-17-analytics-engineering-rise:dataops",
-        "source": "doc:blog/2026-06-17-analytics-engineering-rise",
-        "target": "tag:dataops"
+        "id": "edge:blog/2026-06-18-data-platform-product-ux:ux-design-patterns",
+        "source": "doc:blog/2026-06-18-data-platform-product-ux",
+        "target": "tag:ux-design-patterns"
       }
     },
     {
       "data": {
-        "id": "edge:blog/2026-06-17-analytics-engineering-rise:analytics-engineering",
-        "source": "doc:blog/2026-06-17-analytics-engineering-rise",
-        "target": "tag:analytics-engineering"
+        "id": "edge:blog/2026-06-18-data-platform-product-ux:developer-experience",
+        "source": "doc:blog/2026-06-18-data-platform-product-ux",
+        "target": "tag:developer-experience"
       }
     },
     {
@@ -3160,6 +3146,13 @@
     },
     {
       "data": {
+        "id": "edge:blog/2026-06-17-analytics-engineering-rise:analytics-engineering",
+        "source": "doc:blog/2026-06-17-analytics-engineering-rise",
+        "target": "tag:analytics-engineering"
+      }
+    },
+    {
+      "data": {
         "id": "edge:blog/2026-06-17-analytics-engineering-rise:data-engineering",
         "source": "doc:blog/2026-06-17-analytics-engineering-rise",
         "target": "tag:data-engineering"
@@ -3167,9 +3160,23 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-06-16-cost-optimization-data-pipelines:data-pipeline-optimization",
+        "id": "edge:blog/2026-06-17-analytics-engineering-rise:dataops",
+        "source": "doc:blog/2026-06-17-analytics-engineering-rise",
+        "target": "tag:dataops"
+      }
+    },
+    {
+      "data": {
+        "id": "edge:blog/2026-06-16-cost-optimization-data-pipelines:dataops",
         "source": "doc:blog/2026-06-16-cost-optimization-data-pipelines",
-        "target": "tag:data-pipeline-optimization"
+        "target": "tag:dataops"
+      }
+    },
+    {
+      "data": {
+        "id": "edge:blog/2026-06-16-cost-optimization-data-pipelines:cloud-computing-optimization",
+        "source": "doc:blog/2026-06-16-cost-optimization-data-pipelines",
+        "target": "tag:cloud-computing-optimization"
       }
     },
     {
@@ -3181,9 +3188,9 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-06-16-cost-optimization-data-pipelines:dataops",
+        "id": "edge:blog/2026-06-16-cost-optimization-data-pipelines:data-pipeline-optimization",
         "source": "doc:blog/2026-06-16-cost-optimization-data-pipelines",
-        "target": "tag:dataops"
+        "target": "tag:data-pipeline-optimization"
       }
     },
     {
@@ -3202,9 +3209,9 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-06-16-cost-optimization-data-pipelines:cloud-computing-optimization",
-        "source": "doc:blog/2026-06-16-cost-optimization-data-pipelines",
-        "target": "tag:cloud-computing-optimization"
+        "id": "edge:blog/2026-06-15-schema-registry-avro-protobuf:schema-management",
+        "source": "doc:blog/2026-06-15-schema-registry-avro-protobuf",
+        "target": "tag:schema-management"
       }
     },
     {
@@ -3223,6 +3230,13 @@
     },
     {
       "data": {
+        "id": "edge:blog/2026-06-15-schema-registry-avro-protobuf:data-engineering",
+        "source": "doc:blog/2026-06-15-schema-registry-avro-protobuf",
+        "target": "tag:data-engineering"
+      }
+    },
+    {
+      "data": {
         "id": "edge:blog/2026-06-15-schema-registry-avro-protobuf:distributed-systems",
         "source": "doc:blog/2026-06-15-schema-registry-avro-protobuf",
         "target": "tag:distributed-systems"
@@ -3230,16 +3244,9 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-06-15-schema-registry-avro-protobuf:schema-management",
-        "source": "doc:blog/2026-06-15-schema-registry-avro-protobuf",
-        "target": "tag:schema-management"
-      }
-    },
-    {
-      "data": {
-        "id": "edge:blog/2026-06-15-schema-registry-avro-protobuf:data-engineering",
-        "source": "doc:blog/2026-06-15-schema-registry-avro-protobuf",
-        "target": "tag:data-engineering"
+        "id": "edge:blog/2026-06-14-data-products-api-design:internal-data-platform",
+        "source": "doc:blog/2026-06-14-data-products-api-design",
+        "target": "tag:internal-data-platform"
       }
     },
     {
@@ -3265,9 +3272,9 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-06-14-data-products-api-design:internal-data-platform",
-        "source": "doc:blog/2026-06-14-data-products-api-design",
-        "target": "tag:internal-data-platform"
+        "id": "edge:blog/2026-06-13-data-mesh-implementation:federated-governance",
+        "source": "doc:blog/2026-06-13-data-mesh-implementation",
+        "target": "tag:federated-governance"
       }
     },
     {
@@ -3279,16 +3286,16 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-06-13-data-mesh-implementation:federated-governance",
+        "id": "edge:blog/2026-06-13-data-mesh-implementation:data-mesh-implementation",
         "source": "doc:blog/2026-06-13-data-mesh-implementation",
-        "target": "tag:federated-governance"
+        "target": "tag:data-mesh-implementation"
       }
     },
     {
       "data": {
-        "id": "edge:blog/2026-06-13-data-mesh-implementation:data-mesh-implementation",
-        "source": "doc:blog/2026-06-13-data-mesh-implementation",
-        "target": "tag:data-mesh-implementation"
+        "id": "edge:blog/2026-06-12-terraform-data-infrastructure:dataops",
+        "source": "doc:blog/2026-06-12-terraform-data-infrastructure",
+        "target": "tag:dataops"
       }
     },
     {
@@ -3307,6 +3314,13 @@
     },
     {
       "data": {
+        "id": "edge:blog/2026-06-12-terraform-data-infrastructure:devops-practices",
+        "source": "doc:blog/2026-06-12-terraform-data-infrastructure",
+        "target": "tag:devops-practices"
+      }
+    },
+    {
+      "data": {
         "id": "edge:blog/2026-06-12-terraform-data-infrastructure:infrastructure",
         "source": "doc:blog/2026-06-12-terraform-data-infrastructure",
         "target": "tag:infrastructure"
@@ -3314,23 +3328,9 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-06-12-terraform-data-infrastructure:dataops",
-        "source": "doc:blog/2026-06-12-terraform-data-infrastructure",
-        "target": "tag:dataops"
-      }
-    },
-    {
-      "data": {
         "id": "edge:blog/2026-06-12-terraform-data-infrastructure:infrastructure-as-code",
         "source": "doc:blog/2026-06-12-terraform-data-infrastructure",
         "target": "tag:infrastructure-as-code"
-      }
-    },
-    {
-      "data": {
-        "id": "edge:blog/2026-06-12-terraform-data-infrastructure:devops-practices",
-        "source": "doc:blog/2026-06-12-terraform-data-infrastructure",
-        "target": "tag:devops-practices"
       }
     },
     {
@@ -3356,9 +3356,9 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-06-11-kubernetes-data-pipelines:resource-management",
+        "id": "edge:blog/2026-06-11-kubernetes-data-pipelines:container-orchestration",
         "source": "doc:blog/2026-06-11-kubernetes-data-pipelines",
-        "target": "tag:resource-management"
+        "target": "tag:container-orchestration"
       }
     },
     {
@@ -3370,9 +3370,9 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-06-11-kubernetes-data-pipelines:container-orchestration",
+        "id": "edge:blog/2026-06-11-kubernetes-data-pipelines:resource-management",
         "source": "doc:blog/2026-06-11-kubernetes-data-pipelines",
-        "target": "tag:container-orchestration"
+        "target": "tag:resource-management"
       }
     },
     {
@@ -3391,13 +3391,6 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-06-10-feature-store-feast-vs-tecton:data-engineering",
-        "source": "doc:blog/2026-06-10-feature-store-feast-vs-tecton",
-        "target": "tag:data-engineering"
-      }
-    },
-    {
-      "data": {
         "id": "edge:blog/2026-06-10-feature-store-feast-vs-tecton:machine-learning-infrastructure",
         "source": "doc:blog/2026-06-10-feature-store-feast-vs-tecton",
         "target": "tag:machine-learning-infrastructure"
@@ -3405,23 +3398,16 @@
     },
     {
       "data": {
+        "id": "edge:blog/2026-06-10-feature-store-feast-vs-tecton:data-engineering",
+        "source": "doc:blog/2026-06-10-feature-store-feast-vs-tecton",
+        "target": "tag:data-engineering"
+      }
+    },
+    {
+      "data": {
         "id": "edge:blog/2026-06-10-feature-store-feast-vs-tecton:feature-engineering",
         "source": "doc:blog/2026-06-10-feature-store-feast-vs-tecton",
         "target": "tag:feature-engineering"
-      }
-    },
-    {
-      "data": {
-        "id": "edge:blog/2026-06-09-ml-pipeline-orchestration-feast-mlflow:feature-engineering",
-        "source": "doc:blog/2026-06-09-ml-pipeline-orchestration-feast-mlflow",
-        "target": "tag:feature-engineering"
-      }
-    },
-    {
-      "data": {
-        "id": "edge:blog/2026-06-09-ml-pipeline-orchestration-feast-mlflow:model-deployment",
-        "source": "doc:blog/2026-06-09-ml-pipeline-orchestration-feast-mlflow",
-        "target": "tag:model-deployment"
       }
     },
     {
@@ -3440,16 +3426,23 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-06-09-ml-pipeline-orchestration-feast-mlflow:data-engineering",
+        "id": "edge:blog/2026-06-09-ml-pipeline-orchestration-feast-mlflow:model-deployment",
         "source": "doc:blog/2026-06-09-ml-pipeline-orchestration-feast-mlflow",
-        "target": "tag:data-engineering"
+        "target": "tag:model-deployment"
       }
     },
     {
       "data": {
-        "id": "edge:blog/2026-08-31-data-observability-lineage:data-pipeline-engineering",
-        "source": "doc:blog/2026-08-31-data-observability-lineage",
-        "target": "tag:data-pipeline-engineering"
+        "id": "edge:blog/2026-06-09-ml-pipeline-orchestration-feast-mlflow:feature-engineering",
+        "source": "doc:blog/2026-06-09-ml-pipeline-orchestration-feast-mlflow",
+        "target": "tag:feature-engineering"
+      }
+    },
+    {
+      "data": {
+        "id": "edge:blog/2026-06-09-ml-pipeline-orchestration-feast-mlflow:data-engineering",
+        "source": "doc:blog/2026-06-09-ml-pipeline-orchestration-feast-mlflow",
+        "target": "tag:data-engineering"
       }
     },
     {
@@ -3468,9 +3461,9 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-08-31-data-observability-lineage:data-quality-monitoring",
+        "id": "edge:blog/2026-08-31-data-observability-lineage:data-pipeline-engineering",
         "source": "doc:blog/2026-08-31-data-observability-lineage",
-        "target": "tag:data-quality-monitoring"
+        "target": "tag:data-pipeline-engineering"
       }
     },
     {
@@ -3482,23 +3475,9 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-08-24-open-source-data-platform:infrastructure",
-        "source": "doc:blog/2026-08-24-open-source-data-platform",
-        "target": "tag:infrastructure"
-      }
-    },
-    {
-      "data": {
-        "id": "edge:blog/2026-08-24-open-source-data-platform:dataops",
-        "source": "doc:blog/2026-08-24-open-source-data-platform",
-        "target": "tag:dataops"
-      }
-    },
-    {
-      "data": {
-        "id": "edge:blog/2026-08-24-open-source-data-platform:open-source-data-stack",
-        "source": "doc:blog/2026-08-24-open-source-data-platform",
-        "target": "tag:open-source-data-stack"
+        "id": "edge:blog/2026-08-31-data-observability-lineage:data-quality-monitoring",
+        "source": "doc:blog/2026-08-31-data-observability-lineage",
+        "target": "tag:data-quality-monitoring"
       }
     },
     {
@@ -3517,9 +3496,23 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-08-17-sqlmesh-data-transformation:data-governance",
-        "source": "doc:blog/2026-08-17-sqlmesh-data-transformation",
-        "target": "tag:data-governance"
+        "id": "edge:blog/2026-08-24-open-source-data-platform:dataops",
+        "source": "doc:blog/2026-08-24-open-source-data-platform",
+        "target": "tag:dataops"
+      }
+    },
+    {
+      "data": {
+        "id": "edge:blog/2026-08-24-open-source-data-platform:open-source-data-stack",
+        "source": "doc:blog/2026-08-24-open-source-data-platform",
+        "target": "tag:open-source-data-stack"
+      }
+    },
+    {
+      "data": {
+        "id": "edge:blog/2026-08-24-open-source-data-platform:infrastructure",
+        "source": "doc:blog/2026-08-24-open-source-data-platform",
+        "target": "tag:infrastructure"
       }
     },
     {
@@ -3545,23 +3538,16 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-08-17-sqlmesh-data-transformation:data-engineering",
+        "id": "edge:blog/2026-08-17-sqlmesh-data-transformation:data-governance",
         "source": "doc:blog/2026-08-17-sqlmesh-data-transformation",
-        "target": "tag:data-engineering"
-      }
-    },
-    {
-      "data": {
-        "id": "edge:blog/2026-08-10-dbt-mesh-enterprise-scale:data-governance",
-        "source": "doc:blog/2026-08-10-dbt-mesh-enterprise-scale",
         "target": "tag:data-governance"
       }
     },
     {
       "data": {
-        "id": "edge:blog/2026-08-10-dbt-mesh-enterprise-scale:cloud-computing",
-        "source": "doc:blog/2026-08-10-dbt-mesh-enterprise-scale",
-        "target": "tag:cloud-computing"
+        "id": "edge:blog/2026-08-17-sqlmesh-data-transformation:data-engineering",
+        "source": "doc:blog/2026-08-17-sqlmesh-data-transformation",
+        "target": "tag:data-engineering"
       }
     },
     {
@@ -3573,9 +3559,9 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-08-10-dbt-mesh-enterprise-scale:enterprise-architecture",
+        "id": "edge:blog/2026-08-10-dbt-mesh-enterprise-scale:dataops",
         "source": "doc:blog/2026-08-10-dbt-mesh-enterprise-scale",
-        "target": "tag:enterprise-architecture"
+        "target": "tag:dataops"
       }
     },
     {
@@ -3587,9 +3573,23 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-08-10-dbt-mesh-enterprise-scale:dataops",
+        "id": "edge:blog/2026-08-10-dbt-mesh-enterprise-scale:cloud-computing",
         "source": "doc:blog/2026-08-10-dbt-mesh-enterprise-scale",
-        "target": "tag:dataops"
+        "target": "tag:cloud-computing"
+      }
+    },
+    {
+      "data": {
+        "id": "edge:blog/2026-08-10-dbt-mesh-enterprise-scale:data-governance",
+        "source": "doc:blog/2026-08-10-dbt-mesh-enterprise-scale",
+        "target": "tag:data-governance"
+      }
+    },
+    {
+      "data": {
+        "id": "edge:blog/2026-08-10-dbt-mesh-enterprise-scale:enterprise-architecture",
+        "source": "doc:blog/2026-08-10-dbt-mesh-enterprise-scale",
+        "target": "tag:enterprise-architecture"
       }
     },
     {
@@ -3608,23 +3608,16 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-08-03-delta-lake-iceberg-hudi-comparison:dataops",
-        "source": "doc:blog/2026-08-03-delta-lake-iceberg-hudi-comparison",
-        "target": "tag:dataops"
-      }
-    },
-    {
-      "data": {
-        "id": "edge:blog/2026-08-03-delta-lake-iceberg-hudi-comparison:lakehouse-architecture",
-        "source": "doc:blog/2026-08-03-delta-lake-iceberg-hudi-comparison",
-        "target": "tag:lakehouse-architecture"
-      }
-    },
-    {
-      "data": {
         "id": "edge:blog/2026-08-03-delta-lake-iceberg-hudi-comparison:big-data-storage",
         "source": "doc:blog/2026-08-03-delta-lake-iceberg-hudi-comparison",
         "target": "tag:big-data-storage"
+      }
+    },
+    {
+      "data": {
+        "id": "edge:blog/2026-08-03-delta-lake-iceberg-hudi-comparison:dataops",
+        "source": "doc:blog/2026-08-03-delta-lake-iceberg-hudi-comparison",
+        "target": "tag:dataops"
       }
     },
     {
@@ -3636,6 +3629,13 @@
     },
     {
       "data": {
+        "id": "edge:blog/2026-08-03-delta-lake-iceberg-hudi-comparison:lakehouse-architecture",
+        "source": "doc:blog/2026-08-03-delta-lake-iceberg-hudi-comparison",
+        "target": "tag:lakehouse-architecture"
+      }
+    },
+    {
+      "data": {
         "id": "edge:blog/2026-08-03-delta-lake-iceberg-hudi-comparison:data-engineering",
         "source": "doc:blog/2026-08-03-delta-lake-iceberg-hudi-comparison",
         "target": "tag:data-engineering"
@@ -3643,30 +3643,9 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-07-27-debezium-cdc-change-data-capture:streaming-data-processing",
-        "source": "doc:blog/2026-07-27-debezium-cdc-change-data-capture",
-        "target": "tag:streaming-data-processing"
-      }
-    },
-    {
-      "data": {
-        "id": "edge:blog/2026-07-27-debezium-cdc-change-data-capture:data-replication",
-        "source": "doc:blog/2026-07-27-debezium-cdc-change-data-capture",
-        "target": "tag:data-replication"
-      }
-    },
-    {
-      "data": {
         "id": "edge:blog/2026-07-27-debezium-cdc-change-data-capture:database-integration",
         "source": "doc:blog/2026-07-27-debezium-cdc-change-data-capture",
         "target": "tag:database-integration"
-      }
-    },
-    {
-      "data": {
-        "id": "edge:blog/2026-07-27-debezium-cdc-change-data-capture:change-data-capture",
-        "source": "doc:blog/2026-07-27-debezium-cdc-change-data-capture",
-        "target": "tag:change-data-capture"
       }
     },
     {
@@ -3685,16 +3664,23 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-07-20-apache-iceberg-lakehouse:data-lake-engineering",
-        "source": "doc:blog/2026-07-20-apache-iceberg-lakehouse",
-        "target": "tag:data-lake-engineering"
+        "id": "edge:blog/2026-07-27-debezium-cdc-change-data-capture:streaming-data-processing",
+        "source": "doc:blog/2026-07-27-debezium-cdc-change-data-capture",
+        "target": "tag:streaming-data-processing"
       }
     },
     {
       "data": {
-        "id": "edge:blog/2026-07-20-apache-iceberg-lakehouse:data-format-optimization",
-        "source": "doc:blog/2026-07-20-apache-iceberg-lakehouse",
-        "target": "tag:data-format-optimization"
+        "id": "edge:blog/2026-07-27-debezium-cdc-change-data-capture:data-replication",
+        "source": "doc:blog/2026-07-27-debezium-cdc-change-data-capture",
+        "target": "tag:data-replication"
+      }
+    },
+    {
+      "data": {
+        "id": "edge:blog/2026-07-27-debezium-cdc-change-data-capture:change-data-capture",
+        "source": "doc:blog/2026-07-27-debezium-cdc-change-data-capture",
+        "target": "tag:change-data-capture"
       }
     },
     {
@@ -3713,13 +3699,6 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-07-20-apache-iceberg-lakehouse:acid-transaction-management",
-        "source": "doc:blog/2026-07-20-apache-iceberg-lakehouse",
-        "target": "tag:acid-transaction-management"
-      }
-    },
-    {
-      "data": {
         "id": "edge:blog/2026-07-20-apache-iceberg-lakehouse:big-data-migration",
         "source": "doc:blog/2026-07-20-apache-iceberg-lakehouse",
         "target": "tag:big-data-migration"
@@ -3727,23 +3706,23 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-07-13-kafka-streaming-event-driven:financial-technology",
-        "source": "doc:blog/2026-07-13-kafka-streaming-event-driven",
-        "target": "tag:financial-technology"
+        "id": "edge:blog/2026-07-20-apache-iceberg-lakehouse:acid-transaction-management",
+        "source": "doc:blog/2026-07-20-apache-iceberg-lakehouse",
+        "target": "tag:acid-transaction-management"
       }
     },
     {
       "data": {
-        "id": "edge:blog/2026-07-13-kafka-streaming-event-driven:stream-processing",
-        "source": "doc:blog/2026-07-13-kafka-streaming-event-driven",
-        "target": "tag:stream-processing"
+        "id": "edge:blog/2026-07-20-apache-iceberg-lakehouse:data-lake-engineering",
+        "source": "doc:blog/2026-07-20-apache-iceberg-lakehouse",
+        "target": "tag:data-lake-engineering"
       }
     },
     {
       "data": {
-        "id": "edge:blog/2026-07-13-kafka-streaming-event-driven:distributed-systems",
-        "source": "doc:blog/2026-07-13-kafka-streaming-event-driven",
-        "target": "tag:distributed-systems"
+        "id": "edge:blog/2026-07-20-apache-iceberg-lakehouse:data-format-optimization",
+        "source": "doc:blog/2026-07-20-apache-iceberg-lakehouse",
+        "target": "tag:data-format-optimization"
       }
     },
     {
@@ -3751,6 +3730,13 @@
         "id": "edge:blog/2026-07-13-kafka-streaming-event-driven:dataops",
         "source": "doc:blog/2026-07-13-kafka-streaming-event-driven",
         "target": "tag:dataops"
+      }
+    },
+    {
+      "data": {
+        "id": "edge:blog/2026-07-13-kafka-streaming-event-driven:stream-processing",
+        "source": "doc:blog/2026-07-13-kafka-streaming-event-driven",
+        "target": "tag:stream-processing"
       }
     },
     {
@@ -3769,23 +3755,16 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-07-06-data-contracts:data-governance",
-        "source": "doc:blog/2026-07-06-data-contracts",
-        "target": "tag:data-governance"
+        "id": "edge:blog/2026-07-13-kafka-streaming-event-driven:financial-technology",
+        "source": "doc:blog/2026-07-13-kafka-streaming-event-driven",
+        "target": "tag:financial-technology"
       }
     },
     {
       "data": {
-        "id": "edge:blog/2026-07-06-data-contracts:schema-evolution",
-        "source": "doc:blog/2026-07-06-data-contracts",
-        "target": "tag:schema-evolution"
-      }
-    },
-    {
-      "data": {
-        "id": "edge:blog/2026-07-06-data-contracts:data-quality",
-        "source": "doc:blog/2026-07-06-data-contracts",
-        "target": "tag:data-quality"
+        "id": "edge:blog/2026-07-13-kafka-streaming-event-driven:distributed-systems",
+        "source": "doc:blog/2026-07-13-kafka-streaming-event-driven",
+        "target": "tag:distributed-systems"
       }
     },
     {
@@ -3797,9 +3776,9 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-07-06-data-contracts:data-contracts",
+        "id": "edge:blog/2026-07-06-data-contracts:schema-evolution",
         "source": "doc:blog/2026-07-06-data-contracts",
-        "target": "tag:data-contracts"
+        "target": "tag:schema-evolution"
       }
     },
     {
@@ -3811,23 +3790,23 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-06-29-airflow-prefect-dagster-comparison:software-architecture",
-        "source": "doc:blog/2026-06-29-airflow-prefect-dagster-comparison",
-        "target": "tag:software-architecture"
+        "id": "edge:blog/2026-07-06-data-contracts:data-governance",
+        "source": "doc:blog/2026-07-06-data-contracts",
+        "target": "tag:data-governance"
       }
     },
     {
       "data": {
-        "id": "edge:blog/2026-06-29-airflow-prefect-dagster-comparison:data-pipeline-management",
-        "source": "doc:blog/2026-06-29-airflow-prefect-dagster-comparison",
-        "target": "tag:data-pipeline-management"
+        "id": "edge:blog/2026-07-06-data-contracts:data-contracts",
+        "source": "doc:blog/2026-07-06-data-contracts",
+        "target": "tag:data-contracts"
       }
     },
     {
       "data": {
-        "id": "edge:blog/2026-06-29-airflow-prefect-dagster-comparison:distributed-systems",
-        "source": "doc:blog/2026-06-29-airflow-prefect-dagster-comparison",
-        "target": "tag:distributed-systems"
+        "id": "edge:blog/2026-07-06-data-contracts:data-quality",
+        "source": "doc:blog/2026-07-06-data-contracts",
+        "target": "tag:data-quality"
       }
     },
     {
@@ -3846,6 +3825,41 @@
     },
     {
       "data": {
+        "id": "edge:blog/2026-06-29-airflow-prefect-dagster-comparison:data-pipeline-management",
+        "source": "doc:blog/2026-06-29-airflow-prefect-dagster-comparison",
+        "target": "tag:data-pipeline-management"
+      }
+    },
+    {
+      "data": {
+        "id": "edge:blog/2026-06-29-airflow-prefect-dagster-comparison:software-architecture",
+        "source": "doc:blog/2026-06-29-airflow-prefect-dagster-comparison",
+        "target": "tag:software-architecture"
+      }
+    },
+    {
+      "data": {
+        "id": "edge:blog/2026-06-29-airflow-prefect-dagster-comparison:distributed-systems",
+        "source": "doc:blog/2026-06-29-airflow-prefect-dagster-comparison",
+        "target": "tag:distributed-systems"
+      }
+    },
+    {
+      "data": {
+        "id": "edge:blog/2026-06-22-data-quality-great-expectations:dataops",
+        "source": "doc:blog/2026-06-22-data-quality-great-expectations",
+        "target": "tag:dataops"
+      }
+    },
+    {
+      "data": {
+        "id": "edge:blog/2026-06-22-data-quality-great-expectations:test-automation",
+        "source": "doc:blog/2026-06-22-data-quality-great-expectations",
+        "target": "tag:test-automation"
+      }
+    },
+    {
+      "data": {
         "id": "edge:blog/2026-06-22-data-quality-great-expectations:workflow-automation",
         "source": "doc:blog/2026-06-22-data-quality-great-expectations",
         "target": "tag:workflow-automation"
@@ -3860,20 +3874,6 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-06-22-data-quality-great-expectations:test-automation",
-        "source": "doc:blog/2026-06-22-data-quality-great-expectations",
-        "target": "tag:test-automation"
-      }
-    },
-    {
-      "data": {
-        "id": "edge:blog/2026-06-22-data-quality-great-expectations:dataops",
-        "source": "doc:blog/2026-06-22-data-quality-great-expectations",
-        "target": "tag:dataops"
-      }
-    },
-    {
-      "data": {
         "id": "edge:blog/2026-06-22-data-quality-great-expectations:data-engineering",
         "source": "doc:blog/2026-06-22-data-quality-great-expectations",
         "target": "tag:data-engineering"
@@ -3884,6 +3884,13 @@
         "id": "edge:blog/2026-06-15-dagster-2:dataops",
         "source": "doc:blog/2026-06-15-dagster-2",
         "target": "tag:dataops"
+      }
+    },
+    {
+      "data": {
+        "id": "edge:blog/2026-06-08-science-dataeng:bioinformatics-pipelines",
+        "source": "doc:blog/2026-06-08-science-dataeng",
+        "target": "tag:bioinformatics-pipelines"
       }
     },
     {
@@ -3909,13 +3916,6 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-06-08-science-dataeng:bioinformatics-pipelines",
-        "source": "doc:blog/2026-06-08-science-dataeng",
-        "target": "tag:bioinformatics-pipelines"
-      }
-    },
-    {
-      "data": {
         "id": "edge:blog/2026-06-08-science-dataeng:genomics-workflows",
         "source": "doc:blog/2026-06-08-science-dataeng",
         "target": "tag:genomics-workflows"
@@ -3923,37 +3923,9 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-06-08-stock-dataeng:quantitative-finance",
-        "source": "doc:blog/2026-06-08-stock-dataeng",
-        "target": "tag:quantitative-finance"
-      }
-    },
-    {
-      "data": {
-        "id": "edge:blog/2026-06-08-stock-dataeng:data-pipeline-orchestration",
-        "source": "doc:blog/2026-06-08-stock-dataeng",
-        "target": "tag:data-pipeline-orchestration"
-      }
-    },
-    {
-      "data": {
-        "id": "edge:blog/2026-06-08-stock-dataeng:data-engineering",
-        "source": "doc:blog/2026-06-08-stock-dataeng",
-        "target": "tag:data-engineering"
-      }
-    },
-    {
-      "data": {
         "id": "edge:blog/2026-06-08-stock-dataeng:dataops",
         "source": "doc:blog/2026-06-08-stock-dataeng",
         "target": "tag:dataops"
-      }
-    },
-    {
-      "data": {
-        "id": "edge:blog/2026-06-08-stock-dataeng:markets",
-        "source": "doc:blog/2026-06-08-stock-dataeng",
-        "target": "tag:markets"
       }
     },
     {
@@ -3972,9 +3944,44 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-06-08-aml-dataeng:financial-crime-analytics",
+        "id": "edge:blog/2026-06-08-stock-dataeng:quantitative-finance",
+        "source": "doc:blog/2026-06-08-stock-dataeng",
+        "target": "tag:quantitative-finance"
+      }
+    },
+    {
+      "data": {
+        "id": "edge:blog/2026-06-08-stock-dataeng:data-pipeline-orchestration",
+        "source": "doc:blog/2026-06-08-stock-dataeng",
+        "target": "tag:data-pipeline-orchestration"
+      }
+    },
+    {
+      "data": {
+        "id": "edge:blog/2026-06-08-stock-dataeng:markets",
+        "source": "doc:blog/2026-06-08-stock-dataeng",
+        "target": "tag:markets"
+      }
+    },
+    {
+      "data": {
+        "id": "edge:blog/2026-06-08-stock-dataeng:data-engineering",
+        "source": "doc:blog/2026-06-08-stock-dataeng",
+        "target": "tag:data-engineering"
+      }
+    },
+    {
+      "data": {
+        "id": "edge:blog/2026-06-08-aml-dataeng:transaction-monitoring",
         "source": "doc:blog/2026-06-08-aml-dataeng",
-        "target": "tag:financial-crime-analytics"
+        "target": "tag:transaction-monitoring"
+      }
+    },
+    {
+      "data": {
+        "id": "edge:blog/2026-06-08-aml-dataeng:aml",
+        "source": "doc:blog/2026-06-08-aml-dataeng",
+        "target": "tag:aml"
       }
     },
     {
@@ -3993,9 +4000,16 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-06-08-aml-dataeng:aml",
+        "id": "edge:blog/2026-06-08-aml-dataeng:streaming-etl",
         "source": "doc:blog/2026-06-08-aml-dataeng",
-        "target": "tag:aml"
+        "target": "tag:streaming-etl"
+      }
+    },
+    {
+      "data": {
+        "id": "edge:blog/2026-06-08-aml-dataeng:financial-crime-analytics",
+        "source": "doc:blog/2026-06-08-aml-dataeng",
+        "target": "tag:financial-crime-analytics"
       }
     },
     {
@@ -4003,20 +4017,6 @@
         "id": "edge:blog/2026-06-08-aml-dataeng:anti-money-laundering",
         "source": "doc:blog/2026-06-08-aml-dataeng",
         "target": "tag:anti-money-laundering"
-      }
-    },
-    {
-      "data": {
-        "id": "edge:blog/2026-06-08-aml-dataeng:transaction-monitoring",
-        "source": "doc:blog/2026-06-08-aml-dataeng",
-        "target": "tag:transaction-monitoring"
-      }
-    },
-    {
-      "data": {
-        "id": "edge:blog/2026-06-08-aml-dataeng:streaming-etl",
-        "source": "doc:blog/2026-06-08-aml-dataeng",
-        "target": "tag:streaming-etl"
       }
     },
     {
@@ -4049,13 +4049,6 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-06-08-dataops-markets:dataops",
-        "source": "doc:blog/2026-06-08-dataops-markets",
-        "target": "tag:dataops"
-      }
-    },
-    {
-      "data": {
         "id": "edge:blog/2026-06-08-dataops-markets:markets",
         "source": "doc:blog/2026-06-08-dataops-markets",
         "target": "tag:markets"
@@ -4063,8 +4056,8 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-06-08-dataops-aml:dataops",
-        "source": "doc:blog/2026-06-08-dataops-aml",
+        "id": "edge:blog/2026-06-08-dataops-markets:dataops",
+        "source": "doc:blog/2026-06-08-dataops-markets",
         "target": "tag:dataops"
       }
     },
@@ -4091,9 +4084,9 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-06-07-science:anthropic-denied-s-p-500-entry",
-        "source": "doc:blog/2026-06-07-science",
-        "target": "tag:anthropic-denied-s-p-500-entry"
+        "id": "edge:blog/2026-06-08-dataops-aml:dataops",
+        "source": "doc:blog/2026-06-08-dataops-aml",
+        "target": "tag:dataops"
       }
     },
     {
@@ -4108,6 +4101,13 @@
         "id": "edge:blog/2026-06-07-science:openai-blocked-from-s-p-500",
         "source": "doc:blog/2026-06-07-science",
         "target": "tag:openai-blocked-from-s-p-500"
+      }
+    },
+    {
+      "data": {
+        "id": "edge:blog/2026-06-07-science:anthropic-denied-s-p-500-entry",
+        "source": "doc:blog/2026-06-07-science",
+        "target": "tag:anthropic-denied-s-p-500-entry"
       }
     },
     {
@@ -4182,16 +4182,16 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-05-10-stock-market:risk-management",
+        "id": "edge:blog/2026-05-10-stock-market:markets",
         "source": "doc:blog/2026-05-10-stock-market",
-        "target": "tag:risk-management"
+        "target": "tag:markets"
       }
     },
     {
       "data": {
-        "id": "edge:blog/2026-05-10-stock-market:markets",
+        "id": "edge:blog/2026-05-10-stock-market:risk-management",
         "source": "doc:blog/2026-05-10-stock-market",
-        "target": "tag:markets"
+        "target": "tag:risk-management"
       }
     },
     {
@@ -4210,16 +4210,16 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-04-05-aml:machine-learning",
+        "id": "edge:blog/2026-04-05-aml:aml",
         "source": "doc:blog/2026-04-05-aml",
-        "target": "tag:machine-learning"
+        "target": "tag:aml"
       }
     },
     {
       "data": {
-        "id": "edge:blog/2026-04-05-aml:aml",
+        "id": "edge:blog/2026-04-05-aml:machine-learning",
         "source": "doc:blog/2026-04-05-aml",
-        "target": "tag:aml"
+        "target": "tag:machine-learning"
       }
     },
     {
@@ -4231,16 +4231,16 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-03-10-aml:crypto-finance",
+        "id": "edge:blog/2026-03-10-aml:aml",
         "source": "doc:blog/2026-03-10-aml",
-        "target": "tag:crypto-finance"
+        "target": "tag:aml"
       }
     },
     {
       "data": {
-        "id": "edge:blog/2026-03-10-aml:aml",
+        "id": "edge:blog/2026-03-10-aml:crypto-finance",
         "source": "doc:blog/2026-03-10-aml",
-        "target": "tag:aml"
+        "target": "tag:crypto-finance"
       }
     },
     {
@@ -4287,16 +4287,16 @@
     },
     {
       "data": {
-        "id": "edge:learn/applying-market-analysis:risk-management",
+        "id": "edge:learn/applying-market-analysis:markets",
         "source": "doc:learn/applying-market-analysis",
-        "target": "tag:risk-management"
+        "target": "tag:markets"
       }
     },
     {
       "data": {
-        "id": "edge:learn/applying-market-analysis:markets",
+        "id": "edge:learn/applying-market-analysis:risk-management",
         "source": "doc:learn/applying-market-analysis",
-        "target": "tag:markets"
+        "target": "tag:risk-management"
       }
     },
     {
@@ -4308,13 +4308,6 @@
     },
     {
       "data": {
-        "id": "edge:learn/market-fundamentals:risk-management",
-        "source": "doc:learn/market-fundamentals",
-        "target": "tag:risk-management"
-      }
-    },
-    {
-      "data": {
         "id": "edge:learn/market-fundamentals:markets",
         "source": "doc:learn/market-fundamentals",
         "target": "tag:markets"
@@ -4322,8 +4315,8 @@
     },
     {
       "data": {
-        "id": "edge:learn/designing-aml-program:risk-management",
-        "source": "doc:learn/designing-aml-program",
+        "id": "edge:learn/market-fundamentals:risk-management",
+        "source": "doc:learn/market-fundamentals",
         "target": "tag:risk-management"
       }
     },
@@ -4346,6 +4339,13 @@
         "id": "edge:learn/designing-aml-program:aml",
         "source": "doc:learn/designing-aml-program",
         "target": "tag:aml"
+      }
+    },
+    {
+      "data": {
+        "id": "edge:learn/designing-aml-program:risk-management",
+        "source": "doc:learn/designing-aml-program",
+        "target": "tag:risk-management"
       }
     },
     {
@@ -4441,16 +4441,16 @@
     },
     {
       "data": {
-        "id": "edge:learn/market-analysis:markets",
+        "id": "edge:learn/market-analysis:signal-quality",
         "source": "doc:learn/market-analysis",
-        "target": "tag:markets"
+        "target": "tag:signal-quality"
       }
     },
     {
       "data": {
-        "id": "edge:learn/market-analysis:signal-quality",
+        "id": "edge:learn/market-analysis:markets",
         "source": "doc:learn/market-analysis",
-        "target": "tag:signal-quality"
+        "target": "tag:markets"
       }
     },
     {
@@ -4497,16 +4497,16 @@
     },
     {
       "data": {
-        "id": "edge:learn/behavioral-finance-portfolio:risk-management",
+        "id": "edge:learn/behavioral-finance-portfolio:markets",
         "source": "doc:learn/behavioral-finance-portfolio",
-        "target": "tag:risk-management"
+        "target": "tag:markets"
       }
     },
     {
       "data": {
-        "id": "edge:learn/behavioral-finance-portfolio:markets",
+        "id": "edge:learn/behavioral-finance-portfolio:risk-management",
         "source": "doc:learn/behavioral-finance-portfolio",
-        "target": "tag:markets"
+        "target": "tag:risk-management"
       }
     },
     {
@@ -4518,16 +4518,16 @@
     },
     {
       "data": {
-        "id": "edge:learn/data-ethics-privacy:regtech",
+        "id": "edge:learn/data-ethics-privacy:privacy-ethics",
         "source": "doc:learn/data-ethics-privacy",
-        "target": "tag:regtech"
+        "target": "tag:privacy-ethics"
       }
     },
     {
       "data": {
-        "id": "edge:learn/data-ethics-privacy:privacy-ethics",
+        "id": "edge:learn/data-ethics-privacy:regtech",
         "source": "doc:learn/data-ethics-privacy",
-        "target": "tag:privacy-ethics"
+        "target": "tag:regtech"
       }
     },
     {
@@ -4539,16 +4539,16 @@
     },
     {
       "data": {
-        "id": "edge:learn/crypto-aml:crypto-finance",
+        "id": "edge:learn/crypto-aml:aml",
         "source": "doc:learn/crypto-aml",
-        "target": "tag:crypto-finance"
+        "target": "tag:aml"
       }
     },
     {
       "data": {
-        "id": "edge:learn/crypto-aml:aml",
+        "id": "edge:learn/crypto-aml:crypto-finance",
         "source": "doc:learn/crypto-aml",
-        "target": "tag:aml"
+        "target": "tag:crypto-finance"
       }
     },
     {
@@ -4609,16 +4609,16 @@
     },
     {
       "data": {
-        "id": "edge:knowledge/research-methodology:dataops",
+        "id": "edge:knowledge/research-methodology:signal-quality",
         "source": "doc:knowledge/research-methodology",
-        "target": "tag:dataops"
+        "target": "tag:signal-quality"
       }
     },
     {
       "data": {
-        "id": "edge:knowledge/research-methodology:signal-quality",
+        "id": "edge:knowledge/research-methodology:dataops",
         "source": "doc:knowledge/research-methodology",
-        "target": "tag:signal-quality"
+        "target": "tag:dataops"
       }
     },
     {
@@ -4721,13 +4721,6 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-07-06-counterfactual-methods-for-detecting-unfairness-in-anti-mone:machine-learning",
-        "source": "doc:blog/2026-07-06-counterfactual-methods-for-detecting-unfairness-in-anti-mone",
-        "target": "tag:machine-learning"
-      }
-    },
-    {
-      "data": {
         "id": "edge:blog/2026-07-06-counterfactual-methods-for-detecting-unfairness-in-anti-mone:aml",
         "source": "doc:blog/2026-07-06-counterfactual-methods-for-detecting-unfairness-in-anti-mone",
         "target": "tag:aml"
@@ -4735,8 +4728,22 @@
     },
     {
       "data": {
+        "id": "edge:blog/2026-07-06-counterfactual-methods-for-detecting-unfairness-in-anti-mone:machine-learning",
+        "source": "doc:blog/2026-07-06-counterfactual-methods-for-detecting-unfairness-in-anti-mone",
+        "target": "tag:machine-learning"
+      }
+    },
+    {
+      "data": {
         "id": "edge:blog/2026-07-06-any-axes-are-allowed-a-characteristic-axis-integral-diagnosi:aml",
         "source": "doc:blog/2026-07-06-any-axes-are-allowed-a-characteristic-axis-integral-diagnosi",
+        "target": "tag:aml"
+      }
+    },
+    {
+      "data": {
+        "id": "edge:blog/2026-07-06-causal-separation-conditional-risk-and-projected-markowitz-p:aml",
+        "source": "doc:blog/2026-07-06-causal-separation-conditional-risk-and-projected-markowitz-p",
         "target": "tag:aml"
       }
     },
@@ -4749,8 +4756,8 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-07-06-causal-separation-conditional-risk-and-projected-markowitz-p:aml",
-        "source": "doc:blog/2026-07-06-causal-separation-conditional-risk-and-projected-markowitz-p",
+        "id": "edge:blog/2026-07-06-forecasting-realized-volatility-with-time-series-foundation:aml",
+        "source": "doc:blog/2026-07-06-forecasting-realized-volatility-with-time-series-foundation",
         "target": "tag:aml"
       }
     },
@@ -4759,13 +4766,6 @@
         "id": "edge:blog/2026-07-06-forecasting-realized-volatility-with-time-series-foundation:risk-management",
         "source": "doc:blog/2026-07-06-forecasting-realized-volatility-with-time-series-foundation",
         "target": "tag:risk-management"
-      }
-    },
-    {
-      "data": {
-        "id": "edge:blog/2026-07-06-forecasting-realized-volatility-with-time-series-foundation:aml",
-        "source": "doc:blog/2026-07-06-forecasting-realized-volatility-with-time-series-foundation",
-        "target": "tag:aml"
       }
     },
     {
@@ -4847,13 +4847,6 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-07-06-privacy-preserving-robustness-verification-for-neural-networ:machine-learning",
-        "source": "doc:blog/2026-07-06-privacy-preserving-robustness-verification-for-neural-networ",
-        "target": "tag:machine-learning"
-      }
-    },
-    {
-      "data": {
         "id": "edge:blog/2026-07-06-privacy-preserving-robustness-verification-for-neural-networ:privacy-ethics",
         "source": "doc:blog/2026-07-06-privacy-preserving-robustness-verification-for-neural-networ",
         "target": "tag:privacy-ethics"
@@ -4864,6 +4857,13 @@
         "id": "edge:blog/2026-07-06-privacy-preserving-robustness-verification-for-neural-networ:aml",
         "source": "doc:blog/2026-07-06-privacy-preserving-robustness-verification-for-neural-networ",
         "target": "tag:aml"
+      }
+    },
+    {
+      "data": {
+        "id": "edge:blog/2026-07-06-privacy-preserving-robustness-verification-for-neural-networ:machine-learning",
+        "source": "doc:blog/2026-07-06-privacy-preserving-robustness-verification-for-neural-networ",
+        "target": "tag:machine-learning"
       }
     },
     {
@@ -4973,13 +4973,6 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-07-06-optimizing-ml-workload-partitioning-between-cpus-and-cim-acc:dataops",
-        "source": "doc:blog/2026-07-06-optimizing-ml-workload-partitioning-between-cpus-and-cim-acc",
-        "target": "tag:dataops"
-      }
-    },
-    {
-      "data": {
         "id": "edge:blog/2026-07-06-optimizing-ml-workload-partitioning-between-cpus-and-cim-acc:machine-learning",
         "source": "doc:blog/2026-07-06-optimizing-ml-workload-partitioning-between-cpus-and-cim-acc",
         "target": "tag:machine-learning"
@@ -4987,16 +4980,23 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-07-06-optimizing-ml-workload-partitioning-between-cpus-and-cim-acc:distributed-systems",
+        "id": "edge:blog/2026-07-06-optimizing-ml-workload-partitioning-between-cpus-and-cim-acc:vector-search",
         "source": "doc:blog/2026-07-06-optimizing-ml-workload-partitioning-between-cpus-and-cim-acc",
-        "target": "tag:distributed-systems"
+        "target": "tag:vector-search"
       }
     },
     {
       "data": {
-        "id": "edge:blog/2026-07-06-optimizing-ml-workload-partitioning-between-cpus-and-cim-acc:vector-search",
+        "id": "edge:blog/2026-07-06-optimizing-ml-workload-partitioning-between-cpus-and-cim-acc:dataops",
         "source": "doc:blog/2026-07-06-optimizing-ml-workload-partitioning-between-cpus-and-cim-acc",
-        "target": "tag:vector-search"
+        "target": "tag:dataops"
+      }
+    },
+    {
+      "data": {
+        "id": "edge:blog/2026-07-06-optimizing-ml-workload-partitioning-between-cpus-and-cim-acc:distributed-systems",
+        "source": "doc:blog/2026-07-06-optimizing-ml-workload-partitioning-between-cpus-and-cim-acc",
+        "target": "tag:distributed-systems"
       }
     },
     {
@@ -5057,6 +5057,13 @@
     },
     {
       "data": {
+        "id": "edge:blog/2026-07-06-pdeflow-autonomous-agentic-pde-pipelines-for-neural-operator:agentic-systems",
+        "source": "doc:blog/2026-07-06-pdeflow-autonomous-agentic-pde-pipelines-for-neural-operator",
+        "target": "tag:agentic-systems"
+      }
+    },
+    {
+      "data": {
         "id": "edge:blog/2026-07-06-pdeflow-autonomous-agentic-pde-pipelines-for-neural-operator:dataops",
         "source": "doc:blog/2026-07-06-pdeflow-autonomous-agentic-pde-pipelines-for-neural-operator",
         "target": "tag:dataops"
@@ -5071,37 +5078,9 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-07-06-pdeflow-autonomous-agentic-pde-pipelines-for-neural-operator:agentic-systems",
-        "source": "doc:blog/2026-07-06-pdeflow-autonomous-agentic-pde-pipelines-for-neural-operator",
-        "target": "tag:agentic-systems"
-      }
-    },
-    {
-      "data": {
-        "id": "edge:blog/2026-07-06-counterfactual-methods-for-detecting-unfairness-in-anti-mone-36d35d:dataops",
-        "source": "doc:blog/2026-07-06-counterfactual-methods-for-detecting-unfairness-in-anti-mone-36d35d",
-        "target": "tag:dataops"
-      }
-    },
-    {
-      "data": {
-        "id": "edge:blog/2026-07-06-counterfactual-methods-for-detecting-unfairness-in-anti-mone-36d35d:distributed-systems",
-        "source": "doc:blog/2026-07-06-counterfactual-methods-for-detecting-unfairness-in-anti-mone-36d35d",
-        "target": "tag:distributed-systems"
-      }
-    },
-    {
-      "data": {
         "id": "edge:blog/2026-07-06-counterfactual-methods-for-detecting-unfairness-in-anti-mone-36d35d:transaction-monitoring",
         "source": "doc:blog/2026-07-06-counterfactual-methods-for-detecting-unfairness-in-anti-mone-36d35d",
         "target": "tag:transaction-monitoring"
-      }
-    },
-    {
-      "data": {
-        "id": "edge:blog/2026-07-06-counterfactual-methods-for-detecting-unfairness-in-anti-mone-36d35d:machine-learning",
-        "source": "doc:blog/2026-07-06-counterfactual-methods-for-detecting-unfairness-in-anti-mone-36d35d",
-        "target": "tag:machine-learning"
       }
     },
     {
@@ -5113,6 +5092,27 @@
     },
     {
       "data": {
+        "id": "edge:blog/2026-07-06-counterfactual-methods-for-detecting-unfairness-in-anti-mone-36d35d:dataops",
+        "source": "doc:blog/2026-07-06-counterfactual-methods-for-detecting-unfairness-in-anti-mone-36d35d",
+        "target": "tag:dataops"
+      }
+    },
+    {
+      "data": {
+        "id": "edge:blog/2026-07-06-counterfactual-methods-for-detecting-unfairness-in-anti-mone-36d35d:machine-learning",
+        "source": "doc:blog/2026-07-06-counterfactual-methods-for-detecting-unfairness-in-anti-mone-36d35d",
+        "target": "tag:machine-learning"
+      }
+    },
+    {
+      "data": {
+        "id": "edge:blog/2026-07-06-counterfactual-methods-for-detecting-unfairness-in-anti-mone-36d35d:distributed-systems",
+        "source": "doc:blog/2026-07-06-counterfactual-methods-for-detecting-unfairness-in-anti-mone-36d35d",
+        "target": "tag:distributed-systems"
+      }
+    },
+    {
+      "data": {
         "id": "edge:blog/2026-07-06-video-based-detection-of-cessation-of-breathing-in-pre-term:dataops",
         "source": "doc:blog/2026-07-06-video-based-detection-of-cessation-of-breathing-in-pre-term",
         "target": "tag:dataops"
@@ -5120,16 +5120,16 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-07-06-video-based-detection-of-cessation-of-breathing-in-pre-term:machine-learning",
+        "id": "edge:blog/2026-07-06-video-based-detection-of-cessation-of-breathing-in-pre-term:data-quality",
         "source": "doc:blog/2026-07-06-video-based-detection-of-cessation-of-breathing-in-pre-term",
-        "target": "tag:machine-learning"
+        "target": "tag:data-quality"
       }
     },
     {
       "data": {
-        "id": "edge:blog/2026-07-06-video-based-detection-of-cessation-of-breathing-in-pre-term:data-quality",
+        "id": "edge:blog/2026-07-06-video-based-detection-of-cessation-of-breathing-in-pre-term:machine-learning",
         "source": "doc:blog/2026-07-06-video-based-detection-of-cessation-of-breathing-in-pre-term",
-        "target": "tag:data-quality"
+        "target": "tag:machine-learning"
       }
     },
     {
@@ -5162,16 +5162,16 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-07-06-on-the-risk-of-coding-before-testing-an-empirical-study-on-l:dataops",
+        "id": "edge:blog/2026-07-06-on-the-risk-of-coding-before-testing-an-empirical-study-on-l:llm",
         "source": "doc:blog/2026-07-06-on-the-risk-of-coding-before-testing-an-empirical-study-on-l",
-        "target": "tag:dataops"
+        "target": "tag:llm"
       }
     },
     {
       "data": {
-        "id": "edge:blog/2026-07-06-on-the-risk-of-coding-before-testing-an-empirical-study-on-l:llm",
+        "id": "edge:blog/2026-07-06-on-the-risk-of-coding-before-testing-an-empirical-study-on-l:dataops",
         "source": "doc:blog/2026-07-06-on-the-risk-of-coding-before-testing-an-empirical-study-on-l",
-        "target": "tag:llm"
+        "target": "tag:dataops"
       }
     },
     {
@@ -5183,6 +5183,13 @@
     },
     {
       "data": {
+        "id": "edge:blog/2026-07-06-adaptive-inference-batching-using-policy-gradients:distributed-computing",
+        "source": "doc:blog/2026-07-06-adaptive-inference-batching-using-policy-gradients",
+        "target": "tag:distributed-computing"
+      }
+    },
+    {
+      "data": {
         "id": "edge:blog/2026-07-06-adaptive-inference-batching-using-policy-gradients:dataops",
         "source": "doc:blog/2026-07-06-adaptive-inference-batching-using-policy-gradients",
         "target": "tag:dataops"
@@ -5190,8 +5197,8 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-07-06-adaptive-inference-batching-using-policy-gradients:distributed-computing",
-        "source": "doc:blog/2026-07-06-adaptive-inference-batching-using-policy-gradients",
+        "id": "edge:blog/2026-07-06-cats-secure-blockchain-interoperability-with-cross-chain-ato:distributed-computing",
+        "source": "doc:blog/2026-07-06-cats-secure-blockchain-interoperability-with-cross-chain-ato",
         "target": "tag:distributed-computing"
       }
     },
@@ -5207,13 +5214,6 @@
         "id": "edge:blog/2026-07-06-cats-secure-blockchain-interoperability-with-cross-chain-ato:crypto-finance",
         "source": "doc:blog/2026-07-06-cats-secure-blockchain-interoperability-with-cross-chain-ato",
         "target": "tag:crypto-finance"
-      }
-    },
-    {
-      "data": {
-        "id": "edge:blog/2026-07-06-cats-secure-blockchain-interoperability-with-cross-chain-ato:distributed-computing",
-        "source": "doc:blog/2026-07-06-cats-secure-blockchain-interoperability-with-cross-chain-ato",
-        "target": "tag:distributed-computing"
       }
     },
     {
@@ -5246,16 +5246,16 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-07-07-rust-is-in-tiobe-index-top-10:dataops",
+        "id": "edge:blog/2026-07-07-rust-is-in-tiobe-index-top-10:query-optimization",
         "source": "doc:blog/2026-07-07-rust-is-in-tiobe-index-top-10",
-        "target": "tag:dataops"
+        "target": "tag:query-optimization"
       }
     },
     {
       "data": {
-        "id": "edge:blog/2026-07-07-rust-is-in-tiobe-index-top-10:query-optimization",
+        "id": "edge:blog/2026-07-07-rust-is-in-tiobe-index-top-10:dataops",
         "source": "doc:blog/2026-07-07-rust-is-in-tiobe-index-top-10",
-        "target": "tag:query-optimization"
+        "target": "tag:dataops"
       }
     },
     {
@@ -5323,13 +5323,6 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-07-06-forecasting-realized-volatility-with-time-series-foundation-2e36b1:risk-management",
-        "source": "doc:blog/2026-07-06-forecasting-realized-volatility-with-time-series-foundation-2e36b1",
-        "target": "tag:risk-management"
-      }
-    },
-    {
-      "data": {
         "id": "edge:blog/2026-07-06-forecasting-realized-volatility-with-time-series-foundation-2e36b1:quantitative-modeling",
         "source": "doc:blog/2026-07-06-forecasting-realized-volatility-with-time-series-foundation-2e36b1",
         "target": "tag:quantitative-modeling"
@@ -5344,9 +5337,9 @@
     },
     {
       "data": {
-        "id": "edge:blog/2026-07-06-cats-secure-blockchain-interoperability-with-cross-chain-ato-10c567:crypto-finance",
-        "source": "doc:blog/2026-07-06-cats-secure-blockchain-interoperability-with-cross-chain-ato-10c567",
-        "target": "tag:crypto-finance"
+        "id": "edge:blog/2026-07-06-forecasting-realized-volatility-with-time-series-foundation-2e36b1:risk-management",
+        "source": "doc:blog/2026-07-06-forecasting-realized-volatility-with-time-series-foundation-2e36b1",
+        "target": "tag:risk-management"
       }
     },
     {
@@ -5354,6 +5347,13 @@
         "id": "edge:blog/2026-07-06-cats-secure-blockchain-interoperability-with-cross-chain-ato-10c567:market-microstructure",
         "source": "doc:blog/2026-07-06-cats-secure-blockchain-interoperability-with-cross-chain-ato-10c567",
         "target": "tag:market-microstructure"
+      }
+    },
+    {
+      "data": {
+        "id": "edge:blog/2026-07-06-cats-secure-blockchain-interoperability-with-cross-chain-ato-10c567:crypto-finance",
+        "source": "doc:blog/2026-07-06-cats-secure-blockchain-interoperability-with-cross-chain-ato-10c567",
+        "target": "tag:crypto-finance"
       }
     },
     {
@@ -5372,9 +5372,9 @@
     },
     {
       "data": {
-        "id": "edge:cybernetic-manifesto:system",
+        "id": "edge:cybernetic-manifesto:foundations",
         "source": "doc:cybernetic-manifesto",
-        "target": "tag:system"
+        "target": "tag:foundations"
       }
     },
     {
@@ -5386,8 +5386,15 @@
     },
     {
       "data": {
-        "id": "edge:cybernetic-manifesto:foundations",
+        "id": "edge:cybernetic-manifesto:system",
         "source": "doc:cybernetic-manifesto",
+        "target": "tag:system"
+      }
+    },
+    {
+      "data": {
+        "id": "edge:aml-core-foundations:foundations",
+        "source": "doc:aml-core-foundations",
         "target": "tag:foundations"
       }
     },
@@ -5407,9 +5414,9 @@
     },
     {
       "data": {
-        "id": "edge:aml-core-foundations:foundations",
-        "source": "doc:aml-core-foundations",
-        "target": "tag:foundations"
+        "id": "edge:market-core-foundations:market",
+        "source": "doc:market-core-foundations",
+        "target": "tag:market"
       }
     },
     {
@@ -5428,16 +5435,9 @@
     },
     {
       "data": {
-        "id": "edge:market-core-foundations:market",
-        "source": "doc:market-core-foundations",
-        "target": "tag:market"
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data-core-foundations:data",
+        "id": "edge:data-core-foundations:foundations",
         "source": "doc:data-core-foundations",
-        "target": "tag:data"
+        "target": "tag:foundations"
       }
     },
     {
@@ -5449,16 +5449,9 @@
     },
     {
       "data": {
-        "id": "edge:data-core-foundations:foundations",
+        "id": "edge:data-core-foundations:data",
         "source": "doc:data-core-foundations",
-        "target": "tag:foundations"
-      }
-    },
-    {
-      "data": {
-        "id": "edge:temporal-graph-aml:specialist-module",
-        "source": "doc:temporal-graph-aml",
-        "target": "tag:specialist-module"
+        "target": "tag:data"
       }
     },
     {
@@ -5477,16 +5470,9 @@
     },
     {
       "data": {
-        "id": "edge:hawkes-microstructure:specialist-module",
-        "source": "doc:hawkes-microstructure",
+        "id": "edge:temporal-graph-aml:specialist-module",
+        "source": "doc:temporal-graph-aml",
         "target": "tag:specialist-module"
-      }
-    },
-    {
-      "data": {
-        "id": "edge:hawkes-microstructure:advanced-analytics",
-        "source": "doc:hawkes-microstructure",
-        "target": "tag:advanced-analytics"
       }
     },
     {
@@ -5498,9 +5484,16 @@
     },
     {
       "data": {
-        "id": "edge:zero-copy-arrow-iceberg:data",
-        "source": "doc:zero-copy-arrow-iceberg",
-        "target": "tag:data"
+        "id": "edge:hawkes-microstructure:advanced-analytics",
+        "source": "doc:hawkes-microstructure",
+        "target": "tag:advanced-analytics"
+      }
+    },
+    {
+      "data": {
+        "id": "edge:hawkes-microstructure:specialist-module",
+        "source": "doc:hawkes-microstructure",
+        "target": "tag:specialist-module"
       }
     },
     {
@@ -5519,9 +5512,9 @@
     },
     {
       "data": {
-        "id": "edge:ubo-unwinding-algorithms:zero-copy-arrow-iceberg",
-        "source": "doc:ubo-unwinding-algorithms",
-        "target": "tag:zero-copy-arrow-iceberg"
+        "id": "edge:zero-copy-arrow-iceberg:data",
+        "source": "doc:zero-copy-arrow-iceberg",
+        "target": "tag:data"
       }
     },
     {
@@ -5533,9 +5526,9 @@
     },
     {
       "data": {
-        "id": "edge:ubo-unwinding-algorithms:aml",
+        "id": "edge:ubo-unwinding-algorithms:zero-copy-arrow-iceberg",
         "source": "doc:ubo-unwinding-algorithms",
-        "target": "tag:aml"
+        "target": "tag:zero-copy-arrow-iceberg"
       }
     },
     {
@@ -5547,16 +5540,16 @@
     },
     {
       "data": {
-        "id": "edge:tbml-pricing-anomalies:hawkes-microstructure",
-        "source": "doc:tbml-pricing-anomalies",
-        "target": "tag:hawkes-microstructure"
+        "id": "edge:ubo-unwinding-algorithms:aml",
+        "source": "doc:ubo-unwinding-algorithms",
+        "target": "tag:aml"
       }
     },
     {
       "data": {
-        "id": "edge:tbml-pricing-anomalies:fraud-detection",
+        "id": "edge:tbml-pricing-anomalies:hawkes-microstructure",
         "source": "doc:tbml-pricing-anomalies",
-        "target": "tag:fraud-detection"
+        "target": "tag:hawkes-microstructure"
       }
     },
     {
@@ -5568,37 +5561,16 @@
     },
     {
       "data": {
+        "id": "edge:tbml-pricing-anomalies:fraud-detection",
+        "source": "doc:tbml-pricing-anomalies",
+        "target": "tag:fraud-detection"
+      }
+    },
+    {
+      "data": {
         "id": "edge:tbml-pricing-anomalies:aml",
         "source": "doc:tbml-pricing-anomalies",
         "target": "tag:aml"
-      }
-    },
-    {
-      "data": {
-        "id": "edge:vpin-toxicity-modeling:quantitative-finance",
-        "source": "doc:vpin-toxicity-modeling",
-        "target": "tag:quantitative-finance"
-      }
-    },
-    {
-      "data": {
-        "id": "edge:vpin-toxicity-modeling:microstructure",
-        "source": "doc:vpin-toxicity-modeling",
-        "target": "tag:microstructure"
-      }
-    },
-    {
-      "data": {
-        "id": "edge:vpin-toxicity-modeling:hawkes-microstructure",
-        "source": "doc:vpin-toxicity-modeling",
-        "target": "tag:hawkes-microstructure"
-      }
-    },
-    {
-      "data": {
-        "id": "edge:vpin-toxicity-modeling:zero-copy-arrow-iceberg",
-        "source": "doc:vpin-toxicity-modeling",
-        "target": "tag:zero-copy-arrow-iceberg"
       }
     },
     {
@@ -5610,9 +5582,37 @@
     },
     {
       "data": {
-        "id": "edge:implied-volatility-surfaces:mathematical-modeling",
+        "id": "edge:vpin-toxicity-modeling:zero-copy-arrow-iceberg",
+        "source": "doc:vpin-toxicity-modeling",
+        "target": "tag:zero-copy-arrow-iceberg"
+      }
+    },
+    {
+      "data": {
+        "id": "edge:vpin-toxicity-modeling:quantitative-finance",
+        "source": "doc:vpin-toxicity-modeling",
+        "target": "tag:quantitative-finance"
+      }
+    },
+    {
+      "data": {
+        "id": "edge:vpin-toxicity-modeling:hawkes-microstructure",
+        "source": "doc:vpin-toxicity-modeling",
+        "target": "tag:hawkes-microstructure"
+      }
+    },
+    {
+      "data": {
+        "id": "edge:vpin-toxicity-modeling:microstructure",
+        "source": "doc:vpin-toxicity-modeling",
+        "target": "tag:microstructure"
+      }
+    },
+    {
+      "data": {
+        "id": "edge:implied-volatility-surfaces:market",
         "source": "doc:implied-volatility-surfaces",
-        "target": "tag:mathematical-modeling"
+        "target": "tag:market"
       }
     },
     {
@@ -5631,9 +5631,9 @@
     },
     {
       "data": {
-        "id": "edge:implied-volatility-surfaces:market",
+        "id": "edge:implied-volatility-surfaces:mathematical-modeling",
         "source": "doc:implied-volatility-surfaces",
-        "target": "tag:market"
+        "target": "tag:mathematical-modeling"
       }
     },
     {
@@ -5652,13 +5652,6 @@
     },
     {
       "data": {
-        "id": "edge:cdc-debezium-statemachines:infrastructure",
-        "source": "doc:cdc-debezium-statemachines",
-        "target": "tag:infrastructure"
-      }
-    },
-    {
-      "data": {
         "id": "edge:cdc-debezium-statemachines:data",
         "source": "doc:cdc-debezium-statemachines",
         "target": "tag:data"
@@ -5666,30 +5659,16 @@
     },
     {
       "data": {
+        "id": "edge:cdc-debezium-statemachines:infrastructure",
+        "source": "doc:cdc-debezium-statemachines",
+        "target": "tag:infrastructure"
+      }
+    },
+    {
+      "data": {
         "id": "edge:cdc-debezium-statemachines:zero-copy-arrow-iceberg",
         "source": "doc:cdc-debezium-statemachines",
         "target": "tag:zero-copy-arrow-iceberg"
-      }
-    },
-    {
-      "data": {
-        "id": "edge:flink-stateful-stream-joins:stream-processing",
-        "source": "doc:flink-stateful-stream-joins",
-        "target": "tag:stream-processing"
-      }
-    },
-    {
-      "data": {
-        "id": "edge:flink-stateful-stream-joins:data",
-        "source": "doc:flink-stateful-stream-joins",
-        "target": "tag:data"
-      }
-    },
-    {
-      "data": {
-        "id": "edge:flink-stateful-stream-joins:distributed-systems",
-        "source": "doc:flink-stateful-stream-joins",
-        "target": "tag:distributed-systems"
       }
     },
     {
@@ -5708,9 +5687,30 @@
     },
     {
       "data": {
+        "id": "edge:flink-stateful-stream-joins:stream-processing",
+        "source": "doc:flink-stateful-stream-joins",
+        "target": "tag:stream-processing"
+      }
+    },
+    {
+      "data": {
+        "id": "edge:flink-stateful-stream-joins:data",
+        "source": "doc:flink-stateful-stream-joins",
+        "target": "tag:data"
+      }
+    },
+    {
+      "data": {
         "id": "edge:flink-stateful-stream-joins:zero-copy-arrow-iceberg",
         "source": "doc:flink-stateful-stream-joins",
         "target": "tag:zero-copy-arrow-iceberg"
+      }
+    },
+    {
+      "data": {
+        "id": "edge:flink-stateful-stream-joins:distributed-systems",
+        "source": "doc:flink-stateful-stream-joins",
+        "target": "tag:distributed-systems"
       }
     }
   ]

@@ -96,28 +96,33 @@ class BuildCache:
         
         # Content-affecting templates (change → content needs rebuild)
         content_templates = {
-            'blog_post.j2', 'learn_article.j2', 'knowledge_article.j2',
+            'blog_post.j2', 'learn.j2', 'knowledge.j2',
+            'learn_index.j2', 'knowledge_index.j2',
             'category_index.j2', 'pillar_index.j2', 'layout.j2'
         }
         
         # All templates (change → full rebuild including taxonomies)
         all_templates = content_templates | {
-            'tag_index.j2', 'admin_dashboard.j2', 'admin_gallery.j2',
-            'search.j2', 'feed.xml', 'index.j2', '404.html'
+            'tag_index.j2', 'search.j2', 'index.j2',
+            'admin/dashboard.html', 'admin/gallery.html',
+            'admin/article_list.html', 'admin/login.html',
+            'feed.xml', '404.j2', 'sitemap.xml'
         }
         
         templates_to_hash = content_templates if content_only else all_templates
         
-        for template_file in template_dir.rglob('*.j2'):
+        for template_file in sorted(template_dir.rglob('*')):
+            if template_file.suffix not in ('.j2', '.html', '.xml'):
+                continue
             relative_path = template_file.relative_to(template_dir)
-            if relative_path.name in templates_to_hash:
+            if str(relative_path) in templates_to_hash:
                 file_hash = self.compute_file_hash(template_file)
                 combined.update(f"{relative_path}:{file_hash}".encode())
         
         # Also hash core modules that affect rendering
         core_dir = Path('core')
         if core_dir.exists():
-            for py_file in core_dir.glob('*.py'):
+            for py_file in sorted(core_dir.glob('*.py')):
                 file_hash = self.compute_file_hash(py_file)
                 combined.update(f"{py_file}:{file_hash}".encode())
         
