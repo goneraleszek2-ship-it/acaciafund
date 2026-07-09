@@ -1378,8 +1378,8 @@ def main():
     for js_file in sorted(Path("static/js").glob("*.js")):
         css_hasher.update(js_file.read_bytes())
     build_hash = css_hasher.hexdigest()[:12]
-    # Convert dict content to Content objects
-    all_content = [Content.from_dict(c) if isinstance(c, dict) else c for c in registry.content]
+    # Convert dict/ContentItem content to Content objects
+    all_content = [Content.from_dict(c if isinstance(c, dict) else c.model_dump()) for c in registry.content]
 
     # Initialize logging first (needed for validation logging)
     log_path = OUTPUT_DIR / "build_errors.log"
