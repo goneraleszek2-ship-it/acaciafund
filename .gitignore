@@ -19,3 +19,8 @@ registry.json.bak
 .build_cache.json
 .build_manifest.json
 .pytest_cache/
+
+# Transient test and backup artifacts
+tmp/
+.venv-test/
+*.backup

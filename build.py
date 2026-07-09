@@ -144,8 +144,10 @@ def load_admin_credentials():
                 pass
 
     if not username or not password:
-        username = "admin"
-        password = "admin"
+        raise ValueError(
+            "ADMIN_USERNAME and ADMIN_PASSWORD environment variables must be set. "
+            "Configure them via GitHub Repository Secrets or a local .env file."
+        )
 
     return username, password
 
