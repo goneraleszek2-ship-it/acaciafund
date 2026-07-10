@@ -80,7 +80,16 @@ W_INFO_DENSITY = 0.30
 SOURCE_SCORES: dict[str, float] = {
     "arxiv": 0.90,
     "pubmed": 0.85,
+    "regulatory": 0.85,
+    "finra": 0.85,
+    "fatf": 0.85,
+    "bloomberg": 0.80,
+    "reuters": 0.80,
+    "github": 0.75,
+    "medium": 0.55,
+    "youtube": 0.55,
     "hn": 0.50,
+    "twitter": 0.30,
 }
 
 # Temporal decay: half-life in days for the recency factor
@@ -134,6 +143,30 @@ CONCEPT_PATTERNS: list[tuple[re.Pattern, str]] = [
     (re.compile(r"(?i)\b(genomics|crispr|bioinformatics|clinical.trial|gene)\b"), "biotech-genomics"),
     # --- Semiconductors / Hardware ---
     (re.compile(r"(?i)\b(semiconductor|chip|foundry|tsmc|wafer|fabrication)\b"), "semiconductors"),
+    # --- AML expansion ---
+    (re.compile(r"(?i)\b(sar|ctr|suspicious.activity|regulatory.filing)\b"), "aml-reporting"),
+    (re.compile(r"(?i)\b(shell.company|front.company|money.mule|layering)\b"), "aml-typologies"),
+    (re.compile(r"(?i)\b(corruption|bribery|kleptocracy|illicit.financial)\b"), "financial-crime"),
+    (re.compile(r"(?i)\b(trade.based|invoice.fraud|misinvoicing|trade.laundering)\b"), "trade-finance-crime"),
+    # --- Markets expansion ---
+    (re.compile(r"(?i)\b(supply.chain|logistics|procurement|vendor)\b"), "supply-chain"),
+    (re.compile(r"(?i)\b(commodity|futures|derivatives|options)\b"), "derivatives"),
+    (re.compile(r"(?i)\b(interest.rate|inflation|monetary.policy|central.bank)\b"), "macro-economics"),
+    (re.compile(r"(?i)\b(earnings|revenue|profit.margin|valuation)\b"), "corporate-finance"),
+    (re.compile(r"(?i)\b(manufacturing|production|assembly|factory)\b"), "manufacturing"),
+    # --- Data Engineering expansion ---
+    (re.compile(r"(?i)\b(data.mesh|data.fabric|data.product|data.marketplace)\b"), "data-architecture"),
+    (re.compile(r"(?i)\b(event.driven|event.sourcing|cqrs|domain.event)\b"), "event-driven"),
+    (re.compile(r"(?i)\b(real.time|streaming|cdc|debezium|change.data.capture)\b"), "streaming"),
+    (re.compile(r"(?i)\b(data.lakehouse|data.warehouse|oltp|olap)\b"), "data-storage"),
+    (re.compile(r"(?i)\b(data.catalog|data.discovery|data.lineage)\b"), "data-governance"),
+    (re.compile(r"(?i)\b(orchestration|workflow|airflow|dag)\b"), "orchestration"),
+    (re.compile(r"(?i)\b(schema.evolution|schema.registry|avro|protobuf|parquet)\b"), "schema-management"),
+    # --- Cross-domain ---
+    (re.compile(r"(?i)\b(monitoring|observability|telemetry|tracing|metrics)\b"), "observability"),
+    (re.compile(r"(?i)\b(automation|robotics|rpa|bots)\b"), "automation"),
+    (re.compile(r"(?i)\b(simulation|digital.twin|modeling|forecasting)\b"), "simulation"),
+    (re.compile(r"(?i)\b(testing|quality.assurance|ci.cd|devops)\b"), "software-quality"),
 ]
 
 # Terms whose presence signals high information density
@@ -146,6 +179,10 @@ HIGH_INFO_TERMS: list[re.Pattern] = [
     re.compile(r"(?i)\b(scale|distributed|fault.tolerant)\b"),
     re.compile(r"(?i)\b(optimization|efficiency|throughput)\b"),
     re.compile(r"(?i)\b(governance|policy|ethics|privacy)\b"),
+    re.compile(r"(?i)\b(surveillance|detection|prevention|mitigation)\b"),
+    re.compile(r"(?i)\b(compliance|regulatory|audit|oversight)\b"),
+    re.compile(r"(?i)\b(latency|throughput|bandwidth|scalability)\b"),
+    re.compile(r"(?i)\b(standardization|interoperability|portability)\b"),
 ]
 
 
@@ -531,6 +568,129 @@ Respond with a JSON array of 3-5 kebab-case tags:"""
         return score
 
     # ------------------------------------------------------------------
+    # Bloom's Taxonomy Questions
+    # ------------------------------------------------------------------
+
+    def _generate_bloom_questions(self, item: dict[str, Any]) -> list[dict[str, str]]:
+        """Generate 5 Bloom's taxonomy reading questions via LLM.
+
+        Returns list of {"level": str, "question": str} or empty list
+        if LLM is unavailable or fails.
+        """
+        if not self.infer_mode or not self._llm_client:
+            return []
+
+        title = item.get("title", "")
+        desc = item.get("description", "")
+        text = f"Title: {title}\nSummary: {desc}"
+
+        system_prompt = (
+            "You are a tutor creating Bloom's taxonomy questions. "
+            "Given an article, generate exactly 5 questions at different cognitive levels: "
+            "remember, understand, apply, analyze, evaluate, create. "
+            "Respond with ONLY a JSON array of objects, each with 'level' and 'question' keys. "
+            'Example: [{"level": "remember", "question": "What is..."}, ...]'
+        )
+
+        user_prompt = f"Article:\n{text}\n\nGenerate 5 Bloom's taxonomy questions as a JSON array:"
+
+        try:
+            response = self._llm_client.chat.completions.create(
+                model=self._llm_model,
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_prompt},
+                ],
+                temperature=0.4,
+                max_tokens=500,
+                timeout=30,
+            )
+            raw = response.choices[0].message.content or ""
+            import json as _json
+            cleaned = raw.strip()
+            cleaned = re.sub(r"```(?:json)?\s*", "", cleaned).strip()
+            start = cleaned.find("[")
+            end = cleaned.rfind("]")
+            if start == -1 or end == -1:
+                return []
+            parsed = _json.loads(cleaned[start:end+1])
+            if isinstance(parsed, list):
+                valid = [q for q in parsed if isinstance(q, dict) and "level" in q and "question" in q]
+                return valid[:6]
+        except Exception:
+            logger = logging.getLogger("acaciafund.enrich")
+            logger.warning("Bloom questions LLM call failed for %s", title)
+
+        return []
+
+    # ------------------------------------------------------------------
+    # Flashcard Generation
+    # ------------------------------------------------------------------
+
+    def _generate_flashcards(self, item: dict[str, Any]) -> list[dict[str, str]]:
+        """Generate 3-5 Q&A flashcards via LLM.
+
+        Returns list of {"question": str, "answer": str} or empty list
+        if LLM is unavailable or fails.
+        """
+        if not self.infer_mode or not self._llm_client:
+            return []
+
+        title = item.get("title", "")
+        desc = item.get("description", "")
+        body = item.get("body_html", "")
+        text = f"Title: {title}\nSummary: {desc}\nBody: {body[:1500]}"
+
+        system_prompt = (
+            "You are a study aid generating flashcards. "
+            "Given an article, create 3-5 Q&A flashcards that capture key concepts. "
+            "Respond with ONLY a JSON array of objects, each with 'question' and 'answer' keys. "
+            'Example: [{"question": "What is...", "answer": "It is..."}, ...]'
+        )
+
+        user_prompt = f"Article:\n{text}\n\nGenerate 3-5 flashcards as a JSON array:"
+
+        try:
+            response = self._llm_client.chat.completions.create(
+                model=self._llm_model,
+                messages=[
+                    {"role": "system", "content": system_prompt},
+                    {"role": "user", "content": user_prompt},
+                ],
+                temperature=0.4,
+                max_tokens=600,
+                timeout=30,
+            )
+            raw = response.choices[0].message.content or ""
+            import json as _json
+            cleaned = raw.strip()
+            cleaned = re.sub(r"```(?:json)?\s*", "", cleaned).strip()
+            start = cleaned.find("[")
+            end = cleaned.rfind("]")
+            if start == -1 or end == -1:
+                return []
+            parsed = _json.loads(cleaned[start:end+1])
+            if isinstance(parsed, list):
+                valid = [c for c in parsed if isinstance(c, dict) and "question" in c and "answer" in c]
+                return valid[:6]
+        except Exception:
+            logger = logging.getLogger("acaciafund.enrich")
+            logger.warning("Flashcard LLM call failed for %s", title)
+
+        return []
+
+    # ------------------------------------------------------------------
+    # Reading Time
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def _compute_reading_time(item: dict[str, Any]) -> int:
+        """Estimate reading time in minutes based on body_html word count."""
+        body = item.get("body_html", "")
+        word_count = len(body.split())
+        return max(1, word_count // 200)
+
+    # ------------------------------------------------------------------
     # Bulk Processing
     # ------------------------------------------------------------------
 
@@ -559,6 +719,18 @@ Respond with a JSON array of 3-5 kebab-case tags:"""
         if "sqi" not in item:
             item["sqi"] = baseline_sqi
         item["tags"] = enriched_tags
+
+        # 4. Bloom's taxonomy questions (LLM only)
+        if not item.get("bloom_questions"):
+            item["bloom_questions"] = self._generate_bloom_questions(item)
+
+        # 5. Flashcards (LLM only)
+        if not item.get("flashcards"):
+            item["flashcards"] = self._generate_flashcards(item)
+
+        # 6. Reading time (always computed)
+        item["reading_time"] = self._compute_reading_time(item)
+
         item["enriched"] = True
         item["enriched_at"] = (
             datetime.now(timezone.utc)

@@ -2195,6 +2195,146 @@ def main():
     (sig_dir / "index.html").write_text(aml_signals_html, encoding="utf-8")
     print("  signals: aml/signals/index.html")
 
+    # --- MARKETS SIGNALS DASHBOARD ---
+    stock_research = [p for p in research_items if p.pillar == "stock"]
+    stock_learn = [item for item in learn_items if item.pillar == "stock"]
+    tag_cloud = {}
+    entity_cloud = {}
+    source_totals = {}
+    cross_pillar_links = {}
+    timeline = {}
+    for a in stock_research:
+        for t in a.tags or []:
+            tag_cloud[t] = tag_cloud.get(t, 0) + 1
+        signals = a.signals or {}
+        for e in signals.get("top_entities", []) or []:
+            entity_cloud[e] = entity_cloud.get(e, 0) + 1
+        sb = a.source_breakdown or {}
+        for k, v in sb.items():
+            source_totals[k] = source_totals.get(k, 0) + v
+        if a.date_str:
+            month = a.date_str[:7]
+            timeline[month] = timeline.get(month, 0) + 1
+    tag_sorted = sorted(tag_cloud.items(), key=lambda x: -x[1])
+    entity_sorted = sorted(entity_cloud.items(), key=lambda x: -x[1])
+    source_sorted = sorted(source_totals.items(), key=lambda x: -x[1])
+    source_max = max((c for _, c in source_sorted), default=1)
+    tl_sorted = sorted(timeline.items())
+    tl_max = max(timeline.values()) if timeline else 1
+    avg_sqi_stock = sum((a.signals or {}).get("avg_sqi", 0) or 0 for a in stock_research) / max(
+        len(stock_research), 1
+    )
+    unique_tags = set()
+    for a in stock_research:
+        for t in a.tags or []:
+            unique_tags.add(t)
+    unique_entities = set()
+    for a in stock_research:
+        for e in (a.signals or {}).get("top_entities", []) or []:
+            unique_entities.add(e)
+
+    stock_signals_html = render_template(
+        "aml_signals.j2",
+        content=_dummy(
+            "Markets & Industry Signals Dashboard",
+            "index",
+            description="Aggregated market signals, industry trends, and coverage metrics across Markets articles.",
+        ),
+        stock_count=len(stock_research),
+        avg_sqi=avg_sqi_stock,
+        unique_tags_count=len(unique_tags),
+        unique_entities_count=len(unique_entities),
+        tag_cloud=tag_sorted,
+        entity_cloud=entity_sorted,
+        source_totals=source_sorted,
+        source_max=source_max,
+        cross_pillar_summary=[],
+        timeline=tl_sorted,
+        timeline_max=tl_max,
+        recent_articles=sorted(stock_research, key=lambda x: x.date_str or "", reverse=True)[:10],
+        learn_path=stock_learn,
+        is_index=False,
+        page_path="stock/signals/",
+        page_title="Markets & Industry Signals Dashboard",
+        thumbnail_base=f"{SITE_URL}/static/images",
+        thumbnail_key=thumbnail_key,
+        **ctx_base,
+    )
+    sig_dir = OUTPUT_DIR / "stock" / "signals"
+    sig_dir.mkdir(parents=True, exist_ok=True)
+    (sig_dir / "index.html").write_text(stock_signals_html, encoding="utf-8")
+    print("  signals: stock/signals/index.html")
+
+    # --- DATA ENGINEERING SIGNALS DASHBOARD ---
+    de_research = [p for p in research_items if p.pillar == "data-engineering"]
+    de_learn = [item for item in learn_items if item.pillar == "data-engineering"]
+    tag_cloud = {}
+    entity_cloud = {}
+    source_totals = {}
+    cross_pillar_links = {}
+    timeline = {}
+    for a in de_research:
+        for t in a.tags or []:
+            tag_cloud[t] = tag_cloud.get(t, 0) + 1
+        signals = a.signals or {}
+        for e in signals.get("top_entities", []) or []:
+            entity_cloud[e] = entity_cloud.get(e, 0) + 1
+        sb = a.source_breakdown or {}
+        for k, v in sb.items():
+            source_totals[k] = source_totals.get(k, 0) + v
+        if a.date_str:
+            month = a.date_str[:7]
+            timeline[month] = timeline.get(month, 0) + 1
+    tag_sorted = sorted(tag_cloud.items(), key=lambda x: -x[1])
+    entity_sorted = sorted(entity_cloud.items(), key=lambda x: -x[1])
+    source_sorted = sorted(source_totals.items(), key=lambda x: -x[1])
+    source_max = max((c for _, c in source_sorted), default=1)
+    tl_sorted = sorted(timeline.items())
+    tl_max = max(timeline.values()) if timeline else 1
+    avg_sqi_de = sum((a.signals or {}).get("avg_sqi", 0) or 0 for a in de_research) / max(
+        len(de_research), 1
+    )
+    unique_tags = set()
+    for a in de_research:
+        for t in a.tags or []:
+            unique_tags.add(t)
+    unique_entities = set()
+    for a in de_research:
+        for e in (a.signals or {}).get("top_entities", []) or []:
+            unique_entities.add(e)
+
+    de_signals_html = render_template(
+        "aml_signals.j2",
+        content=_dummy(
+            "Data Engineering Signals Dashboard",
+            "index",
+            description="Aggregated data engineering signals, pipeline trends, and coverage metrics across Data Engineering articles.",
+        ),
+        de_count=len(de_research),
+        avg_sqi=avg_sqi_de,
+        unique_tags_count=len(unique_tags),
+        unique_entities_count=len(unique_entities),
+        tag_cloud=tag_sorted,
+        entity_cloud=entity_sorted,
+        source_totals=source_sorted,
+        source_max=source_max,
+        cross_pillar_summary=[],
+        timeline=tl_sorted,
+        timeline_max=tl_max,
+        recent_articles=sorted(de_research, key=lambda x: x.date_str or "", reverse=True)[:10],
+        learn_path=de_learn,
+        is_index=False,
+        page_path="data-engineering/signals/",
+        page_title="Data Engineering Signals Dashboard",
+        thumbnail_base=f"{SITE_URL}/static/images",
+        thumbnail_key=thumbnail_key,
+        **ctx_base,
+    )
+    sig_dir = OUTPUT_DIR / "data-engineering" / "signals"
+    sig_dir.mkdir(parents=True, exist_ok=True)
+    (sig_dir / "index.html").write_text(de_signals_html, encoding="utf-8")
+    print("  signals: data-engineering/signals/index.html")
+
     # --- HOMEPAGE (filter future posts from featured/recent) ---
     published_research = [p for p in sorted_research if not is_future_post(p)]
     # Freshness cutoff: exclude articles older than 90 days from featured + recent
