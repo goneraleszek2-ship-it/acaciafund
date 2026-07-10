@@ -331,7 +331,7 @@
         {%- for rp in related_posts %}
         {%- set rpillar = rp.pillar or "aml" %}
         {%- set rpc = pillar_config.get(rpillar, pillar_config["aml"]) %}
-        {%- set rtkey = thumbnail_key(rp.title) %}
+        {%- set rtkey = thumbnail_key_fn(rp.title) %}
         {%- set feat_img = rp.featured_image or "" %}
         {%- set has_feat = feat_img %}
           <a href="/{{ rp.slug }}/" class="ghost-card block text-decoration:none">
@@ -364,7 +364,7 @@
          {%- for rl in related_learn %}
          {%- set rpillar = rl.pillar or "aml" %}
          {%- set rpc = pillar_config.get(rpillar, pillar_config["aml"]) %}
-         {%- set rtkey = thumbnail_key(rl.title) %}
+         {%- set rtkey = thumbnail_key_fn(rl.title) %}
          {%- set feat_img = rl.featured_image or "" %}
          {%- set has_feat = feat_img %}
           <a href="/{{ rl.slug }}/" class="ghost-card block text-decoration:none">

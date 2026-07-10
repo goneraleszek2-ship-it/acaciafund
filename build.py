@@ -657,6 +657,8 @@ def generate_card_thumbnail(source_url: str, slug: str) -> str:
         return ""
     raw = source_url.lstrip("/")
     src = Path(PROJECT_ROOT / raw)
+    if src.suffix.lower() == ".svg":
+        return source_url
     if not src.exists() or src.stat().st_size == 0:
         return ""
     # Follow REF: pointers (dedup symlinks from fetch_images.py)
@@ -1748,7 +1750,7 @@ def main():
                 print(f"  learn: {slug} (skipped - unchanged)")
                 continue
             page_path = canonical_path(slug_to_path(slug))
-            out_file = OUTPUT_DIR / f"{slug}.html"
+            out_file = OUTPUT_DIR / slug_to_path(slug)
 
             body, toc_items = _process_item_body(item, strip_emoji=False)
 
@@ -1819,6 +1821,7 @@ def main():
                 layer_sub=layer_sub,
                 **ctx_base,
             )
+            out_file.parent.mkdir(parents=True, exist_ok=True)
             out_file.write_text(html, encoding="utf-8")
             print(f"  learn: {out_file.relative_to(OUTPUT_DIR)}")
 
@@ -1918,7 +1921,7 @@ def main():
                 print(f"  research: {slug} (skipped - unchanged)")
                 continue
             page_path = canonical_path(slug_to_path(slug))
-            out_file = OUTPUT_DIR / f"{slug}.html"
+            out_file = OUTPUT_DIR / slug_to_path(slug)
 
             body, toc_items = _process_item_body(item, strip_emoji=True)
 
@@ -1955,6 +1958,7 @@ def main():
                 og_image_url=og_image_url,
                 thumbnail_base=thumb_base,
                 thumbnail_key=thumb_key,
+                thumbnail_key_fn=thumbnail_key,
                 toc_items=toc_items,
                 related_posts=related,
                 related_learn=related_learn,
@@ -2827,6 +2831,7 @@ Sitemap: {SITE_URL}/sitemap.xml
         print(f"  warnings: {failed_count} items failed during processing (see logs for details)")
 
     # Save manifest for incremental builds
+    manifest_path = PROJECT_ROOT / ".build_manifest.json"
     with open(manifest_path, "w", encoding="utf-8") as f:
         json.dump(current_manifest, f, indent=2)
     
