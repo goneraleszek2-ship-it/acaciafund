@@ -26,6 +26,14 @@ python3 scripts/migrate_slugs.py --apply
 
 # Migration (check only)
 python3 scripts/migrate_slugs.py --check
+
+# Regenerate ontology + glossary
+python3 -c "from core.ontology import OntologyManager; m=OntologyManager(); m.seed_all_pillars(); m.seed_relations(); m.save('data/ontology.json')"
+python3 scripts/generate_glossaries.py
+
+# Source synthesis + verification
+python3 scripts/source_synthesis.py
+python3 scripts/source_verification.py
 ```
 
 ## Architecture
@@ -55,13 +63,21 @@ Three pillars, each with a URL segment:
 
 | File | Purpose |
 |---|---|
-| `config.py` | `PILLAR_URL_MAP`, `PILLAR_URL_REVERSE`, site config |
+| `config.py` | `PILLAR_URL_MAP`, `PILLAR_URL_REVERSE`, `PILLAR_SUBCATEGORIES`, site config |
 | `build.py` | Main build script — imports from `core/urls.py` |
 | `core/urls.py` | Pure URL helpers (lightweight, testable) |
+| `core/ontology.py` | Concept, Relation, ResourceLink, InspirationSource models; OntologyManager; concept extraction; Cytoscape export |
 | `core/build_cache.py` | Incremental build cache |
 | `schemas.py` | Pydantic models for registry validation |
-| `registry.json` | Content registry (187 items) |
+| `registry.json` | Content registry (240+ items) |
 | `scripts/migrate_slugs.py` | Slug migration tool |
+| `scripts/knowledge_ingester.py` | Multi-pillar knowledge ingestion (arXiv, HN) with ontology concept extraction |
+| `scripts/source_synthesis.py` | Source synthesis with inspiration source matching and concept provenance |
+| `scripts/source_verification.py` | Source verification with inspiration domain recognition |
+| `scripts/generate_glossaries.py` | Auto-generate per-pillar glossary pages from ontology concepts |
+| `etc/pillars.toml` | Pillar definitions + `[inspiration_sources]` (32 authoritative sources) |
+| `data/ontology.json` | Persisted ontology (48 concepts, 47 relations) |
+| `.github/workflows/source-refresh.yml` | Weekly ontology + glossary + source refresh |
 
 ## Invariants
 
