@@ -31,6 +31,9 @@ python3 scripts/migrate_slugs.py --check
 python3 -c "from core.ontology import OntologyManager; m=OntologyManager(); m.seed_all_pillars(); m.seed_relations(); m.save('data/ontology.json')"
 python3 scripts/generate_glossaries.py
 
+# Generate learn modules
+python3 scripts/generate_learn_modules.py
+
 # Source synthesis + verification
 python3 scripts/source_synthesis.py
 python3 scripts/source_verification.py
@@ -75,6 +78,7 @@ Three pillars, each with a URL segment:
 | `scripts/source_synthesis.py` | Source synthesis with inspiration source matching and concept provenance |
 | `scripts/source_verification.py` | Source verification with inspiration domain recognition |
 | `scripts/generate_glossaries.py` | Auto-generate per-pillar glossary pages from ontology concepts |
+| `scripts/generate_learn_modules.py` | Auto-generate interactive learn modules with Bloom questions, flashcards, code examples |
 | `etc/pillars.toml` | Pillar definitions + `[inspiration_sources]` (32 authoritative sources) |
 | `data/ontology.json` | Persisted ontology (48 concepts, 47 relations) |
 | `.github/workflows/source-refresh.yml` | Weekly ontology + glossary + source refresh |
