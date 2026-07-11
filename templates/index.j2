@@ -11,7 +11,7 @@
     {% for item in recent_posts %}
     <article>
       <hgroup>
-        <h3><a href="/{{ item.slug }}/">{{ item.title }}</a></h3>
+        <h3><a href="{{ slug_to_url(item.slug) }}">{{ item.title }}</a></h3>
         <p>{{ item.description }}</p>
       </hgroup>
       <footer>
@@ -22,19 +22,11 @@
           {% endfor %}
         </div>
         {% endif %}
-        <a href="/{{ item.slug }}/" role="button" class="outline">Read more →</a>
+        <a href="{{ slug_to_url(item.slug) }}" role="button" class="outline">Read more →</a>
       </footer>
     </article>
     {% endfor %}
   </div>
 </section>
 
-<section>
-  <h2>Explore by Category</h2>
-  <div class="grid">
-    <a href="/research/" role="button" class="secondary">Research</a>
-    <a href="/learn/" role="button" class="secondary">Learn</a>
-    <a href="/knowledge/" role="button" class="secondary">Knowledge</a>
-  </div>
-</section>
 {% endblock %}

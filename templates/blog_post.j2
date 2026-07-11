@@ -334,7 +334,7 @@
         {%- set rtkey = thumbnail_key_fn(rp.title) %}
         {%- set feat_img = rp.featured_image or "" %}
         {%- set has_feat = feat_img %}
-          <a href="/{{ rp.slug }}/" class="ghost-card block text-decoration:none">
+          <a href="{{ slug_to_url(rp.slug) }}" class="ghost-card block text-decoration:none">
             <div class="aspect-[600/340] bg-gray-800 overflow-hidden">
               {%- if has_feat %}
               <img src="{{ resolve_card_image(feat_img) }}" alt="{{ rp.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
@@ -367,7 +367,7 @@
          {%- set rtkey = thumbnail_key_fn(rl.title) %}
          {%- set feat_img = rl.featured_image or "" %}
          {%- set has_feat = feat_img %}
-          <a href="/{{ rl.slug }}/" class="ghost-card block text-decoration:none">
+          <a href="{{ slug_to_url(rl.slug) }}" class="ghost-card block text-decoration:none">
             <div class="aspect-[600/340] bg-gray-800 overflow-hidden">
               {%- if has_feat %}
               <img src="{{ resolve_card_image(feat_img) }}" alt="{{ rl.title | striptags | e }}" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
@@ -392,18 +392,18 @@
 
      {%- if prev_post or next_post %}
      <nav class="mt-12 pt-6 border-t grid grid-cols-2 gap-4" aria-label="Post navigation">
-       {%- if prev_post %}
-       <a href="/{{ prev_post.slug }}/" class="ghost-card group block p-3 text-decoration:none">
-         <span class="text-xs" style="color:var(--color-text-muted)">&larr; Previous</span>
-         <span class="block text-sm font-medium  group-hover:text-blue-600 truncate">{{ prev_post.title | striptags }}</span>
-       </a>
-       {%- endif %}
-       {%- if next_post %}
-       <a href="/{{ next_post.slug }}/" class="ghost-card group block p-3 text-decoration:none">
-         <span class="text-xs" style="color:var(--color-text-muted)">Next &rarr;</span>
-         <span class="block text-sm font-medium  group-hover:text-blue-600 truncate">{{ next_post.title | striptags }}</span>
-       </a>
-       {%- endif %}
+        {%- if prev_post %}
+        <a href="{{ slug_to_url(prev_post.slug) }}" class="ghost-card group block p-3 text-decoration:none">
+          <span class="text-xs" style="color:var(--color-text-muted)">&larr; Previous</span>
+          <span class="block text-sm font-medium  group-hover:text-blue-600 truncate">{{ prev_post.title | striptags }}</span>
+        </a>
+        {%- endif %}
+        {%- if next_post %}
+        <a href="{{ slug_to_url(next_post.slug) }}" class="ghost-card group block p-3 text-decoration:none">
+          <span class="text-xs" style="color:var(--color-text-muted)">Next &rarr;</span>
+          <span class="block text-sm font-medium  group-hover:text-blue-600 truncate">{{ next_post.title | striptags }}</span>
+        </a>
+        {%- endif %}
      </nav>
      {%- endif %}
    </article>
@@ -417,7 +417,7 @@
           {%- set score = rel.score %}
           {%- set rel_title = rel.title | default(rel.slug.split('/')[-1] | replace('-', ' ') | title) | striptags %}
           {%- set rel_pillar = rel.pillar | default("knowledge") %}
-          <a href="/{{ rel_slug }}/" class="block p-3 rounded-lg transition hover:bg-gray-50 dark:hover:bg-gray-800/50" style="background:var(--color-surface);border:1px solid var(--color-border)">
+           <a href="{{ slug_to_url(rel_slug) }}" class="block p-3 rounded-lg transition hover:bg-gray-50 dark:hover:bg-gray-800/50" style="background:var(--color-surface);border:1px solid var(--color-border)">
             <div class="flex items-start justify-between gap-3">
               <div class="flex-1 min-w-0">
                 <h4 class="text-sm font-semibold truncate" style="color:var(--color-text)">{{ rel_title }}</h4>

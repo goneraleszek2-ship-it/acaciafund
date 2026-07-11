@@ -151,7 +151,7 @@
         {%- for rp in related_research %}
         {%- set rpillar = rp.pillar or "aml" %}
         {%- set rpc = pillar_config.get(rpillar, pillar_config["aml"]) %}
-        <a href="/{{ rp.slug }}/" class="ghost-card block text-decoration:none">
+        <a href="{{ slug_to_url(rp.slug) }}" class="ghost-card block text-decoration:none">
           <div class="p-3">
             {% set pillar = rp.pillar %}
             {% include "macros/pillar_badge.html" %}
@@ -173,7 +173,7 @@
         {%- for rk in related_knowledge %}
         {%- set rpillar = rk.pillar or "aml" %}
         {%- set rpc = pillar_config.get(rpillar, pillar_config["aml"]) %}
-        <a href="/{{ rk.slug }}/" class="ghost-card block text-decoration:none">
+        <a href="{{ slug_to_url(rk.slug) }}" class="ghost-card block text-decoration:none">
           <div class="p-3">
             {% set pillar = rk.pillar %}
             {% include "macros/pillar_badge.html" %}
@@ -191,13 +191,13 @@
     {%- if prev_lesson or next_lesson %}
     <nav class="mt-12 pt-6 border-t grid grid-cols-2 gap-4" aria-label="Lesson navigation">
       {%- if prev_lesson %}
-      <a href="/{{ prev_lesson.slug }}/" class="ghost-card group block p-3 text-decoration:none">
+      <a href="{{ slug_to_url(prev_lesson.slug) }}" class="ghost-card group block p-3 text-decoration:none">
         <span class="text-xs" style="color:var(--color-text-muted)">&larr; Previous Lesson</span>
         <span class="block text-sm font-medium group-hover:text-blue-600 truncate">{{ prev_lesson.title | striptags }}</span>
       </a>
       {%- endif %}
       {%- if next_lesson %}
-      <a href="/{{ next_lesson.slug }}/" class="ghost-card group block p-3 text-decoration:none">
+      <a href="{{ slug_to_url(next_lesson.slug) }}" class="ghost-card group block p-3 text-decoration:none">
         <span class="text-xs" style="color:var(--color-text-muted)">Next Lesson &rarr;</span>
         <span class="block text-sm font-medium group-hover:text-blue-600 truncate">{{ next_lesson.title | striptags }}</span>
       </a>

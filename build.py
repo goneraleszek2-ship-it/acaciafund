@@ -1267,6 +1267,8 @@ def main():
     env.globals["resolve_topic_icon"] = resolve_topic_icon
     env.globals["render_topic_icon"] = render_topic_icon
     env.globals["_pick_subtopic"] = _pick_subtopic
+    env.globals["slug_to_url"] = slug_to_url
+    env.globals["pillar_to_url"] = pillar_to_url
 
     def filter_entities(entities):
         result = []

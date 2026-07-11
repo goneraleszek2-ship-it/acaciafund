@@ -131,7 +131,7 @@
         {%- for rp in related_research %}
         {%- set rpillar = rp.pillar or "aml" %}
         {%- set rpc = pillar_config.get(rpillar, pillar_config["aml"]) %}
-        <a href="/{{ rp.slug }}/" class="ghost-card block text-decoration:none">
+        <a href="{{ slug_to_url(rp.slug) }}" class="ghost-card block text-decoration:none">
           <div class="p-3">
             {% set pillar = rp.pillar %}
             {% include "macros/pillar_badge.html" %}
@@ -150,7 +150,7 @@
         {%- for rl in related_learn %}
         {%- set rpillar = rl.pillar or "aml" %}
         {%- set rpc = pillar_config.get(rpillar, pillar_config["aml"]) %}
-        <a href="/{{ rl.slug }}/" class="ghost-card block text-decoration:none">
+        <a href="{{ slug_to_url(rl.slug) }}" class="ghost-card block text-decoration:none">
           <div class="p-3">
             {% set pillar = rl.pillar %}
             {% include "macros/pillar_badge.html" %}

@@ -7,7 +7,7 @@
     <div class="pillar">
       <h2>{{ item.pillar | replace('-', ' ') | title if item.pillar else 'Research' }}</h2>
       <ul>
-        <li><a href="/{{ item.slug }}/">{{ item.title }}</a></li>
+        <li><a href="{{ slug_to_url(item.slug) }}">{{ item.title }}</a></li>
       </ul>
     </div>
     {% endfor %}

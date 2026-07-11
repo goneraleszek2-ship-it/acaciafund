@@ -5,7 +5,7 @@
   <div class="pillar-posts">
     {% for post in posts %}
     <article class="post-card">
-      <h2><a href="/{{ post.slug }}/">{{ post.title }}</a></h2>
+      <h2><a href="{{ slug_to_url(post.slug) }}">{{ post.title }}</a></h2>
       <p class="post-meta">
         <span>{{ post.date_str }}</span>
         <span>•</span>

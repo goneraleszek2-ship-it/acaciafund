@@ -8,7 +8,7 @@
       <h2>{{ diff | capitalize }}</h2>
       <ul>
         {% for item in items %}
-        <li><a href="/learn/{{ item.slug.split('/')[-1] }}/">{{ item.title }}</a></li>
+        <li><a href="{{ slug_to_url(item.slug) }}">{{ item.title }}</a></li>
         {% endfor %}
       </ul>
     </div>
