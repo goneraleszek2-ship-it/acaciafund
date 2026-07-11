@@ -1714,6 +1714,7 @@ def main():
                             ontology_concepts.append({
                                 "id": concept.id,
                                 "name": concept.label,
+                                "description": concept.description,
                                 "score": round(score, 2),
                             })
                     ontology_concepts = ontology_concepts[:8]
@@ -1886,6 +1887,47 @@ def main():
             source_verified = source_info.get("verified", False)
             source_evidence = source_info.get("evidence", [])
 
+            # Extract ontology concepts for learn items
+            ontology_concepts = []
+            if ontology and ontology.concept_count() > 0:
+                try:
+                    tags_text = " ".join(item.tags or [])
+                    title_text = item.title or ""
+                    body_text = item.body_html or ""
+                    body_text = re.sub(r"<[^>]+>", " ", body_text)
+                    combined = f"{title_text} {tags_text} {body_text[:500]}"
+                    matches = extract_concepts_from_text(combined, ontology)
+                    seen_ids = set()
+                    for concept, score in matches:
+                        if concept.id not in seen_ids and score >= 0.3:
+                            seen_ids.add(concept.id)
+                            ontology_concepts.append({
+                                "id": concept.id,
+                                "name": concept.label,
+                                "description": concept.description,
+                                "score": round(score, 2),
+                            })
+                    ontology_concepts = ontology_concepts[:8]
+                except Exception:
+                    pass
+
+            # Build external references for learn items
+            external_references = []
+            lp_key = item.pillar or "aml"
+            lp_prefix = {"aml": "aml", "stock": "ms", "data-engineering": "de"}.get(lp_key, "aml")
+            lp_sources = inspiration_sources.get(lp_prefix, {})
+            for src_key, src_info in lp_sources.items():
+                if isinstance(src_info, dict) and "url" in src_info:
+                    external_references.append({
+                        "title": src_info["name"],
+                        "url": src_info["url"],
+                        "description": src_info.get("description", ""),
+                        "source": src_info["name"],
+                        "relevance": src_info.get("relevance", 0.7),
+                    })
+            external_references.sort(key=lambda x: x.get("relevance", 0), reverse=True)
+            external_references = external_references[:6]
+
             quiz_json = _serialize_quiz(item)
             quality_score, quality_badge, quality_metrics = _compute_quality(quality_scores, item.slug)
 
@@ -1932,6 +1974,8 @@ def main():
                 impact_level=impact_level,
                 trend_categories=trend_categories,
                 source_synthesis=source_synthesis.get(item.slug, []),
+                ontology_concepts=ontology_concepts,
+                external_references=external_references,
                 is_index=False,
                 layer="learn",
                 layer_icon=LAYER_ICONS["learn"],
@@ -2187,6 +2231,42 @@ def main():
         out_dir = OUTPUT_DIR / pillar_url
         out_dir.mkdir(parents=True, exist_ok=True)
         pconf = PILLAR_CONFIG.get(pillar, PILLAR_CONFIG["aml"])
+
+        # Glossary terms for pillar
+        glossary_terms_for_pillar = []
+        for item in all_content:
+            if (item.content_type == "knowledge"
+                    and item.knowledge_category == "reference"
+                    and item.pillar == pillar):
+                glossary_terms_for_pillar.append({
+                    "slug": item.slug,
+                    "label": (item.title or "").replace(" Glossary", ""),
+                    "description": (item.description or "")[:80],
+                })
+        glossary_terms_for_pillar.sort(key=lambda x: x["label"])
+
+        # Latest learn modules for pillar
+        pillar_learn = [item for item in learn_items if item.pillar == pillar]
+        latest_learn_for_pillar = sorted(
+            pillar_learn,
+            key=lambda x: x.created_at or datetime.min.replace(tzinfo=timezone.utc),
+            reverse=True,
+        )[:6]
+        latest_learn_for_pillar = [
+            {"slug": x.slug, "title": x.title, "description": (x.description or "")[:100], "difficulty": getattr(x, "difficulty", "")}
+            for x in latest_learn_for_pillar
+        ]
+
+        # Concept cloud from ontology
+        concept_cloud_for_pillar = []
+        if ontology and ontology.concept_count() > 0:
+            all_concepts = ontology.concepts_by_pillar()
+            pillar_concepts = all_concepts.get(pillar, [])
+            concept_cloud_for_pillar = [
+                {"label": c.label, "count": len(ontology.related_concepts(c.id))}
+                for c in pillar_concepts[:15]
+            ]
+
         # Prepare posts data for JavaScript
         pillar_posts_data = []
         for p in p_posts:
@@ -2227,6 +2307,10 @@ def main():
             page_path=f"{pillar}/",
             page_title=pconf["heading"],
             layer_sub=pconf["label"],
+            page_description=pconf.get("description", ""),
+            glossary_terms=glossary_terms_for_pillar,
+            latest_learn=latest_learn_for_pillar,
+            concept_cloud=concept_cloud_for_pillar,
             thumbnail_base=f"{SITE_URL}/static/images",
             thumbnail_key=thumbnail_key,
             card_images=card_images,

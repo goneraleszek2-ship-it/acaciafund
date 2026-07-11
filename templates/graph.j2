@@ -16,7 +16,19 @@
       <li><span class="legend-dot" style="background:#d97706"></span> Knowledge (reference pages)</li>
       <li><span class="legend-dot" style="background:#a855f7"></span> Docs (system documentation)</li>
       <li><span class="legend-dot" style="background:#14b8a6"></span> Semantic Tag (concept)</li>
+      <li><span class="legend-dot" style="background:#14b8a6; shape:diamond; border:2px solid #fff"></span> Ontology Concept (structured entity)</li>
+      <li><span class="legend-dot" style="background:#f59e0b"></span> Relation (ontology edge)</li>
     </ul>
+    <div style="margin-top:0.75rem;">
+      <label style="font-size:0.75rem;color:var(--color-text-muted)">Filter by pillar:</label>
+      <select id="graph-filter" style="font-size:0.75rem;margin-top:0.25rem;width:100%;padding:0.25rem;border-radius:4px;background:var(--color-bg);color:var(--color-text);border:1px solid var(--color-border)">
+        <option value="all">All</option>
+        <option value="compliance">Compliance</option>
+        <option value="markets">Markets</option>
+        <option value="data">Data Engineering</option>
+        <option value="ontology">Ontology Only</option>
+      </select>
+    </div>
     <p><small>Click a node to highlight its neighbours. Hover to see details. Drag to rearrange.</small></p>
   </details>
 
@@ -172,6 +184,36 @@
           cy.animate({ fit: { eles: matched, padding: 50 }, duration: 400 });
         }
       };
+
+      // Pillar filter
+      var filterEl = document.getElementById('graph-filter');
+      if (filterEl) {
+        filterEl.addEventListener('change', function() {
+          var val = this.value;
+          cy.elements().removeClass('faded highlighted');
+          if (val === 'all') return;
+          if (val === 'ontology') {
+            // Show only ontology concept nodes and their relations
+            var ontNodes = cy.nodes('[type = "concept"]');
+            var ontEdges = cy.edges('[id ^= "ont-rel:"]');
+            cy.elements().addClass('faded');
+            ontNodes.removeClass('faded');
+            ontEdges.removeClass('faded');
+            if (ontNodes.length) cy.animate({ fit: { eles: ontNodes, padding: 50 }, duration: 400 });
+          } else {
+            // Filter by pillar (domain prefix)
+            var pillarMap = { compliance: 'aml', markets: 'stock', data: 'data-engineering' };
+            var prefix = pillarMap[val] || val;
+            var matched = cy.nodes('[domain ^= "' + prefix + '/"]');
+            if (matched.length) {
+              var nbrs = matched.add(matched.neighborhood());
+              cy.elements().addClass('faded');
+              nbrs.removeClass('faded');
+              cy.animate({ fit: { eles: matched, padding: 50 }, duration: 400 });
+            }
+          }
+        });
+      }
     }
 
     fetch('/graph-data.json')

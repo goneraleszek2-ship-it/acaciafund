@@ -1,10 +1,74 @@
 {% extends "layout.j2" %}
 {% block main_content %}
 <section>
-  <h1>{{ page_title }}</h1>
+  <hgroup>
+    <h1>{{ page_title }}</h1>
+    <p>{{ page_description | default("") }}</p>
+  </hgroup>
+
+  {%- if glossary_terms and glossary_terms | length > 0 %}
+  <div class="mt-6 mb-8">
+    <h2 class="text-xl font-bold mb-3" style="color:var(--color-text)">Key Terms</h2>
+    <div class="flex flex-wrap gap-2">
+      {%- for term in glossary_terms[:12] %}
+      <a href="{{ slug_to_url(term.slug) }}" class="ghost-card px-3 py-1.5 text-sm transition hover:shadow-md" style="text-decoration:none;color:var(--color-text)">
+        <span class="font-semibold">{{ term.label }}</span>
+        {%- if term.description %}
+        <span class="text-xs ml-1" style="color:var(--color-text-muted)">— {{ term.description[:60] }}{% if term.description | length > 60 %}...{% endif %}</span>
+        {%- endif %}
+      </a>
+      {%- endfor %}
+    </div>
+  </div>
+  {%- endif %}
+
+  {%- if latest_learn and latest_learn | length > 0 %}
+  <div class="mt-6 mb-8">
+    <h2 class="text-xl font-bold mb-3" style="color:var(--color-text)">Latest Lessons</h2>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {%- for item in latest_learn %}
+      <a href="{{ slug_to_url(item.slug) }}" class="ghost-card block transition hover:shadow-md" style="text-decoration:none">
+        <div class="p-4">
+          <span class="text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, #22c55e 15%, transparent);color:#22c55e">Learn</span>
+          <h3 class="mt-2 text-sm font-semibold" style="color:var(--color-text)">{{ item.title | striptags }}</h3>
+          <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">{{ item.description }}</p>
+          {%- if item.difficulty %}
+          <span class="mt-2 inline-block text-xs px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted)">{{ item.difficulty | capitalize }}</span>
+          {%- endif %}
+        </div>
+      </a>
+      {%- endfor %}
+    </div>
+  </div>
+  {%- endif %}
+
+  {%- if concept_cloud and concept_cloud | length > 0 %}
+  <div class="mt-6 mb-8">
+    <h2 class="text-xl font-bold mb-3" style="color:var(--color-text)">Concepts</h2>
+    <div class="flex flex-wrap gap-2">
+      {%- for concept in concept_cloud %}
+      <span class="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 20%, transparent)">
+        {{ concept.label }}
+        <span class="opacity-60">({{ concept.count }})</span>
+      </span>
+      {%- endfor %}
+    </div>
+  </div>
+  {%- endif %}
+
   <div class="pillar-posts">
     {% for post in posts %}
     <article class="post-card">
+      <div class="flex items-center gap-2 mb-2">
+        {%- set ptype = post.content_type | default("research") %}
+        {%- if ptype == "learn" %}
+        <span class="text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, #22c55e 15%, transparent);color:#22c55e">Learn</span>
+        {%- elif ptype == "knowledge" %}
+        <span class="text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, #d97706 15%, transparent);color:#d97706">Knowledge</span>
+        {%- else %}
+        <span class="text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, #6366f1 15%, transparent);color:#6366f1">Research</span>
+        {%- endif %}
+      </div>
       <h2><a href="{{ slug_to_url(post.slug) }}">{{ post.title }}</a></h2>
       <p class="post-meta">
         <span>{{ post.date_str }}</span>
