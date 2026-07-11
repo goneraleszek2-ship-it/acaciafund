@@ -18977,6 +18977,541 @@
       "auto_generated": true,
       "generated_at": "2026-07-11T16:52:49.862737+00:00",
       "concept_count": 17
+    },
+    {
+      "slug": "data/learn/pyspark-fundamentals",
+      "title": "PySpark Fundamentals: Distributed Data Processing at Scale",
+      "pillar": "data-engineering",
+      "content_type": "learn",
+      "tags": [
+        "pyspark",
+        "spark",
+        "data-engineering",
+        "distributed-computing",
+        "big-data"
+      ],
+      "description": "Master PySpark DataFrame API, Spark SQL, and distributed processing patterns for building production data pipelines.",
+      "difficulty": "intermediate",
+      "body_html": "<h2>What is PySpark?</h2>\n\n<p>PySpark is the Python API for Apache Spark \u2014 a unified analytics engine for large-scale data processing. Spark provides an interface for programming entire clusters with implicit data parallelism and fault tolerance.</p>\n<p>Key advantages over single-machine processing:</p>\n<ul>\n<li><strong>In-memory computation</strong> \u2014 up to 100x faster than Hadoop MapReduce for certain workloads</li>\n<li><strong>Lazy evaluation</strong> \u2014 builds an optimized execution plan before running</li>\n<li><strong>Unified API</strong> \u2014 same codebase for batch, streaming, SQL, and ML workloads</li>\n<li><strong>Horizontal scaling</strong> \u2014 add nodes to handle larger datasets</li>\n</ul>\n\n<h2>SparkSession and DataFrames</h2>\n\n<p>The SparkSession is your entry point to Spark functionality. It creates a bridge between your Python code and the distributed Spark engine.</p>\n<pre><code class=\"language-python\">from pyspark.sql import SparkSession\nfrom pyspark.sql.functions import col, avg, count, when\n\n# Initialize SparkSession\nspark = SparkSession.builder \\\n    .appName(\"AcaciaFund Analytics\") \\\n    .config(\"spark.sql.shuffle.partitions\", \"200\") \\\n    .getOrCreate()\n\n# Read data from various sources\ndf = spark.read.parquet(\"s3://bucket/transactions/\")\ndf_json = spark.read.json(\"s3://bucket/market-data/\")\ndf_csv = spark.read.option(\"header\", True).csv(\"s3://bucket/reports/\")\n\n# Basic transformations\nresult = df \\\n    .filter(col(\"amount\") > 10000) \\\n    .groupBy(\"category\") \\\n    .agg(\n        count(\"*\").alias(\"transaction_count\"),\n        avg(\"amount\").alias(\"avg_amount\")\n    ) \\\n    .orderBy(col(\"avg_amount\").desc())\n\nresult.show()</code></pre>\n\n<h2>Transformations and Actions</h2>\n\n<p>Spark operations fall into two categories:</p>\n<ul>\n<li><strong>Transformations</strong> (lazy) \u2014 <code>filter()</code>, <code>select()</code>, <code>groupBy()</code>, <code>join()</code>, <code>withColumn()</code></li>\n<li><strong>Actions</strong> (eager) \u2014 <code>show()</code>, <code>collect()</code>, <code>count()</code>, <code>write()</code></li>\n</ul>\n<p>The Catalyst optimizer automatically optimizes your query plan, combining operations and eliminating unnecessary shuffles.</p>\n<pre><code class=\"language-python\"># Window functions for time-series analysis\nfrom pyspark.sql.window import Window\nfrom pyspark.sql.functions import lag, lead, dense_rank\n\nwindow_spec = Window.partitionBy(\"asset_class\").orderBy(\"date\")\n\ndf_with_returns = df \\\n    .withColumn(\"prev_close\", lag(\"close\", 1).over(window_spec)) \\\n    .withColumn(\"daily_return\", \n        (col(\"close\") - col(\"prev_close\")) / col(\"prev_close\")) \\\n    .withColumn(\"volatility_30d\", \n        avg(\"daily_return\").over(\n            Window.partitionBy(\"asset_class\")\n                  .orderBy(\"date\")\n                  .rowsBetween(-30, -1)\n        )\n    )</code></pre>\n\n<h2>Performance Optimization</h2>\n\n<p>Key techniques for production PySpark workloads:</p>\n<ul>\n<li><strong>Partitioning</strong> \u2014 Control data distribution with <code>repartition()</code> and <code>coalesce()</code></li>\n<li><strong>Caching</strong> \u2014 Use <code>cache()</code> or <code>persist()</code> for DataFrames reused across actions</li>\n<li><strong>Broadcast joins</strong> \u2014 Automatically broadcasts small tables to avoid shuffles</li>\n<li><strong>Bucketing</strong> \u2014 Pre-partition data by join keys for efficient joins</li>\n</ul>\n<pre><code class=\"language-python\"># Cache frequently accessed data\ntransactions = spark.read.parquet(\"s3://transactions/\").cache()\n\n# Broadcast join for small dimension table\nfrom pyspark.sql.functions import broadcast\nenriched = transactions.join(broadcast(risk_scores), \"customer_id\")\n\n# Optimize partition count for output\nresult.repartition(200, \"date\") \\\n    .write \\\n    .partitionBy(\"date\") \\\n    .parquet(\"s3://output/enriched-transactions/\")</code></pre>",
+      "bloom_questions": [
+        {
+          "level": "remember",
+          "question": "What are the two main types of operations in PySpark?"
+        },
+        {
+          "level": "understand",
+          "question": "Why does Spark use lazy evaluation, and how does it benefit performance?"
+        },
+        {
+          "level": "apply",
+          "question": "Write a PySpark query to find the top 5 categories by total transaction volume in the last 30 days."
+        },
+        {
+          "level": "analyze",
+          "question": "Compare and contrast repartition() vs coalesce() \u2014 when would you use each?"
+        },
+        {
+          "level": "evaluate",
+          "question": "A PySpark job is running 10x slower than expected. What profiling steps would you take?"
+        },
+        {
+          "level": "create",
+          "question": "Design a PySpark pipeline that ingests raw transactions, applies AML risk scoring, and outputs enriched data partitioned by date."
+        }
+      ],
+      "flashcards": [
+        {
+          "front": "What is a SparkSession?",
+          "back": "The single entry point to all Spark functionality, created via SparkSession.builder"
+        },
+        {
+          "front": "What is lazy evaluation in Spark?",
+          "back": "Transformations are recorded but not executed until an action is called, allowing the Catalyst optimizer to plan the most efficient execution path"
+        },
+        {
+          "front": "What is a broadcast join?",
+          "back": "A join strategy where the smaller table is broadcast to all executors, avoiding expensive shuffle operations"
+        }
+      ],
+      "prerequisites": [
+        "data/learn/data-engineering-basics",
+        "data/learn/data-pipeline-architectures"
+      ],
+      "author": "AcaciaFund",
+      "created_at": "2026-07-11T18:46:54.997952+00:00",
+      "updated_at": "2026-07-11T18:46:54.997952+00:00",
+      "date_str": "2026-07-11",
+      "auto_generated": true,
+      "concept_enriched": true
+    },
+    {
+      "slug": "data/learn/partitioning-strategies",
+      "title": "Partitioning Strategies: Optimizing Data Layout for Performance",
+      "pillar": "data-engineering",
+      "content_type": "learn",
+      "tags": [
+        "partitioning",
+        "data-layout",
+        "performance",
+        "data-engineering",
+        "storage"
+      ],
+      "description": "Learn how partitioning strategies affect query performance, storage efficiency, and cost in modern data platforms.",
+      "difficulty": "intermediate",
+      "body_html": "<h2>Why Partitioning Matters</h2>\n\n<p>Partitioning determines how data is physically organized on disk or across cluster nodes. Good partitioning enables partition pruning \u2014 skipping irrelevant data during queries \u2014 which can reduce I/O by 10-100x.</p>\n<p>Key trade-offs:</p>\n<ul>\n<li><strong>Too few partitions</strong> \u2014 large files, poor parallelism, OOM errors</li>\n<li><strong>Too many partitions</strong> \u2014 high metadata overhead, small file problem</li>\n<li><strong>Wrong partition key</strong> \u2014 data skew, uneven resource utilization</li>\n</ul>\n\n<h2>Time-Based Partitioning</h2>\n\n<p>The most common pattern for analytical workloads. Partition by date (and optionally hour) for efficient time-range queries.</p>\n<pre><code class=\"language-python\"># Good: partition by date for daily queries\ndf.write.partitionBy(\"year\", \"month\", \"day\") \\\n    .parquet(\"s3://lake/transactions/\")\n\n# Query only reads relevant partitions\nSELECT * FROM transactions \nWHERE year = 2026 AND month = 7 AND day = 11\n\n# iceberg: hidden partitioning with transform\nALTER TABLE transactions ADD PARTITION FIELD \n    days(ts)  -- automatic daily partitioning</code></pre>\n<p><strong>Rule of thumb:</strong> Target 128MB-1GB per partition file. For daily partitions processing 1TB/day, this means ~1000 partitions per day.</p>\n\n<h2>Hash Partitioning for Joins</h2>\n\n<p>When joining large datasets on a common key, hash-partitioning both datasets by that key ensures co-located data and minimizes network shuffles.</p>\n<pre><code class=\"language-python\"># Pre-bucket by customer_id for efficient joins\ndf.write \\\n    .bucketBy(256, \"customer_id\") \\\n    .sortBy(\"customer_id\") \\\n    .saveAsTable(\"transactions_bucketed\")\n\n# Delta Lake: Z-ORDER for multi-dimensional pruning\nOPTIMIZE transactions\nZORDER BY (customer_id, transaction_date)</code></pre>\n\n<h2>Monitoring Partition Health</h2>\n\n<p>Regularly check for partition skew and small files:</p>\n<pre><code class=\"language-python\"># Check partition sizes\ndf.groupBy(\"date\").count().show()\n\n# Iceberg: check for small files\nSELECT path, file_size_in_bytes \nFROM table.files(table_name) \nORDER BY file_size_in_bytes ASC\nLIMIT 20\n\n# Fix: compact small files\nALTER TABLE transactions EXECUTE optimize \nWHERE date = '2026-07-11'</code></pre>",
+      "bloom_questions": [
+        {
+          "level": "remember",
+          "question": "What is partition pruning?"
+        },
+        {
+          "level": "understand",
+          "question": "Why might partitioning by a high-cardinality column cause problems?"
+        },
+        {
+          "level": "apply",
+          "question": "Design a partitioning scheme for a financial transactions table queried primarily by date range and customer ID."
+        },
+        {
+          "level": "analyze",
+          "question": "Analyze the trade-offs between date-based partitioning and hash partitioning for a real-time analytics workload."
+        }
+      ],
+      "flashcards": [
+        {
+          "front": "What is partition pruning?",
+          "back": "The ability of a query engine to skip reading partitions that don't match the query's filter conditions, reducing I/O"
+        },
+        {
+          "front": "What is the small file problem?",
+          "back": "When too many small partition files create excessive metadata overhead and slow down query planning"
+        },
+        {
+          "front": "What is Z-ORDER?",
+          "back": "A data layout optimization in Delta Lake/Iceberg that co-locates data across multiple columns for efficient multi-dimensional queries"
+        }
+      ],
+      "prerequisites": [
+        "data/learn/pyspark-fundamentals"
+      ],
+      "author": "AcaciaFund",
+      "created_at": "2026-07-11T18:46:54.997952+00:00",
+      "updated_at": "2026-07-11T18:46:54.997952+00:00",
+      "date_str": "2026-07-11",
+      "auto_generated": true,
+      "concept_enriched": true
+    },
+    {
+      "slug": "data/learn/spike-data-pipelines",
+      "title": "Building Resilient Data Pipelines with Spark and dbt",
+      "pillar": "data-engineering",
+      "content_type": "learn",
+      "tags": [
+        "spark",
+        "dbt",
+        "data-pipelines",
+        "dataops",
+        "testing",
+        "data-engineering"
+      ],
+      "description": "Combine Spark's processing power with dbt's transformation layer to build production-grade, tested, documented data pipelines.",
+      "difficulty": "intermediate",
+      "body_html": "<h2>Architecture: Spark + dbt</h2>\n\n<p>The modern data stack combines Spark for heavy ETL processing with dbt for SQL-based transformations, testing, and documentation:</p>\n<ul>\n<li><strong>Spark</strong> \u2014 ingestion, heavy computation, ML feature engineering</li>\n<li><strong>dbt</strong> \u2014 business logic transformations, data quality tests, documentation</li>\n<li><strong>Orchestration</strong> \u2014 Dagster/Airflow coordinates Spark jobs \u2192 dbt runs</li>\n</ul>\n<pre><code class=\"language-python\"># Spark: heavy lifting (ingestion, joins, aggregation)\n# dbt/models/staging/stg_transactions.sql\nWITH source AS (\n    SELECT * FROM {{ source('raw', 'transactions') }}\n),\ncleaned AS (\n    SELECT\n        transaction_id,\n        customer_id,\n        CAST(amount AS DECIMAL(18,2)) AS amount,\n        UPPER(currency) AS currency,\n        DATE(transaction_ts) AS transaction_date,\n        CASE \n            WHEN amount > 10000 THEN 'high_value'\n            WHEN amount > 1000 THEN 'medium'\n            ELSE 'standard'\n        END AS value_tier\n    FROM source\n    WHERE transaction_id IS NOT NULL\n)\nSELECT * FROM cleaned</code></pre>\n\n<h2>Data Quality Tests</h2>\n\n<p>dbt tests validate your data at every transformation step:</p>\n<pre><code class=\"language-yaml\"># dbt/models/staging/schema.yml\nversion: 2\nmodels:\n  - name: stg_transactions\n    columns:\n      - name: transaction_id\n        tests:\n          - unique\n          - not_null\n      - name: amount\n        tests:\n          - not_null\n          - dbt_utils.accepted_range:\n              min_value: 0\n              max_value: 10000000\n      - name: currency\n        tests:\n          - accepted_values:\n              values: ['USD', 'EUR', 'GBP', 'JPY']</code></pre>\n\n<h2>Lineage and Documentation</h2>\n\n<p>dbt auto-generates lineage graphs and documentation. Combined with Spark's execution plans, you get end-to-end visibility:</p>\n<ul>\n<li><strong>Column-level lineage</strong> \u2014 trace any metric back to its raw source</li>\n<li><strong>Impact analysis</strong> \u2014 understand downstream effects of schema changes</li>\n<li><strong>Run history</strong> \u2014 track freshness, execution time, and test results</li>\n</ul>",
+      "bloom_questions": [
+        {
+          "level": "remember",
+          "question": "What are the key responsibilities of Spark vs dbt in a modern data pipeline?"
+        },
+        {
+          "level": "understand",
+          "question": "Why separate data processing (Spark) from business logic transformations (dbt)?"
+        },
+        {
+          "level": "apply",
+          "question": "Write a dbt model that calculates daily transaction totals and flags anomalous days."
+        },
+        {
+          "level": "evaluate",
+          "question": "Evaluate whether this architecture is appropriate for a real-time fraud detection system."
+        }
+      ],
+      "flashcards": [
+        {
+          "front": "What does dbt stand for?",
+          "back": "Data Build Tool \u2014 a SQL-based transformation framework for analytics engineering"
+        },
+        {
+          "front": "What is dbt lineage?",
+          "back": "The automatic graph of dependencies between models, showing how data flows from raw sources through transformations to final outputs"
+        }
+      ],
+      "prerequisites": [
+        "data/learn/pyspark-fundamentals",
+        "data/learn/building-pipelines-dbt-dagster"
+      ],
+      "author": "AcaciaFund",
+      "created_at": "2026-07-11T18:46:54.997952+00:00",
+      "updated_at": "2026-07-11T18:46:54.997952+00:00",
+      "date_str": "2026-07-11",
+      "auto_generated": true,
+      "concept_enriched": true
+    },
+    {
+      "slug": "aml/learn/kyc-cdd-workflows",
+      "title": "KYC/CDD Workflows: From Onboarding to Ongoing Monitoring",
+      "pillar": "aml",
+      "content_type": "learn",
+      "tags": [
+        "kyc",
+        "cdd",
+        "customer-due-diligence",
+        "compliance",
+        "aml",
+        "onboarding"
+      ],
+      "description": "Deep-dive into Know Your Customer and Customer Due Diligence processes \u2014 the frontline defense against financial crime.",
+      "difficulty": "intermediate",
+      "body_html": "<h2>The KYC/CDD Framework</h2>\n\n<p>KYC/CDD is mandated by FATF Recommendation 10 and forms the foundation of AML compliance. It requires financial institutions to:</p>\n<ol>\n<li><strong>Identify</strong> \u2014 verify the identity of customers and beneficial owners</li>\n<li><strong>Understand</strong> \u2014 the nature and purpose of the business relationship</li>\n<li><strong>Monitor</strong> \u2014 ongoing transactions and update customer information</li>\n</ol>\n<p>The three tiers of due diligence:</p>\n<ul>\n<li><strong>Simplified Due Diligence (SDD)</strong> \u2014 low-risk customers, basic verification</li>\n<li><strong>Customer Due Diligence (CDD)</strong> \u2014 standard risk, full identity verification + source of funds</li>\n<li><strong>Enhanced Due Diligence (EDD)</strong> \u2014 high-risk customers (PEPs, high-risk jurisdictions), deeper investigation</li>\n</ul>\n\n<h2>Onboarding Workflow</h2>\n\n<pre><code>Customer Applies \u2192 Identity Verification \u2192 Risk Assessment \u2192 \n  \u251c\u2500 Low Risk \u2192 SDD \u2192 Approve \u2192 Ongoing Monitoring\n  \u251c\u2500 Medium Risk \u2192 CDD \u2192 Approve \u2192 Enhanced Monitoring\n  \u2514\u2500 High Risk \u2192 EDD \u2192 Compliance Review \u2192 Approve/Reject \u2192 Intensive Monitoring</code></pre>\n<p>Key data points collected during onboarding:</p>\n<ul>\n<li>Full legal name, date of birth, nationality</li>\n<li>Residential address (proof of address)</li>\n<li>Identification documents (passport, national ID)</li>\n<li>Source of funds / source of wealth</li>\n<li>Purpose of account / business relationship</li>\n<li>Beneficial ownership (for legal entities: 25%+ ownership threshold)</li>\n</ul>\n\n<h2>Ongoing Monitoring and Periodic Review</h2>\n\n<p>CDD is not a one-time event. Institutions must:</p>\n<ul>\n<li><strong>Transaction monitoring</strong> \u2014 flag unusual patterns (velocity, amounts, counterparties)</li>\n<li><strong>Periodic review</strong> \u2014 refresh customer information based on risk rating</li>\n<li><strong>Watchlist screening</strong> \u2014 check against sanctions lists, PEP databases, adverse media</li>\n<li><strong>Trigger events</strong> \u2014 re-verify when material changes occur</li>\n</ul>\n<p><strong>Risk-based approach:</strong> FATF recommends calibrating review frequency to customer risk level \u2014 high-risk customers reviewed at least annually, low-risk every 3-5 years.</p>",
+      "bloom_questions": [
+        {
+          "level": "remember",
+          "question": "What are the three tiers of due diligence?"
+        },
+        {
+          "level": "understand",
+          "question": "Why is beneficial ownership verification particularly challenging for complex corporate structures?"
+        },
+        {
+          "level": "apply",
+          "question": "Design a risk-scoring matrix for customer onboarding that considers jurisdiction, business type, and transaction patterns."
+        },
+        {
+          "level": "analyze",
+          "question": "Analyze how a fintech startup's KYC process differs from a traditional bank's \u2014 what are the regulatory risks?"
+        },
+        {
+          "level": "evaluate",
+          "question": "Critically assess whether AI-powered identity verification can replace manual KYC review."
+        }
+      ],
+      "flashcards": [
+        {
+          "front": "What is KYC?",
+          "back": "Know Your Customer \u2014 the process of verifying the identity, suitability, and risks of customers"
+        },
+        {
+          "front": "What is EDD?",
+          "back": "Enhanced Due Diligence \u2014 deeper investigation applied to high-risk customers, including source of wealth verification"
+        },
+        {
+          "front": "What is the 25% beneficial ownership threshold?",
+          "back": "FATF recommends identifying natural persons who own 25% or more of a legal entity as beneficial owners"
+        }
+      ],
+      "prerequisites": [
+        "aml/learn/aml-basics",
+        "aml/learn/aml-compliance-glossary"
+      ],
+      "author": "AcaciaFund",
+      "created_at": "2026-07-11T18:46:54.997952+00:00",
+      "updated_at": "2026-07-11T18:46:54.997952+00:00",
+      "date_str": "2026-07-11",
+      "auto_generated": true,
+      "concept_enriched": true
+    },
+    {
+      "slug": "aml/learn/sar-filing-scenarios",
+      "title": "SAR Filing Scenarios: Identifying and Reporting Suspicious Activity",
+      "pillar": "aml",
+      "content_type": "learn",
+      "tags": [
+        "sar",
+        "suspicious-activity-reports",
+        "fincen",
+        "compliance",
+        "aml",
+        "reporting"
+      ],
+      "description": "Master the art of Suspicious Activity Report writing through real-world scenarios \u2014 structuring, layering, trade-based ML, and crypto red flags.",
+      "difficulty": "advanced",
+      "body_html": "<h2>When to File a SAR</h2>\n\n<p>Under the Bank Secrecy Act (BSA), financial institutions must file a SAR when they know, suspect, or have reason to suspect that a transaction:</p>\n<ul>\n<li>Involves funds derived from illegal activity</li>\n<li>Is designed to evade BSA reporting requirements (structuring)</li>\n<li>Lacks a lawful purpose or is unusual for the customer</li>\n<li>Involves use of the institution to facilitate criminal activity</li>\n</ul>\n<p><strong>Filing thresholds:</strong></p>\n<ul>\n<li>Transactions \u2265 $5,000 involving suspected criminal activity</li>\n<li>Any amount for certain offenses (money laundering, terrorism)</li>\n<li>$25,000+ if suspect is unknown</li>\n</ul>\n\n<h2>Scenario 1: Structuring</h2>\n\n<p><strong>Pattern:</strong> Multiple cash deposits just below the $10,000 CTR threshold.</p>\n<p><strong>Red flags:</strong></p>\n<ul>\n<li>Multiple deposits of $9,000-$9,999 within a short period</li>\n<li>Deposits at different branches or ATMs</li>\n<li>Customer appears to receive cash from multiple sources</li>\n<li>Customer is evasive about the source of funds</li>\n</ul>\n<p><strong>SAR narrative example:</strong> \"Account holder made 7 cash deposits between [dates] totaling $67,400, with individual deposits ranging from $8,500 to $9,800. Deposits were made at 3 different branch locations. When asked about the source, customer stated 'tips from work' but employment records show monthly salary of $3,200.\"</p>\n\n<h2>Scenario 2: Layering through Shell Companies</h2>\n\n<p><strong>Pattern:</strong> Rapid movement of funds through multiple corporate accounts with no apparent business purpose.</p>\n<p><strong>Red flags:</strong></p>\n<ul>\n<li>Wire transfers between related entities with no clear commercial reason</li>\n<li>Companies registered in secrecy jurisdictions</li>\n<li>Nominee directors or shareholders</li>\n<li>Funds flowing in circles (A \u2192 B \u2192 C \u2192 A)</li>\n</ul>",
+      "bloom_questions": [
+        {
+          "level": "remember",
+          "question": "What are the SAR filing thresholds under the BSA?"
+        },
+        {
+          "level": "understand",
+          "question": "Why is structuring itself a criminal offense even if the underlying funds are legitimate?"
+        },
+        {
+          "level": "apply",
+          "question": "Write a SAR narrative for a scenario where a customer receives multiple international wire transfers from high-risk jurisdictions."
+        },
+        {
+          "level": "analyze",
+          "question": "Compare SAR filing requirements across the US (FinCEN), UK (NCA), and Canada (FINTRAC)."
+        },
+        {
+          "level": "evaluate",
+          "question": "Evaluate the effectiveness of current SAR filing processes in disrupting criminal financial networks."
+        }
+      ],
+      "flashcards": [
+        {
+          "front": "What is structuring?",
+          "back": "The deliberate breaking up of transactions to avoid currency transaction reporting thresholds (e.g., keeping deposits below $10,000)"
+        },
+        {
+          "front": "What is a SAR?",
+          "back": "Suspicious Activity Report \u2014 a document filed with FinCEN (US) or equivalent authority when suspicious transactions are detected"
+        },
+        {
+          "front": "What is layering?",
+          "back": "The second stage of money laundering \u2014 moving funds through multiple accounts/entities to obscure their origin"
+        }
+      ],
+      "prerequisites": [
+        "aml/learn/aml-basics",
+        "aml/learn/kyc-cdd-workflows",
+        "aml/learn/aml-compliance-glossary"
+      ],
+      "author": "AcaciaFund",
+      "created_at": "2026-07-11T18:46:54.997952+00:00",
+      "updated_at": "2026-07-11T18:46:54.997952+00:00",
+      "date_str": "2026-07-11",
+      "auto_generated": true,
+      "concept_enriched": true
+    },
+    {
+      "slug": "aml/learn/sanctions-screening",
+      "title": "Sanctions Screening: Tools, Techniques, and Compliance Challenges",
+      "pillar": "aml",
+      "content_type": "learn",
+      "tags": [
+        "sanctions",
+        "ofac",
+        "screening",
+        "compliance",
+        "aml",
+        "pep"
+      ],
+      "description": "Navigate the complex landscape of sanctions compliance \u2014 OFAC SDN lists, screening technologies, and managing false positives.",
+      "difficulty": "intermediate",
+      "body_html": "<h2>Sanctions Landscape</h2>\n\n<p>Sanctions are enforced by multiple authorities with overlapping but distinct lists:</p>\n<ul>\n<li><strong>OFAC SDN List</strong> \u2014 Specially Designated Nationals (US, ~12,000 entries)</li>\n<li><strong>EU Consolidated List</strong> \u2014 EU restrictive measures</li>\n<li><strong>UK HMT Sanctions List</strong> \u2014 UK autonomous sanctions</li>\n<li><strong>UN Security Council</strong> \u2014 UN sanctions regimes</li>\n<li><strong>FATF Grey/Black Lists</strong> \u2014 Non-cooperative jurisdictions</li>\n</ul>\n<p>Strict liability applies: organizations can be penalized even for inadvertent violations.</p>\n\n<h2>Screening Technologies</h2>\n\n<p>Modern sanctions screening systems use multiple matching techniques:</p>\n<ul>\n<li><strong>Exact matching</strong> \u2014 direct name comparison (fast but misses variants)</li>\n<li><strong>Fuzzy matching</strong> \u2014 Levenshtein distance, Soundex, metaphone</li>\n<li><strong>Transliteration matching</strong> \u2014 handles Arabic/Cyrillic/Chinese name variations</li>\n<li><strong>Alias matching</strong> \u2014 checks known aliases, nicknames, abbreviation variants</li>\n</ul>\n<p><strong>Key challenge:</strong> Balancing sensitivity (catching true matches) with specificity (minimizing false positives). Industry average false positive rate is 95-99%.</p>\n\n<h2>Managing False Positives</h2>\n\n<p>A tiered approach to reducing alert fatigue:</p>\n<ol>\n<li><strong>Pre-screening</strong> \u2014 apply identity context (DOB, nationality, ID numbers) to filter obvious non-matches</li>\n<li><strong>Scoring engine</strong> \u2014 assign confidence scores to matches, auto-clear below threshold</li>\n<li><strong>Analyst review queue</strong> \u2014 prioritize by risk score and customer exposure</li>\n<li><strong>Feedback loop</strong> \u2014 train matching algorithms on analyst decisions</li>\n</ol>",
+      "bloom_questions": [
+        {
+          "level": "remember",
+          "question": "What are the main sanctions lists that financial institutions must screen against?"
+        },
+        {
+          "level": "understand",
+          "question": "Why is transliteration matching essential for sanctions compliance?"
+        },
+        {
+          "level": "apply",
+          "question": "Design a screening workflow that minimizes false positives while maintaining compliance coverage."
+        },
+        {
+          "level": "evaluate",
+          "question": "Evaluate whether AI-based fuzzy matching can safely reduce manual review volumes."
+        }
+      ],
+      "flashcards": [
+        {
+          "front": "What is the OFAC SDN List?",
+          "back": "Specially Designated Nationals and Blocked Persons List \u2014 maintained by OFAC, it identifies individuals and entities subject to US sanctions"
+        },
+        {
+          "front": "What is strict liability in sanctions?",
+          "back": "Legal doctrine where violations are penalized regardless of intent \u2014 even accidental sanctions breaches carry penalties"
+        }
+      ],
+      "prerequisites": [
+        "aml/learn/aml-basics",
+        "aml/learn/aml-compliance-glossary"
+      ],
+      "author": "AcaciaFund",
+      "created_at": "2026-07-11T18:46:54.997952+00:00",
+      "updated_at": "2026-07-11T18:46:54.997952+00:00",
+      "date_str": "2026-07-11",
+      "auto_generated": true,
+      "concept_enriched": true
+    },
+    {
+      "slug": "markets/learn/quantitative-methods-intro",
+      "title": "Quantitative Methods in Finance: From Descriptive Statistics to Factor Models",
+      "pillar": "stock",
+      "content_type": "learn",
+      "tags": [
+        "quantitative",
+        "statistics",
+        "factor-models",
+        "finance",
+        "markets"
+      ],
+      "description": "Foundation of quantitative finance \u2014 statistical methods, risk measures, and multi-factor models used in institutional portfolio management.",
+      "difficulty": "intermediate",
+      "body_html": "<h2>Why Quantitative Methods?</h2>\n\n<p>Quantitative methods bring mathematical rigor to investment analysis, replacing intuition with systematic, testable frameworks. They underpin:</p>\n<ul>\n<li><strong>Risk management</strong> \u2014 Value at Risk, expected shortfall, stress testing</li>\n<li><strong>Portfolio construction</strong> \u2014 mean-variance optimization, risk parity</li>\n<li><strong>Alpha generation</strong> \u2014 factor-based strategies, statistical arbitrage</li>\n<li><strong>Execution</strong> \u2014 algorithmic trading, optimal order placement</li>\n</ul>\n\n<h2>Key Statistical Concepts</h2>\n\n<p>Essential statistics for financial analysis:</p>\n<ul>\n<li><strong>Distribution</strong> \u2014 returns are approximately normal but fat-tailed (excess kurtosis ~3-10)</li>\n<li><strong>Correlation</strong> \u2014 assets become correlated during crises (correlation breakdown)</li>\n<li><strong>Volatility clustering</strong> \u2014 high-vol periods follow high-vol (GARCH effects)</li>\n<li><strong>Stationarity</strong> \u2014 many financial time series are non-stationary (unit roots)</li>\n</ul>\n<pre><code class=\"language-python\">import numpy as np\nimport pandas as pd\n\n# Annualized volatility from daily returns\ndaily_returns = prices.pct_change().dropna()\nann_volatility = daily_returns.std() * np.sqrt(252)\n\n# Sharpe ratio\nsharpe = (annualized_return - risk_free_rate) / ann_volatility\n\n# Maximum drawdown\ncumulative = (1 + daily_returns).cumprod()\nrunning_max = cumulative.cummax()\ndrawdown = (cumulative - running_max) / running_max\nmax_drawdown = drawdown.min()</code></pre>\n\n<h2>Factor Models</h2>\n\n<p>Factor models explain asset returns through exposure to systematic risk factors:</p>\n<pre><code class=\"language-python\"># Fama-French 3-Factor Model\n# Ri - Rf = alpha + b1*(Rm-Rf) + b2*SMB + b3*HML + epsilon\n\n# Returns decomposition:\n# Market risk (beta) \u2014 compensation for systematic risk\n# Size (SMB) \u2014 small minus big cap returns\n# Value (HML) \u2014 high book-to-market minus low\n# Alpha \u2014 idiosyncratic return (skill or luck)\n\n# Implementation with statsmodels\nimport statsmodels.api as sm\n\nX = sm.add_constant(portfolio_returns - risk_free_rate)\nmodel = sm.OLS(excess_returns, X).fit()\nprint(model.summary())</code></pre>",
+      "bloom_questions": [
+        {
+          "level": "remember",
+          "question": "What are the three factors in the Fama-French model?"
+        },
+        {
+          "level": "understand",
+          "question": "Why do financial returns exhibit fat tails, and what are the implications for risk management?"
+        },
+        {
+          "level": "apply",
+          "question": "Calculate the Sharpe ratio, Sortino ratio, and maximum drawdown for a given return series."
+        },
+        {
+          "level": "analyze",
+          "question": "Compare factor-based investing vs. traditional active management \u2014 what are the trade-offs?"
+        },
+        {
+          "level": "evaluate",
+          "question": "Critically assess whether factor models are reliable guides during market regime changes."
+        }
+      ],
+      "flashcards": [
+        {
+          "front": "What is the Sharpe ratio?",
+          "back": "The excess return per unit of total risk (volatility): (R - Rf) / \u03c3. Higher is better, typically > 1 is considered good"
+        },
+        {
+          "front": "What is fat tails?",
+          "back": "The tendency of financial returns to have more extreme events than a normal distribution would predict"
+        },
+        {
+          "front": "What is a factor model?",
+          "back": "A model that explains asset returns as exposure to systematic risk factors (market, size, value, momentum, etc.) plus idiosyncratic alpha"
+        }
+      ],
+      "prerequisites": [
+        "markets/learn/market-fundamentals",
+        "markets/learn/science-method"
+      ],
+      "author": "AcaciaFund",
+      "created_at": "2026-07-11T18:46:54.997952+00:00",
+      "updated_at": "2026-07-11T18:46:54.997952+00:00",
+      "date_str": "2026-07-11",
+      "auto_generated": true,
+      "concept_enriched": true
+    },
+    {
+      "slug": "markets/learn/volatility-analysis",
+      "title": "Volatility Analysis: Measuring, Modeling, and Trading Uncertainty",
+      "pillar": "stock",
+      "content_type": "learn",
+      "tags": [
+        "volatility",
+        "options",
+        "vix",
+        "garch",
+        "markets",
+        "risk"
+      ],
+      "description": "Understand volatility as an asset class \u2014 from historical vol to implied vol surfaces, VIX dynamics, and volatility trading strategies.",
+      "difficulty": "advanced",
+      "body_html": "<h2>Types of Volatility</h2>\n\n<ul>\n<li><strong>Historical volatility</strong> \u2014 realized standard deviation of past returns</li>\n<li><strong>Implied volatility</strong> \u2014 market's expectation of future vol, embedded in option prices</li>\n<li><strong>Forward volatility</strong> \u2014 expected vol between two future dates (extracted from options)</li>\n<li><strong>Local volatility</strong> \u2014 vol that varies by price level and time (Dupire model)</li>\n</ul>\n<p>The <strong>VIX Index</strong> (CBOE Volatility Index) measures 30-day implied volatility of S&P 500 options \u2014 often called the \"fear gauge.\"</p>\n\n<h2>Volatility Modeling</h2>\n\n<pre><code class=\"language-python\"># GARCH(1,1) \u2014 the workhorse volatility model\nfrom arch import arch_model\n\nreturns = prices.pct_change().dropna() * 100\nmodel = arch_model(returns, vol='Garch', p=1, q=1)\nresult = model.fit(disp='off')\n\n# Conditional volatility forecast\nforecasts = result.forecast(horizon=5)\npredicted_vol = forecasts.variance.iloc[-1].values\n\n# EWMA \u2014 faster-reacting alternative\newma_vol = returns.ewm(span=21).std() * np.sqrt(252)</code></pre>\n\n<h2>Volatility Risk Premium</h2>\n\n<p>Historically, implied volatility exceeds realized volatility by 2-4 percentage points on average. This <strong>volatility risk premium</strong> is compensation for bearing vol risk.</p>\n<p>Strategies that harvest this premium:</p>\n<ul>\n<li><strong>Sell covered calls</strong> \u2014 earn premium from time decay</li>\n<li><strong>Short strangles</strong> \u2014 collect premium from both sides (high risk)</li>\n<li><strong>Put-write strategies</strong> \u2014 systematically sell puts on indices</li>\n</ul>\n<p><strong>Caution:</strong> Vol selling strategies have negative skew \u2014 small steady gains punctuated by large losses during vol spikes.</p>",
+      "bloom_questions": [
+        {
+          "level": "remember",
+          "question": "What does the VIX measure?"
+        },
+        {
+          "level": "understand",
+          "question": "Why does implied volatility typically exceed realized volatility?"
+        },
+        {
+          "level": "apply",
+          "question": "Calculate the 20-day rolling volatility and identify vol regime changes in a given price series."
+        },
+        {
+          "level": "analyze",
+          "question": "Compare GARCH and EWMA models for volatility forecasting \u2014 when would you prefer one over the other?"
+        },
+        {
+          "level": "evaluate",
+          "question": "Assess the risk-reward profile of systematically selling volatility. Is the premium sufficient compensation for tail risk?"
+        }
+      ],
+      "flashcards": [
+        {
+          "front": "What is implied volatility?",
+          "back": "The volatility value that, when plugged into an option pricing model (e.g., Black-Scholes), yields the market price of the option"
+        },
+        {
+          "front": "What is the volatility risk premium?",
+          "back": "The historical tendency for implied volatility to exceed realized volatility \u2014 compensation for bearing uncertainty"
+        }
+      ],
+      "prerequisites": [
+        "markets/learn/quantitative-methods-intro",
+        "markets/learn/market-fundamentals"
+      ],
+      "author": "AcaciaFund",
+      "created_at": "2026-07-11T18:46:54.997952+00:00",
+      "updated_at": "2026-07-11T18:46:54.997952+00:00",
+      "date_str": "2026-07-11",
+      "auto_generated": true,
+      "concept_enriched": true
+    },
+    {
+      "slug": "markets/learn/market-microstructure",
+      "title": "Market Microstructure: How Trades Execute and Prices Form",
+      "pillar": "stock",
+      "content_type": "learn",
+      "tags": [
+        "microstructure",
+        "order-book",
+        "liquidity",
+        "market-making",
+        "markets"
+      ],
+      "description": "Understand the mechanics of order execution, bid-ask spreads, market making, and how electronic markets actually work.",
+      "difficulty": "advanced",
+      "body_html": "<h2>Order Types and the Limit Order Book</h2>\n\n<p>Every trade requires a buyer and seller. The limit order book (LOB) matches them:</p>\n<ul>\n<li><strong>Market orders</strong> \u2014 execute immediately at best available price (taker)</li>\n<li><strong>Limit orders</strong> \u2014 execute only at specified price or better (maker)</li>\n<li><strong>Stop orders</strong> \u2014 become market orders when price reaches threshold</li>\n<li><strong>Iceberg orders</strong> \u2014 large orders split into smaller visible portions</li>\n</ul>\n<p>The <strong>bid-ask spread</strong> reflects the cost of immediacy \u2014 the difference between the best buy (bid) and best sell (ask) prices.</p>\n\n<h2>Market Making</h2>\n\n<p>Market makers provide liquidity by continuously posting bid and ask quotes. Their profit comes from:</p>\n<ul>\n<li><strong>Bid-ask spread capture</strong> \u2014 buying at bid, selling at ask</li>\n<li><strong>Inventory management</strong> \u2014 rebalancing to avoid directional risk</li>\n<li><strong>Adverse selection cost</strong> \u2014 losing to informed traders who know the true value</li>\n</ul>\n<pre><code># Simplified market making P&L\nspread_income = trades * half_spread\ninventory_cost = position * price_change\nadverse_selection = informed_trades * loss\nnet_pnl = spread_income - inventory_cost - adverse_selection</code></pre>\n\n<h2>Market Impact and Execution Quality</h2>\n\n<p>Large orders move prices. Understanding market impact is critical for institutional execution:</p>\n<ul>\n<li><strong>Temporary impact</strong> \u2014 price impact that decays after execution</li>\n<li><strong>Permanent impact</strong> \u2014 lasting price change from information revelation</li>\n<li><strong>Implementation shortfall</strong> \u2014 difference between decision price and average execution price</li>\n</ul>\n<p><strong>Algorithms:</strong> TWAP (time-weighted), VWAP (volume-weighted), Implementation Shortfall, Iceberg, Sniper/Iceberg hybrid.</p>",
+      "bloom_questions": [
+        {
+          "level": "remember",
+          "question": "What is the bid-ask spread?"
+        },
+        {
+          "level": "understand",
+          "question": "Why do market makers face adverse selection, and how do they manage it?"
+        },
+        {
+          "level": "apply",
+          "question": "Design a TWAP execution strategy for a $50M equity order over a 4-hour window."
+        },
+        {
+          "level": "analyze",
+          "question": "Analyze how dark pools affect price discovery and market quality compared to lit exchanges."
+        }
+      ],
+      "flashcards": [
+        {
+          "front": "What is a limit order book?",
+          "back": "An electronic record of all outstanding limit orders for a security, organized by price level, where market makers provide liquidity"
+        },
+        {
+          "front": "What is adverse selection in market making?",
+          "back": "The risk that market makers systematically lose to informed traders who trade on superior information about true value"
+        }
+      ],
+      "prerequisites": [
+        "markets/learn/market-fundamentals",
+        "markets/learn/quantitative-methods-intro"
+      ],
+      "author": "AcaciaFund",
+      "created_at": "2026-07-11T18:46:54.997952+00:00",
+      "updated_at": "2026-07-11T18:46:54.997952+00:00",
+      "date_str": "2026-07-11",
+      "auto_generated": true,
+      "concept_enriched": true
     }
   ],
   "pipeline_stages": [

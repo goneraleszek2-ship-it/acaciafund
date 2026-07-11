@@ -1,13 +1,13 @@
 {
   "manifest_type": "registry-index",
-  "generated_at": "2026-07-11T16:57:53Z",
+  "generated_at": "2026-07-11T20:07:39Z",
   "counts": {
     "runs": 0,
-    "pages": 467,
+    "pages": 509,
     "pillars": {
-      "data-engineering": 74,
-      "stock": 48,
-      "aml": 89,
+      "data-engineering": 77,
+      "stock": 51,
+      "aml": 92,
       "data": 22,
       "market": 10
     }
@@ -1472,6 +1472,60 @@
       "pillar": "data-engineering",
       "title": "Data Engineering Glossary",
       "published_at": ""
+    },
+    {
+      "content_id": "data/learn/pyspark-fundamentals",
+      "pillar": "data-engineering",
+      "title": "PySpark Fundamentals: Distributed Data Processing at Scale",
+      "published_at": "2026-07-11"
+    },
+    {
+      "content_id": "data/learn/partitioning-strategies",
+      "pillar": "data-engineering",
+      "title": "Partitioning Strategies: Optimizing Data Layout for Performance",
+      "published_at": "2026-07-11"
+    },
+    {
+      "content_id": "data/learn/spike-data-pipelines",
+      "pillar": "data-engineering",
+      "title": "Building Resilient Data Pipelines with Spark and dbt",
+      "published_at": "2026-07-11"
+    },
+    {
+      "content_id": "aml/learn/kyc-cdd-workflows",
+      "pillar": "aml",
+      "title": "KYC/CDD Workflows: From Onboarding to Ongoing Monitoring",
+      "published_at": "2026-07-11"
+    },
+    {
+      "content_id": "aml/learn/sar-filing-scenarios",
+      "pillar": "aml",
+      "title": "SAR Filing Scenarios: Identifying and Reporting Suspicious Activity",
+      "published_at": "2026-07-11"
+    },
+    {
+      "content_id": "aml/learn/sanctions-screening",
+      "pillar": "aml",
+      "title": "Sanctions Screening: Tools, Techniques, and Compliance Challenges",
+      "published_at": "2026-07-11"
+    },
+    {
+      "content_id": "markets/learn/quantitative-methods-intro",
+      "pillar": "stock",
+      "title": "Quantitative Methods in Finance: From Descriptive Statistics to Factor Models",
+      "published_at": "2026-07-11"
+    },
+    {
+      "content_id": "markets/learn/volatility-analysis",
+      "pillar": "stock",
+      "title": "Volatility Analysis: Measuring, Modeling, and Trading Uncertainty",
+      "published_at": "2026-07-11"
+    },
+    {
+      "content_id": "markets/learn/market-microstructure",
+      "pillar": "stock",
+      "title": "Market Microstructure: How Trades Execute and Prices Form",
+      "published_at": "2026-07-11"
     }
   ],
   "by_content_id": {
@@ -2689,8 +2743,53 @@
       "content_id": "data/glossary",
       "pillar": "data-engineering",
       "title": "Data Engineering Glossary"
+    },
+    "data/learn/pyspark-fundamentals": {
+      "content_id": "data/learn/pyspark-fundamentals",
+      "pillar": "data-engineering",
+      "title": "PySpark Fundamentals: Distributed Data Processing at Scale"
+    },
+    "data/learn/partitioning-strategies": {
+      "content_id": "data/learn/partitioning-strategies",
+      "pillar": "data-engineering",
+      "title": "Partitioning Strategies: Optimizing Data Layout for Performance"
+    },
+    "data/learn/spike-data-pipelines": {
+      "content_id": "data/learn/spike-data-pipelines",
+      "pillar": "data-engineering",
+      "title": "Building Resilient Data Pipelines with Spark and dbt"
+    },
+    "aml/learn/kyc-cdd-workflows": {
+      "content_id": "aml/learn/kyc-cdd-workflows",
+      "pillar": "aml",
+      "title": "KYC/CDD Workflows: From Onboarding to Ongoing Monitoring"
+    },
+    "aml/learn/sar-filing-scenarios": {
+      "content_id": "aml/learn/sar-filing-scenarios",
+      "pillar": "aml",
+      "title": "SAR Filing Scenarios: Identifying and Reporting Suspicious Activity"
+    },
+    "aml/learn/sanctions-screening": {
+      "content_id": "aml/learn/sanctions-screening",
+      "pillar": "aml",
+      "title": "Sanctions Screening: Tools, Techniques, and Compliance Challenges"
+    },
+    "markets/learn/quantitative-methods-intro": {
+      "content_id": "markets/learn/quantitative-methods-intro",
+      "pillar": "stock",
+      "title": "Quantitative Methods in Finance: From Descriptive Statistics to Factor Models"
+    },
+    "markets/learn/volatility-analysis": {
+      "content_id": "markets/learn/volatility-analysis",
+      "pillar": "stock",
+      "title": "Volatility Analysis: Measuring, Modeling, and Trading Uncertainty"
+    },
+    "markets/learn/market-microstructure": {
+      "content_id": "markets/learn/market-microstructure",
+      "pillar": "stock",
+      "title": "Market Microstructure: How Trades Execute and Prices Form"
     }
   },
   "by_run_id": {},
-  "checksum": "b3e92f845a4ed57d3b3c9bf313caab76ea47b1c51ccb29e475b039cf33100e9c"
+  "checksum": "380e3058841f0532af8613d2159553462c3299d816d275094a68a1c54ea43c4d"
 }

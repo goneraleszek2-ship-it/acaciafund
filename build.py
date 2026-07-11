@@ -418,6 +418,66 @@ def find_related(posts: list, current: Content, max_items: int = 3) -> list:
     return [p for _, p in scored[:max_items]]
 
 
+def find_cross_pillar(
+    current: Content,
+    all_content: list,
+    ontology=None,
+    max_items: int = 4,
+    _concept_cache: dict | None = None,
+) -> list[dict]:
+    """Find related content from *other* pillars sharing ontology concepts.
+
+    Returns a list of dicts with slug, title, description, pillar, and shared_concepts.
+    Uses _concept_cache (slug→set of concept_ids) to avoid re-extracting.
+    """
+    if not ontology or ontology.concept_count() == 0:
+        return []
+
+    if _concept_cache is None:
+        _concept_cache = {}
+
+    # Build concept→label map
+    concept_labels = {c.id: c.label for c in ontology._concepts.values()}
+
+    def _get_concept_ids(item):
+        if item.slug in _concept_cache:
+            return _concept_cache[item.slug]
+        import re as _re
+        tags_text = " ".join(item.tags or [])
+        body_text = _re.sub(r"<[^>]+>", " ", item.body_html or "")
+        combined = f"{item.title or ''} {tags_text} {body_text[:400]}"
+        matches = extract_concepts_from_text(combined, ontology)
+        ids = {c.id for c, s in matches if s >= 0.3}
+        _concept_cache[item.slug] = ids
+        return ids
+
+    current_pillar = current.pillar or "aml"
+    current_ids = _get_concept_ids(current)
+    if not current_ids:
+        return []
+
+    candidates = [c for c in all_content if c.pillar != current_pillar and c.slug != current.slug]
+
+    scored = []
+    for cand in candidates:
+        cand_ids = _get_concept_ids(cand)
+        shared = current_ids & cand_ids
+        if shared:
+            scored.append((len(shared), cand, shared))
+
+    scored.sort(key=lambda x: -x[0])
+    results = []
+    for _, cand, shared_ids in scored[:max_items]:
+        results.append({
+            "slug": cand.slug,
+            "title": cand.title,
+            "description": getattr(cand, "description", ""),
+            "pillar": cand.pillar or "aml",
+            "shared_concepts": [concept_labels.get(cid, cid) for cid in list(shared_ids)[:5]],
+        })
+    return results
+
+
 # ── Visual rules loaded from external config ──
 VISUAL_RULES = json.loads((Path(__file__).parent / "config" / "visual_rules.json").read_text(encoding="utf-8"))
 CARD_PICTOGRAM_KEYWORDS = VISUAL_RULES["card_pictogram_keywords"]
@@ -1650,6 +1710,18 @@ def main():
             cache.update_entry(filepath, html_content, metadata or {"slug": slug}, is_content=True)
 
     _t_render = time.time()
+
+    # Pre-compute ontology concept sets for all items (avoid O(n²) re-extraction)
+    _concept_cache: dict[str, set] = {}
+    if ontology and ontology.concept_count() > 0:
+        import re as _re_pre
+        for item in all_content:
+            tags_text = " ".join(item.tags or [])
+            body_text = _re_pre.sub(r"<[^>]+>", " ", item.body_html or "")
+            combined = f"{item.title or ''} {tags_text} {body_text[:400]}"
+            matches = extract_concepts_from_text(combined, ontology)
+            _concept_cache[item.slug] = {c.id for c, s in matches if s >= 0.3}
+
     # --- KNOWLEDGE PAGES ---
     for item in knowledge_items:
         try:
@@ -1774,6 +1846,7 @@ def main():
                 source_synthesis=source_synthesis.get(item.slug, []),
                 ontology_concepts=ontology_concepts,
                 external_references=external_references,
+                cross_pillar_items=find_cross_pillar(item, all_content, ontology, _concept_cache=_concept_cache),
                 is_index=False,
                 page_type="knowledge",
                 layer="knowledge",
@@ -1976,6 +2049,7 @@ def main():
                 source_synthesis=source_synthesis.get(item.slug, []),
                 ontology_concepts=ontology_concepts,
                 external_references=external_references,
+                cross_pillar_items=find_cross_pillar(item, all_content, ontology, _concept_cache=_concept_cache),
                 is_index=False,
                 layer="learn",
                 layer_icon=LAYER_ICONS["learn"],
@@ -2106,6 +2180,46 @@ def main():
             topic_icon_html = render_topic_icon(
                 topic_sub, PILLAR_COLORS.get(pillar, PILLAR_COLORS["aml"])["accent"]
             )
+
+            # Extract ontology concepts for research items
+            ontology_concepts_r = []
+            external_references_r = []
+            if ontology and ontology.concept_count() > 0:
+                try:
+                    tags_text = " ".join(item.tags or [])
+                    title_text = item.title or ""
+                    import re as _re2
+                    body_text = _re2.sub(r"<[^>]+>", " ", item.body_html or "")
+                    combined = f"{title_text} {tags_text} {body_text[:500]}"
+                    matches = extract_concepts_from_text(combined, ontology)
+                    seen_ids = set()
+                    for concept, score in matches:
+                        if concept.id not in seen_ids and score >= 0.3:
+                            seen_ids.add(concept.id)
+                            ontology_concepts_r.append({
+                                "id": concept.id,
+                                "name": concept.label,
+                                "description": concept.description,
+                                "score": round(score, 2),
+                            })
+                    ontology_concepts_r = ontology_concepts_r[:8]
+                except Exception:
+                    pass
+
+            pillar_prefix_r = {"aml": "aml", "stock": "ms", "data-engineering": "de"}.get(pillar, "aml")
+            pillar_sources_r = inspiration_sources.get(pillar_prefix_r, {})
+            for src_key, src_info in pillar_sources_r.items():
+                if isinstance(src_info, dict) and "url" in src_info:
+                    external_references_r.append({
+                        "title": src_info["name"],
+                        "url": src_info["url"],
+                        "description": src_info.get("description", ""),
+                        "source": src_info["name"],
+                        "relevance": src_info.get("relevance", 0.7),
+                    })
+            external_references_r.sort(key=lambda x: x.get("relevance", 0), reverse=True)
+            external_references_r = external_references_r[:6]
+
             html = render_template(
                 "blog_post.j2",
                 content=item,
@@ -2132,6 +2246,9 @@ def main():
                 topic_icon_html=topic_icon_html,
                 layer_sub=pconf["label"],
                 source_synthesis=source_synthesis.get(item.slug, []),
+                cross_pillar_items=find_cross_pillar(item, all_content, ontology, _concept_cache=_concept_cache),
+                ontology_concepts=ontology_concepts_r,
+                external_references=external_references_r,
                 **ctx_base,
             )
             out_file.parent.mkdir(parents=True, exist_ok=True)
