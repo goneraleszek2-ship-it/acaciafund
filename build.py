@@ -2882,6 +2882,7 @@ def main():
         load_manifest_fn=_load_manifest,
         project_root=PROJECT_ROOT,
         section_types=SECTION_TYPES,
+        ontology=ontology,
     )
 
     # --- SEARCH INDEX + PAGE (via build_taxonomies) ---

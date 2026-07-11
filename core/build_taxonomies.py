@@ -447,6 +447,7 @@ def generate_admin_pages(
     load_manifest_fn=None,
     project_root: Optional[Path] = None,
     section_types: Optional[Dict[int, str]] = None,
+    ontology=None,
 ) -> int:
     """Generate all admin panel pages. Returns count of pages generated."""
     admin_dir = output_dir / "admin"
@@ -711,8 +712,50 @@ def generate_admin_pages(
     (admin_dir / "telemetry.html").write_text(html, encoding="utf-8")
     pages_generated += 1
 
+    # Ontology Curation
+    if ontology and hasattr(ontology, '_concepts'):
+        from core.ontology import OntologyManager
+        pillar_colors = {"aml": "#c97d3e", "stock": "#3a7d5c", "data-engineering": "#6366f1"}
+        pillar_labels = {"aml": "Compliance", "stock": "Markets", "data-engineering": "Data Engineering"}
+
+        concepts_by_pillar = {}
+        for concept in ontology._concepts.values():
+            p = concept.pillar or "aml"
+            concepts_by_pillar.setdefault(p, []).append(concept)
+
+        relations_data = []
+        for r in ontology._relations:
+            relations_data.append({
+                "source": r.source_id,
+                "target": r.target_id,
+                "relation_type": r.relation_type,
+                "weight": r.weight,
+            })
+
+        cross_pillar_count = sum(1 for r in ontology._relations
+                                 if ontology._concepts.get(r.source_id, None)
+                                 and ontology._concepts.get(r.target_id, None)
+                                 and ontology._concepts[r.source_id].pillar != ontology._concepts[r.target_id].pillar)
+
+        html = render_template(
+            "admin/ontology.html",
+            content=_dummy("Ontology Curation", "admin"),
+            active_page="ontology",
+            concept_count=ontology.concept_count(),
+            relation_count=ontology.relation_count(),
+            pillar_count=len(concepts_by_pillar),
+            cross_pillar_count=cross_pillar_count,
+            concepts_by_pillar=concepts_by_pillar,
+            pillar_colors=pillar_colors,
+            pillar_labels=pillar_labels,
+            relations=relations_data,
+            **ctx_base,
+        )
+        (admin_dir / "ontology.html").write_text(html, encoding="utf-8")
+        pages_generated += 1
+
     print(
-        "  admin: login, dashboard, gallery, articles, manifest, pipeline, quality, coverage, sources, curated-test, telemetry"
+        "  admin: login, dashboard, gallery, articles, manifest, pipeline, quality, coverage, sources, curated-test, telemetry, ontology"
     )
     return pages_generated
 
