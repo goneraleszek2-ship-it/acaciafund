@@ -1,0 +1,277 @@
+<span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  AML
+</span><!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Designing a Production Data Platform: From Requirements to Architecture</title>
+    <meta name="description" content="Master the full lifecycle of data platform design: requirements gathering, architecture methodology, a fintech case study, data mesh decentralization, open source vs managed decision framework, budget-friendly stacks, and evolving a platform into a data product.">
+    <link rel="icon" href="/favicon.ico">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+
+
+    <script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "data-engineering"}, "author": {"@type": "Person", "name": "Leszek"}, "dateModified": "2026-07-06T18:02:57Z", "datePublished": "2026-06-12T08:39:15.408286+00:00", "description": "Master the full lifecycle of data platform design: requirements gathering, architecture methodology, a fintech case study, data mesh decentralization, open source vs managed decision framework, budget-friendly stacks, and evolving a platform into a data product.", "headline": "Designing a Production Data Platform: From Requirements to Architecture", "inLanguage": "en", "keywords": "manufacturing, data-architecture", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/data/learn/designing-data-platform/", "@type": "WebPage"}, "proficiencyLevel": "advanced", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-10T06:39:40Z", "signalQualityIndex": 0.941, "sqi": 0.941}
+    </script>
+
+
+    <style>
+        nav { border-bottom: 1px solid var(--pico-muted-border-color); margin-bottom: 2rem; }
+        footer hr { margin-bottom: var(--pico-spacing); }
+        .logo { font-size: 1.25rem; font-weight: 700; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <header class="container">
+        <nav>
+            <ul>
+                <li><strong><a href="/" class="contrast logo">Acacia</a></strong></li>
+            </ul>
+            <ul>
+                <li><a href="/compliance/">Compliance</a></li>
+                <li><a href="/markets/">Markets</a></li>
+                <li><a href="/data/">Data</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        
+
+<nav aria-label="Breadcrumb">
+  <ol>
+    <li><a href="/">Home</a></li>
+    
+    <li aria-hidden="true">/</li>
+    <li aria-current="page">Designing a Production Data Platform: From Requirements to Architecture</li>
+    
+  </ol>
+</nav>
+
+<div id="reading-progress" style="position:fixed;top:0;left:0;height:3px;z-index:9999;width:0%;background:var(--color-accent)"></div>
+
+<div class="flex gap-8 md:flex-row flex-col">
+  <aside class="toc-sidebar shrink-0 order-last md:order-first md:sticky md:top-20 md:self-start md:max-h-[calc(100vh-6rem)] md:overflow-y-auto md:w-52">
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="text-xs font-semibold uppercase tracking-wide" style="color:var(--color-text-muted)">On this page</h2>
+      <button id="focus-toggle" class="text-xs px-2 py-1 rounded" style="color:var(--color-text-muted);background:var(--color-bg)" title="Focus mode" aria-label="Toggle focus mode">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 4h4M6 20h4M18 4h-4M18 20h-4M4 6v4M4 18v4M20 6v4M20 18v4"/></svg>
+      </button>
+    </div>
+    <nav aria-label="Table of contents">
+      <ul class="space-y-1 text-sm">
+        <li>
+          <a href="#from-requirements-to-architecture-a-design-methodology" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            From Requirements to Architecture: A Design Methodology
+          </a>
+        </li>
+        <li>
+          <a href="#case-study-building-a-data-platform-for-a-fintech-startup" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Case Study: Building a Data Platform for a Fintech Startup
+          </a>
+        </li>
+        <li>
+          <a href="#data-mesh-decentralized-ownership-at-scale" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Data Mesh: Decentralized Ownership at Scale
+          </a>
+        </li>
+        <li>
+          <a href="#open-source-vs-managed-a-decision-framework" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Open Source vs Managed: A Decision Framework
+          </a>
+        </li>
+        <li>
+          <a href="#building-a-data-platform-on-a-budget" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Building a Data Platform on a Budget
+          </a>
+        </li>
+        <li>
+          <a href="#from-data-platform-to-data-product" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            From Data Platform to Data Product
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+
+  <article class="min-w-0 flex-1">
+    <nav aria-label="Breadcrumb" class="mb-4 text-xs" style="color:var(--color-text-muted)">
+      <ol class="flex flex-wrap items-center gap-1.5">
+        <li><a href="/" class="hover:text-[var(--color-accent)] transition">Home</a></li>
+        <li aria-hidden="true">/</li>
+        <li><a href="/data/" class="hover:text-[var(--color-accent)] transition">Data Engineering</a></li>
+        <li aria-hidden="true">/</li>
+        <li aria-current="page" class="truncate max-w-[200px]">Designing a Production Data Platform: From Requirements to Architecture</li>
+      </ol>
+    </nav>
+    <header class="mb-8">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="inline-flex items-center gap-1.5 px-2 py-1 text-xs font-medium rounded" style="background:#6366f114;color:#6366f1;border:1px solid #6366f133"><svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 016.5 17H20" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>Learn</span>
+        
+        <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+        <span class="text-xs px-2 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-secondary);border:1px solid var(--color-border)">Advanced</span>
+      </div>
+      <div class="flex items-center gap-2 mt-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 32" width="120" height="32" aria-hidden="true"><rect width="120" height="32" rx="2" fill="#6366f1" opacity="0.08"/><circle cx="4" cy="28" r="3" fill="#6366f1" opacity="0.72"/><circle cx="24" cy="10" r="2" fill="#6366f1" opacity="0.5800000000000001"/><circle cx="44" cy="28" r="1" fill="#6366f1" opacity="0.72"/><circle cx="64" cy="10" r="2" fill="#6366f1" opacity="0.44"/><circle cx="64" cy="19" r="2" fill="#6366f1" opacity="0.44"/><circle cx="64" cy="28" r="2" fill="#6366f1" opacity="0.5800000000000001"/><circle cx="84" cy="10" r="2" fill="#6366f1" opacity="0.3"/><circle cx="84" cy="19" r="2" fill="#6366f1" opacity="0.44"/><circle cx="84" cy="28" r="2" fill="#6366f1" opacity="0.3"/><circle cx="104" cy="19" r="1" fill="#6366f1" opacity="0.5800000000000001"/><circle cx="104" cy="28" r="1" fill="#6366f1" opacity="0.44"/></svg>
+        <h1 class="text-3xl font-extrabold leading-tight">Designing a Production Data Platform: From Requirements to Architecture</h1>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 0.25rem; margin-top: var(--pico-spacing);">
+        <a href="/tags/manufacturing/"><kbd>manufacturing</kbd></a>
+        <a href="/tags/data-architecture/"><kbd>data-architecture</kbd></a>
+      </div>
+    </header>
+
+    <div class="prose prose-lg prose-blue max-w-none">
+      <div class="section-harvester" data-section="overview" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="from-requirements-to-architecture-a-design-methodology">From Requirements to Architecture: A Design Methodology</h2></summary><div class="section-body"><p>Designing a production data platform requires a systematic approach that starts with business requirements and ends with a concrete technology architecture. The methodology has five phases:</p><ul><li><strong>Phase 1 — Requirements Gathering:</strong> Identify data sources, consumer personas, latency SLAs, volume estimates, compliance constraints (GDPR, SOX, SOC2), and team skill sets. Interview stakeholders across engineering, analytics, ML, and business teams.</li><li><strong>Phase 2 — Logical Architecture:</strong> Define the data flow: ingestion → storage → transformation → serving. Choose architectural patterns (medallion, data mesh, lambda/kappa) based on requirements. Map data domains to ownership boundaries.</li><li><strong>Phase 3 — Technology Selection:</strong> Evaluate tools against a weighted decision matrix. Factors: team expertise, operational maturity, scale requirements, budget, vendor lock-in risk, and community health.</li><li><strong>Phase 4 — Implementation Plan:</strong> Define a phased rollout. Start with a minimal viable platform serving one use case, then add capabilities incrementally. Plan for data migration, schema evolution, and cutover strategies.</li><li><strong>Phase 5 — Operations and Governance:</strong> Establish monitoring, alerting, cost governance, data cataloging, and access control. Define SLOs for freshness, quality, and availability. Run a post-mortem after every incident.</li></ul></div></details></div><div class="section-harvester" data-section="key_findings" style="--section-color:#a5b4fc"><details class="section-collapse" open><summary class="section-summary"><h2 id="case-study-building-a-data-platform-for-a-fintech-startup">Case Study: Building a Data Platform for a Fintech Startup</h2></summary><div class="section-body"><p>Let's walk through a realistic scenario. A fintech startup processes 5M transactions/day, needs real-time fraud detection, daily regulatory reporting, and ML-driven credit scoring. Here's how the design unfolds:</p><table style="width:100%;border-collapse:collapse;font-size:0.9em"><tr style="background:var(--color-bg)"><th style="padding:8px;border:1px solid var(--color-border)">Requirement</th><th style="padding:8px;border:1px solid var(--color-border)">Choice</th><th style="padding:8px;border:1px solid var(--color-border)">Rationale</th></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Real-time fraud detection</td><td style="padding:8px;border:1px solid var(--color-border)">Kafka + Flink</td><td style="padding:8px;border:1px solid var(--color-border)">Sub-second latency, exactly-once semantics, stateful processing</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Daily regulatory reporting</td><td style="padding:8px;border:1px solid var(--color-border)">dbt + Snowflake</td><td style="padding:8px;border:1px solid var(--color-border)">SQL-first, tested, auditable transformations</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">ML credit scoring</td><td style="padding:8px;border:1px solid var(--color-border)">Feast + Databricks</td><td style="padding:8px;border:1px solid var(--color-border)">Feature store for training/serving consistency</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Orchestration</td><td style="padding:8px;border:1px solid var(--color-border)">Dagster</td><td style="padding:8px;border:1px solid var(--color-border)">Software-defined assets, dbt integration, partitioned backfills</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Storage</td><td style="padding:8px;border:1px solid var(--color-border)">S3 + Iceberg</td><td style="padding:8px;border:1px solid var(--color-border)">Open table format, ACID transactions, schema evolution</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Data quality</td><td style="padding:8px;border:1px solid var(--color-border)">Great Expectations + dbt tests</td><td style="padding:8px;border:1px solid var(--color-border)">Expectations at ingestion, tests at transformation</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Observability</td><td style="padding:8px;border:1px solid var(--color-border)">Monte Carlo + OpenLineage</td><td style="padding:8px;border:1px solid var(--color-border)">Automated lineage, freshness monitoring, incident management</td></tr></table><p>Key design decisions: Use a medallion architecture (Bronze for raw, Silver for cleaned, Gold for aggregated) with Iceberg as the table format. Run batch pipelines for regulatory reporting on Snowflake (SQL-friendly for auditors), and streaming pipelines for fraud detection on Flink. Dagster orchestrates both worlds.</p></div></details></div><div class="section-harvester" data-section="applied_scenario" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="data-mesh-decentralized-ownership-at-scale">Data Mesh: Decentralized Ownership at Scale</h2></summary><div class="section-body"><p>As the organization grows beyond a single data team, the centralized platform model breaks down. Data mesh, proposed by Zhamak Dehghani, offers an alternative: domain teams own their data as products, while a shared infrastructure layer provides cross-domain interoperability.</p><ul><li><strong>Domain Ownership:</strong> Each business domain (payments, risk, marketing, compliance) owns its data — from ingestion to serving. The domain team decides schema, quality standards, and access policies.</li><li><strong>Data as a Product:</strong> Each domain exposes its data as a well-documented, versioned, and discoverable product with SLOs. Consumers subscribe to data products rather than requesting one-off exports.</li><li><strong>Self-Serve Infrastructure:</strong> A shared platform team provides the infrastructure (storage, compute, catalog, lineage) that domains use to build and serve their data products. This includes data discovery (DataHub/Amundsen), lineage (OpenLineage), and access control.</li><li><strong>Federated Governance:</strong> Global standards (naming conventions, security policies, catalog metadata) are defined centrally but enforced locally. Each domain implements standards within its own data product boundaries.</li><li><strong>dbt Mesh:</strong> Enables decentralized dbt projects where each domain owns its models and contracts, while sharing cross-project references via a public model API. This is a practical implementation of the data mesh principle for the transformation layer.</li></ul></div></details></div><div class="section-harvester" data-section="source_analysis" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="open-source-vs-managed-a-decision-framework">Open Source vs Managed: A Decision Framework</h2></summary><div class="section-body"><table style="width:100%;border-collapse:collapse;font-size:0.9em"><tr style="background:var(--color-bg)"><th style="padding:8px;border:1px solid var(--color-border)">Factor</th><th style="padding:8px;border:1px solid var(--color-border)">Choose Open Source</th><th style="padding:8px;border:1px solid var(--color-border)">Choose Managed</th></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Team size</td><td style="padding:8px;border:1px solid var(--color-border)">5+ platform engineers</td><td style="padding:8px;border:1px solid var(--color-border)">&lt; 5 engineers</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Operating budget</td><td style="padding:8px;border:1px solid var(--color-border)">Engineering time &gt; vendor cost</td><td style="padding:8px;border:1px solid var(--color-border)">Vendor cost &gt; engineering time</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Customization needs</td><td style="padding:8px;border:1px solid var(--color-border)">High (custom connectors, transforms)</td><td style="padding:8px;border:1px solid var(--color-border)">Standard patterns only</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Compliance requirements</td><td style="padding:8px;border:1px solid var(--color-border)">Data residency, air-gapped</td><td style="padding:8px;border:1px solid var(--color-border)">SOC2/HIPAA certified vendor</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Scalability horizon</td><td style="padding:8px;border:1px solid var(--color-border)">Predictable, gradual growth</td><td style="padding:8px;border:1px solid var(--color-border)">Rapid, unpredictable scaling</td></tr></table><p>Most organizations use a hybrid approach: managed services for commodity capabilities (data warehouse, message broker) and open source for differentiation (transformation logic, custom connectors, ML pipelines).</p></div></details></div><div class="section-harvester" data-section="domain_breakdown" style="--section-color:#818cf8"><details class="section-collapse" open><summary class="section-summary"><h2 id="building-a-data-platform-on-a-budget">Building a Data Platform on a Budget</h2></summary><div class="section-body"><p>Not every organization can afford Snowflake + Fivetran + Monte Carlo. Here's a cost-effective open-source stack that scales from startup to mid-market:</p><ul><li><strong>Ingestion:</strong> Airbyte (open source) + Kafka (self-managed or Confluent Cloud free tier). Airbyte has 300+ connectors for sources and destinations.</li><li><strong>Storage:</strong> S3/MinIO + Apache Iceberg. MinIO provides S3-compatible storage on-premises or in any cloud. Iceberg provides table management, ACID, and time travel.</li><li><strong>Transformation:</strong> dbt Core (free) + DuckDB for local development. dbt Cloud is optional for CI/CD and scheduling — use Dagster instead.</li><li><strong>Orchestration:</strong> Dagster (open source). The Dagster+ managed service is optional; the OSS version is production-ready.</li><li><strong>Data Quality:</strong> Great Expectations (open source) + dbt tests (built into dbt Core). Both are free and widely adopted.</li><li><strong>Observability:</strong> OpenLineage (free) + Elementary (free dbt-native observability) + custom monitoring with Prometheus/Grafana.</li><li><strong>BI:</strong> Metabase or Apache Superset (both open source). Good enough for internal dashboards and ad-hoc querying.</li></ul><p>This stack costs <strong>&lt;$500/month</strong> for infrastructure at startup scale and can handle terabytes of data. As you grow, you can replace components with managed alternatives without rewriting your pipeline logic — because the core transformation code (dbt models, Python assets) is portable.</p></div></details></div><div class="section-harvester" data-section="cross_pillar" style="--section-color:#a5b4fc"><details class="section-collapse" open><summary class="section-summary"><h2 id="from-data-platform-to-data-product">From Data Platform to Data Product</h2></summary><div class="section-body"><p>The final evolution is treating the data platform itself as a product. This means:</p><ul><li><strong>Developer Experience:</strong> Provide self-service tools for data ingestion (web UI or API), transformation templates, and CI/CD pipelines. Data engineers should not be a bottleneck for adding new data sources.</li><li><strong>Documentation and Discovery:</strong> Every dataset has a description, owner, freshness SLO, quality score, and lineage. Use a data catalog (DataHub, Amundsen, or Atlan) to make data discoverable.</li><li><strong>Cost Transparency:</strong> Show each team their storage and compute costs. Chargeback or showback models incentivize efficient usage. Monitor cost per dataset and alert on anomalies.</li><li><strong>Feedback Loops:</strong> Collect feedback from data consumers through surveys, usage analytics, and regular meetings. Treat the platform backlog like any product backlog — prioritize by impact.</li></ul><p>The ultimate measure of a data platform is not its technology stack but its <strong>time-to-insight</strong>: how long does it take a data consumer to go from a question to a trusted answer? A well-designed platform reduces this from weeks to minutes.</p></div></details></div>
+    </div>
+    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)" id="quiz-section" data-quiz='{"questions": [{"q": "Your organization has 3 data engineers, 5 analysts, and a tight budget. They need real-time dashboards and daily ML model retraining. Which architecture would you design?", "options": ["Full data mesh with domain-owned infrastructure", "Hybrid medallion architecture with Dagster orchestrating batch dbt + streaming Flink, using Iceberg on S3", "Lambda architecture with separate batch and stream codebases", "Enterprise Snowflake + Fivetran + DataRobot managed stack"], "a": 1, "type": "mc"}, {"q": "A company grows from 1 to 8 domain teams. The centralized data team is a bottleneck. Which architectural change should you design first?", "options": ["Migrate everyone to a single Snowflake instance", "Adopt data mesh principles: domain-owned data products with shared infrastructure layer", "Hire more data engineers for the central team", "Move all data to a data lake"], "a": 1, "type": "mc"}, {"q": "You need to design a data platform for a healthcare startup subject to HIPAA. The team has strong Python/SQL skills but no Kubernetes experience. What stack would you recommend?", "options": ["Self-managed Kafka + Spark on K8s", "Managed Snowflake + dbt Cloud + Dagster+ with HIPAA-compliant configuration", "Open source stack with MinIO + Spark on bare metal", "Apache Hadoop + Hive cluster"], "a": 1, "type": "mc"}, {"q": "Your current platform costs $50K/month in Snowflake compute. Queries scan full tables daily. You need to reduce costs without degrading analyst experience. Which design change has the highest impact?", "options": ["Migrate to Redshift", "Implement Iceberg partitioning + incremental dbt models + materialized views for common queries", "Reduce data retention from 7 years to 30 days", "Limit each analyst to 10 queries per day"], "a": 1, "type": "mc"}, {"q": "You are designing a data catalog and discovery layer for 200+ datasets across 8 teams. Which approach would you choose?", "options": ["A shared spreadsheet maintained by the data team", "DataHub or Amundsen with automated ingestion from dbt + OpenLineage, and domain-owner maintained descriptions", "A wiki page per dataset", "Snowflake's built-in information schema"], "a": 1, "type": "mc"}]}' data-quiz-lesson="data/learn/designing-data-platform/">
+      <h2 class="text-2xl font-bold mb-4" style="color:var(--color-text)">Knowledge Check</h2>
+      <p class="text-sm mb-4" style="color:var(--color-text-muted)">Test your understanding of this lesson.</p>
+      <div id="quiz-score" class="mb-4 text-sm font-semibold" style="color:var(--color-text-secondary)"></div>
+      <div id="quiz-container"></div>
+      <div id="quiz-summary" class="mt-6 p-4 rounded-lg hidden" style="background:var(--color-surface);border:1px solid var(--color-border)"></div>
+      <button id="quiz-retry" class="mt-3 hidden px-4 py-2 text-sm font-semibold rounded-lg transition hover:opacity-80" style="background:var(--color-accent);color:#fff">Retry Quiz</button>
+    </section>
+    <section class="mt-12 pt-8 border-t">
+      <h2 class="text-2xl font-bold mb-4">Bloom Taxonomy Questions</h2>
+      <div class="space-y-4">
+        <div class="ghost-card p-4">
+          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
+            
+          </span>
+          <p class="mt-2">Your organization has 3 data engineers, 5 analysts, and a tight budget. They need real-time dashboards and daily ML model retraining. Which architecture would you design?</p>
+        </div>
+        <div class="ghost-card p-4">
+          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
+            
+          </span>
+          <p class="mt-2">A company grows from 1 to 8 domain teams. The centralized data team is a bottleneck. Which architectural change should you design first?</p>
+        </div>
+        <div class="ghost-card p-4">
+          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
+            
+          </span>
+          <p class="mt-2">You need to design a data platform for a healthcare startup subject to HIPAA. The team has strong Python/SQL skills but no Kubernetes experience. What stack would you recommend?</p>
+        </div>
+        <div class="ghost-card p-4">
+          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
+            
+          </span>
+          <p class="mt-2">Your current platform costs $50K/month in Snowflake compute. Queries scan full tables daily. You need to reduce costs without degrading analyst experience. Which design change has the highest impact?</p>
+        </div>
+        <div class="ghost-card p-4">
+          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
+            
+          </span>
+          <p class="mt-2">You are designing a data catalog and discovery layer for 200+ datasets across 8 teams. Which approach would you choose?</p>
+        </div>
+      </div>
+    </section>
+    <section class="mt-12 pt-8 border-t">
+      <h2 class="text-2xl font-bold mb-6">Related Research</h2>
+      <div class="grid gap-4 sm:grid-cols-3">
+        <a href="https://www.acaciafund.org/data/research/schema-registry-avro-protobuf/" class="ghost-card block text-decoration:none">
+          <div class="p-3">
+            
+            <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Schema Registry Patterns: Avro, Protobuf, and JSON Schema in Production</span>
+            <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-15</span>
+          </div>
+        </a>
+        <a href="https://www.acaciafund.org/data/research/data-products-api-design/" class="ghost-card block text-decoration:none">
+          <div class="p-3">
+            
+            <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Data Products: Designing APIs for the Internal Data Platform</span>
+            <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-14</span>
+          </div>
+        </a>
+        <a href="https://www.acaciafund.org/data/research/data-mesh-implementation/" class="ghost-card block text-decoration:none">
+          <div class="p-3">
+            
+            <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Data Mesh in Practice: Implementing Domain Ownership Without Chaos</span>
+            <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-13</span>
+          </div>
+        </a>
+      </div>
+    </section>
+    <section class="mt-12 pt-8 border-t">
+      <h2 class="text-2xl font-bold mb-6">Related Knowledge</h2>
+      <div class="grid gap-4 sm:grid-cols-3">
+        <a href="https://www.acaciafund.org/knowledge/dataops-trends-2026/" class="ghost-card block text-decoration:none">
+          <div class="p-3">
+            
+            <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">DataOps Trends & Tool Landscape 2026</span>
+            <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-07</span>
+          </div>
+        </a>
+        <a href="https://www.acaciafund.org/knowledge/dataops-glossary/" class="ghost-card block text-decoration:none">
+          <div class="p-3">
+            
+            <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">DataOps Glossary</span>
+            <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-08</span>
+          </div>
+        </a>
+        <a href="https://www.acaciafund.org/knowledge/open-source-tools/" class="ghost-card block text-decoration:none">
+          <div class="p-3">
+            
+            <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Open Source Data Engineering Tool Landscape</span>
+            <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-08</span>
+          </div>
+        </a>
+      </div>
+    </section>
+    <nav class="mt-12 pt-6 border-t grid grid-cols-2 gap-4" aria-label="Lesson navigation">
+      <a href="https://www.acaciafund.org/compliance/learn/trade-based-ml-sanctions/" class="ghost-card group block p-3 text-decoration:none">
+        <span class="text-xs" style="color:var(--color-text-muted)">&larr; Previous Lesson</span>
+        <span class="block text-sm font-medium group-hover:text-blue-600 truncate">Trade-Based Money Laundering & Sanctions — The $2 Trillion Blind Spot</span>
+      </a>
+      <a href="https://www.acaciafund.org/markets/learn/behavioral-finance-portfolio/" class="ghost-card group block p-3 text-decoration:none">
+        <span class="text-xs" style="color:var(--color-text-muted)">Next Lesson &rarr;</span>
+        <span class="block text-sm font-medium group-hover:text-blue-600 truncate">Behavioral Finance & Portfolio Theory — Mind, Market, and Money</span>
+      </a>
+    </nav>
+  </article>
+</div>
+
+<script src="/static/js/learning_hub.d41d8cd9.js" defer></script>
+<div class="newsletter-signup" style="background:var(--color-bg);border:1px solid var(--color-border);padding:2rem;border-radius:8px;text-align:center">
+  <h3 style="color:var(--color-text)">Stay Updated</h3>
+  <p style="color:var(--color-text-muted)">Get the latest research summaries delivered to your inbox.</p>
+  <form style="margin-top:1rem">
+    <input type="email" placeholder="Enter your email" style="padding:0.5rem;border:1px solid var(--color-border);border-radius:4px;width:100%;max-width:300px">
+    <button type="submit" style="margin-top:0.5rem;padding:0.5rem 1rem;background:var(--color-accent);color:#fff;border:none;border-radius:4px;cursor:pointer">Subscribe</button>
+  </form>
+</div>
+
+    </main>
+
+    <footer class="container">
+        <hr>
+        <small>&copy; 2026 AcaciaFund &middot; Generated by the Acacia pipeline.</small>
+    </footer>
+
+    <script src="/static/js/main.d41d8cd9.js"></script>
+</body>
+</html>

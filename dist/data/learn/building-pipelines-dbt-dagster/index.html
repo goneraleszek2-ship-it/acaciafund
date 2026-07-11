@@ -1,0 +1,333 @@
+<span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  AML
+</span><!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Building Data Pipelines with dbt and Dagster: From SQL to Orchestration</title>
+    <meta name="description" content="Learn dbt fundamentals (models, tests, docs, sources), Dagster's software-defined asset approach, and how to build end-to-end pipelines combining both tools with best practices and a comparison of orchestration frameworks.">
+    <link rel="icon" href="/favicon.ico">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+
+
+    <script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "data-engineering"}, "author": {"@type": "Person", "name": "Leszek"}, "dateModified": "2026-07-06T18:02:57Z", "datePublished": "2026-06-12T08:13:46.363993+00:00", "description": "Learn dbt fundamentals (models, tests, docs, sources), Dagster\u0027s software-defined asset approach, and how to build end-to-end pipelines combining both tools with best practices and a comparison of orchestration frameworks.", "headline": "Building Data Pipelines with dbt and Dagster: From SQL to Orchestration", "inLanguage": "en", "keywords": "dataops, orchestration", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/data/learn/building-pipelines-dbt-dagster/", "@type": "WebPage"}, "proficiencyLevel": "intermediate", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-10T06:39:40Z", "signalQualityIndex": 0.933, "sqi": 0.933}
+    </script>
+
+
+    <style>
+        nav { border-bottom: 1px solid var(--pico-muted-border-color); margin-bottom: 2rem; }
+        footer hr { margin-bottom: var(--pico-spacing); }
+        .logo { font-size: 1.25rem; font-weight: 700; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <header class="container">
+        <nav>
+            <ul>
+                <li><strong><a href="/" class="contrast logo">Acacia</a></strong></li>
+            </ul>
+            <ul>
+                <li><a href="/compliance/">Compliance</a></li>
+                <li><a href="/markets/">Markets</a></li>
+                <li><a href="/data/">Data</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        
+
+<nav aria-label="Breadcrumb">
+  <ol>
+    <li><a href="/">Home</a></li>
+    
+    <li aria-hidden="true">/</li>
+    <li aria-current="page">Building Data Pipelines with dbt and Dagster: From SQL to Orchestration</li>
+    
+  </ol>
+</nav>
+
+<div id="reading-progress" style="position:fixed;top:0;left:0;height:3px;z-index:9999;width:0%;background:var(--color-accent)"></div>
+
+<div class="flex gap-8 md:flex-row flex-col">
+  <aside class="toc-sidebar shrink-0 order-last md:order-first md:sticky md:top-20 md:self-start md:max-h-[calc(100vh-6rem)] md:overflow-y-auto md:w-52">
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="text-xs font-semibold uppercase tracking-wide" style="color:var(--color-text-muted)">On this page</h2>
+      <button id="focus-toggle" class="text-xs px-2 py-1 rounded" style="color:var(--color-text-muted);background:var(--color-bg)" title="Focus mode" aria-label="Toggle focus mode">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 4h4M6 20h4M18 4h-4M18 20h-4M4 6v4M4 18v4M20 6v4M20 18v4"/></svg>
+      </button>
+    </div>
+    <nav aria-label="Table of contents">
+      <ul class="space-y-1 text-sm">
+        <li>
+          <a href="#what-is-dbt" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            What is dbt?
+          </a>
+        </li>
+        <li>
+          <a href="#what-is-dagster" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            What is Dagster?
+          </a>
+        </li>
+        <li>
+          <a href="#building-a-pipeline-with-dbt-dagster" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Building a Pipeline with dbt + Dagster
+          </a>
+        </li>
+        <li>
+          <a href="#a-complete-pipeline-example" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            A Complete Pipeline Example
+          </a>
+        </li>
+        <li>
+          <a href="#key-patterns-and-best-practices" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Key Patterns and Best Practices
+          </a>
+        </li>
+        <li>
+          <a href="#comparing-the-orchestrators" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Comparing the Orchestrators
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+
+  <article class="min-w-0 flex-1">
+    <nav aria-label="Breadcrumb" class="mb-4 text-xs" style="color:var(--color-text-muted)">
+      <ol class="flex flex-wrap items-center gap-1.5">
+        <li><a href="/" class="hover:text-[var(--color-accent)] transition">Home</a></li>
+        <li aria-hidden="true">/</li>
+        <li><a href="/data/" class="hover:text-[var(--color-accent)] transition">Data Engineering</a></li>
+        <li aria-hidden="true">/</li>
+        <li aria-current="page" class="truncate max-w-[200px]">Building Data Pipelines with dbt and Dagster: From SQL to Orchestration</li>
+      </ol>
+    </nav>
+    <header class="mb-8">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="inline-flex items-center gap-1.5 px-2 py-1 text-xs font-medium rounded" style="background:#6366f114;color:#6366f1;border:1px solid #6366f133"><svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 016.5 17H20" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>Learn</span>
+        
+        <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+        <span class="text-xs px-2 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-secondary);border:1px solid var(--color-border)">Intermediate</span>
+      </div>
+      <div class="flex items-center gap-2 mt-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 32" width="120" height="32" aria-hidden="true"><rect width="120" height="32" rx="2" fill="#6366f1" opacity="0.08"/><circle cx="4" cy="19" r="3" fill="#6366f1" opacity="0.5800000000000001"/><circle cx="24" cy="19" r="1" fill="#6366f1" opacity="0.3"/><circle cx="24" cy="28" r="1" fill="#6366f1" opacity="0.3"/><circle cx="44" cy="19" r="3" fill="#6366f1" opacity="0.5800000000000001"/><circle cx="64" cy="10" r="1" fill="#6366f1" opacity="0.72"/><circle cx="64" cy="19" r="1" fill="#6366f1" opacity="0.3"/><circle cx="64" cy="28" r="1" fill="#6366f1" opacity="0.3"/><circle cx="104" cy="28" r="1" fill="#6366f1" opacity="0.44"/></svg>
+        <h1 class="text-3xl font-extrabold leading-tight">Building Data Pipelines with dbt and Dagster: From SQL to Orchestration</h1>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 0.25rem; margin-top: var(--pico-spacing);">
+        <a href="/tags/dataops/"><kbd>dataops</kbd></a>
+        <a href="/tags/orchestration/"><kbd>orchestration</kbd></a>
+      </div>
+    </header>
+
+    <div class="prose prose-lg prose-blue max-w-none">
+      <div class="section-harvester" data-section="overview" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="what-is-dbt">What is dbt?</h2></summary><div class="section-body"><p>dbt (data build tool) is the industry-standard SQL-first transformation framework. It enables analytics engineers and data analysts to define data transformations as version-controlled SQL SELECT statements. dbt handles the T in ELT — transforming data that is already loaded into your warehouse or lakehouse.</p><ul><li><strong>Models:</strong> The core unit of dbt. Each model is a <code>.sql</code> file containing a <code>SELECT</code> statement. dbt compiles and executes these against your warehouse, materializing the results as tables, views, or incremental models.</li><li><strong>Tests:</strong> Built-in and custom data quality tests. Generic tests (unique, not_null, accepted_values, relationships) are defined in YAML. Custom tests are written as SQL <code>SELECT</code> statements that return failing rows.</li><li><strong>Documentation:</strong> dbt auto-generates documentation from model definitions and inline <code>description</code> blocks. The docs site includes lineage graphs (Lineage DAG), column-level descriptions, and test coverage.</li><li><strong>Sources and Freshness:</strong> Define source tables with freshness assertions. dbt tracks when each source was last loaded and alerts if data is stale.</li><li><strong>Materializations:</strong><code>table</code> (full refresh), <code>view</code> (no storage), <code>incremental</code> (append/merge new records), <code>ephemeral</code> (CTE), and <code>materialized_view</code> (database-native).</li><li><strong>dbt Mesh:</strong> Decentralize dbt projects across domain teams while sharing a common cross-project reference layer. Each domain owns its models and contracts.</li></ul><p>A simple dbt model looks like this:</p><pre style="background:var(--color-bg);padding:12px;border-radius:8px;overflow-x:auto;font-size:0.85em">
+-- models/orders_summary.sql
+{<!-- -->{ config(materialized='incremental', unique_key='order_id') }}
+
+SELECT
+ o.order_id,
+ o.customer_id,
+ o.order_date,
+ o.total_amount,
+ c.customer_segment
+FROM {{ source('ecommerce', 'orders') }} o
+LEFT JOIN {{ ref('customer_segments') }} c
+ ON o.customer_id = c.customer_id
+{% if is_incremental() %}
+ WHERE o.order_date >= (SELECT max(order_date) FROM {{ this }})
+{% endif %}
+</pre></div></details></div><div class="section-harvester" data-section="key_findings" style="--section-color:#a5b4fc"><details class="section-collapse" open><summary class="section-summary"><h2 id="what-is-dagster">What is Dagster?</h2></summary><div class="section-body"><p>Dagster is a next-generation data orchestrator designed for the modern data stack. Unlike traditional orchestrators (Airflow) that treat pipelines as task DAGs, Dagster treats them as <strong>software-defined assets</strong> — each asset knows its upstream dependencies and how it is materialized.</p><ul><li><strong>Assets:</strong> The core abstraction. An asset is a data product (table, file, ML model) with a known producer function. Assets form a DAG based on their dependencies.</li><li><strong>Ops and Jobs:</strong> Lower-level building blocks. An op is a single computation. A job is a graph of ops. Assets are built on top of ops.</li><li><strong>Schedules and Sensors:</strong> Schedules trigger jobs on a cron interval (e.g., daily at 6 AM). Sensors trigger jobs based on external events (e.g., a file landing in S3).</li><li><strong>dbt Integration:</strong> Dagster has a native dbt integration (<code>dagster-dbt</code>) that loads your dbt models as Dagster assets. Dagster orchestrates dbt runs, provides asset-level lineage, and enables cross-tool dependencies (e.g., "run dbt model A, then run Python op B, then run dbt model C").</li><li><strong>Software-Defined Assets (SDA):</strong> Assets are declared in Python with their upstream dependencies, partition definitions, and freshness policies. Dagster materializes only what's stale or upstream of a changed asset.</li><li><strong>Observability:</strong> Dagster's Dagit UI shows asset lineage, run history, logs, and alerts. Each asset has a "last materialized" timestamp, upstream/downstream lineage, and launch history.</li></ul></div></details></div><div class="section-harvester" data-section="applied_scenario" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="building-a-pipeline-with-dbt-dagster">Building a Pipeline with dbt + Dagster</h2></summary><div class="section-body"><p>The modern data stack often pairs dbt for transformations with Dagster for orchestration. Here's how they work together:</p><pre style="background:var(--color-bg);padding:12px;border-radius:8px;overflow-x:auto;font-size:0.85em">
+# definitions.py — Dagster project root
+from dagster import Definitions, load_assets_from_modules
+from dagster_dbt import dbt_assets, DbtCliResource
+from pathlib import Path
+
+@dbt_assets(manifest=Path("target", "manifest.json"))
+def my_dbt_assets(context, dbt: DbtCliResource):
+ yield from dbt.cli(["build"], context=context).stream()
+
+defs = Definitions(assets=[my_dbt_assets])
+</pre><p>This single file loads your entire dbt project as Dagster assets. Dagster handles scheduling, alerting, and lineage — dbt handles the actual SQL transformations.</p></div></details></div><div class="section-harvester" data-section="source_analysis" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="a-complete-pipeline-example">A Complete Pipeline Example</h2></summary><div class="section-body"><p>Here's a practical pattern combining dbt, Dagster, and Python for a complete data pipeline:</p><pre style="background:var(--color-bg);padding:12px;border-radius:8px;overflow-x:auto;font-size:0.85em">
+# assets.py
+from dagster import asset, AssetIn
+import pandas as pd
+
+@asset
+def raw_transactions() -> pd.DataFrame:
+ """Extract: load raw data from source"""
+ return pd.read_parquet("s3://landing/transactions/")
+
+@asset
+def cleaned_transactions(raw_transactions: pd.DataFrame) -> pd.DataFrame:
+ """Transform: clean and validate"""
+ df = raw_transactions.dropna(subset=["amount", "timestamp"])
+ df["amount"] = df["amount"].clip(lower=0)
+ return df
+
+# dbt models handle the SQL transformations (aggregations, joins, etc.)
+# defined in models/ directory as .sql files
+# loaded via @dbt_assets(...)
+
+@asset
+def alerts(cleaned_transactions: pd.DataFrame) -> None:
+ """Serve: check thresholds and send alerts"""
+ high_value = cleaned_transactions[
+ cleaned_transactions["amount"] > 10_000
+ ]
+ if len(high_value) > 0:
+ print(f"Alert: {len(high_value)} high-value transactions detected")
+</pre><p>Dagster's asset graph automatically determines execution order: <code>raw_transactions</code> → <code>cleaned_transactions</code> → dbt models → <code>alerts</code>. If a partition of <code>raw_transactions</code> is reprocessed, only downstream assets for that partition are re-materialized.</p></div></details></div><div class="section-harvester" data-section="domain_breakdown" style="--section-color:#818cf8"><details class="section-collapse" open><summary class="section-summary"><h2 id="key-patterns-and-best-practices">Key Patterns and Best Practices</h2></summary><div class="section-body"><ul><li><strong>Start with dbt-first:</strong> Use dbt for all SQL transformations. Only bring in custom Python when SQL is insufficient (e.g., ML inference, API calls, complex business logic).</li><li><strong>Use incremental models for large tables:</strong> dbt's <code>incremental</code> materialization appends or merges only new/changed records, avoiding full table scans.</li><li><strong>Define data contracts:</strong> Use dbt's <code>contract</code> enforcement to guarantee column names, types, and constraints between dbt models.</li><li><strong>Leverage Dagster partitions:</strong> Partition your assets by date, region, or other dimensions. Dagster tracks which partitions are materialized and can materialize only stale partitions.</li><li><strong>Automate backfills:</strong> When upstream source data is corrected, Dagster's "re-materialize upstream" feature cascades the backfill through the entire dependency graph.</li><li><strong>Test in CI:</strong> Run <code>dbt build --select state:modified</code> in CI to test only changed models. Use <code>dbt source freshness</code> to validate data recency.</li></ul></div></details></div><div class="section-harvester" data-section="cross_pillar" style="--section-color:#a5b4fc"><details class="section-collapse" open><summary class="section-summary"><h2 id="comparing-the-orchestrators">Comparing the Orchestrators</h2></summary><div class="section-body"><table style="width:100%;border-collapse:collapse;font-size:0.9em"><tr style="background:var(--color-bg)"><th style="padding:8px;border:1px solid var(--color-border)">Feature</th><th style="padding:8px;border:1px solid var(--color-border)">Dagster</th><th style="padding:8px;border:1px solid var(--color-border)">Airflow</th><th style="padding:8px;border:1px solid var(--color-border)">Prefect</th></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Asset abstraction</td><td style="padding:8px;border:1px solid var(--color-border)">Native (SDA)</td><td style="padding:8px;border:1px solid var(--color-border)">No (task-only)</td><td style="padding:8px;border:1px solid var(--color-border)">Partial (flows)</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">dbt integration</td><td style="padding:8px;border:1px solid var(--color-border)">Deep (native)</td><td style="padding:8px;border:1px solid var(--color-border)">Via operators</td><td style="padding:8px;border:1px solid var(--color-border)">Via tasks</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Partition support</td><td style="padding:8px;border:1px solid var(--color-border)">First-class</td><td style="padding:8px;border:1px solid var(--color-border)">Manual</td><td style="padding:8px;border:1px solid var(--color-border)">First-class</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Local dev experience</td><td style="padding:8px;border:1px solid var(--color-border)">Excellent (Dagit)</td><td style="padding:8px;border:1px solid var(--color-border)">Good (local executor)</td><td style="padding:8px;border:1px solid var(--color-border)">Good (Orion)</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Learning curve</td><td style="padding:8px;border:1px solid var(--color-border)">Moderate</td><td style="padding:8px;border:1px solid var(--color-border)">Low (basic) / High (advanced)</td><td style="padding:8px;border:1px solid var(--color-border)">Low</td></tr></table><p>Dagster's software-defined asset approach is a paradigm shift from traditional orchestrators. It treats data as the central concern, not task execution. For teams building modern data platforms, Dagster + dbt is becoming the default stack.</p></div></details></div>
+    </div>
+    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)" id="quiz-section" data-quiz='{"questions": [{"q": "You need to add a new column to a dbt model without breaking downstream consumers. Which dbt feature should you use?", "options": ["Materializations", "Data contracts", "Source freshness", "Ephemeral models"], "a": 1, "type": "mc"}, {"q": "In Dagster, how do you define a data asset that depends on another asset?", "options": ["Using the @op decorator with a DAG definition", "By declaring the dependency as a function parameter", "Using the @schedule decorator", "By defining it in a YAML configuration file"], "a": 1, "type": "mc"}, {"q": "A dbt model needs to process only new records since the last run. Which materialization should you choose?", "options": ["table", "view", "incremental", "ephemeral"], "a": 2, "type": "mc"}, {"q": "When a source table is corrected and old records need reprocessing, what is the best approach in a Dagster + dbt pipeline?", "options": ["Drop and recreate all tables", "Use Dagster's re-materialize upstream from the source asset", "Manually run dbt build --full-refresh", "Write a custom Python script"], "a": 1, "type": "mc"}, {"q": "Your team has two dbt projects owned by different domain teams. Which dbt feature enables cross-project references?", "options": ["dbt Core", "dbt Mesh", "dbt Cloud", "dbt Sources"], "a": 1, "type": "mc"}]}' data-quiz-lesson="data/learn/building-pipelines-dbt-dagster/">
+      <h2 class="text-2xl font-bold mb-4" style="color:var(--color-text)">Knowledge Check</h2>
+      <p class="text-sm mb-4" style="color:var(--color-text-muted)">Test your understanding of this lesson.</p>
+      <div id="quiz-score" class="mb-4 text-sm font-semibold" style="color:var(--color-text-secondary)"></div>
+      <div id="quiz-container"></div>
+      <div id="quiz-summary" class="mt-6 p-4 rounded-lg hidden" style="background:var(--color-surface);border:1px solid var(--color-border)"></div>
+      <button id="quiz-retry" class="mt-3 hidden px-4 py-2 text-sm font-semibold rounded-lg transition hover:opacity-80" style="background:var(--color-accent);color:#fff">Retry Quiz</button>
+    </section>
+    <section class="mt-12 pt-8 border-t">
+      <h2 class="text-2xl font-bold mb-4">Bloom Taxonomy Questions</h2>
+      <div class="space-y-4">
+        <div class="ghost-card p-4">
+          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
+            
+          </span>
+          <p class="mt-2">You need to add a new column to a dbt model without breaking downstream consumers. Which dbt feature should you use?</p>
+        </div>
+        <div class="ghost-card p-4">
+          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
+            
+          </span>
+          <p class="mt-2">In Dagster, how do you define a data asset that depends on another asset?</p>
+        </div>
+        <div class="ghost-card p-4">
+          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
+            
+          </span>
+          <p class="mt-2">A dbt model needs to process only new records since the last run. Which materialization should you choose?</p>
+        </div>
+        <div class="ghost-card p-4">
+          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
+            
+          </span>
+          <p class="mt-2">When a source table is corrected and old records need reprocessing, what is the best approach in a Dagster + dbt pipeline?</p>
+        </div>
+        <div class="ghost-card p-4">
+          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
+            
+          </span>
+          <p class="mt-2">Your team has two dbt projects owned by different domain teams. Which dbt feature enables cross-project references?</p>
+        </div>
+      </div>
+    </section>
+    <section class="mt-12 pt-8 border-t">
+      <h2 class="text-2xl font-bold mb-6">Related Research</h2>
+      <div class="grid gap-4 sm:grid-cols-3">
+        <a href="https://www.acaciafund.org/data/research/analytics-engineering-rise/" class="ghost-card block text-decoration:none">
+          <div class="p-3">
+            
+            <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">The Rise of the Analytics Engineer: dbt, SQLMesh, and the Modern Data Stack</span>
+            <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-17</span>
+          </div>
+        </a>
+        <a href="https://www.acaciafund.org/data/research/kubernetes-data-pipelines/" class="ghost-card block text-decoration:none">
+          <div class="p-3">
+            
+            <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Kubernetes for Data Engineering: Running Data Pipelines on K8s</span>
+            <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-11</span>
+          </div>
+        </a>
+        <a href="https://www.acaciafund.org/data/research/ml-pipeline-orchestration-feast-mlflow/" class="ghost-card block text-decoration:none">
+          <div class="p-3">
+            
+            <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">ML Pipeline Orchestration: From Notebook to Production with Feast and MLflow</span>
+            <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-09</span>
+          </div>
+        </a>
+      </div>
+    </section>
+    <section class="mt-12 pt-8 border-t">
+      <h2 class="text-2xl font-bold mb-6">Related Knowledge</h2>
+      <div class="grid gap-4 sm:grid-cols-3">
+        <a href="https://www.acaciafund.org/knowledge/dataops-trends-2026/" class="ghost-card block text-decoration:none">
+          <div class="p-3">
+            
+            <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">DataOps Trends & Tool Landscape 2026</span>
+            <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-07</span>
+          </div>
+        </a>
+        <a href="https://www.acaciafund.org/knowledge/system-architecture/" class="ghost-card block text-decoration:none">
+          <div class="p-3">
+            
+            <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">AcaciaFund System Architecture: A DataOps Perspective</span>
+            <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-08</span>
+          </div>
+        </a>
+        <a href="https://www.acaciafund.org/knowledge/research-methodology/" class="ghost-card block text-decoration:none">
+          <div class="p-3">
+            
+            <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Research Methodology</span>
+            <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-08</span>
+          </div>
+        </a>
+      </div>
+    </section>
+    <nav class="mt-12 pt-6 border-t grid grid-cols-2 gap-4" aria-label="Lesson navigation">
+      <a href="https://www.acaciafund.org/compliance/learn/crypto-aml/" class="ghost-card group block p-3 text-decoration:none">
+        <span class="text-xs" style="color:var(--color-text-muted)">&larr; Previous Lesson</span>
+        <span class="block text-sm font-medium group-hover:text-blue-600 truncate">Crypto AML & Digital Assets — Compliance in the Age of DeFi</span>
+      </a>
+      <a href="https://www.acaciafund.org/data/learn/open-source-data-stack/" class="ghost-card group block p-3 text-decoration:none">
+        <span class="text-xs" style="color:var(--color-text-muted)">Next Lesson &rarr;</span>
+        <span class="block text-sm font-medium group-hover:text-blue-600 truncate">Building an Open Source Data Stack: From Ingestion to Analytics</span>
+      </a>
+    </nav>
+  </article>
+</div>
+
+<script src="/static/js/learning_hub.d41d8cd9.js" defer></script>
+<div class="newsletter-signup" style="background:var(--color-bg);border:1px solid var(--color-border);padding:2rem;border-radius:8px;text-align:center">
+  <h3 style="color:var(--color-text)">Stay Updated</h3>
+  <p style="color:var(--color-text-muted)">Get the latest research summaries delivered to your inbox.</p>
+  <form style="margin-top:1rem">
+    <input type="email" placeholder="Enter your email" style="padding:0.5rem;border:1px solid var(--color-border);border-radius:4px;width:100%;max-width:300px">
+    <button type="submit" style="margin-top:0.5rem;padding:0.5rem 1rem;background:var(--color-accent);color:#fff;border:none;border-radius:4px;cursor:pointer">Subscribe</button>
+  </form>
+</div>
+
+    </main>
+
+    <footer class="container">
+        <hr>
+        <small>&copy; 2026 AcaciaFund &middot; Generated by the Acacia pipeline.</small>
+    </footer>
+
+    <script src="/static/js/main.d41d8cd9.js"></script>
+</body>
+</html>

@@ -1,0 +1,272 @@
+<span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  AML
+</span><!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Engineering Basics: Glossary and Tool Landscape</title>
+    <meta name="description" content="An introduction to data engineering: the lifecycle, modern tools, architectural patterns, and key concepts glossary. Covers ingestion, storage, transformation, orchestration, and data quality.">
+    <link rel="icon" href="/favicon.ico">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+    <link rel="stylesheet" href="/static/css/style.css">
+
+
+    <script type="application/ld+json">
+{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "data-engineering"}, "author": {"@type": "Person", "name": "Leszek"}, "dateModified": "2026-07-06T18:02:57Z", "datePublished": "2026-06-11T20:50:09.126818+00:00", "description": "An introduction to data engineering: the lifecycle, modern tools, architectural patterns, and key concepts glossary. Covers ingestion, storage, transformation, orchestration, and data quality.", "headline": "Data Engineering Basics: Glossary and Tool Landscape", "inLanguage": "en", "keywords": "dataops, orchestration", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/data/learn/data-engineering-basics/", "@type": "WebPage"}, "proficiencyLevel": "beginner", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-10T06:39:40Z", "signalQualityIndex": 0.932, "sqi": 0.932}
+    </script>
+
+
+    <style>
+        nav { border-bottom: 1px solid var(--pico-muted-border-color); margin-bottom: 2rem; }
+        footer hr { margin-bottom: var(--pico-spacing); }
+        .logo { font-size: 1.25rem; font-weight: 700; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <header class="container">
+        <nav>
+            <ul>
+                <li><strong><a href="/" class="contrast logo">Acacia</a></strong></li>
+            </ul>
+            <ul>
+                <li><a href="/compliance/">Compliance</a></li>
+                <li><a href="/markets/">Markets</a></li>
+                <li><a href="/data/">Data</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        
+
+<nav aria-label="Breadcrumb">
+  <ol>
+    <li><a href="/">Home</a></li>
+    
+    <li aria-hidden="true">/</li>
+    <li aria-current="page">Data Engineering Basics: Glossary and Tool Landscape</li>
+    
+  </ol>
+</nav>
+
+<div id="reading-progress" style="position:fixed;top:0;left:0;height:3px;z-index:9999;width:0%;background:var(--color-accent)"></div>
+
+<div class="flex gap-8 md:flex-row flex-col">
+  <aside class="toc-sidebar shrink-0 order-last md:order-first md:sticky md:top-20 md:self-start md:max-h-[calc(100vh-6rem)] md:overflow-y-auto md:w-52">
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="text-xs font-semibold uppercase tracking-wide" style="color:var(--color-text-muted)">On this page</h2>
+      <button id="focus-toggle" class="text-xs px-2 py-1 rounded" style="color:var(--color-text-muted);background:var(--color-bg)" title="Focus mode" aria-label="Toggle focus mode">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 4h4M6 20h4M18 4h-4M18 20h-4M4 6v4M4 18v4M20 6v4M20 18v4"/></svg>
+      </button>
+    </div>
+    <nav aria-label="Table of contents">
+      <ul class="space-y-1 text-sm">
+        <li>
+          <a href="#what-is-data-engineering" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            What is Data Engineering?
+          </a>
+        </li>
+        <li>
+          <a href="#the-data-engineering-lifecycle" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            The Data Engineering Lifecycle
+          </a>
+        </li>
+        <li>
+          <a href="#core-technologies-in-the-modern-data-stack" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Core Technologies in the Modern Data Stack
+          </a>
+        </li>
+        <li>
+          <a href="#key-architectural-patterns" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Key Architectural Patterns
+          </a>
+        </li>
+        <li>
+          <a href="#key-concepts-glossary" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Key Concepts Glossary
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+
+  <article class="min-w-0 flex-1">
+    <nav aria-label="Breadcrumb" class="mb-4 text-xs" style="color:var(--color-text-muted)">
+      <ol class="flex flex-wrap items-center gap-1.5">
+        <li><a href="/" class="hover:text-[var(--color-accent)] transition">Home</a></li>
+        <li aria-hidden="true">/</li>
+        <li><a href="/data/" class="hover:text-[var(--color-accent)] transition">Data Engineering</a></li>
+        <li aria-hidden="true">/</li>
+        <li aria-current="page" class="truncate max-w-[200px]">Data Engineering Basics: Glossary and Tool Landscape</li>
+      </ol>
+    </nav>
+    <header class="mb-8">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="inline-flex items-center gap-1.5 px-2 py-1 text-xs font-medium rounded" style="background:#6366f114;color:#6366f1;border:1px solid #6366f133"><svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 016.5 17H20" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>Learn</span>
+        
+        <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+        <span class="text-xs px-2 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-secondary);border:1px solid var(--color-border)">Beginner</span>
+      </div>
+      <div class="flex items-center gap-2 mt-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 32" width="120" height="32" aria-hidden="true"><rect width="120" height="32" rx="2" fill="#6366f1" opacity="0.08"/><circle cx="4" cy="10" r="3" fill="#6366f1" opacity="0.8600000000000001"/><circle cx="4" cy="25" r="3" fill="#6366f1" opacity="0.3"/><circle cx="21" cy="10" r="2" fill="#6366f1" opacity="0.5800000000000001"/><circle cx="21" cy="15" r="2" fill="#6366f1" opacity="0.44"/><circle cx="21" cy="25" r="2" fill="#6366f1" opacity="0.5800000000000001"/><circle cx="38" cy="20" r="2" fill="#6366f1" opacity="0.44"/><circle cx="38" cy="25" r="2" fill="#6366f1" opacity="0.3"/><circle cx="55" cy="10" r="1" fill="#6366f1" opacity="0.5800000000000001"/><circle cx="55" cy="15" r="1" fill="#6366f1" opacity="0.3"/><circle cx="72" cy="10" r="2" fill="#6366f1" opacity="0.3"/><circle cx="89" cy="10" r="2" fill="#6366f1" opacity="0.3"/></svg>
+        <h1 class="text-3xl font-extrabold leading-tight">Data Engineering Basics: Glossary and Tool Landscape</h1>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 0.25rem; margin-top: var(--pico-spacing);">
+        <a href="/tags/dataops/"><kbd>dataops</kbd></a>
+        <a href="/tags/orchestration/"><kbd>orchestration</kbd></a>
+      </div>
+    </header>
+
+    <div class="prose prose-lg prose-blue max-w-none">
+      <div class="section-harvester" data-section="overview" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="what-is-data-engineering">What is Data Engineering?</h2></summary><div class="section-body"><p>Data engineering is the discipline of designing, building, and maintaining systems that collect, store, transform, and make data available for analysis and machine learning. It sits at the foundation of the modern data stack, providing the infrastructure that data scientists, analysts, and business users rely on.</p></div></details></div><div class="section-harvester" data-section="key_findings" style="--section-color:#a5b4fc"><details class="section-collapse" open><summary class="section-summary"><h2 id="the-data-engineering-lifecycle">The Data Engineering Lifecycle</h2></summary><div class="section-body"><p>The data engineering lifecycle consists of several stages:</p><ul><li><strong>Generation:</strong> Data is produced by source systems — application databases, APIs, IoT devices, event streams, log files, and third-party services.</li><li><strong>Ingestion:</strong> Data is extracted from sources and loaded into the data platform via batch jobs (daily/hourly exports) or streaming pipelines (real-time events via Kafka, Kinesis, or Pulsar).</li><li><strong>Storage:</strong> Data lands in a lakehouse (e.g., S3 + Iceberg, Delta Lake) or warehouse (Snowflake, BigQuery, Redshift) where it is organized into raw, cleaned, and aggregated layers.</li><li><strong>Transformation:</strong> Raw data is cleaned, normalized, joined, and reshaped using tools like dbt, Spark, or Flink. This produces analytics-ready tables and feature tables for ML.</li><li><strong>Serving:</strong> Clean data is exposed via APIs, dashboards (Looker, Metabase), BI tools, or feature stores (Feast, Tecton) for downstream consumers.</li><li><strong>Monitoring & Observability:</strong> Pipelines are tracked for freshness, volume, schema drift, data quality, and cost. Tools like Great Expectations, Soda, and Monte Carlo flag anomalies in real time.</li></ul></div></details></div><div class="section-harvester" data-section="applied_scenario" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="core-technologies-in-the-modern-data-stack">Core Technologies in the Modern Data Stack</h2></summary><div class="section-body"><table style="width:100%;border-collapse:collapse;font-size:0.9em"><tr style="background:var(--color-bg)"><th style="padding:8px;border:1px solid var(--color-border)">Category</th><th style="padding:8px;border:1px solid var(--color-border)">Tools</th><th style="padding:8px;border:1px solid var(--color-border)">Purpose</th></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Ingestion</td><td style="padding:8px;border:1px solid var(--color-border)">Apache Kafka, Airbyte, Fivetran, Debezium</td><td style="padding:8px;border:1px solid var(--color-border)">Move data from sources to the platform</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Storage</td><td style="padding:8px;border:1px solid var(--color-border)">Apache Iceberg, Delta Lake, Snowflake, BigQuery</td><td style="padding:8px;border:1px solid var(--color-border)">Reliable, queryable data storage</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Transformation</td><td style="padding:8px;border:1px solid var(--color-border)">dbt, Apache Spark, SQLMesh, Flink</td><td style="padding:8px;border:1px solid var(--color-border)">Clean, model, and reshape data</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Orchestration</td><td style="padding:8px;border:1px solid var(--color-border)">Airflow, Dagster, Prefect</td><td style="padding:8px;border:1px solid var(--color-border)">Schedule, monitor, and manage pipeline DAGs</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Data Quality</td><td style="padding:8px;border:1px solid var(--color-border)">Great Expectations, Soda, dbt tests</td><td style="padding:8px;border:1px solid var(--color-border)">Define and enforce data quality expectations</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Observability</td><td style="padding:8px;border:1px solid var(--color-border)">Monte Carlo, Datadog, OpenLineage</td><td style="padding:8px;border:1px solid var(--color-border)">Monitor pipeline health and data lineage</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Serving</td><td style="padding:8px;border:1px solid var(--color-border)">Feast, Tecton, GraphQL, Metabase</td><td style="padding:8px;border:1px solid var(--color-border)">Expose data to consumers</td></tr></table></div></details></div><div class="section-harvester" data-section="source_analysis" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="key-architectural-patterns">Key Architectural Patterns</h2></summary><div class="section-body"><ul><li><strong>Medallion Architecture:</strong> Organizes data into Bronze (raw ingested), Silver (cleaned/validated), and Gold (aggregated/business-ready) layers. Each layer enforces increasing data quality standards.</li><li><strong>Data Mesh:</strong> A decentralized architecture where domain teams own their data as products, with a shared infrastructure layer for cross-domain interoperability.</li><li><strong>Lambda Architecture:</strong> Combines batch and stream processing paths to balance latency and completeness. The batch layer provides accurate historical views while the speed layer handles real-time data.</li><li><strong>Kappa Architecture:</strong> A simplified approach where all data is treated as a stream, eliminating the separate batch layer. Stream processors handle both real-time and historical reprocessing.</li></ul></div></details></div><div class="section-harvester" data-section="domain_breakdown" style="--section-color:#818cf8"><details class="section-collapse" open><summary class="section-summary"><h2 id="key-concepts-glossary">Key Concepts Glossary</h2></summary><div class="section-body"><dl><dt><strong>Pipeline DAG</strong></dt><dd>A directed acyclic graph of tasks representing a data pipeline. Each node is a step (extract, transform, load), and edges define execution order and dependencies.</dd><dt><strong>Schema Drift</strong></dt><dd>When source data changes structure — new columns are added, types change, or fields are removed. Pipelines must handle drift gracefully to avoid breaking downstream consumers.</dd><dt><strong>Idempotency</strong></dt><dd>The property that running the same pipeline multiple times produces the same result. Essential for reprocessing and backfills without data duplication.</dd><dt><strong>Partition Pruning</strong></dt><dd>A query optimization technique where the engine skips irrelevant data partitions (e.g., by date or region) to reduce scan volume and improve query speed.</dd><dt><strong>SLA / SLO</strong></dt><dd>Service Level Agreements and Objectives define freshness, completeness, and accuracy guarantees for data products (e.g., "dashboard refreshes within 15 minutes of source update").</dd><dt><strong>Change Data Capture (CDC)</strong></dt><dd>A technique that captures row-level changes (inserts, updates, deletes) from databases in real time, enabling low-latency data synchronization.</dd></dl></div></details></div>
+    </div>
+    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)" id="quiz-section" data-quiz='{"questions": [{"q": "Which architectural pattern organizes data into Bronze, Silver, and Gold layers?", "options": ["Lambda Architecture", "Medallion Architecture", "Kappa Architecture", "Data Mesh"], "a": 1, "type": "mc"}, {"q": "What does CDC stand for in data engineering?", "options": ["Continuous Data Collection", "Change Data Capture", "Central Data Catalog", "Cloud Data Cluster"], "a": 1, "type": "mc"}, {"q": "Which tool is most commonly used for SQL-based data transformations in the modern data stack?", "options": ["Apache Kafka", "dbt", "Airflow", "Great Expectations"], "a": 1, "type": "mc"}, {"q": "What is the primary purpose of Apache Kafka in a data pipeline?", "options": ["Data transformation", "Data ingestion and streaming", "Data quality testing", "Dashboard visualization"], "a": 1, "type": "mc"}, {"q": "What property ensures running the same pipeline multiple times produces the same result?", "options": ["Idempotency", "Elasticity", "Scalability", "Fault tolerance"], "a": 0, "type": "mc"}]}' data-quiz-lesson="data/learn/data-engineering-basics/">
+      <h2 class="text-2xl font-bold mb-4" style="color:var(--color-text)">Knowledge Check</h2>
+      <p class="text-sm mb-4" style="color:var(--color-text-muted)">Test your understanding of this lesson.</p>
+      <div id="quiz-score" class="mb-4 text-sm font-semibold" style="color:var(--color-text-secondary)"></div>
+      <div id="quiz-container"></div>
+      <div id="quiz-summary" class="mt-6 p-4 rounded-lg hidden" style="background:var(--color-surface);border:1px solid var(--color-border)"></div>
+      <button id="quiz-retry" class="mt-3 hidden px-4 py-2 text-sm font-semibold rounded-lg transition hover:opacity-80" style="background:var(--color-accent);color:#fff">Retry Quiz</button>
+    </section>
+    <section class="mt-12 pt-8 border-t">
+      <h2 class="text-2xl font-bold mb-4">Bloom Taxonomy Questions</h2>
+      <div class="space-y-4">
+        <div class="ghost-card p-4">
+          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
+            
+          </span>
+          <p class="mt-2">Which architectural pattern organizes data into Bronze, Silver, and Gold layers?</p>
+        </div>
+        <div class="ghost-card p-4">
+          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
+            
+          </span>
+          <p class="mt-2">What does CDC stand for in data engineering?</p>
+        </div>
+        <div class="ghost-card p-4">
+          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
+            
+          </span>
+          <p class="mt-2">Which tool is most commonly used for SQL-based data transformations in the modern data stack?</p>
+        </div>
+        <div class="ghost-card p-4">
+          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
+            
+          </span>
+          <p class="mt-2">What is the primary purpose of Apache Kafka in a data pipeline?</p>
+        </div>
+        <div class="ghost-card p-4">
+          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
+            
+          </span>
+          <p class="mt-2">What property ensures running the same pipeline multiple times produces the same result?</p>
+        </div>
+      </div>
+    </section>
+    <section class="mt-12 pt-8 border-t">
+      <h2 class="text-2xl font-bold mb-6">Related Research</h2>
+      <div class="grid gap-4 sm:grid-cols-3">
+        <a href="https://www.acaciafund.org/data/research/analytics-engineering-rise/" class="ghost-card block text-decoration:none">
+          <div class="p-3">
+            
+            <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">The Rise of the Analytics Engineer: dbt, SQLMesh, and the Modern Data Stack</span>
+            <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-17</span>
+          </div>
+        </a>
+        <a href="https://www.acaciafund.org/data/research/kubernetes-data-pipelines/" class="ghost-card block text-decoration:none">
+          <div class="p-3">
+            
+            <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Kubernetes for Data Engineering: Running Data Pipelines on K8s</span>
+            <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-11</span>
+          </div>
+        </a>
+        <a href="https://www.acaciafund.org/data/research/ml-pipeline-orchestration-feast-mlflow/" class="ghost-card block text-decoration:none">
+          <div class="p-3">
+            
+            <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">ML Pipeline Orchestration: From Notebook to Production with Feast and MLflow</span>
+            <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-09</span>
+          </div>
+        </a>
+      </div>
+    </section>
+    <section class="mt-12 pt-8 border-t">
+      <h2 class="text-2xl font-bold mb-6">Related Knowledge</h2>
+      <div class="grid gap-4 sm:grid-cols-3">
+        <a href="https://www.acaciafund.org/knowledge/dataops-trends-2026/" class="ghost-card block text-decoration:none">
+          <div class="p-3">
+            
+            <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">DataOps Trends & Tool Landscape 2026</span>
+            <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-07</span>
+          </div>
+        </a>
+        <a href="https://www.acaciafund.org/knowledge/system-architecture/" class="ghost-card block text-decoration:none">
+          <div class="p-3">
+            
+            <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">AcaciaFund System Architecture: A DataOps Perspective</span>
+            <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-08</span>
+          </div>
+        </a>
+        <a href="https://www.acaciafund.org/knowledge/research-methodology/" class="ghost-card block text-decoration:none">
+          <div class="p-3">
+            
+            <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Research Methodology</span>
+            <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-08</span>
+          </div>
+        </a>
+      </div>
+    </section>
+    <nav class="mt-12 pt-6 border-t grid grid-cols-2 gap-4" aria-label="Lesson navigation">
+      <a href="https://www.acaciafund.org/compliance/learn/beneficial-ownership-transparency/" class="ghost-card group block p-3 text-decoration:none">
+        <span class="text-xs" style="color:var(--color-text-muted)">&larr; Previous Lesson</span>
+        <span class="block text-sm font-medium group-hover:text-blue-600 truncate">Understanding Beneficial Ownership Transparency</span>
+      </a>
+      <a href="https://www.acaciafund.org/data/learn/data-lakehouse-patterns/" class="ghost-card group block p-3 text-decoration:none">
+        <span class="text-xs" style="color:var(--color-text-muted)">Next Lesson &rarr;</span>
+        <span class="block text-sm font-medium group-hover:text-blue-600 truncate">Data Lakehouse Patterns</span>
+      </a>
+    </nav>
+  </article>
+</div>
+
+<script src="/static/js/learning_hub.d41d8cd9.js" defer></script>
+<div class="newsletter-signup" style="background:var(--color-bg);border:1px solid var(--color-border);padding:2rem;border-radius:8px;text-align:center">
+  <h3 style="color:var(--color-text)">Stay Updated</h3>
+  <p style="color:var(--color-text-muted)">Get the latest research summaries delivered to your inbox.</p>
+  <form style="margin-top:1rem">
+    <input type="email" placeholder="Enter your email" style="padding:0.5rem;border:1px solid var(--color-border);border-radius:4px;width:100%;max-width:300px">
+    <button type="submit" style="margin-top:0.5rem;padding:0.5rem 1rem;background:var(--color-accent);color:#fff;border:none;border-radius:4px;cursor:pointer">Subscribe</button>
+  </form>
+</div>
+
+    </main>
+
+    <footer class="container">
+        <hr>
+        <small>&copy; 2026 AcaciaFund &middot; Generated by the Acacia pipeline.</small>
+    </footer>
+
+    <script src="/static/js/main.d41d8cd9.js"></script>
+</body>
+</html>
