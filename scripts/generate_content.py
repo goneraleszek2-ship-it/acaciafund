@@ -32,6 +32,9 @@ sys.path.insert(0, str(ROOT))
 
 REGISTRY_PATH = ROOT / "registry.json"
 
+# Pillar URL mapping (internal key → URL segment)
+from config import PILLAR_URL_MAP
+
 # Target counts per (type, pillar) after generation
 TARGETS: dict[tuple[str, str], int] = {
     ("learn", "aml"): 15,
@@ -45,7 +48,7 @@ TARGETS: dict[tuple[str, str], int] = {
 # ── Pillar metadata for generation ──
 PILLAR_INFO: dict[str, dict[str, Any]] = {
     "aml": {
-        "label": "Anti-Money Laundering",
+        "label": "Compliance & Financial Crime",
         "topics": [
             "beneficial ownership transparency",
             "SAR filing best practices",
@@ -167,8 +170,8 @@ def _generate_deterministic_item(
         title = f"{adjective.title()} {topic.title()}"
 
     slug_base = _pillar_topic_slug(topic)
-    slug_prefix = content_type
-    slug = f"{slug_prefix}/{pillar}/{slug_base}"
+    pillar_url = PILLAR_URL_MAP.get(pillar, pillar)
+    slug = f"{pillar_url}/{content_type}/{slug_base}"
 
     description = (
         f"A {content_type} article exploring {topic} within the "
@@ -278,7 +281,8 @@ def _generate_with_llm(
         parsed = json.loads(cleaned[start:end+1])
 
         slug_base = _pillar_topic_slug(topic)
-        slug = f"{content_type}/{pillar}/{slug_base}"
+        pillar_url = PILLAR_URL_MAP.get(pillar, pillar)
+        slug = f"{pillar_url}/{content_type}/{slug_base}"
 
         return {
             "slug": slug,

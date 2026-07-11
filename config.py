@@ -38,3 +38,11 @@ SQI_DEFAULT = 0.5  # fallback when signal missing
 INTEREST_SQI_WEIGHT = 0.6
 INTEREST_RECENCY_WEIGHT = 0.4
 INTEREST_RECENCY_DAYS = 180
+
+# Pillar URL mapping: internal key → URL segment
+# "stock" maps to "markets" in URLs for better semantics
+PILLAR_URL_MAP = {"aml": "compliance", "stock": "markets", "data-engineering": "data"}
+PILLAR_URL_REVERSE = {v: k for k, v in PILLAR_URL_MAP.items()}
+
+# URL structure version — bump to force full cache rebuild on structural changes
+URL_STRUCTURE_VERSION = "3.0"

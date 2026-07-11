@@ -184,15 +184,15 @@ def generate_navigation_paths(registry: dict, trend_df: pd.DataFrame) -> dict[st
             ],
         },
         "aml": {
-            "label": "AML Compliance Path",
+            "label": "Compliance Path",
             "steps": [
-                {"title": "AML & Compliance Glossary", "slug": "learn/aml-compliance-glossary"},
+                {"title": "AML & Compliance Glossary", "slug": "compliance/learn/aml-compliance-glossary"},
                 {
                     "title": "Money Laundering Mechanisms",
-                    "slug": "learn/money-laundering-mechanisms",
+                    "slug": "compliance/learn/money-laundering-mechanisms",
                 },
-                {"title": "AML Enforcement Cases", "slug": "learn/aml-enforcement-cases"},
-                {"title": "Designing AML Program", "slug": "learn/designing-aml-program"},
+                {"title": "AML Enforcement Cases", "slug": "compliance/learn/aml-enforcement-cases"},
+                {"title": "Designing AML Program", "slug": "compliance/learn/designing-aml-program"},
             ],
         },
         "markets": {

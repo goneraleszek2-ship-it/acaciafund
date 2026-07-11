@@ -43,6 +43,8 @@ from config import (
     SQI_THRESHOLD_MIN,
     STATIC_DST_DIR,
     TEMPLATE_DIR,
+    PILLAR_URL_MAP,
+    PILLAR_URL_REVERSE,
 )
 
 # ── Asset pipeline ──
@@ -55,6 +57,7 @@ from core.content import Content
 
 # ── Page generation helpers (new modular structure) ──
 from core.images.templates import generate_fallback_svg
+from core.urls import slug_to_path, slug_to_fspath, canonical_path, slug_to_url, pillar_to_url, url_to_pillar
 
 
 # --- Knowledge Graph Generation ---
@@ -201,18 +204,20 @@ def get_topic_icons(tags: list[str]) -> list[str]:
 
 PILLAR_CONFIG = {
     "aml": {
-        "label": "AML",
+        "label": "Compliance",
+        "url": "compliance",
         "emoji": "🛡️",
         "color": "slate",
         "bg": "from-slate-900 to-slate-800",
         "accent": "amber",
         "text_color": "text-slate-900",
         "badge_color": "bg-amber-100 text-amber-800",
-        "heading": "Anti-Money Laundering",
-        "description": "Financial crime, compliance, regulation, and risk management.",
+        "heading": "Compliance & Financial Crime",
+        "description": "Anti-money laundering, regulatory compliance, financial crime detection, and risk management.",
     },
     "stock": {
         "label": "Markets",
+        "url": "markets",
         "emoji": "📈",
         "color": "green",
         "bg": "from-green-900 to-green-800",
@@ -224,6 +229,7 @@ PILLAR_CONFIG = {
     },
     "data-engineering": {
         "label": "Data Engineering",
+        "url": "data",
         "emoji": "⚙️",
         "color": "indigo",
         "bg": "from-indigo-900 to-indigo-800",
@@ -235,7 +241,7 @@ PILLAR_CONFIG = {
     },
 }
 PILLAR_EMOJIS = {"aml": "🛡️", "stock": "📈", "data-engineering": "⚙️"}
-PILLAR_NAMES = {"aml": "AML", "stock": "Markets", "data-engineering": "Data Engineering"}
+PILLAR_NAMES = {"aml": "Compliance", "stock": "Markets", "data-engineering": "Data Engineering"}
 DIFFICULTY_ORDER = {"beginner": 0, "intermediate": 1, "advanced": 2}
 
 # Section type mapping (positional index → semantic type)
@@ -285,20 +291,8 @@ def add_lazy_loading(html: str) -> str:
     return re.sub(r"<img(?![^>]*loading=)", '<img loading="lazy" decoding="async"', html)
 
 
-def slug_to_path(slug: str) -> str:
-    return f"{slug}/index.html" if "/" in slug else f"{slug}.html"
-
-
-def canonical_path(slug_or_path: str) -> str:
-    """Normalize a path for canonical URLs: strip /index.html, enforce trailing slash."""
-    path = slug_or_path.replace("/index.html", "/").replace(".html", "/")
-    if not path.endswith("/"):
-        path += "/"
-    return path
-
-
-def slug_to_url(slug: str) -> str:
-    return f"{SITE_URL}/{canonical_path(slug_to_path(slug))}"
+# slug_to_path, slug_to_fspath, canonical_path, slug_to_url, pillar_to_url, url_to_pillar
+# are imported from core.urls above.
 
 
 def group_by_pillar(content_list: list) -> dict[str, list]:
@@ -1051,19 +1045,11 @@ def _cleanup_partial_output(item):
     slug = None
     try:
         slug = item.slug
-        if hasattr(item, "content_type") and item.content_type == "knowledge":
-            clean_slug = slug[10:] if slug.startswith("knowledge/") else slug
-            out_dir = OUTPUT_DIR / "knowledge" / clean_slug
-            if out_dir.exists():
-                shutil.rmtree(out_dir)
-        elif "/" in slug:
-            out_dir = OUTPUT_DIR / slug
-            if out_dir.exists():
-                shutil.rmtree(out_dir)
-        else:
-            out_file = OUTPUT_DIR / f"{slug}.html"
-            if out_file.exists():
-                out_file.unlink()
+        out_path = OUTPUT_DIR / slug_to_fspath(slug_to_path(slug))
+        if out_path.is_dir():
+            shutil.rmtree(out_path)
+        elif out_path.exists():
+            out_path.unlink()
     except (OSError, shutil.Error) as e:
         logger = logging.getLogger(__name__)
         logger.warning(f"Cleanup failed for {slug}: {e}")
@@ -1489,8 +1475,9 @@ def main():
         # Check if item can be skipped using build cache
         # First check template changes, then content hash
         # Handle both flat files and directory-based pages
+        fspath = slug_to_fspath(slug)
         if "/" in slug:
-            output_path = OUTPUT_DIR / slug / "index.html"
+            output_path = OUTPUT_DIR / fspath / "index.html"
         else:
             output_path = OUTPUT_DIR / f"{slug}.html"
             
@@ -1592,11 +1579,11 @@ def main():
             if slug in items_to_skip:
                 print(f"  knowledge: {slug} (skipped - unchanged)")
                 continue
-            clean_slug = slug[10:] if slug.startswith("knowledge/") else slug
-            page_path = canonical_path(slug_to_path(clean_slug))
-            out_dir = OUTPUT_DIR / "knowledge" / clean_slug
-            out_dir.mkdir(parents=True, exist_ok=True)
-            out_file = out_dir / "index.html"
+            # New format: slug contains pillar prefix (e.g. "aml/knowledge/topic")
+            # Platform pages stay at "knowledge/page" (no pillar prefix)
+            page_path = canonical_path(slug_to_path(slug))
+            out_file = OUTPUT_DIR / slug_to_fspath(slug_to_path(slug))
+            out_file.parent.mkdir(parents=True, exist_ok=True)
 
             body, toc_items = _process_item_body(item, strip_emoji=False)
 
@@ -1750,7 +1737,7 @@ def main():
                 print(f"  learn: {slug} (skipped - unchanged)")
                 continue
             page_path = canonical_path(slug_to_path(slug))
-            out_file = OUTPUT_DIR / slug_to_path(slug)
+            out_file = OUTPUT_DIR / slug_to_fspath(slug_to_path(slug))
 
             body, toc_items = _process_item_body(item, strip_emoji=False)
 
@@ -1921,7 +1908,7 @@ def main():
                 print(f"  research: {slug} (skipped - unchanged)")
                 continue
             page_path = canonical_path(slug_to_path(slug))
-            out_file = OUTPUT_DIR / slug_to_path(slug)
+            out_file = OUTPUT_DIR / slug_to_fspath(slug_to_path(slug))
 
             body, toc_items = _process_item_body(item, strip_emoji=True)
 
@@ -2066,7 +2053,8 @@ def main():
     # --- PILLAR SUB-PAGES ---
     for pillar in PILLAR_CONFIG:
         p_posts = pillar_groups.get(pillar, [])
-        out_dir = OUTPUT_DIR / pillar
+        pillar_url = pillar_to_url(pillar)
+        out_dir = OUTPUT_DIR / pillar_url
         out_dir.mkdir(parents=True, exist_ok=True)
         pconf = PILLAR_CONFIG.get(pillar, PILLAR_CONFIG["aml"])
         # Prepare posts data for JavaScript
@@ -2117,7 +2105,7 @@ def main():
             **ctx_base,
         )
         (out_dir / "index.html").write_text(html, encoding="utf-8")
-        print(f"  pillar: {pillar}/index.html")
+        print(f"  pillar: {pillar_url}/index.html")
 
     # --- AML SIGNALS DASHBOARD ---
     aml_research = [p for p in research_items if p.pillar == "aml"]
@@ -2188,16 +2176,16 @@ def main():
         recent_articles=sorted(aml_research, key=lambda x: x.date_str or "", reverse=True)[:10],
         learn_path=aml_learn,
         is_index=False,
-        page_path="aml/signals/",
-        page_title="AML Signals Dashboard",
+        page_path=f"{pillar_to_url('aml')}/signals/",
+        page_title="Compliance Signals Dashboard",
         thumbnail_base=f"{SITE_URL}/static/images",
         thumbnail_key=thumbnail_key,
         **ctx_base,
     )
-    sig_dir = OUTPUT_DIR / "aml" / "signals"
+    sig_dir = OUTPUT_DIR / pillar_to_url("aml") / "signals"
     sig_dir.mkdir(parents=True, exist_ok=True)
     (sig_dir / "index.html").write_text(aml_signals_html, encoding="utf-8")
-    print("  signals: aml/signals/index.html")
+    print(f"  signals: {pillar_to_url('aml')}/signals/index.html")
 
     # --- MARKETS SIGNALS DASHBOARD ---
     stock_research = [p for p in research_items if p.pillar == "stock"]
@@ -2264,10 +2252,10 @@ def main():
         thumbnail_key=thumbnail_key,
         **ctx_base,
     )
-    sig_dir = OUTPUT_DIR / "stock" / "signals"
+    sig_dir = OUTPUT_DIR / "markets" / "signals"
     sig_dir.mkdir(parents=True, exist_ok=True)
     (sig_dir / "index.html").write_text(stock_signals_html, encoding="utf-8")
-    print("  signals: stock/signals/index.html")
+    print("  signals: markets/signals/index.html")
 
     # --- DATA ENGINEERING SIGNALS DASHBOARD ---
     de_research = [p for p in research_items if p.pillar == "data-engineering"]
@@ -2334,10 +2322,10 @@ def main():
         thumbnail_key=thumbnail_key,
         **ctx_base,
     )
-    sig_dir = OUTPUT_DIR / "data-engineering" / "signals"
+    sig_dir = OUTPUT_DIR / "data" / "signals"
     sig_dir.mkdir(parents=True, exist_ok=True)
     (sig_dir / "index.html").write_text(de_signals_html, encoding="utf-8")
-    print("  signals: data-engineering/signals/index.html")
+    print("  signals: data/signals/index.html")
 
     # --- HOMEPAGE (filter future posts from featured/recent) ---
     published_research = [p for p in sorted_research if not is_future_post(p)]
@@ -2439,6 +2427,32 @@ def main():
     )
     print("  redirect: /science/ → /research/")
 
+    # --- /stock/ redirect to /markets/ ---
+    stock_dir = OUTPUT_DIR / "stock"
+    stock_dir.mkdir(parents=True, exist_ok=True)
+    (stock_dir / "index.html").write_text(
+        f'<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">'
+        f"<title>Markets — AcaciaFund</title>"
+        f'<meta http-equiv="refresh" content="0;url={SITE_URL}/markets/">'
+        f'<link rel="canonical" href="{SITE_URL}/markets/">'
+        f'</head><body><p><a href="{SITE_URL}/markets/">Markets — AcaciaFund</a></p></body></html>',
+        encoding="utf-8",
+    )
+    print("  redirect: /stock/ → /markets/")
+
+    # --- /aml/ redirect to /compliance/ ---
+    aml_dir = OUTPUT_DIR / "aml"
+    aml_dir.mkdir(parents=True, exist_ok=True)
+    (aml_dir / "index.html").write_text(
+        f'<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">'
+        f"<title>Compliance — AcaciaFund</title>"
+        f'<meta http-equiv="refresh" content="0;url={SITE_URL}/compliance/">'
+        f'<link rel="canonical" href="{SITE_URL}/compliance/">'
+        f'</head><body><p><a href="{SITE_URL}/compliance/">Compliance — AcaciaFund</a></p></body></html>',
+        encoding="utf-8",
+    )
+    print("  redirect: /aml/ → /compliance/")
+
     # --- Knowledge Graph Page (/graph/) ---
     cytograph_src = PROJECT_ROOT / "data" / "cytograph.json"
     if cytograph_src.exists():
@@ -2529,12 +2543,12 @@ def main():
         now=now,
         is_future_post_fn=is_future_post,
         canonical_path_fn=canonical_path,
-        slug_to_path_fn=slug_to_path,
+        slug_to_path_fn=lambda s: slug_to_fspath(slug_to_path(s)),
     )
 
     # --- SITEMAP ---
     today = datetime.now(timezone.utc).date().isoformat()
-    section_pages = list(pillar_groups) + ["research", "learn", "knowledge", "search"]
+    section_pages = [pillar_to_url(p) for p in PILLAR_CONFIG] + ["research", "learn", "knowledge", "search"]
     tag_slugs = []
     for tag_slug in sorted(tag_items.keys()):
         slug_clean = re.sub(r"[^a-z0-9]+", "-", tag_slug).strip("-")
@@ -2558,14 +2572,7 @@ def main():
             if c.updated_at
             else (c.created_at.date().isoformat() if c.created_at else today)
         )
-        # Generate correct URL based on content type
-        if c.content_type == "knowledge":
-            clean_slug = c.slug[10:] if c.slug.startswith("knowledge/") else c.slug
-            loc = f"{SITE_URL}/knowledge/{clean_slug}/"
-        elif c.content_type in ("research", "learn"):
-            loc = f"{SITE_URL}/{c.slug}.html"
-        else:
-            loc = slug_to_url(c.slug)
+        loc = slug_to_url(c.slug)
         sm.append(
             f"  <url><loc>{loc}</loc><lastmod>{lastmod}</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>"
         )
@@ -2592,6 +2599,18 @@ Sitemap: {SITE_URL}/sitemap.xml
 """
     (OUTPUT_DIR / "robots.txt").write_text(robots_txt, encoding="utf-8")
     _record_timing("content_rendering", time.time() - _t_render)
+
+    # --- REDIRECTS (Cloudflare Pages) ---
+    redirects = [
+        "/aml/*  /compliance/:splat  301",
+        "/aml/signals/*  /compliance/signals/:splat  301",
+        "/stock/signals/*  /markets/signals/:splat  301",
+        "/stock/*  /markets/:splat  301",
+        "/science/*  /research/:splat  301",
+        "/contact/*  /knowledge/contact/:splat  301",
+    ]
+    (OUTPUT_DIR / "_redirects").write_text("\n".join(redirects) + "\n", encoding="utf-8")
+    print("  redirects: _redirects")
 
     # --- Copy llms.txt to site root (geo-checker expects /llms.txt) ---
     llms_src = STATIC_DST_DIR / "llms.txt"
@@ -2804,7 +2823,7 @@ Sitemap: {SITE_URL}/sitemap.xml
         desc = (getattr(c, "description", None) or "")[:200]
         if not slug or not title:
             continue
-        url = f"{SITE_URL}/{slug}/"
+        url = slug_to_url(slug)
         llms_lines.append(f"- [{title}]({url}): {desc}")
         body_text = re.sub(r"<[^>]+>", "", getattr(c, "body_html", None) or "")
         body_text = re.sub(r"\s+", " ", body_text).strip()

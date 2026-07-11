@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+<span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  AML
+</span><!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
@@ -12,7 +14,7 @@
 
 
     <script type="application/ld+json">
-{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "data-engineering"}, "author": {"@type": "Person", "name": "Leszek"}, "dateModified": "2026-07-06T18:02:57Z", "datePublished": "2026-06-08", "description": "Answers to common questions about AcaciaFund\u0027s methodology, content, and platform.", "headline": "Frequently Asked Questions", "inLanguage": "en", "keywords": "page", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/faq/", "@type": "WebPage"}, "proficiencyLevel": "", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-07T08:00:52Z", "signalQualityIndex": 0.881, "sqi": 0.881}
+{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "data-engineering"}, "author": {"@type": "Person", "name": "Leszek"}, "dateModified": "2026-07-06T18:02:57Z", "datePublished": "2026-06-08", "description": "Answers to common questions about AcaciaFund\u0027s methodology, content, and platform.", "headline": "Frequently Asked Questions", "inLanguage": "en", "keywords": "page", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/knowledge/faq/", "@type": "WebPage"}, "proficiencyLevel": "", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-10T06:39:40Z", "signalQualityIndex": 0.881, "sqi": 0.881}
     </script>
 
 
@@ -29,6 +31,9 @@
                 <li><strong><a href="/" class="contrast logo">Acacia</a></strong></li>
             </ul>
             <ul>
+                <li><a href="/compliance/">Compliance</a></li>
+                <li><a href="/markets/">Markets</a></li>
+                <li><a href="/data/">Data</a></li>
                 <li><a href="/research/">Research</a></li>
                 <li><a href="/learn/">Learn</a></li>
                 <li><a href="/knowledge/">Knowledge</a></li>
@@ -38,10 +43,190 @@
 
     <main class="container">
         
-<article>
-  <h1>Frequently Asked Questions</h1>
-  <div class="content"><div class="section-harvester" data-section="overview" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"></summary><div class="section-body"><h3 id="what-is-the-signal-quality-index-sqi">What is the Signal Quality Index (SQI)?</h3><p>SQI is a composite metric that evaluates the quality of synthesized content across four dimensions: <strong>source authority</strong> (is the source reputable?), <strong>freshness</strong> (how recent is the data?), <strong>consensus</strong> (do multiple sources agree?), and <strong>relevance</strong> (how directly does it relate to the pillar?). SQI is normalized to [0, 1] and displayed on every research article.</p><h3 id="how-does-bloom-taxonomy-classification-work">How does Bloom taxonomy classification work?</h3><p>Each article is classified across six cognitive levels: <strong>remember</strong>, <strong>understand</strong>, <strong>apply</strong>, <strong>analyze</strong>, <strong>evaluate</strong>, and <strong>create</strong>. Questions and flashcards are generated at each level to support different learning objectives. A single article may span multiple levels depending on its content depth.</p><h3 id="what-are-the-three-pillars">What are the three pillars?</h3><p><strong>AML</strong> (Anti-Money Laundering) covers financial crime, compliance, regulation, and risk management. <strong>Markets</strong> covers semiconductors, supply chains, AI industry, and manufacturing. <strong>Data Engineering</strong> covers data pipelines, orchestration, quality engineering, streaming, storage, and analytics infrastructure.</p><h3 id="how-are-sources-selected">How are sources selected?</h3><p>Sources are drawn from two primary feeds: <strong>HackerNews</strong> (technology and current events) and <strong>arXiv</strong> (academic preprints across computer science, statistics, and finance). Articles are filtered by relevance to the three pillars and scored using the SQI framework.</p><h3 id="how-often-is-content-updated">How often is content updated?</h3><p>Research articles are published as significant stories emerge. The pipeline processes HackerNews and arXiv feeds daily, but publication frequency depends on the volume of high-SQI signals. Historical articles are preserved with their original quality metrics.</p><h3 id="can-i-reuse-or-cite-acaciafund-content">Can I reuse or cite AcaciaFund content?</h3><p>All content is licensed under MIT. You are free to reuse, adapt, and cite. We recommend citing by article slug and date, as content is version-controlled via Git. Each article has a canonical URL and JSON-LD structured data for citation purposes.</p><h3 id="how-are-thumbnails-generated">How are thumbnails generated?</h3><p>Each research article gets a unique fractal tree SVG, generated using a seed-based L-system. The tree shape is deterministic (same title = same tree) and colored by pillar (amber for AML, green for Markets, indigo for Data Engineering). Additional color flooding, bloom, and mist effects create a distinctive visual identity per article.</p><h3 id="does-acaciafund-use-client-side-javascript">Does AcaciaFund use client-side JavaScript?</h3><p>JavaScript is used only for UI enhancements: dark mode toggling, mobile navigation, reading progress bar, table of contents highlighting, and focus mode. No JavaScript is required for reading content — the site is fully functional with JavaScript disabled.</p><p><em>Last updated: 2026-06-08</em></p><hr /><section class="analytics-index"><small><strong>DataOps Telemetry Index:</strong> This technical brief addresses architectural patterns matching components: dataengineering, faq, help, questions.</small></section><hr /><section class="analytics-index"><small><strong>DataOps Telemetry Index:</strong> This technical brief addresses architectural patterns matching components: dataengineering, faq, help, questions.</small></section><hr /><section class="analytics-index"><small><strong>DataOps Telemetry Index:</strong> This technical brief addresses architectural patterns matching components: dataengineering, faq, help, questions.</small></section><hr /><section class="analytics-index"><small><strong>DataOps Telemetry Index:</strong> This analysis validates Data Engineering, Questions, Help using algorithm, analysis, architecture, bias, causation methodology.</small></section></div></details></div></div>
-</article>
+
+<nav aria-label="Breadcrumb">
+  <ol>
+    <li><a href="/">Home</a></li>
+    
+    <li aria-hidden="true">/</li>
+    <li aria-current="page">Frequently Asked Questions</li>
+    
+  </ol>
+</nav>
+
+<div id="reading-progress" style="position:fixed;top:0;left:0;height:3px;z-index:9999;width:0%;background:var(--color-accent)"></div>
+
+<div class="flex gap-8 md:flex-row flex-col">
+  <aside class="toc-sidebar shrink-0 order-last md:order-first md:sticky md:top-20 md:self-start md:max-h-[calc(100vh-6rem)] md:overflow-y-auto md:w-52">
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="text-xs font-semibold uppercase tracking-wide" style="color:var(--color-text-muted)">On this page</h2>
+      <button id="focus-toggle" class="text-xs px-2 py-1 rounded" style="color:var(--color-text-muted);background:var(--color-bg)" title="Focus mode" aria-label="Toggle focus mode">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 4h4M6 20h4M18 4h-4M18 20h-4M4 6v4M4 18v4M20 6v4M20 18v4"/></svg>
+      </button>
+    </div>
+    <nav aria-label="Table of contents">
+      <ul class="space-y-1 text-sm">
+        <li>
+          <a href="#frequently-asked-questions" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Frequently Asked Questions
+          </a>
+        </li>
+        <li>
+          <a href="#what-is-the-signal-quality-index-sqi" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            What is the Signal Quality Index (SQI)?
+          </a>
+        </li>
+        <li>
+          <a href="#how-does-bloom-taxonomy-classification-work" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            How does Bloom taxonomy classification work?
+          </a>
+        </li>
+        <li>
+          <a href="#what-are-the-three-pillars" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            What are the three pillars?
+          </a>
+        </li>
+        <li>
+          <a href="#how-are-sources-selected" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            How are sources selected?
+          </a>
+        </li>
+        <li>
+          <a href="#how-often-is-content-updated" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            How often is content updated?
+          </a>
+        </li>
+        <li>
+          <a href="#can-i-reuse-or-cite-acaciafund-content" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            Can I reuse or cite AcaciaFund content?
+          </a>
+        </li>
+        <li>
+          <a href="#how-are-thumbnails-generated" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            How are thumbnails generated?
+          </a>
+        </li>
+        <li>
+          <a href="#does-acaciafund-use-client-side-javascript" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            Does AcaciaFund use client-side JavaScript?
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+
+  <article class="min-w-0 flex-1">
+    <nav aria-label="Breadcrumb" class="mb-4 text-xs" style="color:var(--color-text-muted)">
+      <ol class="flex flex-wrap items-center gap-1.5">
+        <li><a href="/" class="hover:text-[var(--color-accent)] transition">Home</a></li>
+        <li aria-hidden="true">/</li>
+        <li><a href="/data/" class="hover:text-[var(--color-accent)] transition">Data Engineering</a></li>
+        <li aria-hidden="true">/</li>
+        <li aria-current="page" class="truncate max-w-[200px]">Frequently Asked Questions</li>
+      </ol>
+    </nav>
+    <header class="mb-8">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="inline-flex items-center gap-1.5 px-2 py-1 text-xs font-medium rounded" style="background:#6366f114;color:#6366f1;border:1px solid #6366f133"><svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 6v6l4 2" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>Knowledge</span>
+        
+        <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+        <span class="text-xs px-2 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-secondary);border:1px solid var(--color-border)">{'label': 'reference', 'icon': '📖', 'color': '#d97706', 'bg_color': '#d97706', 'description': 'glossaries, tool landscapes, and technical terminology across all pillars.', 'slug': 'reference'}</span>
+      </div>
+      <div class="flex items-center gap-2 mt-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 32" width="120" height="32" aria-hidden="true"><rect width="120" height="32" rx="2" fill="#6366f1" opacity="0.08"/><line x1="1" y1="4" x2="7" y2="16" stroke="#6366f1" stroke-width="1.5" opacity="0.44"/><line x1="1" y1="22" x2="7" y2="34" stroke="#6366f1" stroke-width="1.5" opacity="0.44"/><line x1="31" y1="4" x2="37" y2="16" stroke="#6366f1" stroke-width="1.5" opacity="0.72"/><line x1="61" y1="4" x2="67" y2="16" stroke="#6366f1" stroke-width="1.5" opacity="0.3"/><line x1="61" y1="22" x2="67" y2="34" stroke="#6366f1" stroke-width="1.5" opacity="0.3"/><line x1="91" y1="4" x2="97" y2="16" stroke="#6366f1" stroke-width="1.5" opacity="0.3"/><line x1="91" y1="13" x2="97" y2="25" stroke="#6366f1" stroke-width="1.5" opacity="0.5800000000000001"/></svg>
+        <h1 class="text-3xl font-extrabold leading-tight">Frequently Asked Questions</h1>
+      </div>
+      <div class="mt-2 flex items-center gap-2 text-sm" style="color:var(--color-text-muted)">
+        <time datetime="2026-06-08">2026-06-08</time>
+        <span aria-hidden="true">·</span>
+        <span>By Leszek</span>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 0.25rem; margin-top: var(--pico-spacing);">
+        <a href="/tags/page/"><kbd>page</kbd></a>
+      </div>
+    </header>
+
+    <div class="prose prose-lg prose-blue max-w-none">
+      <div class="section-harvester" data-section="overview" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"></summary><div class="section-body"><h3 id="what-is-the-signal-quality-index-sqi">What is the Signal Quality Index (SQI)?</h3><p>SQI is a composite metric that evaluates the quality of synthesized content across four dimensions: <strong>source authority</strong> (is the source reputable?), <strong>freshness</strong> (how recent is the data?), <strong>consensus</strong> (do multiple sources agree?), and <strong>relevance</strong> (how directly does it relate to the pillar?). SQI is normalized to [0, 1] and displayed on every research article.</p><h3 id="how-does-bloom-taxonomy-classification-work">How does Bloom taxonomy classification work?</h3><p>Each article is classified across six cognitive levels: <strong>remember</strong>, <strong>understand</strong>, <strong>apply</strong>, <strong>analyze</strong>, <strong>evaluate</strong>, and <strong>create</strong>. Questions and flashcards are generated at each level to support different learning objectives. A single article may span multiple levels depending on its content depth.</p><h3 id="what-are-the-three-pillars">What are the three pillars?</h3><p><strong>AML</strong> (Anti-Money Laundering) covers financial crime, compliance, regulation, and risk management. <strong>Markets</strong> covers semiconductors, supply chains, AI industry, and manufacturing. <strong>Data Engineering</strong> covers data pipelines, orchestration, quality engineering, streaming, storage, and analytics infrastructure.</p><h3 id="how-are-sources-selected">How are sources selected?</h3><p>Sources are drawn from two primary feeds: <strong>HackerNews</strong> (technology and current events) and <strong>arXiv</strong> (academic preprints across computer science, statistics, and finance). Articles are filtered by relevance to the three pillars and scored using the SQI framework.</p><h3 id="how-often-is-content-updated">How often is content updated?</h3><p>Research articles are published as significant stories emerge. The pipeline processes HackerNews and arXiv feeds daily, but publication frequency depends on the volume of high-SQI signals. Historical articles are preserved with their original quality metrics.</p><h3 id="can-i-reuse-or-cite-acaciafund-content">Can I reuse or cite AcaciaFund content?</h3><p>All content is licensed under MIT. You are free to reuse, adapt, and cite. We recommend citing by article slug and date, as content is version-controlled via Git. Each article has a canonical URL and JSON-LD structured data for citation purposes.</p><h3 id="how-are-thumbnails-generated">How are thumbnails generated?</h3><p>Each research article gets a unique fractal tree SVG, generated using a seed-based L-system. The tree shape is deterministic (same title = same tree) and colored by pillar (amber for AML, green for Markets, indigo for Data Engineering). Additional color flooding, bloom, and mist effects create a distinctive visual identity per article.</p><h3 id="does-acaciafund-use-client-side-javascript">Does AcaciaFund use client-side JavaScript?</h3><p>JavaScript is used only for UI enhancements: dark mode toggling, mobile navigation, reading progress bar, table of contents highlighting, and focus mode. No JavaScript is required for reading content — the site is fully functional with JavaScript disabled.</p><p><em>Last updated: 2026-06-08</em></p><hr /><section class="analytics-index"><small><strong>DataOps Telemetry Index:</strong> This technical brief addresses architectural patterns matching components: dataengineering, faq, help, questions.</small></section><hr /><section class="analytics-index"><small><strong>DataOps Telemetry Index:</strong> This technical brief addresses architectural patterns matching components: dataengineering, faq, help, questions.</small></section><hr /><section class="analytics-index"><small><strong>DataOps Telemetry Index:</strong> This technical brief addresses architectural patterns matching components: dataengineering, faq, help, questions.</small></section><hr /><section class="analytics-index"><small><strong>DataOps Telemetry Index:</strong> This analysis validates Data Engineering, Questions, Help using algorithm, analysis, architecture, bias, causation methodology.</small></section></div></details></div>
+    </div>
+    <section class="mt-12 pt-8 border-t">
+      <h2 class="text-2xl font-bold mb-6">Related Research</h2>
+      <div class="grid gap-4 sm:grid-cols-3">
+        <a href="/data/research/2027-data-engineering-predictions/" class="ghost-card block text-decoration:none">
+          <div class="p-3">
+            
+            <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">2027 Data Engineering Predictions: AI-Augmented Pipelines, Real-Time Universal Catalogs, and the Death of Batch</span>
+          </div>
+        </a>
+        <a href="/data/research/data-platform-product-ux/" class="ghost-card block text-decoration:none">
+          <div class="p-3">
+            
+            <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Data Platform as a Product: UX Patterns for Internal Developer Platforms</span>
+          </div>
+        </a>
+        <a href="/data/research/analytics-engineering-rise/" class="ghost-card block text-decoration:none">
+          <div class="p-3">
+            
+            <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">The Rise of the Analytics Engineer: dbt, SQLMesh, and the Modern Data Stack</span>
+          </div>
+        </a>
+      </div>
+    </section>
+    <section class="mt-12 pt-8 border-t">
+      <h2 class="text-2xl font-bold mb-6">Related Lessons</h2>
+      <div class="grid gap-4 sm:grid-cols-3">
+        <a href="/data/learn/designing-data-platform/" class="ghost-card block text-decoration:none">
+          <div class="p-3">
+            
+            <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Designing a Production Data Platform: From Requirements to Architecture</span>
+          </div>
+        </a>
+        <a href="/data/learn/data-quality-observability-cost/" class="ghost-card block text-decoration:none">
+          <div class="p-3">
+            
+            <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Data Quality, Observability, and Cost Optimization at Scale</span>
+          </div>
+        </a>
+        <a href="/data/learn/building-pipelines-dbt-dagster/" class="ghost-card block text-decoration:none">
+          <div class="p-3">
+            
+            <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Building Data Pipelines with dbt and Dagster: From SQL to Orchestration</span>
+          </div>
+        </a>
+      </div>
+    </section>
+  </article>
+</div>
+
+<script src="/static/js/learning_hub.d41d8cd9.js" defer></script>
+<div class="newsletter-signup" style="background:var(--color-bg);border:1px solid var(--color-border);padding:2rem;border-radius:8px;text-align:center">
+  <h3 style="color:var(--color-text)">Stay Updated</h3>
+  <p style="color:var(--color-text-muted)">Get the latest research summaries delivered to your inbox.</p>
+  <form style="margin-top:1rem">
+    <input type="email" placeholder="Enter your email" style="padding:0.5rem;border:1px solid var(--color-border);border-radius:4px;width:100%;max-width:300px">
+    <button type="submit" style="margin-top:0.5rem;padding:0.5rem 1rem;background:var(--color-accent);color:#fff;border:none;border-radius:4px;cursor:pointer">Subscribe</button>
+  </form>
+</div>
 
     </main>
 

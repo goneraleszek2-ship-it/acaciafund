@@ -192,7 +192,7 @@ def _arxiv_to_item(paper: dict, source_date: str) -> dict[str, Any] | None:
 
     slug_date = published[:10] if published else datetime.now(timezone.utc).strftime("%Y-%m-%d")
     slug_base = _slugify(title)
-    slug = f"blog/{slug_date}-{slug_base}"
+    slug = f"aml/research/{slug_base}"
 
     tags = ["aml"] + _detect_aml_tags(title, abstract)
     tags = list(dict.fromkeys(tags))  # deduplicate preserving order
@@ -268,7 +268,7 @@ def _hn_to_item(story: dict) -> dict[str, Any] | None:
 
     slug_date = created_at[:10] if created_at else datetime.now(timezone.utc).strftime("%Y-%m-%d")
     slug_base = _slugify(title)
-    slug = f"blog/{slug_date}-{slug_base}"
+    slug = f"aml/research/{slug_base}"
 
     tags = ["aml"] + _detect_aml_tags(title, "")
     tags = list(dict.fromkeys(tags))

@@ -33,11 +33,9 @@
       <ol class="flex flex-wrap items-center gap-1.5">
         <li><a href="/" class="hover:text-[var(--color-accent)] transition">Home</a></li>
         <li aria-hidden="true">/</li>
-        <li><a href="/learn/" class="hover:text-[var(--color-accent)] transition">Learn</a></li>
-        <li aria-hidden="true">/</li>
         {%- set pillar_key = content.pillar or "aml" %}
         {%- set pc = pillar_config.get(pillar_key, pillar_config["aml"]) %}
-        <li><a href="/{{ pillar_key }}/" class="hover:text-[var(--color-accent)] transition">{{ pc.label }}</a></li>
+        <li><a href="/{{ pc.url }}/" class="hover:text-[var(--color-accent)] transition">{{ pc.label }}</a></li>
         <li aria-hidden="true">/</li>
         <li aria-current="page" class="truncate max-w-[200px]">{{ content.title | striptags }}</li>
       </ol>

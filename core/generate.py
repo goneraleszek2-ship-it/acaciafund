@@ -28,7 +28,7 @@ from .visuals import (
     generate_thumbnail_svg,
 )
 
-PILLAR_CATEGORY = {"aml": "AML", "stock": "Markets", "data-engineering": "Data Engineering"}
+PILLAR_CATEGORY = {"aml": "Compliance", "stock": "Markets", "data-engineering": "Data Engineering"}
 
 
 def _build_content_deep_analysis(

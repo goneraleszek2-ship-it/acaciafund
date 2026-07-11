@@ -14,6 +14,7 @@ from typing import Any, Dict, Optional
 
 CACHE_FILE = Path('.build_cache.json')
 CACHE_VERSION = '1.0'
+URL_STRUCTURE_VERSION = '3.0'  # Must match config.URL_STRUCTURE_VERSION
 
 
 class BuildCache:
@@ -37,13 +38,14 @@ class BuildCache:
                 with open(self.cache_file, 'r') as f:
                     data = json.load(f)
                 
-                if data.get('version') == CACHE_VERSION:
+                if data.get('version') == CACHE_VERSION and data.get('url_structure_version') == URL_STRUCTURE_VERSION:
                     self.cache = data.get('entries', {})
                     self.templates_hash = data.get('templates_hash')
                     self.content_templates_hash = data.get('content_templates_hash')
                     print(f"📦 Cache loaded: {len(self.cache)} entries")
                 else:
-                    print("⚠️  Cache version mismatch, clearing cache")
+                    reason = "version mismatch" if data.get('version') != CACHE_VERSION else "URL structure changed"
+                    print(f"⚠️  Cache {reason}, clearing cache")
                     self.cache = {}
                     self.templates_hash = None
                     self.content_templates_hash = None
@@ -59,6 +61,7 @@ class BuildCache:
         """Save cache to disk."""
         data = {
             'version': CACHE_VERSION,
+            'url_structure_version': URL_STRUCTURE_VERSION,
             'generated_at': time.time(),
             'templates_hash': self.templates_hash,
             'content_templates_hash': self.content_templates_hash,

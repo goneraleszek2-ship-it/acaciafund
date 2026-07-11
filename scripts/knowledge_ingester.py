@@ -234,6 +234,10 @@ PILLAR_CONFIGS: dict[str, PillarConfig] = {
     ),
 }
 
+# Map ingester slug_name → registry pillar → URL segment
+INGESTER_TO_PILLAR = {"aml": "aml", "data": "data-engineering", "market": "stock"}
+from config import PILLAR_URL_MAP
+
 
 # =========================================================================
 # Shared Utilities
@@ -402,9 +406,11 @@ def _arxiv_to_item(paper: dict, config: PillarConfig) -> dict[str, Any] | None:
 
     slug_date = published[:10] or datetime.now(timezone.utc).strftime("%Y-%m-%d")
     slug_base = _slugify(title)
-    slug = f"blog/{slug_date}-{slug_base}"
-
     pillar = config.slug_name
+    registry_pillar = INGESTER_TO_PILLAR.get(pillar, pillar)
+    pillar_url = PILLAR_URL_MAP.get(registry_pillar, registry_pillar)
+    slug = f"{pillar_url}/research/{slug_base}"
+
     tags = paper.get("_detected_tags", [])
 
     # Category-based fallback tags when keyword detection misses
@@ -494,9 +500,11 @@ def _hn_to_item(story: dict, config: PillarConfig) -> dict[str, Any] | None:
 
     slug_date = created_at[:10] or datetime.now(timezone.utc).strftime("%Y-%m-%d")
     slug_base = _slugify(title)
-    slug = f"blog/{slug_date}-{slug_base}"
-
     pillar = config.slug_name
+    registry_pillar = INGESTER_TO_PILLAR.get(pillar, pillar)
+    pillar_url = PILLAR_URL_MAP.get(registry_pillar, registry_pillar)
+    slug = f"{pillar_url}/research/{slug_base}"
+
     tags = story.get("_detected_tags", [])
     if pillar == "aml" and "aml" not in tags:
         tags.insert(0, "aml")

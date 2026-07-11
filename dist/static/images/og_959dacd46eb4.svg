@@ -1,33 +1,36 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
 <defs>
-<radialGradient id="ogbg" cx="46%" cy="54%"><stop offset="0" stop-color="#1b1314"/><stop offset="1" stop-color="#020617"/></radialGradient>
+<radialGradient id="ogbg" cx="46%" cy="54%"><stop offset="0" stop-color="#1c1950"/><stop offset="1" stop-color="#0f0a3a"/></radialGradient>
 </defs>
 <rect width="1200" height="630" fill="url(#ogbg)"/>
-<ellipse cx="831" cy="389" rx="80" ry="91" fill="#d97706" opacity="0.02"/>
-<ellipse cx="896" cy="537" rx="216" ry="104" fill="#d97706" opacity="0.02"/>
-<ellipse cx="780" cy="391" rx="275" ry="112" fill="#d97706" opacity="0.03"/>
-<ellipse cx="324" cy="304" rx="216" ry="153" fill="#d97706" opacity="0.03"/>
-<ellipse cx="420" cy="440" rx="182" ry="163" fill="#d97706" opacity="0.04"/>
-<ellipse cx="770" cy="86" rx="236" ry="225" fill="#d97706" opacity="0.03"/>
-<circle cx="395.0" cy="54.9" r="1.6" fill="#f1dec8" opacity="0.06"/>
-<circle cx="677.1" cy="192.6" r="4.0" fill="#e6b072" opacity="0.04"/>
-<circle cx="1005.3" cy="265.6" r="5.9" fill="#df933a" opacity="0.07"/>
-<circle cx="938.4" cy="118.4" r="2.1" fill="#eccaa3" opacity="0.02"/>
-<circle cx="28.3" cy="98.6" r="2.3" fill="#e19b4a" opacity="0.04"/>
-<circle cx="621.6" cy="130.4" r="2.3" fill="#da7d11" opacity="0.03"/>
-<circle cx="468.7" cy="45.0" r="4.7" fill="#e29f51" opacity="0.04"/>
-<circle cx="272.8" cy="47.7" r="3.6" fill="#e09641" opacity="0.02"/>
-<circle cx="531.4" cy="447.1" r="2.8" fill="#eed0ad" opacity="0.02"/>
-<circle cx="871.0" cy="559.3" r="2.5" fill="#f3e6d6" opacity="0.06"/>
-<circle cx="190.5" cy="70.8" r="1.9" fill="#e6b071" opacity="0.06"/>
-<circle cx="261.5" cy="339.6" r="5.4" fill="#da7b0f" opacity="0.05"/>
+<ellipse cx="831" cy="389" rx="80" ry="91" fill="#818cf8" opacity="0.02"/>
+<ellipse cx="896" cy="537" rx="216" ry="104" fill="#818cf8" opacity="0.02"/>
+<ellipse cx="780" cy="391" rx="275" ry="112" fill="#818cf8" opacity="0.03"/>
+<ellipse cx="324" cy="304" rx="216" ry="153" fill="#818cf8" opacity="0.03"/>
+<ellipse cx="420" cy="440" rx="182" ry="163" fill="#818cf8" opacity="0.04"/>
+<ellipse cx="770" cy="86" rx="236" ry="225" fill="#818cf8" opacity="0.03"/>
+<circle cx="395.0" cy="54.9" r="1.6" fill="#d7dcfd" opacity="0.06"/>
+<circle cx="677.1" cy="192.6" r="4.0" fill="#b1b8fb" opacity="0.04"/>
+<circle cx="1005.3" cy="265.6" r="5.9" fill="#98a1f9" opacity="0.07"/>
+<circle cx="938.4" cy="118.4" r="2.1" fill="#c6cdfc" opacity="0.02"/>
+<circle cx="28.3" cy="98.6" r="2.3" fill="#9fa8f9" opacity="0.04"/>
+<circle cx="621.6" cy="130.4" r="2.3" fill="#8590f8" opacity="0.03"/>
+<circle cx="468.7" cy="45.0" r="4.7" fill="#a2abfa" opacity="0.04"/>
+<circle cx="272.8" cy="47.7" r="3.6" fill="#9ba4f9" opacity="0.02"/>
+<circle cx="531.4" cy="447.1" r="2.8" fill="#cbd1fc" opacity="0.02"/>
+<circle cx="871.0" cy="559.3" r="2.5" fill="#dde2fd" opacity="0.06"/>
+<circle cx="190.5" cy="70.8" r="1.9" fill="#b0b8fb" opacity="0.06"/>
+<circle cx="261.5" cy="339.6" r="5.4" fill="#858ff8" opacity="0.05"/>
+<rect x="0" y="0" width="1200" height="360" fill="#0f0a3a" opacity="0.85" rx="4"/>
+<g transform="translate(600, 180) scale(0.6)" color="#818cf8" opacity="0.8">  <rect x="4" y="4" width="16" height="16" rx="2"/><path d="M9 4v16M15 4v16M4 9h16M4 15h16"/></g>
 <!-- Icon -->
-<g transform="translate(50, 50) scale(1.8)" color="#d97706">
+<g transform="translate(50, 50) scale(1.8)" color="#818cf8">
   <path d="M12 0C5.363 0 0 5.363 0 12s5.363 12 12 12 12-5.363 12-12S18.637 0 12 0zM9.502 7.03a4.974 4.974 0 0 1 4.97 4.97 4.974 4.974 0 0 1-4.97 4.97A4.974 4.974 0 0 1 4.532 12a4.974 4.974 0 0 1 4.97-4.97zm6.563 3.183h2.351c.98 0 1.787.782 1.787 1.762s-.807 1.789-1.787 1.789h-2.351v-3.551z"/>
 </g>
-<text x="50" y="260" fill="#f8fafc" font-family="system-ui,sans-serif" font-size="44" font-weight="700">Zero-Copy Vectorized Analytics via</text>
-<text x="50" y="312" fill="#f8fafc" font-family="system-ui,sans-serif" font-size="36" font-weight="700">Apache Arrow Flight and Parquet Columnar</text>
-<text x="50" y="364" fill="#f8fafc" font-family="system-ui,sans-serif" font-size="44" font-weight="700">Pruning</text>
-<text x="50" y="500" fill="#d97706" font-family="system-ui,sans-serif" font-size="18" font-weight="600">AcaciaFund &nbsp;·&nbsp; DATA</text>
-<text x="50" y="540" fill="#f8fafc" font-family="system-ui,sans-serif" font-size="14" opacity="0.5">Codzienna synteza badan — AML, rynki, nauka</text>
+<text x="50" y="260" fill="#eef2ff" font-family="system-ui,sans-serif" font-size="44" font-weight="700">Zero-Copy Vectorized Analytics via</text>
+<text x="50" y="312" fill="#eef2ff" font-family="system-ui,sans-serif" font-size="36" font-weight="700">Apache Arrow Flight and Parquet Columnar</text>
+<text x="50" y="364" fill="#eef2ff" font-family="system-ui,sans-serif" font-size="44" font-weight="700">Pruning</text>
+<text x="50" y="500" fill="#818cf8" font-family="system-ui,sans-serif" font-size="18" font-weight="600">AcaciaFund &nbsp;·&nbsp; DATA-ENGINEERING</text>
+<text x="50" y="540" fill="#eef2ff" font-family="system-ui,sans-serif" font-size="14" opacity="0.5">Codzienna synteza badan — AML, rynki, nauka</text>
+<rect x="50" y="570" width="100" height="4" rx="2" fill="#818cf8" opacity="0.8"/>
 </svg>

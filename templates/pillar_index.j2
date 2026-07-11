@@ -9,7 +9,7 @@
       <p class="post-meta">
         <span>{{ post.date_str }}</span>
         <span>•</span>
-        <span>{{ post.pillar | replace('-', ' ') | title }}</span>
+        <span>{{ pconf.label if pconf else (post.pillar | replace('-', ' ') | title) }}</span>
       </p>
       <p>{{ post.description }}</p>
     </article>

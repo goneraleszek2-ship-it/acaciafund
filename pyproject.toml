@@ -38,3 +38,7 @@ pythonVersion = "3.10"
 typeCheckingMode = "basic"
 include = ["build.py", "config.py", "schemas.py", "core", "scripts/enrich.py"]
 exclude = ["dist", "venv", "tmp"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-v --tb=short"

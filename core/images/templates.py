@@ -16,7 +16,7 @@ PILLAR_VISUALS = {
         "label": BRAND["science"]["label"],
     },
     "aml": {
-        "name": "AML",
+        "name": "Compliance",
         "primary": BRAND["aml"]["primary"],
         "dark": BRAND["aml"]["dark"],
         "darker": BRAND["aml"]["darker"],

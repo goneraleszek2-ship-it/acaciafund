@@ -25,7 +25,7 @@ BRAND: dict[str, dict[str, str]] = {
         "dark": "#0f172a",
         "darker": "#020617",
         "accent": "#fbbf24",
-        "label": "AML",
+        "label": "CMP",
     },
     "markets": {
         "primary": "#3a7d5c",

@@ -125,10 +125,50 @@ The key insight: the cache paths are ABSOLUTE paths. So `/root/dist/blog/.../ind
 
 BUT — the cache was recently regenerated. The `.build_cache.json` has `"generated_at": 1783066391.0654044` which is around July 3-4. At that time, the output was at `/root/level`. The July 8 build at 05:57 regenerated the cache. But the build-meta.json at `dist/build-meta.json` was generated at `2026-07-08T05:57:16`.
 
-So the latest build (07:57 AM today) would have generated a new `.build_cache.json` with paths under `/root/acaciafund/dist/`. But wait — the `.build_cache.json` I read earlier had paths under `/root/dist/`... Let me re-read it.
+So the latest build (07:57 AM today) would have generated a new `.build_cache.json` with paths under `/root/acaciafund/dist/`. But the `.build_cache.json` I read earlier had paths under `/root/dist/`...
 
-Actually, let me re-read the `.build_cache.json`. It might have been updated by the latest build.<｜end▁of▁thinking｜>
+---
 
-<｜｜DSML｜｜tool_calls>
-<｜｜DSML｜｜invoke name="read">
-<｜｜DSML｜｜parameter name="filePath" string="true">/root/acaciafund/.build_cache.json
+## Post-Refactor Status (2026-07-10)
+
+### URL Structure v3.0
+
+The site now uses a **pillar-first** URL hierarchy:
+
+| Pillar | URL Segment | Pages |
+|--------|------------|-------|
+| Compliance (AML) | `/compliance/` | 60+ (research, learn, knowledge) |
+| Markets (Stock) | `/markets/` | 40+ |
+| Data Engineering | `/data/` | 50+ |
+
+Platform knowledge pages remain at `/knowledge/{page}`.
+
+### Build Metrics
+
+| Metric | Value |
+|--------|-------|
+| Total pages generated | 338 |
+| Build time | ~11s |
+| Registry items | 187 |
+| Tag pages | 129 |
+| Test coverage | 90 tests (URL, redirect, smoke) |
+
+### Redirects
+
+- `/aml/*` → `/compliance/:splat` (301)
+- `/stock/*` → `/markets/:splat` (301)
+- `/science/*` → `/research/:splat` (301)
+- Meta-refresh redirect at `dist/aml/index.html`
+
+### Key Fixes Applied
+
+1. Extracted URL helpers to `core/urls.py` (dependency-free, testable)
+2. Fixed 3 scripts that locally redefined `PILLAR_URL_MAP` — now import from `config.py`
+3. Fixed AML signals dashboard output path (`dist/aml/signals/` → `dist/compliance/signals/`)
+4. Added `slug_to_fspath()` for internal-key-to-URL-segment translation
+5. Added comprehensive test suite (90 tests, <2s)
+
+### Documentation
+
+- `URL_STRUCTURE.md` — URL hierarchy reference with Mermaid diagram
+- `AGENTS.md` — Development guide with commands, architecture, invariants

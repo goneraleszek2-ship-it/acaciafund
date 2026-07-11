@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+<span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  AML
+</span><!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
@@ -12,7 +14,7 @@
 
 
     <script type="application/ld+json">
-{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "data-engineering"}, "author": {"@type": "Person", "name": "Leszek"}, "dateModified": "2026-07-06T18:02:57Z", "datePublished": "2026-06-08", "description": "How AcaciaFund transforms raw signals into quality-scored research \u2014 SQI, Bloom taxonomy, pipeline stages.", "headline": "Research Methodology", "inLanguage": "en", "keywords": "dataops, signal-quality", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/research-methodology/", "@type": "WebPage"}, "proficiencyLevel": "", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-07T08:00:42Z", "signalQualityIndex": 0.899, "sqi": 0.899}
+{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "data-engineering"}, "author": {"@type": "Person", "name": "Leszek"}, "dateModified": "2026-07-06T18:02:57Z", "datePublished": "2026-06-08", "description": "How AcaciaFund transforms raw signals into quality-scored research \u2014 SQI, Bloom taxonomy, pipeline stages.", "headline": "Research Methodology", "inLanguage": "en", "keywords": "dataops, signal-quality", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/knowledge/research-methodology/", "@type": "WebPage"}, "proficiencyLevel": "", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-10T06:39:40Z", "signalQualityIndex": 0.899, "sqi": 0.899}
     </script>
 
 
@@ -29,6 +31,9 @@
                 <li><strong><a href="/" class="contrast logo">Acacia</a></strong></li>
             </ul>
             <ul>
+                <li><a href="/compliance/">Compliance</a></li>
+                <li><a href="/markets/">Markets</a></li>
+                <li><a href="/data/">Data</a></li>
                 <li><a href="/research/">Research</a></li>
                 <li><a href="/learn/">Learn</a></li>
                 <li><a href="/knowledge/">Knowledge</a></li>
@@ -38,9 +43,79 @@
 
     <main class="container">
         
-<article>
-  <h1>Research Methodology</h1>
-  <div class="content"><div class="section-harvester" data-section="overview" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"></summary><div class="section-body"><p>How AcaciaFund transforms raw signals into structured, quality-scored research articles.</p><h3 id="pipeline-stages">Pipeline Stages</h3><h4>1. Source Ingestion</h4><p>Content is drawn from three primary feeds:</p><ul><li><strong>HackerNews API</strong> (news.ycombinator.com) — technology, business, and science stories ranked by community engagement (points, comments). Top ~30 stories per day are analyzed.</li><li><strong>arXiv API</strong> (arxiv.org) — academic preprints across computer science, physics, mathematics, quantitative biology, and finance. Filtered by relevance to pillar topics.</li><li><strong>PubMed</strong> — biomedical literature (archived — science pillar discontinued).</li></ul><h4>2. Entity Extraction &amp; Summarization</h4><p>Each source is processed through NLP pipelines for:</p><ul><li><strong>Named Entity Recognition (NER)</strong> — extracting organizations, people, technologies, regulations, and financial instruments.</li><li><strong>Automatic Summarization</strong> — extractive summarization identifying key claims, numerical data, and conclusions.</li><li><strong>Topic Modeling</strong> — LDA-based classification into pillar-relevant topics and subtopics.</li></ul><h4>3. Bloom Taxonomy Classification</h4><p>Every article is assessed across six cognitive levels:</p><table style="width:100%;border-collapse:collapse;font-size:0.9em"><tr style="background:var(--color-bg)"><th style="padding:8px;border:1px solid var(--color-border);text-align:left">Level</th><th style="padding:8px;border:1px solid var(--color-border);text-align:left">Description</th><th style="padding:8px;border:1px solid var(--color-border);text-align:left">Example Question</th></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Remember</td><td style="padding:8px;border:1px solid var(--color-border)">Recall facts and basic concepts</td><td style="padding:8px;border:1px solid var(--color-border)">Which pillar does this article belong to?</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Understand</td><td style="padding:8px;border:1px solid var(--color-border)">Explain ideas and concepts</td><td style="padding:8px;border:1px solid var(--color-border)">What is the primary domain of this article?</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Apply</td><td style="padding:8px;border:1px solid var(--color-border)">Use information in new situations</td><td style="padding:8px;border:1px solid var(--color-border)">How can these findings be applied in practice?</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Analyze</td><td style="padding:8px;border:1px solid var(--color-border)">Draw connections among ideas</td><td style="padding:8px;border:1px solid var(--color-border)">What assumptions underlie this analysis?</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Evaluate</td><td style="padding:8px;border:1px solid var(--color-border)">Justify a stand or decision</td><td style="padding:8px;border:1px solid var(--color-border)">How strong is the evidence presented?</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Create</td><td style="padding:8px;border:1px solid var(--color-border)">Produce new or original work</td><td style="padding:8px;border:1px solid var(--color-border)">Design an experiment to test this hypothesis.</td></tr></table><h4>4. Signal Quality Index (SQI) Computation</h4><p>SQI is a composable metric computed per article as a weighted combination:</p><pre style="background:var(--color-bg);padding:16px;border-radius:8px;font-size:0.85em">
+
+<nav aria-label="Breadcrumb">
+  <ol>
+    <li><a href="/">Home</a></li>
+    
+    <li aria-hidden="true">/</li>
+    <li aria-current="page">Research Methodology</li>
+    
+  </ol>
+</nav>
+
+<div id="reading-progress" style="position:fixed;top:0;left:0;height:3px;z-index:9999;width:0%;background:var(--color-accent)"></div>
+
+<div class="flex gap-8 md:flex-row flex-col">
+  <aside class="toc-sidebar shrink-0 order-last md:order-first md:sticky md:top-20 md:self-start md:max-h-[calc(100vh-6rem)] md:overflow-y-auto md:w-52">
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="text-xs font-semibold uppercase tracking-wide" style="color:var(--color-text-muted)">On this page</h2>
+      <button id="focus-toggle" class="text-xs px-2 py-1 rounded" style="color:var(--color-text-muted);background:var(--color-bg)" title="Focus mode" aria-label="Toggle focus mode">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 4h4M6 20h4M18 4h-4M18 20h-4M4 6v4M4 18v4M20 6v4M20 18v4"/></svg>
+      </button>
+    </div>
+    <nav aria-label="Table of contents">
+      <ul class="space-y-1 text-sm">
+        <li>
+          <a href="#research-methodology" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Research Methodology
+          </a>
+        </li>
+        <li>
+          <a href="#pipeline-stages" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            Pipeline Stages
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
+
+  <article class="min-w-0 flex-1">
+    <nav aria-label="Breadcrumb" class="mb-4 text-xs" style="color:var(--color-text-muted)">
+      <ol class="flex flex-wrap items-center gap-1.5">
+        <li><a href="/" class="hover:text-[var(--color-accent)] transition">Home</a></li>
+        <li aria-hidden="true">/</li>
+        <li><a href="/data/" class="hover:text-[var(--color-accent)] transition">Data Engineering</a></li>
+        <li aria-hidden="true">/</li>
+        <li aria-current="page" class="truncate max-w-[200px]">Research Methodology</li>
+      </ol>
+    </nav>
+    <header class="mb-8">
+      <div class="flex items-center gap-3 mb-3">
+        <span class="inline-flex items-center gap-1.5 px-2 py-1 text-xs font-medium rounded" style="background:#6366f114;color:#6366f1;border:1px solid #6366f133"><svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M12 6v6l4 2" fill="none" stroke="currentColor" stroke-width="1.5"/></svg>Knowledge</span>
+        
+        <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+        <span class="text-xs px-2 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-secondary);border:1px solid var(--color-border)">{'label': 'reference', 'icon': '📖', 'color': '#d97706', 'bg_color': '#d97706', 'description': 'glossaries, tool landscapes, and technical terminology across all pillars.', 'slug': 'reference'}</span>
+      </div>
+      <div class="flex items-center gap-2 mt-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 32" width="120" height="32" aria-hidden="true"><rect width="120" height="32" rx="2" fill="#6366f1" opacity="0.08"/><line x1="1" y1="4" x2="7" y2="16" stroke="#6366f1" stroke-width="1.5" opacity="0.5800000000000001"/><line x1="1" y1="11" x2="7" y2="23" stroke="#6366f1" stroke-width="1.5" opacity="0.44"/><line x1="1" y1="25" x2="7" y2="37" stroke="#6366f1" stroke-width="1.5" opacity="0.3"/><line x1="25" y1="4" x2="31" y2="16" stroke="#6366f1" stroke-width="1.5" opacity="0.3"/><line x1="25" y1="18" x2="31" y2="30" stroke="#6366f1" stroke-width="1.5" opacity="0.5800000000000001"/><line x1="49" y1="4" x2="55" y2="16" stroke="#6366f1" stroke-width="1.5" opacity="0.3"/><line x1="49" y1="11" x2="55" y2="23" stroke="#6366f1" stroke-width="1.5" opacity="0.72"/><line x1="49" y1="18" x2="55" y2="30" stroke="#6366f1" stroke-width="1.5" opacity="0.8600000000000001"/><line x1="49" y1="25" x2="55" y2="37" stroke="#6366f1" stroke-width="1.5" opacity="0.8600000000000001"/><line x1="73" y1="4" x2="79" y2="16" stroke="#6366f1" stroke-width="1.5" opacity="0.8600000000000001"/><line x1="73" y1="11" x2="79" y2="23" stroke="#6366f1" stroke-width="1.5" opacity="0.8600000000000001"/><line x1="73" y1="18" x2="79" y2="30" stroke="#6366f1" stroke-width="1.5" opacity="0.8600000000000001"/><line x1="97" y1="11" x2="103" y2="23" stroke="#6366f1" stroke-width="1.5" opacity="0.8600000000000001"/><line x1="97" y1="18" x2="103" y2="30" stroke="#6366f1" stroke-width="1.5" opacity="0.72"/></svg>
+        <h1 class="text-3xl font-extrabold leading-tight">Research Methodology</h1>
+      </div>
+      <div class="mt-2 flex items-center gap-2 text-sm" style="color:var(--color-text-muted)">
+        <time datetime="2026-06-08">2026-06-08</time>
+        <span aria-hidden="true">·</span>
+        <span>By Leszek</span>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 0.25rem; margin-top: var(--pico-spacing);">
+        <a href="/tags/dataops/"><kbd>dataops</kbd></a>
+        <a href="/tags/signal-quality/"><kbd>signal-quality</kbd></a>
+      </div>
+    </header>
+
+    <div class="prose prose-lg prose-blue max-w-none">
+      <div class="section-harvester" data-section="overview" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"></summary><div class="section-body"><p>How AcaciaFund transforms raw signals into structured, quality-scored research articles.</p><h3 id="pipeline-stages">Pipeline Stages</h3><h4>1. Source Ingestion</h4><p>Content is drawn from three primary feeds:</p><ul><li><strong>HackerNews API</strong> (news.ycombinator.com) — technology, business, and science stories ranked by community engagement (points, comments). Top ~30 stories per day are analyzed.</li><li><strong>arXiv API</strong> (arxiv.org) — academic preprints across computer science, physics, mathematics, quantitative biology, and finance. Filtered by relevance to pillar topics.</li><li><strong>PubMed</strong> — biomedical literature (archived — science pillar discontinued).</li></ul><h4>2. Entity Extraction &amp; Summarization</h4><p>Each source is processed through NLP pipelines for:</p><ul><li><strong>Named Entity Recognition (NER)</strong> — extracting organizations, people, technologies, regulations, and financial instruments.</li><li><strong>Automatic Summarization</strong> — extractive summarization identifying key claims, numerical data, and conclusions.</li><li><strong>Topic Modeling</strong> — LDA-based classification into pillar-relevant topics and subtopics.</li></ul><h4>3. Bloom Taxonomy Classification</h4><p>Every article is assessed across six cognitive levels:</p><table style="width:100%;border-collapse:collapse;font-size:0.9em"><tr style="background:var(--color-bg)"><th style="padding:8px;border:1px solid var(--color-border);text-align:left">Level</th><th style="padding:8px;border:1px solid var(--color-border);text-align:left">Description</th><th style="padding:8px;border:1px solid var(--color-border);text-align:left">Example Question</th></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Remember</td><td style="padding:8px;border:1px solid var(--color-border)">Recall facts and basic concepts</td><td style="padding:8px;border:1px solid var(--color-border)">Which pillar does this article belong to?</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Understand</td><td style="padding:8px;border:1px solid var(--color-border)">Explain ideas and concepts</td><td style="padding:8px;border:1px solid var(--color-border)">What is the primary domain of this article?</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Apply</td><td style="padding:8px;border:1px solid var(--color-border)">Use information in new situations</td><td style="padding:8px;border:1px solid var(--color-border)">How can these findings be applied in practice?</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Analyze</td><td style="padding:8px;border:1px solid var(--color-border)">Draw connections among ideas</td><td style="padding:8px;border:1px solid var(--color-border)">What assumptions underlie this analysis?</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Evaluate</td><td style="padding:8px;border:1px solid var(--color-border)">Justify a stand or decision</td><td style="padding:8px;border:1px solid var(--color-border)">How strong is the evidence presented?</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Create</td><td style="padding:8px;border:1px solid var(--color-border)">Produce new or original work</td><td style="padding:8px;border:1px solid var(--color-border)">Design an experiment to test this hypothesis.</td></tr></table><h4>4. Signal Quality Index (SQI) Computation</h4><p>SQI is a composable metric computed per article as a weighted combination:</p><pre style="background:var(--color-bg);padding:16px;border-radius:8px;font-size:0.85em">
 SQI = w1 · Authority + w2 · Freshness + w3 · Consensus + w4 · Relevance
 
 where:
@@ -50,8 +125,84 @@ where:
  Relevance = keyword overlap with pillar taxonomy
 
 Default weights: w1=0.35, w2=0.25, w3=0.25, w4=0.15
-</pre><p>Weights are adjustable per pillar to prioritize different quality dimensions (e.g., AML favors authority, Data Engineering favors freshness).</p><h4>5. Cross-Pillar Analysis</h4><p>Each article is analyzed for connections to other pillars via:</p><ul><li><strong>Shared entity references</strong> — organizations, regulations, or technologies that appear across pillars</li><li><strong>Source overlap</strong> — articles from different pillars citing the same source</li><li><strong>Topic bridging</strong> — latent topic modeling revealing cross-domain themes</li></ul><h4>6. Quality Gates &amp; Serving</h4><p>Before publication, each article passes through quality gates:</p><ul><li><strong>Schema validation</strong> — Pydantic ensures all required fields are present and correctly typed</li><li><strong>Source diversity check</strong> — minimum source count and domain diversity thresholds</li><li><strong>SQI threshold</strong> — minimum SQI of 0.35 for publication</li><li><strong>Deterministic build</strong> — same registry.json always produces identical output</li></ul><p>The final artifact is static HTML deployed to Cloudflare Pages via <code>python3.13 build.py</code>.</p><p><em>Last updated: 2026-06-08</em></p></div></details></div></div>
-</article>
+</pre><p>Weights are adjustable per pillar to prioritize different quality dimensions (e.g., AML favors authority, Data Engineering favors freshness).</p><h4>5. Cross-Pillar Analysis</h4><p>Each article is analyzed for connections to other pillars via:</p><ul><li><strong>Shared entity references</strong> — organizations, regulations, or technologies that appear across pillars</li><li><strong>Source overlap</strong> — articles from different pillars citing the same source</li><li><strong>Topic bridging</strong> — latent topic modeling revealing cross-domain themes</li></ul><h4>6. Quality Gates &amp; Serving</h4><p>Before publication, each article passes through quality gates:</p><ul><li><strong>Schema validation</strong> — Pydantic ensures all required fields are present and correctly typed</li><li><strong>Source diversity check</strong> — minimum source count and domain diversity thresholds</li><li><strong>SQI threshold</strong> — minimum SQI of 0.35 for publication</li><li><strong>Deterministic build</strong> — same registry.json always produces identical output</li></ul><p>The final artifact is static HTML deployed to Cloudflare Pages via <code>python3.13 build.py</code>.</p><p><em>Last updated: 2026-06-08</em></p></div></details></div>
+    </div>
+    <section class="mt-12 pt-8 border-t">
+      <h2 class="text-2xl font-bold mb-6">Related Research</h2>
+      <div class="grid gap-4 sm:grid-cols-3">
+        <a href="/data/research/2027-data-engineering-predictions/" class="ghost-card block text-decoration:none">
+          <div class="p-3">
+            
+            <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">2027 Data Engineering Predictions: AI-Augmented Pipelines, Real-Time Universal Catalogs, and the Death of Batch</span>
+          </div>
+        </a>
+        <a href="/data/research/data-platform-product-ux/" class="ghost-card block text-decoration:none">
+          <div class="p-3">
+            
+            <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Data Platform as a Product: UX Patterns for Internal Developer Platforms</span>
+          </div>
+        </a>
+        <a href="/data/research/analytics-engineering-rise/" class="ghost-card block text-decoration:none">
+          <div class="p-3">
+            
+            <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">The Rise of the Analytics Engineer: dbt, SQLMesh, and the Modern Data Stack</span>
+          </div>
+        </a>
+      </div>
+    </section>
+    <section class="mt-12 pt-8 border-t">
+      <h2 class="text-2xl font-bold mb-6">Related Lessons</h2>
+      <div class="grid gap-4 sm:grid-cols-3">
+        <a href="/data/learn/data-quality-observability-cost/" class="ghost-card block text-decoration:none">
+          <div class="p-3">
+            
+            <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Data Quality, Observability, and Cost Optimization at Scale</span>
+          </div>
+        </a>
+        <a href="/data/learn/building-pipelines-dbt-dagster/" class="ghost-card block text-decoration:none">
+          <div class="p-3">
+            
+            <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Building Data Pipelines with dbt and Dagster: From SQL to Orchestration</span>
+          </div>
+        </a>
+        <a href="/data/learn/data-pipeline-architectures/" class="ghost-card block text-decoration:none">
+          <div class="p-3">
+            
+            <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Data Pipeline Patterns: Batch, Streaming, and Event-Driven Architectures</span>
+          </div>
+        </a>
+      </div>
+    </section>
+  </article>
+</div>
+
+<script src="/static/js/learning_hub.d41d8cd9.js" defer></script>
+<div class="newsletter-signup" style="background:var(--color-bg);border:1px solid var(--color-border);padding:2rem;border-radius:8px;text-align:center">
+  <h3 style="color:var(--color-text)">Stay Updated</h3>
+  <p style="color:var(--color-text-muted)">Get the latest research summaries delivered to your inbox.</p>
+  <form style="margin-top:1rem">
+    <input type="email" placeholder="Enter your email" style="padding:0.5rem;border:1px solid var(--color-border);border-radius:4px;width:100%;max-width:300px">
+    <button type="submit" style="margin-top:0.5rem;padding:0.5rem 1rem;background:var(--color-accent);color:#fff;border:none;border-radius:4px;cursor:pointer">Subscribe</button>
+  </form>
+</div>
 
     </main>
 
