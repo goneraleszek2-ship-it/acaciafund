@@ -54,6 +54,17 @@ jobs:
           rm -rf dist .build_cache.json
           python3 build.py
 
+      - name: Check links and SQI
+        run: python3 scripts/check_links_and_sqi.py --dist-dir dist || true
+
+      - name: Upload link-check report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: link-check-report
+          path: dist/link-check-report.json
+          retention-days: 30
+
       - name: Commit and push changes
         run: |
           git config user.name "github-actions[bot]"
@@ -64,4 +75,4 @@ jobs:
           else
             git commit -m "chore: weekly source refresh — ontology + glossary regeneration"
             git push
-          fi
+          

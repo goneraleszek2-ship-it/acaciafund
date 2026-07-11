@@ -724,27 +724,45 @@ def generate_search_pages(
     render_template,
     ctx_base: Dict[str, Any],
     _dummy,
+    ontology=None,
+    concept_cache: Dict[str, set] | None = None,
 ) -> int:
     """Generate search index JSON and search page. Returns count of pages generated."""
     pages_generated = 0
+
+    # Build concept→label map for search enrichment
+    concept_labels = {}
+    if ontology and hasattr(ontology, '_concepts'):
+        concept_labels = {c.id: c.label for c in ontology._concepts.values()}
 
     search_index = []
     for c in all_content:
         slug = getattr(c, "slug", None)
         if not slug:
             continue
-        search_index.append(
-            {
-                "title": getattr(c, "title", ""),
-                "description": (getattr(c, "description", None) or "")[:300],
-                "slug": slug,
-                "pillar": getattr(c, "pillar", None) or "",
-                "content_type": getattr(c, "content_type", None) or "",
-                "tags": getattr(c, "tags", None) or [],
-                "date_str": getattr(c, "date_str", None) or "",
-                "difficulty": getattr(c, "difficulty", None) or "",
-            }
-        )
+
+        entry = {
+            "title": getattr(c, "title", ""),
+            "description": (getattr(c, "description", None) or "")[:300],
+            "slug": slug,
+            "pillar": getattr(c, "pillar", None) or "",
+            "content_type": getattr(c, "content_type", None) or "",
+            "tags": getattr(c, "tags", None) or [],
+            "date_str": getattr(c, "date_str", None) or "",
+            "difficulty": getattr(c, "difficulty", None) or "",
+        }
+
+        # Enrich with ontology concepts for boosted search
+        if concept_cache and slug in concept_cache:
+            concept_ids = concept_cache[slug]
+            concept_names = [concept_labels.get(cid, cid) for cid in concept_ids]
+            entry["ontology_concepts"] = concept_names
+            entry["concept_boost"] = min(len(concept_names) * 0.1, 1.0)
+        else:
+            entry["ontology_concepts"] = []
+            entry["concept_boost"] = 0.0
+
+        search_index.append(entry)
 
     search_index_path = static_dst_dir / "search-index.json"
     search_index_path.write_text(

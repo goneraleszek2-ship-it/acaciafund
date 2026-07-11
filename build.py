@@ -2887,6 +2887,7 @@ def main():
     # --- SEARCH INDEX + PAGE (via build_taxonomies) ---
     search_pages_count = generate_search_pages(
         OUTPUT_DIR, STATIC_DST_DIR, all_content, render_template, ctx_base, _dummy,
+        ontology=ontology, concept_cache=_concept_cache,
     )
 
     # --- FEED (via build_taxonomies) ---
