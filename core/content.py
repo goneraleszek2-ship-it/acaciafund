@@ -115,4 +115,5 @@ class Content:
             prerequisites=data.get("prerequisites"),
             curated_relations=data.get("curated_relations"),
             quality_flags=data.get("quality_flags", []),
+            knowledge_category=data.get("knowledge_category", "reference"),
         )

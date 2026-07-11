@@ -4,8 +4,12 @@
   <h1>{{ page_title }}</h1>
   <div class="knowledge-categories">
     {% for cat, items in grouped.items() %}
+    {% set cat_info = categories.get(cat, {}) %}
     <div class="category">
-      <h2>{{ cat | replace('_', ' ') | title }}</h2>
+      <h2>{{ cat_info.icon if cat_info.icon else '' }} {{ cat_info.label if cat_info.label else cat | replace('_', ' ') | replace('-', ' ') | title }} <span class="count">({{ items | length }})</span></h2>
+      {% if cat_info.description %}
+      <p class="category-description">{{ cat_info.description }}</p>
+      {% endif %}
       <ul>
         {% for item in items %}
         <li><a href="{{ slug_to_url(item.slug) }}">{{ item.title }}</a></li>

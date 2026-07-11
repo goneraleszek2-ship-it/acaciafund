@@ -284,6 +284,55 @@ KNOWLEDGE_CATEGORIES = {
         "bg_color": "#a855f7",
         "description": "System design, pipeline architecture, and DataOps implementation details.",
     },
+    "foundations": {
+        "label": "Foundations",
+        "icon": "📚",
+        "color": "#0ea5e9",
+        "bg_color": "#0ea5e9",
+        "description": "Core concepts, theoretical frameworks, and foundational knowledge across all pillars.",
+    },
+    "advanced-techniques": {
+        "label": "Advanced Techniques",
+        "icon": "🔬",
+        "color": "#ec4899",
+        "bg_color": "#ec4899",
+        "description": "Specialized algorithms, methods, and advanced technical implementations.",
+    },
+    "best-practices": {
+        "label": "Best Practices",
+        "icon": "✅",
+        "color": "#10b981",
+        "bg_color": "#10b981",
+        "description": "Practical guides, optimization strategies, and implementation recommendations.",
+    },
+    "regulations": {
+        "label": "Regulations",
+        "icon": "📋",
+        "color": "#f59e0b",
+        "bg_color": "#f59e0b",
+        "description": "Regulatory frameworks, compliance requirements, and policy analysis.",
+    },
+    "industry-analysis": {
+        "label": "Industry Analysis",
+        "icon": "📊",
+        "color": "#8b5cf6",
+        "bg_color": "#8b5cf6",
+        "description": "Market trends, industry reports, and sector-specific analysis.",
+    },
+    "market-analysis": {
+        "label": "Market Analysis",
+        "icon": "📈",
+        "color": "#06b6d4",
+        "bg_color": "#06b6d4",
+        "description": "Market dynamics, volatility patterns, and financial analysis frameworks.",
+    },
+    "strategies": {
+        "label": "Strategies",
+        "icon": "🎯",
+        "color": "#f43f5e",
+        "bg_color": "#f43f5e",
+        "description": "Trading strategies, investment approaches, and tactical methodologies.",
+    },
 }
 
 
