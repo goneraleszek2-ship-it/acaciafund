@@ -15,6 +15,14 @@ data-engineering.description = "Data engineering patterns, tools, and architectu
 data-engineering.keywords = ["data", "pipelines", "etl", "warehousing", "analytics"]
 data-engineering.domain_scores = { "data" = 1.0, "pipelines" = 0.95, "etl" = 0.9 }
 
+stock.label = "Markets"
+stock.emoji = "📈"
+stock.folder = "content/stock"
+stock.tags = ["markets", "trading", "finance", "quantitative"]
+stock.description = "Market microstructure, trading strategies, financial analysis, and quantitative methods"
+stock.keywords = ["markets", "trading", "finance", "quantitative", "risk"]
+stock.domain_scores = { "markets" = 1.0, "trading" = 0.95, "finance" = 0.9 }
+
 docs.label = "Documentation"
 docs.emoji = "📚"
 docs.folder = "content/docs"
@@ -33,9 +41,55 @@ aml.values = ["AML", "KYC", "CDD", "EDD", "PEP", "SANCTIONS", "FATF", "FINTRAC",
 
 data-engineering.values = ["SQL", "NoSQL", "ETL", "ELT", "CDC", "Data Lake", "Data Warehouse", "Data Mesh", "Data Fabric", "Stream Processing", "Batch Processing", "Delta Lake", "Iceberg", "Hudi"]
 
+stock.values = ["LOB", "Market Microstructure", "Volatility", "Hawkes Process", "VPIN", "Supply Chain", "Earnings", "Commodity", "Portfolio", "Factor Investing", "Risk Parity", "Technical Analysis", "Macro Analysis"]
+
 docs.values = ["API", "SDK", "CLI", "Tutorial", "Guide", "Reference", "Example", "Best Practice", "FAQ", "Changelog"]
 
 [source_tiers]
 tier_1 = ["hacker-news", "arxiv"]
 tier_2 = ["github-trending", "reddit"]
 tier_3 = ["blogs", "newsletters"]
+
+# ---------------------------------------------------------------------------
+# External inspiration sources per pillar
+# ---------------------------------------------------------------------------
+
+[inspiration_sources]
+
+# Compliance pillar sources
+aml.fatf = { url = "https://www.fatf-gafi.org", name = "FATF", frequency = "weekly", relevance = 0.95, description = "Financial Action Task Force — global AML/CFT standards and grey/black lists" }
+aml.acams = { url = "https://www.acams.org", name = "ACAMS", frequency = "weekly", relevance = 0.9, description = "Association of Certified Anti-Money Laundering Specialists — training, research, typologies" }
+aml.fincen = { url = "https://www.fincen.gov", name = "FinCEN", frequency = "daily", relevance = 0.9, description = "US Financial Crimes Enforcement Network — SAR filings, advisories, BSA guidance" }
+aml.ofac = { url = "https://ofac.treasury.gov", name = "OFAC", frequency = "daily", relevance = 0.9, description = "US Office of Foreign Assets Control — sanctions lists, enforcement actions" }
+aml.ecb = { url = "https://www.ecb.europa.eu", name = "ECB", frequency = "weekly", relevance = 0.8, description = "European Central Bank — AML/CFT policies for the euro area" }
+aml.fca = { url = "https://www.fca.org.uk", name = "FCA", frequency = "weekly", relevance = 0.8, description = "UK Financial Conduct Authority — AML supervision and enforcement" }
+aml.fiu-nca = { url = "https://www.eurounion.fiunetwork.eu", name = "Egmont Group", frequency = "monthly", relevance = 0.75, description = "Egmont Group of Financial Intelligence Units — global FIU network" }
+aml.fintrac = { url = "https://www.fintrac-canafe.gc.ca", name = "FINTRAC", frequency = "weekly", relevance = 0.8, description = "Canada's Financial Transactions and Reports Analysis Centre" }
+aml.transact = { url = "https://www.payments.org", name = "Payments.org", frequency = "monthly", relevance = 0.7, description = "Payments industry — travel rule, virtual asset compliance" }
+aml.chainalysis = { url = "https://www.chainalysis.com", name = "Chainalysis", frequency = "weekly", relevance = 0.85, description = "Blockchain analytics — crypto AML, DeFi compliance research" }
+
+# Data Engineering pillar sources
+de.databricks = { url = "https://www.databricks.com/blog", name = "Databricks Blog", frequency = "daily", relevance = 0.9, description = "Lakehouse, Spark, Delta Lake, Unity Catalog — engineering blog" }
+de.apache-kafka = { url = "https://kafka.apache.org", name = "Apache Kafka", frequency = "weekly", relevance = 0.85, description = "Kafka documentation, KIPs, and ecosystem updates" }
+de.apache-flink = { url = "https://flink.apache.org", name = "Apache Flink", frequency = "weekly", relevance = 0.85, description = "Flink documentation and release notes" }
+de.apache-iceberg = { url = "https://iceberg.apache.org", name = "Apache Iceberg", frequency = "weekly", relevance = 0.85, description = "Iceberg table format — specs, REST catalog, performance" }
+de.dbt = { url = "https://www.getdbt.com/blog", name = "dbt Blog", frequency = "weekly", relevance = 0.85, description = "dbt Labs engineering blog — analytics engineering, Semantic Layer" }
+de.dagster = { url = "https://dagster.io/blog", name = "Dagster Blog", frequency = "weekly", relevance = 0.85, description = "Dagster orchestration — software-defined assets, IO managers" }
+de.confluent = { url = "https://www.confluent.io/blog", name = "Confluent Blog", frequency = "weekly", relevance = 0.8, description = "Kafka ecosystem — Schema Registry, Flink SQL, data streaming" }
+de.aws-big-data = { url = "https://aws.amazon.com/blogs/big-data/", name = "AWS Big Data Blog", frequency = "weekly", relevance = 0.75, description = "AWS analytics services — Glue, EMR, Kinesis, Athena" }
+de.gcp-data = { url = "https://cloud.google.com/blog/products/data-analytics", name = "GCP Data Blog", frequency = "weekly", relevance = 0.75, description = "Google Cloud data analytics — BigQuery, Dataflow, Dataproc" }
+de.meltano = { url = "https://meltano.com/blog", name = "Meltano Blog", frequency = "monthly", relevance = 0.7, description = "Open-source ELT — Singer taps, Meltano SDK, data integration" }
+de.snowflake = { url = "https://www.snowflake.com/blog", name = "Snowflake Blog", frequency = "weekly", relevance = 0.8, description = "Snowflake — data warehousing, Snowpipe, dynamic tables" }
+
+# Markets pillar sources
+ms.sec = { url = "https://www.sec.gov", name = "SEC", frequency = "daily", relevance = 0.9, description = "US Securities and Exchange Commission — filings, rules, enforcement" }
+ms.bis = { url = "https://www.bis.org", name = "BIS", frequency = "weekly", relevance = 0.8, description = "Bank for International Settlements — monetary and financial stability" }
+ms.imf = { url = "https://www.imf.org/en/Publications", name = "IMF", frequency = "monthly", relevance = 0.75, description = "International Monetary Fund — WEO, GFSR, working papers" }
+ms.msci = { url = "https://www.msci.com/research-and-insights", name = "MSCI", frequency = "weekly", relevance = 0.85, description = "MSCI research — factor investing, ESG, market analytics" }
+ms.bloomberg = { url = "https://www.bloomberg.com/professional/insights", name = "Bloomberg Insights", frequency = "weekly", relevance = 0.8, description = "Bloomberg Intelligence — market research, sector analysis" }
+ms.spglobal = { url = "https://www.spglobal.com/marketintelligence", name = "S&P Global", frequency = "weekly", relevance = 0.8, description = "S&P Capital IQ — market data, credit ratings, analytics" }
+ms.man = { url = "https://man.com/insights", name = "Man Group", frequency = "monthly", relevance = 0.75, description = "Man AHL — quantitative research, systematic strategies" }
+ms.aqr = { url = "https://www.aqr.com/Insights", name = "AQR", frequency = "monthly", relevance = 0.8, description = "AQR Capital — academic research on factors, momentum, value" }
+ms.reuters = { url = "https://www.reuters.com/markets", name = "Reuters Markets", frequency = "daily", relevance = 0.7, description = "Reuters — market news, economic data, commodities" }
+ms.ft = { url = "https://www.ft.com/markets", name = "FT Markets", frequency = "daily", relevance = 0.7, description = "Financial Times — markets coverage, analysis, commentary" }
+ms.quantocracy = { url = "https://quantocracy.com", name = "Quantocracy", frequency = "weekly", relevance = 0.75, description = "Quantitative finance aggregator — research papers, strategies" }

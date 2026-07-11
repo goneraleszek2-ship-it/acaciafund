@@ -1,4 +1,11 @@
 from . import sources as sources
+from .ontology import (
+    Concept,
+    InspirationSource,
+    OntologyManager,
+    Relation,
+    ResourceLink,
+)
 from .assets import AssetManager, create_asset_manager
 from .dto import (
     KnowledgeDTO,
@@ -30,6 +37,11 @@ from .metadata import (
 __all__ = [
     "AssetManager",
     "create_asset_manager",
+    "Concept",
+    "InspirationSource",
+    "OntologyManager",
+    "Relation",
+    "ResourceLink",
     "KnowledgeDTO",
     "LearnDTO",
     "ResearchDTO",

@@ -35,7 +35,14 @@ from pydantic import BaseModel, Field
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
+from core.ontology import (
+    Concept,
+    OntologyManager,
+    extract_concepts_from_text,
+)
+
 REGISTRY_PATH = ROOT / "registry.json"
+ONTOLOGY_PATH = ROOT / "data" / "ontology.json"
 
 # =========================================================================
 # Pydantic v2 Schema — validates every item before registry merge
@@ -262,6 +269,35 @@ def jaccard_similarity(a: str, b: str) -> float:
     if not words1 or not words2:
         return 0.0
     return len(words1 & words2) / len(words1 | words2)
+
+
+# =========================================================================
+# Ontology Concept Extraction
+# =========================================================================
+
+
+def extract_and_store_concepts(
+    items: list[dict[str, Any]],
+    ontology: OntologyManager,
+) -> int:
+    """Extract ontology concepts from ingested items and store them.
+
+    For each item, matches title + description + tags against known ontology
+    concepts.  Returns the total number of concept associations found.
+    """
+    associations = 0
+    for item in items:
+        text = " ".join([
+            item.get("title", ""),
+            item.get("description", ""),
+            " ".join(item.get("tags", [])),
+        ])
+        matches = extract_concepts_from_text(text, ontology, min_confidence=0.5)
+        if matches:
+            concept_ids = [c.id for c, _ in matches]
+            item["extracted_concepts"] = concept_ids
+            associations += len(concept_ids)
+    return associations
 
 
 # =========================================================================
@@ -794,7 +830,18 @@ def main() -> int:
         print("\nNo items passed schema validation.")
         return 0
 
-    # 4. Report
+    # 4. Ontology concept extraction
+    ontology = OntologyManager.load(ONTOLOGY_PATH)
+    if ontology.concept_count() == 0:
+        print("  Seeding ontology with canonical concepts...")
+        ontology.seed_all_pillars()
+        ontology.seed_relations()
+    associations = extract_and_store_concepts(validated, ontology)
+    if associations:
+        print(f"  Ontology: {associations} concept associations extracted")
+        ontology.save(ONTOLOGY_PATH)
+
+    # 5. Report
     if args.verbose or args.dry_run:
         print()
         print("─" * 60)
@@ -802,13 +849,16 @@ def main() -> int:
         print("─" * 60)
         for i, item in enumerate(validated, 1):
             src = "arxiv" if item.get("source_breakdown", {}).get("arxiv") else "hn"
+            concepts = item.get("extracted_concepts", [])
             print(f"\n  [{i}] {item['slug']}")
             print(f"      Pillar: {item['pillar']} | Source: {src}")
             print(f"      Title: {item['title'][:80]}")
             print(f"      Tags:   {', '.join(item['tags'][:5])}")
+            if concepts:
+                print(f"      Concepts: {', '.join(concepts[:5])}")
             print(f"      URL:    {item.get('source_url', 'N/A')[:60]}")
 
-    # 5. Ingest
+    # 6. Ingest
     if not args.dry_run:
         content = registry.setdefault("content", [])
         content.extend(validated)
@@ -832,7 +882,7 @@ def main() -> int:
             print(f"  {p:20s} {pillar_counts[p]:3d} ({pct:5.1f}%) {bar}")
         print(f"{'TOTAL':20s} {total:3d}")
 
-        # 6. Run enrich.py if requested
+        # 7. Run enrich.py if requested
         if args.enrich:
             print()
             print("─" * 60)
