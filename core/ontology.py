@@ -418,14 +418,15 @@ class OntologyManager:
             mgr.add_resource_link(ResourceLink(**rl_data))
         return mgr
 
-    def save(self, path: Path) -> None:
-        path.write_text(json.dumps(self.to_dict(), indent=2, default=str), encoding="utf-8")
+    def save(self, path: Path | str) -> None:
+        Path(path).write_text(json.dumps(self.to_dict(), indent=2, default=str), encoding="utf-8")
 
     @classmethod
-    def load(cls, path: Path) -> "OntologyManager":
-        if not path.exists():
+    def load(cls, path: Path | str) -> "OntologyManager":
+        p = Path(path)
+        if not p.exists():
             return cls()
-        return cls.from_dict(json.loads(path.read_text(encoding="utf-8")))
+        return cls.from_dict(json.loads(p.read_text(encoding="utf-8")))
 
     # ---- Integration with existing knowledge graph ----
 

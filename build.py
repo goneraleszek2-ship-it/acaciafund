@@ -1388,6 +1388,27 @@ def main():
             source_synthesis[slug] = records
         print(f"  Loaded source synthesis for {len(source_synthesis)} articles")
 
+    # --- Ontology Concepts ---
+    ontology_path = PROJECT_ROOT / "data" / "ontology.json"
+    ontology = None
+    if ontology_path.exists():
+        try:
+            from core.ontology import OntologyManager, extract_concepts_from_text
+            ontology = OntologyManager.load(ontology_path)
+            print(f"  Loaded ontology: {ontology.concept_count()} concepts, {ontology.relation_count()} relations")
+        except Exception as e:
+            print(f"  Ontology load failed: {e}")
+            ontology = None
+
+    # --- Inspiration Sources (external references per pillar) ---
+    import tomllib as _toml
+    pillars_toml_path = PROJECT_ROOT / "etc" / "pillars.toml"
+    inspiration_sources = {}
+    if pillars_toml_path.exists():
+        with open(pillars_toml_path, "rb") as f:
+            toml_data = _toml.load(f)
+        inspiration_sources = toml_data.get("inspiration_sources", {})
+
     # --- Quality Engine ---
     quality_scores_path = PROJECT_ROOT / "dist" / "quality_scores.parquet"
     quality_scores = {}
@@ -1669,6 +1690,50 @@ def main():
             source_verified = source_info.get("verified", False)
             source_evidence = source_info.get("evidence", [])
 
+            # Extract ontology concepts for this item
+            ontology_concepts = []
+            if ontology and ontology.concept_count() > 0:
+                try:
+                    tags_text = " ".join(item.tags or [])
+                    title_text = item.title or ""
+                    body_text = item.body_html or ""
+                    # Strip HTML tags for text extraction
+                    import re as _re
+                    body_text = _re.sub(r"<[^>]+>", " ", body_text)
+                    combined = f"{title_text} {tags_text} {body_text[:500]}"
+                    matches = extract_concepts_from_text(combined, ontology)
+                    # Deduplicate by concept ID
+                    seen_ids = set()
+                    for concept, score in matches:
+                        if concept.id not in seen_ids and score >= 0.3:
+                            seen_ids.add(concept.id)
+                            ontology_concepts.append({
+                                "id": concept.id,
+                                "name": concept.label,
+                                "score": round(score, 2),
+                            })
+                    ontology_concepts = ontology_concepts[:8]  # Cap at 8
+                except Exception:
+                    pass
+
+            # Build external references from inspiration sources
+            external_references = []
+            pillar_key = item.pillar or "aml"
+            pillar_prefix = {"aml": "aml", "stock": "ms", "data-engineering": "de"}.get(pillar_key, "aml")
+            pillar_sources = inspiration_sources.get(pillar_prefix, {})
+            for src_key, src_info in pillar_sources.items():
+                if isinstance(src_info, dict) and "url" in src_info:
+                    external_references.append({
+                        "title": src_info["name"],
+                        "url": src_info["url"],
+                        "description": src_info.get("description", ""),
+                        "source": src_info["name"],
+                        "relevance": src_info.get("relevance", 0.7),
+                    })
+            # Sort by relevance, keep top 6
+            external_references.sort(key=lambda x: x.get("relevance", 0), reverse=True)
+            external_references = external_references[:6]
+
             html = render_template(
                 "knowledge.j2",
                 content=item,
@@ -1694,6 +1759,8 @@ def main():
                 impact_level=impact_level,
                 trend_categories=trend_categories,
                 source_synthesis=source_synthesis.get(item.slug, []),
+                ontology_concepts=ontology_concepts,
+                external_references=external_references,
                 is_index=False,
                 page_type="knowledge",
                 layer="knowledge",
@@ -2508,17 +2575,38 @@ def main():
     cytograph_src = PROJECT_ROOT / "data" / "cytograph.json"
     if cytograph_src.exists():
         cytograph_dst = OUTPUT_DIR / "graph-data.json"
-        cytograph_dst.write_text(cytograph_src.read_text(encoding="utf-8"), encoding="utf-8")
+        cytograph_data = json.loads(cytograph_src.read_text(encoding="utf-8"))
         try:
-            graph_data = json.loads(cytograph_src.read_text(encoding="utf-8"))
+            graph_data = cytograph_data
             node_count = len(graph_data.get("nodes", []))
             edge_count = len(graph_data.get("edges", []))
         except (json.JSONDecodeError, TypeError, KeyError):
             node_count = 0
             edge_count = 0
     else:
+        graph_data = {"nodes": [], "edges": []}
         node_count = 0
         edge_count = 0
+
+    # Merge ontology concepts and relations into the cytograph
+    ontology_path = PROJECT_ROOT / "data" / "ontology.json"
+    if ontology_path.exists():
+        try:
+            from core.ontology import OntologyManager
+            ontology = OntologyManager.load(ontology_path)
+            if ontology.concept_count() > 0:
+                graph_data = ontology.merge_into_cytograph(graph_data)
+                ont_nodes = sum(1 for n in graph_data.get("nodes", []) if n["data"].get("type") == "concept")
+                ont_edges = sum(1 for e in graph_data.get("edges", []) if e["data"].get("id", "").startswith("ont-rel:"))
+                node_count = len(graph_data.get("nodes", []))
+                edge_count = len(graph_data.get("edges", []))
+                print(f"  ontology: merged {ontology.concept_count()} concepts, {ontology.relation_count()} relations into graph")
+        except Exception as e:
+            print(f"  ontology: merge skipped ({e})")
+
+    # Write merged graph data
+    cytograph_dst = OUTPUT_DIR / "graph-data.json"
+    cytograph_dst.write_text(json.dumps(graph_data, indent=2, default=str), encoding="utf-8")
 
     graph_dir = OUTPUT_DIR / "graph"
     graph_dir.mkdir(parents=True, exist_ok=True)
