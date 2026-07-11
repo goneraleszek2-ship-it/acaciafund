@@ -1,40 +1,40 @@
 {
-  "timestamp": "2026-07-11T15:23:51.651872+00:00",
-  "duration_seconds": 20.79,
+  "timestamp": "2026-07-11T16:57:53.817340+00:00",
+  "duration_seconds": 11.43,
   "steps": {
-    "registry_load": 0.043,
-    "graph_build": 0.47,
-    "asset_pipeline": 0.039,
-    "content_rendering": 14.713
+    "registry_load": 0.044,
+    "graph_build": 0.481,
+    "asset_pipeline": 0.07,
+    "content_rendering": 6.438
   },
-  "page_count": 397,
-  "registry_hash": "cb891c9c186c",
+  "page_count": 467,
+  "registry_hash": "e83450ca4c93",
   "sqi": {
     "min": 0.55,
     "max": 0.95,
-    "avg": 0.755,
+    "avg": 0.746,
     "median": 0.75,
     "q1": 0.75,
-    "q3": 0.83,
-    "sample_count": 86
+    "q3": 0.75,
+    "sample_count": 147
   },
   "sources": {
-    "last_build": "2026-07-11T15:23:51.651909+00:00",
+    "last_build": "2026-07-11T16:57:53.817375+00:00",
     "source_type_counts": {
-      "hn": 370,
-      "arxiv": 163,
+      "hn": 375,
+      "arxiv": 219,
       "pubmed": 102
     }
   },
   "content_counts": {
-    "research": 94,
+    "research": 155,
     "learn": 45,
-    "knowledge": 40
+    "knowledge": 43
   },
   "quality": {
     "gate_min_sqi": 0.65,
     "gate_passed": false,
-    "low_sqi_count": 10,
+    "low_sqi_count": 15,
     "low_sqi_items": [
       {
         "slug": "aml/research/department-of-commerce-has-lifted-export-controls-on-claude",
@@ -84,6 +84,31 @@
       {
         "slug": "markets/research/llms-are-not-a-default-execution-engine",
         "title": "LLMs Are Not a Default Execution Engine",
+        "sqi": 0.55
+      },
+      {
+        "slug": "data/research/every-new-car-sold-in-the-european-union-must-include-a-driv",
+        "title": "Every new car sold in the European Union must include a driver monitoring camera",
+        "sqi": 0.55
+      },
+      {
+        "slug": "data/research/real-time-map-of-great-britains-rail-network",
+        "title": "Real-time map of Great Britain's rail network",
+        "sqi": 0.55
+      },
+      {
+        "slug": "data/research/cloudflare-meerkat-globally-distributed-consensus",
+        "title": "Cloudflare Meerkat - Globally distributed consensus",
+        "sqi": 0.55
+      },
+      {
+        "slug": "data/research/punk-or-why-i-dont-stream-anymore",
+        "title": "Punk, or why I don't stream anymore",
+        "sqi": 0.55
+      },
+      {
+        "slug": "data/research/building-a-real-time-ai-tutor-for-5-year-olds",
+        "title": "Building a real-time AI tutor for 5-year-olds",
         "sqi": 0.55
       }
     ]

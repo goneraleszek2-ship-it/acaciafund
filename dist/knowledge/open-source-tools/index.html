@@ -151,11 +151,107 @@
         <a href="/tags/knowledge/"><kbd>knowledge</kbd></a>
         <a href="/tags/platform/"><kbd>platform</kbd></a>
       </div>
+      <div class="mt-3 flex flex-wrap gap-1.5">
+        <span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+          Suspicious Transaction Report
+        </span>
+        <span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+          Dagster Orchestrator
+        </span>
+      </div>
     </header>
 
     <div class="prose prose-lg prose-blue max-w-none">
       <div class="section-harvester" data-section="overview" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="open-source-data-engineering-tools-2026">Open Source Data Engineering Tools 2026</h2></summary><div class="section-body"><p>Curated reference of production-grade open source tools for each data platform layer.</p></div></details></div><div class="section-harvester" data-section="key_findings" style="--section-color:#a5b4fc"><details class="section-collapse" open><summary class="section-summary"><h2 id="orchestration">Orchestration</h2></summary><div class="section-body"><ul><li><strong>Apache Airflow</strong> — Mature DAG-based scheduler. Largest ecosystem of operators and integrations. Best for teams that need battle-tested stability.</li><li><strong>Dagster</strong> — Asset-centric orchestrator with software-defined assets, explicit lineage, and first-class testability. Growing rapidly in 2026.</li><li><strong>Prefect</strong> — Python-native orchestration with automatic retries, caching, and cloud UI. Strong DX for smaller teams.</li></ul></div></details></div><div class="section-harvester" data-section="applied_scenario" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="data-integration-elt">Data Integration (ELT)</h2></summary><div class="section-body"><ul><li><strong>Airbyte</strong> — 600+ connectors, protocol-level schema handling, incremental syncs. Deploy self-hosted or Cloud.</li><li><strong>Meltano</strong> — Singer-based integration platform with CI/CD for pipelines. Git-native pipeline management.</li><li><strong>Apache NiFi</strong> — Visual data flow designer with real-time routing and transformation. Best for complex topologies.</li><li><strong>Debezium</strong> — CDC platform for MySQL, PostgreSQL, MongoDB, etc. Streams changes to Kafka.</li></ul></div></details></div><div class="section-harvester" data-section="source_analysis" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="transformation">Transformation</h2></summary><div class="section-body"><ul><li><strong>dbt</strong> — SQL transformation framework with testing, documentation, and package management. Industry standard.</li><li><strong>SQLMesh</strong> — SQL transformation with automatic diff-based reconciliation, virtual data environments, and backfill optimization.</li></ul></div></details></div><div class="section-harvester" data-section="domain_breakdown" style="--section-color:#818cf8"><details class="section-collapse" open><summary class="section-summary"><h2 id="data-quality">Data Quality</h2></summary><div class="section-body"><ul><li><strong>Great Expectations</strong> — Python expectation framework with automatic profiling, data docs, and suite management.</li><li><strong>Soda</strong> — YAML-defined quality checks with built-in anomaly detection and Slack/API integrations.</li><li><strong>dbt Tests</strong> — Built-in uniqueness, not-null, accepted-values, foreign-key tests plus custom generic tests.</li></ul></div></details></div><div class="section-harvester" data-section="cross_pillar" style="--section-color:#a5b4fc"><details class="section-collapse" open><summary class="section-summary"><h2 id="catalog-governance">Catalog & Governance</h2></summary><div class="section-body"><ul><li><strong>OpenMetadata</strong> — Unified metadata platform with data discovery, lineage, glossary, and data quality integration.</li><li><strong>DataHub</strong> — LinkedIn's metadata platform. Strong lineage and search. Kubernetes-native.</li><li><strong>Amundsen</strong> — Lyft's data discovery platform. Lighter weight, simpler deployment.</li></ul></div></details></div><div class="section-harvester" data-section="methodology" style="--section-color:#818cf8"><details class="section-collapse" open><summary class="section-summary"><h2 id="stream-processing">Stream Processing</h2></summary><div class="section-body"><ul><li><strong>Apache Kafka</strong> — Distributed event store and stream processing. De facto standard for data streaming.</li><li><strong>Apache Flink</strong> — True stream processing with exactly-once semantics, event-time processing, and state management.</li><li><strong>RisingWave</strong> — Streaming SQL database. Materialized views on streams with PostgreSQL-compatible interface.</li></ul></div></details></div><div class="section-harvester" data-section="overview" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="storage-query">Storage & Query</h2></summary><div class="section-body"><ul><li><strong>Apache Iceberg</strong> — Open table format with ACID, time travel, partition evolution. The 2026 standard for lakehouse tables.</li><li><strong>Delta Lake</strong> — Linux Foundation table format with ACID, schema enforcement, and unified batch/streaming.</li><li><strong>Trino</strong> — Distributed SQL query engine for federated queries across data sources. Extremely fast.</li><li><strong>DuckDB</strong> — Embedded OLAP database. Ideal for local analytics and embedded use cases.</li><li><strong>MinIO</strong> — S3-compatible object storage for on-premise and edge deployments.</li></ul></div></details></div><div class="section-harvester" data-section="overview" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="ml-platform">ML Platform</h2></summary><div class="section-body"><ul><li><strong>MLflow</strong> — Experiment tracking, model registry, deployment. De facto standard for ML lifecycle.</li><li><strong>Feast</strong> — Feature store for ML. Consistent feature computation across training and serving.</li><li><strong>BentoML</strong> — Model serving framework with Python-native APIs and Kubernetes deployment.</li><li><strong>Kubeflow</strong> — MLOps platform on Kubernetes for end-to-end ML workflows.</li></ul></div></details></div><div class="section-harvester" data-section="overview" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="observability">Observability</h2></summary><div class="section-body"><ul><li><strong>Prometheus + Grafana</strong> — Metrics collection and dashboarding. Standard for infrastructure and pipeline monitoring.</li><li><strong>OpenTelemetry</strong> — Vendor-neutral observability framework for traces, metrics, and logs.</li><li><strong>Grafana Loki</strong> — Log aggregation system. Lightweight, cost-effective, Grafana-native.</li></ul></div></details></div>
     </div>
+    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
+      <h2 class="text-2xl font-bold mb-4 inline-flex items-center gap-2" style="color:var(--color-text)">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+        Further Reading
+      </h2>
+      <div class="grid gap-3 sm:grid-cols-2">
+        <a href="https://www.databricks.com/blog" target="_blank" rel="noopener" class="ghost-card p-4 block transition hover:shadow-md" style="text-decoration:none">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 mt-0.5">
+              <span class="inline-block text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">
+                Databricks Blog
+              </span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">Databricks Blog</h3>
+              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">Lakehouse, Spark, Delta Lake, Unity Catalog — engineering blog</p>
+            </div>
+          </div>
+        </a>
+        <a href="https://kafka.apache.org" target="_blank" rel="noopener" class="ghost-card p-4 block transition hover:shadow-md" style="text-decoration:none">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 mt-0.5">
+              <span class="inline-block text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">
+                Apache Kafka
+              </span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">Apache Kafka</h3>
+              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">Kafka documentation, KIPs, and ecosystem updates</p>
+            </div>
+          </div>
+        </a>
+        <a href="https://flink.apache.org" target="_blank" rel="noopener" class="ghost-card p-4 block transition hover:shadow-md" style="text-decoration:none">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 mt-0.5">
+              <span class="inline-block text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">
+                Apache Flink
+              </span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">Apache Flink</h3>
+              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">Flink documentation and release notes</p>
+            </div>
+          </div>
+        </a>
+        <a href="https://iceberg.apache.org" target="_blank" rel="noopener" class="ghost-card p-4 block transition hover:shadow-md" style="text-decoration:none">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 mt-0.5">
+              <span class="inline-block text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">
+                Apache Iceberg
+              </span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">Apache Iceberg</h3>
+              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">Iceberg table format — specs, REST catalog, performance</p>
+            </div>
+          </div>
+        </a>
+        <a href="https://www.getdbt.com/blog" target="_blank" rel="noopener" class="ghost-card p-4 block transition hover:shadow-md" style="text-decoration:none">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 mt-0.5">
+              <span class="inline-block text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">
+                dbt Blog
+              </span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">dbt Blog</h3>
+              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">dbt Labs engineering blog — analytics engineering, Semantic Layer</p>
+            </div>
+          </div>
+        </a>
+        <a href="https://dagster.io/blog" target="_blank" rel="noopener" class="ghost-card p-4 block transition hover:shadow-md" style="text-decoration:none">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 mt-0.5">
+              <span class="inline-block text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">
+                Dagster Blog
+              </span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">Dagster Blog</h3>
+              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">Dagster orchestration — software-defined assets, IO managers</p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </section>
     <section class="mt-12 pt-8 border-t">
       <h2 class="text-2xl font-bold mb-6">Related Research</h2>
       <div class="grid gap-4 sm:grid-cols-3">

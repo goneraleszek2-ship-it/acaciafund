@@ -1131,10 +1131,16 @@ def _serialize_quiz(item) -> str:
     return ""
 
 
-def _compute_quality(quality_scores: dict, slug: str) -> tuple[float, str, dict]:
-    """Compute quality score, badge stars, and metrics dict for an item."""
+def _compute_quality(quality_scores: dict, slug: str, extra_bonus: float = 0.0) -> tuple[float, str, dict]:
+    """Compute quality score, badge stars, and metrics dict for an item.
+    extra_bonus: additional SQI boost for items with ontology annotations / inspiration sources."""
     metrics = _get_quality_metrics_with_fail_safes(quality_scores.get(slug, {}))
     score = metrics.get("quality_score", 0)
+    # Apply bonus for semantic enrichment (ontology concepts, inspiration sources)
+    if extra_bonus > 0:
+        score = min(1.0, score + extra_bonus)
+        metrics["quality_score"] = score
+        metrics["semantic_bonus"] = round(extra_bonus, 3)
     if score >= 0.8:
         badge = "★★★★★"
     elif score >= 0.7:
@@ -1697,12 +1703,10 @@ def main():
                     tags_text = " ".join(item.tags or [])
                     title_text = item.title or ""
                     body_text = item.body_html or ""
-                    # Strip HTML tags for text extraction
                     import re as _re
                     body_text = _re.sub(r"<[^>]+>", " ", body_text)
                     combined = f"{title_text} {tags_text} {body_text[:500]}"
                     matches = extract_concepts_from_text(combined, ontology)
-                    # Deduplicate by concept ID
                     seen_ids = set()
                     for concept, score in matches:
                         if concept.id not in seen_ids and score >= 0.3:
@@ -1712,7 +1716,7 @@ def main():
                                 "name": concept.label,
                                 "score": round(score, 2),
                             })
-                    ontology_concepts = ontology_concepts[:8]  # Cap at 8
+                    ontology_concepts = ontology_concepts[:8]
                 except Exception:
                     pass
 
@@ -1730,9 +1734,17 @@ def main():
                         "source": src_info["name"],
                         "relevance": src_info.get("relevance", 0.7),
                     })
-            # Sort by relevance, keep top 6
             external_references.sort(key=lambda x: x.get("relevance", 0), reverse=True)
             external_references = external_references[:6]
+
+            # SQI bonus for semantic enrichment (concepts + references)
+            semantic_bonus = 0.0
+            if ontology_concepts:
+                semantic_bonus += min(0.03, len(ontology_concepts) * 0.005)
+            if external_references:
+                semantic_bonus += min(0.02, len(external_references) * 0.005)
+            if semantic_bonus > 0:
+                quality_score, quality_badge, quality_metrics = _compute_quality(quality_scores, item.slug, semantic_bonus)
 
             html = render_template(
                 "knowledge.j2",
@@ -2648,8 +2660,10 @@ def main():
             tag_items[t.lower().strip()].append(c)
     
     # Sort tag posts by date
+    from datetime import timezone as _tz
+    _dt_min = datetime.min.replace(tzinfo=_tz.utc)
     for tag_posts in tag_items.values():
-        tag_posts.sort(key=lambda x: x.created_at or datetime.min, reverse=True)
+        tag_posts.sort(key=lambda x: x.created_at or _dt_min, reverse=True)
     
     # Generate tag pages using isolated function
     tag_pages_count = generate_tag_pages(

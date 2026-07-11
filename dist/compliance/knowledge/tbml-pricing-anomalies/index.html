@@ -91,6 +91,24 @@
         <a href="/tags/fraud-detection/"><kbd>fraud-detection</kbd></a>
         <a href="/tags/statistical-modeling/"><kbd>statistical-modeling</kbd></a>
       </div>
+      <div class="mt-3 flex flex-wrap gap-1.5">
+        <span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+          Trade-Based Money Laundering
+        </span>
+        <span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+          Suspicious Transaction Report
+        </span>
+        <span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+          Beneficial Ownership
+        </span>
+        <span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+          Market Microstructure
+        </span>
+      </div>
     </header>
 
     <div class="prose prose-lg prose-blue max-w-none">
@@ -114,6 +132,92 @@ $$\text{Lower Fence} = Q_1 - 1.5 \times \text{IQR}, \quad \text{Upper Fence} = Q
 
 If $x_{c,t}$ violates the upper or lower fence constraints while simultaneously matching high-risk routing tags or shell company flags, the transaction entry is dynamically routed into an accelerated manual remediation queue.</pre>
     </div>
+    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
+      <h2 class="text-2xl font-bold mb-4 inline-flex items-center gap-2" style="color:var(--color-text)">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+        Further Reading
+      </h2>
+      <div class="grid gap-3 sm:grid-cols-2">
+        <a href="https://www.fatf-gafi.org" target="_blank" rel="noopener" class="ghost-card p-4 block transition hover:shadow-md" style="text-decoration:none">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 mt-0.5">
+              <span class="inline-block text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">
+                FATF
+              </span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">FATF</h3>
+              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">Financial Action Task Force — global AML/CFT standards and grey/black lists</p>
+            </div>
+          </div>
+        </a>
+        <a href="https://www.acams.org" target="_blank" rel="noopener" class="ghost-card p-4 block transition hover:shadow-md" style="text-decoration:none">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 mt-0.5">
+              <span class="inline-block text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">
+                ACAMS
+              </span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">ACAMS</h3>
+              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">Association of Certified Anti-Money Laundering Specialists — training, research, typologies</p>
+            </div>
+          </div>
+        </a>
+        <a href="https://www.fincen.gov" target="_blank" rel="noopener" class="ghost-card p-4 block transition hover:shadow-md" style="text-decoration:none">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 mt-0.5">
+              <span class="inline-block text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">
+                FinCEN
+              </span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">FinCEN</h3>
+              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">US Financial Crimes Enforcement Network — SAR filings, advisories, BSA guidance</p>
+            </div>
+          </div>
+        </a>
+        <a href="https://ofac.treasury.gov" target="_blank" rel="noopener" class="ghost-card p-4 block transition hover:shadow-md" style="text-decoration:none">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 mt-0.5">
+              <span class="inline-block text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">
+                OFAC
+              </span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">OFAC</h3>
+              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">US Office of Foreign Assets Control — sanctions lists, enforcement actions</p>
+            </div>
+          </div>
+        </a>
+        <a href="https://www.chainalysis.com" target="_blank" rel="noopener" class="ghost-card p-4 block transition hover:shadow-md" style="text-decoration:none">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 mt-0.5">
+              <span class="inline-block text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">
+                Chainalysis
+              </span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">Chainalysis</h3>
+              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">Blockchain analytics — crypto AML, DeFi compliance research</p>
+            </div>
+          </div>
+        </a>
+        <a href="https://www.ecb.europa.eu" target="_blank" rel="noopener" class="ghost-card p-4 block transition hover:shadow-md" style="text-decoration:none">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 mt-0.5">
+              <span class="inline-block text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">
+                ECB
+              </span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">ECB</h3>
+              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">European Central Bank — AML/CFT policies for the euro area</p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </section>
     <section class="mt-12 pt-8 border-t">
       <h2 class="text-2xl font-bold mb-6">Related Research</h2>
       <div class="grid gap-4 sm:grid-cols-3">

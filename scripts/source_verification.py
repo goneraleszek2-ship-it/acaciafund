@@ -15,10 +15,39 @@ from __future__ import annotations
 
 import json
 import re
+import tomllib
 from pathlib import Path
 from typing import Any
 
 import pandas as pd
+
+INSPIRATION_SOURCES_PATH = Path(__file__).parent.parent / "etc" / "pillars.toml"
+
+# Inspiration source domains mapped to source names for quick lookup
+_INSPIRATION_DOMAINS: dict[str, str] = {}
+
+
+def _load_inspiration_domains() -> dict[str, str]:
+    """Load inspiration source URLs and map domains to source names."""
+    global _INSPIRATION_DOMAINS
+    if _INSPIRATION_DOMAINS:
+        return _INSPIRATION_DOMAINS
+    if not INSPIRATION_SOURCES_PATH.exists():
+        return {}
+    try:
+        with open(INSPIRATION_SOURCES_PATH, "rb") as f:
+            toml_data = tomllib.load(f)
+        sources = toml_data.get("inspiration_sources", {})
+        for pillar_key, pillar_sources in sources.items():
+            if not isinstance(pillar_sources, dict):
+                continue
+            for src_key, src_info in pillar_sources.items():
+                if isinstance(src_info, dict) and "url" in src_info:
+                    domain = extract_domain(src_info["url"])
+                    _INSPIRATION_DOMAINS[domain] = src_info["name"]
+    except Exception:
+        pass
+    return _INSPIRATION_DOMAINS
 
 
 def classify_source_type(
@@ -26,6 +55,12 @@ def classify_source_type(
 ) -> tuple[str, float]:
     """Classify source type and trust score."""
     url_lower = url.lower() if url else ""
+    domain = extract_domain(url)
+
+    # Check inspiration sources first (authoritative)
+    inspr_domains = _load_inspiration_domains()
+    if domain in inspr_domains:
+        return "inspiration", 0.95
 
     # Academic sources
     if any(
@@ -178,6 +213,9 @@ def verify_source(source_type: str) -> dict[str, Any]:
     elif source_type == "regulatory":
         verified = True
         evidence = ["Regulatory focus", "Official sources"]
+    elif source_type == "inspiration":
+        verified = True
+        evidence = ["Curated inspiration source", "Authoritative domain", "Regularly monitored"]
     elif source_type == "ai_generated":
         verified = False
         evidence = ["AI-generated content", "Human review recommended"]
@@ -223,6 +261,7 @@ def compute_source_score(source_info: dict) -> float:
         "engineering_blog": 0.75,
         "news": 0.7,
         "social": 0.5,
+        "inspiration": 0.95,
         "unknown": 0.5,
     }
     base_score = type_scores.get(source_type, 0.5)
@@ -290,6 +329,7 @@ def compute_article_source_score(article: dict) -> dict[str, Any]:
         "news": "News report",
         "social": "User-generated",
         "curated": "Curated source",
+        "inspiration": "Curated inspiration source",
     }
 
     evidence_level = evidence_map.get(best_source["source_type"], "Unknown")

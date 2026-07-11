@@ -8,19 +8,28 @@ Generates synthesis data from authoritative sources for each article:
 - Official documentation
 - Industry reports
 - Regulatory filings
+- Inspiration sources from etc/pillars.toml
 
 Output: /dist/source_synthesis.parquet + /dist/source_synthesis.json
 """
 
 import hashlib
 import json
+import sys
+import tomllib
 from pathlib import Path
 
 import pandas as pd
 
 PROJECT_ROOT = Path(__file__).parent.parent
+sys.path.insert(0, str(PROJECT_ROOT))
 DIST_DIR = PROJECT_ROOT / "dist"
 DIST_DIR.mkdir(exist_ok=True)
+
+INSPIRATION_SOURCES_PATH = PROJECT_ROOT / "etc" / "pillars.toml"
+ONTOLOGY_PATH = PROJECT_ROOT / "data" / "ontology.json"
+
+PILLAR_TO_PREFIX = {"aml": "aml", "stock": "ms", "data-engineering": "de"}
 
 
 def load_foundry_datasets():
@@ -55,6 +64,100 @@ def load_registry():
         with open(registry_path, "r") as f:
             return json.load(f)
     return {"content": []}
+
+
+def load_inspiration_sources():
+    """Load inspiration sources from etc/pillars.toml."""
+    if not INSPIRATION_SOURCES_PATH.exists():
+        return {}
+    with open(INSPIRATION_SOURCES_PATH, "rb") as f:
+        toml_data = tomllib.load(f)
+    return toml_data.get("inspiration_sources", {})
+
+
+def load_ontology_concepts():
+    """Load ontology concept labels for source matching."""
+    if not ONTOLOGY_PATH.exists():
+        return {}
+    try:
+        from core.ontology import OntologyManager
+        mgr = OntologyManager.load(ONTOLOGY_PATH)
+        concept_map = {}
+        for cid, concept in mgr._concepts.items():
+            labels = [concept.label.lower()]
+            labels.extend(a.lower() for a in concept.aliases)
+            concept_map[cid] = {
+                "label": concept.label,
+                "pillar": concept.pillar,
+                "keywords": labels,
+            }
+        return concept_map
+    except Exception:
+        return {}
+
+
+def match_inspiration_sources(article, inspiration_sources, concept_map):
+    """Match inspiration sources to an article based on pillar and concept overlap."""
+    pillar = article.get("pillar", "")
+    prefix = PILLAR_TO_PREFIX.get(pillar, "")
+    if not prefix or prefix not in inspiration_sources:
+        return []
+
+    pillar_sources = inspiration_sources[prefix]
+    article_tags = [t.lower() for t in article.get("tags", [])]
+    title_lower = (article.get("title", "") or "").lower()
+    body_lower = (article.get("body_html", "") or "").lower()
+
+    # Extract ontology concepts from article text
+    article_concepts = set()
+    if concept_map:
+        combined_text = f"{title_lower} {body_lower}"
+        for cid, info in concept_map.items():
+            for kw in info["keywords"]:
+                if kw in combined_text:
+                    article_concepts.add(cid)
+                    break
+
+    matches = []
+    for src_key, src_info in pillar_sources.items():
+        if not isinstance(src_info, dict) or "url" not in src_info:
+            continue
+
+        src_name_lower = src_info["name"].lower()
+        src_desc_lower = src_info.get("description", "").lower()
+
+        # Score relevance based on name/description tag overlap
+        relevance = src_info.get("relevance", 0.7)
+        tag_overlap = sum(1 for t in article_tags if t in src_desc_lower or t in src_name_lower)
+        concept_overlap = sum(1 for c in article_concepts if c.lower() in src_desc_lower)
+
+        # Boost relevance if article mentions source name
+        name_mentioned = src_name_lower in title_lower or src_name_lower in body_lower[:1000]
+
+        adjusted_relevance = relevance
+        adjusted_relevance += min(0.1, tag_overlap * 0.03)
+        adjusted_relevance += min(0.1, concept_overlap * 0.03)
+        if name_mentioned:
+            adjusted_relevance = min(1.0, adjusted_relevance + 0.15)
+
+        if tag_overlap > 0 or concept_overlap > 0 or name_mentioned:
+            matches.append({
+                "source_key": src_key,
+                "source_name": src_info["name"],
+                "source_url": src_info["url"],
+                "description": src_info.get("description", ""),
+                "frequency": src_info.get("frequency", "monthly"),
+                "base_relevance": relevance,
+                "adjusted_relevance": round(min(1.0, adjusted_relevance), 3),
+                "matched_concepts": list(article_concepts & {c for c in concept_map if any(
+                    kw in src_desc_lower for kw in concept_map[c]["keywords"]
+                )})[:5],
+                "tag_overlap": tag_overlap,
+                "name_mentioned": name_mentioned,
+            })
+
+    matches.sort(key=lambda x: x["adjusted_relevance"], reverse=True)
+    return matches[:6]
 
 
 def extract_tags_from_article(article):
@@ -286,6 +389,12 @@ def generate_synthesis_data():
     # Load Foundry datasets
     source_df, quality_df = load_foundry_datasets()
 
+    # Load inspiration sources and ontology
+    inspiration_sources = load_inspiration_sources()
+    concept_map = load_ontology_concepts()
+    total_inspr = sum(len(v) for v in inspiration_sources.values() if isinstance(v, dict))
+    print(f"  Loaded {total_inspr} inspiration sources, {len(concept_map)} ontology concepts")
+
     # Load registry
     registry = load_registry()
     print(f"Loaded {len(registry.get('content', []))} articles from registry")
@@ -296,20 +405,23 @@ def generate_synthesis_data():
     # Generate synthesis data
     print("\nGenerating synthesis data...")
     synthesis_records = []
+    inspr_match_count = 0
 
     for slug, sources in article_sources.items():
-        article_tags = []
+        article_item = None
         for item in registry.get("content", []):
             if item.get("slug") == slug:
+                article_item = item
                 article_tags = extract_tags_from_article(item)
                 break
+        else:
+            article_tags = []
 
         scored_sources = compute_synthesis_scores(sources, quality_df)
 
         for source in scored_sources:
             synthesis_id = hashlib.md5(f"{slug}_{source.get('url', '')}".encode()).hexdigest()[:12]
 
-            # Convert key_insights to Python list explicitly
             raw_insights = extract_key_insights(source)
             key_insights = list(raw_insights) if hasattr(raw_insights, "__iter__") else raw_insights
 
@@ -329,9 +441,40 @@ def generate_synthesis_data():
                 "author_affiliation": str(source.get("author", "")),
                 "source_id": str(source.get("source_id", "")),
                 "domain": str(source.get("domain", "")),
+                "inspiration_match": False,
+                "inspiration_source": "",
+                "matched_concepts": "",
             }
 
             synthesis_records.append(synthesis_record)
+
+        # Add inspiration source matches as synthesis entries
+        if article_item and inspiration_sources:
+            inspr_matches = match_inspiration_sources(article_item, inspiration_sources, concept_map)
+            for match in inspr_matches:
+                inspr_match_count += 1
+                inspr_id = hashlib.md5(f"{slug}_{match['source_key']}".encode()).hexdigest()[:12]
+                inspr_record = {
+                    "synthesis_id": inspr_id,
+                    "article_slug": slug,
+                    "source_type": "inspiration",
+                    "source_url": match["source_url"],
+                    "source_title": match["source_name"],
+                    "synthesis_score": float(match["adjusted_relevance"]),
+                    "relevance_score": float(match["adjusted_relevance"]),
+                    "credibility_score": float(match["base_relevance"]),
+                    "synthesis_text": match["description"],
+                    "key_insights": ["Authoritative external source", match["description"][:100]],
+                    "synthesis_category": "inspiration",
+                    "publication_date": "",
+                    "author_affiliation": match["source_name"],
+                    "source_id": match["source_key"],
+                    "domain": "",
+                    "inspiration_match": True,
+                    "inspiration_source": match["source_name"],
+                    "matched_concepts": ",".join(match.get("matched_concepts", [])[:5]),
+                }
+                synthesis_records.append(inspr_record)
 
     # Create DataFrame
     synthesis_df = pd.DataFrame(synthesis_records)
@@ -367,6 +510,8 @@ def generate_synthesis_data():
         print(f"  Articles with synthesis: {synthesis_df['article_slug'].nunique()}")
         print(f"  Average synthesis score: {synthesis_df['synthesis_score'].mean():.3f}")
         print(f"  Source types: {synthesis_df['source_type'].value_counts().to_dict()}")
+        if inspr_match_count > 0:
+            print(f"  Inspiration source matches: {inspr_match_count}")
 
     return synthesis_df
 

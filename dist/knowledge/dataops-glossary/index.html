@@ -106,11 +106,111 @@
         <a href="/tags/knowledge/"><kbd>knowledge</kbd></a>
         <a href="/tags/platform/"><kbd>platform</kbd></a>
       </div>
+      <div class="mt-3 flex flex-wrap gap-1.5">
+        <span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+          Extract-Load-Transform
+        </span>
+        <span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+          Suspicious Activity Report
+        </span>
+        <span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+          Extract-Transform-Load
+        </span>
+      </div>
     </header>
 
     <div class="prose prose-lg prose-blue max-w-none">
       <div class="section-harvester" data-section="overview" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"></summary><div class="section-body"><p>Key terms used across DataOps, data engineering, and data science — as referenced in AcaciaFund's research and learning materials.</p><dl style="line-height:1.8"><dt><strong>DataOps</strong></dt><dd>Automated, process-oriented methodology applying Agile, DevOps, and statistical process control to data pipeline lifecycle management.</dd><dt><strong>ELT vs ETL</strong></dt><dd>Extract-Load-Transform: data is extracted and loaded raw into the warehouse, then transformed in-place. Contrasts with classic ETL where transformation happens before loading.</dd><dt><strong>Medallion Architecture</strong></dt><dd>Bronze (raw) → Silver (cleaned) → Gold (aggregated) data layering pattern popularized by Databricks for lakehouse implementations.</dd><dt><strong>Pipeline Observability</strong></dt><dd>Real-time monitoring of data pipelines — row counts, schema drift, latency, error rates — to detect and diagnose failures quickly.</dd><dt><strong>Data Contract</strong></dt><dd>Formal agreement between data producers and consumers specifying schema, semantics, quality SLOs, and ownership.</dd><dt><strong>dbt</strong></dt><dd>Data build tool — SQL-first transformation framework. Models are SELECT statements; dbt handles materialization, testing, and docs.</dd><dt><strong>Great Expectations</strong></dt><dd>Open-source Python framework for defining, testing, and documenting data quality expectations.</dd><dt><strong>SQI (Signal Quality Index)</strong></dt><dd>AcaciaFund's composite metric: source authority × freshness × consensus × relevance, normalized to [0,1].</dd><dt><strong>CDC (Change Data Capture)</strong></dt><dd>Technique for capturing row-level changes in databases, enabling real-time data replication without bulk loads.</dd><dt><strong>DAG (Directed Acyclic Graph)</strong></dt><dd>Acyclic graph of tasks with dependencies — the fundamental scheduling unit in Airflow, Dagster, and Prefect.</dd><dt><strong>MCP (Model Context Protocol)</strong></dt><dd>Emerging protocol for AI agents to interact with data tools and APIs in a standardized way, enabling agent-operated data pipelines.</dd><dt><strong>Feature Store</strong></dt><dd>Centralized repository for ML features enabling consistent computation, sharing, and serving across training and inference.</dd><dt><strong>Data Lineage</strong></dt><dd>End-to-end tracking of data from source through transformations to final consumption, enabling debugging, auditing, and impact analysis.</dd><dt><strong>Schema-on-Read</strong></dt><dd>Data lake paradigm where schema is applied at query time rather than ingest time, enabling flexible data storage.</dd></dl></div></details></div>
     </div>
+    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
+      <h2 class="text-2xl font-bold mb-4 inline-flex items-center gap-2" style="color:var(--color-text)">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+        Further Reading
+      </h2>
+      <div class="grid gap-3 sm:grid-cols-2">
+        <a href="https://www.databricks.com/blog" target="_blank" rel="noopener" class="ghost-card p-4 block transition hover:shadow-md" style="text-decoration:none">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 mt-0.5">
+              <span class="inline-block text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">
+                Databricks Blog
+              </span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">Databricks Blog</h3>
+              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">Lakehouse, Spark, Delta Lake, Unity Catalog — engineering blog</p>
+            </div>
+          </div>
+        </a>
+        <a href="https://kafka.apache.org" target="_blank" rel="noopener" class="ghost-card p-4 block transition hover:shadow-md" style="text-decoration:none">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 mt-0.5">
+              <span class="inline-block text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">
+                Apache Kafka
+              </span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">Apache Kafka</h3>
+              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">Kafka documentation, KIPs, and ecosystem updates</p>
+            </div>
+          </div>
+        </a>
+        <a href="https://flink.apache.org" target="_blank" rel="noopener" class="ghost-card p-4 block transition hover:shadow-md" style="text-decoration:none">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 mt-0.5">
+              <span class="inline-block text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">
+                Apache Flink
+              </span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">Apache Flink</h3>
+              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">Flink documentation and release notes</p>
+            </div>
+          </div>
+        </a>
+        <a href="https://iceberg.apache.org" target="_blank" rel="noopener" class="ghost-card p-4 block transition hover:shadow-md" style="text-decoration:none">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 mt-0.5">
+              <span class="inline-block text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">
+                Apache Iceberg
+              </span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">Apache Iceberg</h3>
+              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">Iceberg table format — specs, REST catalog, performance</p>
+            </div>
+          </div>
+        </a>
+        <a href="https://www.getdbt.com/blog" target="_blank" rel="noopener" class="ghost-card p-4 block transition hover:shadow-md" style="text-decoration:none">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 mt-0.5">
+              <span class="inline-block text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">
+                dbt Blog
+              </span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">dbt Blog</h3>
+              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">dbt Labs engineering blog — analytics engineering, Semantic Layer</p>
+            </div>
+          </div>
+        </a>
+        <a href="https://dagster.io/blog" target="_blank" rel="noopener" class="ghost-card p-4 block transition hover:shadow-md" style="text-decoration:none">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 mt-0.5">
+              <span class="inline-block text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">
+                Dagster Blog
+              </span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">Dagster Blog</h3>
+              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">Dagster orchestration — software-defined assets, IO managers</p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </section>
     <section class="mt-12 pt-8 border-t">
       <h2 class="text-2xl font-bold mb-6">Related Research</h2>
       <div class="grid gap-4 sm:grid-cols-3">

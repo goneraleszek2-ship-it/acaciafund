@@ -1,0 +1,1183 @@
+{
+  "concepts": [
+    {
+      "id": "kyc",
+      "label": "Know Your Customer (KYC)",
+      "description": "",
+      "pillar": "aml",
+      "category": "cdd-kyc",
+      "aliases": [
+        "KYC",
+        "know-your-customer"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330033+00:00",
+      "updated_at": "2026-07-11T16:05:04.330142+00:00"
+    },
+    {
+      "id": "cdd",
+      "label": "Customer Due Diligence",
+      "description": "",
+      "pillar": "aml",
+      "category": "cdd-kyc",
+      "aliases": [
+        "CDD"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330241+00:00",
+      "updated_at": "2026-07-11T16:05:04.330246+00:00"
+    },
+    {
+      "id": "edd",
+      "label": "Enhanced Due Diligence",
+      "description": "",
+      "pillar": "aml",
+      "category": "cdd-kyc",
+      "aliases": [
+        "EDD"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330271+00:00",
+      "updated_at": "2026-07-11T16:05:04.330276+00:00"
+    },
+    {
+      "id": "sar",
+      "label": "Suspicious Activity Report",
+      "description": "",
+      "pillar": "aml",
+      "category": "sar-str",
+      "aliases": [
+        "SAR",
+        "suspicious-activity-reporting"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330296+00:00",
+      "updated_at": "2026-07-11T16:05:04.330301+00:00"
+    },
+    {
+      "id": "str",
+      "label": "Suspicious Transaction Report",
+      "description": "",
+      "pillar": "aml",
+      "category": "sar-str",
+      "aliases": [
+        "STR"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330315+00:00",
+      "updated_at": "2026-07-11T16:05:04.330318+00:00"
+    },
+    {
+      "id": "ctr",
+      "label": "Currency Transaction Report",
+      "description": "",
+      "pillar": "aml",
+      "category": "sar-str",
+      "aliases": [
+        "CTR"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330330+00:00",
+      "updated_at": "2026-07-11T16:05:04.330333+00:00"
+    },
+    {
+      "id": "pep",
+      "label": "Politically Exposed Person",
+      "description": "",
+      "pillar": "aml",
+      "category": "risk-assessment",
+      "aliases": [
+        "PEP",
+        "politically-exposed-person"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330357+00:00",
+      "updated_at": "2026-07-11T16:05:04.330361+00:00"
+    },
+    {
+      "id": "sanctions-screening",
+      "label": "Sanctions Screening",
+      "description": "",
+      "pillar": "aml",
+      "category": "sanctions",
+      "aliases": [
+        "OFAC screening",
+        "sanctions list check"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330378+00:00",
+      "updated_at": "2026-07-11T16:05:04.330382+00:00"
+    },
+    {
+      "id": "transaction-monitoring",
+      "label": "Transaction Monitoring",
+      "description": "",
+      "pillar": "aml",
+      "category": "transaction-monitoring",
+      "aliases": [
+        "TM",
+        "transaction surveillance"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330394+00:00",
+      "updated_at": "2026-07-11T16:05:04.330398+00:00"
+    },
+    {
+      "id": "entity-resolution",
+      "label": "Entity Resolution",
+      "description": "",
+      "pillar": "aml",
+      "category": "advanced-techniques",
+      "aliases": [
+        "entity matching",
+        "record linkage"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330410+00:00",
+      "updated_at": "2026-07-11T16:05:04.330412+00:00"
+    },
+    {
+      "id": "network-analysis",
+      "label": "Network Analysis for AML",
+      "description": "",
+      "pillar": "aml",
+      "category": "advanced-techniques",
+      "aliases": [
+        "graph analytics",
+        "network forensics"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330421+00:00",
+      "updated_at": "2026-07-11T16:05:04.330424+00:00"
+    },
+    {
+      "id": "beneficial-ownership",
+      "label": "Beneficial Ownership",
+      "description": "",
+      "pillar": "aml",
+      "category": "regulations",
+      "aliases": [
+        "UBO",
+        "ultimate beneficial ownership",
+        "BO"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330438+00:00",
+      "updated_at": "2026-07-11T16:05:04.330442+00:00"
+    },
+    {
+      "id": "fatf-recommendations",
+      "label": "FATF Recommendations",
+      "description": "",
+      "pillar": "aml",
+      "category": "regulations",
+      "aliases": [
+        "FATF 40 Recommendations"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330453+00:00",
+      "updated_at": "2026-07-11T16:05:04.330456+00:00"
+    },
+    {
+      "id": "bsa",
+      "label": "Bank Secrecy Act",
+      "description": "",
+      "pillar": "aml",
+      "category": "regulations",
+      "aliases": [
+        "BSA",
+        "Currency and Foreign Transactions Act"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330467+00:00",
+      "updated_at": "2026-07-11T16:05:04.330470+00:00"
+    },
+    {
+      "id": "tbml",
+      "label": "Trade-Based Money Laundering",
+      "description": "",
+      "pillar": "aml",
+      "category": "risk-assessment",
+      "aliases": [
+        "TBML",
+        "trade-based-ml"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330477+00:00",
+      "updated_at": "2026-07-11T16:05:04.330482+00:00"
+    },
+    {
+      "id": "regtech",
+      "label": "Regulatory Technology",
+      "description": "",
+      "pillar": "aml",
+      "category": "regtech",
+      "aliases": [
+        "RegTech"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330489+00:00",
+      "updated_at": "2026-07-11T16:05:04.330492+00:00"
+    },
+    {
+      "id": "lob",
+      "label": "Limit Order Book",
+      "description": "",
+      "pillar": "stock",
+      "category": "foundations",
+      "aliases": [
+        "LOB",
+        "order book"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330507+00:00",
+      "updated_at": "2026-07-11T16:05:04.330510+00:00"
+    },
+    {
+      "id": "market-microstructure",
+      "label": "Market Microstructure",
+      "description": "",
+      "pillar": "stock",
+      "category": "foundations",
+      "aliases": [
+        "microstructure"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330519+00:00",
+      "updated_at": "2026-07-11T16:05:04.330522+00:00"
+    },
+    {
+      "id": "volatility-surface",
+      "label": "Implied Volatility Surface",
+      "description": "",
+      "pillar": "stock",
+      "category": "market-analysis",
+      "aliases": [
+        "IV surface",
+        "vol surface"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330531+00:00",
+      "updated_at": "2026-07-11T16:05:04.330534+00:00"
+    },
+    {
+      "id": "hawkes-process",
+      "label": "Hawkes Process",
+      "description": "",
+      "pillar": "stock",
+      "category": "advanced-techniques",
+      "aliases": [
+        "Hawkes self-exciting process"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330544+00:00",
+      "updated_at": "2026-07-11T16:05:04.330547+00:00"
+    },
+    {
+      "id": "vpin",
+      "label": "VPIN Toxicity",
+      "description": "",
+      "pillar": "stock",
+      "category": "advanced-techniques",
+      "aliases": [
+        "Volume-Synchronized Probability of Informed Trading"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330554+00:00",
+      "updated_at": "2026-07-11T16:05:04.330557+00:00"
+    },
+    {
+      "id": "supply-chain-analysis",
+      "label": "Supply Chain Analysis",
+      "description": "",
+      "pillar": "stock",
+      "category": "industry-analysis",
+      "aliases": [
+        "supply chain risk"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330564+00:00",
+      "updated_at": "2026-07-11T16:05:04.330567+00:00"
+    },
+    {
+      "id": "earnings-analysis",
+      "label": "Earnings Analysis",
+      "description": "",
+      "pillar": "stock",
+      "category": "market-analysis",
+      "aliases": [
+        "earnings season",
+        "earnings reports"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330574+00:00",
+      "updated_at": "2026-07-11T16:05:04.330577+00:00"
+    },
+    {
+      "id": "commodity-trading",
+      "label": "Commodity Trading Strategies",
+      "description": "",
+      "pillar": "stock",
+      "category": "strategies",
+      "aliases": [
+        "commodity futures",
+        "commodity hedging"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330584+00:00",
+      "updated_at": "2026-07-11T16:05:04.330586+00:00"
+    },
+    {
+      "id": "semiconductor-industry",
+      "label": "Semiconductor Industry",
+      "description": "",
+      "pillar": "stock",
+      "category": "industry-analysis",
+      "aliases": [
+        "chip industry",
+        "semiconductor supply chain"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330593+00:00",
+      "updated_at": "2026-07-11T16:05:04.330596+00:00"
+    },
+    {
+      "id": "ai-hardware",
+      "label": "AI Hardware Trends",
+      "description": "",
+      "pillar": "stock",
+      "category": "industry-analysis",
+      "aliases": [
+        "AI chips",
+        "GPU market",
+        "AI accelerators"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330603+00:00",
+      "updated_at": "2026-07-11T16:05:04.330605+00:00"
+    },
+    {
+      "id": "portfolio-optimization",
+      "label": "Portfolio Optimization",
+      "description": "",
+      "pillar": "stock",
+      "category": "strategies",
+      "aliases": [
+        "asset allocation",
+        "portfolio construction"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330618+00:00",
+      "updated_at": "2026-07-11T16:05:04.330620+00:00"
+    },
+    {
+      "id": "risk-parity",
+      "label": "Risk Parity",
+      "description": "",
+      "pillar": "stock",
+      "category": "strategies",
+      "aliases": [
+        "risk-balanced portfolio"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330627+00:00",
+      "updated_at": "2026-07-11T16:05:04.330629+00:00"
+    },
+    {
+      "id": "factor-investing",
+      "label": "Factor Investing",
+      "description": "",
+      "pillar": "stock",
+      "category": "strategies",
+      "aliases": [
+        "smart beta",
+        "factor models"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330636+00:00",
+      "updated_at": "2026-07-11T16:05:04.330639+00:00"
+    },
+    {
+      "id": "technical-analysis",
+      "label": "Technical Analysis",
+      "description": "",
+      "pillar": "stock",
+      "category": "market-analysis",
+      "aliases": [
+        "chart patterns",
+        "technical indicators"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330648+00:00",
+      "updated_at": "2026-07-11T16:05:04.330651+00:00"
+    },
+    {
+      "id": "macro-analysis",
+      "label": "Macroeconomic Analysis",
+      "description": "",
+      "pillar": "stock",
+      "category": "market-analysis",
+      "aliases": [
+        "macro analysis",
+        "economic indicators"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330657+00:00",
+      "updated_at": "2026-07-11T16:05:04.330660+00:00"
+    },
+    {
+      "id": "etl",
+      "label": "Extract-Transform-Load",
+      "description": "",
+      "pillar": "data-engineering",
+      "category": "foundations",
+      "aliases": [
+        "ETL",
+        "extract transform load"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330668+00:00",
+      "updated_at": "2026-07-11T16:05:04.330670+00:00"
+    },
+    {
+      "id": "elt",
+      "label": "Extract-Load-Transform",
+      "description": "",
+      "pillar": "data-engineering",
+      "category": "foundations",
+      "aliases": [
+        "ELT"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330677+00:00",
+      "updated_at": "2026-07-11T16:05:04.330680+00:00"
+    },
+    {
+      "id": "cdc",
+      "label": "Change Data Capture",
+      "description": "",
+      "pillar": "data-engineering",
+      "category": "advanced-techniques",
+      "aliases": [
+        "CDC",
+        "change-data-capture"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330689+00:00",
+      "updated_at": "2026-07-11T16:05:04.330692+00:00"
+    },
+    {
+      "id": "data-lake",
+      "label": "Data Lake",
+      "description": "",
+      "pillar": "data-engineering",
+      "category": "foundations",
+      "aliases": [
+        "data lakehouse"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330699+00:00",
+      "updated_at": "2026-07-11T16:05:04.330701+00:00"
+    },
+    {
+      "id": "data-warehouse",
+      "label": "Data Warehouse",
+      "description": "",
+      "pillar": "data-engineering",
+      "category": "foundations",
+      "aliases": [
+        "DWH",
+        "analytical data store"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330708+00:00",
+      "updated_at": "2026-07-11T16:05:04.330710+00:00"
+    },
+    {
+      "id": "data-mesh",
+      "label": "Data Mesh",
+      "description": "",
+      "pillar": "data-engineering",
+      "category": "architecture",
+      "aliases": [
+        "data mesh architecture"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330725+00:00",
+      "updated_at": "2026-07-11T16:05:04.330728+00:00"
+    },
+    {
+      "id": "streaming",
+      "label": "Stream Processing",
+      "description": "",
+      "pillar": "data-engineering",
+      "category": "advanced-techniques",
+      "aliases": [
+        "real-time processing",
+        "stream processing"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330735+00:00",
+      "updated_at": "2026-07-11T16:05:04.330738+00:00"
+    },
+    {
+      "id": "batch-processing",
+      "label": "Batch Processing",
+      "description": "",
+      "pillar": "data-engineering",
+      "category": "foundations",
+      "aliases": [
+        "batch jobs",
+        "scheduled processing"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330747+00:00",
+      "updated_at": "2026-07-11T16:05:04.330750+00:00"
+    },
+    {
+      "id": "dbt",
+      "label": "dbt (data build tool)",
+      "description": "",
+      "pillar": "data-engineering",
+      "category": "advanced-techniques",
+      "aliases": [
+        "data build tool"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330758+00:00",
+      "updated_at": "2026-07-11T16:05:04.330760+00:00"
+    },
+    {
+      "id": "dagster",
+      "label": "Dagster Orchestrator",
+      "description": "",
+      "pillar": "data-engineering",
+      "category": "advanced-techniques",
+      "aliases": [
+        "dagster"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330766+00:00",
+      "updated_at": "2026-07-11T16:05:04.330769+00:00"
+    },
+    {
+      "id": "apache-flink",
+      "label": "Apache Flink",
+      "description": "",
+      "pillar": "data-engineering",
+      "category": "advanced-techniques",
+      "aliases": [
+        "Flink"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330775+00:00",
+      "updated_at": "2026-07-11T16:05:04.330777+00:00"
+    },
+    {
+      "id": "apache-kafka",
+      "label": "Apache Kafka",
+      "description": "",
+      "pillar": "data-engineering",
+      "category": "advanced-techniques",
+      "aliases": [
+        "Kafka"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330784+00:00",
+      "updated_at": "2026-07-11T16:05:04.330787+00:00"
+    },
+    {
+      "id": "apache-iceberg",
+      "label": "Apache Iceberg",
+      "description": "",
+      "pillar": "data-engineering",
+      "category": "advanced-techniques",
+      "aliases": [
+        "Iceberg",
+        "table format"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330794+00:00",
+      "updated_at": "2026-07-11T16:05:04.330797+00:00"
+    },
+    {
+      "id": "schema-registry",
+      "label": "Schema Registry",
+      "description": "",
+      "pillar": "data-engineering",
+      "category": "architecture",
+      "aliases": [
+        "schema evolution",
+        "schema management"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330803+00:00",
+      "updated_at": "2026-07-11T16:05:04.330805+00:00"
+    },
+    {
+      "id": "data-contracts",
+      "label": "Data Contracts",
+      "description": "",
+      "pillar": "data-engineering",
+      "category": "architecture",
+      "aliases": [
+        "data contract",
+        "SLA for data"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330816+00:00",
+      "updated_at": "2026-07-11T16:05:04.330819+00:00"
+    },
+    {
+      "id": "data-quality",
+      "label": "Data Quality",
+      "description": "",
+      "pillar": "data-engineering",
+      "category": "best-practices",
+      "aliases": [
+        "data observability",
+        "data validation"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330833+00:00",
+      "updated_at": "2026-07-11T16:05:04.330836+00:00"
+    },
+    {
+      "id": "arrow-parquet",
+      "label": "Apache Arrow / Parquet",
+      "description": "",
+      "pillar": "data-engineering",
+      "category": "advanced-techniques",
+      "aliases": [
+        "Arrow",
+        "Parquet",
+        "columnar storage"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-11T16:05:04.330847+00:00",
+      "updated_at": "2026-07-11T16:05:04.330850+00:00"
+    }
+  ],
+  "relations": [
+    {
+      "source_id": "cdd",
+      "target_id": "kyc",
+      "relation_type": "part_of",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-11T16:05:04.330882+00:00"
+    },
+    {
+      "source_id": "edd",
+      "target_id": "cdd",
+      "relation_type": "part_of",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-11T16:05:04.330901+00:00"
+    },
+    {
+      "source_id": "sar",
+      "target_id": "transaction-monitoring",
+      "relation_type": "enables",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-11T16:05:04.330919+00:00"
+    },
+    {
+      "source_id": "str",
+      "target_id": "transaction-monitoring",
+      "relation_type": "enables",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-11T16:05:04.330927+00:00"
+    },
+    {
+      "source_id": "ctr",
+      "target_id": "transaction-monitoring",
+      "relation_type": "enables",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-11T16:05:04.330933+00:00"
+    },
+    {
+      "source_id": "pep",
+      "target_id": "edd",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-11T16:05:04.330940+00:00"
+    },
+    {
+      "source_id": "sanctions-screening",
+      "target_id": "kyc",
+      "relation_type": "part_of",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-11T16:05:04.330946+00:00"
+    },
+    {
+      "source_id": "entity-resolution",
+      "target_id": "network-analysis",
+      "relation_type": "related_to",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-11T16:05:04.330956+00:00"
+    },
+    {
+      "source_id": "beneficial-ownership",
+      "target_id": "cdd",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-11T16:05:04.330962+00:00"
+    },
+    {
+      "source_id": "fatf-recommendations",
+      "target_id": "kyc",
+      "relation_type": "regulates",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-11T16:05:04.330972+00:00"
+    },
+    {
+      "source_id": "fatf-recommendations",
+      "target_id": "sar",
+      "relation_type": "regulates",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-11T16:05:04.330979+00:00"
+    },
+    {
+      "source_id": "bsa",
+      "target_id": "sar",
+      "relation_type": "regulates",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-11T16:05:04.330986+00:00"
+    },
+    {
+      "source_id": "bsa",
+      "target_id": "ctr",
+      "relation_type": "regulates",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-11T16:05:04.330993+00:00"
+    },
+    {
+      "source_id": "tbml",
+      "target_id": "transaction-monitoring",
+      "relation_type": "detects",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-11T16:05:04.331002+00:00"
+    },
+    {
+      "source_id": "regtech",
+      "target_id": "transaction-monitoring",
+      "relation_type": "enables",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-11T16:05:04.331012+00:00"
+    },
+    {
+      "source_id": "regtech",
+      "target_id": "kyc",
+      "relation_type": "enables",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-11T16:05:04.331019+00:00"
+    },
+    {
+      "source_id": "market-microstructure",
+      "target_id": "lob",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-11T16:05:04.331028+00:00"
+    },
+    {
+      "source_id": "hawkes-process",
+      "target_id": "market-microstructure",
+      "relation_type": "influences",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-11T16:05:04.331037+00:00"
+    },
+    {
+      "source_id": "vpin",
+      "target_id": "market-microstructure",
+      "relation_type": "measures",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-11T16:05:04.331046+00:00"
+    },
+    {
+      "source_id": "volatility-surface",
+      "target_id": "market-microstructure",
+      "relation_type": "related_to",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-11T16:05:04.331054+00:00"
+    },
+    {
+      "source_id": "earnings-analysis",
+      "target_id": "macro-analysis",
+      "relation_type": "related_to",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-11T16:05:04.331063+00:00"
+    },
+    {
+      "source_id": "commodity-trading",
+      "target_id": "macro-analysis",
+      "relation_type": "related_to",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-11T16:05:04.331071+00:00"
+    },
+    {
+      "source_id": "portfolio-optimization",
+      "target_id": "risk-parity",
+      "relation_type": "implements",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-11T16:05:04.331080+00:00"
+    },
+    {
+      "source_id": "factor-investing",
+      "target_id": "portfolio-optimization",
+      "relation_type": "implements",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-11T16:05:04.331089+00:00"
+    },
+    {
+      "source_id": "technical-analysis",
+      "target_id": "market-microstructure",
+      "relation_type": "influences",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-11T16:05:04.331098+00:00"
+    },
+    {
+      "source_id": "semiconductor-industry",
+      "target_id": "supply-chain-analysis",
+      "relation_type": "part_of",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-11T16:05:04.331109+00:00"
+    },
+    {
+      "source_id": "ai-hardware",
+      "target_id": "semiconductor-industry",
+      "relation_type": "influences",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-11T16:05:04.331119+00:00"
+    },
+    {
+      "source_id": "elt",
+      "target_id": "etl",
+      "relation_type": "supersedes",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-11T16:05:04.331129+00:00"
+    },
+    {
+      "source_id": "cdc",
+      "target_id": "batch-processing",
+      "relation_type": "related_to",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-11T16:05:04.331141+00:00"
+    },
+    {
+      "source_id": "streaming",
+      "target_id": "batch-processing",
+      "relation_type": "related_to",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-11T16:05:04.331152+00:00"
+    },
+    {
+      "source_id": "dbt",
+      "target_id": "elt",
+      "relation_type": "implements",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-11T16:05:04.331164+00:00"
+    },
+    {
+      "source_id": "dagster",
+      "target_id": "etl",
+      "relation_type": "implements",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-11T16:05:04.331175+00:00"
+    },
+    {
+      "source_id": "dagster",
+      "target_id": "elt",
+      "relation_type": "implements",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-11T16:05:04.331186+00:00"
+    },
+    {
+      "source_id": "apache-flink",
+      "target_id": "streaming",
+      "relation_type": "implements",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-11T16:05:04.331200+00:00"
+    },
+    {
+      "source_id": "apache-kafka",
+      "target_id": "streaming",
+      "relation_type": "enables",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-11T16:05:04.331210+00:00"
+    },
+    {
+      "source_id": "apache-iceberg",
+      "target_id": "data-lake",
+      "relation_type": "implements",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-11T16:05:04.331222+00:00"
+    },
+    {
+      "source_id": "schema-registry",
+      "target_id": "data-contracts",
+      "relation_type": "implements",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-11T16:05:04.331233+00:00"
+    },
+    {
+      "source_id": "data-contracts",
+      "target_id": "data-quality",
+      "relation_type": "enables",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-11T16:05:04.331244+00:00"
+    },
+    {
+      "source_id": "arrow-parquet",
+      "target_id": "data-lake",
+      "relation_type": "enables",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-11T16:05:04.331256+00:00"
+    },
+    {
+      "source_id": "data-mesh",
+      "target_id": "data-contracts",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-11T16:05:04.331268+00:00"
+    },
+    {
+      "source_id": "transaction-monitoring",
+      "target_id": "streaming",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "cross-pillar",
+      "created_at": "2026-07-11T16:05:04.331281+00:00"
+    },
+    {
+      "source_id": "transaction-monitoring",
+      "target_id": "cdc",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "cross-pillar",
+      "created_at": "2026-07-11T16:05:04.331295+00:00"
+    },
+    {
+      "source_id": "entity-resolution",
+      "target_id": "data-quality",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "cross-pillar",
+      "created_at": "2026-07-11T16:05:04.331308+00:00"
+    },
+    {
+      "source_id": "network-analysis",
+      "target_id": "data-mesh",
+      "relation_type": "related_to",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "cross-pillar",
+      "created_at": "2026-07-11T16:05:04.331321+00:00"
+    },
+    {
+      "source_id": "regtech",
+      "target_id": "dagster",
+      "relation_type": "related_to",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "cross-pillar",
+      "created_at": "2026-07-11T16:05:04.331336+00:00"
+    },
+    {
+      "source_id": "market-microstructure",
+      "target_id": "streaming",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "cross-pillar",
+      "created_at": "2026-07-11T16:05:04.331350+00:00"
+    },
+    {
+      "source_id": "data-contracts",
+      "target_id": "fatf-recommendations",
+      "relation_type": "related_to",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "cross-pillar",
+      "created_at": "2026-07-11T16:05:04.331363+00:00"
+    }
+  ],
+  "resource_links": []
+}
