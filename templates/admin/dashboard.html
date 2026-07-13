@@ -1,29 +1,58 @@
-{% extends "layout.j2" %}
-{% block main_content %}
-<section class="admin-dashboard">
-  <h1>Admin Dashboard</h1>
-  <div class="stats-grid">
-    <div class="stat-card">
-      <h3>{{ stats_total_articles }}</h3>
-      <p>Articles</p>
-    </div>
-    <div class="stat-card">
-      <h3>{{ stats_total_images }}</h3>
-      <p>Images</p>
-    </div>
-    <div class="stat-card">
-      <h3>{{ stats_with_images_pct }}%</h3>
-      <p>With Images</p>
-    </div>
+{% extends "admin/base.html" %}
+{% block admin_content %}
+<h1 style="margin-bottom:1.5rem">Admin Dashboard</h1>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:2rem">
+  <div class="ghost-card p-4 text-center">
+    <div class="text-2xl font-bold" style="color:var(--color-accent)">{{ stats_total_articles }}</div>
+    <div class="text-xs" style="color:var(--color-text-muted)">Articles</div>
   </div>
-  <nav class="admin-nav">
-    <a href="/admin/dashboard.html">Dashboard</a>
-    <a href="/admin/gallery.html">Gallery</a>
-    <a href="/admin/articles.html">Articles</a>
-    <a href="/admin/manifest.html">Manifest</a>
-    <a href="/admin/quality.html">Quality</a>
-    <a href="/admin/sources.html">Sources</a>
-    <a href="/admin/telemetry.html">Telemetry</a>
-  </nav>
-</section>
+  <div class="ghost-card p-4 text-center">
+    <div class="text-2xl font-bold" style="color:var(--color-accent)">{{ stats_total_images }}</div>
+    <div class="text-xs" style="color:var(--color-text-muted)">Images</div>
+  </div>
+  <div class="ghost-card p-4 text-center">
+    <div class="text-2xl font-bold" style="color:var(--color-accent)">{{ stats_with_images_pct }}%</div>
+    <div class="text-xs" style="color:var(--color-text-muted)">With Images</div>
+  </div>
+  <div class="ghost-card p-4 text-center">
+    <div class="text-2xl font-bold" style="color:var(--color-accent)">{{ stats_low_score }}</div>
+    <div class="text-xs" style="color:var(--color-text-muted)">Low Score</div>
+  </div>
+</div>
+
+{% if stats_by_type %}
+<h2 class="text-lg font-bold mb-3" style="color:var(--color-text)">By Content Type</h2>
+<div class="overflow-x-auto mb-6">
+  <table class="w-full text-xs" style="color:var(--color-text)">
+    <thead>
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <th class="text-left py-2 pr-4 font-semibold">Type</th>
+        <th class="text-right py-2 pr-4 font-semibold">Total</th>
+        <th class="text-right py-2 pr-4 font-semibold">With Images</th>
+        <th class="text-right py-2 font-semibold">Without</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for row in stats_by_type %}
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-semibold">{{ row.type }}</td>
+        <td class="py-1.5 pr-4 text-right">{{ row.total }}</td>
+        <td class="py-1.5 pr-4 text-right">{{ row.with_images }}</td>
+        <td class="py-1.5 text-right">{{ row.without_images }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+
+{% if stats_by_source %}
+<h2 class="text-lg font-bold mb-3" style="color:var(--color-text)">By Source</h2>
+<div style="display:flex;flex-wrap:wrap;gap:0.5rem">
+  {% for src, count in stats_by_source.items() %}
+  <span class="text-xs px-2 py-1 rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">{{ src }}: {{ count }}</span>
+  {% endfor %}
+</div>
+{% endif %}
 {% endblock %}

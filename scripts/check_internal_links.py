@@ -17,7 +17,7 @@ REPORT_PATH = Path("/root/acaciafund/data/broken_links.json")
 
 # Known static redirects (source -> target)
 REDIRECTS = {
-    "/science/": "/research/",
+    "/science/": "/data/research/",
     "/contact/": "/knowledge/contact/",
 }
 

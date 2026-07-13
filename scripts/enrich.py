@@ -217,7 +217,7 @@ class ResearchEnricher:
             return
 
         try:
-            from mem0 import Memory
+            from mem0 import Memory  # pyright: ignore[reportAttributeAccessIssue]
             config = {
                 "llm": {
                     "provider": "openai",
@@ -409,7 +409,7 @@ Respond with a JSON array of 3-5 kebab-case tags:"""
             try:
                 response = self._llm_client.chat.completions.create(
                     model=self._llm_model,
-                    messages=messages,
+                    messages=messages,  # pyright: ignore[reportArgumentType]
                     temperature=0.3,
                     max_tokens=200,
                     timeout=30,

@@ -17,7 +17,11 @@
       <li><span class="legend-dot" style="background:#a855f7"></span> Docs (system documentation)</li>
       <li><span class="legend-dot" style="background:#14b8a6"></span> Semantic Tag (concept)</li>
       <li><span class="legend-dot" style="background:#14b8a6; shape:diamond; border:2px solid #fff"></span> Ontology Concept (structured entity)</li>
-      <li><span class="legend-dot" style="background:#f59e0b"></span> Relation (ontology edge)</li>
+      <li><span class="legend-dot" style="background:#22c55e"></span> part_of relation</li>
+      <li><span class="legend-dot" style="background:#3b82f6"></span> requires relation</li>
+      <li><span class="legend-dot" style="background:#f59e0b"></span> related_to relation</li>
+      <li><span class="legend-dot" style="background:#ef4444"></span> detects relation</li>
+      <li><span class="legend-dot" style="background:#a855f7"></span> other relation types</li>
     </ul>
     <div style="margin-top:0.75rem;">
       <label style="font-size:0.75rem;color:var(--color-text-muted)">Filter by pillar:</label>
@@ -92,6 +96,26 @@
               'haystack-radius': 0.5,
               'opacity': 0.4,
             }
+          },
+          {
+            selector: 'edge[relation = "part_of"]',
+            style: { 'line-color': '#22c55e', 'target-arrow-color': '#22c55e' }
+          },
+          {
+            selector: 'edge[relation = "requires"]',
+            style: { 'line-color': '#3b82f6', 'target-arrow-color': '#3b82f6' }
+          },
+          {
+            selector: 'edge[relation = "related_to"]',
+            style: { 'line-color': '#f59e0b', 'target-arrow-color': '#f59e0b' }
+          },
+          {
+            selector: 'edge[relation = "detects"]',
+            style: { 'line-color': '#ef4444', 'target-arrow-color': '#ef4444' }
+          },
+          {
+            selector: 'edge[relation = "enables"], edge[relation = "implements"], edge[relation = "regulates"], edge[relation = "influences"], edge[relation = "measures"], edge[relation = "supersedes"]',
+            style: { 'line-color': '#a855f7', 'target-arrow-color': '#a855f7' }
           },
           {
             selector: 'node:selected',
@@ -202,9 +226,9 @@
             if (ontNodes.length) cy.animate({ fit: { eles: ontNodes, padding: 50 }, duration: 400 });
           } else {
             // Filter by pillar (domain prefix)
-            var pillarMap = { compliance: 'aml', markets: 'stock', data: 'data-engineering' };
+            var pillarMap = { compliance: 'compliance', markets: 'markets', data: 'data' };
             var prefix = pillarMap[val] || val;
-            var matched = cy.nodes('[domain ^= "' + prefix + '/"]');
+            var matched = cy.nodes('[domain = "' + prefix + '"], [domain = "' + val + '"]');
             if (matched.length) {
               var nbrs = matched.add(matched.neighborhood());
               cy.elements().addClass('faded');

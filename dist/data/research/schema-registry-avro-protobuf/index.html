@@ -1,18 +1,10 @@
-<span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
-  AML
-</span><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Schema Registry Patterns: Avro, Protobuf, and JSON Schema in Production</title>
-    <meta name="description" content="# Schema Registry Patterns: Avro, Protobuf, and JSON Schema in Production
-
-Schema registry architectures enable versioned, contract-enforced data serialization across distributed pipelines. This document provides a comprehensive reference for implementing schema evolution with backward, forward, and full compatibility contracts in production data engineering environments.
-
-## Overview
-
-Schema registry architectures with Confluent Schema Registry and Apicurio provide centralized schema management">
+    <meta name="description" content="Schema Registry Patterns: Avro, Protobuf, and JSON Schema in Production Schema registry architectures enable versioned, contract-enforced data serialization across distributed pipelines. This document provides a comprehensive reference for implementing schema evolution with backward, forward, and full compatibility contracts in production data engineering environments. Overview Schema registry architectures with Confluent Schema Registry and Apicurio provide centralized schema management">
     <link rel="icon" href="/favicon.ico">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
@@ -20,7 +12,7 @@ Schema registry architectures with Confluent Schema Registry and Apicurio provid
 
 
     <script type="application/ld+json">
-{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "data-engineering"}, "author": {"@type": "Person", "name": "AcaciaFund"}, "citation": [{"@type": "Organization", "description": "7 references", "name": "hn"}, {"@type": "Organization", "description": "3 references", "name": "arxiv"}, {"@type": "Organization", "description": "2 references", "name": "pubmed"}], "dateModified": "2026-07-06T18:02:57Z", "datePublished": "2026-06-15", "description": "# Schema Registry Patterns: Avro, Protobuf, and JSON Schema in Production\n\nSchema registry architectures enable versioned, contract-enforced data serialization across distributed pipelines. This document provides a comprehensive reference for implementing schema evolution with backward, forward, and", "headline": "Schema Registry Patterns: Avro, Protobuf, and JSON Schema in Production", "inLanguage": "en", "keywords": "dataops, data-engineering, manufacturing, schema-management, data-governance, data-serialization, distributed-systems", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/data/research/schema-registry-avro-protobuf/", "@type": "WebPage"}, "proficiencyLevel": "", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-10T06:39:40Z", "signalQualityIndex": 0.83, "sqi": 0.83}
+{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "data-engineering"}, "author": {"@type": "Person", "name": "AcaciaFund"}, "citation": [{"@type": "Organization", "description": "7 references", "name": "hn"}, {"@type": "Organization", "description": "3 references", "name": "arxiv"}, {"@type": "Organization", "description": "2 references", "name": "pubmed"}], "dateModified": "2026-07-06T18:02:57Z", "datePublished": "2026-06-15", "description": "Schema Registry Patterns: Avro, Protobuf, and JSON Schema in Production Schema registry architectures enable versioned, contract-enforced data serialization across distributed pipelines. This document provides a comprehensive reference for implementing schema evolution with backward, forward, and fu", "headline": "Schema Registry Patterns: Avro, Protobuf, and JSON Schema in Production", "inLanguage": "en", "keywords": "dataops, data-engineering, manufacturing, schema-management, data-governance, data-serialization, distributed-systems", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/data/research/schema-registry-avro-protobuf/", "@type": "WebPage"}, "proficiencyLevel": "advanced", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-10T06:39:40Z", "signalQualityIndex": 0.83, "sqi": 0.83}
     </script>
 
 
@@ -40,6 +32,8 @@ Schema registry architectures with Confluent Schema Registry and Apicurio provid
                 <li><a href="/compliance/">Compliance</a></li>
                 <li><a href="/markets/">Markets</a></li>
                 <li><a href="/data/">Data</a></li>
+                <li><a href="/review/">Review</a></li>
+                <li><a href="/search/">Search</a></li>
             </ul>
         </nav>
     </header>
@@ -59,7 +53,149 @@ Schema registry architectures with Confluent Schema Registry and Apicurio provid
 
 <div id="reading-progress" style="position:fixed;top:0;left:0;height:3px;z-index:9999;width:0%;background:var(--color-accent)"></div>
 
-<div class="flex gap-8  flex-col">
+<div class="flex gap-8 md:flex-row flex-col">
+  <aside class="toc-sidebar shrink-0 order-last md:order-first md:sticky md:top-20 md:self-start md:max-h-[calc(100vh-6rem)] md:overflow-y-auto md:w-52">
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="text-xs font-semibold uppercase tracking-wide" style="color:var(--color-text-muted)">On this page</h2>
+      <button id="focus-toggle" class="text-xs px-2 py-1 rounded" style="color:var(--color-text-muted);background:var(--color-bg)" title="Focus mode" aria-label="Toggle focus mode">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 4h4M6 20h4M18 4h-4M18 20h-4M4 6v4M4 18v4M20 6v4M20 18v4"/></svg>
+      </button>
+    </div>
+    <nav aria-label="Table of contents">
+      <ul class="space-y-1 text-sm">
+        <li>
+          <a href="#overview" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Overview
+          </a>
+        </li>
+        <li>
+          <a href="#key-benefits" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            Key Benefits
+          </a>
+        </li>
+        <li>
+          <a href="#compatibility-contract-evolution-rules" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Compatibility Contract Evolution Rules
+          </a>
+        </li>
+        <li>
+          <a href="#backward-compatibility-default" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            Backward Compatibility (Default)
+          </a>
+        </li>
+        <li>
+          <a href="#forward-compatibility" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            Forward Compatibility
+          </a>
+        </li>
+        <li>
+          <a href="#full-compatibility-bidirectional" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            Full Compatibility (Bidirectional)
+          </a>
+        </li>
+        <li>
+          <a href="#serialization-format-comparison" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Serialization Format Comparison
+          </a>
+        </li>
+        <li>
+          <a href="#apache-avro" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            Apache Avro
+          </a>
+        </li>
+        <li>
+          <a href="#google-protobuf" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            Google Protobuf
+          </a>
+        </li>
+        <li>
+          <a href="#json-schema" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            JSON Schema
+          </a>
+        </li>
+        <li>
+          <a href="#compatibility-contract-transition-matrix" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Compatibility Contract Transition Matrix
+          </a>
+        </li>
+        <li>
+          <a href="#deployment-strategy" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            Deployment Strategy
+          </a>
+        </li>
+        <li>
+          <a href="#multi-tenant-registry-deployment" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Multi-Tenant Registry Deployment
+          </a>
+        </li>
+        <li>
+          <a href="#confluent-schema-registry-tenancy" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            Confluent Schema Registry Tenancy
+          </a>
+        </li>
+        <li>
+          <a href="#apicurio-multi-tenant-architecture" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            Apicurio Multi-Tenant Architecture
+          </a>
+        </li>
+        <li>
+          <a href="#ci-cd-integration-for-schema-validation" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            CI/CD Integration for Schema Validation
+          </a>
+        </li>
+        <li>
+          <a href="#github-actions-workflow" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            GitHub Actions Workflow
+          </a>
+        </li>
+        <li>
+          <a href="#schema-compatibility-check-script" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            Schema Compatibility Check Script
+          </a>
+        </li>
+        <li>
+          <a href="#performance-considerations" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Performance Considerations
+          </a>
+        </li>
+        <li>
+          <a href="#schema-registry-performance" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            Schema Registry Performance
+          </a>
+        </li>
+        <li>
+          <a href="#optimization-strategies" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            Optimization Strategies
+          </a>
+        </li>
+        <li>
+          <a href="#security-considerations" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Security Considerations
+          </a>
+        </li>
+        <li>
+          <a href="#schema-registry-access-control" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            Schema Registry Access Control
+          </a>
+        </li>
+        <li>
+          <a href="#schema-sanitization" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            Schema Sanitization
+          </a>
+        </li>
+        <li>
+          <a href="#deployment-checklist" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Deployment Checklist
+          </a>
+        </li>
+        <li>
+          <a href="#conclusion" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Conclusion
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
 
   <article class="min-w-0 flex-1">
     <nav aria-label="Breadcrumb" class="mb-4 text-xs" style="color:var(--color-text-muted)">
@@ -112,6 +248,12 @@ Schema registry architectures with Confluent Schema Registry and Apicurio provid
       <div id="quiz-summary" class="mt-6 p-4 rounded-lg hidden" style="background:var(--color-surface);border:1px solid var(--color-border)"></div>
       <button id="quiz-retry" class="mt-3 hidden px-4 py-2 text-sm font-semibold rounded-lg transition hover:opacity-80" style="background:var(--color-accent);color:#fff">Retry Quiz</button>
     </section>
+    <div class="mt-8 text-center">
+      <button id="mark-complete-btn" data-track-lesson="data/research/schema-registry-avro-protobuf/" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition" style="background:var(--color-accent);color:#fff">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+        <span id="complete-btn-text">Mark Complete</span>
+      </button>
+    </div>
     </header>
     <div class="flex items-center gap-3 mb-4 text-xs" style="color:var(--color-text-muted)">
       <span>Share:</span>
@@ -135,42 +277,38 @@ Schema registry architectures with Confluent Schema Registry and Apicurio provid
 
 
     <div class="prose prose-lg prose-blue max-w-none">
-      # Schema Registry Patterns: Avro, Protobuf, and JSON Schema in Production
+      <h1>Schema Registry Patterns: Avro, Protobuf, and JSON Schema in Production</h1>
 
 Schema registry architectures enable versioned, contract-enforced data serialization across distributed pipelines. This document provides a comprehensive reference for implementing schema evolution with backward, forward, and full compatibility contracts in production data engineering environments.
 
-## Overview
+<div class="section-harvester" data-section="overview" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="overview">Overview</h2></summary><div class="section-body">
 
 Schema registry architectures with Confluent Schema Registry and Apicurio provide centralized schema management, compatibility checking, and wire format optimization. This synthesis draws from 12 sources across 4 domains, with a combined Signal Quality Index of 0.83. The leading HackerNews discussion gathered 412 points, indicating strong community interest in this topic.
 
-### Key Benefits
+<h3 id="key-benefits">Key Benefits</h3>
 
-- **Contract Enforcement:** Schema registries enforce data contracts between producers and consumers, preventing breaking changes from propagating through pipelines.
-- **Evolution Management:** Backward, forward, and full compatibility modes allow controlled schema evolution while maintaining pipeline integrity.
-- **Wire Format Optimization:** Binary formats like Avro and Protobuf provide 5-10x compression versus JSON, reducing network bandwidth and storage costs.
-- **Multi-Tenant Isolation:** Registry implementations support tenant-level schema isolation for multi-organization data sharing scenarios.
+- <strong>Contract Enforcement:</strong> Schema registries enforce data contracts between producers and consumers, preventing breaking changes from propagating through pipelines.
+- <strong>Evolution Management:</strong> Backward, forward, and full compatibility modes allow controlled schema evolution while maintaining pipeline integrity.
+- <strong>Wire Format Optimization:</strong> Binary formats like Avro and Protobuf provide 5-10x compression versus JSON, reducing network bandwidth and storage costs.
+- <strong>Multi-Tenant Isolation:</strong> Registry implementations support tenant-level schema isolation for multi-organization data sharing scenarios.
 
-## Compatibility Contract Evolution Rules
+</div></details></div><div class="section-harvester" data-section="key_findings" style="--section-color:#a5b4fc"><details class="section-collapse" open><summary class="section-summary"><h2 id="compatibility-contract-evolution-rules">Compatibility Contract Evolution Rules</h2></summary><div class="section-body">
 
 Schema registries implement three compatibility modes that define how schema revisions can evolve:
 
-### Backward Compatibility (Default)
+<h3 id="backward-compatibility-default">Backward Compatibility (Default)</h3><strong>Definition:</strong> New schemas can read data written by older schemas. Consumers using the latest schema can process data produced by any previous schema version.
 
-**Definition:** New schemas can read data written by older schemas. Consumers using the latest schema can process data produced by any previous schema version.
-
-**Allowed Changes:**
+<strong>Allowed Changes:</strong>
 - Add fields with default values
 - Add new enum values (with defaults for existing consumers)
 - Add new union types (as the last element)
 
-**Prohibited Changes:**
+<strong>Prohibited Changes:</strong>
 - Remove fields (consumers expect them)
 - Change field types (data corruption risk)
 - Remove enum values (invalid data)
 
-**Example:**
-```json
-// v1 schema - producer writes
+<strong>Example:</strong><pre><code class="language-json">// v1 schema - producer writes
 {
  "type": "record",
  "name": "Transaction",
@@ -190,52 +328,40 @@ Schema registries implement three compatibility modes that define how schema rev
  {"name": "timestamp", "type": "long", "default": 0}
  ]
 }
-```
+</code></pre><h3 id="forward-compatibility">Forward Compatibility</h3><strong>Definition:</strong> Old schemas can read data written by newer schemas. Consumers using older schemas can process data produced by newer versions.
 
-### Forward Compatibility
-
-**Definition:** Old schemas can read data written by newer schemas. Consumers using older schemas can process data produced by newer versions.
-
-**Allowed Changes:**
+<strong>Allowed Changes:</strong>
 - Remove fields (consumers ignore them)
 - Add fields with defaults (consumers use defaults)
 - Remove enum values (consumers don't know about them)
 
-**Prohibited Changes:**
+<strong>Prohibited Changes:</strong>
 - Change field types (data corruption)
 - Add required fields without defaults (consumers don't know about them)
 
-**Use Case:** Gradual consumer upgrades where new data must be readable by legacy consumers during transition.
+<strong>Use Case:</strong> Gradual consumer upgrades where new data must be readable by legacy consumers during transition.
 
-### Full Compatibility (Bidirectional)
+<h3 id="full-compatibility-bidirectional">Full Compatibility (Bidirectional)</h3><strong>Definition:</strong> Combines backward and forward compatibility. New and old schemas can read each other's data.
 
-**Definition:** Combines backward and forward compatibility. New and old schemas can read each other's data.
-
-**Allowed Changes:**
+<strong>Allowed Changes:</strong>
 - Add fields with defaults (backward: consumers get defaults, forward: producers write defaults)
 - Remove fields with defaults (backward: producers write defaults, forward: consumers ignore)
 - Add/remove enum values with proper defaults
 
-**Prohibited Changes:**
+<strong>Prohibited Changes:</strong>
 - Any field type changes
 - Adding required fields
 - Removing required fields
 
-**Trade-off:** More restrictive than backward-only, but enables true bidirectional communication.
+<strong>Trade-off:</strong> More restrictive than backward-only, but enables true bidirectional communication.
 
-## Serialization Format Comparison
-
-### Apache Avro
-
-**Characteristics:**
+</div></details></div><div class="section-harvester" data-section="applied_scenario" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="serialization-format-comparison">Serialization Format Comparison</h2></summary><div class="section-body"><h3 id="apache-avro">Apache Avro</h3><strong>Characteristics:</strong>
 - Schema embedded in data files (self-describing)
 - Binary format with compact representation
 - Dynamic typing (schema not required at runtime)
 - Strong ecosystem in Apache ecosystem (Kafka, Hadoop, Flink)
 
-**Schema Definition (.avsc):**
-```json
-{
+<strong>Schema Definition (.avsc):</strong><pre><code class="language-json">{
  "type": "record",
  "name": "AMLTransaction",
  "namespace": "com.acaciafund.aml",
@@ -265,11 +391,7 @@ Schema registries implement three compatibility modes that define how schema rev
  }
  ]
 }
-```
-
-**Serialization Example (Python):**
-```python
-from avro.schema import Schema from avro.datafile import DataFileReader, DataFileWriter
+</code></pre><strong>Serialization Example (Python):</strong><pre><code class="language-python">from avro.schema import Schema from avro.datafile import DataFileReader, DataFileWriter
 from avro.io import DatumReader, DatumWriter
 import json
 
@@ -294,19 +416,13 @@ dfr = DataFileReader(open('transactions.avro', 'rb'), reader)
 for record in dfr:
  print(record)
 dfr.close()
-```
-
-### Google Protobuf
-
-**Characteristics:**
+</code></pre><h3 id="google-protobuf">Google Protobuf</h3><strong>Characteristics:</strong>
 - Schema defined in `.proto` files (separate from data)
 - Binary format with field number-based encoding
 - Static typing (schema required for code generation)
 - Language-specific code generation (Java, Go, Python, C++)
 
-**Schema Definition (.proto):**
-```protobuf
-syntax = "proto3";
+<strong>Schema Definition (.proto):</strong><pre><code class="language-protobuf">syntax = "proto3";
 
 package acaciafund.aml;
 
@@ -330,11 +446,7 @@ enum TransactionFlag {
  REVIEWED = 2;
  BLOCKED = 3;
 }
-```
-
-**Code Generation and Usage:**
-```bash
-# Generate Python code from .proto
+</code></pre><strong>Code Generation and Usage:</strong><pre><code class="language-bash"># Generate Python code from .proto
 protoc --python_out=. aml_transaction.proto
 
 # Use generated code
@@ -358,19 +470,13 @@ serialized = txn.SerializeToString()
 # Deserialize
 txn2 = AMLTransaction()
 txn2.ParseFromString(serialized)
-```
-
-### JSON Schema
-
-**Characteristics:**
+</code></pre><h3 id="json-schema">JSON Schema</h3><strong>Characteristics:</strong>
 - Text-based (human-readable)
 - Schema separate from data
 - Weak typing (runtime validation)
 - Native browser support, web API standard
 
-**Schema Definition:**
-```json
-{
+<strong>Schema Definition:</strong><pre><code class="language-json">{
  "$schema": "http://json-schema.org/draft-07/schema#",
  "title": "AMLTransaction",
  "type": "object",
@@ -393,41 +499,34 @@ txn2.ParseFromString(serialized)
  }
  }
 }
-```
-
-## Compatibility Contract Transition Matrix
+</code></pre></div></details></div><div class="section-harvester" data-section="source_analysis" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="compatibility-contract-transition-matrix">Compatibility Contract Transition Matrix</h2></summary><div class="section-body">
 
 When producers deploy schema revisions, the compatibility mode determines which consumer versions can process the new data:
 
 | Producer → Consumer | v1 Consumer | v2 Consumer |
 |---------------------|-------------|-------------|
-| **v1 Schema** | Compatible | Compatible |
-| **v2 Schema (Backward Compatible)** | ️ Requires default values | Compatible |
-| **v2 Schema (Breaking Change)** | Data corruption | Compatible |
+| <strong>v1 Schema</strong> | Compatible | Compatible |
+| <strong>v2 Schema (Backward Compatible)</strong> | ️ Requires default values | Compatible |
+| <strong>v2 Schema (Breaking Change)</strong> | Data corruption | Compatible |
 
-### Deployment Strategy
-
-**Step 1: Deploy new producer with backward-compatible schema**
+<h3 id="deployment-strategy">Deployment Strategy</h3><strong>Step 1: Deploy new producer with backward-compatible schema</strong>
 - Producer writes v2 schema
 - v1 consumers receive v2 data with new fields (use defaults)
 - v2 consumers receive v2 data (full compatibility)
 
-**Step 2: Gradually upgrade consumers**
+<strong>Step 2: Gradually upgrade consumers</strong>
 - v1 consumers update to v2 schema readers
 - Once all consumers are v2, v1 schema support can be deprecated
 
-**Step 3: Remove legacy schema support**
+<strong>Step 3: Remove legacy schema support</strong>
 - All consumers on v2 schema
 - v1 schema can be safely removed from registry
 
-## Multi-Tenant Registry Deployment
+</div></details></div><div class="section-harvester" data-section="domain_breakdown" style="--section-color:#818cf8"><details class="section-collapse" open><summary class="section-summary"><h2 id="multi-tenant-registry-deployment">Multi-Tenant Registry Deployment</h2></summary><div class="section-body">
 
 For organizations sharing data across business units or external partners, schema registries support tenant isolation:
 
-### Confluent Schema Registry Tenancy
-
-```bash
-# Tenant-specific registry endpoints
+<h3 id="confluent-schema-registry-tenancy">Confluent Schema Registry Tenancy</h3><pre><code class="language-bash"># Tenant-specific registry endpoints
 kafka-schema-registry --tenant=finance --port=8081
 kafka-schema-registry --tenant=marketing --port=8082
 
@@ -435,14 +534,11 @@ kafka-schema-registry --tenant=marketing --port=8082
 curl -X POST -H "Content-Type: application/vnd.schemaregistry.v1+json" \
  --data '{"schema": "{\"type\":\"record\",\"name\":\"Transaction\",\"fields\":[{\"name\":\"id\",\"type\":\"string\"}]}"}' \
  http://localhost:8081/tenants/finance/subjects/transaction-value/versions
-```
-
-### Apicurio Multi-Tenant Architecture
+</code></pre><h3 id="apicurio-multi-tenant-architecture">Apicurio Multi-Tenant Architecture</h3>
 
 Apicurio uses Kubernetes namespaces for tenant isolation:
 
-```yaml
-# Tenant A namespace
+<pre><code class="language-yaml"># Tenant A namespace
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -457,18 +553,15 @@ metadata:
  name: tenant-b
  labels:
  tenant: tenant-b
-```
+</code></pre>
 
 Each namespace runs an independent Apicurio instance with isolated schema repositories.
 
-## CI/CD Integration for Schema Validation
+</div></details></div><div class="section-harvester" data-section="cross_pillar" style="--section-color:#a5b4fc"><details class="section-collapse" open><summary class="section-summary"><h2 id="ci-cd-integration-for-schema-validation">CI/CD Integration for Schema Validation</h2></summary><div class="section-body">
 
 Schema evolution should be validated in CI/CD pipelines before deployment:
 
-### GitHub Actions Workflow
-
-```yaml
-name: Schema Validation
+<h3 id="github-actions-workflow">GitHub Actions Workflow</h3><pre><code class="language-yaml">name: Schema Validation
 
 on:
  push:
@@ -498,12 +591,7 @@ jobs:
  # Compare against latest schema in registry
  curl -s http://localhost:8081/subjects/transaction-value/versions/latest/schema > latest.avsc
  python3 scripts/check_compatibility.py latest.avsc schemas/transaction.avsc
-```
-
-### Schema Compatibility Check Script
-
-```python
-#!/usr/bin/env python3
+</code></pre><h3 id="schema-compatibility-check-script">Schema Compatibility Check Script</h3><pre><code class="language-python">#!/usr/bin/env python3
 """Check schema compatibility between old and new schemas."""
 
 import json
@@ -556,11 +644,7 @@ if __name__ == "__main__":
  else:
  print(" Schemas are NOT backward compatible")
  sys.exit(1)
-```
-
-## Performance Considerations
-
-### Schema Registry Performance
+</code></pre></div></details></div><div class="section-harvester" data-section="methodology" style="--section-color:#818cf8"><details class="section-collapse" open><summary class="section-summary"><h2 id="performance-considerations">Performance Considerations</h2></summary><div class="section-body"><h3 id="schema-registry-performance">Schema Registry Performance</h3>
 
 | Operation | Latency (p50) | Latency (p99) | Throughput |
 |-----------|---------------|---------------|------------|
@@ -569,29 +653,27 @@ if __name__ == "__main__":
 | Avro serialization | 0.1ms | 0.5ms | 50,000 records/s |
 | Protobuf serialization | 0.05ms | 0.3ms | 100,000 records/s |
 
-### Optimization Strategies
+<h3 id="optimization-strategies">Optimization Strategies</h3>
 
-1. **Schema Caching:** Cache schemas locally on producer/consumer to avoid registry lookups
-2. **Schema ID Compression:** Use 4-byte schema IDs instead of full schema strings
-3. **Batch Validation:** Validate schema compatibility in CI, not at runtime
-4. **Async Registration:** Register schemas asynchronously during deployment, not during data production
+1. <strong>Schema Caching:</strong> Cache schemas locally on producer/consumer to avoid registry lookups
+2. <strong>Schema ID Compression:</strong> Use 4-byte schema IDs instead of full schema strings
+3. <strong>Batch Validation:</strong> Validate schema compatibility in CI, not at runtime
+4. <strong>Async Registration:</strong> Register schemas asynchronously during deployment, not during data production
 
-## Security Considerations
+</div></details></div><div class="section-harvester" data-section="overview" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="security-considerations">Security Considerations</h2></summary><div class="section-body"><h3 id="schema-registry-access-control">Schema Registry Access Control</h3>
 
-### Schema Registry Access Control
+- <strong>Authentication:</strong> Require OAuth2 tokens for schema registration
+- <strong>Authorization:</strong> Role-based access control (reader, writer, admin)
+- <strong>Audit Logging:</strong> Log all schema changes with user and timestamp
 
-- **Authentication:** Require OAuth2 tokens for schema registration
-- **Authorization:** Role-based access control (reader, writer, admin)
-- **Audit Logging:** Log all schema changes with user and timestamp
-
-### Schema Sanitization
+<h3 id="schema-sanitization">Schema Sanitization</h3>
 
 - Validate schema syntax before registration
 - Reject schemas with circular references
 - Limit schema size (max 1MB)
 - Prevent injection of malicious field names
 
-## Deployment Checklist
+</div></details></div><div class="section-harvester" data-section="overview" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="deployment-checklist">Deployment Checklist</h2></summary><div class="section-body">
 
 - [ ] Define compatibility mode (backward, forward, full)
 - [ ] Create CI/CD pipeline for schema validation
@@ -602,7 +684,7 @@ if __name__ == "__main__":
 - [ ] Test schema evolution with sample data
 - [ ] Document schema evolution policy for team
 
-## Conclusion
+</div></details></div><div class="section-harvester" data-section="overview" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="conclusion">Conclusion</h2></summary><div class="section-body">
 
 Schema registries provide essential infrastructure for modern data engineering pipelines. By enforcing data contracts and enabling controlled schema evolution, they prevent breaking changes from propagating through distributed systems. The choice between Avro, Protobuf, and JSON Schema depends on your performance requirements, language ecosystem, and team expertise.
 
@@ -612,7 +694,7 @@ CI/CD integration ensures schema changes are validated before deployment, preven
 
 ---
 
-**References:**
+<strong>References:</strong>
 
 1. Confluent Schema Registry Documentation — https://docs.confluent.io/platform/current/schema-registry/
 2. Apache Avro Specification — https://avro.apache.org/docs/current/spec.html
@@ -620,9 +702,9 @@ CI/CD integration ensures schema changes are validated before deployment, preven
 4. JSON Schema Specification — https://json-schema.org/draft-07/json-schema-release.html
 5. Schema Evolution in Apache Avro — https://avro.apache.org/docs/current/spec.html#Schema+Evolution
 
-**Signal Quality Index:** 0.83 
-**Sources:** 12 (4 industry, 3 academic, 3 regulatory, 2 community) 
-**Last Updated:** 2026-06-15
+<strong>Signal Quality Index:</strong> 0.83 
+<strong>Sources:</strong> 12 (4 industry, 3 academic, 3 regulatory, 2 community) 
+<strong>Last Updated:</strong> 2026-06-15</div></details></div>
     </div>
     <section class="mt-12 pt-8 border-t">
       <h2 class="text-2xl font-bold  mb-4">Bloom Taxonomy Questions</h2>
@@ -685,6 +767,99 @@ CI/CD integration ensures schema changes are validated before deployment, preven
         </div>
       </div>
     </section>
+    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
+      <h2 class="text-2xl font-bold mb-6 inline-flex items-center gap-2" style="color:var(--color-text)">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+        Flashcards
+      </h2>
+      <div class="grid gap-4 sm:grid-cols-2" id="flashcard-grid">
+        <div class="ghost-card cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Signal Quality Index" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Signal Quality Index</span>
+              </div>
+              <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
+            </div>
+            <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);color:#fff">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm">Composite metric measuring source authority, freshness, consensus, and relevance of synthesized content.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ghost-card cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Bloom Taxonomy" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Bloom Taxonomy</span>
+              </div>
+              <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
+            </div>
+            <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);color:#fff">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm">Classification system for levels of intellectual behavior in learning: remember, understand, apply, analyze, evaluate, create.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ghost-card cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Schema Registry Patterns" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Schema Registry Patterns</span>
+              </div>
+              <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
+            </div>
+            <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);color:#fff">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm">Schema registry architectures with Confluent Schema Registry and Apicurio: schema evolution rules, compatibility checkin...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ghost-card cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Software-Defined Asset" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Software-Defined Asset</span>
+              </div>
+              <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
+            </div>
+            <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);color:#fff">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm">A Dagster concept: data asset with lineage, partitioning, and freshness declared in code.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ghost-card cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Change Data Capture" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Change Data Capture</span>
+              </div>
+              <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
+            </div>
+            <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);color:#fff">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm">Capturing database row-level changes from transaction logs for real-time replication.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
     <section class="mt-12 pt-8 border-t">
       <h2 class="text-2xl font-bold  mb-4">Signal Analysis</h2>
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
@@ -733,7 +908,8 @@ CI/CD integration ensures schema changes are validated before deployment, preven
               <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">Feature Engineering at Scale: Building ML-Ready Market Data Pipelines with dbt and Iceberg</h3>
               <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">Production feature engineering pipelines for quantitative finance: transforming raw tick data into ML-ready feature sets using dbt for SQL transformations, Iceberg for time-travel access, and Dagster for asset orchestration.</p>
               <div class="mt-2 flex flex-wrap gap-1">
-                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Suspicious Transaction Report</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Apache Iceberg</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">DataOps</span>
               </div>
             </div>
           </div>
@@ -749,7 +925,8 @@ CI/CD integration ensures schema changes are validated before deployment, preven
               <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">Streaming ETL for Suspicious Activity Reports: Real-Time AML Data Pipelines with Kafka and Flink</h3>
               <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">Architecture patterns for building real-time AML surveillance data pipelines using Apache Kafka for transaction ingestion, Flink for stream processing, and Iceberg for immutable audit storage — with DataOps quality gates at every stage.</p>
               <div class="mt-2 flex flex-wrap gap-1">
-                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Suspicious Transaction Report</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Apache Iceberg</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">DataOps</span>
               </div>
             </div>
           </div>
@@ -765,7 +942,7 @@ CI/CD integration ensures schema changes are validated before deployment, preven
               <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">Real-Time Data Engineering for Algorithmic Trading: From Tick Data to Execution Signals</h3>
               <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">Production-grade data pipelines for algorithmic trading systems: handling market data at microsecond latency, feature engineering stream processing, backtesting infrastructure, and DataOps orchestration.</p>
               <div class="mt-2 flex flex-wrap gap-1">
-                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Suspicious Transaction Report</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">DataOps</span>
               </div>
             </div>
           </div>
@@ -781,7 +958,7 @@ CI/CD integration ensures schema changes are validated before deployment, preven
               <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">Data Pipeline Observability in Financial Crime Compliance: Real-Time AML Monitoring at Scale</h3>
               <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">How DataOps practices including pipeline observability, data quality monitoring, and automated lineage tracking are transforming anti-money laundering transaction monitoring systems at major financial institutions.</p>
               <div class="mt-2 flex flex-wrap gap-1">
-                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Suspicious Transaction Report</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">DataOps</span>
               </div>
             </div>
           </div>
@@ -794,14 +971,18 @@ CI/CD integration ensures schema changes are validated before deployment, preven
         Ontology Concepts
       </h2>
       <div class="flex flex-wrap gap-2">
-        <span class="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
+        <a href="/concepts/schema-registry/" class="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full no-underline" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);text-decoration:none">
           Schema Registry
           <span class="opacity-60 text-[10px]">1.0</span>
-        </span>
-        <span class="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
-          Suspicious Transaction Report
+        </a>
+        <a href="/concepts/dataops/" class="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full no-underline" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);text-decoration:none">
+          DataOps
+          <span class="opacity-60 text-[10px]">1.0</span>
+        </a>
+        <a href="/concepts/apache-iceberg/" class="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full no-underline" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);text-decoration:none">
+          Apache Iceberg
           <span class="opacity-60 text-[10px]">0.9</span>
-        </span>
+        </a>
       </div>
     </section>
     <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
@@ -946,7 +1127,7 @@ CI/CD integration ensures schema changes are validated before deployment, preven
               
               <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
   Data Engineering
-</span>
+</span><span class="text-xs ml-1" style="color:var(--color-text-muted)">Beginner</span>
               <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Understanding Data Pipeline Orchestration</span>
              <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-07-10</span>
            </div>
@@ -959,7 +1140,7 @@ CI/CD integration ensures schema changes are validated before deployment, preven
               
               <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
   Data Engineering
-</span>
+</span><span class="text-xs ml-1" style="color:var(--color-text-muted)">Beginner</span>
               <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Real-Time Streaming Architectures</span>
              <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-07-10</span>
            </div>
@@ -972,7 +1153,7 @@ CI/CD integration ensures schema changes are validated before deployment, preven
               
               <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
   Data Engineering
-</span>
+</span><span class="text-xs ml-1" style="color:var(--color-text-muted)">Beginner</span>
               <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Schema Evolution Strategies</span>
              <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-07-10</span>
            </div>
@@ -998,7 +1179,7 @@ CI/CD integration ensures schema changes are validated before deployment, preven
       </div>
     </section>
 
-    <script src="/static/js/learning_hub.d41d8cd9.js" defer></script>
+    <script src="/static/js/learning_hub.534fa53c.js" defer></script>
 
 <div class="newsletter-signup" style="background:var(--color-bg);border:1px solid var(--color-border);padding:2rem;border-radius:8px;text-align:center">
   <h3 style="color:var(--color-text)">Stay Updated</h3>
@@ -1017,6 +1198,6 @@ CI/CD integration ensures schema changes are validated before deployment, preven
         <small>&copy; 2026 AcaciaFund &middot; Generated by the Acacia pipeline.</small>
     </footer>
 
-    <script src="/static/js/main.d41d8cd9.js"></script>
+
 </body>
 </html>

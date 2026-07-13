@@ -1,6 +1,4 @@
-<span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
-  AML
-</span><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
@@ -14,7 +12,7 @@
 
 
     <script type="application/ld+json">
-{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "data-engineering"}, "author": {"@type": "Person", "name": "Leszek"}, "dateModified": "2026-07-06T18:02:57Z", "datePublished": "2026-06-12T08:39:15.408286+00:00", "description": "Master the full lifecycle of data platform design: requirements gathering, architecture methodology, a fintech case study, data mesh decentralization, open source vs managed decision framework, budget-friendly stacks, and evolving a platform into a data product.", "headline": "Designing a Production Data Platform: From Requirements to Architecture", "inLanguage": "en", "keywords": "manufacturing, data-architecture", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/data/learn/designing-data-platform/", "@type": "WebPage"}, "proficiencyLevel": "advanced", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-10T06:39:40Z", "signalQualityIndex": 0.941, "sqi": 0.941}
+{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "data-engineering"}, "author": {"@type": "Person", "name": "Leszek"}, "dateModified": "2026-07-06T18:02:57Z", "datePublished": "2026-06-12T08:39:15.408286+00:00", "description": "Master the full lifecycle of data platform design: requirements gathering, architecture methodology, a fintech case study, data mesh decentralization, open source vs managed decision framework, budget-friendly stacks, and evolving a platform into a data product.", "headline": "Designing a Production Data Platform: From Requirements to Architecture", "inLanguage": "en", "keywords": "manufacturing, data-architecture, data mesh, dataops, regulatory compliance", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/data/learn/designing-data-platform/", "@type": "WebPage"}, "proficiencyLevel": "advanced", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-10T06:39:40Z", "signalQualityIndex": 0.941, "sqi": 0.941}
     </script>
 
 
@@ -34,6 +32,8 @@
                 <li><a href="/compliance/">Compliance</a></li>
                 <li><a href="/markets/">Markets</a></li>
                 <li><a href="/data/">Data</a></li>
+                <li><a href="/review/">Review</a></li>
+                <li><a href="/search/">Search</a></li>
             </ul>
         </nav>
     </header>
@@ -123,12 +123,30 @@
       <div style="display: flex; flex-wrap: wrap; gap: 0.25rem; margin-top: var(--pico-spacing);">
         <a href="/tags/manufacturing/"><kbd>manufacturing</kbd></a>
         <a href="/tags/data-architecture/"><kbd>data-architecture</kbd></a>
+        <a href="/tags/data-mesh/"><kbd>data mesh</kbd></a>
+        <a href="/tags/dataops/"><kbd>dataops</kbd></a>
+        <a href="/tags/regulatory-compliance/"><kbd>regulatory compliance</kbd></a>
       </div>
       <div class="mt-3 flex flex-wrap gap-1.5">
-        <span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
+        <a href="/concepts/data-mesh/" class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full no-underline" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);text-decoration:none">
           <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
-          Suspicious Transaction Report
-        </span>
+          Data Mesh
+        </a>
+        <a href="/concepts/dataops/" class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full no-underline" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);text-decoration:none">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+          DataOps
+        </a>
+        <a href="/concepts/regulatory-compliance/" class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full no-underline" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);text-decoration:none">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+          Regulatory Compliance
+        </a>
+        <a href="/concepts/machine-learning/" class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full no-underline" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);text-decoration:none">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+          Machine Learning
+        </a>
+      </div>
+      <div class="mt-2">
+        <span class="sqi-badge">SQI 0.941</span>
       </div>
     </header>
 
@@ -143,40 +161,56 @@
       <div id="quiz-summary" class="mt-6 p-4 rounded-lg hidden" style="background:var(--color-surface);border:1px solid var(--color-border)"></div>
       <button id="quiz-retry" class="mt-3 hidden px-4 py-2 text-sm font-semibold rounded-lg transition hover:opacity-80" style="background:var(--color-accent);color:#fff">Retry Quiz</button>
     </section>
-    <section class="mt-12 pt-8 border-t">
-      <h2 class="text-2xl font-bold mb-4">Bloom Taxonomy Questions</h2>
-      <div class="space-y-4">
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">Your organization has 3 data engineers, 5 analysts, and a tight budget. They need real-time dashboards and daily ML model retraining. Which architecture would you design?</p>
-        </div>
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">A company grows from 1 to 8 domain teams. The centralized data team is a bottleneck. Which architectural change should you design first?</p>
-        </div>
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">You need to design a data platform for a healthcare startup subject to HIPAA. The team has strong Python/SQL skills but no Kubernetes experience. What stack would you recommend?</p>
-        </div>
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">Your current platform costs $50K/month in Snowflake compute. Queries scan full tables daily. You need to reduce costs without degrading analyst experience. Which design change has the highest impact?</p>
-        </div>
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">You are designing a data catalog and discovery layer for 200+ datasets across 8 teams. Which approach would you choose?</p>
-        </div>
+    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
+      <h2 class="text-2xl font-bold mb-6 inline-flex items-center gap-2" style="color:var(--color-text)">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+        Flashcards
+      </h2>
+      <p class="text-xs mb-4" style="color:var(--color-text-muted)">Space = flip &middot; 1-4 = grade &middot; Swipe on mobile</p>
+      <div class="grid gap-4 sm:grid-cols-2" id="flashcard-grid">
+        <acacia-flashcard
+          data-term="Data Mesh"
+          data-definition="A decentralized architecture where domain teams own their data as products, with a shared infrastructure layer for cross-domain interoperability."
+          data-card-id="data/learn/designing-data-platform/#0"></acacia-flashcard>
+        <acacia-flashcard
+          data-term="Medallion Architecture"
+          data-definition="A data organization pattern with Bronze (raw), Silver (cleaned), and Gold (aggregated) layers, each enforcing increasing data quality."
+          data-card-id="data/learn/designing-data-platform/#1"></acacia-flashcard>
+        <acacia-flashcard
+          data-term="Data as a Product"
+          data-definition="Treating datasets as well-documented, versioned, discoverable products with SLOs, owners, and consumer SLAs."
+          data-card-id="data/learn/designing-data-platform/#2"></acacia-flashcard>
+        <acacia-flashcard
+          data-term="Time-to-Insight"
+          data-definition="The time from asking a business question to getting a trusted data answer. The ultimate measure of data platform effectiveness."
+          data-card-id="data/learn/designing-data-platform/#3"></acacia-flashcard>
+        <acacia-flashcard
+          data-term="dbt Mesh"
+          data-definition="A decentralized dbt architecture allowing domain teams to own separate projects while sharing cross-project references via a public model API."
+          data-card-id="data/learn/designing-data-platform/#4"></acacia-flashcard>
+        <acacia-flashcard
+          data-term="Self-Serve Infrastructure"
+          data-definition="A shared platform providing storage, compute, catalog, lineage, and access control tools that domain teams use to build and serve data products."
+          data-card-id="data/learn/designing-data-platform/#5"></acacia-flashcard>
+        <acacia-flashcard
+          data-term="Federated Governance"
+          data-definition="Global data standards defined centrally but enforced locally by domain teams within their data product boundaries."
+          data-card-id="data/learn/designing-data-platform/#6"></acacia-flashcard>
       </div>
+    </section>
+    <div class="mt-8 text-center">
+      <button id="mark-complete-btn" data-track-lesson="data/learn/designing-data-platform/" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition" style="background:var(--color-accent);color:#fff">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+        <span id="complete-btn-text">Mark Complete</span>
+      </button>
+    </div>
+    <section class="mt-12 pt-8 border-t" id="quiz-section" data-quiz='{"questions": [{"q": "Your organization has 3 data engineers, 5 analysts, and a tight budget. They need real-time dashboards and daily ML model retraining. Which architecture would you design?", "options": ["Full data mesh with domain-owned infrastructure", "Hybrid medallion architecture with Dagster orchestrating batch dbt + streaming Flink, using Iceberg on S3", "Lambda architecture with separate batch and stream codebases", "Enterprise Snowflake + Fivetran + DataRobot managed stack"], "a": 1, "type": "mc"}, {"q": "A company grows from 1 to 8 domain teams. The centralized data team is a bottleneck. Which architectural change should you design first?", "options": ["Migrate everyone to a single Snowflake instance", "Adopt data mesh principles: domain-owned data products with shared infrastructure layer", "Hire more data engineers for the central team", "Move all data to a data lake"], "a": 1, "type": "mc"}, {"q": "You need to design a data platform for a healthcare startup subject to HIPAA. The team has strong Python/SQL skills but no Kubernetes experience. What stack would you recommend?", "options": ["Self-managed Kafka + Spark on K8s", "Managed Snowflake + dbt Cloud + Dagster+ with HIPAA-compliant configuration", "Open source stack with MinIO + Spark on bare metal", "Apache Hadoop + Hive cluster"], "a": 1, "type": "mc"}, {"q": "Your current platform costs $50K/month in Snowflake compute. Queries scan full tables daily. You need to reduce costs without degrading analyst experience. Which design change has the highest impact?", "options": ["Migrate to Redshift", "Implement Iceberg partitioning + incremental dbt models + materialized views for common queries", "Reduce data retention from 7 years to 30 days", "Limit each analyst to 10 queries per day"], "a": 1, "type": "mc"}, {"q": "You are designing a data catalog and discovery layer for 200+ datasets across 8 teams. Which approach would you choose?", "options": ["A shared spreadsheet maintained by the data team", "DataHub or Amundsen with automated ingestion from dbt + OpenLineage, and domain-owner maintained descriptions", "A wiki page per dataset", "Snowflake's built-in information schema"], "a": 1, "type": "mc"}]}' data-quiz-lesson="data/learn/designing-data-platform/">
+      <h2 class="text-2xl font-bold mb-4" style="color:var(--color-text)">Knowledge Check</h2>
+      <p class="text-sm mb-4" style="color:var(--color-text-muted)">Test your understanding of this lesson.</p>
+      <div id="quiz-score" class="mb-4 text-sm font-semibold" style="color:var(--color-text-secondary)"></div>
+      <div id="quiz-container"></div>
+      <div id="quiz-summary" class="mt-6 p-4 rounded-lg hidden" style="background:var(--color-surface);border:1px solid var(--color-border)"></div>
+      <button id="quiz-retry" class="mt-3 hidden px-4 py-2 text-sm font-semibold rounded-lg transition hover:opacity-80" style="background:var(--color-accent);color:#fff">Retry Quiz</button>
     </section>
     <section class="mt-12 pt-8 border-t">
       <h2 class="text-2xl font-bold mb-6">Related Research</h2>
@@ -201,14 +235,14 @@
             <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-14</span>
           </div>
         </a>
-        <a href="https://www.acaciafund.org/data/research/data-mesh-implementation/" class="ghost-card block text-decoration:none">
+        <a href="https://www.acaciafund.org/data/research/feature-store-feast-vs-tecton/" class="ghost-card block text-decoration:none">
           <div class="p-3">
             
             <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
   Data Engineering
 </span>
-            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Data Mesh in Practice: Implementing Domain Ownership Without Chaos</span>
-            <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-13</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Feature Stores at Scale: Feast vs Tecton in Production Deployments</span>
+            <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-10</span>
           </div>
         </a>
       </div>
@@ -216,6 +250,16 @@
     <section class="mt-12 pt-8 border-t">
       <h2 class="text-2xl font-bold mb-6">Related Knowledge</h2>
       <div class="grid gap-4 sm:grid-cols-3">
+        <a href="https://www.acaciafund.org/knowledge/research-methodology/" class="ghost-card block text-decoration:none">
+          <div class="p-3">
+            
+            <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Research Methodology</span>
+            <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-08</span>
+          </div>
+        </a>
         <a href="https://www.acaciafund.org/knowledge/dataops-trends-2026/" class="ghost-card block text-decoration:none">
           <div class="p-3">
             
@@ -226,23 +270,13 @@
             <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-07</span>
           </div>
         </a>
-        <a href="https://www.acaciafund.org/knowledge/dataops-glossary/" class="ghost-card block text-decoration:none">
+        <a href="https://www.acaciafund.org/knowledge/system-architecture/" class="ghost-card block text-decoration:none">
           <div class="p-3">
             
             <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
   Data Engineering
 </span>
-            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">DataOps Glossary</span>
-            <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-08</span>
-          </div>
-        </a>
-        <a href="https://www.acaciafund.org/knowledge/open-source-tools/" class="ghost-card block text-decoration:none">
-          <div class="p-3">
-            
-            <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
-  Data Engineering
-</span>
-            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Open Source Data Engineering Tool Landscape</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">AcaciaFund System Architecture: A DataOps Perspective</span>
             <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-08</span>
           </div>
         </a>
@@ -253,15 +287,15 @@
         <span class="text-xs" style="color:var(--color-text-muted)">&larr; Previous Lesson</span>
         <span class="block text-sm font-medium group-hover:text-blue-600 truncate">Trade-Based Money Laundering & Sanctions — The $2 Trillion Blind Spot</span>
       </a>
-      <a href="https://www.acaciafund.org/markets/learn/behavioral-finance-portfolio/" class="ghost-card group block p-3 text-decoration:none">
+      <a href="https://www.acaciafund.org/data/learn/learning-hub/" class="ghost-card group block p-3 text-decoration:none">
         <span class="text-xs" style="color:var(--color-text-muted)">Next Lesson &rarr;</span>
-        <span class="block text-sm font-medium group-hover:text-blue-600 truncate">Behavioral Finance & Portfolio Theory — Mind, Market, and Money</span>
+        <span class="block text-sm font-medium group-hover:text-blue-600 truncate">Learning Hub</span>
       </a>
     </nav>
   </article>
 </div>
 
-<script src="/static/js/learning_hub.d41d8cd9.js" defer></script>
+<script src="/static/js/learning_hub.534fa53c.js" defer></script>
 <div class="newsletter-signup" style="background:var(--color-bg);border:1px solid var(--color-border);padding:2rem;border-radius:8px;text-align:center">
   <h3 style="color:var(--color-text)">Stay Updated</h3>
   <p style="color:var(--color-text-muted)">Get the latest research summaries delivered to your inbox.</p>
@@ -278,6 +312,6 @@
         <small>&copy; 2026 AcaciaFund &middot; Generated by the Acacia pipeline.</small>
     </footer>
 
-    <script src="/static/js/main.d41d8cd9.js"></script>
+
 </body>
 </html>

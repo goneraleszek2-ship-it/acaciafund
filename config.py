@@ -270,3 +270,19 @@ PILLAR_SUBCATEGORIES: dict[str, dict[str, dict[str, str]]] = {
         },
     },
 }
+
+# Mapping from knowledge categories (cross-pillar) to pillar-specific subcategories.
+# Used to resolve knowledge items to their relevant pillar taxonomy.
+KNOWLEDGE_TO_PILLAR_CATEGORY: dict[str, dict[str, str]] = {
+    "platform": {"aml": "regtech", "stock": "market-microstructure", "data-engineering": "platform-engineering"},
+    "guide": {"aml": "cdd-kyc", "stock": "trading-strategies", "data-engineering": "pipeline-architecture"},
+    "reference": {"aml": "regulations", "stock": "market-microstructure", "data-engineering": "data-governance"},
+    "architecture": {"aml": "network-analysis", "stock": "portfolio-construction", "data-engineering": "data-mesh-fabric"},
+    "foundations": {"aml": "risk-assessment", "stock": "market-microstructure", "data-engineering": "pipeline-architecture"},
+    "advanced-techniques": {"aml": "network-analysis", "stock": "quantitative-methods", "data-engineering": "streaming"},
+    "best-practices": {"aml": "regtech", "stock": "risk-management", "data-engineering": "data-quality"},
+    "regulations": {"aml": "regulations", "stock": "risk-management", "data-engineering": "data-governance"},
+    "industry-analysis": {"aml": "trade-based-ml", "stock": "industry-analysis", "data-engineering": "analytics-engineering"},
+    "market-analysis": {"aml": "financial-intelligence", "stock": "market-microstructure", "data-engineering": "analytics-engineering"},
+    "strategies": {"aml": "regtech", "stock": "trading-strategies", "data-engineering": "orchestration"},
+}

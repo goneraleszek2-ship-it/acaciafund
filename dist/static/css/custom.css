@@ -2223,8 +2223,8 @@ svg:not([class*="w-"]):not([class*="h-"]) {
   align-items: center;
   gap: 0.25rem;
   padding: 0.25rem 0.75rem;
-  background: var(--color-accent)15;
-  border: 1px solid var(--color-accent)30;
+  background: color-mix(in srgb, var(--color-accent) 15%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-accent) 30%, transparent);
   border-radius: 20px;
   font-size: clamp(0.625rem, 2vw, 0.75rem);
   font-weight: 600;
@@ -2362,9 +2362,9 @@ svg:not([class*="w-"]):not([class*="h-"]) {
   transition: all 0.15s;
 }
 .badge-accent {
-  background: var(--color-accent)15;
+  background: color-mix(in srgb, var(--color-accent) 15%, transparent);
   color: var(--color-accent);
-  border: 1px solid var(--color-accent)30;
+  border: 1px solid color-mix(in srgb, var(--color-accent) 30%, transparent);
 }
 .badge-pillar {
   background: var(--color-bg);
@@ -2420,7 +2420,7 @@ svg:not([class*="w-"]):not([class*="h-"]) {
   transition: all 0.15s;
 }
 .btn-text:hover {
-  background: var(--color-accent)10;
+  background: color-mix(in srgb, var(--color-accent) 10%, transparent);
 }
 
 /* Progress ring - elegant circular progress */
@@ -2504,11 +2504,11 @@ svg:not([class*="w-"]):not([class*="h-"]) {
   align-items: center;
   gap: 0.25rem;
   padding: 0.25rem 0.75rem;
-  background: var(--color-accent)15;
-  border: 1px solid var(--color-accent)30;
+  background: color-mix(in srgb, var(--color-accent) 15%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-accent) 30%, transparent);
   border-radius: 20px;
   font-size: 0.75rem;
   font-weight: 600;
   color: var(--color-accent);
   font-family: ui-monospace, 'SF Mono', 'Cascadia Code', 'JetBrains Mono', 'Consolas', monospace;
-}//
+}

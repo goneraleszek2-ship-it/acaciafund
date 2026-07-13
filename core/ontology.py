@@ -77,6 +77,18 @@ class ResourceLink(BaseModel):
         default_factory=lambda: datetime.now(timezone.utc).strftime("%Y-%m-%d")
     )
     license_info: str = ""
+    status: str = Field(
+        default="active",
+        description="Source health: active, degraded, archived",
+    )
+    last_verified: Optional[str] = Field(
+        default=None,
+        description="ISO date when source was last HTTP-verified as reachable",
+    )
+    http_status: Optional[int] = Field(
+        default=None,
+        description="Last observed HTTP status code (200, 404, etc.)",
+    )
 
     model_config = {"extra": "allow"}
 
@@ -91,6 +103,19 @@ class InspirationSource(BaseModel):
     description: str = ""
     last_fetched: Optional[str] = None
     enabled: bool = True
+    pillar: str = Field(default="", description="Owner pillar key")
+    status: str = Field(
+        default="active",
+        description="Source health: active, degraded, archived",
+    )
+    last_verified: Optional[str] = Field(
+        default=None,
+        description="ISO date when source was last HTTP-verified as reachable",
+    )
+    http_status: Optional[int] = Field(
+        default=None,
+        description="Last observed HTTP status code (200, 404, etc.)",
+    )
 
     model_config = {"extra": "allow"}
 
@@ -545,22 +570,23 @@ def extract_concepts_from_text(
     min_confidence: float = 0.5,
 ) -> List[Tuple[Concept, float]]:
     """Match text against known concepts (label + aliases). Returns (concept, confidence)."""
+    import re as _re
     if not text:
         return []
     text_lower = text.lower()
     seen: Dict[str, float] = {}
     for concept in manager._concepts.values():
-        # Check label
+        # Check label — use word-boundary matching to avoid substring false positives
         label = concept.label.lower()
-        if label in text_lower:
+        if _re.search(r'\b' + _re.escape(label) + r'\b', text_lower):
             score = concept.confidence_score
             if score >= min_confidence and concept.id not in seen:
                 seen[concept.id] = score
                 continue
-        # Check aliases
+        # Check aliases — use word-boundary matching
         for alias in concept.aliases:
             alias_lower = alias.lower()
-            if alias_lower in text_lower and alias_lower != label:
+            if _re.search(r'\b' + _re.escape(alias_lower) + r'\b', text_lower) and alias_lower != label:
                 score = concept.confidence_score * 0.9
                 if score >= min_confidence and concept.id not in seen:
                     seen[concept.id] = score

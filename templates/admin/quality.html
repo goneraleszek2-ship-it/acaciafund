@@ -1,13 +1,49 @@
-{% extends "layout.j2" %}
-{% block main_content %}
-<section class="admin-quality">
-  <h1>Quality Statistics</h1>
-  <div class="quality-stats">
-    <p>Total Scores: {{ stats_total_scores }}</p>
-    <p>Average Score: {{ stats_avg_score }}</p>
-    <p>Median Score: {{ stats_median_score }}</p>
-    <p>Above 70: {{ stats_above_70 }}</p>
-    <p>Below 40: {{ stats_below_40 }}</p>
+{% extends "admin/base.html" %}
+{% block admin_content %}
+<h1 style="margin-bottom:1.5rem">Quality Statistics</h1>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1rem;margin-bottom:2rem">
+  <div class="ghost-card p-4 text-center">
+    <div class="text-2xl font-bold" style="color:var(--color-accent)">{{ stats_total_scores }}</div>
+    <div class="text-xs" style="color:var(--color-text-muted)">Total Scores</div>
   </div>
-</section>
+  <div class="ghost-card p-4 text-center">
+    <div class="text-2xl font-bold" style="color:var(--color-accent)">{{ stats_avg_score }}</div>
+    <div class="text-xs" style="color:var(--color-text-muted)">Average</div>
+  </div>
+  <div class="ghost-card p-4 text-center">
+    <div class="text-2xl font-bold" style="color:var(--color-accent)">{{ stats_median_score }}</div>
+    <div class="text-xs" style="color:var(--color-text-muted)">Median</div>
+  </div>
+  <div class="ghost-card p-4 text-center">
+    <div class="text-2xl font-bold" style="color:#22c55e">{{ stats_above_70 }}</div>
+    <div class="text-xs" style="color:var(--color-text-muted)">&ge;70</div>
+  </div>
+  <div class="ghost-card p-4 text-center">
+    <div class="text-2xl font-bold" style="color:#ef4444">{{ stats_below_40 }}</div>
+    <div class="text-xs" style="color:var(--color-text-muted)">&lt;40</div>
+  </div>
+</div>
+
+{% if stats_type_avgs %}
+<h2 class="text-lg font-bold mb-3" style="color:var(--color-text)">By Content Type</h2>
+<div class="overflow-x-auto mb-6">
+  <table class="w-full text-xs" style="color:var(--color-text)">
+    <thead>
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <th class="text-left py-2 pr-4 font-semibold">Type</th>
+        <th class="text-right py-2 font-semibold">Avg Score</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for t, avg in stats_type_avgs.items() %}
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-semibold">{{ t }}</td>
+        <td class="py-1.5 text-right">{{ "%.2f"|format(avg) }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
 {% endblock %}

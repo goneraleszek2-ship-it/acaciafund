@@ -1,6 +1,4 @@
-<span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
-  AML
-</span><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
@@ -14,7 +12,7 @@
 
 
     <script type="application/ld+json">
-{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "data-engineering"}, "author": {"@type": "Person", "name": "Leszek"}, "citation": [{"@type": "Organization", "description": "1 references", "name": "arxiv"}], "dateModified": "2026-07-07T15:52:08Z", "datePublished": "2026-07-06", "description": "In this paper, we present a modular open radio access network (O-RAN) consisting of the 5G Core, a central (O-CU) and distributed unit (O-DU) by Software Radio Systems (SRS) and an O-RAN radio unit (O", "headline": "A Modular O-RAN Testbed Based on SRS Open Source O-CU/O-DU and Massive Beams Modular O-RU", "inLanguage": "en", "keywords": "dataops, distributed-systems", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/data/research/a-modular-o-ran-testbed-based-on-srs-open-source-o-cu-o-du-a/", "@type": "WebPage"}, "proficiencyLevel": "", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-10T06:39:40Z", "signalQualityIndex": 0.75, "sqi": 0.75}
+{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "data-engineering"}, "author": {"@type": "Person", "name": "Leszek"}, "citation": [{"@type": "Organization", "description": "1 references", "name": "arxiv"}], "dateModified": "2026-07-07T15:52:08Z", "datePublished": "2026-07-06", "description": "In this paper, we present a modular open radio access network (O-RAN) consisting of the 5G Core, a central (O-CU) and distributed unit (O-DU) by Software Radio Systems (SRS) and an O-RAN radio unit (O", "headline": "A Modular O-RAN Testbed Based on SRS Open Source O-CU/O-DU and Massive Beams Modular O-RU", "inLanguage": "en", "keywords": "dataops, distributed-systems", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/data/research/a-modular-o-ran-testbed-based-on-srs-open-source-o-cu-o-du-a/", "@type": "WebPage"}, "proficiencyLevel": "beginner", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-10T06:39:40Z", "signalQualityIndex": 0.75, "sqi": 0.75}
     </script>
 
 
@@ -34,6 +32,8 @@
                 <li><a href="/compliance/">Compliance</a></li>
                 <li><a href="/markets/">Markets</a></li>
                 <li><a href="/data/">Data</a></li>
+                <li><a href="/review/">Review</a></li>
+                <li><a href="/search/">Search</a></li>
             </ul>
         </nav>
     </header>
@@ -53,7 +53,44 @@
 
 <div id="reading-progress" style="position:fixed;top:0;left:0;height:3px;z-index:9999;width:0%;background:var(--color-accent)"></div>
 
-<div class="flex gap-8  flex-col">
+<div class="flex gap-8 md:flex-row flex-col">
+  <aside class="toc-sidebar shrink-0 order-last md:order-first md:sticky md:top-20 md:self-start md:max-h-[calc(100vh-6rem)] md:overflow-y-auto md:w-52">
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="text-xs font-semibold uppercase tracking-wide" style="color:var(--color-text-muted)">On this page</h2>
+      <button id="focus-toggle" class="text-xs px-2 py-1 rounded" style="color:var(--color-text-muted);background:var(--color-bg)" title="Focus mode" aria-label="Toggle focus mode">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 4h4M6 20h4M18 4h-4M18 20h-4M4 6v4M4 18v4M20 6v4M20 18v4"/></svg>
+      </button>
+    </div>
+    <nav aria-label="Table of contents">
+      <ul class="space-y-1 text-sm">
+        <li>
+          <a href="#overview" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Overview
+          </a>
+        </li>
+        <li>
+          <a href="#key-topics" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Key Topics
+          </a>
+        </li>
+        <li>
+          <a href="#content" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Content
+          </a>
+        </li>
+        <li>
+          <a href="#significance" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Significance
+          </a>
+        </li>
+        <li>
+          <a href="#further-reading" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Further Reading
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
 
   <article class="min-w-0 flex-1">
     <nav aria-label="Breadcrumb" class="mb-4 text-xs" style="color:var(--color-text-muted)">
@@ -87,7 +124,7 @@
       <div class="mt-2 flex items-center gap-2 text-sm" style="color:var(--color-text-muted)">
         <time datetime="2026-07-06">2026-07-06</time>
         <span aria-hidden="true">·</span>
-        <span>By Leszek <span style="color:var(--color-text-muted)">&middot; AML Specialist & Data Engineer</span></span> · 1 min read
+        <span>By Leszek <span style="color:var(--color-text-muted)">&middot; AML Specialist & Data Engineer</span></span> · 2 min read
       </div>
       <div style="display: flex; flex-wrap: wrap; gap: 0.25rem; margin-top: var(--pico-spacing);">
         <a href="/tags/dataops/"><kbd>dataops</kbd></a>
@@ -116,7 +153,7 @@
 
 
     <div class="prose prose-lg prose-blue max-w-none">
-      <p>In this paper, we present a modular open radio access network (O-RAN) consisting of the 5G Core, a central (O-CU) and distributed unit (O-DU) by Software Radio Systems (SRS) and an O-RAN radio unit (O</p>
+      <div class="section-harvester" data-section="overview" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="overview">Overview</h2></summary><div class="section-body"><p>In this paper, we present a modular open radio access network (O-RAN) consisting of the 5G Core, a central (O-CU) and distributed unit (O-DU) by Software Radio Systems (SRS) and an O-RAN radio unit (O</p></div></details></div><div class="section-harvester" data-section="key_findings" style="--section-color:#a5b4fc"><details class="section-collapse" open><summary class="section-summary"><h2 id="key-topics">Key Topics</h2></summary><div class="section-body"><p>This article covers: dataops, distributed-systems.</p></div></details></div><div class="section-harvester" data-section="applied_scenario" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="content">Content</h2></summary><div class="section-body"><p>, we present a modular open radio access network (O-RAN) consisting of the 5G Core, a central (O-CU) and distributed unit (O-DU) by Software Radio Systems (SRS) and an O-RAN radio unit (O</p></div></details></div><div class="section-harvester" data-section="source_analysis" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="significance">Significance</h2></summary><div class="section-body"><p>This research contributes to advancing knowledge in data engineering, providing insights relevant to practitioners and researchers working in this domain.</p></div></details></div><div class="section-harvester" data-section="domain_breakdown" style="--section-color:#818cf8"><details class="section-collapse" open><summary class="section-summary"><h2 id="further-reading">Further Reading</h2></summary><div class="section-body"><p>For deeper exploration of this topic, consider reviewing the foundational literature and related work in the field.</p></div></details></div>
     </div>
     <section class="mt-12 pt-8 border-t">
       <h2 class="text-2xl font-bold  mb-4">Signal Analysis</h2>
@@ -162,7 +199,7 @@
               <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">Feature Engineering at Scale: Building ML-Ready Market Data Pipelines with dbt and Iceberg</h3>
               <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">Production feature engineering pipelines for quantitative finance: transforming raw tick data into ML-ready feature sets using dbt for SQL transformations, Iceberg for time-travel access, and Dagster for asset orchestration.</p>
               <div class="mt-2 flex flex-wrap gap-1">
-                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Suspicious Transaction Report</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">DataOps</span>
               </div>
             </div>
           </div>
@@ -178,7 +215,7 @@
               <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">Streaming ETL for Suspicious Activity Reports: Real-Time AML Data Pipelines with Kafka and Flink</h3>
               <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">Architecture patterns for building real-time AML surveillance data pipelines using Apache Kafka for transaction ingestion, Flink for stream processing, and Iceberg for immutable audit storage — with DataOps quality gates at every stage.</p>
               <div class="mt-2 flex flex-wrap gap-1">
-                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Suspicious Transaction Report</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">DataOps</span>
               </div>
             </div>
           </div>
@@ -194,7 +231,7 @@
               <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">Real-Time Data Engineering for Algorithmic Trading: From Tick Data to Execution Signals</h3>
               <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">Production-grade data pipelines for algorithmic trading systems: handling market data at microsecond latency, feature engineering stream processing, backtesting infrastructure, and DataOps orchestration.</p>
               <div class="mt-2 flex flex-wrap gap-1">
-                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Suspicious Transaction Report</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">DataOps</span>
               </div>
             </div>
           </div>
@@ -210,7 +247,7 @@
               <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">Data Pipeline Observability in Financial Crime Compliance: Real-Time AML Monitoring at Scale</h3>
               <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">How DataOps practices including pipeline observability, data quality monitoring, and automated lineage tracking are transforming anti-money laundering transaction monitoring systems at major financial institutions.</p>
               <div class="mt-2 flex flex-wrap gap-1">
-                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Suspicious Transaction Report</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">DataOps</span>
               </div>
             </div>
           </div>
@@ -223,10 +260,10 @@
         Ontology Concepts
       </h2>
       <div class="flex flex-wrap gap-2">
-        <span class="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
-          Suspicious Transaction Report
-          <span class="opacity-60 text-[10px]">0.9</span>
-        </span>
+        <a href="/concepts/dataops/" class="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full no-underline" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);text-decoration:none">
+          DataOps
+          <span class="opacity-60 text-[10px]">1.0</span>
+        </a>
       </div>
     </section>
     <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
@@ -331,6 +368,19 @@
              <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-15</span>
            </div>
          </a>
+          <a href="https://www.acaciafund.org/data/research/kafka-streaming-event-driven/" class="ghost-card block text-decoration:none">
+            <div class="aspect-[600/340] bg-gray-800 overflow-hidden">
+              <img src="https://www.acaciafund.org/static/images/generated/blog/2026-07-13-kafka-streaming-event-driven.svg" alt="Real-Time Streaming with Apache Kafka: From Pub/Sub to Event-Driven Architecture" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
+            </div>
+           <div class="p-3">
+              
+              <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+              <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Real-Time Streaming with Apache Kafka: From Pub/Sub to Event-Driven Architecture</span>
+             <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-09</span>
+           </div>
+         </a>
           <a href="https://www.acaciafund.org/data/research/optimizing-ml-workload-partitioning-between-cpus-and-cim-acc/" class="ghost-card block text-decoration:none">
             <div class="aspect-[600/340] bg-gray-800 overflow-hidden">
               <img src="https://www.acaciafund.org/static/images/thumb_5af6492c9dfe.svg" alt="Optimizing ML Workload Partitioning between CPUs and CIM Accelerators for Heterogeneous Computing" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
@@ -341,19 +391,6 @@
   Data Engineering
 </span>
               <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Optimizing ML Workload Partitioning between CPUs and CIM Accelerators for Heterogeneous Computing</span>
-             <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-07-06</span>
-           </div>
-         </a>
-          <a href="https://www.acaciafund.org/data/research/communication-aware-placement-and-pruning-for-efficient-mixt/" class="ghost-card block text-decoration:none">
-            <div class="aspect-[600/340] bg-gray-800 overflow-hidden">
-              <img src="https://www.acaciafund.org/static/images/thumb_ea80c0747a27.svg" alt="Communication-Aware Placement and Pruning for Efficient Mixture-of-Experts Inference" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
-            </div>
-           <div class="p-3">
-              
-              <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
-  Data Engineering
-</span>
-              <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Communication-Aware Placement and Pruning for Efficient Mixture-of-Experts Inference</span>
              <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-07-06</span>
            </div>
          </a>
@@ -371,9 +408,21 @@
               
               <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
   Data Engineering
-</span>
+</span><span class="text-xs ml-1" style="color:var(--color-text-muted)">Beginner</span>
               <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Understanding Data Pipeline Orchestration</span>
              <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-07-10</span>
+           </div>
+         </a>
+          <a href="https://www.acaciafund.org/data/learn/designing-data-platform/" class="ghost-card block text-decoration:none">
+            <div class="aspect-[600/340] bg-gray-800 overflow-hidden">
+              <img src="https://www.acaciafund.org/static/images/generated/learn/designing-data-platform.svg" alt="Designing a Production Data Platform: From Requirements to Architecture" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
+            </div>
+           <div class="p-3">
+              
+              <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span><span class="text-xs ml-1" style="color:var(--color-text-muted)">Advanced</span>
+              <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Designing a Production Data Platform: From Requirements to Architecture</span>
            </div>
          </a>
           <a href="https://www.acaciafund.org/data/learn/data-quality-observability-cost/" class="ghost-card block text-decoration:none">
@@ -386,18 +435,6 @@
   Data Engineering
 </span><span class="text-xs ml-1" style="color:var(--color-text-muted)">Intermediate</span>
               <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Data Quality, Observability, and Cost Optimization at Scale</span>
-           </div>
-         </a>
-          <a href="https://www.acaciafund.org/data/learn/building-pipelines-dbt-dagster/" class="ghost-card block text-decoration:none">
-            <div class="aspect-[600/340] bg-gray-800 overflow-hidden">
-              <img src="https://www.acaciafund.org/static/images/generated/learn/building-pipelines-dbt-dagster.svg" alt="Building Data Pipelines with dbt and Dagster: From SQL to Orchestration" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
-            </div>
-           <div class="p-3">
-              
-              <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
-  Data Engineering
-</span><span class="text-xs ml-1" style="color:var(--color-text-muted)">Intermediate</span>
-              <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Building Data Pipelines with dbt and Dagster: From SQL to Orchestration</span>
            </div>
          </a>
        </div>
@@ -421,7 +458,7 @@
       </div>
     </section>
 
-    <script src="/static/js/learning_hub.d41d8cd9.js" defer></script>
+    <script src="/static/js/learning_hub.534fa53c.js" defer></script>
 
 <div class="newsletter-signup" style="background:var(--color-bg);border:1px solid var(--color-border);padding:2rem;border-radius:8px;text-align:center">
   <h3 style="color:var(--color-text)">Stay Updated</h3>
@@ -440,6 +477,6 @@
         <small>&copy; 2026 AcaciaFund &middot; Generated by the Acacia pipeline.</small>
     </footer>
 
-    <script src="/static/js/main.d41d8cd9.js"></script>
+
 </body>
 </html>

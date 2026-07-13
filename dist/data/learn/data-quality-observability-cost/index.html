@@ -1,6 +1,4 @@
-<span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
-  AML
-</span><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
@@ -34,6 +32,8 @@
                 <li><a href="/compliance/">Compliance</a></li>
                 <li><a href="/markets/">Markets</a></li>
                 <li><a href="/data/">Data</a></li>
+                <li><a href="/review/">Review</a></li>
+                <li><a href="/search/">Search</a></li>
             </ul>
         </nav>
     </header>
@@ -126,14 +126,21 @@
         <a href="/tags/observability/"><kbd>observability</kbd></a>
       </div>
       <div class="mt-3 flex flex-wrap gap-1.5">
-        <span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
+        <a href="/concepts/data-quality/" class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full no-underline" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);text-decoration:none">
           <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
           Data Quality
-        </span>
-        <span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
+        </a>
+        <a href="/concepts/dataops/" class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full no-underline" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);text-decoration:none">
           <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
-          Enhanced Due Diligence
-        </span>
+          DataOps
+        </a>
+        <a href="/concepts/etl/" class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full no-underline" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);text-decoration:none">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+          Extract-Transform-Load
+        </a>
+      </div>
+      <div class="mt-2">
+        <span class="sqi-badge">SQI 0.955</span>
       </div>
     </header>
 
@@ -146,13 +153,13 @@ datasource = context.sources.add_spark("my_spark")
 data_asset = datasource.add_csv_asset("orders", "s3://data/orders/")
 batch = data_asset.get_batch()
 
-# Define expectations
+<h1>Define expectations</h1>
 batch.expect_column_to_exist("order_id")
 batch.expect_column_values_to_not_be_null("amount")
 batch.expect_column_values_to_be_between("amount", 0, 100000)
 batch.expect_column_mean_to_be_between("amount", 50, 200)
 
-# Validate
+<h1>Validate</h1>
 results = batch.validate()
 print(f"Passed: {results['statistics']['successful_expectations']}")
 </pre></div></details></div><div class="section-harvester" data-section="applied_scenario" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="data-observability-monitoring-the-pipeline-health">Data Observability: Monitoring the Pipeline Health</h2></summary><div class="section-body"><p>Data observability extends monitoring to the data itself — not just the infrastructure running the pipeline. It answers five key questions:</p><ul><li><strong>Freshness:</strong> Is the data arriving on time? Track scheduled vs actual arrival times for each table or topic.</li><li><strong>Volume:</strong> Is the expected amount of data arriving? Sudden drops or spikes indicate upstream issues or schema changes.</li><li><strong>Schema:</strong> Has the data structure changed? New columns, removed columns, or type changes must be detected automatically.</li><li><strong>Quality:</strong> Are data quality expectations passing? Track pass/fail rates over time and alert on degradation.</li><li><strong>Lineage:</strong> Where did this data come from, and what downstream reports does it feed? Full column-level lineage enables impact analysis.</li></ul><p>Key tools in the observability space:</p><table style="width:100%;border-collapse:collapse;font-size:0.9em"><tr style="background:var(--color-bg)"><th style="padding:8px;border:1px solid var(--color-border)">Tool</th><th style="padding:8px;border:1px solid var(--color-border)">Category</th><th style="padding:8px;border:1px solid var(--color-border)">Key Features</th></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Monte Carlo</td><td style="padding:8px;border:1px solid var(--color-border)">SaaS</td><td style="padding:8px;border:1px solid var(--color-border)">Automated lineage, freshness/volume/schema monitors, Slack integration, incident management</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Sifflet</td><td style="padding:8px;border:1px solid var(--color-border)">SaaS</td><td style="padding:8px;border:1px solid var(--color-border)">Column-level lineage, root cause analysis, data health scores</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">OpenLineage</td><td style="padding:8px;border:1px solid var(--color-border)">Open source</td><td style="padding:8px;border:1px solid var(--color-border)">Standardized lineage metadata collection, integrates with Airflow/Dagster/Spark</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Datadog</td><td style="padding:8px;border:1px solid var(--color-border)">SaaS</td><td style="padding:8px;border:1px solid var(--color-border)">Infrastructure + data pipeline monitoring, custom metrics, dashboards</td></tr><tr><td style="padding:8px;border:1px solid var(--color-border)">Elementary</td><td style="padding:8px;border:1px solid var(--color-border)">Open source</td><td style="padding:8px;border:1px solid var(--color-border)">dbt-native observability, anomaly detection, data reports in dbt docs</td></tr></table></div></details></div><div class="section-harvester" data-section="source_analysis" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="cost-optimization-engineering-for-efficiency">Cost Optimization: Engineering for Efficiency</h2></summary><div class="section-body"><p>Data infrastructure costs grow with data volume. Without deliberate optimization, cloud data costs can spiral 30-50% year over year. Here are the key strategies:</p><ul><li><strong>Partition Pruning:</strong> Organize tables by date, region, or other high-cardinality dimensions. Queries that filter on the partition key only scan relevant partitions, reducing cost and improving speed. Tools like Iceberg and Delta Lake support partition evolution — changing the partition scheme without rewriting data.</li><li><strong>Incremental Processing:</strong> Process only new or changed records instead of full-table scans. dbt incremental models, Spark structured streaming with watermarks, and Kafka compacted topics all reduce per-run compute.</li><li><strong>Storage Tiering:</strong> Move cold data to cheaper storage. Use lifecycle policies to transition data from hot (SSD) to warm (HDD) to cold (object store/Glacier) based on access patterns. Iceberg and Delta Lake support storage tiering transparently.</li><li><strong>Compute Autoscaling:</strong> Use serverless or auto-scaling compute to match resources to workload. Snowflake auto-suspend, BigQuery slot reservations, and Spark dynamic allocation prevent over-provisioning.</li><li><strong>Query Optimization:</strong> Identify and fix expensive queries. Use materialized views for frequent aggregations, sort keys/partitioning for common filter patterns, and avoid SELECT * in production pipelines.</li><li><strong>Data Retention and Purging:</strong> Define retention policies per dataset. Raw source data may be retained for 30 days, transformed data for 6 months, and aggregated data indefinitely. Automate purging to prevent storage bloat.</li></ul></div></details></div><div class="section-harvester" data-section="domain_breakdown" style="--section-color:#818cf8"><details class="section-collapse" open><summary class="section-summary"><h2 id="feature-stores-quality-controlled-ml-data">Feature Stores: Quality-Controlled ML Data</h2></summary><div class="section-body"><p>Feature stores bridge the gap between data engineering and ML. They provide a centralized registry of features — pre-computed, versioned, and quality-controlled — that ML models consume in both training and inference.</p><ul><li><strong>Feast:</strong> Open-source feature store (LF AI & Data Foundation). Features are defined as Python functions or dbt models, stored in an online store (Redis, DynamoDB) for low-latency serving and an offline store (BigQuery, Snowflake) for training.</li><li><strong>Tecton:</strong> Enterprise feature platform built on Feast's architecture. Adds automated feature engineering, streaming feature computation, point-in-time correctness guarantees, and governance controls.</li><li><strong>Data Quality Integration:</strong> Feature stores enforce quality at the feature level — detecting drift between training and serving data, validating feature value ranges, and alerting on stale or missing features.</li></ul></div></details></div><div class="section-harvester" data-section="cross_pillar" style="--section-color:#a5b4fc"><details class="section-collapse" open><summary class="section-summary"><h2 id="building-an-observability-driven-quality-program">Building an Observability-Driven Quality Program</h2></summary><div class="section-body"><p>A production-grade data quality program combines multiple layers:</p><pre style="background:var(--color-bg);padding:12px;border-radius:8px;overflow-x:auto;font-size:0.85em">
@@ -187,40 +194,56 @@ Layer 5: Cost Governance (Budgets + Alerts)
       <div id="quiz-summary" class="mt-6 p-4 rounded-lg hidden" style="background:var(--color-surface);border:1px solid var(--color-border)"></div>
       <button id="quiz-retry" class="mt-3 hidden px-4 py-2 text-sm font-semibold rounded-lg transition hover:opacity-80" style="background:var(--color-accent);color:#fff">Retry Quiz</button>
     </section>
-    <section class="mt-12 pt-8 border-t">
-      <h2 class="text-2xl font-bold mb-4">Bloom Taxonomy Questions</h2>
-      <div class="space-y-4">
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">A table's row count drops 80% overnight. Which observability dimension first detects this?</p>
-        </div>
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">You notice a critical dashboard shows stale data. The upstream pipeline completed on time but the data quality check shows null rates spiked from 2% to 45%. What is the most likely root cause?</p>
-        </div>
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">Your data warehouse bill increased 40% month-over-month. Queries are scanning full tables daily. Which optimization would have the largest immediate impact?</p>
-        </div>
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">A feature store detects that the distribution of a feature in production differs significantly from the training data distribution. This is an example of:</p>
-        </div>
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">A downstream BI report shows revenue numbers that don't match the source system. The pipeline logs show all steps completed successfully. What should you check first?</p>
-        </div>
+    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
+      <h2 class="text-2xl font-bold mb-6 inline-flex items-center gap-2" style="color:var(--color-text)">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+        Flashcards
+      </h2>
+      <p class="text-xs mb-4" style="color:var(--color-text-muted)">Space = flip &middot; 1-4 = grade &middot; Swipe on mobile</p>
+      <div class="grid gap-4 sm:grid-cols-2" id="flashcard-grid">
+        <acacia-flashcard
+          data-term="Data Observability"
+          data-definition="The practice of monitoring five dimensions of data health: freshness, volume, schema, quality, and lineage — enabling automated detection of data incidents."
+          data-card-id="data/learn/data-quality-observability-cost/#0"></acacia-flashcard>
+        <acacia-flashcard
+          data-term="Great Expectations"
+          data-definition="An open-source data quality framework that lets teams define, document, and test data expectations as version-controlled code."
+          data-card-id="data/learn/data-quality-observability-cost/#1"></acacia-flashcard>
+        <acacia-flashcard
+          data-term="Partition Pruning"
+          data-definition="A query optimization technique where the engine skips irrelevant partitions (e.g., by date) to reduce scan volume and cost."
+          data-card-id="data/learn/data-quality-observability-cost/#2"></acacia-flashcard>
+        <acacia-flashcard
+          data-term="Feature Store"
+          data-definition="A centralized registry of pre-computed, versioned, quality-controlled ML features served for both training and inference."
+          data-card-id="data/learn/data-quality-observability-cost/#3"></acacia-flashcard>
+        <acacia-flashcard
+          data-term="OpenLineage"
+          data-definition="An open standard for collecting column-level lineage metadata across the data pipeline, enabling impact analysis and root cause detection."
+          data-card-id="data/learn/data-quality-observability-cost/#4"></acacia-flashcard>
+        <acacia-flashcard
+          data-term="Storage Tiering"
+          data-definition="Moving data across hot, warm, and cold storage tiers based on access patterns to optimize cost without sacrificing performance for active data."
+          data-card-id="data/learn/data-quality-observability-cost/#5"></acacia-flashcard>
+        <acacia-flashcard
+          data-term="Incremental Processing"
+          data-definition="Processing only new or changed records instead of full-table scans, reducing compute cost and pipeline runtime."
+          data-card-id="data/learn/data-quality-observability-cost/#6"></acacia-flashcard>
       </div>
+    </section>
+    <div class="mt-8 text-center">
+      <button id="mark-complete-btn" data-track-lesson="data/learn/data-quality-observability-cost/" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition" style="background:var(--color-accent);color:#fff">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+        <span id="complete-btn-text">Mark Complete</span>
+      </button>
+    </div>
+    <section class="mt-12 pt-8 border-t" id="quiz-section" data-quiz='{"questions": [{"q": "A table's row count drops 80% overnight. Which observability dimension first detects this?", "options": ["Schema validation", "Volume monitoring", "Freshness tracking", "Lineage analysis"], "a": 1, "type": "mc"}, {"q": "You notice a critical dashboard shows stale data. The upstream pipeline completed on time but the data quality check shows null rates spiked from 2% to 45%. What is the most likely root cause?", "options": ["The pipeline ran slower than usual", "A source system changed its schema or data collection logic", "The dashboard cache expired", "The data warehouse was down"], "a": 1, "type": "mc"}, {"q": "Your data warehouse bill increased 40% month-over-month. Queries are scanning full tables daily. Which optimization would have the largest immediate impact?", "options": ["Buying reserved compute instances", "Implementing partition pruning and incremental processing", "Switching to a different cloud provider", "Adding more indexes"], "a": 1, "type": "mc"}, {"q": "A feature store detects that the distribution of a feature in production differs significantly from the training data distribution. This is an example of:", "options": ["Concept drift", "Data drift", "Schema evolution", "Pipeline failure"], "a": 1, "type": "mc"}, {"q": "A downstream BI report shows revenue numbers that don't match the source system. The pipeline logs show all steps completed successfully. What should you check first?", "options": ["The cloud provider's status page", "The data quality expectations at the transformation layer", "The network latency between systems", "The dashboard caching configuration"], "a": 1, "type": "mc"}]}' data-quiz-lesson="data/learn/data-quality-observability-cost/">
+      <h2 class="text-2xl font-bold mb-4" style="color:var(--color-text)">Knowledge Check</h2>
+      <p class="text-sm mb-4" style="color:var(--color-text-muted)">Test your understanding of this lesson.</p>
+      <div id="quiz-score" class="mb-4 text-sm font-semibold" style="color:var(--color-text-secondary)"></div>
+      <div id="quiz-container"></div>
+      <div id="quiz-summary" class="mt-6 p-4 rounded-lg hidden" style="background:var(--color-surface);border:1px solid var(--color-border)"></div>
+      <button id="quiz-retry" class="mt-3 hidden px-4 py-2 text-sm font-semibold rounded-lg transition hover:opacity-80" style="background:var(--color-accent);color:#fff">Retry Quiz</button>
     </section>
     <section class="mt-12 pt-8 border-t">
       <h2 class="text-2xl font-bold mb-6">Related Research</h2>
@@ -305,7 +328,7 @@ Layer 5: Cost Governance (Budgets + Alerts)
   </article>
 </div>
 
-<script src="/static/js/learning_hub.d41d8cd9.js" defer></script>
+<script src="/static/js/learning_hub.534fa53c.js" defer></script>
 <div class="newsletter-signup" style="background:var(--color-bg);border:1px solid var(--color-border);padding:2rem;border-radius:8px;text-align:center">
   <h3 style="color:var(--color-text)">Stay Updated</h3>
   <p style="color:var(--color-text-muted)">Get the latest research summaries delivered to your inbox.</p>
@@ -322,6 +345,6 @@ Layer 5: Cost Governance (Budgets + Alerts)
         <small>&copy; 2026 AcaciaFund &middot; Generated by the Acacia pipeline.</small>
     </footer>
 
-    <script src="/static/js/main.d41d8cd9.js"></script>
+
 </body>
 </html>

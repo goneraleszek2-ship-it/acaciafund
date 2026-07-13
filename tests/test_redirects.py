@@ -29,7 +29,7 @@ class TestCloudflareRedirects:
                     for line in self.lines)
 
     def test_science_to_research(self):
-        assert any("science/*" in line and "research/:splat" in line and "301" in line
+        assert any("science/*" in line and "data/research/:splat" in line and "301" in line
                     for line in self.lines)
 
     def test_aml_signals_redirect(self):

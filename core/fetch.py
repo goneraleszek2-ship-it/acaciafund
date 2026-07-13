@@ -279,7 +279,6 @@ def _parse_arxiv_xml(xml: str) -> list[dict]:
 def fetch_arxiv(since_hours: int = 72, max_results: int = 100) -> list[dict]:
     """Fetch recent papers from arXiv API."""
     # ARXIV_CATEGORIES and ARXIV_KEYWORDS defined in this module below
-    datetime.now(timezone.utc) - timedelta(hours=since_hours)
     all_cats = [c for cats in ARXIV_CATEGORIES.values() for c in cats]
     query_str = "cat:" + "+OR+cat:".join(urllib.parse.quote(c, safe="") for c in all_cats)
     url = f"http://export.arxiv.org/api/query?search_query={query_str}&sortBy=submittedDate&sortOrder=descending&max_results={max_results}"

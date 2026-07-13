@@ -14,7 +14,7 @@
 
 
     <script type="application/ld+json">
-{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "data-engineering"}, "author": {"@type": "Person", "name": "AcaciaFund"}, "dateModified": "2026-07-07T16:06:20.413657+00:00", "datePublished": "2026-07-07", "description": "Data engineering has undergone a paradigm shift from imperative scripting to declarative compilation. In the imperative paradigm (Python scripts, shell pipelines, manually scheduled cron jobs), each d", "headline": "Declarative DataOps and Schema Governance Architectures", "inLanguage": "en", "keywords": "dataops, core-architecture, foundations, data", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/data/knowledge/core-foundations/", "@type": "WebPage"}, "proficiencyLevel": "", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-10T06:39:40Z", "signalQualityIndex": 1.0, "sqi": 1.0}
+{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "data-engineering"}, "author": {"@type": "Person", "name": "AcaciaFund"}, "dateModified": "2026-07-07T16:06:20.413657+00:00", "datePublished": "2026-07-07", "description": "Data engineering has undergone a paradigm shift from imperative scripting to declarative compilation. In the imperative paradigm (Python scripts, shell pipelines, manually scheduled cron jobs), each d", "headline": "Declarative DataOps and Schema Governance Architectures", "inLanguage": "en", "keywords": "dataops, core-architecture, foundations, data", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/data/knowledge/core-foundations/", "@type": "WebPage"}, "proficiencyLevel": "advanced", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-10T06:39:40Z", "signalQualityIndex": 1.0, "sqi": 1.0}
     </script>
 
 
@@ -34,6 +34,8 @@
                 <li><a href="/compliance/">Compliance</a></li>
                 <li><a href="/markets/">Markets</a></li>
                 <li><a href="/data/">Data</a></li>
+                <li><a href="/review/">Review</a></li>
+                <li><a href="/search/">Search</a></li>
             </ul>
         </nav>
     </header>
@@ -53,7 +55,64 @@
 
 <div id="reading-progress" style="position:fixed;top:0;left:0;height:3px;z-index:9999;width:0%;background:var(--color-accent)"></div>
 
-<div class="flex gap-8  flex-col">
+<div class="flex gap-8 md:flex-row flex-col">
+  <aside class="toc-sidebar shrink-0 order-last md:order-first md:sticky md:top-20 md:self-start md:max-h-[calc(100vh-6rem)] md:overflow-y-auto md:w-52">
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="text-xs font-semibold uppercase tracking-wide" style="color:var(--color-text-muted)">On this page</h2>
+      <button id="focus-toggle" class="text-xs px-2 py-1 rounded" style="color:var(--color-text-muted);background:var(--color-bg)" title="Focus mode" aria-label="Toggle focus mode">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 4h4M6 20h4M18 4h-4M18 20h-4M4 6v4M4 18v4M20 6v4M20 18v4"/></svg>
+      </button>
+    </div>
+    <nav aria-label="Table of contents">
+      <ul class="space-y-1 text-sm">
+        <li>
+          <a href="#static-compilation-testing" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            Static Compilation Testing
+          </a>
+        </li>
+        <li>
+          <a href="#section-2-distributed-table-storage-topologies" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            Section 2: Distributed Table Storage Topologies
+          </a>
+        </li>
+        <li>
+          <a href="#decoupled-storage-architecture" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            Decoupled Storage Architecture
+          </a>
+        </li>
+        <li>
+          <a href="#file-compaction-tactics" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            File Compaction Tactics
+          </a>
+        </li>
+        <li>
+          <a href="#metadata-coordination-the-concurrency-problem" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            Metadata Coordination — The Concurrency Problem
+          </a>
+        </li>
+        <li>
+          <a href="#section-3-stateful-stream-processing" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Section 3: Stateful Stream Processing
+          </a>
+        </li>
+        <li>
+          <a href="#stateful-stream-joins-in-apache-flink" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            Stateful Stream Joins in Apache Flink
+          </a>
+        </li>
+        <li>
+          <a href="#state-compaction-strategies" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            State Compaction Strategies
+          </a>
+        </li>
+        <li>
+          <a href="#state-backend-configuration-for-production" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            State Backend Configuration for Production
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
 
   <article class="min-w-0 flex-1">
     <nav aria-label="Breadcrumb" class="mb-4 text-xs" style="color:var(--color-text-muted)">
@@ -89,6 +148,15 @@
         <a href="/tags/foundations/"><kbd>foundations</kbd></a>
         <a href="/tags/data/"><kbd>data</kbd></a>
       </div>
+      <div class="mt-3 flex flex-wrap gap-1.5">
+        <span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+          DataOps
+        </span>
+      </div>
+      <div class="mt-2">
+        <span class="sqi-badge">SQI 1.000</span>
+      </div>
     </header>
 
     <div class="prose prose-lg prose-blue max-w-none">
@@ -102,8 +170,7 @@ Data engineering has undergone a paradigm shift from imperative scripting to dec
 
 In the declarative paradigm (dbt, SQLMesh, Dagster with software-defined assets), each transformation is a SELECT statement or a Python function annotated with its input and output dependencies. The orchestration engine compiles the full dependency graph before executing any node:
 
-```
-# Declarative model — data/product_metrics.sql
+<pre><code class="language-"># Declarative model — data/product_metrics.sql
 SELECT
  product_id,
  COUNT(DISTINCT user_id) AS active_users,
@@ -112,20 +179,19 @@ SELECT
 FROM raw.events
 WHERE event_date >= CURRENT_DATE - INTERVAL '30 days'
 GROUP BY product_id
-```
+</code></pre>
 
 The orchestration engine performs static analysis at compile time:
-1. **Dependency resolution.** Parse the FROM clause to determine upstream dependencies (`raw.events`). Construct the Directed Acyclic Graph (DAG) of all models.
-2. **Lineage tracking.** For each column in the SELECT clause, trace its origin to the source table's columns. A column-level lineage graph `G_c = (C, E)` where each edge `(c_i, c_j)` indicates that column `c_j` is derived from column `c_i`. This graph supports impact analysis: "if we rename `raw.events.revenue`, which downstream reports break?"
-3. **Type checking.** Ensure that the SELECT statement produces a schema consistent with the declared model schema. Mismatched types raise a compile-time error, not a runtime failure — this is the critical advantage over imperative scripting, where type mismatches surface when the pipeline runs at 3 AM on a Saturday.
-4. **Incremental computation.** If the model is declared as incremental (`WHERE event_date >= CURRENT_DATE - INTERVAL '30 days'`), the engine generates two execution plans: a full-refresh plan (for initial load) and an incremental plan (for daily updates using the model's unique key). The incremental plan applies only changed records, reducing execution time by orders of magnitude for append-only event streams.
+1. <strong>Dependency resolution.</strong> Parse the FROM clause to determine upstream dependencies (`raw.events`). Construct the Directed Acyclic Graph (DAG) of all models.
+2. <strong>Lineage tracking.</strong> For each column in the SELECT clause, trace its origin to the source table's columns. A column-level lineage graph `G_c = (C, E)` where each edge `(c_i, c_j)` indicates that column `c_j` is derived from column `c_i`. This graph supports impact analysis: "if we rename `raw.events.revenue`, which downstream reports break?"
+3. <strong>Type checking.</strong> Ensure that the SELECT statement produces a schema consistent with the declared model schema. Mismatched types raise a compile-time error, not a runtime failure — this is the critical advantage over imperative scripting, where type mismatches surface when the pipeline runs at 3 AM on a Saturday.
+4. <strong>Incremental computation.</strong> If the model is declared as incremental (`WHERE event_date >= CURRENT_DATE - INTERVAL '30 days'`), the engine generates two execution plans: a full-refresh plan (for initial load) and an incremental plan (for daily updates using the model's unique key). The incremental plan applies only changed records, reducing execution time by orders of magnitude for append-only event streams.
 
-### Static Compilation Testing
+<h3 id="static-compilation-testing">Static Compilation Testing</h3>
 
 Declarative orchestration enables static compilation testing — verifying the DAG without executing it. The test suite:
 
-```python
-def test_model_compiles():
+<pre><code class="language-python">def test_model_compiles():
  from dbt.compilation import compile_project
  manifest = compile_project("/path/to/project")
  assert len(manifest.nodes) > 0, "No models found"
@@ -140,20 +206,17 @@ def test_column_lineage():
  for model in manifest.nodes:
  for column in model.columns:
  assert column.lineage is not None, f"{model.name}.{column.name} has no lineage"
-```
+</code></pre>
 
 These tests execute in under 10 seconds for a project with 500 models. They catch 60-70% of deployment-blocking issues (missing sources, circular dependencies, type mismatches) before any data is processed — the declarative paradigm's fundamental efficiency advantage.
 
-### Section 2: Distributed Table Storage Topologies
-
-### Decoupled Storage Architecture
+<h3 id="section-2-distributed-table-storage-topologies">Section 2: Distributed Table Storage Topologies</h3><h3 id="decoupled-storage-architecture">Decoupled Storage Architecture</h3>
 
 Modern data lakehouse architectures decouple storage from compute, persisting data in open formats (Apache Iceberg, Delta Lake, Apache Hudi) on object storage (S3, GCS, Azure Blob) while compute engines (Spark, Trino, DuckDB) read and write through a metadata coordination layer.
 
 The storage topology for an Iceberg table is a three-level tree:
 
-```
-Table root (database.table_name)
+<pre><code class="language-">Table root (database.table_name)
 ├── Metadata layer
 │ ├── v1.metadata.json — Current table snapshot
 │ ├── v2.metadata.json — Updated after append
@@ -169,7 +232,7 @@ Table root (database.table_name)
  │ └── 000001-001.parquet
  └── partition=2026-07-03/
  └── 000002-001.parquet
-```
+</code></pre>
 
 Each metadata JSON file contains:
 - The schema (column names, types, nullable constraints)
@@ -179,22 +242,21 @@ Each metadata JSON file contains:
 
 This three-level indirection enables atomic operations: when a query engine commits a write, it creates a new metadata file and atomically switches the table's current snapshot pointer. Readers see either the old snapshot or the new one, never an intermediate state. The atomic switch is implemented via a file system operation or a catalog transaction (Hive Metastore, AWS Glue, Nessie).
 
-### File Compaction Tactics
+<h3 id="file-compaction-tactics">File Compaction Tactics</h3>
 
 The data lakehouse write pattern — append-only streaming inserts — produces a large number of small files over time. A streaming pipeline writing 1,000 events/second with a 60-second checkpoint interval produces 86,400 files per day per table. Each file incurs a listing overhead on object storage (approximately 5-10 milliseconds per file on S3) and a planning overhead in the query engine (opening each file to read its metadata footer).
 
 Compaction is the process of merging small files into larger ones. The compaction policy for a production Iceberg table with 100 GB/day ingestion:
 
-1. **Target file size:** 512 MB per Parquet file after compaction. This balances query parallelism (more files = more concurrent readers) with planning overhead (fewer files = faster planning).
-2. **Compaction trigger:** Automatic compaction activates when the ratio of small files (<128 MB) to total files exceeds 0.3, or when total file count exceeds 10,000.
-3. **Compaction execution:** A rewrite operation reads all data files in a partition, sorts them by the table's sort order, and writes new files of the target size. The operation is ACID: the rewrite creates new metadata and manifests atomically, and old files are eventually garbage-collected when no snapshot references them.
+1. <strong>Target file size:</strong> 512 MB per Parquet file after compaction. This balances query parallelism (more files = more concurrent readers) with planning overhead (fewer files = faster planning).
+2. <strong>Compaction trigger:</strong> Automatic compaction activates when the ratio of small files (<128 MB) to total files exceeds 0.3, or when total file count exceeds 10,000.
+3. <strong>Compaction execution:</strong> A rewrite operation reads all data files in a partition, sorts them by the table's sort order, and writes new files of the target size. The operation is ACID: the rewrite creates new metadata and manifests atomically, and old files are eventually garbage-collected when no snapshot references them.
 
-### Metadata Coordination — The Concurrency Problem
+<h3 id="metadata-coordination-the-concurrency-problem">Metadata Coordination — The Concurrency Problem</h3>
 
 When multiple engines write to the same Iceberg table concurrently (e.g., a Spark batch job and a Flink streaming job), they contend on the metadata file. Iceberg's optimistic concurrency control uses a compare-and-swap (CAS) on the current metadata pointer:
 
-```
-1. Engine A reads current metadata (v2)
+<pre><code class="language-">1. Engine A reads current metadata (v2)
 2. Engine B reads current metadata (v2)
 3. Engine A writes data, creates v3, attempts to CAS: v2 → v3
 4. CAS succeeds (current is v2)
@@ -202,20 +264,17 @@ When multiple engines write to the same Iceberg table concurrently (e.g., a Spar
 6. CAS fails (current is now v3)
 7. Engine B retries: re-reads v3, merges its changes, creates v5, CAS: v3 → v5
 8. CAS succeeds
-```
+</code></pre>
 
 If Engine B's writes conflict with Engine A's (e.g., both modified the same data file), the merge fails and Engine B must resolve the conflict. Iceberg's default conflict resolution is "last writer wins" — Engine B's write overwrites Engine A's if they touched the same file. For streaming ingestion where writers append to different data files, conflicts are rare. For concurrent compaction operations that both rewrite the same partition, conflicts are frequent and require explicit coordination (e.g., a distributed lock via ZooKeeper).
 
-## Section 3: Stateful Stream Processing
-
-### Stateful Stream Joins in Apache Flink
+<div class="section-harvester" data-section="overview" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="section-3-stateful-stream-processing">Section 3: Stateful Stream Processing</h2></summary><div class="section-body"><h3 id="stateful-stream-joins-in-apache-flink">Stateful Stream Joins in Apache Flink</h3>
 
 Stream processing systems perform stateful operations — aggregations, joins, pattern matching — by maintaining operator state in local embedded key-value stores (RocksDB for Flink) or remote stores (Redis, mem0). The state is checkpointed periodically to durable storage for fault tolerance.
 
 A stream-stream join (enriching a transaction stream with a customer profile stream) requires maintaining both sides in state:
 
-```sql
--- Flink SQL: Stream-stream interval join
+<pre><code class="language-sql">-- Flink SQL: Stream-stream interval join
 SELECT
  t.transaction_id,
  t.amount,
@@ -225,22 +284,21 @@ FROM transactions t
 JOIN customers c
  ON t.customer_id = c.customer_id
  AND t.event_time BETWEEN c.profile_valid_from AND c.profile_valid_to
-```
+</code></pre>
 
 This join requires Flink to maintain:
 - The `transactions` stream's state: keys and event times for the past N minutes (the join interval)
 - The `customers` stream's state: complete profile history (because profiles can change over time)
 
-### State Compaction Strategies
+<h3 id="state-compaction-strategies">State Compaction Strategies</h3>
 
 Without state management, the `customers` join state grows without bound as new profiles are added. Production deployments use three compaction tactics:
 
-1. **Time-to-live (TTL) watermarking.** Each state entry carries a TTL. For the transaction side, TTL equals the join interval (typically 5-60 minutes). For the customer side, TTL is the maximum expected profile validity period (typically 7-30 days). State entries exceeding TTL are garbage-collected during checkpointing.
+1. <strong>Time-to-live (TTL) watermarking.</strong> Each state entry carries a TTL. For the transaction side, TTL equals the join interval (typically 5-60 minutes). For the customer side, TTL is the maximum expected profile validity period (typically 7-30 days). State entries exceeding TTL are garbage-collected during checkpointing.
 
-2. **Versioned state with compaction.** For the customer side, only the most recent profile per `customer_id` is needed for correct join semantics (assuming profile updates supersede previous ones). Flink's RocksDB backend supports compaction filters that discard obsolete entries during RocksDB's LSM-tree compaction cycle:
+2. <strong>Versioned state with compaction.</strong> For the customer side, only the most recent profile per `customer_id` is needed for correct join semantics (assuming profile updates supersede previous ones). Flink's RocksDB backend supports compaction filters that discard obsolete entries during RocksDB's LSM-tree compaction cycle:
 
-```java
-// Flink compaction filter: discard customer profiles superseded by newer ones
+<pre><code class="language-java">// Flink compaction filter: discard customer profiles superseded by newer ones
 public class CustomerProfileCompactionFilter
  implements KeyedStateCompactionFilter<String, CustomerProfile> {
  
@@ -249,23 +307,22 @@ public class CustomerProfileCompactionFilter
  return value.isSuperseded(); // true = discard
  }
 }
-```
+</code></pre>
 
-3. **Event-time alignment.** The join operation must handle out-of-order events — a transaction emitted with a 5-second latency must still join with the correct customer profile. Flink uses watermarks (event-time progress markers) to determine when no more events with timestamp `t < watermark` will arrive. Events arriving after the watermark are "late data" and can be discarded or routed to a side output for offline reprocessing.
+3. <strong>Event-time alignment.</strong> The join operation must handle out-of-order events — a transaction emitted with a 5-second latency must still join with the correct customer profile. Flink uses watermarks (event-time progress markers) to determine when no more events with timestamp `t < watermark` will arrive. Events arriving after the watermark are "late data" and can be discarded or routed to a side output for offline reprocessing.
 
-### State Backend Configuration for Production
+<h3 id="state-backend-configuration-for-production">State Backend Configuration for Production</h3>
 
 The Flink state backend configuration for a production stream join processing 50,000 events/second:
 
-```yaml
-state.backend: rocksdb
+<pre><code class="language-yaml">state.backend: rocksdb
 state.backend.rocksdb.timer-service-factory: ROCKSDB
 state.backend.rocksdb.ttl.compaction.filter.enabled: true
 state.backend.incremental: true
 state.checkpoints.dir: s3://acaciafund-checkpoints/stream-joins/
 state.checkpoints.num-retained: 3
 state.backend.local-recovery: true
-```
+</code></pre>
 
 This configuration:
 - Uses RocksDB (disk-based) rather than Heap (memory-based) because the join state exceeds 100 GB for a 30-day customer profile retention window
@@ -276,12 +333,11 @@ This configuration:
 
 ---
 
-**Last Updated:** 2026-07-07
-**Version:** 1.0.0
-**Classification:** Data Engineering Foundations
-**Primary Sources:** Apache Iceberg Specification v2; Flink State Backend Tuning Guide; Barr Moses — *Data Quality Fundamentals*
-**Confidence Score:** 1.00
-**Ontology Tag:** data/core-foundations</pre>
+<strong>Last Updated:</strong> 2026-07-07
+<strong>Version:</strong> 1.0.0
+<strong>Classification:</strong> Data Engineering Foundations
+<strong>Primary Sources:</strong> Apache Iceberg Specification v2; Flink State Backend Tuning Guide; Barr Moses — <em>Data Quality Fundamentals</em><strong>Confidence Score:</strong> 1.00
+<strong>Ontology Tag:</strong> data/core-foundations</pre></div></details></div>
     </div>
     <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
       <h2 class="text-2xl font-bold mb-4 inline-flex items-center gap-2" style="color:var(--color-text)">
@@ -404,6 +460,15 @@ This configuration:
     <section class="mt-12 pt-8 border-t">
       <h2 class="text-2xl font-bold mb-6">Related Lessons</h2>
       <div class="grid gap-4 sm:grid-cols-3">
+        <a href="https://www.acaciafund.org/data/learn/designing-data-platform/" class="ghost-card block text-decoration:none">
+          <div class="p-3">
+            
+            <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Designing a Production Data Platform: From Requirements to Architecture</span>
+          </div>
+        </a>
         <a href="https://www.acaciafund.org/data/learn/data-quality-observability-cost/" class="ghost-card block text-decoration:none">
           <div class="p-3">
             
@@ -422,21 +487,12 @@ This configuration:
             <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Building Data Pipelines with dbt and Dagster: From SQL to Orchestration</span>
           </div>
         </a>
-        <a href="https://www.acaciafund.org/data/learn/data-pipeline-architectures/" class="ghost-card block text-decoration:none">
-          <div class="p-3">
-            
-            <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
-  Data Engineering
-</span>
-            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Data Pipeline Patterns: Batch, Streaming, and Event-Driven Architectures</span>
-          </div>
-        </a>
       </div>
     </section>
   </article>
 </div>
 
-<script src="/static/js/learning_hub.d41d8cd9.js" defer></script>
+<script src="/static/js/learning_hub.534fa53c.js" defer></script>
 <div class="newsletter-signup" style="background:var(--color-bg);border:1px solid var(--color-border);padding:2rem;border-radius:8px;text-align:center">
   <h3 style="color:var(--color-text)">Stay Updated</h3>
   <p style="color:var(--color-text-muted)">Get the latest research summaries delivered to your inbox.</p>
@@ -453,6 +509,6 @@ This configuration:
         <small>&copy; 2026 AcaciaFund &middot; Generated by the Acacia pipeline.</small>
     </footer>
 
-    <script src="/static/js/main.d41d8cd9.js"></script>
+
 </body>
 </html>

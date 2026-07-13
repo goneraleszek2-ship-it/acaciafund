@@ -1,6 +1,4 @@
-<span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
-  AML
-</span><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
@@ -34,6 +32,8 @@
                 <li><a href="/compliance/">Compliance</a></li>
                 <li><a href="/markets/">Markets</a></li>
                 <li><a href="/data/">Data</a></li>
+                <li><a href="/review/">Review</a></li>
+                <li><a href="/search/">Search</a></li>
             </ul>
         </nav>
     </header>
@@ -118,16 +118,13 @@
         <a href="/tags/stock/"><kbd>stock</kbd></a>
         <a href="/tags/synthesis/"><kbd>synthesis</kbd></a>
       </div>
-      <div class="mt-3 flex flex-wrap gap-1.5">
-        <span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
-          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
-          Suspicious Transaction Report
-        </span>
+      <div class="mt-2">
+        <span class="sqi-badge">SQI 0.930</span>
       </div>
     </header>
 
     <div class="prose prose-lg prose-blue max-w-none">
-      <p>Scientific reasoning is the foundation of reliable research synthesis. In an era of information overload — where a single study can go viral before it is peer-reviewed — the ability to evaluate claims critically is more important than ever. This lesson equips you with the tools to assess scientific evidence, understand methodological pitfalls, and apply structured reasoning to research analysis.</p><div class="section-harvester" data-section="overview" style="--section-color:#3a7d5c"><details class="section-collapse" open><summary class="section-summary"><h2 id="the-scientific-method-in-research-synthesis">The Scientific Method in Research Synthesis</h2></summary><div class="section-body"><p>The traditional scientific method — hypothesis, experiment, analysis, conclusion — maps directly onto research synthesis. The AcaciaFund pipeline applies this cycle: we <strong>hypothesize</strong> which sources carry signal, <strong>ingest and analyze</strong> content from HackerNews and arXiv, <strong>evaluate</strong> quality via SQI metrics, and <strong>conclude</strong> with synthesized findings organized by Bloom taxonomy level.</p></div></details></div><div class="section-harvester" data-section="key_findings" style="--section-color:#6ee7b7"><details class="section-collapse" open><summary class="section-summary"><h2 id="understanding-the-replication-crisis">Understanding the Replication Crisis</h2></summary><div class="section-body"><p>Across psychology, biomedicine, and economics, large-scale replication efforts have found that 30–60% of published studies fail to replicate. Causes include: <strong>p-hacking</strong> (running analyses until a significant p-value appears), <strong>small sample sizes</strong> producing false positives, <strong>publication bias</strong> favoring positive results, and <strong>questionable research practices</strong> like selective reporting. The replication crisis underscores why single studies should never be taken as definitive truth — and why synthesis across multiple sources is essential.</p></div></details></div><div class="section-harvester" data-section="applied_scenario" style="--section-color:#3a7d5c"><details class="section-collapse" open><summary class="section-summary"><h2 id="applying-bloom-taxonomy-to-research">Applying Bloom Taxonomy to Research</h2></summary><div class="section-body"><p>The Bloom taxonomy classifies cognitive skills across six levels:</p><ul><li><strong>Remember:</strong> Recall facts, definitions, and basic concepts from the source.</li><li><strong>Understand:</strong> Explain the meaning and implications of the findings.</li><li><strong>Apply:</strong> Use the knowledge in a new context or scenario.</li><li><strong>Analyze:</strong> Break down the argument — identify assumptions, evidence, and logical structure.</li><li><strong>Evaluate:</strong> Judge the quality, credibility, and relevance of the research.</li><li><strong>Create:</strong> Synthesize insights into new frameworks, hypotheses, or approaches.</li></ul><p>When reading a research article, try to classify each claim by Bloom level. This practice sharpens your ability to distinguish between descriptive summaries and analytical insights.</p></div></details></div><div class="section-harvester" data-section="source_analysis" style="--section-color:#3a7d5c"><details class="section-collapse" open><summary class="section-summary"><h2 id="practical-heuristics-for-evaluating-claims">Practical Heuristics for Evaluating Claims</h2></summary><div class="section-body"><ul><li><strong>Effect size matters more than p-value:</strong> A statistically significant result with a tiny effect may be meaningless in practice.</li><li><strong>Sample size and power:</strong> Studies with fewer than 100 participants per group should be treated with caution unless effects are very large.</li><li><strong>Pre-registration:</strong> Studies that pre-register their analysis plan are less likely to produce false positives than those that don't.</li><li><strong>Source diversity:</strong> Findings replicated across different labs, methods, and populations are substantially more trustworthy than single-site results.</li></ul><p>The AcaciaFund SQI incorporates these heuristics directly — weighting source authority, methodological rigor, and cross-source consensus into every quality score.</p><p>For a practical application of these concepts, explore <a href="/learn/data-quality-engineering/">Data Quality Engineering</a>, which shows how scientific testing principles extend to data pipelines.</p></div></details></div>
+      <p>Scientific reasoning is the foundation of reliable research synthesis. In an era of information overload — where a single study can go viral before it is peer-reviewed — the ability to evaluate claims critically is more important than ever. This lesson equips you with the tools to assess scientific evidence, understand methodological pitfalls, and apply structured reasoning to research analysis.</p><div class="section-harvester" data-section="overview" style="--section-color:#3a7d5c"><details class="section-collapse" open><summary class="section-summary"><h2 id="the-scientific-method-in-research-synthesis">The Scientific Method in Research Synthesis</h2></summary><div class="section-body"><p>The traditional scientific method — hypothesis, experiment, analysis, conclusion — maps directly onto research synthesis. The AcaciaFund pipeline applies this cycle: we <strong>hypothesize</strong> which sources carry signal, <strong>ingest and analyze</strong> content from HackerNews and arXiv, <strong>evaluate</strong> quality via SQI metrics, and <strong>conclude</strong> with synthesized findings organized by Bloom taxonomy level.</p></div></details></div><div class="section-harvester" data-section="key_findings" style="--section-color:#6ee7b7"><details class="section-collapse" open><summary class="section-summary"><h2 id="understanding-the-replication-crisis">Understanding the Replication Crisis</h2></summary><div class="section-body"><p>Across psychology, biomedicine, and economics, large-scale replication efforts have found that 30–60% of published studies fail to replicate. Causes include: <strong>p-hacking</strong> (running analyses until a significant p-value appears), <strong>small sample sizes</strong> producing false positives, <strong>publication bias</strong> favoring positive results, and <strong>questionable research practices</strong> like selective reporting. The replication crisis underscores why single studies should never be taken as definitive truth — and why synthesis across multiple sources is essential.</p></div></details></div><div class="section-harvester" data-section="applied_scenario" style="--section-color:#3a7d5c"><details class="section-collapse" open><summary class="section-summary"><h2 id="applying-bloom-taxonomy-to-research">Applying Bloom Taxonomy to Research</h2></summary><div class="section-body"><p>The Bloom taxonomy classifies cognitive skills across six levels:</p><ul><li><strong>Remember:</strong> Recall facts, definitions, and basic concepts from the source.</li><li><strong>Understand:</strong> Explain the meaning and implications of the findings.</li><li><strong>Apply:</strong> Use the knowledge in a new context or scenario.</li><li><strong>Analyze:</strong> Break down the argument — identify assumptions, evidence, and logical structure.</li><li><strong>Evaluate:</strong> Judge the quality, credibility, and relevance of the research.</li><li><strong>Create:</strong> Synthesize insights into new frameworks, hypotheses, or approaches.</li></ul><p>When reading a research article, try to classify each claim by Bloom level. This practice sharpens your ability to distinguish between descriptive summaries and analytical insights.</p></div></details></div><div class="section-harvester" data-section="source_analysis" style="--section-color:#3a7d5c"><details class="section-collapse" open><summary class="section-summary"><h2 id="practical-heuristics-for-evaluating-claims">Practical Heuristics for Evaluating Claims</h2></summary><div class="section-body"><ul><li><strong>Effect size matters more than p-value:</strong> A statistically significant result with a tiny effect may be meaningless in practice.</li><li><strong>Sample size and power:</strong> Studies with fewer than 100 participants per group should be treated with caution unless effects are very large.</li><li><strong>Pre-registration:</strong> Studies that pre-register their analysis plan are less likely to produce false positives than those that don't.</li><li><strong>Source diversity:</strong> Findings replicated across different labs, methods, and populations are substantially more trustworthy than single-site results.</li></ul><p>The AcaciaFund SQI incorporates these heuristics directly — weighting source authority, methodological rigor, and cross-source consensus into every quality score.</p><p>For a practical application of these concepts, explore <a href="/data/learn/data-quality-engineering/">Data Quality Engineering</a>, which shows how scientific testing principles extend to data pipelines.</p></div></details></div>
     </div>
     <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)" id="quiz-section" data-quiz='{"questions": [{"q": "Why does publication bias threaten the reliability of published research?", "options": ["Journals charge high subscription fees", "Null results are less likely to be published, skewing the evidence base", "Peer review is not rigorous enough", "Researchers do not share their data"], "a": 1, "type": "mc"}, {"q": "A study reports p = 0.04 with 20 participants per group and a very small effect size. How should you evaluate this claim?", "options": ["Accept it — p < 0.05 means it is true", "Treat with caution — small sample + small effect = likely false positive", "Ignore reporting standards entirely", "Reject — only large sample studies are valid"], "a": 1, "type": "mc"}, {"q": "Which Bloom taxonomy level involves breaking down an argument to identify assumptions and logical structure?", "options": ["Remember", "Understand", "Apply", "Analyze"], "a": 3, "type": "mc"}, {"q": "A finding has been replicated across five independent labs using different methodologies. Compared to a single-site study, this replication:", "options": ["Is equally trustworthy", "Is more trustworthy due to methodological diversity", "Is less trustworthy due to inconsistency", "Cannot be compared"], "a": 1, "type": "mc"}, {"q": "What is the key difference between an 'apply' level question and an 'analyze' level question?", "options": ["Apply is harder than analyze", "Apply uses knowledge in a new scenario; analyze breaks down structure and assumptions", "Apply is for science; analyze is for math", "There is no meaningful difference"], "a": 1, "type": "mc"}]}' data-quiz-lesson="markets/learn/science-method/">
       <h2 class="text-2xl font-bold mb-4" style="color:var(--color-text)">Knowledge Check</h2>
@@ -137,45 +134,53 @@
       <div id="quiz-summary" class="mt-6 p-4 rounded-lg hidden" style="background:var(--color-surface);border:1px solid var(--color-border)"></div>
       <button id="quiz-retry" class="mt-3 hidden px-4 py-2 text-sm font-semibold rounded-lg transition hover:opacity-80" style="background:var(--color-accent);color:#fff">Retry Quiz</button>
     </section>
-    <section class="mt-12 pt-8 border-t">
-      <h2 class="text-2xl font-bold mb-4">Bloom Taxonomy Questions</h2>
-      <div class="space-y-4">
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">Why does publication bias threaten the reliability of published research?</p>
-        </div>
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">A study reports p = 0.04 with 20 participants per group and a very small effect size. How should you evaluate this claim?</p>
-        </div>
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">Which Bloom taxonomy level involves breaking down an argument to identify assumptions and logical structure?</p>
-        </div>
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">A finding has been replicated across five independent labs using different methodologies. Compared to a single-site study, this replication:</p>
-        </div>
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">What is the key difference between an 'apply' level question and an 'analyze' level question?</p>
-        </div>
+    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
+      <h2 class="text-2xl font-bold mb-6 inline-flex items-center gap-2" style="color:var(--color-text)">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+        Flashcards
+      </h2>
+      <p class="text-xs mb-4" style="color:var(--color-text-muted)">Space = flip &middot; 1-4 = grade &middot; Swipe on mobile</p>
+      <div class="grid gap-4 sm:grid-cols-2" id="flashcard-grid">
+        <acacia-flashcard
+          data-term="P-Hacking"
+          data-definition="Running multiple statistical analyses or stopping data collection at convenient points until a significant p-value (<0.05) is found, inflating false positive rates."
+          data-card-id="markets/learn/science-method/#0"></acacia-flashcard>
+        <acacia-flashcard
+          data-term="Publication Bias"
+          data-definition="The tendency for journals to publish positive or novel results while rejecting null findings, distorting the published evidence base."
+          data-card-id="markets/learn/science-method/#1"></acacia-flashcard>
+        <acacia-flashcard
+          data-term="Effect Size"
+          data-definition="A quantitative measure of the magnitude of a phenomenon, independent of sample size — more informative than p-values alone for assessing practical significance."
+          data-card-id="markets/learn/science-method/#2"></acacia-flashcard>
+        <acacia-flashcard
+          data-term="Pre-registration"
+          data-definition="Publicly documenting a study's hypothesis, methodology, and analysis plan before data collection begins, reducing the risk of p-hacking and selective reporting."
+          data-card-id="markets/learn/science-method/#3"></acacia-flashcard>
+        <acacia-flashcard
+          data-term="SQI"
+          data-definition="Signal Quality Index — a composite metric measuring source authority, freshness, cross-source consensus, and relevance, used by AcaciaFund to score research reliability."
+          data-card-id="markets/learn/science-method/#4"></acacia-flashcard>
       </div>
+    </section>
+    <div class="mt-8 text-center">
+      <button id="mark-complete-btn" data-track-lesson="markets/learn/science-method/" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition" style="background:var(--color-accent);color:#fff">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+        <span id="complete-btn-text">Mark Complete</span>
+      </button>
+    </div>
+    <section class="mt-12 pt-8 border-t" id="quiz-section" data-quiz='{"questions": [{"q": "Why does publication bias threaten the reliability of published research?", "options": ["Journals charge high subscription fees", "Null results are less likely to be published, skewing the evidence base", "Peer review is not rigorous enough", "Researchers do not share their data"], "a": 1, "type": "mc"}, {"q": "A study reports p = 0.04 with 20 participants per group and a very small effect size. How should you evaluate this claim?", "options": ["Accept it — p < 0.05 means it is true", "Treat with caution — small sample + small effect = likely false positive", "Ignore reporting standards entirely", "Reject — only large sample studies are valid"], "a": 1, "type": "mc"}, {"q": "Which Bloom taxonomy level involves breaking down an argument to identify assumptions and logical structure?", "options": ["Remember", "Understand", "Apply", "Analyze"], "a": 3, "type": "mc"}, {"q": "A finding has been replicated across five independent labs using different methodologies. Compared to a single-site study, this replication:", "options": ["Is equally trustworthy", "Is more trustworthy due to methodological diversity", "Is less trustworthy due to inconsistency", "Cannot be compared"], "a": 1, "type": "mc"}, {"q": "What is the key difference between an 'apply' level question and an 'analyze' level question?", "options": ["Apply is harder than analyze", "Apply uses knowledge in a new scenario; analyze breaks down structure and assumptions", "Apply is for science; analyze is for math", "There is no meaningful difference"], "a": 1, "type": "mc"}]}' data-quiz-lesson="markets/learn/science-method/">
+      <h2 class="text-2xl font-bold mb-4" style="color:var(--color-text)">Knowledge Check</h2>
+      <p class="text-sm mb-4" style="color:var(--color-text-muted)">Test your understanding of this lesson.</p>
+      <div id="quiz-score" class="mb-4 text-sm font-semibold" style="color:var(--color-text-secondary)"></div>
+      <div id="quiz-container"></div>
+      <div id="quiz-summary" class="mt-6 p-4 rounded-lg hidden" style="background:var(--color-surface);border:1px solid var(--color-border)"></div>
+      <button id="quiz-retry" class="mt-3 hidden px-4 py-2 text-sm font-semibold rounded-lg transition hover:opacity-80" style="background:var(--color-accent);color:#fff">Retry Quiz</button>
     </section>
     <section class="mt-12 pt-8 border-t">
       <h2 class="text-2xl font-bold mb-6">Related Research</h2>
       <div class="grid gap-4 sm:grid-cols-3">
-        <a href="https://www.acaciafund.org/markets/research/science-1/" class="ghost-card block text-decoration:none">
+        <a href="https://www.acaciafund.org/markets/research/can-the-stockmarket-swallow-anthropic-spacex-and-openai/" class="ghost-card block text-decoration:none">
           <div class="p-3">
             
             <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
@@ -255,7 +260,7 @@
   </article>
 </div>
 
-<script src="/static/js/learning_hub.d41d8cd9.js" defer></script>
+<script src="/static/js/learning_hub.534fa53c.js" defer></script>
 <div class="newsletter-signup" style="background:var(--color-bg);border:1px solid var(--color-border);padding:2rem;border-radius:8px;text-align:center">
   <h3 style="color:var(--color-text)">Stay Updated</h3>
   <p style="color:var(--color-text-muted)">Get the latest research summaries delivered to your inbox.</p>
@@ -272,6 +277,6 @@
         <small>&copy; 2026 AcaciaFund &middot; Generated by the Acacia pipeline.</small>
     </footer>
 
-    <script src="/static/js/main.d41d8cd9.js"></script>
+
 </body>
 </html>

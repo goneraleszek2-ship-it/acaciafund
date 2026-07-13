@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Distributed Change Data Capture (CDC) State Machines with Debezium and Kafka</title>
-    <meta name="description" content="">
+    <meta name="description" content="Distributed Change Data Capture patterns using Debezium and state machine architectures for real-time transaction log mining.">
     <link rel="icon" href="/favicon.ico">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
@@ -14,7 +14,7 @@
 
 
     <script type="application/ld+json">
-{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "data-engineering"}, "author": {"@type": "Person", "name": "AcaciaFund"}, "dateModified": "2026-07-07T18:32:49.952554+00:00", "datePublished": "2026-07-07", "description": "", "headline": "Distributed Change Data Capture (CDC) State Machines with Debezium and Kafka", "inLanguage": "en", "keywords": "dataops, data, streaming, infrastructure, zero-copy-arrow-iceberg, stream-processing, temporal-graph-aml", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/data/knowledge/cdc-debezium-statemachines/", "@type": "WebPage"}, "proficiencyLevel": "", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-10T06:39:40Z", "signalQualityIndex": 1.0, "sqi": 1.0}
+{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "data-engineering"}, "author": {"@type": "Person", "name": "AcaciaFund"}, "dateModified": "2026-07-07T18:32:49.952554+00:00", "datePublished": "2026-07-07", "description": "Distributed Change Data Capture patterns using Debezium and state machine architectures for real-time transaction log mining.", "headline": "Distributed Change Data Capture (CDC) State Machines with Debezium and Kafka", "inLanguage": "en", "keywords": "dataops, data, streaming, infrastructure, zero-copy-arrow-iceberg, stream-processing, temporal-graph-aml", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/data/knowledge/cdc-debezium-statemachines/", "@type": "WebPage"}, "proficiencyLevel": "advanced", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-10T06:39:40Z", "signalQualityIndex": 1.0, "sqi": 1.0}
     </script>
 
 
@@ -34,6 +34,8 @@
                 <li><a href="/compliance/">Compliance</a></li>
                 <li><a href="/markets/">Markets</a></li>
                 <li><a href="/data/">Data</a></li>
+                <li><a href="/review/">Review</a></li>
+                <li><a href="/search/">Search</a></li>
             </ul>
         </nav>
     </header>
@@ -99,11 +101,7 @@
         </span>
         <span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
           <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
-          Suspicious Transaction Report
-        </span>
-        <span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
-          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
-          Beneficial Ownership
+          DataOps
         </span>
         <span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
           <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
@@ -117,6 +115,13 @@
           <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
           Apache Arrow / Parquet
         </span>
+        <span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+          Anti-Money Laundering
+        </span>
+      </div>
+      <div class="mt-2">
+        <span class="sqi-badge">SQI 1.000</span>
       </div>
     </header>
 
@@ -133,8 +138,7 @@ Every database state update is wrapped by Debezium into a highly structured JSON
 
 $$\Delta S = S_{\text{after}} - S_{\text{before}}$$
 
-```
-+------------------+ Write-Ahead Log +------------------+
+<pre><code class="language-">+------------------+ Write-Ahead Log +------------------+
 | Source Database | --------------------------> | Debezium Engine |
 +------------------+ +--------+---------+
  |
@@ -144,7 +148,7 @@ $$\Delta S = S_{\text{after}} - S_{\text{before}}$$
 +------------------+ Zero-Copy Streaming +------------------+
 | Apache Iceberg | &lt;-------------------------- | Apache Flink |
 +------------------+ +------------------+
-```
+</code></pre>
 
 When a database administrator executes a structural schema modification (e.g., appending an alternate currency code tracking column), the CDC state engine detects the schema version update via Kafka Schema Registry integrations. The downstream ingestion DAG parses the change, updates the active metadata schema configuration, and updates target tables inline without dropping connections or interrupting live compliance streams.</pre>
     </div>
@@ -250,17 +254,10 @@ When a database administrator executes a structural schema modification (e.g., a
         </div>
         <div class="ghost-card p-4 transition hover:shadow-md">
           <div class="flex items-center gap-2 mb-1">
-            <span class="text-xs font-mono px-1.5 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">str</span>
-            <span class="text-xs" style="color:var(--color-text-muted)">score: 0.9</span>
+            <span class="text-xs font-mono px-1.5 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">dataops</span>
+            <span class="text-xs" style="color:var(--color-text-muted)">score: 1.0</span>
           </div>
-          <h3 class="text-sm font-semibold" style="color:var(--color-text)">Suspicious Transaction Report</h3>
-        </div>
-        <div class="ghost-card p-4 transition hover:shadow-md">
-          <div class="flex items-center gap-2 mb-1">
-            <span class="text-xs font-mono px-1.5 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">beneficial-ownership</span>
-            <span class="text-xs" style="color:var(--color-text-muted)">score: 0.9</span>
-          </div>
-          <h3 class="text-sm font-semibold" style="color:var(--color-text)">Beneficial Ownership</h3>
+          <h3 class="text-sm font-semibold" style="color:var(--color-text)">DataOps</h3>
         </div>
         <div class="ghost-card p-4 transition hover:shadow-md">
           <div class="flex items-center gap-2 mb-1">
@@ -283,11 +280,27 @@ When a database administrator executes a structural schema modification (e.g., a
           </div>
           <h3 class="text-sm font-semibold" style="color:var(--color-text)">Apache Arrow / Parquet</h3>
         </div>
+        <div class="ghost-card p-4 transition hover:shadow-md">
+          <div class="flex items-center gap-2 mb-1">
+            <span class="text-xs font-mono px-1.5 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">aml</span>
+            <span class="text-xs" style="color:var(--color-text-muted)">score: 0.9</span>
+          </div>
+          <h3 class="text-sm font-semibold" style="color:var(--color-text)">Anti-Money Laundering</h3>
+        </div>
       </div>
     </section>
     <section class="mt-12 pt-8 border-t">
       <h2 class="text-2xl font-bold mb-6">Related Research</h2>
       <div class="grid gap-4 sm:grid-cols-3">
+        <a href="https://www.acaciafund.org/data/research/kafka-streaming-event-driven/" class="ghost-card block text-decoration:none">
+          <div class="p-3">
+            
+            <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Real-Time Streaming with Apache Kafka: From Pub/Sub to Event-Driven Architecture</span>
+          </div>
+        </a>
         <a href="https://www.acaciafund.org/data/research/show-hn-turn-commodity-wifi-signals-into-real-time-spatial-i/" class="ghost-card block text-decoration:none">
           <div class="p-3">
             
@@ -304,15 +317,6 @@ When a database administrator executes a structural schema modification (e.g., a
   Data Engineering
 </span>
             <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">2027 Data Engineering Predictions: AI-Augmented Pipelines, Real-Time Universal Catalogs, and the Death of Batch</span>
-          </div>
-        </a>
-        <a href="https://www.acaciafund.org/data/research/terraform-data-infrastructure/" class="ghost-card block text-decoration:none">
-          <div class="p-3">
-            
-            <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
-  Data Engineering
-</span>
-            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Terraform for Data Infrastructure: Infrastructure as Code for the Data Platform</span>
           </div>
         </a>
       </div>
@@ -352,7 +356,7 @@ When a database administrator executes a structural schema modification (e.g., a
   </article>
 </div>
 
-<script src="/static/js/learning_hub.d41d8cd9.js" defer></script>
+<script src="/static/js/learning_hub.534fa53c.js" defer></script>
 <div class="newsletter-signup" style="background:var(--color-bg);border:1px solid var(--color-border);padding:2rem;border-radius:8px;text-align:center">
   <h3 style="color:var(--color-text)">Stay Updated</h3>
   <p style="color:var(--color-text-muted)">Get the latest research summaries delivered to your inbox.</p>
@@ -369,6 +373,6 @@ When a database administrator executes a structural schema modification (e.g., a
         <small>&copy; 2026 AcaciaFund &middot; Generated by the Acacia pipeline.</small>
     </footer>
 
-    <script src="/static/js/main.d41d8cd9.js"></script>
+
 </body>
 </html>

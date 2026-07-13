@@ -14,7 +14,7 @@
 
 
     <script type="application/ld+json">
-{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "stock"}, "author": {"@type": "Person", "name": "AcaciaFund"}, "dateModified": "2026-07-07T16:06:20.413657+00:00", "datePublished": "2026-07-07", "description": "A modern electronic Limit Order Book (LOB) implements a continuous double auction \u2014 the canonical mechanism for price discovery in equity, futures, and foreign exchange markets. The LOB model is not m", "headline": "Limit Order Book Physics and Systemic Risk Mechanics", "inLanguage": "en", "keywords": "markets, core-architecture, market, risk-management, derivatives, foundations", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/markets/knowledge/core-foundations/", "@type": "WebPage"}, "proficiencyLevel": "", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-10T06:39:40Z", "signalQualityIndex": 1.0, "sqi": 1.0}
+{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "stock"}, "author": {"@type": "Person", "name": "AcaciaFund"}, "dateModified": "2026-07-07T16:06:20.413657+00:00", "datePublished": "2026-07-07", "description": "A modern electronic Limit Order Book (LOB) implements a continuous double auction \u2014 the canonical mechanism for price discovery in equity, futures, and foreign exchange markets. The LOB model is not m", "headline": "Limit Order Book Physics and Systemic Risk Mechanics", "inLanguage": "en", "keywords": "markets, core-architecture, market, risk-management, derivatives, foundations", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/markets/knowledge/core-foundations/", "@type": "WebPage"}, "proficiencyLevel": "advanced", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-10T06:39:40Z", "signalQualityIndex": 1.0, "sqi": 1.0}
     </script>
 
 
@@ -34,6 +34,8 @@
                 <li><a href="/compliance/">Compliance</a></li>
                 <li><a href="/markets/">Markets</a></li>
                 <li><a href="/data/">Data</a></li>
+                <li><a href="/review/">Review</a></li>
+                <li><a href="/search/">Search</a></li>
             </ul>
         </nav>
     </header>
@@ -53,7 +55,74 @@
 
 <div id="reading-progress" style="position:fixed;top:0;left:0;height:3px;z-index:9999;width:0%;background:var(--color-accent)"></div>
 
-<div class="flex gap-8  flex-col">
+<div class="flex gap-8 md:flex-row flex-col">
+  <aside class="toc-sidebar shrink-0 order-last md:order-first md:sticky md:top-20 md:self-start md:max-h-[calc(100vh-6rem)] md:overflow-y-auto md:w-52">
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="text-xs font-semibold uppercase tracking-wide" style="color:var(--color-text-muted)">On this page</h2>
+      <button id="focus-toggle" class="text-xs px-2 py-1 rounded" style="color:var(--color-text-muted);background:var(--color-bg)" title="Focus mode" aria-label="Toggle focus mode">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 4h4M6 20h4M18 4h-4M18 20h-4M4 6v4M4 18v4M20 6v4M20 18v4"/></svg>
+      </button>
+    </div>
+    <nav aria-label="Table of contents">
+      <ul class="space-y-1 text-sm">
+        <li>
+          <a href="#order-arrival-as-a-marked-point-process" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            Order Arrival as a Marked Point Process
+          </a>
+        </li>
+        <li>
+          <a href="#price-discovery-mechanics" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            Price Discovery Mechanics
+          </a>
+        </li>
+        <li>
+          <a href="#section-2-liquidity-fragmentation" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Section 2: Liquidity Fragmentation
+          </a>
+        </li>
+        <li>
+          <a href="#the-fragmentation-topology" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            The Fragmentation Topology
+          </a>
+        </li>
+        <li>
+          <a href="#liquidity-fragmentation-impact-on-price-discovery" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            Liquidity Fragmentation Impact on Price Discovery
+          </a>
+        </li>
+        <li>
+          <a href="#liquidity-fragmentation-metrics" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            Liquidity Fragmentation Metrics
+          </a>
+        </li>
+        <li>
+          <a href="#section-3-systemic-counterparty-risk-bipartite-exposure-networks" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Section 3: Systemic Counterparty Risk — Bipartite Exposure Networks
+          </a>
+        </li>
+        <li>
+          <a href="#nbfi-intermediation-risk" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            NBFI Intermediation Risk
+          </a>
+        </li>
+        <li>
+          <a href="#bipartite-exposure-network" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            Bipartite Exposure Network
+          </a>
+        </li>
+        <li>
+          <a href="#contagion-simulation" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            Contagion Simulation
+          </a>
+        </li>
+        <li>
+          <a href="#regulatory-mitigation-ccp-resilience" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            Regulatory Mitigation — CCP Resilience
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
 
   <article class="min-w-0 flex-1">
     <nav aria-label="Breadcrumb" class="mb-4 text-xs" style="color:var(--color-text-muted)">
@@ -102,16 +171,11 @@
         </span>
         <span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
           <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
-          Suspicious Transaction Report
+          Risk Management
         </span>
-        <span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
-          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
-          Currency Transaction Report
-        </span>
-        <span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
-          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
-          Beneficial Ownership
-        </span>
+      </div>
+      <div class="mt-2">
+        <span class="sqi-badge">SQI 1.000</span>
       </div>
     </header>
 
@@ -139,8 +203,7 @@ The bid-ask spread at time `t` is:
 
 When `s(t) = 0` (a crossed market), a trade executes at the crossing price using the standard price-time priority matching algorithm:
 
-```
-while exists b ∈ B, a ∈ A where b.price >= a.price:
+<pre><code class="language-">while exists b ∈ B, a ∈ A where b.price >= a.price:
  trade_price = b.price if b.timestamp < a.timestamp else a.price
  trade_volume = min(b.quantity, a.quantity)
  b.quantity -= trade_volume
@@ -149,11 +212,11 @@ while exists b ∈ B, a ∈ A where b.price >= a.price:
  if a.quantity == 0: remove a from A
  p_last(t) = trade_price
  v(t) = trade_volume
-```
+</code></pre>
 
 This is the deterministic kernel of the market. Every trade that ever executes is the deterministic output of this algorithm applied to the order stream. The apparent unpredictability of prices arises not from the matching engine but from the order submission process, which is a stochastic process governed by participant strategies (liquidity provision, momentum trading, arbitrage, hedging).
 
-### Order Arrival as a Marked Point Process
+<h3 id="order-arrival-as-a-marked-point-process">Order Arrival as a Marked Point Process</h3>
 
 Order submissions to the LOB follow a doubly stochastic Poisson process (Cox process) with intensity:
 
@@ -166,7 +229,7 @@ where:
 
 The marked point process includes order type (limit, market, cancel), side (buy, sell), price, and quantity as marks. Each mark has a conditional distribution that depends on the current LOB state, making the joint process path-dependent.
 
-### Price Discovery Mechanics
+<h3 id="price-discovery-mechanics">Price Discovery Mechanics</h3>
 
 Price discovery is the process by which the LOB incorporates new information into the equilibrium price. In efficient market theory (Fama, 1970), this occurs instantaneously. In microstructure reality, information is incorporated through the following sequence:
 
@@ -188,30 +251,28 @@ The temporary (transient) price impact is:
 
 which decays exponentially with time constant `τ ≈ 10-100 milliseconds` as liquidity providers re-enter the book. The difference between permanent and temporary impact is the liquidity provider's profit — they earn the temporary impact premium for supplying immediacy.
 
-## Section 2: Liquidity Fragmentation
-
-### The Fragmentation Topology
+<div class="section-harvester" data-section="overview" style="--section-color:#3a7d5c"><details class="section-collapse" open><summary class="section-summary"><h2 id="section-2-liquidity-fragmentation">Section 2: Liquidity Fragmentation</h2></summary><div class="section-body"><h3 id="the-fragmentation-topology">The Fragmentation Topology</h3>
 
 Post-MiFID II (2018), European equity trading is dispersed across three venue types:
-- **Regulated markets (RM):** Primary exchanges (e.g., Xetra, Euronext, LSE) with pre-trade transparency
-- **Multilateral trading facilities (MTFs):** Alternative venues (e.g., Chi-X, Turquoise, Cboe Europe) competing with RMs on fee structure and latency
-- **Systematic internalisers (SIs):** Investment firms that execute client orders against their own inventory without pre-trade transparency
+- <strong>Regulated markets (RM):</strong> Primary exchanges (e.g., Xetra, Euronext, LSE) with pre-trade transparency
+- <strong>Multilateral trading facilities (MTFs):</strong> Alternative venues (e.g., Chi-X, Turquoise, Cboe Europe) competing with RMs on fee structure and latency
+- <strong>Systematic internalisers (SIs):</strong> Investment firms that execute client orders against their own inventory without pre-trade transparency
 
 Dark pools — trading venues without pre-trade transparency — account for approximately 12-15% of European equity volume as of 2026. They exist in two structural variants:
-- **Continuous dark pools:** Match orders at the mid-point of the lit exchange's best bid and offer (PBBO). The PBBO mid-point provides a reference price that eliminates adverse selection for liquidity demanders.
-- **Periodic auctions:** Batch auctions (e.g., Cboe Europe's periodic auction book) that execute at the mid-point at fixed intervals (every 10-100 milliseconds). The batching interval introduces intentional latency, reducing the information advantage of fast traders.
+- <strong>Continuous dark pools:</strong> Match orders at the mid-point of the lit exchange's best bid and offer (PBBO). The PBBO mid-point provides a reference price that eliminates adverse selection for liquidity demanders.
+- <strong>Periodic auctions:</strong> Batch auctions (e.g., Cboe Europe's periodic auction book) that execute at the mid-point at fixed intervals (every 10-100 milliseconds). The batching interval introduces intentional latency, reducing the information advantage of fast traders.
 
-### Liquidity Fragmentation Impact on Price Discovery
+<h3 id="liquidity-fragmentation-impact-on-price-discovery">Liquidity Fragmentation Impact on Price Discovery</h3>
 
 The fragmentation of liquidity across multiple venues degrades price discovery efficiency through three mechanisms:
 
-1. **Quote snipping.** A market order on venue `A` executes against visible liquidity at that venue. If the same stock is traded on venue `B` and `C` with stale quotes (not updated because the inter-venue latency exceeds the trading latency), the market order books the stale quotes on `B` and `C` before liquidity providers can cancel them. This creates phantom liquidity — displayed volume that is no longer available because the reference price has moved — and generates adverse selection for liquidity providers, widening spreads across all venues.
+1. <strong>Quote snipping.</strong> A market order on venue `A` executes against visible liquidity at that venue. If the same stock is traded on venue `B` and `C` with stale quotes (not updated because the inter-venue latency exceeds the trading latency), the market order books the stale quotes on `B` and `C` before liquidity providers can cancel them. This creates phantom liquidity — displayed volume that is no longer available because the reference price has moved — and generates adverse selection for liquidity providers, widening spreads across all venues.
 
-2. **Latency arbitrage.** Fast traders co-located at multiple venues observe a price move on venue `A` and trade against stale quotes on venue `B` within 5-10 microseconds. This is not front-running (the trader has no knowledge of a specific order) but latency arbitrage (the trader exploits the price discovery asynchrony). The cost of latency arbitrage is borne by liquidity providers who cannot cancel quotes fast enough — a form of taxation on slow capital.
+2. <strong>Latency arbitrage.</strong> Fast traders co-located at multiple venues observe a price move on venue `A` and trade against stale quotes on venue `B` within 5-10 microseconds. This is not front-running (the trader has no knowledge of a specific order) but latency arbitrage (the trader exploits the price discovery asynchrony). The cost of latency arbitrage is borne by liquidity providers who cannot cancel quotes fast enough — a form of taxation on slow capital.
 
-3. **Dark pool information leakage.** While dark pools do not display quotes, their order flow is observable through trade reporting (trade reports are published within microseconds of execution). A sequence of mid-point executions concentrated near the bid or ask reveals that a large buyer or seller is working an order in the dark. This information is used by fast traders to position quotes in the lit market ahead of the dark order flow, increasing the execution shortfall for the dark order.
+3. <strong>Dark pool information leakage.</strong> While dark pools do not display quotes, their order flow is observable through trade reporting (trade reports are published within microseconds of execution). A sequence of mid-point executions concentrated near the bid or ask reveals that a large buyer or seller is working an order in the dark. This information is used by fast traders to position quotes in the lit market ahead of the dark order flow, increasing the execution shortfall for the dark order.
 
-### Liquidity Fragmentation Metrics
+<h3 id="liquidity-fragmentation-metrics">Liquidity Fragmentation Metrics</h3>
 
 The assessment of fragmentation requires a quantitative metric. This analysis uses the Herfindahl-Hirschman Index (HHI) of volume concentration as the baseline measurement framework:
 
@@ -223,13 +284,11 @@ where `V_i` is the volume executed on venue `i`. An HHI below 0.2 indicates high
 
 where `κ ≈ 0.15` is the fragmentation cost coefficient estimated from European equity data (2019-2026). For a stock with `HHI = 0.15` and `s_lit = 0.02%`, the effective spread is `s_effective = 0.02% + 0.15 × (1/0.15 - 1) × 0.02% = 0.037%` — nearly double the lit spread.
 
-## Section 3: Systemic Counterparty Risk — Bipartite Exposure Networks
-
-### NBFI Intermediation Risk
+</div></details></div><div class="section-harvester" data-section="key_findings" style="--section-color:#6ee7b7"><details class="section-collapse" open><summary class="section-summary"><h2 id="section-3-systemic-counterparty-risk-bipartite-exposure-networks">Section 3: Systemic Counterparty Risk — Bipartite Exposure Networks</h2></summary><div class="section-body"><h3 id="nbfi-intermediation-risk">NBFI Intermediation Risk</h3>
 
 Non-Bank Financial Institutions (NBFIs) — hedge funds, mutual funds, pension funds, insurance companies, and money market funds — now account for 51% of global financial assets (FSB, 2025). Their interconnectedness through derivative contracts, securities lending, and repo agreements creates a structured channel for shock propagation that operates outside the traditional banking sector's regulatory perimeter.
 
-### Bipartite Exposure Network
+<h3 id="bipartite-exposure-network">Bipartite Exposure Network</h3>
 
 The financial system is modelled as a bipartite graph `G = (N ∪ A, E)` where:
 
@@ -239,18 +298,17 @@ The financial system is modelled as a bipartite graph `G = (N ∪ A, E)` where:
 
 A shock to asset class `a_j` (e.g., a 20% decline in corporate bonds) propagates through the network as follows:
 
-1. **Mark-to-market losses.** Each institution `n_i` with exposure `w_{ij} > 0` suffers an immediate loss `L_i = w_{ij} × δ_j` where `δ_j` is the shock magnitude.
+1. <strong>Mark-to-market losses.</strong> Each institution `n_i` with exposure `w_{ij} > 0` suffers an immediate loss `L_i = w_{ij} × δ_j` where `δ_j` is the shock magnitude.
 
-2. **Margin calls.** If `n_i` uses leverage `λ_i = total_assets / equity`, the loss triggers margin calls when `L_i / equity_i > margin_threshold`. The margin call forces asset sales at depressed prices, creating a feedback loop.
+2. <strong>Margin calls.</strong> If `n_i` uses leverage `λ_i = total_assets / equity`, the loss triggers margin calls when `L_i / equity_i > margin_threshold`. The margin call forces asset sales at depressed prices, creating a feedback loop.
 
-3. **Contagion.** Institutions that are counterparties to `n_i` in derivative contracts face counterparty credit risk: if `n_i` defaults, the replacement cost of the derivative position must be funded, potentially triggering further defaults.
+3. <strong>Contagion.</strong> Institutions that are counterparties to `n_i` in derivative contracts face counterparty credit risk: if `n_i` defaults, the replacement cost of the derivative position must be funded, potentially triggering further defaults.
 
-### Contagion Simulation
+<h3 id="contagion-simulation">Contagion Simulation</h3>
 
 The systemic risk simulation iterates:
 
-```
-def simulate_contagion(G, shock_asset, shock_magnitude, max_iterations=10):
+<pre><code class="language-">def simulate_contagion(G, shock_asset, shock_magnitude, max_iterations=10):
  defaults = set()
  losses = {n: 0.0 for n in G.NBFIs}
  
@@ -271,29 +329,29 @@ def simulate_contagion(G, shock_asset, shock_magnitude, max_iterations=10):
  shock_magnitude[a] *= (1 + fire_sale_discount)
  
  return defaults, losses
-```
+</code></pre>
 
 The critical parameter is the fire sale discount — the additional price decline caused by forced asset sales from defaulting institutions. Empirical estimates (FSB, 2024) put the fire sale discount at 5-15% for liquid assets and 25-40% for illiquid structured products. The contagion threshold is reached when the number of defaults exceeds a critical value `D_crit` — beyond this point, the fire sale discount self-amplifies through the network, producing a systemic cascade.
 
-### Regulatory Mitigation — CCP Resilience
+<h3 id="regulatory-mitigation-ccp-resilience">Regulatory Mitigation — CCP Resilience</h3>
 
 Central Counterparties (CCPs) sit between NBFI counterparties in derivative trades, mutualising counterparty risk. A CCP is a node in the bipartite exposure network that guarantees trade settlement: if institution `A` defaults on a derivative with institution `B`, the CCP steps in to fulfil the contract.
 
 CCP resilience depends on:
-- **Margin adequacy:** Initial margin must cover potential future exposure at 99% confidence over the liquidation period
-- **Default fund size:** The CCP's default fund must cover the simultaneous default of its two largest clearing members
-- **Waterfall structure:** The CCP's financial resources are deployed in order: defaulter's margin → defaulter's default fund contribution → CCP skin in the game → mutualised default fund contributions
+- <strong>Margin adequacy:</strong> Initial margin must cover potential future exposure at 99% confidence over the liquidation period
+- <strong>Default fund size:</strong> The CCP's default fund must cover the simultaneous default of its two largest clearing members
+- <strong>Waterfall structure:</strong> The CCP's financial resources are deployed in order: defaulter's margin → defaulter's default fund contribution → CCP skin in the game → mutualised default fund contributions
 
 The 2025 stress test of EU CCPs (ESMA, 2025) found that the two-cover rule (largest two members defaulting simultaneously) would exhaust the default fund for CCPs clearing less-liquid asset classes (corporate credit, commodity derivatives) in a 3-sigma stress scenario. This is the structural vulnerability: CCPs are resilient for liquid assets but become a contagion channel themselves when the assets they clear become illiquid.
 
 ---
 
-**Last Updated:** 2026-07-07
-**Version:** 1.0.0
-**Classification:** Market Microstructure Foundations
-**Primary Sources:** Kyle (1985) *Continuous Auctions and Insider Trading*; Fama (1970) *Efficient Capital Markets*; MiFID II (2014/65/EU); FSB 2025 NBFI Monitor; ESMA 2025 CCP Stress Test
-**Confidence Score:** 1.00
-**Ontology Tag:** market/core-foundations</pre>
+<strong>Last Updated:</strong> 2026-07-07
+<strong>Version:</strong> 1.0.0
+<strong>Classification:</strong> Market Microstructure Foundations
+<strong>Primary Sources:</strong> Kyle (1985) <em>Continuous Auctions and Insider Trading</em>; Fama (1970) <em>Efficient Capital Markets</em>; MiFID II (2014/65/EU); FSB 2025 NBFI Monitor; ESMA 2025 CCP Stress Test
+<strong>Confidence Score:</strong> 1.00
+<strong>Ontology Tag:</strong> market/core-foundations</pre></div></details></div>
     </div>
     <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
       <h2 class="text-2xl font-bold mb-4 inline-flex items-center gap-2" style="color:var(--color-text)">
@@ -324,6 +382,19 @@ The 2025 stress test of EU CCPs (ESMA, 2025) found that the two-cover rule (larg
             <div class="flex-1 min-w-0">
               <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">MSCI</h3>
               <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">MSCI research — factor investing, ESG, market analytics</p>
+            </div>
+          </div>
+        </a>
+        <a href="https://arxiv.org/list/math.FIN/recent" target="_blank" rel="noopener" class="ghost-card p-4 block transition hover:shadow-md" style="text-decoration:none">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 mt-0.5">
+              <span class="inline-block text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">
+                arXiv math.FIN
+              </span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">arXiv math.FIN</h3>
+              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">arXiv Quantitative Finance — mathematical finance papers, market models, portfolio theory</p>
             </div>
           </div>
         </a>
@@ -366,19 +437,6 @@ The 2025 stress test of EU CCPs (ESMA, 2025) found that the two-cover rule (larg
             </div>
           </div>
         </a>
-        <a href="https://www.aqr.com/Insights" target="_blank" rel="noopener" class="ghost-card p-4 block transition hover:shadow-md" style="text-decoration:none">
-          <div class="flex items-start gap-3">
-            <div class="shrink-0 mt-0.5">
-              <span class="inline-block text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">
-                AQR
-              </span>
-            </div>
-            <div class="flex-1 min-w-0">
-              <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">AQR</h3>
-              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">AQR Capital — academic research on factors, momentum, value</p>
-            </div>
-          </div>
-        </a>
       </div>
     </section>
     <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
@@ -404,24 +462,10 @@ The 2025 stress test of EU CCPs (ESMA, 2025) found that the two-cover rule (larg
         </div>
         <div class="ghost-card p-4 transition hover:shadow-md">
           <div class="flex items-center gap-2 mb-1">
-            <span class="text-xs font-mono px-1.5 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">str</span>
+            <span class="text-xs font-mono px-1.5 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">risk-management</span>
             <span class="text-xs" style="color:var(--color-text-muted)">score: 0.9</span>
           </div>
-          <h3 class="text-sm font-semibold" style="color:var(--color-text)">Suspicious Transaction Report</h3>
-        </div>
-        <div class="ghost-card p-4 transition hover:shadow-md">
-          <div class="flex items-center gap-2 mb-1">
-            <span class="text-xs font-mono px-1.5 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">ctr</span>
-            <span class="text-xs" style="color:var(--color-text-muted)">score: 0.9</span>
-          </div>
-          <h3 class="text-sm font-semibold" style="color:var(--color-text)">Currency Transaction Report</h3>
-        </div>
-        <div class="ghost-card p-4 transition hover:shadow-md">
-          <div class="flex items-center gap-2 mb-1">
-            <span class="text-xs font-mono px-1.5 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">beneficial-ownership</span>
-            <span class="text-xs" style="color:var(--color-text-muted)">score: 0.9</span>
-          </div>
-          <h3 class="text-sm font-semibold" style="color:var(--color-text)">Beneficial Ownership</h3>
+          <h3 class="text-sm font-semibold" style="color:var(--color-text)">Risk Management</h3>
         </div>
       </div>
     </section>
@@ -492,7 +536,7 @@ The 2025 stress test of EU CCPs (ESMA, 2025) found that the two-cover rule (larg
   </article>
 </div>
 
-<script src="/static/js/learning_hub.d41d8cd9.js" defer></script>
+<script src="/static/js/learning_hub.534fa53c.js" defer></script>
 <div class="newsletter-signup" style="background:var(--color-bg);border:1px solid var(--color-border);padding:2rem;border-radius:8px;text-align:center">
   <h3 style="color:var(--color-text)">Stay Updated</h3>
   <p style="color:var(--color-text-muted)">Get the latest research summaries delivered to your inbox.</p>
@@ -509,6 +553,6 @@ The 2025 stress test of EU CCPs (ESMA, 2025) found that the two-cover rule (larg
         <small>&copy; 2026 AcaciaFund &middot; Generated by the Acacia pipeline.</small>
     </footer>
 
-    <script src="/static/js/main.d41d8cd9.js"></script>
+
 </body>
 </html>

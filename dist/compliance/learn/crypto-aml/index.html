@@ -1,6 +1,4 @@
-<span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
-  AML
-</span><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
@@ -34,6 +32,8 @@
                 <li><a href="/compliance/">Compliance</a></li>
                 <li><a href="/markets/">Markets</a></li>
                 <li><a href="/data/">Data</a></li>
+                <li><a href="/review/">Review</a></li>
+                <li><a href="/search/">Search</a></li>
             </ul>
         </nav>
     </header>
@@ -127,19 +127,26 @@
         <a href="/tags/crypto-finance/"><kbd>crypto-finance</kbd></a>
       </div>
       <div class="mt-3 flex flex-wrap gap-1.5">
-        <span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
-          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
-          Beneficial Ownership
-        </span>
-        <span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
+        <a href="/concepts/regtech/" class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full no-underline" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);text-decoration:none">
           <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
           Regulatory Technology
-        </span>
+        </a>
+        <a href="/concepts/aml/" class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full no-underline" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);text-decoration:none">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+          Anti-Money Laundering
+        </a>
+        <a href="/concepts/regulatory-compliance/" class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full no-underline" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);text-decoration:none">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+          Regulatory Compliance
+        </a>
+      </div>
+      <div class="mt-2">
+        <span class="sqi-badge">SQI 0.930</span>
       </div>
     </header>
 
     <div class="prose prose-lg prose-blue max-w-none">
-      <p>By 2026, stablecoin transaction volumes have reached $9.8 trillion annually, and 61% of financial institutions now prioritize real-time AML/CFT monitoring for crypto-asset transactions. The era of crypto operating outside regulatory frameworks is over — compliance is now a first-class requirement for any digital asset business.</p><div class="section-harvester" data-section="overview" style="--section-color:#c97d3e"><details class="section-collapse" open><summary class="section-summary"><h2 id="why-crypto-aml-matters">Why Crypto AML Matters</h2></summary><div class="section-body"><p>Cryptocurrencies present unique AML challenges: pseudonymous transactions, instant cross-border movement, decentralized finance (DeFi) protocols with no central intermediary, and privacy-enhancing technologies like mixers and zero-knowledge proofs. Criminal organizations exploit these features for ransomware payments, darknet market transactions, and laundering proceeds through decentralized exchanges.</p><p>The <strong>Financial Action Task Force (FATF)</strong> has updated its Recommendations to cover virtual asset service providers (VASPs), requiring them to implement the same AML/CFT measures as traditional financial institutions. By 2026, 128 jurisdictions have introduced or are introducing crypto-specific regulations.</p></div></details></div><div class="section-harvester" data-section="key_findings" style="--section-color:#fbbf24"><details class="section-collapse" open><summary class="section-summary"><h2 id="the-travel-rule-for-crypto">The Travel Rule for Crypto</h2></summary><div class="section-body"><p>FATF Recommendation 16 (the "Travel Rule") requires VASPs to share originator and beneficiary information for transactions above a threshold (typically $1,000). This applies to all virtual asset transfers. Implementation uses specialized travel rule protocols like <strong>OpenVASP</strong>, <strong>TRISA</strong>, and the <strong>IVMS 101</strong> data standard. As of 2026, the Travel Rule is enforced in the EU (MiCA), US (FinCEN guidance), Singapore, Japan, and UAE.</p></div></details></div><div class="section-harvester" data-section="applied_scenario" style="--section-color:#c97d3e"><details class="section-collapse" open><summary class="section-summary"><h2 id="blockchain-analytics-forensics">Blockchain Analytics & Forensics</h2></summary><div class="section-body"><p>Blockchain analytics tools — Chainalysis, TRM Labs, Elliptic — trace transaction flows across public ledgers. Key techniques include:</p><ul><li><strong>Cluster analysis:</strong> Grouping addresses controlled by the same entity using heuristic rules (common input, change address detection).</li><li><strong>Attribution tagging:</strong> Labeling addresses associated with known services, exchanges, mixers, or criminal entities.</li><li><strong>Risk scoring:</strong> Assigning risk scores to addresses based on their transaction history and proximity to known illicit activity.</li><li><strong>Graph analysis:</strong> Visualizing complex transaction networks to uncover layering patterns and fund movement across hundreds of hops.</li></ul></div></details></div><div class="section-harvester" data-section="source_analysis" style="--section-color:#c97d3e"><details class="section-collapse" open><summary class="section-summary"><h2 id="defi-compliance">DeFi Compliance</h2></summary><div class="section-body"><p>Decentralized finance poses the hardest challenge: no central operator, no KYC, instant composability. The 2026 regulatory approach focuses on:</p><ul><li><strong>Front-end accountability:</strong> Requiring DeFi interfaces and dApp front-ends to implement geoblocking and access controls.</li><li><strong>Wallet-level screening:</strong> Mandating that wallet providers screen addresses before processing transactions.</li><li><strong>Stablecoin regulation:</strong> The EU's MiCA framework and US stablecoin bills require issuers to hold reserves, register as e-money institutions, and comply with AML obligations.</li><li><strong>On-chain analytics obligations:</strong> Some jurisdictions now require DeFi protocols to integrate real-time screening at the smart contract level.</li></ul></div></details></div><div class="section-harvester" data-section="domain_breakdown" style="--section-color:#d97706"><details class="section-collapse" open><summary class="section-summary"><h2 id="2026-landscape">2026 Landscape</h2></summary><div class="section-body"><p>The convergence of AI and blockchain analytics is accelerating. Machine learning models now detect suspicious patterns in real-time across multiple blockchains simultaneously. The AI-native AML platforms emerging in 2026 combine transaction monitoring, sanctions screening, and fraud detection into unified systems — the same convergence happening in traditional finance.</p><p>For a refresher on AML fundamentals, revisit <a href="/learn/aml-basics/">AML Fundamentals</a>. To understand the data infrastructure needed for real-time screening, see <a href="/learn/dataops-introduction/">Introduction to DataOps</a>.</p></div></details></div>
+      <p>By 2026, stablecoin transaction volumes have reached $9.8 trillion annually, and 61% of financial institutions now prioritize real-time AML/CFT monitoring for crypto-asset transactions. The era of crypto operating outside regulatory frameworks is over — compliance is now a first-class requirement for any digital asset business.</p><div class="section-harvester" data-section="overview" style="--section-color:#c97d3e"><details class="section-collapse" open><summary class="section-summary"><h2 id="why-crypto-aml-matters">Why Crypto AML Matters</h2></summary><div class="section-body"><p>Cryptocurrencies present unique AML challenges: pseudonymous transactions, instant cross-border movement, decentralized finance (DeFi) protocols with no central intermediary, and privacy-enhancing technologies like mixers and zero-knowledge proofs. Criminal organizations exploit these features for ransomware payments, darknet market transactions, and laundering proceeds through decentralized exchanges.</p><p>The <strong>Financial Action Task Force (FATF)</strong> has updated its Recommendations to cover virtual asset service providers (VASPs), requiring them to implement the same AML/CFT measures as traditional financial institutions. By 2026, 128 jurisdictions have introduced or are introducing crypto-specific regulations.</p></div></details></div><div class="section-harvester" data-section="key_findings" style="--section-color:#fbbf24"><details class="section-collapse" open><summary class="section-summary"><h2 id="the-travel-rule-for-crypto">The Travel Rule for Crypto</h2></summary><div class="section-body"><p>FATF Recommendation 16 (the "Travel Rule") requires VASPs to share originator and beneficiary information for transactions above a threshold (typically $1,000). This applies to all virtual asset transfers. Implementation uses specialized travel rule protocols like <strong>OpenVASP</strong>, <strong>TRISA</strong>, and the <strong>IVMS 101</strong> data standard. As of 2026, the Travel Rule is enforced in the EU (MiCA), US (FinCEN guidance), Singapore, Japan, and UAE.</p></div></details></div><div class="section-harvester" data-section="applied_scenario" style="--section-color:#c97d3e"><details class="section-collapse" open><summary class="section-summary"><h2 id="blockchain-analytics-forensics">Blockchain Analytics & Forensics</h2></summary><div class="section-body"><p>Blockchain analytics tools — Chainalysis, TRM Labs, Elliptic — trace transaction flows across public ledgers. Key techniques include:</p><ul><li><strong>Cluster analysis:</strong> Grouping addresses controlled by the same entity using heuristic rules (common input, change address detection).</li><li><strong>Attribution tagging:</strong> Labeling addresses associated with known services, exchanges, mixers, or criminal entities.</li><li><strong>Risk scoring:</strong> Assigning risk scores to addresses based on their transaction history and proximity to known illicit activity.</li><li><strong>Graph analysis:</strong> Visualizing complex transaction networks to uncover layering patterns and fund movement across hundreds of hops.</li></ul></div></details></div><div class="section-harvester" data-section="source_analysis" style="--section-color:#c97d3e"><details class="section-collapse" open><summary class="section-summary"><h2 id="defi-compliance">DeFi Compliance</h2></summary><div class="section-body"><p>Decentralized finance poses the hardest challenge: no central operator, no KYC, instant composability. The 2026 regulatory approach focuses on:</p><ul><li><strong>Front-end accountability:</strong> Requiring DeFi interfaces and dApp front-ends to implement geoblocking and access controls.</li><li><strong>Wallet-level screening:</strong> Mandating that wallet providers screen addresses before processing transactions.</li><li><strong>Stablecoin regulation:</strong> The EU's MiCA framework and US stablecoin bills require issuers to hold reserves, register as e-money institutions, and comply with AML obligations.</li><li><strong>On-chain analytics obligations:</strong> Some jurisdictions now require DeFi protocols to integrate real-time screening at the smart contract level.</li></ul></div></details></div><div class="section-harvester" data-section="domain_breakdown" style="--section-color:#d97706"><details class="section-collapse" open><summary class="section-summary"><h2 id="2026-landscape">2026 Landscape</h2></summary><div class="section-body"><p>The convergence of AI and blockchain analytics is accelerating. Machine learning models now detect suspicious patterns in real-time across multiple blockchains simultaneously. The AI-native AML platforms emerging in 2026 combine transaction monitoring, sanctions screening, and fraud detection into unified systems — the same convergence happening in traditional finance.</p><p>For a refresher on AML fundamentals, revisit <a href="/compliance/learn/aml-basics/">AML Fundamentals</a>. To understand the data infrastructure needed for real-time screening, see <a href="/data/learn/dataops-introduction/">Introduction to DataOps</a>.</p></div></details></div>
     </div>
     <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)" id="quiz-section" data-quiz='{"questions": [{"q": "Which FATF Recommendation requires VASPs to share customer information for crypto transactions?", "options": ["Recommendation 10 (Record Keeping)", "Recommendation 16 (Travel Rule)", "Recommendation 22 (DNFBPs)", "Recommendation 29 (Financial Intelligence Units)"], "a": 1, "type": "mc"}, {"q": "A crypto exchange detects a wallet cluster with high-risk scores based on proximity to known ransomware addresses. This is an example of:", "options": ["Travel Rule compliance", "On-chain analytics and risk scoring", "KYC verification", "Smart contract auditing"], "a": 1, "type": "mc"}, {"q": "A DeFi protocol has no central operator and no KYC process. Under 2026 regulations, which compliance approach is most applicable?", "options": ["No regulation applies to DeFi", "Front-end geoblocking and wallet-level screening", "The protocol must shut down", "Only stablecoin transactions are regulated"], "a": 1, "type": "mc"}, {"q": "Why does the pseudonymous nature of cryptocurrency create a gap in traditional AML frameworks?", "options": ["Cryptocurrency is not real money", "Transactions occur without a trusted intermediary who can identify the parties", "Blockchain transactions cannot be monitored", "All crypto is already compliant"], "a": 1, "type": "mc"}, {"q": "An institution processes $50M in stablecoin transactions monthly. What is the most critical compliance investment for 2026?", "options": ["A new marketing website", "Real-time blockchain transaction monitoring and Travel Rule solution", "More customer service staff", "Office expansion"], "a": 1, "type": "mc"}]}' data-quiz-lesson="aml/learn/crypto-aml/">
       <h2 class="text-2xl font-bold mb-4" style="color:var(--color-text)">Knowledge Check</h2>
@@ -149,40 +156,48 @@
       <div id="quiz-summary" class="mt-6 p-4 rounded-lg hidden" style="background:var(--color-surface);border:1px solid var(--color-border)"></div>
       <button id="quiz-retry" class="mt-3 hidden px-4 py-2 text-sm font-semibold rounded-lg transition hover:opacity-80" style="background:var(--color-accent);color:#fff">Retry Quiz</button>
     </section>
-    <section class="mt-12 pt-8 border-t">
-      <h2 class="text-2xl font-bold mb-4">Bloom Taxonomy Questions</h2>
-      <div class="space-y-4">
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">Which FATF Recommendation requires VASPs to share customer information for crypto transactions?</p>
-        </div>
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">A crypto exchange detects a wallet cluster with high-risk scores based on proximity to known ransomware addresses. This is an example of:</p>
-        </div>
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">A DeFi protocol has no central operator and no KYC process. Under 2026 regulations, which compliance approach is most applicable?</p>
-        </div>
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">Why does the pseudonymous nature of cryptocurrency create a gap in traditional AML frameworks?</p>
-        </div>
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">An institution processes $50M in stablecoin transactions monthly. What is the most critical compliance investment for 2026?</p>
-        </div>
+    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
+      <h2 class="text-2xl font-bold mb-6 inline-flex items-center gap-2" style="color:var(--color-text)">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+        Flashcards
+      </h2>
+      <p class="text-xs mb-4" style="color:var(--color-text-muted)">Space = flip &middot; 1-4 = grade &middot; Swipe on mobile</p>
+      <div class="grid gap-4 sm:grid-cols-2" id="flashcard-grid">
+        <acacia-flashcard
+          data-term="Travel Rule"
+          data-definition="FATF Recommendation 16 requiring VASPs to share originator and beneficiary information for virtual asset transactions above a threshold."
+          data-card-id="aml/learn/crypto-aml/#0"></acacia-flashcard>
+        <acacia-flashcard
+          data-term="DeFi"
+          data-definition="Decentralized Finance — blockchain-based financial services operating without traditional intermediaries, using smart contracts for automated execution."
+          data-card-id="aml/learn/crypto-aml/#1"></acacia-flashcard>
+        <acacia-flashcard
+          data-term="Blockchain Analytics"
+          data-definition="Techniques for tracing and attributing cryptocurrency transactions on public ledgers using cluster analysis, graph analysis, and risk scoring."
+          data-card-id="aml/learn/crypto-aml/#2"></acacia-flashcard>
+        <acacia-flashcard
+          data-term="MiCA"
+          data-definition="Markets in Crypto-Assets Regulation — the EU's comprehensive regulatory framework for digital assets, stablecoins, and crypto service providers."
+          data-card-id="aml/learn/crypto-aml/#3"></acacia-flashcard>
+        <acacia-flashcard
+          data-term="VASP"
+          data-definition="Virtual Asset Service Provider — any entity that exchanges, transfers, or safekeeps virtual assets on behalf of customers, subject to AML obligations."
+          data-card-id="aml/learn/crypto-aml/#4"></acacia-flashcard>
       </div>
+    </section>
+    <div class="mt-8 text-center">
+      <button id="mark-complete-btn" data-track-lesson="aml/learn/crypto-aml/" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition" style="background:var(--color-accent);color:#fff">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+        <span id="complete-btn-text">Mark Complete</span>
+      </button>
+    </div>
+    <section class="mt-12 pt-8 border-t" id="quiz-section" data-quiz='{"questions": [{"q": "Which FATF Recommendation requires VASPs to share customer information for crypto transactions?", "options": ["Recommendation 10 (Record Keeping)", "Recommendation 16 (Travel Rule)", "Recommendation 22 (DNFBPs)", "Recommendation 29 (Financial Intelligence Units)"], "a": 1, "type": "mc"}, {"q": "A crypto exchange detects a wallet cluster with high-risk scores based on proximity to known ransomware addresses. This is an example of:", "options": ["Travel Rule compliance", "On-chain analytics and risk scoring", "KYC verification", "Smart contract auditing"], "a": 1, "type": "mc"}, {"q": "A DeFi protocol has no central operator and no KYC process. Under 2026 regulations, which compliance approach is most applicable?", "options": ["No regulation applies to DeFi", "Front-end geoblocking and wallet-level screening", "The protocol must shut down", "Only stablecoin transactions are regulated"], "a": 1, "type": "mc"}, {"q": "Why does the pseudonymous nature of cryptocurrency create a gap in traditional AML frameworks?", "options": ["Cryptocurrency is not real money", "Transactions occur without a trusted intermediary who can identify the parties", "Blockchain transactions cannot be monitored", "All crypto is already compliant"], "a": 1, "type": "mc"}, {"q": "An institution processes $50M in stablecoin transactions monthly. What is the most critical compliance investment for 2026?", "options": ["A new marketing website", "Real-time blockchain transaction monitoring and Travel Rule solution", "More customer service staff", "Office expansion"], "a": 1, "type": "mc"}]}' data-quiz-lesson="aml/learn/crypto-aml/">
+      <h2 class="text-2xl font-bold mb-4" style="color:var(--color-text)">Knowledge Check</h2>
+      <p class="text-sm mb-4" style="color:var(--color-text-muted)">Test your understanding of this lesson.</p>
+      <div id="quiz-score" class="mb-4 text-sm font-semibold" style="color:var(--color-text-secondary)"></div>
+      <div id="quiz-container"></div>
+      <div id="quiz-summary" class="mt-6 p-4 rounded-lg hidden" style="background:var(--color-surface);border:1px solid var(--color-border)"></div>
+      <button id="quiz-retry" class="mt-3 hidden px-4 py-2 text-sm font-semibold rounded-lg transition hover:opacity-80" style="background:var(--color-accent);color:#fff">Retry Quiz</button>
     </section>
     <section class="mt-12 pt-8 border-t">
       <h2 class="text-2xl font-bold mb-6">Related Research</h2>
@@ -197,7 +212,7 @@
             <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-08</span>
           </div>
         </a>
-        <a href="https://www.acaciafund.org/compliance/research/aml/" class="ghost-card block text-decoration:none">
+        <a href="https://www.acaciafund.org/compliance/research/cryptocurrency-mixers-under-global-regulatory-spotlight/" class="ghost-card block text-decoration:none">
           <div class="p-3">
             
             <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
@@ -242,13 +257,13 @@
             <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-07-10</span>
           </div>
         </a>
-        <a href="https://www.acaciafund.org/compliance/knowledge/sar-filing-best-practices/" class="ghost-card block text-decoration:none">
+        <a href="https://www.acaciafund.org/compliance/knowledge/trade-based-money-laundering-detection/" class="ghost-card block text-decoration:none">
           <div class="p-3">
             
             <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
   Compliance
 </span>
-            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Sar Filing Best Practices</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Trade-Based Money Laundering Detection</span>
             <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-07-10</span>
           </div>
         </a>
@@ -267,7 +282,7 @@
   </article>
 </div>
 
-<script src="/static/js/learning_hub.d41d8cd9.js" defer></script>
+<script src="/static/js/learning_hub.534fa53c.js" defer></script>
 <div class="newsletter-signup" style="background:var(--color-bg);border:1px solid var(--color-border);padding:2rem;border-radius:8px;text-align:center">
   <h3 style="color:var(--color-text)">Stay Updated</h3>
   <p style="color:var(--color-text-muted)">Get the latest research summaries delivered to your inbox.</p>
@@ -284,6 +299,6 @@
         <small>&copy; 2026 AcaciaFund &middot; Generated by the Acacia pipeline.</small>
     </footer>
 
-    <script src="/static/js/main.d41d8cd9.js"></script>
+
 </body>
 </html>

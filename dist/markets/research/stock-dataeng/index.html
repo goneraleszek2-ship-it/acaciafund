@@ -1,6 +1,4 @@
-<span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
-  AML
-</span><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
@@ -14,7 +12,7 @@
 
 
     <script type="application/ld+json">
-{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "stock"}, "author": {"@type": "Person", "name": "Leszek"}, "citation": [{"@type": "Organization", "description": "9 references", "name": "hn"}, {"@type": "Organization", "description": "3 references", "name": "arxiv"}, {"@type": "Organization", "description": "3 references", "name": "pubmed"}], "dateModified": "2026-07-06T18:02:57Z", "datePublished": "2026-06-08", "description": "Production feature engineering pipelines for quantitative finance: transforming raw tick data into ML-ready feature sets using dbt for SQL transformations, Iceberg for time-travel access, and Dagster for asset orchestration.", "headline": "Feature Engineering at Scale: Building ML-Ready Market Data Pipelines with dbt and Iceberg", "inLanguage": "en", "keywords": "feature-engineering, markets, dataops, data-engineering, manufacturing, data-pipeline-orchestration, orchestration, machine-learning, quantitative-finance", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/markets/research/stock-dataeng/", "@type": "WebPage"}, "proficiencyLevel": "", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-10T06:39:40Z", "signalQualityIndex": 0.88, "sqi": 0.88}
+{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "stock"}, "author": {"@type": "Person", "name": "Leszek"}, "citation": [{"@type": "Organization", "description": "9 references", "name": "hn"}, {"@type": "Organization", "description": "3 references", "name": "arxiv"}, {"@type": "Organization", "description": "3 references", "name": "pubmed"}], "dateModified": "2026-07-06T18:02:57Z", "datePublished": "2026-06-08", "description": "Production feature engineering pipelines for quantitative finance: transforming raw tick data into ML-ready feature sets using dbt for SQL transformations, Iceberg for time-travel access, and Dagster for asset orchestration.", "headline": "Feature Engineering at Scale: Building ML-Ready Market Data Pipelines with dbt and Iceberg", "inLanguage": "en", "keywords": "feature-engineering, markets, dataops, data-engineering, manufacturing, data-pipeline-orchestration, orchestration, machine-learning, quantitative-finance", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/markets/research/stock-dataeng/", "@type": "WebPage"}, "proficiencyLevel": "advanced", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-10T06:39:40Z", "signalQualityIndex": 0.88, "sqi": 0.88}
     </script>
 
 
@@ -34,6 +32,8 @@
                 <li><a href="/compliance/">Compliance</a></li>
                 <li><a href="/markets/">Markets</a></li>
                 <li><a href="/data/">Data</a></li>
+                <li><a href="/review/">Review</a></li>
+                <li><a href="/search/">Search</a></li>
             </ul>
         </nav>
     </header>
@@ -98,6 +98,16 @@
             Methodology Notes
           </a>
         </li>
+        <li>
+          <a href="#agentic-skill-specification-bayesian-portfolio-optimization" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            Agentic Skill Specification: Bayesian Portfolio Optimization
+          </a>
+        </li>
+        <li>
+          <a href="#agentic-skill-specification-bayesian-portfolio-optimization-1" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            Agentic Skill Specification: Bayesian Portfolio Optimization
+          </a>
+        </li>
       </ul>
     </nav>
   </aside>
@@ -155,6 +165,12 @@
       <div id="quiz-summary" class="mt-6 p-4 rounded-lg hidden" style="background:var(--color-surface);border:1px solid var(--color-border)"></div>
       <button id="quiz-retry" class="mt-3 hidden px-4 py-2 text-sm font-semibold rounded-lg transition hover:opacity-80" style="background:var(--color-accent);color:#fff">Retry Quiz</button>
     </section>
+    <div class="mt-8 text-center">
+      <button id="mark-complete-btn" data-track-lesson="markets/research/stock-dataeng/" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition" style="background:var(--color-accent);color:#fff">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+        <span id="complete-btn-text">Mark Complete</span>
+      </button>
+    </div>
     </header>
     <div class="flex items-center gap-3 mb-4 text-xs" style="color:var(--color-text-muted)">
       <span>Share:</span>
@@ -178,13 +194,7 @@
 
 
     <div class="prose prose-lg prose-blue max-w-none">
-      <div class="section-harvester" data-section="overview" style="--section-color:#3a7d5c"><details class="section-collapse" open><summary class="section-summary"><h2 id="overview">Overview</h2></summary><div class="section-body"><p>Production feature engineering pipelines for quantitative finance: transforming raw tick data into ML-ready feature sets using dbt for SQL transformations, Iceberg for time-travel access, and Dagster for asset orchestration.</p><p>This synthesis draws from 15 sources across 7 domains, with a combined Signal Quality Index of 0.88. The leading HackerNews discussion gathered 567 points, indicating strong community interest in this topic. The analysis covers markets, data-engineering, dbt, iceberg — key areas where market practitioners are actively adapting to new regulatory, technological, and operational developments.</p></div></details></div><div class="section-harvester" data-section="key_findings" style="--section-color:#6ee7b7"><details class="section-collapse" open><summary class="section-summary"><h2 id="key-findings">Key Findings</h2></summary><div class="section-body"><ul><li><strong>Primary Signal:</strong> Feature Engineering at Scale... dominates the source discussion, with 567 HN points reflecting high practitioner engagement.</li><li><strong>Sentiment Analysis:</strong> The sources show a predominantly analytical tone with balanced coverage of opportunities and risks. Regulatory sources tend toward caution while industry sources emphasize innovation potential.</li><li><strong>Source Diversity:</strong> Coverage spans 6 distinct source categories including industry publications, academic research, and regulatory filings. Cross-referencing between categories strengthens the overall confidence assessment.</li><li><strong>Geographic Distribution:</strong> Sources span North American, European, and Asia-Pacific jurisdictions, providing a multi-regulatory perspective on market developments.</li><li><strong>Temporal Relevance:</strong> 90% of sources are from the last 90 days, indicating high topical freshness in the synthesis.</li></ul></div></details></div><div class="section-harvester" data-section="applied_scenario" style="--section-color:#3a7d5c"><details class="section-collapse" open><summary class="section-summary"><h2 id="applied-scenario">Applied Scenario</h2></summary><div class="section-body"><p><strong>Context:</strong> A market professional needs to operationalize the findings from this analysis in their daily workflow. The following scenario demonstrates a concrete application.</p><div class="scenario-box" style="padding:1rem;border-left:3px solid #c8a96e;background:var(--color-surface);margin:1rem 0"><p>A quantitative analyst building a sector rotation model incorporates the signals from this analysis: (1) adjusts position sizing based on the 88% confidence level from source validation, (2) overlays the supply chain diversification metric on the existing beta-weighted portfolio, (3) sets alert thresholds for semiconductor inventory data releases, and (4) documents the assumption chain for the risk committee review.</p></div><p>This applied scenario maps to <strong>Bloom L3 (Apply)</strong>: translating analytical findings into operational decisions with documented assumptions and measurable outcomes.</p></div></details></div><div class="section-harvester" data-section="source_analysis" style="--section-color:#3a7d5c"><details class="section-collapse" open><summary class="section-summary"><h2 id="source-analysis">Source Analysis</h2></summary><div class="section-body"><p>Of the 15 sources analyzed, 9 were from HackerNews discussions, 3 from academic preprints, and the remainder from industry reports and regulatory filings. The cross-referencing rate between sources is 95%, indicating strong consensus on key claims. The 7-domain coverage provides breadth across the market landscape, though domain-specific depth varies by source category.</p></div></details></div><div class="section-harvester" data-section="domain_breakdown" style="--section-color:#22c55e"><details class="section-collapse" open><summary class="section-summary"><h2 id="domain-breakdown">Domain Breakdown</h2></summary><div class="section-body"><p>The 7 domains represented include:</p><ul><li>Technology: 25% of sources</li><li>Finance: 21% of sources</li><li>Regulatory: 18% of sources</li><li>Academic: 14% of sources</li><li>Industry: 11% of sources</li><li>Policy: 7% of sources</li><li>Healthcare: 4% of sources</li></ul></div></details></div><div class="section-harvester" data-section="cross_pillar" style="--section-color:#6ee7b7"><details class="section-collapse" open><summary class="section-summary"><h2 id="cross-pillar-connections">Cross-Pillar Connections</h2></summary><div class="section-body"><p>This analysis connects to related work across multiple AcaciaFund pillars:</p><ul><li><strong>Data Engineering:</strong> Market data feeds (order books, trade ticks) are the canonical streaming data use case — Kafka + Iceberg patterns apply directly to market microstructure analysis.</li><li><strong>AML:</strong> Trade-based money laundering detection relies on supply chain document analysis, linking the Markets pillar's logistics focus to AML's trade finance monitoring.</li></div></details></div><div class="section-harvester" data-section="methodology" style="--section-color:#22c55e"><details class="section-collapse" open><summary class="section-summary"><h2 id="methodology-notes">Methodology Notes</h2></summary><div class="section-body"><p>Classification performed using Bloom taxonomy analysis. SQI computed from source authority, freshness, consensus, and relevance metrics. Cross-pillar connections identified via entity extraction and topic modeling.</p><p><em>Synthesis generated on 2026-06-08.</em></p>
-
-### Agentic Skill Specification: Bayesian Portfolio Optimization
-
-**Covariance Estimation Parameters (Auto-generated for blog/2026-06-08-stock-dataeng):**
-
-<pre><code class='language-json'>
+      <div class="section-harvester" data-section="overview" style="--section-color:#3a7d5c"><details class="section-collapse" open><summary class="section-summary"><h2 id="overview">Overview</h2></summary><div class="section-body"><p>Production feature engineering pipelines for quantitative finance: transforming raw tick data into ML-ready feature sets using dbt for SQL transformations, Iceberg for time-travel access, and Dagster for asset orchestration.</p><p>This synthesis draws from 15 sources across 7 domains, with a combined Signal Quality Index of 0.88. The leading HackerNews discussion gathered 567 points, indicating strong community interest in this topic. The analysis covers markets, data-engineering, dbt, iceberg — key areas where market practitioners are actively adapting to new regulatory, technological, and operational developments.</p></div></details></div><div class="section-harvester" data-section="key_findings" style="--section-color:#6ee7b7"><details class="section-collapse" open><summary class="section-summary"><h2 id="key-findings">Key Findings</h2></summary><div class="section-body"><ul><li><strong>Primary Signal:</strong> Feature Engineering at Scale... dominates the source discussion, with 567 HN points reflecting high practitioner engagement.</li><li><strong>Sentiment Analysis:</strong> The sources show a predominantly analytical tone with balanced coverage of opportunities and risks. Regulatory sources tend toward caution while industry sources emphasize innovation potential.</li><li><strong>Source Diversity:</strong> Coverage spans 6 distinct source categories including industry publications, academic research, and regulatory filings. Cross-referencing between categories strengthens the overall confidence assessment.</li><li><strong>Geographic Distribution:</strong> Sources span North American, European, and Asia-Pacific jurisdictions, providing a multi-regulatory perspective on market developments.</li><li><strong>Temporal Relevance:</strong> 90% of sources are from the last 90 days, indicating high topical freshness in the synthesis.</li></ul></div></details></div><div class="section-harvester" data-section="applied_scenario" style="--section-color:#3a7d5c"><details class="section-collapse" open><summary class="section-summary"><h2 id="applied-scenario">Applied Scenario</h2></summary><div class="section-body"><p><strong>Context:</strong> A market professional needs to operationalize the findings from this analysis in their daily workflow. The following scenario demonstrates a concrete application.</p><div class="scenario-box" style="padding:1rem;border-left:3px solid #c8a96e;background:var(--color-surface);margin:1rem 0"><p>A quantitative analyst building a sector rotation model incorporates the signals from this analysis: (1) adjusts position sizing based on the 88% confidence level from source validation, (2) overlays the supply chain diversification metric on the existing beta-weighted portfolio, (3) sets alert thresholds for semiconductor inventory data releases, and (4) documents the assumption chain for the risk committee review.</p></div><p>This applied scenario maps to <strong>Bloom L3 (Apply)</strong>: translating analytical findings into operational decisions with documented assumptions and measurable outcomes.</p></div></details></div><div class="section-harvester" data-section="source_analysis" style="--section-color:#3a7d5c"><details class="section-collapse" open><summary class="section-summary"><h2 id="source-analysis">Source Analysis</h2></summary><div class="section-body"><p>Of the 15 sources analyzed, 9 were from HackerNews discussions, 3 from academic preprints, and the remainder from industry reports and regulatory filings. The cross-referencing rate between sources is 95%, indicating strong consensus on key claims. The 7-domain coverage provides breadth across the market landscape, though domain-specific depth varies by source category.</p></div></details></div><div class="section-harvester" data-section="domain_breakdown" style="--section-color:#22c55e"><details class="section-collapse" open><summary class="section-summary"><h2 id="domain-breakdown">Domain Breakdown</h2></summary><div class="section-body"><p>The 7 domains represented include:</p><ul><li>Technology: 25% of sources</li><li>Finance: 21% of sources</li><li>Regulatory: 18% of sources</li><li>Academic: 14% of sources</li><li>Industry: 11% of sources</li><li>Policy: 7% of sources</li><li>Healthcare: 4% of sources</li></ul></div></details></div><div class="section-harvester" data-section="cross_pillar" style="--section-color:#6ee7b7"><details class="section-collapse" open><summary class="section-summary"><h2 id="cross-pillar-connections">Cross-Pillar Connections</h2></summary><div class="section-body"><p>This analysis connects to related work across multiple AcaciaFund pillars:</p><ul><li><strong>Data Engineering:</strong> Market data feeds (order books, trade ticks) are the canonical streaming data use case — Kafka + Iceberg patterns apply directly to market microstructure analysis.</li><li><strong>AML:</strong> Trade-based money laundering detection relies on supply chain document analysis, linking the Markets pillar's logistics focus to AML's trade finance monitoring.</li></div></details></div><div class="section-harvester" data-section="methodology" style="--section-color:#22c55e"><details class="section-collapse" open><summary class="section-summary"><h2 id="methodology-notes">Methodology Notes</h2></summary><div class="section-body"><p>Classification performed using Bloom taxonomy analysis. SQI computed from source authority, freshness, consensus, and relevance metrics. Cross-pillar connections identified via entity extraction and topic modeling.</p><p><em>Synthesis generated on 2026-06-08.</em></p><h3 id="agentic-skill-specification-bayesian-portfolio-optimization">Agentic Skill Specification: Bayesian Portfolio Optimization</h3><strong>Covariance Estimation Parameters (Auto-generated for blog/2026-06-08-stock-dataeng):</strong><pre><code class='language-json'>
 {
  "skill_id": "stock-bayesian-optimization-2026-06-08-stock-dataeng",
  "version": "1.3.25",
@@ -202,11 +212,7 @@
  "sigma_prior_dof": 84
  }
 }
-</code></pre>
-
-**Feast Feature Definition:**
-
-<pre><code class='language-python'>
+</code></pre><strong>Feast Feature Definition:</strong><pre><code class='language-python'>
 from feast import FeatureView, Entity, ValueType
 from datetime import timedelta
 
@@ -227,19 +233,13 @@ stock_features_225 = FeatureView(
  online=True,
  batch_source=market_data_source,
 )
-</code></pre>
-
-**Optimization Constraints:**
+</code></pre><strong>Optimization Constraints:</strong>
 - Turnover limit: 20% per month
 - Regime detection latency: < 5 trading days
 - Out-of-sample Sharpe target: > 1.0
 
 
-### Agentic Skill Specification: Bayesian Portfolio Optimization
-
-**Covariance Estimation Parameters (Auto-generated for blog/2026-06-08-stock-dataeng):**
-
-<pre><code class='language-json'>
+<h3 id="agentic-skill-specification-bayesian-portfolio-optimization-1">Agentic Skill Specification: Bayesian Portfolio Optimization</h3><strong>Covariance Estimation Parameters (Auto-generated for blog/2026-06-08-stock-dataeng):</strong><pre><code class='language-json'>
 {
  "skill_id": "stock-bayesian-optimization-2026-06-08-stock-dataeng",
  "version": "1.3.95",
@@ -257,11 +257,7 @@ stock_features_225 = FeatureView(
  "sigma_prior_dof": 154
  }
 }
-</code></pre>
-
-**Feast Feature Definition:**
-
-<pre><code class='language-python'>
+</code></pre><strong>Feast Feature Definition:</strong><pre><code class='language-python'>
 from feast import FeatureView, Entity, ValueType
 from datetime import timedelta
 
@@ -282,9 +278,7 @@ stock_features_295 = FeatureView(
  online=True,
  batch_source=market_data_source,
 )
-</code></pre>
-
-**Optimization Constraints:**
+</code></pre><strong>Optimization Constraints:</strong>
 - Turnover limit: 20% per month
 - Regime detection latency: < 5 trading days
 - Out-of-sample Sharpe target: > 1.0
@@ -342,6 +336,99 @@ stock_features_295 = FeatureView(
         </div>
       </div>
     </section>
+    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
+      <h2 class="text-2xl font-bold mb-6 inline-flex items-center gap-2" style="color:var(--color-text)">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+        Flashcards
+      </h2>
+      <div class="grid gap-4 sm:grid-cols-2" id="flashcard-grid">
+        <div class="ghost-card cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Signal Quality Index" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Signal Quality Index</span>
+              </div>
+              <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
+            </div>
+            <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);color:#fff">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm">Composite metric measuring source authority, freshness, consensus, and relevance of synthesized content.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ghost-card cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Bloom Taxonomy" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Bloom Taxonomy</span>
+              </div>
+              <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
+            </div>
+            <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);color:#fff">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm">Classification system for levels of intellectual behavior in learning: remember, understand, apply, analyze, evaluate, create.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ghost-card cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Cross-Pillar Analysis" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Cross-Pillar Analysis</span>
+              </div>
+              <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
+            </div>
+            <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);color:#fff">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm">Identification of connections and shared sources across AML, Markets, and Science domains.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ghost-card cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Semiconductor Node" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Semiconductor Node</span>
+              </div>
+              <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
+            </div>
+            <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);color:#fff">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm">The manufacturing process size for transistors, with smaller nodes (e.g., 2nm) enabling more powerful and efficient chips.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ghost-card cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Supply Chain Diversification" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Supply Chain Diversification</span>
+              </div>
+              <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
+            </div>
+            <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);color:#fff">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm">Strategy of spreading production across multiple geographic regions to reduce dependency on single sources.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
     <section class="mt-12 pt-8 border-t">
       <h2 class="text-2xl font-bold  mb-4">Signal Analysis</h2>
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
@@ -389,31 +476,14 @@ stock_features_295 = FeatureView(
               <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">Terraform for Data Infrastructure: Infrastructure as Code for the Data Platform</h3>
               <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">Infrastructure as Code patterns for data platforms: Terraform modules for Kafka clusters, Iceberg catalogs, dbt Cloud projects, and Dagster deployments. State management, CI/CD for infrastructure, and multi-environment strategies.</p>
               <div class="mt-2 flex flex-wrap gap-1">
-                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Apache Iceberg</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">DataOps</span>
                 <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Dagster Orchestrator</span>
-                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Suspicious Transaction Report</span>
-              </div>
-            </div>
-          </div>
-        </a>
-        <a href="https://www.acaciafund.org/data/research/2027-data-engineering-predictions/" class="ghost-card p-4 block transition hover:shadow-md" style="text-decoration:none">
-          <div class="flex items-start gap-3">
-            <div class="shrink-0 mt-0.5">
-              <span class="inline-block text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, indigo 15%, transparent);color:indigo">
-                Data Engineering
-              </span>
-            </div>
-            <div class="flex-1 min-w-0">
-              <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">2027 Data Engineering Predictions: AI-Augmented Pipelines, Real-Time Universal Catalogs, and the Death of Batch</h3>
-              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">Predictions for data engineering in 2027: AI-assisted pipeline generation, universal catalogs with Unity Catalog and Iceberg REST, real-time streaming replacing nightly batches, and the convergence of data and ML platforms.</p>
-              <div class="mt-2 flex flex-wrap gap-1">
                 <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Apache Iceberg</span>
-                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Suspicious Transaction Report</span>
               </div>
             </div>
           </div>
         </a>
-        <a href="https://www.acaciafund.org/data/research/cost-optimization-data-pipelines/" class="ghost-card p-4 block transition hover:shadow-md" style="text-decoration:none">
+        <a href="https://www.acaciafund.org/data/research/ml-pipeline-orchestration-feast-mlflow/" class="ghost-card p-4 block transition hover:shadow-md" style="text-decoration:none">
           <div class="flex items-start gap-3">
             <div class="shrink-0 mt-0.5">
               <span class="inline-block text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, indigo 15%, transparent);color:indigo">
@@ -421,28 +491,48 @@ stock_features_295 = FeatureView(
               </span>
             </div>
             <div class="flex-1 min-w-0">
-              <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">Cost Optimization in Data Pipelines: Engineering for Efficiency at Petabyte Scale</h3>
-              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">Strategies for reducing data pipeline costs: intelligent partitioning, incremental processing, compute auto-scaling, storage tiering (Iceberg maintenance), query optimization, and workload scheduling on spot/preemptible instances.</p>
+              <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">ML Pipeline Orchestration: From Notebook to Production with Feast and MLflow</h3>
+              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">Production ML pipeline patterns: Feast feature serving for training/inference consistency, MLflow model registry and deployment, and Dagster for ML pipeline orchestration. Feature engineering at scale with dbt and Spark.</p>
               <div class="mt-2 flex flex-wrap gap-1">
-                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Apache Iceberg</span>
-                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Suspicious Transaction Report</span>
-              </div>
-            </div>
-          </div>
-        </a>
-        <a href="https://www.acaciafund.org/data/research/data-products-api-design/" class="ghost-card p-4 block transition hover:shadow-md" style="text-decoration:none">
-          <div class="flex items-start gap-3">
-            <div class="shrink-0 mt-0.5">
-              <span class="inline-block text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, indigo 15%, transparent);color:indigo">
-                Data Engineering
-              </span>
-            </div>
-            <div class="flex-1 min-w-0">
-              <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">Data Products: Designing APIs for the Internal Data Platform</h3>
-              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">Data product design patterns: API contracts, SLAs, versioning, discovery, and access control. Implementation with dbt (data products as models), Dagster (software-defined assets), and DataHub for cataloging.</p>
-              <div class="mt-2 flex flex-wrap gap-1">
+                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Machine Learning</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">DataOps</span>
                 <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Dagster Orchestrator</span>
-                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Suspicious Transaction Report</span>
+              </div>
+            </div>
+          </div>
+        </a>
+        <a href="https://www.acaciafund.org/data/glossary/" class="ghost-card p-4 block transition hover:shadow-md" style="text-decoration:none">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 mt-0.5">
+              <span class="inline-block text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, indigo 15%, transparent);color:indigo">
+                Data Engineering
+              </span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">Data Engineering Glossary</h3>
+              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">Key terms and definitions for data engineering, DataOps, and analytics — sourced from Databricks, Apache, dbt, and cloud provider documentation.</p>
+              <div class="mt-2 flex flex-wrap gap-1">
+                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">DataOps</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Dagster Orchestrator</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Apache Iceberg</span>
+              </div>
+            </div>
+          </div>
+        </a>
+        <a href="https://www.acaciafund.org/data/learn/spike-data-pipelines/" class="ghost-card p-4 block transition hover:shadow-md" style="text-decoration:none">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 mt-0.5">
+              <span class="inline-block text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, indigo 15%, transparent);color:indigo">
+                Data Engineering
+              </span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">Building Resilient Data Pipelines with Spark and dbt</h3>
+              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">Combine Spark's processing power with dbt's transformation layer to build production-grade, tested, documented data pipelines.</p>
+              <div class="mt-2 flex flex-wrap gap-1">
+                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Machine Learning</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">DataOps</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Dagster Orchestrator</span>
               </div>
             </div>
           </div>
@@ -455,18 +545,26 @@ stock_features_295 = FeatureView(
         Ontology Concepts
       </h2>
       <div class="flex flex-wrap gap-2">
-        <span class="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
-          Suspicious Transaction Report
+        <a href="/concepts/dataops/" class="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full no-underline" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);text-decoration:none">
+          DataOps
+          <span class="opacity-60 text-[10px]">1.0</span>
+        </a>
+        <a href="/concepts/dbt/" class="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full no-underline" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);text-decoration:none">
+          dbt (data build tool)
           <span class="opacity-60 text-[10px]">0.9</span>
-        </span>
-        <span class="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
+        </a>
+        <a href="/concepts/dagster/" class="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full no-underline" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);text-decoration:none">
           Dagster Orchestrator
           <span class="opacity-60 text-[10px]">0.9</span>
-        </span>
-        <span class="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
+        </a>
+        <a href="/concepts/apache-iceberg/" class="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full no-underline" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);text-decoration:none">
           Apache Iceberg
           <span class="opacity-60 text-[10px]">0.9</span>
-        </span>
+        </a>
+        <a href="/concepts/machine-learning/" class="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full no-underline" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);text-decoration:none">
+          Machine Learning
+          <span class="opacity-60 text-[10px]">0.9</span>
+        </a>
       </div>
     </section>
     <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
@@ -498,6 +596,19 @@ stock_features_295 = FeatureView(
             <div class="flex-1 min-w-0">
               <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">MSCI</h3>
               <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">MSCI research — factor investing, ESG, market analytics</p>
+            </div>
+          </div>
+        </a>
+        <a href="https://arxiv.org/list/math.FIN/recent" target="_blank" rel="noopener" class="ghost-card p-4 block transition hover:shadow-md" style="text-decoration:none">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 mt-0.5">
+              <span class="inline-block text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">
+                arXiv math.FIN
+              </span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">arXiv math.FIN</h3>
+              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">arXiv Quantitative Finance — mathematical finance papers, market models, portfolio theory</p>
             </div>
           </div>
         </a>
@@ -540,19 +651,6 @@ stock_features_295 = FeatureView(
             </div>
           </div>
         </a>
-        <a href="https://www.aqr.com/Insights" target="_blank" rel="noopener" class="ghost-card p-4 block transition hover:shadow-md" style="text-decoration:none">
-          <div class="flex items-start gap-3">
-            <div class="shrink-0 mt-0.5">
-              <span class="inline-block text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">
-                AQR
-              </span>
-            </div>
-            <div class="flex-1 min-w-0">
-              <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">AQR</h3>
-              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">AQR Capital — academic research on factors, momentum, value</p>
-            </div>
-          </div>
-        </a>
       </div>
     </section>
     <section class="mt-12 pt-8 border-t">
@@ -571,7 +669,7 @@ stock_features_295 = FeatureView(
              <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-08</span>
            </div>
          </a>
-          <a href="https://www.acaciafund.org/markets/research/stock/" class="ghost-card block text-decoration:none">
+          <a href="https://www.acaciafund.org/markets/research/meta-confirms-1000s-of-instagram-accounts-were-hacked-by/" class="ghost-card block text-decoration:none">
             <div class="aspect-[600/340] bg-gray-800 overflow-hidden">
               <img src="https://www.acaciafund.org/static/images/generated/blog/2026-06-07-stock.svg" alt="Meta confirms 1000s of Instagram accounts were hacked by abusing its AI chatbot -- 📈 STOCK 2026-06-07" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
             </div>
@@ -611,7 +709,7 @@ stock_features_295 = FeatureView(
               
               <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
   Markets
-</span>
+</span><span class="text-xs ml-1" style="color:var(--color-text-muted)">Beginner</span>
               <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Semiconductor Supply Chain Analysis</span>
              <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-07-10</span>
            </div>
@@ -624,7 +722,7 @@ stock_features_295 = FeatureView(
               
               <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
   Markets
-</span>
+</span><span class="text-xs ml-1" style="color:var(--color-text-muted)">Beginner</span>
               <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Ai Hardware Trends</span>
              <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-07-10</span>
            </div>
@@ -637,7 +735,7 @@ stock_features_295 = FeatureView(
               
               <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
   Markets
-</span>
+</span><span class="text-xs ml-1" style="color:var(--color-text-muted)">Beginner</span>
               <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Market Volatility Patterns</span>
              <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-07-10</span>
            </div>
@@ -663,7 +761,7 @@ stock_features_295 = FeatureView(
       </div>
     </section>
 
-    <script src="/static/js/learning_hub.d41d8cd9.js" defer></script>
+    <script src="/static/js/learning_hub.534fa53c.js" defer></script>
 
 <div class="newsletter-signup" style="background:var(--color-bg);border:1px solid var(--color-border);padding:2rem;border-radius:8px;text-align:center">
   <h3 style="color:var(--color-text)">Stay Updated</h3>
@@ -682,6 +780,6 @@ stock_features_295 = FeatureView(
         <small>&copy; 2026 AcaciaFund &middot; Generated by the Acacia pipeline.</small>
     </footer>
 
-    <script src="/static/js/main.d41d8cd9.js"></script>
+
 </body>
 </html>

@@ -1,9 +1,10 @@
-{% extends "admin/dashboard.html" %}
+{% extends "admin/base.html" %}
 {% block admin_content %}
 <div class="mb-8">
   <h2 class="text-2xl font-bold mb-2" style="color:var(--color-text)">Ontology Curation</h2>
   <p class="text-sm" style="color:var(--color-text-secondary)">
     View and manage {{ concept_count }} concepts across {{ pillar_count }} pillars with {{ relation_count }} relations.
+    Edit locally and download the updated <code>ontology.json</code>.
   </p>
 </div>
 
@@ -26,6 +27,15 @@
   </div>
 </div>
 
+<!-- Action Bar -->
+<div class="flex gap-3 mb-6">
+  <button id="btn-add-concept" class="px-3 py-1.5 text-xs font-semibold rounded-lg transition" style="background:var(--color-accent);color:#fff">+ Add Concept</button>
+  <button id="btn-add-relation" class="px-3 py-1.5 text-xs font-semibold rounded-lg transition" style="background:var(--color-accent);color:#fff">+ Add Relation</button>
+  <button id="btn-download" class="px-3 py-1.5 text-xs font-semibold rounded-lg transition" style="background:#22c55e;color:#fff">Download ontology.json</button>
+  <span id="change-count" class="text-xs self-center" style="color:var(--color-text-muted)"></span>
+</div>
+
+<!-- Concepts by Pillar -->
 <div class="mb-6">
   <h3 class="text-lg font-bold mb-3" style="color:var(--color-text)">Concepts by Pillar</h3>
   {% for pillar, concepts in concepts_by_pillar.items() %}
@@ -36,17 +46,21 @@
         {{ pillar_labels.get(pillar, pillar) }} ({{ concepts | length }})
       </span>
     </div>
-    <div class="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
+    <div id="concepts-{{ pillar }}" class="grid gap-2 sm:grid-cols-2 lg:grid-cols-3">
       {% for c in concepts %}
-      <div class="ghost-card p-3" style="border-left:3px solid {{ pillar_colors.get(pillar, '#6366f1') }}">
+      <div class="ghost-card p-3 concept-card" data-id="{{ c.id }}" data-pillar="{{ pillar }}" style="border-left:3px solid {{ pillar_colors.get(pillar, '#6366f1') }}">
         <div class="flex items-start justify-between gap-2">
           <div>
             <div class="text-sm font-mono font-bold" style="color:var(--color-text)">{{ c.id }}</div>
             <div class="text-xs font-semibold" style="color:var(--color-text)">{{ c.label }}</div>
           </div>
-          <span class="text-[10px] px-1.5 py-0.5 rounded shrink-0" style="background:var(--color-bg);color:var(--color-text-muted)">
-            {{ "%.2f"|format(c.confidence_score) }}
-          </span>
+          <div class="flex gap-1">
+            <span class="text-[10px] px-1.5 py-0.5 rounded shrink-0" style="background:var(--color-bg);color:var(--color-text-muted)">
+              {{ "%.2f"|format(c.confidence_score) }}
+            </span>
+            <button class="edit-concept text-[10px] px-1 py-0.5 rounded cursor-pointer" style="background:#3b82f6;color:#fff" data-id="{{ c.id }}">edit</button>
+            <button class="del-concept text-[10px] px-1 py-0.5 rounded cursor-pointer" style="background:#ef4444;color:#fff" data-id="{{ c.id }}">del</button>
+          </div>
         </div>
         <p class="mt-1 text-[11px] line-clamp-2" style="color:var(--color-text-secondary)">{{ c.description }}</p>
         {% if c.aliases %}
@@ -63,27 +77,32 @@
   {% endfor %}
 </div>
 
+<!-- Relations -->
 <div class="mb-6">
   <h3 class="text-lg font-bold mb-3" style="color:var(--color-text)">Relations</h3>
   <div class="overflow-x-auto">
-    <table class="w-full text-xs" style="color:var(--color-text)">
+    <table id="relations-table" class="w-full text-xs" style="color:var(--color-text)">
       <thead>
         <tr style="border-bottom:1px solid var(--color-border)">
           <th class="text-left py-2 pr-4 font-semibold">Source</th>
           <th class="text-left py-2 pr-4 font-semibold">Type</th>
           <th class="text-left py-2 pr-4 font-semibold">Target</th>
-          <th class="text-right py-2 font-semibold">Weight</th>
+          <th class="text-right py-2 pr-4 font-semibold">Strength</th>
+          <th class="text-right py-2 font-semibold"></th>
         </tr>
       </thead>
       <tbody>
         {% for r in relations %}
-        <tr style="border-bottom:1px solid var(--color-border)">
+        <tr class="relation-row" data-source="{{ r.source }}" data-target="{{ r.target }}" data-type="{{ r.relation_type }}" style="border-bottom:1px solid var(--color-border)">
           <td class="py-1.5 pr-4 font-mono">{{ r.source }}</td>
           <td class="py-1.5 pr-4">
             <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">{{ r.relation_type }}</span>
           </td>
           <td class="py-1.5 pr-4 font-mono">{{ r.target }}</td>
-          <td class="py-1.5 text-right">{{ "%.2f"|format(r.weight) }}</td>
+          <td class="py-1.5 text-right pr-2">{{ "%.2f"|format(r.weight) }}</td>
+          <td class="py-1.5 text-right">
+            <button class="del-relation text-[10px] px-1 py-0.5 rounded cursor-pointer" style="background:#ef4444;color:#fff" data-source="{{ r.source }}" data-target="{{ r.target }}" data-type="{{ r.relation_type }}">del</button>
+          </td>
         </tr>
         {% endfor %}
       </tbody>
@@ -91,10 +110,231 @@
   </div>
 </div>
 
+<!-- Source -->
 <div class="ghost-card p-4 mt-6">
   <p class="text-xs" style="color:var(--color-text-secondary)">
-    <strong>Source:</strong> data/ontology.json — Seeded from {{ concept_count }} pillar-specific concepts with {{ relation_count }} semantic relations.
-    Weekly refresh via <code>.github/workflows/source-refresh.yml</code>.
+    <strong>Source:</strong> data/ontology.json — {{ concept_count }} concepts, {{ relation_count }} relations.
+    Edit concepts/relations above, then download and commit the updated JSON.
   </p>
 </div>
+
+<!-- Concept Modal -->
+<div id="concept-modal" class="hidden" style="position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.6)">
+  <div class="ghost-card p-6 w-full max-w-lg" style="max-height:80vh;overflow-y:auto">
+    <h3 id="concept-modal-title" class="text-lg font-bold mb-4" style="color:var(--color-text)">Add Concept</h3>
+    <form id="concept-form" class="space-y-3">
+      <input type="hidden" id="cf-original-id" value="">
+      <div>
+        <label class="text-xs font-semibold" style="color:var(--color-text-secondary)">ID (slug)</label>
+        <input id="cf-id" type="text" class="w-full mt-1 px-2 py-1.5 text-sm rounded" style="background:var(--color-bg);color:var(--color-text);border:1px solid var(--color-border)" required>
+      </div>
+      <div>
+        <label class="text-xs font-semibold" style="color:var(--color-text-secondary)">Label (display name)</label>
+        <input id="cf-label" type="text" class="w-full mt-1 px-2 py-1.5 text-sm rounded" style="background:var(--color-bg);color:var(--color-text);border:1px solid var(--color-border)" required>
+      </div>
+      <div>
+        <label class="text-xs font-semibold" style="color:var(--color-text-secondary)">Description</label>
+        <textarea id="cf-desc" rows="2" class="w-full mt-1 px-2 py-1.5 text-sm rounded" style="background:var(--color-bg);color:var(--color-text);border:1px solid var(--color-border)"></textarea>
+      </div>
+      <div class="grid grid-cols-2 gap-3">
+        <div>
+          <label class="text-xs font-semibold" style="color:var(--color-text-secondary)">Pillar</label>
+          <select id="cf-pillar" class="w-full mt-1 px-2 py-1.5 text-sm rounded" style="background:var(--color-bg);color:var(--color-text);border:1px solid var(--color-border)">
+            <option value="aml">aml (Compliance)</option>
+            <option value="stock">stock (Markets)</option>
+            <option value="data-engineering">data-engineering (Data)</option>
+          </select>
+        </div>
+        <div>
+          <label class="text-xs font-semibold" style="color:var(--color-text-secondary)">Confidence (0-1)</label>
+          <input id="cf-confidence" type="number" step="0.05" min="0" max="1" value="0.8" class="w-full mt-1 px-2 py-1.5 text-sm rounded" style="background:var(--color-bg);color:var(--color-text);border:1px solid var(--color-border)">
+        </div>
+      </div>
+      <div>
+        <label class="text-xs font-semibold" style="color:var(--color-text-secondary)">Aliases (comma-separated)</label>
+        <input id="cf-aliases" type="text" class="w-full mt-1 px-2 py-1.5 text-sm rounded" style="background:var(--color-bg);color:var(--color-text);border:1px solid var(--color-border)">
+      </div>
+      <div class="flex gap-2 mt-4">
+        <button type="submit" class="px-4 py-1.5 text-xs font-semibold rounded" style="background:var(--color-accent);color:#fff">Save</button>
+        <button type="button" id="concept-modal-cancel" class="px-4 py-1.5 text-xs font-semibold rounded" style="background:var(--color-bg);color:var(--color-text-secondary);border:1px solid var(--color-border)">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Relation Modal -->
+<div id="relation-modal" class="hidden" style="position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.6)">
+  <div class="ghost-card p-6 w-full max-w-md">
+    <h3 class="text-lg font-bold mb-4" style="color:var(--color-text)">Add Relation</h3>
+    <form id="relation-form" class="space-y-3">
+      <div>
+        <label class="text-xs font-semibold" style="color:var(--color-text-secondary)">Source Concept ID</label>
+        <input id="rf-source" type="text" class="w-full mt-1 px-2 py-1.5 text-sm rounded" style="background:var(--color-bg);color:var(--color-text);border:1px solid var(--color-border)" required>
+      </div>
+      <div>
+        <label class="text-xs font-semibold" style="color:var(--color-text-secondary)">Relation Type</label>
+        <select id="rf-type" class="w-full mt-1 px-2 py-1.5 text-sm rounded" style="background:var(--color-bg);color:var(--color-text);border:1px solid var(--color-border)">
+          <option value="requires">requires</option>
+          <option value="enables">enables</option>
+          <option value="influences">influences</option>
+          <option value="part_of">part_of</option>
+          <option value="supersedes">supersedes</option>
+          <option value="detects">detects</option>
+        </select>
+      </div>
+      <div>
+        <label class="text-xs font-semibold" style="color:var(--color-text-secondary)">Target Concept ID</label>
+        <input id="rf-target" type="text" class="w-full mt-1 px-2 py-1.5 text-sm rounded" style="background:var(--color-bg);color:var(--color-text);border:1px solid var(--color-border)" required>
+      </div>
+      <div>
+        <label class="text-xs font-semibold" style="color:var(--color-text-secondary)">Strength (0-1)</label>
+        <input id="rf-strength" type="number" step="0.05" min="0" max="1" value="0.8" class="w-full mt-1 px-2 py-1.5 text-sm rounded" style="background:var(--color-bg);color:var(--color-text);border:1px solid var(--color-border)">
+      </div>
+      <div class="flex gap-2 mt-4">
+        <button type="submit" class="px-4 py-1.5 text-xs font-semibold rounded" style="background:var(--color-accent);color:#fff">Save</button>
+        <button type="button" id="relation-modal-cancel" class="px-4 py-1.5 text-xs font-semibold rounded" style="background:var(--color-bg);color:var(--color-text-secondary);border:1px solid var(--color-border)">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+(function() {
+  var _conceptsJson = [
+      {%- for pillar, concepts in concepts_by_pillar.items() %}
+      {%- for c in concepts %}
+      {
+        "id": {{ c.id | tojson }},
+        "label": {{ c.label | tojson }},
+        "description": {{ c.description | tojson }},
+        "pillar": {{ pillar | tojson }},
+        "confidence_score": {{ c.confidence_score }},
+        "aliases": [{% for a in (c.aliases or [])[:3] %}{{ a | tojson }}{% if not loop.last %},{% endif %}{% endfor %}]
+      }{% if not loop.last %},{% endif %}
+      {%- endfor %}
+      {%- if not loop.last %},{% endif %}
+      {%- endfor %}
+  ];
+  var _relationsJson = [
+      {%- for r in relations %}
+      {
+        "source_id": {{ r.source | tojson }},
+        "target_id": {{ r.target | tojson }},
+        "relation_type": {{ r.relation_type | tojson }},
+        "strength": {{ r.weight }}
+      }{% if not loop.last %},{% endif %}
+      {%- endfor %}
+  ];
+  var ontology = {
+    concepts: _conceptsJson,
+    relations: _relationsJson
+  };
+  var changes = 0;
+
+  function updateBadge() {
+    var el = document.getElementById('change-count');
+    el.textContent = changes > 0 ? changes + ' unsaved change' + (changes > 1 ? 's' : '') + ' — download to save' : '';
+    el.style.color = changes > 0 ? '#f59e0b' : '';
+  }
+
+  function openConceptModal(vals) {
+    var m = document.getElementById('concept-modal');
+    document.getElementById('concept-modal-title').textContent = vals ? 'Edit Concept' : 'Add Concept';
+    document.getElementById('cf-original-id').value = vals ? vals.id : '';
+    document.getElementById('cf-id').value = vals ? vals.id : '';
+    document.getElementById('cf-id').disabled = !!vals;
+    document.getElementById('cf-label').value = vals ? vals.label : '';
+    document.getElementById('cf-desc').value = vals ? vals.description : '';
+    document.getElementById('cf-pillar').value = vals ? vals.pillar : 'aml';
+    document.getElementById('cf-confidence').value = vals ? vals.confidence_score : 0.8;
+    document.getElementById('cf-aliases').value = vals && vals.aliases ? vals.aliases.join(', ') : '';
+    m.classList.remove('hidden');
+  }
+
+  function closeConceptModal() { document.getElementById('concept-modal').classList.add('hidden'); }
+
+  function openRelationModal() {
+    document.getElementById('relation-modal').classList.remove('hidden');
+  }
+  function closeRelationModal() { document.getElementById('relation-modal').classList.add('hidden'); }
+
+  document.getElementById('btn-add-concept').onclick = function() { openConceptModal(null); };
+  document.getElementById('btn-add-relation').onclick = function() { openRelationModal(); };
+  document.getElementById('concept-modal-cancel').onclick = closeConceptModal;
+  document.getElementById('relation-modal-cancel').onclick = closeRelationModal;
+
+  document.getElementById('concept-modal').onclick = function(e) { if (e.target === this) closeConceptModal(); };
+  document.getElementById('relation-modal').onclick = function(e) { if (e.target === this) closeRelationModal(); };
+
+  document.getElementById('concept-form').onsubmit = function(e) {
+    e.preventDefault();
+    var origId = document.getElementById('cf-original-id').value;
+    var concept = {
+      id: document.getElementById('cf-id').value.trim(),
+      label: document.getElementById('cf-label').value.trim(),
+      description: document.getElementById('cf-desc').value.trim(),
+      pillar: document.getElementById('cf-pillar').value,
+      confidence_score: parseFloat(document.getElementById('cf-confidence').value) || 0.8,
+      aliases: document.getElementById('cf-aliases').value.split(',').map(function(s){return s.trim()}).filter(Boolean)
+    };
+    if (origId) {
+      var idx = ontology.concepts.findIndex(function(c){return c.id===origId});
+      if (idx >= 0) ontology.concepts[idx] = concept;
+    } else {
+      ontology.concepts.push(concept);
+    }
+    changes++;
+    updateBadge();
+    closeConceptModal();
+  };
+
+  document.getElementById('relation-form').onsubmit = function(e) {
+    e.preventDefault();
+    ontology.relations.push({
+      source_id: document.getElementById('rf-source').value.trim(),
+      target_id: document.getElementById('rf-target').value.trim(),
+      relation_type: document.getElementById('rf-type').value,
+      strength: parseFloat(document.getElementById('rf-strength').value) || 0.8
+    });
+    changes++;
+    updateBadge();
+    closeRelationModal();
+  };
+
+  document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('edit-concept')) {
+      var id = e.target.dataset.id;
+      var c = ontology.concepts.find(function(x){return x.id===id});
+      if (c) openConceptModal(c);
+    }
+    if (e.target.classList.contains('del-concept')) {
+      var id = e.target.dataset.id;
+      if (confirm('Delete concept "' + id + '"?')) {
+        ontology.concepts = ontology.concepts.filter(function(c){return c.id!==id});
+        changes++;
+        updateBadge();
+        e.target.closest('.concept-card').remove();
+      }
+    }
+    if (e.target.classList.contains('del-relation')) {
+      var s = e.target.dataset.source, t = e.target.dataset.target, ty = e.target.dataset.type;
+      if (confirm('Delete relation ' + s + ' → ' + t + '?')) {
+        ontology.relations = ontology.relations.filter(function(r){return !(r.source_id===s && r.target_id===t && r.relation_type===ty)});
+        changes++;
+        updateBadge();
+        e.target.closest('tr').remove();
+      }
+    }
+  });
+
+  document.getElementById('btn-download').onclick = function() {
+    var blob = new Blob([JSON.stringify(ontology, null, 2)], {type:'application/json'});
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'ontology.json';
+    a.click();
+    URL.revokeObjectURL(a.href);
+  };
+})();
+</script>
 {% endblock %}

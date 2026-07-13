@@ -1,0 +1,25 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "static/images"
+public_folder: "/images"
+
+collections:
+  - name: "registry"
+    label: "Content Registry"
+    file: "registry.json"
+    fields:
+      - name: "items"
+        label: "Items"
+        widget: "list"
+        fields:
+          - { label: "Slug", name: "slug", widget: "string" }
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Description", name: "description", widget: "text" }
+          - { label: "Pillar", name: "pillar", widget: "select", options: ["aml", "stock", "data-engineering"] }
+          - { label: "Content Type", name: "content_type", widget: "select", options: ["research", "learn", "knowledge"] }
+          - { label: "Difficulty", name: "difficulty", widget: "select", options: ["beginner", "intermediate", "advanced"] }
+          - { label: "Status", name: "status", widget: "select", options: ["published", "draft"] }
+          - { label: "Tags", name: "tags", widget: "list", required: false }
+          - { label: "Body HTML", name: "body_html", widget: "text", required: false }

@@ -281,14 +281,14 @@ def extract_comparisons(body_text: str) -> list[dict[str, Any]]:
                         }
                     )
             elif pat == _COMPARE_PATTERNS[1]:
-                entity = g[2].strip() if len(g) > 2 else "value"
+                entity = g[0].strip()
                 val = g[1]
                 key = f"percent|{entity}|{val}"
                 if key not in seen:
                     seen.add(key)
                     results.append(
                         {
-                            "entity_a": entity[:60],
+                            "entity_a": entity,
                             "entity_b": "",
                             "metric": "change",
                             "value_a": f"{val}%",

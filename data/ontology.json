@@ -7,8 +7,19 @@
       "pillar": "aml",
       "category": "cdd-kyc",
       "aliases": [
-        "KYC",
-        "know-your-customer"
+        "Know Your Customer",
+        "know-your-customer",
+        "KYC verification",
+        "customer identification program",
+        "CIP",
+        "customer onboarding",
+        "know your customer",
+        "know your client",
+        "customer verification",
+        "identity verification",
+        "customer identification",
+        "KYC process",
+        "KYC compliance"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -23,7 +34,11 @@
       "pillar": "aml",
       "category": "cdd-kyc",
       "aliases": [
-        "CDD"
+        "Customer Due Diligence",
+        "due diligence review",
+        "customer risk assessment",
+        "risk profiling",
+        "customer due diligence"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -38,7 +53,12 @@
       "pillar": "aml",
       "category": "cdd-kyc",
       "aliases": [
-        "EDD"
+        "EDD",
+        "enhanced due diligence",
+        "EDD process",
+        "enhanced review",
+        "high-risk customer",
+        "PEP due diligence"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -53,8 +73,14 @@
       "pillar": "aml",
       "category": "sar-str",
       "aliases": [
-        "SAR",
-        "suspicious-activity-reporting"
+        "Suspicious Activity Report",
+        "suspicious-activity-reporting",
+        "suspicious activity",
+        "suspicious activity reporting",
+        "file SAR",
+        "SAR filing",
+        "BSA filing",
+        "sar"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -69,7 +95,13 @@
       "pillar": "aml",
       "category": "sar-str",
       "aliases": [
-        "STR"
+        "Suspicious Transaction Report",
+        "suspicious transaction",
+        "suspicious transaction reporting",
+        "STR filing",
+        "str",
+        "unusual transaction",
+        "transaction alert"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -84,7 +116,12 @@
       "pillar": "aml",
       "category": "sar-str",
       "aliases": [
-        "CTR"
+        "CTR",
+        "currency transaction report",
+        "CTR filing",
+        "currency transaction",
+        "CTR requirement",
+        "cash transaction report"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -100,7 +137,13 @@
       "category": "risk-assessment",
       "aliases": [
         "PEP",
-        "politically-exposed-person"
+        "politically exposed person",
+        "politically-exposed-person",
+        "PEP screening",
+        "politically exposed",
+        "senior foreign political figure",
+        "government official",
+        "pep"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -116,7 +159,13 @@
       "category": "sanctions",
       "aliases": [
         "OFAC screening",
-        "sanctions list check"
+        "sanctions list check",
+        "OFAC",
+        "sanctions compliance",
+        "sanctions list",
+        "blocked person",
+        "SDN list",
+        "sanctions screening"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -131,8 +180,14 @@
       "pillar": "aml",
       "category": "transaction-monitoring",
       "aliases": [
-        "TM",
-        "transaction surveillance"
+        "Transaction Monitoring",
+        "transaction surveillance",
+        "AML monitoring",
+        "monitor transactions",
+        "alert management",
+        "pattern detection",
+        "rule-based monitoring",
+        "anomaly detection"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -145,10 +200,14 @@
       "label": "Entity Resolution",
       "description": "",
       "pillar": "aml",
-      "category": "advanced-techniques",
+      "category": "network-analysis",
       "aliases": [
         "entity matching",
-        "record linkage"
+        "record linkage",
+        "deduplication",
+        "fuzzy matching",
+        "identity resolution",
+        "entity disambiguation"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -161,10 +220,16 @@
       "label": "Network Analysis for AML",
       "description": "",
       "pillar": "aml",
-      "category": "advanced-techniques",
+      "category": "network-analysis",
       "aliases": [
         "graph analytics",
-        "network forensics"
+        "network forensics",
+        "fund flow analysis",
+        "shell company network",
+        "network graph",
+        "social network analysis",
+        "network analysis",
+        "graph analysis"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -179,9 +244,14 @@
       "pillar": "aml",
       "category": "regulations",
       "aliases": [
-        "UBO",
+        "Ultimate Beneficial Owner",
         "ultimate beneficial ownership",
-        "BO"
+        "Beneficial Ownership",
+        "UBO",
+        "ownership transparency",
+        "corporate ownership",
+        "shell company ownership",
+        "beneficial owner identification"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -196,7 +266,12 @@
       "pillar": "aml",
       "category": "regulations",
       "aliases": [
-        "FATF 40 Recommendations"
+        "FATF 40 Recommendations",
+        "FATF",
+        "Financial Action Task Force",
+        "mutual evaluation",
+        "grey list",
+        "black list"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -212,7 +287,13 @@
       "category": "regulations",
       "aliases": [
         "BSA",
-        "Currency and Foreign Transactions Act"
+        "Bank Secrecy Act",
+        "Currency and Foreign Transactions Act",
+        "BSA compliance",
+        "BSA requirements",
+        "FinCEN",
+        "filing requirements",
+        "bsa"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -225,10 +306,17 @@
       "label": "Trade-Based Money Laundering",
       "description": "",
       "pillar": "aml",
-      "category": "risk-assessment",
+      "category": "trade-based-ml",
       "aliases": [
         "TBML",
-        "trade-based-ml"
+        "trade-based-ml",
+        "trade-based money laundering",
+        "mis-invoicing",
+        "over-invoicing",
+        "under-invoicing",
+        "trade fraud",
+        "trade-based laundering",
+        "tbml"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -243,7 +331,12 @@
       "pillar": "aml",
       "category": "regtech",
       "aliases": [
-        "RegTech"
+        "RegTech",
+        "regulatory technology",
+        "compliance automation",
+        "automated compliance",
+        "regulatory reporting",
+        "compliance technology"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -256,10 +349,18 @@
       "label": "Limit Order Book",
       "description": "",
       "pillar": "stock",
-      "category": "foundations",
+      "category": "market-microstructure",
       "aliases": [
         "LOB",
-        "order book"
+        "limit order book",
+        "order book",
+        "LOB dynamics",
+        "limit order",
+        "order matching",
+        "market maker",
+        "bid-ask spread",
+        "order flow",
+        "lob"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -272,9 +373,13 @@
       "label": "Market Microstructure",
       "description": "",
       "pillar": "stock",
-      "category": "foundations",
+      "category": "market-microstructure",
       "aliases": [
-        "microstructure"
+        "microstructure",
+        "market structure",
+        "price formation",
+        "trading mechanism",
+        "market design"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -287,10 +392,14 @@
       "label": "Implied Volatility Surface",
       "description": "",
       "pillar": "stock",
-      "category": "market-analysis",
+      "category": "volatility-analysis",
       "aliases": [
         "IV surface",
-        "vol surface"
+        "vol surface",
+        "implied volatility",
+        "volatility smile",
+        "volatility skew",
+        "options pricing"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -303,9 +412,13 @@
       "label": "Hawkes Process",
       "description": "",
       "pillar": "stock",
-      "category": "advanced-techniques",
+      "category": "quantitative-methods",
       "aliases": [
-        "Hawkes self-exciting process"
+        "Hawkes self-exciting process",
+        "self-exciting process",
+        "point process",
+        "temporal point process",
+        "event-driven model"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -318,9 +431,15 @@
       "label": "VPIN Toxicity",
       "description": "",
       "pillar": "stock",
-      "category": "advanced-techniques",
+      "category": "quantitative-methods",
       "aliases": [
-        "Volume-Synchronized Probability of Informed Trading"
+        "Volume-Synchronized Probability of Informed Trading",
+        "VPIN",
+        "order flow toxicity",
+        "probability of informed trading",
+        "volume-synchronized",
+        "informed trading",
+        "vpin"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -335,7 +454,11 @@
       "pillar": "stock",
       "category": "industry-analysis",
       "aliases": [
-        "supply chain risk"
+        "supply chain risk",
+        "supply chain disruption",
+        "supply chain mapping",
+        "vendor risk",
+        "third-party risk"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -348,10 +471,14 @@
       "label": "Earnings Analysis",
       "description": "",
       "pillar": "stock",
-      "category": "market-analysis",
+      "category": "earnings-analysis",
       "aliases": [
         "earnings season",
-        "earnings reports"
+        "earnings reports",
+        "earnings",
+        "earnings report",
+        "revenue analysis",
+        "financial results"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -364,10 +491,14 @@
       "label": "Commodity Trading Strategies",
       "description": "",
       "pillar": "stock",
-      "category": "strategies",
+      "category": "commodity-markets",
       "aliases": [
         "commodity futures",
-        "commodity hedging"
+        "commodity hedging",
+        "commodity trading",
+        "commodity markets",
+        "commodity",
+        "commodity derivatives"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -383,7 +514,10 @@
       "category": "industry-analysis",
       "aliases": [
         "chip industry",
-        "semiconductor supply chain"
+        "semiconductor supply chain",
+        "semiconductor",
+        "chip shortage",
+        "wafer fab"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -400,7 +534,11 @@
       "aliases": [
         "AI chips",
         "GPU market",
-        "AI accelerators"
+        "AI accelerators",
+        "GPU",
+        "TPU",
+        "AI hardware",
+        "machine learning hardware"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -413,10 +551,13 @@
       "label": "Portfolio Optimization",
       "description": "",
       "pillar": "stock",
-      "category": "strategies",
+      "category": "portfolio-construction",
       "aliases": [
         "asset allocation",
-        "portfolio construction"
+        "portfolio construction",
+        "mean-variance",
+        "efficient frontier",
+        "portfolio design"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -429,9 +570,15 @@
       "label": "Risk Parity",
       "description": "",
       "pillar": "stock",
-      "category": "strategies",
+      "category": "risk-management",
       "aliases": [
-        "risk-balanced portfolio"
+        "risk-balanced portfolio",
+        "risk parity strategy",
+        "risk-parity",
+        "risk parity",
+        "risk-balanced",
+        "equal risk contribution",
+        "ERC"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -444,10 +591,15 @@
       "label": "Factor Investing",
       "description": "",
       "pillar": "stock",
-      "category": "strategies",
+      "category": "portfolio-construction",
       "aliases": [
         "smart beta",
-        "factor models"
+        "factor models",
+        "factor investing",
+        "factor-based investing",
+        "factor-based",
+        "alpha generation",
+        "factor exposure"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -460,10 +612,16 @@
       "label": "Technical Analysis",
       "description": "",
       "pillar": "stock",
-      "category": "market-analysis",
+      "category": "technical-analysis",
       "aliases": [
         "chart patterns",
-        "technical indicators"
+        "technical indicators",
+        "technical analysis",
+        "TA",
+        "moving average",
+        "RSI",
+        "MACD",
+        "candlestick patterns"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -476,10 +634,16 @@
       "label": "Macroeconomic Analysis",
       "description": "",
       "pillar": "stock",
-      "category": "market-analysis",
+      "category": "macro-economics",
       "aliases": [
         "macro analysis",
-        "economic indicators"
+        "economic indicators",
+        "macroeconomic",
+        "GDP",
+        "inflation",
+        "interest rates",
+        "monetary policy",
+        "fiscal policy"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -492,10 +656,14 @@
       "label": "Extract-Transform-Load",
       "description": "",
       "pillar": "data-engineering",
-      "category": "foundations",
+      "category": "pipeline-architecture",
       "aliases": [
-        "ETL",
-        "extract transform load"
+        "Extract Transform Load",
+        "extract transform load",
+        "data pipeline",
+        "data integration",
+        "batch ingestion",
+        "etl"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -508,9 +676,12 @@
       "label": "Extract-Load-Transform",
       "description": "",
       "pillar": "data-engineering",
-      "category": "foundations",
+      "category": "pipeline-architecture",
       "aliases": [
-        "ELT"
+        "Extract Load Transform",
+        "modern data stack",
+        "cloud data warehouse loading",
+        "elt"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -523,10 +694,15 @@
       "label": "Change Data Capture",
       "description": "",
       "pillar": "data-engineering",
-      "category": "advanced-techniques",
+      "category": "streaming",
       "aliases": [
-        "CDC",
-        "change-data-capture"
+        "Change Data Capture",
+        "change-data-capture",
+        "log-based CDC",
+        "real-time replication",
+        "transaction log mining",
+        "incremental sync",
+        "cdc"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -539,9 +715,12 @@
       "label": "Data Lake",
       "description": "",
       "pillar": "data-engineering",
-      "category": "foundations",
+      "category": "storage-formats",
       "aliases": [
-        "data lakehouse"
+        "data lakehouse",
+        "lakehouse",
+        "open table format",
+        "data lake storage"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -554,10 +733,14 @@
       "label": "Data Warehouse",
       "description": "",
       "pillar": "data-engineering",
-      "category": "foundations",
+      "category": "storage-formats",
       "aliases": [
-        "DWH",
-        "analytical data store"
+        "Data Warehouse",
+        "analytical data store",
+        "data warehousing",
+        "dimensional modeling",
+        "star schema",
+        "OLAP"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -570,9 +753,15 @@
       "label": "Data Mesh",
       "description": "",
       "pillar": "data-engineering",
-      "category": "architecture",
+      "category": "data-mesh-fabric",
       "aliases": [
-        "data mesh architecture"
+        "data mesh architecture",
+        "data mesh",
+        "mesh architecture",
+        "domain-oriented",
+        "data as a product",
+        "federated data",
+        "self-serve data"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -585,10 +774,14 @@
       "label": "Stream Processing",
       "description": "",
       "pillar": "data-engineering",
-      "category": "advanced-techniques",
+      "category": "streaming",
       "aliases": [
         "real-time processing",
-        "stream processing"
+        "stream processing",
+        "event streaming",
+        "real-time analytics",
+        "streaming data",
+        "low-latency processing"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -601,10 +794,14 @@
       "label": "Batch Processing",
       "description": "",
       "pillar": "data-engineering",
-      "category": "foundations",
+      "category": "batch-processing",
       "aliases": [
         "batch jobs",
-        "scheduled processing"
+        "scheduled processing",
+        "batch processing",
+        "batch workloads",
+        "overnight batch",
+        "ETL batch"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -617,9 +814,13 @@
       "label": "dbt (data build tool)",
       "description": "",
       "pillar": "data-engineering",
-      "category": "advanced-techniques",
+      "category": "analytics-engineering",
       "aliases": [
-        "data build tool"
+        "data build tool",
+        "dbt",
+        "analytics engineering",
+        "SQL transformation",
+        "data modeling tool"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -632,9 +833,12 @@
       "label": "Dagster Orchestrator",
       "description": "",
       "pillar": "data-engineering",
-      "category": "advanced-techniques",
+      "category": "orchestration",
       "aliases": [
-        "dagster"
+        "dagster",
+        "data orchestration",
+        "asset-based orchestration",
+        "software-defined assets"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -647,9 +851,12 @@
       "label": "Apache Flink",
       "description": "",
       "pillar": "data-engineering",
-      "category": "advanced-techniques",
+      "category": "orchestration",
       "aliases": [
-        "Flink"
+        "Flink",
+        "Apache Flink",
+        "stateful streaming",
+        "stream processing engine"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -662,9 +869,14 @@
       "label": "Apache Kafka",
       "description": "",
       "pillar": "data-engineering",
-      "category": "advanced-techniques",
+      "category": "streaming",
       "aliases": [
-        "Kafka"
+        "Kafka",
+        "Apache Kafka",
+        "event streaming",
+        "message broker",
+        "Kafka Streams",
+        "Kafka Connect"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -677,10 +889,14 @@
       "label": "Apache Iceberg",
       "description": "",
       "pillar": "data-engineering",
-      "category": "advanced-techniques",
+      "category": "storage-formats",
       "aliases": [
         "Iceberg",
-        "table format"
+        "table format",
+        "Apache Iceberg",
+        "open table format",
+        "time travel",
+        "schema evolution"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -693,10 +909,14 @@
       "label": "Schema Registry",
       "description": "",
       "pillar": "data-engineering",
-      "category": "architecture",
+      "category": "schema-management",
       "aliases": [
         "schema evolution",
-        "schema management"
+        "schema management",
+        "schema registry",
+        "Avro registry",
+        "schema validation",
+        "schema compatibility"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -709,10 +929,14 @@
       "label": "Data Contracts",
       "description": "",
       "pillar": "data-engineering",
-      "category": "architecture",
+      "category": "data-governance",
       "aliases": [
         "data contract",
-        "SLA for data"
+        "SLA for data",
+        "data contracts",
+        "data SLA",
+        "data quality agreement",
+        "producer-consumer agreement"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -725,10 +949,16 @@
       "label": "Data Quality",
       "description": "",
       "pillar": "data-engineering",
-      "category": "best-practices",
+      "category": "data-quality",
       "aliases": [
         "data observability",
-        "data validation"
+        "data validation",
+        "data quality",
+        "DQ",
+        "data profiling",
+        "data cleansing",
+        "data accuracy",
+        "data completeness"
       ],
       "properties": {},
       "source_inspiration": "",
@@ -741,17 +971,262 @@
       "label": "Apache Arrow / Parquet",
       "description": "",
       "pillar": "data-engineering",
-      "category": "advanced-techniques",
+      "category": "storage-formats",
       "aliases": [
         "Arrow",
         "Parquet",
-        "columnar storage"
+        "columnar storage",
+        "Apache Arrow",
+        "Apache Parquet",
+        "columnar format",
+        "columnar database"
       ],
       "properties": {},
       "source_inspiration": "",
       "confidence_score": 1.0,
       "created_at": "2026-07-11T16:05:04.330847+00:00",
       "updated_at": "2026-07-11T16:05:04.330850+00:00"
+    },
+    {
+      "id": "aml",
+      "label": "Anti-Money Laundering",
+      "description": "",
+      "pillar": "aml",
+      "category": "sar-str",
+      "aliases": [
+        "anti-money laundering",
+        "AML compliance",
+        "AML regulation",
+        "money laundering prevention",
+        "AML framework",
+        "AML program",
+        "AML"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-13T16:35:58.781855+00:00",
+      "updated_at": "2026-07-13T16:35:58.781886+00:00"
+    },
+    {
+      "id": "dataops",
+      "label": "DataOps",
+      "description": "",
+      "pillar": "data-engineering",
+      "category": "pipeline-architecture",
+      "aliases": [
+        "DataOps",
+        "data operations",
+        "data platform",
+        "data infrastructure",
+        "data CI/CD",
+        "data platform engineering"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-13T16:35:58.781902+00:00",
+      "updated_at": "2026-07-13T16:35:58.781906+00:00"
+    },
+    {
+      "id": "machine-learning",
+      "label": "Machine Learning",
+      "description": "",
+      "pillar": "data-engineering",
+      "category": "pipeline-architecture",
+      "aliases": [
+        "machine learning",
+        "ML",
+        "deep learning",
+        "neural network",
+        "model training",
+        "ML pipeline",
+        "AI model",
+        "model deployment"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-13T16:35:58.781915+00:00",
+      "updated_at": "2026-07-13T16:35:58.781918+00:00"
+    },
+    {
+      "id": "distributed-systems",
+      "label": "Distributed Systems",
+      "description": "",
+      "pillar": "data-engineering",
+      "category": "pipeline-architecture",
+      "aliases": [
+        "distributed systems",
+        "distributed computing",
+        "consensus",
+        "fault tolerance",
+        "distributed database",
+        "distributed architecture",
+        "CAP theorem"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-13T16:35:58.781926+00:00",
+      "updated_at": "2026-07-13T16:35:58.781929+00:00"
+    },
+    {
+      "id": "risk-management",
+      "label": "Risk Management",
+      "description": "",
+      "pillar": "stock",
+      "category": "risk-assessment",
+      "aliases": [
+        "risk management",
+        "risk assessment",
+        "risk modeling",
+        "risk analysis",
+        "financial risk",
+        "portfolio risk",
+        "credit risk",
+        "market risk",
+        "operational risk"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-13T16:35:58.781937+00:00",
+      "updated_at": "2026-07-13T16:35:58.781939+00:00"
+    },
+    {
+      "id": "cybersecurity",
+      "label": "Cybersecurity",
+      "description": "",
+      "pillar": "data-engineering",
+      "category": "pipeline-architecture",
+      "aliases": [
+        "cybersecurity",
+        "information security",
+        "data security",
+        "encryption",
+        "privacy",
+        "access control",
+        "threat detection",
+        "cyber security"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-13T16:35:58.781955+00:00",
+      "updated_at": "2026-07-13T16:35:58.781957+00:00"
+    },
+    {
+      "id": "llm",
+      "label": "Large Language Models",
+      "description": "",
+      "pillar": "data-engineering",
+      "category": "pipeline-architecture",
+      "aliases": [
+        "large language model",
+        "LLM",
+        "GPT",
+        "transformer",
+        "language model",
+        "foundation model",
+        "generative AI",
+        "chatbot",
+        "AI agent",
+        "agentic AI"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-13T16:35:58.781971+00:00",
+      "updated_at": "2026-07-13T16:35:58.781974+00:00"
+    },
+    {
+      "id": "biotech-genomics",
+      "label": "Biotech & Genomics",
+      "description": "",
+      "pillar": "stock",
+      "category": "supply-chain-analysis",
+      "aliases": [
+        "biotech",
+        "genomics",
+        "CRISPR",
+        "gene therapy",
+        "protein folding",
+        "biotechnology",
+        "gene editing",
+        "precision medicine"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-13T16:35:58.781982+00:00",
+      "updated_at": "2026-07-13T16:35:58.781985+00:00"
+    },
+    {
+      "id": "regulatory-compliance",
+      "label": "Regulatory Compliance",
+      "description": "",
+      "pillar": "aml",
+      "category": "regtech",
+      "aliases": [
+        "regulatory compliance",
+        "compliance",
+        "regulation",
+        "regulatory framework",
+        "regulatory requirement",
+        "compliance program",
+        "compliance framework"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-13T16:35:58.781993+00:00",
+      "updated_at": "2026-07-13T16:35:58.781995+00:00"
+    },
+    {
+      "id": "data-governance",
+      "label": "Data Governance",
+      "description": "",
+      "pillar": "data-engineering",
+      "category": "data-quality",
+      "aliases": [
+        "data governance",
+        "data stewardship",
+        "data catalog",
+        "data lineage",
+        "metadata management",
+        "data policy",
+        "data access governance"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-13T16:35:58.782025+00:00",
+      "updated_at": "2026-07-13T16:35:58.782027+00:00"
+    },
+    {
+      "id": "cloud-infrastructure",
+      "label": "Cloud Infrastructure",
+      "description": "",
+      "pillar": "data-engineering",
+      "category": "pipeline-architecture",
+      "aliases": [
+        "cloud infrastructure",
+        "cloud computing",
+        "cloud platform",
+        "AWS",
+        "GCP",
+        "Azure",
+        "cloud migration",
+        "serverless",
+        "Kubernetes",
+        "container orchestration"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-13T16:35:58.782037+00:00",
+      "updated_at": "2026-07-13T16:35:58.782040+00:00"
     }
   ],
   "relations": [
@@ -1177,6 +1652,240 @@
       "evidence": [],
       "pillar": "cross-pillar",
       "created_at": "2026-07-11T16:05:04.331363+00:00"
+    },
+    {
+      "source_id": "aml",
+      "target_id": "kyc",
+      "relation_type": "part_of",
+      "strength": 0.9,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-12T18:05:34.297845+00:00"
+    },
+    {
+      "source_id": "aml",
+      "target_id": "cdd",
+      "relation_type": "part_of",
+      "strength": 0.9,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-12T18:05:34.297845+00:00"
+    },
+    {
+      "source_id": "aml",
+      "target_id": "sar",
+      "relation_type": "part_of",
+      "strength": 0.9,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-12T18:05:34.297845+00:00"
+    },
+    {
+      "source_id": "aml",
+      "target_id": "str",
+      "relation_type": "part_of",
+      "strength": 0.9,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-12T18:05:34.297845+00:00"
+    },
+    {
+      "source_id": "aml",
+      "target_id": "transaction-monitoring",
+      "relation_type": "part_of",
+      "strength": 0.9,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-12T18:05:34.297845+00:00"
+    },
+    {
+      "source_id": "aml",
+      "target_id": "sanctions-screening",
+      "relation_type": "part_of",
+      "strength": 0.9,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-12T18:05:34.297845+00:00"
+    },
+    {
+      "source_id": "aml",
+      "target_id": "beneficial-ownership",
+      "relation_type": "part_of",
+      "strength": 0.9,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-12T18:05:34.297845+00:00"
+    },
+    {
+      "source_id": "aml",
+      "target_id": "regtech",
+      "relation_type": "related_to",
+      "strength": 0.7,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-12T18:05:34.297845+00:00"
+    },
+    {
+      "source_id": "dataops",
+      "target_id": "data-quality",
+      "relation_type": "related_to",
+      "strength": 0.8,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-12T18:05:34.297845+00:00"
+    },
+    {
+      "source_id": "dataops",
+      "target_id": "data-governance",
+      "relation_type": "related_to",
+      "strength": 0.8,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-12T18:05:34.297845+00:00"
+    },
+    {
+      "source_id": "dataops",
+      "target_id": "dbt",
+      "relation_type": "related_to",
+      "strength": 0.7,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-12T18:05:34.297845+00:00"
+    },
+    {
+      "source_id": "dataops",
+      "target_id": "dagster",
+      "relation_type": "related_to",
+      "strength": 0.7,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-12T18:05:34.297845+00:00"
+    },
+    {
+      "source_id": "machine-learning",
+      "target_id": "data-quality",
+      "relation_type": "related_to",
+      "strength": 0.7,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-12T18:05:34.297845+00:00"
+    },
+    {
+      "source_id": "risk-management",
+      "target_id": "portfolio-optimization",
+      "relation_type": "related_to",
+      "strength": 0.8,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-12T18:05:34.297845+00:00"
+    },
+    {
+      "source_id": "risk-management",
+      "target_id": "factor-investing",
+      "relation_type": "related_to",
+      "strength": 0.7,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-12T18:05:34.297845+00:00"
+    },
+    {
+      "source_id": "risk-management",
+      "target_id": "aml",
+      "relation_type": "related_to",
+      "strength": 0.6,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-12T18:05:34.297845+00:00"
+    },
+    {
+      "source_id": "cybersecurity",
+      "target_id": "data-contracts",
+      "relation_type": "related_to",
+      "strength": 0.6,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-12T18:05:34.297845+00:00"
+    },
+    {
+      "source_id": "llm",
+      "target_id": "machine-learning",
+      "relation_type": "related_to",
+      "strength": 0.8,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-12T18:05:34.297845+00:00"
+    },
+    {
+      "source_id": "biotech-genomics",
+      "target_id": "earnings-analysis",
+      "relation_type": "related_to",
+      "strength": 0.6,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-12T18:05:34.297845+00:00"
+    },
+    {
+      "source_id": "cloud-infrastructure",
+      "target_id": "streaming",
+      "relation_type": "related_to",
+      "strength": 0.7,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-12T18:05:34.297845+00:00"
+    },
+    {
+      "source_id": "cloud-infrastructure",
+      "target_id": "data-lake",
+      "relation_type": "related_to",
+      "strength": 0.7,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-12T18:05:34.297845+00:00"
+    },
+    {
+      "source_id": "regulatory-compliance",
+      "target_id": "aml",
+      "relation_type": "related_to",
+      "strength": 0.8,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-12T18:05:34.297845+00:00"
+    },
+    {
+      "source_id": "regulatory-compliance",
+      "target_id": "regtech",
+      "relation_type": "related_to",
+      "strength": 0.8,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-12T18:05:34.297845+00:00"
+    },
+    {
+      "source_id": "regulatory-compliance",
+      "target_id": "fatf-recommendations",
+      "relation_type": "related_to",
+      "strength": 0.7,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-12T18:05:34.297845+00:00"
+    },
+    {
+      "source_id": "data-governance",
+      "target_id": "data-quality",
+      "relation_type": "related_to",
+      "strength": 0.9,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-12T18:05:34.297845+00:00"
+    },
+    {
+      "source_id": "data-governance",
+      "target_id": "data-contracts",
+      "relation_type": "related_to",
+      "strength": 0.7,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-12T18:05:34.297845+00:00"
     }
   ],
   "resource_links": []

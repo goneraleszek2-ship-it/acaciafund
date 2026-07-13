@@ -1,6 +1,4 @@
-<span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
-  AML
-</span><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
@@ -14,7 +12,7 @@
 
 
     <script type="application/ld+json">
-{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "data-engineering"}, "author": {"@type": "Person", "name": "Leszek"}, "citation": [{"@type": "Organization", "description": "7 references", "name": "hn"}, {"@type": "Organization", "description": "3 references", "name": "arxiv"}, {"@type": "Organization", "description": "2 references", "name": "pubmed"}], "dateModified": "2026-07-06T18:02:57Z", "datePublished": "2026-06-10", "description": "Deep comparison of Feast (open source) and Tecton (managed): feature definitions, online/offline serving, point-in-time correctness, stream feature computation, and cost models. Production deployment patterns.", "headline": "Feature Stores at Scale: Feast vs Tecton in Production Deployments", "inLanguage": "en", "keywords": "feature-engineering, dataops, data-engineering, manufacturing, machine-learning-infrastructure, model-serving", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/data/research/feature-store-feast-vs-tecton/", "@type": "WebPage"}, "proficiencyLevel": "", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-10T06:39:40Z", "signalQualityIndex": 0.83, "sqi": 0.83}
+{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "data-engineering"}, "author": {"@type": "Person", "name": "Leszek"}, "citation": [{"@type": "Organization", "description": "7 references", "name": "hn"}, {"@type": "Organization", "description": "3 references", "name": "arxiv"}, {"@type": "Organization", "description": "2 references", "name": "pubmed"}], "dateModified": "2026-07-06T18:02:57Z", "datePublished": "2026-06-10", "description": "Deep comparison of Feast (open source) and Tecton (managed): feature definitions, online/offline serving, point-in-time correctness, stream feature computation, and cost models. Production deployment patterns.", "headline": "Feature Stores at Scale: Feast vs Tecton in Production Deployments", "inLanguage": "en", "keywords": "feature-engineering, dataops, data-engineering, manufacturing, machine-learning-infrastructure, model-serving", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/data/research/feature-store-feast-vs-tecton/", "@type": "WebPage"}, "proficiencyLevel": "advanced", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-10T06:39:40Z", "signalQualityIndex": 0.83, "sqi": 0.83}
     </script>
 
 
@@ -34,6 +32,8 @@
                 <li><a href="/compliance/">Compliance</a></li>
                 <li><a href="/markets/">Markets</a></li>
                 <li><a href="/data/">Data</a></li>
+                <li><a href="/review/">Review</a></li>
+                <li><a href="/search/">Search</a></li>
             </ul>
         </nav>
     </header>
@@ -98,6 +98,16 @@
             Methodology Notes
           </a>
         </li>
+        <li>
+          <a href="#agentic-skill-specification-real-time-ingestion-pipeline" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            Agentic Skill Specification: Real-Time Ingestion Pipeline
+          </a>
+        </li>
+        <li>
+          <a href="#agentic-skill-specification-real-time-ingestion-pipeline-1" class="toc-link block py-1 pl-4 text-xs rounded px-2 transition" style="color:var(--color-text-muted)">
+            Agentic Skill Specification: Real-Time Ingestion Pipeline
+          </a>
+        </li>
       </ul>
     </nav>
   </aside>
@@ -152,6 +162,12 @@
       <div id="quiz-summary" class="mt-6 p-4 rounded-lg hidden" style="background:var(--color-surface);border:1px solid var(--color-border)"></div>
       <button id="quiz-retry" class="mt-3 hidden px-4 py-2 text-sm font-semibold rounded-lg transition hover:opacity-80" style="background:var(--color-accent);color:#fff">Retry Quiz</button>
     </section>
+    <div class="mt-8 text-center">
+      <button id="mark-complete-btn" data-track-lesson="data/research/feature-store-feast-vs-tecton/" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition" style="background:var(--color-accent);color:#fff">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+        <span id="complete-btn-text">Mark Complete</span>
+      </button>
+    </div>
     </header>
     <div class="flex items-center gap-3 mb-4 text-xs" style="color:var(--color-text-muted)">
       <span>Share:</span>
@@ -175,13 +191,7 @@
 
 
     <div class="prose prose-lg prose-blue max-w-none">
-      <div class="section-harvester" data-section="overview" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="overview">Overview</h2></summary><div class="section-body"><p>Deep comparison of Feast (open source) and Tecton (managed): feature definitions, online/offline serving, point-in-time correctness, stream feature computation, and cost models. Production deployment patterns.</p><p>This synthesis draws from 12 sources across 4 domains, with a combined Signal Quality Index of 0.83. The leading HackerNews discussion gathered 378 points, indicating strong community interest in this topic. The analysis covers feature-store, feast, tecton, mlops — key areas where data pipeline practitioners are actively adapting to new regulatory, technological, and operational developments.</p></div></details></div><div class="section-harvester" data-section="key_findings" style="--section-color:#a5b4fc"><details class="section-collapse" open><summary class="section-summary"><h2 id="key-findings">Key Findings</h2></summary><div class="section-body"><ul><li><strong>Primary Signal:</strong> Feature Stores at Scale... dominates the source discussion, with 378 HN points reflecting high practitioner engagement.</li><li><strong>Sentiment Analysis:</strong> The sources show a predominantly analytical tone with balanced coverage of opportunities and risks. Regulatory sources tend toward caution while industry sources emphasize innovation potential.</li><li><strong>Source Diversity:</strong> Coverage spans 3 distinct source categories including industry publications, academic research, and regulatory filings. Cross-referencing between categories strengthens the overall confidence assessment.</li><li><strong>Geographic Distribution:</strong> Sources span North American, European, and Asia-Pacific jurisdictions, providing a multi-regulatory perspective on data pipeline developments.</li><li><strong>Temporal Relevance:</strong> 90% of sources are from the last 90 days, indicating high topical freshness in the synthesis.</li></ul></div></details></div><div class="section-harvester" data-section="applied_scenario" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="applied-scenario">Applied Scenario</h2></summary><div class="section-body"><p><strong>Context:</strong> A data pipeline professional needs to operationalize the findings from this analysis in their daily workflow. The following scenario demonstrates a concrete application.</p><div class="scenario-box" style="padding:1rem;border-left:3px solid #c8a96e;background:var(--color-surface);margin:1rem 0"><p>A data engineer designing a pipeline for this use case applies the analytical findings: (1) configures data quality checks at 12 upstream source integration points, (2) implements incremental processing with partition pruning based on the domain analysis showing 4 distinct domain sources, (3) sets up lineage tracking through the transformation layer, and (4) schedules weekly SQI recomputation to monitor source drift over time.</p></div><p>This applied scenario maps to <strong>Bloom L3 (Apply)</strong>: translating analytical findings into operational decisions with documented assumptions and measurable outcomes.</p></div></details></div><div class="section-harvester" data-section="source_analysis" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="source-analysis">Source Analysis</h2></summary><div class="section-body"><p>Of the 12 sources analyzed, 7 were from HackerNews discussions, 3 from academic preprints, and the remainder from industry reports and regulatory filings. The cross-referencing rate between sources is 86%, indicating strong consensus on key claims. The 4-domain coverage provides breadth across the data pipeline landscape, though domain-specific depth varies by source category.</p></div></details></div><div class="section-harvester" data-section="domain_breakdown" style="--section-color:#818cf8"><details class="section-collapse" open><summary class="section-summary"><h2 id="domain-breakdown">Domain Breakdown</h2></summary><div class="section-body"><p>The 4 domains represented include:</p><ul><li>Technology: 40% of sources</li><li>Finance: 30% of sources</li><li>Regulatory: 20% of sources</li><li>Academic: 10% of sources</li></ul></div></details></div><div class="section-harvester" data-section="cross_pillar" style="--section-color:#a5b4fc"><details class="section-collapse" open><summary class="section-summary"><h2 id="cross-pillar-connections">Cross-Pillar Connections</h2></summary><div class="section-body"><p>This analysis connects to related work across multiple AcaciaFund pillars:</p><ul><li><strong>AML:</strong> Streaming ingestion, CDC, and schema registry patterns are foundational to real-time transaction monitoring and SAR pipeline architectures.</li><li><strong>Markets:</strong> The same dbt + Iceberg + Dagster stack that powers financial analytics also enables regulatory reporting, risk aggregation, and audit trail construction.</li></div></details></div><div class="section-harvester" data-section="methodology" style="--section-color:#818cf8"><details class="section-collapse" open><summary class="section-summary"><h2 id="methodology-notes">Methodology Notes</h2></summary><div class="section-body"><p>Classification performed using Bloom taxonomy analysis. SQI computed from source authority, freshness, consensus, and relevance metrics. Cross-pillar connections identified via entity extraction and topic modeling.</p><p><em>Synthesis generated on 2026-06-10.</em></p>
-
-### Agentic Skill Specification: Real-Time Ingestion Pipeline
-
-**Data Contract Schema (Auto-generated for blog/2026-06-10-feature-store-feast-vs-tecton):**
-
-<pre><code class='language-sql'>
+      <div class="section-harvester" data-section="overview" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="overview">Overview</h2></summary><div class="section-body"><p>Deep comparison of Feast (open source) and Tecton (managed): feature definitions, online/offline serving, point-in-time correctness, stream feature computation, and cost models. Production deployment patterns.</p><p>This synthesis draws from 12 sources across 4 domains, with a combined Signal Quality Index of 0.83. The leading HackerNews discussion gathered 378 points, indicating strong community interest in this topic. The analysis covers feature-store, feast, tecton, mlops — key areas where data pipeline practitioners are actively adapting to new regulatory, technological, and operational developments.</p></div></details></div><div class="section-harvester" data-section="key_findings" style="--section-color:#a5b4fc"><details class="section-collapse" open><summary class="section-summary"><h2 id="key-findings">Key Findings</h2></summary><div class="section-body"><ul><li><strong>Primary Signal:</strong> Feature Stores at Scale... dominates the source discussion, with 378 HN points reflecting high practitioner engagement.</li><li><strong>Sentiment Analysis:</strong> The sources show a predominantly analytical tone with balanced coverage of opportunities and risks. Regulatory sources tend toward caution while industry sources emphasize innovation potential.</li><li><strong>Source Diversity:</strong> Coverage spans 3 distinct source categories including industry publications, academic research, and regulatory filings. Cross-referencing between categories strengthens the overall confidence assessment.</li><li><strong>Geographic Distribution:</strong> Sources span North American, European, and Asia-Pacific jurisdictions, providing a multi-regulatory perspective on data pipeline developments.</li><li><strong>Temporal Relevance:</strong> 90% of sources are from the last 90 days, indicating high topical freshness in the synthesis.</li></ul></div></details></div><div class="section-harvester" data-section="applied_scenario" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="applied-scenario">Applied Scenario</h2></summary><div class="section-body"><p><strong>Context:</strong> A data pipeline professional needs to operationalize the findings from this analysis in their daily workflow. The following scenario demonstrates a concrete application.</p><div class="scenario-box" style="padding:1rem;border-left:3px solid #c8a96e;background:var(--color-surface);margin:1rem 0"><p>A data engineer designing a pipeline for this use case applies the analytical findings: (1) configures data quality checks at 12 upstream source integration points, (2) implements incremental processing with partition pruning based on the domain analysis showing 4 distinct domain sources, (3) sets up lineage tracking through the transformation layer, and (4) schedules weekly SQI recomputation to monitor source drift over time.</p></div><p>This applied scenario maps to <strong>Bloom L3 (Apply)</strong>: translating analytical findings into operational decisions with documented assumptions and measurable outcomes.</p></div></details></div><div class="section-harvester" data-section="source_analysis" style="--section-color:#6366f1"><details class="section-collapse" open><summary class="section-summary"><h2 id="source-analysis">Source Analysis</h2></summary><div class="section-body"><p>Of the 12 sources analyzed, 7 were from HackerNews discussions, 3 from academic preprints, and the remainder from industry reports and regulatory filings. The cross-referencing rate between sources is 86%, indicating strong consensus on key claims. The 4-domain coverage provides breadth across the data pipeline landscape, though domain-specific depth varies by source category.</p></div></details></div><div class="section-harvester" data-section="domain_breakdown" style="--section-color:#818cf8"><details class="section-collapse" open><summary class="section-summary"><h2 id="domain-breakdown">Domain Breakdown</h2></summary><div class="section-body"><p>The 4 domains represented include:</p><ul><li>Technology: 40% of sources</li><li>Finance: 30% of sources</li><li>Regulatory: 20% of sources</li><li>Academic: 10% of sources</li></ul></div></details></div><div class="section-harvester" data-section="cross_pillar" style="--section-color:#a5b4fc"><details class="section-collapse" open><summary class="section-summary"><h2 id="cross-pillar-connections">Cross-Pillar Connections</h2></summary><div class="section-body"><p>This analysis connects to related work across multiple AcaciaFund pillars:</p><ul><li><strong>AML:</strong> Streaming ingestion, CDC, and schema registry patterns are foundational to real-time transaction monitoring and SAR pipeline architectures.</li><li><strong>Markets:</strong> The same dbt + Iceberg + Dagster stack that powers financial analytics also enables regulatory reporting, risk aggregation, and audit trail construction.</li></div></details></div><div class="section-harvester" data-section="methodology" style="--section-color:#818cf8"><details class="section-collapse" open><summary class="section-summary"><h2 id="methodology-notes">Methodology Notes</h2></summary><div class="section-body"><p>Classification performed using Bloom taxonomy analysis. SQI computed from source authority, freshness, consensus, and relevance metrics. Cross-pillar connections identified via entity extraction and topic modeling.</p><p><em>Synthesis generated on 2026-06-10.</em></p><h3 id="agentic-skill-specification-real-time-ingestion-pipeline">Agentic Skill Specification: Real-Time Ingestion Pipeline</h3><strong>Data Contract Schema (Auto-generated for blog/2026-06-10-feature-store-feast-vs-tecton):</strong><pre><code class='language-sql'>
 -- Table: pse_balancing_data_610
 CREATE TABLE pse_balancing_data_610 (
  settlement_period_id TEXT NOT NULL,
@@ -206,11 +216,7 @@ SELECT
  CASE WHEN abs(actual_generation_mw - scheduled_generation_mw) > 2000 
  THEN 'HIGH_DEVIATION' ELSE 'NORMAL' END as deviation_flag
 FROM pse_balancing_data_610;
-</code></pre>
-
-**Pipeline Configuration:**
-
-<pre><code class='language-yaml'>
+</code></pre><strong>Pipeline Configuration:</strong><pre><code class='language-yaml'>
 ingestion:
  poll_interval_seconds: 60
  rate_limit_per_minute: 60
@@ -233,14 +239,7 @@ retention:
  raw_data_days: 250
  aggregated_days: 365
  archive_format: parquet
-</code></pre>
-
-
-### Agentic Skill Specification: Real-Time Ingestion Pipeline
-
-**Data Contract Schema (Auto-generated for blog/2026-06-10-feature-store-feast-vs-tecton):**
-
-<pre><code class='language-sql'>
+</code></pre><h3 id="agentic-skill-specification-real-time-ingestion-pipeline-1">Agentic Skill Specification: Real-Time Ingestion Pipeline</h3><strong>Data Contract Schema (Auto-generated for blog/2026-06-10-feature-store-feast-vs-tecton):</strong><pre><code class='language-sql'>
 -- Table: pse_balancing_data_966
 CREATE TABLE pse_balancing_data_966 (
  settlement_period_id TEXT NOT NULL,
@@ -265,11 +264,7 @@ SELECT
  CASE WHEN abs(actual_generation_mw - scheduled_generation_mw) > 2000 
  THEN 'HIGH_DEVIATION' ELSE 'NORMAL' END as deviation_flag
 FROM pse_balancing_data_966;
-</code></pre>
-
-**Pipeline Configuration:**
-
-<pre><code class='language-yaml'>
+</code></pre><strong>Pipeline Configuration:</strong><pre><code class='language-yaml'>
 ingestion:
  poll_interval_seconds: 60
  rate_limit_per_minute: 60
@@ -355,6 +350,99 @@ retention:
         </div>
       </div>
     </section>
+    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
+      <h2 class="text-2xl font-bold mb-6 inline-flex items-center gap-2" style="color:var(--color-text)">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+        Flashcards
+      </h2>
+      <div class="grid gap-4 sm:grid-cols-2" id="flashcard-grid">
+        <div class="ghost-card cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Signal Quality Index" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Signal Quality Index</span>
+              </div>
+              <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
+            </div>
+            <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);color:#fff">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm">Composite metric measuring source authority, freshness, consensus, and relevance of synthesized content.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ghost-card cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Bloom Taxonomy" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Bloom Taxonomy</span>
+              </div>
+              <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
+            </div>
+            <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);color:#fff">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm">Classification system for levels of intellectual behavior in learning: remember, understand, apply, analyze, evaluate, create.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ghost-card cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Feature Stores at Scale" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Feature Stores at Scale</span>
+              </div>
+              <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
+            </div>
+            <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);color:#fff">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm">Deep comparison of Feast (open source) and Tecton (managed): feature definitions, online/offline serving, point-in-time ...</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ghost-card cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Software-Defined Asset" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Software-Defined Asset</span>
+              </div>
+              <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
+            </div>
+            <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);color:#fff">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm">A Dagster concept: data asset with lineage, partitioning, and freshness declared in code.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="ghost-card cursor-pointer" role="button" tabindex="0" aria-label="Flashcard: Change Data Capture" onclick="this.classList.toggle('flipped')" onkeydown="if(event.key==='Enter'||event.key===' ')this.classList.toggle('flipped')">
+          <div class="flashcard-inner">
+            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">Change Data Capture</span>
+              </div>
+              <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap to reveal definition</p>
+            </div>
+            <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);color:#fff">
+              <div class="flex items-start gap-2">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <span class="text-sm">Capturing database row-level changes from transaction logs for real-time replication.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
     <section class="mt-12 pt-8 border-t">
       <h2 class="text-2xl font-bold  mb-4">Signal Analysis</h2>
       <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
@@ -391,22 +479,6 @@ retention:
       </h2>
       <p class="text-sm mb-4" style="color:var(--color-text-secondary)">Related content across other pillars that share concepts with this article.</p>
       <div class="grid gap-3 sm:grid-cols-2">
-        <a href="https://www.acaciafund.org/markets/research/stock-dataeng/" class="ghost-card p-4 block transition hover:shadow-md" style="text-decoration:none">
-          <div class="flex items-start gap-3">
-            <div class="shrink-0 mt-0.5">
-              <span class="inline-block text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, green 15%, transparent);color:green">
-                Markets
-              </span>
-            </div>
-            <div class="flex-1 min-w-0">
-              <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">Feature Engineering at Scale: Building ML-Ready Market Data Pipelines with dbt and Iceberg</h3>
-              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">Production feature engineering pipelines for quantitative finance: transforming raw tick data into ML-ready feature sets using dbt for SQL transformations, Iceberg for time-travel access, and Dagster for asset orchestration.</p>
-              <div class="mt-2 flex flex-wrap gap-1">
-                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Suspicious Transaction Report</span>
-              </div>
-            </div>
-          </div>
-        </a>
         <a href="https://www.acaciafund.org/compliance/research/aml-dataeng/" class="ghost-card p-4 block transition hover:shadow-md" style="text-decoration:none">
           <div class="flex items-start gap-3">
             <div class="shrink-0 mt-0.5">
@@ -418,23 +490,8 @@ retention:
               <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">Streaming ETL for Suspicious Activity Reports: Real-Time AML Data Pipelines with Kafka and Flink</h3>
               <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">Architecture patterns for building real-time AML surveillance data pipelines using Apache Kafka for transaction ingestion, Flink for stream processing, and Iceberg for immutable audit storage — with DataOps quality gates at every stage.</p>
               <div class="mt-2 flex flex-wrap gap-1">
-                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Suspicious Transaction Report</span>
-              </div>
-            </div>
-          </div>
-        </a>
-        <a href="https://www.acaciafund.org/markets/research/dataops-markets/" class="ghost-card p-4 block transition hover:shadow-md" style="text-decoration:none">
-          <div class="flex items-start gap-3">
-            <div class="shrink-0 mt-0.5">
-              <span class="inline-block text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, green 15%, transparent);color:green">
-                Markets
-              </span>
-            </div>
-            <div class="flex-1 min-w-0">
-              <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">Real-Time Data Engineering for Algorithmic Trading: From Tick Data to Execution Signals</h3>
-              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">Production-grade data pipelines for algorithmic trading systems: handling market data at microsecond latency, feature engineering stream processing, backtesting infrastructure, and DataOps orchestration.</p>
-              <div class="mt-2 flex flex-wrap gap-1">
-                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Suspicious Transaction Report</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">DataOps</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Extract-Transform-Load</span>
               </div>
             </div>
           </div>
@@ -450,7 +507,42 @@ retention:
               <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">Data Pipeline Observability in Financial Crime Compliance: Real-Time AML Monitoring at Scale</h3>
               <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">How DataOps practices including pipeline observability, data quality monitoring, and automated lineage tracking are transforming anti-money laundering transaction monitoring systems at major financial institutions.</p>
               <div class="mt-2 flex flex-wrap gap-1">
-                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Suspicious Transaction Report</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">DataOps</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Extract-Transform-Load</span>
+              </div>
+            </div>
+          </div>
+        </a>
+        <a href="https://www.acaciafund.org/compliance/knowledge/beneficial-ownership-transparency/" class="ghost-card p-4 block transition hover:shadow-md" style="text-decoration:none">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 mt-0.5">
+              <span class="inline-block text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, slate 15%, transparent);color:slate">
+                Compliance
+              </span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">Beneficial Ownership Transparency</h3>
+              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">A knowledge article exploring beneficial ownership transparency within the Anti-Money Laundering domain. Covers core concepts, practical applications, and key considerations.</p>
+              <div class="mt-2 flex flex-wrap gap-1">
+                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">DataOps</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Extract-Transform-Load</span>
+              </div>
+            </div>
+          </div>
+        </a>
+        <a href="https://www.acaciafund.org/compliance/learn/beneficial-ownership-transparency/" class="ghost-card p-4 block transition hover:shadow-md" style="text-decoration:none">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 mt-0.5">
+              <span class="inline-block text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, slate 15%, transparent);color:slate">
+                Compliance
+              </span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">Understanding Beneficial Ownership Transparency</h3>
+              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">A learn article exploring beneficial ownership transparency within the Anti-Money Laundering domain. Covers core concepts, practical applications, and key considerations.</p>
+              <div class="mt-2 flex flex-wrap gap-1">
+                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">DataOps</span>
+                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Extract-Transform-Load</span>
               </div>
             </div>
           </div>
@@ -463,10 +555,10 @@ retention:
         Ontology Concepts
       </h2>
       <div class="flex flex-wrap gap-2">
-        <span class="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
-          Suspicious Transaction Report
-          <span class="opacity-60 text-[10px]">0.9</span>
-        </span>
+        <a href="/concepts/dataops/" class="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full no-underline" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);text-decoration:none">
+          DataOps
+          <span class="opacity-60 text-[10px]">1.0</span>
+        </a>
       </div>
     </section>
     <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
@@ -603,6 +695,18 @@ retention:
        <h2 class="text-2xl font-bold  mb-2">Related Lessons</h2>
        <p class="text-sm mb-6" style="color:var(--color-text-muted)">Deepen your understanding of this topic with structured learning lessons.</p>
        <div class="grid gap-4 sm:grid-cols-3">
+          <a href="https://www.acaciafund.org/data/learn/designing-data-platform/" class="ghost-card block text-decoration:none">
+            <div class="aspect-[600/340] bg-gray-800 overflow-hidden">
+              <img src="https://www.acaciafund.org/static/images/generated/learn/designing-data-platform.svg" alt="Designing a Production Data Platform: From Requirements to Architecture" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
+            </div>
+           <div class="p-3">
+              
+              <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span><span class="text-xs ml-1" style="color:var(--color-text-muted)">Advanced</span>
+              <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Designing a Production Data Platform: From Requirements to Architecture</span>
+           </div>
+         </a>
           <a href="https://www.acaciafund.org/data/learn/data-quality-observability-cost/" class="ghost-card block text-decoration:none">
             <div class="aspect-[600/340] bg-gray-800 overflow-hidden">
               <img src="https://www.acaciafund.org/static/images/generated/learn/data-quality-observability-cost.svg" alt="Data Quality, Observability, and Cost Optimization at Scale" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
@@ -623,21 +727,8 @@ retention:
               
               <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
   Data Engineering
-</span>
+</span><span class="text-xs ml-1" style="color:var(--color-text-muted)">Beginner</span>
               <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Understanding Data Pipeline Orchestration</span>
-             <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-07-10</span>
-           </div>
-         </a>
-          <a href="https://www.acaciafund.org/data/learn/real-time-streaming-architectures/" class="ghost-card block text-decoration:none">
-            <div class="aspect-[600/340] bg-gray-800 overflow-hidden">
-              <img src="https://www.acaciafund.org/static/images/thumb_7475ed84ffbc.svg" alt="Real-Time Streaming Architectures" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
-            </div>
-           <div class="p-3">
-              
-              <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
-  Data Engineering
-</span>
-              <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Real-Time Streaming Architectures</span>
              <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-07-10</span>
            </div>
          </a>
@@ -662,7 +753,7 @@ retention:
       </div>
     </section>
 
-    <script src="/static/js/learning_hub.d41d8cd9.js" defer></script>
+    <script src="/static/js/learning_hub.534fa53c.js" defer></script>
 
 <div class="newsletter-signup" style="background:var(--color-bg);border:1px solid var(--color-border);padding:2rem;border-radius:8px;text-align:center">
   <h3 style="color:var(--color-text)">Stay Updated</h3>
@@ -681,6 +772,6 @@ retention:
         <small>&copy; 2026 AcaciaFund &middot; Generated by the Acacia pipeline.</small>
     </footer>
 
-    <script src="/static/js/main.d41d8cd9.js"></script>
+
 </body>
 </html>

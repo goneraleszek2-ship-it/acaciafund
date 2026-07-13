@@ -28,38 +28,134 @@
                 <li><a href="/compliance/">Compliance</a></li>
                 <li><a href="/markets/">Markets</a></li>
                 <li><a href="/data/">Data</a></li>
+                <li><a href="/review/">Review</a></li>
+                <li><a href="/search/">Search</a></li>
             </ul>
         </nav>
     </header>
 
     <main class="container">
         
-<section class="admin-dashboard">
-  <h1>Admin Dashboard</h1>
-  <div class="stats-grid">
-    <div class="stat-card">
-      <h3>252</h3>
-      <p>Articles</p>
-    </div>
-    <div class="stat-card">
-      <h3>0</h3>
-      <p>Images</p>
-    </div>
-    <div class="stat-card">
-      <h3>35.3%</h3>
-      <p>With Images</p>
-    </div>
+<style>
+  .admin-layout { display: flex; gap: 1.5rem; min-height: calc(100vh - 10rem); }
+  .admin-sidebar { width: 14rem; flex-shrink: 0; }
+  .admin-sidebar nav { position: sticky; top: 5rem; }
+  .admin-sidebar a {
+    display: block; padding: 0.4rem 0.75rem; border-radius: 6px; font-size: 0.85rem;
+    text-decoration: none; color: var(--color-text-secondary, #aaa); transition: all 0.15s;
+  }
+  .admin-sidebar a:hover { background: var(--color-surface, #1a1a2e); color: var(--color-text, #e8e6e3); }
+  .admin-sidebar a.active { background: var(--color-accent, #818cf8); color: #fff; font-weight: 600; }
+  .admin-sidebar .sidebar-section { margin-bottom: 1rem; }
+  .admin-sidebar .sidebar-label {
+    font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+    color: var(--color-text-muted, #666); padding: 0 0.75rem; margin-bottom: 0.25rem;
+  }
+  .admin-content { flex: 1; min-width: 0; }
+</style>
+
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <nav aria-label="Admin navigation">
+      <div class="sidebar-section">
+        <div class="sidebar-label">Overview</div>
+        <a href="/admin/dashboard.html" class="active">Dashboard</a>
+        <a href="/admin/quality.html" class="">Quality</a>
+        <a href="/admin/coverage.html" class="">Coverage</a>
+        <a href="/admin/telemetry.html" class="">Telemetry</a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">Content</div>
+        <a href="/admin/articles.html" class="">Articles</a>
+        <a href="/admin/gallery.html" class="">Gallery</a>
+        <a href="/admin/manifest.html" class="">Manifest</a>
+        <a href="/admin/pipeline.html" class="">Pipeline</a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">Intelligence</div>
+        <a href="/admin/sources.html" class="">Sources</a>
+        <a href="/admin/ontology.html" class="">Ontology</a>
+      </div>
+    </nav>
+  </aside>
+  <div class="admin-content">
+    
+<h1 style="margin-bottom:1.5rem">Admin Dashboard</h1>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:2rem">
+  <div class="ghost-card p-4 text-center">
+    <div class="text-2xl font-bold" style="color:var(--color-accent)">231</div>
+    <div class="text-xs" style="color:var(--color-text-muted)">Articles</div>
   </div>
-  <nav class="admin-nav">
-    <a href="/admin/dashboard.html">Dashboard</a>
-    <a href="/admin/gallery.html">Gallery</a>
-    <a href="/admin/articles.html">Articles</a>
-    <a href="/admin/manifest.html">Manifest</a>
-    <a href="/admin/quality.html">Quality</a>
-    <a href="/admin/sources.html">Sources</a>
-    <a href="/admin/telemetry.html">Telemetry</a>
-  </nav>
-</section>
+  <div class="ghost-card p-4 text-center">
+    <div class="text-2xl font-bold" style="color:var(--color-accent)">0</div>
+    <div class="text-xs" style="color:var(--color-text-muted)">Images</div>
+  </div>
+  <div class="ghost-card p-4 text-center">
+    <div class="text-2xl font-bold" style="color:var(--color-accent)">39.0%</div>
+    <div class="text-xs" style="color:var(--color-text-muted)">With Images</div>
+  </div>
+  <div class="ghost-card p-4 text-center">
+    <div class="text-2xl font-bold" style="color:var(--color-accent)">13</div>
+    <div class="text-xs" style="color:var(--color-text-muted)">Low Score</div>
+  </div>
+</div>
+
+
+<h2 class="text-lg font-bold mb-3" style="color:var(--color-text)">By Content Type</h2>
+<div class="overflow-x-auto mb-6">
+  <table class="w-full text-xs" style="color:var(--color-text)">
+    <thead>
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <th class="text-left py-2 pr-4 font-semibold">Type</th>
+        <th class="text-right py-2 pr-4 font-semibold">Total</th>
+        <th class="text-right py-2 pr-4 font-semibold">With Images</th>
+        <th class="text-right py-2 font-semibold">Without</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-semibold">knowledge</td>
+        <td class="py-1.5 pr-4 text-right">39</td>
+        <td class="py-1.5 pr-4 text-right">12</td>
+        <td class="py-1.5 text-right">27</td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-semibold">learn</td>
+        <td class="py-1.5 pr-4 text-right">48</td>
+        <td class="py-1.5 pr-4 text-right">29</td>
+        <td class="py-1.5 text-right">19</td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-semibold">research</td>
+        <td class="py-1.5 pr-4 text-right">144</td>
+        <td class="py-1.5 pr-4 text-right">49</td>
+        <td class="py-1.5 text-right">95</td>
+      </tr>
+      
+    </tbody>
+  </table>
+</div>
+
+
+
+<h2 class="text-lg font-bold mb-3" style="color:var(--color-text)">By Source</h2>
+<div style="display:flex;flex-wrap:wrap;gap:0.5rem">
+  
+  <span class="text-xs px-2 py-1 rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">hn: 383</span>
+  
+  <span class="text-xs px-2 py-1 rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">arxiv: 210</span>
+  
+  <span class="text-xs px-2 py-1 rounded" style="background:var(--color-bg);color:var(--color-text-secondary)">pubmed: 105</span>
+  
+</div>
+
+
+  </div>
+</div>
 
     </main>
 
@@ -68,6 +164,6 @@
         <small>&copy; 2026 AcaciaFund &middot; Generated by the Acacia pipeline.</small>
     </footer>
 
-    <script src="/static/js/main.d41d8cd9.js"></script>
+
 </body>
 </html>

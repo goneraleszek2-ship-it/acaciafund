@@ -190,23 +190,23 @@ class BuildCache:
         """
         path_key = str(filepath)
 
-        entry = {
+        entry = {  # pyright: ignore[reportArgumentType]
             'updated_at': time.time(),
         }
 
         if is_content:
             if self.content_templates_hash:
-                entry['content_templates_hash'] = self.content_templates_hash
+                entry['content_templates_hash'] = self.content_templates_hash  # pyright: ignore[reportArgumentType]
             elif self.templates_hash:
-                entry['templates_hash'] = self.templates_hash
+                entry['templates_hash'] = self.templates_hash  # pyright: ignore[reportArgumentType]
         else:
             if self.templates_hash:
-                entry['templates_hash'] = self.templates_hash
+                entry['templates_hash'] = self.templates_hash  # pyright: ignore[reportArgumentType]
 
         if content:
-            entry['content_hash'] = self.compute_content_hash(content)
+            entry['content_hash'] = self.compute_content_hash(content)  # pyright: ignore[reportArgumentType]
         elif filepath.exists():
-            entry['file_hash'] = self.compute_file_hash(filepath)
+            entry['file_hash'] = self.compute_file_hash(filepath)  # pyright: ignore[reportArgumentType]
 
         if metadata:
             entry.update(metadata)

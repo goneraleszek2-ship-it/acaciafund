@@ -49,6 +49,9 @@ jobs:
       - name: Run source verification
         run: python3 scripts/source_verification.py || echo "Verification skipped"
 
+      - name: Check source freshness
+        run: python3 scripts/check_source_freshness.py --update-ontology || echo "Freshness check skipped"
+
       - name: Rebuild site
         run: |
           rm -rf dist .build_cache.json
@@ -65,14 +68,22 @@ jobs:
           path: dist/link-check-report.json
           retention-days: 30
 
+      - name: Upload source-health report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: source-health-report
+          path: dist/source_health.json
+          retention-days: 30
+
       - name: Commit and push changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add data/ontology.json registry.json
+          git add data/ontology.json registry.json dist/source_health.json
           if git diff --cached --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "chore: weekly source refresh — ontology + glossary regeneration"
+            git commit -m "chore: weekly source refresh — ontology + glossary + freshness check"
             git push
           

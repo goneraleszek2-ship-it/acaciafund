@@ -669,6 +669,53 @@ def generate_admin_pages(
     except Exception:
         pass
 
+    # Fallback: load inspiration sources from pillars.toml
+    if not sources and project_root:
+        try:
+            import tomllib
+            toml_path = project_root / "etc" / "pillars.toml"
+            if toml_path.exists():
+                with open(toml_path, "rb") as _tf:
+                    _toml = tomllib.load(_tf)
+                for _pk, _ps in _toml.get("inspiration_sources", {}).items():
+                    if not isinstance(_ps, dict):
+                        continue
+                    for _sk, _si in _ps.items():
+                        if isinstance(_si, dict) and "url" in _si:
+                            sources.append({
+                                "name": _si.get("name", _sk),
+                                "url": _si["url"],
+                                "type": "inspiration",
+                                "pillar": _pk,
+                                "relevance": _si.get("relevance", 0.5),
+                            })
+        except Exception:
+            pass
+
+    # Merge source freshness data if available
+    source_health_path = None
+    if project_root:
+        for candidate in [project_root / "data" / "source_health.json", project_root / "dist" / "source_health.json"]:
+            if candidate.exists():
+                source_health_path = candidate
+                break
+    freshness_map = {}
+    health_data = None
+    if source_health_path and source_health_path.exists():
+        try:
+            health_data = json.loads(source_health_path.read_text(encoding="utf-8"))
+            for entry in health_data.get("sources", []):
+                freshness_map[entry.get("name", "")] = entry
+        except Exception:
+            pass
+    for s in sources:
+        name = s.get("name", "")
+        if name in freshness_map:
+            s["status"] = freshness_map[name].get("status", "unknown")
+            s["last_verified"] = freshness_map[name].get("last_verified")
+            s["http_status"] = freshness_map[name].get("http_status")
+            s["freshness_pct"] = health_data.get("freshness_pct", 0) if health_data else 0
+
     html = render_template(
         "admin/sources.html",
         content=_dummy("Sources", "admin"),
@@ -729,7 +776,7 @@ def generate_admin_pages(
                 "source": r.source_id,
                 "target": r.target_id,
                 "relation_type": r.relation_type,
-                "weight": r.weight,
+                "weight": r.strength,
             })
 
         cross_pillar_count = sum(1 for r in ontology._relations
@@ -795,6 +842,12 @@ def generate_search_pages(
             "difficulty": getattr(c, "difficulty", None) or "",
         }
 
+        # Include SQI for quality-aware search
+        sqi_val = getattr(c, "sqi", 0.0) or 0.0
+        signals = getattr(c, "signals", None) or {}
+        signals_avg = signals.get("avg_sqi", 0.0) if isinstance(signals, dict) else 0.0
+        entry["avg_sqi"] = max(sqi_val, signals_avg)
+
         # Enrich with ontology concepts for boosted search
         if concept_cache and slug in concept_cache:
             concept_ids = concept_cache[slug]
@@ -832,7 +885,7 @@ def generate_search_pages(
 
 def generate_feed(
     output_dir: Path,
-    research_items: List[Any],
+    all_content: List[Any],
     render_template,
     ctx_base: Dict[str, Any],
     site_url: str = "",
@@ -855,26 +908,46 @@ def generate_feed(
     if slug_to_path_fn is None:
         slug_to_path_fn = lambda s: s
 
-    published_for_feed = [p for p in research_items if not is_future_post_fn(p)]
-    feed_candidates = [p.created_at for p in published_for_feed[:20] if getattr(p, "created_at", None)]
+    published_for_feed = [p for p in all_content if not is_future_post_fn(p)]
+    feed_candidates = [p.created_at for p in published_for_feed[:30] if getattr(p, "created_at", None)]
     feed_updated = max(feed_candidates).isoformat() if feed_candidates else now.isoformat()
 
+    def _clean_feed_desc(post):
+        """Strip HTML tags and markdown headings from description for clean feed output."""
+        import re as _re
+        desc = post.description or ""
+        if not desc and getattr(post, "body_html", None):
+            desc = post.body_html[:300]
+        # Strip HTML tags
+        desc = _re.sub(r"<[^>]+>", "", desc)
+        # Strip markdown headings
+        desc = _re.sub(r"^#+\s*", "", desc, flags=_re.MULTILINE)
+        # Collapse whitespace
+        desc = _re.sub(r"\s+", " ", desc).strip()
+        return desc[:300]
+
     feed_items = []
-    for post in published_for_feed[:20]:
+    for post in published_for_feed[:30]:
         path = canonical_path_fn(slug_to_path_fn(post.slug))
-        desc = ((post.description or post.body_html[:200])[:300]) if getattr(post, "body_html", None) else ""
+        desc = _clean_feed_desc(post)
         post_updated = (post.created_at or now).isoformat()
+        ct = getattr(post, "content_type", "") or ""
+        pillar = getattr(post, "pillar", "") or ""
+        tags_list = getattr(post, "tags", []) or []
+        tag_xml = "".join(f"\n    <category term=\"{t}\"/>" for t in tags_list[:5])
+        ct_xml = f'\n    <category term="type:{ct}"/>' if ct else ""
+        pillar_xml = f'\n    <category term="pillar:{pillar}"/>' if pillar else ""
         feed_items.append(f"""  <entry>
     <title>{post.title}</title>
     <link href="{site_url}/{path}" rel="alternate" type="text/html"/>
     <id>{site_url}/{path}</id>
     <updated>{post_updated}</updated>
-    <summary>{desc}</summary>
+    <summary>{desc}</summary>{pillar_xml}{ct_xml}{tag_xml}
   </entry>""")
 
     feed = f"""<?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>{site_name} Research</title>
+  <title>{site_name}</title>
   <link href="{site_url}/feed.xml" rel="self" type="application/atom+xml"/>
   <link href="{site_url}/" rel="alternate" type="text/html"/>
   <id>{site_url}/feed.xml</id>

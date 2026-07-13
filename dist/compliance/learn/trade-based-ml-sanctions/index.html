@@ -1,6 +1,4 @@
-<span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
-  AML
-</span><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
@@ -34,6 +32,8 @@
                 <li><a href="/compliance/">Compliance</a></li>
                 <li><a href="/markets/">Markets</a></li>
                 <li><a href="/data/">Data</a></li>
+                <li><a href="/review/">Review</a></li>
+                <li><a href="/search/">Search</a></li>
             </ul>
         </nav>
     </header>
@@ -122,23 +122,30 @@
         <a href="/tags/aml/"><kbd>aml</kbd></a>
       </div>
       <div class="mt-3 flex flex-wrap gap-1.5">
-        <span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
+        <a href="/concepts/tbml/" class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full no-underline" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);text-decoration:none">
           <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
           Trade-Based Money Laundering
-        </span>
-        <span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
-          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
-          Beneficial Ownership
-        </span>
-        <span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
+        </a>
+        <a href="/concepts/regtech/" class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full no-underline" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);text-decoration:none">
           <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
           Regulatory Technology
-        </span>
+        </a>
+        <a href="/concepts/aml/" class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full no-underline" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);text-decoration:none">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+          Anti-Money Laundering
+        </a>
+        <a href="/concepts/regulatory-compliance/" class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full no-underline" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);text-decoration:none">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+          Regulatory Compliance
+        </a>
+      </div>
+      <div class="mt-2">
+        <span class="sqi-badge">SQI 0.930</span>
       </div>
     </header>
 
     <div class="prose prose-lg prose-blue max-w-none">
-      <p>Trade-based money laundering (TBML) is one of the oldest and most difficult-to-detect methods of moving illicit value across borders. By 2026, 38% of financial crime compliance officers identify TBML as a top-three risk, and sanctions regimes have become more fragmented than at any point in the last decade. Understanding both is essential for any AML professional.</p><div class="section-harvester" data-section="overview" style="--section-color:#c97d3e"><details class="section-collapse" open><summary class="section-summary"><h2 id="trade-based-money-laundering">Trade-Based Money Laundering</h2></summary><div class="section-body"><p>TBML exploits the complexity of international trade to obscure the movement of value. Unlike wire transfers — which leave electronic trails — trade transactions involve paper documentation, multiple intermediaries, and physical goods, creating abundant opportunities for concealment.</p><h3 id="common-tbml-techniques">Common TBML Techniques</h3><ul><li><strong>Over-invoicing / Under-invoicing:</strong> Misrepresenting the price of goods to move value. Over-invoicing pays excess funds to a foreign supplier (value leaves the country); under-invoicing allows the importer to resell goods at a profit offshore (value stays abroad).</li><li><strong>Multiple invoicing:</strong> Submitting the same invoice to multiple banks for financing, collecting funds from each before anyone detects the duplication.</li><li><strong>Over- / under-shipment:</strong> Shipping more or fewer goods than the invoice states, with the discrepancy being the laundered amount.</li><li><strong>Phantom shipments:</strong> Creating invoices and customs documents for goods that do not exist. The funds pay for nothing, and the documentation is fabricated.</li><li><strong>Misdescription of goods:</strong> Shipping high-value, hard-to-price items (art, antiques, scrap metal) at manipulated valuations that are difficult for customs to verify.</li></ul></div></details></div><div class="section-harvester" data-section="key_findings" style="--section-color:#fbbf24"><details class="section-collapse" open><summary class="section-summary"><h2 id="sanctions-screening-in-2026">Sanctions Screening in 2026</h2></summary><div class="section-body"><p>The sanctions landscape has fragmented significantly. The US (OFAC), EU, UK, and UN maintain distinct sanctions lists that increasingly diverge. Key 2026 developments:</p><ul><li><strong>Secondary sanctions:</strong> The US has expanded secondary sanctions targeting entities that do business with sanctioned jurisdictions, creating extraterritorial compliance obligations.</li><li><strong>Crypto sanctions:</strong> OFAC now sanctions specific blockchain addresses and requires VASPs to screen all on-chain transactions — not just fiat on/off ramps.</li><li><strong>False positive inflation:</strong> Sanctions list volumes have grown 300% since 2020, with expanding criteria that capture more benign entities. Efficient screening requires fuzzy matching, aliases, and risk-based threshold tuning.</li><li><strong>Real-time screening:</strong> Payment messages (ISO 20022) now carry structured beneficiary ownership data, enabling automated screening at the transaction level rather than batch processing.</li></ul></div></details></div><div class="section-harvester" data-section="applied_scenario" style="--section-color:#c97d3e"><details class="section-collapse" open><summary class="section-summary"><h2 id="beneficial-ownership">Beneficial Ownership</h2></summary><div class="section-body"><p>The 2026 push for beneficial ownership transparency is the most significant structural change in AML. The US Corporate Transparency Act (effective 2024-2026) requires all US companies to report their beneficial owners to FinCEN's beneficial ownership registry. The EU's 6th AML Directive mandates centralized beneficial ownership registers accessible to obliged entities. The challenge: 99% of US firms acknowledge limitations in their ability to verify beneficial ownership data, and registers across jurisdictions are not yet interoperable.</p><p>For the fundamentals of AML compliance, revisit <a href="/learn/aml-basics/">AML Fundamentals</a>. To understand the blockchain analytics side of sanctions screening, see <a href="/learn/crypto-aml/">Crypto AML & Digital Assets</a>.</p><hr /><section class="analytics-index"><small><strong>DataOps Telemetry Index:</strong> This technical brief addresses architectural patterns matching components: aml, beneficialownership, compliance, ofac, sanctions.</small></section><hr /><section class="analytics-index"><small><strong>DataOps Telemetry Index:</strong> This technical brief addresses architectural patterns matching components: aml, beneficialownership, compliance, ofac, sanctions.</small></section><hr /><section class="analytics-index"><small><strong>DataOps Telemetry Index:</strong> This technical brief addresses architectural patterns matching components: aml, beneficialownership, compliance, ofac, sanctions.</small></section><hr /><section class="analytics-index"><small><strong>DataOps Telemetry Index:</strong> This analysis validates Aml, Sanctions, Compliance using algorithm, analysis, architecture, bias, causation methodology.</small></section></div></details></div>
+      <p>Trade-based money laundering (TBML) is one of the oldest and most difficult-to-detect methods of moving illicit value across borders. By 2026, 38% of financial crime compliance officers identify TBML as a top-three risk, and sanctions regimes have become more fragmented than at any point in the last decade. Understanding both is essential for any AML professional.</p><div class="section-harvester" data-section="overview" style="--section-color:#c97d3e"><details class="section-collapse" open><summary class="section-summary"><h2 id="trade-based-money-laundering">Trade-Based Money Laundering</h2></summary><div class="section-body"><p>TBML exploits the complexity of international trade to obscure the movement of value. Unlike wire transfers — which leave electronic trails — trade transactions involve paper documentation, multiple intermediaries, and physical goods, creating abundant opportunities for concealment.</p><h3 id="common-tbml-techniques">Common TBML Techniques</h3><ul><li><strong>Over-invoicing / Under-invoicing:</strong> Misrepresenting the price of goods to move value. Over-invoicing pays excess funds to a foreign supplier (value leaves the country); under-invoicing allows the importer to resell goods at a profit offshore (value stays abroad).</li><li><strong>Multiple invoicing:</strong> Submitting the same invoice to multiple banks for financing, collecting funds from each before anyone detects the duplication.</li><li><strong>Over- / under-shipment:</strong> Shipping more or fewer goods than the invoice states, with the discrepancy being the laundered amount.</li><li><strong>Phantom shipments:</strong> Creating invoices and customs documents for goods that do not exist. The funds pay for nothing, and the documentation is fabricated.</li><li><strong>Misdescription of goods:</strong> Shipping high-value, hard-to-price items (art, antiques, scrap metal) at manipulated valuations that are difficult for customs to verify.</li></ul></div></details></div><div class="section-harvester" data-section="key_findings" style="--section-color:#fbbf24"><details class="section-collapse" open><summary class="section-summary"><h2 id="sanctions-screening-in-2026">Sanctions Screening in 2026</h2></summary><div class="section-body"><p>The sanctions landscape has fragmented significantly. The US (OFAC), EU, UK, and UN maintain distinct sanctions lists that increasingly diverge. Key 2026 developments:</p><ul><li><strong>Secondary sanctions:</strong> The US has expanded secondary sanctions targeting entities that do business with sanctioned jurisdictions, creating extraterritorial compliance obligations.</li><li><strong>Crypto sanctions:</strong> OFAC now sanctions specific blockchain addresses and requires VASPs to screen all on-chain transactions — not just fiat on/off ramps.</li><li><strong>False positive inflation:</strong> Sanctions list volumes have grown 300% since 2020, with expanding criteria that capture more benign entities. Efficient screening requires fuzzy matching, aliases, and risk-based threshold tuning.</li><li><strong>Real-time screening:</strong> Payment messages (ISO 20022) now carry structured beneficiary ownership data, enabling automated screening at the transaction level rather than batch processing.</li></ul></div></details></div><div class="section-harvester" data-section="applied_scenario" style="--section-color:#c97d3e"><details class="section-collapse" open><summary class="section-summary"><h2 id="beneficial-ownership">Beneficial Ownership</h2></summary><div class="section-body"><p>The 2026 push for beneficial ownership transparency is the most significant structural change in AML. The US Corporate Transparency Act (effective 2024-2026) requires all US companies to report their beneficial owners to FinCEN's beneficial ownership registry. The EU's 6th AML Directive mandates centralized beneficial ownership registers accessible to obliged entities. The challenge: 99% of US firms acknowledge limitations in their ability to verify beneficial ownership data, and registers across jurisdictions are not yet interoperable.</p><p>For the fundamentals of AML compliance, revisit <a href="/compliance/learn/aml-basics/">AML Fundamentals</a>. To understand the blockchain analytics side of sanctions screening, see <a href="/compliance/learn/crypto-aml/">Crypto AML & Digital Assets</a>.</p><hr /><section class="analytics-index"><small><strong>DataOps Telemetry Index:</strong> This technical brief addresses architectural patterns matching components: aml, beneficialownership, compliance, ofac, sanctions.</small></section><hr /><section class="analytics-index"><small><strong>DataOps Telemetry Index:</strong> This technical brief addresses architectural patterns matching components: aml, beneficialownership, compliance, ofac, sanctions.</small></section><hr /><section class="analytics-index"><small><strong>DataOps Telemetry Index:</strong> This technical brief addresses architectural patterns matching components: aml, beneficialownership, compliance, ofac, sanctions.</small></section><hr /><section class="analytics-index"><small><strong>DataOps Telemetry Index:</strong> This analysis validates Aml, Sanctions, Compliance using algorithm, analysis, architecture, bias, causation methodology.</small></section></div></details></div>
     </div>
     <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)" id="quiz-section" data-quiz='{"questions": [{"q": "A company invoices $2M for electronic components that have a market value of $500K. Which TBML technique does this describe?", "options": ["Phantom shipping", "Over-invoicing", "Multiple invoicing", "Misdescription of goods"], "a": 1, "type": "mc"}, {"q": "Why is TBML particularly difficult to detect compared to wire transfer-based money laundering?", "options": ["TBML amounts are always small", "Trade transactions involve paper documents, physical goods, and multiple intermediaries — creating many opportunities to obscure value", "TBML is legal in most jurisdictions", "Banks do not monitor trade transactions"], "a": 1, "type": "mc"}, {"q": "A compliance team receives 10,000 sanctions alert hits per day with a 99% false positive rate. What is the most effective response?", "options": ["Hire more analysts", "Tune screening thresholds using risk-based calibration and fuzzy matching logic", "Ignore alerts under $10,000", "Block all transactions from flagged countries"], "a": 1, "type": "mc"}, {"q": "How does the fragmentation of US, EU, and UK sanctions lists create compliance risk for a global bank?", "options": ["Sanctions are voluntary", "A transaction cleared by one jurisdiction's list may violate another's, creating conflicting obligations", "Fragmentation reduces compliance costs", "Lists are identical in practice"], "a": 1, "type": "mc"}, {"q": "A beneficial ownership registry reveals that a shell company's nominal director is a local lawyer, but the actual controlling party is a politically exposed person from a high-risk jurisdiction. What should the filing institution do?", "options": ["Accept the filing as-is — the lawyer is the legal owner", "Apply enhanced due diligence and escalate for potential SAR filing based on the undisclosed beneficial owner", "Close the account immediately", "Report to customs authorities"], "a": 1, "type": "mc"}]}' data-quiz-lesson="aml/learn/trade-based-ml-sanctions/">
       <h2 class="text-2xl font-bold mb-4" style="color:var(--color-text)">Knowledge Check</h2>
@@ -148,40 +155,48 @@
       <div id="quiz-summary" class="mt-6 p-4 rounded-lg hidden" style="background:var(--color-surface);border:1px solid var(--color-border)"></div>
       <button id="quiz-retry" class="mt-3 hidden px-4 py-2 text-sm font-semibold rounded-lg transition hover:opacity-80" style="background:var(--color-accent);color:#fff">Retry Quiz</button>
     </section>
-    <section class="mt-12 pt-8 border-t">
-      <h2 class="text-2xl font-bold mb-4">Bloom Taxonomy Questions</h2>
-      <div class="space-y-4">
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">A company invoices $2M for electronic components that have a market value of $500K. Which TBML technique does this describe?</p>
-        </div>
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">Why is TBML particularly difficult to detect compared to wire transfer-based money laundering?</p>
-        </div>
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">A compliance team receives 10,000 sanctions alert hits per day with a 99% false positive rate. What is the most effective response?</p>
-        </div>
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">How does the fragmentation of US, EU, and UK sanctions lists create compliance risk for a global bank?</p>
-        </div>
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">A beneficial ownership registry reveals that a shell company's nominal director is a local lawyer, but the actual controlling party is a politically exposed person from a high-risk jurisdiction. What should the filing institution do?</p>
-        </div>
+    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
+      <h2 class="text-2xl font-bold mb-6 inline-flex items-center gap-2" style="color:var(--color-text)">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+        Flashcards
+      </h2>
+      <p class="text-xs mb-4" style="color:var(--color-text-muted)">Space = flip &middot; 1-4 = grade &middot; Swipe on mobile</p>
+      <div class="grid gap-4 sm:grid-cols-2" id="flashcard-grid">
+        <acacia-flashcard
+          data-term="TBML"
+          data-definition="Trade-Based Money Laundering — the process of disguising illicit funds through trade transactions by misrepresenting price, quantity, or quality of goods."
+          data-card-id="aml/learn/trade-based-ml-sanctions/#0"></acacia-flashcard>
+        <acacia-flashcard
+          data-term="Over-Invoicing"
+          data-definition="A TBML technique where goods are invoiced above market value, allowing excess funds to be transferred to a foreign supplier as legitimate trade payments."
+          data-card-id="aml/learn/trade-based-ml-sanctions/#1"></acacia-flashcard>
+        <acacia-flashcard
+          data-term="OFAC"
+          data-definition="Office of Foreign Assets Control — the US Treasury agency that administers and enforces economic and trade sanctions against targeted jurisdictions and entities."
+          data-card-id="aml/learn/trade-based-ml-sanctions/#2"></acacia-flashcard>
+        <acacia-flashcard
+          data-term="Beneficial Ownership Register"
+          data-definition="A centralized database requiring companies to disclose the natural persons who ultimately own or control them — key to preventing anonymous shell company abuse."
+          data-card-id="aml/learn/trade-based-ml-sanctions/#3"></acacia-flashcard>
+        <acacia-flashcard
+          data-term="Secondary Sanctions"
+          data-definition="Sanctions targeting non-US entities that do business with sanctioned jurisdictions, creating extraterritorial compliance obligations for global financial institutions."
+          data-card-id="aml/learn/trade-based-ml-sanctions/#4"></acacia-flashcard>
       </div>
+    </section>
+    <div class="mt-8 text-center">
+      <button id="mark-complete-btn" data-track-lesson="aml/learn/trade-based-ml-sanctions/" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition" style="background:var(--color-accent);color:#fff">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+        <span id="complete-btn-text">Mark Complete</span>
+      </button>
+    </div>
+    <section class="mt-12 pt-8 border-t" id="quiz-section" data-quiz='{"questions": [{"q": "A company invoices $2M for electronic components that have a market value of $500K. Which TBML technique does this describe?", "options": ["Phantom shipping", "Over-invoicing", "Multiple invoicing", "Misdescription of goods"], "a": 1, "type": "mc"}, {"q": "Why is TBML particularly difficult to detect compared to wire transfer-based money laundering?", "options": ["TBML amounts are always small", "Trade transactions involve paper documents, physical goods, and multiple intermediaries — creating many opportunities to obscure value", "TBML is legal in most jurisdictions", "Banks do not monitor trade transactions"], "a": 1, "type": "mc"}, {"q": "A compliance team receives 10,000 sanctions alert hits per day with a 99% false positive rate. What is the most effective response?", "options": ["Hire more analysts", "Tune screening thresholds using risk-based calibration and fuzzy matching logic", "Ignore alerts under $10,000", "Block all transactions from flagged countries"], "a": 1, "type": "mc"}, {"q": "How does the fragmentation of US, EU, and UK sanctions lists create compliance risk for a global bank?", "options": ["Sanctions are voluntary", "A transaction cleared by one jurisdiction's list may violate another's, creating conflicting obligations", "Fragmentation reduces compliance costs", "Lists are identical in practice"], "a": 1, "type": "mc"}, {"q": "A beneficial ownership registry reveals that a shell company's nominal director is a local lawyer, but the actual controlling party is a politically exposed person from a high-risk jurisdiction. What should the filing institution do?", "options": ["Accept the filing as-is — the lawyer is the legal owner", "Apply enhanced due diligence and escalate for potential SAR filing based on the undisclosed beneficial owner", "Close the account immediately", "Report to customs authorities"], "a": 1, "type": "mc"}]}' data-quiz-lesson="aml/learn/trade-based-ml-sanctions/">
+      <h2 class="text-2xl font-bold mb-4" style="color:var(--color-text)">Knowledge Check</h2>
+      <p class="text-sm mb-4" style="color:var(--color-text-muted)">Test your understanding of this lesson.</p>
+      <div id="quiz-score" class="mb-4 text-sm font-semibold" style="color:var(--color-text-secondary)"></div>
+      <div id="quiz-container"></div>
+      <div id="quiz-summary" class="mt-6 p-4 rounded-lg hidden" style="background:var(--color-surface);border:1px solid var(--color-border)"></div>
+      <button id="quiz-retry" class="mt-3 hidden px-4 py-2 text-sm font-semibold rounded-lg transition hover:opacity-80" style="background:var(--color-accent);color:#fff">Retry Quiz</button>
     </section>
     <section class="mt-12 pt-8 border-t">
       <h2 class="text-2xl font-bold mb-6">Related Research</h2>
@@ -206,7 +221,7 @@
             <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-08</span>
           </div>
         </a>
-        <a href="https://www.acaciafund.org/compliance/research/aml/" class="ghost-card block text-decoration:none">
+        <a href="https://www.acaciafund.org/compliance/research/cryptocurrency-mixers-under-global-regulatory-spotlight/" class="ghost-card block text-decoration:none">
           <div class="p-3">
             
             <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
@@ -266,7 +281,7 @@
   </article>
 </div>
 
-<script src="/static/js/learning_hub.d41d8cd9.js" defer></script>
+<script src="/static/js/learning_hub.534fa53c.js" defer></script>
 <div class="newsletter-signup" style="background:var(--color-bg);border:1px solid var(--color-border);padding:2rem;border-radius:8px;text-align:center">
   <h3 style="color:var(--color-text)">Stay Updated</h3>
   <p style="color:var(--color-text-muted)">Get the latest research summaries delivered to your inbox.</p>
@@ -283,6 +298,6 @@
         <small>&copy; 2026 AcaciaFund &middot; Generated by the Acacia pipeline.</small>
     </footer>
 
-    <script src="/static/js/main.d41d8cd9.js"></script>
+
 </body>
 </html>

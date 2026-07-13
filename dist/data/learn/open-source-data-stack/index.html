@@ -1,12 +1,10 @@
-<span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
-  AML
-</span><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Building an Open Source Data Stack: From Ingestion to Analytics</title>
-    <meta name="description" content="<h2>The Modern Open Source Data Stack</h2><p>The 2026 open source data stack is modular, composable, and cloud-agnostic. Teams assemble best-in-class tools for each layer rather than buying monolithi">
+    <meta name="description" content="The Modern Open Source Data Stack The 2026 open source data stack is modular, composable, and cloud-agnostic. Teams assemble best-in-class tools for each layer rather than buying monolithi">
     <link rel="icon" href="/favicon.ico">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
@@ -14,7 +12,7 @@
 
 
     <script type="application/ld+json">
-{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "data-engineering"}, "author": {"@type": "Person", "name": "Leszek"}, "dateModified": "2026-07-06T18:02:57Z", "datePublished": "2026-06-08", "description": "\u003ch2\u003eThe Modern Open Source Data Stack\u003c/h2\u003e\u003cp\u003eThe 2026 open source data stack is modular, composable, and cloud-agnostic. Teams assemble best-in-class tools for each layer rather than buying monolithi", "headline": "Building an Open Source Data Stack: From Ingestion to Analytics", "inLanguage": "en", "keywords": "cloud-infrastructure", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/data/learn/open-source-data-stack/", "@type": "WebPage"}, "proficiencyLevel": "intermediate", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-10T06:39:40Z", "signalQualityIndex": 0.93, "sqi": 0.93}
+{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "data-engineering"}, "author": {"@type": "Person", "name": "Leszek"}, "dateModified": "2026-07-06T18:02:57Z", "datePublished": "2026-06-08", "description": "The Modern Open Source Data Stack The 2026 open source data stack is modular, composable, and cloud-agnostic. Teams assemble best-in-class tools for each layer rather than buying monolithi", "headline": "Building an Open Source Data Stack: From Ingestion to Analytics", "inLanguage": "en", "keywords": "cloud-infrastructure, cdc, data lake, dbt, apache iceberg", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/data/learn/open-source-data-stack/", "@type": "WebPage"}, "proficiencyLevel": "intermediate", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-10T06:39:40Z", "signalQualityIndex": 0.93, "sqi": 0.93}
     </script>
 
 
@@ -34,6 +32,8 @@
                 <li><a href="/compliance/">Compliance</a></li>
                 <li><a href="/markets/">Markets</a></li>
                 <li><a href="/data/">Data</a></li>
+                <li><a href="/review/">Review</a></li>
+                <li><a href="/search/">Search</a></li>
             </ul>
         </nav>
     </header>
@@ -137,12 +137,35 @@
       </div>
       <div style="display: flex; flex-wrap: wrap; gap: 0.25rem; margin-top: var(--pico-spacing);">
         <a href="/tags/cloud-infrastructure/"><kbd>cloud-infrastructure</kbd></a>
+        <a href="/tags/cdc/"><kbd>cdc</kbd></a>
+        <a href="/tags/data-lake/"><kbd>data lake</kbd></a>
+        <a href="/tags/dbt/"><kbd>dbt</kbd></a>
+        <a href="/tags/apache-iceberg/"><kbd>apache iceberg</kbd></a>
       </div>
       <div class="mt-3 flex flex-wrap gap-1.5">
-        <span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
+        <a href="/concepts/data-lake/" class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full no-underline" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);text-decoration:none">
           <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
-          Suspicious Transaction Report
-        </span>
+          Data Lake
+        </a>
+        <a href="/concepts/apache-iceberg/" class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full no-underline" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);text-decoration:none">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+          Apache Iceberg
+        </a>
+        <a href="/concepts/cdc/" class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full no-underline" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);text-decoration:none">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+          Change Data Capture
+        </a>
+        <a href="/concepts/dbt/" class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full no-underline" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);text-decoration:none">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+          dbt (data build tool)
+        </a>
+        <a href="/concepts/cloud-infrastructure/" class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full no-underline" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);text-decoration:none">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+          Cloud Infrastructure
+        </a>
+      </div>
+      <div class="mt-2">
+        <span class="sqi-badge">SQI 0.930</span>
       </div>
     </header>
 
@@ -157,40 +180,48 @@
       <div id="quiz-summary" class="mt-6 p-4 rounded-lg hidden" style="background:var(--color-surface);border:1px solid var(--color-border)"></div>
       <button id="quiz-retry" class="mt-3 hidden px-4 py-2 text-sm font-semibold rounded-lg transition hover:opacity-80" style="background:var(--color-accent);color:#fff">Retry Quiz</button>
     </section>
-    <section class="mt-12 pt-8 border-t">
-      <h2 class="text-2xl font-bold mb-4">Bloom Taxonomy Questions</h2>
-      <div class="space-y-4">
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">Which layer of the open source data stack does Apache Iceberg belong to?</p>
-        </div>
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">What distinguishes Dagster from Airflow in data pipeline orchestration?</p>
-        </div>
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">A team needs to migrate from a monolithic data warehouse to a lakehouse architecture. Which two tools form the core of the new stack?</p>
-        </div>
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">Why is a lakehouse architecture preferred over a traditional data warehouse for modern data teams?</p>
-        </div>
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">Your VP asks for a 'zero licensing fee' production data stack serving 50 analysts. What is the most critical cost not captured by tool licensing?</p>
-        </div>
+    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
+      <h2 class="text-2xl font-bold mb-6 inline-flex items-center gap-2" style="color:var(--color-text)">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+        Flashcards
+      </h2>
+      <p class="text-xs mb-4" style="color:var(--color-text-muted)">Space = flip &middot; 1-4 = grade &middot; Swipe on mobile</p>
+      <div class="grid gap-4 sm:grid-cols-2" id="flashcard-grid">
+        <acacia-flashcard
+          data-term="Lakehouse"
+          data-definition="Data architecture combining data lake flexibility with warehouse ACID guarantees, using table formats like Apache Iceberg or Delta Lake."
+          data-card-id="data/learn/open-source-data-stack/#0"></acacia-flashcard>
+        <acacia-flashcard
+          data-term="Dagster"
+          data-definition="Asset-centric data orchestrator treating datasets as first-class assets with explicit lineage and metadata."
+          data-card-id="data/learn/open-source-data-stack/#1"></acacia-flashcard>
+        <acacia-flashcard
+          data-term="Airbyte"
+          data-definition="Open-source data integration platform with 600+ connectors for EL(T) pipelines."
+          data-card-id="data/learn/open-source-data-stack/#2"></acacia-flashcard>
+        <acacia-flashcard
+          data-term="Apache Iceberg"
+          data-definition="Open table format for huge analytic datasets, providing ACID transactions, time travel, and schema evolution on object storage."
+          data-card-id="data/learn/open-source-data-stack/#3"></acacia-flashcard>
+        <acacia-flashcard
+          data-term="dbt"
+          data-definition="Data build tool — SQL transformation framework enabling version-controlled, tested, and documented analytics pipelines."
+          data-card-id="data/learn/open-source-data-stack/#4"></acacia-flashcard>
       </div>
+    </section>
+    <div class="mt-8 text-center">
+      <button id="mark-complete-btn" data-track-lesson="data/learn/open-source-data-stack/" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition" style="background:var(--color-accent);color:#fff">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+        <span id="complete-btn-text">Mark Complete</span>
+      </button>
+    </div>
+    <section class="mt-12 pt-8 border-t" id="quiz-section" data-quiz='{"questions": [{"q": "Which layer of the open source data stack does Apache Iceberg belong to?", "options": ["Ingestion", "Storage", "Transformation", "Orchestration"], "a": 1, "type": "mc"}, {"q": "What distinguishes Dagster from Airflow in data pipeline orchestration?", "options": ["Dagster uses Python; Airflow uses SQL", "Dagster treats datasets as assets with explicit lineage; Airflow focuses on task DAGs", "Airflow is open source; Dagster is proprietary", "Dagster cannot run on Kubernetes"], "a": 1, "type": "mc"}, {"q": "A team needs to migrate from a monolithic data warehouse to a lakehouse architecture. Which two tools form the core of the new stack?", "options": ["dbt + Airbyte", "Iceberg + Trino", "Kafka + Flink", "Metabase + Superset"], "a": 1, "type": "mc"}, {"q": "Why is a lakehouse architecture preferred over a traditional data warehouse for modern data teams?", "options": ["Lakehouses are cheaper but slower", "Lakehouses combine data lake flexibility with warehouse ACID guarantees", "Lakehouses require less engineering talent", "Lakehouses only work with structured data"], "a": 1, "type": "mc"}, {"q": "Your VP asks for a 'zero licensing fee' production data stack serving 50 analysts. What is the most critical cost not captured by tool licensing?", "options": ["Cloud compute and storage costs", "Engineering time for integration and maintenance", "Both cloud infrastructure and engineering time", "Data quality tool costs"], "a": 2, "type": "mc"}]}' data-quiz-lesson="data/learn/open-source-data-stack/">
+      <h2 class="text-2xl font-bold mb-4" style="color:var(--color-text)">Knowledge Check</h2>
+      <p class="text-sm mb-4" style="color:var(--color-text-muted)">Test your understanding of this lesson.</p>
+      <div id="quiz-score" class="mb-4 text-sm font-semibold" style="color:var(--color-text-secondary)"></div>
+      <div id="quiz-container"></div>
+      <div id="quiz-summary" class="mt-6 p-4 rounded-lg hidden" style="background:var(--color-surface);border:1px solid var(--color-border)"></div>
+      <button id="quiz-retry" class="mt-3 hidden px-4 py-2 text-sm font-semibold rounded-lg transition hover:opacity-80" style="background:var(--color-accent);color:#fff">Retry Quiz</button>
     </section>
     <section class="mt-12 pt-8 border-t">
       <h2 class="text-2xl font-bold mb-6">Related Research</h2>
@@ -205,24 +236,24 @@
             <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-12</span>
           </div>
         </a>
-        <a href="https://www.acaciafund.org/data/research/2027-data-engineering-predictions/" class="ghost-card block text-decoration:none">
+        <a href="https://www.acaciafund.org/data/research/sodium-ion-salt-batteries-will-revolutionize-electric-vehicl/" class="ghost-card block text-decoration:none">
           <div class="p-3">
             
             <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
   Data Engineering
 </span>
-            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">2027 Data Engineering Predictions: AI-Augmented Pipelines, Real-Time Universal Catalogs, and the Death of Batch</span>
-            <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-19</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Sodium-ion "salt" batteries will revolutionize electric-vehicle and grid storage</span>
+            <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-07-07</span>
           </div>
         </a>
-        <a href="https://www.acaciafund.org/data/research/data-platform-product-ux/" class="ghost-card block text-decoration:none">
+        <a href="https://www.acaciafund.org/data/research/microsoft-admits-a-windows-11-bug-is-eating-up-to-500gb-of-s/" class="ghost-card block text-decoration:none">
           <div class="p-3">
             
             <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
   Data Engineering
 </span>
-            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Data Platform as a Product: UX Patterns for Internal Developer Platforms</span>
-            <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-18</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Microsoft admits a Windows 11 bug is eating up to 500GB of storage</span>
+            <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-07-07</span>
           </div>
         </a>
       </div>
@@ -275,7 +306,7 @@
   </article>
 </div>
 
-<script src="/static/js/learning_hub.d41d8cd9.js" defer></script>
+<script src="/static/js/learning_hub.534fa53c.js" defer></script>
 <div class="newsletter-signup" style="background:var(--color-bg);border:1px solid var(--color-border);padding:2rem;border-radius:8px;text-align:center">
   <h3 style="color:var(--color-text)">Stay Updated</h3>
   <p style="color:var(--color-text-muted)">Get the latest research summaries delivered to your inbox.</p>
@@ -292,6 +323,6 @@
         <small>&copy; 2026 AcaciaFund &middot; Generated by the Acacia pipeline.</small>
     </footer>
 
-    <script src="/static/js/main.d41d8cd9.js"></script>
+
 </body>
 </html>

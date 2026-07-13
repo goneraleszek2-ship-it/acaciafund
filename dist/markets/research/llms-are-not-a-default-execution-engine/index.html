@@ -1,6 +1,4 @@
-<span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
-  AML
-</span><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
@@ -14,7 +12,7 @@
 
 
     <script type="application/ld+json">
-{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "stock"}, "author": {"@type": "Person", "name": "jusonchan81"}, "citation": [{"@type": "Organization", "description": "1 references", "name": "hn"}], "dateModified": "2026-07-07T15:52:10Z", "datePublished": "2026-07-07", "description": "HackerNews discussion (7 points) about LLMs Are Not a Default Execution Engine.", "headline": "LLMs Are Not a Default Execution Engine", "inLanguage": "en", "keywords": "market-microstructure", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/markets/research/llms-are-not-a-default-execution-engine/", "@type": "WebPage"}, "proficiencyLevel": "", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-10T06:39:40Z", "signalQualityIndex": 0.55, "sqi": 0.55}
+{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "stock"}, "author": {"@type": "Person", "name": "jusonchan81"}, "citation": [{"@type": "Organization", "description": "1 references", "name": "hn"}], "dateModified": "2026-07-07T15:52:10Z", "datePublished": "2026-07-07", "description": "HackerNews discussion (7 points) about LLMs Are Not a Default Execution Engine.", "headline": "LLMs Are Not a Default Execution Engine", "inLanguage": "en", "keywords": "market-microstructure", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/markets/research/llms-are-not-a-default-execution-engine/", "@type": "WebPage"}, "proficiencyLevel": "beginner", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-10T06:39:40Z", "signalQualityIndex": 0.688, "sqi": 0.688}
     </script>
 
 
@@ -34,6 +32,8 @@
                 <li><a href="/compliance/">Compliance</a></li>
                 <li><a href="/markets/">Markets</a></li>
                 <li><a href="/data/">Data</a></li>
+                <li><a href="/review/">Review</a></li>
+                <li><a href="/search/">Search</a></li>
             </ul>
         </nav>
     </header>
@@ -53,7 +53,44 @@
 
 <div id="reading-progress" style="position:fixed;top:0;left:0;height:3px;z-index:9999;width:0%;background:var(--color-accent)"></div>
 
-<div class="flex gap-8  flex-col">
+<div class="flex gap-8 md:flex-row flex-col">
+  <aside class="toc-sidebar shrink-0 order-last md:order-first md:sticky md:top-20 md:self-start md:max-h-[calc(100vh-6rem)] md:overflow-y-auto md:w-52">
+    <div class="flex items-center justify-between mb-3">
+      <h2 class="text-xs font-semibold uppercase tracking-wide" style="color:var(--color-text-muted)">On this page</h2>
+      <button id="focus-toggle" class="text-xs px-2 py-1 rounded" style="color:var(--color-text-muted);background:var(--color-bg)" title="Focus mode" aria-label="Toggle focus mode">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 4h4M6 20h4M18 4h-4M18 20h-4M4 6v4M4 18v4M20 6v4M20 18v4"/></svg>
+      </button>
+    </div>
+    <nav aria-label="Table of contents">
+      <ul class="space-y-1 text-sm">
+        <li>
+          <a href="#overview" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Overview
+          </a>
+        </li>
+        <li>
+          <a href="#key-topics" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Key Topics
+          </a>
+        </li>
+        <li>
+          <a href="#content" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Content
+          </a>
+        </li>
+        <li>
+          <a href="#significance" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Significance
+          </a>
+        </li>
+        <li>
+          <a href="#further-reading" class="toc-link block py-1  rounded px-2 transition" style="color:var(--color-text-muted)">
+            Further Reading
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </aside>
 
   <article class="min-w-0 flex-1">
     <nav aria-label="Breadcrumb" class="mb-4 text-xs" style="color:var(--color-text-muted)">
@@ -82,7 +119,7 @@
         <h1 class="text-3xl font-extrabold  leading-tight">LLMs Are Not a Default Execution Engine</h1>
       </div>
       <div class="mt-2">
-        <span class="badge badge-accent font-meta">SQI 0.55</span>
+        <span class="badge badge-accent font-meta">SQI 0.688</span>
       </div>
       <div class="mt-2 flex items-center gap-2 text-sm" style="color:var(--color-text-muted)">
         <time datetime="2026-07-07">2026-07-07</time>
@@ -115,7 +152,7 @@
 
 
     <div class="prose prose-lg prose-blue max-w-none">
-      <p>HackerNews discussion: <a href='https://news.ycombinator.com/item?id=48812489'>LLMs Are Not a Default Execution Engine</a></p><p>Score: 7 points by jusonchan81.</p><p>Source: <a href='https://unmeshed.io/blog/using-ai-wisely-starts-before-the-first-prompt'>https://unmeshed.io/blog/using-ai-wisely-starts-before-the-first-prompt</a></p>
+      <div class="section-harvester" data-section="overview" style="--section-color:#3a7d5c"><details class="section-collapse" open><summary class="section-summary"><h2 id="overview">Overview</h2></summary><div class="section-body"><p>HackerNews discussion (7 points) about LLMs Are Not a Default Execution Engine.</p></div></details></div><div class="section-harvester" data-section="key_findings" style="--section-color:#6ee7b7"><details class="section-collapse" open><summary class="section-summary"><h2 id="key-topics">Key Topics</h2></summary><div class="section-body"><p>This article covers: market-microstructure.</p></div></details></div><div class="section-harvester" data-section="applied_scenario" style="--section-color:#3a7d5c"><details class="section-collapse" open><summary class="section-summary"><h2 id="content">Content</h2></summary><div class="section-body"><p>HackerNews discussion: LLMs Are Not a Default Execution Engine Score: 7 points by jusonchan81. Source: https://unmeshed.io/blog/using-ai-wisely-starts-before-the-first-prompt</p></div></details></div><div class="section-harvester" data-section="source_analysis" style="--section-color:#3a7d5c"><details class="section-collapse" open><summary class="section-summary"><h2 id="significance">Significance</h2></summary><div class="section-body"><p>This research contributes to advancing knowledge in financial markets, providing insights relevant to practitioners and researchers working in this domain.</p></div></details></div><div class="section-harvester" data-section="domain_breakdown" style="--section-color:#22c55e"><details class="section-collapse" open><summary class="section-summary"><h2 id="further-reading">Further Reading</h2></summary><div class="section-body"><p>For deeper exploration of this topic, consider reviewing the foundational literature and related work in the field.</p></div></details></div>
     </div>
     <section class="mt-12 pt-8 border-t">
       <h2 class="text-2xl font-bold  mb-4">Signal Analysis</h2>
@@ -162,7 +199,6 @@
               <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">The volume of technical communication across financial intelligence, market microstructure, and data engineering domains has undergone a phase transition. Between 2020 and 2026, the per-capita publica</p>
               <div class="mt-2 flex flex-wrap gap-1">
                 <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Market Microstructure</span>
-                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Suspicious Transaction Report</span>
               </div>
             </div>
           </div>
@@ -176,44 +212,9 @@
             </div>
             <div class="flex-1 min-w-0">
               <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">Trade-Based Money Laundering (TBML) Detection via Statistical Pricing Anomaly Isolation</h3>
-              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)"></p>
+              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">Detection methods for Trade-Based Money Laundering through mis-invoicing, phantom shipments, and pricing anomalies in trade documentation.</p>
               <div class="mt-2 flex flex-wrap gap-1">
                 <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Market Microstructure</span>
-                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Suspicious Transaction Report</span>
-              </div>
-            </div>
-          </div>
-        </a>
-        <a href="https://www.acaciafund.org/markets/research/estimating-the-stochastic-discount-factor-from-option-prices/" class="ghost-card p-4 block transition hover:shadow-md" style="text-decoration:none">
-          <div class="flex items-start gap-3">
-            <div class="shrink-0 mt-0.5">
-              <span class="inline-block text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, slate 15%, transparent);color:slate">
-                Compliance
-              </span>
-            </div>
-            <div class="flex-1 min-w-0">
-              <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">Estimating the Stochastic Discount Factor from Option Prices and Predicting the Equity Premium</h3>
-              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">This paper proposes a stochastic discount factor (SDF) scaled by time-varying volatility. By utilizing prices and market data implied solely from S\&P 500 options, the proposed framework recovers a st</p>
-              <div class="mt-2 flex flex-wrap gap-1">
-                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Market Microstructure</span>
-                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Suspicious Transaction Report</span>
-              </div>
-            </div>
-          </div>
-        </a>
-        <a href="https://www.acaciafund.org/markets/research/algorithmic-expert-aggregation/" class="ghost-card p-4 block transition hover:shadow-md" style="text-decoration:none">
-          <div class="flex items-start gap-3">
-            <div class="shrink-0 mt-0.5">
-              <span class="inline-block text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, slate 15%, transparent);color:slate">
-                Compliance
-              </span>
-            </div>
-            <div class="flex-1 min-w-0">
-              <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">Algorithmic Expert Aggregation</h3>
-              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">Forecast aggregation aims to combine information from multiple Bayesian experts' forecasts into an aggregate forecast. In much of this literature, however, the aggregate forecast is optimized for a pa</p>
-              <div class="mt-2 flex flex-wrap gap-1">
-                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Market Microstructure</span>
-                <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Suspicious Transaction Report</span>
               </div>
             </div>
           </div>
@@ -226,14 +227,10 @@
         Ontology Concepts
       </h2>
       <div class="flex flex-wrap gap-2">
-        <span class="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
-          Suspicious Transaction Report
-          <span class="opacity-60 text-[10px]">0.9</span>
-        </span>
-        <span class="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
+        <a href="/concepts/market-microstructure/" class="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full no-underline" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);text-decoration:none">
           Market Microstructure
           <span class="opacity-60 text-[10px]">0.9</span>
-        </span>
+        </a>
       </div>
     </section>
     <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
@@ -265,6 +262,19 @@
             <div class="flex-1 min-w-0">
               <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">MSCI</h3>
               <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">MSCI research — factor investing, ESG, market analytics</p>
+            </div>
+          </div>
+        </a>
+        <a href="https://arxiv.org/list/math.FIN/recent" target="_blank" rel="noopener" class="ghost-card p-4 block transition hover:shadow-md" style="text-decoration:none">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 mt-0.5">
+              <span class="inline-block text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">
+                arXiv math.FIN
+              </span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">arXiv math.FIN</h3>
+              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">arXiv Quantitative Finance — mathematical finance papers, market models, portfolio theory</p>
             </div>
           </div>
         </a>
@@ -307,61 +317,48 @@
             </div>
           </div>
         </a>
-        <a href="https://www.aqr.com/Insights" target="_blank" rel="noopener" class="ghost-card p-4 block transition hover:shadow-md" style="text-decoration:none">
-          <div class="flex items-start gap-3">
-            <div class="shrink-0 mt-0.5">
-              <span class="inline-block text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">
-                AQR
-              </span>
-            </div>
-            <div class="flex-1 min-w-0">
-              <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">AQR</h3>
-              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">AQR Capital — academic research on factors, momentum, value</p>
-            </div>
-          </div>
-        </a>
       </div>
     </section>
     <section class="mt-12 pt-8 border-t">
       <h2 class="text-2xl font-bold  mb-6">Related</h2>
       <div class="grid gap-4 sm:grid-cols-3">
-          <a href="https://www.acaciafund.org/markets/research/stock-dataeng/" class="ghost-card block text-decoration:none">
+          <a href="https://www.acaciafund.org/markets/research/estimating-the-stochastic-discount-factor-from-option-prices/" class="ghost-card block text-decoration:none">
             <div class="aspect-[600/340] bg-gray-800 overflow-hidden">
-              <img src="https://www.acaciafund.org/static/images/generated/blog/2026-06-08-stock-dataeng.svg" alt="Feature Engineering at Scale: Building ML-Ready Market Data Pipelines with dbt and Iceberg" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
+              <img src="https://www.acaciafund.org/static/images/thumb_2319fae7845c.svg" alt="Estimating the Stochastic Discount Factor from Option Prices and Predicting the Equity Premium" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
             </div>
            <div class="p-3">
               
               <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
   Markets
 </span>
-              <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Feature Engineering at Scale: Building ML-Ready Market Data Pipelines with dbt and Iceberg</span>
-             <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-08</span>
+              <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Estimating the Stochastic Discount Factor from Option Prices and Predicting the Equity Premium</span>
+             <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-07-09</span>
            </div>
          </a>
-          <a href="https://www.acaciafund.org/markets/research/dataops-markets/" class="ghost-card block text-decoration:none">
+          <a href="https://www.acaciafund.org/markets/research/algorithmic-expert-aggregation/" class="ghost-card block text-decoration:none">
             <div class="aspect-[600/340] bg-gray-800 overflow-hidden">
-              <img src="https://www.acaciafund.org/static/images/generated/blog/2026-06-08-dataops-markets.svg" alt="Real-Time Data Engineering for Algorithmic Trading: From Tick Data to Execution Signals" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
+              <img src="https://www.acaciafund.org/static/images/thumb_a2a440b3c436.svg" alt="Algorithmic Expert Aggregation" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
             </div>
            <div class="p-3">
               
               <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
   Markets
 </span>
-              <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Real-Time Data Engineering for Algorithmic Trading: From Tick Data to Execution Signals</span>
-             <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-08</span>
+              <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Algorithmic Expert Aggregation</span>
+             <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-07-09</span>
            </div>
          </a>
-          <a href="https://www.acaciafund.org/markets/research/science/" class="ghost-card block text-decoration:none">
+          <a href="https://www.acaciafund.org/markets/research/robust-bayesian-decision-making-under-adversarial-uncertaint/" class="ghost-card block text-decoration:none">
             <div class="aspect-[600/340] bg-gray-800 overflow-hidden">
-              <img src="https://www.acaciafund.org/static/images/generated/blog/2026-06-07-science.svg" alt="S&amp;P 500 rejects SpaceX, also blocking entry for OpenAI and Anthropic -- 🧬 SCIENCE 2026-06-07" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
+              <img src="https://www.acaciafund.org/static/images/thumb_f756e4a91050.svg" alt="Robust Bayesian Decision Making under Adversarial Uncertainty" width="600" height="340" class="w-full h-full object-cover" loading="lazy" decoding="async">
             </div>
            <div class="p-3">
               
               <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
   Markets
 </span>
-              <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">S&P 500 rejects SpaceX, also blocking entry for OpenAI and Anthropic -- 🧬 SCIENCE 2026-06-07</span>
-             <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-07</span>
+              <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Robust Bayesian Decision Making under Adversarial Uncertainty</span>
+             <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-07-09</span>
            </div>
          </a>
        </div>
@@ -409,9 +406,9 @@
        </div>
      </section>
      <nav class="mt-12 pt-6 border-t grid grid-cols-2 gap-4" aria-label="Post navigation">
-        <a href="https://www.acaciafund.org/compliance/research/causal-effects-of-protocol-fee-changes-on-liquidity-provisio/" class="ghost-card group block p-3 text-decoration:none">
+        <a href="https://www.acaciafund.org/compliance/research/grounded-event-extraction-from-sec-8-k-filings-with-a-fine-g/" class="ghost-card group block p-3 text-decoration:none">
           <span class="text-xs" style="color:var(--color-text-muted)">&larr; Previous</span>
-          <span class="block text-sm font-medium  group-hover:text-blue-600 truncate">Causal Effects of Protocol-Fee Changes on Liquidity Provision in Automated Market Makers</span>
+          <span class="block text-sm font-medium  group-hover:text-blue-600 truncate">Grounded Event Extraction from SEC 8-K Filings with a Fine-Grained Taxonomy</span>
         </a>
         <a href="https://www.acaciafund.org/data/research/s3-is-a-better-abstraction-than-nfs-networked-block-storage/" class="ghost-card group block p-3 text-decoration:none">
           <span class="text-xs" style="color:var(--color-text-muted)">Next &rarr;</span>
@@ -427,7 +424,7 @@
       </div>
     </section>
 
-    <script src="/static/js/learning_hub.d41d8cd9.js" defer></script>
+    <script src="/static/js/learning_hub.534fa53c.js" defer></script>
 
 <div class="newsletter-signup" style="background:var(--color-bg);border:1px solid var(--color-border);padding:2rem;border-radius:8px;text-align:center">
   <h3 style="color:var(--color-text)">Stay Updated</h3>
@@ -446,6 +443,6 @@
         <small>&copy; 2026 AcaciaFund &middot; Generated by the Acacia pipeline.</small>
     </footer>
 
-    <script src="/static/js/main.d41d8cd9.js"></script>
+
 </body>
 </html>

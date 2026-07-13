@@ -1,6 +1,4 @@
-<span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
-  AML
-</span><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
@@ -14,7 +12,7 @@
 
 
     <script type="application/ld+json">
-{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "stock"}, "author": {"@type": "Person", "name": "Leszek"}, "dateModified": "2026-07-06T18:02:57Z", "datePublished": "2026-06-12T09:43:21.987136+00:00", "description": "Analyze industries and competitive positioning: Porter\u0027s Five Forces, types of competitive moats (network effects, switching costs, intangibles, cost advantages, efficient scale), TAM/SAM/SOM market sizing, financial statement analysis by sector, and a case study of the semiconductor industry.", "headline": "Sector and Competitive Analysis: Industry Frameworks, Moats, and TAM Analysis", "inLanguage": "en", "keywords": "markets, semiconductors", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/markets/learn/sector-competitive-analysis/", "@type": "WebPage"}, "proficiencyLevel": "intermediate", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-10T06:39:40Z", "signalQualityIndex": 0.941, "sqi": 0.941}
+{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "stock"}, "author": {"@type": "Person", "name": "Leszek"}, "dateModified": "2026-07-06T18:02:57Z", "datePublished": "2026-06-12T09:43:21.987136+00:00", "description": "Analyze industries and competitive positioning: Porter\u0027s Five Forces, types of competitive moats (network effects, switching costs, intangibles, cost advantages, efficient scale), TAM/SAM/SOM market sizing, financial statement analysis by sector, and a case study of the semiconductor industry.", "headline": "Sector and Competitive Analysis: Industry Frameworks, Moats, and TAM Analysis", "inLanguage": "en", "keywords": "markets, semiconductors, commodity trading, semiconductor industry", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/markets/learn/sector-competitive-analysis/", "@type": "WebPage"}, "proficiencyLevel": "intermediate", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-10T06:39:40Z", "signalQualityIndex": 0.941, "sqi": 0.941}
     </script>
 
 
@@ -34,6 +32,8 @@
                 <li><a href="/compliance/">Compliance</a></li>
                 <li><a href="/markets/">Markets</a></li>
                 <li><a href="/data/">Data</a></li>
+                <li><a href="/review/">Review</a></li>
+                <li><a href="/search/">Search</a></li>
             </ul>
         </nav>
     </header>
@@ -153,12 +153,21 @@
       <div style="display: flex; flex-wrap: wrap; gap: 0.25rem; margin-top: var(--pico-spacing);">
         <a href="/tags/markets/"><kbd>markets</kbd></a>
         <a href="/tags/semiconductors/"><kbd>semiconductors</kbd></a>
+        <a href="/tags/commodity-trading/"><kbd>commodity trading</kbd></a>
+        <a href="/tags/semiconductor-industry/"><kbd>semiconductor industry</kbd></a>
       </div>
       <div class="mt-3 flex flex-wrap gap-1.5">
-        <span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
+        <a href="/concepts/semiconductor-industry/" class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full no-underline" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);text-decoration:none">
           <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
-          Suspicious Transaction Report
-        </span>
+          Semiconductor Industry
+        </a>
+        <a href="/concepts/commodity-trading/" class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full no-underline" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);text-decoration:none">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+          Commodity Trading Strategies
+        </a>
+      </div>
+      <div class="mt-2">
+        <span class="sqi-badge">SQI 0.941</span>
       </div>
     </header>
 
@@ -173,72 +182,88 @@
       <div id="quiz-summary" class="mt-6 p-4 rounded-lg hidden" style="background:var(--color-surface);border:1px solid var(--color-border)"></div>
       <button id="quiz-retry" class="mt-3 hidden px-4 py-2 text-sm font-semibold rounded-lg transition hover:opacity-80" style="background:var(--color-accent);color:#fff">Retry Quiz</button>
     </section>
-    <section class="mt-12 pt-8 border-t">
-      <h2 class="text-2xl font-bold mb-4">Bloom Taxonomy Questions</h2>
-      <div class="space-y-4">
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">A company dominates its market because each new user makes the platform more valuable for all existing users. This competitive advantage is best classified as:</p>
-        </div>
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">An analyst is evaluating enterprise software companies. Which metric best indicates that a company's product has high switching costs?</p>
-        </div>
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">Using Porter's Five Forces, which industry structure would you expect to generate the highest average profitability?</p>
-        </div>
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">A startup's bottom-up TAM analysis estimates 10,000 potential customers at $5,000/year = $50M TAM. A competitor uses a top-down approach starting with a $200B market and applying percentages to arrive at $5B TAM. What is the most likely issue with the top-down number?</p>
-        </div>
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">A semiconductor company's stock has high P/E during a cyclical upswing but the P/E collapses during the downturn even though the company remains profitable. This pattern suggests:</p>
-        </div>
+    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
+      <h2 class="text-2xl font-bold mb-6 inline-flex items-center gap-2" style="color:var(--color-text)">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+        Flashcards
+      </h2>
+      <p class="text-xs mb-4" style="color:var(--color-text-muted)">Space = flip &middot; 1-4 = grade &middot; Swipe on mobile</p>
+      <div class="grid gap-4 sm:grid-cols-2" id="flashcard-grid">
+        <acacia-flashcard
+          data-term="Porter's Five Forces"
+          data-definition="Framework analyzing industry profitability through five competitive forces: threat of new entrants, supplier power, buyer power, threat of substitutes, and rivalry among existing firms."
+          data-card-id="markets/learn/sector-competitive-analysis/#0"></acacia-flashcard>
+        <acacia-flashcard
+          data-term="Network Effects Moat"
+          data-definition="Each new user adds value for all existing users, creating a self-reinforcing feedback loop. The strongest and most durable type of competitive moat."
+          data-card-id="markets/learn/sector-competitive-analysis/#1"></acacia-flashcard>
+        <acacia-flashcard
+          data-term="Switching Costs Moat"
+          data-definition="The cost (time, money, effort) for a customer to switch providers. High switching costs create sticky revenue and pricing power."
+          data-card-id="markets/learn/sector-competitive-analysis/#2"></acacia-flashcard>
+        <acacia-flashcard
+          data-term="Total Addressable Market (TAM)"
+          data-definition="The total revenue opportunity for a product or service. Calculated via top-down (macro percentages), bottom-up (unit economics × customers), or value theory (value created × capture rate)."
+          data-card-id="markets/learn/sector-competitive-analysis/#3"></acacia-flashcard>
+        <acacia-flashcard
+          data-term="SOM (Serviceable Obtainable Market)"
+          data-definition="The portion of TAM that can realistically be captured given competition, brand, and go-to-market capabilities."
+          data-card-id="markets/learn/sector-competitive-analysis/#4"></acacia-flashcard>
+        <acacia-flashcard
+          data-term="Net Dollar Retention (NDR)"
+          data-definition="SaaS metric measuring revenue growth from existing customers (expansion minus churn). NDR >120% indicates strong switching costs and product stickiness."
+          data-card-id="markets/learn/sector-competitive-analysis/#5"></acacia-flashcard>
+        <acacia-flashcard
+          data-term="Cyclical vs Secular Growth"
+          data-definition="Cyclical growth follows economic booms and busts (semiconductors, energy). Secular growth is independent of the economic cycle, driven by long-term structural trends (AI, healthcare, cloud computing)."
+          data-card-id="markets/learn/sector-competitive-analysis/#6"></acacia-flashcard>
       </div>
+    </section>
+    <div class="mt-8 text-center">
+      <button id="mark-complete-btn" data-track-lesson="markets/learn/sector-competitive-analysis/" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition" style="background:var(--color-accent);color:#fff">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+        <span id="complete-btn-text">Mark Complete</span>
+      </button>
+    </div>
+    <section class="mt-12 pt-8 border-t" id="quiz-section" data-quiz='{"questions": [{"q": "A company dominates its market because each new user makes the platform more valuable for all existing users. This competitive advantage is best classified as:", "options": ["Switching costs", "Network effects", "Intangible assets", "Cost advantages"], "a": 1, "type": "mc"}, {"q": "An analyst is evaluating enterprise software companies. Which metric best indicates that a company's product has high switching costs?", "options": ["High revenue growth rate", "Net Dollar Retention (NDR) above 120%", "Low gross margin", "High inventory turnover"], "a": 1, "type": "mc"}, {"q": "Using Porter's Five Forces, which industry structure would you expect to generate the highest average profitability?", "options": ["Airlines (low entry barriers, powerful suppliers, intense rivalry)", "Credit rating agencies (oligopoly with regulatory barriers, low rivalry)", "Retail grocery (many competitors, powerful buyers, thin margins)", "Commodity chemicals (undifferentiated products, powerful buyers)"], "a": 1, "type": "mc"}, {"q": "A startup's bottom-up TAM analysis estimates 10,000 potential customers at $5,000/year = $50M TAM. A competitor uses a top-down approach starting with a $200B market and applying percentages to arrive at $5B TAM. What is the most likely issue with the top-down number?", "options": ["It is too conservative", "Compound assumption errors can produce unrealistic, inflated estimates", "It does not account for competition", "It only applies to B2B markets"], "a": 1, "type": "mc"}, {"q": "A semiconductor company's stock has high P/E during a cyclical upswing but the P/E collapses during the downturn even though the company remains profitable. This pattern suggests:", "options": ["The company is poorly managed", "The market correctly prices cyclical earnings — P/E looks low at the peak of earnings (high earnings) and high at the trough (low earnings)", "The company should be valued on P/B instead of P/E", "The stock is always overvalued"], "a": 1, "type": "mc"}]}' data-quiz-lesson="markets/learn/sector-competitive-analysis/">
+      <h2 class="text-2xl font-bold mb-4" style="color:var(--color-text)">Knowledge Check</h2>
+      <p class="text-sm mb-4" style="color:var(--color-text-muted)">Test your understanding of this lesson.</p>
+      <div id="quiz-score" class="mb-4 text-sm font-semibold" style="color:var(--color-text-secondary)"></div>
+      <div id="quiz-container"></div>
+      <div id="quiz-summary" class="mt-6 p-4 rounded-lg hidden" style="background:var(--color-surface);border:1px solid var(--color-border)"></div>
+      <button id="quiz-retry" class="mt-3 hidden px-4 py-2 text-sm font-semibold rounded-lg transition hover:opacity-80" style="background:var(--color-accent);color:#fff">Retry Quiz</button>
     </section>
     <section class="mt-12 pt-8 border-t">
       <h2 class="text-2xl font-bold mb-6">Related Research</h2>
       <div class="grid gap-4 sm:grid-cols-3">
-        <a href="https://www.acaciafund.org/markets/research/stock-dataeng/" class="ghost-card block text-decoration:none">
+        <a href="https://www.acaciafund.org/markets/research/stock-1/" class="ghost-card block text-decoration:none">
           <div class="p-3">
             
             <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
   Markets
 </span>
-            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Feature Engineering at Scale: Building ML-Ready Market Data Pipelines with dbt and Iceberg</span>
-            <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-08</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Nvidia RTX Spark -- 📈 STOCK 2026-06-02</span>
+            <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-02</span>
           </div>
         </a>
-        <a href="https://www.acaciafund.org/markets/research/dataops-markets/" class="ghost-card block text-decoration:none">
+        <a href="https://www.acaciafund.org/markets/research/stock-2/" class="ghost-card block text-decoration:none">
           <div class="p-3">
             
             <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
   Markets
 </span>
-            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Real-Time Data Engineering for Algorithmic Trading: From Tick Data to Execution Signals</span>
-            <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-08</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Microsoft Office 2019 and 2021 for Mac view-only conversion -- 📈 STOCK 2026-06-01</span>
+            <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-01</span>
           </div>
         </a>
-        <a href="https://www.acaciafund.org/markets/research/stock/" class="ghost-card block text-decoration:none">
+        <a href="https://www.acaciafund.org/markets/research/stock-6/" class="ghost-card block text-decoration:none">
           <div class="p-3">
             
             <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
   Markets
 </span>
-            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Meta confirms 1000s of Instagram accounts were hacked by abusing its AI chatbot -- 📈 STOCK 2026-06-07</span>
-            <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-07</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Global semiconductor supply chain reshuffling: the post-Taiwan scenario</span>
+            <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-02-14</span>
           </div>
         </a>
       </div>
@@ -256,23 +281,23 @@
             <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-07-07</span>
           </div>
         </a>
-        <a href="https://www.acaciafund.org/markets/knowledge/semiconductor-supply-chain-analysis/" class="ghost-card block text-decoration:none">
+        <a href="https://www.acaciafund.org/markets/knowledge/earnings-analysis-frameworks/" class="ghost-card block text-decoration:none">
           <div class="p-3">
             
             <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
   Markets
 </span>
-            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Semiconductor Supply Chain Analysis</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Earnings Analysis Frameworks</span>
             <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-07-10</span>
           </div>
         </a>
-        <a href="https://www.acaciafund.org/markets/knowledge/ai-hardware-trends/" class="ghost-card block text-decoration:none">
+        <a href="https://www.acaciafund.org/markets/knowledge/industrial-automation-trends/" class="ghost-card block text-decoration:none">
           <div class="p-3">
             
             <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
   Markets
 </span>
-            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Ai Hardware Trends</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Industrial Automation Trends</span>
             <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-07-10</span>
           </div>
         </a>
@@ -291,7 +316,7 @@
   </article>
 </div>
 
-<script src="/static/js/learning_hub.d41d8cd9.js" defer></script>
+<script src="/static/js/learning_hub.534fa53c.js" defer></script>
 <div class="newsletter-signup" style="background:var(--color-bg);border:1px solid var(--color-border);padding:2rem;border-radius:8px;text-align:center">
   <h3 style="color:var(--color-text)">Stay Updated</h3>
   <p style="color:var(--color-text-muted)">Get the latest research summaries delivered to your inbox.</p>
@@ -308,6 +333,6 @@
         <small>&copy; 2026 AcaciaFund &middot; Generated by the Acacia pipeline.</small>
     </footer>
 
-    <script src="/static/js/main.d41d8cd9.js"></script>
+
 </body>
 </html>

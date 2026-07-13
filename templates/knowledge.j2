@@ -82,6 +82,15 @@
         {%- endfor %}
       </div>
       {%- endif %}
+      {%- set sqi_val = content.sqi or 0 %}
+      {%- if content.signals and content.signals.avg_sqi %}
+        {%- set sqi_val = [sqi_val, content.signals.avg_sqi] | max %}
+      {%- endif %}
+      {%- if sqi_val > 0 %}
+      <div class="mt-2">
+        <span class="sqi-badge">SQI {{ "%.3f" | format(sqi_val) }}</span>
+      </div>
+      {%- endif %}
     </header>
 
     <div class="prose prose-lg prose-blue max-w-none">

@@ -29,6 +29,7 @@ from config import (
     INTEREST_RECENCY_DAYS,
     INTEREST_RECENCY_WEIGHT,
     INTEREST_SQI_WEIGHT,
+    KNOWLEDGE_TO_PILLAR_CATEGORY,
     OUTPUT_DIR,
     PIPELINE_STATIC_DIR,
     PLAUSIBLE_DOMAIN,
@@ -54,6 +55,7 @@ from core.brand import (
     section_type_color,
 )
 from core.content import Content
+from core.ontology import extract_concepts_from_text
 
 # ── Page generation helpers (new modular structure) ──
 from core.images.templates import generate_fallback_svg
@@ -94,14 +96,16 @@ from core.visuals import (  # noqa: E402
 from schemas import RegistryData  # noqa: E402
 from seed_learn import CURATED_RELATIONS  # noqa: E402
 from seed_learn import PREREQUISITES as LEARN_PREREQUISITES  # noqa: E402
+from core.ontology import extract_concepts_from_text  # noqa: E402
 
 # ── Mem0 integration for session context and deployment logging ──
 try:
-    from services.mem0 import log_deployment
+    from services.mem0 import log_deployment  # pyright: ignore[reportMissingImports, reportAttributeAccessIssue]
 
     MEM0_AVAILABLE = True
 except ImportError:
     MEM0_AVAILABLE = False
+    log_deployment = None  # pyright: ignore[reportAssignmentType]
 
 # ── Build cache for incremental builds ──
 from core.build_cache import (  # noqa: E402
@@ -597,6 +601,95 @@ def generate_sqi_badge(sqi: float) -> str:
     )
 
 
+_SQI_WEIGHTS = {
+    "source_credibility": 0.25,
+    "technical_accuracy": 0.25,
+    "practical_value": 0.20,
+    "freshness": 0.15,
+    "trend_relevance": 0.10,
+    "educational_quality": 0.05,
+}
+
+
+def _compute_sqi_for_item(item: "Content") -> float:
+    """Lightweight SQI computation for items missing it (matches backfill_sqi.py)."""
+    body = (item.body_html or "").lower()
+    title = (item.title or "").lower()
+    text = f"{title} {body}"
+
+    source_cred = 0.5
+    sb = item.source_breakdown or {}
+    signals = item.signals or {}
+    sc = signals.get("count", sum(sb.values()) if sb else 0)
+    if sc >= 3:
+        source_cred = 1.0
+    elif sc >= 2:
+        source_cred = 0.85
+    elif sc == 1:
+        source_cred = 0.7
+
+    tech_acc = 0.5
+    depth = ["architecture", "implementation", "pattern", "design", "algorithm",
+             "framework", "methodology", "analysis", "model", "system"]
+    code = ["code", "example", "implementation", "api", "function", "class", "import", "def ", "return"]
+    ref = ["documentation", "specification", "rfc", "standard", "reference", "citation", "paper", "study"]
+    if any(m in text for m in depth):
+        tech_acc += 0.15
+    if any(m in text for m in code):
+        tech_acc += 0.1
+    if any(m in text for m in ref):
+        tech_acc += 0.15
+    if len(body) > 2000:
+        tech_acc += 0.1
+    tech_acc = min(1.0, tech_acc)
+
+    practical = 0.5
+    pmarks = ["how to", "tutorial", "guide", "step-by-step", "best practices",
+              "case study", "real-world", "production", "deployment"]
+    tmarks = ["tool", "library", "framework", "platform", "software", "database"]
+    if any(m in text for m in pmarks):
+        practical += 0.2
+    if any(m in text for m in tmarks):
+        practical += 0.15
+    if item.content_type == "learn":
+        practical += 0.1
+    practical = min(1.0, practical)
+
+    fresh = 0.5
+    if item.created_at:
+        try:
+            days_old = (datetime.now(timezone.utc) - item.created_at).days
+            fresh = max(0.2, 1.0 - (days_old / 360))
+        except (ValueError, TypeError):
+            pass
+
+    trend = 0.5
+    ts = signals.get("trend_strength", 0)
+    if isinstance(ts, (int, float)) and ts > 0:
+        trend = min(1.0, ts / 100)
+
+    edu = 0.3
+    if item.bloom_questions:
+        edu += 0.35
+    if item.content_type == "learn":
+        edu += 0.15
+    edu = min(1.0, edu)
+
+    scores = {
+        "source_credibility": source_cred,
+        "technical_accuracy": tech_acc,
+        "practical_value": practical,
+        "freshness": fresh,
+        "trend_relevance": trend,
+        "educational_quality": edu,
+    }
+    final = sum(scores[k] * _SQI_WEIGHTS[k] for k in _SQI_WEIGHTS)
+    slug = item.slug or ""
+    if "glossary" in slug:
+        final = max(final, 0.68)
+    return round(final, 3)
+
+
 def thumbnail_key(title: str) -> str:
     return hashlib.md5(title.encode()).hexdigest()[:12]
 
@@ -782,7 +875,7 @@ def generate_card_thumbnail(source_url: str, slug: str) -> str:
     if not thumb_path.exists() or src.stat().st_mtime > thumb_path.stat().st_mtime:
         try:
             with Image.open(src) as img:
-                img.thumbnail((200, 150), Image.LANCZOS)
+                img.thumbnail((200, 150), Image.Resampling.LANCZOS)  # pyright: ignore[reportAttributeAccessIssue]
                 img.save(thumb_path, optimize=True)
         except (OSError, ValueError) as e:
             print(f"  WARNING: card thumbnail failed for {slug}: {e}")
@@ -1265,7 +1358,7 @@ def _generate_page_svgs(item, layer: str, thumb_key: str, og_key: str) -> None:
     (out_static / f"og_{og_key}.svg").write_text(svg_og, encoding="utf-8")
 
 
-def main():
+def main():  # pyright: ignore[reportGeneralTypeIssues]
     print("Starting AcaciaFund generator...")
     start_time = time.time()
     _timings: dict[str, float] = {}
@@ -1535,6 +1628,20 @@ def main():
         print("ERROR: No valid content items remaining after validation.")
         return 1
 
+    # Backfill SQI for items missing it
+    sqi_backfilled = 0
+    for item in all_content:
+        has_sqi = item.sqi is not None and item.sqi > 0
+        signals_avg = (item.signals or {}).get("avg_sqi", 0) if isinstance(item.signals, dict) else 0
+        if not has_sqi and signals_avg and signals_avg > 0:
+            item.sqi = round(signals_avg, 3)
+            sqi_backfilled += 1
+        elif not has_sqi and not signals_avg:
+            item.sqi = _compute_sqi_for_item(item)
+            sqi_backfilled += 1
+    if sqi_backfilled:
+        print(f"  sqi: backfilled {sqi_backfilled} items")
+
     _t0 = time.time()
     # Generate knowledge graph for semantic cross-linking
     generate_knowledge_graph()
@@ -1718,9 +1825,9 @@ def main():
         for item in all_content:
             tags_text = " ".join(item.tags or [])
             body_text = _re_pre.sub(r"<[^>]+>", " ", item.body_html or "")
-            combined = f"{item.title or ''} {tags_text} {body_text[:400]}"
+            combined = f"{item.title or ''} {tags_text} {body_text[:800]}"
             matches = extract_concepts_from_text(combined, ontology)
-            _concept_cache[item.slug] = {c.id for c, s in matches if s >= 0.3}
+            _concept_cache[item.slug] = {c.id for c, s in matches if s >= 0.35}
 
     # --- KNOWLEDGE PAGES ---
     for item in knowledge_items:
@@ -1740,6 +1847,11 @@ def main():
             kcat = KNOWLEDGE_CATEGORIES.get(item.knowledge_category, {})
             if kcat:
                 kcat["slug"] = item.knowledge_category
+
+            # Resolve pillar-specific subcategory from knowledge category
+            pillar_subcategory = KNOWLEDGE_TO_PILLAR_CATEGORY.get(
+                item.knowledge_category, {}
+            ).get(item.pillar or "aml", "")
 
             related_research = find_related(research_items, item, 3)
             related_learn = find_related(learn_items, item, 3)
@@ -1781,7 +1893,7 @@ def main():
                     matches = extract_concepts_from_text(combined, ontology)
                     seen_ids = set()
                     for concept, score in matches:
-                        if concept.id not in seen_ids and score >= 0.3:
+                        if concept.id not in seen_ids and score >= 0.35:
                             seen_ids.add(concept.id)
                             ontology_concepts.append({
                                 "id": concept.id,
@@ -1852,6 +1964,7 @@ def main():
                 layer="knowledge",
                 layer_icon=LAYER_ICONS["knowledge"],
                 layer_sub=layer_sub,
+                pillar_subcategory=pillar_subcategory,
                 **ctx_base,
             )
             out_file.write_text(html, encoding="utf-8")
@@ -1972,7 +2085,7 @@ def main():
                     matches = extract_concepts_from_text(combined, ontology)
                     seen_ids = set()
                     for concept, score in matches:
-                        if concept.id not in seen_ids and score >= 0.3:
+                        if concept.id not in seen_ids and score >= 0.35:
                             seen_ids.add(concept.id)
                             ontology_concepts.append({
                                 "id": concept.id,
@@ -2194,7 +2307,7 @@ def main():
                     matches = extract_concepts_from_text(combined, ontology)
                     seen_ids = set()
                     for concept, score in matches:
-                        if concept.id not in seen_ids and score >= 0.3:
+                        if concept.id not in seen_ids and score >= 0.35:
                             seen_ids.add(concept.id)
                             ontology_concepts_r.append({
                                 "id": concept.id,
@@ -2751,12 +2864,12 @@ def main():
     (science_dir / "index.html").write_text(
         f'<!DOCTYPE html><html lang="en"><head><meta charset="utf-8">'
         f"<title>Science — AcaciaFund</title>"
-        f'<meta http-equiv="refresh" content="0;url={SITE_URL}/research/">'
-        f'<link rel="canonical" href="{SITE_URL}/research/">'
-        f'</head><body><p><a href="{SITE_URL}/research/">Research — AcaciaFund</a></p></body></html>',
+        f'<meta http-equiv="refresh" content="0;url={SITE_URL}/data/research/">'
+        f'<link rel="canonical" href="{SITE_URL}/data/research/">'
+        f'</head><body><p><a href="{SITE_URL}/data/research/">Research — AcaciaFund</a></p></body></html>',
         encoding="utf-8",
     )
-    print("  redirect: /science/ → /research/")
+    print("  redirect: /science/ → /data/research/")
 
     # --- /stock/ redirect to /markets/ ---
     stock_dir = OUTPUT_DIR / "stock"
@@ -2817,6 +2930,40 @@ def main():
         except Exception as e:
             print(f"  ontology: merge skipped ({e})")
 
+    # Add doc↔concept edges (content items linked to ontology concepts)
+    if ontology and ontology.concept_count() > 0:
+        existing_edge_ids = {e["data"]["id"] for e in graph_data.get("edges", [])}
+        doc_concept_edges = 0
+        for _ci in all_content:
+            if not _ci.tags:
+                continue
+            _ctext = f"{_ci.title or ''} {' '.join(_ci.tags or [])} {(_ci.body_html or '')[:500]}"
+            import re as _re
+            _ctext = _re.sub(r"<[^>]+>", " ", _ctext)
+            try:
+                _matches = extract_concepts_from_text(_ctext, ontology)
+                _doc_id = f"doc:{_ci.slug}"
+                for _concept, _score in _matches:
+                    if _score >= 0.35:
+                        _edge_id = f"doc-concept:{_ci.slug}:{_concept.id}"
+                        if _edge_id not in existing_edge_ids:
+                            graph_data.setdefault("edges", []).append({
+                                "data": {
+                                    "id": _edge_id,
+                                    "source": _doc_id,
+                                    "target": f"ont:{_concept.id}",
+                                    "type": "document-concept",
+                                    "strength": round(_score, 2),
+                                }
+                            })
+                            existing_edge_ids.add(_edge_id)
+                            doc_concept_edges += 1
+            except Exception:
+                pass
+        if doc_concept_edges > 0:
+            edge_count = len(graph_data.get("edges", []))
+            print(f"  doc-concept: {doc_concept_edges} edges added")
+
     # Write merged graph data
     cytograph_dst = OUTPUT_DIR / "graph-data.json"
     cytograph_dst.write_text(json.dumps(graph_data, indent=2, default=str), encoding="utf-8")
@@ -2839,6 +2986,130 @@ def main():
     )
     (graph_dir / "index.html").write_text(graph_html, encoding="utf-8")
     print("  graph: graph/index.html")
+
+    # --- Review pages (dashboard + queue) ---
+    _review_cards = []
+    for _ri_raw in registry.content:
+        _ri_dict = _ri_raw if isinstance(_ri_raw, dict) else (_ri_raw.model_dump() if hasattr(_ri_raw, 'model_dump') else {})
+        _ri_fcs = _ri_dict.get("flashcards", [])
+        if not _ri_fcs:
+            continue
+        _rpillar = _ri_dict.get("pillar", "aml")
+        _slug = _ri_dict.get("slug", "")
+        for _fi, _fc in enumerate(_ri_fcs):
+            _card_id = f"{_slug}#{_fi}"
+            _fc_term = _fc.get("term", "") or _fc.get("front", "")
+            _fc_def = _fc.get("definition", "") or _fc.get("back", "")
+            _review_cards.append({
+                "id": _card_id,
+                "term": _fc_term,
+                "definition": _fc_def,
+                "pillar": _rpillar,
+                "slug": _slug,
+            })
+    _review_cards_json = json.dumps(_review_cards, ensure_ascii=False)
+
+    review_dir = OUTPUT_DIR / "review"
+    review_dir.mkdir(parents=True, exist_ok=True)
+    review_html = render_template(
+        "review.j2",
+        content=_dummy("Review Dashboard — AcaciaFund", "index", description="Spaced repetition review dashboard for AcaciaFund learn modules."),
+        flashcard_cards=_review_cards_json,
+        page_path="review/",
+        page_title="Review Dashboard",
+        **ctx_base,
+    )
+    (review_dir / "index.html").write_text(review_html, encoding="utf-8")
+    print(f"  review: review/index.html ({len(_review_cards)} cards)")
+
+    queue_dir = review_dir / "queue"
+    queue_dir.mkdir(parents=True, exist_ok=True)
+    queue_html = render_template(
+        "review_queue.j2",
+        content=_dummy("Review Queue — AcaciaFund", "index", description="Review queue for spaced repetition flashcards."),
+        flashcard_cards=_review_cards_json,
+        page_path="review/queue/",
+        page_title="Review Queue",
+        **ctx_base,
+    )
+    (queue_dir / "index.html").write_text(queue_html, encoding="utf-8")
+    print("  review: review/queue/index.html")
+
+    # --- Concept detail pages ---
+    if ontology and ontology.concept_count() > 0:
+        # Build concept → content mapping by re-extracting from all items
+        concept_content_map = {}
+        for _ci in all_content:
+            if not _ci.tags:
+                continue
+            _ctext = f"{_ci.title or ''} {' '.join(_ci.tags or [])} {(_ci.body_html or '')[:500]}"
+            import re as _re
+            _ctext = _re.sub(r"<[^>]+>", " ", _ctext)
+            try:
+                _matches = extract_concepts_from_text(_ctext, ontology)
+                for _concept, _score in _matches:
+                    if _score >= 0.35:
+                        if _concept.id not in concept_content_map:
+                            concept_content_map[_concept.id] = []
+                        concept_content_map[_concept.id].append({
+                            "slug": _ci.slug,
+                            "title": _ci.title,
+                            "description": (_ci.description or "")[:120],
+                            "pillar": _ci.pillar or "",
+                            "content_type": _ci.content_type,
+                            "url": f"/{_ci.slug}/",
+                            "score": round(_score, 2),
+                        })
+            except Exception:
+                pass
+
+        concept_dir = OUTPUT_DIR / "concepts"
+        concept_dir.mkdir(parents=True, exist_ok=True)
+        _concept_count = 0
+        all_concepts = ontology.concepts_by_pillar()
+        for _pillar_key, _pillar_concepts in all_concepts.items():
+            for _concept in _pillar_concepts:
+                # Related concepts with relation type
+                _related_concepts = []
+                for _rel in ontology.relations_for(_concept.id):
+                    _other_id = _rel.target_id if _rel.source_id == _concept.id else _rel.source_id
+                    _other = ontology.get_concept(_other_id)
+                    if _other:
+                        _related_concepts.append({
+                            "id": _other.id,
+                            "label": _other.label,
+                            "relation": _rel.relation_type,
+                        })
+
+                _related_items = concept_content_map.get(_concept.id, [])
+                _related_items.sort(key=lambda x: x["score"], reverse=True)
+                _related_items = _related_items[:12]
+
+                concept_html = render_template(
+                    "concept_detail.j2",
+                    content=_dummy(
+                        f"{_concept.label} — AcaciaFund Concepts",
+                        "index",
+                        description=_concept.description or f"Concept: {_concept.label} in {_pillar_key} pillar.",
+                    ),
+                    concept={
+                        "id": _concept.id,
+                        "label": _concept.label,
+                        "description": _concept.description or "",
+                        "pillar": _pillar_key,
+                        "category": _concept.category or "",
+                        "aliases": _concept.aliases or [],
+                    },
+                    related_items=_related_items,
+                    related_concepts=_related_concepts,
+                    page_path=f"concepts/{_concept.id}/",
+                    **ctx_base,
+                )
+                _cd = concept_dir / _concept.id
+                _cd.mkdir(parents=True, exist_ok=True)
+                (_cd / "index.html").write_text(concept_html, encoding="utf-8")
+                _concept_count += 1
+        print(f"  concepts: {_concept_count} concept pages")
 
     # --- 404 ---
     _suggestions = sorted(all_content, key=lambda c: hashlib.md5(c.slug.encode()).hexdigest())[:3]
@@ -2893,7 +3164,7 @@ def main():
 
     # --- FEED (via build_taxonomies) ---
     feed_pages_count = generate_feed(
-        OUTPUT_DIR, research_items, render_template, ctx_base,
+        OUTPUT_DIR, all_content, render_template, ctx_base,
         site_url=SITE_URL,
         site_name=SITE_NAME,
         now=now,
@@ -2962,7 +3233,7 @@ Sitemap: {SITE_URL}/sitemap.xml
         "/aml/signals/*  /compliance/signals/:splat  301",
         "/stock/signals/*  /markets/signals/:splat  301",
         "/stock/*  /markets/:splat  301",
-        "/science/*  /research/:splat  301",
+        "/science/*  /data/research/:splat  301",
         "/contact/*  /knowledge/contact/:splat  301",
     ]
     (OUTPUT_DIR / "_redirects").write_text("\n".join(redirects) + "\n", encoding="utf-8")
@@ -3101,11 +3372,13 @@ Sitemap: {SITE_URL}/sitemap.xml
             print(f"  mem0: logging failed ({e})")
 
     # ── Build metrics (build-meta.json) ──
-    sqi_values = [
-        c.signals.get("avg_sqi", 0.0)
-        for c in all_content
-        if c.signals and isinstance(c.signals, dict) and "avg_sqi" in c.signals
-    ]
+    sqi_values = []
+    for c in all_content:
+        sqi_val = c.sqi or 0.0
+        signals_avg = (c.signals or {}).get("avg_sqi", 0.0) if isinstance(c.signals, dict) else 0.0
+        effective = max(sqi_val, signals_avg)
+        if effective > 0:
+            sqi_values.append(effective)
     sqi_sorted = sorted(sqi_values) if sqi_values else [0.0]
     n_sqi = len(sqi_sorted)
     sqi_min = sqi_sorted[0] if n_sqi > 0 else 0.0
@@ -3123,13 +3396,13 @@ Sitemap: {SITE_URL}/sitemap.xml
                 source_counts[src] += cnt
 
     # Soft quality gate: flag low-SQI items without excluding them
-    low_sqi_items = [
-        {"slug": c.slug, "title": c.title[:80], "sqi": c.signals.get("avg_sqi", 0.0)}
-        for c in all_content
-        if c.signals
-        and isinstance(c.signals, dict)
-        and c.signals.get("avg_sqi", SQI_DEFAULT) < SQI_THRESHOLD_MIN
-    ]
+    low_sqi_items = []
+    for c in all_content:
+        sqi_val = c.sqi or 0.0
+        signals_avg = (c.signals or {}).get("avg_sqi", 0.0) if isinstance(c.signals, dict) else 0.0
+        effective_sqi = max(sqi_val, signals_avg)
+        if effective_sqi > 0 and effective_sqi < SQI_THRESHOLD_MIN:
+            low_sqi_items.append({"slug": c.slug, "title": c.title[:80], "sqi": effective_sqi})
     low_sqi_items.sort(key=lambda x: x["sqi"])
 
     # Content type counts

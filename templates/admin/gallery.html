@@ -1,14 +1,29 @@
-{% extends "layout.j2" %}
-{% block main_content %}
-<section class="admin-gallery">
-  <h1>Image Gallery</h1>
-  <div class="gallery-grid">
-    {% for img in gallery_images %}
-    <div class="gallery-item">
-      <img src="{{ img.url }}" alt="Section image">
-      <p>{{ img.slug }} - Section {{ img.section_index }}</p>
-    </div>
-    {% endfor %}
+{% extends "admin/base.html" %}
+{% block admin_content %}
+<h1 style="margin-bottom:1.5rem">Image Gallery</h1>
+
+<div style="display:flex;gap:1rem;margin-bottom:1.5rem">
+  <div class="ghost-card p-3 text-center" style="min-width:120px">
+    <div class="text-xl font-bold" style="color:var(--color-accent)">{{ stats_total_images }}</div>
+    <div class="text-xs" style="color:var(--color-text-muted)">Total Images</div>
   </div>
-</section>
+  <div class="ghost-card p-3 text-center" style="min-width:120px">
+    <div class="text-xl font-bold" style="color:var(--color-accent)">{{ article_count }}</div>
+    <div class="text-xs" style="color:var(--color-text-muted)">Articles</div>
+  </div>
+</div>
+
+{% if gallery_images %}
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem">
+  {% for img in gallery_images %}
+  <div class="ghost-card p-3">
+    <img src="{{ img.url }}" alt="Section image" style="width:100%;border-radius:4px;margin-bottom:0.5rem" loading="lazy">
+    <div class="text-xs" style="color:var(--color-text-secondary)">{{ img.slug }}</div>
+    <div class="text-[10px]" style="color:var(--color-text-muted)">Section {{ img.section_index }}</div>
+  </div>
+  {% endfor %}
+</div>
+{% else %}
+<p style="color:var(--color-text-muted)">No images in manifest.</p>
+{% endif %}
 {% endblock %}

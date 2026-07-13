@@ -14,7 +14,7 @@
 
 
     <script type="application/ld+json">
-{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "data-engineering"}, "author": {"@type": "Person", "name": "Leszek"}, "dateModified": "2026-07-06T18:02:57Z", "datePublished": "2026-06-13", "description": "Comprehensive Mermaid architecture diagrams including the new Source Framework (registry + 5 fetcher types + health/DLQ), Admin Panel (Flask routes, API, templates), and RSS Ingestion Pipeline \u2014 13 diagrams total.", "headline": "System Diagrams \u2014 Architecture, Pipeline \u0026 Data Flow", "inLanguage": "en", "keywords": "dataops", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/knowledge/diagrams/", "@type": "WebPage"}, "proficiencyLevel": "intermediate", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-10T06:39:40Z", "signalQualityIndex": 0.918, "sqi": 0.918}
+{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "data-engineering"}, "author": {"@type": "Person", "name": "Leszek"}, "dateModified": "2026-07-06T18:02:57Z", "datePublished": "2026-06-13", "description": "Comprehensive Mermaid architecture diagrams including the new Source Framework (registry + 5 fetcher types + health/DLQ), Admin Panel (Flask routes, API, templates), and RSS Ingestion Pipeline \u2014 13 diagrams total.", "headline": "System Diagrams \u2014 Architecture, Pipeline \u0026 Data Flow", "inLanguage": "en", "keywords": "api, dataops", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/knowledge/diagrams/", "@type": "WebPage"}, "proficiencyLevel": "intermediate", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-10T06:39:40Z", "signalQualityIndex": 0.918, "sqi": 0.918}
     </script>
 
 
@@ -34,6 +34,8 @@
                 <li><a href="/compliance/">Compliance</a></li>
                 <li><a href="/markets/">Markets</a></li>
                 <li><a href="/data/">Data</a></li>
+                <li><a href="/review/">Review</a></li>
+                <li><a href="/search/">Search</a></li>
             </ul>
         </nav>
     </header>
@@ -171,13 +173,17 @@
         <span>By Leszek</span>
       </div>
       <div style="display: flex; flex-wrap: wrap; gap: 0.25rem; margin-top: var(--pico-spacing);">
+        <a href="/tags/api/"><kbd>api</kbd></a>
         <a href="/tags/dataops/"><kbd>dataops</kbd></a>
       </div>
       <div class="mt-3 flex flex-wrap gap-1.5">
         <span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
           <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
-          Suspicious Transaction Report
+          DataOps
         </span>
+      </div>
+      <div class="mt-2">
+        <span class="sqi-badge">SQI 0.918</span>
       </div>
     </header>
 
@@ -305,6 +311,15 @@
     <section class="mt-12 pt-8 border-t">
       <h2 class="text-2xl font-bold mb-6">Related Lessons</h2>
       <div class="grid gap-4 sm:grid-cols-3">
+        <a href="https://www.acaciafund.org/data/learn/designing-data-platform/" class="ghost-card block text-decoration:none">
+          <div class="p-3">
+            
+            <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
+  Data Engineering
+</span>
+            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Designing a Production Data Platform: From Requirements to Architecture</span>
+          </div>
+        </a>
         <a href="https://www.acaciafund.org/data/learn/data-quality-observability-cost/" class="ghost-card block text-decoration:none">
           <div class="p-3">
             
@@ -323,21 +338,12 @@
             <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Building Data Pipelines with dbt and Dagster: From SQL to Orchestration</span>
           </div>
         </a>
-        <a href="https://www.acaciafund.org/data/learn/data-pipeline-architectures/" class="ghost-card block text-decoration:none">
-          <div class="p-3">
-            
-            <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
-  Data Engineering
-</span>
-            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">Data Pipeline Patterns: Batch, Streaming, and Event-Driven Architectures</span>
-          </div>
-        </a>
       </div>
     </section>
   </article>
 </div>
 
-<script src="/static/js/learning_hub.d41d8cd9.js" defer></script>
+<script src="/static/js/learning_hub.534fa53c.js" defer></script>
 <div class="newsletter-signup" style="background:var(--color-bg);border:1px solid var(--color-border);padding:2rem;border-radius:8px;text-align:center">
   <h3 style="color:var(--color-text)">Stay Updated</h3>
   <p style="color:var(--color-text-muted)">Get the latest research summaries delivered to your inbox.</p>
@@ -354,6 +360,6 @@
         <small>&copy; 2026 AcaciaFund &middot; Generated by the Acacia pipeline.</small>
     </footer>
 
-    <script src="/static/js/main.d41d8cd9.js"></script>
+
 </body>
 </html>

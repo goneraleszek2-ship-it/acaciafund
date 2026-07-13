@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>AcaciaFund Research</title>
+  <title>AcaciaFund</title>
   <link href="https://www.acaciafund.org/feed.xml" rel="self" type="application/atom+xml"/>
   <link href="https://www.acaciafund.org/" rel="alternate" type="text/html"/>
   <id>https://www.acaciafund.org/feed.xml</id>
-  <updated>2026-07-06T00:00:00+00:00</updated>
+  <updated>2026-07-13T00:00:00+00:00</updated>
   <author><name>AcaciaFund</name></author>
   <entry>
     <title>2027 Data Engineering Predictions: AI-Augmented Pipelines, Real-Time Universal Catalogs, and the Death of Batch</title>
@@ -12,6 +12,13 @@
     <id>https://www.acaciafund.org/data/research/2027-data-engineering-predictions/</id>
     <updated>2026-06-19T07:50:40+00:00</updated>
     <summary>Predictions for data engineering in 2027: AI-assisted pipeline generation, universal catalogs with Unity Catalog and Iceberg REST, real-time streaming replacing nightly batches, and the convergence of data and ML platforms.</summary>
+    <category term="pillar:data-engineering"/>
+    <category term="type:research"/>
+    <category term="dataops"/>
+    <category term="real-time-streaming"/>
+    <category term="data-engineering"/>
+    <category term="data-cataloging"/>
+    <category term="ai-automation"/>
   </entry>
   <entry>
     <title>Data Platform as a Product: UX Patterns for Internal Developer Platforms</title>
@@ -19,6 +26,13 @@
     <id>https://www.acaciafund.org/data/research/data-platform-product-ux/</id>
     <updated>2026-06-18T07:50:40+00:00</updated>
     <summary>Treating the data platform as an internal product: developer experience design, self-service data ingestion, catalog/search UX, pipeline debugging tools, and SLA dashboards. Patterns from leading platform teams.</summary>
+    <category term="pillar:data-engineering"/>
+    <category term="type:research"/>
+    <category term="dataops"/>
+    <category term="self-service-analytics"/>
+    <category term="developer-experience"/>
+    <category term="data-platform"/>
+    <category term="internal-product-development"/>
   </entry>
   <entry>
     <title>The Rise of the Analytics Engineer: dbt, SQLMesh, and the Modern Data Stack</title>
@@ -26,6 +40,13 @@
     <id>https://www.acaciafund.org/data/research/analytics-engineering-rise/</id>
     <updated>2026-06-17T07:50:40+00:00</updated>
     <summary>The analytics engineering discipline: how dbt and SQLMesh transformed the data workflow, the shift from ETL to ELT, analytics engineering best practices, and the evolving role between data engineering and data science.</summary>
+    <category term="pillar:data-engineering"/>
+    <category term="type:research"/>
+    <category term="dataops"/>
+    <category term="data-engineering"/>
+    <category term="orchestration"/>
+    <category term="analytics-engineering"/>
+    <category term="data-transformation"/>
   </entry>
   <entry>
     <title>Cost Optimization in Data Pipelines: Engineering for Efficiency at Petabyte Scale</title>
@@ -33,15 +54,27 @@
     <id>https://www.acaciafund.org/data/research/cost-optimization-data-pipelines/</id>
     <updated>2026-06-16T07:50:40+00:00</updated>
     <summary>Strategies for reducing data pipeline costs: intelligent partitioning, incremental processing, compute auto-scaling, storage tiering (Iceberg maintenance), query optimization, and workload scheduling on spot/preemptible instances.</summary>
+    <category term="pillar:data-engineering"/>
+    <category term="type:research"/>
+    <category term="dataops"/>
+    <category term="cloud-computing-optimization"/>
+    <category term="big-data-engineering"/>
+    <category term="cost-engineering"/>
+    <category term="data-pipeline-optimization"/>
   </entry>
   <entry>
     <title>Schema Registry Patterns: Avro, Protobuf, and JSON Schema in Production</title>
     <link href="https://www.acaciafund.org/data/research/schema-registry-avro-protobuf/" rel="alternate" type="text/html"/>
     <id>https://www.acaciafund.org/data/research/schema-registry-avro-protobuf/</id>
     <updated>2026-06-15T07:50:40+00:00</updated>
-    <summary># Schema Registry Patterns: Avro, Protobuf, and JSON Schema in Production
-
-Schema registry architectures enable versioned, contract-enforced data serialization across distributed pipelines. This document provides a comprehensive reference for implementing schema evolution with backward, forward, and</summary>
+    <summary>Schema Registry Patterns: Avro, Protobuf, and JSON Schema in Production Schema registry architectures enable versioned, contract-enforced data serialization across distributed pipelines. This document provides a comprehensive reference for implementing schema evolution with backward, forward, and fu</summary>
+    <category term="pillar:data-engineering"/>
+    <category term="type:research"/>
+    <category term="dataops"/>
+    <category term="data-engineering"/>
+    <category term="manufacturing"/>
+    <category term="schema-management"/>
+    <category term="data-governance"/>
   </entry>
   <entry>
     <title>Data Products: Designing APIs for the Internal Data Platform</title>
@@ -49,6 +82,13 @@ Schema registry architectures enable versioned, contract-enforced data serializa
     <id>https://www.acaciafund.org/data/research/data-products-api-design/</id>
     <updated>2026-06-14T07:50:40+00:00</updated>
     <summary>Data product design patterns: API contracts, SLAs, versioning, discovery, and access control. Implementation with dbt (data products as models), Dagster (software-defined assets), and DataHub for cataloging.</summary>
+    <category term="pillar:data-engineering"/>
+    <category term="type:research"/>
+    <category term="dataops"/>
+    <category term="internal-data-platform"/>
+    <category term="data-engineering"/>
+    <category term="data-products"/>
+    <category term="api-design"/>
   </entry>
   <entry>
     <title>Data Mesh in Practice: Implementing Domain Ownership Without Chaos</title>
@@ -56,6 +96,12 @@ Schema registry architectures enable versioned, contract-enforced data serializa
     <id>https://www.acaciafund.org/data/research/data-mesh-implementation/</id>
     <updated>2026-06-13T07:50:40+00:00</updated>
     <summary>Practical guide to data mesh adoption: domain ownership patterns, data product definitions, federated governance, and the compute platform. Case studies of mesh implementations and common failure modes.</summary>
+    <category term="pillar:data-engineering"/>
+    <category term="type:research"/>
+    <category term="data-mesh-implementation"/>
+    <category term="data-architecture"/>
+    <category term="domain-ownership-patterns"/>
+    <category term="federated-governance"/>
   </entry>
   <entry>
     <title>Terraform for Data Infrastructure: Infrastructure as Code for the Data Platform</title>
@@ -63,6 +109,13 @@ Schema registry architectures enable versioned, contract-enforced data serializa
     <id>https://www.acaciafund.org/data/research/terraform-data-infrastructure/</id>
     <updated>2026-06-12T07:50:40+00:00</updated>
     <summary>Infrastructure as Code patterns for data platforms: Terraform modules for Kafka clusters, Iceberg catalogs, dbt Cloud projects, and Dagster deployments. State management, CI/CD for infrastructure, and multi-environment strategies.</summary>
+    <category term="pillar:data-engineering"/>
+    <category term="type:research"/>
+    <category term="dataops"/>
+    <category term="software-quality"/>
+    <category term="data-engineering"/>
+    <category term="cloud-architecture"/>
+    <category term="cloud-infrastructure"/>
   </entry>
   <entry>
     <title>Kubernetes for Data Engineering: Running Data Pipelines on K8s</title>
@@ -70,6 +123,13 @@ Schema registry architectures enable versioned, contract-enforced data serializa
     <id>https://www.acaciafund.org/data/research/kubernetes-data-pipelines/</id>
     <updated>2026-06-11T07:50:40+00:00</updated>
     <summary>Running data workloads on Kubernetes: Airflow Executor types (Celery vs Kubernetes), Dagster on K8s, Spark on Kubernetes with the Spark Operator, and stateful workloads (Kafka, Flink) on K8s. Resource management and cost optimization.</summary>
+    <category term="pillar:data-engineering"/>
+    <category term="type:research"/>
+    <category term="dataops"/>
+    <category term="distributed-computing"/>
+    <category term="data-engineering"/>
+    <category term="container-orchestration"/>
+    <category term="infrastructure"/>
   </entry>
   <entry>
     <title>Feature Stores at Scale: Feast vs Tecton in Production Deployments</title>
@@ -77,6 +137,13 @@ Schema registry architectures enable versioned, contract-enforced data serializa
     <id>https://www.acaciafund.org/data/research/feature-store-feast-vs-tecton/</id>
     <updated>2026-06-10T07:50:40+00:00</updated>
     <summary>Deep comparison of Feast (open source) and Tecton (managed): feature definitions, online/offline serving, point-in-time correctness, stream feature computation, and cost models. Production deployment patterns.</summary>
+    <category term="pillar:data-engineering"/>
+    <category term="type:research"/>
+    <category term="feature-engineering"/>
+    <category term="dataops"/>
+    <category term="data-engineering"/>
+    <category term="manufacturing"/>
+    <category term="machine-learning-infrastructure"/>
   </entry>
   <entry>
     <title>ML Pipeline Orchestration: From Notebook to Production with Feast and MLflow</title>
@@ -84,6 +151,27 @@ Schema registry architectures enable versioned, contract-enforced data serializa
     <id>https://www.acaciafund.org/data/research/ml-pipeline-orchestration-feast-mlflow/</id>
     <updated>2026-06-09T07:50:40+00:00</updated>
     <summary>Production ML pipeline patterns: Feast feature serving for training/inference consistency, MLflow model registry and deployment, and Dagster for ML pipeline orchestration. Feature engineering at scale with dbt and Spark.</summary>
+    <category term="pillar:data-engineering"/>
+    <category term="type:research"/>
+    <category term="feature-engineering"/>
+    <category term="dataops"/>
+    <category term="data-engineering"/>
+    <category term="manufacturing"/>
+    <category term="orchestration"/>
+  </entry>
+  <entry>
+    <title>Real-Time Streaming with Apache Kafka: From Pub/Sub to Event-Driven Architecture</title>
+    <link href="https://www.acaciafund.org/data/research/kafka-streaming-event-driven/" rel="alternate" type="text/html"/>
+    <id>https://www.acaciafund.org/data/research/kafka-streaming-event-driven/</id>
+    <updated>2026-07-13T00:00:00+00:00</updated>
+    <summary>Production patterns for Apache Kafka: topic design strategies, consumer group rebalancing, exactly-once semantics, Kafka Connect for source/sink integration, and ksqlDB for stream processing. Real case studies from financial services.</summary>
+    <category term="pillar:data-engineering"/>
+    <category term="type:research"/>
+    <category term="dataops"/>
+    <category term="manufacturing"/>
+    <category term="event-driven"/>
+    <category term="financial-technology"/>
+    <category term="event-driven-architecture"/>
   </entry>
   <entry>
     <title>Data Contracts: Schema as API for the Analytics Team</title>
@@ -91,6 +179,13 @@ Schema registry architectures enable versioned, contract-enforced data serializa
     <id>https://www.acaciafund.org/data/research/data-contracts/</id>
     <updated>2026-07-06T00:00:00+00:00</updated>
     <summary>Implementing data contracts with dbt-expectations, Soda, and Great Expectations. Covers schema evolution, contract versioning, producer/consumer ownership patterns, and breaking change detection in production pipelines.</summary>
+    <category term="pillar:data-engineering"/>
+    <category term="type:research"/>
+    <category term="dataops"/>
+    <category term="data-contracts"/>
+    <category term="data-quality"/>
+    <category term="manufacturing"/>
+    <category term="data-governance"/>
   </entry>
   <entry>
     <title>Airflow vs Prefect vs Dagster: Choosing the Right Orchestrator in 2026</title>
@@ -98,6 +193,13 @@ Schema registry architectures enable versioned, contract-enforced data serializa
     <id>https://www.acaciafund.org/data/research/airflow-prefect-dagster-comparison/</id>
     <updated>2026-06-29T00:00:00+00:00</updated>
     <summary>Comprehensive comparison of the three leading Python orchestrators: execution model, DAG vs asset paradigm, scaling characteristics, monitoring, and community ecosystem. Decision framework for greenfield and migration scenarios.</summary>
+    <category term="pillar:data-engineering"/>
+    <category term="type:research"/>
+    <category term="workflow-orchestration"/>
+    <category term="software-architecture"/>
+    <category term="orchestration"/>
+    <category term="python-engineering"/>
+    <category term="data-pipeline-management"/>
   </entry>
   <entry>
     <title>Data Quality at Scale: Great Expectations Beyond Unit Tests for Data</title>
@@ -105,6 +207,13 @@ Schema registry architectures enable versioned, contract-enforced data serializa
     <id>https://www.acaciafund.org/data/research/data-quality-great-expectations/</id>
     <updated>2026-06-22T00:00:00+00:00</updated>
     <summary>Advanced patterns for Great Expectations in production: custom expectations, data docs auto-generation, checkpoint orchestration, and integration with Dagster and Airflow for automated quality gating.</summary>
+    <category term="pillar:data-engineering"/>
+    <category term="type:research"/>
+    <category term="test-automation"/>
+    <category term="workflow-automation"/>
+    <category term="dataops"/>
+    <category term="data-engineering"/>
+    <category term="data-quality"/>
   </entry>
   <entry>
     <title>Dagster 2.0: Next-Gen Data Pipeline Orchestration for the Modern Data Platform</title>
@@ -112,6 +221,12 @@ Schema registry architectures enable versioned, contract-enforced data serializa
     <id>https://www.acaciafund.org/data/research/dagster-2/</id>
     <updated>2026-06-15T00:00:00+00:00</updated>
     <summary>Deep dive into Dagster 2.0's asset-based orchestration model, software-defined assets, and the shift from DAG-centric to asset-centric pipeline design. Covers partitioning, backfills, and the new dagster-ui 2.0.</summary>
+    <category term="pillar:data-engineering"/>
+    <category term="type:research"/>
+    <category term="dataops"/>
+    <category term="orchestration"/>
+    <category term="etl"/>
+    <category term="dagster"/>
   </entry>
   <entry>
     <title>Data Pipeline Patterns for High-Throughput Genomics: Orchestrating Bioinformatics Workflows with Dagster</title>
@@ -119,6 +234,13 @@ Schema registry architectures enable versioned, contract-enforced data serializa
     <id>https://www.acaciafund.org/data/research/science-dataeng/</id>
     <updated>2026-06-08T16:26:44.310900+00:00</updated>
     <summary>Applying modern DataOps orchestration to genomics: Dagster assets for sequencing pipeline stages, Great Expectations for quality gates on base-call accuracy, and dbt for cohort-level analytical transformations.</summary>
+    <category term="pillar:data-engineering"/>
+    <category term="type:research"/>
+    <category term="dataops"/>
+    <category term="bioinformatics-pipelines"/>
+    <category term="genomics-workflows"/>
+    <category term="data-ops"/>
+    <category term="orchestration"/>
   </entry>
   <entry>
     <title>Feature Engineering at Scale: Building ML-Ready Market Data Pipelines with dbt and Iceberg</title>
@@ -126,6 +248,13 @@ Schema registry architectures enable versioned, contract-enforced data serializa
     <id>https://www.acaciafund.org/markets/research/stock-dataeng/</id>
     <updated>2026-06-08T16:26:44.310900+00:00</updated>
     <summary>Production feature engineering pipelines for quantitative finance: transforming raw tick data into ML-ready feature sets using dbt for SQL transformations, Iceberg for time-travel access, and Dagster for asset orchestration.</summary>
+    <category term="pillar:stock"/>
+    <category term="type:research"/>
+    <category term="feature-engineering"/>
+    <category term="markets"/>
+    <category term="dataops"/>
+    <category term="data-engineering"/>
+    <category term="manufacturing"/>
   </entry>
   <entry>
     <title>Streaming ETL for Suspicious Activity Reports: Real-Time AML Data Pipelines with Kafka and Flink</title>
@@ -133,6 +262,13 @@ Schema registry architectures enable versioned, contract-enforced data serializa
     <id>https://www.acaciafund.org/compliance/research/aml-dataeng/</id>
     <updated>2026-06-08T16:26:44.310900+00:00</updated>
     <summary>Architecture patterns for building real-time AML surveillance data pipelines using Apache Kafka for transaction ingestion, Flink for stream processing, and Iceberg for immutable audit storage — with DataOps quality gates at every stage.</summary>
+    <category term="pillar:aml"/>
+    <category term="type:research"/>
+    <category term="anti-money-laundering"/>
+    <category term="dataops"/>
+    <category term="aml-reporting"/>
+    <category term="data-engineering"/>
+    <category term="financial-crime-analytics"/>
   </entry>
   <entry>
     <title>Reproducible ML Pipelines in Computational Biology: MLOps for CRISPR Target Discovery</title>
@@ -140,6 +276,12 @@ Schema registry architectures enable versioned, contract-enforced data serializa
     <id>https://www.acaciafund.org/data/research/dataops-science/</id>
     <updated>2026-06-08T16:26:44.310900+00:00</updated>
     <summary>Applying DataOps and MLOps principles to computational biology workflows: version-controlled training data, reproducible feature engineering, automated model validation, and pipeline CI/CD for CRISPR target prediction.</summary>
+    <category term="pillar:data-engineering"/>
+    <category term="type:research"/>
+    <category term="dataops"/>
+    <category term="biotech-genomics"/>
+    <category term="machine-learning"/>
+    <category term="software-quality"/>
   </entry>
   <entry>
     <title>Real-Time Data Engineering for Algorithmic Trading: From Tick Data to Execution Signals</title>
@@ -147,5 +289,122 @@ Schema registry architectures enable versioned, contract-enforced data serializa
     <id>https://www.acaciafund.org/markets/research/dataops-markets/</id>
     <updated>2026-06-08T16:26:44.310900+00:00</updated>
     <summary>Production-grade data pipelines for algorithmic trading systems: handling market data at microsecond latency, feature engineering stream processing, backtesting infrastructure, and DataOps orchestration.</summary>
+    <category term="pillar:stock"/>
+    <category term="type:research"/>
+    <category term="markets"/>
+    <category term="dataops"/>
+    <category term="manufacturing"/>
+    <category term="orchestration"/>
+    <category term="streaming"/>
+  </entry>
+  <entry>
+    <title>Data Pipeline Observability in Financial Crime Compliance: Real-Time AML Monitoring at Scale</title>
+    <link href="https://www.acaciafund.org/compliance/research/dataops-aml/" rel="alternate" type="text/html"/>
+    <id>https://www.acaciafund.org/compliance/research/dataops-aml/</id>
+    <updated>2026-06-08T16:26:44.310900+00:00</updated>
+    <summary>How DataOps practices including pipeline observability, data quality monitoring, and automated lineage tracking are transforming anti-money laundering transaction monitoring systems at major financial institutions.</summary>
+    <category term="pillar:aml"/>
+    <category term="type:research"/>
+    <category term="dataops"/>
+    <category term="transaction-monitoring"/>
+    <category term="aml"/>
+    <category term="regtech"/>
+    <category term="observability"/>
+  </entry>
+  <entry>
+    <title>S&P 500 rejects SpaceX, also blocking entry for OpenAI and Anthropic -- 🧬 SCIENCE 2026-06-07</title>
+    <link href="https://www.acaciafund.org/markets/research/sp-500-rejects-spacex-also-blocking-entry-for-openai-and/" rel="alternate" type="text/html"/>
+    <id>https://www.acaciafund.org/markets/research/sp-500-rejects-spacex-also-blocking-entry-for-openai-and/</id>
+    <updated>2026-06-07T07:01:01.826129+00:00</updated>
+    <summary>Summary Today in SCIENCE, the top story is "S&P 500 rejects SpaceX, also blocking entry for OpenAI and Anthropic", which gathered 1405 points on Hacker News -- nearly 15x higher than the av</summary>
+    <category term="pillar:stock"/>
+    <category term="type:research"/>
+    <category term="anthropic-denied-s-p-500-entry"/>
+    <category term="s-p-500-rejects-spacex"/>
+    <category term="openai-blocked-from-s-p-500"/>
+  </entry>
+  <entry>
+    <title>Meta confirms 1000s of Instagram accounts were hacked by abusing its AI chatbot -- 📈 STOCK 2026-06-07</title>
+    <link href="https://www.acaciafund.org/markets/research/meta-confirms-1000s-of-instagram-accounts-were-hacked-by/" rel="alternate" type="text/html"/>
+    <id>https://www.acaciafund.org/markets/research/meta-confirms-1000s-of-instagram-accounts-were-hacked-by/</id>
+    <updated>2026-06-07T07:00:59.886937+00:00</updated>
+    <summary>Summary Today in STOCK, the top story is "Meta confirms 1000s of Instagram accounts were hacked by abusing its AI chatbot", which gathered 546 points on Hacker News -- nearly 5x higher than</summary>
+    <category term="pillar:stock"/>
+    <category term="type:research"/>
+    <category term="markets"/>
+    <category term="stock-market"/>
+    <category term="llm"/>
+  </entry>
+  <entry>
+    <title>Gov.uk has replaced Stripe with Dutch provider Adyen -- 🛡️ AML 2026-06-07</title>
+    <link href="https://www.acaciafund.org/markets/research/govuk-has-replaced-stripe-with-dutch-provider-adyen-aml/" rel="alternate" type="text/html"/>
+    <id>https://www.acaciafund.org/markets/research/govuk-has-replaced-stripe-with-dutch-provider-adyen-aml/</id>
+    <updated>2026-06-07T07:00:58.318239+00:00</updated>
+    <summary>Summary Today in AML, the top story is "Gov.uk has replaced Stripe with Dutch provider Adyen", which gathered 559 points on Hacker News -- nearly 13x higher than the average of other articl</summary>
+    <category term="pillar:stock"/>
+    <category term="type:research"/>
+    <category term="aml"/>
+  </entry>
+  <entry>
+    <title>Nvidia RTX Spark -- 📈 STOCK 2026-06-02</title>
+    <link href="https://www.acaciafund.org/markets/research/stock-1/" rel="alternate" type="text/html"/>
+    <id>https://www.acaciafund.org/markets/research/stock-1/</id>
+    <updated>2026-06-02T07:01:01.998900+00:00</updated>
+    <summary>Trending (HackerNews, 2026-06-02) Nvidia RTX Spark (discussion) (405 pts) OpenAI frontier models and Codex are now available on AWS (discussion) (326 pts) ChatGPT for Google Sheets exfiltrates wor</summary>
+    <category term="pillar:stock"/>
+    <category term="type:research"/>
+    <category term="markets"/>
+    <category term="cloud-infrastructure"/>
+    <category term="semiconductor industry"/>
+  </entry>
+  <entry>
+    <title>Can the stockmarket swallow Anthropic, SpaceX and OpenAI? -- 🧬 SCIENCE 2026-06-02</title>
+    <link href="https://www.acaciafund.org/markets/research/can-the-stockmarket-swallow-anthropic-spacex-and-openai/" rel="alternate" type="text/html"/>
+    <id>https://www.acaciafund.org/markets/research/can-the-stockmarket-swallow-anthropic-spacex-and-openai/</id>
+    <updated>2026-06-02T07:01:01.991269+00:00</updated>
+    <summary>Trending (HackerNews, 2026-06-02) Can the stockmarket swallow Anthropic, SpaceX and OpenAI? (discussion) (534 pts) Anthropic confidentially submits draft S-1 to the SEC (discussion) (508 pts) AI A</summary>
+    <category term="pillar:stock"/>
+    <category term="type:research"/>
+    <category term="anthropic"/>
+    <category term="openai"/>
+    <category term="research"/>
+    <category term="science"/>
+    <category term="spacex"/>
+  </entry>
+  <entry>
+    <title>Iran stops negotiations with U.S., vows to completely block Strait of Hormuz -- 🛡️ AML 2026-06-02</title>
+    <link href="https://www.acaciafund.org/markets/research/aml-1/" rel="alternate" type="text/html"/>
+    <id>https://www.acaciafund.org/markets/research/aml-1/</id>
+    <updated>2026-06-02T07:01:01.982885+00:00</updated>
+    <summary>Trending (HackerNews, 2026-06-02) Iran stops negotiations with U.S., vows to 'completely' block Strait of Hormuz (discussion) (101 pts) Show HN: Eyeball (discussion) (60 pts) The Infosec Phraseboo</summary>
+    <category term="pillar:stock"/>
+    <category term="type:research"/>
+    <category term="aml"/>
+  </entry>
+  <entry>
+    <title>Microsoft Office 2019 and 2021 for Mac view-only conversion -- 📈 STOCK 2026-06-01</title>
+    <link href="https://www.acaciafund.org/markets/research/stock-2/" rel="alternate" type="text/html"/>
+    <id>https://www.acaciafund.org/markets/research/stock-2/</id>
+    <updated>2026-06-01T07:01:01.975213+00:00</updated>
+    <summary>Trending (HackerNews, 2026-06-01) Microsoft Office 2019 and 2021 for Mac view-only conversion (discussion) (998 pts) I put a datacenter GPU in my gaming PC (discussion) (318 pts) ChatGPT for Googl</summary>
+    <category term="pillar:stock"/>
+    <category term="type:research"/>
+    <category term="stock-market"/>
+    <category term="markets"/>
+    <category term="semiconductor industry"/>
+  </entry>
+  <entry>
+    <title>A pictorial introduction to differential geometry (2017) -- 🧬 SCIENCE 2026-06-01</title>
+    <link href="https://www.acaciafund.org/data/research/a-pictorial-introduction-to-differential-geometry-2017/" rel="alternate" type="text/html"/>
+    <id>https://www.acaciafund.org/data/research/a-pictorial-introduction-to-differential-geometry-2017/</id>
+    <updated>2026-06-01T07:01:01.967725+00:00</updated>
+    <summary>Trending (HackerNews, 2026-06-01) A pictorial introduction to differential geometry (2017) (discussion) (134 pts) New solar desalination breakthrough makes fresh water without toxic brine (discuss</summary>
+    <category term="pillar:data-engineering"/>
+    <category term="type:research"/>
+    <category term="data-engineering"/>
+    <category term="differential"/>
+    <category term="geometry"/>
+    <category term="introduction"/>
+    <category term="pictorial"/>
   </entry>
 </feed>

@@ -1,5 +1,5 @@
-{% extends "layout.j2" %}
-{% block main_content %}
+{% extends "admin/base.html" %}
+{% block admin_content %}
 <style>
   .telemetry-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0; }
   .telemetry-card { border: 1px solid var(--pico-muted-border-color); border-radius: 8px; padding: 1.25rem; background: var(--pico-card-background-color); }
@@ -27,6 +27,11 @@
   .section-nav a:hover { background: var(--pico-primary); color: var(--pico-primary-inverse); }
   .pillar-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 0.25rem; vertical-align: middle; }
 </style>
+
+<div style="display:flex;gap:0.5rem;align-items:center;margin-bottom:1rem">
+  <button id="export-csv" class="px-3 py-1.5 text-xs font-semibold rounded-lg transition" style="background:var(--color-accent);color:#fff">Export CSV</button>
+  <button id="export-json" class="px-3 py-1.5 text-xs font-semibold rounded-lg transition" style="background:#22c55e;color:#fff">Export JSON</button>
+</div>
 
 <div class="section-nav">
   <a href="#tag-grid">Tags</a>
@@ -284,6 +289,63 @@ var telemetryMaxWeight = {{ telemetry.tag.cooccurrence_max_weight }};
   }
 
   initGraph();
+})();
+</script>
+<script>
+(function() {
+  function buildExportData() {
+    var rows = [];
+    rows.push(['Metric', 'Value']);
+    rows.push(['Total Tags', '{{ telemetry.tag.total_tags }}']);
+    rows.push(['Tag Assignments', '{{ telemetry.tag.total_assignments }}']);
+    rows.push(['Cross-Pillar Tags', '{{ telemetry.tag.crossover_count }}']);
+    rows.push(['Avg SQI', '{{ telemetry.sqi.avg }}']);
+    rows.push(['SQI Count', '{{ telemetry.sqi.count }}']);
+    rows.push(['LLM-Enriched', '{{ telemetry.enrichment.llm_likely }}']);
+    rows.push(['Deterministic', '{{ telemetry.enrichment.deterministic_likely }}']);
+    rows.push(['Total Enriched', '{{ telemetry.enrichment.total_enriched }}']);
+    rows.push([]);
+    rows.push(['--- Top Tags ---']);
+    {% for tag, count in telemetry.tag.top_tags %}
+    rows.push(['Tag: {{ tag }}', '{{ count }}']);
+    {% endfor %}
+    rows.push([]);
+    rows.push(['--- SQI by Pillar ---']);
+    {% for pillar, data in telemetry.sqi.pillar_avgs.items() %}
+    rows.push(['{{ pillar }} items', '{{ data.count }}']);
+    rows.push(['{{ pillar }} avg', '{{ data.avg }}']);
+    {% endfor %}
+    rows.push([]);
+    rows.push(['--- Velocity ---']);
+    {% for m in telemetry.velocity.monthly %}
+    rows.push(['{{ m.period }}', '{{ m.count }}']);
+    {% endfor %}
+    return rows;
+  }
+
+  document.getElementById('export-csv').onclick = function() {
+    var rows = buildExportData();
+    var csv = rows.map(function(r){return r.map(function(c){return '"'+String(c).replace(/"/g,'""')+'"'}).join(',')}).join('\n');
+    var blob = new Blob([csv], {type:'text/csv'});
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'telemetry.csv';
+    a.click();
+  };
+
+  document.getElementById('export-json').onclick = function() {
+    var data = {
+      tags: { total: {{ telemetry.tag.total_tags }}, assignments: {{ telemetry.tag.total_assignments }}, crossover: {{ telemetry.tag.crossover_count }} },
+      sqi: { avg: '{{ telemetry.sqi.avg }}', count: {{ telemetry.sqi.count }}, min: '{{ telemetry.sqi.min }}', max: '{{ telemetry.sqi.max }}' },
+      enrichment: { llm: {{ telemetry.enrichment.llm_likely }}, deterministic: {{ telemetry.enrichment.deterministic_likely }}, total: {{ telemetry.enrichment.total_enriched }} },
+      velocity_months: {{ telemetry.velocity.monthly | length }}
+    };
+    var blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'telemetry.json';
+    a.click();
+  };
 })();
 </script>
 {% endblock %}

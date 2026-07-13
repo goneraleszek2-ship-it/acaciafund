@@ -34,10 +34,11 @@ def resolve_topic_icon(key: str) -> str | None:
             return _SI_CACHE[slug]
         try:
             icon = _si_icons.get(slug)
-            m = re.search(r"<path[^>]*/>", icon.svg)
-            if m:
-                _SI_CACHE[slug] = m.group(0)
-                return _SI_CACHE[slug]
+            if icon is not None:
+                m = re.search(r"<path[^>]*/>", icon.svg)
+                if m:
+                    _SI_CACHE[slug] = m.group(0)
+                    return _SI_CACHE[slug]
         except KeyError:
             return None
     return None
@@ -1405,6 +1406,8 @@ def generate_thumbnail_svg(
         cx_k = width / 2
         cy_k = height / 2 - size * 0.2
         r_k = size
+        # Initialize variables for potential mirroring
+        x1 = y1 = x2 = y2 = 0
         for i in range(3):
             a1 = math.radians(60 + i * 120)
             a2 = math.radians(60 + (i + 1) * 120)

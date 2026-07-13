@@ -1,0 +1,126 @@
+{% extends "layout.j2" %}
+{% block main_content %}
+<nav aria-label="Breadcrumb" class="mb-4 text-xs" style="color:var(--color-text-muted)">
+  <ol class="flex flex-wrap items-center gap-1.5">
+    <li><a href="/" class="hover:text-[var(--color-accent)] transition">Home</a></li>
+    <li aria-hidden="true">/</li>
+    <li aria-current="page">Review Dashboard</li>
+  </ol>
+</nav>
+
+<header class="mb-8">
+  <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">Review Dashboard</h1>
+  <p class="mt-2 text-sm" style="color:var(--color-text-muted)">Track your spaced repetition progress across all learn modules.</p>
+</header>
+
+<div class="grid gap-6 sm:grid-cols-3 mb-8">
+  <div class="ghost-card p-6 text-center">
+    <div id="stat-due" class="text-4xl font-bold" style="color:var(--color-accent)">0</div>
+    <div class="text-xs font-meta mt-1" style="color:var(--color-text-muted)">Cards Due</div>
+  </div>
+  <div class="ghost-card p-6 text-center">
+    <div id="stat-streak" class="text-4xl font-bold" style="color:#22c55e">0</div>
+    <div class="text-xs font-meta mt-1" style="color:var(--color-text-muted)">Day Streak</div>
+  </div>
+  <div class="ghost-card p-6 text-center">
+    <div id="stat-mastered" class="text-4xl font-bold" style="color:#3b82f6">0</div>
+    <div class="text-xs font-meta mt-1" style="color:var(--color-text-muted)">Mastered</div>
+  </div>
+</div>
+
+<section class="mb-8">
+  <h2 class="text-lg font-semibold mb-4" style="color:var(--color-text)">Activity (last 90 days)</h2>
+  <div id="heatmap" class="flex flex-wrap gap-1" role="img" aria-label="Review activity heatmap"></div>
+</section>
+
+<section class="mb-8">
+  <h2 class="text-lg font-semibold mb-4" style="color:var(--color-text)">Due by Pillar</h2>
+  <div class="grid gap-4 sm:grid-cols-3" id="pillar-due">
+    <div class="ghost-card p-4 text-center">
+      <div class="text-2xl font-bold" style="color:#ef4444">0</div>
+      <div class="text-xs" style="color:var(--color-text-muted)">Compliance</div>
+    </div>
+    <div class="ghost-card p-4 text-center">
+      <div class="text-2xl font-bold" style="color:#f59e0b">0</div>
+      <div class="text-xs" style="color:var(--color-text-muted)">Markets</div>
+    </div>
+    <div class="ghost-card p-4 text-center">
+      <div class="text-2xl font-bold" style="color:#3b82f6">0</div>
+      <div class="text-xs" style="color:var(--color-text-muted)">Data Engineering</div>
+    </div>
+  </div>
+</section>
+
+<div class="text-center">
+  <a href="/review/queue/" class="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded-lg transition hover:opacity-80" style="background:var(--color-accent);color:#fff">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+    Start Review
+  </a>
+</div>
+
+<script>
+(function() {
+  const cards = {{ flashcard_cards | safe }};
+  const SM2_KEY = 'acacia_sm2';
+  const HIST_KEY = 'acacia_review_history';
+
+  let sm2 = {};
+  try { sm2 = JSON.parse(localStorage.getItem(SM2_KEY) || '{}'); } catch(_) {}
+
+  let hist = [];
+  try { hist = JSON.parse(localStorage.getItem(HIST_KEY) || '[]'); } catch(_) {}
+
+  const now = Date.now();
+  let due = 0, learning = 0, mastered = 0;
+  const pillarDue = { aml: 0, stock: 0, 'data-engineering': 0 };
+
+  for (const c of cards) {
+    const s = sm2[c.id] || { reps: 0, interval: 0, due: 0 };
+    if (s.due <= now) {
+      due++;
+      pillarDue[c.pillar] = (pillarDue[c.pillar] || 0) + 1;
+    } else if (s.reps > 0 && s.interval < 21) learning++;
+    else if (s.reps > 0) mastered++;
+  }
+
+  document.getElementById('stat-due').textContent = due;
+  document.getElementById('stat-mastered').textContent = mastered;
+
+  let streak = 0;
+  if (hist.length) {
+    const today = new Date().toISOString().slice(0, 10);
+    const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0, 10);
+    if (hist.includes(today) || hist.includes(yesterday)) {
+      let d = hist.includes(today) ? new Date() : new Date(Date.now() - 86400000);
+      while (hist.includes(d.toISOString().slice(0, 10))) {
+        streak++;
+        d = new Date(d.getTime() - 86400000);
+      }
+    }
+  }
+  document.getElementById('stat-streak').textContent = streak;
+
+  const pillarCards = document.getElementById('pillar-due').children;
+  const pkeys = ['aml', 'stock', 'data-engineering'];
+  for (let i = 0; i < 3; i++) {
+    pillarCards[i].querySelector('div:first-child').textContent = pillarDue[pkeys[i]] || 0;
+  }
+
+  const heatmap = document.getElementById('heatmap');
+  const today = new Date();
+  for (let i = 89; i >= 0; i--) {
+    const d = new Date(today.getTime() - i * 86400000);
+    const key = d.toISOString().slice(0, 10);
+    const active = hist.includes(key);
+    const cell = document.createElement('div');
+    cell.title = key;
+    cell.style.cssText = 'width:12px;height:12px;border-radius:2px;' +
+      (active ? 'background:var(--color-accent)' : 'background:var(--color-border)');
+    cell.setAttribute('aria-label', key + (active ? ' (reviewed)' : ''));
+    heatmap.appendChild(cell);
+  }
+})();
+</script>
+
+{% include 'partials/newsletter.html' %}
+{% endblock %}

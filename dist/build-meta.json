@@ -1,116 +1,40 @@
 {
-  "timestamp": "2026-07-11T20:07:38.893024+00:00",
-  "duration_seconds": 7.74,
+  "timestamp": "2026-07-13T16:44:35.668389+00:00",
+  "duration_seconds": 194.61,
   "steps": {
-    "registry_load": 0.052,
-    "graph_build": 0.466,
-    "asset_pipeline": 0.046,
-    "content_rendering": 2.592
+    "registry_load": 0.048,
+    "graph_build": 0.513,
+    "asset_pipeline": 0.102,
+    "content_rendering": 120.389
   },
-  "page_count": 509,
-  "registry_hash": "8dc0722f7aa0",
+  "page_count": 584,
+  "registry_hash": "f589c11564da",
   "sqi": {
-    "min": 0.55,
-    "max": 0.95,
-    "avg": 0.746,
+    "min": 0.679,
+    "max": 1.0,
+    "avg": 0.82,
     "median": 0.75,
     "q1": 0.75,
-    "q3": 0.75,
-    "sample_count": 147
+    "q3": 0.93,
+    "sample_count": 231
   },
   "sources": {
-    "last_build": "2026-07-11T20:07:38.893066+00:00",
+    "last_build": "2026-07-13T16:44:35.668425+00:00",
     "source_type_counts": {
-      "hn": 375,
-      "arxiv": 219,
-      "pubmed": 102
+      "hn": 383,
+      "arxiv": 210,
+      "pubmed": 105
     }
   },
   "content_counts": {
-    "research": 155,
-    "learn": 54,
-    "knowledge": 43
+    "research": 144,
+    "learn": 48,
+    "knowledge": 39
   },
   "quality": {
     "gate_min_sqi": 0.65,
-    "gate_passed": false,
-    "low_sqi_count": 15,
-    "low_sqi_items": [
-      {
-        "slug": "aml/research/department-of-commerce-has-lifted-export-controls-on-claude",
-        "title": "Department of Commerce has lifted export controls on Claude Fable 5 and Mythos 5",
-        "sqi": 0.55
-      },
-      {
-        "slug": "aml/research/international-chess-federation-sanctions-kramnik",
-        "title": "International chess federation sanctions Kramnik",
-        "sqi": 0.55
-      },
-      {
-        "slug": "data/research/sodium-ion-salt-batteries-will-revolutionize-electric-vehicl",
-        "title": "Sodium-ion \"salt\" batteries will revolutionize electric-vehicle and grid storage",
-        "sqi": 0.55
-      },
-      {
-        "slug": "data/research/rust-is-in-tiobe-index-top-10",
-        "title": "Rust is in TIOBE Index top 10",
-        "sqi": 0.55
-      },
-      {
-        "slug": "data/research/microsoft-admits-a-windows-11-bug-is-eating-up-to-500gb-of-s",
-        "title": "Microsoft admits a Windows 11 bug is eating up to 500GB of storage",
-        "sqi": 0.55
-      },
-      {
-        "slug": "data/research/show-hn-focal-harvest-cli-research-pipeline-to-search-scrape",
-        "title": "Show HN: Focal Harvest \u2013 CLI research pipeline to search, scrape and notify",
-        "sqi": 0.55
-      },
-      {
-        "slug": "data/research/serving-a-1t-open-model-at-511-tok-s-single-stream-lossless",
-        "title": "Serving a 1T open model at 511 tok.s single-stream, lossless, on four B200s",
-        "sqi": 0.55
-      },
-      {
-        "slug": "data/research/show-hn-turn-commodity-wifi-signals-into-real-time-spatial-i",
-        "title": "Show HN: Turn commodity WiFi signals into real-time spatial intelligence",
-        "sqi": 0.55
-      },
-      {
-        "slug": "data/research/s3-is-a-better-abstraction-than-nfs-networked-block-storage",
-        "title": "S3 is a better abstraction than NFS / networked block storage",
-        "sqi": 0.55
-      },
-      {
-        "slug": "markets/research/llms-are-not-a-default-execution-engine",
-        "title": "LLMs Are Not a Default Execution Engine",
-        "sqi": 0.55
-      },
-      {
-        "slug": "data/research/every-new-car-sold-in-the-european-union-must-include-a-driv",
-        "title": "Every new car sold in the European Union must include a driver monitoring camera",
-        "sqi": 0.55
-      },
-      {
-        "slug": "data/research/real-time-map-of-great-britains-rail-network",
-        "title": "Real-time map of Great Britain's rail network",
-        "sqi": 0.55
-      },
-      {
-        "slug": "data/research/cloudflare-meerkat-globally-distributed-consensus",
-        "title": "Cloudflare Meerkat - Globally distributed consensus",
-        "sqi": 0.55
-      },
-      {
-        "slug": "data/research/punk-or-why-i-dont-stream-anymore",
-        "title": "Punk, or why I don't stream anymore",
-        "sqi": 0.55
-      },
-      {
-        "slug": "data/research/building-a-real-time-ai-tutor-for-5-year-olds",
-        "title": "Building a real-time AI tutor for 5-year-olds",
-        "sqi": 0.55
-      }
-    ]
+    "gate_passed": true,
+    "low_sqi_count": 0,
+    "low_sqi_items": []
   }
 }

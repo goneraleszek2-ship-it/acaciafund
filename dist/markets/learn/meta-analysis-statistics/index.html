@@ -1,6 +1,4 @@
-<span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
-  AML
-</span><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
@@ -34,6 +32,8 @@
                 <li><a href="/compliance/">Compliance</a></li>
                 <li><a href="/markets/">Markets</a></li>
                 <li><a href="/data/">Data</a></li>
+                <li><a href="/review/">Review</a></li>
+                <li><a href="/search/">Search</a></li>
             </ul>
         </nav>
     </header>
@@ -123,10 +123,13 @@
       <div style="display: flex; flex-wrap: wrap; gap: 0.25rem; margin-top: var(--pico-spacing);">
         <a href="/tags/signal-quality/"><kbd>signal-quality</kbd></a>
       </div>
+      <div class="mt-2">
+        <span class="sqi-badge">SQI 0.930</span>
+      </div>
     </header>
 
     <div class="prose prose-lg prose-blue max-w-none">
-      <p>Individual studies can mislead. Small samples produce false positives. p-hacking generates statistically significant but meaningless results. Publication bias distorts the evidence base. Meta-analysis — the statistical combination of results from multiple studies — is the most powerful tool we have for seeing through these distortions. Combined with statistical literacy, it forms the foundation of evidence-based research synthesis.</p><div class="section-harvester" data-section="overview" style="--section-color:#3a7d5c"><details class="section-collapse" open><summary class="section-summary"><h2 id="why-meta-analysis-exists">Why Meta-Analysis Exists</h2></summary><div class="section-body"><p>A single study with p = 0.04 and 30 participants may be a false positive. But if five independent labs each find a similar effect, the combined evidence is far more convincing. Meta-analysis formalizes this intuition: it <strong>pools</strong> effect sizes across studies, <strong>weights</strong> them by precision (inverse variance), and <strong>tests</strong> whether the overall effect is statistically significant and consistent across studies.</p></div></details></div><div class="section-harvester" data-section="key_findings" style="--section-color:#6ee7b7"><details class="section-collapse" open><summary class="section-summary"><h2 id="key-concepts">Key Concepts</h2></summary><div class="section-body"><ul><li><strong>Effect size:</strong> Standardized measure of the magnitude of a phenomenon (Cohen's d, Pearson's r, odds ratio). Unlike p-values, effect sizes tell you <em>how much</em> — not just <em>whether</em>.</li><li><strong>Heterogeneity:</strong> The degree to which study results differ beyond what chance would predict. High heterogeneity (I2 > 75%) suggests the effect varies across contexts, populations, or methodologies — and a single summary estimate may be misleading.</li><li><strong>Funnel plot:</strong> A scatter plot of effect size vs. study precision. Asymmetry suggests publication bias: small studies with null results are missing (they were never published).</li><li><strong>Forest plot:</strong> The standard visualization showing each study's effect size and confidence interval, plus the meta-analytic summary (a diamond at the bottom).</li></ul></div></details></div><div class="section-harvester" data-section="applied_scenario" style="--section-color:#3a7d5c"><details class="section-collapse" open><summary class="section-summary"><h2 id="the-p-value-debate">The p-Value Debate</h2></summary><div class="section-body"><p>The American Statistical Association's 2016 statement warned that p-values are widely misunderstood and misused. A p-value is <em>not</em> the probability that the null hypothesis is true. It is the probability of observing the data (or more extreme) assuming the null is true. By 2026, many journals have adopted <strong>stricter thresholds</strong> (p < 0.005 for "significant"), <strong>pre-registration requirements</strong>, and <strong>registered reports</strong> (peer review before results are known). The shift is toward effect sizes and confidence intervals as the primary reporting standard.</p></div></details></div><div class="section-harvester" data-section="source_analysis" style="--section-color:#3a7d5c"><details class="section-collapse" open><summary class="section-summary"><h2 id="bayesian-reasoning-for-research-synthesis">Bayesian Reasoning for Research Synthesis</h2></summary><div class="section-body"><p>Bayesian statistics offers an alternative framework that is more intuitive for research synthesis. Instead of a p-value, Bayes factors quantify the relative evidence for one hypothesis vs. another. A Bayes factor of 10 means the data are 10 times more likely under the alternative hypothesis than the null. Bayesian methods naturally incorporate prior information — crucial when combining results across studies where previous evidence informs current beliefs.</p></div></details></div><div class="section-harvester" data-section="domain_breakdown" style="--section-color:#22c55e"><details class="section-collapse" open><summary class="section-summary"><h2 id="the-acaciafund-sqi-connection">The AcaciaFund SQI Connection</h2></summary><div class="section-body"><p>The Signal Quality Index (SQI) applies meta-analytic thinking to news and research aggregation. It weights sources by authority (analogous to study quality), cross-source consensus (analogous to replication), freshness (analogous to recency), and relevance (analogous to applicability). Each AcaciaFund article's SQI is a meta-analytic summary of the evidence — not a single source's claim.</p><p>For the foundations of scientific reasoning, see <a href="/learn/science-method/">Scientific Reasoning in Research Synthesis</a>. The data pipeline that computes SQI at scale is explored in <a href="/learn/data-quality-engineering/">Data Quality Engineering</a>.</p></div></details></div>
+      <p>Individual studies can mislead. Small samples produce false positives. p-hacking generates statistically significant but meaningless results. Publication bias distorts the evidence base. Meta-analysis — the statistical combination of results from multiple studies — is the most powerful tool we have for seeing through these distortions. Combined with statistical literacy, it forms the foundation of evidence-based research synthesis.</p><div class="section-harvester" data-section="overview" style="--section-color:#3a7d5c"><details class="section-collapse" open><summary class="section-summary"><h2 id="why-meta-analysis-exists">Why Meta-Analysis Exists</h2></summary><div class="section-body"><p>A single study with p = 0.04 and 30 participants may be a false positive. But if five independent labs each find a similar effect, the combined evidence is far more convincing. Meta-analysis formalizes this intuition: it <strong>pools</strong> effect sizes across studies, <strong>weights</strong> them by precision (inverse variance), and <strong>tests</strong> whether the overall effect is statistically significant and consistent across studies.</p></div></details></div><div class="section-harvester" data-section="key_findings" style="--section-color:#6ee7b7"><details class="section-collapse" open><summary class="section-summary"><h2 id="key-concepts">Key Concepts</h2></summary><div class="section-body"><ul><li><strong>Effect size:</strong> Standardized measure of the magnitude of a phenomenon (Cohen's d, Pearson's r, odds ratio). Unlike p-values, effect sizes tell you <em>how much</em> — not just <em>whether</em>.</li><li><strong>Heterogeneity:</strong> The degree to which study results differ beyond what chance would predict. High heterogeneity (I2 > 75%) suggests the effect varies across contexts, populations, or methodologies — and a single summary estimate may be misleading.</li><li><strong>Funnel plot:</strong> A scatter plot of effect size vs. study precision. Asymmetry suggests publication bias: small studies with null results are missing (they were never published).</li><li><strong>Forest plot:</strong> The standard visualization showing each study's effect size and confidence interval, plus the meta-analytic summary (a diamond at the bottom).</li></ul></div></details></div><div class="section-harvester" data-section="applied_scenario" style="--section-color:#3a7d5c"><details class="section-collapse" open><summary class="section-summary"><h2 id="the-p-value-debate">The p-Value Debate</h2></summary><div class="section-body"><p>The American Statistical Association's 2016 statement warned that p-values are widely misunderstood and misused. A p-value is <em>not</em> the probability that the null hypothesis is true. It is the probability of observing the data (or more extreme) assuming the null is true. By 2026, many journals have adopted <strong>stricter thresholds</strong> (p < 0.005 for "significant"), <strong>pre-registration requirements</strong>, and <strong>registered reports</strong> (peer review before results are known). The shift is toward effect sizes and confidence intervals as the primary reporting standard.</p></div></details></div><div class="section-harvester" data-section="source_analysis" style="--section-color:#3a7d5c"><details class="section-collapse" open><summary class="section-summary"><h2 id="bayesian-reasoning-for-research-synthesis">Bayesian Reasoning for Research Synthesis</h2></summary><div class="section-body"><p>Bayesian statistics offers an alternative framework that is more intuitive for research synthesis. Instead of a p-value, Bayes factors quantify the relative evidence for one hypothesis vs. another. A Bayes factor of 10 means the data are 10 times more likely under the alternative hypothesis than the null. Bayesian methods naturally incorporate prior information — crucial when combining results across studies where previous evidence informs current beliefs.</p></div></details></div><div class="section-harvester" data-section="domain_breakdown" style="--section-color:#22c55e"><details class="section-collapse" open><summary class="section-summary"><h2 id="the-acaciafund-sqi-connection">The AcaciaFund SQI Connection</h2></summary><div class="section-body"><p>The Signal Quality Index (SQI) applies meta-analytic thinking to news and research aggregation. It weights sources by authority (analogous to study quality), cross-source consensus (analogous to replication), freshness (analogous to recency), and relevance (analogous to applicability). Each AcaciaFund article's SQI is a meta-analytic summary of the evidence — not a single source's claim.</p><p>For the foundations of scientific reasoning, see <a href="/markets/learn/science-method/">Scientific Reasoning in Research Synthesis</a>. The data pipeline that computes SQI at scale is explored in <a href="/data/learn/data-quality-engineering/">Data Quality Engineering</a>.</p></div></details></div>
     </div>
     <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)" id="quiz-section" data-quiz='{"questions": [{"q": "In a meta-analysis, what does high heterogeneity (I² = 85%) suggest about the combined results?", "options": ["The summary effect is very precise", "Study results vary substantially beyond chance — the effect may differ across contexts", "The p-value is definitely significant", "No further analysis is needed"], "a": 1, "type": "mc"}, {"q": "A funnel plot shows most small studies cluster on the right (positive effect) side with very few on the left. What does this suggest?", "options": ["The intervention is highly effective", "Publication bias — small null-result studies are missing from the literature", "Large studies are unreliable", "Heterogeneity is low"], "a": 1, "type": "mc"}, {"q": "A study reports p = 0.03 with Cohen's d = 0.15 (very small effect) and N = 500. A second study reports p = 0.04 with d = 0.80 (large effect) and N = 30. Which finding should influence practice more?", "options": ["The first — p is smaller", "The second — the effect size is much larger, despite the weaker p-value", "Neither — both are significant", "The first — it has a larger sample"], "a": 1, "type": "mc"}, {"q": "A Bayesian analysis returns a Bayes factor of 12 in favor of the alternative hypothesis. How should this be interpreted?", "options": ["The alternative is 12 times more likely than the null given the data", "The p-value is 0.12", "The null hypothesis is rejected", "The effect size is 12"], "a": 0, "type": "mc"}, {"q": "How does the AcaciaFund SQI methodology reflect meta-analytic principles?", "options": ["It only uses the most recent source", "It weights multiple sources by authority, cross-source consensus, freshness, and relevance — analogous to a meta-analysis weighting studies by quality", "It averages all p-values", "It ignores source quality"], "a": 1, "type": "mc"}]}' data-quiz-lesson="markets/learn/meta-analysis-statistics/">
       <h2 class="text-2xl font-bold mb-4" style="color:var(--color-text)">Knowledge Check</h2>
@@ -136,40 +139,48 @@
       <div id="quiz-summary" class="mt-6 p-4 rounded-lg hidden" style="background:var(--color-surface);border:1px solid var(--color-border)"></div>
       <button id="quiz-retry" class="mt-3 hidden px-4 py-2 text-sm font-semibold rounded-lg transition hover:opacity-80" style="background:var(--color-accent);color:#fff">Retry Quiz</button>
     </section>
-    <section class="mt-12 pt-8 border-t">
-      <h2 class="text-2xl font-bold mb-4">Bloom Taxonomy Questions</h2>
-      <div class="space-y-4">
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">In a meta-analysis, what does high heterogeneity (I² = 85%) suggest about the combined results?</p>
-        </div>
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">A funnel plot shows most small studies cluster on the right (positive effect) side with very few on the left. What does this suggest?</p>
-        </div>
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">A study reports p = 0.03 with Cohen's d = 0.15 (very small effect) and N = 500. A second study reports p = 0.04 with d = 0.80 (large effect) and N = 30. Which finding should influence practice more?</p>
-        </div>
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">A Bayesian analysis returns a Bayes factor of 12 in favor of the alternative hypothesis. How should this be interpreted?</p>
-        </div>
-        <div class="ghost-card p-4">
-          <span class="inline-block px-2 py-0.5 text-xs font-semibold rounded" style=" background:var(--color-bg);color:var(--color-text-secondary)">
-            
-          </span>
-          <p class="mt-2">How does the AcaciaFund SQI methodology reflect meta-analytic principles?</p>
-        </div>
+    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
+      <h2 class="text-2xl font-bold mb-6 inline-flex items-center gap-2" style="color:var(--color-text)">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+        Flashcards
+      </h2>
+      <p class="text-xs mb-4" style="color:var(--color-text-muted)">Space = flip &middot; 1-4 = grade &middot; Swipe on mobile</p>
+      <div class="grid gap-4 sm:grid-cols-2" id="flashcard-grid">
+        <acacia-flashcard
+          data-term="Effect Size"
+          data-definition="A standardized measure of the magnitude of a phenomenon (Cohen's d, r, odds ratio) — more informative than p-values because it tells you how much, not just whether."
+          data-card-id="markets/learn/meta-analysis-statistics/#0"></acacia-flashcard>
+        <acacia-flashcard
+          data-term="Heterogeneity (I²)"
+          data-definition="The proportion of observed variance in study results that reflects real differences rather than chance. I² > 75% indicates high heterogeneity."
+          data-card-id="markets/learn/meta-analysis-statistics/#1"></acacia-flashcard>
+        <acacia-flashcard
+          data-term="Funnel Plot"
+          data-definition="A scatter plot of effect size vs. precision used to detect publication bias — asymmetry suggests small null-result studies are missing from the literature."
+          data-card-id="markets/learn/meta-analysis-statistics/#2"></acacia-flashcard>
+        <acacia-flashcard
+          data-term="Bayes Factor"
+          data-definition="The ratio of the likelihood of the data under one hypothesis vs. another. BF > 3 suggests substantial evidence for the alternative; BF > 10 is strong."
+          data-card-id="markets/learn/meta-analysis-statistics/#3"></acacia-flashcard>
+        <acacia-flashcard
+          data-term="Registered Report"
+          data-definition="A publication format where peer review occurs before results are known — study design and analysis plan are accepted in advance, reducing publication bias."
+          data-card-id="markets/learn/meta-analysis-statistics/#4"></acacia-flashcard>
       </div>
+    </section>
+    <div class="mt-8 text-center">
+      <button id="mark-complete-btn" data-track-lesson="markets/learn/meta-analysis-statistics/" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition" style="background:var(--color-accent);color:#fff">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+        <span id="complete-btn-text">Mark Complete</span>
+      </button>
+    </div>
+    <section class="mt-12 pt-8 border-t" id="quiz-section" data-quiz='{"questions": [{"q": "In a meta-analysis, what does high heterogeneity (I² = 85%) suggest about the combined results?", "options": ["The summary effect is very precise", "Study results vary substantially beyond chance — the effect may differ across contexts", "The p-value is definitely significant", "No further analysis is needed"], "a": 1, "type": "mc"}, {"q": "A funnel plot shows most small studies cluster on the right (positive effect) side with very few on the left. What does this suggest?", "options": ["The intervention is highly effective", "Publication bias — small null-result studies are missing from the literature", "Large studies are unreliable", "Heterogeneity is low"], "a": 1, "type": "mc"}, {"q": "A study reports p = 0.03 with Cohen's d = 0.15 (very small effect) and N = 500. A second study reports p = 0.04 with d = 0.80 (large effect) and N = 30. Which finding should influence practice more?", "options": ["The first — p is smaller", "The second — the effect size is much larger, despite the weaker p-value", "Neither — both are significant", "The first — it has a larger sample"], "a": 1, "type": "mc"}, {"q": "A Bayesian analysis returns a Bayes factor of 12 in favor of the alternative hypothesis. How should this be interpreted?", "options": ["The alternative is 12 times more likely than the null given the data", "The p-value is 0.12", "The null hypothesis is rejected", "The effect size is 12"], "a": 0, "type": "mc"}, {"q": "How does the AcaciaFund SQI methodology reflect meta-analytic principles?", "options": ["It only uses the most recent source", "It weights multiple sources by authority, cross-source consensus, freshness, and relevance — analogous to a meta-analysis weighting studies by quality", "It averages all p-values", "It ignores source quality"], "a": 1, "type": "mc"}]}' data-quiz-lesson="markets/learn/meta-analysis-statistics/">
+      <h2 class="text-2xl font-bold mb-4" style="color:var(--color-text)">Knowledge Check</h2>
+      <p class="text-sm mb-4" style="color:var(--color-text-muted)">Test your understanding of this lesson.</p>
+      <div id="quiz-score" class="mb-4 text-sm font-semibold" style="color:var(--color-text-secondary)"></div>
+      <div id="quiz-container"></div>
+      <div id="quiz-summary" class="mt-6 p-4 rounded-lg hidden" style="background:var(--color-surface);border:1px solid var(--color-border)"></div>
+      <button id="quiz-retry" class="mt-3 hidden px-4 py-2 text-sm font-semibold rounded-lg transition hover:opacity-80" style="background:var(--color-accent);color:#fff">Retry Quiz</button>
     </section>
     <section class="mt-12 pt-8 border-t">
       <h2 class="text-2xl font-bold mb-6">Related Research</h2>
@@ -194,7 +205,7 @@
             <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">2026-06-08</span>
           </div>
         </a>
-        <a href="https://www.acaciafund.org/markets/research/science/" class="ghost-card block text-decoration:none">
+        <a href="https://www.acaciafund.org/markets/research/sp-500-rejects-spacex-also-blocking-entry-for-openai-and/" class="ghost-card block text-decoration:none">
           <div class="p-3">
             
             <span class="pillar-badge" style="background:var(--color-accent);color:#fff;padding:0.25rem 0.5rem;border-radius:4px;text-transform:uppercase;font-size:0.75rem;font-weight:600">
@@ -254,7 +265,7 @@
   </article>
 </div>
 
-<script src="/static/js/learning_hub.d41d8cd9.js" defer></script>
+<script src="/static/js/learning_hub.534fa53c.js" defer></script>
 <div class="newsletter-signup" style="background:var(--color-bg);border:1px solid var(--color-border);padding:2rem;border-radius:8px;text-align:center">
   <h3 style="color:var(--color-text)">Stay Updated</h3>
   <p style="color:var(--color-text-muted)">Get the latest research summaries delivered to your inbox.</p>
@@ -271,6 +282,6 @@
         <small>&copy; 2026 AcaciaFund &middot; Generated by the Acacia pipeline.</small>
     </footer>
 
-    <script src="/static/js/main.d41d8cd9.js"></script>
+
 </body>
 </html>

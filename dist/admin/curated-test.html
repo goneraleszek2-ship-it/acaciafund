@@ -28,16 +28,1417 @@
                 <li><a href="/compliance/">Compliance</a></li>
                 <li><a href="/markets/">Markets</a></li>
                 <li><a href="/data/">Data</a></li>
+                <li><a href="/review/">Review</a></li>
+                <li><a href="/search/">Search</a></li>
             </ul>
         </nav>
     </header>
 
     <main class="container">
         
-<section class="admin-curated">
-  <h1>Curated Test</h1>
-  <p>Curated entries: 191</p>
-</section>
+<style>
+  .admin-layout { display: flex; gap: 1.5rem; min-height: calc(100vh - 10rem); }
+  .admin-sidebar { width: 14rem; flex-shrink: 0; }
+  .admin-sidebar nav { position: sticky; top: 5rem; }
+  .admin-sidebar a {
+    display: block; padding: 0.4rem 0.75rem; border-radius: 6px; font-size: 0.85rem;
+    text-decoration: none; color: var(--color-text-secondary, #aaa); transition: all 0.15s;
+  }
+  .admin-sidebar a:hover { background: var(--color-surface, #1a1a2e); color: var(--color-text, #e8e6e3); }
+  .admin-sidebar a.active { background: var(--color-accent, #818cf8); color: #fff; font-weight: 600; }
+  .admin-sidebar .sidebar-section { margin-bottom: 1rem; }
+  .admin-sidebar .sidebar-label {
+    font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+    color: var(--color-text-muted, #666); padding: 0 0.75rem; margin-bottom: 0.25rem;
+  }
+  .admin-content { flex: 1; min-width: 0; }
+</style>
+
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <nav aria-label="Admin navigation">
+      <div class="sidebar-section">
+        <div class="sidebar-label">Overview</div>
+        <a href="/admin/dashboard.html" class="">Dashboard</a>
+        <a href="/admin/quality.html" class="">Quality</a>
+        <a href="/admin/coverage.html" class="">Coverage</a>
+        <a href="/admin/telemetry.html" class="">Telemetry</a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">Content</div>
+        <a href="/admin/articles.html" class="">Articles</a>
+        <a href="/admin/gallery.html" class="">Gallery</a>
+        <a href="/admin/manifest.html" class="">Manifest</a>
+        <a href="/admin/pipeline.html" class="">Pipeline</a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">Intelligence</div>
+        <a href="/admin/sources.html" class="">Sources</a>
+        <a href="/admin/ontology.html" class="">Ontology</a>
+      </div>
+    </nav>
+  </aside>
+  <div class="admin-content">
+    
+<h1 style="margin-bottom:1.5rem">Curated Tester</h1>
+
+<p class="text-sm mb-4" style="color:var(--color-text-secondary)">191 curated entries</p>
+
+
+<div class="overflow-x-auto">
+  <table class="w-full text-xs" style="color:var(--color-text)">
+    <thead>
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <th class="text-left py-2 pr-4 font-semibold">Slug</th>
+        <th class="text-left py-2 font-semibold">Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">ai ethics fairness bias</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">airflow workflow dag scheduling</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">aml transaction monitoring</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">analytics dashboard data visualization</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">analytics dashboard visualization</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">anti bribery anti corruption</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">anti corruption bribery</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">apache flink stream processing</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">apache hudi data lake</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">apache iceberg table format</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">apache spark hadoop big data</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">api integration web service connection</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">api rest http web service</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">artificial intelligence machine learning</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">bank vault security gold</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">behavioral finance psychology</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">beneficial ownership transparency</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">binance crypto exchange</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">biotechnology lab research</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">blockchain analytics tracing</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">bloomberg terminal finance</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">bond yield fixed income</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">business intelligence analytics</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">change data capture cdc replication</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">chart graph financial report document</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">ci cd pipeline devops automation</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">circuit board electronics hardware</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">circuit board processor semiconductor chip</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">climate change global warming</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">climate weather environmental</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">cloud computing infrastructure</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">cloud computing technology infrastructure</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">commodities gold silver oil</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">compliance regulation policy document</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">compliance regulation regulatory</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">computer code programming screen</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">computer vision object detection</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">connection bridge integration network</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">container kubernetes deployment</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">corporate governance board</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">counter terrorist financing</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">credit risk default analysis</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">crispr gene editing</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">crypto mixer tumbling</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">cryptocurrency bitcoin blockchain</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">cybersecurity hacking encryption</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">cybersecurity lock encryption protection</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">dagster data orchestration</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">data catalog metadata management</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">data center server infrastructure</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">data center server rack hardware</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">data governance stewardship</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">data labeling annotation</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">data lake architecture storage</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">data lineage tracking provenance</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">data mesh domain ownership</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">data mining pattern discovery</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">data observability monitoring</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">data pipeline orchestration dag</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">data pipeline streaming batch</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">data platform architecture design</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">data quality validation testing</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">data science workflow</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">data streaming kafka event</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">data warehouse schema star</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">database schema table relationship</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">database sql query</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">databricks lakehouse platform</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">dbt data build tool transformation</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">decentralized finance defi</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">delta lake acid transactions</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">derivatives options futures trading</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">differential geometry manifold curvature</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">dna genome sequencing biology</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">docker container kubernetes orchestration</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">docker container virtualization</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">economic sanctions ofac</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">edge computing iot device</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">elasticsearch search analytics</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">eniac computer history computing</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">esg sustainable investing</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">etl pipeline data warehouse</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">feature store ml pipeline</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">federal reserve central bank</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">financial audit accounting</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">financial intelligence unit</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">fintech digital banking</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">forex currency exchange</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">freight shipping container</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">gaussian curvature surface geometry</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">generative ai diffusion model</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">genome dna sequencing</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">git version control</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">global trade import export</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">grafana monitoring dashboard</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">graph database neo4j</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">great expectations data quality</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">hedge fund quantitative trading</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">in memory database redis cache</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">inflation consumer price</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">infrastructure as code terraform</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">initial public offering ipo</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">insurance underwriting risk</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">interest rate monetary policy</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">inventory management warehouse</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">investment portfolio diversification</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">just in time manufacturing</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">kafka connect streaming</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">kafka streaming message queue</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">kubernetes container orchestration</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">kyc know your customer verification</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">laboratory research experiment</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">large language model</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">last mile delivery logistics</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">linux operating system</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">load balancing traffic distribution</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">merger acquisition deal</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">message queue rabbitmq</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">microservices architecture api</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">mlops machine learning operations</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">model evaluation metrics</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">money laundering financial crime</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">mongodb nosql document database</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">natural language understanding</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">network cable ethernet connectivity</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">network connection architecture system integration</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">neural network deep learning</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">neuroscience brain imaging</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">nosql document database mongodb</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">nyse stock exchange trading wall street</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">office workspace desk computer</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">olap cube analytics query</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">parquet columnar format</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">particle accelerator physics</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">pension fund retirement investing</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">pharmaceutical drug development</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">politically exposed person pep</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">postgresql relational database</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">prefect workflow orchestration</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">private equity leveraged buyout</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">procurement sourcing supply</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">programming code developer</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">prometheus monitoring</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">protein structure biology</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">python programming language</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">quantum computing</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">quantum computing qubit</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">rag retrieval augmented generation</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">real estate investment trust</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">recommender system collaborative filtering</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">redis cache memory database</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">reinforcement learning agent</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">renewable energy solar wind</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">riemannian manifold tensor calculus</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">risk assessment due diligence</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">robot automation industry</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">s3 object storage cloud</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">sanctions ofac embargoes</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">satellite orbit space</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">science laboratory research experiment</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">search engine elasticsearch</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">semiconductor chip wafer fabrication</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">semiconductor wafer chip fabrication</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">server room data center</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">serverless computing function</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">shell company beneficial owner</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">snowflake data warehouse</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">software architecture diagram blueprint</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">sql query database engine</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">stablecoin usdt usdc</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">stock market chart trading</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">stock ticker market data</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">supply chain logistics shipping</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">suspicious activity report sar</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">technology infrastructure server room</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">telescope astronomy space</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">terraform infrastructure code</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">third party due diligence</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">time series database monitoring</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">trade based money laundering</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">trading floor commodities exchange</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">training data dataset</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">transformer model attention</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">travel rule fatf</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">treasury department government building</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">vector database embedding</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">venture capital startup funding</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">wall street financial district</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">warehouse automation robotics</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">whistleblower hotline reporting</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+      <tr style="border-bottom:1px solid var(--color-border)">
+        <td class="py-1.5 pr-4 font-mono">wire transfer swift</td>
+        <td class="py-1.5">
+          <span class="px-1.5 py-0.5 rounded text-[10px]" style="background:var(--color-bg);color:var(--color-text-muted)">curated</span>
+        </td>
+      </tr>
+      
+    </tbody>
+  </table>
+</div>
+
+
+  </div>
+</div>
 
     </main>
 
@@ -46,6 +1447,6 @@
         <small>&copy; 2026 AcaciaFund &middot; Generated by the Acacia pipeline.</small>
     </footer>
 
-    <script src="/static/js/main.d41d8cd9.js"></script>
+
 </body>
 </html>

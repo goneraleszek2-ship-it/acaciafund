@@ -1,0 +1,49 @@
+{% extends "layout.j2" %}
+{% block main_content %}
+<style>
+  .admin-layout { display: flex; gap: 1.5rem; min-height: calc(100vh - 10rem); }
+  .admin-sidebar { width: 14rem; flex-shrink: 0; }
+  .admin-sidebar nav { position: sticky; top: 5rem; }
+  .admin-sidebar a {
+    display: block; padding: 0.4rem 0.75rem; border-radius: 6px; font-size: 0.85rem;
+    text-decoration: none; color: var(--color-text-secondary, #aaa); transition: all 0.15s;
+  }
+  .admin-sidebar a:hover { background: var(--color-surface, #1a1a2e); color: var(--color-text, #e8e6e3); }
+  .admin-sidebar a.active { background: var(--color-accent, #818cf8); color: #fff; font-weight: 600; }
+  .admin-sidebar .sidebar-section { margin-bottom: 1rem; }
+  .admin-sidebar .sidebar-label {
+    font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+    color: var(--color-text-muted, #666); padding: 0 0.75rem; margin-bottom: 0.25rem;
+  }
+  .admin-content { flex: 1; min-width: 0; }
+</style>
+
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <nav aria-label="Admin navigation">
+      <div class="sidebar-section">
+        <div class="sidebar-label">Overview</div>
+        <a href="/admin/dashboard.html" class="{% if active_page == 'dashboard' %}active{% endif %}">Dashboard</a>
+        <a href="/admin/quality.html" class="{% if active_page == 'quality' %}active{% endif %}">Quality</a>
+        <a href="/admin/coverage.html" class="{% if active_page == 'coverage' %}active{% endif %}">Coverage</a>
+        <a href="/admin/telemetry.html" class="{% if active_page == 'telemetry' %}active{% endif %}">Telemetry</a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">Content</div>
+        <a href="/admin/articles.html" class="{% if active_page == 'articles' %}active{% endif %}">Articles</a>
+        <a href="/admin/gallery.html" class="{% if active_page == 'gallery' %}active{% endif %}">Gallery</a>
+        <a href="/admin/manifest.html" class="{% if active_page == 'manifest' %}active{% endif %}">Manifest</a>
+        <a href="/admin/pipeline.html" class="{% if active_page == 'pipeline' %}active{% endif %}">Pipeline</a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">Intelligence</div>
+        <a href="/admin/sources.html" class="{% if active_page == 'sources' %}active{% endif %}">Sources</a>
+        <a href="/admin/ontology.html" class="{% if active_page == 'ontology' %}active{% endif %}">Ontology</a>
+      </div>
+    </nav>
+  </aside>
+  <div class="admin-content">
+    {% block admin_content %}{% endblock %}
+  </div>
+</div>
+{% endblock %}

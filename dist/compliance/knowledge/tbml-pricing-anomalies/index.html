@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trade-Based Money Laundering (TBML) Detection via Statistical Pricing Anomaly Isolation</title>
-    <meta name="description" content="">
+    <meta name="description" content="Detection methods for Trade-Based Money Laundering through mis-invoicing, phantom shipments, and pricing anomalies in trade documentation.">
     <link rel="icon" href="/favicon.ico">
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
@@ -14,7 +14,7 @@
 
 
     <script type="application/ld+json">
-{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "aml"}, "author": {"@type": "Person", "name": "AcaciaFund"}, "dateModified": "2026-07-07T18:32:49.952554+00:00", "datePublished": "2026-07-07", "description": "", "headline": "Trade-Based Money Laundering (TBML) Detection via Statistical Pricing Anomaly Isolation", "inLanguage": "en", "keywords": "trade-finance-crime, transaction-monitoring, aml, hawkes-microstructure, fraud-detection, statistical-modeling", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/aml/knowledge/tbml-pricing-anomalies/", "@type": "WebPage"}, "proficiencyLevel": "", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-10T06:39:40Z", "signalQualityIndex": 1.0, "sqi": 1.0}
+{"@context": "https://schema.org", "@type": "TechArticle", "about": {"@type": "Thing", "name": "aml"}, "author": {"@type": "Person", "name": "AcaciaFund"}, "dateModified": "2026-07-07T18:32:49.952554+00:00", "datePublished": "2026-07-07", "description": "Detection methods for Trade-Based Money Laundering through mis-invoicing, phantom shipments, and pricing anomalies in trade documentation.", "headline": "Trade-Based Money Laundering (TBML) Detection via Statistical Pricing Anomaly Isolation", "inLanguage": "en", "keywords": "trade-finance-crime, transaction-monitoring, aml, hawkes-microstructure, fraud-detection, statistical-modeling", "mainEntityOfPage": {"@id": "https://www.acaciafund.org/aml/knowledge/tbml-pricing-anomalies/", "@type": "WebPage"}, "proficiencyLevel": "advanced", "semanticEnrichment": "completed", "semanticEnrichmentDate": "2026-07-10T06:39:40Z", "signalQualityIndex": 1.0, "sqi": 1.0}
     </script>
 
 
@@ -34,6 +34,8 @@
                 <li><a href="/compliance/">Compliance</a></li>
                 <li><a href="/markets/">Markets</a></li>
                 <li><a href="/data/">Data</a></li>
+                <li><a href="/review/">Review</a></li>
+                <li><a href="/search/">Search</a></li>
             </ul>
         </nav>
     </header>
@@ -98,16 +100,15 @@
         </span>
         <span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
           <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
-          Suspicious Transaction Report
-        </span>
-        <span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
-          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
-          Beneficial Ownership
-        </span>
-        <span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
-          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
           Market Microstructure
         </span>
+        <span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
+          Anti-Money Laundering
+        </span>
+      </div>
+      <div class="mt-2">
+        <span class="sqi-badge">SQI 1.000</span>
       </div>
     </header>
 
@@ -234,24 +235,17 @@ If $x_{c,t}$ violates the upper or lower fence constraints while simultaneously 
         </div>
         <div class="ghost-card p-4 transition hover:shadow-md">
           <div class="flex items-center gap-2 mb-1">
-            <span class="text-xs font-mono px-1.5 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">str</span>
-            <span class="text-xs" style="color:var(--color-text-muted)">score: 0.9</span>
-          </div>
-          <h3 class="text-sm font-semibold" style="color:var(--color-text)">Suspicious Transaction Report</h3>
-        </div>
-        <div class="ghost-card p-4 transition hover:shadow-md">
-          <div class="flex items-center gap-2 mb-1">
-            <span class="text-xs font-mono px-1.5 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">beneficial-ownership</span>
-            <span class="text-xs" style="color:var(--color-text-muted)">score: 0.9</span>
-          </div>
-          <h3 class="text-sm font-semibold" style="color:var(--color-text)">Beneficial Ownership</h3>
-        </div>
-        <div class="ghost-card p-4 transition hover:shadow-md">
-          <div class="flex items-center gap-2 mb-1">
             <span class="text-xs font-mono px-1.5 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">market-microstructure</span>
             <span class="text-xs" style="color:var(--color-text-muted)">score: 0.9</span>
           </div>
           <h3 class="text-sm font-semibold" style="color:var(--color-text)">Market Microstructure</h3>
+        </div>
+        <div class="ghost-card p-4 transition hover:shadow-md">
+          <div class="flex items-center gap-2 mb-1">
+            <span class="text-xs font-mono px-1.5 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">aml</span>
+            <span class="text-xs" style="color:var(--color-text-muted)">score: 0.9</span>
+          </div>
+          <h3 class="text-sm font-semibold" style="color:var(--color-text)">Anti-Money Laundering</h3>
         </div>
       </div>
     </section>
@@ -322,7 +316,7 @@ If $x_{c,t}$ violates the upper or lower fence constraints while simultaneously 
   </article>
 </div>
 
-<script src="/static/js/learning_hub.d41d8cd9.js" defer></script>
+<script src="/static/js/learning_hub.534fa53c.js" defer></script>
 <div class="newsletter-signup" style="background:var(--color-bg);border:1px solid var(--color-border);padding:2rem;border-radius:8px;text-align:center">
   <h3 style="color:var(--color-text)">Stay Updated</h3>
   <p style="color:var(--color-text-muted)">Get the latest research summaries delivered to your inbox.</p>
@@ -339,6 +333,6 @@ If $x_{c,t}$ violates the upper or lower fence constraints while simultaneously 
         <small>&copy; 2026 AcaciaFund &middot; Generated by the Acacia pipeline.</small>
     </footer>
 
-    <script src="/static/js/main.d41d8cd9.js"></script>
+
 </body>
 </html>

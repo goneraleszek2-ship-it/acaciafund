@@ -28,12 +28,58 @@
                 <li><a href="/compliance/">Compliance</a></li>
                 <li><a href="/markets/">Markets</a></li>
                 <li><a href="/data/">Data</a></li>
+                <li><a href="/review/">Review</a></li>
+                <li><a href="/search/">Search</a></li>
             </ul>
         </nav>
     </header>
 
     <main class="container">
         
+<style>
+  .admin-layout { display: flex; gap: 1.5rem; min-height: calc(100vh - 10rem); }
+  .admin-sidebar { width: 14rem; flex-shrink: 0; }
+  .admin-sidebar nav { position: sticky; top: 5rem; }
+  .admin-sidebar a {
+    display: block; padding: 0.4rem 0.75rem; border-radius: 6px; font-size: 0.85rem;
+    text-decoration: none; color: var(--color-text-secondary, #aaa); transition: all 0.15s;
+  }
+  .admin-sidebar a:hover { background: var(--color-surface, #1a1a2e); color: var(--color-text, #e8e6e3); }
+  .admin-sidebar a.active { background: var(--color-accent, #818cf8); color: #fff; font-weight: 600; }
+  .admin-sidebar .sidebar-section { margin-bottom: 1rem; }
+  .admin-sidebar .sidebar-label {
+    font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+    color: var(--color-text-muted, #666); padding: 0 0.75rem; margin-bottom: 0.25rem;
+  }
+  .admin-content { flex: 1; min-width: 0; }
+</style>
+
+<div class="admin-layout">
+  <aside class="admin-sidebar">
+    <nav aria-label="Admin navigation">
+      <div class="sidebar-section">
+        <div class="sidebar-label">Overview</div>
+        <a href="/admin/dashboard.html" class="">Dashboard</a>
+        <a href="/admin/quality.html" class="">Quality</a>
+        <a href="/admin/coverage.html" class="">Coverage</a>
+        <a href="/admin/telemetry.html" class="active">Telemetry</a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">Content</div>
+        <a href="/admin/articles.html" class="">Articles</a>
+        <a href="/admin/gallery.html" class="">Gallery</a>
+        <a href="/admin/manifest.html" class="">Manifest</a>
+        <a href="/admin/pipeline.html" class="">Pipeline</a>
+      </div>
+      <div class="sidebar-section">
+        <div class="sidebar-label">Intelligence</div>
+        <a href="/admin/sources.html" class="">Sources</a>
+        <a href="/admin/ontology.html" class="">Ontology</a>
+      </div>
+    </nav>
+  </aside>
+  <div class="admin-content">
+    
 <style>
   .telemetry-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin: 1.5rem 0; }
   .telemetry-card { border: 1px solid var(--pico-muted-border-color); border-radius: 8px; padding: 1.25rem; background: var(--pico-card-background-color); }
@@ -62,6 +108,11 @@
   .pillar-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 0.25rem; vertical-align: middle; }
 </style>
 
+<div style="display:flex;gap:0.5rem;align-items:center;margin-bottom:1rem">
+  <button id="export-csv" class="px-3 py-1.5 text-xs font-semibold rounded-lg transition" style="background:var(--color-accent);color:#fff">Export CSV</button>
+  <button id="export-json" class="px-3 py-1.5 text-xs font-semibold rounded-lg transition" style="background:#22c55e;color:#fff">Export JSON</button>
+</div>
+
 <div class="section-nav">
   <a href="#tag-grid">Tags</a>
   <a href="#sqi-grid">SQI</a>
@@ -72,18 +123,18 @@
 </div>
 
 <h1>Telemetry Grids</h1>
-<p>Live analytics on semantic enrichment, tag distribution, SQI trends, content velocity, and source diversity across 252 items.</p>
+<p>Live analytics on semantic enrichment, tag distribution, SQI trends, content velocity, and source diversity across 231 items.</p>
 
 <hgroup>
   <h2>Summary</h2>
 </hgroup>
 <div class="stat-row">
-  <span class="stat-badge"><strong>227</strong> unique tags</span>
-  <span class="stat-badge"><strong>930</strong> tag assignments</span>
-  <span class="stat-badge"><strong>39</strong> cross-pillar tags</span>
-  <span class="stat-badge"><strong>0.785</strong> avg SQI</span>
-  <span class="stat-badge"><strong>105</strong> LLM-enriched</span>
-  <span class="stat-badge"><strong>147</strong> deterministic</span>
+  <span class="stat-badge"><strong>265</strong> unique tags</span>
+  <span class="stat-badge"><strong>977</strong> tag assignments</span>
+  <span class="stat-badge"><strong>44</strong> cross-pillar tags</span>
+  <span class="stat-badge"><strong>0.816</strong> avg SQI</span>
+  <span class="stat-badge"><strong>114</strong> LLM-enriched</span>
+  <span class="stat-badge"><strong>117</strong> deterministic</span>
   <span class="stat-badge"><strong>7</strong> active months</span>
 </div>
 
@@ -97,123 +148,123 @@
     <div>
 
       <div class="bar-row">
-        <span class="bar-label">aml</span>
+        <span class="bar-label">dataops</span>
         <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
-        <span class="bar-value">101</span>
+        <span class="bar-value">90</span>
       </div>
 
       <div class="bar-row">
-        <span class="bar-label">dataops</span>
-        <div class="bar-track"><div class="bar-fill" style="width:87%"></div></div>
-        <span class="bar-value">88</span>
+        <span class="bar-label">aml</span>
+        <div class="bar-track"><div class="bar-fill" style="width:93%"></div></div>
+        <span class="bar-value">84</span>
+      </div>
+
+      <div class="bar-row">
+        <span class="bar-label">regulatory compliance</span>
+        <div class="bar-track"><div class="bar-fill" style="width:46%"></div></div>
+        <span class="bar-value">42</span>
       </div>
 
       <div class="bar-row">
         <span class="bar-label">data-engineering</span>
-        <div class="bar-track"><div class="bar-fill" style="width:29%"></div></div>
-        <span class="bar-value">30</span>
-      </div>
-
-      <div class="bar-row">
-        <span class="bar-label">markets</span>
-        <div class="bar-track"><div class="bar-fill" style="width:29%"></div></div>
-        <span class="bar-value">30</span>
-      </div>
-
-      <div class="bar-row">
-        <span class="bar-label">transaction-monitoring</span>
-        <div class="bar-track"><div class="bar-fill" style="width:28%"></div></div>
+        <div class="bar-track"><div class="bar-fill" style="width:32%"></div></div>
         <span class="bar-value">29</span>
       </div>
 
       <div class="bar-row">
+        <span class="bar-label">markets</span>
+        <div class="bar-track"><div class="bar-fill" style="width:31%"></div></div>
+        <span class="bar-value">28</span>
+      </div>
+
+      <div class="bar-row">
         <span class="bar-label">regtech</span>
-        <div class="bar-track"><div class="bar-fill" style="width:25%"></div></div>
-        <span class="bar-value">26</span>
-      </div>
-
-      <div class="bar-row">
-        <span class="bar-label">observability</span>
         <div class="bar-track"><div class="bar-fill" style="width:23%"></div></div>
-        <span class="bar-value">24</span>
-      </div>
-
-      <div class="bar-row">
-        <span class="bar-label">risk-management</span>
-        <div class="bar-track"><div class="bar-fill" style="width:21%"></div></div>
-        <span class="bar-value">22</span>
-      </div>
-
-      <div class="bar-row">
-        <span class="bar-label">orchestration</span>
-        <div class="bar-track"><div class="bar-fill" style="width:20%"></div></div>
         <span class="bar-value">21</span>
       </div>
 
       <div class="bar-row">
-        <span class="bar-label">manufacturing</span>
-        <div class="bar-track"><div class="bar-fill" style="width:19%"></div></div>
+        <span class="bar-label">orchestration</span>
+        <div class="bar-track"><div class="bar-fill" style="width:22%"></div></div>
         <span class="bar-value">20</span>
       </div>
 
       <div class="bar-row">
-        <span class="bar-label">compliance</span>
-        <div class="bar-track"><div class="bar-fill" style="width:18%"></div></div>
-        <span class="bar-value">19</span>
+        <span class="bar-label">observability</span>
+        <div class="bar-track"><div class="bar-fill" style="width:22%"></div></div>
+        <span class="bar-value">20</span>
+      </div>
+
+      <div class="bar-row">
+        <span class="bar-label">transaction-monitoring</span>
+        <div class="bar-track"><div class="bar-fill" style="width:22%"></div></div>
+        <span class="bar-value">20</span>
       </div>
 
       <div class="bar-row">
         <span class="bar-label">distributed-systems</span>
-        <div class="bar-track"><div class="bar-fill" style="width:16%"></div></div>
+        <div class="bar-track"><div class="bar-fill" style="width:20%"></div></div>
+        <span class="bar-value">18</span>
+      </div>
+
+      <div class="bar-row">
+        <span class="bar-label">risk-management</span>
+        <div class="bar-track"><div class="bar-fill" style="width:20%"></div></div>
+        <span class="bar-value">18</span>
+      </div>
+
+      <div class="bar-row">
+        <span class="bar-label">manufacturing</span>
+        <div class="bar-track"><div class="bar-fill" style="width:18%"></div></div>
         <span class="bar-value">17</span>
       </div>
 
       <div class="bar-row">
-        <span class="bar-label">financial-intelligence</span>
-        <div class="bar-track"><div class="bar-fill" style="width:16%"></div></div>
+        <span class="bar-label">llm</span>
+        <div class="bar-track"><div class="bar-fill" style="width:18%"></div></div>
         <span class="bar-value">17</span>
       </div>
 
       <div class="bar-row">
         <span class="bar-label">streaming</span>
-        <div class="bar-track"><div class="bar-fill" style="width:15%"></div></div>
-        <span class="bar-value">16</span>
+        <div class="bar-track"><div class="bar-fill" style="width:16%"></div></div>
+        <span class="bar-value">15</span>
       </div>
 
       <div class="bar-row">
         <span class="bar-label">machine-learning</span>
         <div class="bar-track"><div class="bar-fill" style="width:14%"></div></div>
-        <span class="bar-value">15</span>
+        <span class="bar-value">13</span>
       </div>
 
       <div class="bar-row">
-        <span class="bar-label">financial-crime</span>
+        <span class="bar-label">compliance</span>
         <div class="bar-track"><div class="bar-fill" style="width:14%"></div></div>
-        <span class="bar-value">15</span>
+        <span class="bar-value">13</span>
+      </div>
+
+      <div class="bar-row">
+        <span class="bar-label">financial-intelligence</span>
+        <div class="bar-track"><div class="bar-fill" style="width:12%"></div></div>
+        <span class="bar-value">11</span>
       </div>
 
       <div class="bar-row">
         <span class="bar-label">supply-chain</span>
-        <div class="bar-track"><div class="bar-fill" style="width:13%"></div></div>
-        <span class="bar-value">14</span>
+        <div class="bar-track"><div class="bar-fill" style="width:11%"></div></div>
+        <span class="bar-value">10</span>
       </div>
 
       <div class="bar-row">
-        <span class="bar-label">macro-economics</span>
+        <span class="bar-label">stream-processing</span>
         <div class="bar-track"><div class="bar-fill" style="width:10%"></div></div>
-        <span class="bar-value">11</span>
+        <span class="bar-value">9</span>
       </div>
 
       <div class="bar-row">
-        <span class="bar-label">corporate-finance</span>
+        <span class="bar-label">research</span>
         <div class="bar-track"><div class="bar-fill" style="width:10%"></div></div>
-        <span class="bar-value">11</span>
-      </div>
-
-      <div class="bar-row">
-        <span class="bar-label">market-microstructure</span>
-        <div class="bar-track"><div class="bar-fill" style="width:10%"></div></div>
-        <span class="bar-value">11</span>
+        <span class="bar-value">9</span>
       </div>
 
     </div>
@@ -235,8 +286,6 @@
           <span class="pillar-dot" style="background:#22c55e"></span>stock
 
           <span class="pillar-dot" style="background:#f59e0b"></span>aml
-
-          <span class="pillar-dot" style="background:#a855f7"></span>data
 
         </td>
       </tr>
@@ -303,17 +352,6 @@
       </tr>
 
       <tr>
-        <td><span class="tag-pill">distributed-systems</span></td>
-        <td>
-
-          <span class="pillar-dot" style="background:#6366f1"></span>data-engineering
-
-          <span class="pillar-dot" style="background:#a855f7"></span>data
-
-        </td>
-      </tr>
-
-      <tr>
         <td><span class="tag-pill">software-quality</span></td>
         <td>
 
@@ -336,34 +374,12 @@
       </tr>
 
       <tr>
-        <td><span class="tag-pill">distributed-computing</span></td>
-        <td>
-
-          <span class="pillar-dot" style="background:#6366f1"></span>data-engineering
-
-          <span class="pillar-dot" style="background:#a855f7"></span>data
-
-        </td>
-      </tr>
-
-      <tr>
         <td><span class="tag-pill">feature-engineering</span></td>
         <td>
 
           <span class="pillar-dot" style="background:#6366f1"></span>data-engineering
 
           <span class="pillar-dot" style="background:#22c55e"></span>stock
-
-        </td>
-      </tr>
-
-      <tr>
-        <td><span class="tag-pill">data-quality</span></td>
-        <td>
-
-          <span class="pillar-dot" style="background:#6366f1"></span>data-engineering
-
-          <span class="pillar-dot" style="background:#a855f7"></span>data
 
         </td>
       </tr>
@@ -430,6 +446,30 @@
       </tr>
 
       <tr>
+        <td><span class="tag-pill">llm</span></td>
+        <td>
+
+          <span class="pillar-dot" style="background:#22c55e"></span>stock
+
+          <span class="pillar-dot" style="background:#f59e0b"></span>aml
+
+          <span class="pillar-dot" style="background:#6366f1"></span>data-engineering
+
+        </td>
+      </tr>
+
+      <tr>
+        <td><span class="tag-pill">semiconductor industry</span></td>
+        <td>
+
+          <span class="pillar-dot" style="background:#22c55e"></span>stock
+
+          <span class="pillar-dot" style="background:#6366f1"></span>data-engineering
+
+        </td>
+      </tr>
+
+      <tr>
         <td><span class="tag-pill">research</span></td>
         <td>
 
@@ -452,12 +492,21 @@
       </tr>
 
       <tr>
-        <td><span class="tag-pill">risk-management</span></td>
+        <td><span class="tag-pill">cybersecurity</span></td>
+        <td>
+
+          <span class="pillar-dot" style="background:#6366f1"></span>data-engineering
+
+          <span class="pillar-dot" style="background:#f59e0b"></span>aml
+
+        </td>
+      </tr>
+
+      <tr>
+        <td><span class="tag-pill">monitoring</span></td>
         <td>
 
           <span class="pillar-dot" style="background:#22c55e"></span>stock
-
-          <span class="pillar-dot" style="background:#f59e0b"></span>aml
 
           <span class="pillar-dot" style="background:#6366f1"></span>data-engineering
 
@@ -476,12 +525,12 @@
 </hgroup>
 <div class="telemetry-grid">
   <div class="telemetry-card">
-    <h2>Distribution (252 items)</h2>
+    <h2>Distribution (231 items)</h2>
     <div class="stat-row">
-      <span class="stat-badge">Avg: <strong>0.785</strong></span>
-      <span class="stat-badge">Min: <strong>0.5</strong></span>
+      <span class="stat-badge">Avg: <strong>0.816</strong></span>
+      <span class="stat-badge">Min: <strong>0.679</strong></span>
       <span class="stat-badge">Max: <strong>1.0</strong></span>
-      <span class="stat-badge">&ge;0.8: <strong>104</strong></span>
+      <span class="stat-badge">&ge;0.8: <strong>105</strong></span>
       <span class="stat-badge">&lt;0.5: <strong>0</strong></span>
     </div>
     <div class="decile-chart">
@@ -529,16 +578,16 @@
 
 
       <div class="decile-col">
-        <div class="decile-fill" style="height:26px;background:#f59e0b"></div>
-        <span class="decile-label">27</span>
+        <div class="decile-fill" style="height:2px;background:#f59e0b"></div>
+        <span class="decile-label">0</span>
         <span class="decile-label">0.5</span>
       </div>
 
 
 
       <div class="decile-col">
-        <div class="decile-fill" style="height:33px;background:#22c55e"></div>
-        <span class="decile-label">34</span>
+        <div class="decile-fill" style="height:42px;background:#22c55e"></div>
+        <span class="decile-label">42</span>
         <span class="decile-label">0.6</span>
       </div>
 
@@ -546,14 +595,14 @@
 
       <div class="decile-col">
         <div class="decile-fill" style="height:85px;background:#22c55e"></div>
-        <span class="decile-label">87</span>
+        <span class="decile-label">84</span>
         <span class="decile-label">0.7</span>
       </div>
 
 
 
       <div class="decile-col">
-        <div class="decile-fill" style="height:24px;background:#22c55e"></div>
+        <div class="decile-fill" style="height:25px;background:#22c55e"></div>
         <span class="decile-label">25</span>
         <span class="decile-label">0.8</span>
       </div>
@@ -561,8 +610,8 @@
 
 
       <div class="decile-col">
-        <div class="decile-fill" style="height:77px;background:#22c55e"></div>
-        <span class="decile-label">79</span>
+        <div class="decile-fill" style="height:80px;background:#22c55e"></div>
+        <span class="decile-label">80</span>
         <span class="decile-label">0.9</span>
       </div>
 
@@ -577,41 +626,25 @@
 
       <tr>
         <td><span class="pillar-dot" style="background:#f59e0b"></span>aml</td>
-        <td>92</td>
-        <td><strong>0.751</strong></td>
-        <td>0.5</td>
+        <td>76</td>
+        <td><strong>0.777</strong></td>
+        <td>0.679</td>
         <td>1.0</td>
-      </tr>
-
-      <tr>
-        <td><span class="pillar-dot" style="background:#a855f7"></span>data</td>
-        <td>22</td>
-        <td><strong>0.705</strong></td>
-        <td>0.55</td>
-        <td>0.75</td>
       </tr>
 
       <tr>
         <td><span class="pillar-dot" style="background:#6366f1"></span>data-engineering</td>
-        <td>77</td>
-        <td><strong>0.824</strong></td>
-        <td>0.5</td>
+        <td>100</td>
+        <td><strong>0.826</strong></td>
+        <td>0.68</td>
         <td>1.0</td>
       </tr>
 
       <tr>
-        <td><span class="pillar-dot" style="background:#a855f7"></span>market</td>
-        <td>10</td>
-        <td><strong>0.75</strong></td>
-        <td>0.75</td>
-        <td>0.75</td>
-      </tr>
-
-      <tr>
         <td><span class="pillar-dot" style="background:#22c55e"></span>stock</td>
-        <td>51</td>
-        <td><strong>0.826</strong></td>
-        <td>0.5</td>
+        <td>55</td>
+        <td><strong>0.851</strong></td>
+        <td>0.679</td>
         <td>1.0</td>
       </tr>
 
@@ -629,20 +662,20 @@
     <h2>LLM vs Deterministic</h2>
     <div style="display:flex;gap:1rem;align-items:center;margin:0.5rem 0;">
       <div style="flex:1;height:2rem;border-radius:8px;overflow:hidden;display:flex;">
-        <div style="width:41.7%;background:#6366f1;display:flex;align-items:center;justify-content:center;font-size:0.75rem;color:white;">
-41.7%
+        <div style="width:49.4%;background:#6366f1;display:flex;align-items:center;justify-content:center;font-size:0.75rem;color:white;">
+49.4%
         </div>
-        <div style="width:58.3%;background:#f59e0b;display:flex;align-items:center;justify-content:center;font-size:0.75rem;color:white;">
-58.3%
+        <div style="width:50.6%;background:#f59e0b;display:flex;align-items:center;justify-content:center;font-size:0.75rem;color:white;">
+50.6%
         </div>
       </div>
     </div>
     <table class="telemetry-table">
       <thead><tr><th>Source</th><th>Count</th><th>%</th></tr></thead>
       <tbody>
-        <tr><td>LLM-extracted (4+ tags)</td><td>105</td><td>41.7%</td></tr>
-        <tr><td>Deterministic (&le;3 tags)</td><td>147</td><td>58.3%</td></tr>
-        <tr><td>Total enriched</td><td>179</td><td>71.0%</td></tr>
+        <tr><td>LLM-extracted (4+ tags)</td><td>114</td><td>49.4%</td></tr>
+        <tr><td>Deterministic (&le;3 tags)</td><td>117</td><td>50.6%</td></tr>
+        <tr><td>Total enriched</td><td>170</td><td>73.6%</td></tr>
       </tbody>
     </table>
   </div>
@@ -659,19 +692,19 @@
 
       <div class="bar-row">
         <span class="bar-label" style="width:5rem;">2026-01</span>
-        <div class="bar-track"><div class="bar-fill" style="width:1%"></div></div>
+        <div class="bar-track"><div class="bar-fill" style="width:2%"></div></div>
         <span class="bar-value">3</span>
       </div>
 
       <div class="bar-row">
         <span class="bar-label" style="width:5rem;">2026-02</span>
-        <div class="bar-track"><div class="bar-fill" style="width:1%"></div></div>
+        <div class="bar-track"><div class="bar-fill" style="width:2%"></div></div>
         <span class="bar-value">3</span>
       </div>
 
       <div class="bar-row">
         <span class="bar-label" style="width:5rem;">2026-03</span>
-        <div class="bar-track"><div class="bar-fill" style="width:1%"></div></div>
+        <div class="bar-track"><div class="bar-fill" style="width:2%"></div></div>
         <span class="bar-value">3</span>
       </div>
 
@@ -689,14 +722,14 @@
 
       <div class="bar-row">
         <span class="bar-label" style="width:5rem;">2026-06</span>
-        <div class="bar-track"><div class="bar-fill" style="width:45%"></div></div>
+        <div class="bar-track"><div class="bar-fill" style="width:52%"></div></div>
         <span class="bar-value">72</span>
       </div>
 
       <div class="bar-row">
         <span class="bar-label" style="width:5rem;">2026-07</span>
         <div class="bar-track"><div class="bar-fill" style="width:100%"></div></div>
-        <span class="bar-value">159</span>
+        <span class="bar-value">138</span>
       </div>
 
     </div>
@@ -714,15 +747,15 @@
       <thead><tr><th>Source</th><th>Total References</th></tr></thead>
       <tbody>
 
-      <tr><td>hn</td><td><strong>375</strong></td></tr>
+      <tr><td>hn</td><td><strong>383</strong></td></tr>
 
-      <tr><td>arxiv</td><td><strong>219</strong></td></tr>
+      <tr><td>arxiv</td><td><strong>210</strong></td></tr>
 
-      <tr><td>pubmed</td><td><strong>102</strong></td></tr>
+      <tr><td>pubmed</td><td><strong>105</strong></td></tr>
 
       </tbody>
     </table>
-    <p style="margin-top:0.5rem;font-size:0.82rem;">146 items have source breakdown data; 106 do not.</p>
+    <p style="margin-top:0.5rem;font-size:0.82rem;">135 items have source breakdown data; 96 do not.</p>
   </div>
 </div>
 
@@ -738,10 +771,10 @@
 <script src="https://unpkg.com/cytoscape@3.30.4/dist/cytoscape.min.js"></script>
 <script src="https://unpkg.com/cytoscape-cose-bilkent@4.1.0/cytoscape-cose-bilkent.js"></script>
 <script>
-var telemetryTagNodes = [{"frequency": 88, "id": "dataops"}, {"frequency": 2, "id": "real-time-streaming"}, {"frequency": 30, "id": "data-engineering"}, {"frequency": 2, "id": "data-cataloging"}, {"frequency": 2, "id": "ai-automation"}, {"frequency": 15, "id": "machine-learning"}, {"frequency": 16, "id": "streaming"}, {"frequency": 1, "id": "self-service-analytics"}, {"frequency": 1, "id": "developer-experience"}, {"frequency": 1, "id": "data-platform"}, {"frequency": 1, "id": "internal-product-development"}, {"frequency": 1, "id": "ux-design-patterns"}, {"frequency": 21, "id": "orchestration"}, {"frequency": 1, "id": "analytics-engineering"}, {"frequency": 2, "id": "data-transformation"}, {"frequency": 2, "id": "cloud-computing-optimization"}, {"frequency": 2, "id": "big-data-engineering"}, {"frequency": 2, "id": "cost-engineering"}, {"frequency": 1, "id": "data-pipeline-optimization"}, {"frequency": 2, "id": "scalable-data-processing"}, {"frequency": 20, "id": "manufacturing"}, {"frequency": 4, "id": "schema-management"}, {"frequency": 7, "id": "data-governance"}, {"frequency": 2, "id": "data-serialization"}, {"frequency": 17, "id": "distributed-systems"}, {"frequency": 1, "id": "internal-data-platform"}, {"frequency": 1, "id": "data-products"}, {"frequency": 1, "id": "api-design"}, {"frequency": 8, "id": "data-architecture"}, {"frequency": 1, "id": "data-mesh-implementation"}, {"frequency": 1, "id": "domain-ownership-patterns"}, {"frequency": 1, "id": "federated-governance"}, {"frequency": 5, "id": "software-quality"}, {"frequency": 1, "id": "cloud-architecture"}, {"frequency": 6, "id": "cloud-infrastructure"}, {"frequency": 3, "id": "infrastructure"}, {"frequency": 1, "id": "infrastructure-as-code"}, {"frequency": 1, "id": "continuous-integration"}, {"frequency": 1, "id": "devops-practices"}, {"frequency": 8, "id": "distributed-computing"}, {"frequency": 1, "id": "container-orchestration"}, {"frequency": 1, "id": "cost-optimization"}, {"frequency": 1, "id": "resource-management"}, {"frequency": 5, "id": "feature-engineering"}, {"frequency": 1, "id": "machine-learning-infrastructure"}, {"frequency": 1, "id": "model-serving"}, {"frequency": 1, "id": "model-deployment"}, {"frequency": 1, "id": "pipeline-orchestration"}, {"frequency": 1, "id": "data-contracts"}, {"frequency": 6, "id": "data-quality"}, {"frequency": 1, "id": "contract-versioning"}, {"frequency": 1, "id": "schema-evolution"}, {"frequency": 1, "id": "workflow-orchestration"}, {"frequency": 1, "id": "software-architecture"}, {"frequency": 1, "id": "python-engineering"}, {"frequency": 1, "id": "data-pipeline-management"}, {"frequency": 24, "id": "observability"}, {"frequency": 1, "id": "test-automation"}, {"frequency": 1, "id": "workflow-automation"}, {"frequency": 1, "id": "bioinformatics-pipelines"}, {"frequency": 1, "id": "genomics-workflows"}, {"frequency": 1, "id": "data-ops"}, {"frequency": 7, "id": "biotech-genomics"}, {"frequency": 30, "id": "markets"}, {"frequency": 1, "id": "data-pipeline-orchestration"}, {"frequency": 4, "id": "quantitative-finance"}, {"frequency": 3, "id": "anti-money-laundering"}, {"frequency": 10, "id": "aml-reporting"}, {"frequency": 1, "id": "financial-crime-analytics"}, {"frequency": 29, "id": "transaction-monitoring"}, {"frequency": 101, "id": "aml"}, {"frequency": 1, "id": "real-time-data-processing"}, {"frequency": 3, "id": "streaming-etl"}, {"frequency": 26, "id": "regtech"}, {"frequency": 1, "id": "anthropic-denied-s-p-500-entry"}, {"frequency": 1, "id": "s-p-500-rejects-spacex"}, {"frequency": 1, "id": "openai-blocked-from-s-p-500"}, {"frequency": 1, "id": "anthropic"}, {"frequency": 1, "id": "openai"}, {"frequency": 9, "id": "research"}, {"frequency": 3, "id": "science"}, {"frequency": 1, "id": "spacex"}, {"frequency": 5, "id": "stock"}, {"frequency": 1, "id": "stockmarket"}, {"frequency": 1, "id": "swallow"}, {"frequency": 1, "id": "differential"}, {"frequency": 1, "id": "geometry"}, {"frequency": 1, "id": "introduction"}, {"frequency": 1, "id": "pictorial"}, {"frequency": 1, "id": "bun"}, {"frequency": 1, "id": "deprecated"}, {"frequency": 1, "id": "limited"}, {"frequency": 1, "id": "now"}, {"frequency": 1, "id": "runtime"}, {"frequency": 22, "id": "risk-management"}, {"frequency": 11, "id": "macro-economics"}, {"frequency": 1, "id": "$4.2b"}, {"frequency": 1, "id": "computing"}, {"frequency": 1, "id": "funding"}, {"frequency": 1, "id": "quantum"}, {"frequency": 1, "id": "record"}, {"frequency": 1, "id": "see"}, {"frequency": 1, "id": "startups"}, {"frequency": 1, "id": "atmospheric"}, {"frequency": 1, "id": "chemistry"}, {"frequency": 1, "id": "detects"}, {"frequency": 1, "id": "exoplanet"}, {"frequency": 1, "id": "habitable"}, {"frequency": 1, "id": "jwst"}, {"frequency": 14, "id": "supply-chain"}, {"frequency": 4, "id": "llm"}, {"frequency": 1, "id": "$300b"}, {"frequency": 1, "id": "annual"}, {"frequency": 1, "id": "benefits"}, {"frequency": 1, "id": "hardware"}, {"frequency": 1, "id": "rate"}, {"frequency": 1, "id": "reaches"}, {"frequency": 1, "id": "run"}, {"frequency": 6, "id": "crypto-finance"}, {"frequency": 1, "id": "attempt"}, {"frequency": 1, "id": "claim"}, {"frequency": 1, "id": "new"}, {"frequency": 1, "id": "replication"}, {"frequency": 1, "id": "results"}, {"frequency": 1, "id": "room"}, {"frequency": 4, "id": "semiconductors"}, {"frequency": 1, "id": "alphafold"}, {"frequency": 1, "id": "ever"}, {"frequency": 1, "id": "largest"}, {"frequency": 1, "id": "million"}, {"frequency": 1, "id": "predicts"}, {"frequency": 1, "id": "protein"}, {"frequency": 11, "id": "corporate-finance"}, {"frequency": 6, "id": "derivatives"}, {"frequency": 6, "id": "trade-finance-crime"}, {"frequency": 2, "id": "aml-typologies"}, {"frequency": 1, "id": "event-driven"}, {"frequency": 2, "id": "learn"}, {"frequency": 1, "id": "reasoning"}, {"frequency": 1, "id": "scientific"}, {"frequency": 1, "id": "synthesis"}, {"frequency": 4, "id": "signal-quality"}, {"frequency": 5, "id": "privacy-ethics"}, {"frequency": 1, "id": "crypto-aml"}, {"frequency": 1, "id": "behavioral"}, {"frequency": 1, "id": "behind"}, {"frequency": 1, "id": "design"}, {"frequency": 1, "id": "education"}, {"frequency": 1, "id": "effective"}, {"frequency": 1, "id": "learning"}, {"frequency": 1, "id": "platforms"}, {"frequency": 6, "id": "documentation"}, {"frequency": 9, "id": "knowledge"}, {"frequency": 6, "id": "platform"}, {"frequency": 4, "id": "agentic-systems"}, {"frequency": 3, "id": "simulation"}, {"frequency": 4, "id": "cybersecurity"}, {"frequency": 1, "id": "vector-search"}, {"frequency": 4, "id": "data-lakehouse"}, {"frequency": 1, "id": "query-optimization"}, {"frequency": 8, "id": "stream-processing"}, {"frequency": 11, "id": "market-microstructure"}, {"frequency": 4, "id": "core-architecture"}, {"frequency": 17, "id": "financial-intelligence"}, {"frequency": 1, "id": "system"}, {"frequency": 4, "id": "foundations"}, {"frequency": 4, "id": "market"}, {"frequency": 4, "id": "data"}, {"frequency": 3, "id": "advanced-analytics"}, {"frequency": 3, "id": "specialist-module"}, {"frequency": 4, "id": "zero-copy-arrow-iceberg"}, {"frequency": 1, "id": "entity-resolution"}, {"frequency": 1, "id": "graph-theory"}, {"frequency": 3, "id": "hawkes-microstructure"}, {"frequency": 1, "id": "fraud-detection"}, {"frequency": 1, "id": "statistical-modeling"}, {"frequency": 2, "id": "microstructure"}, {"frequency": 1, "id": "mathematical-modeling"}, {"frequency": 2, "id": "temporal-graph-aml"}, {"frequency": 1, "id": "vpin-toxicity-modeling"}, {"frequency": 15, "id": "financial-crime"}, {"frequency": 19, "id": "compliance"}, {"frequency": 1, "id": "automation"}, {"frequency": 1, "id": "cloud-computing"}, {"frequency": 1, "id": "database-integration"}, {"frequency": 1, "id": "change-data-capture"}, {"frequency": 1, "id": "streaming-data-processing"}, {"frequency": 1, "id": "event-driven-architecture"}, {"frequency": 1, "id": "database-systems"}, {"frequency": 4, "id": "quantitative-modeling"}, {"frequency": 1, "id": "systemic-risk"}, {"frequency": 3, "id": "glossary"}, {"frequency": 3, "id": "reference"}, {"frequency": 2, "id": "finance"}, {"frequency": 1, "id": "pyspark"}, {"frequency": 2, "id": "spark"}, {"frequency": 1, "id": "big-data"}, {"frequency": 1, "id": "partitioning"}, {"frequency": 1, "id": "data-layout"}, {"frequency": 1, "id": "performance"}, {"frequency": 1, "id": "storage"}, {"frequency": 1, "id": "dbt"}, {"frequency": 1, "id": "data-pipelines"}, {"frequency": 1, "id": "testing"}, {"frequency": 1, "id": "kyc"}, {"frequency": 1, "id": "cdd"}, {"frequency": 1, "id": "customer-due-diligence"}, {"frequency": 1, "id": "onboarding"}, {"frequency": 1, "id": "sar"}, {"frequency": 1, "id": "suspicious-activity-reports"}, {"frequency": 1, "id": "fincen"}, {"frequency": 1, "id": "reporting"}, {"frequency": 1, "id": "sanctions"}, {"frequency": 1, "id": "ofac"}, {"frequency": 1, "id": "screening"}, {"frequency": 1, "id": "pep"}, {"frequency": 1, "id": "quantitative"}, {"frequency": 1, "id": "statistics"}, {"frequency": 1, "id": "factor-models"}, {"frequency": 1, "id": "volatility"}, {"frequency": 1, "id": "options"}, {"frequency": 1, "id": "vix"}, {"frequency": 1, "id": "garch"}, {"frequency": 1, "id": "risk"}, {"frequency": 1, "id": "order-book"}, {"frequency": 1, "id": "liquidity"}, {"frequency": 1, "id": "market-making"}];
-var telemetryTagEdges = [{"source": "aml", "target": "transaction-monitoring", "weight": 29}, {"source": "aml", "target": "regtech", "weight": 25}, {"source": "dataops", "target": "orchestration", "weight": 20}, {"source": "regtech", "target": "transaction-monitoring", "weight": 20}, {"source": "aml", "target": "compliance", "weight": 19}, {"source": "data-engineering", "target": "dataops", "weight": 18}, {"source": "dataops", "target": "streaming", "weight": 16}, {"source": "dataops", "target": "distributed-systems", "weight": 16}, {"source": "aml", "target": "financial-intelligence", "weight": 16}, {"source": "markets", "target": "risk-management", "weight": 15}, {"source": "aml", "target": "financial-crime", "weight": 15}, {"source": "financial-intelligence", "target": "transaction-monitoring", "weight": 15}, {"source": "financial-intelligence", "target": "regtech", "weight": 15}, {"source": "compliance", "target": "financial-crime", "weight": 15}, {"source": "compliance", "target": "transaction-monitoring", "weight": 15}, {"source": "compliance", "target": "financial-intelligence", "weight": 15}, {"source": "compliance", "target": "regtech", "weight": 15}, {"source": "financial-crime", "target": "transaction-monitoring", "weight": 15}, {"source": "financial-crime", "target": "financial-intelligence", "weight": 15}, {"source": "financial-crime", "target": "regtech", "weight": 15}, {"source": "dataops", "target": "observability", "weight": 13}, {"source": "manufacturing", "target": "markets", "weight": 12}, {"source": "manufacturing", "target": "supply-chain", "weight": 11}, {"source": "markets", "target": "supply-chain", "weight": 11}, {"source": "macro-economics", "target": "markets", "weight": 11}, {"source": "macro-economics", "target": "risk-management", "weight": 11}, {"source": "corporate-finance", "target": "markets", "weight": 11}, {"source": "corporate-finance", "target": "risk-management", "weight": 11}, {"source": "dataops", "target": "manufacturing", "weight": 10}, {"source": "manufacturing", "target": "risk-management", "weight": 10}, {"source": "observability", "target": "transaction-monitoring", "weight": 10}, {"source": "aml", "target": "aml-reporting", "weight": 10}, {"source": "aml", "target": "observability", "weight": 10}, {"source": "macro-economics", "target": "supply-chain", "weight": 10}, {"source": "macro-economics", "target": "manufacturing", "weight": 10}, {"source": "corporate-finance", "target": "supply-chain", "weight": 10}, {"source": "corporate-finance", "target": "manufacturing", "weight": 10}, {"source": "corporate-finance", "target": "macro-economics", "weight": 10}, {"source": "risk-management", "target": "supply-chain", "weight": 10}, {"source": "aml-reporting", "target": "transaction-monitoring", "weight": 9}, {"source": "dataops", "target": "machine-learning", "weight": 8}, {"source": "dataops", "target": "stream-processing", "weight": 8}, {"source": "data-engineering", "target": "orchestration", "weight": 8}, {"source": "orchestration", "target": "streaming", "weight": 8}, {"source": "observability", "target": "regtech", "weight": 8}, {"source": "observability", "target": "streaming", "weight": 8}, {"source": "aml-reporting", "target": "regtech", "weight": 8}, {"source": "aml", "target": "risk-management", "weight": 8}, {"source": "dataops", "target": "distributed-computing", "weight": 7}, {"source": "data-engineering", "target": "manufacturing", "weight": 7}, {"source": "data-engineering", "target": "knowledge", "weight": 7}, {"source": "data-governance", "target": "dataops", "weight": 7}, {"source": "dataops", "target": "transaction-monitoring", "weight": 6}, {"source": "data-engineering", "target": "documentation", "weight": 6}, {"source": "data-engineering", "target": "platform", "weight": 6}, {"source": "manufacturing", "target": "orchestration", "weight": 6}, {"source": "data-architecture", "target": "dataops", "weight": 6}, {"source": "data-quality", "target": "dataops", "weight": 6}, {"source": "observability", "target": "orchestration", "weight": 6}, {"source": "aml-reporting", "target": "observability", "weight": 6}, {"source": "aml", "target": "dataops", "weight": 6}, {"source": "aml", "target": "trade-finance-crime", "weight": 6}, {"source": "documentation", "target": "knowledge", "weight": 6}, {"source": "documentation", "target": "platform", "weight": 6}, {"source": "knowledge", "target": "platform", "weight": 6}, {"source": "financial-intelligence", "target": "observability", "weight": 6}, {"source": "compliance", "target": "observability", "weight": 6}, {"source": "financial-crime", "target": "observability", "weight": 6}, {"source": "dataops", "target": "regtech", "weight": 5}, {"source": "data-engineering", "target": "machine-learning", "weight": 5}, {"source": "data-engineering", "target": "streaming", "weight": 5}, {"source": "data-engineering", "target": "feature-engineering", "weight": 5}, {"source": "data-governance", "target": "orchestration", "weight": 5}, {"source": "data-governance", "target": "observability", "weight": 5}, {"source": "data-governance", "target": "streaming", "weight": 5}, {"source": "data-architecture", "target": "data-governance", "weight": 5}, {"source": "data-architecture", "target": "orchestration", "weight": 5}, {"source": "data-architecture", "target": "observability", "weight": 5}, {"source": "data-architecture", "target": "streaming", "weight": 5}, {"source": "feature-engineering", "target": "manufacturing", "weight": 5}, {"source": "aml", "target": "machine-learning", "weight": 5}, {"source": "aml", "target": "crypto-finance", "weight": 5}, {"source": "research", "target": "stock", "weight": 5}, {"source": "derivatives", "target": "risk-management", "weight": 5}, {"source": "dataops", "target": "schema-management", "weight": 4}, {"source": "dataops", "target": "software-quality", "weight": 4}, {"source": "dataops", "target": "markets", "weight": 4}, {"source": "dataops", "target": "financial-crime", "weight": 4}, {"source": "dataops", "target": "financial-intelligence", "weight": 4}, {"source": "data-engineering", "target": "data-governance", "weight": 4}, {"source": "machine-learning", "target": "manufacturing", "weight": 4}, {"source": "machine-learning", "target": "transaction-monitoring", "weight": 4}, {"source": "machine-learning", "target": "observability", "weight": 4}, {"source": "data-architecture", "target": "data-engineering", "weight": 4}, {"source": "feature-engineering", "target": "machine-learning", "weight": 4}, {"source": "markets", "target": "orchestration", "weight": 4}, {"source": "aml-reporting", "target": "financial-crime", "weight": 4}, {"source": "aml-reporting", "target": "financial-intelligence", "weight": 4}, {"source": "aml-reporting", "target": "compliance", "weight": 4}, {"source": "aml", "target": "streaming", "weight": 4}, {"source": "aml", "target": "markets", "weight": 4}, {"source": "aml", "target": "privacy-ethics", "weight": 4}, {"source": "aml", "target": "cybersecurity", "weight": 4}, {"source": "streaming", "target": "transaction-monitoring", "weight": 4}, {"source": "derivatives", "target": "markets", "weight": 4}, {"source": "data-lakehouse", "target": "dataops", "weight": 4}, {"source": "core-architecture", "target": "foundations", "weight": 4}, {"source": "data", "target": "dataops", "weight": 4}, {"source": "compliance", "target": "dataops", "weight": 4}, {"source": "market-microstructure", "target": "quantitative-modeling", "weight": 4}, {"source": "dataops", "target": "infrastructure", "weight": 3}, {"source": "dataops", "target": "feature-engineering", "weight": 3}, {"source": "dataops", "target": "streaming-etl", "weight": 3}, {"source": "dataops", "target": "risk-management", "weight": 3}, {"source": "data-engineering", "target": "markets", "weight": 3}, {"source": "data-engineering", "target": "quantitative-finance", "weight": 3}, {"source": "data-engineering", "target": "transaction-monitoring", "weight": 3}, {"source": "data-engineering", "target": "streaming-etl", "weight": 3}, {"source": "data-engineering", "target": "observability", "weight": 3}, {"source": "machine-learning", "target": "orchestration", "weight": 3}, {"source": "machine-learning", "target": "markets", "weight": 3}, {"source": "machine-learning", "target": "quantitative-finance", "weight": 3}, {"source": "data-governance", "target": "schema-management", "weight": 3}, {"source": "manufacturing", "target": "quantitative-finance", "weight": 3}, {"source": "manufacturing", "target": "streaming", "weight": 3}, {"source": "manufacturing", "target": "observability", "weight": 3}, {"source": "distributed-systems", "target": "observability", "weight": 3}, {"source": "cloud-infrastructure", "target": "dataops", "weight": 3}, {"source": "orchestration", "target": "risk-management", "weight": 3}, {"source": "feature-engineering", "target": "markets", "weight": 3}, {"source": "feature-engineering", "target": "quantitative-finance", "weight": 3}, {"source": "observability", "target": "risk-management", "weight": 3}, {"source": "biotech-genomics", "target": "observability", "weight": 3}, {"source": "markets", "target": "quantitative-finance", "weight": 3}, {"source": "markets", "target": "streaming", "weight": 3}, {"source": "anti-money-laundering", "target": "dataops", "weight": 3}, {"source": "anti-money-laundering", "target": "data-engineering", "weight": 3}, {"source": "anti-money-laundering", "target": "transaction-monitoring", "weight": 3}, {"source": "anti-money-laundering", "target": "streaming-etl", "weight": 3}, {"source": "aml-reporting", "target": "dataops", "weight": 3}, {"source": "aml-reporting", "target": "streaming", "weight": 3}, {"source": "aml-reporting", "target": "machine-learning", "weight": 3}, {"source": "aml", "target": "anti-money-laundering", "weight": 3}, {"source": "aml", "target": "data-engineering", "weight": 3}, {"source": "aml", "target": "streaming-etl", "weight": 3}, {"source": "aml", "target": "simulation", "weight": 3}, {"source": "aml", "target": "corporate-finance", "weight": 3}, {"source": "aml", "target": "supply-chain", "weight": 3}, {"source": "aml", "target": "manufacturing", "weight": 3}, {"source": "aml", "target": "macro-economics", "weight": 3}, {"source": "streaming-etl", "target": "transaction-monitoring", "weight": 3}, {"source": "regtech", "target": "streaming", "weight": 3}, {"source": "research", "target": "science", "weight": 3}, {"source": "semiconductors", "target": "supply-chain", "weight": 3}, {"source": "crypto-finance", "target": "regtech", "weight": 3}, {"source": "trade-finance-crime", "target": "transaction-monitoring", "weight": 3}, {"source": "knowledge", "target": "reference", "weight": 3}, {"source": "agentic-systems", "target": "aml", "weight": 3}, {"source": "advanced-analytics", "target": "specialist-module", "weight": 3}, {"source": "glossary", "target": "reference", "weight": 3}, {"source": "glossary", "target": "knowledge", "weight": 3}, {"source": "dataops", "target": "real-time-streaming", "weight": 2}, {"source": "dataops", "target": "scalable-data-processing", "weight": 2}, {"source": "dataops", "target": "zero-copy-arrow-iceberg", "weight": 2}, {"source": "dataops", "target": "temporal-graph-aml", "weight": 2}, {"source": "dataops", "target": "supply-chain", "weight": 2}, {"source": "dataops", "target": "macro-economics", "weight": 2}, {"source": "data-engineering", "target": "real-time-streaming", "weight": 2}, {"source": "data-engineering", "target": "data-transformation", "weight": 2}, {"source": "data-engineering", "target": "schema-management", "weight": 2}, {"source": "data-engineering", "target": "data-serialization", "weight": 2}, {"source": "data-engineering", "target": "distributed-systems", "weight": 2}, {"source": "data-engineering", "target": "infrastructure", "weight": 2}, {"source": "data-engineering", "target": "distributed-computing", "weight": 2}, {"source": "data-engineering", "target": "research", "weight": 2}, {"source": "data-engineering", "target": "science", "weight": 2}, {"source": "data-engineering", "target": "financial-crime", "weight": 2}, {"source": "data-engineering", "target": "financial-intelligence", "weight": 2}, {"source": "data-engineering", "target": "regtech", "weight": 2}, {"source": "data-engineering", "target": "supply-chain", "weight": 2}, {"source": "data-engineering", "target": "macro-economics", "weight": 2}, {"source": "data-engineering", "target": "risk-management", "weight": 2}, {"source": "data-engineering", "target": "spark", "weight": 2}, {"source": "data-cataloging", "target": "dataops", "weight": 2}, {"source": "data-cataloging", "target": "real-time-streaming", "weight": 2}, {"source": "data-cataloging", "target": "data-engineering", "weight": 2}, {"source": "data-cataloging", "target": "streaming", "weight": 2}, {"source": "ai-automation", "target": "dataops", "weight": 2}, {"source": "ai-automation", "target": "real-time-streaming", "weight": 2}, {"source": "ai-automation", "target": "data-engineering", "weight": 2}, {"source": "ai-automation", "target": "data-cataloging", "weight": 2}, {"source": "ai-automation", "target": "streaming", "weight": 2}, {"source": "machine-learning", "target": "regtech", "weight": 2}, {"source": "machine-learning", "target": "supply-chain", "weight": 2}, {"source": "machine-learning", "target": "macro-economics", "weight": 2}, {"source": "machine-learning", "target": "risk-management", "weight": 2}, {"source": "real-time-streaming", "target": "streaming", "weight": 2}, {"source": "data-transformation", "target": "dataops", "weight": 2}, {"source": "data-transformation", "target": "orchestration", "weight": 2}, {"source": "cloud-computing-optimization", "target": "dataops", "weight": 2}];
-var telemetryMaxFreq = 101;
-var telemetryMaxWeight = 29;
+var telemetryTagNodes = [{"frequency": 90, "id": "dataops"}, {"frequency": 2, "id": "real-time-streaming"}, {"frequency": 29, "id": "data-engineering"}, {"frequency": 2, "id": "data-cataloging"}, {"frequency": 2, "id": "ai-automation"}, {"frequency": 13, "id": "machine-learning"}, {"frequency": 15, "id": "streaming"}, {"frequency": 1, "id": "self-service-analytics"}, {"frequency": 1, "id": "developer-experience"}, {"frequency": 1, "id": "data-platform"}, {"frequency": 1, "id": "internal-product-development"}, {"frequency": 1, "id": "ux-design-patterns"}, {"frequency": 20, "id": "orchestration"}, {"frequency": 1, "id": "analytics-engineering"}, {"frequency": 2, "id": "data-transformation"}, {"frequency": 2, "id": "cloud-computing-optimization"}, {"frequency": 2, "id": "big-data-engineering"}, {"frequency": 2, "id": "cost-engineering"}, {"frequency": 1, "id": "data-pipeline-optimization"}, {"frequency": 2, "id": "scalable-data-processing"}, {"frequency": 17, "id": "manufacturing"}, {"frequency": 4, "id": "schema-management"}, {"frequency": 7, "id": "data-governance"}, {"frequency": 2, "id": "data-serialization"}, {"frequency": 18, "id": "distributed-systems"}, {"frequency": 1, "id": "internal-data-platform"}, {"frequency": 1, "id": "data-products"}, {"frequency": 1, "id": "api-design"}, {"frequency": 8, "id": "data-architecture"}, {"frequency": 1, "id": "data-mesh-implementation"}, {"frequency": 1, "id": "domain-ownership-patterns"}, {"frequency": 1, "id": "federated-governance"}, {"frequency": 5, "id": "software-quality"}, {"frequency": 1, "id": "cloud-architecture"}, {"frequency": 6, "id": "cloud-infrastructure"}, {"frequency": 3, "id": "infrastructure"}, {"frequency": 1, "id": "infrastructure-as-code"}, {"frequency": 1, "id": "continuous-integration"}, {"frequency": 1, "id": "devops-practices"}, {"frequency": 8, "id": "distributed-computing"}, {"frequency": 1, "id": "container-orchestration"}, {"frequency": 1, "id": "cost-optimization"}, {"frequency": 1, "id": "resource-management"}, {"frequency": 4, "id": "feature-engineering"}, {"frequency": 1, "id": "machine-learning-infrastructure"}, {"frequency": 1, "id": "model-serving"}, {"frequency": 1, "id": "model-deployment"}, {"frequency": 1, "id": "pipeline-orchestration"}, {"frequency": 2, "id": "event-driven"}, {"frequency": 1, "id": "financial-technology"}, {"frequency": 2, "id": "event-driven-architecture"}, {"frequency": 1, "id": "real-time-data-integration"}, {"frequency": 9, "id": "stream-processing"}, {"frequency": 1, "id": "data-contracts"}, {"frequency": 6, "id": "data-quality"}, {"frequency": 1, "id": "contract-versioning"}, {"frequency": 1, "id": "schema-evolution"}, {"frequency": 1, "id": "workflow-orchestration"}, {"frequency": 1, "id": "software-architecture"}, {"frequency": 1, "id": "python-engineering"}, {"frequency": 1, "id": "data-pipeline-management"}, {"frequency": 20, "id": "observability"}, {"frequency": 1, "id": "test-automation"}, {"frequency": 1, "id": "workflow-automation"}, {"frequency": 3, "id": "etl"}, {"frequency": 2, "id": "dagster"}, {"frequency": 1, "id": "bioinformatics-pipelines"}, {"frequency": 1, "id": "genomics-workflows"}, {"frequency": 1, "id": "data-ops"}, {"frequency": 6, "id": "biotech-genomics"}, {"frequency": 28, "id": "markets"}, {"frequency": 1, "id": "data-pipeline-orchestration"}, {"frequency": 3, "id": "quantitative-finance"}, {"frequency": 3, "id": "anti-money-laundering"}, {"frequency": 8, "id": "aml-reporting"}, {"frequency": 1, "id": "financial-crime-analytics"}, {"frequency": 20, "id": "transaction-monitoring"}, {"frequency": 84, "id": "aml"}, {"frequency": 1, "id": "real-time-data-processing"}, {"frequency": 3, "id": "streaming-etl"}, {"frequency": 21, "id": "regtech"}, {"frequency": 1, "id": "anthropic-denied-s-p-500-entry"}, {"frequency": 1, "id": "s-p-500-rejects-spacex"}, {"frequency": 1, "id": "openai-blocked-from-s-p-500"}, {"frequency": 2, "id": "stock-market"}, {"frequency": 17, "id": "llm"}, {"frequency": 5, "id": "semiconductor industry"}, {"frequency": 1, "id": "anthropic"}, {"frequency": 1, "id": "openai"}, {"frequency": 9, "id": "research"}, {"frequency": 3, "id": "science"}, {"frequency": 1, "id": "spacex"}, {"frequency": 5, "id": "stock"}, {"frequency": 1, "id": "stockmarket"}, {"frequency": 1, "id": "swallow"}, {"frequency": 1, "id": "differential"}, {"frequency": 1, "id": "geometry"}, {"frequency": 1, "id": "introduction"}, {"frequency": 1, "id": "pictorial"}, {"frequency": 7, "id": "cybersecurity"}, {"frequency": 2, "id": "monitoring"}, {"frequency": 1, "id": "bun"}, {"frequency": 1, "id": "deprecated"}, {"frequency": 1, "id": "limited"}, {"frequency": 1, "id": "now"}, {"frequency": 1, "id": "runtime"}, {"frequency": 2, "id": "sanctions screening"}, {"frequency": 4, "id": "fatf recommendations"}, {"frequency": 2, "id": "technical analysis"}, {"frequency": 18, "id": "risk-management"}, {"frequency": 7, "id": "macro-economics"}, {"frequency": 1, "id": "$4.2b"}, {"frequency": 1, "id": "computing"}, {"frequency": 1, "id": "funding"}, {"frequency": 1, "id": "quantum"}, {"frequency": 1, "id": "record"}, {"frequency": 1, "id": "see"}, {"frequency": 1, "id": "startups"}, {"frequency": 1, "id": "atmospheric"}, {"frequency": 1, "id": "chemistry"}, {"frequency": 1, "id": "detects"}, {"frequency": 1, "id": "exoplanet"}, {"frequency": 1, "id": "habitable"}, {"frequency": 1, "id": "jwst"}, {"frequency": 10, "id": "supply-chain"}, {"frequency": 42, "id": "regulatory compliance"}, {"frequency": 1, "id": "$300b"}, {"frequency": 1, "id": "annual"}, {"frequency": 1, "id": "benefits"}, {"frequency": 1, "id": "hardware"}, {"frequency": 1, "id": "rate"}, {"frequency": 1, "id": "reaches"}, {"frequency": 1, "id": "run"}, {"frequency": 5, "id": "crypto-finance"}, {"frequency": 1, "id": "attempt"}, {"frequency": 1, "id": "claim"}, {"frequency": 1, "id": "new"}, {"frequency": 1, "id": "replication"}, {"frequency": 1, "id": "results"}, {"frequency": 1, "id": "room"}, {"frequency": 2, "id": "beneficial ownership"}, {"frequency": 2, "id": "bsa"}, {"frequency": 4, "id": "semiconductors"}, {"frequency": 1, "id": "alphafold"}, {"frequency": 1, "id": "ever"}, {"frequency": 1, "id": "largest"}, {"frequency": 1, "id": "million"}, {"frequency": 1, "id": "predicts"}, {"frequency": 1, "id": "protein"}, {"frequency": 1, "id": "commodity trading"}, {"frequency": 7, "id": "corporate-finance"}, {"frequency": 2, "id": "earnings analysis"}, {"frequency": 1, "id": "macro analysis"}, {"frequency": 5, "id": "derivatives"}, {"frequency": 6, "id": "trade-finance-crime"}, {"frequency": 2, "id": "aml-typologies"}, {"frequency": 1, "id": "data mesh"}, {"frequency": 8, "id": "data lake"}, {"frequency": 3, "id": "dbt"}, {"frequency": 1, "id": "elt"}, {"frequency": 1, "id": "batch processing"}, {"frequency": 2, "id": "learn"}, {"frequency": 1, "id": "reasoning"}, {"frequency": 1, "id": "scientific"}, {"frequency": 1, "id": "synthesis"}, {"frequency": 4, "id": "signal-quality"}, {"frequency": 2, "id": "data quality"}, {"frequency": 1, "id": "biotech genomics"}, {"frequency": 1, "id": "portfolio"}, {"frequency": 5, "id": "privacy-ethics"}, {"frequency": 1, "id": "crypto-aml"}, {"frequency": 2, "id": "api"}, {"frequency": 1, "id": "behavioral"}, {"frequency": 1, "id": "behind"}, {"frequency": 1, "id": "design"}, {"frequency": 1, "id": "education"}, {"frequency": 1, "id": "effective"}, {"frequency": 1, "id": "learning"}, {"frequency": 1, "id": "platforms"}, {"frequency": 1, "id": "cdc"}, {"frequency": 1, "id": "apache iceberg"}, {"frequency": 6, "id": "documentation"}, {"frequency": 9, "id": "knowledge"}, {"frequency": 6, "id": "platform"}, {"frequency": 2, "id": "cdd"}, {"frequency": 1, "id": "edd"}, {"frequency": 2, "id": "sar"}, {"frequency": 1, "id": "str"}, {"frequency": 4, "id": "agentic-systems"}, {"frequency": 2, "id": "sanctions"}, {"frequency": 1, "id": "factor investing"}, {"frequency": 3, "id": "simulation"}, {"frequency": 1, "id": "aws"}, {"frequency": 1, "id": "vector-search"}, {"frequency": 1, "id": "deep-learning"}, {"frequency": 4, "id": "data-lakehouse"}, {"frequency": 1, "id": "query-optimization"}, {"frequency": 9, "id": "market-microstructure"}, {"frequency": 4, "id": "core-architecture"}, {"frequency": 11, "id": "financial-intelligence"}, {"frequency": 1, "id": "system"}, {"frequency": 4, "id": "foundations"}, {"frequency": 4, "id": "market"}, {"frequency": 4, "id": "data"}, {"frequency": 3, "id": "advanced-analytics"}, {"frequency": 3, "id": "specialist-module"}, {"frequency": 4, "id": "zero-copy-arrow-iceberg"}, {"frequency": 1, "id": "entity-resolution"}, {"frequency": 1, "id": "graph-theory"}, {"frequency": 3, "id": "hawkes-microstructure"}, {"frequency": 1, "id": "fraud-detection"}, {"frequency": 1, "id": "statistical-modeling"}, {"frequency": 2, "id": "microstructure"}, {"frequency": 1, "id": "mathematical-modeling"}, {"frequency": 2, "id": "temporal-graph-aml"}, {"frequency": 1, "id": "vpin-toxicity-modeling"}, {"frequency": 9, "id": "financial-crime"}, {"frequency": 13, "id": "compliance"}, {"frequency": 1, "id": "automation"}, {"frequency": 1, "id": "cloud-computing"}, {"frequency": 1, "id": "database-integration"}, {"frequency": 1, "id": "change-data-capture"}, {"frequency": 1, "id": "streaming-data-processing"}, {"frequency": 1, "id": "trading"}, {"frequency": 1, "id": "entity resolution"}, {"frequency": 3, "id": "real-time"}, {"frequency": 2, "id": "transaction monitoring"}, {"frequency": 1, "id": "cryptocurrency"}, {"frequency": 1, "id": "arrow parquet"}, {"frequency": 1, "id": "database-systems"}, {"frequency": 1, "id": "cloud"}, {"frequency": 4, "id": "quantitative-modeling"}, {"frequency": 1, "id": "lob"}, {"frequency": 3, "id": "glossary"}, {"frequency": 3, "id": "reference"}, {"frequency": 2, "id": "finance"}, {"frequency": 1, "id": "pyspark"}, {"frequency": 2, "id": "spark"}, {"frequency": 1, "id": "big-data"}, {"frequency": 1, "id": "partitioning"}, {"frequency": 1, "id": "data-layout"}, {"frequency": 1, "id": "performance"}, {"frequency": 1, "id": "storage"}, {"frequency": 1, "id": "data-pipelines"}, {"frequency": 1, "id": "testing"}, {"frequency": 1, "id": "kyc"}, {"frequency": 1, "id": "customer-due-diligence"}, {"frequency": 1, "id": "onboarding"}, {"frequency": 1, "id": "suspicious-activity-reports"}, {"frequency": 1, "id": "fincen"}, {"frequency": 1, "id": "reporting"}, {"frequency": 1, "id": "ofac"}, {"frequency": 1, "id": "screening"}, {"frequency": 1, "id": "pep"}, {"frequency": 1, "id": "quantitative"}, {"frequency": 1, "id": "statistics"}, {"frequency": 1, "id": "factor-models"}, {"frequency": 1, "id": "volatility"}, {"frequency": 1, "id": "options"}, {"frequency": 1, "id": "vix"}, {"frequency": 1, "id": "garch"}, {"frequency": 1, "id": "risk"}, {"frequency": 1, "id": "order-book"}, {"frequency": 1, "id": "liquidity"}, {"frequency": 1, "id": "market-making"}];
+var telemetryTagEdges = [{"source": "aml", "target": "regulatory compliance", "weight": 38}, {"source": "aml", "target": "transaction-monitoring", "weight": 20}, {"source": "aml", "target": "regtech", "weight": 20}, {"source": "dataops", "target": "orchestration", "weight": 19}, {"source": "data-engineering", "target": "dataops", "weight": 18}, {"source": "dataops", "target": "distributed-systems", "weight": 17}, {"source": "dataops", "target": "streaming", "weight": 15}, {"source": "regtech", "target": "transaction-monitoring", "weight": 14}, {"source": "aml", "target": "compliance", "weight": 13}, {"source": "dataops", "target": "observability", "weight": 12}, {"source": "dataops", "target": "manufacturing", "weight": 11}, {"source": "markets", "target": "risk-management", "weight": 11}, {"source": "aml", "target": "financial-intelligence", "weight": 10}, {"source": "dataops", "target": "stream-processing", "weight": 9}, {"source": "aml", "target": "llm", "weight": 9}, {"source": "aml", "target": "financial-crime", "weight": 9}, {"source": "llm", "target": "regulatory compliance", "weight": 9}, {"source": "financial-intelligence", "target": "transaction-monitoring", "weight": 9}, {"source": "financial-intelligence", "target": "regtech", "weight": 9}, {"source": "compliance", "target": "financial-crime", "weight": 9}, {"source": "compliance", "target": "transaction-monitoring", "weight": 9}, {"source": "compliance", "target": "financial-intelligence", "weight": 9}, {"source": "compliance", "target": "regtech", "weight": 9}, {"source": "financial-crime", "target": "transaction-monitoring", "weight": 9}, {"source": "financial-crime", "target": "financial-intelligence", "weight": 9}, {"source": "financial-crime", "target": "regtech", "weight": 9}, {"source": "dataops", "target": "machine-learning", "weight": 8}, {"source": "data-engineering", "target": "orchestration", "weight": 8}, {"source": "manufacturing", "target": "markets", "weight": 8}, {"source": "aml", "target": "aml-reporting", "weight": 8}, {"source": "dataops", "target": "distributed-computing", "weight": 7}, {"source": "data-engineering", "target": "knowledge", "weight": 7}, {"source": "data-governance", "target": "dataops", "weight": 7}, {"source": "manufacturing", "target": "supply-chain", "weight": 7}, {"source": "data-architecture", "target": "dataops", "weight": 7}, {"source": "orchestration", "target": "streaming", "weight": 7}, {"source": "observability", "target": "transaction-monitoring", "weight": 7}, {"source": "observability", "target": "streaming", "weight": 7}, {"source": "markets", "target": "supply-chain", "weight": 7}, {"source": "aml-reporting", "target": "transaction-monitoring", "weight": 7}, {"source": "aml", "target": "observability", "weight": 7}, {"source": "aml", "target": "risk-management", "weight": 7}, {"source": "macro-economics", "target": "markets", "weight": 7}, {"source": "macro-economics", "target": "risk-management", "weight": 7}, {"source": "corporate-finance", "target": "markets", "weight": 7}, {"source": "corporate-finance", "target": "risk-management", "weight": 7}, {"source": "data lake", "target": "dataops", "weight": 7}, {"source": "dataops", "target": "llm", "weight": 6}, {"source": "data-engineering", "target": "manufacturing", "weight": 6}, {"source": "data-engineering", "target": "documentation", "weight": 6}, {"source": "data-engineering", "target": "platform", "weight": 6}, {"source": "manufacturing", "target": "risk-management", "weight": 6}, {"source": "data-quality", "target": "dataops", "weight": 6}, {"source": "observability", "target": "orchestration", "weight": 6}, {"source": "aml-reporting", "target": "regtech", "weight": 6}, {"source": "aml", "target": "dataops", "weight": 6}, {"source": "aml", "target": "trade-finance-crime", "weight": 6}, {"source": "macro-economics", "target": "supply-chain", "weight": 6}, {"source": "macro-economics", "target": "manufacturing", "weight": 6}, {"source": "corporate-finance", "target": "supply-chain", "weight": 6}, {"source": "corporate-finance", "target": "manufacturing", "weight": 6}, {"source": "corporate-finance", "target": "macro-economics", "weight": 6}, {"source": "risk-management", "target": "supply-chain", "weight": 6}, {"source": "documentation", "target": "knowledge", "weight": 6}, {"source": "documentation", "target": "platform", "weight": 6}, {"source": "knowledge", "target": "platform", "weight": 6}, {"source": "dataops", "target": "transaction-monitoring", "weight": 5}, {"source": "data-engineering", "target": "streaming", "weight": 5}, {"source": "data-governance", "target": "orchestration", "weight": 5}, {"source": "data-governance", "target": "observability", "weight": 5}, {"source": "data-governance", "target": "streaming", "weight": 5}, {"source": "manufacturing", "target": "orchestration", "weight": 5}, {"source": "data-architecture", "target": "data-governance", "weight": 5}, {"source": "data-architecture", "target": "orchestration", "weight": 5}, {"source": "data-architecture", "target": "observability", "weight": 5}, {"source": "data-architecture", "target": "streaming", "weight": 5}, {"source": "observability", "target": "regtech", "weight": 5}, {"source": "aml", "target": "cybersecurity", "weight": 5}, {"source": "research", "target": "stock", "weight": 5}, {"source": "dataops", "target": "schema-management", "weight": 4}, {"source": "dataops", "target": "software-quality", "weight": 4}, {"source": "dataops", "target": "regtech", "weight": 4}, {"source": "data-engineering", "target": "machine-learning", "weight": 4}, {"source": "data-engineering", "target": "data-governance", "weight": 4}, {"source": "data-engineering", "target": "feature-engineering", "weight": 4}, {"source": "data-architecture", "target": "data-engineering", "weight": 4}, {"source": "feature-engineering", "target": "manufacturing", "weight": 4}, {"source": "aml-reporting", "target": "observability", "weight": 4}, {"source": "aml", "target": "fatf recommendations", "weight": 4}, {"source": "aml", "target": "machine-learning", "weight": 4}, {"source": "aml", "target": "crypto-finance", "weight": 4}, {"source": "aml", "target": "privacy-ethics", "weight": 4}, {"source": "derivatives", "target": "risk-management", "weight": 4}, {"source": "data lake", "target": "data-lakehouse", "weight": 4}, {"source": "data-lakehouse", "target": "dataops", "weight": 4}, {"source": "core-architecture", "target": "foundations", "weight": 4}, {"source": "data", "target": "dataops", "weight": 4}, {"source": "market-microstructure", "target": "quantitative-modeling", "weight": 4}, {"source": "dataops", "target": "infrastructure", "weight": 3}, {"source": "dataops", "target": "feature-engineering", "weight": 3}, {"source": "dataops", "target": "etl", "weight": 3}, {"source": "dataops", "target": "markets", "weight": 3}, {"source": "dataops", "target": "streaming-etl", "weight": 3}, {"source": "dataops", "target": "financial-crime", "weight": 3}, {"source": "dataops", "target": "financial-intelligence", "weight": 3}, {"source": "dataops", "target": "real-time", "weight": 3}, {"source": "data-engineering", "target": "transaction-monitoring", "weight": 3}, {"source": "data-engineering", "target": "streaming-etl", "weight": 3}, {"source": "data-engineering", "target": "observability", "weight": 3}, {"source": "machine-learning", "target": "manufacturing", "weight": 3}, {"source": "machine-learning", "target": "orchestration", "weight": 3}, {"source": "machine-learning", "target": "transaction-monitoring", "weight": 3}, {"source": "machine-learning", "target": "observability", "weight": 3}, {"source": "data-governance", "target": "schema-management", "weight": 3}, {"source": "manufacturing", "target": "streaming", "weight": 3}, {"source": "distributed-systems", "target": "observability", "weight": 3}, {"source": "cloud-infrastructure", "target": "dataops", "weight": 3}, {"source": "feature-engineering", "target": "machine-learning", "weight": 3}, {"source": "stream-processing", "target": "streaming", "weight": 3}, {"source": "markets", "target": "orchestration", "weight": 3}, {"source": "markets", "target": "semiconductor industry", "weight": 3}, {"source": "anti-money-laundering", "target": "dataops", "weight": 3}, {"source": "anti-money-laundering", "target": "data-engineering", "weight": 3}, {"source": "anti-money-laundering", "target": "transaction-monitoring", "weight": 3}, {"source": "anti-money-laundering", "target": "streaming-etl", "weight": 3}, {"source": "aml", "target": "anti-money-laundering", "weight": 3}, {"source": "aml", "target": "data-engineering", "weight": 3}, {"source": "aml", "target": "streaming", "weight": 3}, {"source": "aml", "target": "streaming-etl", "weight": 3}, {"source": "aml", "target": "markets", "weight": 3}, {"source": "aml", "target": "simulation", "weight": 3}, {"source": "streaming", "target": "transaction-monitoring", "weight": 3}, {"source": "streaming-etl", "target": "transaction-monitoring", "weight": 3}, {"source": "research", "target": "science", "weight": 3}, {"source": "fatf recommendations", "target": "regtech", "weight": 3}, {"source": "semiconductors", "target": "supply-chain", "weight": 3}, {"source": "derivatives", "target": "markets", "weight": 3}, {"source": "data lake", "target": "orchestration", "weight": 3}, {"source": "trade-finance-crime", "target": "transaction-monitoring", "weight": 3}, {"source": "cybersecurity", "target": "privacy-ethics", "weight": 3}, {"source": "knowledge", "target": "reference", "weight": 3}, {"source": "agentic-systems", "target": "aml", "weight": 3}, {"source": "financial-intelligence", "target": "observability", "weight": 3}, {"source": "advanced-analytics", "target": "specialist-module", "weight": 3}, {"source": "compliance", "target": "dataops", "weight": 3}, {"source": "compliance", "target": "observability", "weight": 3}, {"source": "financial-crime", "target": "observability", "weight": 3}, {"source": "real-time", "target": "stream-processing", "weight": 3}, {"source": "glossary", "target": "reference", "weight": 3}, {"source": "glossary", "target": "knowledge", "weight": 3}, {"source": "dataops", "target": "real-time-streaming", "weight": 2}, {"source": "dataops", "target": "scalable-data-processing", "weight": 2}, {"source": "dataops", "target": "event-driven", "weight": 2}, {"source": "dataops", "target": "event-driven-architecture", "weight": 2}, {"source": "dataops", "target": "regulatory compliance", "weight": 2}, {"source": "dataops", "target": "dbt", "weight": 2}, {"source": "dataops", "target": "signal-quality", "weight": 2}, {"source": "dataops", "target": "risk-management", "weight": 2}, {"source": "dataops", "target": "zero-copy-arrow-iceberg", "weight": 2}, {"source": "dataops", "target": "temporal-graph-aml", "weight": 2}, {"source": "dataops", "target": "transaction monitoring", "weight": 2}, {"source": "data-engineering", "target": "real-time-streaming", "weight": 2}, {"source": "data-engineering", "target": "data-transformation", "weight": 2}, {"source": "data-engineering", "target": "schema-management", "weight": 2}, {"source": "data-engineering", "target": "data-serialization", "weight": 2}, {"source": "data-engineering", "target": "distributed-systems", "weight": 2}, {"source": "data-engineering", "target": "infrastructure", "weight": 2}, {"source": "data-engineering", "target": "distributed-computing", "weight": 2}, {"source": "data-engineering", "target": "markets", "weight": 2}, {"source": "data-engineering", "target": "quantitative-finance", "weight": 2}, {"source": "data-engineering", "target": "research", "weight": 2}, {"source": "data-engineering", "target": "science", "weight": 2}, {"source": "data-engineering", "target": "financial-crime", "weight": 2}, {"source": "data-engineering", "target": "financial-intelligence", "weight": 2}, {"source": "data-engineering", "target": "regtech", "weight": 2}, {"source": "data-engineering", "target": "spark", "weight": 2}, {"source": "data-cataloging", "target": "dataops", "weight": 2}, {"source": "data-cataloging", "target": "real-time-streaming", "weight": 2}, {"source": "data-cataloging", "target": "data-engineering", "weight": 2}, {"source": "data-cataloging", "target": "streaming", "weight": 2}, {"source": "ai-automation", "target": "dataops", "weight": 2}, {"source": "ai-automation", "target": "real-time-streaming", "weight": 2}, {"source": "ai-automation", "target": "data-engineering", "weight": 2}, {"source": "ai-automation", "target": "data-cataloging", "weight": 2}, {"source": "ai-automation", "target": "streaming", "weight": 2}, {"source": "machine-learning", "target": "markets", "weight": 2}, {"source": "machine-learning", "target": "quantitative-finance", "weight": 2}, {"source": "real-time-streaming", "target": "streaming", "weight": 2}, {"source": "data-transformation", "target": "dataops", "weight": 2}, {"source": "data-transformation", "target": "orchestration", "weight": 2}, {"source": "cloud-computing-optimization", "target": "dataops", "weight": 2}, {"source": "cloud-computing-optimization", "target": "cost-engineering", "weight": 2}, {"source": "cloud-computing-optimization", "target": "scalable-data-processing", "weight": 2}, {"source": "big-data-engineering", "target": "dataops", "weight": 2}, {"source": "big-data-engineering", "target": "cloud-computing-optimization", "weight": 2}, {"source": "big-data-engineering", "target": "cost-engineering", "weight": 2}, {"source": "big-data-engineering", "target": "scalable-data-processing", "weight": 2}, {"source": "cost-engineering", "target": "dataops", "weight": 2}, {"source": "cost-engineering", "target": "scalable-data-processing", "weight": 2}, {"source": "data-governance", "target": "manufacturing", "weight": 2}];
+var telemetryMaxFreq = 90;
+var telemetryMaxWeight = 38;
 
 (function() {
   var elements = [];
@@ -805,6 +838,122 @@ var telemetryMaxWeight = 29;
   initGraph();
 })();
 </script>
+<script>
+(function() {
+  function buildExportData() {
+    var rows = [];
+    rows.push(['Metric', 'Value']);
+    rows.push(['Total Tags', '265']);
+    rows.push(['Tag Assignments', '977']);
+    rows.push(['Cross-Pillar Tags', '44']);
+    rows.push(['Avg SQI', '0.816']);
+    rows.push(['SQI Count', '231']);
+    rows.push(['LLM-Enriched', '114']);
+    rows.push(['Deterministic', '117']);
+    rows.push(['Total Enriched', '170']);
+    rows.push([]);
+    rows.push(['--- Top Tags ---']);
+    
+    rows.push(['Tag: dataops', '90']);
+    
+    rows.push(['Tag: aml', '84']);
+    
+    rows.push(['Tag: regulatory compliance', '42']);
+    
+    rows.push(['Tag: data-engineering', '29']);
+    
+    rows.push(['Tag: markets', '28']);
+    
+    rows.push(['Tag: regtech', '21']);
+    
+    rows.push(['Tag: orchestration', '20']);
+    
+    rows.push(['Tag: observability', '20']);
+    
+    rows.push(['Tag: transaction-monitoring', '20']);
+    
+    rows.push(['Tag: distributed-systems', '18']);
+    
+    rows.push(['Tag: risk-management', '18']);
+    
+    rows.push(['Tag: manufacturing', '17']);
+    
+    rows.push(['Tag: llm', '17']);
+    
+    rows.push(['Tag: streaming', '15']);
+    
+    rows.push(['Tag: machine-learning', '13']);
+    
+    rows.push(['Tag: compliance', '13']);
+    
+    rows.push(['Tag: financial-intelligence', '11']);
+    
+    rows.push(['Tag: supply-chain', '10']);
+    
+    rows.push(['Tag: stream-processing', '9']);
+    
+    rows.push(['Tag: research', '9']);
+    
+    rows.push([]);
+    rows.push(['--- SQI by Pillar ---']);
+    
+    rows.push(['aml items', '76']);
+    rows.push(['aml avg', '0.777']);
+    
+    rows.push(['data-engineering items', '100']);
+    rows.push(['data-engineering avg', '0.826']);
+    
+    rows.push(['stock items', '55']);
+    rows.push(['stock avg', '0.851']);
+    
+    rows.push([]);
+    rows.push(['--- Velocity ---']);
+    
+    rows.push(['2026-01', '3']);
+    
+    rows.push(['2026-02', '3']);
+    
+    rows.push(['2026-03', '3']);
+    
+    rows.push(['2026-04', '4']);
+    
+    rows.push(['2026-05', '5']);
+    
+    rows.push(['2026-06', '72']);
+    
+    rows.push(['2026-07', '138']);
+    
+    return rows;
+  }
+
+  document.getElementById('export-csv').onclick = function() {
+    var rows = buildExportData();
+    var csv = rows.map(function(r){return r.map(function(c){return '"'+String(c).replace(/"/g,'""')+'"'}).join(',')}).join('\n');
+    var blob = new Blob([csv], {type:'text/csv'});
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'telemetry.csv';
+    a.click();
+  };
+
+  document.getElementById('export-json').onclick = function() {
+    var data = {
+      tags: { total: 265, assignments: 977, crossover: 44 },
+      sqi: { avg: '0.816', count: 231, min: '0.679', max: '1.0' },
+      enrichment: { llm: 114, deterministic: 117, total: 170 },
+      velocity_months: 7
+    };
+    var blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'telemetry.json';
+    a.click();
+  };
+})();
+</script>
+
+  </div>
+</div>
 
     </main>
 
@@ -813,6 +962,6 @@ var telemetryMaxWeight = 29;
         <small>&copy; 2026 AcaciaFund &middot; Generated by the Acacia pipeline.</small>
     </footer>
 
-    <script src="/static/js/main.d41d8cd9.js"></script>
+
 </body>
 </html>

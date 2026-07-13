@@ -1,0 +1,108 @@
+{% extends "layout.j2" %}
+{% from "macros/breadcrumbs.html" import breadcrumbs %}
+{% block main_content %}
+<nav aria-label="Breadcrumb" class="mb-4 text-xs" style="color:var(--color-text-muted)">
+  <ol class="flex flex-wrap items-center gap-1.5">
+    <li><a href="/" class="hover:text-[var(--color-accent)] transition">Home</a></li>
+    <li aria-hidden="true">/</li>
+    <li><a href="/knowledge/" class="hover:text-[var(--color-accent)] transition">Knowledge</a></li>
+    <li aria-hidden="true">/</li>
+    <li aria-current="page">Concepts</li>
+    <li aria-hidden="true">/</li>
+    <li aria-current="page">{{ concept.label }}</li>
+  </ol>
+</nav>
+
+<header class="mb-8">
+  <div class="flex items-center gap-3 mb-3">
+    <span class="inline-block text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 15%, transparent);color:var(--color-accent)">
+      {{ concept.pillar | default("cross-pillar") | capitalize }}
+    </span>
+    {%- if concept.category %}
+    <span class="text-xs px-2 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-secondary);border:1px solid var(--color-border)">
+      {{ concept.category | replace('-', ' ') | title }}
+    </span>
+    {%- endif %}
+  </div>
+  <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">{{ concept.label }}</h1>
+  {%- if concept.description %}
+  <p class="mt-3 text-sm max-w-2xl" style="color:var(--color-text-secondary)">{{ concept.description }}</p>
+  {%- endif %}
+  {%- if concept.aliases and concept.aliases | length > 1 %}
+  <div class="mt-3 flex flex-wrap gap-1.5">
+    {%- for alias in concept.aliases[:6] %}
+    <span class="text-[11px] px-2 py-0.5 rounded-full" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">{{ alias }}</span>
+    {%- endfor %}
+  </div>
+  {%- endif %}
+</header>
+
+<div class="grid gap-8 lg:grid-cols-3">
+  <div class="lg:col-span-2">
+    <section class="mb-8">
+      <h2 class="text-lg font-semibold mb-4" style="color:var(--color-text)">Related Content</h2>
+      {%- if related_items and related_items | length > 0 %}
+      <div class="grid gap-4 sm:grid-cols-2">
+        {%- for item in related_items %}
+        {%- set item_pillar = item.pillar or "aml" %}
+        {%- set pc = pillar_config.get(item_pillar, pillar_config["aml"]) %}
+        <a href="{{ item.url }}" class="ghost-card p-4 block transition hover:shadow-md" style="text-decoration:none">
+          <div class="flex items-start gap-3">
+            <div class="shrink-0 mt-0.5">
+              <span class="inline-block text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, {{ pc.color | default('#6366f1') }} 15%, transparent);color:{{ pc.color | default('#6366f1') }}">
+                {{ pc.label | default(item_pillar) }}
+              </span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">{{ item.title | striptags }}</h3>
+              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">{{ item.description }}</p>
+              <div class="mt-1.5 flex items-center gap-2 text-[10px]" style="color:var(--color-text-muted)">
+                <span>{{ item.content_type | capitalize }}</span>
+                {%- if item.score %}
+                <span class="font-semibold" style="color:var(--color-accent)">{{ (item.score * 100) | round(0) }}% match</span>
+                {%- endif %}
+              </div>
+            </div>
+          </div>
+        </a>
+        {%- endfor %}
+      </div>
+      {%- else %}
+      <p class="text-sm ghost-card p-4" style="color:var(--color-text-muted)">No content references this concept yet.</p>
+      {%- endif %}
+    </section>
+  </div>
+
+  <div class="space-y-6">
+    {%- if related_concepts and related_concepts | length > 0 %}
+    <section>
+      <h3 class="text-sm font-semibold mb-3" style="color:var(--color-text)">Related Concepts</h3>
+      <div class="space-y-2">
+        {%- for rc in related_concepts %}
+        <a href="/concepts/{{ rc.id }}/" class="block p-3 rounded-lg transition hover:shadow-sm" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+          <div class="flex items-center justify-between">
+            <span class="text-sm font-medium" style="color:var(--color-text)">{{ rc.label }}</span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted)">{{ rc.relation }}</span>
+          </div>
+        </a>
+        {%- endfor %}
+      </div>
+    </section>
+    {%- endif %}
+
+    <section>
+      <h3 class="text-sm font-semibold mb-3" style="color:var(--color-text)">Explore</h3>
+      <div class="space-y-2">
+        <a href="/graph/" class="block p-3 rounded-lg transition hover:shadow-sm" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+          <span class="text-sm" style="color:var(--color-text)">Knowledge Graph</span>
+        </a>
+        <a href="/search/?q={{ concept.label | urlencode }}" class="block p-3 rounded-lg transition hover:shadow-sm" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+          <span class="text-sm" style="color:var(--color-text)">Search: {{ concept.label }}</span>
+        </a>
+      </div>
+    </section>
+  </div>
+</div>
+
+{% include 'partials/newsletter.html' %}
+{% endblock %}

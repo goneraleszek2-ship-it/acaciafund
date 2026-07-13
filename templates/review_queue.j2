@@ -1,0 +1,124 @@
+{% extends "layout.j2" %}
+{% block main_content %}
+<nav aria-label="Breadcrumb" class="mb-4 text-xs" style="color:var(--color-text-muted)">
+  <ol class="flex flex-wrap items-center gap-1.5">
+    <li><a href="/" class="hover:text-[var(--color-accent)] transition">Home</a></li>
+    <li aria-hidden="true">/</li>
+    <li><a href="/review/" class="hover:text-[var(--color-accent)] transition">Review</a></li>
+    <li aria-hidden="true">/</li>
+    <li aria-current="page">Queue</li>
+  </ol>
+</nav>
+
+<header class="mb-6">
+  <h1 class="text-2xl font-extrabold" style="color:var(--color-text)">Review Queue</h1>
+  <p class="mt-1 text-sm" style="color:var(--color-text-muted)">Swipe or use keyboard. Space = flip, 1-4 = grade.</p>
+</header>
+
+<div class="flex items-center justify-between mb-6">
+  <div id="queue-progress" class="text-sm font-meta" style="color:var(--color-text-muted)">0 / 0 reviewed</div>
+  <div id="queue-due" class="text-sm font-semibold" style="color:var(--color-accent)">0 due</div>
+</div>
+
+<div id="queue-empty" class="hidden ghost-card p-8 text-center">
+  <svg class="w-12 h-12 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+  <p class="text-sm font-semibold" style="color:var(--color-text)">All caught up!</p>
+  <p class="text-xs mt-1" style="color:var(--color-text-muted)">No cards due for review right now.</p>
+  <a href="/review/" class="inline-block mt-4 px-4 py-2 text-xs font-semibold rounded-lg" style="background:var(--color-accent);color:#fff">Back to Dashboard</a>
+</div>
+
+<div id="queue-active" class="flex flex-col items-center">
+  <div id="queue-card-container" class="w-full max-w-lg" role="region" aria-label="Flashcard review" aria-live="polite">
+  </div>
+  <div id="queue-nav" class="mt-4 flex gap-3 hidden">
+    <button id="queue-skip" class="px-4 py-2 text-xs font-semibold rounded-lg" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border);min-width:44px;min-height:44px">Skip</button>
+    <button id="queue-done" class="px-4 py-2 text-xs font-semibold rounded-lg" style="background:var(--color-accent);color:#fff;min-width:44px;min-height:44px">Done</button>
+  </div>
+</div>
+
+<script>
+(function() {
+  const allCards = {{ flashcard_cards | safe }};
+  const SM2_KEY = 'acacia_sm2';
+
+  let sm2 = {};
+  try { sm2 = JSON.parse(localStorage.getItem(SM2_KEY) || '{}'); } catch(_) {}
+
+  const now = Date.now();
+  const dueCards = allCards
+    .filter(c => {
+      const s = sm2[c.id] || { reps: 0, due: 0 };
+      return s.due <= now;
+    })
+    .sort((a, b) => {
+      const sa = sm2[a.id] || { due: 0 };
+      const sb = sm2[b.id] || { due: 0 };
+      return sa.due - sb.due;
+    });
+
+  const container = document.getElementById('queue-card-container');
+  const emptyEl = document.getElementById('queue-empty');
+  const activeEl = document.getElementById('queue-active');
+  const progressEl = document.getElementById('queue-progress');
+  const dueEl = document.getElementById('queue-due');
+  const navEl = document.getElementById('queue-nav');
+
+  if (!dueCards.length) {
+    emptyEl.classList.remove('hidden');
+    activeEl.classList.add('hidden');
+    dueEl.textContent = '0 due';
+    return;
+  }
+
+  dueEl.textContent = dueCards.length + ' due';
+  let idx = 0;
+  let reviewed = 0;
+
+  function renderCard() {
+    if (idx >= dueCards.length) {
+      container.innerHTML = '<div class="ghost-card p-6 text-center"><p class="text-sm font-semibold" style="color:var(--color-text)">Queue complete!</p></div>';
+      navEl.classList.add('hidden');
+      return;
+    }
+
+    const c = dueCards[idx];
+    container.innerHTML = '';
+
+    const fc = document.createElement('acacia-flashcard');
+    fc.setAttribute('data-term', c.term);
+    fc.setAttribute('data-definition', c.definition);
+    fc.setAttribute('data-card-id', c.id);
+    container.appendChild(fc);
+
+    progressEl.textContent = `${reviewed} / ${dueCards.length} reviewed`;
+    navEl.classList.remove('hidden');
+
+    fc.addEventListener('card-graded', () => {
+      reviewed++;
+      idx++;
+      setTimeout(renderCard, 200);
+    });
+  }
+
+  renderCard();
+
+  document.getElementById('queue-skip').addEventListener('click', () => {
+    idx++;
+    renderCard();
+  });
+  document.getElementById('queue-done').addEventListener('click', () => {
+    window.location.href = '/review/';
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.key === 'ArrowRight' || e.key === 'Escape') {
+      idx++;
+      renderCard();
+    }
+  });
+})();
+</script>
+
+{% include 'partials/newsletter.html' %}
+{% endblock %}
