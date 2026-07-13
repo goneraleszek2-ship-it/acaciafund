@@ -16,7 +16,7 @@ SITE_DESCRIPTION = (
     "Automated classification of HackerNews + arXiv content using Bloom taxonomy. "
     "Static-first, privacy-preserving."
 )
-PLAUSIBLE_DOMAIN = ""
+PLAUSIBLE_DOMAIN = "plausible.io"
 
 # Paths (source)
 REGISTRY_PATH = PROJECT_ROOT / "registry.json"
@@ -43,6 +43,8 @@ INTEREST_RECENCY_DAYS = 180
 # "stock" maps to "markets" in URLs for better semantics
 PILLAR_URL_MAP = {"aml": "compliance", "stock": "markets", "data-engineering": "data"}
 PILLAR_URL_REVERSE = {v: k for k, v in PILLAR_URL_MAP.items()}
+PILLAR_NAMES = {"aml": "Compliance", "stock": "Markets", "data-engineering": "Data Engineering"}
+PILLAR_EMOJIS = {"aml": "🛡️", "stock": "📈", "data-engineering": "⚙️"}
 
 # URL structure version — bump to force full cache rebuild on structural changes
 URL_STRUCTURE_VERSION = "3.0"

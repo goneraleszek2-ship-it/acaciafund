@@ -1,25 +1,25 @@
 {
-  "timestamp": "2026-07-13T16:44:35.668389+00:00",
-  "duration_seconds": 194.61,
+  "timestamp": "2026-07-13T17:56:30.900469+00:00",
+  "duration_seconds": 39.28,
   "steps": {
-    "registry_load": 0.048,
-    "graph_build": 0.513,
-    "asset_pipeline": 0.102,
-    "content_rendering": 120.389
+    "registry_load": 0.061,
+    "graph_build": 0.667,
+    "asset_pipeline": 0.078,
+    "content_rendering": 27.784
   },
-  "page_count": 584,
-  "registry_hash": "f589c11564da",
+  "page_count": 697,
+  "registry_hash": "c4e5ada37ae1",
   "sqi": {
     "min": 0.679,
     "max": 1.0,
-    "avg": 0.82,
-    "median": 0.75,
+    "avg": 0.823,
+    "median": 0.85,
     "q1": 0.75,
-    "q3": 0.93,
-    "sample_count": 231
+    "q3": 0.922,
+    "sample_count": 256
   },
   "sources": {
-    "last_build": "2026-07-13T16:44:35.668425+00:00",
+    "last_build": "2026-07-13T17:56:30.900518+00:00",
     "source_type_counts": {
       "hn": 383,
       "arxiv": 210,
@@ -27,9 +27,9 @@
     }
   },
   "content_counts": {
-    "research": 144,
+    "research": 164,
     "learn": 48,
-    "knowledge": 39
+    "knowledge": 44
   },
   "quality": {
     "gate_min_sqi": 0.65,

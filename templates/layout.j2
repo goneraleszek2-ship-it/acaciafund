@@ -21,6 +21,9 @@
         footer hr { margin-bottom: var(--pico-spacing); }
         .logo { font-size: 1.25rem; font-weight: 700; text-decoration: none; }
     </style>
+{% if plausible_domain %}
+    <script defer data-domain="{{ plausible_domain }}" src="https://{{ plausible_domain }}/js/script.js"></script>
+{% endif %}
 </head>
 <body>
     <header class="container">

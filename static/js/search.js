@@ -85,6 +85,42 @@
     history.replaceState(null, '', url);
   }
 
+  const STORAGE_KEY = 'ac_search_history';
+  const MAX_SUGGESTIONS = 10;
+
+  function getHistory() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch { return []; }
+  }
+
+  function saveQuery(q) {
+    const trimmed = q.trim().toLowerCase();
+    if (!trimmed) return;
+    let history = getHistory().filter(h => h !== trimmed);
+    history.unshift(trimmed);
+    if (history.length > MAX_SUGGESTIONS) history = history.slice(0, MAX_SUGGESTIONS);
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(history)); } catch {}
+  }
+
+  function renderSuggestions(filter) {
+    const el = document.getElementById('search-suggestions');
+    if (!el) return;
+    const history = getHistory();
+    const matching = filter ? history.filter(h => h.includes(filter.toLowerCase())) : history;
+    if (!matching.length) { el.innerHTML = ''; el.style.display = 'none'; return; }
+    el.innerHTML = matching.map((h, i) =>
+      '<div class="suggestion-item" data-suggestion="' + escapeHtml(h) + '" data-idx="' + i + '" style="padding:0.5rem 0.75rem;cursor:pointer;font-size:0.9rem;border-bottom:1px solid var(--color-border, #333)">' +
+      highlightTerms(escapeHtml(h), filter ? filter.split(/\s+/) : []) +
+      '</div>'
+    ).join('');
+    el.style.display = 'block';
+  }
+
+  function firePlausible(event, props) {
+    if (typeof plausible === 'function') {
+      try { plausible(event, { props: props || {} }); } catch {}
+    }
+  }
+
   let searchIndex = null;
   let allScored = [];
   let displayedCount = 0;
@@ -113,7 +149,7 @@
     const sqi = entry.avg_sqi || 0;
     const isSelected = idx === selectedIndex;
 
-    let html = '<a href="' + url + '" class="search-result" data-idx="' + idx + '" style="display:block;padding:1rem;margin-bottom:0.5rem;border:1px solid ' + (isSelected ? 'var(--color-accent, #818cf8)' : 'var(--color-border, #333)') + ';border-radius:8px;text-decoration:none;color:var(--color-text, #e8e6e3);transition:border-color 0.2s' + (isSelected ? ';background:color-mix(in srgb, var(--color-accent, #818cf8) 8%, transparent)' : '') + '">';
+    let html = '<a href="' + url + '" class="search-result" data-idx="' + idx + '" data-slug="' + escapeHtml(entry.slug) + '" style="display:block;padding:1rem;margin-bottom:0.5rem;border:1px solid ' + (isSelected ? 'var(--color-accent, #818cf8)' : 'var(--color-border, #333)') + ';border-radius:8px;text-decoration:none;color:var(--color-text, #e8e6e3);transition:border-color 0.2s' + (isSelected ? ';background:color-mix(in srgb, var(--color-accent, #818cf8) 8%, transparent)' : '') + '">';
     html += '<div style="display:flex;gap:0.5rem;align-items:center;margin-bottom:0.25rem;flex-wrap:wrap">';
     html += '<span style="display:inline-block;padding:2px 8px;border-radius:9999px;font-size:0.7rem;font-weight:600;color:#fff;background:' + color + '">' + escapeHtml(pLabel) + '</span>';
     if (ctLabel) html += '<span style="font-size:0.7rem;color:var(--color-text-muted, #888)">' + escapeHtml(ctLabel) + '</span>';
@@ -198,6 +234,9 @@
           : 'No results';
       }
 
+      saveQuery(query);
+      firePlausible('search', { query: query, results: allScored.length, terms: terms.length });
+
       if (!allScored.length) {
         container.innerHTML = '<p style="color:var(--color-text-muted, #888);text-align:center;margin-top:2rem">No results for "' + escapeHtml(query) + '"</p>';
         return;
@@ -257,6 +296,7 @@
     input.addEventListener('input', function() {
       clearTimeout(debounce);
       const val = input.value;
+      renderSuggestions(val);
       debounce = setTimeout(() => {
         const url = new URL(window.location);
         if (val) url.searchParams.set('q', val);
@@ -264,6 +304,40 @@
         history.replaceState(null, '', url);
         runSearch(val);
       }, 200);
+    });
+
+    input.addEventListener('focus', function() { renderSuggestions(this.value); });
+    input.addEventListener('blur', function() {
+      setTimeout(function() {
+        const el = document.getElementById('search-suggestions');
+        if (el) el.style.display = 'none';
+      }, 200);
+    });
+
+    // Click delegation for result clicks (Plausible tracking)
+    document.getElementById('search-results').addEventListener('click', function(e) {
+      const result = e.target.closest('.search-result');
+      if (result) {
+        const slug = result.getAttribute('data-slug');
+        const query = input.value;
+        firePlausible('Search Result Click', { query: query, slug: slug });
+      }
+    });
+
+    // Suggestion click handler
+    document.getElementById('search-suggestions').addEventListener('click', function(e) {
+      const item = e.target.closest('.suggestion-item');
+      if (item) {
+        const suggestion = item.getAttribute('data-suggestion');
+        if (suggestion) {
+          input.value = suggestion;
+          this.style.display = 'none';
+          const url = new URL(window.location);
+          url.searchParams.set('q', suggestion);
+          history.replaceState(null, '', url);
+          runSearch(suggestion);
+        }
+      }
     });
 
     // Keyboard navigation

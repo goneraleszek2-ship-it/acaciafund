@@ -13,12 +13,15 @@
   .search-sidebar .reset-btn:hover { color: var(--color-text, #e8e6e3); border-color: var(--color-accent, #818cf8); }
   .search-main { flex: 1; min-width: 0; }
   .search-input-wrap { max-width: 100%; margin-bottom: 1rem; }
-  .search-input-wrap input {
-    width: 100%; padding: 0.75rem 1rem; font-size: 1.1rem;
+  .search-input-wrap input { position: relative; width: 100%; padding: 0.75rem 1rem; font-size: 1.1rem;
     border-radius: 8px; border: 1px solid var(--color-border, #333);
     background: var(--color-surface, #1a1a2e); color: var(--color-text, #e8e6e3); box-sizing: border-box;
   }
   .search-input-wrap input:focus { outline: none; border-color: var(--color-accent, #818cf8); }
+  .search-input-wrap { position: relative; }
+  #search-suggestions { display: none; position: absolute; top: 100%; left: 0; right: 0; z-index: 100; background: var(--color-surface, #1a1a2e); border: 1px solid var(--color-border, #333); border-top: none; border-radius: 0 0 8px 8px; max-height: 300px; overflow-y: auto; }
+  .suggestion-item:hover { background: color-mix(in srgb, var(--color-accent, #818cf8) 10%, transparent); }
+  .suggestion-item mark { background: transparent; color: var(--color-accent, #818cf8); font-weight: 700; }
   #search-stats { font-size: 0.85rem; color: var(--color-text-muted, #888); margin-bottom: 1rem; }
   .search-result:hover { border-color: var(--color-accent, #818cf8) !important; }
   #search-results { max-width: 100%; }
@@ -58,7 +61,8 @@
   </aside>
   <div class="search-main">
     <div class="search-input-wrap">
-      <input type="text" id="search-input" placeholder="Search articles, lessons, guides... (press / to focus)">
+      <input type="text" id="search-input" placeholder="Search articles, lessons, guides... (press / to focus)" autocomplete="off">
+      <div id="search-suggestions"></div>
     </div>
     <div id="search-stats"></div>
     <div id="search-results"></div>

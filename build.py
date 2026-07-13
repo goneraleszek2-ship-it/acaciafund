@@ -46,6 +46,8 @@ from config import (
     TEMPLATE_DIR,
     PILLAR_URL_MAP,
     PILLAR_URL_REVERSE,
+    PILLAR_NAMES,
+    PILLAR_EMOJIS,
 )
 
 # ── Asset pipeline ──
@@ -244,8 +246,6 @@ PILLAR_CONFIG = {
         "description": "Data pipelines, orchestration, quality engineering, streaming, storage, and analytics infrastructure.",
     },
 }
-PILLAR_EMOJIS = {"aml": "🛡️", "stock": "📈", "data-engineering": "⚙️"}
-PILLAR_NAMES = {"aml": "Compliance", "stock": "Markets", "data-engineering": "Data Engineering"}
 DIFFICULTY_ORDER = {"beginner": 0, "intermediate": 1, "advanced": 2}
 
 # Section type mapping (positional index → semantic type)
