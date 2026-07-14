@@ -1,7 +1,6 @@
 """Tests for the SM-2 spaced repetition algorithm (JS implementation logic in Python)."""
 import json
 import time
-import pytest
 
 
 class SM2Scheduler:

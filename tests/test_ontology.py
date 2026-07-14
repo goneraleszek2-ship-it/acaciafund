@@ -1,6 +1,5 @@
 """Tests for core/ontology.py — Concept, Relation, ResourceLink models and OntologyManager."""
 
-import json
 import tempfile
 from pathlib import Path
 
@@ -18,7 +17,6 @@ from core.ontology import (
     ResourceLink,
     extract_concepts_from_text,
 )
-
 
 # ---------------------------------------------------------------------------
 # Model validation tests

@@ -9,14 +9,16 @@ Usage:
 
 from __future__ import annotations
 
-import tomllib
 from pathlib import Path
+
+import tomllib
 
 from core.sources.arxiv import ArxivFetcher
 from core.sources.base import BaseFetcher, SourceConfig, all_source_summaries
 from core.sources.hn import HNFetcher
 from core.sources.pubmed import PubMedFetcher
 from core.sources.rss import RSSFetcher
+from core.sources.sec_edgar import SecEdgarFetcher
 from core.sources.semantic_scholar import SemanticScholarFetcher
 
 SOURCES_TOML = Path(__file__).resolve().parent.parent.parent / "etc" / "sources.toml"
@@ -27,6 +29,7 @@ FETCHER_CLASSES: dict[str, type[BaseFetcher]] = {
     "pubmed": PubMedFetcher,
     "semantic_scholar": SemanticScholarFetcher,
     "rss": RSSFetcher,
+    "sec-edgar": SecEdgarFetcher,
 }
 
 

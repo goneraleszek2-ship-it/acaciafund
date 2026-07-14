@@ -191,7 +191,7 @@ def _story_manifest_summary(path: Path, manifest: dict[str, Any]) -> dict[str, A
     date_val = manifest.get("date", "")
     created_val = manifest.get("created_at", "")
     published_val = manifest.get("published_at", "")
-    
+
     return {
         "content_id": manifest.get("content_id", ""),
         "pillar": manifest.get("pillar", ""),
@@ -230,21 +230,21 @@ def _extract_frontmatter(path: Path) -> dict[str, Any] | None:
         content = path.read_text(encoding="utf-8")
     except OSError:
         return None
-    
+
     import re
     fm_match = re.match(r"^---\s*\n(.*?)\n---\s*\n?(.*)", content, re.DOTALL)
     if not fm_match:
         return None
-    
+
     import yaml
     try:
         frontmatter = yaml.safe_load(fm_match.group(1))
     except yaml.YAMLError:
         return None
-    
+
     if not isinstance(frontmatter, dict):
         return None
-    
+
     return frontmatter
 
 
@@ -268,7 +268,7 @@ def _pillar_from_path(path: Path) -> str:
 
 def build_registry_index() -> dict[str, Any]:
     run_root = RUNS_DIR
-    
+
     # Scan actual content directories with markdown files
     content_dirs = [
         BASE_DIR / "content" / "aml",
@@ -292,15 +292,15 @@ def build_registry_index() -> dict[str, Any]:
                 import sys
                 print(f"WARNING: Could not parse front-matter from {md_path}", file=sys.stderr)
                 continue
-            
+
             # Skip files without required fields
             slug = frontmatter.get("slug") or _md_path_to_content_id(md_path)
             pillar = frontmatter.get("pillar") or _pillar_from_path(md_path)
             title = frontmatter.get("title", "")
-            
+
             if not slug:
                 continue
-            
+
             # Build story manifest from front-matter
             manifest = {
                 "manifest_type": "story",
@@ -312,7 +312,7 @@ def build_registry_index() -> dict[str, Any]:
                 "published_at": frontmatter.get("date", iso_utc()),
                 "checksum": payload_checksum({"slug": slug, "title": title, "pillar": pillar}),
             }
-            
+
             page = _story_manifest_summary(md_path, manifest)
             pages.append(page)
             content_id = page["content_id"]

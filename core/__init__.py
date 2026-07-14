@@ -1,11 +1,4 @@
 from . import sources as sources
-from .ontology import (
-    Concept,
-    InspirationSource,
-    OntologyManager,
-    Relation,
-    ResourceLink,
-)
 from .assets import AssetManager, create_asset_manager
 from .dto import (
     KnowledgeDTO,
@@ -32,6 +25,13 @@ from .metadata import (
     validate_manifest,
     write_json,
     write_registry_index,
+)
+from .ontology import (
+    Concept,
+    InspirationSource,
+    OntologyManager,
+    Relation,
+    ResourceLink,
 )
 
 __all__ = [

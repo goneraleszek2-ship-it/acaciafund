@@ -43,8 +43,11 @@ INTEREST_RECENCY_DAYS = 180
 # "stock" maps to "markets" in URLs for better semantics
 PILLAR_URL_MAP = {"aml": "compliance", "stock": "markets", "data-engineering": "data"}
 PILLAR_URL_REVERSE = {v: k for k, v in PILLAR_URL_MAP.items()}
-PILLAR_NAMES = {"aml": "Compliance", "stock": "Markets", "data-engineering": "Data Engineering"}
-PILLAR_EMOJIS = {"aml": "🛡️", "stock": "📈", "data-engineering": "⚙️"}
+# Derived from PILLAR_CONFIG below; keep as fallbacks until override after PILLAR_CONFIG
+PILLAR_NAMES_BASE = {"aml": "Compliance", "stock": "Markets", "data-engineering": "Data Engineering"}
+PILLAR_EMOJIS_BASE = {"aml": "🛡️", "stock": "📈", "data-engineering": "⚙️"}
+PILLAR_NAMES = dict(PILLAR_NAMES_BASE)
+PILLAR_EMOJIS = dict(PILLAR_EMOJIS_BASE)
 
 # URL structure version — bump to force full cache rebuild on structural changes
 URL_STRUCTURE_VERSION = "3.0"
@@ -287,4 +290,52 @@ KNOWLEDGE_TO_PILLAR_CATEGORY: dict[str, dict[str, str]] = {
     "industry-analysis": {"aml": "trade-based-ml", "stock": "industry-analysis", "data-engineering": "analytics-engineering"},
     "market-analysis": {"aml": "financial-intelligence", "stock": "market-microstructure", "data-engineering": "analytics-engineering"},
     "strategies": {"aml": "regtech", "stock": "trading-strategies", "data-engineering": "orchestration"},
+    "methodology": {"aml": "risk-assessment", "stock": "quantitative-methods", "data-engineering": "analytics-engineering"},
+    "tutorial-code": {"aml": "regtech", "stock": "trading-strategies", "data-engineering": "pipeline-architecture"},
 }
+
+# Pillar visual/config metadata (used by build.py for templates and rendering)
+# label, url, emoji are derived from the source-of-truth dicts above;
+# extra fields (color, bg, accent, heading, description) are presentation-only.
+PILLAR_CONFIG: dict[str, dict[str, str]] = {
+    "aml": {
+        "label": "Compliance",
+        "url": "compliance",
+        "emoji": "🛡️",
+        "color": "slate",
+        "bg": "from-slate-900 to-slate-800",
+        "accent": "amber",
+        "text_color": "text-slate-900",
+        "badge_color": "bg-amber-100 text-amber-800",
+        "heading": "Compliance & Financial Crime",
+        "description": "Anti-money laundering, regulatory compliance, financial crime detection, and risk management.",
+    },
+    "stock": {
+        "label": "Markets",
+        "url": "markets",
+        "emoji": "📈",
+        "color": "green",
+        "bg": "from-green-900 to-green-800",
+        "accent": "green",
+        "text_color": "text-green-900",
+        "badge_color": "bg-green-100 text-green-800",
+        "heading": "Markets & Industry",
+        "description": "Semiconductors, supply chains, AI industry, manufacturing.",
+    },
+    "data-engineering": {
+        "label": "Data Engineering",
+        "url": "data",
+        "emoji": "⚙️",
+        "color": "indigo",
+        "bg": "from-indigo-900 to-indigo-800",
+        "accent": "indigo",
+        "text_color": "text-indigo-900",
+        "badge_color": "bg-indigo-100 text-indigo-800",
+        "heading": "Data Engineering & Infrastructure",
+        "description": "Data pipelines, orchestration, quality engineering, streaming, storage, and analytics infrastructure.",
+    },
+}
+
+# Derive simple dicts from PILLAR_CONFIG to eliminate duplication
+PILLAR_NAMES = {k: v["label"] for k, v in PILLAR_CONFIG.items()}
+PILLAR_EMOJIS = {k: v["emoji"] for k, v in PILLAR_CONFIG.items()}

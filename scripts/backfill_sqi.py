@@ -10,7 +10,6 @@ in-place with computed SQI values.
 from __future__ import annotations
 
 import json
-import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -220,7 +219,7 @@ def main():
     with open(registry_path, "w") as f:
         json.dump(registry, f, indent=2, ensure_ascii=False)
 
-    print(f"\nResults:")
+    print("\nResults:")
     print(f"  Already has SQI >= {SQI_THRESHOLD}: {already_has_sqi}")
     print(f"  Updated with new SQI: {updated}")
     print(f"  Below threshold after update: {below_threshold}")
@@ -236,7 +235,7 @@ def main():
     if sqi_values:
         sqi_values.sort()
         n = len(sqi_values)
-        print(f"\nSQI Distribution:")
+        print("\nSQI Distribution:")
         print(f"  Min: {sqi_values[0]:.3f}")
         print(f"  Max: {sqi_values[-1]:.3f}")
         print(f"  Avg: {sum(sqi_values)/n:.3f}")

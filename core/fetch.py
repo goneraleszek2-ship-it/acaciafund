@@ -597,5 +597,162 @@ def fetch_semantic_scholar(since_hours: int = 168, max_results: int = 50) -> lis
     return papers[:max_results]
 
 
-# Update ARXIV_CATEGORIES to include more relevant sections
-# Expanding beyond current categories to capture more interdisciplinary work
+# ── SEC EDGAR ──
+
+
+def fetch_sec_edgar(
+    query: str = "financial markets OR quantitative finance OR market microstructure",
+    days_back: int = 7,
+    max_results: int = 50,
+) -> list[dict]:
+    """Search SEC EDGAR full-text search API for recent filings.
+
+    Uses the SEC EDGAR Full-Text Search (EFTS) API:
+    https://efts.sec.gov/LATEST/search-index
+    """
+    end_date = datetime.now(timezone.utc)
+    start_date = end_date - timedelta(days=days_back)
+    params = {
+        "q": query,
+        "dateRange": "custom",
+        "startdt": start_date.strftime("%Y-%m-%d"),
+        "enddt": end_date.strftime("%Y-%m-%d"),
+    }
+    url = f"https://efts.sec.gov/LATEST/search-index?{urllib.parse.urlencode(params)}"
+
+    raw = _request(url, timeout=30)
+    if raw is None:
+        write_dlq("sec-edgar", url, "All retries exhausted", {"days_back": days_back, "query": query})
+        return []
+
+    try:
+        data = json.loads(raw)
+    except json.JSONDecodeError:
+        return []
+
+    results: list[dict] = []
+    for hit in data.get("hits", {}).get("hits", []):
+        source = hit.get("_source", {})
+        title = source.get("display_names") or [""]
+        title = title[0] if isinstance(title, list) else str(title)
+        if not title:
+            continue
+        results.append({
+            "title": title.strip(),
+            "url": source.get("url", ""),
+            "published": source.get("date", ""),
+            "summary": (source.get("description") or "")[:500],
+            "form_type": source.get("form_type", ""),
+            "ticker": source.get("tickers", [None])[0] if source.get("tickers") else None,
+            "source": "sec-edgar",
+        })
+        if len(results) >= max_results:
+            break
+
+    return results
+
+
+# ── SSRN ──
+
+
+def fetch_ssrn(
+    days_back: int = 7,
+    max_results: int = 50,
+) -> list[dict]:
+    """Fetch recent SSRN finance/economics papers via RSS feed."""
+    from email.utils import parsedate_to_datetime
+
+    url = "https://papers.ssrn.com/sol3/rss/jeljournals/RSS_RecentPapers.rss"
+    raw = _cached_request(url, "ssrn_recent", ttl_hours=6)
+    if raw is None:
+        write_dlq("ssrn", url, "All retries exhausted", {"days_back": days_back})
+        return []
+
+    papers: list[dict] = []
+    try:
+        root = ET.fromstring(raw)
+    except ET.ParseError:
+        return []
+
+    cutoff = datetime.now(timezone.utc) - timedelta(days=days_back)
+    for item in root.findall(".//item")[: max_results * 2]:
+        title_el = item.find("title")
+        link_el = item.find("link")
+        desc_el = item.find("description")
+        pub_el = item.find("pubDate")
+        if title_el is None or link_el is None:
+            continue
+        title = (title_el.text or "").strip()
+        link = (link_el.text or "").strip()
+        if not title or not link:
+            continue
+        pub_str = (pub_el.text or "").strip() if pub_el is not None else ""
+        try:
+            pub = parsedate_to_datetime(pub_str) if pub_str else None
+            if pub and pub.replace(tzinfo=timezone.utc) < cutoff:
+                continue
+        except Exception:
+            pass
+        papers.append({
+            "title": title,
+            "url": link,
+            "published": pub_str,
+            "summary": re.sub(r"<[^>]+>", "", (desc_el.text or "") if desc_el is not None else "")[:500],
+            "source": "ssrn",
+        })
+        if len(papers) >= max_results:
+            break
+    return papers
+
+
+# ── NBER ──
+
+
+def fetch_nber(
+    days_back: int = 7,
+    max_results: int = 50,
+) -> list[dict]:
+    """Fetch recent NBER working papers via RSS feed."""
+    from email.utils import parsedate_to_datetime
+
+    url = "https://www.nber.org/rss/papers.xml"
+    raw = _cached_request(url, "nber_recent", ttl_hours=6)
+    if raw is None:
+        write_dlq("nber", url, "All retries exhausted", {"days_back": days_back})
+        return []
+
+    papers: list[dict] = []
+    try:
+        root = ET.fromstring(raw)
+    except ET.ParseError:
+        return []
+
+    cutoff = datetime.now(timezone.utc) - timedelta(days=days_back)
+    for item in root.findall(".//item")[: max_results * 2]:
+        title_el = item.find("title")
+        link_el = item.find("link")
+        desc_el = item.find("description")
+        pub_el = item.find("pubDate")
+        if title_el is None or link_el is None:
+            continue
+        title = (title_el.text or "").strip()
+        link = (link_el.text or "").strip()
+        if not title or not link:
+            continue
+        pub_str = (pub_el.text or "").strip() if pub_el is not None else ""
+        try:
+            pub = parsedate_to_datetime(pub_str) if pub_str else None
+            if pub and pub.replace(tzinfo=timezone.utc) < cutoff:
+                continue
+        except Exception:
+            pass
+        papers.append({
+            "title": title,
+            "url": link,
+            "published": pub_str,
+            "summary": re.sub(r"<[^>]+>", "", (desc_el.text or "") if desc_el is not None else "")[:500],
+            "source": "nber",
+        })
+        if len(papers) >= max_results:
+            break
+    return papers

@@ -1,18 +1,1 @@
-{% extends "layout.j2" %}
-{% block main_content %}
-<section>
-  <h1>{{ page_title }}</h1>
-  <div class="difficulty-groups">
-    {% for diff, items in grouped.items() %}
-    <div class="difficulty">
-      <h2>{{ diff | capitalize }}</h2>
-      <ul>
-        {% for item in items %}
-        <li><a href="{{ slug_to_url(item.slug) }}">{{ item.title }}</a></li>
-        {% endfor %}
-      </ul>
-    </div>
-    {% endfor %}
-  </div>
-</section>
-{% endblock %}
+{{ item.description | truncate(100) }}

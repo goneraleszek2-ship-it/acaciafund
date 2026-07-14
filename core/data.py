@@ -1,10 +1,11 @@
 import json
 import re
 import sys
-import tomllib
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
+
+import tomllib
 
 BASE_DIR = Path(__file__).parent.parent
 CONFIG_PATH = BASE_DIR / "etc" / "pillars.toml"

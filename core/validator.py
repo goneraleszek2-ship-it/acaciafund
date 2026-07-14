@@ -65,42 +65,42 @@ def _image_exists_with_any_extension(img_url: str) -> bool:
     # Resolve to hashed path if in manifest
     resolved_path = _resolve_asset_path(img_url.lstrip("/"))
     img_path = PROJECT_ROOT / resolved_path.lstrip("/")
-    
+
     # First check the exact path with the expected extension
     if img_path.is_file():
         return True
-    
+
     # If not found, try other valid extensions
     for ext in VALID_IMAGE_EXTENSIONS:
         alt_path = img_path.with_suffix(ext)
         if alt_path.is_file():
             return True
-    
+
     # If still not found, try with 'blog/' prefix (for blog images)
     if "blog/" not in resolved_path:
         blog_path = PROJECT_ROOT / "static" / "images" / "generated" / "blog" / Path(resolved_path).name
         if blog_path.is_file():
             return True
-        
+
         # Try alternate extensions with blog/ prefix
         for ext in VALID_IMAGE_EXTENSIONS:
             alt_path = blog_path.with_suffix(ext)
             if alt_path.is_file():
                 return True
-    
+
     # Try adding _s1 suffix (for blog section images)
     stem = img_path.stem
     ext = img_path.suffix if img_path.suffix else ".webp"
     s1_path = img_path.parent / f"{stem}_s1{ext}"
     if s1_path.is_file():
         return True
-    
+
     # Try alternate extensions with _s1 suffix
     for ext in VALID_IMAGE_EXTENSIONS:
         s1_alt = img_path.parent / f"{stem}_s1{ext}"
         if s1_alt.is_file():
             return True
-    
+
     return False
 
 

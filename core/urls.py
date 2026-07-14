@@ -5,7 +5,6 @@ and canonical URLs. They are dependency-free (only imports config.py) so they ca
 be imported safely by tests without triggering heavy module-level computation.
 """
 
-import re
 
 from config import PILLAR_URL_MAP, PILLAR_URL_REVERSE, SITE_URL
 

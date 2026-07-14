@@ -1,0 +1,35 @@
+graph TD
+    START(["python3 build.py"]) --> LOAD["1. Load Registry"]
+    LOAD -->|"registry.json"| VALIDATE["Validate items"]
+    VALIDATE --> CACHE["2. Build Cache Init"]
+    CACHE -->|".build_cache.json"| LOOP
+
+    subgraph "3. Process Items (loop)"
+        LOOP["For each item"] --> HASH{"Cache hit?"}
+        HASH -->|"Yes, unchanged"| SKIP["Skip item"]
+        HASH -->|"No, changed/new"| SQI["Compute SQI"]
+        SQI --> BODY["Render body HTML"]
+        BODY --> IMAGES["Generate OG / thumbnails"]
+        IMAGES --> SVGS["Generate topic icons"]
+        SVGS --> INJECT["Inject section images"]
+        INJECT --> RENDER["Render Jinja2 template"]
+        RENDER --> WRITE["Write output file"]
+    end
+
+    LOOP --> DONE{"All items done?"}
+    DONE -->|"No"| LOOP
+    DONE -->|"Yes"| TAX["4. Generate Taxonomies"]
+
+    TAX --> ADMIN["generate_admin_pages()<br/>12 admin pages"]
+    TAX --> SEARCH["generate_search_pages()<br/>search page + index"]
+    TAX --> TAGS["generate_tag_pages()<br/>tag archive pages"]
+    TAX --> PILLARS["generate_pillar_pages()<br/>pillar landings"]
+    TAX --> FEED["generate_feed()<br/>Atom feed"]
+
+    ADMIN --> GRAPH["5. Build Knowledge Graph"]
+    GRAPH --> ASSETS["6. Copy Static Assets"]
+    ASSETS --> META["7. Write Metadata"]
+    META --> DONE_BUILD["Build complete"]
+
+    style START fill:#22c55e,color:#fff
+    style DONE_BUILD fill:#22c55e,color:#fff

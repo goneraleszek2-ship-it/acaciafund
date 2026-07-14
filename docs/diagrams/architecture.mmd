@@ -1,0 +1,61 @@
+graph TD
+    subgraph "Ingestion Layer"
+        KI["knowledge_ingester.py<br/>(arXiv, HN, PubMed)"]
+        GL["generate_learn_modules.py<br/>(Bloom Qs, flashcards)"]
+        GG["generate_glossaries.py<br/>(pillar glossaries)"]
+        BS["backfill_sqi.py<br/>(SQI scores)"]
+        CS["check_source_freshness.py<br/>(32 sources)"]
+    end
+
+    subgraph "Data Layer"
+        RJ["registry.json<br/>~280 items"]
+        OT["data/ontology.json<br/>48 concepts, 47 relations"]
+        SH["data/source_health.json<br/>32 sources"]
+        SL["seed_learn.py<br/>prerequisites + relations"]
+    end
+
+    subgraph "Build Engine"
+        BP["build.py<br/>~3667 lines"]
+        BC["build_cache.py<br/>incremental builds"]
+        BT["build_taxonomies.py<br/>5 generators"]
+        URLS["urls.py<br/>slug/pillar translation"]
+    end
+
+    subgraph "Output (dist/)"
+        HTML["HTML pages (~810)"]
+        STATIC["static/ assets"]
+        FEED["feed.xml"]
+        GRAPH["graph-data.json"]
+        SEARCH["search-index.json"]
+        META["build-meta.json"]
+    end
+
+    subgraph "Deployment"
+        CF["Cloudflare Pages"]
+        GH["GitHub Actions"]
+    end
+
+    KI --> RJ
+    GL --> RJ
+    GG --> RJ
+    BS --> RJ
+    CS --> SH
+
+    RJ --> BP
+    OT --> BP
+    SH --> BP
+    SL --> BP
+
+    BP --> BC
+    BP --> BT
+    BP --> URLS
+    BP --> HTML
+    BP --> STATIC
+    BP --> FEED
+    BP --> GRAPH
+    BP --> SEARCH
+    BP --> META
+
+    HTML --> CF
+    STATIC --> CF
+    GH --> CF

@@ -1,0 +1,51 @@
+graph LR
+    subgraph "External Sources"
+        ARXIV["arXiv API"]
+        HN["HackerNews"]
+        PUBMED["PubMed"]
+        SEC["SEC EDGAR"]
+    end
+
+    subgraph "Scripts"
+        KI["knowledge_ingester.py"]
+        GL["generate_learn_modules.py"]
+        GG["generate_glossaries.py"]
+    end
+
+    subgraph "Data"
+        RJ["registry.json"]
+        ONTO["data/ontology.json"]
+    end
+
+    subgraph "Build"
+        BP["build.py"]
+        TEMPLATES["Jinja2 Templates"]
+    end
+
+    subgraph "Output"
+        PAGES["/compliance/, /markets/, /data/"]
+        GLOSSARY["/glossary/"]
+        LEARN["/learn/"]
+        KNOWLEDGE["/knowledge/"]
+    end
+
+    ARXIV --> KI
+    HN --> KI
+    PUBMED --> KI
+    SEC --> KI
+    KI --> RJ
+
+    ONTO --> GG
+    GG --> RJ
+
+    ONTO --> GL
+    GL --> RJ
+
+    RJ --> BP
+    ONTO --> BP
+    TEMPLATES --> BP
+
+    BP --> PAGES
+    BP --> GLOSSARY
+    BP --> LEARN
+    BP --> KNOWLEDGE

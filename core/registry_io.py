@@ -11,7 +11,6 @@ import os
 from pathlib import Path
 from typing import Any
 
-
 LOCK_SUFFIX = ".lock"
 TMP_SUFFIX = ".tmp"
 

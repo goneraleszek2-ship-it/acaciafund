@@ -179,8 +179,8 @@ def main():
             "body_html": f"<p>{meta['description']}</p>\n\n{body.replace(chr(10)*2, '</p><p>').replace(chr(10), '<br>')}",
             "bloom_questions": [
                 {"level": "remember", "question": f"What are the core concepts in {meta['title'].replace(' Glossary', '')}?"},
-                {"level": "understand", "question": f"How do the concepts in this glossary relate to each other?"},
-                {"level": "apply", "question": f"How would you use these terms when analyzing a real-world scenario?"},
+                {"level": "understand", "question": "How do the concepts in this glossary relate to each other?"},
+                {"level": "apply", "question": "How would you use these terms when analyzing a real-world scenario?"},
             ],
             "source_inspiration": True,
             "auto_generated": True,

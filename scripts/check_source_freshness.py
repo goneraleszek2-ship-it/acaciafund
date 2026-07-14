@@ -15,11 +15,12 @@ from __future__ import annotations
 import json
 import sys
 import time
-import tomllib
 from datetime import datetime, timezone
 from pathlib import Path
+from urllib.error import HTTPError, URLError
 from urllib.request import Request, urlopen
-from urllib.error import URLError, HTTPError
+
+import tomllib
 
 PROJECT_ROOT = Path(__file__).parent.parent
 PILLARS_TOML = PROJECT_ROOT / "etc" / "pillars.toml"

@@ -15,11 +15,11 @@ from __future__ import annotations
 
 import json
 import re
-import tomllib
 from pathlib import Path
 from typing import Any
 
 import pandas as pd
+import tomllib
 
 INSPIRATION_SOURCES_PATH = Path(__file__).parent.parent / "etc" / "pillars.toml"
 

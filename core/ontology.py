@@ -475,6 +475,10 @@ class OntologyManager:
         """Export relations as Cytoscape-compatible edge dicts."""
         edges = []
         for i, r in enumerate(self._relations):
+            src = self._concepts.get(r.source_id)
+            tgt = self._concepts.get(r.target_id)
+            source_pillar = src.pillar if src else ""
+            target_pillar = tgt.pillar if tgt else ""
             edges.append({
                 "data": {
                     "id": f"ont-rel:{i}",
@@ -482,6 +486,8 @@ class OntologyManager:
                     "target": f"ont:{r.target_id}",
                     "relation": r.relation_type,
                     "strength": r.strength,
+                    "sourcePillar": source_pillar,
+                    "targetPillar": target_pillar,
                 }
             })
         return edges

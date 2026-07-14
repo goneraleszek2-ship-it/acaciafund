@@ -1,5 +1,7 @@
 import os
+
 from mem0 import Memory
+
 
 def setup():
     api_key = os.getenv('NVIDIA_API_KEY')
@@ -20,7 +22,7 @@ def setup():
             }
         }
     }
-    
+
     # Przekazujemy config bezpośrednio do konstruktora
     m = Memory(config=config)
     m.add("AcaciaFund to Knowledge Fund skupiony na strukturyzacji wiedzy dziedzinowej.", user_id='leszek_dev')

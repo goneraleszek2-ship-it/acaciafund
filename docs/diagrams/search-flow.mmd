@@ -1,0 +1,28 @@
+sequenceDiagram
+    participant User
+    participant Browser
+    participant FuseJS as Fuse.js
+    participant LocalStorage
+    participant Plausible
+
+    Note over Browser: Page Load
+    Browser->>FuseJS: fetch(/static/search-index.json)
+    FuseJS-->>Browser: search index loaded
+
+    Note over User,Browser: User Interaction
+    User->>Browser: Type query
+    Browser->>Browser: Debounce 200ms
+    Browser->>LocalStorage: save recent query
+    Browser->>FuseJS: search(query)
+    FuseJS-->>Browser: ranked results
+    Browser->>Browser: apply facet filters
+    Browser->>Browser: apply concept boost
+    Browser->>Browser: update URL params (?q=&f_pillar=)
+    Browser->>User: render result cards
+
+    Note over User,Plausible: Analytics
+    Browser->>Plausible: plausible('search', {query, results, filters})
+
+    User->>Browser: click result
+    Browser->>Plausible: plausible('search_result_click', {query, slug, position})
+    Browser->>User: navigate to result page

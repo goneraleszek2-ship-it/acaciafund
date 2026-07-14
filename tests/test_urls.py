@@ -10,12 +10,12 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 from config import PILLAR_URL_MAP, PILLAR_URL_REVERSE
 from core.urls import (
-    pillar_to_url,
-    url_to_pillar,
-    slug_to_fspath,
-    slug_to_url,
     canonical_path,
+    pillar_to_url,
+    slug_to_fspath,
     slug_to_path,
+    slug_to_url,
+    url_to_pillar,
 )
 
 

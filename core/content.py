@@ -1,7 +1,7 @@
 """Content wrapper for AcaciaFund registry data."""
 
 from dataclasses import dataclass, field
-from datetime import datetime, timezone
+from datetime import datetime
 from typing import Any, Dict, List, Optional
 
 
@@ -61,18 +61,18 @@ class Content:
         """Create Content instance from dictionary."""
         created_at = None
         date_str = None
-        
+
         # Try to parse created_at
         if "created_at" in data and data["created_at"]:
             try:
                 created_at = datetime.fromisoformat(data["created_at"].replace("Z", "+00:00"))
             except (ValueError, TypeError):
                 pass
-        
+
         # Try to parse date_str
         if "date_str" in data and data["date_str"]:
             date_str = data["date_str"]
-        
+
         # Multi-tag migration: fall back to wrapping single category if tags are empty
         tags: List[str] = data.get("tags", [])
         if not tags and "category" in data and data["category"]:

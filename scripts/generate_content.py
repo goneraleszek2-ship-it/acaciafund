@@ -196,8 +196,8 @@ def _generate_deterministic_item(
                 f"relevant to {pillar} professionals.</p>"
             )
             body_parts.append(
-                f"<p>Practical implications include improved decision-making, "
-                f"better risk assessment, and enhanced operational efficiency.</p>"
+                "<p>Practical implications include improved decision-making, "
+                "better risk assessment, and enhanced operational efficiency.</p>"
             )
 
     tags = list(info["keywords"])
@@ -320,7 +320,7 @@ def main() -> int:
         p = item.get("pillar", "")
         counts[(t, p)] += 1
 
-    print(f"\nCurrent distribution:")
+    print("\nCurrent distribution:")
     for (t, p), c in sorted(counts.items()):
         print(f"  {t:12s} / {p:20s}: {c}")
 

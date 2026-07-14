@@ -100,23 +100,29 @@ def main():
     # Run the build
     print("Running full build...")
     start = time.time()
-    # We'll run build.py and capture output
     import subprocess
 
-    result = subprocess.run(
-        [sys.executable, "build.py"],
-        cwd="/root/acaciafund",
-        capture_output=True,
-        text=True,
-    )
-    elapsed = time.time() - start
-    if result.returncode == 0:
-        print(f"Build succeeded in {elapsed:.2f}s.")
-        print(f"Output: {result.stdout[-500:] if len(result.stdout) > 500 else result.stdout}")
-    else:
-        print(f"Build failed after {elapsed:.2f}s.")
-        print(f"Stdout: {result.stdout}")
-        print(f"Stderr: {result.stderr}")
+    try:
+        result = subprocess.run(
+            [sys.executable, "build.py"],
+            cwd="/root/acaciafund",
+            capture_output=True,
+            text=True,
+            timeout=600,
+        )
+        elapsed = time.time() - start
+        if result.returncode == 0:
+            print(f"Build succeeded in {elapsed:.2f}s.")
+            print(f"Output: {result.stdout[-500:] if len(result.stdout) > 500 else result.stdout}")
+        else:
+            print(f"Build failed after {elapsed:.2f}s.")
+            print(f"Stdout: {result.stdout}")
+            print(f"Stderr: {result.stderr}")
+    except subprocess.TimeoutExpired:
+        elapsed = time.time() - start
+        print(f"Build timed out after {elapsed:.2f}s (limit: 600s).")
+    except FileNotFoundError:
+        print("build.py not found — ensure you're running from the project root.")
 
     print("\nDone.")
 

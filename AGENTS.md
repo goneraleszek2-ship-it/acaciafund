@@ -89,7 +89,7 @@ This codebase has been built in sequential sprints. Understanding what came befo
 | Foundation fixes | Concept extraction word-boundary fix, alias expansion, full category remapping, knowledge-to-pillar mapping, description backfill |
 | Quality fixes | SQI backfill script, search recall improvement (threshold 0.35, body window 800), niche concept alias expansion |
 
-**Current state:** 260 registry items, 510 pages, 3 clean pillars, 48 ontology concepts (all with valid PILLAR_SUBCATEGORIES), 32 inspiration sources. Quality gate: 3 items below threshold (glossary pages only).
+**Current state:** ~280 registry items, ~810 pages, 3 clean pillars, 48 ontology concepts (all with valid PILLAR_SUBCATEGORIES), 32 inspiration sources. Quality gate: passing (all 263 items ≥ 0.65).
 
 ## Architecture
 
@@ -135,7 +135,23 @@ Each pillar has subcategories defined in `config.py` → `PILLAR_SUBCATEGORIES`:
 
 ### Knowledge Categories
 
-11 knowledge categories defined in `build.py` → `KNOWLEDGE_CATEGORIES`: methodology, tooling, architecture, tutorial, reference, tutorial-code, case-study, benchmark, comparison, deep-dive, landscape.
+13 knowledge categories defined in `build.py` → `KNOWLEDGE_CATEGORIES`: platform, guide, reference, architecture, foundations, advanced-techniques, best-practices, regulations, industry-analysis, market-analysis, strategies, methodology, tutorial-code.
+
+| Category | Icon | Description |
+|---|---|---|
+| `platform` | ⚙️ | About AcaciaFund — mission, team, contact, operations |
+| `guide` | 🧭 | Methodology, taxonomy, and how-to guides |
+| `reference` | 📖 | Glossaries, tool landscapes, technical terminology |
+| `architecture` | 🔗 | System design, pipeline architecture, DataOps |
+| `foundations` | 📚 | Core concepts and theoretical frameworks |
+| `advanced-techniques` | 🔬 | Specialized algorithms and advanced implementations |
+| `best-practices` | ✅ | Practical guides, optimization strategies |
+| `regulations` | 📋 | Regulatory frameworks and compliance analysis |
+| `industry-analysis` | 📊 | Market trends, industry reports, sector analysis |
+| `market-analysis` | 📈 | Market dynamics, volatility, financial analysis |
+| `strategies` | 🎯 | Trading and investment strategies |
+| `methodology` | 🧪 | Research methods, backtesting frameworks |
+| `tutorial-code` | 💻 | Step-by-step tutorials with executable code |
 
 Knowledge items use cross-pillar categories. To resolve them to pillar-specific subcategories, use `config.py` → `KNOWLEDGE_TO_PILLAR_CATEGORY`. This maps each knowledge category to the appropriate pillar subcategory for breadcrumb/navigation display.
 
@@ -316,20 +332,12 @@ result = df.filter(pl.col('price') > 100).collect()
 ## Known Issues & Tech Debt
 
 ### Critical
-- **`services/mem0/` does not exist.** 7 scripts import `from services.mem0 import ...` and will crash if run directly. `build.py` wraps this in try/except (line 99-104) so the build is safe, but standalone scripts are broken.
-- **`scripts/execute_fixes.py`** imports `from test_agent_arena import query_model` with a broken `sys.path.append`. Will fail unless run from within `scripts/`.
+- **`services/mem0/` does not exist.** 6 mem0 scripts archived in `scripts/archive/`. `build.py` wraps the import in try/except (line 99-104).
+- **`scripts/execute_fixes.py`** depends on external LLM APIs. Mock fallback works but the build subprocess at the end may hang without timeout.
 
 ### Warning
-- **`templates/admin/login.html`** was fixed (now extends `admin/base.html` with sidebar hidden).
-- **`core/build_taxonomies.py`** (958 lines) has zero test coverage. This is the highest-risk untested module.
-- **20+ orphaned scripts** in `scripts/` that are not imported or referenced by any workflow, build, or test (see `scripts/` directory listing).
 - **`config.py` vs `build.py`** — `build.py` defines `PILLAR_CONFIG`, `PILLAR_EMOJIS`, `PILLAR_NAMES` as parallel dicts (lines 205-244) that duplicate pillar info also in `config.py`. If pillars change, both must be updated.
-- **SQI quality gate**: 3 items fail the 0.65 threshold (all glossary pages). Run `python3 scripts/backfill_sqi.py` to recompute SQI for all items.
 - **Concept extraction threshold**: `build.py` uses `>= 0.35` for concept cache and inline extraction. `extract_concepts_from_text()` default is `>= 0.5`. If extraction is too strict/loose, adjust these thresholds.
-
-### Info
-- **`fetch_images.py` and `content_audit.py`** reference `"science"` as a pillar in search strings (cosmetic, not functional).
-- **7 legacy redirect directories** in dist/ (`aml/`, `science/`, `stock/`, etc.) are artifacts of old URL structure. Handled by `_redirects`.
 
 ## Testing
 
@@ -344,8 +352,9 @@ result = df.filter(pl.col('price') > 100).collect()
 | `tests/test_smoke.py` | 34 | Registry validation, schema enforcement |
 | `tests/test_build_smoke.py` | 12 | Build output verification |
 | `tests/test_redirects.py` | 8 | Redirect rules validation |
+| `tests/test_build_taxonomies.py` | 20 | Taxonomy generation (all 5 generators) |
 
-**Total: ~143 tests.** Tests use `python3 -m pytest tests/ -v`.
+**Total: ~163 tests.** Tests use `python3 -m pytest tests/ -v`.
 
 ### Testing Strategy
 

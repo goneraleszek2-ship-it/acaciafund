@@ -104,9 +104,17 @@ def build_graph() -> dict:
             )
             seen_ids.add(f"tag:{tag}")
 
+    # Build lookup: slug → domain
+    slug_domain = {}
+    for item in items:
+        s = item.get("slug", "")
+        if s:
+            slug_domain[s] = _domain(s)
+
     # --- Edges ---
     edges: list[dict] = []
     for slug, tags in doc_tag_map.items():
+        src_pillar = slug_domain.get(slug, "")
         for t in tags:
             edges.append(
                 {
@@ -114,6 +122,8 @@ def build_graph() -> dict:
                         "id": f"edge:{slug}:{t}",
                         "source": f"doc:{slug}",
                         "target": f"tag:{t}",
+                        "sourcePillar": src_pillar,
+                        "targetPillar": "",
                     }
                 }
             )

@@ -219,7 +219,7 @@ def main():
             print(f"    ... and {len(pairs) - 5} more")
 
     if by_pillar:
-        print(f"\n  By pillar:")
+        print("\n  By pillar:")
         for pillar, count in sorted(by_pillar.items()):
             url = PILLAR_URL_MAP.get(pillar, pillar)
             print(f"    {pillar} → {url}: {count} items")

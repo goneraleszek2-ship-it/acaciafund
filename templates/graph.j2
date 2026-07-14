@@ -6,26 +6,10 @@
     <p>Interactive topology of {{ node_count }} semantic nodes and {{ edge_count }} relationships across the Acacia knowledge repository.</p>
   </hgroup>
 
-  <div id="cy" class="graph-container"></div>
-
-  <details class="graph-legend">
-    <summary>Legend</summary>
-    <ul class="legend-list">
-      <li><span class="legend-dot" style="background:#6366f1"></span> Blog (research articles)</li>
-      <li><span class="legend-dot" style="background:#22c55e"></span> Learn (educational content)</li>
-      <li><span class="legend-dot" style="background:#d97706"></span> Knowledge (reference pages)</li>
-      <li><span class="legend-dot" style="background:#a855f7"></span> Docs (system documentation)</li>
-      <li><span class="legend-dot" style="background:#14b8a6"></span> Semantic Tag (concept)</li>
-      <li><span class="legend-dot" style="background:#14b8a6; shape:diamond; border:2px solid #fff"></span> Ontology Concept (structured entity)</li>
-      <li><span class="legend-dot" style="background:#22c55e"></span> part_of relation</li>
-      <li><span class="legend-dot" style="background:#3b82f6"></span> requires relation</li>
-      <li><span class="legend-dot" style="background:#f59e0b"></span> related_to relation</li>
-      <li><span class="legend-dot" style="background:#ef4444"></span> detects relation</li>
-      <li><span class="legend-dot" style="background:#a855f7"></span> other relation types</li>
-    </ul>
-    <div style="margin-top:0.75rem;">
-      <label style="font-size:0.75rem;color:var(--color-text-muted)">Filter by pillar:</label>
-      <select id="graph-filter" style="font-size:0.75rem;margin-top:0.25rem;width:100%;padding:0.25rem;border-radius:4px;background:var(--color-bg);color:var(--color-text);border:1px solid var(--color-border)">
+  <div class="graph-toolbar">
+    <div class="graph-toolbar-group">
+      <label>Pillar</label>
+      <select id="graph-filter">
         <option value="all">All</option>
         <option value="compliance">Compliance</option>
         <option value="markets">Markets</option>
@@ -33,23 +17,244 @@
         <option value="ontology">Ontology Only</option>
       </select>
     </div>
-    <p><small>Click a node to highlight its neighbours. Hover to see details. Drag to rearrange.</small></p>
-  </details>
-
-  <div class="graph-controls">
-    <button id="btn-reset" class="outline">Reset Layout</button>
-    <button id="btn-download" class="outline">Download PNG</button>
+    <div class="graph-toolbar-group">
+      <label>Relation&nbsp;type</label>
+      <select id="graph-relation-filter">
+        <option value="all">All</option>
+        <option value="part_of">Part of</option>
+        <option value="requires">Requires</option>
+        <option value="related_to">Related to</option>
+        <option value="detects">Detects</option>
+        <option value="enables">Enables</option>
+        <option value="implements">Implements</option>
+        <option value="regulates">Regulates</option>
+        <option value="influences">Influences</option>
+        <option value="measures">Measures</option>
+        <option value="supersedes">Supersedes</option>
+      </select>
+    </div>
+    <div class="graph-toolbar-group">
+      <label>Layout</label>
+      <select id="graph-layout">
+        <option value="cose-bilkent">Force-directed</option>
+        <option value="dagre">Hierarchical</option>
+        <option value="concentric">Concentric</option>
+        <option value="breadthfirst">Breadth-first</option>
+      </select>
+    </div>
+    <div class="graph-toolbar-group">
+      <label>Search</label>
+      <input type="text" id="graph-search" placeholder="Search nodes..." style="width:140px;font-size:0.8rem;padding:2px 6px;border-radius:4px;background:var(--color-bg);color:var(--color-text);border:1px solid var(--color-border)">
+    </div>
+    <div class="graph-toolbar-group graph-toolbar-actions">
+      <button id="btn-reset" class="outline" style="font-size:0.75rem;padding:2px 8px">Reset</button>
+      <button id="btn-download" class="outline" style="font-size:0.75rem;padding:2px 8px">PNG</button>
+    </div>
   </div>
+
+  <div id="cy" class="graph-container"></div>
+
+  <div id="graph-detail" class="graph-detail" style="display:none">
+    <div class="graph-detail-header">
+      <span id="detail-title"></span>
+      <button id="detail-close" class="outline" style="font-size:0.7rem;padding:1px 6px">&#x2715;</button>
+    </div>
+    <div id="detail-body" class="graph-detail-body"></div>
+  </div>
+
+  <details class="graph-legend" style="margin-top:0.5rem">
+    <summary>Legend</summary>
+    <ul class="legend-list">
+      <li><span class="legend-dot" style="background:#6366f1"></span> Research</li>
+      <li><span class="legend-dot" style="background:#22c55e"></span> Learn</li>
+      <li><span class="legend-dot" style="background:#d97706"></span> Knowledge</li>
+      <li><span class="legend-dot" style="background:#14b8a6; shape:diamond; border:2px solid #fff"></span> Concept</li>
+      <li><span class="legend-dot" style="background:#22c55e"></span> part_of</li>
+      <li><span class="legend-dot" style="background:#3b82f6"></span> requires</li>
+      <li><span class="legend-dot" style="background:#f59e0b"></span> related_to</li>
+      <li><span class="legend-dot" style="background:#ef4444"></span> detects</li>
+      <li><span class="legend-dot" style="background:#a855f7"></span> other</li>
+    </ul>
+    <p><small>Click a node to highlight neighbours and show details. Hover to preview. Drag to rearrange. Scroll to zoom.</small></p>
+  </details>
 </section>
 
 <script src="https://unpkg.com/cytoscape@3.30.4/dist/cytoscape.min.js"></script>
 <script src="https://unpkg.com/cytoscape-cose-bilkent@4.1.0/cytoscape-cose-bilkent.js"></script>
+<script src="https://unpkg.com/dagre@0.8.5/dist/dagre.min.js"></script>
+<script src="https://unpkg.com/cytoscape-dagre@2.5.0/cytoscape-dagre.js"></script>
 <script>
   (function() {
     var cy;
+    var rawData = null;
+    var currentActiveNode = null;
+    var detailTimer = null;
+
+    var RELATION_COLORS = {
+      'part_of': '#22c55e',
+      'requires': '#3b82f6',
+      'related_to': '#f59e0b',
+      'detects': '#ef4444',
+      'enables': '#a855f7',
+      'implements': '#a855f7',
+      'regulates': '#a855f7',
+      'influences': '#a855f7',
+      'measures': '#a855f7',
+      'supersedes': '#a855f7',
+    };
+
+    var PILLAR_COLORS = {
+      'compliance': '#f59e0b',
+      'markets': '#3b82f6',
+      'data': '#22c55e',
+    };
+
+    function runLayout(name) {
+      if (!cy) return;
+      var opts = { animate: true, animationDuration: 600, fit: true, padding: 30 };
+      if (name === 'dagre') {
+        opts.name = 'dagre';
+        opts.rankDir = 'TB';
+        opts.nodeSep = 40;
+        opts.rankSep = 60;
+        opts.edgeSep = 10;
+      } else if (name === 'cose-bilkent') {
+        opts.name = 'cose-bilkent';
+        opts.nodeRepulsion = function() { return 204800; };
+        opts.idealEdgeLength = function() { return 80; };
+        opts.gravity = 0.25;
+        opts.numIter = 1000;
+      } else if (name === 'concentric') {
+        opts.name = 'concentric';
+        opts.concentric = function(n) { return n.degree(); };
+        opts.levelWidth = function(nodes) { return 2; };
+      } else if (name === 'breadthfirst') {
+        opts.name = 'breadthfirst';
+        opts.directed = true;
+      }
+      cy.layout(opts).run();
+    }
+
+    function applyFilters() {
+      if (!cy) return;
+
+      var pillarVal = document.getElementById('graph-filter').value;
+      var relVal = document.getElementById('graph-relation-filter').value;
+
+      cy.elements().removeClass('faded');
+
+      var visibleEdges = cy.edges();
+      var visibleNodes = cy.nodes();
+
+      // Relation filter
+      if (relVal !== 'all') {
+        visibleEdges = cy.edges('[relation = "' + relVal + '"]');
+        var connectedNodeIds = new Set();
+        visibleEdges.forEach(function(e) {
+          connectedNodeIds.add(e.data('source'));
+          connectedNodeIds.add(e.data('target'));
+        });
+        visibleNodes = cy.nodes().filter(function(n) {
+          return connectedNodeIds.has(n.id());
+        });
+      }
+
+      // Pillar filter
+      if (pillarVal !== 'all') {
+        if (pillarVal === 'ontology') {
+          visibleNodes = cy.nodes('[type = "concept"]');
+          visibleEdges = cy.edges('[id ^= "ont-rel:"]');
+        } else {
+          var matchedNodes = cy.nodes('[domain = "' + pillarVal + '"]');
+          visibleNodes = matchedNodes;
+          var connEdgeIds = new Set();
+          matchedNodes.forEach(function(n) {
+            n.connectedEdges().forEach(function(e) { connEdgeIds.add(e.id()); });
+          });
+          visibleEdges = cy.edges().filter(function(e) { return connEdgeIds.has(e.id()); });
+        }
+      }
+
+      // Apply
+      cy.elements().addClass('faded');
+      visibleNodes.removeClass('faded');
+      visibleEdges.removeClass('faded');
+
+      // Re-style edges by relation
+      visibleEdges.forEach(function(e) {
+        var rel = e.data('relation');
+        var color = RELATION_COLORS[rel] || '#a855f7';
+        // Cross-pillar edge detection: source and target belong to different pillars
+        var srcP = e.data('sourcePillar');
+        var tgtP = e.data('targetPillar');
+        var isCross = srcP && tgtP && srcP !== tgtP;
+        if (isCross) {
+          e.style('line-style', 'dashed');
+          e.style('width', 0.8);
+          e.style('line-color', '#94a3b8');
+          e.style('target-arrow-color', '#94a3b8');
+          e.style('opacity', 0.6);
+        } else {
+          e.style('line-style', 'solid');
+          e.style('line-color', color);
+          e.style('target-arrow-color', color);
+          e.style('width', 0.6);
+          e.style('opacity', 0.4);
+        }
+      });
+
+      if (visibleNodes.length && (pillarVal !== 'all' || relVal !== 'all')) {
+        cy.animate({ fit: { eles: visibleNodes, padding: 50 }, duration: 400 });
+      }
+    }
+
+    function showDetail(node) {
+      var d = node.data();
+      var el = document.getElementById('graph-detail');
+      document.getElementById('detail-title').textContent = d.label;
+
+      var html = '';
+
+      if (d.type === 'document') {
+        var domain = d.domain || 'unknown';
+        var pColor = PILLAR_COLORS[domain] || '#888';
+        html += '<span class="detail-badge" style="background:' + pColor + '">' + domain + '</span>';
+        if (d.slug) {
+          html += '<a href="/' + d.slug.replace(/^\/+/, '') + '/" class="detail-link">View page &rarr;</a>';
+        }
+        html += '<div class="detail-section"><strong>ID:</strong> ' + d.id + '</div>';
+      } else {
+        html += '<span class="detail-badge" style="background:#14b8a6">Concept</span>';
+        html += '<div class="detail-section"><strong>Connections:</strong> ' + node.degree() + ' edges</div>';
+
+        // Show connected nodes
+        var nbrs = node.neighborhood().nodes();
+        if (nbrs.length) {
+          html += '<div class="detail-section"><strong>Connected to:</strong></div>';
+          html += '<div class="detail-neighbors">';
+          nbrs.forEach(function(n) {
+            var nd = n.data();
+            var pColor = PILLAR_COLORS[nd.domain] || '#888';
+            html += '<span class="detail-neighbor" data-id="' + nd.id + '" style="border-left:3px solid ' + pColor + '">' + nd.label + '</span>';
+          });
+          html += '</div>';
+        }
+      }
+
+      document.getElementById('detail-body').innerHTML = html;
+      el.style.display = 'block';
+      currentActiveNode = node;
+    }
+
+    function hideDetail() {
+      document.getElementById('graph-detail').style.display = 'none';
+      currentActiveNode = null;
+    }
 
     function initGraph(data) {
-      cytoscape.use(require ? require('cytoscape-cose-bilkent') : window.cytoscapeCoseBilkent);
+      rawData = data;
+      cytoscape.use(window.cytoscapeCoseBilkent);
+      cytoscape.use(window.cytoscapeDagre);
 
       cy = cytoscape({
         container: document.getElementById('cy'),
@@ -98,26 +303,6 @@
             }
           },
           {
-            selector: 'edge[relation = "part_of"]',
-            style: { 'line-color': '#22c55e', 'target-arrow-color': '#22c55e' }
-          },
-          {
-            selector: 'edge[relation = "requires"]',
-            style: { 'line-color': '#3b82f6', 'target-arrow-color': '#3b82f6' }
-          },
-          {
-            selector: 'edge[relation = "related_to"]',
-            style: { 'line-color': '#f59e0b', 'target-arrow-color': '#f59e0b' }
-          },
-          {
-            selector: 'edge[relation = "detects"]',
-            style: { 'line-color': '#ef4444', 'target-arrow-color': '#ef4444' }
-          },
-          {
-            selector: 'edge[relation = "enables"], edge[relation = "implements"], edge[relation = "regulates"], edge[relation = "influences"], edge[relation = "measures"], edge[relation = "supersedes"]',
-            style: { 'line-color': '#a855f7', 'target-arrow-color': '#a855f7' }
-          },
-          {
             selector: 'node:selected',
             style: {
               'border-width': 2,
@@ -148,8 +333,7 @@
         ],
         layout: {
           name: 'cose-bilkent',
-          animate: true,
-          animationDuration: 800,
+          animate: false,
           fit: true,
           padding: 30,
           nodeRepulsion: function() { return 204800; },
@@ -160,41 +344,46 @@
         wheelSensitivity: 0.3,
       });
 
-      // Hover tooltip
+      // Hover — preview
+      var previewTimer = null;
       cy.on('mouseover', 'node', function(evt) {
         var n = evt.target;
-        var data = n.data();
-        var info = data.label;
-        if (data.type === 'document') {
-          info += ' [' + data.domain + ']';
+        var d = n.data();
+        var info = d.label;
+        if (d.type === 'document') {
+          info += ' [' + (d.domain || '') + ']';
         } else {
-          info += ' (' + data.count + ' docs)';
+          info += ' (' + n.degree() + ' connections)';
         }
         n.style({ 'border-width': 1, 'border-color': '#fbbf24', 'border-opacity': 0.6 });
         document.getElementById('cy').title = info;
       });
       cy.on('mouseout', 'node', function(evt) {
-        evt.target.style({ 'border-width': 0 });
+        if (evt.target !== currentActiveNode) {
+          evt.target.style({ 'border-width': 0 });
+        }
         document.getElementById('cy').title = '';
       });
 
-      // Click — highlight neighbourhood
+      // Click — highlight neighbourhood + detail panel
       cy.on('tap', 'node', function(evt) {
         var n = evt.target;
         var nbrs = n.neighborhood().add(n);
         cy.elements().addClass('faded');
         nbrs.removeClass('faded');
         nbrs.addClass('highlighted');
+        showDetail(n);
       });
       cy.on('tap', function(evt) {
         if (evt.target === cy) {
           cy.elements().removeClass('faded highlighted');
+          hideDetail();
         }
       });
 
-      // Search by label
-      window.filterGraph = function(query) {
-        var q = query.toLowerCase().trim();
+      // Search
+      document.getElementById('graph-search').addEventListener('input', function() {
+        var q = this.value.toLowerCase().trim();
         cy.elements().removeClass('faded highlighted');
         if (!q) return;
         var matched = cy.nodes().filter(function(n) {
@@ -207,37 +396,38 @@
           nbrs.addClass('highlighted');
           cy.animate({ fit: { eles: matched, padding: 50 }, duration: 400 });
         }
-      };
+      });
 
       // Pillar filter
-      var filterEl = document.getElementById('graph-filter');
-      if (filterEl) {
-        filterEl.addEventListener('change', function() {
-          var val = this.value;
-          cy.elements().removeClass('faded highlighted');
-          if (val === 'all') return;
-          if (val === 'ontology') {
-            // Show only ontology concept nodes and their relations
-            var ontNodes = cy.nodes('[type = "concept"]');
-            var ontEdges = cy.edges('[id ^= "ont-rel:"]');
-            cy.elements().addClass('faded');
-            ontNodes.removeClass('faded');
-            ontEdges.removeClass('faded');
-            if (ontNodes.length) cy.animate({ fit: { eles: ontNodes, padding: 50 }, duration: 400 });
-          } else {
-            // Filter by pillar (domain prefix)
-            var pillarMap = { compliance: 'compliance', markets: 'markets', data: 'data' };
-            var prefix = pillarMap[val] || val;
-            var matched = cy.nodes('[domain = "' + prefix + '"], [domain = "' + val + '"]');
-            if (matched.length) {
-              var nbrs = matched.add(matched.neighborhood());
-              cy.elements().addClass('faded');
-              nbrs.removeClass('faded');
-              cy.animate({ fit: { eles: matched, padding: 50 }, duration: 400 });
-            }
+      document.getElementById('graph-filter').addEventListener('change', applyFilters);
+
+      // Relation filter
+      document.getElementById('graph-relation-filter').addEventListener('change', applyFilters);
+
+      // Layout toggle
+      document.getElementById('graph-layout').addEventListener('change', function() {
+        runLayout(this.value);
+        // Re-apply filters after layout
+        setTimeout(applyFilters, 600);
+      });
+
+      // Detail close
+      document.getElementById('detail-close').addEventListener('click', function() {
+        cy.elements().removeClass('faded highlighted');
+        hideDetail();
+      });
+
+      // Neighbor click in detail panel
+      document.getElementById('detail-body').addEventListener('click', function(e) {
+        var neighbor = e.target.closest('.detail-neighbor');
+        if (neighbor) {
+          var nid = neighbor.getAttribute('data-id');
+          var node = cy.getElementById(nid);
+          if (node.length) {
+            node.trigger('tap');
           }
-        });
-      }
+        }
+      });
     }
 
     fetch('/graph-data.json')
@@ -251,7 +441,15 @@
       });
 
     document.getElementById('btn-reset').addEventListener('click', function() {
-      if (cy) cy.layout({ name: 'cose-bilkent', animate: true, animationDuration: 500, fit: true }).run();
+      if (cy) {
+        cy.elements().removeClass('faded highlighted');
+        hideDetail();
+        document.getElementById('graph-filter').value = 'all';
+        document.getElementById('graph-relation-filter').value = 'all';
+        document.getElementById('graph-layout').value = 'cose-bilkent';
+        document.getElementById('graph-search').value = '';
+        runLayout('cose-bilkent');
+      }
     });
 
     document.getElementById('btn-download').addEventListener('click', function() {
@@ -273,7 +471,7 @@
     border: 1px solid var(--pico-muted-border-color, #334155);
     border-radius: 8px;
     background: #0f172a;
-    margin: 1rem 0;
+    margin: 0.5rem 0;
     position: relative;
     overflow: hidden;
   }
@@ -287,9 +485,106 @@
     color: #64748b;
     font-style: italic;
   }
-  .graph-legend {
-    margin: 1rem 0;
+  .graph-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    margin: 0.75rem 0;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid var(--pico-muted-border-color, #334155);
+    border-radius: 6px;
+    background: var(--pico-card-background-color, transparent);
+    align-items: flex-end;
+  }
+  .graph-toolbar-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+  .graph-toolbar-group label {
+    font-size: 0.7rem;
+    color: var(--color-text-muted, #888);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .graph-toolbar-group select,
+  .graph-toolbar-group input {
+    font-size: 0.8rem;
+    padding: 2px 6px;
+    border-radius: 4px;
+    background: var(--color-bg);
+    color: var(--color-text);
+    border: 1px solid var(--color-border, #334155);
+  }
+  .graph-toolbar-actions {
+    flex-direction: row;
+    align-items: flex-end;
+    gap: 0.35rem;
+    margin-left: auto;
+  }
+  .graph-detail {
+    margin: 0.5rem 0;
     padding: 0.75rem 1rem;
+    border: 1px solid var(--pico-muted-border-color, #334155);
+    border-radius: 6px;
+    background: var(--pico-card-background-color, transparent);
+  }
+  .graph-detail-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 0.95rem;
+  }
+  .graph-detail-body {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary, #aaa);
+    line-height: 1.5;
+  }
+  .graph-detail-body .detail-badge {
+    display: inline-block;
+    padding: 1px 8px;
+    border-radius: 9999px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #fff;
+    margin-right: 0.5rem;
+    text-transform: capitalize;
+  }
+  .graph-detail-body .detail-link {
+    display: inline-block;
+    font-size: 0.8rem;
+    color: var(--color-accent, #818cf8);
+    text-decoration: none;
+  }
+  .graph-detail-body .detail-link:hover {
+    text-decoration: underline;
+  }
+  .graph-detail-body .detail-section {
+    margin-top: 0.4rem;
+  }
+  .graph-detail-body .detail-neighbors {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem;
+    margin-top: 0.25rem;
+  }
+  .graph-detail-body .detail-neighbor {
+    padding: 0.2rem 0.5rem;
+    font-size: 0.75rem;
+    border-radius: 4px;
+    background: color-mix(in srgb, var(--color-accent, #818cf8) 8%, transparent);
+    cursor: pointer;
+    flex: 1 1 auto;
+    min-width: 80px;
+  }
+  .graph-detail-body .detail-neighbor:hover {
+    background: color-mix(in srgb, var(--color-accent, #818cf8) 20%, transparent);
+  }
+  .graph-legend {
+    margin: 0.5rem 0;
+    padding: 0.5rem 1rem;
     border: 1px solid var(--pico-muted-border-color, #334155);
     border-radius: 6px;
     background: var(--pico-card-background-color, transparent);
@@ -313,14 +608,6 @@
     height: 10px;
     border-radius: 50%;
     flex-shrink: 0;
-  }
-  .graph-controls {
-    display: flex;
-    gap: 0.75rem;
-    margin-top: 0.75rem;
-  }
-  .graph-controls button {
-    --pico-font-size: 0.85rem;
   }
 </style>
 {% endblock %}

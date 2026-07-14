@@ -6,11 +6,9 @@ Implements mtime/SHA-256 based incremental builds to reduce build time from 18.9
 
 import hashlib
 import json
-import os
 import time
 from pathlib import Path
 from typing import Any, Dict, Optional
-
 
 CACHE_FILE = Path('.build_cache.json')
 CACHE_VERSION = '1.0'
@@ -23,21 +21,21 @@ class BuildCache:
     Separates content hash (source markdown) from layout hash (templates)
     to enable proper incremental builds.
     """
-    
+
     def __init__(self, cache_file: Optional[Path] = None):
         self.cache_file = cache_file or CACHE_FILE
         self.cache: Dict[str, Dict[str, Any]] = {}
         self.templates_hash: Optional[str] = None
         self.content_templates_hash: Optional[str] = None  # Hash of content-affecting templates only
         self.load()
-    
+
     def load(self) -> None:
         """Load cache from disk."""
         if self.cache_file.exists():
             try:
                 with open(self.cache_file, 'r') as f:
                     data = json.load(f)
-                
+
                 if data.get('version') == CACHE_VERSION and data.get('url_structure_version') == URL_STRUCTURE_VERSION:
                     self.cache = data.get('entries', {})
                     self.templates_hash = data.get('templates_hash')
@@ -56,7 +54,7 @@ class BuildCache:
                 self.content_templates_hash = None
         else:
             print("ℹ️  No existing cache found")
-    
+
     def save(self) -> None:
         """Save cache to disk."""
         data = {
@@ -67,26 +65,26 @@ class BuildCache:
             'content_templates_hash': self.content_templates_hash,
             'entries': self.cache
         }
-        
+
         with open(self.cache_file, 'w') as f:
             json.dump(data, f, indent=2)
-        
+
         print(f"💾 Cache saved: {len(self.cache)} entries")
-    
+
     def compute_file_hash(self, filepath: Path) -> str:
         """Compute SHA-256 hash of a file."""
         sha256 = hashlib.sha256()
-        
+
         with open(filepath, 'rb') as f:
             for chunk in iter(lambda: f.read(8192), b''):
                 sha256.update(chunk)
-        
+
         return sha256.hexdigest()
-    
+
     def compute_content_hash(self, content: str) -> str:
         """Compute SHA-256 hash of content string."""
         return hashlib.sha256(content.encode('utf-8')).hexdigest()
-    
+
     def compute_templates_hash(self, template_dir: Path, content_only: bool = False) -> str:
         """Compute combined hash of templates.
         
@@ -96,14 +94,14 @@ class BuildCache:
                          (article templates), not layout/global templates
         """
         combined = hashlib.sha256()
-        
+
         # Content-affecting templates (change → content needs rebuild)
         content_templates = {
             'blog_post.j2', 'learn.j2', 'knowledge.j2',
             'learn_index.j2', 'knowledge_index.j2',
             'category_index.j2', 'pillar_index.j2', 'layout.j2'
         }
-        
+
         # All templates (change → full rebuild including taxonomies)
         all_templates = content_templates | {
             'tag_index.j2', 'search.j2', 'index.j2',
@@ -111,9 +109,9 @@ class BuildCache:
             'admin/article_list.html', 'admin/login.html',
             'feed.xml', '404.j2', 'sitemap.xml'
         }
-        
+
         templates_to_hash = content_templates if content_only else all_templates
-        
+
         for template_file in sorted(template_dir.rglob('*')):
             if template_file.suffix not in ('.j2', '.html', '.xml'):
                 continue
@@ -121,21 +119,21 @@ class BuildCache:
             if str(relative_path) in templates_to_hash:
                 file_hash = self.compute_file_hash(template_file)
                 combined.update(f"{relative_path}:{file_hash}".encode())
-        
+
         # Also hash core modules that affect rendering
         core_dir = Path('core')
         if core_dir.exists():
             for py_file in sorted(core_dir.glob('*.py')):
                 file_hash = self.compute_file_hash(py_file)
                 combined.update(f"{py_file}:{file_hash}".encode())
-        
+
         result = combined.hexdigest()
         if content_only:
             self.content_templates_hash = result
         else:
             self.templates_hash = result
         return result
-    
+
     def needs_rebuild(self, filepath: Path, content: Optional[str] = None,
                       is_content: bool = True) -> bool:
         """Check if a file needs to be rebuilt.
@@ -176,7 +174,7 @@ class BuildCache:
                     return True
 
         return False
-    
+
     def update_entry(self, filepath: Path, content: Optional[str] = None,
                      metadata: Optional[Dict[str, Any]] = None,
                      is_content: bool = True) -> None:
@@ -212,7 +210,7 @@ class BuildCache:
             entry.update(metadata)
 
         self.cache[path_key] = entry
-    
+
     def invalidate(self, pattern: Optional[str] = None) -> int:
         """Invalidate cache entries. If pattern provided, only invalidate matching entries."""
         if pattern:
@@ -221,9 +219,9 @@ class BuildCache:
         else:
             invalidated = len(self.cache)
             self.cache = {}
-        
+
         return invalidated
-    
+
     def get_stats(self) -> Dict[str, Any]:
         """Get cache statistics."""
         return {
@@ -242,15 +240,15 @@ def get_cache() -> BuildCache:
 def check_template_changes(template_dir: Path, cache: BuildCache) -> bool:
     """Check if any templates have changed since last build."""
     current_hash = cache.compute_templates_hash(template_dir, content_only=False)
-    
+
     if cache.templates_hash is None:
         print("🔄 First build, templates will be hashed")
         return True
-    
+
     if current_hash != cache.templates_hash:
         print("🔄 Templates changed, full rebuild required")
         return True
-    
+
     return False
 
 
@@ -270,7 +268,7 @@ def parallel_map(func, items, pool=None):
     """Parallel map with fallback to sequential execution."""
     if pool is None:
         return [func(item) for item in items]
-    
+
     try:
         return pool.map(func, items)
     except Exception:

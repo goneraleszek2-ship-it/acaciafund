@@ -7,7 +7,6 @@ content hash system — they always regenerate since they depend on
 aggregate state (tag maps, stats, etc.) that changes across builds.
 """
 
-import hashlib
 import json
 import os
 import re
@@ -761,7 +760,6 @@ def generate_admin_pages(
 
     # Ontology Curation
     if ontology and hasattr(ontology, '_concepts'):
-        from core.ontology import OntologyManager
         pillar_colors = {"aml": "#c97d3e", "stock": "#3a7d5c", "data-engineering": "#6366f1"}
         pillar_labels = {"aml": "Compliance", "stock": "Markets", "data-engineering": "Data Engineering"}
 

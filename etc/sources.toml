@@ -1,0 +1,30 @@
+[source.sec-edgar]
+type = "sec-edgar"
+enabled = true
+category = "markets"
+quality_weight = 0.8
+[source.sec-edgar.params]
+since_hours = 168
+max_results = 50
+
+[source.ssrn]
+type = "rss"
+enabled = true
+category = "markets"
+quality_weight = 0.8
+[source.ssrn.params]
+url = "https://papers.ssrn.com/sol3/rss/jeljournals/RSS_RecentPapers.rss"
+since_hours = 168
+max_results = 50
+cache_ttl_hours = 6
+
+[source.nber]
+type = "rss"
+enabled = true
+category = "markets"
+quality_weight = 0.8
+[source.nber.params]
+url = "https://www.nber.org/rss/papers.xml"
+since_hours = 168
+max_results = 50
+cache_ttl_hours = 6

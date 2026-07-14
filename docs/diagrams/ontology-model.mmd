@@ -1,0 +1,65 @@
+classDiagram
+    class Concept {
+        +str id
+        +str label
+        +str pillar
+        +str category
+        +list aliases
+        +float confidence_score
+        +str source_inspiration
+    }
+
+    class Relation {
+        +str source_id
+        +str target_id
+        +str relation_type
+        +float strength
+        +str pillar
+    }
+
+    class ResourceLink {
+        +str concept_id
+        +str url
+        +str status
+        +datetime last_verified
+        +int http_status
+    }
+
+    class InspirationSource {
+        +str url
+        +str name
+        +str frequency
+        +float relevance
+        +str pillar
+        +str status
+        +datetime last_verified
+        +int http_status
+    }
+
+    class OntologyManager {
+        +add_concept()
+        +get_concept()
+        +resolve_alias()
+        +find_concepts()
+        +concepts_by_pillar()
+        +add_relation()
+        +relations_for()
+        +related_concepts()
+        +to_dict()
+        +from_dict()
+        +save()
+        +load()
+        +to_cytograph_nodes()
+        +to_cytograph_edges()
+        +merge_into_cytograph()
+        +seed_pillar()
+        +seed_all_pillars()
+        +seed_relations()
+    }
+
+    Concept "1" --> "*" Relation : source
+    Concept "1" --> "*" Relation : target
+    Concept "1" --> "*" ResourceLink
+    Concept "1" --> "*" InspirationSource
+    OntologyManager --> Concept : manages
+    OntologyManager --> Relation : manages

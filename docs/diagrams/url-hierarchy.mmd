@@ -1,0 +1,40 @@
+graph TD
+    Root["/"] --> Compliance["/compliance/"]
+    Root --> Markets["/markets/"]
+    Root --> Data["/data/"]
+    Root --> Knowledge["/knowledge/"]
+    Root --> Tags["/tags/"]
+    Root --> Search["/search/"]
+    Root --> Graph["/graph/"]
+    Root --> Admin["/admin/"]
+    Root --> Feed["/feed.xml"]
+
+    Compliance --> CR["/compliance/research/{topic}/"]
+    Compliance --> CL["/compliance/learn/{topic}/"]
+    Compliance --> CK["/compliance/knowledge/{topic}/"]
+    Compliance --> CG["/compliance/glossary/"]
+    Compliance --> CS["/compliance/signals/"]
+
+    Markets --> MR["/markets/research/{topic}/"]
+    Markets --> ML["/markets/learn/{topic}/"]
+    Markets --> MK["/markets/knowledge/{topic}/"]
+    Markets --> MG["/markets/glossary/"]
+
+    Data --> DR["/data/research/{topic}/"]
+    Data --> DL["/data/learn/{topic}/"]
+    Data --> DK["/data/knowledge/{topic}/"]
+    Data --> DG["/data/glossary/"]
+
+    Knowledge --> KA["/knowledge/about/"]
+    Knowledge --> KF["/knowledge/faq/"]
+    Knowledge --> KX["/knowledge/{platform-page}/"]
+
+    Admin --> AD["/admin/dashboard.html"]
+    Admin --> AQ["/admin/quality.html"]
+    Admin --> AC["/admin/coverage.html"]
+    Admin --> AS["/admin/sources.html"]
+    Admin --> AO["/admin/ontology.html"]
+
+    style Compliance fill:#f59e0b,stroke:#1e293b,color:#1e293b
+    style Markets fill:#10b981,stroke:#1e293b,color:#fff
+    style Data fill:#3b82f6,stroke:#1e293b,color:#fff

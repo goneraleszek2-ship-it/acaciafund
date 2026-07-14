@@ -13,7 +13,6 @@ import shutil
 import subprocess
 import sys
 import time
-import tomllib
 import unicodedata
 from collections import defaultdict
 from datetime import datetime, timedelta, timezone
@@ -22,7 +21,8 @@ from typing import Any
 from urllib.parse import quote as urlquote
 
 import pandas as pd
-from jinja2 import Environment, FileSystemLoader, FileSystemBytecodeCache, select_autoescape
+import tomllib
+from jinja2 import Environment, FileSystemLoader, select_autoescape
 from PIL import Image
 
 from config import (
@@ -31,6 +31,9 @@ from config import (
     INTEREST_SQI_WEIGHT,
     KNOWLEDGE_TO_PILLAR_CATEGORY,
     OUTPUT_DIR,
+    PILLAR_CONFIG,
+    PILLAR_EMOJIS,
+    PILLAR_NAMES,
     PIPELINE_STATIC_DIR,
     PLAUSIBLE_DOMAIN,
     PROJECT_ROOT,
@@ -44,10 +47,6 @@ from config import (
     SQI_THRESHOLD_MIN,
     STATIC_DST_DIR,
     TEMPLATE_DIR,
-    PILLAR_URL_MAP,
-    PILLAR_URL_REVERSE,
-    PILLAR_NAMES,
-    PILLAR_EMOJIS,
 )
 
 # ── Asset pipeline ──
@@ -57,11 +56,17 @@ from core.brand import (
     section_type_color,
 )
 from core.content import Content
-from core.ontology import extract_concepts_from_text
 
 # ── Page generation helpers (new modular structure) ──
 from core.images.templates import generate_fallback_svg
-from core.urls import slug_to_path, slug_to_fspath, canonical_path, slug_to_url, pillar_to_url, url_to_pillar
+from core.ontology import extract_concepts_from_text
+from core.urls import (
+    canonical_path,
+    pillar_to_url,
+    slug_to_fspath,
+    slug_to_path,
+    slug_to_url,
+)
 
 
 # --- Knowledge Graph Generation ---
@@ -98,11 +103,12 @@ from core.visuals import (  # noqa: E402
 from schemas import RegistryData  # noqa: E402
 from seed_learn import CURATED_RELATIONS  # noqa: E402
 from seed_learn import PREREQUISITES as LEARN_PREREQUISITES  # noqa: E402
-from core.ontology import extract_concepts_from_text  # noqa: E402
 
 # ── Mem0 integration for session context and deployment logging ──
 try:
-    from services.mem0 import log_deployment  # pyright: ignore[reportMissingImports, reportAttributeAccessIssue]
+    from services.mem0 import (
+        log_deployment,  # pyright: ignore[reportMissingImports, reportAttributeAccessIssue]
+    )
 
     MEM0_AVAILABLE = True
 except ImportError:
@@ -111,7 +117,6 @@ except ImportError:
 
 # ── Build cache for incremental builds ──
 from core.build_cache import (  # noqa: E402
-    BuildCache,
     get_cache,
     get_worker_pool,
     parallel_map,
@@ -121,7 +126,6 @@ from core.build_cache import (  # noqa: E402
 from core.build_taxonomies import (  # noqa: E402
     generate_admin_pages,
     generate_feed,
-    generate_pillar_pages,
     generate_search_pages,
     generate_tag_pages,
 )
@@ -208,44 +212,6 @@ def get_topic_icons(tags: list[str]) -> list[str]:
     return matched
 
 
-PILLAR_CONFIG = {
-    "aml": {
-        "label": "Compliance",
-        "url": "compliance",
-        "emoji": "🛡️",
-        "color": "slate",
-        "bg": "from-slate-900 to-slate-800",
-        "accent": "amber",
-        "text_color": "text-slate-900",
-        "badge_color": "bg-amber-100 text-amber-800",
-        "heading": "Compliance & Financial Crime",
-        "description": "Anti-money laundering, regulatory compliance, financial crime detection, and risk management.",
-    },
-    "stock": {
-        "label": "Markets",
-        "url": "markets",
-        "emoji": "📈",
-        "color": "green",
-        "bg": "from-green-900 to-green-800",
-        "accent": "green",
-        "text_color": "text-green-900",
-        "badge_color": "bg-green-100 text-green-800",
-        "heading": "Markets & Industry",
-        "description": "Semiconductors, supply chains, AI industry, manufacturing.",
-    },
-    "data-engineering": {
-        "label": "Data Engineering",
-        "url": "data",
-        "emoji": "⚙️",
-        "color": "indigo",
-        "bg": "from-indigo-900 to-indigo-800",
-        "accent": "indigo",
-        "text_color": "text-indigo-900",
-        "badge_color": "bg-indigo-100 text-indigo-800",
-        "heading": "Data Engineering & Infrastructure",
-        "description": "Data pipelines, orchestration, quality engineering, streaming, storage, and analytics infrastructure.",
-    },
-}
 DIFFICULTY_ORDER = {"beginner": 0, "intermediate": 1, "advanced": 2}
 
 # Section type mapping (positional index → semantic type)
@@ -336,6 +302,20 @@ KNOWLEDGE_CATEGORIES = {
         "color": "#f43f5e",
         "bg_color": "#f43f5e",
         "description": "Trading strategies, investment approaches, and tactical methodologies.",
+    },
+    "methodology": {
+        "label": "Methodology",
+        "icon": "🧪",
+        "color": "#84cc16",
+        "bg_color": "#84cc16",
+        "description": "Research methods, backtesting frameworks, and analytical approaches.",
+    },
+    "tutorial-code": {
+        "label": "Tutorial with Code",
+        "icon": "💻",
+        "color": "#14b8a6",
+        "bg_color": "#14b8a6",
+        "description": "Step-by-step tutorials with executable code examples and implementations.",
     },
 }
 
@@ -1078,14 +1058,14 @@ def strip_html_tag(tag: str) -> str:
 def is_future_post(post) -> bool:
     """Check if a post is future-dated based on frontmatter date or created_at."""
     from datetime import date
-    
+
     today = date.today().isoformat()
-    
+
     # Check date_str from frontmatter (e.g., "2026-06-15")
     if getattr(post, "date_str", ""):
         if post.date_str > today:
             return True
-    
+
     # Fallback to created_at (may be str from Pydantic or datetime from Content.from_dict)
     if post.created_at:
         dt = post.created_at
@@ -1093,7 +1073,7 @@ def is_future_post(post) -> bool:
             dt = datetime.fromisoformat(dt.replace("Z", "+00:00"))
         if dt > datetime.now(timezone.utc):
             return True
-    
+
     return False
 
 
@@ -1104,13 +1084,13 @@ def _get_quality_metrics_with_fail_safes(metrics: dict) -> dict:
         metrics["authority"] = 0.74
     if metrics.get("diversity", 0) == 0.0:
         metrics["diversity"] = 0.68
-    
+
     # Ensure required fields exist
     if "authority" not in metrics:
         metrics["authority"] = 0.74
     if "diversity" not in metrics:
         metrics["diversity"] = 0.68
-    
+
     return metrics
 
 
@@ -1369,11 +1349,11 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     # Initialize build cache and worker pool
     cache = get_cache()
     _pool = get_worker_pool()
-    
+
     # Check for template changes — compute both content-only and full template hashes
     content_hash = cache.compute_templates_hash(TEMPLATE_DIR, content_only=True)
     full_hash = cache.compute_templates_hash(TEMPLATE_DIR, content_only=False)
-    
+
     if cache.content_templates_hash and content_hash != cache.content_templates_hash:
         print("🔄 Content templates changed, content pages will rebuild")
     elif cache.templates_hash and full_hash != cache.templates_hash:
@@ -1614,7 +1594,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
 
     # Temporal filter: drop future-dated content
     all_content = [c for c in all_content if not is_future_post(c)]
-    
+
     # Validate content before processing (skip-and-continue mode)
     _, validation_errors, skipped_slugs = validate_content(all_content, strict=False)
     if validation_errors:
@@ -1725,10 +1705,10 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
             output_path = OUTPUT_DIR / fspath / "index.html"
         else:
             output_path = OUTPUT_DIR / f"{slug}.html"
-            
+
         if slug in items_to_skip:
             continue
-            
+
         # Use build cache for faster change detection
         # Pass the content hash (not the full JSON) for consistent comparison
         if not cache.needs_rebuild(output_path, current_hash, is_content=True):
@@ -1808,7 +1788,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
 
     def render_template(template_name, **kw):
         return env.get_template(template_name).render(**kw)
-    
+
     def write_cached_html(filepath, html_content, slug="", metadata=None):
         """Write HTML file and update build cache."""
         filepath.parent.mkdir(parents=True, exist_ok=True)
@@ -2947,6 +2927,8 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                     if _score >= 0.35:
                         _edge_id = f"doc-concept:{_ci.slug}:{_concept.id}"
                         if _edge_id not in existing_edge_ids:
+                            _doc_pillar = _ci.pillar if hasattr(_ci, 'pillar') else ""
+                            _concept_pillar = _concept.pillar if hasattr(_concept, 'pillar') else ""
                             graph_data.setdefault("edges", []).append({
                                 "data": {
                                     "id": _edge_id,
@@ -2954,6 +2936,8 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                                     "target": f"ont:{_concept.id}",
                                     "type": "document-concept",
                                     "strength": round(_score, 2),
+                                    "sourcePillar": _doc_pillar,
+                                    "targetPillar": _concept_pillar,
                                 }
                             })
                             existing_edge_ids.add(_edge_id)
@@ -3130,13 +3114,13 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     for c in all_content:
         for t in c.tags or []:
             tag_items[t.lower().strip()].append(c)
-    
+
     # Sort tag posts by date
     from datetime import timezone as _tz
     _dt_min = datetime.min.replace(tzinfo=_tz.utc)
     for tag_posts in tag_items.values():
         tag_posts.sort(key=lambda x: x.created_at or _dt_min, reverse=True)
-    
+
     # Generate tag pages using isolated function
     tag_pages_count = generate_tag_pages(
         OUTPUT_DIR, tag_items, render_template, ctx_base, _dummy
@@ -3482,7 +3466,7 @@ Sitemap: {SITE_URL}/sitemap.xml
     manifest_path = PROJECT_ROOT / ".build_manifest.json"
     with open(manifest_path, "w", encoding="utf-8") as f:
         json.dump(current_manifest, f, indent=2)
-    
+
     # Update cache for all processed items
     print("  Updating build cache...")
     for item in all_content:
@@ -3493,14 +3477,14 @@ Sitemap: {SITE_URL}/sitemap.xml
                 output_path = OUTPUT_DIR / slug / "index.html"
             else:
                 output_path = OUTPUT_DIR / f"{slug}.html"
-            
+
             if output_path.exists():
                 # Use precomputed content hash (from before mutations) for consistency
                 content_hash = content_hashes.get(slug) or _get_content_hash(item)
                 cache.update_entry(output_path, content_hash,
                                  {"slug": slug, "content_type": getattr(item, "content_type", "")},
                                  is_content=True)
-    
+
     # Save build cache with both hash types
     _t0 = time.time()
     cache.content_templates_hash = cache.compute_templates_hash(TEMPLATE_DIR, content_only=True)
@@ -3510,17 +3494,17 @@ Sitemap: {SITE_URL}/sitemap.xml
 
     # Write registry index to reflect actual generated pages
     # (no local imports - use globals)
-    
+
     registry_dir = Path("registry")
     registry_dir.mkdir(exist_ok=True)
     index_path = registry_dir / "index.json"
-    
+
     # Count pillars from all_content
     pillar_counts = {}
     for item in all_content:
         pillar = item.pillar or "unknown"
         pillar_counts[pillar] = pillar_counts.get(pillar, 0) + 1
-    
+
     index = {
         "manifest_type": "registry-index",
         "generated_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z"),
@@ -3536,21 +3520,21 @@ Sitemap: {SITE_URL}/sitemap.xml
         "by_run_id": {},
         "checksum": "",
     }
-    
+
     # Compute checksum
     def canonical_json(payload):
         return json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
     index["checksum"] = hashlib.sha256(canonical_json({k: v for k, v in index.items() if k != "checksum"}).encode("utf-8")).hexdigest()
-    
+
     with open(index_path, "w", encoding="utf-8") as f:
         json.dump(index, f, indent=2, ensure_ascii=False)
-    
+
     print(f"  registry: index.json updated ({total} pages, {len(pillar_counts)} pillars)")
 
     # Print build cache stats
     cache_stats = cache.get_stats()
     print(f"\n📊 Build Cache: {cache_stats['total_entries']} entries, {cache_stats['cache_size_kb']:.1f} KB")
-    
+
     # Print total build time
     total_time = time.time() - start_time
     if _pool is not None:

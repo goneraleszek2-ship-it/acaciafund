@@ -1,7 +1,6 @@
 """Shared fixtures for AcaciaFund test suite."""
 
 import json
-import shutil
 from pathlib import Path
 
 import pytest
