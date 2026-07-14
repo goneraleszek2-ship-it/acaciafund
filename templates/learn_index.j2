@@ -1,1 +1,24 @@
-{{ item.description | truncate(100) }}
+{% extends "layout.j2" %}
+{% block main_content %}
+<section>
+  <h1>{{ content.title | default("Learning Hub") }}</h1>
+  {% if content.description %}
+  <p>{{ content.description }}</p>
+  {% endif %}
+  {% for diff, group in grouped.items() %}
+  <details{% if loop.first %} open{% endif %}>
+    <summary><strong>{{ diff | capitalize }}</strong> <span>({{ group | length }})</span></summary>
+    <ul>
+      {% for item in group %}
+      <li>
+        <a href="{{ slug_to_url(item.slug) }}">{{ item.title }}</a>
+        {% if item.description %}
+        <br><small>{{ item.description | truncate(100) }}</small>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+  </details>
+  {% endfor %}
+</section>
+{% endblock %}
