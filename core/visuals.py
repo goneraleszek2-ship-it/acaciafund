@@ -11,6 +11,7 @@ from pathlib import Path
 
 from simpleicons.all import icons as _si_icons
 
+from config import PILLAR_COLORS
 from core.brand import BRAND
 
 # Cache for resolved Simple Icons SVG paths
@@ -595,26 +596,7 @@ SUBTOPIC_CATEGORIES: dict[str, dict[str, set[str]]] = {
     },
 }
 
-PILLAR_COLORS = {
-    "aml": {
-        "bg": BRAND["aml"]["darker"],
-        "fg": BRAND["aml"]["dark"],
-        "text": "#f8fafc",
-        "accent": BRAND["aml"]["secondary"],
-    },
-    "stock": {
-        "bg": BRAND["markets"]["darker"],
-        "fg": BRAND["markets"]["dark"],
-        "text": "#f0fdf4",
-        "accent": BRAND["markets"]["secondary"],
-    },
-    "data-engineering": {
-        "bg": BRAND["science"]["darker"],
-        "fg": BRAND["science"]["dark"],
-        "text": "#eef2ff",
-        "accent": BRAND["science"]["secondary"],
-    },
-}
+
 
 
 def _content_hash(text: str) -> str:

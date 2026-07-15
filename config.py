@@ -339,3 +339,33 @@ PILLAR_CONFIG: dict[str, dict[str, str]] = {
 # Derive simple dicts from PILLAR_CONFIG to eliminate duplication
 PILLAR_NAMES = {k: v["label"] for k, v in PILLAR_CONFIG.items()}
 PILLAR_EMOJIS = {k: v["emoji"] for k, v in PILLAR_CONFIG.items()}
+
+# Pillar brand colors (used by build.py and core/visuals.py)
+PILLAR_COLORS: dict[str, dict[str, str]] = {
+    "aml": {
+        "bg": "#020617",
+        "fg": "#0f172a",
+        "text": "#f8fafc",
+        "accent": "#d97706",
+    },
+    "stock": {
+        "bg": "#022c22",
+        "fg": "#052e16",
+        "text": "#f0fdf4",
+        "accent": "#22c55e",
+    },
+    "data-engineering": {
+        "bg": "#0f0a3a",
+        "fg": "#1e1b4b",
+        "text": "#eef2ff",
+        "accent": "#818cf8",
+    },
+}
+
+# Fingerprint colors used for per-article visual identity
+PILLAR_FINGERPRINT_COLORS: dict[str, str] = {
+    "aml": "#c97d3e",
+    "stock": "#3a7d5c",
+    "data-engineering": "#6366f1",
+    "": "#6b7280",
+}

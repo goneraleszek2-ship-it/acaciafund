@@ -344,7 +344,7 @@ result = df.filter(pl.col('price') > 100).collect()
 ### Test Files
 
 | File | Tests | Coverage |
-|---|---|---|
+|---|---|---|---|
 | `tests/test_ontology.py` | 39 | Ontology models, manager, extraction, seeding |
 | `tests/test_learn_generation.py` | 14 | Learn module generation pipeline |
 | `tests/test_urls.py` | 18 | URL helpers, pillar mapping, slug conversion |
@@ -352,28 +352,31 @@ result = df.filter(pl.col('price') > 100).collect()
 | `tests/test_smoke.py` | 34 | Registry validation, schema enforcement |
 | `tests/test_build_smoke.py` | 12 | Build output verification |
 | `tests/test_redirects.py` | 8 | Redirect rules validation |
-| `tests/test_build_taxonomies.py` | 20 | Taxonomy generation (all 5 generators) |
+| `tests/test_build_taxonomies.py` | 51 | Taxonomy generation (all 5 generators) |
+| `tests/test_data.py` | 15 | core/data.py: domain extraction, entity/theme extraction, DLQ writing, logging |
+| `tests/test_content.py` | 21 | core/content.py: Content dataclass construction, defaults, dict parsing |
+| `tests/test_metadata.py` | 20 | core/metadata.py: manifest building, JSON utils, schema validation |
 
-**Total: ~163 tests.** Tests use `python3 -m pytest tests/ -v`.
+**Total: ~295 tests.** Tests use `python3 -m pytest tests/ -v`.
 
 ### Testing Strategy
 
 - **Core modules** (`core/urls.py`, `core/ontology.py`) are well-tested.
 - **`build.py` and `core/build_taxonomies.py`** are tested via smoke tests only (build output inspection).
 - **Scripts** are tested indirectly via workflow integration.
-- **No unit tests** for: `core/compositor.py`, `core/generate.py`, `core/generate_pages.py`, `core/data.py`, `core/score.py`, `core/visuals.py`, `core/bloom.py`, `core/brand.py`, `core/content.py`, `core/metadata.py`, `core/assets.py`, `scripts/check_source_freshness.py`, `scripts/source_synthesis.py`, `scripts/source_verification.py`.
+- **No unit tests** for: `core/compositor.py`, `core/generate.py`, `core/generate_pages.py`, `core/score.py`, `core/visuals.py`, `core/bloom.py`, `core/brand.py`, `core/assets.py`, `scripts/check_source_freshness.py`, `scripts/source_synthesis.py`, `scripts/source_verification.py`.
 
 ### Running Tests
 
 ```bash
-# Run all tests (may take 2-3 minutes due to build imports)
-python3 -m pytest tests/ -v
+# Run all tests (redirect to file to avoid Python 3.14 pipe buffering)
+bash scripts/run_tests.sh
 
 # Run specific test file
-python3 -m pytest tests/test_ontology.py -v
+bash scripts/run_tests.sh tests/test_ontology.py -v
 
-# Run with timeout (if hanging)
-timeout 300 python3 -m pytest tests/ -v --timeout=60
+# Or manually (always redirect to file)
+python3 -u -m pytest tests/ -v > /tmp/test_results.log 2>&1
 ```
 
 ## Troubleshooting

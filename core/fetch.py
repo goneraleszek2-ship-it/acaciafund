@@ -601,7 +601,7 @@ def fetch_semantic_scholar(since_hours: int = 168, max_results: int = 50) -> lis
 
 
 def fetch_sec_edgar(
-    query: str = "financial markets OR quantitative finance OR market microstructure",
+    query: str = "risk OR trading OR volatility OR market OR finance OR earnings",
     days_back: int = 7,
     max_results: int = 50,
 ) -> list[dict]:
@@ -617,6 +617,7 @@ def fetch_sec_edgar(
         "dateRange": "custom",
         "startdt": start_date.strftime("%Y-%m-%d"),
         "enddt": end_date.strftime("%Y-%m-%d"),
+        "rpp": str(min(max_results, 100)),
     }
     url = f"https://efts.sec.gov/LATEST/search-index?{urllib.parse.urlencode(params)}"
 
@@ -633,17 +634,36 @@ def fetch_sec_edgar(
     results: list[dict] = []
     for hit in data.get("hits", {}).get("hits", []):
         source = hit.get("_source", {})
-        title = source.get("display_names") or [""]
-        title = title[0] if isinstance(title, list) else str(title)
+        form_type = source.get("form", "") or source.get("file_type", "") or ""
+        ticker = None  # SEC API doesn't return tickers in search results
+        display_names = source.get("display_names") or [""]
+        company = display_names[0] if isinstance(display_names, list) else str(display_names)
+        file_desc = source.get("file_description") or ""
+        # Strip CIK suffix from company name for cleaner display
+        if company:
+            company = company.split("(CIK")[0].strip()
+
+        # Build a meaningful title from form_type + company
+        title_parts = []
+        if form_type:
+            title_parts.append(form_type)
+        if company:
+            title_parts.append(company)
+        title = " · ".join(title_parts).strip()
         if not title:
             continue
+
+        # Use file_description for keyword matching context
+        summary = file_desc[:500] if file_desc else title
+
         results.append({
-            "title": title.strip(),
+            "title": title,
             "url": source.get("url", ""),
-            "published": source.get("date", ""),
-            "summary": (source.get("description") or "")[:500],
-            "form_type": source.get("form_type", ""),
-            "ticker": source.get("tickers", [None])[0] if source.get("tickers") else None,
+            "published": source.get("file_date", ""),
+            "summary": summary,
+            "form_type": form_type,
+            "ticker": ticker,
+            "company": company,
             "source": "sec-edgar",
         })
         if len(results) >= max_results:
@@ -654,27 +674,42 @@ def fetch_sec_edgar(
 
 # ── SSRN ──
 
+# Known SSRN journal IDs for finance/economics
+# NB: Journal 208253 (NBER Working Paper Series) is handled by fetch_nber()
+#     to avoid overlapping content.  Only list non-NBER journals here.
+SSRN_FINANCE_JOURNALS: list[str] = [
+    "219219",    # ERN: Asset Pricing (Top)
+    "3473453",   # Investing eJournal
+    "4058853",   # Technology & Investing eJournal
+    "4058834",   # Fixed Income Investing eJournal
+    "3629923",   # Decision-Making in Economics & Finance eJournal
+    "4910885",   # Climate Finance eJournal
+    "870524",    # Entrepreneurship & Finance eJournal
+    "1394379",   # Corporate Governance: Capital Raising, Investments & Market Trading
+    "2051279",   # Econometric Modeling: Corporate Finance & Governance
+    "3506952",   # Data Science, Data Analytics & Informatics eJournal
+]
 
-def fetch_ssrn(
-    days_back: int = 7,
-    max_results: int = 50,
-) -> list[dict]:
-    """Fetch recent SSRN finance/economics papers via RSS feed."""
+# NB: SSRN's global RSS feed (papers.ssrn.com/sol3/rss/jeljournals/RSS_RecentPapers.rss)
+#     is dead (returns HTML).  Per-journal API feeds at
+#     api.ssrn.com/content/v1/journals/{id}/papers/rss still work.
+
+
+def _fetch_ssrn_journal(journal_id: str, cutoff: datetime, max_results: int) -> list[dict]:
+    """Fetch papers from a single SSRN journal RSS feed."""
     from email.utils import parsedate_to_datetime
 
-    url = "https://papers.ssrn.com/sol3/rss/jeljournals/RSS_RecentPapers.rss"
-    raw = _cached_request(url, "ssrn_recent", ttl_hours=6)
+    url = f"https://api.ssrn.com/content/v1/journals/{journal_id}/papers/rss"
+    raw = _cached_request(url, f"ssrn_j_{journal_id}", ttl_hours=6)
     if raw is None:
-        write_dlq("ssrn", url, "All retries exhausted", {"days_back": days_back})
         return []
 
-    papers: list[dict] = []
     try:
         root = ET.fromstring(raw)
     except ET.ParseError:
         return []
 
-    cutoff = datetime.now(timezone.utc) - timedelta(days=days_back)
+    papers: list[dict] = []
     for item in root.findall(".//item")[: max_results * 2]:
         title_el = item.find("title")
         link_el = item.find("link")
@@ -705,6 +740,21 @@ def fetch_ssrn(
     return papers
 
 
+def fetch_ssrn(
+    days_back: int = 7,
+    max_results: int = 50,
+) -> list[dict]:
+    """Fetch recent SSRN finance/economics papers via per-journal RSS feeds."""
+    cutoff = datetime.now(timezone.utc) - timedelta(days=days_back)
+    papers: list[dict] = []
+    for jid in SSRN_FINANCE_JOURNALS:
+        journal_papers = _fetch_ssrn_journal(jid, cutoff, max_results)
+        papers.extend(journal_papers)
+        if len(papers) >= max_results:
+            break
+    return papers[:max_results]
+
+
 # ── NBER ──
 
 
@@ -712,47 +762,15 @@ def fetch_nber(
     days_back: int = 7,
     max_results: int = 50,
 ) -> list[dict]:
-    """Fetch recent NBER working papers via RSS feed."""
-    from email.utils import parsedate_to_datetime
+    """Fetch recent NBER working papers via SSRN journal API.
 
-    url = "https://www.nber.org/rss/papers.xml"
-    raw = _cached_request(url, "nber_recent", ttl_hours=6)
-    if raw is None:
-        write_dlq("nber", url, "All retries exhausted", {"days_back": days_back})
-        return []
-
-    papers: list[dict] = []
-    try:
-        root = ET.fromstring(raw)
-    except ET.ParseError:
-        return []
-
+    NBER's own RSS feed (nber.org/rss/papers.xml) returns 403 for automated
+    clients.  SSRN hosts the NBER Working Paper Series (journal_id=208253)
+    with a working RSS feed that we proxy through instead.
+    """
     cutoff = datetime.now(timezone.utc) - timedelta(days=days_back)
-    for item in root.findall(".//item")[: max_results * 2]:
-        title_el = item.find("title")
-        link_el = item.find("link")
-        desc_el = item.find("description")
-        pub_el = item.find("pubDate")
-        if title_el is None or link_el is None:
-            continue
-        title = (title_el.text or "").strip()
-        link = (link_el.text or "").strip()
-        if not title or not link:
-            continue
-        pub_str = (pub_el.text or "").strip() if pub_el is not None else ""
-        try:
-            pub = parsedate_to_datetime(pub_str) if pub_str else None
-            if pub and pub.replace(tzinfo=timezone.utc) < cutoff:
-                continue
-        except Exception:
-            pass
-        papers.append({
-            "title": title,
-            "url": link,
-            "published": pub_str,
-            "summary": re.sub(r"<[^>]+>", "", (desc_el.text or "") if desc_el is not None else "")[:500],
-            "source": "nber",
-        })
-        if len(papers) >= max_results:
-            break
+    papers = _fetch_ssrn_journal("208253", cutoff, max_results)
+    # Re-tag source as "nber" since these ARE NBER papers
+    for p in papers:
+        p["source"] = "nber"
     return papers

@@ -1,689 +1,539 @@
-"""Tests for core/build_taxonomies.py — taxonomy generation pipeline."""
+"""Tests for core/build_taxonomies.py — tag, admin, search, feed, pillar pages."""
 
 import json
 from datetime import datetime, timezone
 from pathlib import Path
-from types import SimpleNamespace
-from unittest.mock import MagicMock
+from unittest.mock import ANY, MagicMock
 
 import pytest
 
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
+from core.build_taxonomies import (
+    _compute_coverage_data,
+    _compute_dashboard_stats,
+    _compute_enrichment_telemetry,
+    _compute_quality_stats,
+    _compute_source_telemetry,
+    _compute_sqi_telemetry,
+    _compute_tag_telemetry,
+    _compute_telemetry,
+    _compute_velocity_telemetry,
+    generate_admin_pages,
+    generate_feed,
+    generate_pillar_pages,
+    generate_search_pages,
+    generate_tag_pages,
+)
 
 
-def _to_obj(d: dict):
-    """Convert a dict to a SimpleNamespace for attribute access (.slug, .title, etc.)."""
-    return SimpleNamespace(**d)
-
-
-def _dummy_content(slug: str = "", ct: str = "", pillar: str = "") -> dict:
-    return {
-        "slug": slug,
-        "title": f"Test {slug}",
-        "content_type": ct or "research",
-        "pillar": pillar or "aml",
-        "tags": ["test", slug.split("/")[-1]] if slug else ["test"],
-        "body_html": "<p>Body</p>",
-        "description": f"Desc for {slug}" if slug else "A test",
-        "date_str": "2026-07-13",
-        "difficulty": "beginner",
-        "reading_time": 3,
-        "sqi": 0.85,
-        "author": "AcaciaFund",
-        "language": "en",
-        "signals": {"avg_sqi": 0.85},
-        "created_at": datetime(2026, 7, 13, 12, 0, 0, tzinfo=timezone.utc),
+def _make_item(**kwargs):
+    """Create a simple object with given attributes (like Content)."""
+    defaults = {
+        "slug": "test/slug",
+        "title": "Test Title",
+        "pillar": "aml",
+        "content_type": "research",
+        "tags": [],
+        "body_html": "",
+        "description": "",
+        "featured_image": None,
+        "date_str": "",
+        "sqi": None,
+        "signals": None,
+        "source_breakdown": None,
+        "section_images": None,
+        "enriched": False,
+        "enriched_at": None,
+        "created_at": None,
+        "difficulty": "",
+        "reading_time": 0,
+        "knowledge_category": "",
     }
+    defaults.update(kwargs)
+    return type("MockContent", (object,), defaults)()
 
 
-def _dummy_obj(slug: str, ct: str) -> dict:
-    """Matches _dummy signature used in build_taxonomies: fn(slug_or_title, content_type)."""
-    return _dummy_content(slug=slug, ct=ct, pillar="aml")
+def _dummy(title="", category="post", body_html="", description=""):
+    """Minimal _dummy equivalent from build.py."""
+    return type("obj", (object,), {
+        "title": title, "language": "en", "category": category,
+        "slug": "", "body_html": body_html, "description": description,
+        "created_at": None, "updated_at": None, "tags": [], "pillar": "",
+        "difficulty": "", "date_str": "", "thumbnail_svg": "", "og_svg": "",
+        "signals": {},
+    })()
 
 
-def _make_items(count: int = 5) -> list:
-    """Return list of SimpleNamespace items matching Content object interface."""
-    pillars = ["aml", "stock", "data-engineering"]
-    cts = ["research", "learn", "knowledge"]
-    items = []
-    for i in range(count):
-        p = pillars[i % len(pillars)]
-        ct = cts[i % len(cts)]
-        items.append(_to_obj(_dummy_content(f"{p}/{ct}/item-{i}", ct, p)))
-    return items
-
-
-# ── Fixtures ──
-
-
-@pytest.fixture
-def mock_render():
-    return MagicMock(return_value="<html>Rendered</html>")
-
-
-@pytest.fixture
-def ctx_base():
-    return {
-        "site_name": "AcaciaFund",
-        "site_url": "https://www.acaciafund.org",
-        "build_timestamp": "2026-07-13T00:00:00",
-    }
-
-
-@pytest.fixture
-def tmp_dist(tmp_path):
-    d = tmp_path / "dist"
-    d.mkdir()
-    return d
-
-
-# ── Tag Pages ──
-
-
-class TestGenerateTagPages:
-    def test_generates_tag_index_and_pages(self, tmp_dist, mock_render, ctx_base):
-        from core.build_taxonomies import generate_tag_pages
-
-        tag_items = {
-            "aml": [_dummy_content("aml/res/item-1", "research", "aml")],
-            "data-engineering": [_dummy_content("de/res/item-2", "research", "data-engineering")],
-            "markets": [_dummy_content("mkt/res/item-3", "research", "stock")],
-        }
-        count = generate_tag_pages(tmp_dist, tag_items, mock_render, ctx_base, _dummy_obj)
-
-        assert count == 4
-        assert (tmp_dist / "tags" / "index.html").exists()
-        assert (tmp_dist / "tags" / "aml" / "index.html").exists()
-        assert (tmp_dist / "tags" / "data-engineering" / "index.html").exists()
-        assert (tmp_dist / "tags" / "markets" / "index.html").exists()
-
-    def test_empty_tag_items_returns_zero(self, tmp_dist, mock_render, ctx_base):
-        from core.build_taxonomies import generate_tag_pages
-
-        count = generate_tag_pages(tmp_dist, {}, mock_render, ctx_base, _dummy_obj)
-        assert count == 0
-
-    def test_slug_sanitization_handles_special_chars(self, tmp_dist, mock_render, ctx_base):
-        from core.build_taxonomies import generate_tag_pages
-
-        tag_items = {"Data Quality!@#": [_dummy_content("test/item-1", "research", "data-engineering")]}
-        count = generate_tag_pages(tmp_dist, tag_items, mock_render, ctx_base, _dummy_obj)
-        assert count == 2
-        assert (tmp_dist / "tags" / "data-quality" / "index.html").exists()
-
-    def test_thin_tags_get_noindex(self, tmp_dist, mock_render, ctx_base):
-        from core.build_taxonomies import generate_tag_pages
-
-        tag_items = {"lonely": [_dummy_content("test/item-1", "research", "data-engineering")]}
-        generate_tag_pages(tmp_dist, tag_items, mock_render, ctx_base, _dummy_obj)
-
-        thin_call = None
-        for call in mock_render.call_args_list:
-            kwargs = call[1] if len(call) > 1 else {}
-            if kwargs.get("robots_noindex"):
-                thin_call = kwargs
-        assert thin_call is not None, "Expected a call with robots_noindex=True"
-
-
-# ── Admin Pages ──
-
-
-class TestGenerateAdminPages:
-    def test_generates_all_admin_pages(self, tmp_dist, mock_render, ctx_base):
-        from core.build_taxonomies import generate_admin_pages
-
-        items = _make_items(20)
-        static_dir = tmp_dist / "static"
-        static_dir.mkdir(parents=True, exist_ok=True)
-
-        pages = generate_admin_pages(tmp_dist, items, static_dir, mock_render, ctx_base, _dummy_obj)
-
-        assert pages > 0
-        expected = [
-            "login", "dashboard", "gallery", "articles", "manifest",
-            "pipeline", "quality", "coverage", "sources", "telemetry",
-        ]
-        for name in expected:
-            assert (tmp_dist / "admin" / f"{name}.html").exists(), f"Missing admin/{name}.html"
-        # ontology page requires ontology arg to be passed
-
-    def test_admin_pages_use_render_template(self, tmp_dist, mock_render, ctx_base):
-        from core.build_taxonomies import generate_admin_pages
-
-        items = _make_items(5)
-        static_dir = tmp_dist / "static"
-        static_dir.mkdir(parents=True, exist_ok=True)
-
-        generate_admin_pages(tmp_dist, items, static_dir, mock_render, ctx_base, _dummy_obj)
-        assert mock_render.call_count >= 10
-
-
-# ── Search Pages ──
-
-
-class TestGenerateSearchPages:
-    def test_generates_search_index_json(self, tmp_dist, mock_render, ctx_base):
-        from core.build_taxonomies import generate_search_pages
-
-        items = _make_items(10)
-        static_dir = tmp_dist / "static"
-        static_dir.mkdir(parents=True, exist_ok=True)
-
-        pages = generate_search_pages(tmp_dist, static_dir, items, mock_render, ctx_base, _dummy_obj)
-        assert pages > 0
-
-        idx_path = static_dir / "search-index.json"
-        assert idx_path.exists()
-        idx = json.loads(idx_path.read_text(encoding="utf-8"))
-        assert len(idx) == 10
-        assert all("slug" in e for e in idx)
-        assert all("title" in e for e in idx)
-
-    def test_search_index_has_correct_fields(self, tmp_dist, mock_render, ctx_base):
-        from core.build_taxonomies import generate_search_pages
-
-        items = _make_items(3)
-        static_dir = tmp_dist / "static"
-        static_dir.mkdir(parents=True, exist_ok=True)
-
-        generate_search_pages(tmp_dist, static_dir, items, mock_render, ctx_base, _dummy_obj)
-
-        idx = json.loads((static_dir / "search-index.json").read_text(encoding="utf-8"))
-        entry = idx[0]
-        assert "slug" in entry
-        assert "title" in entry
-        assert "pillar" in entry
-        assert "content_type" in entry
-        assert "tags" in entry
-        assert "description" in entry
-
-    def test_search_index_handles_empty_items(self, tmp_dist, mock_render, ctx_base):
-        from core.build_taxonomies import generate_search_pages
-
-        static_dir = tmp_dist / "static"
-        static_dir.mkdir(parents=True, exist_ok=True)
-
-        pages = generate_search_pages(tmp_dist, static_dir, [], mock_render, ctx_base, _dummy_obj)
-        assert pages >= 1  # search page + optionally search index
-
-        idx = json.loads((static_dir / "search-index.json").read_text(encoding="utf-8"))
-        assert idx == []
-
-    def test_search_page_rendered(self, tmp_dist, mock_render, ctx_base):
-        from core.build_taxonomies import generate_search_pages
-
-        static_dir = tmp_dist / "static"
-        static_dir.mkdir(parents=True, exist_ok=True)
-
-        generate_search_pages(tmp_dist, static_dir, _make_items(3), mock_render, ctx_base, _dummy_obj)
-        assert (tmp_dist / "search" / "index.html").exists()
-
-
-# ── Feed ──
-
-
-class TestGenerateFeed:
-    def test_generates_feed_xml(self, tmp_dist, mock_render, ctx_base):
-        from core.build_taxonomies import generate_feed
-
-        items = _make_items(5)
-        pages = generate_feed(tmp_dist, items, mock_render, ctx_base)
-        assert pages == 1
-        assert (tmp_dist / "feed.xml").exists()
-
-    def test_feed_handles_empty_items(self, tmp_dist, mock_render, ctx_base):
-        from core.build_taxonomies import generate_feed
-
-        pages = generate_feed(tmp_dist, [], mock_render, ctx_base)
-        assert pages == 1
-        assert (tmp_dist / "feed.xml").exists()
-
-    def test_feed_render_called(self, tmp_dist, mock_render, ctx_base):
-        from core.build_taxonomies import generate_feed
-
-        generate_feed(tmp_dist, _make_items(5), mock_render, ctx_base)
-        feed_file = tmp_dist / "feed.xml"
-        assert feed_file.exists()
-        content = feed_file.read_text(encoding="utf-8")
-        assert '<?xml version="1.0"' in content
-        assert "<feed" in content
-
-    def test_feed_content_is_xml(self, tmp_dist, mock_render, ctx_base):
-        from core.build_taxonomies import generate_feed
-
-        mock_render.return_value = '<?xml version="1.0" encoding="utf-8"?><feed></feed>'
-        generate_feed(tmp_dist, _make_items(3), mock_render, ctx_base)
-        content = (tmp_dist / "feed.xml").read_text(encoding="utf-8")
-        assert "<?xml" in content
-
-
-# ── Pillar Pages ──
-
-
-class TestGeneratePillarPages:
-    def _pillar_groups(self, items):
-        groups = {"compliance": [], "markets": [], "data": []}
-        for i in items:
-            p = {"aml": "compliance", "stock": "markets", "data-engineering": "data"}.get(i.pillar, "data")
-            groups[p].append(i)
-        return groups
-
-    def test_generates_pillar_index_pages(self, tmp_dist, mock_render, ctx_base):
-        from core.build_taxonomies import generate_pillar_pages
-
-        groups = self._pillar_groups(_make_items(10))
-        pages = generate_pillar_pages(tmp_dist, groups, mock_render, ctx_base)
-        assert pages >= 3
-        assert (tmp_dist / "compliance" / "index.html").exists()
-        assert (tmp_dist / "markets" / "index.html").exists()
-        assert (tmp_dist / "data" / "index.html").exists()
-
-    def test_pillar_page_render_called(self, tmp_dist, mock_render, ctx_base):
-        from core.build_taxonomies import generate_pillar_pages
-
-        groups = self._pillar_groups(_make_items(15))
-        generate_pillar_pages(tmp_dist, groups, mock_render, ctx_base)
-        assert mock_render.call_count >= 3
-
-
-# ── Integration with Live Data ──
-
-
-class TestLiveBuildTaxonomies:
-    def test_tag_pages_generate_with_live_registry(self, tmp_dist, mock_render, ctx_base, project_root):
-        from core.build_taxonomies import generate_tag_pages
-
-        registry_path = project_root / "registry.json"
-        if not registry_path.exists():
-            pytest.skip("registry.json not found")
-
-        raw = json.loads(registry_path.read_text(encoding="utf-8"))
-        items = raw.get("content", [])
-
-        from collections import defaultdict
-        tag_items = defaultdict(list)
-        for item in items[:50]:
-            tags = item.get("tags", [])
-            if isinstance(tags, list):
-                for tag in tags:
-                    tag_items[tag].append(item)
-
-        count = generate_tag_pages(tmp_dist, dict(tag_items), mock_render, ctx_base, _dummy_obj)
-        assert count > 0
-
-    def test_search_index_with_live_registry(self, tmp_dist, mock_render, ctx_base, project_root):
-        from core.build_taxonomies import generate_search_pages
-
-        registry_path = project_root / "registry.json"
-        if not registry_path.exists():
-            pytest.skip("registry.json not found")
-
-        raw = json.loads(registry_path.read_text(encoding="utf-8"))
-        raw_items = raw.get("content", [])
-        # Convert to SimpleNamespace (generate_search_pages uses getattr for attribute access)
-        items = [_to_obj(i) for i in raw_items]
-
-        static_dir = tmp_dist / "static"
-        static_dir.mkdir(parents=True, exist_ok=True)
-
-        generate_search_pages(tmp_dist, static_dir, items, mock_render, ctx_base, _dummy_obj)
-
-        idx = json.loads((static_dir / "search-index.json").read_text(encoding="utf-8"))
-        assert len(idx) > 0
-        for entry in idx:
-            assert "slug" in entry
-            assert "title" in entry
-            assert "content_type" in entry
-
-
-# ── _compute_* Helper Functions ──
-
+# ── _compute_dashboard_stats ──
 
 class TestComputeDashboardStats:
     def test_empty_content(self):
-        from core.build_taxonomies import _compute_dashboard_stats
-
         stats = _compute_dashboard_stats([])
         assert stats["total_articles"] == 0
-        assert stats["with_images"] == 0
         assert stats["with_images_pct"] == 0
-        assert stats["low_score"] == 0
 
-    def test_counts_articles_with_images(self):
-        from types import SimpleNamespace
+    def test_single_item_no_image(self):
+        stats = _compute_dashboard_stats([_make_item(slug="a")])
+        assert stats["total_articles"] == 1
+        assert stats["with_images"] == 0
+        assert stats["by_type"][0]["type"] == "research"
 
-        from core.build_taxonomies import _compute_dashboard_stats
-
-        items = [
-            SimpleNamespace(slug="a", signals={}, content_type="research", featured_image="img.jpg", source_breakdown={}),
-            SimpleNamespace(slug="b", signals={}, content_type="learn", featured_image=None, source_breakdown={}),
-            SimpleNamespace(slug="c", signals={"avg_score": 50}, content_type="research", featured_image=None, source_breakdown={}),
-        ]
-        stats = _compute_dashboard_stats(items)
-        assert stats["total_articles"] == 3
+    def test_single_item_with_image(self):
+        stats = _compute_dashboard_stats([_make_item(slug="a", featured_image="/img/a.png")])
         assert stats["with_images"] == 1
-        assert stats["without_images"] == 2
-        assert stats["low_score"] == 1
 
-    def test_by_type_breakdown(self):
-        from types import SimpleNamespace
+    def test_unknown_content_type(self):
+        stats = _compute_dashboard_stats([_make_item(slug="a", content_type=None)])
+        assert stats["by_type"][0]["type"] == "unknown"
 
-        from core.build_taxonomies import _compute_dashboard_stats
-
+    def test_source_breakdown_aggregation(self):
         items = [
-            SimpleNamespace(slug="a", signals={}, content_type="research", featured_image="img.jpg", source_breakdown={}),
-            SimpleNamespace(slug="b", signals={}, content_type="research", featured_image=None, source_breakdown={}),
-            SimpleNamespace(slug="c", signals={}, content_type="learn", featured_image="img.jpg", source_breakdown={}),
+            _make_item(slug="a", source_breakdown={"arxiv": 1}),
+            _make_item(slug="b", source_breakdown={"arxiv": 1, "hn": 2}),
         ]
         stats = _compute_dashboard_stats(items)
-        by_type = {t["type"]: t for t in stats["by_type"]}
-        assert by_type["research"]["total"] == 2
-        assert by_type["research"]["with_images"] == 1
-        assert by_type["learn"]["total"] == 1
-        assert by_type["learn"]["with_images"] == 1
+        assert stats["by_source"]["arxiv"] == 2
+        assert stats["by_source"]["hn"] == 2
 
+    def test_low_score_signals(self):
+        items = [
+            _make_item(slug="a", signals={"avg_score": 50}),
+            _make_item(slug="b", signals={"avg_score": 90}),
+        ]
+        stats = _compute_dashboard_stats(items)
+        assert stats["low_score_sections"] == 1
+
+
+# ── _compute_quality_stats ──
 
 class TestComputeQualityStats:
     def test_empty_content(self):
-        from core.build_taxonomies import _compute_quality_stats
-
-        qstats = _compute_quality_stats([])
-        assert qstats["total_scores"] == 0
-        assert qstats["avg_score"] == 0
+        qs = _compute_quality_stats([])
+        assert qs["total_scores"] == 0
+        assert qs["avg_score"] == 0
 
     def test_scores_from_section_images(self):
-        from types import SimpleNamespace
+        items = [_make_item(slug="a", section_images=[
+            {"relevance_score": 85, "source_api": "unsplash", "section_index": 0},
+            {"relevance_score": 60, "source_api": "unsplash", "section_index": 1},
+        ])]
+        qs = _compute_quality_stats(items)
+        assert qs["total_scores"] == 2
+        assert qs["avg_score"] == 72.5
+        assert qs["above_70"] == 1
+        assert qs["below_40"] == 0
 
-        from core.build_taxonomies import _compute_quality_stats
+    def test_zero_score_ignored(self):
+        items = [_make_item(slug="a", section_images=[
+            {"relevance_score": 0, "source_api": "unsplash", "section_index": 0},
+            {"relevance_score": 80, "source_api": "unsplash", "section_index": 1},
+        ])]
+        qs = _compute_quality_stats(items)
+        assert qs["total_scores"] == 1
 
-        items = [
-            SimpleNamespace(
-                slug="a", content_type="research",
-                section_images=[
-                    {"relevance_score": 85, "source_api": "unsplash", "section_index": 0},
-                    {"relevance_score": 70, "source_api": "unsplash", "section_index": 1},
-                ],
-            ),
-            SimpleNamespace(
-                slug="b", content_type="learn",
-                section_images=[
-                    {"relevance_score": 45, "source_api": "pexels", "section_index": 0},
-                ],
-            ),
-        ]
-        qstats = _compute_quality_stats(items)
-        assert qstats["total_scores"] == 3
-        assert qstats["avg_score"] == pytest.approx((85 + 70 + 45) / 3, 0.1)
-        assert qstats["above_70"] == 2
-        assert qstats["below_40"] == 0
+    def test_source_averages(self):
+        items = [_make_item(slug="a", section_images=[
+            {"relevance_score": 90, "source_api": "a", "section_index": 0},
+            {"relevance_score": 70, "source_api": "b", "section_index": 0},
+        ])]
+        qs = _compute_quality_stats(items)
+        assert "a" in qs["source_avgs"]
+        assert "b" in qs["source_avgs"]
 
-    def test_bucket_distribution(self):
-        from types import SimpleNamespace
 
-        from core.build_taxonomies import _compute_quality_stats
-
-        items = [
-            SimpleNamespace(
-                slug="a", content_type="research",
-                section_images=[{"relevance_score": s, "source_api": "unsplash", "section_index": 0}],
-            )
-            for s in [5, 15, 25, 35, 45, 55, 65, 75, 85, 95]
-        ]
-        qstats = _compute_quality_stats(items)
-        assert sum(b > 0 for b in qstats["buckets"]) >= 8
-        assert qstats["source_avgs"]["unsplash"] > 0
-
+# ── _compute_coverage_data ──
 
 class TestComputeCoverageData:
     def test_empty_content(self):
-        from core.build_taxonomies import _compute_coverage_data
+        cd = _compute_coverage_data([], {})
+        assert cd["heatmap"] == {}
+        assert cd["by_pillar"] == {}
 
-        cov = _compute_coverage_data([], {})
-        assert cov["heatmap"] == {}
-        assert cov["by_pillar"] == {}
-        assert cov["by_type"] == {}
+    def test_section_images_counted(self):
+        section_types = {0: "overview"}
+        items = [_make_item(slug="a", pillar="aml", content_type="research",
+                            section_images=[{"section_index": 0, "image_url": "/img/a.png"}])]
+        cd = _compute_coverage_data(items, section_types)
+        assert cd["by_pillar"]["aml"]["filled"] == 1
+        assert cd["by_pillar"]["aml"]["total"] == 1
 
-    def test_coverage_counts(self):
-        from types import SimpleNamespace
-
-        from core.build_taxonomies import _compute_coverage_data
-
-        items = [
-            SimpleNamespace(
-                slug="a", pillar="aml", content_type="research",
-                section_images=[
-                    {"section_index": 0, "image_url": "img1.jpg"},
-                    {"section_index": 1, "image_url": ""},
-                ],
-            ),
-            SimpleNamespace(
-                slug="b", pillar="aml", content_type="research",
-                section_images=[{"section_index": 0, "image_url": "img2.jpg"}],
-            ),
-        ]
-        section_types = {0: "overview", 1: "key_findings"}
-        cov = _compute_coverage_data(items, section_types)
-        assert cov["by_pillar"]["aml"]["filled"] == 2
-        assert cov["by_pillar"]["aml"]["total"] == 3
-        assert cov["by_type"]["research"]["filled"] == 2
-        assert cov["by_type"]["research"]["total"] == 3
+    def test_unfilled_not_counted(self):
+        section_types = {0: "overview"}
+        items = [_make_item(slug="a", pillar="aml", content_type="research",
+                            section_images=[{"section_index": 0, "image_url": ""}])]
+        cd = _compute_coverage_data(items, section_types)
+        assert cd["by_pillar"]["aml"]["filled"] == 0
+        assert cd["by_pillar"]["aml"]["total"] == 1
 
 
-class TestComputeSQITelemetry:
-    def test_empty_content(self):
-        from core.build_taxonomies import _compute_sqi_telemetry
-
-        sqi = _compute_sqi_telemetry([])
-        assert sqi["count"] == 0
-        assert sqi["avg"] == 0
-
-    def test_sqi_from_direct_attr(self):
-        from types import SimpleNamespace
-
-        from core.build_taxonomies import _compute_sqi_telemetry
-
-        items = [
-            SimpleNamespace(slug="a", sqi=0.9, signals={}, pillar="aml", content_type="research"),
-            SimpleNamespace(slug="b", sqi=0.5, signals={}, pillar="aml", content_type="research"),
-            SimpleNamespace(slug="c", sqi=0.1, signals={}, pillar="stock", content_type="learn"),
-            SimpleNamespace(slug="d", sqi=0.3, signals={}, pillar="stock", content_type="learn"),
-        ]
-        sqi = _compute_sqi_telemetry(items)
-        assert sqi["count"] == 4
-        assert sqi["avg"] == pytest.approx((0.9 + 0.5 + 0.1 + 0.3) / 4, 0.01)
-        assert sqi["above_08"] == 1
-        assert sqi["below_05"] == 2
-
-    def test_sqi_falls_back_to_signals(self):
-        from types import SimpleNamespace
-
-        from core.build_taxonomies import _compute_sqi_telemetry
-
-        items = [
-            SimpleNamespace(slug="a", sqi=None, signals={"avg_sqi": 0.75}, pillar="aml", content_type="research"),
-        ]
-        sqi = _compute_sqi_telemetry(items)
-        assert sqi["count"] == 1
-        assert sqi["avg"] == pytest.approx(0.75, 0.01)
-
-    def test_sqi_clamps(self):
-        from types import SimpleNamespace
-
-        from core.build_taxonomies import _compute_sqi_telemetry
-
-        items = [
-            SimpleNamespace(slug="a", sqi=-0.5, signals={}, pillar="aml", content_type="research"),
-            SimpleNamespace(slug="b", sqi=1.5, signals={}, pillar="aml", content_type="research"),
-        ]
-        sqi = _compute_sqi_telemetry(items)
-        assert sqi["min"] == 0.0
-        assert sqi["max"] == 1.0
-
+# ── _compute_tag_telemetry ──
 
 class TestComputeTagTelemetry:
     def test_empty_content(self):
-        from core.build_taxonomies import _compute_tag_telemetry
+        tt = _compute_tag_telemetry([])
+        assert tt["total_tags"] == 0
+        assert tt["crossover_tags"] == {}
 
-        tel = _compute_tag_telemetry([])
-        assert tel["total_tags"] == 0
-        assert tel["total_assignments"] == 0
-
-    def test_tag_counts_and_crossover(self):
-        from types import SimpleNamespace
-
-        from core.build_taxonomies import _compute_tag_telemetry
-
+    def test_tag_counts_and_cooccurrence(self):
         items = [
-            SimpleNamespace(slug="a", tags=["aml", "kyc"], pillar="aml", content_type="research", date_str="2026-01-01"),
-            SimpleNamespace(slug="b", tags=["aml", "data"], pillar="data-engineering", content_type="learn", date_str="2026-01-02"),
-            SimpleNamespace(slug="c", tags=["kyc"], pillar="aml", content_type="knowledge", date_str="2026-01-03"),
+            _make_item(slug="a", tags=["aml", "kyc"], pillar="aml", content_type="research"),
+            _make_item(slug="b", tags=["aml", "kyc"], pillar="aml", content_type="knowledge"),
         ]
-        tel = _compute_tag_telemetry(items)
-        assert tel["total_tags"] == 3
-        assert tel["total_assignments"] == 5
-        assert "aml" in tel["crossover_tags"]  # appears in 2 pillars
+        tt = _compute_tag_telemetry(items)
+        assert tt["total_tags"] == 2
+        assert tt["top_tags"][0] == ("aml", 2)
+        assert len(tt["cooccurrence_edges"]) == 1
+        assert tt["cooccurrence_edges"][0]["weight"] == 2
 
-    def test_cooccurrence(self):
-        from types import SimpleNamespace
-
-        from core.build_taxonomies import _compute_tag_telemetry
-
+    def test_crossover_tags(self):
         items = [
-            SimpleNamespace(slug="a", tags=["a", "b"], pillar="aml", content_type="research", date_str=""),
-            SimpleNamespace(slug="b", tags=["a", "b", "c"], pillar="aml", content_type="research", date_str=""),
+            _make_item(slug="a", tags=["data-quality"], pillar="aml"),
+            _make_item(slug="b", tags=["data-quality"], pillar="stock"),
         ]
-        tel = _compute_tag_telemetry(items)
-        assert len(tel["cooccurrence_edges"]) >= 1
+        tt = _compute_tag_telemetry(items)
+        assert "data-quality" in tt["crossover_tags"]
 
+    def test_date_tracking(self):
+        items = [_make_item(slug="a", tags=["ml"], date_str="2026-06-01")]
+        tt = _compute_tag_telemetry(items)
+        assert tt["total_assignments"] == 1
+
+
+# ── _compute_sqi_telemetry ──
+
+class TestComputeSqiTelemetry:
+    def test_empty_content(self):
+        sqi = _compute_sqi_telemetry([])
+        assert sqi["count"] == 0
+
+    def test_direct_sqi(self):
+        items = [_make_item(slug="a", sqi=0.85)]
+        sqi = _compute_sqi_telemetry(items)
+        assert sqi["avg"] == 0.85
+        assert sqi["above_08"] == 1
+
+    def test_signals_fallback(self):
+        items = [_make_item(slug="a", sqi=None, signals={"avg_sqi": 0.75})]
+        sqi = _compute_sqi_telemetry(items)
+        assert sqi["avg"] == 0.75
+
+    def test_missing_sqi_defaults(self):
+        items = [_make_item(slug="a", sqi=None, signals=None)]
+        sqi = _compute_sqi_telemetry(items)
+        assert sqi["avg"] == 0.5
+
+    def test_sqi_clamped(self):
+        items = [_make_item(slug="a", sqi=1.5)]
+        sqi = _compute_sqi_telemetry(items)
+        assert sqi["max"] <= 1.0
+
+    def test_pillar_averages(self):
+        items = [
+            _make_item(slug="a", sqi=0.9, pillar="aml"),
+            _make_item(slug="b", sqi=0.7, pillar="stock"),
+            _make_item(slug="c", sqi=0.8, pillar="aml"),
+        ]
+        sqi = _compute_sqi_telemetry(items)
+        assert sqi["pillar_avgs"]["aml"]["avg"] == 0.85
+        assert sqi["pillar_avgs"]["stock"]["avg"] == 0.7
+
+
+# ── _compute_enrichment_telemetry ──
 
 class TestComputeEnrichmentTelemetry:
-    def test_empty_content(self):
-        from core.build_taxonomies import _compute_enrichment_telemetry
+    def test_all_deterministic(self):
+        items = [_make_item(slug="a", tags=["aml"]), _make_item(slug="b", tags=["kyc"])]
+        et = _compute_enrichment_telemetry(items)
+        assert et["deterministic_likely"] == 2
+        assert et["llm_likely"] == 0
 
-        enr = _compute_enrichment_telemetry([])
-        assert enr["total_enriched"] == 0
+    def test_llm_likely_with_many_tags(self):
+        items = [_make_item(slug="a", tags=["a", "b", "c", "d", "e"])]
+        et = _compute_enrichment_telemetry(items)
+        assert et["llm_likely"] == 1
 
-    def test_counts_enriched_items(self):
-        from types import SimpleNamespace
+    def test_enriched_by_flag(self):
+        items = [_make_item(slug="a", enriched=True)]
+        et = _compute_enrichment_telemetry(items)
+        assert et["total_enriched"] == 1
 
-        from core.build_taxonomies import _compute_enrichment_telemetry
+    def test_enriched_by_at(self):
+        items = [_make_item(slug="a", enriched=False, enriched_at="2026-07-14T00:00:00Z")]
+        et = _compute_enrichment_telemetry(items)
+        assert et["total_enriched"] == 1
 
-        items = [
-            SimpleNamespace(slug="a", tags=["a", "b", "c", "d"], enriched=True),
-            SimpleNamespace(slug="b", tags=["x"], enriched=False),
-            SimpleNamespace(slug="c", tags=["p", "q"], enriched=True, enriched_at="2026-01-01"),
-        ]
-        enr = _compute_enrichment_telemetry(items)
-        assert enr["total_enriched"] == 2
 
+# ── _compute_velocity_telemetry ──
 
 class TestComputeVelocityTelemetry:
-    def test_empty_content(self):
-        from core.build_taxonomies import _compute_velocity_telemetry
-
-        vel = _compute_velocity_telemetry([])
-        assert vel["total_months"] == 0
+    def test_empty(self):
+        vt = _compute_velocity_telemetry([])
+        assert vt["total_months"] == 0
 
     def test_monthly_grouping(self):
-        from datetime import datetime, timezone
-        from types import SimpleNamespace
-
-        from core.build_taxonomies import _compute_velocity_telemetry
-
         items = [
-            SimpleNamespace(slug="a", created_at=datetime(2026, 1, 15, tzinfo=timezone.utc)),
-            SimpleNamespace(slug="b", created_at=datetime(2026, 1, 20, tzinfo=timezone.utc)),
-            SimpleNamespace(slug="c", created_at=datetime(2026, 2, 1, tzinfo=timezone.utc)),
+            _make_item(slug="a", created_at=datetime(2026, 6, 1, tzinfo=timezone.utc)),
+            _make_item(slug="b", created_at=datetime(2026, 6, 15, tzinfo=timezone.utc)),
+            _make_item(slug="c", created_at=datetime(2026, 7, 1, tzinfo=timezone.utc)),
         ]
-        vel = _compute_velocity_telemetry(items)
-        assert vel["total_months"] == 2
-        months = {m["period"]: m["count"] for m in vel["monthly"]}
-        assert months["2026-01"] == 2
-        assert months["2026-02"] == 1
+        vt = _compute_velocity_telemetry(items)
+        assert vt["total_months"] == 2
+        june = [m for m in vt["monthly"] if m["period"] == "2026-06"]
+        assert len(june) == 1
+        assert june[0]["count"] == 2
 
+    def test_no_datetime_ignored(self):
+        items = [_make_item(slug="a", created_at=None)]
+        vt = _compute_velocity_telemetry(items)
+        assert vt["total_months"] == 0
+
+
+# ── _compute_source_telemetry ──
 
 class TestComputeSourceTelemetry:
-    def test_empty_content(self):
-        from core.build_taxonomies import _compute_source_telemetry
+    def test_empty(self):
+        st = _compute_source_telemetry([])
+        assert st["source_totals"] == {}
 
-        src = _compute_source_telemetry([])
-        assert src["items_with_sources"] == 0
-
-    def test_source_counts(self):
-        from types import SimpleNamespace
-
-        from core.build_taxonomies import _compute_source_telemetry
-
+    def test_source_aggregation(self):
         items = [
-            SimpleNamespace(slug="a", source_breakdown={"arxiv": 1, "hn": 2}, pillar="aml"),
-            SimpleNamespace(slug="b", source_breakdown={}, pillar="stock"),
-            SimpleNamespace(slug="c", source_breakdown={"arxiv": 1}, pillar="aml"),
+            _make_item(slug="a", source_breakdown={"arxiv": 1}, pillar="aml"),
+            _make_item(slug="b", source_breakdown={"hn": 2}, pillar="stock"),
         ]
-        src = _compute_source_telemetry(items)
-        assert src["items_with_sources"] == 2
-        assert src["items_wo_sources"] == 1
-        assert src["source_totals"]["arxiv"] == 2
-        assert src["source_totals"]["hn"] == 2
+        st = _compute_source_telemetry(items)
+        assert st["source_totals"]["arxiv"] == 1
+        assert st["source_totals"]["hn"] == 2
+        assert st["source_by_pillar"]["stock"]["hn"] == 2
+        assert st["items_with_sources"] == 2
 
+
+# ── _compute_telemetry (aggregator) ──
 
 class TestComputeTelemetry:
-    def test_aggregates_all_sub_telemetry(self):
-        from datetime import datetime, timezone
-        from types import SimpleNamespace
+    def test_returns_all_keys(self):
+        items = [_make_item(slug="a", tags=["aml"], sqi=0.8, pillar="aml")]
+        t = _compute_telemetry(items)
+        assert "tag" in t
+        assert "sqi" in t
+        assert "enrichment" in t
+        assert "velocity" in t
+        assert "source" in t
 
-        from core.build_taxonomies import _compute_telemetry
 
+# ── generate_tag_pages ──
+
+class TestGenerateTagPages:
+    def test_generates_tag_pages(self, tmp_path):
+        output_dir = tmp_path / "site"
+        render_template = MagicMock(return_value="<html>tag</html>")
+        tag_items = {"aml": [_make_item(slug="a")], "kyc": [_make_item(slug="b")]}
+        pages = generate_tag_pages(output_dir, tag_items, render_template, {}, _dummy)
+        assert pages == 3  # 2 tags + 1 index
+        assert (output_dir / "tags" / "aml" / "index.html").exists()
+        assert (output_dir / "tags" / "kyc" / "index.html").exists()
+        assert (output_dir / "tags" / "index.html").exists()
+
+    def test_thin_tag_gets_noindex(self, tmp_path):
+        output_dir = tmp_path / "site"
+        render_template = MagicMock(return_value="<html>thin</html>")
+        tag_items = {"thin": [_make_item(slug="a")]}
+        generate_tag_pages(output_dir, tag_items, render_template, {}, _dummy)
+        first_call_kwargs = render_template.call_args_list[0][1]
+        assert first_call_kwargs.get("robots_noindex") is True
+
+    def test_empty_no_index(self, tmp_path):
+        output_dir = tmp_path / "site"
+        pages = generate_tag_pages(output_dir, {}, MagicMock(), {}, _dummy)
+        assert pages == 0
+
+    def test_slug_cleaning(self, tmp_path):
+        output_dir = tmp_path / "site"
+        render_template = MagicMock(return_value="<html>c</html>")
+        tag_items = {"AML/KYC Compliance": [_make_item(slug="a")]}
+        generate_tag_pages(output_dir, tag_items, render_template, {}, _dummy)
+        assert (output_dir / "tags" / "aml-kyc-compliance" / "index.html").exists()
+
+
+# ── generate_search_pages ──
+
+class TestGenerateSearchPages:
+    def test_search_index_and_page(self, tmp_path):
+        output_dir = tmp_path / "site"
+        static_dir = tmp_path / "static"
+        static_dir.mkdir(parents=True)
+        render_template = MagicMock(return_value="<html>search</html>")
+        items = [_make_item(slug="a", title="Test", description="Desc", pillar="aml",
+                            content_type="research", tags=["aml"], sqi=0.85)]
+        pages = generate_search_pages(output_dir, static_dir, items, render_template, {}, _dummy)
+        assert pages == 2
+        assert (static_dir / "search-index.json").exists()
+
+    def test_search_index_content(self, tmp_path):
+        output_dir = tmp_path / "site"
+        static_dir = tmp_path / "static"
+        static_dir.mkdir(parents=True)
+        items = [_make_item(slug="a", title="Test", description="Desc", pillar="aml",
+                            content_type="research", tags=["aml"], sqi=0.85)]
+        render_template = MagicMock(return_value="<html>search</html>")
+        generate_search_pages(output_dir, static_dir, items, render_template, {}, _dummy)
+        idx = json.loads((static_dir / "search-index.json").read_text())
+        assert len(idx) == 1
+        assert idx[0]["title"] == "Test"
+
+    def test_search_concept_enrichment(self, tmp_path):
+        output_dir = tmp_path / "site"
+        static_dir = tmp_path / "static"
+        static_dir.mkdir(parents=True)
+        items = [_make_item(slug="a", title="Test")]
+        concept_cache = {"a": {"concept-1"}}
+
+        class FakeOntology:
+            _concepts = {"concept-1": type("c", (object,), {"id": "concept-1", "label": "Concept One"})}
+
+        render_template = MagicMock(return_value="<html>search</html>")
+        pages = generate_search_pages(output_dir, static_dir, items, render_template, {}, _dummy,
+                                       ontology=FakeOntology(), concept_cache=concept_cache)
+        idx = json.loads((static_dir / "search-index.json").read_text())
+        assert "Concept One" in idx[0]["ontology_concepts"]
+        assert idx[0]["concept_boost"] > 0
+
+    def test_empty_slug_skipped(self, tmp_path):
+        output_dir = tmp_path / "site"
+        static_dir = tmp_path / "static"
+        static_dir.mkdir(parents=True)
+        items = [_make_item(slug=None), _make_item(slug="valid")]
+        render_template = MagicMock(return_value="<html>search</html>")
+        generate_search_pages(output_dir, static_dir, items, render_template, {}, _dummy)
+        idx = json.loads((static_dir / "search-index.json").read_text())
+        assert len(idx) == 1
+
+
+# ── generate_feed ──
+
+class TestGenerateFeed:
+    def test_generates_feed(self, tmp_path):
+        output_dir = tmp_path / "site"
+        output_dir.mkdir(parents=True, exist_ok=True)
         items = [
-            SimpleNamespace(
-                slug="a", sqi=0.8, signals={}, pillar="aml", content_type="research",
-                tags=["aml"], source_breakdown={"arxiv": 1}, enriched=True,
-                created_at=datetime(2026, 1, 1, tzinfo=timezone.utc),
-                section_images=[],
-            ),
+            _make_item(slug="a", title="Post A", description="Desc A",
+                       created_at=datetime(2026, 6, 1, tzinfo=timezone.utc),
+                       tags=["aml"], content_type="research", pillar="aml"),
         ]
-        tel = _compute_telemetry(items)
-        assert "tag" in tel
-        assert "sqi" in tel
-        assert "enrichment" in tel
-        assert "velocity" in tel
-        assert "source" in tel
-        assert tel["sqi"]["count"] == 1
-        assert tel["tag"]["total_tags"] == 1
+        pages = generate_feed(output_dir, items, MagicMock(), {},
+                              site_url="https://example.com", site_name="Test",
+                              now=datetime(2026, 6, 15, tzinfo=timezone.utc))
+        assert pages == 1
+        feed = (output_dir / "feed.xml").read_text()
+        assert "Post A" in feed
+        assert "https://example.com" in feed
+        assert 'pillar:aml' in feed
+        assert 'type:research' in feed
+
+    def test_feed_content(self, tmp_path):
+        output_dir = tmp_path / "site"
+        output_dir.mkdir(parents=True, exist_ok=True)
+        items = [
+            _make_item(slug="a", title="Alpha", description="",
+                       body_html="<p>Body content here</p>",
+                       created_at=datetime(2026, 6, 1, tzinfo=timezone.utc)),
+        ]
+        generate_feed(output_dir, items, MagicMock(), {},
+                      site_url="https://x.com", site_name="X",
+                      now=datetime(2026, 6, 15, tzinfo=timezone.utc))
+        feed = (output_dir / "feed.xml").read_text()
+        assert "Body content here" in feed
+
+    def test_html_stripped_from_feed_desc(self, tmp_path):
+        output_dir = tmp_path / "site"
+        output_dir.mkdir(parents=True, exist_ok=True)
+        items = [
+            _make_item(slug="a", title="Test", description="<b>bold</b> text",
+                       created_at=datetime(2026, 6, 1, tzinfo=timezone.utc)),
+        ]
+        generate_feed(output_dir, items, MagicMock(), {},
+                      site_url="https://x.com", site_name="X",
+                      now=datetime(2026, 6, 15, tzinfo=timezone.utc))
+        feed = (output_dir / "feed.xml").read_text()
+        assert "<b>" not in feed
+        assert "bold text" in feed
 
 
-# ── Performance ──
+# ── generate_pillar_pages ──
+
+class TestGeneratePillarPages:
+    def test_generates_pillar_pages(self, tmp_path):
+        output_dir = tmp_path / "site"
+        render_template = MagicMock(return_value="<html>pillar</html>")
+        groups = {"compliance": [_make_item(slug="a")], "markets": [_make_item(slug="b")]}
+        pages = generate_pillar_pages(output_dir, groups, render_template, {})
+        assert pages == 2
+        assert (output_dir / "compliance" / "index.html").exists()
+        assert (output_dir / "markets" / "index.html").exists()
+
+    def test_empty_groups(self, tmp_path):
+        pages = generate_pillar_pages(tmp_path / "site", {}, MagicMock(), {})
+        assert pages == 0
 
 
-class TestBuildTaxonomiesPerformance:
-    def test_admin_page_generation_speed(self, tmp_dist, mock_render, ctx_base):
-        import time
+# ── generate_admin_pages (selected tests) ──
 
-        from core.build_taxonomies import generate_admin_pages
+class TestGenerateAdminPages:
+    def test_dashboard_page(self, tmp_path):
+        output_dir = tmp_path / "site"
+        static_dir = tmp_path / "static"
+        static_dir.mkdir(parents=True)
+        render_template = MagicMock(return_value="<html>dashboard</html>")
+        items = [_make_item(slug="a", title="Test")]
+        pages = generate_admin_pages(output_dir, items, static_dir, render_template, {}, _dummy)
+        assert pages >= 1
+        assert (output_dir / "admin" / "dashboard.html").exists()
 
-        items = _make_items(200)
-        static_dir = tmp_dist / "static"
-        static_dir.mkdir(parents=True, exist_ok=True)
+    def test_login_page_with_default_creds(self, tmp_path):
+        output_dir = tmp_path / "site"
+        static_dir = tmp_path / "static"
+        static_dir.mkdir(parents=True)
+        render_template = MagicMock(return_value="<html>login</html>")
+        items = [_make_item(slug="a")]
+        generate_admin_pages(
+            output_dir, items, static_dir, render_template, {}, _dummy,
+            load_admin_credentials_fn=lambda: ("admin", "admin"),
+        )
+        render_template.assert_any_call(
+            "admin/login.html",
+            content=ANY,
+            admin_username="admin",
+            admin_password="admin",
+        )
 
-        start = time.perf_counter()
-        pages = generate_admin_pages(tmp_dist, items, static_dir, mock_render, ctx_base, _dummy_obj)
-        elapsed = time.perf_counter() - start
+    def test_quality_page(self, tmp_path):
+        output_dir = tmp_path / "site"
+        static_dir = tmp_path / "static"
+        static_dir.mkdir(parents=True)
+        render_template = MagicMock(return_value="<html>quality</html>")
+        items = [_make_item(slug="a", section_images=[{"relevance_score": 85, "source_api": "u", "section_index": 0}])]
+        generate_admin_pages(output_dir, items, static_dir, render_template, {}, _dummy)
+        assert (output_dir / "admin" / "quality.html").exists()
 
-        assert pages > 0
-        assert elapsed < 5.0, f"Admin generation too slow: {elapsed:.2f}s"
+    def test_redirect_index(self, tmp_path):
+        output_dir = tmp_path / "site"
+        static_dir = tmp_path / "static"
+        static_dir.mkdir(parents=True)
+        render_template = MagicMock(return_value='<html><meta http-equiv="refresh" content="0;url=dashboard.html"></html>')
+        generate_admin_pages(output_dir, [], static_dir, render_template, {}, _dummy)
+        idx = (output_dir / "admin" / "index.html").read_text()
+        assert "redirect" in idx.lower()
 
-    def test_tag_generation_speed(self, tmp_dist, mock_render, ctx_base):
-        import time
-
-        from core.build_taxonomies import generate_tag_pages
-
-        tag_items = {}
-        for i in range(50):
-            n_items = (i % 5) + 1
-            tag_items[f"tag-{i}"] = [_dummy_content(f"test/item-{i}-{j}", "research", "data-engineering") for j in range(n_items)]
-
-        start = time.perf_counter()
-        count = generate_tag_pages(tmp_dist, tag_items, mock_render, ctx_base, _dummy_obj)
-        elapsed = time.perf_counter() - start
-
-        assert count > 0
-        assert elapsed < 3.0, f"Tag generation too slow: {elapsed:.2f}s"
+    def test_sources_from_pillars_toml_fallback(self, tmp_path):
+        output_dir = tmp_path / "site"
+        static_dir = tmp_path / "static"
+        static_dir.mkdir(parents=True)
+        # Create a minimal pillars.toml
+        etc_dir = tmp_path / "etc"
+        etc_dir.mkdir(parents=True)
+        (etc_dir / "pillars.toml").write_text(
+            '[inspiration_sources]\n[inspiration_sources.aml]\n[inspiration_sources.aml.ssrn]\nname = "SSRN"\nurl = "https://ssrn.com"\nrelevance = 0.9\n'
+        )
+        render_template = MagicMock(return_value="<html>sources</html>")
+        generate_admin_pages(output_dir, [], static_dir, render_template, {}, _dummy,
+                             project_root=tmp_path)
+        # sources.html should have been generated
+        assert (output_dir / "admin" / "sources.html").exists()

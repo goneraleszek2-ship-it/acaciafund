@@ -1,10 +1,10 @@
 {
-  "checked_at": "2026-07-12T11:27:28.191980+00:00",
-  "total": 32,
-  "active": 26,
-  "degraded": 3,
-  "error": 3,
-  "freshness_pct": 81,
+  "checked_at": "2026-07-14T09:53:47.024106+00:00",
+  "total": 35,
+  "active": 30,
+  "degraded": 4,
+  "error": 1,
+  "freshness_pct": 86,
   "sources": [
     {
       "key": "aml.fatf",
@@ -14,10 +14,10 @@
       "frequency": "weekly",
       "relevance": 0.95,
       "http_status": 403,
-      "latency_ms": 258,
+      "latency_ms": 242,
       "error": "HTTP Error 403: Forbidden",
       "status": "degraded",
-      "last_verified": "2026-07-12T11:26:38.527505+00:00",
+      "last_verified": "2026-07-14T09:53:02.317561+00:00",
       "staleness_days": null
     },
     {
@@ -28,10 +28,10 @@
       "frequency": "weekly",
       "relevance": 0.9,
       "http_status": 200,
-      "latency_ms": 669,
+      "latency_ms": 668,
       "error": null,
       "status": "active",
-      "last_verified": "2026-07-12T11:26:39.498603+00:00",
+      "last_verified": "2026-07-14T09:53:03.287186+00:00",
       "staleness_days": null
     },
     {
@@ -42,10 +42,10 @@
       "frequency": "daily",
       "relevance": 0.9,
       "http_status": 200,
-      "latency_ms": 250,
+      "latency_ms": 215,
       "error": null,
       "status": "active",
-      "last_verified": "2026-07-12T11:26:40.049938+00:00",
+      "last_verified": "2026-07-14T09:53:03.804902+00:00",
       "staleness_days": null
     },
     {
@@ -56,10 +56,10 @@
       "frequency": "daily",
       "relevance": 0.9,
       "http_status": 200,
-      "latency_ms": 328,
+      "latency_ms": 239,
       "error": null,
       "status": "active",
-      "last_verified": "2026-07-12T11:26:40.679469+00:00",
+      "last_verified": "2026-07-14T09:53:04.345482+00:00",
       "staleness_days": null
     },
     {
@@ -70,10 +70,10 @@
       "frequency": "weekly",
       "relevance": 0.8,
       "http_status": 200,
-      "latency_ms": 660,
+      "latency_ms": 575,
       "error": null,
       "status": "active",
-      "last_verified": "2026-07-12T11:26:41.640871+00:00",
+      "last_verified": "2026-07-14T09:53:05.221201+00:00",
       "staleness_days": null
     },
     {
@@ -84,24 +84,24 @@
       "frequency": "weekly",
       "relevance": 0.8,
       "http_status": 200,
-      "latency_ms": 264,
+      "latency_ms": 200,
       "error": null,
       "status": "active",
-      "last_verified": "2026-07-12T11:26:42.206228+00:00",
+      "last_verified": "2026-07-14T09:53:05.722608+00:00",
       "staleness_days": null
     },
     {
       "key": "aml.fiu-nca",
       "pillar": "aml",
       "name": "Egmont Group",
-      "url": "https://www.eurounion.fiunetwork.eu",
+      "url": "https://egmontgroup.org",
       "frequency": "monthly",
       "relevance": 0.75,
-      "http_status": null,
-      "latency_ms": 97,
-      "error": "<urlopen error [Errno -2] Name or service not known>",
-      "status": "error",
-      "last_verified": "2026-07-12T11:26:42.604167+00:00",
+      "http_status": 200,
+      "latency_ms": 299,
+      "error": null,
+      "status": "active",
+      "last_verified": "2026-07-14T09:53:06.322612+00:00",
       "staleness_days": null
     },
     {
@@ -112,10 +112,10 @@
       "frequency": "weekly",
       "relevance": 0.8,
       "http_status": 200,
-      "latency_ms": 1506,
+      "latency_ms": 1499,
       "error": null,
       "status": "active",
-      "last_verified": "2026-07-12T11:26:44.412734+00:00",
+      "last_verified": "2026-07-14T09:53:08.123365+00:00",
       "staleness_days": null
     },
     {
@@ -126,10 +126,10 @@
       "frequency": "monthly",
       "relevance": 0.7,
       "http_status": 200,
-      "latency_ms": 1136,
+      "latency_ms": 1139,
       "error": null,
       "status": "active",
-      "last_verified": "2026-07-12T11:26:45.850588+00:00",
+      "last_verified": "2026-07-14T09:53:09.563196+00:00",
       "staleness_days": null
     },
     {
@@ -140,10 +140,10 @@
       "frequency": "weekly",
       "relevance": 0.85,
       "http_status": 200,
-      "latency_ms": 251,
+      "latency_ms": 302,
       "error": null,
       "status": "active",
-      "last_verified": "2026-07-12T11:26:46.403713+00:00",
+      "last_verified": "2026-07-14T09:53:10.167035+00:00",
       "staleness_days": null
     },
     {
@@ -154,10 +154,10 @@
       "frequency": "daily",
       "relevance": 0.9,
       "http_status": 200,
-      "latency_ms": 337,
+      "latency_ms": 255,
       "error": null,
       "status": "active",
-      "last_verified": "2026-07-12T11:26:47.042155+00:00",
+      "last_verified": "2026-07-14T09:53:10.723604+00:00",
       "staleness_days": null
     },
     {
@@ -168,10 +168,10 @@
       "frequency": "weekly",
       "relevance": 0.85,
       "http_status": 200,
-      "latency_ms": 378,
+      "latency_ms": 258,
       "error": null,
       "status": "active",
-      "last_verified": "2026-07-12T11:26:47.721943+00:00",
+      "last_verified": "2026-07-14T09:53:11.283950+00:00",
       "staleness_days": null
     },
     {
@@ -182,10 +182,10 @@
       "frequency": "weekly",
       "relevance": 0.85,
       "http_status": 200,
-      "latency_ms": 247,
+      "latency_ms": 315,
       "error": null,
       "status": "active",
-      "last_verified": "2026-07-12T11:26:48.270504+00:00",
+      "last_verified": "2026-07-14T09:53:11.900330+00:00",
       "staleness_days": null
     },
     {
@@ -196,10 +196,10 @@
       "frequency": "weekly",
       "relevance": 0.85,
       "http_status": 200,
-      "latency_ms": 351,
+      "latency_ms": 259,
       "error": null,
       "status": "active",
-      "last_verified": "2026-07-12T11:26:48.922939+00:00",
+      "last_verified": "2026-07-14T09:53:12.461047+00:00",
       "staleness_days": null
     },
     {
@@ -210,10 +210,10 @@
       "frequency": "weekly",
       "relevance": 0.85,
       "http_status": 200,
-      "latency_ms": 349,
+      "latency_ms": 603,
       "error": null,
       "status": "active",
-      "last_verified": "2026-07-12T11:26:49.573539+00:00",
+      "last_verified": "2026-07-14T09:53:13.366380+00:00",
       "staleness_days": null
     },
     {
@@ -224,10 +224,10 @@
       "frequency": "weekly",
       "relevance": 0.85,
       "http_status": 200,
-      "latency_ms": 242,
+      "latency_ms": 214,
       "error": null,
       "status": "active",
-      "last_verified": "2026-07-12T11:26:50.117423+00:00",
+      "last_verified": "2026-07-14T09:53:13.882708+00:00",
       "staleness_days": null
     },
     {
@@ -238,10 +238,10 @@
       "frequency": "weekly",
       "relevance": 0.8,
       "http_status": 200,
-      "latency_ms": 1013,
+      "latency_ms": 1000,
       "error": null,
       "status": "active",
-      "last_verified": "2026-07-12T11:26:51.431417+00:00",
+      "last_verified": "2026-07-14T09:53:15.185036+00:00",
       "staleness_days": null
     },
     {
@@ -252,10 +252,10 @@
       "frequency": "weekly",
       "relevance": 0.75,
       "http_status": 200,
-      "latency_ms": 390,
+      "latency_ms": 372,
       "error": null,
       "status": "active",
-      "last_verified": "2026-07-12T11:26:52.123352+00:00",
+      "last_verified": "2026-07-14T09:53:15.858491+00:00",
       "staleness_days": null
     },
     {
@@ -265,11 +265,11 @@
       "url": "https://cloud.google.com/blog/products/data-analytics",
       "frequency": "weekly",
       "relevance": 0.75,
-      "http_status": null,
-      "latency_ms": 11932,
-      "error": "[Errno 103] Software caused connection abort",
-      "status": "error",
-      "last_verified": "2026-07-12T11:27:04.355550+00:00",
+      "http_status": 200,
+      "latency_ms": 10605,
+      "error": null,
+      "status": "active",
+      "last_verified": "2026-07-14T09:53:26.765019+00:00",
       "staleness_days": null
     },
     {
@@ -280,10 +280,10 @@
       "frequency": "monthly",
       "relevance": 0.7,
       "http_status": 200,
-      "latency_ms": 8229,
+      "latency_ms": 938,
       "error": null,
       "status": "active",
-      "last_verified": "2026-07-12T11:27:12.886665+00:00",
+      "last_verified": "2026-07-14T09:53:28.004247+00:00",
       "staleness_days": null
     },
     {
@@ -294,10 +294,10 @@
       "frequency": "weekly",
       "relevance": 0.8,
       "http_status": 200,
-      "latency_ms": 5568,
+      "latency_ms": 3857,
       "error": null,
       "status": "active",
-      "last_verified": "2026-07-12T11:27:18.755959+00:00",
+      "last_verified": "2026-07-14T09:53:32.163238+00:00",
       "staleness_days": null
     },
     {
@@ -308,10 +308,10 @@
       "frequency": "daily",
       "relevance": 0.9,
       "http_status": 200,
-      "latency_ms": 322,
+      "latency_ms": 345,
       "error": null,
       "status": "active",
-      "last_verified": "2026-07-12T11:27:19.378862+00:00",
+      "last_verified": "2026-07-14T09:53:32.810793+00:00",
       "staleness_days": null
     },
     {
@@ -322,10 +322,10 @@
       "frequency": "weekly",
       "relevance": 0.8,
       "http_status": 200,
-      "latency_ms": 1059,
+      "latency_ms": 385,
       "error": null,
       "status": "active",
-      "last_verified": "2026-07-12T11:27:20.758834+00:00",
+      "last_verified": "2026-07-14T09:53:33.498968+00:00",
       "staleness_days": null
     },
     {
@@ -336,10 +336,10 @@
       "frequency": "monthly",
       "relevance": 0.75,
       "http_status": 200,
-      "latency_ms": 798,
+      "latency_ms": 468,
       "error": null,
       "status": "active",
-      "last_verified": "2026-07-12T11:27:21.858363+00:00",
+      "last_verified": "2026-07-14T09:53:34.268856+00:00",
       "staleness_days": null
     },
     {
@@ -350,10 +350,10 @@
       "frequency": "weekly",
       "relevance": 0.85,
       "http_status": 200,
-      "latency_ms": 378,
+      "latency_ms": 593,
       "error": null,
       "status": "active",
-      "last_verified": "2026-07-12T11:27:22.537536+00:00",
+      "last_verified": "2026-07-14T09:53:35.167656+00:00",
       "staleness_days": null
     },
     {
@@ -364,10 +364,10 @@
       "frequency": "weekly",
       "relevance": 0.8,
       "http_status": 403,
-      "latency_ms": 264,
+      "latency_ms": 306,
       "error": "HTTP Error 403: Forbidden",
       "status": "degraded",
-      "last_verified": "2026-07-12T11:27:23.111883+00:00",
+      "last_verified": "2026-07-14T09:53:35.775513+00:00",
       "staleness_days": null
     },
     {
@@ -378,10 +378,10 @@
       "frequency": "weekly",
       "relevance": 0.8,
       "http_status": 200,
-      "latency_ms": 704,
+      "latency_ms": 655,
       "error": null,
       "status": "active",
-      "last_verified": "2026-07-12T11:27:24.118098+00:00",
+      "last_verified": "2026-07-14T09:53:36.732543+00:00",
       "staleness_days": null
     },
     {
@@ -392,10 +392,10 @@
       "frequency": "monthly",
       "relevance": 0.75,
       "http_status": null,
-      "latency_ms": 109,
+      "latency_ms": 250,
       "error": "<urlopen error [SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1081)>",
       "status": "error",
-      "last_verified": "2026-07-12T11:27:24.527491+00:00",
+      "last_verified": "2026-07-14T09:53:37.284048+00:00",
       "staleness_days": null
     },
     {
@@ -406,10 +406,10 @@
       "frequency": "monthly",
       "relevance": 0.8,
       "http_status": 200,
-      "latency_ms": 1026,
+      "latency_ms": 1121,
       "error": null,
       "status": "active",
-      "last_verified": "2026-07-12T11:27:25.855102+00:00",
+      "last_verified": "2026-07-14T09:53:38.707285+00:00",
       "staleness_days": null
     },
     {
@@ -420,10 +420,10 @@
       "frequency": "daily",
       "relevance": 0.7,
       "http_status": 200,
-      "latency_ms": 477,
+      "latency_ms": 1196,
       "error": null,
       "status": "active",
-      "last_verified": "2026-07-12T11:27:26.633200+00:00",
+      "last_verified": "2026-07-14T09:53:40.206346+00:00",
       "staleness_days": null
     },
     {
@@ -433,11 +433,11 @@
       "url": "https://www.ft.com/markets",
       "frequency": "daily",
       "relevance": 0.7,
-      "http_status": 403,
-      "latency_ms": 92,
-      "error": "HTTP Error 403: Forbidden",
-      "status": "degraded",
-      "last_verified": "2026-07-12T11:27:27.026046+00:00",
+      "http_status": 200,
+      "latency_ms": 378,
+      "error": null,
+      "status": "active",
+      "last_verified": "2026-07-14T09:53:40.886121+00:00",
       "staleness_days": null
     },
     {
@@ -448,10 +448,52 @@
       "frequency": "weekly",
       "relevance": 0.75,
       "http_status": 200,
-      "latency_ms": 565,
+      "latency_ms": 754,
       "error": null,
       "status": "active",
-      "last_verified": "2026-07-12T11:27:27.891864+00:00",
+      "last_verified": "2026-07-14T09:53:41.942905+00:00",
+      "staleness_days": null
+    },
+    {
+      "key": "ms.arxiv-math-fin",
+      "pillar": "ms",
+      "name": "arXiv math.FIN",
+      "url": "https://arxiv.org/list/math.FIN/recent",
+      "frequency": "weekly",
+      "relevance": 0.85,
+      "http_status": 400,
+      "latency_ms": 448,
+      "error": "HTTP Error 400: Bad Request",
+      "status": "degraded",
+      "last_verified": "2026-07-14T09:53:42.692903+00:00",
+      "staleness_days": null
+    },
+    {
+      "key": "ms.ssrn",
+      "pillar": "ms",
+      "name": "SSRN Finance",
+      "url": "https://www.ssrn.com/en/index.cfm/finance/",
+      "frequency": "weekly",
+      "relevance": 0.8,
+      "http_status": 404,
+      "latency_ms": 2901,
+      "error": "HTTP Error 404: Not Found",
+      "status": "degraded",
+      "last_verified": "2026-07-14T09:53:45.896444+00:00",
+      "staleness_days": null
+    },
+    {
+      "key": "ms.nber",
+      "pillar": "ms",
+      "name": "NBER",
+      "url": "https://www.nber.org/papers",
+      "frequency": "weekly",
+      "relevance": 0.8,
+      "http_status": 200,
+      "latency_ms": 526,
+      "error": null,
+      "status": "active",
+      "last_verified": "2026-07-14T09:53:46.723555+00:00",
       "staleness_days": null
     }
   ]

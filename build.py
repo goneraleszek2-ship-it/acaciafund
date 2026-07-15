@@ -31,8 +31,10 @@ from config import (
     INTEREST_SQI_WEIGHT,
     KNOWLEDGE_TO_PILLAR_CATEGORY,
     OUTPUT_DIR,
+    PILLAR_COLORS,
     PILLAR_CONFIG,
     PILLAR_EMOJIS,
+    PILLAR_FINGERPRINT_COLORS,
     PILLAR_NAMES,
     PIPELINE_STATIC_DIR,
     PLAUSIBLE_DOMAIN,
@@ -91,7 +93,6 @@ def generate_knowledge_graph():
 # ── Content validation ──
 from core.validator import validate_content  # noqa: E402
 from core.visuals import (  # noqa: E402
-    PILLAR_COLORS,
     SUBTOPIC_CATEGORIES,
     TOPIC_ICONS,
     _pick_subtopic,
@@ -336,7 +337,7 @@ def group_by_pillar(content_list: list) -> dict[str, list]:
             continue
         groups[p].append(c)
     for g in groups.values():
-        g.sort(key=lambda x: x.created_at or datetime.min, reverse=True)
+        g.sort(key=lambda x: _get_created(x) or datetime.min.replace(tzinfo=timezone.utc), reverse=True)
     return dict(groups)
 
 
@@ -1059,20 +1060,20 @@ def is_future_post(post) -> bool:
     """Check if a post is future-dated based on frontmatter date or created_at."""
     from datetime import date
 
-    today = date.today().isoformat()
+    today = date.today()
 
-    # Check date_str from frontmatter (e.g., "2026-06-15")
     if getattr(post, "date_str", ""):
-        if post.date_str > today:
-            return True
+        try:
+            post_date = post.date_str[:10]
+            post_dt = date.fromisoformat(post_date)
+            if post_dt > today:
+                return True
+        except (ValueError, TypeError):
+            pass
 
-    # Fallback to created_at (may be str from Pydantic or datetime from Content.from_dict)
-    if post.created_at:
-        dt = post.created_at
-        if isinstance(dt, str):
-            dt = datetime.fromisoformat(dt.replace("Z", "+00:00"))
-        if dt > datetime.now(timezone.utc):
-            return True
+    dt = _get_created(post)
+    if dt and dt > datetime.now(timezone.utc):
+        return True
 
     return False
 
@@ -1093,14 +1094,6 @@ def _get_quality_metrics_with_fail_safes(metrics: dict) -> dict:
 
     return metrics
 
-
-# ── Visual fingerprint: unique ident for every article ─────
-PILLAR_FINGERPRINT_COLORS = {
-    "aml": BRAND["aml"]["primary"],
-    "stock": BRAND["markets"]["primary"],
-    "data-engineering": BRAND["science"]["primary"],
-    "": "#6b7280",
-}
 
 LAYER_SYMBOLS = {
     "research": (
@@ -1188,9 +1181,37 @@ def layer_indicator_html(content_type: str, pillar: str = "") -> str:
     )
 
 
+def _dt_utc(val):
+    if val is None:
+        return None
+    if isinstance(val, str):
+        try:
+            val = datetime.fromisoformat(val.replace("Z", "+00:00"))
+        except (ValueError, TypeError):
+            return None
+    if hasattr(val, "tzinfo") and val.tzinfo is None:
+        val = val.replace(tzinfo=timezone.utc)
+    return val
+
+
+def _get_created(post):
+    dt = getattr(post, "created_at", None)
+    if dt is None:
+        return None
+    if isinstance(dt, str):
+        try:
+            dt = datetime.fromisoformat(dt.replace("Z", "+00:00"))
+        except (ValueError, TypeError):
+            return None
+    if hasattr(dt, "tzinfo") and dt.tzinfo is None:
+        dt = dt.replace(tzinfo=timezone.utc)
+    return dt
+
+
 def interest_score(post, now: datetime) -> float:
     sqi = post.signals.get("avg_sqi", 0.0) if post.signals else 0.0
-    age_days = (now - (post.created_at or now)).days if post.created_at else 365
+    created = _dt_utc(getattr(post, "created_at", None))
+    age_days = (now - created).days if created else 365
     age_days = max(0, age_days)
     recency = max(0.1, 1.0 - age_days / INTEREST_RECENCY_DAYS)
     return sqi * INTEREST_SQI_WEIGHT + recency * INTEREST_RECENCY_WEIGHT
@@ -2756,13 +2777,14 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     # Freshness cutoff: exclude articles older than 90 days from featured + recent
     ninety_days_ago = now - timedelta(days=90)
     fresh_posts = [
-        p for p in published_research if not p.created_at or p.created_at >= ninety_days_ago
+        p for p in published_research
+        if not _get_created(p) or _get_created(p) >= ninety_days_ago
     ]
     featured = fresh_posts[:3] if len(fresh_posts) >= 3 else published_research[:3]
     # Hero: highest-SQI article from last 7 days
     seven_days_ago = now - timedelta(days=7)
     recent_articles = [
-        p for p in published_research if p.created_at and p.created_at >= seven_days_ago
+        p for p in published_research if _get_created(p) and _get_created(p) >= seven_days_ago
     ]
     hero_article = (
         max(recent_articles, key=lambda x: (x.signals or {}).get("avg_sqi", 0))

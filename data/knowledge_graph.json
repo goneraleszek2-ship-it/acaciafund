@@ -19,12 +19,12 @@
       "score": 0.1667
     },
     {
-      "slug": "knowledge/system-architecture",
-      "score": 0.1429
+      "slug": "data/research/relaxing-faithfulness-with-intervention-only-causal-discover",
+      "score": 0.1667
     },
     {
-      "slug": "knowledge/diagrams",
-      "score": 0.1429
+      "slug": "data/research/dag-fm-a-foundation-model-for-causal-discovery-under-heterog",
+      "score": 0.1667
     }
   ],
   "data/research/analytics-engineering-rise": [
@@ -51,8 +51,8 @@
       "score": 0.1667
     },
     {
-      "slug": "knowledge/system-architecture",
-      "score": 0.1429
+      "slug": "data/research/relaxing-faithfulness-with-intervention-only-causal-discover",
+      "score": 0.1667
     }
   ],
   "data/research/schema-registry-avro-protobuf": [
@@ -93,8 +93,8 @@
       "score": 0.1111
     },
     {
-      "slug": "data/learn/data-pipeline-orchestration",
-      "score": 0.0769
+      "slug": "data/knowledge/data-mesh-adoption-strategies",
+      "score": 0.1111
     }
   ],
   "data/research/terraform-data-infrastructure": [
@@ -177,8 +177,8 @@
       "score": 0.2
     },
     {
-      "slug": "data/research/kubernetes-data-pipelines",
-      "score": 0.1818
+      "slug": "data/research/relaxing-faithfulness-with-intervention-only-causal-discover",
+      "score": 0.2
     }
   ],
   "data/research/sqlmesh-data-transformation": [
@@ -253,19 +253,23 @@
   ],
   "data/research/kafka-streaming-event-driven": [
     {
+      "slug": "data/research/time-is-money-incentivized-causal-transaction-ordering",
+      "score": 0.3333
+    },
+    {
+      "slug": "data/research/deeprt-engine-a-unified-gpu-parallel-ray-tracing-framework-w",
+      "score": 0.3333
+    },
+    {
       "slug": "data/learn/data-pipeline-architectures",
       "score": 0.3
-    },
-    {
-      "slug": "data/research/show-hn-turn-commodity-wifi-signals-into-real-time-spatial-i",
-      "score": 0.3
-    },
-    {
-      "slug": "markets/research/dataops-markets",
-      "score": 0.2727
     }
   ],
   "data/research/data-contracts": [
+    {
+      "slug": "data/knowledge/data-contracts-best-practices",
+      "score": 0.4
+    },
     {
       "slug": "data/research/schema-registry-avro-protobuf",
       "score": 0.3636
@@ -273,10 +277,6 @@
     {
       "slug": "data/research/data-quality-great-expectations",
       "score": 0.25
-    },
-    {
-      "slug": "data/learn/data-quality-observability-cost",
-      "score": 0.2222
     }
   ],
   "data/research/airflow-prefect-dagster-comparison": [
@@ -285,12 +285,12 @@
       "score": 0.2143
     },
     {
-      "slug": "data/knowledge/flink-stateful-stream-joins",
-      "score": 0.1538
+      "slug": "data/knowledge/dagster-pipeline-tutorial",
+      "score": 0.1667
     },
     {
-      "slug": "data/learn/real-time-streaming-architectures",
-      "score": 0.1333
+      "slug": "data/knowledge/flink-stateful-stream-joins",
+      "score": 0.1538
     }
   ],
   "data/research/data-quality-great-expectations": [
@@ -439,12 +439,12 @@
       "score": 1.0
     },
     {
-      "slug": "data/research/ey-canada-published-a-cybersecurity-report-and-most",
-      "score": 0.5
+      "slug": "compliance/research/can-llms-perform-deep-technical-comprehension-of-computer-ar",
+      "score": 1.0
     },
     {
-      "slug": "aml/research/aml-2",
-      "score": 0.5
+      "slug": "compliance/research/forgetting-our-way-to-shared-meaning-effects-of-forgetting-o",
+      "score": 1.0
     }
   ],
   "markets/research/stock-1": [
@@ -481,12 +481,12 @@
       "score": 1.0
     },
     {
-      "slug": "data/research/ey-canada-published-a-cybersecurity-report-and-most",
-      "score": 0.5
+      "slug": "compliance/research/can-llms-perform-deep-technical-comprehension-of-computer-ar",
+      "score": 1.0
     },
     {
-      "slug": "aml/research/aml-2",
-      "score": 0.5
+      "slug": "compliance/research/forgetting-our-way-to-shared-meaning-effects-of-forgetting-o",
+      "score": 1.0
     }
   ],
   "markets/research/stock-2": [
@@ -873,12 +873,12 @@
       "score": 0.5
     },
     {
-      "slug": "aml/research/department-of-commerce-has-lifted-export-controls-on-claude",
-      "score": 0.4
+      "slug": "compliance/research/a-minimalist-retargeting-guided-reinforcement-learning-recip",
+      "score": 0.5
     },
     {
-      "slug": "aml/learn/trade-based-ml-sanctions",
-      "score": 0.3333
+      "slug": "aml/research/department-of-commerce-has-lifted-export-controls-on-claude",
+      "score": 0.4
     }
   ],
   "aml/learn/aml-compliance-glossary": [
@@ -1045,8 +1045,8 @@
       "score": 0.6
     },
     {
-      "slug": "aml/research/dataops-aml",
-      "score": 0.4286
+      "slug": "compliance/research/closing-the-loop-an-access-control-architecture-for-automate",
+      "score": 0.5
     }
   ],
   "markets/learn/behavioral-finance-portfolio": [
@@ -1331,16 +1331,16 @@
   ],
   "knowledge/glossary": [
     {
+      "slug": "compliance/knowledge/aml-risk-scoring-methodology",
+      "score": 0.25
+    },
+    {
       "slug": "aml/learn/kyc-cdd-workflows",
       "score": 0.2222
     },
     {
       "slug": "aml/learn/sar-filing-scenarios",
       "score": 0.2222
-    },
-    {
-      "slug": "markets/research/govuk-has-replaced-stripe-with-dutch-provider-adyen-aml",
-      "score": 0.2
     }
   ],
   "knowledge/diagrams": [
@@ -1349,12 +1349,12 @@
       "score": 0.5
     },
     {
-      "slug": "markets/learn/crispr-gene-editing",
-      "score": 0.3333
+      "slug": "data/research/relaxing-faithfulness-with-intervention-only-causal-discover",
+      "score": 0.5
     },
     {
-      "slug": "knowledge/system-architecture",
-      "score": 0.3333
+      "slug": "data/research/dag-fm-a-foundation-model-for-causal-discovery-under-heterog",
+      "score": 0.5
     }
   ],
   "data/knowledge/cybernetic-foundations": [
@@ -1387,16 +1387,16 @@
   ],
   "aml/research/square-root-price-impact-is-necessary-for-endogenous-manipul": [
     {
+      "slug": "compliance/research/a-minimalist-retargeting-guided-reinforcement-learning-recip",
+      "score": 0.5
+    },
+    {
       "slug": "aml/research/department-of-commerce-has-lifted-export-controls-on-claude",
       "score": 0.4
     },
     {
       "slug": "aml/research/agent-data-injection-attacks-are-realistic-threats-to-ai-age",
       "score": 0.4
-    },
-    {
-      "slug": "aml/learn/money-laundering-mechanisms",
-      "score": 0.3333
     }
   ],
   "aml/research/department-of-commerce-has-lifted-export-controls-on-claude": [
@@ -1429,15 +1429,15 @@
   ],
   "aml/research/counterfactual-methods-for-detecting-unfairness-in-anti-mone": [
     {
+      "slug": "compliance/research/closing-the-loop-an-access-control-architecture-for-automate",
+      "score": 0.6667
+    },
+    {
       "slug": "aml/research/aml-1",
       "score": 0.6
     },
     {
       "slug": "aml/research/quantum-spectral-anomaly-detection",
-      "score": 0.5
-    },
-    {
-      "slug": "aml/research/privacy-preserving-robustness-verification-for-neural-networ",
       "score": 0.5
     }
   ],
@@ -1811,12 +1811,12 @@
       "score": 0.5
     },
     {
-      "slug": "data/learn/data-quality-observability-cost",
-      "score": 0.4
+      "slug": "data/research/auditing-the-risk-claims-of-distributional-reinforcement-lea",
+      "score": 0.5
     },
     {
-      "slug": "data/learn/data-quality-engineering",
-      "score": 0.4
+      "slug": "data/research/improved-global-ocean-heat-content-estimation-by-modeling-ve",
+      "score": 0.5
     }
   ],
   "data/research/choosing-a-parallel-heterogeneous-ensemble-method-for-tabula": [
@@ -1923,12 +1923,12 @@
       "score": 0.5
     },
     {
-      "slug": "knowledge/system-architecture",
-      "score": 0.3333
+      "slug": "data/research/relaxing-faithfulness-with-intervention-only-causal-discover",
+      "score": 0.5
     },
     {
-      "slug": "knowledge/diagrams",
-      "score": 0.3333
+      "slug": "data/research/dag-fm-a-foundation-model-for-causal-discovery-under-heterog",
+      "score": 0.5
     }
   ],
   "data/research/microsoft-admits-a-windows-11-bug-is-eating-up-to-500gb-of-s": [
@@ -1947,15 +1947,15 @@
   ],
   "data/research/show-hn-focal-harvest-cli-research-pipeline-to-search-scrape": [
     {
+      "slug": "data/research/relaxing-faithfulness-with-intervention-only-causal-discover",
+      "score": 1.0
+    },
+    {
+      "slug": "data/research/dag-fm-a-foundation-model-for-causal-discovery-under-heterog",
+      "score": 1.0
+    },
+    {
       "slug": "knowledge/system-architecture",
-      "score": 0.5
-    },
-    {
-      "slug": "knowledge/diagrams",
-      "score": 0.5
-    },
-    {
-      "slug": "data/knowledge/cybernetic-foundations",
       "score": 0.5
     }
   ],
@@ -2123,8 +2123,8 @@
       "score": 0.25
     },
     {
-      "slug": "data/research/ey-canada-published-a-cybersecurity-report-and-most",
-      "score": 0.2
+      "slug": "compliance/research/can-llms-perform-deep-technical-comprehension-of-computer-ar",
+      "score": 0.25
     }
   ],
   "aml/knowledge/tbml-pricing-anomalies": [
@@ -2133,12 +2133,12 @@
       "score": 0.4286
     },
     {
-      "slug": "aml/research/quantum-spectral-anomaly-detection",
-      "score": 0.2857
+      "slug": "compliance/research/closing-the-loop-an-access-control-architecture-for-automate",
+      "score": 0.3333
     },
     {
-      "slug": "aml/research/department-of-commerce-has-lifted-export-controls-on-claude",
-      "score": 0.2857
+      "slug": "compliance/research/a-minimalist-retargeting-guided-reinforcement-learning-recip",
+      "score": 0.3333
     }
   ],
   "markets/knowledge/vpin-toxicity-modeling": [
@@ -2189,12 +2189,12 @@
       "score": 0.5
     },
     {
-      "slug": "knowledge/system-architecture",
-      "score": 0.25
+      "slug": "data/research/time-is-money-incentivized-causal-transaction-ordering",
+      "score": 0.375
     },
     {
-      "slug": "data/research/communication-aware-placement-and-pruning-for-efficient-mixt",
-      "score": 0.25
+      "slug": "data/research/deeprt-engine-a-unified-gpu-parallel-ray-tracing-framework-w",
+      "score": 0.375
     }
   ],
   "compliance/knowledge/beneficial-ownership-transparency": [
@@ -2805,12 +2805,12 @@
       "score": 0.5
     },
     {
-      "slug": "knowledge/system-architecture",
-      "score": 0.3333
+      "slug": "data/research/relaxing-faithfulness-with-intervention-only-causal-discover",
+      "score": 0.5
     },
     {
-      "slug": "knowledge/diagrams",
-      "score": 0.3333
+      "slug": "data/research/dag-fm-a-foundation-model-for-causal-discovery-under-heterog",
+      "score": 0.5
     }
   ],
   "data/research/trm-raft-a-byzantine-resistant-raft-consensus-via-integrated": [
@@ -2861,12 +2861,12 @@
       "score": 0.75
     },
     {
-      "slug": "data/research/every-new-car-sold-in-the-european-union-must-include-a-driv",
-      "score": 0.5
+      "slug": "data/research/auditing-the-risk-claims-of-distributional-reinforcement-lea",
+      "score": 0.6667
     },
     {
-      "slug": "data/research/video-based-detection-of-cessation-of-breathing-in-pre-term",
-      "score": 0.4
+      "slug": "data/research/improved-global-ocean-heat-content-estimation-by-modeling-ve",
+      "score": 0.6667
     }
   ],
   "data/research/a-practical-investigation-of-training-free-relaxed-speculati": [
@@ -2903,12 +2903,12 @@
       "score": 0.75
     },
     {
-      "slug": "data/research/every-new-car-sold-in-the-european-union-must-include-a-driv",
-      "score": 0.4
+      "slug": "data/research/auditing-the-risk-claims-of-distributional-reinforcement-lea",
+      "score": 0.5
     },
     {
-      "slug": "data/research/video-based-detection-of-cessation-of-breathing-in-pre-term",
-      "score": 0.3333
+      "slug": "data/research/improved-global-ocean-heat-content-estimation-by-modeling-ve",
+      "score": 0.5
     }
   ],
   "data/research/secure-decentralized-federated-learning-via-gossip-and-virtu": [
@@ -2983,16 +2983,16 @@
   ],
   "data/research/every-new-car-sold-in-the-european-union-must-include-a-driv": [
     {
-      "slug": "data/research/self-adaptive-anomaly-detection-with-reinforcement-learning",
-      "score": 0.5
+      "slug": "data/research/auditing-the-risk-claims-of-distributional-reinforcement-lea",
+      "score": 0.6667
     },
     {
-      "slug": "data/research/video-based-detection-of-cessation-of-breathing-in-pre-term",
-      "score": 0.4
+      "slug": "data/research/improved-global-ocean-heat-content-estimation-by-modeling-ve",
+      "score": 0.6667
     },
     {
-      "slug": "data/research/caad-causality-aware-multivariate-time-series-anomaly-detect",
-      "score": 0.4
+      "slug": "data/research/closing-the-loop-an-access-control-architecture-for-automate",
+      "score": 0.6667
     }
   ],
   "data/research/real-time-map-of-great-britains-rail-network": [
@@ -3075,8 +3075,8 @@
       "score": 1.0
     },
     {
-      "slug": "markets/research/estimating-the-stochastic-discount-factor-from-option-prices",
-      "score": 0.6667
+      "slug": "markets/research/the-quarter-hour-effect-periodic-algorithmic-trading-and-ret",
+      "score": 1.0
     }
   ],
   "markets/research/robust-bayesian-decision-making-under-adversarial-uncertaint": [
@@ -3089,8 +3089,8 @@
       "score": 1.0
     },
     {
-      "slug": "markets/research/estimating-the-stochastic-discount-factor-from-option-prices",
-      "score": 0.6667
+      "slug": "markets/research/the-quarter-hour-effect-periodic-algorithmic-trading-and-ret",
+      "score": 1.0
     }
   ],
   "markets/research/multi-sender-bayesian-persuasion-with-imperfect-information": [
@@ -3103,8 +3103,8 @@
       "score": 1.0
     },
     {
-      "slug": "markets/research/estimating-the-stochastic-discount-factor-from-option-prices",
-      "score": 0.6667
+      "slug": "markets/research/the-quarter-hour-effect-periodic-algorithmic-trading-and-ret",
+      "score": 1.0
     }
   ],
   "markets/research/causal-effects-of-protocol-fee-changes-on-liquidity-provisio": [
@@ -3207,16 +3207,16 @@
   ],
   "data/learn/pyspark-fundamentals": [
     {
+      "slug": "data/knowledge/pyspark-dataframe-tutorial",
+      "score": 0.375
+    },
+    {
       "slug": "data/learn/spike-data-pipelines",
       "score": 0.2222
     },
     {
       "slug": "data/research/delta-lake-iceberg-hudi-comparison",
       "score": 0.2
-    },
-    {
-      "slug": "data/research/kubernetes-data-pipelines",
-      "score": 0.1818
     }
   ],
   "data/learn/partitioning-strategies": [
@@ -3257,11 +3257,15 @@
       "score": 0.2222
     },
     {
-      "slug": "aml/knowledge/cross-border-financial-intelligence",
-      "score": 0.2
+      "slug": "compliance/knowledge/aml-risk-scoring-methodology",
+      "score": 0.2222
     }
   ],
   "aml/learn/sar-filing-scenarios": [
+    {
+      "slug": "aml/learn/whistleblower-programs",
+      "score": 0.3333
+    },
     {
       "slug": "knowledge/glossary",
       "score": 0.2222
@@ -3269,13 +3273,13 @@
     {
       "slug": "compliance/glossary",
       "score": 0.2222
-    },
-    {
-      "slug": "aml/knowledge/cross-border-financial-intelligence",
-      "score": 0.2
     }
   ],
   "aml/learn/sanctions-screening": [
+    {
+      "slug": "compliance/knowledge/aml-screening-rules-tutorial",
+      "score": 0.3333
+    },
     {
       "slug": "aml/research/international-chess-federation-sanctions-kramnik",
       "score": 0.2857
@@ -3283,10 +3287,6 @@
     {
       "slug": "compliance/glossary",
       "score": 0.2222
-    },
-    {
-      "slug": "aml/knowledge/cross-border-financial-intelligence",
-      "score": 0.2
     }
   ],
   "markets/learn/quantitative-methods-intro": [
@@ -3361,15 +3361,15 @@
   ],
   "stock/research/machine-learning-risk-parity": [
     {
+      "slug": "stock/knowledge/portfolio-rebalancing-strategies",
+      "score": 0.2222
+    },
+    {
       "slug": "aml/research/counterfactual-methods-for-detecting-unfairness-in-anti-mone",
       "score": 0.1429
     },
     {
       "slug": "aml/research/privacy-preserving-robustness-verification-for-neural-networ",
-      "score": 0.1429
-    },
-    {
-      "slug": "data/research/interpretable-human-label-free-deep-learning-for-real-bogus",
       "score": 0.1429
     }
   ],
@@ -3379,11 +3379,11 @@
       "score": 0.1111
     },
     {
-      "slug": "data/research/2027-data-engineering-predictions",
-      "score": 0.0
+      "slug": "markets/knowledge/fixed-income-liquidity",
+      "score": 0.0909
     },
     {
-      "slug": "data/research/data-platform-product-ux",
+      "slug": "data/research/2027-data-engineering-predictions",
       "score": 0.0
     }
   ],
@@ -3417,15 +3417,15 @@
   ],
   "stock/research/commodity-seasonality-patterns": [
     {
+      "slug": "markets/knowledge/quant-fund-landscape",
+      "score": 0.1
+    },
+    {
       "slug": "data/research/2027-data-engineering-predictions",
       "score": 0.0
     },
     {
       "slug": "data/research/data-platform-product-ux",
-      "score": 0.0
-    },
-    {
-      "slug": "data/research/analytics-engineering-rise",
       "score": 0.0
     }
   ],
@@ -3435,25 +3435,25 @@
       "score": 0.375
     },
     {
-      "slug": "stock/knowledge/options-glossary",
-      "score": 0.25
+      "slug": "markets/knowledge/volatility-outlook",
+      "score": 0.375
     },
     {
-      "slug": "stock/research/options-flow-analysis",
-      "score": 0.1111
+      "slug": "stock/knowledge/options-glossary",
+      "score": 0.25
     }
   ],
   "stock/research/factor-timing-regime-signals": [
+    {
+      "slug": "stock/knowledge/momentum-factor-strategies",
+      "score": 0.2222
+    },
     {
       "slug": "stock/research/esg-integration-quant-portfolio",
       "score": 0.1111
     },
     {
       "slug": "data/research/2027-data-engineering-predictions",
-      "score": 0.0
-    },
-    {
-      "slug": "data/research/data-platform-product-ux",
       "score": 0.0
     }
   ],
@@ -3463,25 +3463,25 @@
       "score": 0.1111
     },
     {
-      "slug": "data/research/2027-data-engineering-predictions",
-      "score": 0.0
+      "slug": "stock/knowledge/momentum-factor-strategies",
+      "score": 0.1
     },
     {
-      "slug": "data/research/data-platform-product-ux",
+      "slug": "data/research/2027-data-engineering-predictions",
       "score": 0.0
     }
   ],
   "stock/research/statistical-arbitrage-pairs-v3": [
+    {
+      "slug": "stock/knowledge/mean-reversion-strategies",
+      "score": 0.375
+    },
     {
       "slug": "aml/research/counterfactual-methods-for-detecting-unfairness-in-anti-mone",
       "score": 0.1429
     },
     {
       "slug": "aml/research/privacy-preserving-robustness-verification-for-neural-networ",
-      "score": 0.1429
-    },
-    {
-      "slug": "data/research/interpretable-human-label-free-deep-learning-for-real-bogus",
       "score": 0.1429
     }
   ],
@@ -3491,12 +3491,12 @@
       "score": 0.125
     },
     {
-      "slug": "data/research/kafka-streaming-event-driven",
-      "score": 0.0769
+      "slug": "markets/knowledge/backtesting-python-tutorial",
+      "score": 0.0909
     },
     {
-      "slug": "data/research/2027-data-engineering-predictions",
-      "score": 0.0
+      "slug": "data/research/kafka-streaming-event-driven",
+      "score": 0.0769
     }
   ],
   "stock/research/market-impact-cost-models": [
@@ -3543,29 +3543,29 @@
   ],
   "stock/knowledge/market-data-api-reference": [
     {
+      "slug": "markets/knowledge/trading-infrastructure-architecture",
+      "score": 0.2222
+    },
+    {
       "slug": "data/research/data-products-api-design",
       "score": 0.1111
     },
     {
-      "slug": "data/research/2027-data-engineering-predictions",
-      "score": 0.0
-    },
-    {
-      "slug": "data/research/data-platform-product-ux",
-      "score": 0.0
+      "slug": "markets/knowledge/financial-data-analysis-guide",
+      "score": 0.1111
     }
   ],
   "stock/knowledge/backtesting-methodology": [
+    {
+      "slug": "markets/knowledge/backtesting-validation-methodology",
+      "score": 0.2222
+    },
     {
       "slug": "markets/knowledge/vpin-toxicity-modeling",
       "score": 0.1111
     },
     {
       "slug": "stock/research/options-flow-analysis",
-      "score": 0.1111
-    },
-    {
-      "slug": "stock/research/earnings-season-alpha",
       "score": 0.1111
     }
   ],
@@ -3599,16 +3599,16 @@
   ],
   "stock/knowledge/market-maker-compliance": [
     {
+      "slug": "markets/knowledge/securities-regulations",
+      "score": 0.375
+    },
+    {
       "slug": "compliance/glossary",
       "score": 0.1111
     },
     {
       "slug": "markets/learn/market-microstructure",
       "score": 0.1111
-    },
-    {
-      "slug": "aml/knowledge/cross-border-financial-intelligence",
-      "score": 0.1
     }
   ],
   "stock/research/alternative-data-alpha": [
@@ -3679,6 +3679,2106 @@
     {
       "slug": "markets/knowledge/implied-volatility-surfaces",
       "score": 0.1111
+    }
+  ],
+  "stock/knowledge/mean-reversion-strategies": [
+    {
+      "slug": "stock/research/statistical-arbitrage-pairs-v3",
+      "score": 0.375
+    },
+    {
+      "slug": "data/research/2027-data-engineering-predictions",
+      "score": 0.0
+    },
+    {
+      "slug": "data/research/data-platform-product-ux",
+      "score": 0.0
+    }
+  ],
+  "stock/knowledge/momentum-factor-strategies": [
+    {
+      "slug": "stock/research/factor-timing-regime-signals",
+      "score": 0.2222
+    },
+    {
+      "slug": "stock/research/esg-integration-quant-portfolio",
+      "score": 0.1
+    },
+    {
+      "slug": "markets/knowledge/financial-data-analysis-guide",
+      "score": 0.0909
+    }
+  ],
+  "stock/knowledge/portfolio-rebalancing-strategies": [
+    {
+      "slug": "stock/research/machine-learning-risk-parity",
+      "score": 0.2222
+    },
+    {
+      "slug": "markets/knowledge/portfolio-optimization-python-tutorial",
+      "score": 0.0909
+    },
+    {
+      "slug": "data/research/2027-data-engineering-predictions",
+      "score": 0.0
+    }
+  ],
+  "aml/learn/regtech-compliance": [
+    {
+      "slug": "aml/learn/aml-enforcement-cases",
+      "score": 0.4286
+    },
+    {
+      "slug": "aml/learn/aml-basics",
+      "score": 0.4286
+    },
+    {
+      "slug": "aml/learn/trade-based-ml-sanctions",
+      "score": 0.4286
+    }
+  ],
+  "aml/learn/cross-border-aml": [
+    {
+      "slug": "markets/research/govuk-has-replaced-stripe-with-dutch-provider-adyen-aml",
+      "score": 0.1667
+    },
+    {
+      "slug": "markets/research/aml-1",
+      "score": 0.1667
+    },
+    {
+      "slug": "compliance/research/can-llms-perform-deep-technical-comprehension-of-computer-ar",
+      "score": 0.1667
+    }
+  ],
+  "aml/learn/whistleblower-programs": [
+    {
+      "slug": "aml/learn/sar-filing-scenarios",
+      "score": 0.3333
+    },
+    {
+      "slug": "compliance/glossary",
+      "score": 0.2222
+    },
+    {
+      "slug": "aml/knowledge/cross-border-financial-intelligence",
+      "score": 0.2
+    }
+  ],
+  "aml/learn/aml-program-audit": [
+    {
+      "slug": "compliance/knowledge/aml-risk-scoring-methodology",
+      "score": 0.2222
+    },
+    {
+      "slug": "compliance/knowledge/aml-risk-assessment-methodology",
+      "score": 0.2
+    },
+    {
+      "slug": "markets/research/govuk-has-replaced-stripe-with-dutch-provider-adyen-aml",
+      "score": 0.1667
+    }
+  ],
+  "aml/learn/sanctions-evasion-typologies": [
+    {
+      "slug": "aml/learn/sanctions-screening",
+      "score": 0.1818
+    },
+    {
+      "slug": "markets/research/govuk-has-replaced-stripe-with-dutch-provider-adyen-aml",
+      "score": 0.1429
+    },
+    {
+      "slug": "markets/research/aml-1",
+      "score": 0.1429
+    }
+  ],
+  "aml/learn/aml-business-continuity": [
+    {
+      "slug": "markets/research/stock-market",
+      "score": 0.125
+    },
+    {
+      "slug": "markets/learn/applying-market-analysis",
+      "score": 0.125
+    },
+    {
+      "slug": "markets/learn/market-fundamentals",
+      "score": 0.125
+    }
+  ],
+  "data/knowledge/data-quality-best-practices": [
+    {
+      "slug": "data/research/every-new-car-sold-in-the-european-union-must-include-a-driv",
+      "score": 0.2857
+    },
+    {
+      "slug": "data/knowledge/data-quality-measurement-methodology",
+      "score": 0.2222
+    },
+    {
+      "slug": "data/knowledge/data-contracts-best-practices",
+      "score": 0.2
+    }
+  ],
+  "data/knowledge/data-privacy-regulations": [
+    {
+      "slug": "data/research/sqlmesh-data-transformation",
+      "score": 0.1
+    },
+    {
+      "slug": "data/knowledge/data-contracts-best-practices",
+      "score": 0.0909
+    },
+    {
+      "slug": "data/knowledge/data-quality-methodology",
+      "score": 0.0909
+    }
+  ],
+  "markets/knowledge/risk-management-best-practices": [
+    {
+      "slug": "markets/research/stock-market",
+      "score": 0.125
+    },
+    {
+      "slug": "markets/learn/applying-market-analysis",
+      "score": 0.125
+    },
+    {
+      "slug": "markets/learn/market-fundamentals",
+      "score": 0.125
+    }
+  ],
+  "markets/knowledge/securities-regulations": [
+    {
+      "slug": "stock/knowledge/market-maker-compliance",
+      "score": 0.375
+    },
+    {
+      "slug": "compliance/glossary",
+      "score": 0.1
+    },
+    {
+      "slug": "aml/knowledge/cross-border-financial-intelligence",
+      "score": 0.0909
+    }
+  ],
+  "compliance/knowledge/fintech-trends-analysis": [
+    {
+      "slug": "compliance/knowledge/regtech-market-analysis",
+      "score": 0.3333
+    },
+    {
+      "slug": "aml/learn/regtech-compliance",
+      "score": 0.2
+    },
+    {
+      "slug": "aml/learn/aml-compliance-glossary",
+      "score": 0.125
+    }
+  ],
+  "compliance/knowledge/sanctions-market-impact": [
+    {
+      "slug": "compliance/knowledge/global-sanctions-landscape",
+      "score": 0.2
+    },
+    {
+      "slug": "aml/research/international-chess-federation-sanctions-kramnik",
+      "score": 0.125
+    },
+    {
+      "slug": "aml/learn/sanctions-screening",
+      "score": 0.0909
+    }
+  ],
+  "data/knowledge/data-infrastructure-trends": [
+    {
+      "slug": "data/knowledge/data-platform-comparison",
+      "score": 0.1667
+    },
+    {
+      "slug": "data/knowledge/data-mesh-adoption-strategies",
+      "score": 0.0833
+    },
+    {
+      "slug": "data/knowledge/data-infrastructure-market",
+      "score": 0.0833
+    }
+  ],
+  "data/knowledge/data-market-landscape": [
+    {
+      "slug": "data/research/2027-data-engineering-predictions",
+      "score": 0.0
+    },
+    {
+      "slug": "data/research/data-platform-product-ux",
+      "score": 0.0
+    },
+    {
+      "slug": "data/research/analytics-engineering-rise",
+      "score": 0.0
+    }
+  ],
+  "data/knowledge/data-pipeline-strategies": [
+    {
+      "slug": "data/learn/data-pipeline-architectures",
+      "score": 0.1111
+    },
+    {
+      "slug": "data/research/show-hn-turn-commodity-wifi-signals-into-real-time-spatial-i",
+      "score": 0.1111
+    },
+    {
+      "slug": "markets/research/dataops-markets",
+      "score": 0.1
+    }
+  ],
+  "data/knowledge/data-mesh-adoption-strategies": [
+    {
+      "slug": "data/research/data-mesh-implementation",
+      "score": 0.1111
+    },
+    {
+      "slug": "data/research/data-products-api-design",
+      "score": 0.0909
+    },
+    {
+      "slug": "data/knowledge/data-infrastructure-trends",
+      "score": 0.0833
+    }
+  ],
+  "compliance/knowledge/compliance-program-strategies": [
+    {
+      "slug": "aml/learn/aml-business-continuity",
+      "score": 0.0909
+    },
+    {
+      "slug": "compliance/knowledge/aml-compliance-program-guide",
+      "score": 0.0833
+    },
+    {
+      "slug": "compliance/knowledge/aml-foundations",
+      "score": 0.0833
+    }
+  ],
+  "compliance/knowledge/sanctions-compliance-strategies": [
+    {
+      "slug": "compliance/knowledge/sanctions-compliance-guide",
+      "score": 0.2
+    },
+    {
+      "slug": "aml/learn/sanctions-screening",
+      "score": 0.0909
+    },
+    {
+      "slug": "compliance/knowledge/sanctions-screening-best-practices",
+      "score": 0.0909
+    }
+  ],
+  "markets/research/the-quarter-hour-effect-periodic-algorithmic-trading-and-ret": [
+    {
+      "slug": "markets/research/algorithmic-expert-aggregation",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/robust-bayesian-decision-making-under-adversarial-uncertaint",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/multi-sender-bayesian-persuasion-with-imperfect-information",
+      "score": 1.0
+    }
+  ],
+  "markets/research/mosaic-runtime-efficient-multi-agent-embodied-planning": [
+    {
+      "slug": "markets/research/llms-are-not-a-default-execution-engine",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/on-exploring-input-resolution-scaling-for-anytime-lidar-obje",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/mpflow-learning-budgeted-max-flow-optimization-on-the-lightn",
+      "score": 1.0
+    }
+  ],
+  "markets/research/semantic-pareto-dqn-a-multi-objective-reinforcement-learning": [
+    {
+      "slug": "markets/research/llms-are-not-a-default-execution-engine",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/on-exploring-input-resolution-scaling-for-anytime-lidar-obje",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/mpflow-learning-budgeted-max-flow-optimization-on-the-lightn",
+      "score": 1.0
+    }
+  ],
+  "markets/research/a-truckload-of-satoshis-detecting-and-measuring-one-way-arbi": [
+    {
+      "slug": "markets/research/algorithmic-expert-aggregation",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/robust-bayesian-decision-making-under-adversarial-uncertaint",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/multi-sender-bayesian-persuasion-with-imperfect-information",
+      "score": 1.0
+    }
+  ],
+  "markets/research/objective-and-subjective-entropy-measures-of-portfolio-subop": [
+    {
+      "slug": "markets/research/llms-are-not-a-default-execution-engine",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/on-exploring-input-resolution-scaling-for-anytime-lidar-obje",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/mpflow-learning-budgeted-max-flow-optimization-on-the-lightn",
+      "score": 1.0
+    }
+  ],
+  "markets/research/deep-learning-for-dynamic-programming-with-recursive-utility": [
+    {
+      "slug": "markets/research/algorithmic-expert-aggregation",
+      "score": 0.6667
+    },
+    {
+      "slug": "markets/research/robust-bayesian-decision-making-under-adversarial-uncertaint",
+      "score": 0.6667
+    },
+    {
+      "slug": "markets/research/multi-sender-bayesian-persuasion-with-imperfect-information",
+      "score": 0.6667
+    }
+  ],
+  "compliance/research/closing-the-loop-an-access-control-architecture-for-automate": [
+    {
+      "slug": "aml/research/quantum-spectral-anomaly-detection",
+      "score": 0.6667
+    },
+    {
+      "slug": "aml/research/counterfactual-methods-for-detecting-unfairness-in-anti-mone",
+      "score": 0.6667
+    },
+    {
+      "slug": "markets/research/govuk-has-replaced-stripe-with-dutch-provider-adyen-aml",
+      "score": 0.5
+    }
+  ],
+  "compliance/research/a-minimalist-retargeting-guided-reinforcement-learning-recip": [
+    {
+      "slug": "aml/research/department-of-commerce-has-lifted-export-controls-on-claude",
+      "score": 0.6667
+    },
+    {
+      "slug": "markets/research/govuk-has-replaced-stripe-with-dutch-provider-adyen-aml",
+      "score": 0.5
+    },
+    {
+      "slug": "markets/research/aml-1",
+      "score": 0.5
+    }
+  ],
+  "compliance/research/can-llms-perform-deep-technical-comprehension-of-computer-ar": [
+    {
+      "slug": "markets/research/govuk-has-replaced-stripe-with-dutch-provider-adyen-aml",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/aml-1",
+      "score": 1.0
+    },
+    {
+      "slug": "compliance/research/forgetting-our-way-to-shared-meaning-effects-of-forgetting-o",
+      "score": 1.0
+    }
+  ],
+  "compliance/research/forgetting-our-way-to-shared-meaning-effects-of-forgetting-o": [
+    {
+      "slug": "markets/research/govuk-has-replaced-stripe-with-dutch-provider-adyen-aml",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/aml-1",
+      "score": 1.0
+    },
+    {
+      "slug": "compliance/research/can-llms-perform-deep-technical-comprehension-of-computer-ar",
+      "score": 1.0
+    }
+  ],
+  "compliance/research/paradoxes-of-game-theoretic-equilibria-and-price-of-anarchy": [
+    {
+      "slug": "markets/research/govuk-has-replaced-stripe-with-dutch-provider-adyen-aml",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/aml-1",
+      "score": 1.0
+    },
+    {
+      "slug": "compliance/research/can-llms-perform-deep-technical-comprehension-of-computer-ar",
+      "score": 1.0
+    }
+  ],
+  "compliance/research/when-local-monitors-miss-compositional-harm-diagnosing-distr": [
+    {
+      "slug": "markets/research/govuk-has-replaced-stripe-with-dutch-provider-adyen-aml",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/aml-1",
+      "score": 1.0
+    },
+    {
+      "slug": "compliance/research/can-llms-perform-deep-technical-comprehension-of-computer-ar",
+      "score": 1.0
+    }
+  ],
+  "compliance/research/an-explainable-agentic-system-for-detection-of-conversationa": [
+    {
+      "slug": "markets/research/govuk-has-replaced-stripe-with-dutch-provider-adyen-aml",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/aml-1",
+      "score": 1.0
+    },
+    {
+      "slug": "compliance/research/can-llms-perform-deep-technical-comprehension-of-computer-ar",
+      "score": 1.0
+    }
+  ],
+  "compliance/research/one-vote-several-parliaments-an-empirical-analysis-of-the-al": [
+    {
+      "slug": "markets/research/govuk-has-replaced-stripe-with-dutch-provider-adyen-aml",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/aml-1",
+      "score": 1.0
+    },
+    {
+      "slug": "compliance/research/can-llms-perform-deep-technical-comprehension-of-computer-ar",
+      "score": 1.0
+    }
+  ],
+  "compliance/research/cardanos-voltaire-governance-complete-specification-and-rese": [
+    {
+      "slug": "markets/research/govuk-has-replaced-stripe-with-dutch-provider-adyen-aml",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/aml-1",
+      "score": 1.0
+    },
+    {
+      "slug": "compliance/research/can-llms-perform-deep-technical-comprehension-of-computer-ar",
+      "score": 1.0
+    }
+  ],
+  "compliance/research/time-is-money-incentivized-causal-transaction-ordering": [
+    {
+      "slug": "markets/research/govuk-has-replaced-stripe-with-dutch-provider-adyen-aml",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/aml-1",
+      "score": 1.0
+    },
+    {
+      "slug": "compliance/research/can-llms-perform-deep-technical-comprehension-of-computer-ar",
+      "score": 1.0
+    }
+  ],
+  "compliance/research/we-are-all-in-big-trouble-shock-emoji-personal-narratives-in": [
+    {
+      "slug": "markets/research/govuk-has-replaced-stripe-with-dutch-provider-adyen-aml",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/aml-1",
+      "score": 1.0
+    },
+    {
+      "slug": "compliance/research/can-llms-perform-deep-technical-comprehension-of-computer-ar",
+      "score": 1.0
+    }
+  ],
+  "compliance/research/philosopher-and-prophet-inequalities-for-divisible-items": [
+    {
+      "slug": "markets/research/govuk-has-replaced-stripe-with-dutch-provider-adyen-aml",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/aml-1",
+      "score": 1.0
+    },
+    {
+      "slug": "compliance/research/can-llms-perform-deep-technical-comprehension-of-computer-ar",
+      "score": 1.0
+    }
+  ],
+  "compliance/research/agent-hacks-agent-autoresearch-for-production-agent-red-team": [
+    {
+      "slug": "markets/research/govuk-has-replaced-stripe-with-dutch-provider-adyen-aml",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/aml-1",
+      "score": 1.0
+    },
+    {
+      "slug": "compliance/research/can-llms-perform-deep-technical-comprehension-of-computer-ar",
+      "score": 1.0
+    }
+  ],
+  "compliance/research/uncovering-students-mental-models-of-generative-artificial-i": [
+    {
+      "slug": "markets/research/govuk-has-replaced-stripe-with-dutch-provider-adyen-aml",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/aml-1",
+      "score": 1.0
+    },
+    {
+      "slug": "compliance/research/can-llms-perform-deep-technical-comprehension-of-computer-ar",
+      "score": 1.0
+    }
+  ],
+  "compliance/research/reproducing-human-biases-in-route-choice-using-large-languag": [
+    {
+      "slug": "markets/research/govuk-has-replaced-stripe-with-dutch-provider-adyen-aml",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/aml-1",
+      "score": 1.0
+    },
+    {
+      "slug": "compliance/research/can-llms-perform-deep-technical-comprehension-of-computer-ar",
+      "score": 1.0
+    }
+  ],
+  "compliance/research/paperrouter-agent-a-content-grounded-llm-agent-for-personali": [
+    {
+      "slug": "markets/research/govuk-has-replaced-stripe-with-dutch-provider-adyen-aml",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/aml-1",
+      "score": 1.0
+    },
+    {
+      "slug": "compliance/research/can-llms-perform-deep-technical-comprehension-of-computer-ar",
+      "score": 1.0
+    }
+  ],
+  "compliance/research/linux-disk-encryption-and-self-encrypting-drives-a-case-stud": [
+    {
+      "slug": "markets/research/govuk-has-replaced-stripe-with-dutch-provider-adyen-aml",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/aml-1",
+      "score": 1.0
+    },
+    {
+      "slug": "compliance/research/can-llms-perform-deep-technical-comprehension-of-computer-ar",
+      "score": 1.0
+    }
+  ],
+  "compliance/research/graph-based-structural-evaluation-of-llm-translated-adversar": [
+    {
+      "slug": "markets/research/govuk-has-replaced-stripe-with-dutch-provider-adyen-aml",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/aml-1",
+      "score": 1.0
+    },
+    {
+      "slug": "compliance/research/can-llms-perform-deep-technical-comprehension-of-computer-ar",
+      "score": 1.0
+    }
+  ],
+  "compliance/research/llm-guided-program-evolution-for-targeted-black-box-attacks": [
+    {
+      "slug": "markets/research/govuk-has-replaced-stripe-with-dutch-provider-adyen-aml",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/aml-1",
+      "score": 1.0
+    },
+    {
+      "slug": "compliance/research/can-llms-perform-deep-technical-comprehension-of-computer-ar",
+      "score": 1.0
+    }
+  ],
+  "compliance/research/prezta-provable-remote-execution-of-zero-trust-authorization": [
+    {
+      "slug": "markets/research/govuk-has-replaced-stripe-with-dutch-provider-adyen-aml",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/aml-1",
+      "score": 1.0
+    },
+    {
+      "slug": "compliance/research/can-llms-perform-deep-technical-comprehension-of-computer-ar",
+      "score": 1.0
+    }
+  ],
+  "compliance/research/social-insurance-with-imperfect-eligibility-screening-theory": [
+    {
+      "slug": "compliance/research/risk-design-ai-and-prediction-beyond-screening-in-insurance",
+      "score": 1.0
+    },
+    {
+      "slug": "compliance/research/closing-the-loop-an-access-control-architecture-for-automate",
+      "score": 0.5
+    },
+    {
+      "slug": "aml/research/quantum-spectral-anomaly-detection",
+      "score": 0.3333
+    }
+  ],
+  "compliance/research/financial-sanctions-and-the-global-payments-network": [
+    {
+      "slug": "markets/research/govuk-has-replaced-stripe-with-dutch-provider-adyen-aml",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/aml-1",
+      "score": 1.0
+    },
+    {
+      "slug": "compliance/research/can-llms-perform-deep-technical-comprehension-of-computer-ar",
+      "score": 1.0
+    }
+  ],
+  "compliance/research/risk-design-ai-and-prediction-beyond-screening-in-insurance": [
+    {
+      "slug": "compliance/research/social-insurance-with-imperfect-eligibility-screening-theory",
+      "score": 1.0
+    },
+    {
+      "slug": "compliance/research/closing-the-loop-an-access-control-architecture-for-automate",
+      "score": 0.5
+    },
+    {
+      "slug": "aml/research/quantum-spectral-anomaly-detection",
+      "score": 0.3333
+    }
+  ],
+  "data/research/time-is-money-incentivized-causal-transaction-ordering": [
+    {
+      "slug": "data/research/deeprt-engine-a-unified-gpu-parallel-ray-tracing-framework-w",
+      "score": 1.0
+    },
+    {
+      "slug": "data/research/communication-aware-placement-and-pruning-for-efficient-mixt",
+      "score": 0.6667
+    },
+    {
+      "slug": "data/research/parallel-mathcal-o-sqrt-n-overhead-lsd-radix-sort",
+      "score": 0.6667
+    }
+  ],
+  "data/research/deeprt-engine-a-unified-gpu-parallel-ray-tracing-framework-w": [
+    {
+      "slug": "data/research/time-is-money-incentivized-causal-transaction-ordering",
+      "score": 1.0
+    },
+    {
+      "slug": "data/research/communication-aware-placement-and-pruning-for-efficient-mixt",
+      "score": 0.6667
+    },
+    {
+      "slug": "data/research/parallel-mathcal-o-sqrt-n-overhead-lsd-radix-sort",
+      "score": 0.6667
+    }
+  ],
+  "data/research/privacy-aware-collaborative-and-distributed-bayesian-optimiz": [
+    {
+      "slug": "data/research/communication-aware-placement-and-pruning-for-efficient-mixt",
+      "score": 1.0
+    },
+    {
+      "slug": "data/research/parallel-mathcal-o-sqrt-n-overhead-lsd-radix-sort",
+      "score": 1.0
+    },
+    {
+      "slug": "data/research/geometric-causal-models",
+      "score": 1.0
+    }
+  ],
+  "data/research/autoslo-practical-latency-slos-on-cloud-data-warehouses-exte": [
+    {
+      "slug": "data/research/sodium-ion-salt-batteries-will-revolutionize-electric-vehicl",
+      "score": 0.6667
+    },
+    {
+      "slug": "data/research/microsoft-admits-a-windows-11-bug-is-eating-up-to-500gb-of-s",
+      "score": 0.6667
+    },
+    {
+      "slug": "data/research/s3-is-a-better-abstraction-than-nfs-networked-block-storage",
+      "score": 0.6667
+    }
+  ],
+  "data/research/relaxing-faithfulness-with-intervention-only-causal-discover": [
+    {
+      "slug": "data/research/show-hn-focal-harvest-cli-research-pipeline-to-search-scrape",
+      "score": 1.0
+    },
+    {
+      "slug": "data/research/dag-fm-a-foundation-model-for-causal-discovery-under-heterog",
+      "score": 1.0
+    },
+    {
+      "slug": "knowledge/system-architecture",
+      "score": 0.5
+    }
+  ],
+  "data/research/auditing-the-risk-claims-of-distributional-reinforcement-lea": [
+    {
+      "slug": "data/research/improved-global-ocean-heat-content-estimation-by-modeling-ve",
+      "score": 1.0
+    },
+    {
+      "slug": "data/research/closing-the-loop-an-access-control-architecture-for-automate",
+      "score": 1.0
+    },
+    {
+      "slug": "data/research/self-adaptive-anomaly-detection-with-reinforcement-learning",
+      "score": 0.6667
+    }
+  ],
+  "data/research/dag-fm-a-foundation-model-for-causal-discovery-under-heterog": [
+    {
+      "slug": "data/research/show-hn-focal-harvest-cli-research-pipeline-to-search-scrape",
+      "score": 1.0
+    },
+    {
+      "slug": "data/research/relaxing-faithfulness-with-intervention-only-causal-discover",
+      "score": 1.0
+    },
+    {
+      "slug": "knowledge/system-architecture",
+      "score": 0.5
+    }
+  ],
+  "data/research/need-for-speed-sort-a-recursive-distribution-based-sorting-a": [
+    {
+      "slug": "data/research/communication-aware-placement-and-pruning-for-efficient-mixt",
+      "score": 1.0
+    },
+    {
+      "slug": "data/research/parallel-mathcal-o-sqrt-n-overhead-lsd-radix-sort",
+      "score": 1.0
+    },
+    {
+      "slug": "data/research/geometric-causal-models",
+      "score": 1.0
+    }
+  ],
+  "data/research/modeling-time-course-gene-expression-data-through-bayesian-p": [
+    {
+      "slug": "data/research/communication-aware-placement-and-pruning-for-efficient-mixt",
+      "score": 1.0
+    },
+    {
+      "slug": "data/research/parallel-mathcal-o-sqrt-n-overhead-lsd-radix-sort",
+      "score": 1.0
+    },
+    {
+      "slug": "data/research/geometric-causal-models",
+      "score": 1.0
+    }
+  ],
+  "data/research/improved-global-ocean-heat-content-estimation-by-modeling-ve": [
+    {
+      "slug": "data/research/auditing-the-risk-claims-of-distributional-reinforcement-lea",
+      "score": 1.0
+    },
+    {
+      "slug": "data/research/closing-the-loop-an-access-control-architecture-for-automate",
+      "score": 1.0
+    },
+    {
+      "slug": "data/research/self-adaptive-anomaly-detection-with-reinforcement-learning",
+      "score": 0.6667
+    }
+  ],
+  "data/research/closing-the-loop-an-access-control-architecture-for-automate": [
+    {
+      "slug": "data/research/auditing-the-risk-claims-of-distributional-reinforcement-lea",
+      "score": 1.0
+    },
+    {
+      "slug": "data/research/improved-global-ocean-heat-content-estimation-by-modeling-ve",
+      "score": 1.0
+    },
+    {
+      "slug": "data/research/self-adaptive-anomaly-detection-with-reinforcement-learning",
+      "score": 0.6667
+    }
+  ],
+  "data/research/when-local-monitors-miss-compositional-harm-diagnosing-distr": [
+    {
+      "slug": "data/research/communication-aware-placement-and-pruning-for-efficient-mixt",
+      "score": 1.0
+    },
+    {
+      "slug": "data/research/parallel-mathcal-o-sqrt-n-overhead-lsd-radix-sort",
+      "score": 1.0
+    },
+    {
+      "slug": "data/research/geometric-causal-models",
+      "score": 1.0
+    }
+  ],
+  "data/research/memexchange-cloud-scale-memory-trading": [
+    {
+      "slug": "data/research/adaptive-inference-batching-using-policy-gradients",
+      "score": 1.0
+    },
+    {
+      "slug": "data/research/secure-decentralized-federated-learning-via-gossip-and-virtu",
+      "score": 1.0
+    },
+    {
+      "slug": "data/research/smetric-rethink-llm-scheduling-for-serving-agents-with-balan",
+      "score": 1.0
+    }
+  ],
+  "markets/research/privacy-aware-collaborative-and-distributed-bayesian-optimiz": [
+    {
+      "slug": "markets/research/algorithmic-expert-aggregation",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/robust-bayesian-decision-making-under-adversarial-uncertaint",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/multi-sender-bayesian-persuasion-with-imperfect-information",
+      "score": 1.0
+    }
+  ],
+  "markets/research/tutorial-for-bayesian-factor-models": [
+    {
+      "slug": "markets/research/algorithmic-expert-aggregation",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/robust-bayesian-decision-making-under-adversarial-uncertaint",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/multi-sender-bayesian-persuasion-with-imperfect-information",
+      "score": 1.0
+    }
+  ],
+  "markets/research/prezta-provable-remote-execution-of-zero-trust-authorization": [
+    {
+      "slug": "markets/research/llms-are-not-a-default-execution-engine",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/on-exploring-input-resolution-scaling-for-anytime-lidar-obje",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/mpflow-learning-budgeted-max-flow-optimization-on-the-lightn",
+      "score": 1.0
+    }
+  ],
+  "markets/research/markov-chain-monte-carlo-with-diffusion-paths": [
+    {
+      "slug": "markets/research/algorithmic-expert-aggregation",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/robust-bayesian-decision-making-under-adversarial-uncertaint",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/multi-sender-bayesian-persuasion-with-imperfect-information",
+      "score": 1.0
+    }
+  ],
+  "markets/research/modeling-time-course-gene-expression-data-through-bayesian-p": [
+    {
+      "slug": "markets/research/algorithmic-expert-aggregation",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/robust-bayesian-decision-making-under-adversarial-uncertaint",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/multi-sender-bayesian-persuasion-with-imperfect-information",
+      "score": 1.0
+    }
+  ],
+  "markets/research/diffeeg-a-self-supervised-denoising-diffusion-model-for-lear": [
+    {
+      "slug": "markets/research/llms-are-not-a-default-execution-engine",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/on-exploring-input-resolution-scaling-for-anytime-lidar-obje",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/mpflow-learning-budgeted-max-flow-optimization-on-the-lightn",
+      "score": 1.0
+    }
+  ],
+  "markets/research/compound-interference-recognition-for-lr-fhss-satellite-iot": [
+    {
+      "slug": "markets/research/llms-are-not-a-default-execution-engine",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/on-exploring-input-resolution-scaling-for-anytime-lidar-obje",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/mpflow-learning-budgeted-max-flow-optimization-on-the-lightn",
+      "score": 1.0
+    }
+  ],
+  "markets/research/stochastic-analysis-of-successive-interference-cancellation": [
+    {
+      "slug": "markets/research/algorithmic-expert-aggregation",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/robust-bayesian-decision-making-under-adversarial-uncertaint",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/multi-sender-bayesian-persuasion-with-imperfect-information",
+      "score": 1.0
+    }
+  ],
+  "markets/research/spatial-and-temporal-correlation-of-interference-in-a-narrow": [
+    {
+      "slug": "markets/research/algorithmic-expert-aggregation",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/robust-bayesian-decision-making-under-adversarial-uncertaint",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/multi-sender-bayesian-persuasion-with-imperfect-information",
+      "score": 1.0
+    }
+  ],
+  "markets/research/8-k-lqr-house-inc-yhc": [
+    {
+      "slug": "markets/research/8-k-mgt-capital-investments-inc-mgti",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/8-k-draftkings-inc-dkng",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/424b2-barclays-bank-plc-djp-grn-vxx-vxz-atmp-gbug-tapr-bwvtf",
+      "score": 1.0
+    }
+  ],
+  "markets/research/pos-ex-etf-series-solutions": [
+    {
+      "slug": "markets/research/llms-are-not-a-default-execution-engine",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/on-exploring-input-resolution-scaling-for-anytime-lidar-obje",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/mpflow-learning-budgeted-max-flow-optimization-on-the-lightn",
+      "score": 1.0
+    }
+  ],
+  "markets/research/8-k-mgt-capital-investments-inc-mgti": [
+    {
+      "slug": "markets/research/8-k-lqr-house-inc-yhc",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/8-k-draftkings-inc-dkng",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/424b2-barclays-bank-plc-djp-grn-vxx-vxz-atmp-gbug-tapr-bwvtf",
+      "score": 1.0
+    }
+  ],
+  "markets/research/8-k-draftkings-inc-dkng": [
+    {
+      "slug": "markets/research/8-k-lqr-house-inc-yhc",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/8-k-mgt-capital-investments-inc-mgti",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/424b2-barclays-bank-plc-djp-grn-vxx-vxz-atmp-gbug-tapr-bwvtf",
+      "score": 1.0
+    }
+  ],
+  "markets/research/424b2-barclays-bank-plc-djp-grn-vxx-vxz-atmp-gbug-tapr-bwvtf": [
+    {
+      "slug": "markets/research/8-k-lqr-house-inc-yhc",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/8-k-mgt-capital-investments-inc-mgti",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/8-k-draftkings-inc-dkng",
+      "score": 1.0
+    }
+  ],
+  "markets/research/424b2-barclays-bank-plc-djp-grn-vxx-vxz-atmp-gbug-tapr-bwvtf-2a65c8": [
+    {
+      "slug": "markets/research/8-k-lqr-house-inc-yhc",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/8-k-mgt-capital-investments-inc-mgti",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/8-k-draftkings-inc-dkng",
+      "score": 1.0
+    }
+  ],
+  "markets/research/424b2-barclays-bank-plc-djp-grn-vxx-vxz-atmp-gbug-tapr-bwvtf-2d3123": [
+    {
+      "slug": "markets/research/8-k-lqr-house-inc-yhc",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/8-k-mgt-capital-investments-inc-mgti",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/8-k-draftkings-inc-dkng",
+      "score": 1.0
+    }
+  ],
+  "markets/research/424b2-barclays-bank-plc-djp-grn-vxx-vxz-atmp-gbug-tapr-bwvtf-8efa8c": [
+    {
+      "slug": "markets/research/8-k-lqr-house-inc-yhc",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/8-k-mgt-capital-investments-inc-mgti",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/8-k-draftkings-inc-dkng",
+      "score": 1.0
+    }
+  ],
+  "markets/research/what-do-asset-prices-in-april-2025-say-about-demand-for-the": [
+    {
+      "slug": "markets/research/from-stocks-to-flows-debt-service-and-fiscal-sustainability",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/do-monetary-policy-rates-reach-borrowers-evidence-from-house",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/how-might-fiscal-policy-respond-to-the-rise-of-artificial-in",
+      "score": 1.0
+    }
+  ],
+  "markets/research/from-stocks-to-flows-debt-service-and-fiscal-sustainability": [
+    {
+      "slug": "markets/research/what-do-asset-prices-in-april-2025-say-about-demand-for-the",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/do-monetary-policy-rates-reach-borrowers-evidence-from-house",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/how-might-fiscal-policy-respond-to-the-rise-of-artificial-in",
+      "score": 1.0
+    }
+  ],
+  "markets/research/unruly-by-design-fee-volatility-and-strategic-attacks-in-bit": [
+    {
+      "slug": "markets/research/algorithmic-expert-aggregation",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/robust-bayesian-decision-making-under-adversarial-uncertaint",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/multi-sender-bayesian-persuasion-with-imperfect-information",
+      "score": 1.0
+    }
+  ],
+  "markets/research/do-monetary-policy-rates-reach-borrowers-evidence-from-house": [
+    {
+      "slug": "markets/research/what-do-asset-prices-in-april-2025-say-about-demand-for-the",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/from-stocks-to-flows-debt-service-and-fiscal-sustainability",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/how-might-fiscal-policy-respond-to-the-rise-of-artificial-in",
+      "score": 1.0
+    }
+  ],
+  "markets/research/how-might-fiscal-policy-respond-to-the-rise-of-artificial-in": [
+    {
+      "slug": "markets/research/what-do-asset-prices-in-april-2025-say-about-demand-for-the",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/from-stocks-to-flows-debt-service-and-fiscal-sustainability",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/do-monetary-policy-rates-reach-borrowers-evidence-from-house",
+      "score": 1.0
+    }
+  ],
+  "markets/research/forecasting-the-covid-surge-in-inflation": [
+    {
+      "slug": "markets/research/what-do-asset-prices-in-april-2025-say-about-demand-for-the",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/from-stocks-to-flows-debt-service-and-fiscal-sustainability",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/do-monetary-policy-rates-reach-borrowers-evidence-from-house",
+      "score": 1.0
+    }
+  ],
+  "markets/research/neighborhood-effects-and-missing-markets-for-opportunity": [
+    {
+      "slug": "markets/research/what-do-asset-prices-in-april-2025-say-about-demand-for-the",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/from-stocks-to-flows-debt-service-and-fiscal-sustainability",
+      "score": 1.0
+    },
+    {
+      "slug": "markets/research/do-monetary-policy-rates-reach-borrowers-evidence-from-house",
+      "score": 1.0
+    }
+  ],
+  "data/knowledge/data-quality-measurement-methodology": [
+    {
+      "slug": "data/research/every-new-car-sold-in-the-european-union-must-include-a-driv",
+      "score": 0.3333
+    },
+    {
+      "slug": "data/knowledge/data-quality-best-practices",
+      "score": 0.2222
+    },
+    {
+      "slug": "data/research/auditing-the-risk-claims-of-distributional-reinforcement-lea",
+      "score": 0.1667
+    }
+  ],
+  "compliance/knowledge/aml-risk-scoring-methodology": [
+    {
+      "slug": "knowledge/glossary",
+      "score": 0.25
+    },
+    {
+      "slug": "aml/learn/kyc-cdd-workflows",
+      "score": 0.2222
+    },
+    {
+      "slug": "aml/learn/aml-program-audit",
+      "score": 0.2222
+    }
+  ],
+  "markets/knowledge/event-study-methodology": [
+    {
+      "slug": "markets/research/llms-are-not-a-default-execution-engine",
+      "score": 0.2
+    },
+    {
+      "slug": "markets/research/on-exploring-input-resolution-scaling-for-anytime-lidar-obje",
+      "score": 0.2
+    },
+    {
+      "slug": "markets/research/mpflow-learning-budgeted-max-flow-optimization-on-the-lightn",
+      "score": 0.2
+    }
+  ],
+  "data/knowledge/pipeline-benchmarking-methodology": [
+    {
+      "slug": "data/learn/partitioning-strategies",
+      "score": 0.1111
+    },
+    {
+      "slug": "stock/knowledge/backtesting-methodology",
+      "score": 0.1111
+    },
+    {
+      "slug": "data/knowledge/data-quality-measurement-methodology",
+      "score": 0.1111
+    }
+  ],
+  "markets/knowledge/factor-model-validation-methodology": [
+    {
+      "slug": "markets/learn/behavioral-finance-portfolio",
+      "score": 0.1429
+    },
+    {
+      "slug": "markets/learn/quantitative-methods-intro",
+      "score": 0.1111
+    },
+    {
+      "slug": "stock/knowledge/backtesting-methodology",
+      "score": 0.1111
+    }
+  ],
+  "data/knowledge/pyspark-dataframe-tutorial": [
+    {
+      "slug": "data/learn/pyspark-fundamentals",
+      "score": 0.375
+    },
+    {
+      "slug": "markets/knowledge/portfolio-optimization-python-tutorial",
+      "score": 0.2
+    },
+    {
+      "slug": "data/knowledge/pyspark-etl-tutorial",
+      "score": 0.1818
+    }
+  ],
+  "markets/knowledge/options-pricing-python-tutorial": [
+    {
+      "slug": "compliance/knowledge/aml-screening-rules-tutorial",
+      "score": 0.2
+    },
+    {
+      "slug": "markets/knowledge/portfolio-optimization-python-tutorial",
+      "score": 0.2
+    },
+    {
+      "slug": "stock/research/options-flow-analysis",
+      "score": 0.1
+    }
+  ],
+  "compliance/knowledge/aml-screening-rules-tutorial": [
+    {
+      "slug": "aml/learn/sanctions-screening",
+      "score": 0.3333
+    },
+    {
+      "slug": "aml/research/international-chess-federation-sanctions-kramnik",
+      "score": 0.2857
+    },
+    {
+      "slug": "aml/learn/regtech-compliance",
+      "score": 0.2
+    }
+  ],
+  "data/knowledge/dbt-pipeline-tutorial": [
+    {
+      "slug": "data/research/analytics-engineering-rise",
+      "score": 0.1111
+    },
+    {
+      "slug": "data/learn/building-pipelines-dbt-dagster",
+      "score": 0.1111
+    },
+    {
+      "slug": "data/learn/open-source-data-stack",
+      "score": 0.1111
+    }
+  ],
+  "markets/knowledge/portfolio-optimization-python-tutorial": [
+    {
+      "slug": "data/knowledge/pyspark-dataframe-tutorial",
+      "score": 0.2
+    },
+    {
+      "slug": "markets/knowledge/options-pricing-python-tutorial",
+      "score": 0.2
+    },
+    {
+      "slug": "compliance/knowledge/aml-screening-rules-tutorial",
+      "score": 0.2
+    }
+  ],
+  "compliance/knowledge/cdd-best-practices": [
+    {
+      "slug": "knowledge/glossary",
+      "score": 0.2
+    },
+    {
+      "slug": "aml/learn/kyc-cdd-workflows",
+      "score": 0.1818
+    },
+    {
+      "slug": "compliance/knowledge/aml-risk-scoring-methodology",
+      "score": 0.0909
+    }
+  ],
+  "compliance/knowledge/sanctions-screening-best-practices": [
+    {
+      "slug": "compliance/knowledge/sanctions-screening-methodology",
+      "score": 0.3333
+    },
+    {
+      "slug": "compliance/knowledge/ofac-sanctions-regulations",
+      "score": 0.1818
+    },
+    {
+      "slug": "compliance/knowledge/aml-screening-python",
+      "score": 0.1818
+    }
+  ],
+  "data/knowledge/data-contracts-best-practices": [
+    {
+      "slug": "data/research/data-contracts",
+      "score": 0.4
+    },
+    {
+      "slug": "data/knowledge/data-quality-best-practices",
+      "score": 0.2
+    },
+    {
+      "slug": "data/knowledge/data-quality-methodology",
+      "score": 0.2
+    }
+  ],
+  "data/knowledge/pipeline-reliability-best-practices": [
+    {
+      "slug": "data/knowledge/dagster-pipeline-tutorial",
+      "score": 0.1818
+    },
+    {
+      "slug": "knowledge/system-architecture",
+      "score": 0.1429
+    },
+    {
+      "slug": "markets/research/science-2",
+      "score": 0.125
+    }
+  ],
+  "markets/knowledge/execution-quality-best-practices": [
+    {
+      "slug": "markets/knowledge/mifid-regulations",
+      "score": 0.1818
+    },
+    {
+      "slug": "stock/knowledge/market-maker-compliance",
+      "score": 0.1
+    },
+    {
+      "slug": "markets/knowledge/securities-regulations",
+      "score": 0.0909
+    }
+  ],
+  "compliance/knowledge/aml-compliance-program-guide": [
+    {
+      "slug": "compliance/knowledge/aml-foundations",
+      "score": 0.1667
+    },
+    {
+      "slug": "aml/research/aml-3",
+      "score": 0.0909
+    },
+    {
+      "slug": "knowledge/pillar-taxonomy",
+      "score": 0.0909
+    }
+  ],
+  "compliance/knowledge/regulatory-reporting-guide": [
+    {
+      "slug": "knowledge/glossary",
+      "score": 0.0909
+    },
+    {
+      "slug": "aml/learn/sar-filing-scenarios",
+      "score": 0.0833
+    },
+    {
+      "slug": "compliance/knowledge/regtech-system-architecture",
+      "score": 0.0833
+    }
+  ],
+  "compliance/knowledge/sanctions-compliance-guide": [
+    {
+      "slug": "aml/learn/sanctions-screening",
+      "score": 0.2
+    },
+    {
+      "slug": "compliance/knowledge/sanctions-compliance-strategies",
+      "score": 0.2
+    },
+    {
+      "slug": "compliance/knowledge/ofac-sanctions-regulations",
+      "score": 0.1818
+    }
+  ],
+  "markets/knowledge/financial-data-analysis-guide": [
+    {
+      "slug": "markets/knowledge/market-data-analysis-tutorial",
+      "score": 0.1818
+    },
+    {
+      "slug": "stock/knowledge/market-data-api-reference",
+      "score": 0.1111
+    },
+    {
+      "slug": "markets/learn/quantitative-methods-intro",
+      "score": 0.1
+    }
+  ],
+  "markets/knowledge/quant-research-guide": [
+    {
+      "slug": "markets/knowledge/backtesting-python-tutorial",
+      "score": 0.1818
+    },
+    {
+      "slug": "stock/knowledge/backtesting-methodology",
+      "score": 0.1
+    },
+    {
+      "slug": "markets/knowledge/backtesting-validation-methodology",
+      "score": 0.0909
+    }
+  ],
+  "compliance/knowledge/fincen-enforcement-trends": [
+    {
+      "slug": "aml/learn/sar-filing-scenarios",
+      "score": 0.0909
+    },
+    {
+      "slug": "compliance/knowledge/sanctions-compliance-guide",
+      "score": 0.0909
+    },
+    {
+      "slug": "compliance/knowledge/aml-risk-assessment-methodology",
+      "score": 0.0909
+    }
+  ],
+  "compliance/knowledge/global-sanctions-landscape": [
+    {
+      "slug": "compliance/knowledge/sanctions-market-impact",
+      "score": 0.2
+    },
+    {
+      "slug": "aml/research/international-chess-federation-sanctions-kramnik",
+      "score": 0.125
+    },
+    {
+      "slug": "aml/learn/sanctions-screening",
+      "score": 0.0909
+    }
+  ],
+  "markets/knowledge/quant-fund-landscape": [
+    {
+      "slug": "stock/research/commodity-seasonality-patterns",
+      "score": 0.1
+    },
+    {
+      "slug": "stock/research/alternative-data-alpha",
+      "score": 0.1
+    },
+    {
+      "slug": "data/research/2027-data-engineering-predictions",
+      "score": 0.0
+    }
+  ],
+  "markets/knowledge/fintech-regulation-trends": [
+    {
+      "slug": "data/research/2027-data-engineering-predictions",
+      "score": 0.0
+    },
+    {
+      "slug": "data/research/data-platform-product-ux",
+      "score": 0.0
+    },
+    {
+      "slug": "data/research/analytics-engineering-rise",
+      "score": 0.0
+    }
+  ],
+  "data/knowledge/data-platform-market": [
+    {
+      "slug": "data/knowledge/data-engineering-foundations",
+      "score": 0.1667
+    },
+    {
+      "slug": "data/research/autoslo-practical-latency-slos-on-cloud-data-warehouses-exte",
+      "score": 0.125
+    },
+    {
+      "slug": "data/research/sodium-ion-salt-batteries-will-revolutionize-electric-vehicl",
+      "score": 0.1111
+    }
+  ],
+  "compliance/knowledge/regtech-market-analysis": [
+    {
+      "slug": "compliance/knowledge/fintech-trends-analysis",
+      "score": 0.3333
+    },
+    {
+      "slug": "aml/learn/regtech-compliance",
+      "score": 0.2
+    },
+    {
+      "slug": "compliance/knowledge/regtech-system-architecture",
+      "score": 0.2
+    }
+  ],
+  "markets/knowledge/volatility-outlook": [
+    {
+      "slug": "stock/research/vix-term-structure-trading",
+      "score": 0.375
+    },
+    {
+      "slug": "markets/learn/volatility-analysis",
+      "score": 0.2
+    },
+    {
+      "slug": "stock/research/earnings-season-alpha",
+      "score": 0.1
+    }
+  ],
+  "markets/knowledge/equity-market-structure": [
+    {
+      "slug": "markets/knowledge/execution-quality-best-practices",
+      "score": 0.0909
+    },
+    {
+      "slug": "data/research/2027-data-engineering-predictions",
+      "score": 0.0
+    },
+    {
+      "slug": "data/research/data-platform-product-ux",
+      "score": 0.0
+    }
+  ],
+  "markets/knowledge/fixed-income-liquidity": [
+    {
+      "slug": "stock/research/etf-creation-redemption-arbitrage",
+      "score": 0.0909
+    },
+    {
+      "slug": "stock/research/fixed-income-yield-curve-models",
+      "score": 0.0909
+    },
+    {
+      "slug": "data/research/2027-data-engineering-predictions",
+      "score": 0.0
+    }
+  ],
+  "data/knowledge/data-infrastructure-market": [
+    {
+      "slug": "data/knowledge/data-infrastructure-trends",
+      "score": 0.0833
+    },
+    {
+      "slug": "data/research/terraform-data-infrastructure",
+      "score": 0.0714
+    },
+    {
+      "slug": "data/research/2027-data-engineering-predictions",
+      "score": 0.0
+    }
+  ],
+  "markets/knowledge/options-trading-strategies": [
+    {
+      "slug": "markets/knowledge/volatility-outlook",
+      "score": 0.0833
+    },
+    {
+      "slug": "data/research/2027-data-engineering-predictions",
+      "score": 0.0
+    },
+    {
+      "slug": "data/research/data-platform-product-ux",
+      "score": 0.0
+    }
+  ],
+  "compliance/knowledge/aml-platform-architecture": [
+    {
+      "slug": "compliance/knowledge/transaction-monitoring-platform",
+      "score": 0.1818
+    },
+    {
+      "slug": "compliance/research/social-insurance-with-imperfect-eligibility-screening-theory",
+      "score": 0.1667
+    },
+    {
+      "slug": "compliance/research/risk-design-ai-and-prediction-beyond-screening-in-insurance",
+      "score": 0.1667
+    }
+  ],
+  "data/knowledge/data-lakehouse-architecture": [
+    {
+      "slug": "data/knowledge/data-engineering-foundations",
+      "score": 0.1818
+    },
+    {
+      "slug": "data/research/autoslo-practical-latency-slos-on-cloud-data-warehouses-exte",
+      "score": 0.1429
+    },
+    {
+      "slug": "data/research/sodium-ion-salt-batteries-will-revolutionize-electric-vehicl",
+      "score": 0.125
+    }
+  ],
+  "markets/knowledge/trading-infrastructure-architecture": [
+    {
+      "slug": "stock/knowledge/market-data-api-reference",
+      "score": 0.2222
+    },
+    {
+      "slug": "markets/knowledge/execution-management-platform",
+      "score": 0.0769
+    },
+    {
+      "slug": "data/research/2027-data-engineering-predictions",
+      "score": 0.0
+    }
+  ],
+  "compliance/knowledge/regtech-system-architecture": [
+    {
+      "slug": "compliance/knowledge/regtech-market-analysis",
+      "score": 0.2
+    },
+    {
+      "slug": "aml/learn/aml-compliance-glossary",
+      "score": 0.125
+    },
+    {
+      "slug": "aml/learn/quiz-aml",
+      "score": 0.125
+    }
+  ],
+  "markets/knowledge/market-data-architecture": [
+    {
+      "slug": "stock/knowledge/market-data-api-reference",
+      "score": 0.1
+    },
+    {
+      "slug": "markets/knowledge/financial-data-analysis-guide",
+      "score": 0.0833
+    },
+    {
+      "slug": "markets/knowledge/market-data-analysis-tutorial",
+      "score": 0.0769
+    }
+  ],
+  "compliance/knowledge/aml-foundations": [
+    {
+      "slug": "aml/research/aml-3",
+      "score": 0.2
+    },
+    {
+      "slug": "knowledge/pillar-taxonomy",
+      "score": 0.2
+    },
+    {
+      "slug": "knowledge/glossary",
+      "score": 0.2
+    }
+  ],
+  "data/knowledge/data-engineering-foundations": [
+    {
+      "slug": "data/research/data-products-api-design",
+      "score": 0.1818
+    },
+    {
+      "slug": "data/knowledge/data-lakehouse-architecture",
+      "score": 0.1818
+    },
+    {
+      "slug": "data/knowledge/data-platform-market",
+      "score": 0.1667
+    }
+  ],
+  "markets/knowledge/quant-finance-foundations": [
+    {
+      "slug": "markets/learn/semiconductor-supply-chain-analysis",
+      "score": 0.1429
+    },
+    {
+      "slug": "markets/research/stock-market",
+      "score": 0.125
+    },
+    {
+      "slug": "markets/learn/applying-market-analysis",
+      "score": 0.125
+    }
+  ],
+  "compliance/knowledge/risk-foundations": [
+    {
+      "slug": "markets/research/stock-market",
+      "score": 0.1111
+    },
+    {
+      "slug": "markets/learn/applying-market-analysis",
+      "score": 0.1111
+    },
+    {
+      "slug": "markets/learn/market-fundamentals",
+      "score": 0.1111
+    }
+  ],
+  "compliance/knowledge/aml-risk-assessment-methodology": [
+    {
+      "slug": "aml/learn/aml-program-audit",
+      "score": 0.2
+    },
+    {
+      "slug": "compliance/knowledge/aml-risk-scoring-methodology",
+      "score": 0.1
+    },
+    {
+      "slug": "compliance/knowledge/fincen-enforcement-trends",
+      "score": 0.0909
+    }
+  ],
+  "compliance/knowledge/sanctions-screening-methodology": [
+    {
+      "slug": "compliance/knowledge/sanctions-screening-best-practices",
+      "score": 0.3333
+    },
+    {
+      "slug": "compliance/knowledge/aml-screening-python",
+      "score": 0.1818
+    },
+    {
+      "slug": "compliance/knowledge/aml-platform-architecture",
+      "score": 0.0909
+    }
+  ],
+  "data/knowledge/data-quality-methodology": [
+    {
+      "slug": "data/knowledge/data-quality-best-practices",
+      "score": 0.2
+    },
+    {
+      "slug": "data/knowledge/data-contracts-best-practices",
+      "score": 0.2
+    },
+    {
+      "slug": "data/research/data-contracts",
+      "score": 0.1667
+    }
+  ],
+  "data/knowledge/etl-testing-methodology": [
+    {
+      "slug": "data/knowledge/pipeline-reliability-best-practices",
+      "score": 0.0909
+    },
+    {
+      "slug": "data/research/2027-data-engineering-predictions",
+      "score": 0.0
+    },
+    {
+      "slug": "data/research/data-platform-product-ux",
+      "score": 0.0
+    }
+  ],
+  "markets/knowledge/backtesting-validation-methodology": [
+    {
+      "slug": "stock/knowledge/backtesting-methodology",
+      "score": 0.2222
+    },
+    {
+      "slug": "markets/knowledge/quant-research-guide",
+      "score": 0.0909
+    },
+    {
+      "slug": "markets/knowledge/backtesting-python-tutorial",
+      "score": 0.0833
+    }
+  ],
+  "markets/knowledge/factor-modeling-methodology": [
+    {
+      "slug": "markets/learn/quantitative-methods-intro",
+      "score": 0.0909
+    },
+    {
+      "slug": "markets/knowledge/factor-model-validation-methodology",
+      "score": 0.0909
+    },
+    {
+      "slug": "markets/knowledge/financial-data-analysis-guide",
+      "score": 0.0833
+    }
+  ],
+  "data/knowledge/feature-engineering-methodology": [
+    {
+      "slug": "data/research/ml-pipeline-orchestration-feast-mlflow",
+      "score": 0.1538
+    },
+    {
+      "slug": "markets/research/stock-dataeng",
+      "score": 0.1429
+    },
+    {
+      "slug": "markets/learn/semiconductor-supply-chain-analysis",
+      "score": 0.1333
+    }
+  ],
+  "compliance/knowledge/regulatory-reporting-platform": [
+    {
+      "slug": "aml/learn/aml-business-continuity",
+      "score": 0.0909
+    },
+    {
+      "slug": "compliance/knowledge/regtech-system-architecture",
+      "score": 0.0909
+    },
+    {
+      "slug": "compliance/knowledge/regulatory-reporting-guide",
+      "score": 0.0833
+    }
+  ],
+  "compliance/knowledge/transaction-monitoring-platform": [
+    {
+      "slug": "compliance/knowledge/aml-platform-architecture",
+      "score": 0.1818
+    },
+    {
+      "slug": "compliance/research/social-insurance-with-imperfect-eligibility-screening-theory",
+      "score": 0.1429
+    },
+    {
+      "slug": "compliance/research/risk-design-ai-and-prediction-beyond-screening-in-insurance",
+      "score": 0.1429
+    }
+  ],
+  "data/knowledge/data-platform-comparison": [
+    {
+      "slug": "data/knowledge/data-infrastructure-trends",
+      "score": 0.1667
+    },
+    {
+      "slug": "data/research/data-platform-product-ux",
+      "score": 0.0833
+    },
+    {
+      "slug": "data/knowledge/data-platform-market",
+      "score": 0.0769
+    }
+  ],
+  "markets/knowledge/execution-management-platform": [
+    {
+      "slug": "markets/knowledge/securities-regulations",
+      "score": 0.0833
+    },
+    {
+      "slug": "markets/knowledge/execution-quality-best-practices",
+      "score": 0.0833
+    },
+    {
+      "slug": "markets/knowledge/trading-infrastructure-architecture",
+      "score": 0.0769
+    }
+  ],
+  "compliance/knowledge/bsa-aml-regulations": [
+    {
+      "slug": "aml/research/aml-3",
+      "score": 0.0909
+    },
+    {
+      "slug": "knowledge/pillar-taxonomy",
+      "score": 0.0909
+    },
+    {
+      "slug": "aml/learn/sar-filing-scenarios",
+      "score": 0.0833
+    }
+  ],
+  "compliance/knowledge/ofac-sanctions-regulations": [
+    {
+      "slug": "aml/learn/sanctions-screening",
+      "score": 0.1818
+    },
+    {
+      "slug": "compliance/knowledge/sanctions-screening-best-practices",
+      "score": 0.1818
+    },
+    {
+      "slug": "compliance/knowledge/sanctions-compliance-guide",
+      "score": 0.1818
+    }
+  ],
+  "data/knowledge/data-sovereignty-regulations": [
+    {
+      "slug": "compliance/glossary",
+      "score": 0.0909
+    },
+    {
+      "slug": "stock/knowledge/market-maker-compliance",
+      "score": 0.0909
+    },
+    {
+      "slug": "aml/knowledge/cross-border-financial-intelligence",
+      "score": 0.0833
+    }
+  ],
+  "markets/knowledge/mifid-regulations": [
+    {
+      "slug": "markets/knowledge/execution-quality-best-practices",
+      "score": 0.1818
+    },
+    {
+      "slug": "stock/knowledge/market-maker-compliance",
+      "score": 0.0909
+    },
+    {
+      "slug": "markets/knowledge/securities-regulations",
+      "score": 0.0833
+    }
+  ],
+  "markets/knowledge/market-abuse-regulations": [
+    {
+      "slug": "stock/knowledge/market-maker-compliance",
+      "score": 0.0909
+    },
+    {
+      "slug": "data/research/2027-data-engineering-predictions",
+      "score": 0.0
+    },
+    {
+      "slug": "data/research/data-platform-product-ux",
+      "score": 0.0
+    }
+  ],
+  "compliance/knowledge/aml-screening-python": [
+    {
+      "slug": "compliance/knowledge/sanctions-screening-best-practices",
+      "score": 0.1818
+    },
+    {
+      "slug": "compliance/knowledge/sanctions-screening-methodology",
+      "score": 0.1818
+    },
+    {
+      "slug": "compliance/knowledge/sanctions-screening-tutorial",
+      "score": 0.1667
+    }
+  ],
+  "compliance/knowledge/sanctions-screening-tutorial": [
+    {
+      "slug": "compliance/knowledge/aml-screening-python",
+      "score": 0.1667
+    },
+    {
+      "slug": "markets/knowledge/options-pricing-python-tutorial",
+      "score": 0.0833
+    },
+    {
+      "slug": "compliance/knowledge/aml-screening-rules-tutorial",
+      "score": 0.0833
+    }
+  ],
+  "data/knowledge/pyspark-etl-tutorial": [
+    {
+      "slug": "data/learn/pyspark-fundamentals",
+      "score": 0.2
+    },
+    {
+      "slug": "data/knowledge/pyspark-dataframe-tutorial",
+      "score": 0.1818
+    },
+    {
+      "slug": "data/learn/dataops-introduction",
+      "score": 0.1111
+    }
+  ],
+  "data/knowledge/dagster-pipeline-tutorial": [
+    {
+      "slug": "data/research/dagster-2",
+      "score": 0.375
+    },
+    {
+      "slug": "knowledge/dataops-trends-2026",
+      "score": 0.375
+    },
+    {
+      "slug": "knowledge/system-architecture",
+      "score": 0.2857
+    }
+  ],
+  "data/knowledge/sql-analytics-tutorial": [
+    {
+      "slug": "data/research/rust-is-in-tiobe-index-top-10",
+      "score": 0.125
+    },
+    {
+      "slug": "data/research/2027-data-engineering-predictions",
+      "score": 0.0
+    },
+    {
+      "slug": "data/research/data-platform-product-ux",
+      "score": 0.0
+    }
+  ],
+  "markets/knowledge/backtesting-python-tutorial": [
+    {
+      "slug": "markets/knowledge/quant-research-guide",
+      "score": 0.1818
+    },
+    {
+      "slug": "data/learn/data-pipeline-architectures",
+      "score": 0.1
+    },
+    {
+      "slug": "stock/research/merger-arbitrage-spread-prediction",
+      "score": 0.0909
+    }
+  ],
+  "markets/knowledge/market-data-analysis-tutorial": [
+    {
+      "slug": "markets/knowledge/financial-data-analysis-guide",
+      "score": 0.1818
+    },
+    {
+      "slug": "stock/knowledge/market-data-api-reference",
+      "score": 0.1
+    },
+    {
+      "slug": "stock/knowledge/momentum-factor-strategies",
+      "score": 0.0833
     }
   ]
 }

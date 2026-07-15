@@ -188,18 +188,32 @@ MARKET_TAGS: dict[str, list[str]] = {
     "market-microstructure": [
         r"\bmarket.microstructure", r"\border.book", r"\bliquidity\b",
         r"\bdark.pool", r"\border.flow", r"\bimbalance\b", r"\bexecution\b",
+        r"\betf\b", r"\bexchange.traded", r"\bhft\b", r"\bhigh.frequency",
+        r"\bmarket.maker", r"\bspread\b", r"\bquote\b",
     ],
     "systemic-risk": [
         r"\bsystemic.risk", r"\bcounterparty.risk", r"\bnbfi\b",
         r"\bnon.bank.financ", r"\bcontagion\b", r"\bfinancial.stability\b",
+        r"\bcredit.risk\b", r"\bsystemically.important", r"\bsifi\b",
     ],
     "quantitative-modeling": [
         r"\bregime.switch", r"\bbayesian\b", r"\bcorrelation\b",
         r"\bvolatility\b", r"\barbitrage\b", r"\bcross.asset\b",
+        r"\boption\b", r"\bderivative", r"\bportfolio\b", r"\bfactor.model",
+        r"\bstochastic", r"\bmonte.carlo", r"\brisk.model",
     ],
     "macro-finance": [
         r"\bmacroeconomic\b", r"\bmonetary.polic", r"\binflation\b",
         r"\byield.curve\b", r"\bfiscal\b", r"\bcentral.bank\b",
+        r"\binterest.rate", r"\bgdp\b", r"\bemployment\b",
+        r"\bquantitative.easing", r"\bfinancial.market",
+        r"\basset.price", r"\bcapital.market",
+    ],
+    "sec-filings": [
+        r"\b10.k\b", r"\b10.q\b", r"\b8.k\b", r"\b6.k\b",
+        r"\bn.csr\b", r"\bs.1\b", r"\b424b", r"\bpreliminary.pricing",
+        r"\bpricing.supplement", r"\bprospectus", r"\bshareholder.report",
+        r"\bform.k\b", r"\bform.q\b", r"\bsec.filing",
     ],
 }
 
