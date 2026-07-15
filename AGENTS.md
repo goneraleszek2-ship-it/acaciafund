@@ -355,11 +355,14 @@ result = df.filter(pl.col('price') > 100).collect()
 | `tests/test_build_taxonomies.py` | 51 | Taxonomy generation (all 5 generators) |
 | `tests/test_compositor.py` | **26** | core/compositor.py: SVG renderers (timeline, flow, comparisons, badges, numbers, connections) |
 | `tests/test_generate_pages.py` | **40** | core/generate_pages.py: extract_headings, find_related, reading_time, sanitize, SQI badge, fingerprint |
+| `tests/test_extractors.py` | **19** | core/extractors.py: timeline, flow, comparison extraction from text |
+| `tests/test_check_source_freshness.py` | **8** | scripts/check_source_freshness.py: compute_staleness contract tests |
+| `tests/test_source_synthesis.py` | **18** | scripts/source_synthesis.py: extract_tags, synthesis_description, key_insights |
 | `tests/test_data.py` | 15 | core/data.py: domain extraction, entity/theme extraction, DLQ writing, logging |
 | `tests/test_content.py` | 11 | core/content.py: Content dataclass construction, defaults, dict parsing |
 | `tests/test_metadata.py` | 28 | core/metadata.py: manifest building, JSON utils, schema validation |
 
-**Total: ~361 tests.** Tests use `python3 -m pytest tests/ -v`.
+**Total: ~406 tests.** Tests use `python3 -m pytest tests/ -v`. Target: 80% line coverage across core/ and scripts/ (currently at ~55%).
 
 ### Testing Strategy
 
