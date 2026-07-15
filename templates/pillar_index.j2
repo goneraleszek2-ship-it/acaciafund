@@ -63,7 +63,13 @@
     {%- endif %}
   </div>
 
-  <div class="pillar-posts mt-6">
+  <div class="flex items-center gap-3 mt-6 mb-4">
+    <a href="/{{ pconf.url }}/synthesis/" class="text-xs px-3 py-1.5 rounded font-semibold no-underline transition hover:shadow-sm" style="background:var(--color-surface);border:1px solid var(--color-border);color:var(--color-text)">
+      Cross-Pillar Synthesis →
+    </a>
+  </div>
+
+  <div class="pillar-posts mt-2">
     {% for post in posts %}
     <article class="post-card mb-4 last:mb-0">
       <div class="flex items-center gap-2 mb-2">

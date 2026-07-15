@@ -69,6 +69,12 @@ from core.urls import (
     slug_to_path,
     slug_to_url,
 )
+from core.learning_paths import (
+    build_all_learning_paths,
+    enrich_journeys_with_content,
+    generate_learning_path_context,
+    generate_cross_pillar_synthesis,
+)
 
 
 # --- Knowledge Graph Generation ---
@@ -3069,6 +3075,13 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
             except Exception:
                 pass
 
+        # Compute learning paths for concept linking
+        _lp_journeys = build_all_learning_paths(ontology, max_depth=3)
+        if _lp_journeys:
+            _lp_journeys = enrich_journeys_with_content(_lp_journeys, concept_content_map)
+        else:
+            _lp_journeys = {}
+
         concept_dir = OUTPUT_DIR / "concepts"
         concept_dir.mkdir(parents=True, exist_ok=True)
         _concept_count = 0
@@ -3091,6 +3104,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                 _related_items.sort(key=lambda x: x["score"], reverse=True)
                 _related_items = _related_items[:12]
 
+                _has_lp = _concept.id in _lp_journeys if _lp_journeys else False
                 concept_html = render_template(
                     "concept_detail.j2",
                     content=_dummy(
@@ -3106,6 +3120,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                         "category": _concept.category or "",
                         "aliases": _concept.aliases or [],
                     },
+                    has_learning_path=_has_lp,
                     related_items=_related_items,
                     related_concepts=_related_concepts,
                     page_path=f"concepts/{_concept.id}/",
@@ -3116,6 +3131,55 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                 (_cd / "index.html").write_text(concept_html, encoding="utf-8")
                 _concept_count += 1
         print(f"  concepts: {_concept_count} concept pages")
+
+        # --- Render learning path pages ---
+        if _lp_journeys:
+            _lp_count = 0
+            for _lp_id, _lp_journey in _lp_journeys.items():
+                _lp_context = generate_learning_path_context(_lp_journey, PILLAR_CONFIG)
+                _lp_pillar_url = pillar_to_url(_lp_journey.start_pillar)
+                _lp_html = render_template(
+                    "learning_path.j2",
+                    content=_dummy(
+                        f"{_lp_journey.start_label} — Learning Path — AcaciaFund",
+                        "index",
+                        description=f"Structured learning path for {_lp_journey.start_label}.",
+                    ),
+                    pillar_url=_lp_pillar_url,
+                    **_lp_context,
+                    **ctx_base,
+                )
+                _lp_dir = OUTPUT_DIR / _lp_pillar_url / "learn" / _lp_id
+                _lp_dir.mkdir(parents=True, exist_ok=True)
+                (_lp_dir / "index.html").write_text(_lp_html, encoding="utf-8")
+                _lp_count += 1
+            print(f"  learning paths: {_lp_count} pages")
+
+        # --- Cross-pillar synthesis pages ---
+        _synth = generate_cross_pillar_synthesis(all_content, concept_content_map, PILLAR_CONFIG)
+        _synth_count = 0
+        for _synth_pillar in ["aml", "stock", "data-engineering"]:
+            _synth_pillar_url = pillar_to_url(_synth_pillar)
+            _synth_pc = PILLAR_CONFIG.get(_synth_pillar, {})
+            _synth_html = render_template(
+                "pillar_synthesis.j2",
+                content=_dummy(
+                    f"{_synth_pc.get('label', _synth_pillar)} — Cross-Pillar Synthesis — AcaciaFund",
+                    "index",
+                    description=f"Cross-pillar synthesis view for {_synth_pc.get('label', _synth_pillar)}.",
+                ),
+                pillar=_synth_pillar,
+                pillar_url=_synth_pillar_url,
+                pillar_label=_synth_pc.get("label", _synth_pillar),
+                pillar_color=_synth_pc.get("color", "#6366f1"),
+                synthesis=_synth,
+                **ctx_base,
+            )
+            _synth_dir = OUTPUT_DIR / _synth_pillar_url / "synthesis"
+            _synth_dir.mkdir(parents=True, exist_ok=True)
+            (_synth_dir / "index.html").write_text(_synth_html, encoding="utf-8")
+            _synth_count += 1
+        print(f"  synthesis: {_synth_count} pillar pages")
 
     # --- 404 ---
     _suggestions = sorted(all_content, key=lambda c: hashlib.md5(c.slug.encode()).hexdigest())[:3]

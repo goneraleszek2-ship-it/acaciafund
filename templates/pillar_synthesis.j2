@@ -1,0 +1,95 @@
+{% extends "layout.j2" %}
+{% block main_content %}
+<nav aria-label="Breadcrumb" class="mb-4 text-xs" style="color:var(--color-text-muted)">
+  <ol class="flex flex-wrap items-center gap-1.5">
+    <li><a href="/" class="hover:text-[var(--color-accent)] transition">Home</a></li>
+    <li aria-hidden="true">/</li>
+    <li><a href="/{{ pillar_url }}/" class="hover:text-[var(--color-accent)] transition">{{ pillar_label }}</a></li>
+    <li aria-hidden="true">/</li>
+    <li aria-current="page">Synthesis</li>
+  </ol>
+</nav>
+
+<header class="mb-6">
+  <div class="flex items-center gap-2 mb-2">
+    <span class="text-xs px-2 py-0.5 rounded font-semibold" style="background:color-mix(in srgb, {{ pillar_color }} 15%, transparent);color:{{ pillar_color }}">{{ pillar_label }}</span>
+    <span class="text-xs px-2 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Cross-Pillar Synthesis</span>
+  </div>
+  <h1 class="text-2xl font-extrabold" style="color:var(--color-text)">{{ pillar_label }} — Cross-Pillar Synthesis</h1>
+  <p class="mt-1 text-sm" style="color:var(--color-text-muted)">
+    {{ synthesis.pillar_counts.get(pillar, 0) }} articles ·
+    {{ synthesis.total_bridges }} cross-pillar bridges
+  </p>
+</header>
+
+{%- if synthesis.bridges and synthesis.bridges | length > 0 %}
+<section class="mb-8">
+  <h2 class="text-sm font-bold mb-3" style="color:var(--color-text)">Concept Bridges</h2>
+  <p class="text-xs mb-3" style="color:var(--color-text-muted)">Concepts that span multiple pillars, connecting different domains.</p>
+  <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+    {%- for bridge_id, bridge in synthesis.bridges.items() %}
+    {%- if pillar in bridge.pillars %}
+    <div class="ghost-card p-3">
+      <h3 class="text-sm font-semibold" style="color:var(--color-text)">{{ bridge_id | replace('-', ' ') | title }}</h3>
+      <div class="flex items-center gap-1.5 mt-2">
+        {%- for bp in bridge.pillars %}
+        <span class="text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, {{ pillar_config.get(bp, {}).get('color', '#6366f1') }} 15%, transparent);color:{{ pillar_config.get(bp, {}).get('color', '#6366f1') }}">
+          {{ pillar_config.get(bp, {}).get('label', bp) }}
+        </span>
+        {%- endfor %}
+      </div>
+      <p class="mt-2 text-xs" style="color:var(--color-text-muted)">{{ bridge.total_content }} content items</p>
+      <a href="/concepts/{{ bridge_id }}/" class="mt-2 inline-block text-xs font-semibold no-underline" style="color:var(--color-accent)">View concept →</a>
+    </div>
+    {%- endif %}
+    {%- endfor %}
+  </div>
+</section>
+{%- endif %}
+
+{%- if synthesis.timeline and synthesis.timeline | length > 0 %}
+<section class="mb-8">
+  <h2 class="text-sm font-bold mb-3" style="color:var(--color-text)">Content Timeline</h2>
+  <p class="text-xs mb-3" style="color:var(--color-text-muted)">Content volume per pillar over time.</p>
+  <div class="overflow-x-auto">
+    <table class="w-full text-xs" style="color:var(--color-text)">
+      <thead>
+        <tr>
+          <th class="text-left py-1 pr-2 font-semibold" style="color:var(--color-text-muted)">Month</th>
+          {%- for p in ['aml', 'stock', 'data-engineering'] %}
+          <th class="text-center py-1 px-1 font-semibold" style="color:{{ pillar_config.get(p, {}).get('color', '#6366f1') }}">{{ pillar_config.get(p, {}).get('label', p) }}</th>
+          {%- endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {%- for month, counts in synthesis.timeline.items() %}
+        <tr class="border-t" style="border-color:var(--color-border)">
+          <td class="py-1.5 pr-2 whitespace-nowrap font-medium">{{ month }}</td>
+          {%- for p in ['aml', 'stock', 'data-engineering'] %}
+          {%- set cnt = counts.get(p, 0) %}
+          <td class="text-center py-1.5 px-1">
+            {%- if cnt > 0 %}
+            <span class="inline-block rounded px-1.5 py-0.5 font-semibold" style="background:color-mix(in srgb, {{ pillar_config.get(p, {}).get('color', '#6366f1') }} {{ [cnt * 20, 80] | min }}%, transparent);color:{{ pillar_config.get(p, {}).get('color', '#6366f1') }}">{{ cnt }}</span>
+            {%- else %}
+            <span style="color:var(--color-text-muted)">—</span>
+            {%- endif %}
+          </td>
+          {%- endfor %}
+        </tr>
+        {%- endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{%- endif %}
+
+<section>
+  <h2 class="text-sm font-bold mb-3" style="color:var(--color-text)">Explore</h2>
+  <div class="flex flex-wrap gap-2">
+    <a href="/graph/" class="text-xs px-3 py-1.5 rounded font-semibold no-underline" style="background:var(--color-surface);border:1px solid var(--color-border);color:var(--color-text)">Knowledge Graph</a>
+    <a href="/search/?f_pillar={{ pillar }}" class="text-xs px-3 py-1.5 rounded font-semibold no-underline" style="background:var(--color-surface);border:1px solid var(--color-border);color:var(--color-text)">Search {{ pillar_label }}</a>
+  </div>
+</section>
+
+{% include 'partials/newsletter.html' %}
+{% endblock %}

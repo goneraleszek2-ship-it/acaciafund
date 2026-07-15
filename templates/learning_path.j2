@@ -1,0 +1,111 @@
+{% extends "layout.j2" %}
+{% block main_content %}
+<nav aria-label="Breadcrumb" class="mb-4 text-xs" style="color:var(--color-text-muted)">
+  <ol class="flex flex-wrap items-center gap-1.5">
+    <li><a href="/" class="hover:text-[var(--color-accent)] transition">Home</a></li>
+    <li aria-hidden="true">/</li>
+    <li><a href="/{{ pillar_url }}/" class="hover:text-[var(--color-accent)] transition">{{ pillar_label }}</a></li>
+    <li aria-hidden="true">/</li>
+    <li aria-current="page">Learning Path</li>
+  </ol>
+</nav>
+
+<header class="mb-6">
+  <div class="flex items-center gap-2 mb-2">
+    <span class="text-xs px-2 py-0.5 rounded font-semibold" style="background:color-mix(in srgb, {{ pillar_color }} 15%, transparent);color:{{ pillar_color }}">{{ pillar_label }}</span>
+    <span class="text-xs px-2 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Learning Path</span>
+  </div>
+  <h1 class="text-2xl font-extrabold" style="color:var(--color-text)">{{ journey_label }}</h1>
+  <p class="mt-1 text-sm" style="color:var(--color-text-muted)">
+    {{ total_nodes }} concepts · {{ path_count }} path{{ 's' if path_count != 1 }} · {{ pillar_span }} pillar{{ 's' if pillar_span != 1 }}
+  </p>
+</header>
+
+{%- if paths and paths | length > 0 %}
+<section class="mb-8">
+  <h2 class="text-sm font-bold mb-3" style="color:var(--color-text)">Flow</h2>
+  <div class="flex items-start gap-1 overflow-x-auto pb-2">
+    {%- set first_path = paths[0] %}
+    {%- for concept in first_path.concepts %}
+    <div class="flex items-center gap-1 shrink-0">
+      <div class="px-3 py-2 rounded text-xs font-semibold whitespace-nowrap" style="background:color-mix(in srgb, {{ pillar_color }} 12%, transparent);color:{{ pillar_color }};border:1px solid color-mix(in srgb, {{ pillar_color }} 25%, transparent)">
+        {{ concept.label }}
+      </div>
+      {%- if not loop.last %}
+      <svg class="w-4 h-4 shrink-0" fill="none" stroke="var(--color-text-muted)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      {%- endif %}
+    </div>
+    {%- endfor %}
+  </div>
+</section>
+
+{%- if path_count > 1 %}
+<section class="mb-8">
+  <h2 class="text-sm font-bold mb-3" style="color:var(--color-text)">All Paths</h2>
+  <div class="space-y-2">
+    {%- for path in paths %}
+    <div class="ghost-card p-3 cursor-pointer transition hover:shadow-md path-option" data-path-index="{{ loop.index0 }}">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-1 overflow-x-auto">
+          {%- for concept in path.concepts %}
+          <span class="text-xs px-2 py-0.5 rounded whitespace-nowrap" style="background:color-mix(in srgb, {{ pillar_color }} 10%, transparent);color:{{ pillar_color }}">{{ concept.label }}</span>
+          {%- if not loop.last %}
+          <span class="text-xs" style="color:var(--color-text-muted)">→</span>
+          {%- endif %}
+          {%- endfor %}
+        </div>
+        <span class="text-xs shrink-0 ml-2" style="color:var(--color-text-muted)">{{ path.depth }} step{{ 's' if path.depth != 1 }}</span>
+      </div>
+    </div>
+    {%- endfor %}
+  </div>
+</section>
+{%- endif %}
+{%- endif %}
+
+<section>
+  <h2 class="text-sm font-bold mb-4" style="color:var(--color-text)">Concepts in this Path</h2>
+  <div class="space-y-4">
+    {%- for node in nodes %}
+    <div class="ghost-card p-4 path-node" data-concept-id="{{ node.concept_id }}">
+      <div class="flex items-center justify-between mb-2">
+        <div class="flex items-center gap-2">
+          <span class="inline-block w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold" style="background:color-mix(in srgb, {{ pillar_color }} 15%, transparent);color:{{ pillar_color }}">
+            {{ loop.index }}
+          </span>
+          <h3 class="text-sm font-semibold" style="color:var(--color-text)">{{ node.label }}</h3>
+        </div>
+        <span class="text-xs px-2 py-0.5 rounded" style="
+          {%- if node.bloom_level == 'remember' %} background:color-mix(in srgb, #3b82f6 15%, transparent);color:#3b82f6
+          {%- elif node.bloom_level == 'apply' %} background:color-mix(in srgb, #f59e0b 15%, transparent);color:#f59e0b
+          {%- elif node.bloom_level == 'evaluate' %} background:color-mix(in srgb, #a855f7 15%, transparent);color:#a855f7
+          {%- else %} background:var(--color-bg);color:var(--color-text-muted)
+          {%- endif %}">
+          {{ node.bloom_level | capitalize }}
+        </span>
+      </div>
+      <div class="flex items-center gap-1 mb-3">
+        <span class="text-xs px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">{{ node.pillar | capitalize }}</span>
+        <span class="text-xs" style="color:var(--color-text-muted)">{{ node.total_content }} items</span>
+      </div>
+      {%- if node.learn or node.research or node.knowledge %}
+      <div class="grid gap-2 sm:grid-cols-3">
+        {%- for item in (node.learn + node.research + node.knowledge)[:3] %}
+        {%- set item_pillar = item.pillar or start_pillar %}
+        {%- set item_color = pillar_color %}
+        <a href="/{{ item.slug }}/" class="block p-2 rounded text-xs no-underline transition hover:shadow-sm" style="background:var(--color-surface);border:1px solid var(--color-border);color:var(--color-text)">
+          <span class="line-clamp-1 font-semibold">{{ item.title | striptags }}</span>
+          <span class="block mt-0.5" style="color:var(--color-text-muted)">{{ item.content_type | capitalize }}</span>
+        </a>
+        {%- endfor %}
+      </div>
+      {%- else %}
+      <p class="text-xs" style="color:var(--color-text-muted)">No linked content for this concept yet.</p>
+      {%- endif %}
+    </div>
+    {%- endfor %}
+  </div>
+</section>
+
+{% include 'partials/newsletter.html' %}
+{% endblock %}
