@@ -353,11 +353,13 @@ result = df.filter(pl.col('price') > 100).collect()
 | `tests/test_build_smoke.py` | 12 | Build output verification |
 | `tests/test_redirects.py` | 8 | Redirect rules validation |
 | `tests/test_build_taxonomies.py` | 51 | Taxonomy generation (all 5 generators) |
+| `tests/test_compositor.py` | **26** | core/compositor.py: SVG renderers (timeline, flow, comparisons, badges, numbers, connections) |
+| `tests/test_generate_pages.py` | **40** | core/generate_pages.py: extract_headings, find_related, reading_time, sanitize, SQI badge, fingerprint |
 | `tests/test_data.py` | 15 | core/data.py: domain extraction, entity/theme extraction, DLQ writing, logging |
 | `tests/test_content.py` | 11 | core/content.py: Content dataclass construction, defaults, dict parsing |
 | `tests/test_metadata.py` | 28 | core/metadata.py: manifest building, JSON utils, schema validation |
 
-**Total: ~295 tests.** Tests use `python3 -m pytest tests/ -v`.
+**Total: ~361 tests.** Tests use `python3 -m pytest tests/ -v`.
 
 ### Testing Strategy
 
@@ -433,5 +435,5 @@ python3 -u -m pytest tests/ -v > /tmp/test_results.log 2>&1
 ## Next Steps (Priority Order)
 
 1. **Graph visualization enhancements** — Relation-type filter, layout toggle (force vs hierarchical), cross-pillar edge styling
-2. **Add tests** — `core/compositor.py`, `core/generate.py`, `scripts/check_source_freshness.py`, `scripts/source_synthesis.py`
-3. **Graph visualization enhancements** — Relation-type filter, layout toggle (force vs hierarchical), cross-pillar edge styling
+2. **Add tests** — `core/generate.py` helpers, `scripts/check_source_freshness.py` compute_staleness, `scripts/source_synthesis.py` pure functions
+3. **Knowledge ingestion run** — `knowledge_ingester.py --pillar aml --source all --days 7` for latest AML content
