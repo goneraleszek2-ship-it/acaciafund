@@ -333,10 +333,10 @@ result = df.filter(pl.col('price') > 100).collect()
 
 ### Critical
 - **`services/mem0/` does not exist.** 6 mem0 scripts archived in `scripts/archive/`. `build.py` wraps the import in try/except (line 99-104).
-- **`scripts/execute_fixes.py`** depends on external LLM APIs. Mock fallback works but the build subprocess at the end may hang without timeout.
+- **`scripts/execute_fixes.py`** depends on external LLM APIs. Now archived in `scripts/archive/execute_fixes.py`.
 
 ### Warning
-- **`config.py` vs `build.py`** — `build.py` defines `PILLAR_CONFIG`, `PILLAR_EMOJIS`, `PILLAR_NAMES` as parallel dicts (lines 205-244) that duplicate pillar info also in `config.py`. If pillars change, both must be updated.
+- **`config.py` vs `build.py`** — `PILLAR_CONFIG`, `PILLAR_EMOJIS`, `PILLAR_NAMES`, `PILLAR_COLORS`, `PILLAR_FINGERPRINT_COLORS` all live in `config.py` now. `build.py` imports from config. **No duplication.**
 - **Concept extraction threshold**: `build.py` uses `>= 0.35` for concept cache and inline extraction. `extract_concepts_from_text()` default is `>= 0.5`. If extraction is too strict/loose, adjust these thresholds.
 
 ## Testing
@@ -354,8 +354,8 @@ result = df.filter(pl.col('price') > 100).collect()
 | `tests/test_redirects.py` | 8 | Redirect rules validation |
 | `tests/test_build_taxonomies.py` | 51 | Taxonomy generation (all 5 generators) |
 | `tests/test_data.py` | 15 | core/data.py: domain extraction, entity/theme extraction, DLQ writing, logging |
-| `tests/test_content.py` | 21 | core/content.py: Content dataclass construction, defaults, dict parsing |
-| `tests/test_metadata.py` | 20 | core/metadata.py: manifest building, JSON utils, schema validation |
+| `tests/test_content.py` | 11 | core/content.py: Content dataclass construction, defaults, dict parsing |
+| `tests/test_metadata.py` | 28 | core/metadata.py: manifest building, JSON utils, schema validation |
 
 **Total: ~295 tests.** Tests use `python3 -m pytest tests/ -v`.
 
@@ -432,12 +432,6 @@ python3 -u -m pytest tests/ -v > /tmp/test_results.log 2>&1
 
 ## Next Steps (Priority Order)
 
-1. **Run knowledge ingestion** — Execute `knowledge_ingester.py --pillar market --source all --days 7` to pull Markets content (SEC EDGAR, arXiv math.FIN, SSRN, NBER sources now in `etc/pillars.toml`)
-2. **Learn module parity** — Markets has 18 learn modules (equal to others, but content depth may vary)
-3. **Query suggestions** — localStorage top-10 queries → autocomplete dropdown in `search.js`
-4. **Plausible analytics** — `search` + `search_result_click` events in `search.js` (requires `PLAUSIBLE_DOMAIN` in `config.py`)
-5. **Graph visualization enhancements** — Relation-type filter, layout toggle (force vs hierarchical), cross-pillar edge styling
-6. **Build.py pillar dict dedup** — Remove duplicate pillar config in `build.py` (lines 205-244) vs `config.py`
-7. **Add tests** — Prioritize `core/build_taxonomies.py` (958 lines, zero coverage), `scripts/check_source_freshness.py`, `scripts/source_synthesis.py`
-8. **Knowledge category coverage audit** — 11 categories × 3 pillars = 33 buckets; fill gaps
-9. **Orphaned scripts cleanup** — Remove 20+ unreferenced scripts from `scripts/` after verifying no build dependencies
+1. **Graph visualization enhancements** — Relation-type filter, layout toggle (force vs hierarchical), cross-pillar edge styling
+2. **Add tests** — `core/compositor.py`, `core/generate.py`, `scripts/check_source_freshness.py`, `scripts/source_synthesis.py`
+3. **Graph visualization enhancements** — Relation-type filter, layout toggle (force vs hierarchical), cross-pillar edge styling
