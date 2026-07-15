@@ -1,3 +1,30 @@
+/* Progressive disclosure for article sections */
+.section-header {
+  cursor: pointer;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0;
+}
+.section-header::before {
+  content: '\25B6';
+  transition: transform 0.2s;
+  font-size: 0.7em;
+}
+.section-header.is-expanded::before {
+  content: '\25BC';
+}
+.prose-section.is-collapsed {
+  max-height: 3rem;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+.prose-section {
+  max-height: none;
+  transition: max-height 0.3s ease;
+}
+
 .card-research-summary {
                 display: -webkit-box;
                 -webkit-line-clamp: 3;
@@ -7,3 +34,29 @@
                 line-height: 1.55;
                 color: var(--color-text-secondary);
             }
+
+/* Generation flashcard textarea */
+.gen-answer:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: -1px;
+}
+
+/* Collapsible <details> sections on pillar pages */
+details.ghost-card summary::-webkit-details-marker {
+  color: var(--color-text-muted);
+}
+details.ghost-card summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+details.ghost-card summary::before {
+  content: '\25B6';
+  font-size: 0.7em;
+  transition: transform 0.2s;
+  color: var(--color-text-muted);
+}
+details.ghost-card[open] summary::before {
+  content: '\25BC';
+}

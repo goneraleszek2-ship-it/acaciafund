@@ -89,7 +89,73 @@ This codebase has been built in sequential sprints. Understanding what came befo
 | Foundation fixes | Concept extraction word-boundary fix, alias expansion, full category remapping, knowledge-to-pillar mapping, description backfill |
 | Quality fixes | SQI backfill script, search recall improvement (threshold 0.35, body window 800), niche concept alias expansion |
 
-**Current state:** ~280 registry items, ~810 pages, 3 clean pillars, 48 ontology concepts (all with valid PILLAR_SUBCATEGORIES), 32 inspiration sources. Quality gate: passing (all 263 items ≥ 0.65).
+**Current state:** ~280 registry items, ~810 pages, 3 clean pillars, 48 ontology concepts (all with valid PILLAR_SUBCATEGORIES), 32 inspiration sources. Quality gate: passing (all 263 items ≥ 0.65). 430 tests passing.
+
+## Cognitive Architecture (Phase 4)
+
+The portal is being restructured from a *content repository* into a *schema-building engine* grounded in cognitive psychology:
+
+### Framework Principles
+
+| Principle | Source | Portal Mechanism |
+|-----------|--------|------------------|
+| **Cognitive Load Theory** | Sweller (1988) | Progressive disclosure, worked examples, reduced split attention |
+| **Dual Coding** | Paivio (1969) | Visual abstracts + verbal summaries, consistent icon→concept mapping |
+| **Schema Theory** | Bartlett (1932), Piaget, Anderson | Learning paths, concept prerequisites, interleaved cross-pillar practice |
+| **Spaced Retrieval** | Ebbinghaus, Leitner, SM-2 | Portal-wide review queue, expanding intervals, mastery tracking |
+| **Testing Effect** | Roediger & Karpicke | Bloom questions on every page, active recall before passive review |
+| **Desirable Difficulties** | Bjork (1994) | Interleaved pillars, graduated difficulty, retrieval-before-exposure |
+
+### Five-Phase Implementation Plan
+
+| Phase | Focus | Key Deliverables | Cognitive Principle |
+|-------|-------|------------------|---------------------|
+| **1** | Schema Builder & Dual Coding | `core/schema_builder.py`, visual abstracts, concept maps, progressive disclosure JS | Schema formation, dual coding, CLT |
+| **2** | Knowledge Structure Reformulation | Learning path DAGs, cross-pillar synthesis views, multi-resolution hierarchy | Schema elaboration, germane load |
+| **3** | Retrieval & Retention Engine | Portal-wide SM-2, interleaved practice, gap detection, concept mastery dashboard | Spaced retrieval, testing effect |
+| **4** | Research-Grade Features | Source trails, contradiction detection, evidence grading, hypothesis workspace | Metacognition, critical thinking |
+| **5** | Adaptive Presentation | Difficulty/interest/modality adaptation, personalized recommendations | Individual differences, expertise reversal |
+
+### Gap Analysis: Current vs Target
+
+#### Already Exists ✓
+- SM-2 spaced repetition in `learning_hub.js` + `review.j2` (dashboard) + `review_queue.j2` (flashcard queue)
+- Concept detail pages at `/concepts/{id}/` via `concept_detail.j2`
+- Knowledge graph at `/graph/` via `graph.j2` (Cytoscape, pillar/relation/layout filters)
+- Ontology with directed relations (`requires`, `part_of`, `enables`, `influences`, `detects`, `supersedes`, `regulates`, `measures`)
+- Bloom taxonomy questions on learn/knowledge pages
+- Visual article fingerprints (tartan SVG patterns)
+- Pillar badge macros (`templates/macros/pillar_badge.html`)
+- Source freshness checker (32 weekly HTTP checks)
+- Cross-pillar content connections (`find_cross_pillar()` in `build.py`)
+- Schema builder (prerequisite→path DAG) | `core/schema_builder.py` | P1 ✓
+- Visual abstract (SVG + 3-bullet summary) | `templates/partials/visual_abstract.j2` | P1 ✓
+- Per-article concept map | `templates/partials/concept_map.j2` | P1 ✓
+- Progressive disclosure JS | `static/js/progressive_disclosure.js` | P1 ✓
+- **Cognitive Load Amputation**: Simplified homepage (pillar-grid, 3 items each), collapsible pillar sections (`<details>`), reduced article headers (3 elements max), collapsible metadata section | Phase 1.5 ✓
+- **Retrieval-First Architecture**: Pre-test gate (`pretest_gate.js`) requires quiz attempt before content | Phase 1.5 ✓
+- **Generation Flashcards**: `data-generate` attribute on `<acacia-flashcard>` enables write-before-flip mode | Phase 1.5 ✓
+
+#### Partially Exists ⚠️
+- **Learning paths**: `seed_learn.py` has bare prerequisites (`PREREQUISITES` dict with 3 entries), but no rendered `learning_path.j2` or path computation
+- **Cross-pillar synthesis**: `find_cross_pillar()` in `build.py` returns concept-shared content, but no matrix/timeline/comparison views
+
+#### Does Not Exist ✗
+| Component | File | Priority |
+|-----------|------|----------|
+| Learning path DAG generation | `core/learning_paths.py` | P2 |
+| Learning path template | `templates/learning_path.j2` | P2 |
+| Cross-pillar synthesis matrix/timeline | `templates/pillar_synthesis.j2` | P2 |
+| Portal-wide concept review (beyond learn modules) | Expand `learning_hub.js` | P3 |
+| Interleaved practice scheduler | `core/review_scheduler.py` | P3 |
+| Gap detection algorithm | `core/gap_detector.py` | P3 |
+| Concept mastery dashboard | Expand `review.j2` | P3 |
+| Source trail (claim→citation mapping) | `core/source_trail.py` | P4 |
+| Contradiction detection | `core/contradiction.py` | P4 |
+| Evidence grading (GRADE-style) | `core/evidence_grade.py` | P4 |
+| Hypothesis tracker | `templates/research_workspace.j2` | P4 |
+| Research export (PDF/MD) | `scripts/export_research.py` | P4 |
+| Adaptive difficulty/interest/modality | `core/adaptive.py` | P5 |
 
 ## Architecture
 
@@ -179,6 +245,10 @@ scripts/knowledge_ingester.py  →  registry.json  →  build.py  →  dist/
 | `core/build_cache.py` | Incremental build cache with parallel_map support |
 | `schemas.py` | Pydantic models for registry validation (`RegistryData`) |
 | `registry.json` | Content registry (260 items) |
+| `core/schema_builder.py` | **NEW** Schema builder: prerequisite graphs, learning paths, Bloom categorization |
+| `static/js/progressive_disclosure.js` | **NEW** Collapsible article sections (Cognitive Load Theory) |
+| `templates/partials/visual_abstract.j2` | **NEW** Dual-coded article summary partial (visual abstract) |
+| `templates/partials/concept_map.j2` | **NEW** Per-article concept neighborhood map partial |
 | `seed_learn.py` | Learn module prerequisites and curated relations |
 | `scripts/check_source_freshness.py` | HTTP HEAD checker for 32 inspiration sources |
 | `scripts/check_links_and_sqi.py` | Broken link checker + SQI audit + external reference inventory |
@@ -219,6 +289,8 @@ scripts/knowledge_ingester.py  →  registry.json  →  build.py  →  dist/
 | `graph.j2` | Cytoscape knowledge graph with pillar filter |
 | `tag_index.j2` | Tag archive pages |
 | `admin/*.html` | 12 admin dashboard pages |
+| `partials/visual_abstract.j2` | **NEW** Dual-coded article summary (included in research/learn/knowledge) |
+| `partials/concept_map.j2` | **NEW** Prerequisite/dependent concept map (included in concept_detail) |
 
 ### Search System
 
@@ -361,15 +433,49 @@ result = df.filter(pl.col('price') > 100).collect()
 | `tests/test_data.py` | 15 | core/data.py: domain extraction, entity/theme extraction, DLQ writing, logging |
 | `tests/test_content.py` | 11 | core/content.py: Content dataclass construction, defaults, dict parsing |
 | `tests/test_metadata.py` | 28 | core/metadata.py: manifest building, JSON utils, schema validation |
+| `tests/test_contracts.py` | **24** | MOSA architecture contract tests (config schema, module interfaces, signature validation) |
+| `tests/test_schema_builder.py` | **19** | core/schema_builder.py: prerequisite graph, learning paths, Bloom categorization |
+| `tests/test_progressive_disclosure.js` | **8** | static/js/progressive_disclosure.js: parseSections, toggleSection pure functions |
 
-**Total: ~406 tests.** Tests use `python3 -m pytest tests/ -v`. Target: 80% line coverage across core/ and scripts/ (currently at ~55%).
+JS tests run via `node tests/test_progressive_disclosure.js` (no npm/playwright needed).
+
+**Total: 449 Python tests + 8 JS tests.**
+
+### Phase 1.5 Files (Cognitive Load Amputation — July 2026)
+
+| File | Purpose |
+|------|---------|
+| `templates/index.j2` | Simplified homepage: pillar cards (3 items each), Learn/Knowledge sections, Featured |
+| `templates/pillar_index.j2` | Collapsible sections via `<details>` (Key Terms, Lessons, Concepts) |
+| `templates/learn.j2` | Reduced header (3 elements), pre-test gate, generation flashcards, collapsible metadata |
+| `templates/blog_post.j2` | Reduced header (3 elements), collapsible metadata section |
+| `templates/knowledge.j2` | Reduced header (3 elements), collapsible metadata section |
+| `templates/partials/article_metadata.j2` | Reusable collapsible metadata partial (tags + concepts + SQI) |
+| `templates/partials/pretest_gate.j2` | Pre-test gate partial (retrieval before exposure) |
+| `static/js/pretest_gate.js` | JS for pre-test gate: renders first quiz question, hides body until attempted |
+| `static/js/learning_hub.js` | Added `data-generate` attribute for write-before-flip flashcards |
+| `static/css/custom.css` | CSS for generation flashcards and collapsible details sections |
+
+### Running Phase 1 Tests
+
+```bash
+# Schema builder (Python)
+python3 -u -m pytest tests/test_schema_builder.py -v > /tmp/test_sb.log 2>&1
+
+# Progressive disclosure (JS)
+node tests/test_progressive_disclosure.js
+
+# All core tests (excludes build-dependent tests that may hang)
+python3 -u -m pytest tests/test_schema_builder.py tests/test_ontology.py tests/test_compositor.py tests/test_extractors.py tests/test_contracts.py tests/test_urls.py tests/test_data.py tests/test_content.py tests/test_metadata.py tests/test_learn_generation.py tests/test_build_cache.py tests/test_generate_pages.py tests/test_check_source_freshness.py tests/test_source_synthesis.py tests/test_smoke.py -v > /tmp/test_core.log 2>&1
+``` Tests use `python3 -m pytest tests/ -v`. Target: 80% line coverage across core/ and scripts/ (currently at ~55%).
 
 ### Testing Strategy
 
 - **Core modules** (`core/urls.py`, `core/ontology.py`) are well-tested.
 - **`build.py` and `core/build_taxonomies.py`** are tested via smoke tests only (build output inspection).
 - **Scripts** are tested indirectly via workflow integration.
-- **No unit tests** for: `core/compositor.py`, `core/generate.py`, `core/generate_pages.py`, `core/score.py`, `core/visuals.py`, `core/bloom.py`, `core/brand.py`, `core/assets.py`, `scripts/check_source_freshness.py`, `scripts/source_synthesis.py`, `scripts/source_verification.py`.
+- **Fully tested**: `core/compositor.py` (26), `core/generate_pages.py` (40), `core/extractors.py` (19), `scripts/check_source_freshness.py` (8), `scripts/source_synthesis.py` (18)
+- **No unit tests** for: `core/generate.py`, `core/score.py`, `core/visuals.py`, `core/bloom.py`, `core/brand.py`, `core/assets.py`, `scripts/source_verification.py`.
 
 ### Running Tests
 
@@ -435,8 +541,183 @@ python3 -u -m pytest tests/ -v > /tmp/test_results.log 2>&1
   - Uploads artifacts (30-day retention)
   - Commits `data/ontology.json`, `registry.json`, `data/source_health.json`
 
-## Next Steps (Priority Order)
+## Next Steps — Phase 1: Schema Builder & Dual Coding
 
-1. **Graph visualization enhancements** — Relation-type filter, layout toggle (force vs hierarchical), cross-pillar edge styling
-2. **Add tests** — `core/generate.py` helpers, `scripts/check_source_freshness.py` compute_staleness, `scripts/source_synthesis.py` pure functions
-3. **Knowledge ingestion run** — `knowledge_ingester.py --pillar aml --source all --days 7` for latest AML content
+The gap analysis at the top of this file shows all components that need to be built. Phase 1 focuses on the four highest-ROI pieces. **Do not proceed to Phase 2 until all Phase 1 deliverables pass their tests, render in the build, and linter/typecheck are clean.**
+
+### Phase 1 Deliverables (priority order)
+
+#### 1. Schema builder (`core/schema_builder.py`) — NEW
+Build a module that transforms `ontology.py` prerequisite relations into a learning-path DAG.
+
+```
+core/schema_builder.py
+├── build_prerequisite_graph(manager) → nx.DiGraph
+│   - Directed edges: `requires` relations only
+│   - Each node: Concept(id, label, pillar)
+│   - Rejects cycles (log warning, skip edge)
+├── compute_learning_paths(graph, start_concept_id, depth=3) → List[LearningPath]
+│   - BFS from start concept, limited to `depth` hops
+│   - Returns ordered list of LearningPath dataclass:
+│     │   LearningPath = {
+│     │       concepts: List[Concept],
+│     │       total_depth: int,
+│     │       pillar_span: int,  # how many pillars covered
+│     │       start: str,
+│     │       end: str,
+│     │   }
+│   - Multiple paths per start concept (one per viable terminal node)
+├── categorize_by_bloom(concept_id, manager) → BloomLevel
+    - Maps concept position in DAG to Bloom level:
+    │   root/leaf → Remember/Understand
+    │   mid-chain → Apply/Analyze
+    │   deep → Evaluate/Create
+    Return str: "remember" | "understand" | "apply" | "analyze" | "evaluate" | "create"
+```
+
+**Tests** (`tests/test_schema_builder.py`):
+- Build graph from acyclic seed relations → valid DAG
+- Build graph with intentional cycle → no error, edge skipped, warning logged
+- Compute learning path: start concept A, depth 2 → path with A→B concepts
+- Compute learning path: start concept with no outgoing edges → empty list
+- Categorize by bloom: root concept → "remember"
+- Categorize by bloom: deep node (depth 3+) → "evaluate" or "create"
+
+**Integration**: The schema builder is a pure computation module. It will be called at build time from `build.py` (or later from `scripts/generate_learning_paths.py`) to generate per-concept learning paths. No template changes yet — we build the data layer first.
+
+#### 2. Visual abstract partial (`templates/partials/visual_abstract.j2`) — NEW
+A Jinja2 partial for dual-coded article summaries (dual coding theory). Included at the top of every `research.j2`, `learn.j2`, `knowledge.j2` page.
+
+```
+{# templates/partials/visual_abstract.j2 #}
+Usage: {% include 'partials/visual_abstract.j2' %}  {# passed article, concept, pillar_config #}
+
+Renders:
+┌────────────────────────────────┐
+│ 🧩 visual_abstract            │
+│ ┌────────────────────────────┐ │
+│ │  SVG icon (article type)   │ │
+│ └────────────────────────────┘ │
+│ 📌 3-bullet summary           │
+│   • Key insight 1             │
+│   • Key insight 2             │
+│   • Key insight 3             │
+│ 🏷️ Concept badges             │
+│ 📊 bloom level indicator      │
+└────────────────────────────────┘
+
+Accepts variables:
+- article (dict with title, description, difficulty, content_type)
+- concept (dict with id, label for the article's concept)
+- pillar_config (dict with color, emoji for the pillar)
+
+SVG icons: Use a simple inline SVG matching the content_type:
+  research → book-open icon
+  learn → academic-cap icon  
+  knowledge → light-bulb icon
+Use pillar color for accent.
+
+3-bullet summary: Auto-extract from article.description (split on '.', take first 3 sentences).
+Fallback: If description has < 3 sentences, use truncated description + "..." placeholder.
+```
+
+**Tests**: No unit tests for a template. Visual verification during build: render at least one article of each type and inspect the partial output.
+
+#### 3. Concept map partial (`templates/partials/concept_map.j2`) — NEW
+A Jinja2 partial showing the immediate neighborhood of a concept (prerequisites + dependents).
+
+```
+{# templates/partials/concept_map.j2 #}
+Usage: {% include 'partials/concept_map.j2' %}  {# passed concept, related_concepts, pillar_config #}
+
+Renders:
+┌──────────────────────────────────────────┐
+│ 📖 Concept Map                          │
+│                                         │
+│     [prerequisite A] ← [THIS CONCEPT] → [dependent X] │
+│     [prerequisite B] ←                   → [dependent Y] │
+│                                         │
+│ Legend: ← requires  → enables           │
+└──────────────────────────────────────────┘
+
+Accepts:
+- concept (Concept dict with id, label, description)
+- related_concepts (list of {id, label, relation_type} for all direct relations)
+- pillar_config (dict with color)
+
+Layout:
+- Top line: "Requires" prerequisites (relation_type="requires") on the left
+- Middle: Current concept centered, bold, with pillar color accent
+- Bottom line: "Enables" dependents (relation_type="enables") on the right
+- If no prerequisites or dependents, show "None" text in muted color
+- Show up to 6 concepts per side (truncate with "+N more" if exceeded)
+
+Use arrow CSS or simple text arrows (← / →) for direction.
+```
+
+**Tests**: Same — template, verified by rendering one concept page during build.
+
+#### 4. Progressive disclosure JS (`static/js/progressive_disclosure.js`) — NEW
+JavaScript for collapsible article sections (Cognitive Load Theory — reduces extraneous load).
+
+```
+Applies to: All article pages (research, learn, knowledge, blog_post)
+
+Behavior:
+- On page load, find all <section> elements with class "prose-section"
+- Each gets a clickable header bar with:
+  │ [▶/▼] Section Title
+- First section auto-expanded, all others collapsed
+- Click toggles collapse/expand with smooth animation (CSS transition)
+- Saves section open/close state to sessionStorage per-page
+
+Implementation:
+- Vanilla JS, no dependencies
+- Targets: document.querySelectorAll('section.prose-section')
+- Each section must have a <h2> or <h3> as first child for the title
+- Toggle: class "is-collapsed" on the section (CSS: .is-collapsed > *:not(.section-header) { display: none })
+- Smooth transition via max-height animation
+- Session state key: `acacia_disclosure_{page_slug}`
+
+CSS (add to existing post.css or main.css):
+- .section-header { cursor: pointer; user-select: none; display: flex; align-items: center; gap: 0.5rem; }
+- .section-header::before { content: '▶'; transition: transform 0.2s; }
+- .section-header.is-expanded::before { content: '▼'; }
+- .prose-section.is-collapsed { max-height: 3rem; overflow: hidden; transition: max-height 0.3s ease; }
+- .prose-section { max-height: none; transition: max-height 0.3s ease; }
+```
+
+**Tests** (`tests/test_progressive_disclosure.py`):
+- HTML fixture with 3 sections → JS should collapse all but first
+- `sessionStorage` state is read on page load
+- Click on collapsed section header → section expands
+- Click on expanded section header → section collapses
+- State persists across page reload (sessionStorage read)
+
+Use Playwright or simple DOM testing. If Playwright setup is heavy, write the test as a pure function test:
+```
+parse_sections(html_string) → sections: List[Dict]
+toggle_section(sections, index) → new_sections: List[Dict]
+```
+Then test the pure functions.
+
+### Agent Instructions
+
+For any agent working on this codebase:
+
+1. **Always read AGENTS.md first** — it contains architecture invariants, build commands, and testing requirements
+2. **Phase 1 end-to-end**: Implement items 1-4 above in order. Each must have tests before moving to the next.
+3. **Test first**: Write tests in `tests/test_schema_builder.py` and `tests/test_progressive_disclosure.py` before implementing modules. For templates, verify during build.
+4. **No new dependencies**: Schema builder uses only `networkx` (already installed). JS uses vanilla JS. Templates use Jinja2 (already installed).
+5. **Verify after each item**:
+   ```bash
+   # Run Phase 1 tests
+   python3 -u -m pytest tests/test_schema_builder.py tests/test_progressive_disclosure.py -v > /tmp/test_phase1.log 2>&1
+   # Lint
+   ruff check core/schema_builder.py static/js/progressive_disclosure.js templates/partials/
+   # Typecheck
+   pyright core/schema_builder.py
+   # Build test (verify partials render)
+   python3 build.py 2>&1 | tail -20
+   ```
+6. **Credit**: Add yourself to `AGENTS.md` credits after completing Phase 1.

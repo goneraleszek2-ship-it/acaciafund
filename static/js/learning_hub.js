@@ -278,7 +278,16 @@
       const term = this.getAttribute('data-term') || '';
       const def  = this.getAttribute('data-definition') || '';
       const id   = this.getAttribute('data-card-id') || '';
+      const generate = this.hasAttribute('data-generate');
 
+      if (generate) {
+        this._renderGeneration(term, def, id);
+      } else {
+        this._renderStandard(term, def, id);
+      }
+    }
+
+    _renderStandard(term, def, id) {
       this.innerHTML = `
         <div class="flashcard-card-flip ghost-card cursor-pointer" role="button" tabindex="0"
              aria-label="Flashcard: ${this._esc(term)}. Press Space to flip."
@@ -306,6 +315,51 @@
           </div>
         </div>`;
 
+      this._attachStandardEvents(id);
+    }
+
+    _renderGeneration(term, def, id) {
+      this.innerHTML = `
+        <div class="flashcard-card-flip ghost-card" style="min-height:140px">
+          <div class="flashcard-inner">
+            <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
+              <div class="flex items-start gap-2 mb-3">
+                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                <span class="font-semibold text-sm" style="color:var(--color-text)">${this._esc(term)}</span>
+              </div>
+              <textarea class="gen-answer w-full rounded p-2 text-sm" rows="3"
+                placeholder="Write your answer here..."
+                style="background:var(--color-bg);color:var(--color-text);border:1px solid var(--color-border);resize:vertical;font-family:inherit;width:100%;box-sizing:border-box"></textarea>
+              <button class="gen-reveal mt-2 px-3 py-1.5 text-xs font-semibold rounded-lg" style="background:var(--color-accent);color:#fff;border:none;cursor:pointer">Reveal Answer</button>
+            </div>
+            <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);color:#fff">
+              <div class="space-y-3">
+                <div>
+                  <p class="text-[11px] opacity-80 mb-1">Your answer:</p>
+                  <div class="gen-user-answer text-sm rounded p-2" style="background:rgba(0,0,0,0.15)"></div>
+                </div>
+                <div>
+                  <p class="text-[11px] opacity-80 mb-1">Correct answer:</p>
+                  <div class="flex items-start gap-2">
+                    <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <span class="text-sm flashcard-back-text">${this._esc(def)}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="flashcard-grade-bar hidden mt-2 flex gap-2 justify-center" role="group" aria-label="Grade this card">
+            <button data-grade="0" class="grade-btn px-3 py-1.5 text-xs font-semibold rounded-lg" style="background:color-mix(in srgb, #ef4444 15%, transparent);color:#ef4444;min-width:44px;min-height:44px">Again</button>
+            <button data-grade="1" class="grade-btn px-3 py-1.5 text-xs font-semibold rounded-lg" style="background:color-mix(in srgb, #f59e0b 15%, transparent);color:#f59e0b;min-width:44px;min-height:44px">Hard</button>
+            <button data-grade="2" class="grade-btn px-3 py-1.5 text-xs font-semibold rounded-lg" style="background:color-mix(in srgb, #22c55e 15%, transparent);color:#22c55e;min-width:44px;min-height:44px">Good</button>
+            <button data-grade="3" class="grade-btn px-3 py-1.5 text-xs font-semibold rounded-lg" style="background:color-mix(in srgb, #3b82f6 15%, transparent);color:#3b82f6;min-width:44px;min-height:44px">Easy</button>
+          </div>
+        </div>`;
+
+      this._attachGenerationEvents(id);
+    }
+
+    _attachStandardEvents(id) {
       const flipEl = this.querySelector('.flashcard-card-flip');
       const gradeBar = this.querySelector('.flashcard-grade-bar');
 
@@ -318,6 +372,41 @@
             this._grade(parseInt(e.key), id);
           }
         }
+      });
+
+      if (gradeBar) {
+        gradeBar.querySelectorAll('.grade-btn').forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this._grade(parseInt(btn.dataset.grade), id);
+          });
+        });
+      }
+    }
+
+    _attachGenerationEvents(id) {
+      const flipEl = this.querySelector('.flashcard-card-flip');
+      const gradeBar = this.querySelector('.flashcard-grade-bar');
+      const textarea = this.querySelector('.gen-answer');
+      const revealBtn = this.querySelector('.gen-reveal');
+
+      function doReveal() {
+        const userAnswer = (textarea.value || '').trim();
+        const userDisplay = flipEl.querySelector('.gen-user-answer');
+        if (userDisplay) {
+          userDisplay.textContent = userAnswer || '(no answer written)';
+        }
+        flipEl.classList.add('flipped');
+        if (gradeBar) gradeBar.classList.remove('hidden');
+      }
+
+      revealBtn.addEventListener('click', (e) => { e.stopPropagation(); doReveal(); });
+      textarea.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+          e.preventDefault();
+          doReveal();
+        }
+        e.stopPropagation();
       });
 
       if (gradeBar) {

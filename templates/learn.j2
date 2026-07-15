@@ -39,62 +39,35 @@
         <li aria-current="page" class="truncate max-w-[200px]">{{ content.title | striptags }}</li>
       </ol>
     </nav>
-    <header class="mb-8">
-      <div class="flex items-center gap-3 mb-3">
+    <header class="mb-6">
+      <div class="flex items-center gap-2 mb-2">
         {{ layer_badge | default("") | safe }}
         {% set pillar = content.pillar %}
         {% include "macros/pillar_badge.html" %}
-        {%- if topic_icon_html %}
-        <span class="article-topic-icon">{{ topic_icon_html | safe }}</span>
-        {%- endif %}
         {%- if content.difficulty %}
         <span class="text-xs px-2 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-secondary);border:1px solid var(--color-border)">{{ content.difficulty | capitalize }}</span>
         {%- endif %}
       </div>
-      <div class="flex items-center gap-2 mt-1">
-        {{ visual_fingerprint | default("") | safe }}
-        <h1 class="text-3xl font-extrabold leading-tight">{{ content.title | striptags }}</h1>
-      </div>
+      <h1 class="text-3xl font-extrabold leading-tight" style="color:var(--color-text)">{{ content.title | striptags }}</h1>
       {%- if content.date_str %}
       <div class="mt-2 flex items-center gap-2 text-sm" style="color:var(--color-text-muted)">
         <time datetime="{{ content.date_str }}">{{ content.date_str }}</time>
-        <span aria-hidden="true">·</span>
-        <span>By {{ content.author | default("Leszek") }}</span>
-        {%- if content.reading_time %} · {{ content.reading_time }} min read{% endif %}
-      </div>
-      {%- endif %}
-      {%- if content.tags and content.tags | length > 0 %}
-      <div style="display: flex; flex-wrap: wrap; gap: 0.25rem; margin-top: var(--pico-spacing);">
-        {%- for tag in content.tags %}
-        {%- set tag_slug = tag | lower | replace(' ', '-') | replace('_', '-') %}
-        <a href="/tags/{{ tag_slug }}/"><kbd>{{ tag }}</kbd></a>
-        {%- endfor %}
-      </div>
-      {%- endif %}
-      {%- if ontology_concepts and ontology_concepts | length > 0 %}
-      <div class="mt-3 flex flex-wrap gap-1.5">
-        {%- for concept in ontology_concepts %}
-        <a href="/concepts/{{ concept.id }}/" class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full no-underline" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);text-decoration:none">
-          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A2 2 0 013 12V7a4 4 0 014-4z"/></svg>
-          {{ concept.name }}
-        </a>
-        {%- endfor %}
-      </div>
-      {%- endif %}
-      {%- set sqi_val = content.sqi or 0 %}
-      {%- if content.signals and content.signals.avg_sqi %}
-        {%- set sqi_val = [sqi_val, content.signals.avg_sqi] | max %}
-      {%- endif %}
-      {%- if sqi_val > 0 %}
-      <div class="mt-2">
-        <span class="sqi-badge">SQI {{ "%.3f" | format(sqi_val) }}</span>
+        {%- if content.reading_time %}<span aria-hidden="true"> · </span><span>{{ content.reading_time }} min read</span>{% endif %}
       </div>
       {%- endif %}
     </header>
 
+    {% include 'partials/pretest_gate.j2' %}
+
+    {% include 'partials/visual_abstract.j2' %}
+
+    <div id="lesson-body">
     <div class="prose prose-lg prose-blue max-w-none">
       {{ page_body | default(content.body_html) | safe }}
     </div>
+    </div>
+
+    {% include 'partials/article_metadata.j2' %}
 
     {%- if quiz_json %}
     <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)" id="quiz-section" data-quiz='{{ quiz_json }}' data-quiz-lesson="{{ page_path }}">
@@ -122,7 +95,8 @@
         <acacia-flashcard
           data-term="{{ fc_term }}"
           data-definition="{{ fc_def[:200] }}"
-          data-card-id="{{ page_path }}#{{ loop.index0 }}"></acacia-flashcard>
+          data-card-id="{{ page_path }}#{{ loop.index0 }}"
+          data-generate></acacia-flashcard>
         {%- endif %}
         {%- endfor %}
       </div>
@@ -233,5 +207,7 @@
 </div>
 
 <script src="{{ 'js/learning_hub.js' | asset }}" defer></script>
+<script src="{{ 'js/pretest_gate.js' | asset }}" defer></script>
 {% include 'partials/newsletter.html' %}
+<script src="{{ 'js/progressive_disclosure.js' | asset }}" defer></script>
 {% endblock %}
