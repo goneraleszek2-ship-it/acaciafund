@@ -1,0 +1,15 @@
+{%- if concept.normative_basis %}
+{%- set _normative_styles = {
+  "kantian_duty": {"icon": "⚖️", "desc": "Kantian — grounded in duty and universalizability", "color": "#6366f1"},
+  "utilitarian": {"icon": "📊", "desc": "Utilitarian — justified by aggregate consequences", "color": "#22c55e"},
+  "rawlsian": {"icon": "🏛️", "desc": "Rawlsian — fairness, reciprocity, original position", "color": "#a855f7"},
+  "virtue_ethics": {"icon": "🧠", "desc": "Virtue Ethics — grounded in character and practical wisdom", "color": "#f59e0b"},
+  "pragmatic": {"icon": "🔧", "desc": "Pragmatic — justified by what works in practice", "color": "#06b6d4"},
+  "contractarian": {"icon": "📝", "desc": "Contractarian — legitimacy comes from agreement between parties", "color": "#f43f5e"},
+} %}
+{%- set _nb = _normative_styles.get(concept.normative_basis, {"icon": "❓", "desc": concept.normative_basis | replace('_', ' ') | title, "color": "var(--color-text-muted)"}) %}
+<span class="inline-flex items-center gap-1 text-[11px] font-medium" style="color:{{ _nb['color'] }}" title="{{ _nb['desc'] }}">
+  <span>{{ _nb['icon'] }}</span>
+  <span>{{ _nb['desc'] }}</span>
+</span>
+{%- endif %}

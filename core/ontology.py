@@ -40,6 +40,49 @@ class Concept(BaseModel):
         description="Originating source URL or organisation name",
     )
     confidence_score: float = Field(default=1.0, ge=0.0, le=1.0)
+
+    # Philosophical foundations metadata
+    philosophical_lineage: List[str] = Field(
+        default_factory=list,
+        description="Epistemic/ethical traditions this concept belongs to, e.g. 'social_epistemology', 'foucault_discipline'",
+    )
+    epistemic_status: str = Field(
+        default="",
+        description="Epistemic role: 'constitutive' | 'regulatory' | 'pragmatic' | 'ontological' | 'instrumental'",
+    )
+    normative_basis: str = Field(
+        default="",
+        description="Normative foundation: 'kantian_duty' | 'utilitarian' | 'rawlsian' | 'virtue_ethics' | 'pragmatic' | 'contractarian'",
+    )
+    ontological_commitment: str = Field(
+        default="",
+        description="Metaphysical stance: 'realist' | 'constructivist' | 'fictionalist' | 'pluralist' | 'processual'",
+    )
+    temporal_ontology: str = Field(
+        default="",
+        description="Time model: 'state_based' | 'event_based' | 'processual' | 'eternalist'",
+    )
+    uncertainty_class: str = Field(
+        default="",
+        description="Uncertainty type: 'knightian' | 'measurable' | 'ambiguity' | 'ignorance'",
+    )
+    governance_model: str = Field(
+        default="",
+        description="Governance pattern: 'hierarchical' | 'polycentric' | 'algorithmic' | 'constitutional'",
+    )
+    semantic_contract_type: str = Field(
+        default="",
+        description="Semantic role: 'constitutive' | 'coordinating' | 'descriptive'",
+    )
+    philosophical_sources: List[str] = Field(
+        default_factory=list,
+        description="Primary source citations e.g. 'Foucault, Discipline and Punish (1975)'",
+    )
+    cross_pillar_analogs: List[str] = Field(
+        default_factory=list,
+        description="Concept IDs in other pillars sharing the same epistemic pattern",
+    )
+
     created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
     updated_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
 

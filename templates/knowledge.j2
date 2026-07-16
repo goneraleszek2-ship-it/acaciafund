@@ -60,9 +60,18 @@
 
     {% include 'partials/visual_abstract.j2' %}
 
+    {%- if concept is defined %}
+    {% include 'partials/normative_basis.j2' %}
+    {%- endif %}
+
     <div class="prose prose-lg prose-blue max-w-none">
       {{ page_body | default(content.body_html) | safe }}
     </div>
+
+    {%- if concept is defined %}
+    {% include 'partials/philosophical_lineage.j2' %}
+    {% include 'partials/cross_pillar_philosophy.j2' %}
+    {%- endif %}
 
     {% include 'partials/article_metadata.j2' %}
 
@@ -148,15 +157,35 @@
       </h2>
       <p class="text-sm mb-4" style="color:var(--color-text-secondary)">Related ontology concepts with definitions and source links.</p>
       <div class="grid gap-3 sm:grid-cols-2">
-        {%- for concept in ontology_concepts %}
+        {%- for _concept in ontology_concepts %}
         <div class="ghost-card p-4 transition hover:shadow-md">
           <div class="flex items-center gap-2 mb-1">
-            <span class="text-xs font-mono px-1.5 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">{{ concept.id }}</span>
-            <span class="text-xs" style="color:var(--color-text-muted)">score: {{ concept.score }}</span>
+            <span class="text-xs font-mono px-1.5 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">{{ _concept.id }}</span>
+            <span class="text-xs" style="color:var(--color-text-muted)">score: {{ _concept.score }}</span>
+            {%- if _concept.epistemic_status %}
+            <span class="text-[10px] px-1 py-0.5 rounded font-semibold" style="background:color-mix(in srgb, #6366f1 8%, transparent);color:#6366f1">{{ _concept.epistemic_status | capitalize }}</span>
+            {%- endif %}
           </div>
-          <h3 class="text-sm font-semibold" style="color:var(--color-text)">{{ concept.name }}</h3>
-          {%- if concept.description %}
-          <p class="mt-1 text-xs" style="color:var(--color-text-secondary)">{{ concept.description }}</p>
+          <h3 class="text-sm font-semibold" style="color:var(--color-text)">{{ _concept.name }}</h3>
+          {%- if _concept.description %}
+          <p class="mt-1 text-xs" style="color:var(--color-text-secondary)">{{ _concept.description }}</p>
+          {%- endif %}
+          {%- if _concept.philosophical_lineage and _concept.philosophical_lineage | length > 0 %}
+          <div class="mt-1.5 flex flex-wrap gap-1">
+            {%- for _pl in _concept.philosophical_lineage[:3] %}
+            <span class="text-[10px] px-1.5 py-0.5 rounded-full" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">{{ _pl | replace('_', ' ') | title }}</span>
+            {%- endfor %}
+            {%- if _concept.philosophical_lineage | length > 3 %}
+            <span class="text-[10px] px-1.5 py-0.5" style="color:var(--color-text-muted)">+{{ _concept.philosophical_lineage | length - 3 }} more</span>
+            {%- endif %}
+          </div>
+          {%- endif %}
+          {%- if _concept.cross_pillar_analogs and _concept.cross_pillar_analogs | length > 0 %}
+          <div class="mt-1 flex flex-wrap gap-1">
+            {%- for _analog in _concept.cross_pillar_analogs[:3] %}
+            <a href="/concepts/{{ _analog }}/" class="text-[10px] px-1.5 py-0.5 rounded-full no-underline" style="background:color-mix(in srgb, #22c55e 8%, transparent);color:#22c55e">{{ _analog | replace('-', ' ') | title }}</a>
+            {%- endfor %}
+          </div>
           {%- endif %}
         </div>
         {%- endfor %}

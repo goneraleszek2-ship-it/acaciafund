@@ -1,0 +1,27 @@
+{%- if concept.cross_pillar_analogs and concept.cross_pillar_analogs | length > 0 %}
+<aside class="mt-6 p-4 rounded-lg" style="background:color-mix(in srgb, var(--color-accent) 5%, transparent);border:1px solid color-mix(in srgb, var(--color-accent) 15%, transparent)">
+  <h4 class="text-xs font-bold mb-2 flex items-center gap-1.5" style="color:var(--color-text)">
+    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4-4m-4 4l4 4"/></svg>
+    Same epistemic pattern in other pillars
+  </h4>
+  <div class="flex flex-wrap gap-2">
+    {%- for analog in concept.cross_pillar_analogs %}
+    <a href="/concepts/{{ analog }}/" class="text-xs px-2.5 py-1 rounded-full no-underline font-medium transition hover:shadow-sm" style="background:var(--color-surface);color:var(--color-text-secondary);border:1px solid var(--color-border)">
+      {{ analog | replace('-', ' ') | title }}
+    </a>
+    {%- endfor %}
+  </div>
+  <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">
+    These concepts share the same foundational role — exploring them reveals hidden structural parallels between pillars.
+  </p>
+</aside>
+{%- elif concept.philosophical_lineage and concept.philosophical_lineage | length > 0 %}
+<aside class="mt-6 p-4 rounded-lg" style="background:color-mix(in srgb, var(--color-accent) 3%, transparent);border:1px solid var(--color-border)">
+  <h4 class="text-xs font-bold mb-1" style="color:var(--color-text-muted)">
+    <span class="mr-1">🧩</span> Explore connections to other pillars
+  </h4>
+  <p class="text-[11px]" style="color:var(--color-text-secondary)">
+    This concept has no explicit cross-pillar analogs yet — <a href="/graph/" class="font-semibold no-underline" style="color:var(--color-accent)">explore the knowledge graph</a> to discover hidden connections.
+  </p>
+</aside>
+{%- endif %}

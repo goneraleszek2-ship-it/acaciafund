@@ -1,0 +1,667 @@
+{
+  "kyc": {
+    "philosophical_lineage": ["social_epistemology", "identity_theory", "surveillance_studies", "foucault_discipline"],
+    "epistemic_status": "constitutive",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [
+      "Goffman, Erving. The Presentation of Self in Everyday Life (1956)",
+      "Foucault, Michel. Discipline and Punish: The Birth of the Prison (1975)",
+      "Simmel, Georg. The Philosophy of Money (1900) — Chapter on Trust",
+      "Windley, Phillip. Digital Identity (2005)"
+    ],
+    "cross_pillar_analogs": ["market-microstructure", "data-mesh"]
+  },
+  "cdd": {
+    "philosophical_lineage": ["social_epistemology", "trust_theory"],
+    "epistemic_status": "regulatory",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "constructivist",
+    "governance_model": "hierarchical",
+    "philosophical_sources": [
+      "Bok, Sissela. Secrets: On the Ethics of Concealment and Revelation (1989)",
+      "Schneider, Leslie. The Ethics of Whistleblowing (2007)"
+    ],
+    "cross_pillar_analogs": ["data-contracts"]
+  },
+  "edd": {
+    "philosophical_lineage": ["surveillance_studies", "risk_theory"],
+    "epistemic_status": "regulatory",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "constructivist",
+    "governance_model": "hierarchical",
+    "philosophical_sources": [
+      "Sunstein, Cass. Laws of Fear: Beyond the Precautionary Principle (2005)",
+      "Rawls, John. A Theory of Justice (1971) — Proportionality principle"
+    ],
+    "cross_pillar_analogs": ["portfolio-optimization"]
+  },
+  "sar": {
+    "philosophical_lineage": ["surveillance_studies", "epistemic_duty", "bureaucratic_knowledge"],
+    "epistemic_status": "regulatory",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "realist",
+    "uncertainty_class": "ambiguity",
+    "governance_model": "hierarchical",
+    "philosophical_sources": [
+      "Kvanvig, Jonathan. The Value of Knowledge and the Pursuit of Understanding (2003)",
+      "Bok, Sissela. Secrets: On the Ethics of Concealment and Revelation (1989)"
+    ],
+    "cross_pillar_analogs": ["data-quality"]
+  },
+  "str": {
+    "philosophical_lineage": ["surveillance_studies", "epistemic_duty"],
+    "epistemic_status": "regulatory",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "realist",
+    "uncertainty_class": "ambiguity",
+    "governance_model": "hierarchical",
+    "philosophical_sources": [
+      "Kvanvig, Jonathan. The Value of Knowledge and the Pursuit of Understanding (2003)"
+    ]
+  },
+  "ctr": {
+    "philosophical_lineage": ["surveillance_studies"],
+    "epistemic_status": "regulatory",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "realist",
+    "governance_model": "hierarchical"
+  },
+  "pep": {
+    "philosophical_lineage": ["political_philosophy", "sovereignty", "risk_theory"],
+    "epistemic_status": "regulatory",
+    "normative_basis": "contractarian",
+    "ontological_commitment": "constructivist",
+    "uncertainty_class": "knightian",
+    "governance_model": "hierarchical",
+    "philosophical_sources": [
+      "Walzer, Michael. Just and Unjust Wars (1977) — Extraterritoriality",
+      "Nussbaum, Martha. Frontiers of Justice (2006)"
+    ],
+    "cross_pillar_analogs": ["distributed-systems"]
+  },
+  "sanctions-screening": {
+    "philosophical_lineage": ["political_philosophy", "sovereignty", "moral_complicity"],
+    "epistemic_status": "regulatory",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "realist",
+    "governance_model": "algorithmic",
+    "philosophical_sources": [
+      "Walzer, Michael. Just and Unjust Wars (1977)",
+      "Nussbaum, Martha. Frontiers of Justice (2006)"
+    ]
+  },
+  "transaction-monitoring": {
+    "philosophical_lineage": ["surveillance_studies", "algorithmic_governance", "predictive_epistemology"],
+    "epistemic_status": "constitutive",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "processual",
+    "uncertainty_class": "knightian",
+    "governance_model": "algorithmic",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [
+      "Zuboff, Shoshana. The Age of Surveillance Capitalism (2019)",
+      "Lyon, David. Surveillance Studies: An Overview (2007)",
+      "Crawford, Kate. Atlas of AI (2021)"
+    ],
+    "cross_pillar_analogs": ["streaming", "high-frequency-trading"]
+  },
+  "entity-resolution": {
+    "philosophical_lineage": ["philosophy_of_language", "ontology_matching", "identity_theory"],
+    "epistemic_status": "constitutive",
+    "ontological_commitment": "constructivist",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [
+      "Wittgenstein, Ludwig. Philosophical Investigations (1953) — Language games",
+      "Searle, John. The Construction of Social Reality (1995)"
+    ],
+    "cross_pillar_analogs": ["schema-registry"]
+  },
+  "network-analysis": {
+    "philosophical_lineage": ["network_theory", "distributed_cognition"],
+    "epistemic_status": "instrumental",
+    "ontological_commitment": "constructivist",
+    "philosophical_sources": [
+      "Latour, Bruno. Reassembling the Social: An Introduction to Actor-Network-Theory (2005)",
+      "Ostrom, Elinor. Governing the Commons (1990)"
+    ],
+    "cross_pillar_analogs": ["distributed-systems", "data-mesh"]
+  },
+  "beneficial-ownership": {
+    "philosophical_lineage": ["legal_philosophy", "metaphysics_of_ownership", "corporate_personhood"],
+    "epistemic_status": "ontological",
+    "normative_basis": "contractarian",
+    "ontological_commitment": "constructivist",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [
+      "Hart, H.L.A. The Concept of Law (1961)",
+      "Teubner, Gunther. Law as an Autopoietic System (1993)",
+      "Pistor, Katharina. The Code of Capital (2019)"
+    ],
+    "cross_pillar_analogs": ["data-mesh", "data-contracts"]
+  },
+  "fatf-recommendations": {
+    "philosophical_lineage": ["legal_philosophy", "regulatory_theory"],
+    "epistemic_status": "regulatory",
+    "normative_basis": "contractarian",
+    "ontological_commitment": "realist",
+    "governance_model": "hierarchical",
+    "philosophical_sources": [
+      "FATF. International Standards on Combating Money Laundering (2012-2023)"
+    ]
+  },
+  "bsa": {
+    "philosophical_lineage": ["legal_philosophy", "regulatory_theory"],
+    "epistemic_status": "regulatory",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "realist",
+    "governance_model": "hierarchical"
+  },
+  "tbml": {
+    "philosophical_lineage": ["trade_theory", "surveillance_studies"],
+    "epistemic_status": "instrumental",
+    "uncertainty_class": "ambiguity",
+    "philosophical_sources": [
+      "Zuboff, Shoshana. The Age of Surveillance Capitalism (2019)"
+    ]
+  },
+  "regtech": {
+    "philosophical_lineage": ["technology_philosophy", "legal_philosophy"],
+    "epistemic_status": "instrumental",
+    "normative_basis": "pragmatic",
+    "governance_model": "algorithmic",
+    "philosophical_sources": [
+      "Heidegger, Martin. The Question Concerning Technology (1954)",
+      "Hildebrandt, Mireille. Law for Computer Scientists (2020)"
+    ],
+    "cross_pillar_analogs": ["orchestration"]
+  },
+  "travel-rule": {
+    "philosophical_lineage": ["regulatory_theory", "sovereignty"],
+    "epistemic_status": "regulatory",
+    "normative_basis": "contractarian",
+    "governance_model": "hierarchical"
+  },
+  "adverse-media": {
+    "philosophical_lineage": ["surveillance_studies", "epistemology_of_journalism"],
+    "epistemic_status": "regulatory",
+    "normative_basis": "kantian_duty",
+    "uncertainty_class": "ambiguity",
+    "philosophical_sources": [
+      "Lyon, David. Surveillance Studies: An Overview (2007)"
+    ],
+    "cross_pillar_analogs": ["ml-pipeline"]
+  },
+  "aml-program": {
+    "philosophical_lineage": ["organizational_ethics"],
+    "epistemic_status": "regulatory",
+    "normative_basis": "kantian_duty",
+    "governance_model": "hierarchical"
+  },
+  "cyber-aml": {
+    "philosophical_lineage": ["surveillance_studies", "cybersecurity_ethics"],
+    "epistemic_status": "instrumental",
+    "philosophical_sources": [
+      "Crawford, Kate. Atlas of AI (2021)"
+    ],
+    "cross_pillar_analogs": ["distributed-systems", "data-security"]
+  },
+  "correspondent-banking": {
+    "philosophical_lineage": ["trust_theory", "social_epistemology"],
+    "epistemic_status": "regulatory",
+    "normative_basis": "utilitarian",
+    "philosophical_sources": [
+      "Simmel, Georg. The Philosophy of Money (1900)"
+    ]
+  },
+  "crypto-aml": {
+    "philosophical_lineage": ["digital_identity", "surveillance_studies"],
+    "epistemic_status": "pragmatic",
+    "ontological_commitment": "constructivist",
+    "philosophical_sources": [
+      "Crawford, Kate. Atlas of AI (2021)"
+    ],
+    "cross_pillar_analogs": ["data-security"]
+  },
+  "regulatory-reporting": {
+    "philosophical_lineage": ["bureaucratic_knowledge"],
+    "epistemic_status": "regulatory",
+    "governance_model": "hierarchical",
+    "cross_pillar_analogs": ["data-pipeline"]
+  },
+
+  "lob": {
+    "philosophical_lineage": ["distributed_cognition", "hayek_knowledge", "price_epistemology"],
+    "epistemic_status": "constitutive",
+    "normative_basis": "pragmatic",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "processual",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [
+      "Hayek, Friedrich. The Use of Knowledge in Society (1945)",
+      "Polanyi, Michael. The Tacit Dimension (1966)",
+      "O'Hara, Maureen. Market Microstructure Theory (1995)"
+    ],
+    "cross_pillar_analogs": ["kyc", "schema-registry"]
+  },
+  "market-microstructure": {
+    "philosophical_lineage": ["distributed_cognition", "hayek_knowledge", "price_formation_theory"],
+    "epistemic_status": "constitutive",
+    "normative_basis": "pragmatic",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "processual",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [
+      "Hayek, Friedrich. The Use of Knowledge in Society (1945)",
+      "Polanyi, Michael. The Tacit Dimension (1966)",
+      "Garfinkel, Harold. Studies in Ethnomethodology (1967)"
+    ],
+    "cross_pillar_analogs": ["transaction-monitoring", "streaming"]
+  },
+  "volatility-surface": {
+    "philosophical_lineage": ["modal_metaphysics", "counterfactual_reasoning", "probability_philosophy"],
+    "epistemic_status": "ontological",
+    "ontological_commitment": "fictionalist",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "ambiguity",
+    "semantic_contract_type": "coordinating",
+    "philosophical_sources": [
+      "Lewis, David. On the Plurality of Worlds (1986)",
+      "Derman, Emanuel. Models. Behaving. Badly (2011)",
+      "Black, Fischer; Scholes, Myron. The Pricing of Options (1973)"
+    ],
+    "cross_pillar_analogs": ["aml-program"]
+  },
+  "hawkes-process": {
+    "philosophical_lineage": ["probability_philosophy", "point_process_theory"],
+    "epistemic_status": "instrumental",
+    "ontological_commitment": "fictionalist",
+    "uncertainty_class": "measurable",
+    "philosophical_sources": [
+      "Hawkes, Alan G. Point Spectra... (1971) — Biometrika"
+    ]
+  },
+  "vpin": {
+    "philosophical_lineage": ["market_microstructure", "information_asymmetry"],
+    "epistemic_status": "instrumental",
+    "uncertainty_class": "measurable",
+    "philosophical_sources": [
+      "Easley, David; de Prado, Marcos. VPIN Toxicity (2012)"
+    ]
+  },
+  "portfolio-optimization": {
+    "philosophical_lineage": ["decision_theory", "ethics_of_diversification", "arrow_debreu"],
+    "epistemic_status": "pragmatic",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "fictionalist",
+    "uncertainty_class": "measurable",
+    "governance_model": "algorithmic",
+    "philosophical_sources": [
+      "von Neumann, John; Morgenstern, Oskar. Theory of Games and Economic Behavior (1944)",
+      "Arrow, Kenneth. Social Choice and Individual Values (1951)",
+      "Markowitz, Harry. Portfolio Selection (1952)"
+    ],
+    "cross_pillar_analogs": ["edd"]
+  },
+  "risk-parity": {
+    "philosophical_lineage": ["decision_theory", "ethics_of_diversification"],
+    "epistemic_status": "pragmatic",
+    "normative_basis": "utilitarian",
+    "uncertainty_class": "measurable",
+    "philosophical_sources": [
+      "Dalio, Ray. Principles (2017)"
+    ]
+  },
+  "factor-investing": {
+    "philosophical_lineage": ["probability_philosophy", "statistical_epistemology"],
+    "epistemic_status": "instrumental",
+    "ontological_commitment": "fictionalist",
+    "uncertainty_class": "measurable",
+    "philosophical_sources": [
+      "Fama, Eugene; French, Kenneth. The Cross-Section of Expected Stock Returns (1992)"
+    ],
+    "cross_pillar_analogs": ["ml-pipeline"]
+  },
+  "technical-analysis": {
+    "philosophical_lineage": ["hermeneutics", "pattern_recognition"],
+    "epistemic_status": "pragmatic",
+    "ontological_commitment": "constructivist",
+    "philosophical_sources": [
+      "Kahneman, Daniel. Thinking, Fast and Slow (2011)"
+    ],
+    "cross_pillar_analogs": ["adverse-media"]
+  },
+  "macro-analysis": {
+    "philosophical_lineage": ["political_economy"],
+    "epistemic_status": "pragmatic",
+    "ontological_commitment": "fictionalist",
+    "uncertainty_class": "knightian"
+  },
+  "options-trading": {
+    "philosophical_lineage": ["modal_metaphysics", "counterfactual_reasoning"],
+    "epistemic_status": "instrumental",
+    "ontological_commitment": "fictionalist",
+    "temporal_ontology": "event_based"
+  },
+  "behavioral-finance": {
+    "philosophical_lineage": ["philosophy_of_mind", "bounded_rationality", "dual_process_theory"],
+    "epistemic_status": "pragmatic",
+    "normative_basis": "virtue_ethics",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "processual",
+    "philosophical_sources": [
+      "Kahneman, Daniel. Thinking, Fast and Slow (2011)",
+      "Gigerenzer, Gerd. Rationality for Mortals (2008)",
+      "Thaler, Richard. Misbehaving: The Making of Behavioral Economics (2015)"
+    ],
+    "cross_pillar_analogs": ["data-quality"]
+  },
+  "market-impact": {
+    "philosophical_lineage": ["price_theory", "market_microstructure"],
+    "epistemic_status": "instrumental",
+    "ontological_commitment": "fictionalist",
+    "temporal_ontology": "processual",
+    "philosophical_sources": [
+      "O'Hara, Maureen. Market Microstructure Theory (1995)"
+    ],
+    "cross_pillar_analogs": ["transaction-monitoring"]
+  },
+  "statistical-arbitrage": {
+    "philosophical_lineage": ["probability_philosophy", "statistical_epistemology"],
+    "epistemic_status": "instrumental",
+    "ontological_commitment": "fictionalist",
+    "uncertainty_class": "measurable",
+    "philosophical_sources": [
+      "Ramsey, Frank. Truth and Probability (1926)"
+    ]
+  },
+  "high-frequency-trading": {
+    "philosophical_lineage": ["philosophy_of_time", "speed_as_power", "technological_determinism"],
+    "epistemic_status": "constitutive",
+    "normative_basis": "pragmatic",
+    "ontological_commitment": "processual",
+    "temporal_ontology": "processual",
+    "governance_model": "algorithmic",
+    "philosophical_sources": [
+      "Virilio, Paul. Speed and Politics (1977)",
+      "Heidegger, Martin. The Question Concerning Technology (1954)",
+      "Latour, Bruno. Reassembling the Social (2005)"
+    ],
+    "cross_pillar_analogs": ["streaming", "transaction-monitoring"]
+  },
+  "asset-pricing": {
+    "philosophical_lineage": ["probability_philosophy", "rational_expectations", "value_theory"],
+    "epistemic_status": "ontological",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "fictionalist",
+    "uncertainty_class": "measurable",
+    "philosophical_sources": [
+      "Ramsey, Frank. Truth and Probability (1926)",
+      "de Finetti, Bruno. Theory of Probability (1974)",
+      "Lucas, Robert. Rational Expectations and Econometric Practice (1981)",
+      "Taleb, Nassim Nicholas. The Black Swan (2007)"
+    ],
+    "cross_pillar_analogs": ["aml-program"]
+  },
+  "esg-investing": {
+    "philosophical_lineage": ["environmental_ethics", "intergenerational_justice", "stakeholder_theory"],
+    "epistemic_status": "normative",
+    "normative_basis": "rawlsian",
+    "ontological_commitment": "pluralist",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [
+      "Leopold, Aldo. A Sand County Almanac (1949) — The Land Ethic",
+      "Rawls, John. A Theory of Justice (1971) — Just savings principle",
+      "Freeman, R. Edward. Strategic Management: A Stakeholder Approach (1984)"
+    ],
+    "cross_pillar_analogs": ["aml-program"]
+  },
+  "supply-chain-analysis": {
+    "philosophical_lineage": ["systems_theory"],
+    "epistemic_status": "instrumental",
+    "ontological_commitment": "realist"
+  },
+  "semiconductor-industry": {
+    "philosophical_lineage": ["political_economy"],
+    "epistemic_status": "pragmatic",
+    "ontological_commitment": "realist"
+  },
+  "ai-hardware": {
+    "philosophical_lineage": ["technology_philosophy"],
+    "epistemic_status": "instrumental",
+    "ontological_commitment": "realist"
+  },
+  "commodity-trading": {
+    "philosophical_lineage": ["political_economy"],
+    "epistemic_status": "pragmatic"
+  },
+  "earnings-analysis": {
+    "philosophical_lineage": ["accounting_theory"],
+    "epistemic_status": "pragmatic"
+  },
+  "fixed-income": {
+    "philosophical_lineage": ["time_preference_theory"],
+    "epistemic_status": "instrumental",
+    "philosophical_sources": [
+      "Fisher, Irving. The Theory of Interest (1930)"
+    ]
+  },
+
+  "etl": {
+    "philosophical_lineage": ["hermeneutics", "interpretation_theory"],
+    "epistemic_status": "constitutive",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "semantic_contract_type": "coordinating",
+    "philosophical_sources": [
+      "Gadamer, Hans-Georg. Truth and Method (1960)",
+      "Ricoeur, Paul. Interpretation Theory (1976)",
+      "Bowker, Geoffrey; Star, Susan Leigh. Sorting Things Out (1999)"
+    ],
+    "cross_pillar_analogs": ["transaction-monitoring", "market-microstructure"]
+  },
+  "elt": {
+    "philosophical_lineage": ["hermeneutics", "interpretation_theory"],
+    "epistemic_status": "constitutive",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "philosophical_sources": [
+      "Gadamer, Hans-Georg. Truth and Method (1960)"
+    ]
+  },
+  "data-mesh": {
+    "philosophical_lineage": ["political_philosophy", "decentralization", "subsidiarity", "commons_theory"],
+    "epistemic_status": "constitutive",
+    "normative_basis": "contractarian",
+    "ontological_commitment": "pluralist",
+    "governance_model": "polycentric",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [
+      "Ostrom, Elinor. Governing the Commons (1990)",
+      "Evans, Peter. The Appropriation of the Social (1995)",
+      "Vernon, Vaughn. Domain-Driven Design (2003)"
+    ],
+    "cross_pillar_analogs": ["beneficial-ownership", "network-analysis"]
+  },
+  "data-contracts": {
+    "philosophical_lineage": ["philosophy_of_language", "social_contract"],
+    "epistemic_status": "constitutive",
+    "normative_basis": "contractarian",
+    "ontological_commitment": "constructivist",
+    "semantic_contract_type": "constitutive",
+    "governance_model": "polycentric",
+    "philosophical_sources": [
+      "Wittgenstein, Ludwig. Philosophical Investigations (1953) — Language games",
+      "Searle, John. The Construction of Social Reality (1995)",
+      "Borgida et al. Ontology Matching (2007)"
+    ],
+    "cross_pillar_analogs": ["cdd", "fatf-recommendations"]
+  },
+  "streaming": {
+    "philosophical_lineage": ["process_philosophy", "philosophy_of_time", "event_ontology"],
+    "epistemic_status": "constitutive",
+    "ontological_commitment": "processual",
+    "temporal_ontology": "processual",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [
+      "Whitehead, Alfred North. Process and Reality (1929)",
+      "Bergson, Henri. Time and Free Will (1889)",
+      "Fowler, Martin; Young, Greg. Event Sourcing pattern (2000s)"
+    ],
+    "cross_pillar_analogs": ["transaction-monitoring", "high-frequency-trading"]
+  },
+  "batch-processing": {
+    "philosophical_lineage": ["state_epistemology"],
+    "epistemic_status": "instrumental",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "state_based"
+  },
+  "cdc": {
+    "philosophical_lineage": ["event_ontology"],
+    "epistemic_status": "constitutive",
+    "ontological_commitment": "processual",
+    "temporal_ontology": "event_based",
+    "cross_pillar_analogs": ["vpin"]
+  },
+  "data-lake": {
+    "philosophical_lineage": ["epistemology_of_storage"],
+    "epistemic_status": "pragmatic",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "state_based"
+  },
+  "data-warehouse": {
+    "philosophical_lineage": ["epistemology_of_storage", "structured_knowledge"],
+    "epistemic_status": "regulatory",
+    "ontological_commitment": "realist",
+    "semantic_contract_type": "descriptive"
+  },
+  "dbt": {
+    "philosophical_lineage": ["software_philosophy", "analytics_engineering"],
+    "epistemic_status": "instrumental",
+    "normative_basis": "pragmatic"
+  },
+  "dagster": {
+    "philosophical_lineage": ["software_philosophy", "systems_theory"],
+    "epistemic_status": "instrumental",
+    "governance_model": "algorithmic"
+  },
+  "apache-flink": {
+    "philosophical_lineage": ["event_processing", "distributed_computing"],
+    "epistemic_status": "instrumental",
+    "temporal_ontology": "processual"
+  },
+  "apache-kafka": {
+    "philosophical_lineage": ["event_logging", "distributed_consensus"],
+    "epistemic_status": "constitutive",
+    "ontological_commitment": "processual",
+    "temporal_ontology": "event_based"
+  },
+  "apache-iceberg": {
+    "philosophical_lineage": ["data_architecture"],
+    "epistemic_status": "instrumental"
+  },
+  "arrow-parquet": {
+    "philosophical_lineage": ["data_architecture", "columnar_storage"],
+    "epistemic_status": "instrumental",
+    "ontological_commitment": "realist"
+  },
+  "schema-registry": {
+    "philosophical_lineage": ["philosophy_of_language", "semantic_interoperability"],
+    "epistemic_status": "constitutive",
+    "semantic_contract_type": "constitutive",
+    "governance_model": "polycentric",
+    "philosophical_sources": [
+      "Wittgenstein, Ludwig. Philosophical Investigations (1953)"
+    ],
+    "cross_pillar_analogs": ["entity-resolution", "lob"]
+  },
+  "data-quality": {
+    "philosophical_lineage": ["epistemology_of_measurement", "error_theory"],
+    "epistemic_status": "constitutive",
+    "normative_basis": "pragmatic",
+    "ontological_commitment": "realist",
+    "philosophical_sources": [
+      "Mayo, Deborah. Error and the Growth of Experimental Knowledge (1996)",
+      "Toulmin, Stephen. The Uses of Argument (1958)"
+    ],
+    "cross_pillar_analogs": ["sar", "behavioral-finance"]
+  },
+  "data-observability": {
+    "philosophical_lineage": ["epistemology_of_measurement", "systems_theory"],
+    "epistemic_status": "constitutive",
+    "ontological_commitment": "realist",
+    "philosophical_sources": [
+      "Mayo, Deborah. Error and the Growth of Experimental Knowledge (1996)"
+    ]
+  },
+  "data-pipeline": {
+    "philosophical_lineage": ["hermeneutics", "interpretation_theory"],
+    "epistemic_status": "constitutive",
+    "ontological_commitment": "constructivist",
+    "cross_pillar_analogs": ["regulatory-reporting"]
+  },
+  "data-governance": {
+    "philosophical_lineage": ["information_ethics", "contextual_integrity"],
+    "epistemic_status": "regulatory",
+    "normative_basis": "rawlsian",
+    "governance_model": "polycentric",
+    "philosophical_sources": [
+      "Floridi, Luciano. The Ethics of Information (2013)",
+      "Nissenbaum, Helen. Privacy in Context (2009)"
+    ],
+    "cross_pillar_analogs": ["fatf-recommendations", "bsa"]
+  },
+  "orchestration": {
+    "philosophical_lineage": ["cybernetics", "systems_theory"],
+    "epistemic_status": "instrumental",
+    "governance_model": "algorithmic",
+    "cross_pillar_analogs": ["regtech"]
+  },
+  "query-optimization": {
+    "philosophical_lineage": ["philosophy_of_computation", "algorithms"],
+    "epistemic_status": "instrumental"
+  },
+  "real-time-analytics": {
+    "philosophical_lineage": ["process_philosophy", "temporal_epistemology"],
+    "epistemic_status": "instrumental",
+    "temporal_ontology": "processual",
+    "cross_pillar_analogs": ["market-microstructure"]
+  },
+  "data-security": {
+    "philosophical_lineage": ["information_ethics", "contextual_integrity"],
+    "epistemic_status": "regulatory",
+    "normative_basis": "kantian_duty",
+    "governance_model": "hierarchical",
+    "philosophical_sources": [
+      "Nissenbaum, Helen. Privacy in Context (2009)",
+      "Floridi, Luciano. The Ethics of Information (2013)"
+    ],
+    "cross_pillar_analogs": ["cyber-aml"]
+  },
+  "distributed-systems": {
+    "philosophical_lineage": ["social_epistemology", "consensus_theory", "political_philosophy"],
+    "epistemic_status": "constitutive",
+    "ontological_commitment": "pluralist",
+    "governance_model": "polycentric",
+    "philosophical_sources": [
+      "Lamport, Leslie. Time, Clocks, and the Ordering of Events (1978)",
+      "Fischer, Michael; Lynch, Nancy; Paterson, Michael. Impossibility of Distributed Consensus (1985)",
+      "Castro, Miguel; Liskov, Barbara. Practical Byzantine Fault Tolerance (1999)"
+    ],
+    "cross_pillar_analogs": ["pep", "network-analysis"]
+  },
+  "ml-pipeline": {
+    "philosophical_lineage": ["statistical_epistemology", "induction"],
+    "epistemic_status": "instrumental",
+    "uncertainty_class": "knightian",
+    "philosophical_sources": [
+      "Taleb, Nassim Nicholas. The Black Swan (2007)"
+    ],
+    "cross_pillar_analogs": ["adverse-media", "factor-investing"]
+  }
+}

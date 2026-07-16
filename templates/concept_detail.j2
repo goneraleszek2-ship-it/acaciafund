@@ -37,10 +37,21 @@
   {%- endif %}
 </header>
 
-<div class="grid gap-8 lg:grid-cols-3">
-  <div class="lg:col-span-2">
-    <section class="mb-8">
-      <h2 class="text-lg font-semibold mb-4" style="color:var(--color-text)">Related Content</h2>
+  <div class="grid gap-8 lg:grid-cols-3">
+    <div class="lg:col-span-2">
+      <div class="flex items-center gap-2 mb-4">
+        {% include 'partials/epistemic_badge.j2' %}
+        {%- if concept.normative_basis %}
+        {% include 'partials/normative_basis.j2' %}
+        {%- endif %}
+      </div>
+
+      {% include 'partials/philosophical_lineage.j2' %}
+
+      {% include 'partials/cross_pillar_philosophy.j2' %}
+
+      <section class="mb-8">
+        <h2 class="text-lg font-semibold mb-4" style="color:var(--color-text)">Related Content</h2>
       {%- if related_items and related_items | length > 0 %}
       <div class="grid gap-4 sm:grid-cols-2">
         {%- for item in related_items %}

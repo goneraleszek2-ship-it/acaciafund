@@ -1902,11 +1902,21 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                     for concept, score in matches:
                         if concept.id not in seen_ids and score >= 0.35:
                             seen_ids.add(concept.id)
+                            _concept_phil_lineage = getattr(concept, "philosophical_lineage", None) or []
+                            _concept_ep_status = getattr(concept, "epistemic_status", "") or ""
+                            _concept_norm_basis = getattr(concept, "normative_basis", "") or ""
+                            _concept_phil_sources = getattr(concept, "philosophical_sources", None) or []
+                            _concept_cross_pillar = getattr(concept, "cross_pillar_analogs", None) or []
                             ontology_concepts.append({
                                 "id": concept.id,
                                 "name": concept.label,
                                 "description": concept.description,
                                 "score": round(score, 2),
+                                "philosophical_lineage": _concept_phil_lineage,
+                                "epistemic_status": _concept_ep_status,
+                                "normative_basis": _concept_norm_basis,
+                                "philosophical_sources": _concept_phil_sources,
+                                "cross_pillar_analogs": _concept_cross_pillar,
                             })
                     ontology_concepts = ontology_concepts[:8]
                 except Exception:
@@ -3119,6 +3129,15 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                         "pillar": _pillar_key,
                         "category": _concept.category or "",
                         "aliases": _concept.aliases or [],
+                        "philosophical_lineage": getattr(_concept, "philosophical_lineage", None) or [],
+                        "epistemic_status": getattr(_concept, "epistemic_status", "") or "",
+                        "normative_basis": getattr(_concept, "normative_basis", "") or "",
+                        "ontological_commitment": getattr(_concept, "ontological_commitment", "") or "",
+                        "temporal_ontology": getattr(_concept, "temporal_ontology", "") or "",
+                        "uncertainty_class": getattr(_concept, "uncertainty_class", "") or "",
+                        "governance_model": getattr(_concept, "governance_model", "") or "",
+                        "philosophical_sources": getattr(_concept, "philosophical_sources", None) or [],
+                        "cross_pillar_analogs": getattr(_concept, "cross_pillar_analogs", None) or [],
                     },
                     has_learning_path=_has_lp,
                     related_items=_related_items,
