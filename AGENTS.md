@@ -64,8 +64,45 @@ for text, desc in tests:
     print(f'  {desc}: {ids}')
 "
 
+# Enrich ontology with philosophical foundations metadata
+python3 scripts/enrich_philosophy.py
+
+# Philosophy tests (check all concepts have epistemic_status, lineage, etc.)
+python3 -u -m pytest tests/test_philosophy_integration.py -v
+
+# Validate cross-pillar analogs reference existing concepts
+python3 -c "
+import json
+with open('data/ontology.json') as f:
+    data = json.load(f)
+all_ids = {c['id'] for c in data['concepts']}
+bad = []
+for c in data['concepts']:
+    for analog in c.get('cross_pillar_analogs', []):
+        if analog not in all_ids:
+            bad.append((c['id'], analog))
+if bad:
+    for cid, a in bad:
+        print(f'  {cid} -> {a} (missing)')
+else:
+    print('All cross-pillar analogs valid.')
+"
+
 # Deploy to Cloudflare
 python3 scripts/deploy_cloudflare.py
+
+# Retention Engine — generate concept review data
+python3 -c "
+from core.ontology import OntologyManager
+from core.retention_engine import generate_concept_review_json, save_concept_review_json
+mgr = OntologyManager.load('data/ontology.json')
+items = generate_concept_review_json(mgr)
+save_concept_review_json(items, 'dist/static/review_concepts.json')
+print(f'Generated {len(items)} concept review items')
+"
+
+# Retention Engine — run tests
+python3 -u -m pytest tests/test_retention_engine.py -v
 ```
 
 ## System Evolution Summary
@@ -89,7 +126,7 @@ This codebase has been built in sequential sprints. Understanding what came befo
 | Foundation fixes | Concept extraction word-boundary fix, alias expansion, full category remapping, knowledge-to-pillar mapping, description backfill |
 | Quality fixes | SQI backfill script, search recall improvement (threshold 0.35, body window 800), niche concept alias expansion |
 
-**Current state:** ~280 registry items, ~810 pages, 3 clean pillars, 48 ontology concepts (all with valid PILLAR_SUBCATEGORIES), 32 inspiration sources. Quality gate: passing (all 263 items ≥ 0.65). 430 tests passing.
+**Current state:** ~420 registry items, ~1213 pages, 3 clean pillars, 72 ontology concepts (all with philosophical metadata), 32 inspiration sources. Quality gate: passing. 507 Python tests + 8 JS tests passing.
 
 ## Cognitive Architecture (Phase 4)
 
@@ -136,20 +173,56 @@ The portal is being restructured from a *content repository* into a *schema-buil
 - **Retrieval-First Architecture**: Pre-test gate (`pretest_gate.js`) requires quiz attempt before content | Phase 1.5 ✓
 - **Generation Flashcards**: `data-generate` attribute on `<acacia-flashcard>` enables write-before-flip mode | Phase 1.5 ✓
 
+#### Now Exists ✓ (Phase 2B — July 2026)
+- **Philosophical foundations layer** integrated into Knowledge content type (not a separate section)
+- **Concept model** extended with 10 philosophical metadata fields: `philosophical_lineage`, `epistemic_status`, `normative_basis`, `ontological_commitment`, `temporal_ontology`, `uncertainty_class`, `governance_model`, `semantic_contract_type`, `philosophical_sources`, `cross_pillar_analogs`
+- **`scripts/enrich_philosophy.py`** — reads `data/philosophy_metadata.json`, merges into ontology
+- **72 ontology concepts** enriched with philosophical metadata (all have `epistemic_status`)
+- **4 new template partials**: `philosophical_lineage.j2` (expandable genealogy), `epistemic_badge.j2` (inline epistemic role indicator), `normative_basis.j2` (inline normative theory display), `cross_pillar_philosophy.j2` ("Same pattern in other pillars")
+- **`concept_detail.j2`** — shows philosophical lineage, epistemic badge, normative basis, primary sources, cross-pillar analogs
+- **`knowledge.j2`** — Concept Explorer shows epistemic badges, lineage tags (up to 3), cross-pillar analog links for each extracted concept
+- **11 tests** for philosophy integration (`tests/test_philosophy_integration.py`): model fields, ontology enrichment, pipeline, cross-pillar validation
+
+| File | Purpose |
+|------|---------|
+| `data/philosophy_metadata.json` | Concept→philosophical metadata mapping (71 concepts) |
+| `scripts/enrich_philosophy.py` | Merge philosophy metadata into ontology.json |
+| `templates/partials/philosophical_lineage.j2` | Expandable genealogy tree (thinker → concept → technique) |
+| `templates/partials/epistemic_badge.j2` | Inline badge: "Constitutive", "Instrumental", "Regulatory", etc. |
+| `templates/partials/normative_basis.j2` | "Kantian duty", "Utilitarian", "Rawlsian" indicator |
+| `templates/partials/cross_pillar_philosophy.j2` | "Same epistemic pattern in other pillars" section |
+| `tests/test_philosophy_integration.py` | 11 tests for philosophical foundations |
+
+#### Now Exists ✓ (Phase 3 — July 2026)
+- **Portal-wide concept review** via `RetentionEngine` in `retention_engine.js` — reviews all 72 ontology concepts with SM-2 scheduling
+- **Gap detection** (`core/retention_engine.py` + JS) — identifies unseen, overdue (7+ days), and low-mastery (<0.3) concepts
+- **Interleaved practice scheduler** — automatically mixes concepts across all 3 pillars, prioritizing due and unseen items
+- **Concept mastery dashboard** — rendered dynamically in `review.j2` via `concept-mastery-dashboard` container; shows per-pillar mastery bars, gap reports, and interleaved session trigger
+- **`static/review_concepts.json`** — auto-generated at build time from ontology (72 concepts with metadata)
+- **38 tests** for retention engine (`tests/test_retention_engine.py`): SM-2 algorithm, mastery scoring, gap detection, interleaving, data generation
+
+| File | Purpose |
+|------|---------|
+| `core/retention_engine.py` | SM-2 algorithm, gap detection, interleaved scheduling, concept review data generation |
+| `static/js/retention_engine.js` | Client-side retention engine: concept review cards, mastery dashboard, interleaved sessions |
+| `templates/review.j2` | Updated with concept mastery dashboard section + retention_engine.js |
+| `static/review_concepts.json` | Build-generated concept review data (72 concepts, camelCase keys) |
+| `tests/test_retention_engine.py` | 38 tests for all retention engine components |
+
 #### Partially Exists ⚠️
-- **Learning paths**: `seed_learn.py` has bare prerequisites (`PREREQUISITES` dict with 3 entries), but no rendered `learning_path.j2` or path computation
+- **Learning paths**: `seed_learn.py` has bare prerequisites (`PREREQUISITES` dict with 3 entries)
 - **Cross-pillar synthesis**: `find_cross_pillar()` in `build.py` returns concept-shared content, but no matrix/timeline/comparison views
+
+#### Now Improved ✓ (Phase 2 Deepening — July 2026)
+- **Learning path template** (`templates/learning_path.j2`): Now includes interactive progress tracking (localStorage checkboxes per node), concept detail page links on every flow node, "Review on Dashboard" button per concept, bloom level badges with cognitive-skill tooltip descriptions, and a progress bar at the top
+- **Pillar synthesis template** (`templates/pillar_synthesis.j2`): Now includes cross-pillar analog matrix table showing epistemic-status mapping between concepts in different pillars, enriched bridge cards with per-pillar expandable content lists, bridge count + analog count in header, and review dashboard link
+- **`core/learning_paths.py`**: `generate_cross_pillar_synthesis()` now accepts optional `ontology` param; returns `analog_matrix` (concepts → analogs with epistemic status) and `enriched_bridges` (bridges with per-pillar content breakdown)
+- **15 learning path pages** + **3 pillar synthesis pages** — all enhanced at build time
+- **Cross-pillar analog matrix** leverages the 39 ontology concepts with `cross_pillar_analogs` data
 
 #### Does Not Exist ✗
 | Component | File | Priority |
 |-----------|------|----------|
-| Learning path DAG generation | `core/learning_paths.py` | P2 |
-| Learning path template | `templates/learning_path.j2` | P2 |
-| Cross-pillar synthesis matrix/timeline | `templates/pillar_synthesis.j2` | P2 |
-| Portal-wide concept review (beyond learn modules) | Expand `learning_hub.js` | P3 |
-| Interleaved practice scheduler | `core/review_scheduler.py` | P3 |
-| Gap detection algorithm | `core/gap_detector.py` | P3 |
-| Concept mastery dashboard | Expand `review.j2` | P3 |
 | Source trail (claim→citation mapping) | `core/source_trail.py` | P4 |
 | Contradiction detection | `core/contradiction.py` | P4 |
 | Evidence grading (GRADE-style) | `core/evidence_grade.py` | P4 |
@@ -436,10 +509,11 @@ result = df.filter(pl.col('price') > 100).collect()
 | `tests/test_contracts.py` | **24** | MOSA architecture contract tests (config schema, module interfaces, signature validation) |
 | `tests/test_schema_builder.py` | **19** | core/schema_builder.py: prerequisite graph, learning paths, Bloom categorization |
 | `tests/test_progressive_disclosure.js` | **8** | static/js/progressive_disclosure.js: parseSections, toggleSection pure functions |
+| `tests/test_retention_engine.py` | **38** | core/retention_engine.py: SM-2, gap detection, interleaving, data generation |
 
 JS tests run via `node tests/test_progressive_disclosure.js` (no npm/playwright needed).
 
-**Total: 449 Python tests + 8 JS tests.**
+**Total: 507 Python tests + 8 JS tests.**
 
 ### Phase 1.5 Files (Cognitive Load Amputation — July 2026)
 

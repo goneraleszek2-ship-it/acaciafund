@@ -3057,6 +3057,20 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     (queue_dir / "index.html").write_text(queue_html, encoding="utf-8")
     print("  review: review/queue/index.html")
 
+    # --- Concept review data for retention engine ---
+    if ontology and ontology.concept_count() > 0:
+        try:
+            from core.retention_engine import generate_concept_review_json, save_concept_review_json
+            _concept_review_items = generate_concept_review_json(ontology)
+            _review_data_path = STATIC_DST_DIR / "review_concepts.json"
+            save_concept_review_json(_concept_review_items, _review_data_path)
+            _review_data_size = _review_data_path.stat().st_size if _review_data_path.exists() else 0
+            print(f"  retention: static/review_concepts.json ({len(_concept_review_items)} concepts, {_review_data_size:,} bytes)")
+        except ImportError:
+            print("  retention: core.retention_engine not available — skipping")
+        except Exception as _e_ret:
+            print(f"  retention: error generating concept review data — {_e_ret}")
+
     # --- Concept detail pages ---
     if ontology and ontology.concept_count() > 0:
         # Build concept → content mapping by re-extracting from all items
@@ -3175,7 +3189,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
             print(f"  learning paths: {_lp_count} pages")
 
         # --- Cross-pillar synthesis pages ---
-        _synth = generate_cross_pillar_synthesis(all_content, concept_content_map, PILLAR_CONFIG)
+        _synth = generate_cross_pillar_synthesis(all_content, concept_content_map, PILLAR_CONFIG, ontology)
         _synth_count = 0
         for _synth_pillar in ["aml", "stock", "data-engineering"]:
             _synth_pillar_url = pillar_to_url(_synth_pillar)

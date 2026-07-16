@@ -21,6 +21,16 @@
   </p>
 </header>
 
+<div id="lp-progress-bar" class="ghost-card p-3 mb-6">
+  <div class="flex items-center justify-between mb-1">
+    <span class="text-xs font-semibold" style="color:var(--color-text)">Progress</span>
+    <span id="lp-progress-text" class="text-xs" style="color:var(--color-text-muted)">0 / {{ total_nodes }} complete</span>
+  </div>
+  <div class="h-2 rounded-full overflow-hidden" style="background:var(--color-border)">
+    <div id="lp-progress-fill" class="h-full rounded-full transition-all" style="width:0%;background:{{ pillar_color }}"></div>
+  </div>
+</div>
+
 {%- if paths and paths | length > 0 %}
 <section class="mb-8">
   <h2 class="text-sm font-bold mb-3" style="color:var(--color-text)">Flow</h2>
@@ -28,9 +38,9 @@
     {%- set first_path = paths[0] %}
     {%- for concept in first_path.concepts %}
     <div class="flex items-center gap-1 shrink-0">
-      <div class="px-3 py-2 rounded text-xs font-semibold whitespace-nowrap" style="background:color-mix(in srgb, {{ pillar_color }} 12%, transparent);color:{{ pillar_color }};border:1px solid color-mix(in srgb, {{ pillar_color }} 25%, transparent)">
+      <a href="/concepts/{{ concept.id }}/" class="px-3 py-2 rounded text-xs font-semibold whitespace-nowrap no-underline transition hover:opacity-80" style="background:color-mix(in srgb, {{ pillar_color }} 12%, transparent);color:{{ pillar_color }};border:1px solid color-mix(in srgb, {{ pillar_color }} 25%, transparent)">
         {{ concept.label }}
-      </div>
+      </a>
       {%- if not loop.last %}
       <svg class="w-4 h-4 shrink-0" fill="none" stroke="var(--color-text-muted)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       {%- endif %}
@@ -48,7 +58,7 @@
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-1 overflow-x-auto">
           {%- for concept in path.concepts %}
-          <span class="text-xs px-2 py-0.5 rounded whitespace-nowrap" style="background:color-mix(in srgb, {{ pillar_color }} 10%, transparent);color:{{ pillar_color }}">{{ concept.label }}</span>
+          <a href="/concepts/{{ concept.id }}/" class="text-xs px-2 py-0.5 rounded whitespace-nowrap no-underline" style="background:color-mix(in srgb, {{ pillar_color }} 10%, transparent);color:{{ pillar_color }}">{{ concept.label }}</a>
           {%- if not loop.last %}
           <span class="text-xs" style="color:var(--color-text-muted)">→</span>
           {%- endif %}
@@ -67,26 +77,44 @@
   <h2 class="text-sm font-bold mb-4" style="color:var(--color-text)">Concepts in this Path</h2>
   <div class="space-y-4">
     {%- for node in nodes %}
-    <div class="ghost-card p-4 path-node" data-concept-id="{{ node.concept_id }}">
-      <div class="flex items-center justify-between mb-2">
+    <div class="ghost-card p-4 path-node" data-concept-id="{{ node.concept_id }}" data-node-idx="{{ loop.index0 }}">
+      <div class="flex items-start justify-between mb-2">
         <div class="flex items-center gap-2">
-          <span class="inline-block w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold" style="background:color-mix(in srgb, {{ pillar_color }} 15%, transparent);color:{{ pillar_color }}">
+          <span class="inline-flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold" style="background:color-mix(in srgb, {{ pillar_color }} 15%, transparent);color:{{ pillar_color }}">
             {{ loop.index }}
           </span>
-          <h3 class="text-sm font-semibold" style="color:var(--color-text)">{{ node.label }}</h3>
+          <a href="/concepts/{{ node.concept_id }}/" class="text-sm font-semibold no-underline transition hover:opacity-80" style="color:var(--color-text)">{{ node.label }}</a>
         </div>
-        <span class="text-xs px-2 py-0.5 rounded" style="
-          {%- if node.bloom_level == 'remember' %} background:color-mix(in srgb, #3b82f6 15%, transparent);color:#3b82f6
-          {%- elif node.bloom_level == 'apply' %} background:color-mix(in srgb, #f59e0b 15%, transparent);color:#f59e0b
-          {%- elif node.bloom_level == 'evaluate' %} background:color-mix(in srgb, #a855f7 15%, transparent);color:#a855f7
-          {%- else %} background:var(--color-bg);color:var(--color-text-muted)
-          {%- endif %}">
-          {{ node.bloom_level | capitalize }}
-        </span>
+        <div class="flex items-center gap-2 shrink-0">
+          <span class="lp-complete-btn inline-flex items-center gap-1 px-2 py-1 text-[10px] font-semibold rounded cursor-pointer transition hover:opacity-80" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+            Mark Done
+          </span>
+          <span class="text-xs px-2 py-0.5 rounded bloom-badge" style="
+            {%- if node.bloom_level == 'remember' %} background:color-mix(in srgb, #3b82f6 15%, transparent);color:#3b82f6
+            {%- elif node.bloom_level == 'understand' %} background:color-mix(in srgb, #22c55e 15%, transparent);color:#22c55e
+            {%- elif node.bloom_level == 'apply' %} background:color-mix(in srgb, #f59e0b 15%, transparent);color:#f59e0b
+            {%- elif node.bloom_level == 'analyze' %} background:color-mix(in srgb, #a855f7 15%, transparent);color:#a855f7
+            {%- elif node.bloom_level == 'evaluate' %} background:color-mix(in srgb, #ef4444 15%, transparent);color:#ef4444
+            {%- elif node.bloom_level == 'create' %} background:color-mix(in srgb, #6366f1 15%, transparent);color:#6366f1
+            {%- else %} background:var(--color-bg);color:var(--color-text-muted)
+            {%- endif %}"
+            title="
+              {%- if node.bloom_level == 'remember' %} Recall facts and basic concepts
+              {%- elif node.bloom_level == 'understand' %} Explain ideas and interpret meaning
+              {%- elif node.bloom_level == 'apply' %} Use knowledge in new situations
+              {%- elif node.bloom_level == 'analyze' %} Draw connections and identify patterns
+              {%- elif node.bloom_level == 'evaluate' %} Justify decisions and critique arguments
+              {%- elif node.bloom_level == 'create' %} Produce new or original work
+              {%- endif %}">
+            {{ node.bloom_level | capitalize }}
+          </span>
+        </div>
       </div>
-      <div class="flex items-center gap-1 mb-3">
+      <div class="flex items-center gap-2 mb-3">
         <span class="text-xs px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">{{ node.pillar | capitalize }}</span>
         <span class="text-xs" style="color:var(--color-text-muted)">{{ node.total_content }} items</span>
+        <a href="/review/" class="text-xs font-semibold no-underline transition hover:opacity-80" style="color:var(--color-accent)">Review on Dashboard →</a>
       </div>
       {%- if node.learn or node.research or node.knowledge %}
       <div class="grid gap-2 sm:grid-cols-3">
@@ -106,6 +134,60 @@
     {%- endfor %}
   </div>
 </section>
+
+<script>
+(function() {
+  var STORAGE_KEY = 'acacia_lp_progress_' + '{{ start_concept_id }}';
+  var totalNodes = {{ total_nodes }};
+
+  function loadProgress() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(e) { return []; }
+  }
+
+  function saveProgress(done) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(done)); } catch(e) {}
+  }
+
+  function updateUI(done) {
+    var fill = document.getElementById('lp-progress-fill');
+    var text = document.getElementById('lp-progress-text');
+    var pct = totalNodes > 0 ? Math.round((done.length / totalNodes) * 100) : 0;
+    if (fill) fill.style.width = pct + '%';
+    if (text) text.textContent = done.length + ' / ' + totalNodes + ' complete';
+
+    document.querySelectorAll('.lp-complete-btn').forEach(function(btn, i) {
+      var isDone = done.indexOf(i) !== -1;
+      if (isDone) {
+        btn.style.borderColor = '#22c55e';
+        btn.style.color = '#22c55e';
+        btn.style.background = 'color-mix(in srgb, #22c55e 10%, transparent)';
+        btn.innerHTML = '<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Done';
+      } else {
+        btn.style.borderColor = '';
+        btn.style.color = '';
+        btn.style.background = '';
+        btn.innerHTML = '<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Mark Done';
+      }
+    });
+  }
+
+  var done = loadProgress();
+  updateUI(done);
+
+  document.querySelectorAll('.lp-complete-btn').forEach(function(btn, i) {
+    btn.addEventListener('click', function() {
+      var idx = parseInt(this.closest('.path-node').dataset.nodeIdx);
+      if (done.indexOf(idx) === -1) {
+        done.push(idx);
+      } else {
+        done = done.filter(function(d) { return d !== idx; });
+      }
+      saveProgress(done);
+      updateUI(done);
+    });
+  });
+})();
+</script>
 
 {% include 'partials/newsletter.html' %}
 {% endblock %}

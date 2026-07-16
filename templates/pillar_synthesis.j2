@@ -18,9 +18,65 @@
   <h1 class="text-2xl font-extrabold" style="color:var(--color-text)">{{ pillar_label }} — Cross-Pillar Synthesis</h1>
   <p class="mt-1 text-sm" style="color:var(--color-text-muted)">
     {{ synthesis.pillar_counts.get(pillar, 0) }} articles ·
-    {{ synthesis.total_bridges }} cross-pillar bridges
+    {{ synthesis.total_bridges }} cross-pillar bridges ·
+    {{ synthesis.total_analogs }} philosophical analogs
   </p>
 </header>
+
+{%- if synthesis.analog_matrix and synthesis.analog_matrix | length > 0 %}
+<section class="mb-8">
+  <h2 class="text-sm font-bold mb-3" style="color:var(--color-text)">Cross-Pillar Analog Matrix</h2>
+  <p class="text-xs mb-3" style="color:var(--color-text-muted)">Concepts in this pillar that share epistemic patterns with concepts in other pillars.</p>
+  <div class="overflow-x-auto">
+    <table class="w-full text-xs" style="color:var(--color-text);border-collapse:collapse">
+      <thead>
+        <tr class="border-b" style="border-color:var(--color-border)">
+          <th class="text-left py-2 pr-3 font-semibold" style="color:var(--color-text-muted)">Concept</th>
+          <th class="text-left py-2 pr-3 font-semibold" style="color:var(--color-text-muted)">Epistemic Role</th>
+          <th class="text-left py-2 font-semibold" style="color:var(--color-text-muted)">Analog In</th>
+          <th class="text-left py-2 pl-3 font-semibold" style="color:var(--color-text-muted)">Analog Concept</th>
+        </tr>
+      </thead>
+      <tbody>
+        {%- for matrix_id, matrix_entry in synthesis.analog_matrix.items() %}
+        {%- if pillar in matrix_entry.pillar or true %}
+        {%- for analog in matrix_entry.analogs %}
+        <tr class="border-b" style="border-color:var(--color-border)">
+          {%- if loop.first %}
+          <td class="py-2 pr-3" rowspan="{{ matrix_entry.analogs | length }}">
+            <a href="/concepts/{{ matrix_entry.id }}/" class="font-semibold no-underline" style="color:var(--color-accent)">{{ matrix_entry.label }}</a>
+          </td>
+          <td class="py-2 pr-3" rowspan="{{ matrix_entry.analogs | length }}">
+            {%- if matrix_entry.epistemic_status %}
+            <span class="inline-block px-1.5 py-0.5 rounded font-semibold" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">{{ matrix_entry.epistemic_status | capitalize }}</span>
+            {%- else %}
+            <span style="color:var(--color-text-muted)">—</span>
+            {%- endif %}
+          </td>
+          {%- endif %}
+          <td class="py-2 pr-3">
+            {%- set analog_pc = pillar_config.get(analog.pillar, {}) %}
+            <span class="inline-block px-1.5 py-0.5 rounded" style="background:color-mix(in srgb, {{ analog_pc.get('color', '#6366f1') }} 15%, transparent);color:{{ analog_pc.get('color', '#6366f1') }}">
+              {{ analog_pc.get('label', analog.pillar) }}
+            </span>
+          </td>
+          <td class="py-2 pl-3">
+            <a href="/concepts/{{ analog.id }}/" class="no-underline transition hover:opacity-80" style="color:var(--color-text)">
+              {{ analog.label }}
+              {%- if analog.epistemic_status %}
+              <span class="text-[10px] ml-1" style="color:var(--color-text-muted)">({{ analog.epistemic_status }})</span>
+              {%- endif %}
+            </a>
+          </td>
+        </tr>
+        {%- endfor %}
+        {%- endif %}
+        {%- endfor %}
+      </tbody>
+    </table>
+  </div>
+</section>
+{%- endif %}
 
 {%- if synthesis.bridges and synthesis.bridges | length > 0 %}
 <section class="mb-8">
@@ -33,12 +89,34 @@
       <h3 class="text-sm font-semibold" style="color:var(--color-text)">{{ bridge_id | replace('-', ' ') | title }}</h3>
       <div class="flex items-center gap-1.5 mt-2">
         {%- for bp in bridge.pillars %}
-        <span class="text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, {{ pillar_config.get(bp, {}).get('color', '#6366f1') }} 15%, transparent);color:{{ pillar_config.get(bp, {}).get('color', '#6366f1') }}">
+        {%- set bp_color = pillar_config.get(bp, {}).get('color', '#6366f1') %}
+        <span class="text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, {{ bp_color }} 15%, transparent);color:{{ bp_color }}">
           {{ pillar_config.get(bp, {}).get('label', bp) }}
         </span>
         {%- endfor %}
       </div>
       <p class="mt-2 text-xs" style="color:var(--color-text-muted)">{{ bridge.total_content }} content items</p>
+
+      {%- set enriched = synthesis.enriched_bridges.get(bridge_id, {}) %}
+      {%- if enriched and enriched.by_pillar %}
+      <div class="mt-2 space-y-1">
+        {%- for bp, items in enriched.by_pillar.items() %}
+        {%- if items %}
+        <details class="text-[10px]">
+          <summary class="cursor-pointer font-semibold" style="color:{{ pillar_config.get(bp, {}).get('color', '#6366f1') }}">
+            {{ pillar_config.get(bp, {}).get('label', bp) }} ({{ items | length }})
+          </summary>
+          <ul class="mt-1 space-y-0.5 pl-2">
+            {%- for item in items[:3] %}
+            <li><a href="/{{ item.slug }}/" class="no-underline hover:opacity-80" style="color:var(--color-text-muted)">{{ item.title | striptags | truncate(60) }}</a></li>
+            {%- endfor %}
+          </ul>
+        </details>
+        {%- endif %}
+        {%- endfor %}
+      </div>
+      {%- endif %}
+
       <a href="/concepts/{{ bridge_id }}/" class="mt-2 inline-block text-xs font-semibold no-underline" style="color:var(--color-accent)">View concept →</a>
     </div>
     {%- endif %}
@@ -88,6 +166,7 @@
   <div class="flex flex-wrap gap-2">
     <a href="/graph/" class="text-xs px-3 py-1.5 rounded font-semibold no-underline" style="background:var(--color-surface);border:1px solid var(--color-border);color:var(--color-text)">Knowledge Graph</a>
     <a href="/search/?f_pillar={{ pillar }}" class="text-xs px-3 py-1.5 rounded font-semibold no-underline" style="background:var(--color-surface);border:1px solid var(--color-border);color:var(--color-text)">Search {{ pillar_label }}</a>
+    <a href="/review/" class="text-xs px-3 py-1.5 rounded font-semibold no-underline" style="background:var(--color-surface);border:1px solid var(--color-border);color:var(--color-text)">Review Dashboard</a>
   </div>
 </section>
 

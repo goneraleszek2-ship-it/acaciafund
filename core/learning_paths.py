@@ -148,8 +148,9 @@ def generate_cross_pillar_synthesis(
     all_content: list,
     concept_content_map: dict[str, list[dict]],
     pillar_config: dict,
+    ontology: OntologyManager | None = None,
 ) -> dict[str, Any]:
-    """Build cross-pillar data: concept bridges, timeline, content counts."""
+    """Build cross-pillar data: concept bridges, timeline, matrix, content counts."""
     by_pillar: dict[str, list] = {}
     for item in all_content:
         p = item.pillar or "aml"
@@ -182,9 +183,58 @@ def generate_cross_pillar_synthesis(
             if p in timeline[month]:
                 timeline[month][p] += 1
 
+    # --- Cross-pillar analog matrix (using ontology cross_pillar_analogs) ---
+    analog_matrix: dict[str, dict] = {}
+    if ontology:
+        for concept in ontology._concepts.values():
+            if concept.cross_pillar_analogs:
+                analogs_info = []
+                for analog_id in concept.cross_pillar_analogs:
+                    ac = ontology.get_concept(analog_id)
+                    if ac:
+                        analogs_info.append({
+                            "id": analog_id,
+                            "label": ac.label,
+                            "pillar": ac.pillar,
+                            "epistemic_status": ac.epistemic_status or "",
+                        })
+                if analogs_info:
+                    analog_matrix[concept.id] = {
+                        "id": concept.id,
+                        "label": concept.label,
+                        "pillar": concept.pillar,
+                        "epistemic_status": concept.epistemic_status or "",
+                        "analogs": analogs_info,
+                    }
+
+    # --- Enriched bridges with per-pillar content ---
+    enriched_bridges: dict[str, dict] = {}
+    for cid, pillars in concept_pillars.items():
+        span = len(pillars)
+        if span < 2:
+            continue
+        by_pillar_content: dict[str, list] = {}
+        for item in concept_content_map.get(cid, []):
+            p = item.get("pillar", "aml")
+            by_pillar_content.setdefault(p, []).append({
+                "slug": item.get("slug", ""),
+                "title": item.get("title", ""),
+                "content_type": item.get("content_type", ""),
+            })
+        enriched_bridges[cid] = {
+            "concept_id": cid,
+            "pillars": sorted(pillars),
+            "span": span,
+            "total_content": len(concept_content_map.get(cid, [])),
+            "by_pillar": {p: items[:4] for p, items in by_pillar_content.items()},
+        }
+
     return {
         "bridges": dict(sorted(bridges.items(), key=lambda x: -x[1]["total_content"])),
+        "enriched_bridges": dict(sorted(enriched_bridges.items(), key=lambda x: -x[1]["total_content"])),
+        "analog_matrix": analog_matrix,
         "timeline": dict(sorted(timeline.items())),
         "pillar_counts": {p: len(items) for p, items in by_pillar.items()},
         "total_bridges": len(bridges),
+        "total_analogs": len(analog_matrix),
     }

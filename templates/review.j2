@@ -10,7 +10,7 @@
 
 <header class="mb-8">
   <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">Review Dashboard</h1>
-  <p class="mt-2 text-sm" style="color:var(--color-text-muted)">Track your spaced repetition progress across all learn modules.</p>
+  <p class="mt-2 text-sm" style="color:var(--color-text-muted)">Spaced repetition tracking for flashcards and ontology concepts across all pillars.</p>
 </header>
 
 <div class="grid gap-6 sm:grid-cols-3 mb-8">
@@ -58,6 +58,15 @@
   </a>
 </div>
 
+<hr class="my-8" style="border-color:var(--color-border)">
+
+<section>
+  <h2 class="text-xl font-extrabold mb-2" style="color:var(--color-text)">Concept Mastery</h2>
+  <p class="text-sm mb-6" style="color:var(--color-text-muted)">Track retention of all 70+ ontology concepts across pillars. Includes gap detection and interleaved practice.</p>
+  <div id="concept-mastery-dashboard"></div>
+</section>
+
+<script src="/static/js/retention_engine.js"></script>
 <script>
 (function() {
   const cards = {{ flashcard_cards | safe }};
