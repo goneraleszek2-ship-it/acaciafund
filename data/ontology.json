@@ -36,7 +36,8 @@
       ],
       "cross_pillar_analogs": [
         "market-microstructure",
-        "data-mesh"
+        "data-mesh",
+        "lob"
       ]
     },
     {
@@ -299,7 +300,12 @@
       ],
       "cross_pillar_analogs": [
         "streaming",
-        "high-frequency-trading"
+        "high-frequency-trading",
+        "market-microstructure",
+        "market-impact",
+        "etl",
+        "gdpr-synthetic-data",
+        "ai-act-high-risk"
       ]
     },
     {
@@ -438,7 +444,10 @@
       "temporal_ontology": "",
       "uncertainty_class": "",
       "semantic_contract_type": "",
-      "cross_pillar_analogs": []
+      "cross_pillar_analogs": [
+        "data-contracts",
+        "data-governance"
+      ]
     },
     {
       "id": "bsa",
@@ -467,7 +476,9 @@
       "uncertainty_class": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": []
+      "cross_pillar_analogs": [
+        "data-governance"
+      ]
     },
     {
       "id": "tbml",
@@ -526,7 +537,9 @@
         "Hildebrandt, Mireille. Law for Computer Scientists (2020)"
       ],
       "cross_pillar_analogs": [
-        "orchestration"
+        "orchestration",
+        "ai-act-high-risk",
+        "ai-conformity-assessment"
       ],
       "ontological_commitment": "",
       "temporal_ontology": "",
@@ -560,7 +573,9 @@
       "uncertainty_class": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": []
+      "cross_pillar_analogs": [
+        "mica-crypto-assets"
+      ]
     },
     {
       "id": "adverse-media",
@@ -588,7 +603,8 @@
         "Lyon, David. Surveillance Studies: An Overview (2007)"
       ],
       "cross_pillar_analogs": [
-        "ml-pipeline"
+        "ml-pipeline",
+        "technical-analysis"
       ],
       "ontological_commitment": "",
       "temporal_ontology": "",
@@ -621,7 +637,15 @@
       "uncertainty_class": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": []
+      "cross_pillar_analogs": [
+        "volatility-surface",
+        "asset-pricing",
+        "esg-investing",
+        "debiasing-pipeline",
+        "fairness-metrics",
+        "dora-ict-risk",
+        "esg-double-materiality"
+      ]
     },
     {
       "id": "cyber-aml",
@@ -648,7 +672,10 @@
       ],
       "cross_pillar_analogs": [
         "distributed-systems",
-        "data-security"
+        "data-security",
+        "gdpr-anonymization",
+        "differential-privacy",
+        "nis2-cyber-resilience"
       ],
       "normative_basis": "",
       "ontological_commitment": "",
@@ -709,7 +736,8 @@
       "epistemic_status": "regulatory",
       "governance_model": "hierarchical",
       "cross_pillar_analogs": [
-        "data-pipeline"
+        "data-pipeline",
+        "model-cards"
       ],
       "normative_basis": "",
       "ontological_commitment": "",
@@ -744,7 +772,8 @@
         "Crawford, Kate. Atlas of AI (2021)"
       ],
       "cross_pillar_analogs": [
-        "data-security"
+        "data-security",
+        "mica-crypto-assets"
       ],
       "normative_basis": "",
       "temporal_ontology": "",
@@ -820,7 +849,11 @@
       ],
       "cross_pillar_analogs": [
         "transaction-monitoring",
-        "streaming"
+        "streaming",
+        "kyc",
+        "etl",
+        "real-time-analytics",
+        "gdpr-synthetic-data"
       ],
       "uncertainty_class": "",
       "governance_model": ""
@@ -919,7 +952,9 @@
       "temporal_ontology": "",
       "governance_model": "",
       "semantic_contract_type": "",
-      "cross_pillar_analogs": []
+      "cross_pillar_analogs": [
+        "cdc"
+      ]
     },
     {
       "id": "supply-chain-analysis",
@@ -1092,7 +1127,9 @@
         "Markowitz, Harry. Portfolio Selection (1952)"
       ],
       "cross_pillar_analogs": [
-        "edd"
+        "edd",
+        "debiasing-pipeline",
+        "fairness-metrics"
       ],
       "temporal_ontology": "",
       "semantic_contract_type": ""
@@ -1312,7 +1349,8 @@
         "Freeman, R. Edward. Strategic Management: A Stakeholder Approach (1984)"
       ],
       "cross_pillar_analogs": [
-        "aml-program"
+        "aml-program",
+        "esg-double-materiality"
       ],
       "temporal_ontology": "",
       "uncertainty_class": "",
@@ -1453,7 +1491,8 @@
       ],
       "cross_pillar_analogs": [
         "streaming",
-        "transaction-monitoring"
+        "transaction-monitoring",
+        "ai-act-high-risk"
       ],
       "uncertainty_class": "",
       "semantic_contract_type": ""
@@ -1680,7 +1719,9 @@
       ],
       "cross_pillar_analogs": [
         "beneficial-ownership",
-        "network-analysis"
+        "network-analysis",
+        "kyc",
+        "federated-learning"
       ],
       "temporal_ontology": "",
       "uncertainty_class": ""
@@ -1716,7 +1757,8 @@
       ],
       "cross_pillar_analogs": [
         "transaction-monitoring",
-        "high-frequency-trading"
+        "high-frequency-trading",
+        "market-microstructure"
       ],
       "normative_basis": "",
       "uncertainty_class": "",
@@ -1917,7 +1959,8 @@
       ],
       "cross_pillar_analogs": [
         "entity-resolution",
-        "lob"
+        "lob",
+        "data-act-interoperability"
       ],
       "normative_basis": "",
       "ontological_commitment": "",
@@ -1955,7 +1998,10 @@
       ],
       "cross_pillar_analogs": [
         "cdd",
-        "fatf-recommendations"
+        "fatf-recommendations",
+        "beneficial-ownership",
+        "model-cards",
+        "data-act-interoperability"
       ],
       "temporal_ontology": "",
       "uncertainty_class": ""
@@ -2055,7 +2101,9 @@
       "uncertainty_class": "",
       "governance_model": "",
       "semantic_contract_type": "",
-      "cross_pillar_analogs": []
+      "cross_pillar_analogs": [
+        "dora-ict-risk"
+      ]
     },
     {
       "id": "data-pipeline",
@@ -2247,7 +2295,11 @@
         "Floridi, Luciano. The Ethics of Information (2013)"
       ],
       "cross_pillar_analogs": [
-        "cyber-aml"
+        "cyber-aml",
+        "crypto-aml",
+        "gdpr-anonymization",
+        "differential-privacy",
+        "nis2-cyber-resilience"
       ],
       "ontological_commitment": "",
       "temporal_ontology": "",
@@ -2285,7 +2337,10 @@
       ],
       "cross_pillar_analogs": [
         "pep",
-        "network-analysis"
+        "network-analysis",
+        "cyber-aml",
+        "federated-learning",
+        "dora-ict-risk"
       ],
       "normative_basis": "",
       "temporal_ontology": "",
@@ -2319,13 +2374,557 @@
       ],
       "cross_pillar_analogs": [
         "adverse-media",
-        "factor-investing"
+        "factor-investing",
+        "ai-conformity-assessment"
       ],
       "normative_basis": "",
       "ontological_commitment": "",
       "temporal_ontology": "",
       "governance_model": "",
       "semantic_contract_type": ""
+    },
+    {
+      "id": "gdpr-anonymization",
+      "label": "GDPR Anonymization & Pseudonymization",
+      "description": "Techniques and regulatory requirements for rendering personal data non-identifiable under GDPR Article 26 and Recital 26.",
+      "pillar": "data-engineering",
+      "category": "best-practices",
+      "aliases": [
+        "anonymization",
+        "pseudonymization",
+        "data masking",
+        "de-identification"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-16T20:53:19.637112+00:00",
+      "updated_at": "2026-07-16T20:53:19.637112+00:00",
+      "philosophical_lineage": [
+        "privacy_philosophy",
+        "contextual_integrity",
+        "nissenbaum"
+      ],
+      "epistemic_status": "regulatory",
+      "normative_basis": "kantian_duty",
+      "ontological_commitment": "constructivist",
+      "temporal_ontology": "state_based",
+      "uncertainty_class": "ambiguity",
+      "governance_model": "hierarchical",
+      "semantic_contract_type": "constitutive",
+      "philosophical_sources": [
+        "Nissenbaum, Helen. Privacy in Context: Technology, Policy, and the Integrity of Social Life (2009)",
+        "Floridi, Luciano. The Ethics of Information (2013)",
+        "European Parliament. GDPR Article 26 and Recital 26 (2016/679)"
+      ],
+      "cross_pillar_analogs": [
+        "data-security",
+        "cyber-aml"
+      ]
+    },
+    {
+      "id": "gdpr-synthetic-data",
+      "label": "Synthetic Data Generation for GDPR Compliance",
+      "description": "Generation of artificial datasets that preserve statistical properties of original data without exposing personal information.",
+      "pillar": "data-engineering",
+      "category": "advanced-techniques",
+      "aliases": [
+        "synthetic data",
+        "data generation",
+        "generative modeling",
+        "synth data"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-16T20:53:19.637112+00:00",
+      "updated_at": "2026-07-16T20:53:19.637112+00:00",
+      "philosophical_lineage": [
+        "philosophy_of_simulation",
+        "epistemic_trust",
+        "fictionalism"
+      ],
+      "epistemic_status": "constitutive",
+      "normative_basis": "pragmatic",
+      "ontological_commitment": "fictionalist",
+      "temporal_ontology": "state_based",
+      "uncertainty_class": "measurable",
+      "governance_model": "algorithmic",
+      "semantic_contract_type": "coordinating",
+      "philosophical_sources": [
+        "Baudrillard, Jean. Simulacra and Simulation (1981)",
+        "Derman, Emanuel. Models. Behaving. Badly (2011)",
+        "Goodfellow, Ian et al. Generative Adversarial Nets (2014)"
+      ],
+      "cross_pillar_analogs": [
+        "transaction-monitoring",
+        "market-microstructure"
+      ]
+    },
+    {
+      "id": "debiasing-pipeline",
+      "label": "Debiasing Pipeline",
+      "description": "Systematic processes for detecting and mitigating bias in ML training data, features, and model outputs.",
+      "pillar": "data-engineering",
+      "category": "best-practices",
+      "aliases": [
+        "bias mitigation",
+        "fairness pipeline",
+        "bias detection",
+        "algorithmic fairness"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-16T20:53:19.637112+00:00",
+      "updated_at": "2026-07-16T20:53:19.637112+00:00",
+      "philosophical_lineage": [
+        "ethics_of_algorithm",
+        "distributive_justice",
+        "rawlsian"
+      ],
+      "epistemic_status": "normative",
+      "normative_basis": "rawlsian",
+      "ontological_commitment": "constructivist",
+      "temporal_ontology": "processual",
+      "uncertainty_class": "ambiguity",
+      "governance_model": "algorithmic",
+      "semantic_contract_type": "constitutive",
+      "philosophical_sources": [
+        "Rawls, John. A Theory of Justice (1971) \u2014 Difference principle",
+        "Crawford, Kate. Atlas of AI (2021)",
+        "Noble, Safiya Umoja. Algorithms of Oppression (2018)"
+      ],
+      "cross_pillar_analogs": [
+        "aml-program",
+        "portfolio-optimization"
+      ]
+    },
+    {
+      "id": "differential-privacy",
+      "label": "Differential Privacy",
+      "description": "Formal mathematical framework for quantifying and limiting privacy leakage in statistical queries and ML training.",
+      "pillar": "data-engineering",
+      "category": "advanced-techniques",
+      "aliases": [
+        "DP",
+        "epsilon-delta privacy",
+        "privacy budget",
+        "noise injection"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-16T20:53:19.637112+00:00",
+      "updated_at": "2026-07-16T20:53:19.637112+00:00",
+      "philosophical_lineage": [
+        "privacy_philosophy",
+        "epistemic_humility"
+      ],
+      "epistemic_status": "constitutive",
+      "normative_basis": "utilitarian",
+      "ontological_commitment": "fictionalist",
+      "temporal_ontology": "event_based",
+      "uncertainty_class": "measurable",
+      "governance_model": "algorithmic",
+      "semantic_contract_type": "coordinating",
+      "philosophical_sources": [
+        "Dwork, Cynthia; Roth, Aaron. The Algorithmic Foundations of Differential Privacy (2014)",
+        "Nissenbaum, Helen. Privacy in Context (2009)",
+        "Floridi, Luciano. The Logic of Information (2019)"
+      ],
+      "cross_pillar_analogs": [
+        "data-security",
+        "cyber-aml"
+      ]
+    },
+    {
+      "id": "federated-learning",
+      "label": "Federated Learning",
+      "description": "Distributed ML paradigm where models are trained across decentralized data sources without raw data leaving its origin.",
+      "pillar": "data-engineering",
+      "category": "advanced-techniques",
+      "aliases": [
+        "federated ML",
+        "distributed training",
+        "privacy-preserving ML",
+        "federated averaging"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-16T20:53:19.637112+00:00",
+      "updated_at": "2026-07-16T20:53:19.637112+00:00",
+      "philosophical_lineage": [
+        "distributed_epistemology",
+        "data_sovereignty"
+      ],
+      "epistemic_status": "constitutive",
+      "normative_basis": "contractarian",
+      "ontological_commitment": "pluralist",
+      "temporal_ontology": "processual",
+      "uncertainty_class": "knightian",
+      "governance_model": "polycentric",
+      "semantic_contract_type": "constitutive",
+      "philosophical_sources": [
+        "McMahan, Brendan et al. Communication-Efficient Learning of Deep Networks from Decentralized Data (2017)",
+        "Ostrom, Elinor. Governing the Commons (1990)",
+        "Floridi, Luciano. The Fourth Revolution (2014)"
+      ],
+      "cross_pillar_analogs": [
+        "distributed-systems",
+        "data-mesh"
+      ]
+    },
+    {
+      "id": "model-cards",
+      "label": "Model Cards & Documentation Standards",
+      "description": "Structured transparency reporting for ML models covering intended use, performance, limitations, and ethical considerations.",
+      "pillar": "data-engineering",
+      "category": "best-practices",
+      "aliases": [
+        "model card",
+        "model documentation",
+        "model transparency report",
+        "model governance"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-16T20:53:19.637112+00:00",
+      "updated_at": "2026-07-16T20:53:19.637112+00:00",
+      "philosophical_lineage": [
+        "transparency_ethics",
+        "documentation_philosophy"
+      ],
+      "epistemic_status": "constitutive",
+      "normative_basis": "kantian_duty",
+      "ontological_commitment": "constructivist",
+      "temporal_ontology": "state_based",
+      "uncertainty_class": "ambiguity",
+      "governance_model": "polycentric",
+      "semantic_contract_type": "descriptive",
+      "philosophical_sources": [
+        "Mitchell, Margaret et al. Model Cards for Model Reporting (2019)",
+        "Floridi, Luciano. The Ethics of Information (2013)",
+        "Hildebrandt, Mireille. Law for Computer Scientists (2020)"
+      ],
+      "cross_pillar_analogs": [
+        "regulatory-reporting",
+        "data-contracts"
+      ]
+    },
+    {
+      "id": "fairness-metrics",
+      "label": "Fairness Metrics in ML",
+      "description": "Quantitative measures for evaluating algorithmic fairness across demographic groups: demographic parity, equal opportunity, equalized odds.",
+      "pillar": "data-engineering",
+      "category": "best-practices",
+      "aliases": [
+        "algorithmic fairness",
+        "demographic parity",
+        "equal opportunity",
+        "fairness metric"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-16T20:53:19.637112+00:00",
+      "updated_at": "2026-07-16T20:53:19.637112+00:00",
+      "philosophical_lineage": [
+        "distributive_justice",
+        "rawlsian",
+        "algorithmic_fairness"
+      ],
+      "epistemic_status": "normative",
+      "normative_basis": "rawlsian",
+      "ontological_commitment": "constructivist",
+      "temporal_ontology": "state_based",
+      "uncertainty_class": "measurable",
+      "governance_model": "algorithmic",
+      "semantic_contract_type": "coordinating",
+      "philosophical_sources": [
+        "Dwork, Cynthia et al. Fairness Through Awareness (2012)",
+        "Barocas, Solon; Selbst, Andrew. Big Data's Disparate Impact (2016)",
+        "Rawls, John. A Theory of Justice (1971)"
+      ],
+      "cross_pillar_analogs": [
+        "aml-program",
+        "portfolio-optimization"
+      ]
+    },
+    {
+      "id": "ai-act-high-risk",
+      "label": "EU AI Act \u2014 High-Risk Classification",
+      "description": "EU regulation categorizing AI systems by risk level, imposing conformity assessments, transparency, and human oversight for high-risk applications.",
+      "pillar": "data-engineering",
+      "category": "regulations",
+      "aliases": [
+        "AI Act",
+        "high-risk AI",
+        "EU AI Act",
+        "AI risk classification"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-16T20:53:19.637112+00:00",
+      "updated_at": "2026-07-16T20:53:19.637112+00:00",
+      "philosophical_lineage": [
+        "regulatory_philosophy",
+        "precautionary_principle",
+        "sunstein"
+      ],
+      "epistemic_status": "regulatory",
+      "normative_basis": "kantian_duty",
+      "ontological_commitment": "realist",
+      "temporal_ontology": "state_based",
+      "uncertainty_class": "ambiguity",
+      "governance_model": "hierarchical",
+      "semantic_contract_type": "constitutive",
+      "philosophical_sources": [
+        "European Commission. Proposal for AI Act (2021/0106/COD)",
+        "Sunstein, Cass. Laws of Fear: Beyond the Precautionary Principle (2005)",
+        "Floridi, Luciano. The Cambridge Handbook of Information Law (2020)"
+      ],
+      "cross_pillar_analogs": [
+        "regtech",
+        "transaction-monitoring",
+        "high-frequency-trading"
+      ]
+    },
+    {
+      "id": "ai-conformity-assessment",
+      "label": "AI Conformity Assessment & Auditing",
+      "description": "Procedures for verifying AI system compliance with regulatory standards, including documentation, testing, and continuous monitoring.",
+      "pillar": "data-engineering",
+      "category": "regulations",
+      "aliases": [
+        "AI auditing",
+        "conformity assessment",
+        "AI compliance audit",
+        "algorithm audit"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-16T20:53:19.637112+00:00",
+      "updated_at": "2026-07-16T20:53:19.637112+00:00",
+      "philosophical_lineage": [
+        "conformity_theory",
+        "audit_philosophy"
+      ],
+      "epistemic_status": "regulatory",
+      "normative_basis": "pragmatic",
+      "ontological_commitment": "realist",
+      "temporal_ontology": "processual",
+      "uncertainty_class": "measurable",
+      "governance_model": "algorithmic",
+      "semantic_contract_type": "descriptive",
+      "philosophical_sources": [
+        "Hildebrandt, Mireille. Law for Computer Scientists (2020)",
+        "EU AI Act. Conformity Assessment Procedures (Title III, Chapter 3)",
+        "Floridi, Luciano. The Ethics of Information (2013)"
+      ],
+      "cross_pillar_analogs": [
+        "regtech",
+        "ml-pipeline"
+      ]
+    },
+    {
+      "id": "dora-ict-risk",
+      "label": "DORA \u2014 ICT Risk Management",
+      "description": "EU Digital Operational Resilience Act requirements for ICT risk management, incident reporting, digital resilience testing, and third-party risk.",
+      "pillar": "data-engineering",
+      "category": "regulations",
+      "aliases": [
+        "DORA",
+        "Digital Operational Resilience Act",
+        "ICT risk",
+        "operational resilience"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-16T20:53:19.637112+00:00",
+      "updated_at": "2026-07-16T20:53:19.637112+00:00",
+      "philosophical_lineage": [
+        "resilience_philosophy",
+        "systems_theory",
+        "brittleness"
+      ],
+      "epistemic_status": "regulatory",
+      "normative_basis": "utilitarian",
+      "ontological_commitment": "realist",
+      "temporal_ontology": "processual",
+      "uncertainty_class": "knightian",
+      "governance_model": "hierarchical",
+      "semantic_contract_type": "coordinating",
+      "philosophical_sources": [
+        "European Parliament. Regulation (EU) 2022/2554 (DORA)",
+        "Taleb, Nassim Nicholas. Antifragile (2012)",
+        "Perrow, Charles. Normal Accidents (1984)"
+      ],
+      "cross_pillar_analogs": [
+        "aml-program",
+        "data-observability",
+        "distributed-systems",
+        "nis2-cyber-resilience"
+      ]
+    },
+    {
+      "id": "nis2-cyber-resilience",
+      "label": "NIS2 Directive \u2014 Cybersecurity Resilience",
+      "description": "EU Directive on measures for a high common level of cybersecurity across critical sectors, expanding scope and incident reporting obligations.",
+      "pillar": "data-engineering",
+      "category": "best-practices",
+      "aliases": [
+        "NIS2",
+        "NIS 2 Directive",
+        "cyber resilience",
+        "network security"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-16T20:53:19.637112+00:00",
+      "updated_at": "2026-07-16T20:53:19.637112+00:00",
+      "philosophical_lineage": [
+        "cybersecurity_ethics",
+        "operational_resilience"
+      ],
+      "epistemic_status": "regulatory",
+      "normative_basis": "kantian_duty",
+      "ontological_commitment": "realist",
+      "temporal_ontology": "processual",
+      "uncertainty_class": "knightian",
+      "governance_model": "hierarchical",
+      "semantic_contract_type": "coordinating",
+      "philosophical_sources": [
+        "European Parliament. Directive (EU) 2022/2555 (NIS2)",
+        "Schneier, Bruce. Click Here to Kill Everybody (2018)",
+        "Sunstein, Cass. Laws of Fear (2005)"
+      ],
+      "cross_pillar_analogs": [
+        "cyber-aml",
+        "data-security",
+        "dora-ict-risk"
+      ]
+    },
+    {
+      "id": "mica-crypto-assets",
+      "label": "MiCA \u2014 Markets in Crypto-Assets Regulation",
+      "description": "EU regulation establishing a harmonized framework for crypto-assets, stablecoins, and crypto-asset service providers (CASPs).",
+      "pillar": "aml",
+      "category": "crypto-aml",
+      "aliases": [
+        "MiCA",
+        "Markets in Crypto-Assets",
+        "crypto regulation",
+        "CASPs"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-16T20:53:19.637112+00:00",
+      "updated_at": "2026-07-16T20:53:19.637112+00:00",
+      "philosophical_lineage": [
+        "monetary_philosophy",
+        "sovereignty",
+        "trust_in_code"
+      ],
+      "epistemic_status": "regulatory",
+      "normative_basis": "contractarian",
+      "ontological_commitment": "realist",
+      "temporal_ontology": "state_based",
+      "uncertainty_class": "ambiguity",
+      "governance_model": "hierarchical",
+      "semantic_contract_type": "constitutive",
+      "philosophical_sources": [
+        "European Commission. Proposal for MiCA Regulation (2020/0265/COD)",
+        "Pistor, Katharina. The Code of Capital (2019)",
+        "Nakamoto, Satoshi. Bitcoin: A Peer-to-Peer Electronic Cash System (2008)"
+      ],
+      "cross_pillar_analogs": [
+        "crypto-aml",
+        "travel-rule"
+      ]
+    },
+    {
+      "id": "esg-double-materiality",
+      "label": "ESG Double Materiality",
+      "description": "CSRD framework requiring companies to report both how sustainability issues affect their value (financial materiality) and how they affect the world (impact materiality).",
+      "pillar": "stock",
+      "category": "industry-analysis",
+      "aliases": [
+        "double materiality",
+        "CSRD materiality",
+        "impact materiality",
+        "financial materiality"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-16T20:53:19.637112+00:00",
+      "updated_at": "2026-07-16T20:53:19.637112+00:00",
+      "philosophical_lineage": [
+        "stakeholder_theory",
+        "intergenerational_justice"
+      ],
+      "epistemic_status": "normative",
+      "normative_basis": "rawlsian",
+      "ontological_commitment": "pluralist",
+      "temporal_ontology": "event_based",
+      "uncertainty_class": "knightian",
+      "governance_model": "polycentric",
+      "semantic_contract_type": "constitutive",
+      "philosophical_sources": [
+        "European Commission. Corporate Sustainability Reporting Directive (2022/2464)",
+        "Rawls, John. A Theory of Justice (1971) \u2014 Just savings principle",
+        "Freeman, R. Edward. Strategic Management: A Stakeholder Approach (1984)"
+      ],
+      "cross_pillar_analogs": [
+        "aml-program",
+        "esg-investing"
+      ]
+    },
+    {
+      "id": "data-act-interoperability",
+      "label": "EU Data Act \u2014 Data Interoperability",
+      "description": "EU regulation promoting fair access to and reuse of data, mandating interoperability standards, data portability, and smart contract safeguards.",
+      "pillar": "data-engineering",
+      "category": "architecture",
+      "aliases": [
+        "EU Data Act",
+        "data interoperability",
+        "data portability",
+        "smart contract safeguards"
+      ],
+      "properties": {},
+      "source_inspiration": "",
+      "confidence_score": 1.0,
+      "created_at": "2026-07-16T20:53:19.637112+00:00",
+      "updated_at": "2026-07-16T20:53:19.637112+00:00",
+      "philosophical_lineage": [
+        "data_commons",
+        "information_economics"
+      ],
+      "epistemic_status": "regulatory",
+      "normative_basis": "contractarian",
+      "ontological_commitment": "realist",
+      "temporal_ontology": "state_based",
+      "uncertainty_class": "ambiguity",
+      "governance_model": "polycentric",
+      "semantic_contract_type": "coordinating",
+      "philosophical_sources": [
+        "European Commission. Data Act Regulation (2023/2854)",
+        "Ostrom, Elinor. Governing the Commons (1990)",
+        "Lessig, Lawrence. Code and Other Laws of Cyberspace (1999)"
+      ],
+      "cross_pillar_analogs": [
+        "data-contracts",
+        "schema-registry"
+      ]
     }
   ],
   "relations": [
@@ -3147,6 +3746,285 @@
       "evidence": [],
       "pillar": "cross-pillar",
       "created_at": "2026-07-14T10:34:47.366859+00:00"
+    },
+    {
+      "source_id": "gdpr-anonymization",
+      "target_id": "gdpr-synthetic-data",
+      "relation_type": "enables",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-16T20:53:19.637112+00:00"
+    },
+    {
+      "source_id": "gdpr-synthetic-data",
+      "target_id": "data-quality",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-16T20:53:19.637112+00:00"
+    },
+    {
+      "source_id": "gdpr-synthetic-data",
+      "target_id": "debiasing-pipeline",
+      "relation_type": "enables",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-16T20:53:19.637112+00:00"
+    },
+    {
+      "source_id": "gdpr-anonymization",
+      "target_id": "data-security",
+      "relation_type": "implements",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-16T20:53:19.637112+00:00"
+    },
+    {
+      "source_id": "differential-privacy",
+      "target_id": "gdpr-anonymization",
+      "relation_type": "implements",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-16T20:53:19.637112+00:00"
+    },
+    {
+      "source_id": "federated-learning",
+      "target_id": "differential-privacy",
+      "relation_type": "related_to",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-16T20:53:19.637112+00:00"
+    },
+    {
+      "source_id": "debiasing-pipeline",
+      "target_id": "fairness-metrics",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-16T20:53:19.637112+00:00"
+    },
+    {
+      "source_id": "debiasing-pipeline",
+      "target_id": "ml-pipeline",
+      "relation_type": "implements",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-16T20:53:19.637112+00:00"
+    },
+    {
+      "source_id": "model-cards",
+      "target_id": "ml-pipeline",
+      "relation_type": "implements",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-16T20:53:19.637112+00:00"
+    },
+    {
+      "source_id": "model-cards",
+      "target_id": "debiasing-pipeline",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-16T20:53:19.637112+00:00"
+    },
+    {
+      "source_id": "ai-act-high-risk",
+      "target_id": "transaction-monitoring",
+      "relation_type": "regulates",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "cross-pillar",
+      "created_at": "2026-07-16T20:53:19.637112+00:00"
+    },
+    {
+      "source_id": "ai-act-high-risk",
+      "target_id": "high-frequency-trading",
+      "relation_type": "regulates",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "cross-pillar",
+      "created_at": "2026-07-16T20:53:19.637112+00:00"
+    },
+    {
+      "source_id": "ai-act-high-risk",
+      "target_id": "ml-pipeline",
+      "relation_type": "regulates",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "cross-pillar",
+      "created_at": "2026-07-16T20:53:19.637112+00:00"
+    },
+    {
+      "source_id": "ai-conformity-assessment",
+      "target_id": "ml-pipeline",
+      "relation_type": "implements",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-16T20:53:19.637112+00:00"
+    },
+    {
+      "source_id": "ai-conformity-assessment",
+      "target_id": "model-cards",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-16T20:53:19.637112+00:00"
+    },
+    {
+      "source_id": "ai-conformity-assessment",
+      "target_id": "ai-act-high-risk",
+      "relation_type": "implements",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "cross-pillar",
+      "created_at": "2026-07-16T20:53:19.637112+00:00"
+    },
+    {
+      "source_id": "dora-ict-risk",
+      "target_id": "data-observability",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "cross-pillar",
+      "created_at": "2026-07-16T20:53:19.637112+00:00"
+    },
+    {
+      "source_id": "dora-ict-risk",
+      "target_id": "distributed-systems",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "cross-pillar",
+      "created_at": "2026-07-16T20:53:19.637112+00:00"
+    },
+    {
+      "source_id": "dora-ict-risk",
+      "target_id": "data-contracts",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "cross-pillar",
+      "created_at": "2026-07-16T20:53:19.637112+00:00"
+    },
+    {
+      "source_id": "dora-ict-risk",
+      "target_id": "orchestration",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "cross-pillar",
+      "created_at": "2026-07-16T20:53:19.637112+00:00"
+    },
+    {
+      "source_id": "nis2-cyber-resilience",
+      "target_id": "cyber-aml",
+      "relation_type": "related_to",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "cross-pillar",
+      "created_at": "2026-07-16T20:53:19.637112+00:00"
+    },
+    {
+      "source_id": "nis2-cyber-resilience",
+      "target_id": "data-security",
+      "relation_type": "regulates",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "cross-pillar",
+      "created_at": "2026-07-16T20:53:19.637112+00:00"
+    },
+    {
+      "source_id": "nis2-cyber-resilience",
+      "target_id": "dora-ict-risk",
+      "relation_type": "related_to",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "cross-pillar",
+      "created_at": "2026-07-16T20:53:19.637112+00:00"
+    },
+    {
+      "source_id": "mica-crypto-assets",
+      "target_id": "crypto-aml",
+      "relation_type": "regulates",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "cross-pillar",
+      "created_at": "2026-07-16T20:53:19.637112+00:00"
+    },
+    {
+      "source_id": "mica-crypto-assets",
+      "target_id": "travel-rule",
+      "relation_type": "regulates",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-16T20:53:19.637112+00:00"
+    },
+    {
+      "source_id": "mica-crypto-assets",
+      "target_id": "transaction-monitoring",
+      "relation_type": "regulates",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "cross-pillar",
+      "created_at": "2026-07-16T20:53:19.637112+00:00"
+    },
+    {
+      "source_id": "esg-double-materiality",
+      "target_id": "esg-investing",
+      "relation_type": "regulates",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-16T20:53:19.637112+00:00"
+    },
+    {
+      "source_id": "esg-double-materiality",
+      "target_id": "aml-program",
+      "relation_type": "related_to",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "cross-pillar",
+      "created_at": "2026-07-16T20:53:19.637112+00:00"
+    },
+    {
+      "source_id": "data-act-interoperability",
+      "target_id": "data-contracts",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-16T20:53:19.637112+00:00"
+    },
+    {
+      "source_id": "data-act-interoperability",
+      "target_id": "schema-registry",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-16T20:53:19.637112+00:00"
+    },
+    {
+      "source_id": "data-act-interoperability",
+      "target_id": "data-mesh",
+      "relation_type": "related_to",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "cross-pillar",
+      "created_at": "2026-07-16T20:53:19.637112+00:00"
     }
   ],
   "resource_links": []

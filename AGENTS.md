@@ -70,23 +70,19 @@ python3 scripts/enrich_philosophy.py
 # Philosophy tests (check all concepts have epistemic_status, lineage, etc.)
 python3 -u -m pytest tests/test_philosophy_integration.py -v
 
-# Validate cross-pillar analogs reference existing concepts
-python3 -c "
-import json
-with open('data/ontology.json') as f:
-    data = json.load(f)
-all_ids = {c['id'] for c in data['concepts']}
-bad = []
-for c in data['concepts']:
-    for analog in c.get('cross_pillar_analogs', []):
-        if analog not in all_ids:
-            bad.append((c['id'], analog))
-if bad:
-    for cid, a in bad:
-        print(f'  {cid} -> {a} (missing)')
-else:
-    print('All cross-pillar analogs valid.')
-"
+# Validate cross-pillar analogs (bidirectional check + auto-fix)
+python3 scripts/validate_cross_pillar.py
+python3 scripts/validate_cross_pillar.py --fix             # auto-add missing reciprocal mappings
+python3 scripts/validate_cross_pillar.py --format json
+
+# Audit concept coverage across all content
+python3 scripts/audit_concept_coverage.py                  # full re-extraction
+python3 scripts/audit_concept_coverage.py --cached         # use build-persisted cache
+python3 scripts/audit_concept_coverage.py --fail-on-orphans 5   # CI gate
+
+# Cluster concepts by philosophical lineage
+python3 scripts/audit_philosophical_lineage.py
+python3 scripts/audit_philosophical_lineage.py --min-cluster 3
 
 # Deploy to Cloudflare
 python3 scripts/deploy_cloudflare.py

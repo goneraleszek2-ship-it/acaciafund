@@ -1335,11 +1335,11 @@
       "score": 0.25
     },
     {
-      "slug": "aml/learn/kyc-cdd-workflows",
-      "score": 0.2222
+      "slug": "compliance/knowledge/foundations-surveillance-suspicion",
+      "score": 0.25
     },
     {
-      "slug": "aml/learn/sar-filing-scenarios",
+      "slug": "aml/learn/kyc-cdd-workflows",
       "score": 0.2222
     }
   ],
@@ -3943,8 +3943,8 @@
       "score": 0.0909
     },
     {
-      "slug": "data/knowledge/data-infrastructure-trends",
-      "score": 0.0833
+      "slug": "data/knowledge/foundations-governance",
+      "score": 0.0909
     }
   ],
   "compliance/knowledge/compliance-program-strategies": [
@@ -5041,16 +5041,16 @@
   ],
   "compliance/knowledge/cdd-best-practices": [
     {
+      "slug": "compliance/knowledge/foundations-trust-identity",
+      "score": 0.3
+    },
+    {
       "slug": "knowledge/glossary",
       "score": 0.2
     },
     {
       "slug": "aml/learn/kyc-cdd-workflows",
       "score": 0.1818
-    },
-    {
-      "slug": "compliance/knowledge/aml-risk-scoring-methodology",
-      "score": 0.0909
     }
   ],
   "compliance/knowledge/sanctions-screening-best-practices": [
@@ -5129,11 +5129,11 @@
       "score": 0.0909
     },
     {
-      "slug": "aml/learn/sar-filing-scenarios",
-      "score": 0.0833
+      "slug": "compliance/knowledge/foundations-surveillance-suspicion",
+      "score": 0.0909
     },
     {
-      "slug": "compliance/knowledge/regtech-system-architecture",
+      "slug": "aml/learn/sar-filing-scenarios",
       "score": 0.0833
     }
   ],
@@ -5675,11 +5675,11 @@
       "score": 0.0909
     },
     {
-      "slug": "data/research/2027-data-engineering-predictions",
-      "score": 0.0
+      "slug": "compliance/knowledge/foundations-surveillance-suspicion",
+      "score": 0.0909
     },
     {
-      "slug": "data/research/data-platform-product-ux",
+      "slug": "data/research/2027-data-engineering-predictions",
       "score": 0.0
     }
   ],
@@ -5779,6 +5779,90 @@
     {
       "slug": "stock/knowledge/momentum-factor-strategies",
       "score": 0.0833
+    }
+  ],
+  "compliance/knowledge/foundations-trust-identity": [
+    {
+      "slug": "compliance/knowledge/cdd-best-practices",
+      "score": 0.3
+    },
+    {
+      "slug": "aml/learn/kyc-cdd-workflows",
+      "score": 0.2
+    },
+    {
+      "slug": "knowledge/glossary",
+      "score": 0.1
+    }
+  ],
+  "compliance/knowledge/foundations-surveillance-suspicion": [
+    {
+      "slug": "compliance/research/closing-the-loop-an-access-control-architecture-for-automate",
+      "score": 0.4
+    },
+    {
+      "slug": "aml/research/quantum-spectral-anomaly-detection",
+      "score": 0.3333
+    },
+    {
+      "slug": "aml/research/counterfactual-methods-for-detecting-unfairness-in-anti-mone",
+      "score": 0.3333
+    }
+  ],
+  "markets/knowledge/foundations-price-knowledge": [
+    {
+      "slug": "markets/research/causal-effects-of-protocol-fee-changes-on-liquidity-provisio",
+      "score": 0.3333
+    },
+    {
+      "slug": "markets/research/llms-are-not-a-default-execution-engine",
+      "score": 0.2
+    },
+    {
+      "slug": "markets/research/on-exploring-input-resolution-scaling-for-anytime-lidar-obje",
+      "score": 0.2
+    }
+  ],
+  "markets/knowledge/foundations-risk-probability": [
+    {
+      "slug": "markets/learn/volatility-analysis",
+      "score": 0.2
+    },
+    {
+      "slug": "stock/research/earnings-season-alpha",
+      "score": 0.1
+    },
+    {
+      "slug": "stock/research/vix-term-structure-trading",
+      "score": 0.1
+    }
+  ],
+  "data/knowledge/foundations-interpretation": [
+    {
+      "slug": "data/knowledge/foundations-governance",
+      "score": 0.2
+    },
+    {
+      "slug": "data/learn/dataops-introduction",
+      "score": 0.125
+    },
+    {
+      "slug": "data/research/dagster-2",
+      "score": 0.1111
+    }
+  ],
+  "data/knowledge/foundations-governance": [
+    {
+      "slug": "data/knowledge/foundations-interpretation",
+      "score": 0.2
+    },
+    {
+      "slug": "compliance/knowledge/foundations-surveillance-suspicion",
+      "score": 0.1
+    },
+    {
+      "slug": "markets/knowledge/foundations-price-knowledge",
+      "score": 0.1
     }
   ]
 }

@@ -13,7 +13,14 @@
   <p class="mt-2 text-sm" style="color:var(--color-text-muted)">Spaced repetition tracking for flashcards and ontology concepts across all pillars.</p>
 </header>
 
-<div class="grid gap-6 sm:grid-cols-3 mb-8">
+<div class="flex gap-1 mb-6 p-1 rounded-lg" style="background:var(--color-bg);border:1px solid var(--color-border)" role="tablist" aria-label="Review mode">
+  <button class="review-tab flex-1 px-3 py-2 text-xs font-semibold rounded-md transition" role="tab" aria-selected="true" data-tab="all" style="background:var(--color-surface);color:var(--color-text)">All</button>
+  <button class="review-tab flex-1 px-3 py-2 text-xs font-semibold rounded-md transition" role="tab" aria-selected="false" data-tab="flashcards" style="color:var(--color-text-muted)">Flashcards</button>
+  <button class="review-tab flex-1 px-3 py-2 text-xs font-semibold rounded-md transition" role="tab" aria-selected="false" data-tab="concepts" style="color:var(--color-text-muted)">Concepts</button>
+</div>
+
+<div id="review-flashcard-section">
+  <div class="grid gap-6 sm:grid-cols-3 mb-8">
   <div class="ghost-card p-6 text-center">
     <div id="stat-due" class="text-4xl font-bold" style="color:var(--color-accent)">0</div>
     <div class="text-xs font-meta mt-1" style="color:var(--color-text-muted)">Cards Due</div>
@@ -57,14 +64,17 @@
     Start Review
   </a>
 </div>
+</div>
 
 <hr class="my-8" style="border-color:var(--color-border)">
 
+<div id="review-concept-section">
 <section>
   <h2 class="text-xl font-extrabold mb-2" style="color:var(--color-text)">Concept Mastery</h2>
   <p class="text-sm mb-6" style="color:var(--color-text-muted)">Track retention of all 70+ ontology concepts across pillars. Includes gap detection and interleaved practice.</p>
   <div id="concept-mastery-dashboard"></div>
 </section>
+</div>
 
 <script src="/static/js/retention_engine.js"></script>
 <script>
@@ -129,6 +139,29 @@
     heatmap.appendChild(cell);
   }
 })();
+
+document.querySelectorAll('.review-tab').forEach(function(tab) {
+  tab.addEventListener('click', function() {
+    document.querySelectorAll('.review-tab').forEach(function(t) {
+      t.style.background = '';
+      t.style.color = 'var(--color-text-muted)';
+      t.setAttribute('aria-selected', 'false');
+    });
+    this.style.background = 'var(--color-surface)';
+    this.style.color = 'var(--color-text)';
+    this.setAttribute('aria-selected', 'true');
+    var mode = this.dataset.tab;
+    var flashcardSec = document.getElementById('review-flashcard-section');
+    var conceptSec = document.getElementById('review-concept-section');
+    if (mode === 'all') {
+      flashcardSec.style.display = ''; conceptSec.style.display = '';
+    } else if (mode === 'flashcards') {
+      flashcardSec.style.display = ''; conceptSec.style.display = 'none';
+    } else if (mode === 'concepts') {
+      flashcardSec.style.display = 'none'; conceptSec.style.display = '';
+    }
+  });
+});
 </script>
 
 {% include 'partials/newsletter.html' %}

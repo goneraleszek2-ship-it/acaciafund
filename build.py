@@ -1836,6 +1836,19 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
             matches = extract_concepts_from_text(combined, ontology)
             _concept_cache[item.slug] = {c.id for c, s in matches if s >= 0.35}
 
+        # Persist concept→content mapping for downstream tools (audit, analytics)
+        try:
+            _concept_content_map_path = PROJECT_ROOT / "data" / "concept_content_map.json"
+            _concept_content_map: dict[str, list[str]] = {}
+            for _slug, _cids in _concept_cache.items():
+                _concept_content_map[_slug] = sorted(_cids)
+            _concept_content_map_path.write_text(
+                json.dumps(_concept_content_map, indent=2, sort_keys=True), encoding="utf-8"
+            )
+            print(f"  concept map: saved {len(_concept_content_map)} items to data/concept_content_map.json")
+        except Exception as _cm_err:
+            print(f"  concept map: save failed — {_cm_err}")
+
     # --- KNOWLEDGE PAGES ---
     for item in knowledge_items:
         try:

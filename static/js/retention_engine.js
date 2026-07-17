@@ -263,10 +263,10 @@
           </div>
 
           <div class="flex gap-1 p-3 pt-0 justify-center">
-            <button data-grade="0" class="grade-btn px-3 py-2 text-xs font-semibold rounded-lg transition hover:opacity-80" style="background:color-mix(in srgb, #ef4444 15%, transparent);color:#ef4444;min-width:44px;min-height:44px">Again</button>
-            <button data-grade="1" class="grade-btn px-3 py-2 text-xs font-semibold rounded-lg transition hover:opacity-80" style="background:color-mix(in srgb, #f59e0b 15%, transparent);color:#f59e0b;min-width:44px;min-height:44px">Hard</button>
-            <button data-grade="2" class="grade-btn px-3 py-2 text-xs font-semibold rounded-lg transition hover:opacity-80" style="background:color-mix(in srgb, #22c55e 15%, transparent);color:#22c55e;min-width:44px;min-height:44px">Good</button>
-            <button data-grade="3" class="grade-btn px-3 py-2 text-xs font-semibold rounded-lg transition hover:opacity-80" style="background:color-mix(in srgb, #3b82f6 15%, transparent);color:#3b82f6;min-width:44px;min-height:44px">Easy</button>
+            <button data-grade="0" class="grade-btn px-3 py-2 text-xs font-semibold rounded-lg transition hover:opacity-80" style="background:color-mix(in srgb, #ef4444 15%, transparent);color:#ef4444;min-width:48px;min-height:48px">Again</button>
+            <button data-grade="1" class="grade-btn px-3 py-2 text-xs font-semibold rounded-lg transition hover:opacity-80" style="background:color-mix(in srgb, #f59e0b 15%, transparent);color:#f59e0b;min-width:48px;min-height:48px">Hard</button>
+            <button data-grade="2" class="grade-btn px-3 py-2 text-xs font-semibold rounded-lg transition hover:opacity-80" style="background:color-mix(in srgb, #22c55e 15%, transparent);color:#22c55e;min-width:48px;min-height:48px">Good</button>
+            <button data-grade="3" class="grade-btn px-3 py-2 text-xs font-semibold rounded-lg transition hover:opacity-80" style="background:color-mix(in srgb, #3b82f6 15%, transparent);color:#3b82f6;min-width:48px;min-height:48px">Easy</button>
           </div>
         </div>
       `;
@@ -442,10 +442,10 @@
         <div class="ghost-card p-4 mb-4">
           <div class="flex items-center justify-between">
             <span class="text-xs font-semibold" style="color:var(--color-accent)">${title}</span>
-            <span class="text-xs" style="color:var(--color-text-muted)">${idx + 1} / ${items.length}</span>
+            <span class="text-xs" style="color:var(--color-text-muted)" aria-live="polite">${idx + 1} / ${items.length}</span>
           </div>
         </div>
-        <div id="session-card-container"></div>
+        <div id="session-card-container" aria-live="polite"></div>
         <div class="flex justify-center gap-3 mt-4">
           <button id="session-skip-btn" class="px-4 py-2 text-xs font-semibold rounded-lg" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border);min-width:44px;min-height:44px">Skip</button>
           <button id="session-exit-btn" class="px-4 py-2 text-xs font-semibold rounded-lg" style="background:color-mix(in srgb, #ef4444 15%, transparent);color:#ef4444;min-width:44px;min-height:44px">Exit</button>
@@ -468,7 +468,22 @@
           document.removeEventListener('keydown', sessionKeydown);
           container.querySelector('#session-skip-btn')?.click();
         }
+        if (e.key === '1') { document.removeEventListener('keydown', sessionKeydown); var gb = container.querySelector('[data-grade="0"]'); if (gb) gb.click(); }
+        if (e.key === '2') { document.removeEventListener('keydown', sessionKeydown); var gb = container.querySelector('[data-grade="1"]'); if (gb) gb.click(); }
+        if (e.key === '3') { document.removeEventListener('keydown', sessionKeydown); var gb = container.querySelector('[data-grade="2"]'); if (gb) gb.click(); }
+        if (e.key === '4') { document.removeEventListener('keydown', sessionKeydown); var gb = container.querySelector('[data-grade="3"]'); if (gb) gb.click(); }
       });
+
+      // Swipe support
+      var touchStartX = 0;
+      container.addEventListener('touchstart', function(e) { touchStartX = e.changedTouches[0].screenX; }, { passive: true });
+      container.addEventListener('touchend', function(e) {
+        var dx = e.changedTouches[0].screenX - touchStartX;
+        if (Math.abs(dx) > 80) {
+          var skipBtn = document.getElementById('session-skip-btn');
+          if (skipBtn) skipBtn.click();
+        }
+      }, { passive: true });
     }
 
     _esc(s) {

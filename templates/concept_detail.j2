@@ -96,6 +96,10 @@
         <a href="/{{ concept_pillar_url }}/learn/{{ concept.id }}/" class="block p-3 rounded-lg transition hover:shadow-sm" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);border:1px solid var(--color-accent);text-decoration:none">
           <span class="text-sm font-semibold" style="color:var(--color-accent)">Learning Path →</span>
         </a>
+        {%- else %}
+        <a href="/review/" class="block p-3 rounded-lg transition hover:shadow-sm" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);border:1px solid var(--color-accent);text-decoration:none">
+          <span class="text-sm font-semibold" style="color:var(--color-accent)">Review on Dashboard →</span>
+        </a>
         {%- endif %}
         <a href="/graph/" class="block p-3 rounded-lg transition hover:shadow-sm" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
           <span class="text-sm" style="color:var(--color-text)">Knowledge Graph</span>

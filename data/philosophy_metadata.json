@@ -1,6 +1,11 @@
 {
   "kyc": {
-    "philosophical_lineage": ["social_epistemology", "identity_theory", "surveillance_studies", "foucault_discipline"],
+    "philosophical_lineage": [
+      "social_epistemology",
+      "identity_theory",
+      "surveillance_studies",
+      "foucault_discipline"
+    ],
     "epistemic_status": "constitutive",
     "normative_basis": "kantian_duty",
     "ontological_commitment": "constructivist",
@@ -11,13 +16,20 @@
     "philosophical_sources": [
       "Goffman, Erving. The Presentation of Self in Everyday Life (1956)",
       "Foucault, Michel. Discipline and Punish: The Birth of the Prison (1975)",
-      "Simmel, Georg. The Philosophy of Money (1900) — Chapter on Trust",
+      "Simmel, Georg. The Philosophy of Money (1900) \u2014 Chapter on Trust",
       "Windley, Phillip. Digital Identity (2005)"
     ],
-    "cross_pillar_analogs": ["market-microstructure", "data-mesh"]
+    "cross_pillar_analogs": [
+      "market-microstructure",
+      "data-mesh",
+      "lob"
+    ]
   },
   "cdd": {
-    "philosophical_lineage": ["social_epistemology", "trust_theory"],
+    "philosophical_lineage": [
+      "social_epistemology",
+      "trust_theory"
+    ],
     "epistemic_status": "regulatory",
     "normative_basis": "kantian_duty",
     "ontological_commitment": "constructivist",
@@ -26,22 +38,33 @@
       "Bok, Sissela. Secrets: On the Ethics of Concealment and Revelation (1989)",
       "Schneider, Leslie. The Ethics of Whistleblowing (2007)"
     ],
-    "cross_pillar_analogs": ["data-contracts"]
+    "cross_pillar_analogs": [
+      "data-contracts"
+    ]
   },
   "edd": {
-    "philosophical_lineage": ["surveillance_studies", "risk_theory"],
+    "philosophical_lineage": [
+      "surveillance_studies",
+      "risk_theory"
+    ],
     "epistemic_status": "regulatory",
     "normative_basis": "utilitarian",
     "ontological_commitment": "constructivist",
     "governance_model": "hierarchical",
     "philosophical_sources": [
       "Sunstein, Cass. Laws of Fear: Beyond the Precautionary Principle (2005)",
-      "Rawls, John. A Theory of Justice (1971) — Proportionality principle"
+      "Rawls, John. A Theory of Justice (1971) \u2014 Proportionality principle"
     ],
-    "cross_pillar_analogs": ["portfolio-optimization"]
+    "cross_pillar_analogs": [
+      "portfolio-optimization"
+    ]
   },
   "sar": {
-    "philosophical_lineage": ["surveillance_studies", "epistemic_duty", "bureaucratic_knowledge"],
+    "philosophical_lineage": [
+      "surveillance_studies",
+      "epistemic_duty",
+      "bureaucratic_knowledge"
+    ],
     "epistemic_status": "regulatory",
     "normative_basis": "kantian_duty",
     "ontological_commitment": "realist",
@@ -51,10 +74,15 @@
       "Kvanvig, Jonathan. The Value of Knowledge and the Pursuit of Understanding (2003)",
       "Bok, Sissela. Secrets: On the Ethics of Concealment and Revelation (1989)"
     ],
-    "cross_pillar_analogs": ["data-quality"]
+    "cross_pillar_analogs": [
+      "data-quality"
+    ]
   },
   "str": {
-    "philosophical_lineage": ["surveillance_studies", "epistemic_duty"],
+    "philosophical_lineage": [
+      "surveillance_studies",
+      "epistemic_duty"
+    ],
     "epistemic_status": "regulatory",
     "normative_basis": "kantian_duty",
     "ontological_commitment": "realist",
@@ -65,27 +93,39 @@
     ]
   },
   "ctr": {
-    "philosophical_lineage": ["surveillance_studies"],
+    "philosophical_lineage": [
+      "surveillance_studies"
+    ],
     "epistemic_status": "regulatory",
     "normative_basis": "kantian_duty",
     "ontological_commitment": "realist",
     "governance_model": "hierarchical"
   },
   "pep": {
-    "philosophical_lineage": ["political_philosophy", "sovereignty", "risk_theory"],
+    "philosophical_lineage": [
+      "political_philosophy",
+      "sovereignty",
+      "risk_theory"
+    ],
     "epistemic_status": "regulatory",
     "normative_basis": "contractarian",
     "ontological_commitment": "constructivist",
     "uncertainty_class": "knightian",
     "governance_model": "hierarchical",
     "philosophical_sources": [
-      "Walzer, Michael. Just and Unjust Wars (1977) — Extraterritoriality",
+      "Walzer, Michael. Just and Unjust Wars (1977) \u2014 Extraterritoriality",
       "Nussbaum, Martha. Frontiers of Justice (2006)"
     ],
-    "cross_pillar_analogs": ["distributed-systems"]
+    "cross_pillar_analogs": [
+      "distributed-systems"
+    ]
   },
   "sanctions-screening": {
-    "philosophical_lineage": ["political_philosophy", "sovereignty", "moral_complicity"],
+    "philosophical_lineage": [
+      "political_philosophy",
+      "sovereignty",
+      "moral_complicity"
+    ],
     "epistemic_status": "regulatory",
     "normative_basis": "kantian_duty",
     "ontological_commitment": "realist",
@@ -96,7 +136,11 @@
     ]
   },
   "transaction-monitoring": {
-    "philosophical_lineage": ["surveillance_studies", "algorithmic_governance", "predictive_epistemology"],
+    "philosophical_lineage": [
+      "surveillance_studies",
+      "algorithmic_governance",
+      "predictive_epistemology"
+    ],
     "epistemic_status": "constitutive",
     "normative_basis": "utilitarian",
     "ontological_commitment": "constructivist",
@@ -109,31 +153,55 @@
       "Lyon, David. Surveillance Studies: An Overview (2007)",
       "Crawford, Kate. Atlas of AI (2021)"
     ],
-    "cross_pillar_analogs": ["streaming", "high-frequency-trading"]
+    "cross_pillar_analogs": [
+      "streaming",
+      "high-frequency-trading",
+      "market-microstructure",
+      "market-impact",
+      "etl",
+      "gdpr-synthetic-data",
+      "ai-act-high-risk"
+    ]
   },
   "entity-resolution": {
-    "philosophical_lineage": ["philosophy_of_language", "ontology_matching", "identity_theory"],
+    "philosophical_lineage": [
+      "philosophy_of_language",
+      "ontology_matching",
+      "identity_theory"
+    ],
     "epistemic_status": "constitutive",
     "ontological_commitment": "constructivist",
     "semantic_contract_type": "constitutive",
     "philosophical_sources": [
-      "Wittgenstein, Ludwig. Philosophical Investigations (1953) — Language games",
+      "Wittgenstein, Ludwig. Philosophical Investigations (1953) \u2014 Language games",
       "Searle, John. The Construction of Social Reality (1995)"
     ],
-    "cross_pillar_analogs": ["schema-registry"]
+    "cross_pillar_analogs": [
+      "schema-registry"
+    ]
   },
   "network-analysis": {
-    "philosophical_lineage": ["network_theory", "distributed_cognition"],
+    "philosophical_lineage": [
+      "network_theory",
+      "distributed_cognition"
+    ],
     "epistemic_status": "instrumental",
     "ontological_commitment": "constructivist",
     "philosophical_sources": [
       "Latour, Bruno. Reassembling the Social: An Introduction to Actor-Network-Theory (2005)",
       "Ostrom, Elinor. Governing the Commons (1990)"
     ],
-    "cross_pillar_analogs": ["distributed-systems", "data-mesh"]
+    "cross_pillar_analogs": [
+      "distributed-systems",
+      "data-mesh"
+    ]
   },
   "beneficial-ownership": {
-    "philosophical_lineage": ["legal_philosophy", "metaphysics_of_ownership", "corporate_personhood"],
+    "philosophical_lineage": [
+      "legal_philosophy",
+      "metaphysics_of_ownership",
+      "corporate_personhood"
+    ],
     "epistemic_status": "ontological",
     "normative_basis": "contractarian",
     "ontological_commitment": "constructivist",
@@ -143,27 +211,46 @@
       "Teubner, Gunther. Law as an Autopoietic System (1993)",
       "Pistor, Katharina. The Code of Capital (2019)"
     ],
-    "cross_pillar_analogs": ["data-mesh", "data-contracts"]
+    "cross_pillar_analogs": [
+      "data-mesh",
+      "data-contracts"
+    ]
   },
   "fatf-recommendations": {
-    "philosophical_lineage": ["legal_philosophy", "regulatory_theory"],
+    "philosophical_lineage": [
+      "legal_philosophy",
+      "regulatory_theory"
+    ],
     "epistemic_status": "regulatory",
     "normative_basis": "contractarian",
     "ontological_commitment": "realist",
     "governance_model": "hierarchical",
     "philosophical_sources": [
       "FATF. International Standards on Combating Money Laundering (2012-2023)"
+    ],
+    "cross_pillar_analogs": [
+      "data-contracts",
+      "data-governance"
     ]
   },
   "bsa": {
-    "philosophical_lineage": ["legal_philosophy", "regulatory_theory"],
+    "philosophical_lineage": [
+      "legal_philosophy",
+      "regulatory_theory"
+    ],
     "epistemic_status": "regulatory",
     "normative_basis": "kantian_duty",
     "ontological_commitment": "realist",
-    "governance_model": "hierarchical"
+    "governance_model": "hierarchical",
+    "cross_pillar_analogs": [
+      "data-governance"
+    ]
   },
   "tbml": {
-    "philosophical_lineage": ["trade_theory", "surveillance_studies"],
+    "philosophical_lineage": [
+      "trade_theory",
+      "surveillance_studies"
+    ],
     "epistemic_status": "instrumental",
     "uncertainty_class": "ambiguity",
     "philosophical_sources": [
@@ -171,7 +258,10 @@
     ]
   },
   "regtech": {
-    "philosophical_lineage": ["technology_philosophy", "legal_philosophy"],
+    "philosophical_lineage": [
+      "technology_philosophy",
+      "legal_philosophy"
+    ],
     "epistemic_status": "instrumental",
     "normative_basis": "pragmatic",
     "governance_model": "algorithmic",
@@ -179,40 +269,79 @@
       "Heidegger, Martin. The Question Concerning Technology (1954)",
       "Hildebrandt, Mireille. Law for Computer Scientists (2020)"
     ],
-    "cross_pillar_analogs": ["orchestration"]
+    "cross_pillar_analogs": [
+      "orchestration",
+      "ai-act-high-risk",
+      "ai-conformity-assessment"
+    ]
   },
   "travel-rule": {
-    "philosophical_lineage": ["regulatory_theory", "sovereignty"],
+    "philosophical_lineage": [
+      "regulatory_theory",
+      "sovereignty"
+    ],
     "epistemic_status": "regulatory",
     "normative_basis": "contractarian",
-    "governance_model": "hierarchical"
+    "governance_model": "hierarchical",
+    "cross_pillar_analogs": [
+      "mica-crypto-assets"
+    ]
   },
   "adverse-media": {
-    "philosophical_lineage": ["surveillance_studies", "epistemology_of_journalism"],
+    "philosophical_lineage": [
+      "surveillance_studies",
+      "epistemology_of_journalism"
+    ],
     "epistemic_status": "regulatory",
     "normative_basis": "kantian_duty",
     "uncertainty_class": "ambiguity",
     "philosophical_sources": [
       "Lyon, David. Surveillance Studies: An Overview (2007)"
     ],
-    "cross_pillar_analogs": ["ml-pipeline"]
+    "cross_pillar_analogs": [
+      "ml-pipeline",
+      "technical-analysis"
+    ]
   },
   "aml-program": {
-    "philosophical_lineage": ["organizational_ethics"],
+    "philosophical_lineage": [
+      "organizational_ethics"
+    ],
     "epistemic_status": "regulatory",
     "normative_basis": "kantian_duty",
-    "governance_model": "hierarchical"
+    "governance_model": "hierarchical",
+    "cross_pillar_analogs": [
+      "volatility-surface",
+      "asset-pricing",
+      "esg-investing",
+      "debiasing-pipeline",
+      "fairness-metrics",
+      "dora-ict-risk",
+      "esg-double-materiality"
+    ]
   },
   "cyber-aml": {
-    "philosophical_lineage": ["surveillance_studies", "cybersecurity_ethics"],
+    "philosophical_lineage": [
+      "surveillance_studies",
+      "cybersecurity_ethics"
+    ],
     "epistemic_status": "instrumental",
     "philosophical_sources": [
       "Crawford, Kate. Atlas of AI (2021)"
     ],
-    "cross_pillar_analogs": ["distributed-systems", "data-security"]
+    "cross_pillar_analogs": [
+      "distributed-systems",
+      "data-security",
+      "gdpr-anonymization",
+      "differential-privacy",
+      "nis2-cyber-resilience"
+    ]
   },
   "correspondent-banking": {
-    "philosophical_lineage": ["trust_theory", "social_epistemology"],
+    "philosophical_lineage": [
+      "trust_theory",
+      "social_epistemology"
+    ],
     "epistemic_status": "regulatory",
     "normative_basis": "utilitarian",
     "philosophical_sources": [
@@ -220,23 +349,37 @@
     ]
   },
   "crypto-aml": {
-    "philosophical_lineage": ["digital_identity", "surveillance_studies"],
+    "philosophical_lineage": [
+      "digital_identity",
+      "surveillance_studies"
+    ],
     "epistemic_status": "pragmatic",
     "ontological_commitment": "constructivist",
     "philosophical_sources": [
       "Crawford, Kate. Atlas of AI (2021)"
     ],
-    "cross_pillar_analogs": ["data-security"]
+    "cross_pillar_analogs": [
+      "data-security",
+      "mica-crypto-assets"
+    ]
   },
   "regulatory-reporting": {
-    "philosophical_lineage": ["bureaucratic_knowledge"],
+    "philosophical_lineage": [
+      "bureaucratic_knowledge"
+    ],
     "epistemic_status": "regulatory",
     "governance_model": "hierarchical",
-    "cross_pillar_analogs": ["data-pipeline"]
+    "cross_pillar_analogs": [
+      "data-pipeline",
+      "model-cards"
+    ]
   },
-
   "lob": {
-    "philosophical_lineage": ["distributed_cognition", "hayek_knowledge", "price_epistemology"],
+    "philosophical_lineage": [
+      "distributed_cognition",
+      "hayek_knowledge",
+      "price_epistemology"
+    ],
     "epistemic_status": "constitutive",
     "normative_basis": "pragmatic",
     "ontological_commitment": "constructivist",
@@ -247,10 +390,17 @@
       "Polanyi, Michael. The Tacit Dimension (1966)",
       "O'Hara, Maureen. Market Microstructure Theory (1995)"
     ],
-    "cross_pillar_analogs": ["kyc", "schema-registry"]
+    "cross_pillar_analogs": [
+      "kyc",
+      "schema-registry"
+    ]
   },
   "market-microstructure": {
-    "philosophical_lineage": ["distributed_cognition", "hayek_knowledge", "price_formation_theory"],
+    "philosophical_lineage": [
+      "distributed_cognition",
+      "hayek_knowledge",
+      "price_formation_theory"
+    ],
     "epistemic_status": "constitutive",
     "normative_basis": "pragmatic",
     "ontological_commitment": "constructivist",
@@ -261,10 +411,21 @@
       "Polanyi, Michael. The Tacit Dimension (1966)",
       "Garfinkel, Harold. Studies in Ethnomethodology (1967)"
     ],
-    "cross_pillar_analogs": ["transaction-monitoring", "streaming"]
+    "cross_pillar_analogs": [
+      "transaction-monitoring",
+      "streaming",
+      "kyc",
+      "etl",
+      "real-time-analytics",
+      "gdpr-synthetic-data"
+    ]
   },
   "volatility-surface": {
-    "philosophical_lineage": ["modal_metaphysics", "counterfactual_reasoning", "probability_philosophy"],
+    "philosophical_lineage": [
+      "modal_metaphysics",
+      "counterfactual_reasoning",
+      "probability_philosophy"
+    ],
     "epistemic_status": "ontological",
     "ontological_commitment": "fictionalist",
     "temporal_ontology": "event_based",
@@ -275,27 +436,42 @@
       "Derman, Emanuel. Models. Behaving. Badly (2011)",
       "Black, Fischer; Scholes, Myron. The Pricing of Options (1973)"
     ],
-    "cross_pillar_analogs": ["aml-program"]
+    "cross_pillar_analogs": [
+      "aml-program"
+    ]
   },
   "hawkes-process": {
-    "philosophical_lineage": ["probability_philosophy", "point_process_theory"],
+    "philosophical_lineage": [
+      "probability_philosophy",
+      "point_process_theory"
+    ],
     "epistemic_status": "instrumental",
     "ontological_commitment": "fictionalist",
     "uncertainty_class": "measurable",
     "philosophical_sources": [
-      "Hawkes, Alan G. Point Spectra... (1971) — Biometrika"
+      "Hawkes, Alan G. Point Spectra... (1971) \u2014 Biometrika"
     ]
   },
   "vpin": {
-    "philosophical_lineage": ["market_microstructure", "information_asymmetry"],
+    "philosophical_lineage": [
+      "market_microstructure",
+      "information_asymmetry"
+    ],
     "epistemic_status": "instrumental",
     "uncertainty_class": "measurable",
     "philosophical_sources": [
       "Easley, David; de Prado, Marcos. VPIN Toxicity (2012)"
+    ],
+    "cross_pillar_analogs": [
+      "cdc"
     ]
   },
   "portfolio-optimization": {
-    "philosophical_lineage": ["decision_theory", "ethics_of_diversification", "arrow_debreu"],
+    "philosophical_lineage": [
+      "decision_theory",
+      "ethics_of_diversification",
+      "arrow_debreu"
+    ],
     "epistemic_status": "pragmatic",
     "normative_basis": "utilitarian",
     "ontological_commitment": "fictionalist",
@@ -306,10 +482,17 @@
       "Arrow, Kenneth. Social Choice and Individual Values (1951)",
       "Markowitz, Harry. Portfolio Selection (1952)"
     ],
-    "cross_pillar_analogs": ["edd"]
+    "cross_pillar_analogs": [
+      "edd",
+      "debiasing-pipeline",
+      "fairness-metrics"
+    ]
   },
   "risk-parity": {
-    "philosophical_lineage": ["decision_theory", "ethics_of_diversification"],
+    "philosophical_lineage": [
+      "decision_theory",
+      "ethics_of_diversification"
+    ],
     "epistemic_status": "pragmatic",
     "normative_basis": "utilitarian",
     "uncertainty_class": "measurable",
@@ -318,38 +501,57 @@
     ]
   },
   "factor-investing": {
-    "philosophical_lineage": ["probability_philosophy", "statistical_epistemology"],
+    "philosophical_lineage": [
+      "probability_philosophy",
+      "statistical_epistemology"
+    ],
     "epistemic_status": "instrumental",
     "ontological_commitment": "fictionalist",
     "uncertainty_class": "measurable",
     "philosophical_sources": [
       "Fama, Eugene; French, Kenneth. The Cross-Section of Expected Stock Returns (1992)"
     ],
-    "cross_pillar_analogs": ["ml-pipeline"]
+    "cross_pillar_analogs": [
+      "ml-pipeline"
+    ]
   },
   "technical-analysis": {
-    "philosophical_lineage": ["hermeneutics", "pattern_recognition"],
+    "philosophical_lineage": [
+      "hermeneutics",
+      "pattern_recognition"
+    ],
     "epistemic_status": "pragmatic",
     "ontological_commitment": "constructivist",
     "philosophical_sources": [
       "Kahneman, Daniel. Thinking, Fast and Slow (2011)"
     ],
-    "cross_pillar_analogs": ["adverse-media"]
+    "cross_pillar_analogs": [
+      "adverse-media"
+    ]
   },
   "macro-analysis": {
-    "philosophical_lineage": ["political_economy"],
+    "philosophical_lineage": [
+      "political_economy"
+    ],
     "epistemic_status": "pragmatic",
     "ontological_commitment": "fictionalist",
     "uncertainty_class": "knightian"
   },
   "options-trading": {
-    "philosophical_lineage": ["modal_metaphysics", "counterfactual_reasoning"],
+    "philosophical_lineage": [
+      "modal_metaphysics",
+      "counterfactual_reasoning"
+    ],
     "epistemic_status": "instrumental",
     "ontological_commitment": "fictionalist",
     "temporal_ontology": "event_based"
   },
   "behavioral-finance": {
-    "philosophical_lineage": ["philosophy_of_mind", "bounded_rationality", "dual_process_theory"],
+    "philosophical_lineage": [
+      "philosophy_of_mind",
+      "bounded_rationality",
+      "dual_process_theory"
+    ],
     "epistemic_status": "pragmatic",
     "normative_basis": "virtue_ethics",
     "ontological_commitment": "realist",
@@ -359,20 +561,30 @@
       "Gigerenzer, Gerd. Rationality for Mortals (2008)",
       "Thaler, Richard. Misbehaving: The Making of Behavioral Economics (2015)"
     ],
-    "cross_pillar_analogs": ["data-quality"]
+    "cross_pillar_analogs": [
+      "data-quality"
+    ]
   },
   "market-impact": {
-    "philosophical_lineage": ["price_theory", "market_microstructure"],
+    "philosophical_lineage": [
+      "price_theory",
+      "market_microstructure"
+    ],
     "epistemic_status": "instrumental",
     "ontological_commitment": "fictionalist",
     "temporal_ontology": "processual",
     "philosophical_sources": [
       "O'Hara, Maureen. Market Microstructure Theory (1995)"
     ],
-    "cross_pillar_analogs": ["transaction-monitoring"]
+    "cross_pillar_analogs": [
+      "transaction-monitoring"
+    ]
   },
   "statistical-arbitrage": {
-    "philosophical_lineage": ["probability_philosophy", "statistical_epistemology"],
+    "philosophical_lineage": [
+      "probability_philosophy",
+      "statistical_epistemology"
+    ],
     "epistemic_status": "instrumental",
     "ontological_commitment": "fictionalist",
     "uncertainty_class": "measurable",
@@ -381,7 +593,11 @@
     ]
   },
   "high-frequency-trading": {
-    "philosophical_lineage": ["philosophy_of_time", "speed_as_power", "technological_determinism"],
+    "philosophical_lineage": [
+      "philosophy_of_time",
+      "speed_as_power",
+      "technological_determinism"
+    ],
     "epistemic_status": "constitutive",
     "normative_basis": "pragmatic",
     "ontological_commitment": "processual",
@@ -392,10 +608,18 @@
       "Heidegger, Martin. The Question Concerning Technology (1954)",
       "Latour, Bruno. Reassembling the Social (2005)"
     ],
-    "cross_pillar_analogs": ["streaming", "transaction-monitoring"]
+    "cross_pillar_analogs": [
+      "streaming",
+      "transaction-monitoring",
+      "ai-act-high-risk"
+    ]
   },
   "asset-pricing": {
-    "philosophical_lineage": ["probability_philosophy", "rational_expectations", "value_theory"],
+    "philosophical_lineage": [
+      "probability_philosophy",
+      "rational_expectations",
+      "value_theory"
+    ],
     "epistemic_status": "ontological",
     "normative_basis": "utilitarian",
     "ontological_commitment": "fictionalist",
@@ -406,54 +630,77 @@
       "Lucas, Robert. Rational Expectations and Econometric Practice (1981)",
       "Taleb, Nassim Nicholas. The Black Swan (2007)"
     ],
-    "cross_pillar_analogs": ["aml-program"]
+    "cross_pillar_analogs": [
+      "aml-program"
+    ]
   },
   "esg-investing": {
-    "philosophical_lineage": ["environmental_ethics", "intergenerational_justice", "stakeholder_theory"],
+    "philosophical_lineage": [
+      "environmental_ethics",
+      "intergenerational_justice",
+      "stakeholder_theory"
+    ],
     "epistemic_status": "normative",
     "normative_basis": "rawlsian",
     "ontological_commitment": "pluralist",
     "semantic_contract_type": "constitutive",
     "philosophical_sources": [
-      "Leopold, Aldo. A Sand County Almanac (1949) — The Land Ethic",
-      "Rawls, John. A Theory of Justice (1971) — Just savings principle",
+      "Leopold, Aldo. A Sand County Almanac (1949) \u2014 The Land Ethic",
+      "Rawls, John. A Theory of Justice (1971) \u2014 Just savings principle",
       "Freeman, R. Edward. Strategic Management: A Stakeholder Approach (1984)"
     ],
-    "cross_pillar_analogs": ["aml-program"]
+    "cross_pillar_analogs": [
+      "aml-program",
+      "esg-double-materiality"
+    ]
   },
   "supply-chain-analysis": {
-    "philosophical_lineage": ["systems_theory"],
+    "philosophical_lineage": [
+      "systems_theory"
+    ],
     "epistemic_status": "instrumental",
     "ontological_commitment": "realist"
   },
   "semiconductor-industry": {
-    "philosophical_lineage": ["political_economy"],
+    "philosophical_lineage": [
+      "political_economy"
+    ],
     "epistemic_status": "pragmatic",
     "ontological_commitment": "realist"
   },
   "ai-hardware": {
-    "philosophical_lineage": ["technology_philosophy"],
+    "philosophical_lineage": [
+      "technology_philosophy"
+    ],
     "epistemic_status": "instrumental",
     "ontological_commitment": "realist"
   },
   "commodity-trading": {
-    "philosophical_lineage": ["political_economy"],
+    "philosophical_lineage": [
+      "political_economy"
+    ],
     "epistemic_status": "pragmatic"
   },
   "earnings-analysis": {
-    "philosophical_lineage": ["accounting_theory"],
+    "philosophical_lineage": [
+      "accounting_theory"
+    ],
     "epistemic_status": "pragmatic"
   },
   "fixed-income": {
-    "philosophical_lineage": ["time_preference_theory"],
+    "philosophical_lineage": [
+      "time_preference_theory"
+    ],
     "epistemic_status": "instrumental",
     "philosophical_sources": [
       "Fisher, Irving. The Theory of Interest (1930)"
     ]
   },
-
   "etl": {
-    "philosophical_lineage": ["hermeneutics", "interpretation_theory"],
+    "philosophical_lineage": [
+      "hermeneutics",
+      "interpretation_theory"
+    ],
     "epistemic_status": "constitutive",
     "ontological_commitment": "constructivist",
     "temporal_ontology": "state_based",
@@ -463,10 +710,16 @@
       "Ricoeur, Paul. Interpretation Theory (1976)",
       "Bowker, Geoffrey; Star, Susan Leigh. Sorting Things Out (1999)"
     ],
-    "cross_pillar_analogs": ["transaction-monitoring", "market-microstructure"]
+    "cross_pillar_analogs": [
+      "transaction-monitoring",
+      "market-microstructure"
+    ]
   },
   "elt": {
-    "philosophical_lineage": ["hermeneutics", "interpretation_theory"],
+    "philosophical_lineage": [
+      "hermeneutics",
+      "interpretation_theory"
+    ],
     "epistemic_status": "constitutive",
     "ontological_commitment": "constructivist",
     "temporal_ontology": "state_based",
@@ -475,7 +728,12 @@
     ]
   },
   "data-mesh": {
-    "philosophical_lineage": ["political_philosophy", "decentralization", "subsidiarity", "commons_theory"],
+    "philosophical_lineage": [
+      "political_philosophy",
+      "decentralization",
+      "subsidiarity",
+      "commons_theory"
+    ],
     "epistemic_status": "constitutive",
     "normative_basis": "contractarian",
     "ontological_commitment": "pluralist",
@@ -486,24 +744,42 @@
       "Evans, Peter. The Appropriation of the Social (1995)",
       "Vernon, Vaughn. Domain-Driven Design (2003)"
     ],
-    "cross_pillar_analogs": ["beneficial-ownership", "network-analysis"]
+    "cross_pillar_analogs": [
+      "beneficial-ownership",
+      "network-analysis",
+      "kyc",
+      "federated-learning"
+    ]
   },
   "data-contracts": {
-    "philosophical_lineage": ["philosophy_of_language", "social_contract"],
+    "philosophical_lineage": [
+      "philosophy_of_language",
+      "social_contract"
+    ],
     "epistemic_status": "constitutive",
     "normative_basis": "contractarian",
     "ontological_commitment": "constructivist",
     "semantic_contract_type": "constitutive",
     "governance_model": "polycentric",
     "philosophical_sources": [
-      "Wittgenstein, Ludwig. Philosophical Investigations (1953) — Language games",
+      "Wittgenstein, Ludwig. Philosophical Investigations (1953) \u2014 Language games",
       "Searle, John. The Construction of Social Reality (1995)",
       "Borgida et al. Ontology Matching (2007)"
     ],
-    "cross_pillar_analogs": ["cdd", "fatf-recommendations"]
+    "cross_pillar_analogs": [
+      "cdd",
+      "fatf-recommendations",
+      "beneficial-ownership",
+      "model-cards",
+      "data-act-interoperability"
+    ]
   },
   "streaming": {
-    "philosophical_lineage": ["process_philosophy", "philosophy_of_time", "event_ontology"],
+    "philosophical_lineage": [
+      "process_philosophy",
+      "philosophy_of_time",
+      "event_ontology"
+    ],
     "epistemic_status": "constitutive",
     "ontological_commitment": "processual",
     "temporal_ontology": "processual",
@@ -513,75 +789,117 @@
       "Bergson, Henri. Time and Free Will (1889)",
       "Fowler, Martin; Young, Greg. Event Sourcing pattern (2000s)"
     ],
-    "cross_pillar_analogs": ["transaction-monitoring", "high-frequency-trading"]
+    "cross_pillar_analogs": [
+      "transaction-monitoring",
+      "high-frequency-trading",
+      "market-microstructure"
+    ]
   },
   "batch-processing": {
-    "philosophical_lineage": ["state_epistemology"],
+    "philosophical_lineage": [
+      "state_epistemology"
+    ],
     "epistemic_status": "instrumental",
     "ontological_commitment": "realist",
     "temporal_ontology": "state_based"
   },
   "cdc": {
-    "philosophical_lineage": ["event_ontology"],
+    "philosophical_lineage": [
+      "event_ontology"
+    ],
     "epistemic_status": "constitutive",
     "ontological_commitment": "processual",
     "temporal_ontology": "event_based",
-    "cross_pillar_analogs": ["vpin"]
+    "cross_pillar_analogs": [
+      "vpin"
+    ]
   },
   "data-lake": {
-    "philosophical_lineage": ["epistemology_of_storage"],
+    "philosophical_lineage": [
+      "epistemology_of_storage"
+    ],
     "epistemic_status": "pragmatic",
     "ontological_commitment": "realist",
     "temporal_ontology": "state_based"
   },
   "data-warehouse": {
-    "philosophical_lineage": ["epistemology_of_storage", "structured_knowledge"],
+    "philosophical_lineage": [
+      "epistemology_of_storage",
+      "structured_knowledge"
+    ],
     "epistemic_status": "regulatory",
     "ontological_commitment": "realist",
     "semantic_contract_type": "descriptive"
   },
   "dbt": {
-    "philosophical_lineage": ["software_philosophy", "analytics_engineering"],
+    "philosophical_lineage": [
+      "software_philosophy",
+      "analytics_engineering"
+    ],
     "epistemic_status": "instrumental",
     "normative_basis": "pragmatic"
   },
   "dagster": {
-    "philosophical_lineage": ["software_philosophy", "systems_theory"],
+    "philosophical_lineage": [
+      "software_philosophy",
+      "systems_theory"
+    ],
     "epistemic_status": "instrumental",
     "governance_model": "algorithmic"
   },
   "apache-flink": {
-    "philosophical_lineage": ["event_processing", "distributed_computing"],
+    "philosophical_lineage": [
+      "event_processing",
+      "distributed_computing"
+    ],
     "epistemic_status": "instrumental",
     "temporal_ontology": "processual"
   },
   "apache-kafka": {
-    "philosophical_lineage": ["event_logging", "distributed_consensus"],
+    "philosophical_lineage": [
+      "event_logging",
+      "distributed_consensus"
+    ],
     "epistemic_status": "constitutive",
     "ontological_commitment": "processual",
     "temporal_ontology": "event_based"
   },
   "apache-iceberg": {
-    "philosophical_lineage": ["data_architecture"],
+    "philosophical_lineage": [
+      "data_architecture"
+    ],
     "epistemic_status": "instrumental"
   },
   "arrow-parquet": {
-    "philosophical_lineage": ["data_architecture", "columnar_storage"],
+    "philosophical_lineage": [
+      "data_architecture",
+      "columnar_storage"
+    ],
     "epistemic_status": "instrumental",
     "ontological_commitment": "realist"
   },
   "schema-registry": {
-    "philosophical_lineage": ["philosophy_of_language", "semantic_interoperability"],
+    "philosophical_lineage": [
+      "philosophy_of_language",
+      "semantic_interoperability"
+    ],
     "epistemic_status": "constitutive",
     "semantic_contract_type": "constitutive",
     "governance_model": "polycentric",
     "philosophical_sources": [
       "Wittgenstein, Ludwig. Philosophical Investigations (1953)"
     ],
-    "cross_pillar_analogs": ["entity-resolution", "lob"]
+    "cross_pillar_analogs": [
+      "entity-resolution",
+      "lob",
+      "data-act-interoperability"
+    ]
   },
   "data-quality": {
-    "philosophical_lineage": ["epistemology_of_measurement", "error_theory"],
+    "philosophical_lineage": [
+      "epistemology_of_measurement",
+      "error_theory"
+    ],
     "epistemic_status": "constitutive",
     "normative_basis": "pragmatic",
     "ontological_commitment": "realist",
@@ -589,24 +907,41 @@
       "Mayo, Deborah. Error and the Growth of Experimental Knowledge (1996)",
       "Toulmin, Stephen. The Uses of Argument (1958)"
     ],
-    "cross_pillar_analogs": ["sar", "behavioral-finance"]
+    "cross_pillar_analogs": [
+      "sar",
+      "behavioral-finance"
+    ]
   },
   "data-observability": {
-    "philosophical_lineage": ["epistemology_of_measurement", "systems_theory"],
+    "philosophical_lineage": [
+      "epistemology_of_measurement",
+      "systems_theory"
+    ],
     "epistemic_status": "constitutive",
     "ontological_commitment": "realist",
     "philosophical_sources": [
       "Mayo, Deborah. Error and the Growth of Experimental Knowledge (1996)"
+    ],
+    "cross_pillar_analogs": [
+      "dora-ict-risk"
     ]
   },
   "data-pipeline": {
-    "philosophical_lineage": ["hermeneutics", "interpretation_theory"],
+    "philosophical_lineage": [
+      "hermeneutics",
+      "interpretation_theory"
+    ],
     "epistemic_status": "constitutive",
     "ontological_commitment": "constructivist",
-    "cross_pillar_analogs": ["regulatory-reporting"]
+    "cross_pillar_analogs": [
+      "regulatory-reporting"
+    ]
   },
   "data-governance": {
-    "philosophical_lineage": ["information_ethics", "contextual_integrity"],
+    "philosophical_lineage": [
+      "information_ethics",
+      "contextual_integrity"
+    ],
     "epistemic_status": "regulatory",
     "normative_basis": "rawlsian",
     "governance_model": "polycentric",
@@ -614,26 +949,45 @@
       "Floridi, Luciano. The Ethics of Information (2013)",
       "Nissenbaum, Helen. Privacy in Context (2009)"
     ],
-    "cross_pillar_analogs": ["fatf-recommendations", "bsa"]
+    "cross_pillar_analogs": [
+      "fatf-recommendations",
+      "bsa"
+    ]
   },
   "orchestration": {
-    "philosophical_lineage": ["cybernetics", "systems_theory"],
+    "philosophical_lineage": [
+      "cybernetics",
+      "systems_theory"
+    ],
     "epistemic_status": "instrumental",
     "governance_model": "algorithmic",
-    "cross_pillar_analogs": ["regtech"]
+    "cross_pillar_analogs": [
+      "regtech"
+    ]
   },
   "query-optimization": {
-    "philosophical_lineage": ["philosophy_of_computation", "algorithms"],
+    "philosophical_lineage": [
+      "philosophy_of_computation",
+      "algorithms"
+    ],
     "epistemic_status": "instrumental"
   },
   "real-time-analytics": {
-    "philosophical_lineage": ["process_philosophy", "temporal_epistemology"],
+    "philosophical_lineage": [
+      "process_philosophy",
+      "temporal_epistemology"
+    ],
     "epistemic_status": "instrumental",
     "temporal_ontology": "processual",
-    "cross_pillar_analogs": ["market-microstructure"]
+    "cross_pillar_analogs": [
+      "market-microstructure"
+    ]
   },
   "data-security": {
-    "philosophical_lineage": ["information_ethics", "contextual_integrity"],
+    "philosophical_lineage": [
+      "information_ethics",
+      "contextual_integrity"
+    ],
     "epistemic_status": "regulatory",
     "normative_basis": "kantian_duty",
     "governance_model": "hierarchical",
@@ -641,10 +995,20 @@
       "Nissenbaum, Helen. Privacy in Context (2009)",
       "Floridi, Luciano. The Ethics of Information (2013)"
     ],
-    "cross_pillar_analogs": ["cyber-aml"]
+    "cross_pillar_analogs": [
+      "cyber-aml",
+      "crypto-aml",
+      "gdpr-anonymization",
+      "differential-privacy",
+      "nis2-cyber-resilience"
+    ]
   },
   "distributed-systems": {
-    "philosophical_lineage": ["social_epistemology", "consensus_theory", "political_philosophy"],
+    "philosophical_lineage": [
+      "social_epistemology",
+      "consensus_theory",
+      "political_philosophy"
+    ],
     "epistemic_status": "constitutive",
     "ontological_commitment": "pluralist",
     "governance_model": "polycentric",
@@ -653,15 +1017,347 @@
       "Fischer, Michael; Lynch, Nancy; Paterson, Michael. Impossibility of Distributed Consensus (1985)",
       "Castro, Miguel; Liskov, Barbara. Practical Byzantine Fault Tolerance (1999)"
     ],
-    "cross_pillar_analogs": ["pep", "network-analysis"]
+    "cross_pillar_analogs": [
+      "pep",
+      "network-analysis",
+      "cyber-aml",
+      "federated-learning",
+      "dora-ict-risk"
+    ]
   },
   "ml-pipeline": {
-    "philosophical_lineage": ["statistical_epistemology", "induction"],
+    "philosophical_lineage": [
+      "statistical_epistemology",
+      "induction"
+    ],
     "epistemic_status": "instrumental",
     "uncertainty_class": "knightian",
     "philosophical_sources": [
       "Taleb, Nassim Nicholas. The Black Swan (2007)"
     ],
-    "cross_pillar_analogs": ["adverse-media", "factor-investing"]
+    "cross_pillar_analogs": [
+      "adverse-media",
+      "factor-investing",
+      "ai-conformity-assessment"
+    ]
+  },
+  "gdpr-anonymization": {
+    "philosophical_lineage": [
+      "privacy_philosophy",
+      "contextual_integrity",
+      "nissenbaum"
+    ],
+    "epistemic_status": "regulatory",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "ambiguity",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [
+      "Nissenbaum, Helen. Privacy in Context: Technology, Policy, and the Integrity of Social Life (2009)",
+      "Floridi, Luciano. The Ethics of Information (2013)",
+      "European Parliament. GDPR Article 26 and Recital 26 (2016/679)"
+    ],
+    "cross_pillar_analogs": [
+      "data-security",
+      "cyber-aml"
+    ]
+  },
+  "gdpr-synthetic-data": {
+    "philosophical_lineage": [
+      "philosophy_of_simulation",
+      "epistemic_trust",
+      "fictionalism"
+    ],
+    "epistemic_status": "constitutive",
+    "normative_basis": "pragmatic",
+    "ontological_commitment": "fictionalist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "algorithmic",
+    "semantic_contract_type": "coordinating",
+    "philosophical_sources": [
+      "Baudrillard, Jean. Simulacra and Simulation (1981)",
+      "Derman, Emanuel. Models. Behaving. Badly (2011)",
+      "Goodfellow, Ian et al. Generative Adversarial Nets (2014)"
+    ],
+    "cross_pillar_analogs": [
+      "transaction-monitoring",
+      "market-microstructure"
+    ]
+  },
+  "debiasing-pipeline": {
+    "philosophical_lineage": [
+      "ethics_of_algorithm",
+      "distributive_justice",
+      "rawlsian"
+    ],
+    "epistemic_status": "normative",
+    "normative_basis": "rawlsian",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "processual",
+    "uncertainty_class": "ambiguity",
+    "governance_model": "algorithmic",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [
+      "Rawls, John. A Theory of Justice (1971) \u2014 Difference principle",
+      "Crawford, Kate. Atlas of AI (2021)",
+      "Noble, Safiya Umoja. Algorithms of Oppression (2018)"
+    ],
+    "cross_pillar_analogs": [
+      "aml-program",
+      "portfolio-optimization"
+    ]
+  },
+  "differential-privacy": {
+    "philosophical_lineage": [
+      "privacy_philosophy",
+      "epistemic_humility"
+    ],
+    "epistemic_status": "constitutive",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "fictionalist",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "algorithmic",
+    "semantic_contract_type": "coordinating",
+    "philosophical_sources": [
+      "Dwork, Cynthia; Roth, Aaron. The Algorithmic Foundations of Differential Privacy (2014)",
+      "Nissenbaum, Helen. Privacy in Context (2009)",
+      "Floridi, Luciano. The Logic of Information (2019)"
+    ],
+    "cross_pillar_analogs": [
+      "data-security",
+      "cyber-aml"
+    ]
+  },
+  "federated-learning": {
+    "philosophical_lineage": [
+      "distributed_epistemology",
+      "data_sovereignty"
+    ],
+    "epistemic_status": "constitutive",
+    "normative_basis": "contractarian",
+    "ontological_commitment": "pluralist",
+    "temporal_ontology": "processual",
+    "uncertainty_class": "knightian",
+    "governance_model": "polycentric",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [
+      "McMahan, Brendan et al. Communication-Efficient Learning of Deep Networks from Decentralized Data (2017)",
+      "Ostrom, Elinor. Governing the Commons (1990)",
+      "Floridi, Luciano. The Fourth Revolution (2014)"
+    ],
+    "cross_pillar_analogs": [
+      "distributed-systems",
+      "data-mesh"
+    ]
+  },
+  "model-cards": {
+    "philosophical_lineage": [
+      "transparency_ethics",
+      "documentation_philosophy"
+    ],
+    "epistemic_status": "constitutive",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "ambiguity",
+    "governance_model": "polycentric",
+    "semantic_contract_type": "descriptive",
+    "philosophical_sources": [
+      "Mitchell, Margaret et al. Model Cards for Model Reporting (2019)",
+      "Floridi, Luciano. The Ethics of Information (2013)",
+      "Hildebrandt, Mireille. Law for Computer Scientists (2020)"
+    ],
+    "cross_pillar_analogs": [
+      "regulatory-reporting",
+      "data-contracts"
+    ]
+  },
+  "fairness-metrics": {
+    "philosophical_lineage": [
+      "distributive_justice",
+      "rawlsian",
+      "algorithmic_fairness"
+    ],
+    "epistemic_status": "normative",
+    "normative_basis": "rawlsian",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "algorithmic",
+    "semantic_contract_type": "coordinating",
+    "philosophical_sources": [
+      "Dwork, Cynthia et al. Fairness Through Awareness (2012)",
+      "Barocas, Solon; Selbst, Andrew. Big Data's Disparate Impact (2016)",
+      "Rawls, John. A Theory of Justice (1971)"
+    ],
+    "cross_pillar_analogs": [
+      "aml-program",
+      "portfolio-optimization"
+    ]
+  },
+  "ai-act-high-risk": {
+    "philosophical_lineage": [
+      "regulatory_philosophy",
+      "precautionary_principle",
+      "sunstein"
+    ],
+    "epistemic_status": "regulatory",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "ambiguity",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [
+      "European Commission. Proposal for AI Act (2021/0106/COD)",
+      "Sunstein, Cass. Laws of Fear: Beyond the Precautionary Principle (2005)",
+      "Floridi, Luciano. The Cambridge Handbook of Information Law (2020)"
+    ],
+    "cross_pillar_analogs": [
+      "regtech",
+      "transaction-monitoring",
+      "high-frequency-trading"
+    ]
+  },
+  "ai-conformity-assessment": {
+    "philosophical_lineage": [
+      "conformity_theory",
+      "audit_philosophy"
+    ],
+    "epistemic_status": "regulatory",
+    "normative_basis": "pragmatic",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "processual",
+    "uncertainty_class": "measurable",
+    "governance_model": "algorithmic",
+    "semantic_contract_type": "descriptive",
+    "philosophical_sources": [
+      "Hildebrandt, Mireille. Law for Computer Scientists (2020)",
+      "EU AI Act. Conformity Assessment Procedures (Title III, Chapter 3)",
+      "Floridi, Luciano. The Ethics of Information (2013)"
+    ],
+    "cross_pillar_analogs": [
+      "regtech",
+      "ml-pipeline"
+    ]
+  },
+  "dora-ict-risk": {
+    "philosophical_lineage": [
+      "resilience_philosophy",
+      "systems_theory",
+      "brittleness"
+    ],
+    "epistemic_status": "regulatory",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "processual",
+    "uncertainty_class": "knightian",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "coordinating",
+    "philosophical_sources": [
+      "European Parliament. Regulation (EU) 2022/2554 (DORA)",
+      "Taleb, Nassim Nicholas. Antifragile (2012)",
+      "Perrow, Charles. Normal Accidents (1984)"
+    ],
+    "cross_pillar_analogs": [
+      "aml-program",
+      "data-observability",
+      "distributed-systems",
+      "nis2-cyber-resilience"
+    ]
+  },
+  "nis2-cyber-resilience": {
+    "philosophical_lineage": [
+      "cybersecurity_ethics",
+      "operational_resilience"
+    ],
+    "epistemic_status": "regulatory",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "processual",
+    "uncertainty_class": "knightian",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "coordinating",
+    "philosophical_sources": [
+      "European Parliament. Directive (EU) 2022/2555 (NIS2)",
+      "Schneier, Bruce. Click Here to Kill Everybody (2018)",
+      "Sunstein, Cass. Laws of Fear (2005)"
+    ],
+    "cross_pillar_analogs": [
+      "cyber-aml",
+      "data-security",
+      "dora-ict-risk"
+    ]
+  },
+  "mica-crypto-assets": {
+    "philosophical_lineage": [
+      "monetary_philosophy",
+      "sovereignty",
+      "trust_in_code"
+    ],
+    "epistemic_status": "regulatory",
+    "normative_basis": "contractarian",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "ambiguity",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [
+      "European Commission. Proposal for MiCA Regulation (2020/0265/COD)",
+      "Pistor, Katharina. The Code of Capital (2019)",
+      "Nakamoto, Satoshi. Bitcoin: A Peer-to-Peer Electronic Cash System (2008)"
+    ],
+    "cross_pillar_analogs": [
+      "crypto-aml",
+      "travel-rule"
+    ]
+  },
+  "esg-double-materiality": {
+    "philosophical_lineage": [
+      "stakeholder_theory",
+      "intergenerational_justice"
+    ],
+    "epistemic_status": "normative",
+    "normative_basis": "rawlsian",
+    "ontological_commitment": "pluralist",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "knightian",
+    "governance_model": "polycentric",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [
+      "European Commission. Corporate Sustainability Reporting Directive (2022/2464)",
+      "Rawls, John. A Theory of Justice (1971) \u2014 Just savings principle",
+      "Freeman, R. Edward. Strategic Management: A Stakeholder Approach (1984)"
+    ],
+    "cross_pillar_analogs": [
+      "aml-program",
+      "esg-investing"
+    ]
+  },
+  "data-act-interoperability": {
+    "philosophical_lineage": [
+      "data_commons",
+      "information_economics"
+    ],
+    "epistemic_status": "regulatory",
+    "normative_basis": "contractarian",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "ambiguity",
+    "governance_model": "polycentric",
+    "semantic_contract_type": "coordinating",
+    "philosophical_sources": [
+      "European Commission. Data Act Regulation (2023/2854)",
+      "Ostrom, Elinor. Governing the Commons (1990)",
+      "Lessig, Lawrence. Code and Other Laws of Cyberspace (1999)"
+    ],
+    "cross_pillar_analogs": [
+      "data-contracts",
+      "schema-registry"
+    ]
   }
 }

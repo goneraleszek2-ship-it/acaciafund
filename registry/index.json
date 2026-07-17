@@ -1,13 +1,13 @@
 {
   "manifest_type": "registry-index",
-  "generated_at": "2026-07-14T19:29:25Z",
+  "generated_at": "2026-07-16T21:32:42Z",
   "counts": {
     "runs": 0,
-    "pages": 1179,
+    "pages": 1233,
     "pillars": {
-      "data-engineering": 137,
-      "stock": 138,
-      "aml": 131
+      "data-engineering": 139,
+      "stock": 140,
+      "aml": 133
     }
   },
   "latest_by_pillar": {},
@@ -2448,6 +2448,42 @@
       "pillar": "stock",
       "title": "Market Data Analysis with Python: yfinance, pandas, and Visualization",
       "published_at": "2026-07-14T00:00:00Z"
+    },
+    {
+      "content_id": "compliance/knowledge/foundations-trust-identity",
+      "pillar": "aml",
+      "title": "Trust & Identity: The Philosophical Foundations of KYC",
+      "published_at": "2026-07-16"
+    },
+    {
+      "content_id": "compliance/knowledge/foundations-surveillance-suspicion",
+      "pillar": "aml",
+      "title": "Surveillance & Suspicion: The Philosophy of Transaction Monitoring",
+      "published_at": "2026-07-16"
+    },
+    {
+      "content_id": "markets/knowledge/foundations-price-knowledge",
+      "pillar": "stock",
+      "title": "Price as Knowledge: The Philosophy of Market Microstructure",
+      "published_at": "2026-07-16"
+    },
+    {
+      "content_id": "markets/knowledge/foundations-risk-probability",
+      "pillar": "stock",
+      "title": "Risk & Probability: The Philosophy of Asset Pricing",
+      "published_at": "2026-07-16"
+    },
+    {
+      "content_id": "data/knowledge/foundations-interpretation",
+      "pillar": "data-engineering",
+      "title": "Data as Interpretation: The Philosophy of Pipelines and ETL",
+      "published_at": "2026-07-16"
+    },
+    {
+      "content_id": "data/knowledge/foundations-governance",
+      "pillar": "data-engineering",
+      "title": "Decentralized Governance: The Philosophy of Data Mesh",
+      "published_at": "2026-07-16"
     }
   ],
   "by_content_id": {
@@ -4480,8 +4516,38 @@
       "content_id": "markets/knowledge/market-data-analysis-tutorial",
       "pillar": "stock",
       "title": "Market Data Analysis with Python: yfinance, pandas, and Visualization"
+    },
+    "compliance/knowledge/foundations-trust-identity": {
+      "content_id": "compliance/knowledge/foundations-trust-identity",
+      "pillar": "aml",
+      "title": "Trust & Identity: The Philosophical Foundations of KYC"
+    },
+    "compliance/knowledge/foundations-surveillance-suspicion": {
+      "content_id": "compliance/knowledge/foundations-surveillance-suspicion",
+      "pillar": "aml",
+      "title": "Surveillance & Suspicion: The Philosophy of Transaction Monitoring"
+    },
+    "markets/knowledge/foundations-price-knowledge": {
+      "content_id": "markets/knowledge/foundations-price-knowledge",
+      "pillar": "stock",
+      "title": "Price as Knowledge: The Philosophy of Market Microstructure"
+    },
+    "markets/knowledge/foundations-risk-probability": {
+      "content_id": "markets/knowledge/foundations-risk-probability",
+      "pillar": "stock",
+      "title": "Risk & Probability: The Philosophy of Asset Pricing"
+    },
+    "data/knowledge/foundations-interpretation": {
+      "content_id": "data/knowledge/foundations-interpretation",
+      "pillar": "data-engineering",
+      "title": "Data as Interpretation: The Philosophy of Pipelines and ETL"
+    },
+    "data/knowledge/foundations-governance": {
+      "content_id": "data/knowledge/foundations-governance",
+      "pillar": "data-engineering",
+      "title": "Decentralized Governance: The Philosophy of Data Mesh"
     }
   },
   "by_run_id": {},
-  "checksum": "8d1005e329bdb50e06878ef850282d3be790ad52a1910ac7edf67f6637d65be7"
+  "checksum": "b62e54fe83a373c7d881889f2854b2e8900a5a22e1f24b016d352774cbd81292"
 }
