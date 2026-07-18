@@ -1,5 +1,7 @@
 """Seed learn data for AcaciaFund."""
 
+from typing import Dict, List
+
 # Curated relations between topics
 CURATED_RELATIONS: Dict[str, List[str]] = {
     "aml": ["kyc", "compliance", "regulations"],
