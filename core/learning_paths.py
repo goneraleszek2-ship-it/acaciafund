@@ -9,9 +9,11 @@ import networkx as nx
 
 from core.ontology import OntologyManager
 from core.schema_builder import (
+    FeynmanLearningPath,
     LearningPath,
     build_prerequisite_graph,
     categorize_by_bloom,
+    compute_feynman_learning_paths,
     compute_learning_paths,
 )
 

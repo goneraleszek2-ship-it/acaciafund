@@ -69,6 +69,45 @@
 
     {% include 'partials/article_metadata.j2' %}
 
+    {%- if ontology_concepts and ontology_concepts | length > 0 %}
+    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
+      <h2 class="text-2xl font-bold mb-2 flex items-center gap-2" style="color:var(--color-text)">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+        Feynman Concept Cards
+      </h2>
+      <p class="text-sm mb-6" style="color:var(--color-text-muted)">Master each building block: read the ELI5, explore the analogy, work the example, find your gaps, teach it back, build it.</p>
+      <div class="space-y-6" id="feynman-concept-cards">
+        {%- for oc in ontology_concepts %}
+        {% set concept = oc %}{% include 'partials/feynman_card.j2' %}
+        {%- endfor %}
+      </div>
+    </section>
+    {%- endif %}
+
+    {# End-of-lesson Feynman Synthesis #}
+    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
+      <h2 class="text-2xl font-bold mb-4 flex items-center gap-2" style="color:var(--color-text)">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+        Feynman Synthesis — Prove You Understand
+      </h2>
+      <div class="grid gap-4 sm:grid-cols-2">
+        <div class="p-4 rounded" style="background:var(--color-surface);border:1px solid var(--color-border)">
+          <h3 class="text-sm font-semibold mb-2" style="color:var(--color-text)">1. The One-Pager</h3>
+          <p class="text-xs mb-3" style="color:var(--color-text-muted)">Explain this lesson's core idea to a smart 15-year-old. No jargon allowed.</p>
+          <textarea class="w-full min-h-[100px] p-2 text-sm rounded border feynman-synthesis-input" id="feynman-onepager" placeholder="Your explanation..." style="background:var(--color-bg);border-color:var(--color-border);color:var(--color-text);resize:vertical"></textarea>
+        </div>
+        <div class="p-4 rounded" style="background:var(--color-surface);border:1px solid var(--color-border)">
+          <h3 class="text-sm font-semibold mb-2" style="color:var(--color-text)">2. The Gap Map</h3>
+          <p class="text-xs mb-3" style="color:var(--color-text-muted)">List 3 things you are still unsure about. Be specific.</p>
+          <textarea class="w-full min-h-[100px] p-2 text-sm rounded border feynman-synthesis-input" id="feynman-gaps" placeholder="1. ...\n2. ...\n3. ..." style="background:var(--color-bg);border-color:var(--color-border);color:var(--color-text);resize:vertical"></textarea>
+        </div>
+      </div>
+      <div class="mt-4 flex gap-3">
+        <button id="save-feynman-synthesis" class="px-4 py-2 text-sm font-semibold rounded border-0 cursor-pointer" style="background:var(--color-accent);color:#fff">Save My Synthesis</button>
+        <button id="submit-feynman-synthesis" class="px-4 py-2 text-sm font-semibold rounded cursor-pointer" style="background:transparent;border:1px solid var(--color-accent);color:var(--color-accent)">Submit for Review</button>
+      </div>
+    </section>
+
     {%- if quiz_json %}
     <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)" id="quiz-section" data-quiz='{{ quiz_json }}' data-quiz-lesson="{{ page_path }}">
       <h2 class="text-2xl font-bold mb-4" style="color:var(--color-text)">Knowledge Check</h2>

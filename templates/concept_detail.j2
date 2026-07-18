@@ -50,6 +50,8 @@
 
       {% include 'partials/cross_pillar_philosophy.j2' %}
 
+      {% include 'partials/feynman_card.j2' %}
+
       <section class="mb-8">
         <h2 class="text-lg font-semibold mb-4" style="color:var(--color-text)">Related Content</h2>
       {%- if related_items and related_items | length > 0 %}
@@ -106,6 +108,9 @@
         </a>
         <a href="/search/?q={{ concept.label | urlencode }}" class="block p-3 rounded-lg transition hover:shadow-sm" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
           <span class="text-sm" style="color:var(--color-text)">Search: {{ concept.label }}</span>
+        </a>
+        <a href="/{{ concept_pillar_url }}/learn/feynman-path/" class="block p-3 rounded-lg transition hover:shadow-sm" style="background:color-mix(in srgb, #d97706 10%, transparent);border:1px solid #d97706;text-decoration:none">
+          <span class="text-sm font-semibold" style="color:#d97706">Feynman Learning Path →</span>
         </a>
       </div>
     </section>

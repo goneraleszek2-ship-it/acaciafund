@@ -4,9 +4,12 @@ import pytest
 
 from core.ontology import Concept, OntologyManager, Relation
 from core.schema_builder import (
+    FeynmanLearningPath,
+    FeynmanStage,
     LearningPath,
     build_prerequisite_graph,
     categorize_by_bloom,
+    compute_feynman_learning_paths,
     compute_learning_paths,
 )
 
@@ -230,3 +233,106 @@ class TestCategorizeByBloom:
         graph = build_prerequisite_graph(mgr)
         level = categorize_by_bloom("lonely", graph)
         assert level == "remember"
+
+
+# ---------------------------------------------------------------------------
+# compute_feynman_learning_paths
+# ---------------------------------------------------------------------------
+
+
+@pytest.fixture
+def feynman_manager():
+    """Ontology with concepts having Feynman metadata for path testing."""
+    mgr = OntologyManager()
+    for cid, label, pillar, fd in [
+        ("a", "Concept A", "aml", 1),
+        ("b", "Concept B", "aml", 2),
+        ("c", "Concept C", "aml", 3),
+        ("d", "Concept D", "aml", 4),
+    ]:
+        c = Concept(id=cid, label=label, pillar=pillar, feynman_difficulty=fd)
+        c.eli5_explanation = f"ELI5 for {label}"
+        c.analogy = f"Analogy for {label}"
+        c.concrete_example = f"Example for {label}"
+        c.gap_questions = [f"Gap Q for {label}"]
+        c.teach_back_prompt = f"Teach {label}"
+        c.build_exercise = {"type": "code", "prompt": f"Build {label}", "solution": "done"}
+        mgr.add_concept(c)
+    return mgr
+
+
+class TestFeynmanLearningPaths:
+    def test_returns_per_pillar(self, feynman_manager):
+        paths = compute_feynman_learning_paths(feynman_manager)
+        assert len(paths) == 1  # only 'aml' pillar
+        assert paths[0].pillar == "aml"
+
+    def test_has_all_stages(self, feynman_manager):
+        paths = compute_feynman_learning_paths(feynman_manager)
+        stages = [s.stage_type for s in paths[0].stages]
+        assert "eli5" in stages
+        assert "analogy" in stages
+        assert "concrete" in stages
+        assert "gap_map" in stages
+        assert "build" in stages
+        assert "teach_back" in stages
+
+    def test_eli5_stage_only_diff1_2(self, feynman_manager):
+        """ELI5 stage should only include difficulty 1-2 concepts."""
+        paths = compute_feynman_learning_paths(feynman_manager)
+        eli5_stage = next(s for s in paths[0].stages if s.stage_type == "eli5")
+        for cid in eli5_stage.concept_ids:
+            c = feynman_manager.get_concept(cid)
+            assert c is not None
+            assert c.feynman_difficulty <= 2
+
+    def test_build_stage_has_build_exercises(self, feynman_manager):
+        paths = compute_feynman_learning_paths(feynman_manager)
+        build_stage = next(s for s in paths[0].stages if s.stage_type == "build")
+        for cid in build_stage.concept_ids:
+            c = feynman_manager.get_concept(cid)
+            assert c is not None
+            assert c.build_exercise is not None
+
+    def test_total_concepts(self, feynman_manager):
+        paths = compute_feynman_learning_paths(feynman_manager)
+        assert paths[0].total_concepts == 4  # all 4 aml concepts
+
+    def test_difficulty_tiers(self, feynman_manager):
+        paths = compute_feynman_learning_paths(feynman_manager)
+        assert 1 in paths[0].difficulty_tiers
+        assert 2 in paths[0].difficulty_tiers
+        assert 3 in paths[0].difficulty_tiers
+        assert 4 in paths[0].difficulty_tiers
+
+    def test_all_concepts_in_at_least_one_stage(self, feynman_manager):
+        paths = compute_feynman_learning_paths(feynman_manager)
+        all_in_stages = set()
+        for stage in paths[0].stages:
+            all_in_stages.update(stage.concept_ids)
+        for c in feynman_manager._concepts:
+            assert c in all_in_stages, f"Concept {c} missing from all stages"
+
+    def test_empty_ontology_returns_empty(self):
+        mgr = OntologyManager()
+        paths = compute_feynman_learning_paths(mgr)
+        assert len(paths) == 0
+
+    def test_concepts_without_feynman_data_handled(self):
+        mgr = OntologyManager()
+        mgr.add_concept(Concept(id="plain", label="Plain", pillar="aml"))
+        paths = compute_feynman_learning_paths(mgr)
+        # Should not crash; plain has no feynman fields but still diffs into gap_map stage
+        assert len(paths) == 1
+
+    def test_prerequisite_ordering(self, feynman_manager):
+        """Add a prerequisite edge and verify topological ordering."""
+        feynman_manager.add_relation(Relation(
+            source_id="b", target_id="a", relation_type="requires"
+        ))
+        paths = compute_feynman_learning_paths(feynman_manager)
+        eli5_stage = next(s for s in paths[0].stages if s.stage_type == "eli5")
+        # 'a' should come before 'b' (a is prerequisite of b)
+        idx_a = eli5_stage.concept_ids.index("a")
+        idx_b = eli5_stage.concept_ids.index("b")
+        assert idx_a < idx_b, "Prerequisite should come before dependent"

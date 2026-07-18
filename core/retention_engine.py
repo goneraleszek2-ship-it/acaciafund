@@ -1,7 +1,8 @@
-"""Retention & Retrieval Engine — SM-2 scheduling, gap detection, interleaved practice."""
+"""Retention & Retrieval — SM-2, gap detection, interleaved practice, Feynman review modes."""
 
 from __future__ import annotations
 
+import enum
 import json
 import random
 from dataclasses import dataclass, field
@@ -64,6 +65,192 @@ class InterleavedSession:
     items: List[ConceptReviewItem] = field(default_factory=list)
     pillar_order: List[str] = field(default_factory=list)
     session_size: int = 10
+
+
+# ---------------------------------------------------------------------------
+# Feynman Review Modes
+# ---------------------------------------------------------------------------
+
+
+class FeynmanReviewMode(enum.Enum):
+    """Modes for Feynman-style active recall review."""
+
+    ELI5 = "eli5"
+    TEACH_BACK = "teach_back"
+    ANALOGY_MAP = "analogy_map"
+    GAP_FIND = "gap_find"
+    BUILD_IT = "build_it"
+
+
+@dataclass
+class FeynmanAttempt:
+    """Records a single Feynman exercise attempt."""
+
+    concept_id: str
+    mode: FeynmanReviewMode
+    quality: int = 0  # 0-4 self-assessment scale
+    timestamp: float = 0.0
+    response: str = ""
+
+
+@dataclass
+class FeynmanReviewItem:
+    """A concept review card in Feynman mode."""
+
+    concept_id: str
+    mode: FeynmanReviewMode
+    prompt: str
+    expected_elements: List[str] = field(default_factory=list)
+    difficulty: int = 1
+
+
+FEYNMAN_MODE_WEIGHTS: Dict[FeynmanReviewMode, float] = {
+    FeynmanReviewMode.ELI5: 0.05,
+    FeynmanReviewMode.TEACH_BACK: 0.10,
+    FeynmanReviewMode.ANALOGY_MAP: 0.08,
+    FeynmanReviewMode.GAP_FIND: 0.07,
+    FeynmanReviewMode.BUILD_IT: 0.15,
+}
+
+
+def select_feynman_mode(
+    concept: Dict[str, Any],
+    history: List[FeynmanAttempt],
+    path_position: Optional[str] = None,
+) -> FeynmanReviewMode:
+    """Select the best Feynman mode for a concept based on learner history
+    and position in a Feynman learning path.
+
+    If path_position is provided, biases mode selection:
+      - "eli5" or "analogy" (early stages) → prefer ELI5, ANALOGY_MAP
+      - "concrete" (mid stage) → prefer GAP_FIND
+      - "build" or "teach_back" (late stages) → prefer BUILD_IT, TEACH_BACK
+
+    Otherwise falls back to history-based selection (prioritises untried modes,
+    then lowest average quality).
+    """
+    if path_position:
+        stage_biases = {
+            "eli5": [FeynmanReviewMode.ELI5, FeynmanReviewMode.ANALOGY_MAP],
+            "analogy": [FeynmanReviewMode.ANALOGY_MAP, FeynmanReviewMode.ELI5],
+            "concrete": [FeynmanReviewMode.GAP_FIND, FeynmanReviewMode.ELI5],
+            "gap_map": [FeynmanReviewMode.GAP_FIND, FeynmanReviewMode.TEACH_BACK],
+            "build": [FeynmanReviewMode.BUILD_IT, FeynmanReviewMode.TEACH_BACK],
+            "teach_back": [FeynmanReviewMode.TEACH_BACK, FeynmanReviewMode.BUILD_IT],
+        }
+        modes = stage_biases.get(path_position, [FeynmanReviewMode.ELI5])
+        attempted = {
+            a.mode for a in history
+            if a.concept_id in (concept.get("id"), concept.get("conceptSlug"))
+        }
+        for mode in modes:
+            if mode not in attempted:
+                return mode
+
+    # Fallback: standard history-based selection
+    ids = {concept.get("id"), concept.get("conceptSlug")}
+    attempted_modes = {a.mode for a in history if a.concept_id in ids}
+
+    priority_order = [
+        FeynmanReviewMode.BUILD_IT,
+        FeynmanReviewMode.TEACH_BACK,
+        FeynmanReviewMode.GAP_FIND,
+        FeynmanReviewMode.ANALOGY_MAP,
+        FeynmanReviewMode.ELI5,
+    ]
+
+    for mode in priority_order:
+        if mode not in attempted_modes:
+            return mode
+
+    # All attempted — return the one with lowest average quality
+    mode_qualities: Dict[FeynmanReviewMode, List[int]] = {}
+    for a in history:
+        if a.concept_id in (concept.get("id"), concept.get("conceptSlug")):
+            mode_qualities.setdefault(a.mode, []).append(a.quality)
+
+    worst = FeynmanReviewMode.ELI5
+    worst_avg = float("inf")
+    for mode, quals in mode_qualities.items():
+        avg = sum(quals) / len(quals)
+        if avg < worst_avg:
+            worst_avg = avg
+            worst = mode
+    return worst
+
+
+def get_feynman_prompt(concept: Dict[str, Any], mode: FeynmanReviewMode) -> str:
+    """Generate a review prompt for a concept in a given Feynman mode."""
+    label = concept.get("label", concept.get("conceptSlug", "this concept"))
+    prompts = {
+        FeynmanReviewMode.ELI5: (
+            f'Explain "{label}" like I am 5 years old. '
+            "One paragraph. No jargon. Use an everyday analogy."
+        ),
+        FeynmanReviewMode.TEACH_BACK: (
+            f'Teach "{label}" to a colleague who asks '
+            "'How does this work?' Cover: what it is, how it works, "
+            "why it matters. Use a concrete example."
+        ),
+        FeynmanReviewMode.ANALOGY_MAP: (
+            f'Create a NEW analogy for "{label}" — '
+            "different from the one in the concept card. "
+            "Explain why your analogy works and where it breaks down."
+        ),
+        FeynmanReviewMode.GAP_FIND: concept.get(
+            "teach_back_prompt",
+            f'Explain "{label}" in your own words. '
+            "Then list exactly what you are still unsure about.",
+        ),
+        FeynmanReviewMode.BUILD_IT: concept.get(
+            "build_exercise", {}
+        ).get(
+            "prompt",
+            f'Build something using "{label}" — code, a diagram, or '
+            "a calculation. Then explain your design choices.",
+        ),
+    }
+    return prompts.get(mode, prompts[FeynmanReviewMode.ELI5])
+
+
+def calculate_feynman_mastery(
+    state: MasteryState,
+    feynman_attempts: List[FeynmanAttempt],
+) -> float:
+    """Compute mastery score weighted by Feynman exercise completion.
+
+    Base SM-2 mastery is boosted by Feynman mode completion:
+    - ELI5: +0.05, Gap Find: +0.07, Analogy: +0.08
+    - Teach Back: +0.10, Build It: +0.15 (creation = deepest understanding)
+    """
+    base = calculate_mastery(state)
+    bonus = 0.0
+    for attempt in feynman_attempts:
+        if attempt.quality >= 3:
+            bonus += FEYNMAN_MODE_WEIGHTS.get(attempt.mode, 0.05)
+    return round(min(1.0, base + bonus), 3)
+
+
+def generate_feynman_review_items(
+    concept: Dict[str, Any],
+) -> List[FeynmanReviewItem]:
+    """Generate all possible Feynman review items for a given concept dict."""
+    feynman_data = concept.get("eli5_explanation") or concept.get("feynman_difficulty")
+    if not feynman_data:
+        return []
+
+    items = []
+    for mode in FeynmanReviewMode:
+        prompt = get_feynman_prompt(concept, mode)
+        difficulty = concept.get("feynman_difficulty", 2)
+        items.append(FeynmanReviewItem(
+            concept_id=concept.get("id") or concept.get("conceptSlug", ""),
+            mode=mode,
+            prompt=prompt,
+            expected_elements=concept.get("gap_questions", []),
+            difficulty=difficulty,
+        ))
+    return items
 
 
 # ---------------------------------------------------------------------------
@@ -172,8 +359,10 @@ def generate_concept_review_json(
 ) -> List[Dict[str, Any]]:
     """Generate JSON-serializable review items for the front-end."""
     items = generate_concept_reviews(manager, bloom_map)
-    return [
-        {
+    result = []
+    for item in items:
+        c = manager.get_concept(item.concept_slug)
+        result.append({
             "id": item.id,
             "conceptSlug": item.concept_slug,
             "label": item.label,
@@ -185,9 +374,16 @@ def generate_concept_review_json(
             "bloomLevel": item.bloom_level,
             "sourceInspiration": item.source_inspiration,
             "aliases": item.aliases[:5],
-        }
-        for item in items
-    ]
+            # Feynman fields
+            "eli5Explanation": getattr(c, "eli5_explanation", None),
+            "analogy": getattr(c, "analogy", None),
+            "concreteExample": getattr(c, "concrete_example", None),
+            "feynmanDifficulty": getattr(c, "feynman_difficulty", 1),
+            "gapQuestions": getattr(c, "gap_questions", []),
+            "teachBackPrompt": getattr(c, "teach_back_prompt", None),
+            "buildExercise": getattr(c, "build_exercise", None),
+        })
+    return result
 
 
 # ---------------------------------------------------------------------------

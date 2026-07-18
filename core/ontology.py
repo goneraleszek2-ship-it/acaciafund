@@ -83,6 +83,47 @@ class Concept(BaseModel):
         description="Concept IDs in other pillars sharing the same epistemic pattern",
     )
 
+    # Feynman learning framework fields
+    eli5_explanation: Optional[str] = Field(
+        default=None,
+        description="Explain Like I'm 5 — one paragraph, no jargon, for absolute beginners",
+    )
+    analogy: Optional[str] = Field(
+        default=None,
+        description="Real-world analogy that maps intuitively to this concept",
+    )
+    concrete_example: Optional[str] = Field(
+        default=None,
+        description="Specific worked example with numbers, code, or step-by-step walkthrough",
+    )
+    feynman_diagram: Optional[str] = Field(
+        default=None,
+        description="SVG or Mermaid diagram for visual / diagrammatic reasoning",
+    )
+    gap_questions: List[str] = Field(
+        default_factory=list,
+        description="Questions that reveal understanding gaps when the learner cannot answer them",
+    )
+    teach_back_prompt: Optional[str] = Field(
+        default=None,
+        description="Prompt asking the learner to explain the concept in their own words",
+    )
+    build_exercise: Optional[Dict[str, Any]] = Field(
+        default=None,
+        description=(
+            "Hands-on exercise: "
+            "{'type': 'code|calc|diagram', 'prompt': str, 'solution': str}"
+        ),
+    )
+    feynman_difficulty: int = Field(
+        default=1, ge=1, le=5,
+        description="1=trivial to explain, 5=requires deep prerequisite knowledge",
+    )
+    explanation_quality: float = Field(
+        default=0.0, ge=0.0, le=1.0,
+        description="Internal quality score for Feynman-generated explanations",
+    )
+
     created_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
     updated_at: str = Field(default_factory=lambda: datetime.now(timezone.utc).isoformat())
 

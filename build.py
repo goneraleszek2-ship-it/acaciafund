@@ -75,6 +75,7 @@ from core.learning_paths import (
     generate_learning_path_context,
     generate_cross_pillar_synthesis,
 )
+from core.schema_builder import compute_feynman_learning_paths
 
 
 # --- Knowledge Graph Generation ---
@@ -1561,6 +1562,15 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
         try:
             from core.ontology import OntologyManager, extract_concepts_from_text
             ontology = OntologyManager.load(ontology_path)
+            # Enrich ontology with Feynman learning framework metadata
+            try:
+                from scripts.enrich_feynman import enrich_all_with_stubs
+                enrich_all_with_stubs(ontology_path, ontology_path)
+                ontology = OntologyManager.load(ontology_path)
+                eli5_count = sum(1 for c in ontology._concepts.values() if c.eli5_explanation)
+                print(f"  Feynman-enriched ontology: {ontology.concept_count()} concepts ({eli5_count} with ELI5)")
+            except Exception as fe:
+                print(f"  Feynman enrichment skipped ({fe})")
             print(f"  Loaded ontology: {ontology.concept_count()} concepts, {ontology.relation_count()} relations")
         except Exception as e:
             print(f"  Ontology load failed: {e}")
@@ -1922,6 +1932,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                             _concept_cross_pillar = getattr(concept, "cross_pillar_analogs", None) or []
                             ontology_concepts.append({
                                 "id": concept.id,
+                                "label": concept.label,
                                 "name": concept.label,
                                 "description": concept.description,
                                 "score": round(score, 2),
@@ -1930,6 +1941,16 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                                 "normative_basis": _concept_norm_basis,
                                 "philosophical_sources": _concept_phil_sources,
                                 "cross_pillar_analogs": _concept_cross_pillar,
+                                # Feynman fields
+                                "eli5_explanation": getattr(concept, "eli5_explanation", None),
+                                "analogy": getattr(concept, "analogy", None),
+                                "concrete_example": getattr(concept, "concrete_example", None),
+                                "feynman_diagram": getattr(concept, "feynman_diagram", None),
+                                "gap_questions": getattr(concept, "gap_questions", []),
+                                "teach_back_prompt": getattr(concept, "teach_back_prompt", None),
+                                "build_exercise": getattr(concept, "build_exercise", None),
+                                "feynman_difficulty": getattr(concept, "feynman_difficulty", 1),
+                                "explanation_quality": getattr(concept, "explanation_quality", 0.0),
                             })
                     ontology_concepts = ontology_concepts[:8]
                 except Exception:
@@ -2120,8 +2141,18 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                             ontology_concepts.append({
                                 "id": concept.id,
                                 "name": concept.label,
+                                "label": concept.label,
                                 "description": concept.description,
                                 "score": round(score, 2),
+                                # Feynman fields
+                                "eli5_explanation": getattr(concept, "eli5_explanation", None),
+                                "analogy": getattr(concept, "analogy", None),
+                                "concrete_example": getattr(concept, "concrete_example", None),
+                                "feynman_diagram": getattr(concept, "feynman_diagram", None),
+                                "gap_questions": getattr(concept, "gap_questions", []),
+                                "teach_back_prompt": getattr(concept, "teach_back_prompt", None),
+                                "build_exercise": getattr(concept, "build_exercise", None),
+                                "feynman_difficulty": getattr(concept, "feynman_difficulty", 1),
                             })
                     ontology_concepts = ontology_concepts[:8]
                 except Exception:
@@ -3165,6 +3196,16 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                         "governance_model": getattr(_concept, "governance_model", "") or "",
                         "philosophical_sources": getattr(_concept, "philosophical_sources", None) or [],
                         "cross_pillar_analogs": getattr(_concept, "cross_pillar_analogs", None) or [],
+                        # Feynman fields
+                        "eli5_explanation": getattr(_concept, "eli5_explanation", None),
+                        "analogy": getattr(_concept, "analogy", None),
+                        "concrete_example": getattr(_concept, "concrete_example", None),
+                        "feynman_diagram": getattr(_concept, "feynman_diagram", None),
+                        "gap_questions": getattr(_concept, "gap_questions", []),
+                        "teach_back_prompt": getattr(_concept, "teach_back_prompt", None),
+                        "build_exercise": getattr(_concept, "build_exercise", None),
+                        "feynman_difficulty": getattr(_concept, "feynman_difficulty", 1),
+                        "explanation_quality": getattr(_concept, "explanation_quality", 0.0),
                     },
                     has_learning_path=_has_lp,
                     related_items=_related_items,
@@ -3200,6 +3241,51 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                 (_lp_dir / "index.html").write_text(_lp_html, encoding="utf-8")
                 _lp_count += 1
             print(f"  learning paths: {_lp_count} pages")
+
+        # --- Feynman learning path pages ---
+        _feynman_paths = compute_feynman_learning_paths(ontology)
+        # Build concept map for template
+        _feynman_concept_map = {}
+        for _c in ontology._concepts.values():
+            _feynman_concept_map[_c.id] = {
+                "id": _c.id,
+                "label": _c.label,
+                "pillar": _c.pillar,
+                "description": _c.description,
+                "feynman_difficulty": getattr(_c, "feynman_difficulty", 1),
+                "eli5_explanation": getattr(_c, "eli5_explanation", None),
+                "analogy": getattr(_c, "analogy", None),
+                "concrete_example": getattr(_c, "concrete_example", None),
+                "gap_questions": getattr(_c, "gap_questions", []),
+                "teach_back_prompt": getattr(_c, "teach_back_prompt", None),
+                "build_exercise": getattr(_c, "build_exercise", None),
+            }
+        _feynman_count = 0
+        for _fp in _feynman_paths:
+            _fp_pillar_url = pillar_to_url(_fp.pillar)
+            _fp_pc = PILLAR_CONFIG.get(_fp.pillar, {})
+            _fp_html = render_template(
+                "feynman_learning_path.j2",
+                content=_dummy(
+                    f"Feynman Learning Path — {_fp_pc.get('label', _fp.pillar)} — AcaciaFund",
+                    "index",
+                    description=f"Feynman-scaffolded learning path for {_fp_pc.get('label', _fp.pillar)} with {_fp.total_concepts} concepts across {len(_fp.stages)} stages.",
+                ),
+                stages=_fp.stages,
+                total_concepts=_fp.total_concepts,
+                difficulty_tiers=_fp.difficulty_tiers,
+                concept_map=_feynman_concept_map,
+                pillar_label=_fp_pc.get("label", _fp.pillar),
+                pillar_color=_fp_pc.get("color", "#6366f1"),
+                pillar_url=_fp_pillar_url,
+                page_path=f"{_fp_pillar_url}/learn/feynman-path/",
+                **ctx_base,
+            )
+            _fp_dir = OUTPUT_DIR / _fp_pillar_url / "learn" / "feynman-path"
+            _fp_dir.mkdir(parents=True, exist_ok=True)
+            (_fp_dir / "index.html").write_text(_fp_html, encoding="utf-8")
+            _feynman_count += 1
+        print(f"  feynman paths: {_feynman_count} pages")
 
         # --- Cross-pillar synthesis pages ---
         _synth = generate_cross_pillar_synthesis(all_content, concept_content_map, PILLAR_CONFIG, ontology)

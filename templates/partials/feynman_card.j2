@@ -1,0 +1,122 @@
+{# Feynman Concept Card — progressive-disclosure layers for ease of understanding #}
+<div class="feynman-card ghost-card p-5 mb-6" data-concept="{{ concept.id }}">
+
+  {# LAYER 1: ELI5 — always visible #}
+  <div class="feynman-layer eli5-layer mb-4">
+    <div class="flex items-center gap-2 mb-2">
+      <span class="inline-block text-xs font-semibold uppercase tracking-wider px-2 py-0.5 rounded" style="background:color-mix(in srgb, #d97706 12%, transparent);color:#d97706">ELI5</span>
+      <span class="w-px h-4" style="background:color-mix(in srgb, #d97706 30%, transparent)"></span>
+      <span class="text-xs" style="color:var(--color-text-muted)">Explain like I'm 5</span>
+    </div>
+    <p class="text-sm leading-relaxed" style="color:var(--color-text-secondary)">{{ concept.eli5_explanation or concept.description or "No simple explanation yet." }}</p>
+  </div>
+
+  {# LAYER 2: ANALOGY — expandable #}
+  {% if concept.analogy %}
+  <details class="feynman-layer analogy-layer mb-3 group">
+    <summary class="flex items-center gap-2 cursor-pointer py-1 list-none select-none" style="color:var(--color-text)">
+      <svg class="w-3.5 h-3.5 transition-transform duration-200 group-open:rotate-90" fill="none" stroke="#2563eb" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      <span class="text-xs font-semibold uppercase tracking-wider" style="color:#2563eb">Analogy</span>
+    </summary>
+    <div class="mt-2 p-3 rounded text-sm" style="background:color-mix(in srgb, #2563eb 6%, transparent);border:1px solid color-mix(in srgb, #2563eb 15%, transparent);color:var(--color-text-secondary)">
+      {{ concept.analogy }}
+    </div>
+  </details>
+  {% endif %}
+
+  {# LAYER 3: CONCRETE EXAMPLE — expandable #}
+  {% if concept.concrete_example %}
+  <details class="feynman-layer example-layer mb-3 group">
+    <summary class="flex items-center gap-2 cursor-pointer py-1 list-none select-none" style="color:var(--color-text)">
+      <svg class="w-3.5 h-3.5 transition-transform duration-200 group-open:rotate-90" fill="none" stroke="#16a34a" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      <span class="text-xs font-semibold uppercase tracking-wider" style="color:#16a34a">Example</span>
+    </summary>
+    <div class="mt-2 p-3 rounded text-sm" style="background:color-mix(in srgb, #16a34a 6%, transparent);border:1px solid color-mix(in srgb, #16a34a 15%, transparent);color:var(--color-text-secondary);font-family:ui-monospace,SFMono-Regular,Menlo,monospace">
+      {{ concept.concrete_example }}
+    </div>
+  </details>
+  {% endif %}
+
+  {# LAYER 4: FEYNMAN DIAGRAM — visual reasoning #}
+  {% if concept.feynman_diagram %}
+  <details class="feynman-layer diagram-layer mb-3 group">
+    <summary class="flex items-center gap-2 cursor-pointer py-1 list-none select-none" style="color:var(--color-text)">
+      <svg class="w-3.5 h-3.5 transition-transform duration-200 group-open:rotate-90" fill="none" stroke="#7c3aed" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      <span class="text-xs font-semibold uppercase tracking-wider" style="color:#7c3aed">Diagram</span>
+    </summary>
+    <div class="mt-2 p-3 rounded text-sm" style="background:color-mix(in srgb, #7c3aed 6%, transparent);border:1px solid color-mix(in srgb, #7c3aed 15%, transparent);color:var(--color-text-secondary)">
+      {{ concept.feynman_diagram | safe }}
+    </div>
+  </details>
+  {% endif %}
+
+  {# LAYER 5: GAP QUESTIONS — self-diagnosis #}
+  {% if concept.gap_questions and concept.gap_questions | length > 0 %}
+  <details class="feynman-layer gaps-layer mb-3 group">
+    <summary class="flex items-center gap-2 cursor-pointer py-1 list-none select-none" style="color:var(--color-text)">
+      <svg class="w-3.5 h-3.5 transition-transform duration-200 group-open:rotate-90" fill="none" stroke="#dc2626" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      <span class="text-xs font-semibold uppercase tracking-wider" style="color:#dc2626">Gaps</span>
+    </summary>
+    <div class="mt-2 space-y-2">
+      {% for q in concept.gap_questions %}
+      <div class="p-2 rounded text-sm" style="background:color-mix(in srgb, #dc2626 6%, transparent);border:1px solid color-mix(in srgb, #dc2626 12%, transparent);color:var(--color-text-secondary)">
+        {{ q }}
+      </div>
+      {% endfor %}
+    </div>
+  </details>
+  {% endif %}
+
+  {# LAYER 6: TEACH BACK — active recall #}
+  {% if concept.teach_back_prompt %}
+  <div class="feynman-layer teachback-layer mb-3 p-3 rounded" style="background:color-mix(in srgb, var(--color-accent) 8%, transparent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
+    <div class="flex items-center gap-2 mb-2">
+      <svg class="w-4 h-4" fill="none" stroke="var(--color-accent)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+      <span class="text-xs font-semibold uppercase tracking-wider" style="color:var(--color-accent)">Teach Back</span>
+    </div>
+    <p class="text-sm mb-2" style="color:var(--color-text-secondary)">{{ concept.teach_back_prompt }}</p>
+    <textarea class="teachback-input w-full min-h-[60px] p-2 text-sm rounded border" placeholder="Write your explanation here..." style="background:var(--color-bg);border-color:var(--color-border);color:var(--color-text);resize:vertical" data-teachback="{{ concept.id }}"></textarea>
+    <button class="teachback-submit mt-2 text-xs px-3 py-1.5 rounded font-semibold border-0 cursor-pointer" style="background:var(--color-accent);color:#fff" data-submit-teachback="{{ concept.id }}">Submit Explanation</button>
+  </div>
+  {% endif %}
+
+  {# LAYER 7: BUILD EXERCISE — "what I cannot create, I do not understand" #}
+  {% if concept.build_exercise %}
+  <details class="feynman-layer build-layer group">
+    <summary class="flex items-center gap-2 cursor-pointer py-1 list-none select-none" style="color:var(--color-text)">
+      <svg class="w-3.5 h-3.5 transition-transform duration-200 group-open:rotate-90" fill="none" stroke="#ea580c" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      <span class="text-xs font-semibold uppercase tracking-wider" style="color:#ea580c">Build</span>
+    </summary>
+    <div class="mt-2 p-3 rounded text-sm" style="background:color-mix(in srgb, #ea580c 6%, transparent);border:1px solid color-mix(in srgb, #ea580c 15%, transparent)">
+      <p class="font-mono mb-2" style="color:var(--color-text)">{{ concept.build_exercise.prompt }}</p>
+      {% if concept.build_exercise.type == "code" %}
+      <textarea class="build-exercise-input w-full min-h-[120px] p-2 text-xs font-mono rounded border" placeholder="Write your solution..." style="background:var(--color-bg);border-color:var(--color-border);color:var(--color-text);resize:vertical"></textarea>
+      {% endif %}
+      <details class="mt-2">
+        <summary class="text-xs cursor-pointer select-none" style="color:var(--color-text-muted)">Show solution</summary>
+        <pre class="mt-2 p-3 text-xs font-mono rounded overflow-x-auto" style="background:var(--color-bg);border:1px solid var(--color-border);color:var(--color-text-secondary)">{{ concept.build_exercise.solution }}</pre>
+      </details>
+    </div>
+  </details>
+  {% endif %}
+
+  {# Footer: difficulty indicator #}
+  {% if concept.feynman_difficulty %}
+  <div class="mt-4 pt-3 border-t flex items-center gap-2 text-xs" style="border-color:var(--color-border);color:var(--color-text-muted)">
+    <span>Explanation difficulty:</span>
+    <span class="flex gap-0.5">
+      {% for i in range(5) %}
+      <span class="inline-block w-2 h-2 rounded-full {% if i < concept.feynman_difficulty %}" style="background:var(--color-accent){%
+        else %}" style="background:var(--color-border){%
+        endif %}"></span>
+      {% endfor %}
+    </span>
+    <span>
+      {% if concept.feynman_difficulty <= 2 %}Beginner-friendly
+      {% elif concept.feynman_difficulty == 3 %}Intermediate
+      {% else %}Advanced
+      {% endif %}
+    </span>
+  </div>
+  {% endif %}
+</div>

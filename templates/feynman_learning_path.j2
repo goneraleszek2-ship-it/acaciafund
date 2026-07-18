@@ -1,0 +1,225 @@
+{% extends "layout.j2" %}
+{% block main_content %}
+<nav aria-label="Breadcrumb" class="mb-4 text-xs" style="color:var(--color-text-muted)">
+  <ol class="flex flex-wrap items-center gap-1.5">
+    <li><a href="/" class="hover:text-[var(--color-accent)] transition">Home</a></li>
+    <li aria-hidden="true">/</li>
+    <li><a href="/{{ pillar_url }}/" class="hover:text-[var(--color-accent)] transition">{{ pillar_label }}</a></li>
+    <li aria-hidden="true">/</li>
+    <li aria-current="page">Feynman Learning Path</li>
+  </ol>
+</nav>
+
+<header class="mb-6">
+  <div class="flex items-center gap-2 mb-2">
+    <span class="text-xs px-2 py-0.5 rounded font-semibold" style="background:color-mix(in srgb, {{ pillar_color }} 15%, transparent);color:{{ pillar_color }}">{{ pillar_label }}</span>
+    <span class="text-xs px-2 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Feynman Path</span>
+  </div>
+  <h1 class="text-2xl font-extrabold" style="color:var(--color-text)">Feynman Learning Path</h1>
+  <p class="mt-1 text-sm" style="color:var(--color-text-muted)">
+    {{ total_concepts }} concepts · {{ stages | length }} stages
+    · Difficulty tiers: {{ difficulty_tiers | join(", ") }}
+  </p>
+</header>
+
+<div class="mb-6">
+  <div class="ghost-card p-4">
+    <p class="text-xs leading-relaxed" style="color:var(--color-text-secondary)">
+      The Feynman Technique is a four-step learning method: pick a concept, teach it to a child,
+      identify gaps, review and simplify. This path scaffolds concepts through six progressive stages:
+      <strong class="font-semibold" style="color:var(--color-text)">Explain → Analogize → Exemplify → Find Gaps → Build → Teach Back</strong>.
+      Complete each stage before moving to the next.
+    </p>
+  </div>
+</div>
+
+{%- if stages %}
+<div class="space-y-8">
+  {%- for stage in stages %}
+  <section class="feynman-stage ghost-card overflow-hidden" data-stage="{{ stage.stage_type }}" data-stage-idx="{{ loop.index0 }}">
+    <div class="p-4 border-b" style="border-color:var(--color-border)">
+      <div class="flex items-center gap-3 mb-1">
+        <span class="inline-flex items-center justify-center w-8 h-8 rounded-full text-sm font-bold shrink-0" style="background:color-mix(in srgb, {{ pillar_color }} 15%, transparent);color:{{ pillar_color }}">{{ loop.index }}</span>
+        <div>
+          <h2 class="text-base font-bold" style="color:var(--color-text)">{{ stage.label }}</h2>
+          <p class="text-xs" style="color:var(--color-text-muted)">{{ stage.description }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="p-4">
+      <p class="text-xs italic mb-3 px-3 py-2 rounded" style="background:var(--color-bg);color:var(--color-text-secondary);border-left:3px solid {{ pillar_color }}">
+        {{ stage.prompt }}
+      </p>
+
+      <div class="space-y-2">
+        {%- for cid in stage.concept_ids %}
+        {%- set concept = concept_map.get(cid, {}) %}
+        <div class="flex items-center gap-2 py-1 px-2 rounded hover:bg-[var(--color-bg)] transition">
+          <span class="text-xs text-[var(--color-text-muted)] w-5 shrink-0 text-right">{{ loop.index }}.</span>
+          <a href="/concepts/{{ cid }}/" class="text-sm font-semibold no-underline hover:opacity-80 transition" style="color:var(--color-accent)">
+            {{ concept.get("label", cid) }}
+          </a>
+          {%- set fd = concept.get("feynman_difficulty", 1) %}
+          <span class="text-[10px] px-1.5 py-0.5 rounded-full ml-auto shrink-0" style="background:color-mix(in srgb, {% if fd <= 2 %}#22c55e{% elif fd == 3 %}#f59e0b{% else %}#ef4444{% endif %} 12%, transparent);color:{% if fd <= 2 %}#22c55e{% elif fd == 3 %}#f59e0b{% else %}#ef4444{% endif %}">
+            D{{ fd }}
+          </span>
+        </div>
+        {%- endfor %}
+      </div>
+    </div>
+
+    {%- if stage.stage_type == "eli5" %}
+    <div class="px-4 pb-4">
+      <details class="text-xs" style="color:var(--color-text-muted)">
+        <summary class="cursor-pointer font-semibold" style="color:var(--color-accent)">Show ELI5 previews</summary>
+        <div class="mt-2 space-y-2">
+          {%- for cid in stage.concept_ids %}
+          {%- set concept = concept_map.get(cid, {}) %}
+          {%- set eli5 = concept.get("eli5_explanation") %}
+          {%- if eli5 %}
+          <div class="p-2 rounded" style="background:var(--color-bg)">
+            <span class="font-semibold" style="color:var(--color-text)">{{ concept.get("label", cid) }}:</span>
+            <span>{{ eli5[:200] }}{% if eli5|length > 200 %}…{% endif %}</span>
+          </div>
+          {%- endif %}
+          {%- endfor %}
+        </div>
+      </details>
+    </div>
+    {%- endif %}
+
+    {%- if stage.stage_type == "analogy" %}
+    <div class="px-4 pb-4">
+      <details class="text-xs" style="color:var(--color-text-muted)">
+        <summary class="cursor-pointer font-semibold" style="color:var(--color-accent)">Show analogies</summary>
+        <div class="mt-2 space-y-2">
+          {%- for cid in stage.concept_ids %}
+          {%- set concept = concept_map.get(cid, {}) %}
+          {%- set analogy = concept.get("analogy") %}
+          {%- if analogy %}
+          <div class="p-2 rounded" style="background:var(--color-bg)">
+            <span class="font-semibold" style="color:var(--color-text)">{{ concept.get("label", cid) }}:</span>
+            <span>{{ analogy[:200] }}{% if analogy|length > 200 %}…{% endif %}</span>
+          </div>
+          {%- endif %}
+          {%- endfor %}
+        </div>
+      </details>
+    </div>
+    {%- endif %}
+
+    {%- if stage.stage_type == "concrete" %}
+    <div class="px-4 pb-4">
+      <details class="text-xs" style="color:var(--color-text-muted)">
+        <summary class="cursor-pointer font-semibold" style="color:var(--color-accent)">Show examples</summary>
+        <div class="mt-2 space-y-2">
+          {%- for cid in stage.concept_ids %}
+          {%- set concept = concept_map.get(cid, {}) %}
+          {%- set example = concept.get("concrete_example") %}
+          {%- if example %}
+          <div class="p-2 rounded" style="background:var(--color-bg);white-space:pre-wrap;font-family:monospace;font-size:11px">
+            <span class="font-semibold" style="color:var(--color-text);font-family:sans-serif">{{ concept.get("label", cid) }}</span>
+            <br>{{ example[:300] }}{% if example|length > 300 %}…{% endif %}
+          </div>
+          {%- endif %}
+          {%- endfor %}
+        </div>
+      </details>
+    </div>
+    {%- endif %}
+
+    {%- if stage.stage_type == "gap_map" %}
+    <div class="px-4 pb-4">
+      <details class="text-xs" style="color:var(--color-text-muted)">
+        <summary class="cursor-pointer font-semibold" style="color:var(--color-accent)">Show gap questions</summary>
+        <div class="mt-2 space-y-3">
+          {%- for cid in stage.concept_ids %}
+          {%- set concept = concept_map.get(cid, {}) %}
+          {%- set gap_questions = concept.get("gap_questions", []) %}
+          {%- if gap_questions %}
+          <div class="p-2 rounded" style="background:var(--color-bg)">
+            <span class="font-semibold block mb-1" style="color:var(--color-text)">{{ concept.get("label", cid) }}</span>
+            <ul class="list-disc pl-4 space-y-0.5">
+              {%- for q in gap_questions %}
+              <li>{{ q }}</li>
+              {%- endfor %}
+            </ul>
+          </div>
+          {%- endif %}
+          {%- endfor %}
+        </div>
+      </details>
+    </div>
+    {%- endif %}
+
+    {%- if stage.stage_type == "build" %}
+    <div class="px-4 pb-4">
+      <details class="text-xs" style="color:var(--color-text-muted)">
+        <summary class="cursor-pointer font-semibold" style="color:var(--color-accent)">Show build exercises</summary>
+        <div class="mt-2 space-y-3">
+          {%- for cid in stage.concept_ids %}
+          {%- set concept = concept_map.get(cid, {}) %}
+          {%- set be = concept.get("build_exercise") %}
+          {%- if be %}
+          <div class="p-3 rounded" style="background:var(--color-bg)">
+            <span class="font-semibold block mb-1" style="color:var(--color-text)">{{ concept.get("label", cid) }}</span>
+            <div class="whitespace-pre-wrap font-mono" style="font-size:11px;color:var(--color-text-secondary)">
+              {{- be.get("prompt", "No prompt") -}}
+            </div>
+            {%- if be.get("solution") %}
+            <details class="mt-1">
+              <summary class="cursor-pointer font-semibold" style="color:var(--color-accent)">Solution</summary>
+              <div class="mt-1 whitespace-pre-wrap font-mono p-2 rounded" style="background:var(--color-surface);font-size:11px;color:var(--color-text-secondary)">{{ be.get("solution", "")[:400] }}</div>
+            </details>
+            {%- endif %}
+          </div>
+          {%- endif %}
+          {%- endfor %}
+        </div>
+      </details>
+    </div>
+    {%- endif %}
+
+    {%- if stage.stage_type == "teach_back" %}
+    <div class="px-4 pb-4">
+      <details class="text-xs" style="color:var(--color-text-muted)">
+        <summary class="cursor-pointer font-semibold" style="color:var(--color-accent)">Show teach-back prompts</summary>
+        <div class="mt-2 space-y-2">
+          {%- for cid in stage.concept_ids %}
+          {%- set concept = concept_map.get(cid, {}) %}
+          {%- set prompt = concept.get("teach_back_prompt") %}
+          {%- if prompt %}
+          <div class="p-2 rounded" style="background:var(--color-bg)">
+            <span class="font-semibold" style="color:var(--color-text)">{{ concept.get("label", cid) }}:</span>
+            <span>{{ prompt[:200] }}{% if prompt|length > 200 %}…{% endif %}</span>
+          </div>
+          {%- endif %}
+          {%- endfor %}
+        </div>
+      </details>
+    </div>
+    {%- endif %}
+  </section>
+  {%- endfor %}
+</div>
+
+<div class="mt-8 ghost-card p-4">
+  <h3 class="text-sm font-bold mb-2" style="color:var(--color-text)">How to use this path</h3>
+  <ol class="text-xs space-y-1" style="color:var(--color-text-muted)">
+    <li>1. Start at <strong class="font-semibold" style="color:var(--color-text)">Stage 1 (ELI5)</strong> — read each concept's plain-English explanation.</li>
+    <li>2. Move to <strong class="font-semibold" style="color:var(--color-text)">Stage 2 (Analogy)</strong> — internalise the real-world mapping.</li>
+    <li>3. Work through <strong class="font-semibold" style="color:var(--color-text)">Stage 3 (Concrete)</strong> — run the code or follow the numbers.</li>
+    <li>4. Test yourself with <strong class="font-semibold" style="color:var(--color-text)">Stage 4 (Gap Map)</strong> — honestly flag what you don't know.</li>
+    <li>5. Prove you understand with <strong class="font-semibold" style="color:var(--color-text)">Stage 5 (Build)</strong> — create something real.</li>
+    <li>6. Solidify with <strong class="font-semibold" style="color:var(--color-text)">Stage 6 (Teach Back)</strong> — explain it to someone else.</li>
+  </ol>
+</div>
+{%- else %}
+<div class="ghost-card p-8 text-center">
+  <p class="text-sm" style="color:var(--color-text-muted)">No concepts with Feynman metadata in this pillar yet. Add feynman_metadata.json entries to build a path.</p>
+</div>
+{%- endif %}
+
+{% include 'partials/newsletter.html' %}
+{% endblock %}
