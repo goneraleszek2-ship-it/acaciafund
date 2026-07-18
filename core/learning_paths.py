@@ -9,11 +9,9 @@ import networkx as nx
 
 from core.ontology import OntologyManager
 from core.schema_builder import (
-    FeynmanLearningPath,
     LearningPath,
     build_prerequisite_graph,
     categorize_by_bloom,
-    compute_feynman_learning_paths,
     compute_learning_paths,
 )
 
@@ -232,8 +230,12 @@ def generate_cross_pillar_synthesis(
         }
 
     return {
-        "bridges": dict(sorted(bridges.items(), key=lambda x: -x[1]["total_content"])),
-        "enriched_bridges": dict(sorted(enriched_bridges.items(), key=lambda x: -x[1]["total_content"])),
+        "bridges": dict(
+            sorted(bridges.items(), key=lambda x: -x[1]["total_content"])
+        ),
+        "enriched_bridges": dict(
+            sorted(enriched_bridges.items(), key=lambda x: -x[1]["total_content"])
+        ),
         "analog_matrix": analog_matrix,
         "timeline": dict(sorted(timeline.items())),
         "pillar_counts": {p: len(items) for p, items in by_pillar.items()},

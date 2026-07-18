@@ -1567,11 +1567,19 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                 from scripts.enrich_feynman import enrich_all_with_stubs
                 enrich_all_with_stubs(ontology_path, ontology_path)
                 ontology = OntologyManager.load(ontology_path)
-                eli5_count = sum(1 for c in ontology._concepts.values() if c.eli5_explanation)
-                print(f"  Feynman-enriched ontology: {ontology.concept_count()} concepts ({eli5_count} with ELI5)")
+                eli5_count = sum(
+                    1 for c in ontology._concepts.values() if c.eli5_explanation
+                )
+                print(
+                    f"  Feynman-enriched ontology: {ontology.concept_count()} "
+                    f"concepts ({eli5_count} with ELI5)"
+                )
             except Exception as fe:
                 print(f"  Feynman enrichment skipped ({fe})")
-            print(f"  Loaded ontology: {ontology.concept_count()} concepts, {ontology.relation_count()} relations")
+            print(
+                f"  Loaded ontology: {ontology.concept_count()} concepts, "
+                f"{ontology.relation_count()} relations"
+            )
         except Exception as e:
             print(f"  Ontology load failed: {e}")
             ontology = None
@@ -3269,7 +3277,12 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                 content=_dummy(
                     f"Feynman Learning Path — {_fp_pc.get('label', _fp.pillar)} — AcaciaFund",
                     "index",
-                    description=f"Feynman-scaffolded learning path for {_fp_pc.get('label', _fp.pillar)} with {_fp.total_concepts} concepts across {len(_fp.stages)} stages.",
+                    description=(
+                        f"Feynman-scaffolded learning path for "
+                        f"{_fp_pc.get('label', _fp.pillar)} with "
+                        f"{_fp.total_concepts} concepts across "
+                        f"{len(_fp.stages)} stages."
+                    ),
                 ),
                 stages=_fp.stages,
                 total_concepts=_fp.total_concepts,
