@@ -17,6 +17,7 @@
   <button class="review-tab flex-1 px-3 py-2 text-xs font-semibold rounded-md transition" role="tab" aria-selected="true" data-tab="all" style="background:var(--color-surface);color:var(--color-text)">All</button>
   <button class="review-tab flex-1 px-3 py-2 text-xs font-semibold rounded-md transition" role="tab" aria-selected="false" data-tab="flashcards" style="color:var(--color-text-muted)">Flashcards</button>
   <button class="review-tab flex-1 px-3 py-2 text-xs font-semibold rounded-md transition" role="tab" aria-selected="false" data-tab="concepts" style="color:var(--color-text-muted)">Concepts</button>
+  <button class="review-tab flex-1 px-3 py-2 text-xs font-semibold rounded-md transition" role="tab" aria-selected="false" data-tab="feynman" style="color:var(--color-text-muted)">Feynman</button>
 </div>
 
 <div id="review-flashcard-section">
@@ -73,6 +74,30 @@
   <h2 class="text-xl font-extrabold mb-2" style="color:var(--color-text)">Concept Mastery</h2>
   <p class="text-sm mb-6" style="color:var(--color-text-muted)">Track retention of all 70+ ontology concepts across pillars. Includes gap detection and interleaved practice.</p>
   <div id="concept-mastery-dashboard"></div>
+</section>
+</div>
+
+<div id="review-feynman-section" style="display:none">
+<section>
+  <h2 class="text-xl font-extrabold mb-2" style="color:var(--color-text)">Feynman Technique</h2>
+  <p class="text-sm mb-6" style="color:var(--color-text-muted)">Deepen understanding by explaining concepts in your own words — ELI5, teach-back, analogies, gap-finding, and build exercises. Self-assess after each attempt.</p>
+  <div id="feynman-mode-selector" class="flex flex-wrap gap-2 mb-6">
+    <button data-feynman-mode="eli5" class="feynman-mode-btn px-4 py-2 text-xs font-semibold rounded-lg transition" style="background:#22c55e;color:#fff">Explain Like I'm 5</button>
+    <button data-feynman-mode="teach_back" class="feynman-mode-btn px-4 py-2 text-xs font-semibold rounded-lg transition" style="background:#3b82f6;color:#fff">Teach Back</button>
+    <button data-feynman-mode="analogy_map" class="feynman-mode-btn px-4 py-2 text-xs font-semibold rounded-lg transition" style="background:#f59e0b;color:#fff">New Analogy</button>
+    <button data-feynman-mode="gap_find" class="feynman-mode-btn px-4 py-2 text-xs font-semibold rounded-lg transition" style="background:#ef4444;color:#fff">Find Gaps</button>
+    <button data-feynman-mode="build_it" class="feynman-mode-btn px-4 py-2 text-xs font-semibold rounded-lg transition" style="background:#8b5cf6;color:#fff">Build It</button>
+  </div>
+  <div id="feynman-mastery-bars" class="mb-6">
+    <h3 class="text-sm font-semibold mb-3" style="color:var(--color-text)">Feynman Mastery (SM-2 + mode completion bonus)</h3>
+    <div id="feynman-mastery-container" class="space-y-3"></div>
+  </div>
+  <div class="text-center">
+    <button id="start-feynman-session" class="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded-lg transition hover:opacity-80" style="background:var(--color-accent);color:#fff">
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+      Start Feynman Practice
+    </button>
+  </div>
 </section>
 </div>
 
@@ -140,6 +165,63 @@
   }
 })();
 
+document.addEventListener('DOMContentLoaded', function() {
+  if (window.AcaciaRetention) {
+    var feynmanEngine = new AcaciaRetention();
+    feynmanEngine.loadConceptData().then(function() {
+      var feynmanMasteryContainer = document.getElementById('feynman-mastery-container');
+      if (feynmanMasteryContainer) {
+        var breakdown = feynmanEngine.getPillarBreakdown();
+        var feynmanHistory = JSON.parse(localStorage.getItem('acacia_feynman_history') || '[]');
+        var html = '';
+        for (var pKey in breakdown) {
+          var p = breakdown[pKey];
+          var pillarInfo = { aml: { label: 'Compliance', color: '#ef4444' }, stock: { label: 'Markets', color: '#f59e0b' }, 'data-engineering': { label: 'Data Engineering', color: '#3b82f6' } }[pKey] || { label: pKey, color: '#6366f1' };
+          var masteredCount = p.mastered || 0;
+          var pct = p.total ? Math.round((masteredCount / p.total) * 100) : 0;
+          html += '<div class="ghost-card p-3"><div class="flex items-center justify-between mb-1"><span class="text-xs font-semibold" style="color:' + pillarInfo.color + '">' + pillarInfo.label + '</span><span class="text-xs" style="color:var(--color-text-muted)">' + feynmanHistory.filter(function(h) { return h.quality >= 3; }).length + ' quality attempts</span></div><div class="h-2 rounded-full overflow-hidden" style="background:color-mix(in srgb, ' + pillarInfo.color + ' 15%, transparent)"><div class="h-full rounded-full transition-all" style="width:' + pct + '%;background:' + pillarInfo.color + '"></div></div><div class="flex justify-between mt-1"><span class="text-[10px]" style="color:var(--color-text-muted)">Feynman mode mastery</span><span class="text-[10px]" style="color:' + pillarInfo.color + '">' + pct + '%</span></div></div>';
+        }
+        feynmanMasteryContainer.innerHTML = html;
+      }
+
+      document.getElementById('start-feynman-session').addEventListener('click', function() {
+        var selectedMode = document.querySelector('.feynman-mode-btn.active')?.dataset.feynmanMode || null;
+        var items = [];
+        var concepts = feynmanEngine.concepts;
+        var feynmanHistory = JSON.parse(localStorage.getItem('acacia_feynman_history') || '[]');
+        if (selectedMode) {
+          for (var i = 0; i < concepts.length; i++) {
+            var feynmanItems = feynmanEngine.generateFeynmanReviewItems(concepts[i]);
+            for (var j = 0; j < feynmanItems.length; j++) {
+              if (feynmanItems[j].mode === selectedMode) items.push(feynmanItems[j]);
+            }
+          }
+          feynmanEngine.startFeynmanSession(items, 'Feynman: ' + selectedMode);
+        } else {
+          for (var i = 0; i < concepts.length; i++) {
+            var mode = feynmanEngine.selectFeynmanMode(concepts[i], feynmanHistory);
+            var feynmanItems = feynmanEngine.generateFeynmanReviewItems(concepts[i]);
+            var match = null;
+            for (var j = 0; j < feynmanItems.length; j++) {
+              if (feynmanItems[j].mode === mode) { match = feynmanItems[j]; break; }
+            }
+            if (match) items.push(match);
+          }
+          feynmanEngine.startFeynmanSession(items, 'Adaptive Feynman');
+        }
+      });
+
+      document.querySelectorAll('.feynman-mode-btn').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.feynman-mode-btn').forEach(function(b) { b.classList.remove('active'); b.style.opacity = '0.6'; });
+          this.classList.add('active');
+          this.style.opacity = '1';
+        });
+      });
+    });
+  }
+});
+
 document.querySelectorAll('.review-tab').forEach(function(tab) {
   tab.addEventListener('click', function() {
     document.querySelectorAll('.review-tab').forEach(function(t) {
@@ -153,12 +235,15 @@ document.querySelectorAll('.review-tab').forEach(function(tab) {
     var mode = this.dataset.tab;
     var flashcardSec = document.getElementById('review-flashcard-section');
     var conceptSec = document.getElementById('review-concept-section');
+    var feynmanSec = document.getElementById('review-feynman-section');
     if (mode === 'all') {
-      flashcardSec.style.display = ''; conceptSec.style.display = '';
+      flashcardSec.style.display = ''; conceptSec.style.display = ''; feynmanSec.style.display = '';
     } else if (mode === 'flashcards') {
-      flashcardSec.style.display = ''; conceptSec.style.display = 'none';
+      flashcardSec.style.display = ''; conceptSec.style.display = 'none'; feynmanSec.style.display = 'none';
     } else if (mode === 'concepts') {
-      flashcardSec.style.display = 'none'; conceptSec.style.display = '';
+      flashcardSec.style.display = 'none'; conceptSec.style.display = ''; feynmanSec.style.display = 'none';
+    } else if (mode === 'feynman') {
+      flashcardSec.style.display = 'none'; conceptSec.style.display = 'none'; feynmanSec.style.display = '';
     }
   });
 });

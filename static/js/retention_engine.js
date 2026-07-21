@@ -486,6 +486,193 @@
       }, { passive: true });
     }
 
+    /* ── Feynman Review Modes ─────────────────────────────────── */
+
+    static FEYNMAN_MODES() {
+      return ['eli5', 'teach_back', 'analogy_map', 'gap_find', 'build_it'];
+    }
+
+    static FEYNMAN_MODE_WEIGHTS() {
+      return { eli5: 0.05, teach_back: 0.10, analogy_map: 0.08, gap_find: 0.07, build_it: 0.15 };
+    }
+
+    selectFeynmanMode(concept, feynmanHistory, pathPosition) {
+      const history = feynmanHistory || [];
+      const attempts = history.filter(a =>
+        a.conceptId === (concept.id || concept.conceptSlug)
+      );
+      const attemptedModes = new Set(attempts.map(a => a.mode));
+
+      if (pathPosition) {
+        const stageBiases = {
+          eli5: ['eli5', 'analogy_map'],
+          analogy: ['analogy_map', 'eli5'],
+          concrete: ['gap_find', 'eli5'],
+          gap_map: ['gap_find', 'teach_back'],
+          build: ['build_it', 'teach_back'],
+          teach_back: ['teach_back', 'build_it'],
+        };
+        const modes = stageBiases[pathPosition] || ['eli5'];
+        for (const mode of modes) {
+          if (!attemptedModes.has(mode)) return mode;
+        }
+      }
+
+      const priorityOrder = ['build_it', 'teach_back', 'gap_find', 'analogy_map', 'eli5'];
+      for (const mode of priorityOrder) {
+        if (!attemptedModes.has(mode)) return mode;
+      }
+
+      const modeQualities = {};
+      for (const a of attempts) {
+        if (!modeQualities[a.mode]) modeQualities[a.mode] = [];
+        modeQualities[a.mode].push(a.quality);
+      }
+      let worst = 'eli5';
+      let worstAvg = Infinity;
+      for (const [mode, quals] of Object.entries(modeQualities)) {
+        const avg = quals.reduce((s, v) => s + v, 0) / quals.length;
+        if (avg < worstAvg) { worstAvg = avg; worst = mode; }
+      }
+      return worst;
+    }
+
+    getFeynmanPrompt(concept, mode) {
+      const label = concept.label || concept.conceptSlug || 'this concept';
+      const prompts = {
+        eli5: `Explain "${label}" like I am 5 years old. One paragraph. No jargon. Use an everyday analogy.`,
+        teach_back: `Teach "${label}" to a colleague who asks 'How does this work?' Cover: what it is, how it works, why it matters. Use a concrete example.`,
+        analogy_map: `Create a NEW analogy for "${label}" — different from the one in the concept card. Explain why your analogy works and where it breaks down.`,
+        gap_find: concept.teachBackPrompt || `Explain "${label}" in your own words. Then list exactly what you are still unsure about.`,
+        build_it: (concept.buildExercise && concept.buildExercise.prompt) || `Build something using "${label}" — code, a diagram, or a calculation. Then explain your design choices.`,
+      };
+      return prompts[mode] || prompts.eli5;
+    }
+
+    calculateFeynmanMastery(conceptId, feynmanAttempts) {
+      const base = this.calculateScore(conceptId);
+      let bonus = 0;
+      const weights = RetentionEngine.FEYNMAN_MODE_WEIGHTS();
+      for (const attempt of (feynmanAttempts || [])) {
+        if (attempt.quality >= 3 && weights[attempt.mode]) {
+          bonus += weights[attempt.mode];
+        }
+      }
+      return Math.round(Math.min(1, base + bonus) * 1000) / 1000;
+    }
+
+    generateFeynmanReviewItems(concept) {
+      if (!concept.eli5Explanation && !concept.feynmanDifficulty) return [];
+      const items = [];
+      for (const mode of RetentionEngine.FEYNMAN_MODES()) {
+        items.push({
+          conceptId: concept.id || concept.conceptSlug || '',
+          mode: mode,
+          prompt: this.getFeynmanPrompt(concept, mode),
+          expectedElements: concept.gapQuestions || [],
+          difficulty: concept.feynmanDifficulty || 2,
+        });
+      }
+      return items;
+    }
+
+    renderFeynmanCard(container, feynmanItem, concept, onComplete) {
+      const pillar = PILLAR_MAP[concept.pillar] || { label: concept.pillar, color: '#6366f1' };
+      const modeLabels = { eli5: 'Explain Like I\'m 5', teach_back: 'Teach Back', analogy_map: 'New Analogy', gap_find: 'Find Gaps', build_it: 'Build It' };
+      const modeColors = { eli5: '#22c55e', teach_back: '#3b82f6', analogy_map: '#f59e0b', gap_find: '#ef4444', build_it: '#8b5cf6' };
+      const modeLabel = modeLabels[feynmanItem.mode] || feynmanItem.mode;
+      const modeColor = modeColors[feynmanItem.mode] || '#6366f1';
+
+      container.innerHTML = `
+        <div class="ghost-card rounded-lg overflow-hidden" role="group" aria-label="Feynman review: ${this._esc(concept.label || concept.id)}">
+          <div class="p-5">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="text-xs font-semibold px-2 py-0.5 rounded" style="background:color-mix(in srgb, ${pillar.color} 15%, transparent);color:${pillar.color}">${pillar.label}</span>
+              <span class="text-xs font-semibold px-2 py-0.5 rounded" style="background:color-mix(in srgb, ${modeColor} 15%, transparent);color:${modeColor}">${modeLabel}</span>
+              <span class="text-xs" style="color:var(--color-text-muted)">Difficulty: ${feynmanItem.difficulty}/5</span>
+            </div>
+            <div class="mb-4">
+              <h3 class="text-lg font-bold mb-2" style="color:var(--color-text)">${this._esc(concept.label || concept.id)}</h3>
+              <div class="p-3 rounded text-sm leading-relaxed" style="background:var(--color-bg);border:1px solid var(--color-border);color:var(--color-text-secondary)">
+                ${this._esc(feynmanItem.prompt)}
+              </div>
+            </div>
+            <textarea class="w-full min-h-[120px] p-3 text-sm rounded border feynman-response-input" placeholder="Write your explanation here..." style="background:var(--color-bg);border-color:var(--color-border);color:var(--color-text);resize:vertical"></textarea>
+          </div>
+          <div class="flex items-center justify-between p-3 pt-0">
+            <div class="flex gap-1">
+              <button data-quality="4" class="feynman-quality-btn px-3 py-1.5 text-xs font-semibold rounded-lg transition hover:opacity-80" style="background:color-mix(in srgb, #22c55e 15%, transparent);color:#22c55e">4 - Nailed It</button>
+              <button data-quality="3" class="feynman-quality-btn px-3 py-1.5 text-xs font-semibold rounded-lg transition hover:opacity-80" style="background:color-mix(in srgb, #3b82f6 15%, transparent);color:#3b82f6">3 - Good</button>
+              <button data-quality="2" class="feynman-quality-btn px-3 py-1.5 text-xs font-semibold rounded-lg transition hover:opacity-80" style="background:color-mix(in srgb, #f59e0b 15%, transparent);color:#f59e0b">2 - Okay</button>
+              <button data-quality="1" class="feynman-quality-btn px-3 py-1.5 text-xs font-semibold rounded-lg transition hover:opacity-80" style="background:color-mix(in srgb, #ef4444 15%, transparent);color:#ef4444">1 - Struggled</button>
+            </div>
+            <button class="feynman-skip-btn px-3 py-1.5 text-xs rounded-lg transition" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Skip</button>
+          </div>
+        </div>
+      `;
+
+      container.querySelectorAll('.feynman-quality-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const quality = parseInt(btn.dataset.quality);
+          const response = container.querySelector('.feynman-response-input')?.value || '';
+          if (onComplete) onComplete(quality, response, feynmanItem);
+        });
+      });
+      container.querySelector('.feynman-skip-btn').addEventListener('click', () => {
+        if (onComplete) onComplete(-1, '', feynmanItem);
+      });
+    }
+
+    startFeynmanSession(items, title) {
+      const overlay = document.createElement('div');
+      overlay.id = 'feynman-session-overlay';
+      overlay.style.cssText = 'position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.6);display:flex;align-items:center;justify-content:center;padding:1rem;';
+      const modal = document.createElement('div');
+      modal.style.cssText = 'max-width:700px;width:100%;max-height:90vh;overflow-y:auto;border-radius:12px;padding:1.5rem;';
+      overlay.appendChild(modal);
+      document.body.appendChild(overlay);
+      this._renderFeynmanSession(modal, items, 0, title, overlay, []);
+    }
+
+    _renderFeynmanSession(container, items, idx, title, overlay, history) {
+      if (idx >= items.length) {
+        container.innerHTML = `
+          <div class="ghost-card p-6 text-center">
+            <svg class="w-12 h-12 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <p class="text-sm font-semibold mb-1" style="color:var(--color-text)">Feynman Session Complete!</p>
+            <p class="text-xs" style="color:var(--color-text-muted)">${title} — ${history.filter(h => h.quality >= 3).length} high-quality explanations</p>
+            <button id="feynman-session-close" class="mt-4 px-4 py-2 text-xs font-semibold rounded-lg" style="background:var(--color-accent);color:#fff">Done</button>
+          </div>`;
+        container.querySelector('#feynman-session-close').addEventListener('click', () => overlay.remove());
+        return;
+      }
+
+      const item = items[idx];
+      const concept = this.concepts.find(c => c.id === item.conceptId) || {};
+      container.innerHTML = `
+        <div class="ghost-card p-4 mb-4">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-semibold" style="color:var(--color-accent)">${title}</span>
+            <span class="text-xs" style="color:var(--color-text-muted)" aria-live="polite">${idx + 1} / ${items.length}</span>
+          </div>
+        </div>
+        <div id="feynman-card-container" aria-live="polite"></div>`;
+
+      const cardContainer = document.getElementById('feynman-card-container');
+      let feynmanHistory = JSON.parse(localStorage.getItem('acacia_feynman_history') || '[]');
+      this.renderFeynmanCard(cardContainer, item, concept, (quality, response, feynmanItem) => {
+        history.push({
+          conceptId: feynmanItem.conceptId,
+          mode: feynmanItem.mode,
+          quality: quality,
+          timestamp: Date.now(),
+          response: response,
+        });
+        try { localStorage.setItem('acacia_feynman_history', JSON.stringify(history)); } catch (_) {}
+        setTimeout(() => this._renderFeynmanSession(container, items, idx + 1, title, overlay, history), 200);
+      });
+    }
+
     _esc(s) {
       const d = document.createElement('div');
       d.textContent = s || '';

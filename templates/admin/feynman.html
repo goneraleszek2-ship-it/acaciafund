@@ -1,0 +1,113 @@
+{% extends "admin/base.html" %}
+{% block admin_content %}
+<div class="mb-8">
+  <h2 class="text-2xl font-bold mb-2" style="color:var(--color-text)">Feynman Metadata Quality</h2>
+  <p class="text-sm" style="color:var(--color-text-secondary)">
+    Per-pillar Feynman metadata coverage, difficulty distribution, and explanation quality.
+    Hand-crafted: count of concepts with manual entry in <code>feynman_metadata.json</code>.
+  </p>
+</div>
+
+<!-- Per-pillar summary cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+  {% for p_key, p_data in per_pillar.items() %}
+  {% set p_color = {"aml": "#ef4444", "stock": "#f59e0b", "data-engineering": "#3b82f6"}.get(p_key, "#6366f1") %}
+  <div class="ghost-card p-4" style="border-top: 3px solid {{ p_color }}">
+    <div class="flex items-center justify-between mb-3">
+      <span class="text-sm font-semibold" style="color:{{ p_color }}">{{ p_data.label }}</span>
+      <span class="text-xs" style="color:var(--color-text-muted)">{{ p_data.count }} concepts</span>
+    </div>
+    <div class="space-y-2 text-xs">
+      <div class="flex justify-between">
+        <span style="color:var(--color-text-muted)">Hand-crafted</span>
+        <span class="font-semibold" style="color:var(--color-text)">{{ p_data.hand_crafted }} / {{ p_data.count }}</span>
+      </div>
+      <div class="flex justify-between">
+        <span style="color: var(--color-text-muted)">Avg Difficulty</span>
+        <span class="font-semibold" style="color:var(--color-text)">{{ "%.2f"|format(p_data.avg_difficulty) }} / 5</span>
+      </div>
+      <div class="flex justify-between">
+        <span style="color:var(--color-text-muted)">Avg Quality</span>
+        <span class="font-semibold" style="color:var(--color-text)">{{ "%.2f"|format(p_data.avg_quality) }}</span>
+      </div>
+      <div class="flex justify-between">
+        <span style="color:var(--color-text-muted)">Has Diagram</span>
+        <span class="font-semibold" style="color:var(--color-text)">{{ p_data.has_diagram }} / {{ p_data.count }}</span>
+      </div>
+      <div class="mt-2 pt-2 border-t" style="border-color: var(--color-border)">
+        <span style="color:var(--color-text-muted)">Difficulty distribution:</span>
+        <div class="flex gap-1 mt-1">
+          {% for d in range(1, 6) %}
+          {% set d_count = p_data.difficulty_distribution.get(d|string, 0) %}
+          <span class="flex-1 text-center px-1 py-0.5 rounded text-[10px]"
+                style="background:color-mix(in srgb, {{ p_color }} {{ (d_count / p_data.count * 80) + 10 }}%, transparent); color:{{ p_color }}">
+            {{ d_count }}
+          </span>
+          {% endfor %}
+        </div>
+        <div class="flex justify-between text-[9px] mt-0.5" style="color:var(--color-text-muted)">
+          <span>1</span><span>2</span><span>3</span><span>4</span><span>5</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<!-- Totals bar -->
+<div class="flex flex-wrap gap-3 mb-8">
+  <div class="ghost-card p-3 text-center flex-1">
+    <div class="text-xl font-bold" style="color:var(--color-accent)">{{ total_concepts }}</div>
+    <div class="text-xs" style="color:var(--color-text-muted)">Total Concepts</div>
+  </div>
+  <div class="ghost-card p-3 text-center flex-1">
+    <div class="text-xl font-bold" style="color:#22c55e">{{ total_hand_crafted }}</div>
+    <div class="text-xs" style="color:var(--color-text-muted)">Hand-crafted</div>
+  </div>
+  <div class="ghost-card p-3 text-center flex-1">
+    <div class="text-xl font-bold" style="color:#3b82f6">{{ total_analogs }}</div>
+    <div class="text-xs" style="color:var(--color-text-muted)">Total Analogs</div>
+  </div>
+  <div class="ghost-card p-3 text-center flex-1">
+    <div class="text-xl font-bold" style="color:#d97706">{{ total_diagram }}</div>
+    <div class="text-xs" style="color:var(--color-text-muted)">Diagrams</div>
+  </div>
+</div>
+
+<!-- Concept-level detail -->
+<h3 class="text-lg font-bold mb-3" style="color:var(--color-text)">Concepts by pillar</h3>
+{% for p_key, p_data in per_pillar.items() %}
+{% set p_color = {"aml": "#ef4444", "stock": "#f59e0b", "data-engineering": "#3b82f6"}.get(p_key, "#6366f1") %}
+<div class="mb-6">
+  <h4 class="text-sm font-semibold mb-2" style="color:{{ p_color }}">{{ p_data.label }} ({{ p_data.count }})</h4>
+  <div class="overflow-x-auto">
+    <table class="w-full text-xs" style="color:var(--color-text)">
+      <thead>
+        <tr style="border-bottom:1px solid var(--color-border)">
+          <th class="text-left py-1 pr-2 font-semibold">Concept</th>
+          <th class="text-left py-1 pr-2 font-semibold">Category</th>
+          <th class="text-center py-1 pr-2 font-semibold" style="color:#d97706">Diff</th>
+          <th class="text-center py-1 pr-2 font-semibold" style="color:#8b5cf6">Quality</th>
+          <th class="text-center py-1 pr-2 font-semibold" style="color:#3b82f6">Diagram</th>
+          <th class="text-center py-1 pr-2 font-semibold" style="color:#22c55e">Hand-crafted</th>
+          <th class="text-left py-1 font-semibold" style="color:var(--color-text-muted)">Analogs</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for c in p_data.concepts %}
+        <tr style="border-bottom:1px solid var(--color-border)" class="hover:bg-[var(--color-surface)] transition">
+          <td class="py-1 pr-2 font-mono">{{ c.id }}</td>
+          <td class="py-1 pr-2" style="color:var(--color-text-muted)">{{ c.category }}</td>
+          <td class="py-1 pr-2 text-center">{{ c.difficulty }}</td>
+          <td class="py-1 pr-2 text-center">{{ c.quality }}</td>
+          <td class="py-1 pr-2 text-center" style="color:{{ '#22c55e' if c.has_diagram else 'var(--color-text-muted)' }}">{{ '✓' if c.has_diagram else '✗' }}</td>
+          <td class="py-1 pr-2 text-center" style="color:{{ '#22c55e' if c.hand_crafted else 'var(--color-text-muted)' }}">{{ '✓' if c.hand_crafted else '✗' }}</td>
+          <td class="py-1" style="color:var(--color-text-muted)">{{ c.analog_count }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endfor %}
+{% endblock %}

@@ -799,8 +799,94 @@ def generate_admin_pages(
         (admin_dir / "ontology.html").write_text(html, encoding="utf-8")
         pages_generated += 1
 
+    # Feynman Metadata Quality Dashboard
+    if ontology and hasattr(ontology, '_concepts'):
+        feynman_path = project_root / "data" / "feynman_metadata.json" if project_root else Path("data/feynman_metadata.json")
+        hand_crafted_ids = set()
+        if feynman_path.exists():
+            try:
+                with open(feynman_path) as f:
+                    hand_crafted_ids = set(json.load(f).keys())
+            except Exception:
+                pass
+
+        pillar_colors = {"aml": "#ef4444", "stock": "#f59e0b", "data-engineering": "#3b82f6"}
+        pillar_labels = {"aml": "Compliance", "stock": "Markets", "data-engineering": "Data Engineering"}
+
+        per_pillar = {}
+        total_analogs = 0
+        total_diagram = 0
+
+        for concept in ontology._concepts.values():
+            p = concept.pillar or "aml"
+            if p not in per_pillar:
+                per_pillar[p] = {
+                    "label": pillar_labels.get(p, p),
+                    "count": 0,
+                    "hand_crafted": 0,
+                    "difficulty_sum": 0,
+                    "quality_sum": 0.0,
+                    "has_diagram": 0,
+                    "difficulty_distribution": {str(i): 0 for i in range(1, 6)},
+                    "concepts": [],
+                }
+            pd = per_pillar[p]
+            pd["count"] += 1
+            hc = concept.id in hand_crafted_ids
+            if hc:
+                pd["hand_crafted"] += 1
+            diff = getattr(concept, "feynman_difficulty", 1)
+            quality = getattr(concept, "explanation_quality", 0.0)
+            pd["difficulty_sum"] += diff
+            pd["quality_sum"] += quality
+            diff_str = str(min(5, max(1, diff)))
+            pd["difficulty_distribution"][diff_str] = pd["difficulty_distribution"].get(diff_str, 0) + 1
+            dia = bool(getattr(concept, "feynman_diagram", None))
+            if dia:
+                pd["has_diagram"] += 1
+            analogs = getattr(concept, "cross_pillar_analogs", []) or []
+            pd["concepts"].append({
+                "id": concept.id,
+                "category": concept.category,
+                "difficulty": diff,
+                "quality": quality,
+                "has_diagram": dia,
+                "hand_crafted": hc,
+                "analog_count": len(analogs),
+            })
+            total_analogs += len(analogs)
+            if dia:
+                total_diagram += 1
+
+        total_concepts = len(ontology._concepts)
+        total_hand_crafted = sum(pd["hand_crafted"] for pd in per_pillar.values())
+
+        for pd in per_pillar.values():
+            if pd["count"] > 0:
+                pd["avg_difficulty"] = pd["difficulty_sum"] / pd["count"]
+                pd["avg_quality"] = round(pd["quality_sum"] / pd["count"], 2)
+            else:
+                pd["avg_difficulty"] = 0.0
+                pd["avg_quality"] = 0.0
+            del pd["difficulty_sum"]
+            del pd["quality_sum"]
+
+        html = render_template(
+            "admin/feynman.html",
+            content=_dummy("Feynman QA — AcaciaFund", "admin"),
+            active_page="feynman",
+            per_pillar=per_pillar,
+            total_concepts=total_concepts,
+            total_hand_crafted=total_hand_crafted,
+            total_analogs=total_analogs,
+            total_diagram=total_diagram,
+            **ctx_base,
+        )
+        (admin_dir / "feynman.html").write_text(html, encoding="utf-8")
+        pages_generated += 1
+
     print(
-        "  admin: login, dashboard, gallery, articles, manifest, pipeline, quality, coverage, sources, curated-test, telemetry, ontology"
+        "  admin: login, dashboard, gallery, articles, manifest, pipeline, quality, coverage, sources, curated-test, telemetry, ontology, feynman"
     )
     return pages_generated
 

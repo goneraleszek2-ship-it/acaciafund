@@ -75,7 +75,10 @@ from core.learning_paths import (
     generate_learning_path_context,
     generate_cross_pillar_synthesis,
 )
-from core.schema_builder import compute_feynman_learning_paths
+from core.schema_builder import (
+    compute_feynman_learning_paths,
+    compute_cross_pillar_feynman_paths,
+)
 
 
 # --- Knowledge Graph Generation ---
@@ -3260,6 +3263,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                 "label": _c.label,
                 "pillar": _c.pillar,
                 "description": _c.description,
+                "difficulty": getattr(_c, "feynman_difficulty", 1),
                 "feynman_difficulty": getattr(_c, "feynman_difficulty", 1),
                 "eli5_explanation": getattr(_c, "eli5_explanation", None),
                 "analogy": getattr(_c, "analogy", None),
@@ -3299,6 +3303,39 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
             (_fp_dir / "index.html").write_text(_fp_html, encoding="utf-8")
             _feynman_count += 1
         print(f"  feynman paths: {_feynman_count} pages")
+
+        # --- Cross-pillar Feynman synthesis pages ---
+        _cp_feynman_paths = compute_cross_pillar_feynman_paths(ontology)
+        _cp_feynman_count = 0
+        for _cp_fp in _cp_feynman_paths:
+            _cp_pillar_url = pillar_to_url(_cp_fp.pillar)
+            _cp_pc = PILLAR_CONFIG.get(_cp_fp.pillar, {})
+            _cp_html = render_template(
+                "feynman_cross_pillar_path.j2",
+                content=_dummy(
+                    f"Cross-Pillar Feynman Synthesis — {_cp_pc.get('label', _cp_fp.pillar)} — AcaciaFund",
+                    "index",
+                    description=(
+                        f"Feynman cross-pillar analog synthesis for "
+                        f"{_cp_pc.get('label', _cp_fp.pillar)} with "
+                        f"{_cp_fp.total_triples} cross-domain connections."
+                    ),
+                ),
+                triples=_cp_fp.triples,
+                total_triples=_cp_fp.total_triples,
+                connected_pillars=_cp_fp.connected_pillars,
+                concept_map=_feynman_concept_map,
+                pillar_label=_cp_pc.get("label", _cp_fp.pillar),
+                pillar_color=_cp_pc.get("color", "#6366f1"),
+                pillar_url=_cp_pillar_url,
+                page_path=f"{_cp_pillar_url}/learn/feynman-synthesis/",
+                **ctx_base,
+            )
+            _cp_dir = OUTPUT_DIR / _cp_pillar_url / "learn" / "feynman-synthesis"
+            _cp_dir.mkdir(parents=True, exist_ok=True)
+            (_cp_dir / "index.html").write_text(_cp_html, encoding="utf-8")
+            _cp_feynman_count += 1
+        print(f"  cross-pillar feynman paths: {_cp_feynman_count} pages")
 
         # --- Cross-pillar synthesis pages ---
         _synth = generate_cross_pillar_synthesis(all_content, concept_content_map, PILLAR_CONFIG, ontology)

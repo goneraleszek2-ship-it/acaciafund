@@ -75,8 +75,44 @@ def enrich_feynman(
     return enriched
 
 
+def _compute_difficulty(
+    concept_id: str, category: str, description: str, pillar: str,
+    manager: OntologyManager,
+) -> int:
+    """Compute difficulty dynamically from concept properties.
+
+    Factors:
+      - Prerequisite count: 0→base, 1-2→+1, 3+→+2
+      - Abstract level from category: "advanced-techniques" or "strategies" → +1
+      - Description length: >300 chars → +1 (more detailed = harder)
+      - Cross-pillar analogs: 3+ → +1 (connected concepts are more complex)
+    """
+    score = 1
+
+    prereq_count = len(manager.outgoing_relations(concept_id))
+    if prereq_count >= 3:
+        score += 2
+    elif prereq_count >= 1:
+        score += 1
+
+    abstract_cats = {"advanced-techniques", "strategies", "architecture"}
+    if category in abstract_cats:
+        score += 1
+
+    if description and len(description) > 300:
+        score += 1
+
+    concept = manager.get_concept(concept_id)
+    analogs = getattr(concept, "cross_pillar_analogs", []) if concept else []
+    if len(analogs) >= 3:
+        score += 1
+
+    return max(1, min(5, score))
+
+
 def generate_feynman_stub(
     concept_id: str, label: str, description: str, category: str,
+    pillar: str = "", manager: OntologyManager | None = None,
 ) -> Dict[str, Any]:
     """Generate starter Feynman fields for a concept without manual metadata.
 
@@ -86,45 +122,55 @@ def generate_feynman_stub(
     desc = description or f"A core concept in {cat_clean}."
     desc_trunc = desc[:250] if len(desc) > 250 else desc
 
-    # Derive analogy from category domain
+    # Pillar-aware analogy derivation
     domain_analogies = {
-        "cdd-kyc": "like checking IDs at a border crossing",
-        "sar-str": "like a smoke alarm that triggers when something unusual happens",
-        "risk-assessment": "like an insurance adjuster evaluating risk factors",
-        "sanctions": "like a no-fly list for financial transactions",
-        "transaction-monitoring": "like a security camera watching a bank vault 24/7",
-        "regtech": "like a robotic process assistant automating compliance paperwork",
-        "advanced-techniques": "like a master craftsman using specialized tools",
-        "regulations": "like a rulebook that everyone in the game must follow",
-        "foundations": "like the foundation of a building — invisible but load-bearing",
-        "market-analysis": "like a weather forecast for financial markets",
-        "strategies": "like a chess player thinking several moves ahead",
-        "industry-analysis": "like a medical diagnosis of an entire industry",
-        "architecture": "like a blueprint for a complex machine",
-        "best-practices": "like a maintenance checklist for a power plant",
-        "crypto-aml": "like a digital border patrol for virtual currencies",
+        ("aml", "cdd-kyc"): "like checking IDs at a border crossing",
+        ("aml", "sar-str"): "like a smoke alarm that triggers when something unusual happens",
+        ("aml", "risk-assessment"): "like an insurance adjuster evaluating risk factors",
+        ("aml", "sanctions"): "like a no-fly list for financial transactions",
+        ("aml", "transaction-monitoring"): "like a security camera watching a bank vault 24/7",
+        ("aml", "regtech"): "like a robotic process assistant automating compliance paperwork",
+        ("aml", "regulations"): "like a rulebook that everyone in the game must follow",
+        ("aml", "crypto-aml"): "like a digital border patrol for virtual currencies",
+        ("aml", "advanced-techniques"): "like a master craftsman using specialized compliance tools",
+        ("aml", "foundations"): "like the compliance rulebook that governs every transaction",
+        ("stock", "foundations"): "like the laws of probability that govern market behavior",
+        ("stock", "market-analysis"): "like a weather forecast for financial markets",
+        ("stock", "strategies"): "like a chess player thinking several moves ahead",
+        ("stock", "industry-analysis"): "like a medical diagnosis of an entire industry",
+        ("stock", "advanced-techniques"): "like a high-precision instrument in a trader's toolkit",
+        ("data-engineering", "foundations"): "like the foundation of a building — invisible but load-bearing",
+        ("data-engineering", "architecture"): "like a blueprint for a complex machine",
+        ("data-engineering", "best-practices"): "like a maintenance checklist for a power plant",
+        ("data-engineering", "advanced-techniques"): "like a specialized tool in a data engineer's workshop",
+        ("data-engineering", "regulations"): "like a data governance rulebook for safe handling",
     }
-    analogy_base = domain_analogies.get(category, "like a specialized tool in a toolbox")
+    analogy_key = (pillar, category)
+    analogy_base = domain_analogies.get(analogy_key) or domain_analogies.get(
+        ("", category), "like a specialized tool in a toolbox"
+    )
 
-    # Derive build exercise type from category
+    # Derive build exercise type from category (pillar-aware)
     build_types = {
-        "cdd-kyc": "checklist",
-        "sar-str": "flowchart",
-        "risk-assessment": "matrix",
-        "sanctions": "code",
-        "transaction-monitoring": "code",
-        "regtech": "code",
-        "advanced-techniques": "code",
-        "regulations": "diagram",
-        "foundations": "diagram",
-        "market-analysis": "calc",
-        "strategies": "calc",
-        "industry-analysis": "diagram",
-        "architecture": "diagram",
-        "best-practices": "checklist",
-        "crypto-aml": "code",
+        ("aml", "cdd-kyc"): "checklist",
+        ("aml", "sar-str"): "flowchart",
+        ("aml", "risk-assessment"): "matrix",
+        ("aml", "sanctions"): "code",
+        ("aml", "transaction-monitoring"): "code",
+        ("aml", "regtech"): "code",
+        ("stock", "market-analysis"): "calc",
+        ("stock", "strategies"): "calc",
+        ("stock", "foundations"): "diagram",
+        ("data-engineering", "architecture"): "diagram",
+        ("data-engineering", "foundations"): "diagram",
+        ("data-engineering", "best-practices"): "checklist",
     }
-    build_type = build_types.get(category, "diagram")
+    build_type = build_types.get(analogy_key) or build_types.get(("", category), "diagram")
+
+    difficulty = (
+        _compute_difficulty(concept_id, category, description, pillar, manager)
+        if manager else 2
+    )
 
     return {
         "eli5_explanation": (
@@ -163,9 +209,30 @@ def generate_feynman_stub(
                 f"3. Expected outcomes or outputs"
             ),
         },
-        "feynman_difficulty": 2,
-        "explanation_quality": 0.3,
+        "feynman_difficulty": difficulty,
+        "explanation_quality": _compute_explanation_quality(label, description),
     }
+
+
+def _compute_explanation_quality(label: str, description: str) -> float:
+    """Compute a dynamic explanation quality score.
+
+    Base: 0.3
+    +0.3 if description is substantive (>100 chars)
+    +0.2 if label contains domain-specific keywords
+    +0.2 if description contains actionable language
+    Capped at 1.0
+    """
+    quality = 0.3
+    if description and len(description) > 100:
+        quality += 0.3
+    domain_keywords = ["regulatory", "algorithm", "framework", "pipeline", "protocol"]
+    if any(kw in (label + (description or "")).lower() for kw in domain_keywords):
+        quality += 0.2
+    action_words = ["detect", "analyze", "compute", "validate", "optimize", "transform"]
+    if any(w in (description or "").lower() for w in action_words):
+        quality += 0.2
+    return round(min(1.0, quality), 2)
 
 
 def enrich_all_with_stubs(ontology_path: str | Path, output_path: str | Path | None = None) -> int:
@@ -188,6 +255,7 @@ def enrich_all_with_stubs(ontology_path: str | Path, output_path: str | Path | N
         ):
             feynman_fields = generate_feynman_stub(
                 concept.id, concept.label, concept.description, concept.category,
+                pillar=concept.pillar, manager=manager,
             )
 
         for field, value in feynman_fields.items():

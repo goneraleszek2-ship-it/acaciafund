@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import logging
 from dataclasses import dataclass, field
-from typing import Dict, List, Tuple
+from typing import Dict, List, Optional, Tuple
 
 import networkx as nx
 
@@ -174,6 +174,25 @@ class FeynmanLearningPath:
     difficulty_tiers: List[int] = field(default_factory=list)
 
 
+@dataclass
+class CrossPillarFeynmanTriple:
+    """A triple of analog concepts across pillars."""
+    source_id: str
+    source_pillar: str
+    target_id: str
+    target_pillar: str
+    relation_type: str = "analogous"
+
+
+@dataclass
+class CrossPillarFeynmanPath:
+    """A cross-pillar Feynman synthesis grouping analog concepts together."""
+    pillar: str  # hosting pillar
+    triples: List[CrossPillarFeynmanTriple] = field(default_factory=list)
+    total_triples: int = 0
+    connected_pillars: List[str] = field(default_factory=list)
+
+
 def _order_by_prerequisites(
     concept_ids: List[str],
     manager: OntologyManager,
@@ -290,7 +309,7 @@ def compute_feynman_learning_paths(
 
         # Sort concepts by feynman_difficulty
         sorted_concepts = sorted(concepts, key=lambda c: (
-            getattr(c, "feynman_difficulty", 1) if hasattr(c, "feynman_difficulty") else 1,
+            getattr(c, "feynman_difficulty", 1) or 1,
             c.label,
         ))
 
@@ -304,15 +323,15 @@ def compute_feynman_learning_paths(
 
             candidate_ids = []
             for c in sorted_concepts:
-                fd = getattr(c, "feynman_difficulty", 1) if hasattr(c, "feynman_difficulty") else 1
+                fd = getattr(c, "feynman_difficulty", 1) or 1
                 if not (dr[0] <= fd <= dr[1]):
                     continue
-                _eli5 = hasattr(c, "eli5_explanation") and c.eli5_explanation
-                _analogy = hasattr(c, "analogy") and c.analogy
-                _concrete = hasattr(c, "concrete_example") and c.concrete_example
-                _gaps = hasattr(c, "gap_questions") and c.gap_questions
-                _build = hasattr(c, "build_exercise") and c.build_exercise
-                _teach = hasattr(c, "teach_back_prompt") and c.teach_back_prompt
+                _eli5 = c.eli5_explanation is not None
+                _analogy = c.analogy is not None
+                _concrete = c.concrete_example is not None
+                _gaps = c.gap_questions is not None and len(c.gap_questions) > 0
+                _build = c.build_exercise is not None
+                _teach = c.teach_back_prompt is not None
                 if stage_type == "eli5" and not _eli5:
                     continue
                 if stage_type == "analogy" and not _analogy:
@@ -349,7 +368,7 @@ def compute_feynman_learning_paths(
                 ))
 
         difficulty_tiers = sorted(set(
-            getattr(c, "feynman_difficulty", 1) if hasattr(c, "feynman_difficulty") else 1
+            getattr(c, "feynman_difficulty", 1) or 1
             for c in concepts
         ))
 
@@ -358,6 +377,65 @@ def compute_feynman_learning_paths(
             stages=stages,
             total_concepts=len(seen_ids),
             difficulty_tiers=difficulty_tiers,
+        ))
+
+    return paths
+
+
+def compute_cross_pillar_feynman_paths(
+    manager: OntologyManager,
+) -> List[CrossPillarFeynmanPath]:
+    """Build cross-pillar Feynman synthesis paths using cross_pillar_analogs.
+
+    For each pillar, finds concepts that have analogs in OTHER pillars and
+    groups them into triples. This creates "synthesis" paths that connect
+    concepts across domains — the core of the Feynman technique.
+
+    Returns one CrossPillarFeynmanPath per pillar (hosted from that pillar's perspective).
+    """
+    concepts = list(manager._concepts.values())
+    analog_map: Dict[str, List[str]] = {}
+
+    for c in concepts:
+        analogs = getattr(c, "cross_pillar_analogs", None) or []
+        if analogs:
+            analog_map[c.id] = [a for a in analogs if a != c.id]
+
+    pillar_concepts: Dict[str, List[Concept]] = {}
+    for c in concepts:
+        pillar_concepts.setdefault(c.pillar, []).append(c)
+
+    paths: List[CrossPillarFeynmanPath] = []
+
+    for pillar_key, p_concepts in pillar_concepts.items():
+        triples: List[CrossPillarFeynmanTriple] = []
+        seen_local: set = set()
+
+        for c in p_concepts:
+            source_analogs = analog_map.get(c.id, [])
+            for analog_id in source_analogs:
+                analog_c = manager.get_concept(analog_id)
+                if not analog_c or analog_c.pillar == pillar_key:
+                    continue
+                pair_key = tuple(sorted([c.id, analog_id]))
+                if pair_key in seen_local:
+                    continue
+                seen_local.add(pair_key)
+                triples.append(CrossPillarFeynmanTriple(
+                    source_id=c.id,
+                    source_pillar=pillar_key,
+                    target_id=analog_id,
+                    target_pillar=analog_c.pillar,
+                ))
+
+        connected = sorted(set(t.target_pillar for t in triples))
+        triples.sort(key=lambda t: (t.target_pillar, t.target_id))
+
+        paths.append(CrossPillarFeynmanPath(
+            pillar=pillar_key,
+            triples=triples,
+            total_triples=len(triples),
+            connected_pillars=connected,
         ))
 
     return paths
