@@ -24,9 +24,7 @@ import logging
 import re
 import subprocess
 import sys
-import time
 import uuid
-from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
 from datetime import datetime, timedelta, timezone
@@ -41,7 +39,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 logger = logging.getLogger(__name__)
 
-from core.ontology import (
+from core.ontology import (  # noqa: E402
     OntologyManager,
     extract_concepts_from_text,
 )
@@ -262,7 +260,7 @@ PILLAR_CONFIGS: dict[str, PillarConfig] = {
 
 # Map ingester slug_name → registry pillar → URL segment
 INGESTER_TO_PILLAR = {"aml": "aml", "data": "data-engineering", "market": "stock"}
-from config import PILLAR_URL_MAP
+from config import PILLAR_URL_MAP  # noqa: E402
 
 # =========================================================================
 # Shared Utilities
@@ -560,13 +558,19 @@ def _arxiv_to_item(paper: dict, config: PillarConfig) -> dict[str, Any] | None:
         for cat in (paper.get("categories") or []):
             cat_lower = cat.lower()
             if config.slug_name == "data":
-                if cat_lower == "cs.db": tags.append("database-systems")
-                elif cat_lower == "cs.dc": tags.append("distributed-computing")
-                elif cat_lower == "cs.se": tags.append("software-engineering")
+                if cat_lower == "cs.db":
+                    tags.append("database-systems")
+                elif cat_lower == "cs.dc":
+                    tags.append("distributed-computing")
+                elif cat_lower == "cs.se":
+                    tags.append("software-engineering")
             elif config.slug_name == "market":
-                if cat_lower in ("q-fin.mf", "q-fin.tr"): tags.append("market-microstructure")
-                elif cat_lower == "econ.em": tags.append("quantitative-modeling")
-                elif cat_lower == "q-fin.cp": tags.append("computational-finance")
+                if cat_lower in ("q-fin.mf", "q-fin.tr"):
+                    tags.append("market-microstructure")
+                elif cat_lower == "econ.em":
+                    tags.append("quantitative-modeling")
+                elif cat_lower == "q-fin.cp":
+                    tags.append("computational-finance")
 
     return _source_to_item(
         paper, config, source_key="arxiv", title=title, url=url,
@@ -1030,7 +1034,7 @@ def deduplicate(items: list[dict], registry_data: dict) -> list[dict]:
 # Registry I/O
 # =========================================================================
 
-from _registry_utils import load_registry, save_registry
+from _registry_utils import load_registry, save_registry  # noqa: E402
 
 
 def prune_and_archive_registry(
@@ -1044,7 +1048,6 @@ def prune_and_archive_registry(
     If still over limit after age pruning, oldest items are archived.
     Returns count of archived items.
     """
-    from datetime import timedelta
 
     items = registry_data.get("content", [])
     if len(items) <= max_active:

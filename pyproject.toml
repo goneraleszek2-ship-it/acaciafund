@@ -32,7 +32,7 @@ line-length = 100
 
 [tool.ruff.lint]
 select = ["E", "F", "W", "I"]
-ignore = ["E501"]
+ignore = ["E501", "W291"]
 
 [tool.pyright]
 pythonVersion = "3.10"

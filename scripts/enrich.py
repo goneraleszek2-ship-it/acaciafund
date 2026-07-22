@@ -295,7 +295,7 @@ class ResearchEnricher:
         cleaned = raw.strip()
         if cleaned.startswith("```"):
             lines = cleaned.split("\n")
-            lines = [l for l in lines if not l.strip().startswith("```")]
+            lines = [line for line in lines if not line.strip().startswith("```")]
             cleaned = "\n".join(lines)
         try:
             return json.loads(cleaned)
@@ -871,7 +871,7 @@ No markdown, no code fences, just JSON."""
 # =========================================================================
 
 
-from _registry_utils import load_registry, save_registry
+from _registry_utils import load_registry, save_registry  # noqa: E402
 
 
 def main() -> int:

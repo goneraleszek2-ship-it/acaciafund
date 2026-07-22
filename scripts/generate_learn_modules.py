@@ -24,7 +24,7 @@ sys.path.insert(0, str(Path(__file__).parent.parent))
 
 logger = logging.getLogger(__name__)
 
-from core.ontology import OntologyManager
+from core.ontology import OntologyManager  # noqa: E402
 
 PROJECT_ROOT = Path(__file__).parent.parent
 ONTOLOGY_PATH = PROJECT_ROOT / "data" / "ontology.json"
@@ -806,7 +806,7 @@ def auto_generate_from_ontology(
                 raw = resp.choices[0].message.content.strip()
                 if raw.startswith("```"):
                     lines = raw.split("\n")
-                    lines = [l for l in lines if not l.strip().startswith("```")]
+                    lines = [line for line in lines if not line.strip().startswith("```")]
                     raw = "\n".join(lines)
                 module_data = json.loads(raw)
             except Exception:
@@ -909,7 +909,6 @@ def main():
 
     existing_slugs = {item.get("slug") for item in registry.get("content", [])}
     new_modules = []
-    updated = 0
     created = 0
 
     now = datetime.now(timezone.utc).isoformat()
@@ -967,6 +966,7 @@ def main():
         llm_client = None
         try:
             import os
+
             from openai import OpenAI
             api_key = os.environ.get("NVIDIA_API_KEY") or os.environ.get("OPENAI_API_KEY")
             if api_key:
