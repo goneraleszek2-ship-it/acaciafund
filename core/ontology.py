@@ -11,7 +11,10 @@ import json
 from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Set, Tuple
+from typing import TYPE_CHECKING, Any, Dict, List, Optional, Set, Tuple
+
+if TYPE_CHECKING:
+    from core.ontology_cache import OntologyCache
 
 from pydantic import BaseModel, Field
 
@@ -554,6 +557,7 @@ class OntologyManager:
         self._alias_index: Dict[str, str] = {}  # alias_lower → concept_id
         self._pillar_index: Dict[str, Set[str]] = defaultdict(set)  # pillar → {concept_ids}
         self._category_index: Dict[str, Set[str]] = defaultdict(set)  # category → {concept_ids}
+        self._cache: Optional[OntologyCache] = None
 
     # ---- Concepts ----
 
@@ -568,12 +572,16 @@ class OntologyManager:
             existing.aliases = list(set(existing.aliases + concept.aliases))
             existing.properties.update(concept.properties)
             existing.updated_at = datetime.now(timezone.utc).isoformat()
+            if self._cache:
+                self._cache.invalidate()
             return
         self._concepts[concept.id] = concept
         self._pillar_index[concept.pillar].add(concept.id)
         self._category_index[concept.category].add(concept.id)
         for alias in concept.aliases:
             self._alias_index[alias.lower()] = concept.id
+        if self._cache:
+            self._cache.invalidate()
 
     def get_concept(self, concept_id: str) -> Optional[Concept]:
         return self._concepts.get(concept_id)
@@ -627,8 +635,12 @@ class OntologyManager:
             if (existing.source_id, existing.target_id, existing.relation_type) == key:
                 existing.strength = max(existing.strength, relation.strength)
                 existing.evidence = list(set(existing.evidence + relation.evidence))
+                if self._cache:
+                    self._cache.invalidate()
                 return
         self._relations.append(relation)
+        if self._cache:
+            self._cache.invalidate()
 
     def relations_for(self, concept_id: str) -> List[Relation]:
         """Get all relations where concept_id is source or target."""
@@ -763,6 +775,8 @@ class OntologyManager:
         total = 0
         for pillar in PILLAR_CONCEPT_SEEDS:
             total += self.seed_pillar(pillar)
+        if self._cache:
+            self._cache.invalidate()
         return total
 
     def seed_relations(self) -> int:
@@ -844,6 +858,21 @@ class OntologyManager:
             c.cross_pillar_analogs = [aid for aid, _ in scored[:MAX_ANALOGS]]
 
         return added
+
+    # ---- Cache integration ----
+
+    def enable_cache(self, cache_dir: Optional[Path] = None) -> OntologyCache:
+        """Enable multi-level caching for expensive ontology operations.
+
+        Creates and returns an :class:`OntologyCache` instance.  The cache is
+        *not* enabled by default (backward compatible).  Once enabled, mutation
+        methods (``add_concept``, ``add_relation``, ``seed_all_pillars``)
+        automatically invalidate cached entries.
+        """
+        from core.ontology_cache import OntologyCache as _OntologyCache
+
+        self._cache = _OntologyCache(self, cache_dir=cache_dir)
+        return self._cache
 
     # ---- Utility ----
 

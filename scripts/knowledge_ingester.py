@@ -20,6 +20,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import logging
 import re
 import subprocess
 import sys
@@ -36,6 +37,9 @@ from pydantic import BaseModel, Field
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "scripts"))
+
+logger = logging.getLogger(__name__)
 
 from core.ontology import (
     OntologyManager,
@@ -384,7 +388,7 @@ def fetch_arxiv_for_pillar(
 
     papers = fetch_arxiv(since_hours=max(24, days_back * 24), max_results=max_results)
     if verbose:
-        print(f"  arXiv returned {len(papers)} total papers")
+        logger.debug(f"  arXiv returned {len(papers)} total papers")
 
     relevant: list[dict[str, Any]] = []
     for p in papers:
@@ -401,9 +405,9 @@ def fetch_arxiv_for_pillar(
 
     relevant.sort(key=lambda p: p["_relevance_score"], reverse=True)
     if verbose:
-        print(f"  {config.slug_name}-relevant (score >= {threshold}): {len(relevant)}")
+        logger.debug(f"  {config.slug_name}-relevant (score >= {threshold}): {len(relevant)}")
         for p in relevant[:3]:
-            print(f"    [{p['_relevance_score']:.2f}] {p.get('title', '')[:70]}")
+            logger.debug(f"    [{p['_relevance_score']:.2f}] {p.get('title', '')[:70]}")
     return relevant
 
 
@@ -423,7 +427,7 @@ def fetch_hn_for_pillar(
         max_hits=max_hits,
     )
     if verbose:
-        print(f"  HN returned {len(stories)} stories")
+        logger.debug(f"  HN returned {len(stories)} stories")
 
     relevant: list[dict[str, Any]] = []
     for s in stories:
@@ -438,7 +442,7 @@ def fetch_hn_for_pillar(
 
     relevant.sort(key=lambda s: s["_relevance_score"], reverse=True)
     if verbose:
-        print(f"  {config.slug_name}-relevant (score >= {threshold}): {len(relevant)}")
+        logger.debug(f"  {config.slug_name}-relevant (score >= {threshold}): {len(relevant)}")
     return relevant
 
 
@@ -618,7 +622,7 @@ def fetch_sec_edgar_for_pillar(
         max_results=50,
     )
     if verbose:
-        print(f"  SEC EDGAR returned {len(filings)} filings")
+        logger.debug(f"  SEC EDGAR returned {len(filings)} filings")
 
     threshold = config.hn_min_score
     relevant: list[dict] = []
@@ -634,7 +638,7 @@ def fetch_sec_edgar_for_pillar(
 
     relevant.sort(key=lambda f: f["_relevance_score"], reverse=True)
     if verbose:
-        print(f"  {config.slug_name}-relevant (score >= {threshold}): {len(relevant)}")
+        logger.debug(f"  {config.slug_name}-relevant (score >= {threshold}): {len(relevant)}")
     return relevant
 
 
@@ -671,7 +675,7 @@ def fetch_ssrn_for_pillar(
 
     papers = fetch_ssrn(days_back=days_back, max_results=50)
     if verbose:
-        print(f"  SSRN returned {len(papers)} papers")
+        logger.debug(f"  SSRN returned {len(papers)} papers")
 
     threshold = config.hn_min_score
     relevant: list[dict] = []
@@ -687,7 +691,7 @@ def fetch_ssrn_for_pillar(
 
     relevant.sort(key=lambda p: p["_relevance_score"], reverse=True)
     if verbose:
-        print(f"  {config.slug_name}-relevant (score >= {threshold}): {len(relevant)}")
+        logger.debug(f"  {config.slug_name}-relevant (score >= {threshold}): {len(relevant)}")
     return relevant
 
 
@@ -724,7 +728,7 @@ def fetch_nber_for_pillar(
 
     papers = fetch_nber(days_back=days_back, max_results=50)
     if verbose:
-        print(f"  NBER returned {len(papers)} papers")
+        logger.debug(f"  NBER returned {len(papers)} papers")
 
     threshold = config.hn_min_score
     relevant: list[dict] = []
@@ -740,7 +744,7 @@ def fetch_nber_for_pillar(
 
     relevant.sort(key=lambda p: p["_relevance_score"], reverse=True)
     if verbose:
-        print(f"  {config.slug_name}-relevant (score >= {threshold}): {len(relevant)}")
+        logger.debug(f"  {config.slug_name}-relevant (score >= {threshold}): {len(relevant)}")
     return relevant
 
 
@@ -800,7 +804,7 @@ def fetch_pubmed_for_pillar(
     since_hours = days_back * 24
     papers = fetch_pubmed(since_hours=since_hours, max_results=300)
     if verbose:
-        print(f"  PubMed returned {len(papers)} papers")
+        logger.debug(f"  PubMed returned {len(papers)} papers")
 
     threshold = config.hn_min_score
     relevant: list[dict] = []
@@ -816,7 +820,7 @@ def fetch_pubmed_for_pillar(
 
     relevant.sort(key=lambda p: p["_relevance_score"], reverse=True)
     if verbose:
-        print(f"  {config.slug_name}-relevant (score >= {threshold}): {len(relevant)}")
+        logger.debug(f"  {config.slug_name}-relevant (score >= {threshold}): {len(relevant)}")
     return relevant
 
 
@@ -880,7 +884,7 @@ def fetch_s2_for_pillar(
     since_hours = days_back * 24
     papers = fetch_semantic_scholar(since_hours=since_hours, max_results=300)
     if verbose:
-        print(f"  Semantic Scholar returned {len(papers)} papers")
+        logger.debug(f"  Semantic Scholar returned {len(papers)} papers")
 
     threshold = config.hn_min_score
     relevant: list[dict] = []
@@ -896,7 +900,7 @@ def fetch_s2_for_pillar(
 
     relevant.sort(key=lambda p: p["_relevance_score"], reverse=True)
     if verbose:
-        print(f"  {config.slug_name}-relevant (score >= {threshold}): {len(relevant)}")
+        logger.debug(f"  {config.slug_name}-relevant (score >= {threshold}): {len(relevant)}")
     return relevant
 
 
@@ -1018,7 +1022,7 @@ def deduplicate(items: list[dict], registry_data: dict) -> list[dict]:
         new_items.append(item)
 
     if duplicates:
-        print(f"  Skipped {duplicates} duplicates (slug/URL/title/Jaccard>=0.93)")
+        logger.info(f"  Skipped {duplicates} duplicates (slug/URL/title/Jaccard>=0.93)")
     return new_items
 
 
@@ -1089,7 +1093,7 @@ def prune_and_archive_registry(
         json.dump({"items": existing_archive, "archived_at": datetime.now(timezone.utc).isoformat()}, f, indent=1)
 
     registry_data["content"] = active
-    print(f"  Archived {len(archive)} items to {archive_path.name} (active: {len(active)})")
+    logger.info(f"  Archived {len(archive)} items to {archive_path.name} (active: {len(active)})")
     return len(archive)
 
 
@@ -1110,7 +1114,7 @@ def ingest_pillar(
     items: list[dict] = []
 
     if verbose:
-        print(f"\n  ── {config.label} ({config.slug_name}) ──")
+        logger.debug(f"\n  ── {config.label} ({config.slug_name}) ──")
 
     if source in ("arxiv", "all"):
         papers = fetch_arxiv_for_pillar(config, days_back, verbose=verbose)
@@ -1119,7 +1123,7 @@ def ingest_pillar(
             if item is not None:
                 items.append(item)
         if verbose:
-            print(f"  → {sum(1 for i in items if i.get('source_breakdown', {}).get('arxiv'))} arXiv items for {config.slug_name}")
+            logger.debug(f"  → {sum(1 for i in items if i.get('source_breakdown', {}).get('arxiv'))} arXiv items for {config.slug_name}")
 
     if source in ("hn", "all"):
         stories = fetch_hn_for_pillar(config, days_back, verbose=verbose)
@@ -1129,7 +1133,7 @@ def ingest_pillar(
                 items.append(item)
         if verbose:
             hn_count = sum(1 for i in items if i.get('source_breakdown', {}).get('hn'))
-            print(f"  → {hn_count} HN items for {config.slug_name}")
+            logger.debug(f"  → {hn_count} HN items for {config.slug_name}")
 
     if source in ("sec-edgar", "all"):
         filings = fetch_sec_edgar_for_pillar(config, days_back, verbose=verbose)
@@ -1139,7 +1143,7 @@ def ingest_pillar(
                 items.append(item)
         if verbose:
             sec_count = sum(1 for i in items if i.get('source_breakdown', {}).get('sec-edgar'))
-            print(f"  → {sec_count} SEC EDGAR items for {config.slug_name}")
+            logger.debug(f"  → {sec_count} SEC EDGAR items for {config.slug_name}")
 
     if source in ("ssrn", "all"):
         papers = fetch_ssrn_for_pillar(config, days_back, verbose=verbose)
@@ -1149,7 +1153,7 @@ def ingest_pillar(
                 items.append(item)
         if verbose:
             ssrn_count = sum(1 for i in items if i.get('source_breakdown', {}).get('ssrn'))
-            print(f"  → {ssrn_count} SSRN items for {config.slug_name}")
+            logger.debug(f"  → {ssrn_count} SSRN items for {config.slug_name}")
 
     if source in ("nber", "all"):
         papers = fetch_nber_for_pillar(config, days_back, verbose=verbose)
@@ -1159,7 +1163,7 @@ def ingest_pillar(
                 items.append(item)
         if verbose:
             nber_count = sum(1 for i in items if i.get('source_breakdown', {}).get('nber'))
-            print(f"  → {nber_count} NBER items for {config.slug_name}")
+            logger.debug(f"  → {nber_count} NBER items for {config.slug_name}")
 
     if source in ("pubmed", "all"):
         papers = fetch_pubmed_for_pillar(config, days_back, verbose=verbose)
@@ -1169,7 +1173,7 @@ def ingest_pillar(
                 items.append(item)
         if verbose:
             pubmed_count = sum(1 for i in items if i.get('source_breakdown', {}).get('pubmed'))
-            print(f"  → {pubmed_count} PubMed items for {config.slug_name}")
+            logger.debug(f"  → {pubmed_count} PubMed items for {config.slug_name}")
 
     if source in ("semantic-scholar", "all"):
         papers = fetch_s2_for_pillar(config, days_back, verbose=verbose)
@@ -1179,7 +1183,7 @@ def ingest_pillar(
                 items.append(item)
         if verbose:
             s2_count = sum(1 for i in items if i.get('source_breakdown', {}).get('semantic-scholar'))
-            print(f"  → {s2_count} Semantic Scholar items for {config.slug_name}")
+            logger.debug(f"  → {s2_count} Semantic Scholar items for {config.slug_name}")
 
     return items
 
@@ -1234,13 +1238,15 @@ def main() -> int:
     )
     args = parser.parse_args()
 
-    print("=" * 60)
-    print("MULTI-PILLAR KNOWLEDGE INGESTION")
-    print("=" * 60)
-    print(f"Pillar: {args.pillar} | Source: {args.source} | Lookback: {args.days}d")
+    logging.basicConfig(level=logging.DEBUG if args.verbose else logging.INFO, format="%(message)s")
+
+    logger.info("=" * 60)
+    logger.info("MULTI-PILLAR KNOWLEDGE INGESTION")
+    logger.info("=" * 60)
+    logger.info(f"Pillar: {args.pillar} | Source: {args.source} | Lookback: {args.days}d")
     if args.dry_run:
-        print("DRY RUN — no changes will be written")
-    print()
+        logger.info("DRY RUN — no changes will be written")
+    logger.info("")
 
     # Resolve pillars to process
     pillar_keys = list(PILLAR_CONFIGS) if args.pillar == "all" else [args.pillar]
@@ -1262,22 +1268,22 @@ def main() -> int:
                 items = future.result()
                 all_new_items.extend(items)
             except Exception as e:
-                print(f"  [ERROR] {pillar_key}: {e}")
+                logger.error(f"  [ERROR] {pillar_key}: {e}")
 
     if not all_new_items:
-        print("\nNo new content candidates found.")
+        logger.info("\nNo new content candidates found.")
         return 0
 
-    print(f"\nTotal raw candidates: {len(all_new_items)}")
+    logger.info(f"\nTotal raw candidates: {len(all_new_items)}")
 
     # 2. Deduplicate
     registry = load_registry()
     new_items = deduplicate(all_new_items, registry)
 
-    print(f"New items to ingest: {len(new_items)}")
+    logger.info(f"New items to ingest: {len(new_items)}")
 
     if not new_items:
-        print("\nNothing new to ingest.")
+        logger.info("\nNothing new to ingest.")
         return 0
 
     # 3. Validate via Pydantic schema
@@ -1290,49 +1296,49 @@ def main() -> int:
         except Exception as e:
             errors += 1
             if args.verbose:
-                print(f"  [schema error] {item.get('slug', '?')}: {e}")
+                logger.debug(f"  [schema error] {item.get('slug', '?')}: {e}")
     if errors:
-        print(f"  Schema validation: {errors} items dropped, {len(validated)} passed")
+        logger.info(f"  Schema validation: {errors} items dropped, {len(validated)} passed")
 
     if not validated:
-        print("\nNo items passed schema validation.")
+        logger.info("\nNo items passed schema validation.")
         return 0
 
     # 4. Ontology concept extraction
     ontology = OntologyManager.load(ONTOLOGY_PATH)
     if ontology.concept_count() == 0:
-        print("  Seeding ontology with canonical concepts...")
+        logger.info("  Seeding ontology with canonical concepts...")
         ontology.seed_all_pillars()
         ontology.seed_relations()
     associations = extract_and_store_concepts(validated, ontology)
     if associations:
-        print(f"  Ontology: {associations} concept associations extracted")
+        logger.info(f"  Ontology: {associations} concept associations extracted")
 
     # 4b. Cross-pillar analog auto-population
     if not args.dry_run:
         analogs = ontology.auto_populate_cross_pillar_analogs()
         if analogs:
-            print(f"  Cross-pillar analogs: {analogs} links populated")
+            logger.info(f"  Cross-pillar analogs: {analogs} links populated")
 
     ontology.save(ONTOLOGY_PATH)
 
     # 5. Report
     if args.verbose or args.dry_run:
-        print()
-        print("─" * 60)
-        print("NEW ITEMS PREVIEW")
-        print("─" * 60)
+        logger.info("")
+        logger.info("─" * 60)
+        logger.info("NEW ITEMS PREVIEW")
+        logger.info("─" * 60)
         for i, item in enumerate(validated, 1):
             sb = item.get("source_breakdown", {})
             src = "arxiv" if sb.get("arxiv") else "hn" if sb.get("hn") else "sec-edgar" if sb.get("sec-edgar") else "ssrn" if sb.get("ssrn") else "nber" if sb.get("nber") else "pubmed" if sb.get("pubmed") else "semantic-scholar"
             concepts = item.get("extracted_concepts", [])
-            print(f"\n  [{i}] {item['slug']}")
-            print(f"      Pillar: {item['pillar']} | Source: {src}")
-            print(f"      Title: {item['title'][:80]}")
-            print(f"      Tags:   {', '.join(item['tags'][:5])}")
+            logger.debug(f"\n  [{i}] {item['slug']}")
+            logger.debug(f"      Pillar: {item['pillar']} | Source: {src}")
+            logger.debug(f"      Title: {item['title'][:80]}")
+            logger.debug(f"      Tags:   {', '.join(item['tags'][:5])}")
             if concepts:
-                print(f"      Concepts: {', '.join(concepts[:5])}")
-            print(f"      URL:    {item.get('source_url', 'N/A')[:60]}")
+                logger.debug(f"      Concepts: {', '.join(concepts[:5])}")
+            logger.debug(f"      URL:    {item.get('source_url', 'N/A')[:60]}")
 
     # 6. Ingest
     if not args.dry_run:
@@ -1342,7 +1348,7 @@ def main() -> int:
         # 6b. Prune + archive if over limit
         pruned = prune_and_archive_registry(registry)
         if pruned:
-            print(f"  Pruned {pruned} old items (archived to data/registry_archive/)")
+            logger.info(f"  Pruned {pruned} old items (archived to data/registry_archive/)")
 
         save_registry(registry)
 
@@ -1352,23 +1358,23 @@ def main() -> int:
             p = c.get("pillar", "unknown")
             pillar_counts[p] = pillar_counts.get(p, 0) + 1
 
-        print()
-        print("✓" * 60)
-        print(f"Ingested {len(validated)} new items into {REGISTRY_PATH}")
-        print()
-        print("Pillar distribution:")
+        logger.info("")
+        logger.info("✓" * 60)
+        logger.info(f"Ingested {len(validated)} new items into {REGISTRY_PATH}")
+        logger.info("")
+        logger.info("Pillar distribution:")
         total = len(content)
         for p in sorted(pillar_counts):
             pct = pillar_counts[p] / total * 100
             bar = "█" * int(pct / 2) + "░" * (50 - int(pct / 2))
-            print(f"  {p:20s} {pillar_counts[p]:3d} ({pct:5.1f}%) {bar}")
-        print(f"{'TOTAL':20s} {total:3d}")
+            logger.info(f"  {p:20s} {pillar_counts[p]:3d} ({pct:5.1f}%) {bar}")
+        logger.info(f"{'TOTAL':20s} {total:3d}")
 
         # 7. Run enrich.py if requested
         if args.enrich:
-            print()
-            print("─" * 60)
-            print("Running enrichment pipeline...")
+            logger.info("")
+            logger.info("─" * 60)
+            logger.info("Running enrichment pipeline...")
             enrich_script = ROOT / "scripts" / "enrich.py"
             if enrich_script.exists():
                 result = subprocess.run(
@@ -1377,17 +1383,17 @@ def main() -> int:
                     capture_output=True,
                     text=True,
                 )
-                print(result.stdout)
+                logger.info(result.stdout)
                 if result.returncode != 0:
-                    print(f"Enrichment warning: {result.stderr}")
+                    logger.info(f"Enrichment warning: {result.stderr}")
             else:
-                print(f"  enrich.py not found at {enrich_script}")
+                logger.info(f"  enrich.py not found at {enrich_script}")
 
-        print()
-        print("Done. Run `python build.py` to rebuild the site.")
+        logger.info("")
+        logger.info("Done. Run `python build.py` to rebuild the site.")
     else:
-        print()
-        print("DRY RUN — no changes written.")
+        logger.info("")
+        logger.info("DRY RUN — no changes written.")
 
     return 0
 

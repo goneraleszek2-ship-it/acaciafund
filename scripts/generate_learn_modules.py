@@ -15,11 +15,14 @@ Output: Updates registry.json with new learn entries.
 
 import argparse
 import json
+import logging
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
+
+logger = logging.getLogger(__name__)
 
 from core.ontology import OntologyManager
 
@@ -756,10 +759,10 @@ def auto_generate_from_ontology(
             concepts_needing_modules.append(concept)
 
     if not concepts_needing_modules:
-        print("  All ontology concepts already have learn modules.")
+        logger.info("  All ontology concepts already have learn modules.")
         return []
 
-    print(f"  Found {len(concepts_needing_modules)} concepts without learn modules")
+    logger.info(f"  Found {len(concepts_needing_modules)} concepts without learn modules")
     new_slugs = []
     now = datetime.now(timezone.utc).isoformat()
 
@@ -864,7 +867,7 @@ def auto_generate_from_ontology(
         registry["content"].append(item)
         existing_slugs.add(slug)
         new_slugs.append(slug)
-        print(f"  Auto-generated: {slug}")
+        logger.info(f"  Auto-generated: {slug}")
 
     return new_slugs
 
@@ -882,11 +885,18 @@ def main():
         default=20,
         help="Max auto-generated modules to create (default: 20)",
     )
+    parser.add_argument(
+        "--verbose", "-v",
+        action="store_true",
+        help="Show detailed output",
+    )
     args = parser.parse_args()
 
-    print("=" * 60)
-    print("Learn Module Generator")
-    print("=" * 60)
+    logging.basicConfig(level=logging.DEBUG if args.verbose else logging.INFO, format="%(message)s")
+
+    logger.info("=" * 60)
+    logger.info("Learn Module Generator")
+    logger.info("=" * 60)
 
     # Load ontology for prerequisite resolution
     ontology = None
@@ -949,11 +959,11 @@ def main():
         existing_slugs.add(slug)
         new_modules.append(slug)
         created += 1
-        print(f"  Created: {slug}")
+        logger.info(f"  Created: {slug}")
 
     # ── Phase 2: Auto-generate from ontology (LLM only) ──────────────
     if ontology and args.infer:
-        print("\nAuto-generating modules from ontology concepts via LLM...")
+        logger.info("\nAuto-generating modules from ontology concepts via LLM...")
         llm_client = None
         try:
             import os
@@ -972,16 +982,16 @@ def main():
             )
             created += len(auto_slugs)
         else:
-            print("  No LLM client available (missing API key or openai package)")
+            logger.warning("  No LLM client available (missing API key or openai package)")
     elif ontology:
-        print("\n  Skipping auto-generation (use --infer for LLM-generated modules)")
+        logger.info("\n  Skipping auto-generation (use --infer for LLM-generated modules)")
 
     # Save registry
     with open(REGISTRY_PATH, "w") as f:
         json.dump(registry, f, indent=2, default=str)
 
-    print(f"\n  Total new modules: {created}")
-    print(f"  Registry now has {len(registry['content'])} items")
+    logger.info(f"\n  Total new modules: {created}")
+    logger.info(f"  Registry now has {len(registry['content'])} items")
 
 
 if __name__ == "__main__":

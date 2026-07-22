@@ -37,7 +37,7 @@ from pathlib import Path
 from typing import Any
 
 logger = logging.getLogger("acaciafund.enrich")
-logging.basicConfig(level=logging.WARNING, format="%(levelname)s:%(name)s:%(message)s")
+logging.basicConfig(level=logging.INFO, format="%(message)s")
 
 ROOT = Path(__file__).resolve().parent.parent
 
@@ -66,6 +66,7 @@ _bootstrap_environment()
 # Must be set before mem0/fastembed is initialized (happens lazily).
 os.environ.setdefault("HF_HUB_OFFLINE", "1")
 sys.path.insert(0, str(ROOT))
+sys.path.insert(0, str(ROOT / "scripts"))
 
 REGISTRY_PATH = ROOT / "registry.json"
 
@@ -212,7 +213,7 @@ class ResearchEnricher:
         self._llm_model = "meta/llama-3.1-70b-instruct"
 
         if not self._api_key:
-            print("  [warn] No NVIDIA_API_KEY set, falling back to deterministic mode")
+            logger.warning("  [warn] No NVIDIA_API_KEY set, falling back to deterministic mode")
             self.infer_mode = False
             return
 
@@ -244,7 +245,7 @@ class ResearchEnricher:
                 base_url=self._api_base,
             )
         except ImportError as e:
-            print(f"  [warn] Failed to initialize LLM: {e}, falling back to deterministic")
+            logger.warning(f"  [warn] Failed to initialize LLM: {e}, falling back to deterministic")
             self.infer_mode = False
 
     # ------------------------------------------------------------------
@@ -917,12 +918,12 @@ def main() -> int:
     # Load registry
     reg = load_registry()
     items: list[dict] = reg.get("content", [])
-    print(f"Loaded {len(items)} items from registry")
+    logger.info(f"Loaded {len(items)} items from registry")
 
     # Initialize enricher
     enricher = ResearchEnricher(infer_mode=args.infer)
     mode = "LLM" if args.infer else "deterministic"
-    print(f"Enricher mode: {mode}")
+    logger.info(f"Enricher mode: {mode}")
 
     # Process items
     enriched_count = 0
@@ -935,7 +936,7 @@ def main() -> int:
         if item.get("enriched") and not args.force:
             skipped_count += 1
             if args.verbose:
-                print(f"  [skip] {slug} (already enriched)")
+                logger.debug(f"  [skip] {slug} (already enriched)")
             continue
 
         # Enrich
@@ -955,7 +956,7 @@ def main() -> int:
                     "source": "llm",
                 }
                 if args.verbose:
-                    print(f"  [feynman] {slug}: {feynman.get('one_liner', '')[:60]}")
+                    logger.debug(f"  [feynman] {slug}: {feynman.get('one_liner', '')[:60]}")
 
         # LLM Philosophy enrichment
         if args.llm_philosophy and enricher._llm_client:
@@ -971,14 +972,14 @@ def main() -> int:
                     "source": "llm",
                 }
                 if args.verbose:
-                    print(f"  [philosophy] {slug}: {phil.get('epistemic_status', '?')}")
+                    logger.debug(f"  [philosophy] {slug}: {phil.get('epistemic_status', '?')}")
 
         if args.verbose:
             tags = item.get("tags", [])
             sqi = item.get("sqi", 0.0)
-            print(f"  [enrich] {slug}")
-            print(f"           tags={tags[:5]}{'...' if len(tags) > 5 else ''}")
-            print(f"           sqi={sqi:.3f}")
+            logger.debug(f"  [enrich] {slug}")
+            logger.debug(f"           tags={tags[:5]}{'...' if len(tags) > 5 else ''}")
+            logger.debug(f"           sqi={sqi:.3f}")
 
     # Update registry metadata
     now = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
@@ -988,20 +989,20 @@ def main() -> int:
     # Write changes
     if not args.dry_run:
         save_registry(reg)
-        print(f"  Written to {REGISTRY_PATH}")
+        logger.info(f"  Written to {REGISTRY_PATH}")
     else:
-        print("  DRY RUN - no changes written")
+        logger.info("  DRY RUN - no changes written")
 
     # Summary
-    print()
-    print("=" * 60)
-    print("ENRICHMENT ENGINE REPORT")
-    print("=" * 60)
-    print(f"Total items:            {len(items)}")
-    print(f"Enriched this run:      {enriched_count}")
-    print(f"Skipped (already done): {skipped_count}")
-    print(f"Enricher mode:          {mode}")
-    print()
+    logger.info("")
+    logger.info("=" * 60)
+    logger.info("ENRICHMENT ENGINE REPORT")
+    logger.info("=" * 60)
+    logger.info(f"Total items:            {len(items)}")
+    logger.info(f"Enriched this run:      {enriched_count}")
+    logger.info(f"Skipped (already done): {skipped_count}")
+    logger.info(f"Enricher mode:          {mode}")
+    logger.info("")
 
     return 0
 
