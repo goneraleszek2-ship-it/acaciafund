@@ -1,52 +1,6 @@
 {
-  "aml/knowledge/ai-in-aml-compliance": [
-    "data-observability",
-    "regtech"
-  ],
-  "aml/knowledge/core-foundations": [
-    "beneficial-ownership",
-    "cdd"
-  ],
-  "aml/knowledge/cross-border-financial-intelligence": [
-    "regtech"
-  ],
-  "aml/knowledge/cryptocurrency-aml-challenges": [
-    "crypto-aml",
-    "regtech"
-  ],
-  "aml/knowledge/regulatory-technology-landscape": [
-    "regtech"
-  ],
-  "aml/knowledge/sar-filing-best-practices": [
-    "data-observability",
-    "regtech",
-    "sar"
-  ],
-  "aml/knowledge/tbml-pricing-anomalies": [
-    "market-microstructure",
-    "tbml",
-    "transaction-monitoring"
-  ],
-  "aml/knowledge/temporal-graph-aml": [
-    "data-observability",
-    "transaction-monitoring"
-  ],
-  "aml/knowledge/transaction-monitoring-optimization": [
-    "data-observability",
-    "regtech",
-    "transaction-monitoring"
-  ],
-  "aml/knowledge/ubo-unwinding-algorithms": [
-    "apache-iceberg",
-    "arrow-parquet",
-    "beneficial-ownership"
-  ],
   "aml/learn/aml-basics": [
     "regtech"
-  ],
-  "aml/learn/aml-business-continuity": [
-    "aml-program",
-    "sar"
   ],
   "aml/learn/aml-compliance-glossary": [
     "bsa",
@@ -54,18 +8,6 @@
   ],
   "aml/learn/aml-enforcement-cases": [
     "regtech"
-  ],
-  "aml/learn/aml-program-audit": [
-    "aml-program",
-    "transaction-monitoring"
-  ],
-  "aml/learn/beneficial-ownership-transparency": [
-    "beneficial-ownership",
-    "etl",
-    "regtech"
-  ],
-  "aml/learn/cross-border-aml": [
-    "fatf-recommendations"
   ],
   "aml/learn/crypto-aml": [
     "regtech"
@@ -78,44 +20,16 @@
     "regtech",
     "transaction-monitoring"
   ],
-  "aml/learn/kyc-cdd-workflows": [
-    "cdd",
-    "edd",
-    "kyc"
-  ],
   "aml/learn/money-laundering-mechanisms": [
     "tbml"
   ],
   "aml/learn/quiz-aml": [
     "regtech"
   ],
-  "aml/learn/regtech-compliance": [
-    "cdd",
-    "kyc",
-    "regtech",
-    "sanctions-screening",
-    "sar",
-    "transaction-monitoring"
-  ],
-  "aml/learn/sanctions-evasion-typologies": [
-    "beneficial-ownership"
-  ],
-  "aml/learn/sanctions-screening": [
-    "pep",
-    "sanctions-screening"
-  ],
-  "aml/learn/sar-filing-scenarios": [
-    "bsa",
-    "ctr",
-    "sar"
-  ],
   "aml/learn/trade-based-ml-sanctions": [
     "regtech",
     "tbml"
   ],
-  "aml/learn/whistleblower-programs": [],
-  "aml/research/agent-data-injection-attacks-are-realistic-threats-to-ai-age": [],
-  "aml/research/algebraic-modelings-of-the-supersingular-isogeny-problem": [],
   "aml/research/aml-1": [
     "data-observability",
     "transaction-monitoring"
@@ -138,12 +52,6 @@
     "etl",
     "streaming"
   ],
-  "aml/research/any-axes-are-allowed-a-characteristic-axis-integral-diagnosi": [
-    "factor-investing"
-  ],
-  "aml/research/canniuplift-a-holistic-framework-for-mitigating-seller-and-i": [],
-  "aml/research/causal-separation-conditional-risk-and-projected-markowitz-p": [],
-  "aml/research/counterfactual-methods-for-detecting-unfairness-in-anti-mone": [],
   "aml/research/cryptocurrency-mixers-under-global-regulatory-spotlight": [
     "fatf-recommendations",
     "mica-crypto-assets",
@@ -152,326 +60,17 @@
     "technical-analysis",
     "travel-rule"
   ],
-  "aml/research/curated-retrieval-versus-open-web-search-in-public-ai-inform": [],
   "aml/research/dataops-aml": [
     "data-observability",
     "data-quality",
     "regtech",
     "transaction-monitoring"
   ],
-  "aml/research/department-of-commerce-has-lifted-export-controls-on-claude": [],
-  "aml/research/finfluencers-on-tiktok-a-longitudinal-analysis-of-content-en": [],
-  "aml/research/forecasting-realized-volatility-with-time-series-foundation": [],
-  "aml/research/from-multiplicity-to-vulnerability-privacy-amplification-ris": [],
-  "aml/research/international-chess-federation-sanctions-kramnik": [],
-  "aml/research/learning-only-what-valid-adapters-can-express-subspace-const": [],
-  "aml/research/multi-choice-min-prophet": [],
-  "aml/research/open-problems-in-ai-incident-governance": [],
-  "aml/research/pisas-benchmarking-contextual-integrity-in-multi-user-agenti": [],
-  "aml/research/privacy-preserving-robustness-verification-for-neural-networ": [],
   "aml/research/quantum-spectral-anomaly-detection": [],
-  "aml/research/rating-the-pitch-not-the-product-user-evaluations-of-llms-re": [],
-  "aml/research/selective-disclosure-watermarking-for-large-language-models": [],
   "aml/research/square-root-price-impact-is-necessary-for-endogenous-manipul": [
     "market-impact"
   ],
-  "aml/research/untrusted-content-masking-for-web-agents-with-security-guara": [],
-  "aml/research/when-agents-lie-premeditation-persistence-and-exploitation-i": [],
-  "aml/research/when-ai-is-wrong-on-purpose-how-students-respond-to-buggy-ge": [],
-  "aml/research/when-claws-remember-but-do-not-tell-stealthy-memory-injectio": [],
-  "compliance/glossary": [
-    "adverse-media",
-    "aml-program",
-    "beneficial-ownership",
-    "bsa",
-    "correspondent-banking",
-    "crypto-aml",
-    "kyc"
-  ],
-  "compliance/knowledge/aml-compliance-program-guide": [
-    "aml-program",
-    "bsa",
-    "sanctions-screening",
-    "transaction-monitoring"
-  ],
-  "compliance/knowledge/aml-foundations": [
-    "bsa",
-    "cdd"
-  ],
-  "compliance/knowledge/aml-platform-architecture": [
-    "sanctions-screening",
-    "transaction-monitoring"
-  ],
-  "compliance/knowledge/aml-risk-assessment-methodology": [
-    "bsa",
-    "cdd",
-    "edd"
-  ],
-  "compliance/knowledge/aml-risk-scoring-methodology": [
-    "cdd"
-  ],
-  "compliance/knowledge/aml-screening-python": [],
-  "compliance/knowledge/aml-screening-rules-tutorial": [],
-  "compliance/knowledge/beneficial-ownership-transparency": [
-    "beneficial-ownership",
-    "etl",
-    "regtech"
-  ],
-  "compliance/knowledge/bsa-aml-regulations": [
-    "beneficial-ownership",
-    "bsa",
-    "correspondent-banking",
-    "ctr",
-    "edd",
-    "sar"
-  ],
-  "compliance/knowledge/cdd-best-practices": [
-    "aml-program",
-    "beneficial-ownership",
-    "cdd",
-    "edd",
-    "fatf-recommendations",
-    "kyc",
-    "pep"
-  ],
-  "compliance/knowledge/compliance-program-strategies": [
-    "edd",
-    "transaction-monitoring"
-  ],
-  "compliance/knowledge/fincen-enforcement-trends": [
-    "beneficial-ownership",
-    "bsa",
-    "sar",
-    "transaction-monitoring"
-  ],
-  "compliance/knowledge/fintech-trends-analysis": [
-    "regtech",
-    "transaction-monitoring"
-  ],
-  "compliance/knowledge/foundations-surveillance-suspicion": [
-    "sar",
-    "str",
-    "transaction-monitoring"
-  ],
-  "compliance/knowledge/foundations-trust-identity": [
-    "cdd",
-    "kyc"
-  ],
-  "compliance/knowledge/global-sanctions-landscape": [
-    "correspondent-banking"
-  ],
-  "compliance/knowledge/ofac-sanctions-regulations": [],
-  "compliance/knowledge/regtech-market-analysis": [
-    "regtech",
-    "regulatory-reporting",
-    "transaction-monitoring"
-  ],
-  "compliance/knowledge/regtech-system-architecture": [
-    "regtech"
-  ],
-  "compliance/knowledge/regulatory-reporting-guide": [
-    "ctr",
-    "sar"
-  ],
-  "compliance/knowledge/regulatory-reporting-platform": [
-    "bsa",
-    "data-quality",
-    "kyc"
-  ],
-  "compliance/knowledge/risk-foundations": [],
-  "compliance/knowledge/sanctions-compliance-guide": [
-    "sanctions-screening"
-  ],
-  "compliance/knowledge/sanctions-compliance-strategies": [],
-  "compliance/knowledge/sanctions-market-impact": [],
-  "compliance/knowledge/sanctions-screening-best-practices": [
-    "sanctions-screening"
-  ],
-  "compliance/knowledge/sanctions-screening-methodology": [
-    "model-cards",
-    "sanctions-screening"
-  ],
-  "compliance/knowledge/sanctions-screening-tutorial": [
-    "sanctions-screening"
-  ],
-  "compliance/knowledge/trade-based-money-laundering-detection": [
-    "regtech",
-    "tbml"
-  ],
-  "compliance/knowledge/transaction-monitoring-platform": [
-    "batch-processing",
-    "sar",
-    "streaming",
-    "transaction-monitoring"
-  ],
-  "compliance/research/a-minimalist-retargeting-guided-reinforcement-learning-recip": [],
-  "compliance/research/agent-hacks-agent-autoresearch-for-production-agent-red-team": [],
-  "compliance/research/an-explainable-agentic-system-for-detection-of-conversationa": [],
-  "compliance/research/artificial-persons": [],
-  "compliance/research/can-llms-perform-deep-technical-comprehension-of-computer-ar": [],
-  "compliance/research/cardanos-voltaire-governance-complete-specification-and-rese": [],
-  "compliance/research/closing-the-loop-an-access-control-architecture-for-automate": [],
-  "compliance/research/conversational-retrieval-and-on-the-fly-knowledge-modeling-o": [],
-  "compliance/research/dav-gen-end-to-end-generative-retrieval-via-draft-and-verify": [],
-  "compliance/research/does-online-sustainability-communication-shape-public-discou": [],
-  "compliance/research/elitism-in-the-aisle-a-long-run-surname-measure-of-legislati": [],
-  "compliance/research/financial-sanctions-and-the-global-payments-network": [],
-  "compliance/research/forgetting-our-way-to-shared-meaning-effects-of-forgetting-o": [],
-  "compliance/research/from-rules-to-nash-equilibria-a-lean-4-case-study-in-game-th": [],
-  "compliance/research/graph-based-structural-evaluation-of-llm-translated-adversar": [],
-  "compliance/research/grounded-event-extraction-from-sec-8-k-filings-with-a-fine-g": [],
-  "compliance/research/improving-ad-hoc-search-effectiveness-for-conversational-inf": [],
-  "compliance/research/large-language-models-as-a-judge-in-theory-agnostic-adaptive": [],
-  "compliance/research/linux-disk-encryption-and-self-encrypting-drives-a-case-stud": [],
-  "compliance/research/llm-guided-program-evolution-for-targeted-black-box-attacks": [],
-  "compliance/research/locality-of-curve-decoding-and-improved-proximity-gaps": [],
-  "compliance/research/log-insight-automating-microservice-incident-diagnosis-via-n": [],
-  "compliance/research/one-vote-several-parliaments-an-empirical-analysis-of-the-al": [],
-  "compliance/research/paperrouter-agent-a-content-grounded-llm-agent-for-personali": [],
-  "compliance/research/paradoxes-of-game-theoretic-equilibria-and-price-of-anarchy": [],
-  "compliance/research/philosopher-and-prophet-inequalities-for-divisible-items": [],
-  "compliance/research/prezta-provable-remote-execution-of-zero-trust-authorization": [],
-  "compliance/research/projagent-procedural-similarity-retrieval-for-repository-lev": [],
-  "compliance/research/reproducing-human-biases-in-route-choice-using-large-languag": [
-    "behavioral-finance"
-  ],
-  "compliance/research/risk-design-ai-and-prediction-beyond-screening-in-insurance": [],
-  "compliance/research/rumour-spreading-in-community-based-networks": [],
-  "compliance/research/secure-qr-codes-authenticity-verification-via-eddsa-signatur": [],
-  "compliance/research/social-insurance-with-imperfect-eligibility-screening-theory": [],
-  "compliance/research/the-context-access-divide-interaction-level-architecture-as": [],
-  "compliance/research/the-geopolitics-of-knowledge-tipping-points-national-fingerp": [],
-  "compliance/research/time-is-money-incentivized-causal-transaction-ordering": [],
-  "compliance/research/token-flow-firewall-semantic-runtime-auditing-for-persistent": [],
-  "compliance/research/trace-a-two-channel-robust-attribution-watermark-via-complem": [],
-  "compliance/research/uncovering-students-mental-models-of-generative-artificial-i": [],
-  "compliance/research/validity-of-llms-as-data-annotators-amalia-on-authority": [],
-  "compliance/research/we-are-all-in-big-trouble-shock-emoji-personal-narratives-in": [],
-  "compliance/research/when-local-monitors-miss-compositional-harm-diagnosing-distr": [],
-  "data/glossary": [
-    "ai-conformity-assessment",
-    "apache-flink",
-    "apache-iceberg",
-    "apache-kafka",
-    "arrow-parquet"
-  ],
-  "data/knowledge/cdc-debezium-statemachines": [
-    "apache-iceberg",
-    "apache-kafka",
-    "arrow-parquet",
-    "cdc"
-  ],
-  "data/knowledge/core-foundations": [],
   "data/knowledge/cybernetic-foundations": [],
-  "data/knowledge/cybernetic-manifesto": [
-    "market-microstructure"
-  ],
-  "data/knowledge/dagster-pipeline-tutorial": [
-    "dagster",
-    "data-observability",
-    "orchestration"
-  ],
-  "data/knowledge/data-contracts-best-practices": [
-    "data-contracts",
-    "schema-registry"
-  ],
-  "data/knowledge/data-engineering-foundations": [
-    "apache-flink",
-    "apache-kafka",
-    "data-lake",
-    "data-mesh",
-    "data-warehouse",
-    "elt",
-    "etl",
-    "streaming"
-  ],
-  "data/knowledge/data-infrastructure-market": [
-    "data-lake",
-    "ml-pipeline"
-  ],
-  "data/knowledge/data-infrastructure-trends": [
-    "apache-iceberg",
-    "dagster",
-    "data-mesh"
-  ],
-  "data/knowledge/data-lakehouse-architecture": [
-    "apache-iceberg",
-    "data-lake"
-  ],
-  "data/knowledge/data-market-landscape": [
-    "apache-flink",
-    "apache-kafka",
-    "dagster",
-    "data-governance"
-  ],
-  "data/knowledge/data-mesh-adoption-strategies": [
-    "data-mesh"
-  ],
-  "data/knowledge/data-pipeline-strategies": [
-    "apache-kafka",
-    "batch-processing",
-    "cdc",
-    "data-quality",
-    "elt",
-    "orchestration"
-  ],
-  "data/knowledge/data-platform-comparison": [
-    "arrow-parquet"
-  ],
-  "data/knowledge/data-platform-market": [
-    "apache-iceberg",
-    "data-lake",
-    "data-observability"
-  ],
-  "data/knowledge/data-privacy-regulations": [],
-  "data/knowledge/data-quality-best-practices": [
-    "data-quality"
-  ],
-  "data/knowledge/data-quality-measurement-methodology": [
-    "data-observability",
-    "data-quality"
-  ],
-  "data/knowledge/data-quality-methodology": [
-    "data-quality"
-  ],
-  "data/knowledge/data-sovereignty-regulations": [],
-  "data/knowledge/dbt-pipeline-tutorial": [],
-  "data/knowledge/etl-testing-methodology": [
-    "etl"
-  ],
-  "data/knowledge/feature-engineering-methodology": [
-    "ml-pipeline"
-  ],
-  "data/knowledge/flink-stateful-stream-joins": [
-    "apache-flink",
-    "apache-iceberg",
-    "arrow-parquet",
-    "data-observability"
-  ],
-  "data/knowledge/foundations-governance": [
-    "data-contracts",
-    "data-mesh"
-  ],
-  "data/knowledge/foundations-interpretation": [
-    "cdc",
-    "elt",
-    "etl"
-  ],
-  "data/knowledge/pipeline-benchmarking-methodology": [],
-  "data/knowledge/pipeline-reliability-best-practices": [
-    "data-observability"
-  ],
-  "data/knowledge/pyspark-dataframe-tutorial": [],
-  "data/knowledge/pyspark-etl-tutorial": [
-    "arrow-parquet",
-    "etl"
-  ],
-  "data/knowledge/sql-analytics-tutorial": [
-    "query-optimization"
-  ],
-  "data/knowledge/zero-copy-arrow-iceberg": [
-    "arrow-parquet"
-  ],
   "data/learn/building-pipelines-dbt-dagster": [
     "dagster",
     "data-lake",
@@ -490,24 +89,11 @@
     "ai-act-high-risk",
     "regtech"
   ],
-  "data/learn/data-lakehouse-patterns": [
-    "cdc",
-    "data-lake",
-    "data-observability"
-  ],
   "data/learn/data-pipeline-architectures": [
     "batch-processing",
     "dagster"
   ],
-  "data/learn/data-pipeline-orchestration": [
-    "data-observability",
-    "orchestration"
-  ],
   "data/learn/data-quality-engineering": [
-    "data-observability",
-    "data-quality"
-  ],
-  "data/learn/data-quality-frameworks": [
     "data-observability",
     "data-quality"
   ],
@@ -533,30 +119,10 @@
     "cdc",
     "data-lake"
   ],
-  "data/learn/partitioning-strategies": [
-    "arrow-parquet"
-  ],
-  "data/learn/pyspark-fundamentals": [],
-  "data/learn/real-time-streaming-architectures": [
-    "data-observability"
-  ],
-  "data/learn/schema-evolution-strategies": [
-    "data-observability",
-    "schema-registry"
-  ],
-  "data/learn/spike-data-pipelines": [
-    "dagster",
-    "data-quality",
-    "etl",
-    "ml-pipeline"
-  ],
   "data/research/2027-data-engineering-predictions": [
     "apache-iceberg"
   ],
-  "data/research/a-modular-o-ran-testbed-based-on-srs-open-source-o-cu-o-du-a": [],
   "data/research/a-pictorial-introduction-to-differential-geometry-2017": [],
-  "data/research/a-practical-investigation-of-training-free-relaxed-speculati": [],
-  "data/research/adaptive-inference-batching-using-policy-gradients": [],
   "data/research/airflow-prefect-dagster-comparison": [
     "dagster",
     "data-observability",
@@ -570,33 +136,10 @@
     "apache-iceberg",
     "arrow-parquet"
   ],
-  "data/research/ardy-autoregressive-diffusion-with-hybrid-representation-for": [],
-  "data/research/auditing-the-risk-claims-of-distributional-reinforcement-lea": [],
-  "data/research/autoslo-practical-latency-slos-on-cloud-data-warehouses-exte": [],
-  "data/research/bisco-llm-lookup-free-binary-spherical-coding-for-extreme-lo": [
-    "data-lake"
-  ],
-  "data/research/building-a-real-time-ai-tutor-for-5-year-olds": [],
   "data/research/bun-runtime-support-now-limited-and-deprecated-science": [],
-  "data/research/caad-causality-aware-multivariate-time-series-anomaly-detect": [
-    "arrow-parquet",
-    "transaction-monitoring"
-  ],
-  "data/research/cats-secure-blockchain-interoperability-with-cross-chain-ato": [],
-  "data/research/choosing-a-parallel-heterogeneous-ensemble-method-for-tabula": [],
-  "data/research/closing-the-loop-an-access-control-architecture-for-automate": [],
-  "data/research/cloudflare-meerkat-globally-distributed-consensus": [
-    "distributed-systems"
-  ],
-  "data/research/coded-task-offloading-for-fluid-computing-a-privacy-aware-ap": [],
-  "data/research/communication-aware-placement-and-pruning-for-efficient-mixt": [],
-  "data/research/computing-in-anonymous-dynamic-networks-with-one-bit-communi": [],
   "data/research/cost-optimization-data-pipelines": [
     "apache-iceberg",
     "query-optimization"
-  ],
-  "data/research/dag-fm-a-foundation-model-for-causal-discovery-under-heterog": [
-    "orchestration"
   ],
   "data/research/dagster-2": [
     "dagster",
@@ -622,20 +165,10 @@
   "data/research/dataops-science": [
     "ml-pipeline"
   ],
-  "data/research/deeprt-engine-a-unified-gpu-parallel-ray-tracing-framework-w": [],
-  "data/research/docmaster-a-hierarchical-structure-aware-system-for-document": [],
-  "data/research/every-new-car-sold-in-the-european-union-must-include-a-driv": [],
-  "data/research/exact-ratio-preservation-via-outliers-for-fair-k-center-clus": [],
   "data/research/ey-canada-published-a-cybersecurity-report-and-most": [],
   "data/research/feature-store-feast-vs-tecton": [
     "ml-pipeline"
   ],
-  "data/research/geometric-causal-models": [],
-  "data/research/h3d-benchmarking-unsupervised-text-hashing-for-fine-grained": [
-    "entity-resolution"
-  ],
-  "data/research/improved-global-ocean-heat-content-estimation-by-modeling-ve": [],
-  "data/research/interpretable-human-label-free-deep-learning-for-real-bogus": [],
   "data/research/kafka-streaming-event-driven": [
     "apache-kafka",
     "streaming"
@@ -645,29 +178,10 @@
     "apache-kafka",
     "dagster"
   ],
-  "data/research/memexchange-cloud-scale-memory-trading": [],
-  "data/research/microsoft-admits-a-windows-11-bug-is-eating-up-to-500gb-of-s": [
-    "data-lake"
-  ],
   "data/research/ml-pipeline-orchestration-feast-mlflow": [
     "dagster",
     "ml-pipeline",
     "orchestration"
-  ],
-  "data/research/modeling-time-course-gene-expression-data-through-bayesian-p": [],
-  "data/research/need-for-speed-sort-a-recursive-distribution-based-sorting-a": [],
-  "data/research/on-the-risk-of-coding-before-testing-an-empirical-study-on-l": [],
-  "data/research/optimizing-ml-workload-partitioning-between-cpus-and-cim-acc": [],
-  "data/research/parallel-mathcal-o-sqrt-n-overhead-lsd-radix-sort": [],
-  "data/research/parallel-qec-decoding-applied-to-distributed-quantum-computi": [],
-  "data/research/pdeflow-autonomous-agentic-pde-pipelines-for-neural-operator": [],
-  "data/research/privacy-aware-collaborative-and-distributed-bayesian-optimiz": [],
-  "data/research/punk-or-why-i-dont-stream-anymore": [],
-  "data/research/real-time-map-of-great-britains-rail-network": [],
-  "data/research/relaxing-faithfulness-with-intervention-only-causal-discover": [],
-  "data/research/rust-is-in-tiobe-index-top-10": [],
-  "data/research/s3-is-a-better-abstraction-than-nfs-networked-block-storage": [
-    "data-lake"
   ],
   "data/research/schema-registry-avro-protobuf": [
     "schema-registry"
@@ -675,36 +189,11 @@
   "data/research/science-dataeng": [
     "dagster"
   ],
-  "data/research/secure-decentralized-federated-learning-via-gossip-and-virtu": [
-    "federated-learning"
-  ],
-  "data/research/self-adaptive-anomaly-detection-with-reinforcement-learning": [
-    "transaction-monitoring"
-  ],
-  "data/research/serving-a-1t-open-model-at-511-tok-s-single-stream-lossless": [],
-  "data/research/show-hn-focal-harvest-cli-research-pipeline-to-search-scrape": [],
-  "data/research/show-hn-turn-commodity-wifi-signals-into-real-time-spatial-i": [],
-  "data/research/smetric-rethink-llm-scheduling-for-serving-agents-with-balan": [],
-  "data/research/sodium-ion-salt-batteries-will-revolutionize-electric-vehicl": [
-    "data-lake"
-  ],
-  "data/research/stablecoins-under-stress-in-a-national-economy-transaction-l": [],
   "data/research/terraform-data-infrastructure": [
     "apache-iceberg",
     "apache-kafka",
     "dagster"
   ],
-  "data/research/time-is-money-incentivized-causal-transaction-ordering": [],
-  "data/research/trm-raft-a-byzantine-resistant-raft-consensus-via-integrated": [
-    "distributed-systems"
-  ],
-  "data/research/video-based-detection-of-cessation-of-breathing-in-pre-term": [
-    "data-observability"
-  ],
-  "data/research/webswarm-recursive-multi-agent-orchestration-for-deep-and-wi": [],
-  "data/research/when-local-monitors-miss-compositional-harm-diagnosing-distr": [],
-  "data/research/who-needs-dram-we-have-fiber": [],
-  "data/research/workflow-as-knowledge-semantic-persistence-for-llm-mediated": [],
   "knowledge/about": [],
   "knowledge/changelog": [],
   "knowledge/contact": [],
@@ -745,125 +234,12 @@
   "knowledge/system-architecture": [
     "data-observability"
   ],
-  "markets/glossary": [
-    "ai-hardware",
-    "asset-pricing",
-    "behavioral-finance",
-    "commodity-trading",
-    "esg-double-materiality",
-    "esg-investing",
-    "factor-investing"
-  ],
-  "markets/knowledge/backtesting-python-tutorial": [],
-  "markets/knowledge/backtesting-validation-methodology": [],
-  "markets/knowledge/core-foundations": [
-    "lob",
-    "market-microstructure"
-  ],
-  "markets/knowledge/earnings-analysis-frameworks": [
-    "earnings-analysis"
-  ],
-  "markets/knowledge/equity-market-structure": [],
-  "markets/knowledge/event-study-methodology": [
-    "market-microstructure"
-  ],
-  "markets/knowledge/execution-management-platform": [
-    "high-frequency-trading",
-    "market-impact"
-  ],
-  "markets/knowledge/execution-quality-best-practices": [
-    "fixed-income",
-    "market-impact"
-  ],
-  "markets/knowledge/factor-model-validation-methodology": [
-    "factor-investing"
-  ],
-  "markets/knowledge/factor-modeling-methodology": [
-    "factor-investing",
-    "portfolio-optimization"
-  ],
-  "markets/knowledge/financial-data-analysis-guide": [
-    "data-quality"
-  ],
-  "markets/knowledge/fintech-regulation-trends": [
-    "mica-crypto-assets",
-    "travel-rule"
-  ],
-  "markets/knowledge/fixed-income-liquidity": [
-    "fixed-income"
-  ],
-  "markets/knowledge/foundations-price-knowledge": [
-    "lob",
-    "market-microstructure",
-    "vpin"
-  ],
-  "markets/knowledge/foundations-risk-probability": [
-    "asset-pricing",
-    "factor-investing"
-  ],
-  "markets/knowledge/hawkes-microstructure": [
-    "lob"
-  ],
-  "markets/knowledge/implied-volatility-surfaces": [
-    "market-microstructure",
-    "volatility-surface"
-  ],
-  "markets/knowledge/industrial-automation-trends": [],
-  "markets/knowledge/market-abuse-regulations": [],
-  "markets/knowledge/market-data-analysis-tutorial": [
-    "data-quality",
-    "technical-analysis"
-  ],
-  "markets/knowledge/market-data-architecture": [
-    "lob"
-  ],
-  "markets/knowledge/mifid-regulations": [
-    "options-trading"
-  ],
-  "markets/knowledge/options-pricing-python-tutorial": [],
-  "markets/knowledge/options-trading-strategies": [
-    "options-trading"
-  ],
-  "markets/knowledge/portfolio-optimization-python-tutorial": [
-    "portfolio-optimization",
-    "risk-parity"
-  ],
-  "markets/knowledge/quant-finance-foundations": [],
-  "markets/knowledge/quant-fund-landscape": [
-    "statistical-arbitrage"
-  ],
-  "markets/knowledge/quant-research-guide": [
-    "behavioral-finance",
-    "market-microstructure",
-    "statistical-arbitrage"
-  ],
-  "markets/knowledge/risk-management-best-practices": [],
-  "markets/knowledge/securities-regulations": [
-    "high-frequency-trading"
-  ],
-  "markets/knowledge/trading-infrastructure-architecture": [
-    "high-frequency-trading"
-  ],
-  "markets/knowledge/volatility-outlook": [
-    "portfolio-optimization"
-  ],
-  "markets/knowledge/vpin-toxicity-modeling": [
-    "apache-iceberg",
-    "arrow-parquet",
-    "market-microstructure"
-  ],
-  "markets/learn/ai-hardware-trends": [
-    "ai-hardware"
-  ],
   "markets/learn/applying-market-analysis": [
     "portfolio-optimization"
   ],
   "markets/learn/behavioral-design-learning": [],
   "markets/learn/behavioral-finance-portfolio": [
     "behavioral-finance"
-  ],
-  "markets/learn/commodity-trading-strategies": [
-    "commodity-trading"
   ],
   "markets/learn/crispr-gene-editing": [],
   "markets/learn/market-analysis": [
@@ -875,22 +251,7 @@
     "macro-analysis"
   ],
   "markets/learn/market-fundamentals": [],
-  "markets/learn/market-microstructure": [
-    "apache-iceberg",
-    "lob",
-    "market-microstructure"
-  ],
-  "markets/learn/market-volatility-patterns": [
-    "data-observability"
-  ],
   "markets/learn/meta-analysis-statistics": [],
-  "markets/learn/quantitative-methods-intro": [
-    "factor-investing",
-    "high-frequency-trading",
-    "portfolio-optimization",
-    "risk-parity",
-    "statistical-arbitrage"
-  ],
   "markets/learn/science-method": [],
   "markets/learn/sector-competitive-analysis": [
     "semiconductor-industry"
@@ -898,122 +259,18 @@
   "markets/learn/semiconductor-supply-chain": [
     "semiconductor-industry"
   ],
-  "markets/learn/semiconductor-supply-chain-analysis": [
-    "semiconductor-industry",
-    "supply-chain-analysis"
-  ],
-  "markets/learn/volatility-analysis": [],
-  "markets/research/424b2-barclays-bank-plc-djp-grn-vxx-vxz-atmp-gbug-tapr-bwvtf": [
-    "market-microstructure"
-  ],
-  "markets/research/424b2-barclays-bank-plc-djp-grn-vxx-vxz-atmp-gbug-tapr-bwvtf-2a65c8": [
-    "market-microstructure"
-  ],
-  "markets/research/424b2-barclays-bank-plc-djp-grn-vxx-vxz-atmp-gbug-tapr-bwvtf-2d3123": [
-    "market-microstructure"
-  ],
-  "markets/research/424b2-barclays-bank-plc-djp-grn-vxx-vxz-atmp-gbug-tapr-bwvtf-8efa8c": [
-    "market-microstructure"
-  ],
-  "markets/research/8-k-draftkings-inc-dkng": [
-    "market-microstructure"
-  ],
-  "markets/research/8-k-lqr-house-inc-yhc": [
-    "market-microstructure"
-  ],
-  "markets/research/8-k-mgt-capital-investments-inc-mgti": [
-    "market-microstructure"
-  ],
-  "markets/research/a-truckload-of-satoshis-detecting-and-measuring-one-way-arbi": [
-    "high-frequency-trading",
-    "market-microstructure"
-  ],
   "markets/research/ai-regulation": [
     "ai-act-high-risk"
   ],
-  "markets/research/algorithmic-expert-aggregation": [
-    "market-microstructure"
-  ],
   "markets/research/aml-1": [],
   "markets/research/can-the-stockmarket-swallow-anthropic-spacex-and-openai": [],
-  "markets/research/causal-effects-of-protocol-fee-changes-on-liquidity-provisio": [
-    "lob",
-    "market-microstructure"
-  ],
-  "markets/research/compound-interference-recognition-for-lr-fhss-satellite-iot": [
-    "market-microstructure"
-  ],
   "markets/research/dataops-markets": [
     "high-frequency-trading",
     "ml-pipeline",
     "streaming"
   ],
-  "markets/research/deep-learning-for-dynamic-programming-with-recursive-utility": [
-    "market-microstructure"
-  ],
-  "markets/research/diffeeg-a-self-supervised-denoising-diffusion-model-for-lear": [
-    "market-microstructure"
-  ],
-  "markets/research/do-monetary-policy-rates-reach-borrowers-evidence-from-house": [
-    "market-microstructure"
-  ],
-  "markets/research/estimating-the-stochastic-discount-factor-from-option-prices": [
-    "market-microstructure"
-  ],
-  "markets/research/forecasting-the-covid-surge-in-inflation": [
-    "market-microstructure"
-  ],
-  "markets/research/from-stocks-to-flows-debt-service-and-fiscal-sustainability": [
-    "market-microstructure"
-  ],
   "markets/research/govuk-has-replaced-stripe-with-dutch-provider-adyen-aml": [],
-  "markets/research/how-might-fiscal-policy-respond-to-the-rise-of-artificial-in": [
-    "market-microstructure"
-  ],
-  "markets/research/llms-are-not-a-default-execution-engine": [
-    "market-microstructure"
-  ],
-  "markets/research/markov-chain-monte-carlo-with-diffusion-paths": [
-    "market-microstructure"
-  ],
   "markets/research/meta-confirms-1000s-of-instagram-accounts-were-hacked-by": [],
-  "markets/research/modeling-time-course-gene-expression-data-through-bayesian-p": [
-    "market-microstructure"
-  ],
-  "markets/research/mosaic-runtime-efficient-multi-agent-embodied-planning": [
-    "market-microstructure"
-  ],
-  "markets/research/mpflow-learning-budgeted-max-flow-optimization-on-the-lightn": [
-    "market-microstructure"
-  ],
-  "markets/research/multi-sender-bayesian-persuasion-with-imperfect-information": [
-    "market-microstructure"
-  ],
-  "markets/research/neighborhood-effects-and-missing-markets-for-opportunity": [
-    "behavioral-finance",
-    "market-microstructure"
-  ],
-  "markets/research/objective-and-subjective-entropy-measures-of-portfolio-subop": [
-    "market-microstructure"
-  ],
-  "markets/research/on-exploring-input-resolution-scaling-for-anytime-lidar-obje": [
-    "market-microstructure"
-  ],
-  "markets/research/optimal-prediction-of-resistance-and-support-levels-under-co": [
-    "market-microstructure"
-  ],
-  "markets/research/pos-ex-etf-series-solutions": [
-    "market-microstructure"
-  ],
-  "markets/research/prezta-provable-remote-execution-of-zero-trust-authorization": [
-    "market-microstructure"
-  ],
-  "markets/research/privacy-aware-collaborative-and-distributed-bayesian-optimiz": [
-    "market-microstructure"
-  ],
-  "markets/research/robust-bayesian-decision-making-under-adversarial-uncertaint": [
-    "market-microstructure"
-  ],
   "markets/research/science-2": [
     "data-observability"
   ],
@@ -1021,16 +278,7 @@
   "markets/research/science-4": [],
   "markets/research/science-5": [],
   "markets/research/science-6": [],
-  "markets/research/semantic-pareto-dqn-a-multi-objective-reinforcement-learning": [
-    "market-microstructure"
-  ],
   "markets/research/sp-500-rejects-spacex-also-blocking-entry-for-openai-and": [],
-  "markets/research/spatial-and-temporal-correlation-of-interference-in-a-narrow": [
-    "market-microstructure"
-  ],
-  "markets/research/stochastic-analysis-of-successive-interference-cancellation": [
-    "market-microstructure"
-  ],
   "markets/research/stock-1": [
     "semiconductor-industry"
   ],
@@ -1051,88 +299,5 @@
     "dagster",
     "ml-pipeline"
   ],
-  "markets/research/stock-market": [],
-  "markets/research/the-quarter-hour-effect-periodic-algorithmic-trading-and-ret": [
-    "high-frequency-trading",
-    "market-microstructure"
-  ],
-  "markets/research/tutorial-for-bayesian-factor-models": [
-    "factor-investing",
-    "market-microstructure"
-  ],
-  "markets/research/unruly-by-design-fee-volatility-and-strategic-attacks-in-bit": [
-    "market-microstructure"
-  ],
-  "markets/research/what-do-asset-prices-in-april-2025-say-about-demand-for-the": [
-    "market-microstructure"
-  ],
-  "stock/knowledge/backtesting-methodology": [],
-  "stock/knowledge/market-data-api-reference": [],
-  "stock/knowledge/market-maker-compliance": [
-    "high-frequency-trading"
-  ],
-  "stock/knowledge/mean-reversion-strategies": [
-    "statistical-arbitrage"
-  ],
-  "stock/knowledge/momentum-factor-strategies": [],
-  "stock/knowledge/options-glossary": [],
-  "stock/knowledge/portfolio-rebalancing-strategies": [
-    "portfolio-optimization",
-    "risk-parity"
-  ],
-  "stock/knowledge/portfolio-risk-analytics": [],
-  "stock/research/alternative-data-alpha": [],
-  "stock/research/behavioral-finance-biases-trading": [
-    "behavioral-finance"
-  ],
-  "stock/research/commodity-seasonality-patterns": [
-    "commodity-trading"
-  ],
-  "stock/research/cross-asset-volatility-spillover": [
-    "fixed-income"
-  ],
-  "stock/research/crypto-market-microstructure": [
-    "lob",
-    "market-microstructure"
-  ],
-  "stock/research/decentralized-finance-derivatives": [
-    "str"
-  ],
-  "stock/research/earnings-season-alpha": [
-    "earnings-analysis"
-  ],
-  "stock/research/esg-integration-quant-portfolio": [
-    "esg-investing",
-    "portfolio-optimization"
-  ],
-  "stock/research/etf-creation-redemption-arbitrage": [
-    "fixed-income"
-  ],
-  "stock/research/factor-timing-regime-signals": [],
-  "stock/research/fixed-income-yield-curve-models": [
-    "fixed-income"
-  ],
-  "stock/research/high-frequency-latency-arbitrage": [
-    "lob",
-    "market-microstructure"
-  ],
-  "stock/research/machine-learning-risk-parity": [
-    "risk-parity"
-  ],
-  "stock/research/macro-factor-models-cross-asset": [
-    "factor-investing",
-    "portfolio-optimization"
-  ],
-  "stock/research/market-impact-cost-models": [
-    "market-impact"
-  ],
-  "stock/research/merger-arbitrage-spread-prediction": [],
-  "stock/research/options-flow-analysis": [
-    "market-microstructure"
-  ],
-  "stock/research/sector-rotation-business-cycle": [],
-  "stock/research/statistical-arbitrage-pairs-v3": [
-    "statistical-arbitrage"
-  ],
-  "stock/research/vix-term-structure-trading": []
+  "markets/research/stock-market": []
 }

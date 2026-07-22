@@ -20,7 +20,6 @@ from config import (
 )
 from core.build_utils import _dt_utc
 
-
 _SQI_WEIGHTS = {
     "source_credibility": 0.25,
     "technical_accuracy": 0.25,

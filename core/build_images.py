@@ -9,12 +9,10 @@ from __future__ import annotations
 import hashlib
 import json
 from pathlib import Path
-from typing import Any
 
 from PIL import Image
 
 from config import PROJECT_ROOT, SITE_URL
-
 
 VISUAL_RULES = json.loads((Path(__file__).parent.parent / "config" / "visual_rules.json").read_text(encoding="utf-8"))
 CARD_PICTOGRAM_KEYWORDS = VISUAL_RULES["card_pictogram_keywords"]

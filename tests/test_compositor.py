@@ -1,6 +1,5 @@
 """Tests for core/compositor.py — SVG compositing engine."""
 
-import re
 
 from core.compositor import (
     PILLAR_COMPOSITOR_COLORS,

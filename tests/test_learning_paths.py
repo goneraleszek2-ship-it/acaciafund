@@ -1,14 +1,15 @@
 """Tests for core/learning_paths.py."""
 import pytest
+
 from core.learning_paths import (
+    LearningJourney,
+    PathNode,
     build_all_learning_paths,
     enrich_journeys_with_content,
-    generate_learning_path_context,
     generate_cross_pillar_synthesis,
-    PathNode,
-    LearningJourney,
+    generate_learning_path_context,
 )
-from core.ontology import OntologyManager, Concept, Relation
+from core.ontology import Concept, OntologyManager, Relation
 from core.schema_builder import LearningPath
 
 

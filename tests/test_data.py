@@ -1,14 +1,10 @@
 """Tests for core/data.py — data utilities, domain extraction, entity extraction."""
 
 import json
-from pathlib import Path
-
-import pytest
 
 from core.data import (
     ALL_ENTITIES,
     DOMAIN_TAXONOMY,
-    KNOWN_ENTITIES,
     STOP_WORDS,
     categorize_domain,
     extract_domain,
@@ -82,7 +78,6 @@ class TestExtractThemes:
 class TestWriteDlq:
     def test_writes_file(self, tmp_path):
         dlq_dir = tmp_path / ".dlq"
-        from core.data import DLQ_DIR as ORIG_DLQ_DIR
 
         # Patch DLQ_DIR
         import core.data as d

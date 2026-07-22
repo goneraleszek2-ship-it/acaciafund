@@ -6,7 +6,6 @@ from core.extractors import (
     extract_timeline,
 )
 
-
 # ── extract_timeline ──
 
 

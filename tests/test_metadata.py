@@ -9,8 +9,8 @@ import pytest
 from core.metadata import (
     _type_ok,
     build_asset_manifest,
-    build_story_manifest,
     build_run_manifest,
+    build_story_manifest,
     canonical_json,
     iso_utc,
     payload_checksum,

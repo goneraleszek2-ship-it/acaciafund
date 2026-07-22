@@ -7,8 +7,6 @@ import pytest
 
 from core.ontology import (
     Concept,
-    OntologyManager,
-    RELATION_TYPES,
 )
 
 ONTOLOGY_PATH = Path(__file__).parent.parent / "data" / "ontology.json"

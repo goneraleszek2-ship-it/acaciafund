@@ -147,7 +147,7 @@ def validate(
     else:
         s = report["summary"]
         print(f"{'='*60}")
-        print(f"  CROSS-PILLAR ANALOG VALIDATION")
+        print("  CROSS-PILLAR ANALOG VALIDATION")
         print(f"{'='*60}")
         print(f"  Concepts in ontology:        {s['total_concepts_in_ontology']}")
         print(f"  With analogs (ontology):     {s['concepts_with_analogs_ontology']}")

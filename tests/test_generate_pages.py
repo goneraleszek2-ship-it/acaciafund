@@ -14,7 +14,6 @@ from core.generate_pages import (
     thumbnail_key,
 )
 
-
 # ── extract_headings ──
 
 

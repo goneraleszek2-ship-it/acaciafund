@@ -4,15 +4,12 @@ import pytest
 
 from core.ontology import Concept, OntologyManager, Relation
 from core.schema_builder import (
-    FeynmanLearningPath,
-    FeynmanStage,
     LearningPath,
     build_prerequisite_graph,
     categorize_by_bloom,
     compute_feynman_learning_paths,
     compute_learning_paths,
 )
-
 
 # ---------------------------------------------------------------------------
 # Fixtures

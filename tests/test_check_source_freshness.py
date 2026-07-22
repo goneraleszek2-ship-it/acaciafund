@@ -3,10 +3,9 @@
 Uses contract-testing approach: test function promises, not implementation.
 """
 
-from datetime import datetime, timezone, timedelta
+from datetime import datetime, timedelta, timezone
 
 from scripts.check_source_freshness import compute_staleness
-
 
 # ── compute_staleness ──
 #

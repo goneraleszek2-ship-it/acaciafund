@@ -5,9 +5,6 @@ Each test checks that a module exports what it promises (signatures, types, keys
 """
 
 import inspect
-from typing import Any, get_type_hints
-
-import pytest
 
 from config import (
     PILLAR_COLORS,
@@ -19,7 +16,6 @@ from config import (
     PILLAR_URL_MAP,
     PILLAR_URL_REVERSE,
 )
-
 
 # ── Config schema contract ──
 #
@@ -171,7 +167,7 @@ class TestCoreUrlsContract:
 
 class TestCoreOntologyContract:
     def test_exports_required_classes(self):
-        from core.ontology import Concept, Relation, ResourceLink, OntologyManager
+        from core.ontology import Concept, OntologyManager, Relation, ResourceLink
         assert all(cls is not None for cls in [Concept, Relation, ResourceLink, OntologyManager])
 
     def test_ontology_manager_has_core_methods(self):
@@ -187,17 +183,20 @@ class TestCoreOntologyContract:
 class TestCoreCompositorContract:
     def test_exports_all_renderers(self):
         from core.compositor import (
-            render_timeline, render_flow, render_comparisons,
-            render_entity_badges, render_key_numbers, render_connections,
             auto_compose,
+            render_timeline,
         )
         assert callable(render_timeline)
         assert callable(auto_compose)
 
     def test_each_renderer_accepts_empty_list(self):
         from core.compositor import (
-            render_timeline, render_flow, render_comparisons,
-            render_entity_badges, render_key_numbers, render_connections,
+            render_comparisons,
+            render_connections,
+            render_entity_badges,
+            render_flow,
+            render_key_numbers,
+            render_timeline,
         )
         for renderer in (render_timeline, render_flow, render_comparisons, render_entity_badges, render_key_numbers, render_connections):
             assert renderer([]) == "", f"{renderer.__name__}([]) should return ''"

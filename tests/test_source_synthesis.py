@@ -3,14 +3,12 @@
 Contract tests: verify function promises, not internal implementation.
 """
 
-import pytest
 
 from scripts.source_synthesis import (
     extract_key_insights,
     extract_tags_from_article,
     generate_synthesis_description,
 )
-
 
 # ── extract_tags_from_article ──
 #

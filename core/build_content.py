@@ -11,9 +11,6 @@ import json
 import logging
 import re
 import shutil
-from collections import defaultdict
-from datetime import datetime, timezone
-from pathlib import Path
 from typing import Any
 
 from config import (
@@ -26,7 +23,6 @@ from config import (
 from core.brand import section_type_color
 from core.build_images import resolve_featured_image, resolve_section_image
 from core.build_utils import (
-    _get_created,
     add_lazy_loading,
     extract_headings,
     get_topic_icons,
@@ -37,7 +33,6 @@ from core.build_utils import (
 from core.images.templates import generate_fallback_svg
 from core.urls import slug_to_fspath, slug_to_path
 from core.visuals import generate_og_image, generate_thumbnail_svg
-
 
 SECTION_TYPES = {
     0: "overview",

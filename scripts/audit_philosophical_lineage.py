@@ -62,7 +62,7 @@ def main():
     else:
         s = report["summary"]
         print(f"{'='*60}")
-        print(f"  PHILOSOPHICAL LINEAGE CLUSTERS")
+        print("  PHILOSOPHICAL LINEAGE CLUSTERS")
         print(f"{'='*60}")
         print(f"  Total lineage tags:         {s['total_lineage_tags']}")
         print(f"  Clusters (≥{args.min_cluster} concepts):  {s['clusters_above_threshold']}")
@@ -78,7 +78,7 @@ def main():
         print()
         if cross_pillar:
             print(f"  {'─'*40}")
-            print(f"  CROSS-PILLAR CLUSTERS (synthesis candidates)")
+            print("  CROSS-PILLAR CLUSTERS (synthesis candidates)")
             print(f"  {'─'*40}")
             for tag, members in cross_pillar:
                 pillars = sorted({m["pillar"] for m in members})

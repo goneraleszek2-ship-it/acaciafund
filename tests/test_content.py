@@ -1,8 +1,6 @@
 """Tests for core/content.py — Content dataclass wrapper."""
 
-from datetime import datetime, timezone
 
-import pytest
 
 from core.content import Content
 

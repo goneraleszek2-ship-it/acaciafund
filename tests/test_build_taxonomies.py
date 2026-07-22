@@ -2,10 +2,7 @@
 
 import json
 from datetime import datetime, timezone
-from pathlib import Path
 from unittest.mock import ANY, MagicMock
-
-import pytest
 
 from core.build_taxonomies import (
     _compute_coverage_data,
