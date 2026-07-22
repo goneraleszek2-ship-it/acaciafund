@@ -11,10 +11,12 @@
   ],
   "aml/learn/crypto-aml": [
     "crypto-markets",
+    "defi-aml",
     "regtech"
   ],
   "aml/learn/designing-aml-program": [
     "aml-program",
+    "aml-risk-scoring",
     "cdd",
     "data-observability",
     "pep",
@@ -35,7 +37,9 @@
     "data-observability",
     "transaction-monitoring"
   ],
-  "aml/research/aml-2": [],
+  "aml/research/aml-2": [
+    "defi-aml"
+  ],
   "aml/research/aml-3": [
     "beneficial-ownership",
     "bsa",
@@ -43,6 +47,8 @@
     "regtech"
   ],
   "aml/research/aml-4": [
+    "aml-esg-risk",
+    "aml-risk-scoring",
     "beneficial-ownership",
     "fatf-recommendations"
   ],
@@ -55,6 +61,7 @@
     "streaming"
   ],
   "aml/research/cryptocurrency-mixers-under-global-regulatory-spotlight": [
+    "crypto-travel-rule",
     "fatf-recommendations",
     "global-sanctions",
     "mica-crypto-assets",
@@ -79,6 +86,7 @@
     "dataops"
   ],
   "data/learn/building-pipelines-dbt-dagster": [
+    "change-data-capture",
     "dagster",
     "data-lake",
     "data-quality",
@@ -163,6 +171,7 @@
   "data/research/bun-runtime-support-now-limited-and-deprecated-science": [],
   "data/research/cost-optimization-data-pipelines": [
     "apache-iceberg",
+    "change-data-capture",
     "dataops",
     "pipeline-cost-optimization",
     "query-optimization"
@@ -250,6 +259,7 @@
     "dataops"
   ],
   "knowledge/dataops-glossary": [
+    "aml-continuous-monitoring",
     "data-observability",
     "dataops",
     "elt",
@@ -275,6 +285,7 @@
     "str"
   ],
   "knowledge/open-source-tools": [
+    "change-data-capture",
     "dagster",
     "elt",
     "elt-pipeline",
