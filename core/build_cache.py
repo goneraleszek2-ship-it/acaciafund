@@ -17,7 +17,7 @@ URL_STRUCTURE_VERSION = '3.0'  # Must match config.URL_STRUCTURE_VERSION
 
 class BuildCache:
     """Incremental build cache using file hashes and mtimes.
-    
+
     Separates content hash (source markdown) from layout hash (templates)
     to enable proper incremental builds.
     """
@@ -87,7 +87,7 @@ class BuildCache:
 
     def compute_templates_hash(self, template_dir: Path, content_only: bool = False) -> str:
         """Compute combined hash of templates.
-        
+
         Args:
             template_dir: Directory containing templates
             content_only: If True, only hash templates that affect content rendering

@@ -249,9 +249,6 @@ def _compute_tag_telemetry(all_content: List[Any]) -> Dict[str, Any]:
                 else:
                     tag_cooccurrence[t2][t1] += 1
 
-    # Top tags
-    top_tags = sorted(tag_counts.items(), key=lambda x: -x[1])[:50]
-
     # Tags with pillar crossover (appear in 2+ pillars)
     crossover_tags = {
         t: dict(pillars)
@@ -984,13 +981,16 @@ def generate_feed(
         now = datetime.now(timezone.utc)
 
     if is_future_post_fn is None:
-        is_future_post_fn = lambda c: False
+        def _is_future_post_fn(c): return False
+        is_future_post_fn = _is_future_post_fn
 
     if canonical_path_fn is None:
-        canonical_path_fn = lambda p: p
+        def _canonical_path_fn(p): return p
+        canonical_path_fn = _canonical_path_fn
 
     if slug_to_path_fn is None:
-        slug_to_path_fn = lambda s: s
+        def _slug_to_path_fn(s): return s
+        slug_to_path_fn = _slug_to_path_fn
 
     published_for_feed = [p for p in all_content if not is_future_post_fn(p)]
     feed_candidates = [p.created_at for p in published_for_feed[:30] if getattr(p, "created_at", None)]
