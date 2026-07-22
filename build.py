@@ -2320,8 +2320,15 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     # Sort tag posts by date
     from datetime import timezone as _tz
     _dt_min = datetime.min.replace(tzinfo=_tz.utc)
+    def _tag_sort_key(x):
+        dt = x.created_at
+        if dt is None:
+            return _dt_min
+        if dt.tzinfo is None:
+            return dt.replace(tzinfo=_tz.utc)
+        return dt
     for tag_posts in tag_items.values():
-        tag_posts.sort(key=lambda x: x.created_at or _dt_min, reverse=True)
+        tag_posts.sort(key=_tag_sort_key, reverse=True)
 
     # Generate tag pages using isolated function
     generate_tag_pages(
