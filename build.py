@@ -7,13 +7,11 @@ Build script for AcaciaFund: converts registry.json to static HTML using Jinja2 
 import hashlib
 import json
 import logging
-import os
 import re
 import shutil
 import subprocess
 import sys
 import time
-import unicodedata
 from collections import defaultdict
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
@@ -23,18 +21,13 @@ from urllib.parse import quote as urlquote
 import pandas as pd
 import tomllib
 from jinja2 import Environment, FileSystemLoader, select_autoescape
-from PIL import Image
 
 from config import (
-    INTEREST_RECENCY_DAYS,
-    INTEREST_RECENCY_WEIGHT,
-    INTEREST_SQI_WEIGHT,
     KNOWLEDGE_TO_PILLAR_CATEGORY,
     OUTPUT_DIR,
     PILLAR_COLORS,
     PILLAR_CONFIG,
     PILLAR_EMOJIS,
-    PILLAR_FINGERPRINT_COLORS,
     PILLAR_NAMES,
     PIPELINE_STATIC_DIR,
     PLAUSIBLE_DOMAIN,
@@ -43,8 +36,6 @@ from config import (
     SITE_DESCRIPTION,
     SITE_NAME,
     SITE_URL,
-    SQI_BADGE_HIGH,
-    SQI_BADGE_MED,
     SQI_DEFAULT,
     SQI_THRESHOLD_MIN,
     STATIC_DST_DIR,
@@ -53,58 +44,25 @@ from config import (
 
 # ── Asset pipeline ──
 from core.assets import create_asset_manager
-from core.brand import (
-    BRAND,
-    section_type_color,
-)
-from core.content import Content
-
-# ── Page generation helpers (new modular structure) ──
-from core.images.templates import generate_fallback_svg
-from core.ontology import extract_concepts_from_text
-from core.urls import (
-    canonical_path,
-    pillar_to_url,
-    slug_to_fspath,
-    slug_to_path,
-    slug_to_url,
-)
-from core.learning_paths import (
-    build_all_learning_paths,
-    enrich_journeys_with_content,
-    generate_learning_path_context,
-    generate_cross_pillar_synthesis,
-)
-from core.schema_builder import (
-    compute_feynman_learning_paths,
-    compute_cross_pillar_feynman_paths,
-)
 
 # ── Extracted utility modules ──
 from core.build_content import (
-    _article_as_dict,
+    LAYER_ICONS,
+    SECTION_TYPES,
     _build_jsonld,
     _cleanup_partial_output,
     _dummy,
     _generate_page_images,
     _generate_page_svgs,
-    _get_article_attr,
     _process_item_body,
     _serialize_quiz,
     generate_article_fingerprint,
-    get_layer,
-    inject_section_images,
-    LAYER_ICONS,
-    LAYER_SYMBOLS,
     layer_indicator_html,
-    SECTION_TYPES,
 )
 from core.build_images import (
     _resolve_ref_file,
     generate_card_thumbnail,
-    generate_missing_ai_image,
     pick_card_pictogram,
-    resolve_featured_image,
     resolve_section_image,
     thumbnail_key,
 )
@@ -116,19 +74,33 @@ from core.build_quality import (
     interest_score,
 )
 from core.build_utils import (
-    _dt_utc,
     _get_created,
-    add_lazy_loading,
-    extract_headings,
     find_cross_pillar,
     find_related,
     get_topic_icons,
     group_by_pillar,
     load_admin_credentials,
     reading_time_minutes,
-    sanitize_domain_breakdown,
-    sanitize_text,
-    strip_html_tag,
+)
+from core.content import Content
+
+# ── Page generation helpers (new modular structure) ──
+from core.learning_paths import (
+    build_all_learning_paths,
+    enrich_journeys_with_content,
+    generate_cross_pillar_synthesis,
+    generate_learning_path_context,
+)
+from core.schema_builder import (
+    compute_cross_pillar_feynman_paths,
+    compute_feynman_learning_paths,
+)
+from core.urls import (
+    canonical_path,
+    pillar_to_url,
+    slug_to_fspath,
+    slug_to_path,
+    slug_to_url,
 )
 
 
@@ -154,8 +126,6 @@ def generate_knowledge_graph():
 # ── Content validation ──
 from core.validator import validate_content  # noqa: E402
 from core.visuals import (  # noqa: E402
-    SUBTOPIC_CATEGORIES,
-    TOPIC_ICONS,
     _pick_subtopic,
     generate_og_image,
     generate_thumbnail_svg,
@@ -191,7 +161,6 @@ from core.build_taxonomies import (  # noqa: E402
     generate_search_pages,
     generate_tag_pages,
 )
-
 
 # ── Stop words loaded from external config ──
 STOP_WORDS = set(json.loads((Path(__file__).parent / "config" / "stop_words.json").read_text(encoding="utf-8")))
@@ -1962,8 +1931,6 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
             ontology = OntologyManager.load(ontology_path)
             if ontology.concept_count() > 0:
                 graph_data = ontology.merge_into_cytograph(graph_data)
-                ont_nodes = sum(1 for n in graph_data.get("nodes", []) if n["data"].get("type") == "concept")
-                ont_edges = sum(1 for e in graph_data.get("edges", []) if e["data"].get("id", "").startswith("ont-rel:"))
                 node_count = len(graph_data.get("nodes", []))
                 edge_count = len(graph_data.get("edges", []))
                 print(f"  ontology: merged {ontology.concept_count()} concepts, {ontology.relation_count()} relations into graph")
@@ -2357,7 +2324,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
         tag_posts.sort(key=lambda x: x.created_at or _dt_min, reverse=True)
 
     # Generate tag pages using isolated function
-    tag_pages_count = generate_tag_pages(
+    generate_tag_pages(
         OUTPUT_DIR, tag_items, render_template, ctx_base, _dummy
     )
     if tag_items:
@@ -2366,7 +2333,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     # --- ADMIN PANEL (via build_taxonomies) ---
     from core.images.manifest import load_manifest as _load_manifest
 
-    admin_pages_count = generate_admin_pages(
+    generate_admin_pages(
         OUTPUT_DIR, all_content, STATIC_DST_DIR, render_template, ctx_base, _dummy,
         load_admin_credentials_fn=load_admin_credentials,
         load_manifest_fn=_load_manifest,
@@ -2376,13 +2343,13 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     )
 
     # --- SEARCH INDEX + PAGE (via build_taxonomies) ---
-    search_pages_count = generate_search_pages(
+    generate_search_pages(
         OUTPUT_DIR, STATIC_DST_DIR, all_content, render_template, ctx_base, _dummy,
         ontology=ontology, concept_cache=_concept_cache,
     )
 
     # --- FEED (via build_taxonomies) ---
-    feed_pages_count = generate_feed(
+    generate_feed(
         OUTPUT_DIR, all_content, render_template, ctx_base,
         site_url=SITE_URL,
         site_name=SITE_NAME,
