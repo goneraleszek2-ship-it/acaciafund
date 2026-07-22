@@ -274,6 +274,8 @@ PILLAR_CONCEPT_SEEDS: Dict[str, List[Dict[str, Any]]] = {
          "aliases": ["automated reporting", "regulatory filings"]},
         {"id": "crypto-aml", "label": "Cryptocurrency AML", "category": "advanced-techniques",
          "aliases": ["crypto compliance", "VASP", "virtual asset compliance"]},
+        {"id": "mica-crypto-assets", "label": "MiCA — Markets in Crypto-Assets Regulation", "category": "crypto-aml",
+         "aliases": ["MiCA", "Markets in Crypto-Assets", "crypto regulation", "CASPs"]},
     ],
     "stock": [
         {"id": "lob", "label": "Limit Order Book", "category": "foundations",
@@ -322,6 +324,8 @@ PILLAR_CONCEPT_SEEDS: Dict[str, List[Dict[str, Any]]] = {
          "aliases": ["HFT", "algorithmic trading", "low latency"]},
         {"id": "asset-pricing", "label": "Asset Pricing Models", "category": "foundations",
          "aliases": ["CAPM", "asset pricing", "discount factor models"]},
+        {"id": "esg-double-materiality", "label": "ESG Double Materiality", "category": "industry-analysis",
+         "aliases": ["double materiality", "CSRD materiality", "impact materiality", "financial materiality"]},
     ],
     "data-engineering": [
         {"id": "etl", "label": "Extract-Transform-Load", "category": "foundations",
@@ -401,106 +405,6 @@ PILLAR_CONCEPT_SEEDS: Dict[str, List[Dict[str, Any]]] = {
          "aliases": ["NIS2", "NIS 2 Directive", "cyber resilience", "network security"]},
         {"id": "data-act-interoperability", "label": "EU Data Act — Data Interoperability", "category": "architecture",
          "aliases": ["EU Data Act", "data interoperability", "data portability", "smart contract safeguards"]},
-    ],
-    "aml": [
-        {"id": "kyc", "label": "Know Your Customer (KYC)", "category": "cdd-kyc",
-         "aliases": ["KYC", "know-your-customer"]},
-        {"id": "cdd", "label": "Customer Due Diligence", "category": "cdd-kyc",
-         "aliases": ["CDD"]},
-        {"id": "edd", "label": "Enhanced Due Diligence", "category": "cdd-kyc",
-         "aliases": ["EDD"]},
-        {"id": "sar", "label": "Suspicious Activity Report", "category": "sar-str",
-         "aliases": ["SAR", "suspicious-activity-reporting"]},
-        {"id": "str", "label": "Suspicious Transaction Report", "category": "sar-str",
-         "aliases": ["STR"]},
-        {"id": "ctr", "label": "Currency Transaction Report", "category": "sar-str",
-         "aliases": ["CTR"]},
-        {"id": "pep", "label": "Politically Exposed Person", "category": "risk-assessment",
-         "aliases": ["PEP", "politically-exposed-person"]},
-        {"id": "sanctions-screening", "label": "Sanctions Screening", "category": "sanctions",
-         "aliases": ["OFAC screening", "sanctions list check"]},
-        {"id": "transaction-monitoring", "label": "Transaction Monitoring", "category": "transaction-monitoring",
-         "aliases": ["TM", "transaction surveillance"]},
-        {"id": "entity-resolution", "label": "Entity Resolution", "category": "advanced-techniques",
-         "aliases": ["entity matching", "record linkage"]},
-        {"id": "network-analysis", "label": "Network Analysis for AML", "category": "advanced-techniques",
-         "aliases": ["graph analytics", "network forensics"]},
-        {"id": "beneficial-ownership", "label": "Beneficial Ownership", "category": "regulations",
-         "aliases": ["UBO", "ultimate beneficial ownership", "BO"]},
-        {"id": "fatf-recommendations", "label": "FATF Recommendations", "category": "regulations",
-         "aliases": ["FATF 40 Recommendations"]},
-        {"id": "bsa", "label": "Bank Secrecy Act", "category": "regulations",
-         "aliases": ["BSA", "Currency and Foreign Transactions Act"]},
-        {"id": "tbml", "label": "Trade-Based Money Laundering", "category": "risk-assessment",
-         "aliases": ["TBML", "trade-based-ml"]},
-        {"id": "regtech", "label": "Regulatory Technology", "category": "regtech",
-         "aliases": ["RegTech"]},
-        {"id": "travel-rule", "label": "FATF Travel Rule", "category": "regulations",
-         "aliases": ["travel rule", "VASP travel rule"]},
-        {"id": "adverse-media", "label": "Adverse Media Screening", "category": "cdd-kyc",
-         "aliases": ["negative news screening", "adverse media check"]},
-        {"id": "aml-program", "label": "AML Compliance Program", "category": "risk-assessment",
-         "aliases": ["AML program", "BSA/AML program"]},
-        {"id": "cyber-aml", "label": "Cyber AML / Financial Cybercrime", "category": "advanced-techniques",
-         "aliases": ["financial cybercrime", "cyber-enabled fraud"]},
-        {"id": "correspondent-banking", "label": "Correspondent Banking AML", "category": "risk-assessment",
-         "aliases": ["correspondent banking", "nested accounts"]},
-        {"id": "regulatory-reporting", "label": "Regulatory Reporting Automation", "category": "regtech",
-         "aliases": ["automated reporting", "regulatory filings"]},
-        {"id": "crypto-aml", "label": "Cryptocurrency AML", "category": "advanced-techniques",
-         "aliases": ["crypto compliance", "VASP", "virtual asset compliance"]},
-        {"id": "mica-crypto-assets", "label": "MiCA — Markets in Crypto-Assets Regulation", "category": "crypto-aml",
-         "aliases": ["MiCA", "Markets in Crypto-Assets", "crypto regulation", "CASPs"]},
-    ],
-    "stock": [
-        {"id": "lob", "label": "Limit Order Book", "category": "foundations",
-         "aliases": ["LOB", "order book"]},
-        {"id": "market-microstructure", "label": "Market Microstructure", "category": "foundations",
-         "aliases": ["microstructure"]},
-        {"id": "volatility-surface", "label": "Implied Volatility Surface", "category": "market-analysis",
-         "aliases": ["IV surface", "vol surface"]},
-        {"id": "hawkes-process", "label": "Hawkes Process", "category": "advanced-techniques",
-         "aliases": ["Hawkes self-exciting process"]},
-        {"id": "vpin", "label": "VPIN Toxicity", "category": "advanced-techniques",
-         "aliases": ["Volume-Synchronized Probability of Informed Trading"]},
-        {"id": "supply-chain-analysis", "label": "Supply Chain Analysis", "category": "industry-analysis",
-         "aliases": ["supply chain risk"]},
-        {"id": "earnings-analysis", "label": "Earnings Analysis", "category": "market-analysis",
-         "aliases": ["earnings season", "earnings reports"]},
-        {"id": "commodity-trading", "label": "Commodity Trading Strategies", "category": "strategies",
-         "aliases": ["commodity futures", "commodity hedging"]},
-        {"id": "semiconductor-industry", "label": "Semiconductor Industry", "category": "industry-analysis",
-         "aliases": ["chip industry", "semiconductor supply chain"]},
-        {"id": "ai-hardware", "label": "AI Hardware Trends", "category": "industry-analysis",
-         "aliases": ["AI chips", "GPU market", "AI accelerators"]},
-        {"id": "portfolio-optimization", "label": "Portfolio Optimization", "category": "strategies",
-         "aliases": ["asset allocation", "portfolio construction"]},
-        {"id": "risk-parity", "label": "Risk Parity", "category": "strategies",
-         "aliases": ["risk-balanced portfolio"]},
-        {"id": "factor-investing", "label": "Factor Investing", "category": "strategies",
-         "aliases": ["smart beta", "factor models"]},
-        {"id": "technical-analysis", "label": "Technical Analysis", "category": "market-analysis",
-         "aliases": ["chart patterns", "technical indicators"]},
-        {"id": "macro-analysis", "label": "Macroeconomic Analysis", "category": "market-analysis",
-         "aliases": ["macro analysis", "economic indicators"]},
-        {"id": "options-trading", "label": "Options Trading Strategies", "category": "strategies",
-         "aliases": ["options strategies", "derivatives trading"]},
-        {"id": "fixed-income", "label": "Fixed Income Markets", "category": "market-analysis",
-         "aliases": ["bond markets", "fixed income", "credit markets"]},
-        {"id": "esg-investing", "label": "ESG Investing", "category": "industry-analysis",
-         "aliases": ["ESG", "sustainable investing", "responsible investing"]},
-        {"id": "behavioral-finance", "label": "Behavioral Finance", "category": "foundations",
-         "aliases": ["behavioral economics", "behavioral biases"]},
-        {"id": "market-impact", "label": "Market Impact Models", "category": "advanced-techniques",
-         "aliases": ["price impact", "market impact cost", "implementation shortfall"]},
-        {"id": "statistical-arbitrage", "label": "Statistical Arbitrage", "category": "strategies",
-         "aliases": ["stat arb", "pairs trading", "mean reversion"]},
-        {"id": "high-frequency-trading", "label": "High Frequency Trading", "category": "advanced-techniques",
-         "aliases": ["HFT", "algorithmic trading", "low latency"]},
-        {"id": "asset-pricing", "label": "Asset Pricing Models", "category": "foundations",
-         "aliases": ["CAPM", "asset pricing", "discount factor models"]},
-        {"id": "esg-double-materiality", "label": "ESG Double Materiality", "category": "industry-analysis",
-         "aliases": ["double materiality", "CSRD materiality", "impact materiality", "financial materiality"]},
     ],
 }
 
@@ -876,6 +780,69 @@ class OntologyManager:
                     source_id=src, target_id=tgt, relation_type=rtype, pillar="cross-pillar",
                 ))
                 added += 1
+        return added
+
+    # ---- Cross-pillar analog auto-population ----
+
+    def auto_populate_cross_pillar_analogs(self) -> int:
+        """Auto-populate cross_pillar_analogs based on epistemic_status AND category.
+
+        For each pair of concepts in different pillars, they are cross-linked as
+        analogs only when BOTH epistemic_status AND category match (AND predicate).
+        Caps at 3 analogs per concept, ranked by confidence_score.
+        Returns count of analogs added.
+        """
+        from collections import defaultdict
+
+        PILLAR_KEYS_SET = {"aml", "stock", "data-engineering"}
+        added = 0
+        concepts = list(self._concepts.values())
+
+        # Build candidate pairs: group by (category, epistemic_status)
+        groups: dict[tuple, list] = defaultdict(list)
+        for c in concepts:
+            if c.pillar not in PILLAR_KEYS_SET:
+                continue
+            ep = getattr(c, "epistemic_status", None)
+            cat = getattr(c, "category", None)
+            if ep and cat:
+                groups[(cat, ep)].append(c)
+
+        MAX_ANALOGS = 3
+
+        # Within each group, link cross-pillar pairs
+        for (cat, ep), group in groups.items():
+            for i, c1 in enumerate(group):
+                for c2 in group[i + 1:]:
+                    if c1.pillar == c2.pillar:
+                        continue
+
+                    existing = getattr(c1, "cross_pillar_analogs", []) or []
+                    if c2.id not in existing:
+                        existing.append(c2.id)
+                        c1.cross_pillar_analogs = existing
+                        added += 1
+
+                    existing2 = getattr(c2, "cross_pillar_analogs", []) or []
+                    if c1.id not in existing2:
+                        existing2.append(c1.id)
+                        c2.cross_pillar_analogs = existing2
+                        added += 1
+
+        # Cap at MAX_ANALOGS per concept, keeping highest-confidence analogs
+        for c in concepts:
+            analogs = getattr(c, "cross_pillar_analogs", []) or []
+            if len(analogs) <= MAX_ANALOGS:
+                continue
+            # Rank by confidence_score of the analog concept
+            scored = []
+            for aid in analogs:
+                ac = self._concepts.get(aid)
+                if ac:
+                    scored.append((aid, getattr(ac, "confidence_score", 0.5)))
+            scored.sort(key=lambda x: -x[1])
+            c.cross_pillar_analogs = [aid for aid, _ in scored[:MAX_ANALOGS]]
+
         return added
 
     # ---- Utility ----

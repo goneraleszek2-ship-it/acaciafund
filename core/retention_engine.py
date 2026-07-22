@@ -289,7 +289,7 @@ def sm2_compute(
 
     # ease factor update (mapped from 0-3 to 0-5 range for SM-2 formula)
     q5 = quality * 5.0 / 3.0
-    ease += 0.1 - (3 - q5) * (0.08 + (3 - q5) * 0.02)
+    ease += 0.1 - (5 - q5) * (0.08 + (5 - q5) * 0.02)
     ease = max(1.3, ease)
 
     return round(ease, 2), interval, reps

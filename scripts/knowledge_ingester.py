@@ -23,9 +23,12 @@ import json
 import re
 import subprocess
 import sys
+import time
 import uuid
+from collections import defaultdict
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -273,10 +276,13 @@ def _slugify(text: str, max_len: int = 60) -> str:
     return s[:max_len].rstrip("-")
 
 
+_WORD_RE = re.compile(r"\b\w+\b")
+
+
 def jaccard_similarity(a: str, b: str) -> float:
     """Token-level Jaccard similarity using word-boundary tokenization."""
-    words1 = set(re.findall(r"\b\w+\b", a.lower()))
-    words2 = set(re.findall(r"\b\w+\b", b.lower()))
+    words1 = set(_WORD_RE.findall(a.lower()))
+    words2 = set(_WORD_RE.findall(b.lower()))
     if not words1 or not words2:
         return 0.0
     return len(words1 & words2) / len(words1 | words2)
@@ -440,60 +446,73 @@ def fetch_hn_for_pillar(
 # Source → Registry Item converters
 # =========================================================================
 
+# Default pillar tags inserted when no tags detected
+_PILLAR_BASE_TAGS = {"aml": "aml", "data": "dataops", "market": "market-microstructure"}
 
-def _arxiv_to_item(paper: dict, config: PillarConfig) -> dict[str, Any] | None:
-    """Convert arXiv paper dict into a registry content item."""
-    title = (paper.get("title") or "").strip()
-    abstract = (paper.get("abstract") or "").strip()
-    url = (paper.get("url") or "").strip()
-    published = (paper.get("published") or "").strip()
 
-    if not title or not abstract:
+def _source_to_item(
+    source: dict,
+    config: PillarConfig,
+    *,
+    source_key: str,
+    title: str = "",
+    url: str = "",
+    date_str: str = "",
+    summary: str = "",
+    body_html: str = "",
+    author: str = "",
+    tags: list[str] | None = None,
+    avg_sqi: float = 0.65,
+    score: float = 0.70,
+    signals_extra: dict | None = None,
+    quality_extra: dict | None = None,
+) -> dict[str, Any] | None:
+    """Unified converter: source dict + pillar config → registry content item."""
+    if not title:
         return None
 
-    slug_date = published[:10] or datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    slug_date = date_str[:10] if date_str else datetime.now(timezone.utc).strftime("%Y-%m-%d")
     slug_base = _slugify(title)
     pillar = config.slug_name
     registry_pillar = INGESTER_TO_PILLAR.get(pillar, pillar)
     pillar_url = PILLAR_URL_MAP.get(registry_pillar, registry_pillar)
     slug = f"{pillar_url}/research/{slug_base}"
 
-    tags = paper.get("_detected_tags", [])
+    if tags is None:
+        tags = source.get("_detected_tags", [])
 
-    # Category-based fallback tags when keyword detection misses
-    if not tags:
-        cats = paper.get("categories") or []
-        for cat in cats:
-            cat_lower = cat.lower()
-            if pillar == "data":
-                if cat_lower == "cs.db":
-                    tags.append("database-systems")
-                elif cat_lower == "cs.dc":
-                    tags.append("distributed-computing")
-                elif cat_lower == "cs.se":
-                    tags.append("software-engineering")
-            elif pillar == "market":
-                if cat_lower in ("q-fin.mf", "q-fin.tr"):
-                    tags.append("market-microstructure")
-                elif cat_lower == "econ.em":
-                    tags.append("quantitative-modeling")
-                elif cat_lower == "q-fin.cp":
-                    tags.append("computational-finance")
-
-    # Ensure base pillar tag exists
-    if pillar == "aml" and "aml" not in tags:
-        tags.insert(0, "aml")
-    elif pillar == "data" and "dataops" not in tags:
-        tags.insert(0, "dataops")
-    elif pillar == "market" and "market-microstructure" not in tags:
-        tags.insert(0, "market-microstructure")
-
+    # Insert base pillar tag if missing
+    base_tag = _PILLAR_BASE_TAGS.get(pillar)
+    if base_tag and base_tag not in tags:
+        tags.insert(0, base_tag)
     tags = list(dict.fromkeys(tags))
 
-    body_html = f"<p>{abstract}</p>"
-    description = abstract[:300].rstrip() + ("..." if len(abstract) > 300 else "")
+    if not body_html:
+        body_html = f"<p>{summary}</p>" if summary else ""
+    if not summary:
+        summary = title[:200]
+    description = summary[:300].rstrip() + ("..." if len(summary) > 300 else "") if summary else title[:200]
 
     now_iso = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+
+    signals = {
+        "avg_sqi": avg_sqi,
+        "count": 1,
+        "domain_diversity": len(tags),
+        "top_entities": [url] if url else [],
+    }
+    if signals_extra:
+        signals.update(signals_extra)
+
+    quality = {
+        "score": score,
+        "source_verified": True,
+        "evidence_level": "Unknown",
+        "trend_strength": 50.0,
+        "adoption_level": "emerging",
+    }
+    if quality_extra:
+        quality.update(quality_extra)
 
     return {
         "slug": slug,
@@ -506,24 +525,13 @@ def _arxiv_to_item(paper: dict, config: PillarConfig) -> dict[str, Any] | None:
         "category": "blog",
         "language": "en",
         "date_str": slug_date,
-        "created_at": published,
+        "created_at": date_str or now_iso,
         "updated_at": now_iso,
-        "author": "Leszek",
+        "author": author or "AcaciaFund",
         "source_url": url,
-        "source_breakdown": {"arxiv": 1},
-        "signals": {
-            "avg_sqi": 0.75,
-            "count": 1,
-            "domain_diversity": len(tags),
-            "top_entities": [url],
-        },
-        "quality_metrics": {
-            "score": 0.75,
-            "source_verified": True,
-            "evidence_level": "Unknown",
-            "trend_strength": 50.0,
-            "adoption_level": "emerging",
-        },
+        "source_breakdown": {source_key: 1},
+        "signals": signals,
+        "quality_metrics": quality,
         "sqi": None,
         "enriched": False,
         "lineage": {},
@@ -531,6 +539,36 @@ def _arxiv_to_item(paper: dict, config: PillarConfig) -> dict[str, Any] | None:
         "section_images": [],
         "difficulty": "",
     }
+
+
+def _arxiv_to_item(paper: dict, config: PillarConfig) -> dict[str, Any] | None:
+    """Convert arXiv paper dict into a registry content item."""
+    title = (paper.get("title") or "").strip()
+    abstract = (paper.get("abstract") or "").strip()
+    url = (paper.get("url") or "").strip()
+    published = (paper.get("published") or "").strip()
+
+    if not title or not abstract:
+        return None
+
+    tags = paper.get("_detected_tags", [])
+    if not tags:
+        for cat in (paper.get("categories") or []):
+            cat_lower = cat.lower()
+            if config.slug_name == "data":
+                if cat_lower == "cs.db": tags.append("database-systems")
+                elif cat_lower == "cs.dc": tags.append("distributed-computing")
+                elif cat_lower == "cs.se": tags.append("software-engineering")
+            elif config.slug_name == "market":
+                if cat_lower in ("q-fin.mf", "q-fin.tr"): tags.append("market-microstructure")
+                elif cat_lower == "econ.em": tags.append("quantitative-modeling")
+                elif cat_lower == "q-fin.cp": tags.append("computational-finance")
+
+    return _source_to_item(
+        paper, config, source_key="arxiv", title=title, url=url,
+        date_str=published, summary=abstract, body_html=f"<p>{abstract}</p>",
+        author="Leszek", tags=tags, avg_sqi=0.75, score=0.75,
+    )
 
 
 def _hn_to_item(story: dict, config: PillarConfig) -> dict[str, Any] | None:
@@ -545,68 +583,20 @@ def _hn_to_item(story: dict, config: PillarConfig) -> dict[str, Any] | None:
     if not title:
         return None
 
-    slug_date = created_at[:10] or datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    slug_base = _slugify(title)
-    pillar = config.slug_name
-    registry_pillar = INGESTER_TO_PILLAR.get(pillar, pillar)
-    pillar_url = PILLAR_URL_MAP.get(registry_pillar, registry_pillar)
-    slug = f"{pillar_url}/research/{slug_base}"
-
-    tags = story.get("_detected_tags", [])
-    if pillar == "aml" and "aml" not in tags:
-        tags.insert(0, "aml")
-    elif pillar == "data" and "dataops" not in tags:
-        tags.insert(0, "dataops")
-    elif pillar == "market" and "market-microstructure" not in tags:
-        tags.insert(0, "market-microstructure")
-    tags = list(dict.fromkeys(tags))
-
     description = f"HackerNews discussion ({points} points) about {title[:120]}."
-    body_html = f"<p>HackerNews discussion: <a href='{hn_url}'>{title}</a></p>"
-    body_html += f"<p>Score: {points} points by {author}.</p>"
+    body = f"<p>HackerNews discussion: <a href='{hn_url}'>{title}</a></p>"
+    body += f"<p>Score: {points} points by {author}.</p>"
     if url and url != hn_url:
-        body_html += f"<p>Source: <a href='{url}'>{url[:80]}</a></p>"
+        body += f"<p>Source: <a href='{url}'>{url[:80]}</a></p>"
 
-    now_iso = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
-
-    return {
-        "slug": slug,
-        "title": title,
-        "pillar": registry_pillar,
-        "content_type": "research",
-        "tags": tags,
-        "description": description,
-        "body_html": body_html,
-        "category": "blog",
-        "language": "en",
-        "date_str": slug_date,
-        "created_at": created_at or now_iso,
-        "updated_at": now_iso,
-        "author": author,
-        "source_url": hn_url,
-        "source_breakdown": {"hn": 1},
-        "signals": {
-            "avg_sqi": 0.55,
-            "count": points,
-            "total_score": points * 100,
-            "avg_score": float(points),
-            "domain_diversity": len(tags),
-            "top_entities": [hn_url],
-        },
-        "quality_metrics": {
-            "score": min(0.95, 0.45 + (points / 1000)),
-            "source_verified": True,
-            "evidence_level": "Unknown",
-            "trend_strength": min(100.0, points),
-            "adoption_level": "emerging",
-        },
-        "sqi": None,
-        "enriched": False,
-        "lineage": {},
-        "quality_flags": [],
-        "section_images": [],
-        "difficulty": "",
-    }
+    return _source_to_item(
+        story, config, source_key="hn", title=title, url=hn_url,
+        date_str=created_at, summary=description, body_html=body,
+        author=author, avg_sqi=0.55,
+        score=min(0.95, 0.45 + (points / 1000)),
+        signals_extra={"count": points, "total_score": points * 100, "avg_score": float(points)},
+        quality_extra={"trend_strength": min(100.0, points)},
+    )
 
 
 # =========================================================================
@@ -658,59 +648,12 @@ def _sec_edgar_to_item(filing: dict, config: PillarConfig) -> dict[str, Any] | N
     if not title:
         return None
 
-    slug_date = published or datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    slug_base = _slugify(title)
-    pillar = config.slug_name
-    registry_pillar = INGESTER_TO_PILLAR.get(pillar, pillar)
-    pillar_url = PILLAR_URL_MAP.get(registry_pillar, registry_pillar)
-    slug = f"{pillar_url}/research/{slug_base}"
-
-    tags = filing.get("_detected_tags", [])
-    if pillar == "market" and "market-microstructure" not in tags:
-        tags.insert(0, "market-microstructure")
-    tags = list(dict.fromkeys(tags))
-
-    body_html = f"<p>{summary}</p>" if summary else ""
-    description = summary[:300].rstrip() + ("..." if len(summary) > 300 else "") if summary else title[:200]
-
-    now_iso = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
-
-    return {
-        "slug": slug,
-        "title": title,
-        "pillar": registry_pillar,
-        "content_type": "research",
-        "tags": tags,
-        "description": description,
-        "body_html": body_html,
-        "category": "blog",
-        "language": "en",
-        "date_str": slug_date,
-        "created_at": published or now_iso,
-        "updated_at": now_iso,
-        "author": "SEC EDGAR",
-        "source_url": url,
-        "source_breakdown": {"sec-edgar": 1},
-        "signals": {
-            "avg_sqi": 0.7,
-            "count": 1,
-            "domain_diversity": len(tags),
-            "top_entities": [url],
-        },
-        "quality_metrics": {
-            "score": 0.7,
-            "source_verified": True,
-            "evidence_level": "Official",
-            "trend_strength": 50.0,
-            "adoption_level": "established",
-        },
-        "sqi": None,
-        "enriched": False,
-        "lineage": {},
-        "quality_flags": [],
-        "section_images": [],
-        "difficulty": "",
-    }
+    return _source_to_item(
+        filing, config, source_key="sec-edgar", title=title, url=url,
+        date_str=published, summary=summary,
+        author="SEC EDGAR", avg_sqi=0.7, score=0.7,
+        quality_extra={"evidence_level": "Official", "adoption_level": "established"},
+    )
 
 
 # =========================================================================
@@ -758,59 +701,12 @@ def _ssrn_to_item(paper: dict, config: PillarConfig) -> dict[str, Any] | None:
     if not title:
         return None
 
-    slug_date = published or datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    slug_base = _slugify(title)
-    pillar = config.slug_name
-    registry_pillar = INGESTER_TO_PILLAR.get(pillar, pillar)
-    pillar_url = PILLAR_URL_MAP.get(registry_pillar, registry_pillar)
-    slug = f"{pillar_url}/research/{slug_base}"
-
-    tags = paper.get("_detected_tags", [])
-    if pillar == "market" and "market-microstructure" not in tags:
-        tags.insert(0, "market-microstructure")
-    tags = list(dict.fromkeys(tags))
-
-    body_html = f"<p>{summary}</p>" if summary else ""
-    description = summary[:300].rstrip() + ("..." if len(summary) > 300 else "") if summary else title[:200]
-
-    now_iso = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
-
-    return {
-        "slug": slug,
-        "title": title,
-        "pillar": registry_pillar,
-        "content_type": "research",
-        "tags": tags,
-        "description": description,
-        "body_html": body_html,
-        "category": "blog",
-        "language": "en",
-        "date_str": slug_date,
-        "created_at": published or now_iso,
-        "updated_at": now_iso,
-        "author": "SSRN",
-        "source_url": url,
-        "source_breakdown": {"ssrn": 1},
-        "signals": {
-            "avg_sqi": 0.75,
-            "count": 1,
-            "domain_diversity": len(tags),
-            "top_entities": [url],
-        },
-        "quality_metrics": {
-            "score": 0.75,
-            "source_verified": True,
-            "evidence_level": "Academic",
-            "trend_strength": 50.0,
-            "adoption_level": "emerging",
-        },
-        "sqi": None,
-        "enriched": False,
-        "lineage": {},
-        "quality_flags": [],
-        "section_images": [],
-        "difficulty": "",
-    }
+    return _source_to_item(
+        paper, config, source_key="ssrn", title=title, url=url,
+        date_str=published, summary=summary, author="SSRN",
+        avg_sqi=0.75, score=0.75,
+        quality_extra={"evidence_level": "Academic"},
+    )
 
 
 # =========================================================================
@@ -858,59 +754,175 @@ def _nber_to_item(paper: dict, config: PillarConfig) -> dict[str, Any] | None:
     if not title:
         return None
 
-    slug_date = published or datetime.now(timezone.utc).strftime("%Y-%m-%d")
-    slug_base = _slugify(title)
-    pillar = config.slug_name
-    registry_pillar = INGESTER_TO_PILLAR.get(pillar, pillar)
-    pillar_url = PILLAR_URL_MAP.get(registry_pillar, registry_pillar)
-    slug = f"{pillar_url}/research/{slug_base}"
+    return _source_to_item(
+        paper, config, source_key="nber", title=title, url=url,
+        date_str=published, summary=summary, author="NBER",
+        avg_sqi=0.75, score=0.75,
+        quality_extra={"evidence_level": "Academic"},
+    )
 
-    tags = paper.get("_detected_tags", [])
-    if pillar == "market" and "market-microstructure" not in tags:
-        tags.insert(0, "market-microstructure")
-    tags = list(dict.fromkeys(tags))
 
-    body_html = f"<p>{summary}</p>" if summary else ""
-    description = summary[:300].rstrip() + ("..." if len(summary) > 300 else "") if summary else title[:200]
+# =========================================================================
+# PubMed Fetcher
+# =========================================================================
 
-    now_iso = datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
+PUBMED_QUERIES: dict[str, list[str]] = {
+    "aml": [
+        "anti-money laundering", "know your customer", "financial crime",
+        "sanctions compliance", "suspicious activity report",
+        "beneficial ownership", "financial intelligence unit",
+    ],
+    "data": [
+        "data pipeline", "data quality", "distributed systems",
+        "machine learning infrastructure", "stream processing",
+        "data engineering", "data governance",
+    ],
+    "market": [
+        "market microstructure", "portfolio optimization", "financial risk",
+        "behavioral finance", "options pricing", "asset allocation",
+        "systemic risk",
+    ],
+}
 
-    return {
-        "slug": slug,
-        "title": title,
-        "pillar": registry_pillar,
-        "content_type": "research",
-        "tags": tags,
-        "description": description,
-        "body_html": body_html,
-        "category": "blog",
-        "language": "en",
-        "date_str": slug_date,
-        "created_at": published or now_iso,
-        "updated_at": now_iso,
-        "author": "NBER",
-        "source_url": url,
-        "source_breakdown": {"nber": 1},
-        "signals": {
-            "avg_sqi": 0.75,
-            "count": 1,
-            "domain_diversity": len(tags),
-            "top_entities": [url],
-        },
-        "quality_metrics": {
-            "score": 0.75,
-            "source_verified": True,
+
+def fetch_pubmed_for_pillar(
+    config: PillarConfig,
+    days_back: int = 7,
+    verbose: bool = False,
+) -> list[dict]:
+    """Fetch PubMed papers and score against a pillar config."""
+    from core.fetch import fetch_pubmed
+
+    queries = PUBMED_QUERIES.get(config.slug_name, [])
+    if not queries:
+        return []
+
+    since_hours = days_back * 24
+    papers = fetch_pubmed(since_hours=since_hours, max_results=300)
+    if verbose:
+        print(f"  PubMed returned {len(papers)} papers")
+
+    threshold = config.hn_min_score
+    relevant: list[dict] = []
+    for p in papers:
+        title = p.get("title", "")
+        summary = p.get("abstract", "")
+        score, tags = score_pillar_relevance(f"{title} {summary}", config)
+        if score >= threshold:
+            p["_relevance_score"] = round(score, 3)
+            p["_detected_tags"] = tags
+            p["_pillar"] = config.slug_name
+            relevant.append(p)
+
+    relevant.sort(key=lambda p: p["_relevance_score"], reverse=True)
+    if verbose:
+        print(f"  {config.slug_name}-relevant (score >= {threshold}): {len(relevant)}")
+    return relevant
+
+
+def _pubmed_to_item(paper: dict, config: PillarConfig) -> dict[str, Any] | None:
+    """Convert PubMed paper dict into a registry content item."""
+    title = (paper.get("title") or "").strip()
+    url = (paper.get("url") or "").strip()
+    published = (paper.get("published") or "")[:10]
+    abstract = (paper.get("abstract") or "").strip()
+
+    if not title:
+        return None
+
+    return _source_to_item(
+        paper, config, source_key="pubmed", title=title, url=url,
+        date_str=published, summary=abstract,
+        author=paper.get("author", "PubMed"),
+        avg_sqi=0.70, score=0.70,
+        quality_extra={"evidence_level": "Academic", "trend_strength": 40.0},
+    )
+
+
+# =========================================================================
+# Semantic Scholar Fetcher
+# =========================================================================
+
+S2_QUERIES: dict[str, list[str]] = {
+    "aml": [
+        "anti-money laundering compliance",
+        "financial crime regulation",
+        "suspicious transaction detection",
+        "know your customer verification",
+    ],
+    "data": [
+        "data engineering pipeline",
+        "distributed data processing",
+        "real-time stream processing",
+        "data quality monitoring",
+    ],
+    "market": [
+        "market microstructure",
+        "portfolio risk management",
+        "algorithmic trading",
+        "financial market volatility",
+    ],
+}
+
+
+def fetch_s2_for_pillar(
+    config: PillarConfig,
+    days_back: int = 7,
+    verbose: bool = False,
+) -> list[dict]:
+    """Fetch Semantic Scholar papers and score against a pillar config."""
+    from core.fetch import fetch_semantic_scholar
+
+    queries = S2_QUERIES.get(config.slug_name, [])
+    if not queries:
+        return []
+
+    since_hours = days_back * 24
+    papers = fetch_semantic_scholar(since_hours=since_hours, max_results=300)
+    if verbose:
+        print(f"  Semantic Scholar returned {len(papers)} papers")
+
+    threshold = config.hn_min_score
+    relevant: list[dict] = []
+    for p in papers:
+        title = p.get("title", "")
+        abstract = p.get("abstract", "")
+        score, tags = score_pillar_relevance(f"{title} {abstract}", config)
+        if score >= threshold:
+            p["_relevance_score"] = round(score, 3)
+            p["_detected_tags"] = tags
+            p["_pillar"] = config.slug_name
+            relevant.append(p)
+
+    relevant.sort(key=lambda p: p["_relevance_score"], reverse=True)
+    if verbose:
+        print(f"  {config.slug_name}-relevant (score >= {threshold}): {len(relevant)}")
+    return relevant
+
+
+def _s2_to_item(paper: dict, config: PillarConfig) -> dict[str, Any] | None:
+    """Convert Semantic Scholar paper dict into a registry content item."""
+    title = (paper.get("title") or "").strip()
+    url = (paper.get("url") or "").strip()
+    published = (paper.get("published") or "")[:10]
+    abstract = (paper.get("abstract") or "").strip()
+    venue = (paper.get("venue") or "").strip()
+
+    if not title:
+        return None
+
+    return _source_to_item(
+        paper, config, source_key="semantic-scholar", title=title, url=url,
+        date_str=published, summary=abstract,
+        author=paper.get("author", "Semantic Scholar"),
+        avg_sqi=0.72, score=0.72,
+        quality_extra={
             "evidence_level": "Academic",
-            "trend_strength": 50.0,
-            "adoption_level": "emerging",
+            "trend_strength": 45.0,
+            "citations": paper.get("citations", 0),
+            "venue": venue,
         },
-        "sqi": None,
-        "enriched": False,
-        "lineage": {},
-        "quality_flags": [],
-        "section_images": [],
-        "difficulty": "",
-    }
+    )
 
 
 # =========================================================================
@@ -942,16 +954,24 @@ def deduplicate(items: list[dict], registry_data: dict) -> list[dict]:
     """Filter out items already in the registry.
 
     Checks:
-      1. Slug match
-      2. Source URL match
-      3. Exact title match
-      4. Jaccard similarity ≥ 0.93 (near-duplicate title)
+      1. Slug match (set O(1))
+      2. Source URL match (set O(1))
+      3. Exact title match (set O(1))
+      4. Word-overlap pre-check + Jaccard similarity >= 0.93 (near-duplicate title)
     """
     existing_slugs_set = _existing_slugs(registry_data)
     existing_urls_set = _existing_urls(registry_data)
     existing_titles_list = _existing_titles(registry_data)
+    existing_titles_set = set(existing_titles_list)
+
+    # Pre-compute word sets for existing titles (for fast overlap check)
+    existing_word_sets = [
+        (t, set(_WORD_RE.findall(t)))
+        for t in existing_titles_list
+    ]
 
     new_items: list[dict] = []
+    seen_slugs: set[str] = set()
     duplicates = 0
     for item in items:
         slug = item.get("slug", "")
@@ -964,30 +984,41 @@ def deduplicate(items: list[dict], registry_data: dict) -> list[dict]:
         if source_url and source_url in existing_urls_set:
             duplicates += 1
             continue
-        if title and title in existing_titles_list:
+        if title in existing_titles_set:
             duplicates += 1
             continue
 
-        # Jaccard similarity check against all existing titles
+        # Fast word-overlap pre-check before full Jaccard
         is_duplicate = False
         if title:
-            for et in existing_titles_list:
-                if jaccard_similarity(title, et) >= 0.93:
-                    duplicates += 1
-                    is_duplicate = True
-                    break
+            title_words = set(_WORD_RE.findall(title))
+            if len(title_words) < 2:
+                pass  # too short to near-dup
+            else:
+                for et, et_words in existing_word_sets:
+                    if not (title_words & et_words):
+                        continue
+                    overlap = len(title_words & et_words) / max(len(title_words | et_words), 1)
+                    if overlap < 0.6:
+                        continue
+                    if jaccard_similarity(title, et) >= 0.93:
+                        duplicates += 1
+                        is_duplicate = True
+                        break
         if is_duplicate:
             continue
 
-        # Slug collision within batch
-        if slug in {i.get("slug") for i in new_items}:
+        # Slug collision within batch (O(1) lookup)
+        if slug in seen_slugs:
             uid = uuid.uuid4().hex[:6]
             item["slug"] = f"{slug}-{uid}"
+            slug = item["slug"]
 
+        seen_slugs.add(slug)
         new_items.append(item)
 
     if duplicates:
-        print(f"  Skipped {duplicates} duplicates (slug/URL/title/Jaccard≥0.93)")
+        print(f"  Skipped {duplicates} duplicates (slug/URL/title/Jaccard>=0.93)")
     return new_items
 
 
@@ -995,18 +1026,71 @@ def deduplicate(items: list[dict], registry_data: dict) -> list[dict]:
 # Registry I/O
 # =========================================================================
 
-
-def load_registry() -> dict:
-    if not REGISTRY_PATH.exists():
-        print(f"Error: {REGISTRY_PATH} not found")
-        sys.exit(1)
-    with open(REGISTRY_PATH, "r", encoding="utf-8") as f:
-        return json.load(f)
+from _registry_utils import load_registry, save_registry
 
 
-def save_registry(reg: dict) -> None:
-    from core.registry_io import save_registry as _atomic_save
-    _atomic_save(reg, REGISTRY_PATH)
+def prune_and_archive_registry(
+    registry_data: dict,
+    max_active: int = 2000,
+    max_age_months: int = 18,
+) -> int:
+    """Archive old items beyond max_active, keeping newest.
+
+    Items older than max_age_months go to data/registry_archive/YYYY-MM.json.
+    If still over limit after age pruning, oldest items are archived.
+    Returns count of archived items.
+    """
+    from datetime import timedelta
+
+    items = registry_data.get("content", [])
+    if len(items) <= max_active:
+        return 0
+
+    cutoff = datetime.now(timezone.utc) - timedelta(days=max_age_months * 30)
+
+    def _parse_date(d: str) -> datetime:
+        try:
+            return datetime.fromisoformat(d.replace("Z", "+00:00"))
+        except (ValueError, TypeError):
+            return datetime.min.replace(tzinfo=timezone.utc)
+
+    # Split by age
+    active = []
+    archive = []
+    for item in items:
+        created = _parse_date(item.get("created_at", ""))
+        if created > cutoff:
+            active.append(item)
+        else:
+            archive.append(item)
+
+    # If still over limit, archive oldest from active
+    if len(active) > max_active:
+        active.sort(key=lambda x: x.get("created_at", ""), reverse=True)
+        archive.extend(active[max_active:])
+        active = active[:max_active]
+
+    if not archive:
+        return 0
+
+    # Write archive file
+    archive_dir = ROOT / "data" / "registry_archive"
+    archive_dir.mkdir(parents=True, exist_ok=True)
+    today = datetime.now(timezone.utc).strftime("%Y-%m")
+    archive_path = archive_dir / f"{today}.json"
+
+    existing_archive = []
+    if archive_path.exists():
+        with open(archive_path) as f:
+            existing_archive = json.load(f).get("items", [])
+
+    existing_archive.extend(archive)
+    with open(archive_path, "w") as f:
+        json.dump({"items": existing_archive, "archived_at": datetime.now(timezone.utc).isoformat()}, f, indent=1)
+
+    registry_data["content"] = active
+    print(f"  Archived {len(archive)} items to {archive_path.name} (active: {len(active)})")
+    return len(archive)
 
 
 # =========================================================================
@@ -1020,6 +1104,7 @@ def ingest_pillar(
     days_back: int,
     verbose: bool,
     dry_run: bool,
+    max_per_source: int = 0,
 ) -> list[dict]:
     """Fetch, score, convert items for one pillar. Returns new items."""
     items: list[dict] = []
@@ -1076,6 +1161,26 @@ def ingest_pillar(
             nber_count = sum(1 for i in items if i.get('source_breakdown', {}).get('nber'))
             print(f"  → {nber_count} NBER items for {config.slug_name}")
 
+    if source in ("pubmed", "all"):
+        papers = fetch_pubmed_for_pillar(config, days_back, verbose=verbose)
+        for p in papers:
+            item = _pubmed_to_item(p, config)
+            if item is not None:
+                items.append(item)
+        if verbose:
+            pubmed_count = sum(1 for i in items if i.get('source_breakdown', {}).get('pubmed'))
+            print(f"  → {pubmed_count} PubMed items for {config.slug_name}")
+
+    if source in ("semantic-scholar", "all"):
+        papers = fetch_s2_for_pillar(config, days_back, verbose=verbose)
+        for p in papers:
+            item = _s2_to_item(p, config)
+            if item is not None:
+                items.append(item)
+        if verbose:
+            s2_count = sum(1 for i in items if i.get('source_breakdown', {}).get('semantic-scholar'))
+            print(f"  → {s2_count} Semantic Scholar items for {config.slug_name}")
+
     return items
 
 
@@ -1096,7 +1201,7 @@ def main() -> int:
     )
     parser.add_argument(
         "--source",
-        choices=["arxiv", "hn", "sec-edgar", "ssrn", "nber", "all"],
+        choices=["arxiv", "hn", "sec-edgar", "ssrn", "nber", "pubmed", "semantic-scholar", "all"],
         default="all",
         help="Which source to fetch from (default: all)",
     )
@@ -1105,6 +1210,12 @@ def main() -> int:
         type=int,
         default=7,
         help="Look back N days for content (default: 7)",
+    )
+    parser.add_argument(
+        "--max-per-source",
+        type=int,
+        default=0,
+        help="Override default per-source result limits (0 = use defaults)",
     )
     parser.add_argument(
         "--dry-run",
@@ -1135,11 +1246,23 @@ def main() -> int:
     pillar_keys = list(PILLAR_CONFIGS) if args.pillar == "all" else [args.pillar]
     configs = [PILLAR_CONFIGS[k] for k in pillar_keys]
 
-    # 1. Fetch for each pillar
+    # 1. Fetch for each pillar (parallel)
     all_new_items: list[dict] = []
-    for cfg in configs:
-        items = ingest_pillar(cfg, args.source, args.days, args.verbose, args.dry_run)
-        all_new_items.extend(items)
+    with ThreadPoolExecutor(max_workers=3) as pool:
+        futures = {
+            pool.submit(
+                ingest_pillar, cfg, args.source, args.days, args.verbose, args.dry_run,
+                args.max_per_source,
+            ): cfg.slug_name
+            for cfg in configs
+        }
+        for future in as_completed(futures):
+            pillar_key = futures[future]
+            try:
+                items = future.result()
+                all_new_items.extend(items)
+            except Exception as e:
+                print(f"  [ERROR] {pillar_key}: {e}")
 
     if not all_new_items:
         print("\nNo new content candidates found.")
@@ -1184,7 +1307,14 @@ def main() -> int:
     associations = extract_and_store_concepts(validated, ontology)
     if associations:
         print(f"  Ontology: {associations} concept associations extracted")
-        ontology.save(ONTOLOGY_PATH)
+
+    # 4b. Cross-pillar analog auto-population
+    if not args.dry_run:
+        analogs = ontology.auto_populate_cross_pillar_analogs()
+        if analogs:
+            print(f"  Cross-pillar analogs: {analogs} links populated")
+
+    ontology.save(ONTOLOGY_PATH)
 
     # 5. Report
     if args.verbose or args.dry_run:
@@ -1194,7 +1324,7 @@ def main() -> int:
         print("─" * 60)
         for i, item in enumerate(validated, 1):
             sb = item.get("source_breakdown", {})
-            src = "arxiv" if sb.get("arxiv") else "hn" if sb.get("hn") else "sec-edgar" if sb.get("sec-edgar") else "ssrn" if sb.get("ssrn") else "nber"
+            src = "arxiv" if sb.get("arxiv") else "hn" if sb.get("hn") else "sec-edgar" if sb.get("sec-edgar") else "ssrn" if sb.get("ssrn") else "nber" if sb.get("nber") else "pubmed" if sb.get("pubmed") else "semantic-scholar"
             concepts = item.get("extracted_concepts", [])
             print(f"\n  [{i}] {item['slug']}")
             print(f"      Pillar: {item['pillar']} | Source: {src}")
@@ -1208,6 +1338,12 @@ def main() -> int:
     if not args.dry_run:
         content = registry.setdefault("content", [])
         content.extend(validated)
+
+        # 6b. Prune + archive if over limit
+        pruned = prune_and_archive_registry(registry)
+        if pruned:
+            print(f"  Pruned {pruned} old items (archived to data/registry_archive/)")
+
         save_registry(registry)
 
         # Pillar counts

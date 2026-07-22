@@ -248,6 +248,60 @@ class ResearchEnricher:
             self.infer_mode = False
 
     # ------------------------------------------------------------------
+    # LLM retry helper
+    # ------------------------------------------------------------------
+
+    def _llm_call(
+        self,
+        system_prompt: str,
+        user_prompt: str,
+        *,
+        temperature: float = 0.4,
+        max_tokens: int = 500,
+        max_retries: int = 3,
+        base_delay: float = 2.0,
+    ) -> str | None:
+        """Call LLM with exponential backoff retry. Returns raw response text or None."""
+        if not self._llm_client:
+            return None
+        import time as _time
+        last_err = None
+        for attempt in range(max_retries):
+            try:
+                resp = self._llm_client.chat.completions.create(
+                    model=self._llm_model,
+                    messages=[
+                        {"role": "system", "content": system_prompt},
+                        {"role": "user", "content": user_prompt},
+                    ],
+                    temperature=temperature,
+                    max_tokens=max_tokens,
+                    timeout=30,
+                )
+                return (resp.choices[0].message.content or "").strip()
+            except Exception as e:
+                last_err = e
+                if attempt < max_retries - 1:
+                    _time.sleep(base_delay * (2 ** attempt))
+        logger.warning("LLM call failed after %d retries: %s", max_retries, last_err)
+        return None
+
+    @staticmethod
+    def _parse_llm_json(raw: str) -> Any:
+        """Strip markdown fences and parse JSON from LLM response."""
+        if not raw:
+            return None
+        cleaned = raw.strip()
+        if cleaned.startswith("```"):
+            lines = cleaned.split("\n")
+            lines = [l for l in lines if not l.strip().startswith("```")]
+            cleaned = "\n".join(lines)
+        try:
+            return json.loads(cleaned)
+        except json.JSONDecodeError:
+            return None
+
+    # ------------------------------------------------------------------
     # Tag Extraction
     # ------------------------------------------------------------------
 
@@ -741,25 +795,82 @@ Respond with a JSON array of 3-5 kebab-case tags:"""
 
         return item
 
+    # ----------------------------------------------------------------
+    # LLM Feynman enrichment (--llm-feynman)
+    # ----------------------------------------------------------------
+
+    def generate_feynman_explanation(
+        self, item: dict[str, Any]
+    ) -> dict[str, Any] | None:
+        """Generate a Feynman-style explanation stub via LLM."""
+        title = item.get("title", "")
+        description = item.get("description", "")
+        body = item.get("body_html", "")[:800]
+        if not title:
+            return None
+
+        system_prompt = "You output only valid JSON."
+        user_prompt = f"""You are generating a Feynman explanation for a research article.
+
+Title: {title}
+Description: {description}
+Body excerpt: {body}
+
+Return ONLY valid JSON with these fields:
+{{
+  "plain_english": "A 2-3 sentence explanation in plain language a college student could understand.",
+  "key_intuition": "The single most important insight, stated simply.",
+  "why_it_matters": "Why this matters for someone studying data, compliance, or markets.",
+  "difficulty": "beginner|intermediate|advanced",
+  "one_liner": "A single sentence capturing the essence."
+}}
+No markdown, no code fences, just JSON."""
+
+        raw = self._llm_call(system_prompt, user_prompt, temperature=0.4, max_tokens=500)
+        return self._parse_llm_json(raw)
+
+    # ----------------------------------------------------------------
+    # LLM Philosophy enrichment (--llm-philosophy)
+    # ----------------------------------------------------------------
+
+    def classify_philosophy(
+        self, item: dict[str, Any]
+    ) -> dict[str, Any] | None:
+        """Classify epistemic status and philosophical basis via LLM."""
+        title = item.get("title", "")
+        description = item.get("description", "")
+        tags = item.get("tags", [])
+        if not title:
+            return None
+
+        system_prompt = "You output only valid JSON."
+        user_prompt = f"""Classify the philosophical and epistemic properties of this research article.
+
+Title: {title}
+Description: {description}
+Tags: {', '.join(tags[:10])}
+
+Return ONLY valid JSON:
+{{
+  "epistemic_status": "empirical|theoretical|normative|interpretive|speculative|review|meta-analytic",
+  "epistemic_role": "Constitutive|Instrumental|Regulatory|Critical|Explanatory|Predictive|Prescriptive",
+  "normative_basis": "None|Kantian|Utilitarian|Rawlsian|Virtue|Pragmatist|Deontological|Consequentialist|Feminist|Postcolonial",
+  "uncertainty_class": "risk|ambiguity|deep-uncertainty|unknown-unknowns",
+  "philosophical_sources": ["key thinkers referenced, e.g. Arrow, Kahneman"],
+  "temporal_ontology": "static|process|teleological|cyclical"
+}}
+No markdown, no code fences, just JSON."""
+
+        raw = self._llm_call(system_prompt, user_prompt, temperature=0.3, max_tokens=400)
+        return self._parse_llm_json(raw)
+
 
 # =========================================================================
 # CLI Entry Point
 # =========================================================================
 
 
-def load_registry() -> dict:
-    """Load registry.json."""
-    if not REGISTRY_PATH.exists():
-        print(f"Error: {REGISTRY_PATH} not found.")
-        sys.exit(1)
-    with open(REGISTRY_PATH, "r", encoding="utf-8") as f:
-        return json.load(f)
-
-
-def save_registry(reg: dict) -> None:
-    """Save registry.json atomically."""
-    from core.registry_io import save_registry as _atomic_save
-    _atomic_save(reg, REGISTRY_PATH)
+from _registry_utils import load_registry, save_registry
 
 
 def main() -> int:
@@ -785,6 +896,16 @@ def main() -> int:
         "--dry-run",
         action="store_true",
         help="Show changes without writing to registry",
+    )
+    parser.add_argument(
+        "--llm-feynman",
+        action="store_true",
+        help="Generate Feynman explanation stubs via LLM (requires --infer)",
+    )
+    parser.add_argument(
+        "--llm-philosophy",
+        action="store_true",
+        help="Classify epistemic status and philosophical basis via LLM (requires --infer)",
     )
     parser.add_argument(
         "--verbose", "-v",
@@ -820,6 +941,37 @@ def main() -> int:
         # Enrich
         enricher.enrich_item(item)
         enriched_count += 1
+
+        # LLM Feynman enrichment
+        if args.llm_feynman and enricher._llm_client:
+            feynman = enricher.generate_feynman_explanation(item)
+            if feynman:
+                item["feynman"] = {
+                    "plain_english": feynman.get("plain_english", ""),
+                    "key_intuition": feynman.get("key_intuition", ""),
+                    "why_it_matters": feynman.get("why_it_matters", ""),
+                    "difficulty": feynman.get("difficulty", "intermediate"),
+                    "one_liner": feynman.get("one_liner", ""),
+                    "source": "llm",
+                }
+                if args.verbose:
+                    print(f"  [feynman] {slug}: {feynman.get('one_liner', '')[:60]}")
+
+        # LLM Philosophy enrichment
+        if args.llm_philosophy and enricher._llm_client:
+            phil = enricher.classify_philosophy(item)
+            if phil:
+                item["philosophy"] = {
+                    "epistemic_status": phil.get("epistemic_status", "empirical"),
+                    "epistemic_role": phil.get("epistemic_role", ""),
+                    "normative_basis": phil.get("normative_basis", "None"),
+                    "uncertainty_class": phil.get("uncertainty_class", "risk"),
+                    "philosophical_sources": phil.get("philosophical_sources", []),
+                    "temporal_ontology": phil.get("temporal_ontology", "static"),
+                    "source": "llm",
+                }
+                if args.verbose:
+                    print(f"  [philosophy] {slug}: {phil.get('epistemic_status', '?')}")
 
         if args.verbose:
             tags = item.get("tags", [])

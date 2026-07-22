@@ -13,6 +13,7 @@ Creates hands-on learning content with:
 Output: Updates registry.json with new learn entries.
 """
 
+import argparse
 import json
 import sys
 from datetime import datetime, timezone
@@ -693,7 +694,196 @@ def generate_module_body(module):
     return "\n\n".join(sections_html)
 
 
+# ── Auto-generate modules from ontology concepts ─────────────────────
+
+AUTO_MODULE_PROMPT = """You are generating a learn module for an educational portal.
+Concept: {concept_label} ({concept_id})
+Pillar: {pillar}
+Description: {description}
+Category: {category}
+Relations: {relations}
+
+Generate ONLY valid JSON for a learn module with these fields:
+{{
+  "title": "string - clear, descriptive title",
+  "description": "2-3 sentence overview",
+  "difficulty": "beginner|intermediate|advanced",
+  "tags": ["tag1", "tag2", "tag3"],
+  "sections": [
+    {{
+      "heading": "Section Title",
+      "content": "<p>HTML paragraph explaining the concept...</p>"
+    }}
+  ],
+  "flashcards": [
+    {{"front": "Question?", "back": "Answer"}}
+  ],
+  "bloom_questions": [
+    {{
+      "question": "Multiple choice question?",
+      "choices": ["A", "B", "C", "D"],
+      "correct_index": 0,
+      "explanation": "Why this is correct"
+    }}
+  ]
+}}
+Generate 3-4 sections, 4-6 flashcards, 3-4 Bloom questions.
+No markdown, no code fences, just JSON."""
+
+
+def auto_generate_from_ontology(
+    ontology, registry, llm_client=None, max_new: int = 20
+) -> list[str]:
+    """Auto-generate learn modules for ontology concepts missing learn content.
+
+    Returns list of newly created slugs.
+    """
+    existing_slugs = {item.get("slug") for item in registry.get("content", [])}
+    existing_learn_slugs = {
+        item.get("slug")
+        for item in registry.get("content", [])
+        if item.get("content_type") == "learn"
+    }
+
+    # Find concepts without a learn module
+    concepts_needing_modules = []
+    for concept in ontology.concepts:
+        # Check if any learn slug contains this concept id
+        has_module = any(
+            concept.id in slug for slug in existing_learn_slugs
+        )
+        if not has_module:
+            concepts_needing_modules.append(concept)
+
+    if not concepts_needing_modules:
+        print("  All ontology concepts already have learn modules.")
+        return []
+
+    print(f"  Found {len(concepts_needing_modules)} concepts without learn modules")
+    new_slugs = []
+    now = datetime.now(timezone.utc).isoformat()
+
+    for concept in concepts_needing_modules[:max_new]:
+        # Determine pillar from concept
+        pillar = concept.pillar if hasattr(concept, "pillar") and concept.pillar else "data"
+        pillar_map = {"aml": "aml", "stock": "stock", "data-engineering": "data-engineering"}
+        pillar_key = pillar_map.get(pillar, "data-engineering")
+
+        # Build concept relations string
+        relations = []
+        if hasattr(concept, "category"):
+            relations.append(f"category: {concept.category}")
+
+        slug_base = concept.id.replace(" ", "-").replace("/", "-")
+        slug = f"{pillar_key}/learn/{slug_base}"
+
+        if slug in existing_slugs:
+            continue
+
+        if llm_client:
+            # Use LLM to generate rich content
+            prompt = AUTO_MODULE_PROMPT.format(
+                concept_label=concept.label,
+                concept_id=concept.id,
+                pillar=pillar_key,
+                description=getattr(concept, "description", concept.label),
+                category=getattr(concept, "category", "foundations"),
+                relations=", ".join(relations) if relations else "none",
+            )
+            try:
+                resp = llm_client.chat.completions.create(
+                    model="meta/llama-3.1-70b-instruct",
+                    messages=[
+                        {"role": "system", "content": "You output only valid JSON."},
+                        {"role": "user", "content": prompt},
+                    ],
+                    temperature=0.5,
+                    max_tokens=2000,
+                )
+                raw = resp.choices[0].message.content.strip()
+                if raw.startswith("```"):
+                    lines = raw.split("\n")
+                    lines = [l for l in lines if not l.strip().startswith("```")]
+                    raw = "\n".join(lines)
+                module_data = json.loads(raw)
+            except Exception:
+                continue
+        else:
+            # Deterministic fallback: minimal stub
+            module_data = {
+                "title": f"Understanding {concept.label}",
+                "description": f"Learn about {concept.label} in the context of {pillar_key}.",
+                "difficulty": "intermediate",
+                "tags": [concept.id, pillar_key],
+                "sections": [
+                    {
+                        "heading": f"What is {concept.label}?",
+                        "content": f"<p>{concept.label} is a key concept in {pillar_key}. This module provides an introduction and practical understanding.</p>",
+                    },
+                    {
+                        "heading": "Key Principles",
+                        "content": f"<p>The core principles of {concept.label} include understanding its foundational assumptions and practical applications.</p>",
+                    },
+                ],
+                "flashcards": [
+                    {"front": f"What is {concept.label}?", "back": f"{concept.label} is a concept in {pillar_key}."}
+                ],
+                "bloom_questions": [
+                    {
+                        "question": f"What is {concept.label} primarily used for?",
+                        "choices": ["Analysis", "Synthesis", "Evaluation", "Memory"],
+                        "correct_index": 0,
+                        "explanation": f"{concept.label} is primarily used for analysis in {pillar_key}.",
+                    }
+                ],
+            }
+
+        body_html = generate_module_body(module_data)
+
+        item = {
+            "slug": slug,
+            "title": module_data.get("title", f"Understanding {concept.label}"),
+            "pillar": pillar_key,
+            "content_type": "learn",
+            "tags": module_data.get("tags", [concept.id]),
+            "description": module_data.get("description", f"Learn about {concept.label}"),
+            "difficulty": module_data.get("difficulty", "intermediate"),
+            "body_html": body_html,
+            "bloom_questions": module_data.get("bloom_questions", []),
+            "flashcards": module_data.get("flashcards", []),
+            "prerequisites": [],
+            "author": "AcaciaFund",
+            "created_at": now,
+            "updated_at": now,
+            "date_str": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
+            "auto_generated": True,
+            "concept_enriched": True,
+            "concept_id": concept.id,
+        }
+
+        registry["content"].append(item)
+        existing_slugs.add(slug)
+        new_slugs.append(slug)
+        print(f"  Auto-generated: {slug}")
+
+    return new_slugs
+
+
 def main():
+    parser = argparse.ArgumentParser(description="Learn Module Generator")
+    parser.add_argument(
+        "--infer",
+        action="store_true",
+        help="Enable LLM-based auto-generation from ontology (requires API key)",
+    )
+    parser.add_argument(
+        "--max-new",
+        type=int,
+        default=20,
+        help="Max auto-generated modules to create (default: 20)",
+    )
+    args = parser.parse_args()
+
     print("=" * 60)
     print("Learn Module Generator")
     print("=" * 60)
@@ -714,6 +904,7 @@ def main():
 
     now = datetime.now(timezone.utc).isoformat()
 
+    # ── Phase 1: Hand-authored modules ────────────────────────────────
     for module in MODULES:
         slug = module["slug"]
 
@@ -759,6 +950,31 @@ def main():
         new_modules.append(slug)
         created += 1
         print(f"  Created: {slug}")
+
+    # ── Phase 2: Auto-generate from ontology (LLM only) ──────────────
+    if ontology and args.infer:
+        print("\nAuto-generating modules from ontology concepts via LLM...")
+        llm_client = None
+        try:
+            import os
+            from openai import OpenAI
+            api_key = os.environ.get("NVIDIA_API_KEY") or os.environ.get("OPENAI_API_KEY")
+            if api_key:
+                llm_client = OpenAI(
+                    base_url="https://integrate.api.nvidia.com/v1",
+                    api_key=api_key,
+                )
+        except ImportError:
+            pass
+        if llm_client:
+            auto_slugs = auto_generate_from_ontology(
+                ontology, registry, llm_client=llm_client, max_new=args.max_new
+            )
+            created += len(auto_slugs)
+        else:
+            print("  No LLM client available (missing API key or openai package)")
+    elif ontology:
+        print("\n  Skipping auto-generation (use --infer for LLM-generated modules)")
 
     # Save registry
     with open(REGISTRY_PATH, "w") as f:
