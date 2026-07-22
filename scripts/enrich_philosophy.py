@@ -65,7 +65,6 @@ def enrich_ontology(ontology: dict, metadata: dict) -> int:
 
 
 def main():
-    output_mode = None
     output_path = None
     args = sys.argv[1:]
     for i, a in enumerate(args):

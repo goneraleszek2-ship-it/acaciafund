@@ -493,7 +493,6 @@ def add_concepts_and_relations() -> int:
 
 def main():
     added = add_concepts_and_relations()
-    total = added
     # Count
     ontology = load_json(ONTOLOGY_PATH)
     metadata = load_json(PHILOSOPHY_PATH)

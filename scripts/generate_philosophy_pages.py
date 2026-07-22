@@ -327,7 +327,6 @@ DATA_GOVERNANCE_BODY = """
 def main():
     dry_run = "--dry-run" in sys.argv
 
-    ontology = load_json(ONTOLOGY_PATH)
     registry = load_json(REGISTRY_PATH)
     existing_slugs = {item["slug"] for item in registry.get("content", [])}
 

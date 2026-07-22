@@ -85,7 +85,6 @@ def save_registry(registry):
 def generate_glossary_body(pillar_key, concepts, relations, sources):
     """Generate Markdown body for a glossary page."""
     lines = []
-    now = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
     # Introduction
     lines.append(f"This glossary covers key concepts in {PILLAR_META[pillar_key]['title'].replace(' Glossary', '').lower()} as used across AcaciaFund's research, learning materials, and knowledge base.")

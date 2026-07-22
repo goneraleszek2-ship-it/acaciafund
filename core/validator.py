@@ -53,13 +53,13 @@ def _get_attr(item: Any, name: str, default: Any = None) -> Any:
 
 def _image_exists_with_any_extension(img_url: str) -> bool:
     """Check if image exists with any valid extension and path variant.
-    
+
     This function tries multiple path variants to match the build.py resolution logic:
     1. First checks the exact path with the expected extension
     2. Then tries alternate extensions (.webp, .jpg, .png, .svg)
     3. Also tries paths with 'blog/' prefix if missing
     4. Also tries adding '_s1' suffix for blog section images
-    
+
     Returns True if the image exists with any valid extension/path variant.
     """
     # Resolve to hashed path if in manifest

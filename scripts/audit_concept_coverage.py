@@ -14,14 +14,13 @@ import argparse
 import json
 import re
 import sys
-from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from core.ontology import OntologyManager, extract_concepts_from_text
+from core.ontology import OntologyManager, extract_concepts_from_text  # noqa: E402
 
 
 def load_registry() -> list[dict]:
@@ -107,7 +106,6 @@ def audit(
 
     # Per-content-type unclassified items
     unclassified: list[Any] = []
-    all_items = []
     for slug, matched_ids in content_map.items():
         if not matched_ids:
             unclassified.append(slug)
@@ -170,7 +168,7 @@ def audit(
     else:
         s = report["summary"]
         print(f"{'='*60}")
-        print(f"  CONCEPT COVERAGE AUDIT")
+        print("  CONCEPT COVERAGE AUDIT")
         print(f"{'='*60}")
         print(f"  Total concepts:    {s['total_concepts']}")
         print(f"  Covered (≥3 refs): {s['covered']} ({s['coverage_pct']}%)")
@@ -193,14 +191,14 @@ def audit(
                 print(f"    {c['id']:30s}  pillar={c['pillar']:20s}  refs={c['content_count']}")
 
         print(f"  {'─'*40}")
-        print(f"  PILLAR COVERAGE")
+        print("  PILLAR COVERAGE")
         print(f"  {'─'*40}")
         for p, st in sorted(pillar_stats.items()):
             pct = round(st["covered"] / st["total"] * 100, 1) if st["total"] else 0
             print(f"    {p:20s}  {st['covered']:2d}/{st['total']:2d} ({pct:5.1f}%)  orphans={st['orphans']}")
 
         print(f"  {'─'*40}")
-        print(f"  EPISTEMIC STATUS COVERAGE")
+        print("  EPISTEMIC STATUS COVERAGE")
         print(f"  {'─'*40}")
         for e, st in sorted(epi_stats.items()):
             pct = round(st["covered"] / st["total"] * 100, 1) if st["total"] else 0
