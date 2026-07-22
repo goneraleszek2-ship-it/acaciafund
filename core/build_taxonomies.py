@@ -23,8 +23,11 @@ def generate_tag_pages(
     ctx_base: Dict[str, Any],
     _dummy,
     site_url: str = "",
+    pillar_url_map: Optional[Dict[str, str]] = None,
 ) -> int:
     """Generate all tag archive pages. Returns count of pages generated."""
+    from collections import defaultdict
+
     tags_dir = output_dir / "tags"
     tags_dir.mkdir(parents=True, exist_ok=True)
 
@@ -67,6 +70,40 @@ def generate_tag_pages(
         )
         tag_out.write_text(html, encoding="utf-8")
         pages_generated += 1
+
+    # Per-pillar tag pages
+    if pillar_url_map:
+        pillar_tag_items: Dict[str, Dict[str, list]] = defaultdict(lambda: defaultdict(list))
+        for tag_slug, tag_posts in tag_items.items():
+            for p in tag_posts:
+                pillar = getattr(p, "pillar", None) or ""
+                if pillar:
+                    pillar_tag_items[pillar][tag_slug].append(p)
+
+        for pillar_key, tags_dict in pillar_tag_items.items():
+            pillar_url = pillar_url_map.get(pillar_key, pillar_key)
+            pillar_tags_dir = output_dir / pillar_url / "tags"
+            pillar_tags_dir.mkdir(parents=True, exist_ok=True)
+
+            for tag_slug, tag_posts in sorted(tags_dict.items()):
+                tag_slug_clean = re.sub(r"[^a-z0-9]+", "-", tag_slug.lower()).strip("-")
+                if not tag_slug_clean:
+                    continue
+
+                tag_out = pillar_tags_dir / tag_slug_clean / "index.html"
+                tag_out.parent.mkdir(parents=True, exist_ok=True)
+
+                html = render_template(
+                    "tag_index.j2",
+                    content=_dummy(f"{tag_slug} — {pillar_key}", "tag"),
+                    tag=tag_slug,
+                    items=tag_posts,
+                    is_index=False,
+                    page_path=f"{pillar_url}/tags/{tag_slug_clean}/",
+                    **ctx_base,
+                )
+                tag_out.write_text(html, encoding="utf-8")
+                pages_generated += 1
 
     return pages_generated
 

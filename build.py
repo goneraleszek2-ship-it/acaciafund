@@ -29,6 +29,7 @@ from config import (
     PILLAR_CONFIG,
     PILLAR_EMOJIS,
     PILLAR_NAMES,
+    PILLAR_URL_MAP,
     PIPELINE_STATIC_DIR,
     PLAUSIBLE_DOMAIN,
     PROJECT_ROOT,
@@ -988,6 +989,36 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     (knowledge_dir / "index.html").write_text(html, encoding="utf-8")
     print("  category: knowledge/index.html")
 
+    # Per-category knowledge landing pages
+    _kc_count = 0
+    for _kc_id, _kc_items in grouped.items():
+        _kc_cfg = KNOWLEDGE_CATEGORIES.get(_kc_id, {})
+        _kc_html = render_template(
+            "knowledge_index.j2",
+            content=_dummy(
+                f"{_kc_cfg.get('label', _kc_id.title())} — Knowledge — AcaciaFund",
+                "index",
+                description=_kc_cfg.get("description", f"Knowledge category: {_kc_id}."),
+            ),
+            items=_kc_items,
+            grouped={_kc_id: _kc_items},
+            categories=KNOWLEDGE_CATEGORIES,
+            thumbnail_base=thumb_base,
+            thumbnail_key=thumbnail_key,
+            page_title=_kc_cfg.get("label", _kc_id.title()),
+            is_index=False,
+            page_path=f"knowledge/{_kc_id}/",
+            layer="knowledge",
+            layer_icon=LAYER_ICONS["knowledge"],
+            **ctx_base,
+        )
+        _kc_dir = knowledge_dir / _kc_id
+        _kc_dir.mkdir(parents=True, exist_ok=True)
+        (_kc_dir / "index.html").write_text(_kc_html, encoding="utf-8")
+        _kc_count += 1
+    if _kc_count:
+        print(f"  knowledge-categories: {_kc_count} pages")
+
     # --- LEARN PAGES ---
     BLOOM_ORDER = {
         "remember": 1,
@@ -1540,6 +1571,32 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
         (out_dir / "index.html").write_text(html, encoding="utf-8")
         print(f"  pillar: {pillar_url}/index.html")
 
+        # Per-pillar-type index pages (research, learn, knowledge)
+        for _ptype, _ptype_items in [("research", [p for p in research_items if p.pillar == pillar]),
+                                       ("learn", [p for p in learn_items if p.pillar == pillar]),
+                                       ("knowledge", [p for p in knowledge_items if p.pillar == pillar])]:
+            if not _ptype_items:
+                continue
+            _ptype_html = render_template(
+                "category_index.j2",
+                content=_dummy(
+                    f"{pconf['label']} {_ptype.title()} — AcaciaFund",
+                    "index",
+                    description=f"{_ptype.title()} articles in {pconf['label']}.",
+                ),
+                category=_ptype,
+                items=_ptype_items,
+                grouped={},
+                page_title=f"{pconf['label']} {_ptype.title()}",
+                is_index=False,
+                page_path=f"{pillar_url}/{_ptype}/",
+                **ctx_base,
+            )
+            _ptype_dir = out_dir / _ptype
+            _ptype_dir.mkdir(parents=True, exist_ok=True)
+            (_ptype_dir / "index.html").write_text(_ptype_html, encoding="utf-8")
+            print(f"  pillar-{_ptype}: {pillar_url}/{_ptype}/index.html")
+
     # --- AML SIGNALS DASHBOARD ---
     aml_research = [p for p in research_items if p.pillar == "aml"]
     aml_learn = [item for item in learn_items if item.pillar == "aml"]
@@ -1844,6 +1901,161 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     start_here_dir.mkdir(parents=True, exist_ok=True)
     (start_here_dir / "index.html").write_text(start_here_html, encoding="utf-8")
     print("  start-here: start-here/index.html")
+
+    # --- date-based archive pages ---
+    _archive_items: dict[str, list] = defaultdict(list)
+    for _ai in all_content:
+        _ad = _get_created(_ai)
+        if _ad:
+            _key = _ad.strftime("%Y/%m")
+            _archive_items[_key].append(_ai)
+    _archive_count = 0
+    for _arch_key in sorted(_archive_items, reverse=True):
+        _arch_items = _archive_items[_arch_key]
+        _arch_parts = _arch_key.split("/")
+        _arch_year, _arch_month = _arch_parts[0], _arch_parts[1]
+        _arch_label = f"{_arch_year}-{_arch_month}"
+        _arch_pillar_groups: dict[str, list] = defaultdict(list)
+        for _arch_item in _arch_items:
+            _arch_pillar_groups[_arch_item.pillar or "unknown"].append(_arch_item)
+        _arch_html = render_template(
+            "category_index.j2",
+            content=_dummy(
+                f"Archives: {_arch_label} — AcaciaFund",
+                "index",
+                description=f"Articles from {_arch_label}.",
+            ),
+            category="archives",
+            items=_arch_items,
+            grouped=dict(_arch_pillar_groups),
+            page_title=f"Archives: {_arch_label}",
+            is_index=False,
+            page_path=f"archives/{_arch_year}/{_arch_month}/",
+            **ctx_base,
+        )
+        _arch_dir = OUTPUT_DIR / "archives" / _arch_year / _arch_month
+        _arch_dir.mkdir(parents=True, exist_ok=True)
+        (_arch_dir / "index.html").write_text(_arch_html, encoding="utf-8")
+        _archive_count += 1
+    if _archive_count > 0:
+        # Master archives index
+        _arch_months = sorted(set(_archive_items.keys()), reverse=True)
+        _arch_index_html = render_template(
+            "category_index.j2",
+            content=_dummy(
+                "Archives — AcaciaFund",
+                "index",
+                description="Browse articles by month.",
+            ),
+            category="archives",
+            items=[],
+            grouped={},
+            page_title="Archives",
+            is_index=False,
+            page_path="archives/",
+            _archive_months=[{"key": m, "label": f"{m.split('/')[0]}-{m.split('/')[1]}"} for m in _arch_months],
+            **ctx_base,
+        )
+        archives_root = OUTPUT_DIR / "archives"
+        archives_root.mkdir(parents=True, exist_ok=True)
+        (archives_root / "index.html").write_text(_arch_index_html, encoding="utf-8")
+
+        # Per-pillar archive pages
+        for _pillar_key, _pillar_url in PILLAR_URL_MAP.items():
+            _pillar_arch_items: dict[str, list] = defaultdict(list)
+            for _ai in all_content:
+                if getattr(_ai, "pillar", None) != _pillar_key:
+                    continue
+                _ad = _get_created(_ai)
+                if _ad:
+                    _pillar_arch_items[_ad.strftime("%Y/%m")].append(_ai)
+            for _arch_key in sorted(_pillar_arch_items, reverse=True):
+                _arch_items = _pillar_arch_items[_arch_key]
+                _arch_parts = _arch_key.split("/")
+                _arch_year, _arch_month = _arch_parts[0], _arch_parts[1]
+                _arch_label = f"{_arch_year}-{_arch_month}"
+                _arch_html = render_template(
+                    "category_index.j2",
+                    content=_dummy(
+                        f"Archives: {_arch_label} — {_pillar_key} — AcaciaFund",
+                        "index",
+                        description=f"Articles from {_arch_label} in {_pillar_key}.",
+                    ),
+                    category="archives",
+                    items=_arch_items,
+                    grouped={_pillar_key: _arch_items},
+                    page_title=f"Archives: {_arch_label} ({_pillar_key})",
+                    is_index=False,
+                    page_path=f"{_pillar_url}/archives/{_arch_year}/{_arch_month}/",
+                    **ctx_base,
+                )
+                _arch_dir = OUTPUT_DIR / _pillar_url / "archives" / _arch_year / _arch_month
+                _arch_dir.mkdir(parents=True, exist_ok=True)
+                (_arch_dir / "index.html").write_text(_arch_html, encoding="utf-8")
+                _archive_count += 1
+        print(f"  archives: {_archive_count} monthly pages + index")
+    else:
+        print("  archives: none (no dated items)")
+
+    # --- per-pillar difficulty archive pages ---
+    _extra_count = 0
+    for _pillar_key, _pillar_url in PILLAR_URL_MAP.items():
+        for _diff in ("beginner", "intermediate", "advanced"):
+            _diff_items = [c for c in all_content if getattr(c, "pillar", None) == _pillar_key
+                           and (getattr(c, "difficulty", None) or "").lower() == _diff]
+            if not _diff_items:
+                continue
+            _diff_dir = OUTPUT_DIR / _pillar_url / "difficulty" / _diff
+            _diff_dir.mkdir(parents=True, exist_ok=True)
+            _diff_html = render_template(
+                "category_index.j2",
+                content=_dummy(
+                    f"{_diff.title()} Difficulty — {_pillar_key}",
+                    "index",
+                    description=f"{_diff.title()} difficulty content in {_pillar_key}.",
+                ),
+                category=_diff,
+                items=_diff_items,
+                page_title=f"{_diff.title()} ({_pillar_key})",
+                is_index=False,
+                page_path=f"{_pillar_url}/difficulty/{_diff}/",
+                **ctx_base,
+            )
+            (_diff_dir / "index.html").write_text(_diff_html, encoding="utf-8")
+            _extra_count += 1
+
+    # --- per-pillar bloom-level archive pages ---
+    _bloom_levels = {"remember": 1, "understand": 2, "apply": 3, "analyze": 4, "evaluate": 5, "create": 6}
+    for _pillar_key, _pillar_url in PILLAR_URL_MAP.items():
+        for _bloom_name, _bloom_val in _bloom_levels.items():
+            _bloom_items = [
+                c for c in all_content
+                if getattr(c, "pillar", None) == _pillar_key
+                and getattr(c, "highest_bloom", 0) >= _bloom_val
+            ]
+            if not _bloom_items:
+                continue
+            _bloom_dir = OUTPUT_DIR / _pillar_url / "bloom" / _bloom_name
+            _bloom_dir.mkdir(parents=True, exist_ok=True)
+            _bloom_html = render_template(
+                "category_index.j2",
+                content=_dummy(
+                    f"Bloom: {_bloom_name.title()} — {_pillar_key}",
+                    "index",
+                    description=f"Content at {_bloom_name.title()} Bloom level in {_pillar_key}.",
+                ),
+                category=_bloom_name,
+                items=_bloom_items,
+                page_title=f"Bloom: {_bloom_name.title()} ({_pillar_key})",
+                is_index=False,
+                page_path=f"{_pillar_url}/bloom/{_bloom_name}/",
+                **ctx_base,
+            )
+            (_bloom_dir / "index.html").write_text(_bloom_html, encoding="utf-8")
+            _extra_count += 1
+
+    if _extra_count:
+        print(f"  extra indexes: {_extra_count} pages")
 
     # Write homepage OG image
     out_static = STATIC_DST_DIR / "images"
@@ -2181,7 +2393,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                     **_lp_context,
                     **ctx_base,
                 )
-                _lp_dir = OUTPUT_DIR / _lp_pillar_url / "learn" / _lp_id
+                _lp_dir = OUTPUT_DIR / "learning-paths" / _lp_id
                 _lp_dir.mkdir(parents=True, exist_ok=True)
                 (_lp_dir / "index.html").write_text(_lp_html, encoding="utf-8")
                 _lp_count += 1
@@ -2331,11 +2543,121 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
         tag_posts.sort(key=_tag_sort_key, reverse=True)
 
     # Generate tag pages using isolated function
-    generate_tag_pages(
-        OUTPUT_DIR, tag_items, render_template, ctx_base, _dummy
+    tag_pages_count = generate_tag_pages(
+        OUTPUT_DIR, tag_items, render_template, ctx_base, _dummy,
+        pillar_url_map=PILLAR_URL_MAP,
     )
     if tag_items:
-        print(f"  tags: {len(tag_items)} tag pages + index")
+        print(f"  tags: {tag_pages_count} pages")
+    else:
+        print("  tags: 0 pages")
+
+    # --- per-letter tag index pages ---
+    _letter_tag_items: dict[str, list] = defaultdict(list)
+    for _tag_slug in sorted(tag_items.keys()):
+        _first = _tag_slug.strip().lower()[0] if _tag_slug.strip() else "?"
+        _letter_tag_items[_first].append((_tag_slug, len(tag_items[_tag_slug])))
+    for _letter, _ltags in sorted(_letter_tag_items.items()):
+        if len(_ltags) < 2:
+            continue
+        _letter_tag_dir = OUTPUT_DIR / "tags" / _letter
+        _letter_tag_dir.mkdir(parents=True, exist_ok=True)
+        _lt_html = render_template(
+            "category_index.j2",
+            content=_dummy(f"Tags starting with '{_letter.upper()}'", "index",
+                           description=f"All tags beginning with '{_letter.upper()}'."),
+            category="tags",
+            items=[],
+            page_title=f"Tags: {_letter.upper()}",
+            letter_tags=_ltags,
+            is_index=False,
+            page_path=f"tags/{_letter}/",
+            **ctx_base,
+        )
+        (_letter_tag_dir / "index.html").write_text(_lt_html, encoding="utf-8")
+        _extra_count += 1
+
+    if _extra_count:
+        print(f"  letter tag indexes: {len(_letter_tag_items)} pages")
+
+    # --- per-item source breakdown pages ---
+    _item_page_count = 0
+    for _c in all_content:
+        _sb = getattr(_c, "source_breakdown", None)
+        if not _sb:
+            continue
+        _pillar_key = getattr(_c, "pillar", "")
+        _pillar_url = PILLAR_URL_MAP.get(_pillar_key, _pillar_key)
+        _slug_parts = getattr(_c, "slug", "").rstrip("/").split("/")
+        _last_slug = _slug_parts[-1] if _slug_parts else "unknown"
+        _src_dir = OUTPUT_DIR / _pillar_url / _last_slug / "sources"
+        _src_dir.mkdir(parents=True, exist_ok=True)
+        _src_html = render_template(
+            "category_index.j2",
+            content=_dummy(f"Sources: {getattr(_c, 'title', '')}", "index",
+                           description=f"Source breakdown for {getattr(_c, 'title', '')}."),
+            category="sources",
+            items=[_c],
+            page_title=f"Sources: {getattr(_c, 'title', '')}",
+            is_index=False,
+            page_path=f"{_pillar_url}/{_last_slug}/sources/",
+            **ctx_base,
+        )
+        (_src_dir / "index.html").write_text(_src_html, encoding="utf-8")
+        _item_page_count += 1
+
+    # --- per-item flashcard pages ---
+    for _c in all_content:
+        _fc = getattr(_c, "flashcards", None) or []
+        if not _fc:
+            continue
+        _pillar_key = getattr(_c, "pillar", "")
+        _pillar_url = PILLAR_URL_MAP.get(_pillar_key, _pillar_key)
+        _slug_parts = getattr(_c, "slug", "").rstrip("/").split("/")
+        _last_slug = _slug_parts[-1] if _slug_parts else "unknown"
+        _fc_dir = OUTPUT_DIR / _pillar_url / _last_slug / "flashcards"
+        _fc_dir.mkdir(parents=True, exist_ok=True)
+        _fc_html = render_template(
+            "category_index.j2",
+            content=_dummy(f"Flashcards: {getattr(_c, 'title', '')}", "index",
+                           description=f"Flashcards for {getattr(_c, 'title', '')}."),
+            category="flashcards",
+            items=[_c],
+            page_title=f"Flashcards: {getattr(_c, 'title', '')}",
+            is_index=False,
+            page_path=f"{_pillar_url}/{_last_slug}/flashcards/",
+            **ctx_base,
+        )
+        (_fc_dir / "index.html").write_text(_fc_html, encoding="utf-8")
+        _item_page_count += 1
+
+    if _item_page_count:
+        print(f"  item pages (so far): {_item_page_count} pages")
+
+    # --- per-item details pages ---
+    for _c in all_content:
+        _pillar_key = getattr(_c, "pillar", "")
+        _pillar_url = PILLAR_URL_MAP.get(_pillar_key, _pillar_key)
+        _slug_parts = getattr(_c, "slug", "").rstrip("/").split("/")
+        _last_slug = _slug_parts[-1] if _slug_parts else "unknown"
+        _det_dir = OUTPUT_DIR / _pillar_url / _last_slug / "details"
+        _det_dir.mkdir(parents=True, exist_ok=True)
+        _det_html = render_template(
+            "category_index.j2",
+            content=_dummy(f"Details: {getattr(_c, 'title', '')}", "index",
+                           description=f"Metadata details for {getattr(_c, 'title', '')}."),
+            category="details",
+            items=[_c],
+            page_title=f"Details: {getattr(_c, 'title', '')}",
+            is_index=False,
+            page_path=f"{_pillar_url}/{_last_slug}/details/",
+            **ctx_base,
+        )
+        (_det_dir / "index.html").write_text(_det_html, encoding="utf-8")
+        _item_page_count += 1
+
+    if _item_page_count:
+        print(f"  item sub-pages: {_item_page_count} pages")
 
     # --- ADMIN PANEL (via build_taxonomies) ---
     from core.images.manifest import load_manifest as _load_manifest

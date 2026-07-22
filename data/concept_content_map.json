@@ -10,6 +10,7 @@
     "regtech"
   ],
   "aml/learn/crypto-aml": [
+    "crypto-markets",
     "regtech"
   ],
   "aml/learn/designing-aml-program": [
@@ -49,11 +50,13 @@
     "apache-flink",
     "apache-iceberg",
     "apache-kafka",
+    "dataops",
     "etl",
     "streaming"
   ],
   "aml/research/cryptocurrency-mixers-under-global-regulatory-spotlight": [
     "fatf-recommendations",
+    "global-sanctions",
     "mica-crypto-assets",
     "regtech",
     "sanctions-screening",
@@ -63,6 +66,8 @@
   "aml/research/dataops-aml": [
     "data-observability",
     "data-quality",
+    "data-quality-monitoring",
+    "dataops",
     "regtech",
     "transaction-monitoring"
   ],
@@ -70,57 +75,73 @@
   "aml/research/square-root-price-impact-is-necessary-for-endogenous-manipul": [
     "market-impact"
   ],
-  "data/knowledge/cybernetic-foundations": [],
+  "data/knowledge/cybernetic-foundations": [
+    "dataops"
+  ],
   "data/learn/building-pipelines-dbt-dagster": [
     "dagster",
     "data-lake",
     "data-quality",
+    "dataops",
     "dbt",
     "elt",
+    "elt-pipeline",
     "etl"
   ],
   "data/learn/data-engineering-basics": [
     "apache-kafka",
     "batch-processing",
     "data-lake",
-    "elt"
+    "dataops",
+    "elt",
+    "elt-pipeline"
   ],
   "data/learn/data-ethics-privacy": [
     "ai-act-high-risk",
+    "dataops",
     "regtech"
   ],
   "data/learn/data-pipeline-architectures": [
     "batch-processing",
-    "dagster"
+    "dagster",
+    "dataops"
   ],
   "data/learn/data-quality-engineering": [
     "data-observability",
-    "data-quality"
+    "data-quality",
+    "dataops"
   ],
   "data/learn/data-quality-observability-cost": [
     "data-observability",
-    "data-quality"
+    "data-quality",
+    "dataops",
+    "pipeline-cost-optimization"
   ],
   "data/learn/dataops-introduction": [
     "data-observability",
     "data-pipeline",
     "data-quality",
+    "dataops",
     "etl"
   ],
   "data/learn/designing-data-platform": [
-    "data-mesh"
+    "data-mesh",
+    "dataops"
   ],
   "data/learn/learning-hub": [
     "data-quality",
+    "dataops",
     "semiconductor-industry"
   ],
   "data/learn/open-source-data-stack": [
     "apache-iceberg",
     "cdc",
+    "change-data-capture",
     "data-lake"
   ],
   "data/research/2027-data-engineering-predictions": [
-    "apache-iceberg"
+    "apache-iceberg",
+    "dataops"
   ],
   "data/research/a-pictorial-introduction-to-differential-geometry-2017": [],
   "data/research/airflow-prefect-dagster-comparison": [
@@ -129,84 +150,120 @@
     "orchestration"
   ],
   "data/research/analytics-engineering-rise": [
+    "dataops",
     "elt",
+    "elt-pipeline",
     "etl"
   ],
   "data/research/apache-iceberg-lakehouse": [
     "apache-iceberg",
-    "arrow-parquet"
+    "arrow-parquet",
+    "dataops"
   ],
   "data/research/bun-runtime-support-now-limited-and-deprecated-science": [],
   "data/research/cost-optimization-data-pipelines": [
     "apache-iceberg",
+    "dataops",
+    "pipeline-cost-optimization",
     "query-optimization"
   ],
   "data/research/dagster-2": [
     "dagster",
+    "dataops",
     "etl",
     "orchestration"
   ],
   "data/research/data-contracts": [
     "data-contracts",
+    "dataops",
+    "schema-migration",
     "schema-registry"
   ],
   "data/research/data-mesh-implementation": [
-    "data-mesh"
+    "data-mesh",
+    "data-mesh-governance"
   ],
-  "data/research/data-platform-product-ux": [],
+  "data/research/data-platform-product-ux": [
+    "dataops"
+  ],
   "data/research/data-products-api-design": [
     "dagster",
-    "data-security"
+    "data-security",
+    "dataops"
   ],
   "data/research/data-quality-great-expectations": [
     "dagster",
-    "data-quality"
+    "data-quality",
+    "dataops"
   ],
   "data/research/dataops-science": [
+    "dataops",
+    "feature-store",
     "ml-pipeline"
   ],
   "data/research/ey-canada-published-a-cybersecurity-report-and-most": [],
   "data/research/feature-store-feast-vs-tecton": [
+    "dataops",
     "ml-pipeline"
   ],
   "data/research/kafka-streaming-event-driven": [
     "apache-kafka",
+    "dataops",
     "streaming"
   ],
   "data/research/kubernetes-data-pipelines": [
     "apache-flink",
     "apache-kafka",
-    "dagster"
+    "dagster",
+    "dataops",
+    "pipeline-cost-optimization"
   ],
   "data/research/ml-pipeline-orchestration-feast-mlflow": [
     "dagster",
+    "dataops",
+    "feature-store",
     "ml-pipeline",
     "orchestration"
   ],
   "data/research/schema-registry-avro-protobuf": [
+    "dataops",
+    "schema-migration",
     "schema-registry"
   ],
   "data/research/science-dataeng": [
-    "dagster"
+    "dagster",
+    "dataops"
   ],
   "data/research/terraform-data-infrastructure": [
     "apache-iceberg",
     "apache-kafka",
-    "dagster"
+    "dagster",
+    "dataops"
   ],
-  "knowledge/about": [],
-  "knowledge/changelog": [],
-  "knowledge/contact": [],
+  "knowledge/about": [
+    "dataops"
+  ],
+  "knowledge/changelog": [
+    "dataops"
+  ],
+  "knowledge/contact": [
+    "dataops"
+  ],
   "knowledge/dataops-glossary": [
     "data-observability",
+    "dataops",
     "elt",
+    "elt-pipeline",
     "etl"
   ],
   "knowledge/dataops-trends-2026": [
     "dagster",
-    "data-lake"
+    "data-lake",
+    "dataops"
   ],
-  "knowledge/diagrams": [],
+  "knowledge/diagrams": [
+    "dataops"
+  ],
   "knowledge/faq": [
     "distributed-systems"
   ],
@@ -220,19 +277,24 @@
   "knowledge/open-source-tools": [
     "dagster",
     "elt",
+    "elt-pipeline",
     "orchestration"
   ],
   "knowledge/pillar-taxonomy": [
     "bsa",
     "fatf-recommendations",
+    "global-sanctions",
     "kyc",
     "mica-crypto-assets",
     "regtech",
     "sanctions-screening"
   ],
-  "knowledge/research-methodology": [],
+  "knowledge/research-methodology": [
+    "dataops"
+  ],
   "knowledge/system-architecture": [
-    "data-observability"
+    "data-observability",
+    "dataops"
   ],
   "markets/learn/applying-market-analysis": [
     "portfolio-optimization"
@@ -250,7 +312,9 @@
     "earnings-analysis",
     "macro-analysis"
   ],
-  "markets/learn/market-fundamentals": [],
+  "markets/learn/market-fundamentals": [
+    "retail-trading"
+  ],
   "markets/learn/meta-analysis-statistics": [],
   "markets/learn/science-method": [],
   "markets/learn/sector-competitive-analysis": [
@@ -265,7 +329,11 @@
   "markets/research/aml-1": [],
   "markets/research/can-the-stockmarket-swallow-anthropic-spacex-and-openai": [],
   "markets/research/dataops-markets": [
+    "algorithmic-trading",
+    "dataops",
+    "feature-store",
     "high-frequency-trading",
+    "market-data",
     "ml-pipeline",
     "streaming"
   ],
@@ -297,7 +365,12 @@
   "markets/research/stock-dataeng": [
     "apache-iceberg",
     "dagster",
+    "dataops",
+    "feature-store",
+    "market-data",
     "ml-pipeline"
   ],
-  "markets/research/stock-market": []
+  "markets/research/stock-market": [
+    "retail-trading"
+  ]
 }

@@ -3223,18 +3223,9 @@
     },
     {
       "data": {
-        "id": "edge:data/research/2027-data-engineering-predictions:data-engineering",
+        "id": "edge:data/research/2027-data-engineering-predictions:real-time-streaming",
         "source": "doc:data/research/2027-data-engineering-predictions",
-        "target": "tag:data-engineering",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/2027-data-engineering-predictions:machine-learning",
-        "source": "doc:data/research/2027-data-engineering-predictions",
-        "target": "tag:machine-learning",
+        "target": "tag:real-time-streaming",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -3250,18 +3241,9 @@
     },
     {
       "data": {
-        "id": "edge:data/research/2027-data-engineering-predictions:real-time-streaming",
+        "id": "edge:data/research/2027-data-engineering-predictions:data-engineering",
         "source": "doc:data/research/2027-data-engineering-predictions",
-        "target": "tag:real-time-streaming",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/2027-data-engineering-predictions:streaming",
-        "source": "doc:data/research/2027-data-engineering-predictions",
-        "target": "tag:streaming",
+        "target": "tag:data-engineering",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -3277,45 +3259,27 @@
     },
     {
       "data": {
+        "id": "edge:data/research/2027-data-engineering-predictions:streaming",
+        "source": "doc:data/research/2027-data-engineering-predictions",
+        "target": "tag:streaming",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:data/research/2027-data-engineering-predictions:machine-learning",
+        "source": "doc:data/research/2027-data-engineering-predictions",
+        "target": "tag:machine-learning",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
         "id": "edge:data/research/data-platform-product-ux:dataops",
         "source": "doc:data/research/data-platform-product-ux",
         "target": "tag:dataops",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/data-platform-product-ux:ux-design-patterns",
-        "source": "doc:data/research/data-platform-product-ux",
-        "target": "tag:ux-design-patterns",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/data-platform-product-ux:internal-product-development",
-        "source": "doc:data/research/data-platform-product-ux",
-        "target": "tag:internal-product-development",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/data-platform-product-ux:self-service-analytics",
-        "source": "doc:data/research/data-platform-product-ux",
-        "target": "tag:self-service-analytics",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/data-platform-product-ux:developer-experience",
-        "source": "doc:data/research/data-platform-product-ux",
-        "target": "tag:developer-experience",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -3331,36 +3295,36 @@
     },
     {
       "data": {
-        "id": "edge:data/research/analytics-engineering-rise:data-engineering",
-        "source": "doc:data/research/analytics-engineering-rise",
-        "target": "tag:data-engineering",
+        "id": "edge:data/research/data-platform-product-ux:self-service-analytics",
+        "source": "doc:data/research/data-platform-product-ux",
+        "target": "tag:self-service-analytics",
         "sourcePillar": "data",
         "targetPillar": ""
       }
     },
     {
       "data": {
-        "id": "edge:data/research/analytics-engineering-rise:analytics-engineering",
-        "source": "doc:data/research/analytics-engineering-rise",
-        "target": "tag:analytics-engineering",
+        "id": "edge:data/research/data-platform-product-ux:internal-product-development",
+        "source": "doc:data/research/data-platform-product-ux",
+        "target": "tag:internal-product-development",
         "sourcePillar": "data",
         "targetPillar": ""
       }
     },
     {
       "data": {
-        "id": "edge:data/research/analytics-engineering-rise:dataops",
-        "source": "doc:data/research/analytics-engineering-rise",
-        "target": "tag:dataops",
+        "id": "edge:data/research/data-platform-product-ux:ux-design-patterns",
+        "source": "doc:data/research/data-platform-product-ux",
+        "target": "tag:ux-design-patterns",
         "sourcePillar": "data",
         "targetPillar": ""
       }
     },
     {
       "data": {
-        "id": "edge:data/research/analytics-engineering-rise:data-transformation",
-        "source": "doc:data/research/analytics-engineering-rise",
-        "target": "tag:data-transformation",
+        "id": "edge:data/research/data-platform-product-ux:developer-experience",
+        "source": "doc:data/research/data-platform-product-ux",
+        "target": "tag:developer-experience",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -3376,18 +3340,36 @@
     },
     {
       "data": {
-        "id": "edge:data/research/cost-optimization-data-pipelines:scalable-data-processing",
-        "source": "doc:data/research/cost-optimization-data-pipelines",
-        "target": "tag:scalable-data-processing",
+        "id": "edge:data/research/analytics-engineering-rise:dataops",
+        "source": "doc:data/research/analytics-engineering-rise",
+        "target": "tag:dataops",
         "sourcePillar": "data",
         "targetPillar": ""
       }
     },
     {
       "data": {
-        "id": "edge:data/research/cost-optimization-data-pipelines:big-data-engineering",
-        "source": "doc:data/research/cost-optimization-data-pipelines",
-        "target": "tag:big-data-engineering",
+        "id": "edge:data/research/analytics-engineering-rise:data-engineering",
+        "source": "doc:data/research/analytics-engineering-rise",
+        "target": "tag:data-engineering",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:data/research/analytics-engineering-rise:data-transformation",
+        "source": "doc:data/research/analytics-engineering-rise",
+        "target": "tag:data-transformation",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:data/research/analytics-engineering-rise:analytics-engineering",
+        "source": "doc:data/research/analytics-engineering-rise",
+        "target": "tag:analytics-engineering",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -3403,18 +3385,18 @@
     },
     {
       "data": {
-        "id": "edge:data/research/cost-optimization-data-pipelines:cost-engineering",
+        "id": "edge:data/research/cost-optimization-data-pipelines:cloud-computing-optimization",
         "source": "doc:data/research/cost-optimization-data-pipelines",
-        "target": "tag:cost-engineering",
+        "target": "tag:cloud-computing-optimization",
         "sourcePillar": "data",
         "targetPillar": ""
       }
     },
     {
       "data": {
-        "id": "edge:data/research/cost-optimization-data-pipelines:cloud-computing-optimization",
+        "id": "edge:data/research/cost-optimization-data-pipelines:big-data-engineering",
         "source": "doc:data/research/cost-optimization-data-pipelines",
-        "target": "tag:cloud-computing-optimization",
+        "target": "tag:big-data-engineering",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -3430,9 +3412,18 @@
     },
     {
       "data": {
-        "id": "edge:data/research/schema-registry-avro-protobuf:data-engineering",
-        "source": "doc:data/research/schema-registry-avro-protobuf",
-        "target": "tag:data-engineering",
+        "id": "edge:data/research/cost-optimization-data-pipelines:scalable-data-processing",
+        "source": "doc:data/research/cost-optimization-data-pipelines",
+        "target": "tag:scalable-data-processing",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:data/research/cost-optimization-data-pipelines:cost-engineering",
+        "source": "doc:data/research/cost-optimization-data-pipelines",
+        "target": "tag:cost-engineering",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -3448,9 +3439,9 @@
     },
     {
       "data": {
-        "id": "edge:data/research/schema-registry-avro-protobuf:schema-management",
+        "id": "edge:data/research/schema-registry-avro-protobuf:data-engineering",
         "source": "doc:data/research/schema-registry-avro-protobuf",
-        "target": "tag:schema-management",
+        "target": "tag:data-engineering",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -3466,15 +3457,6 @@
     },
     {
       "data": {
-        "id": "edge:data/research/schema-registry-avro-protobuf:data-serialization",
-        "source": "doc:data/research/schema-registry-avro-protobuf",
-        "target": "tag:data-serialization",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
         "id": "edge:data/research/schema-registry-avro-protobuf:distributed-systems",
         "source": "doc:data/research/schema-registry-avro-protobuf",
         "target": "tag:distributed-systems",
@@ -3484,27 +3466,27 @@
     },
     {
       "data": {
+        "id": "edge:data/research/schema-registry-avro-protobuf:data-serialization",
+        "source": "doc:data/research/schema-registry-avro-protobuf",
+        "target": "tag:data-serialization",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:data/research/schema-registry-avro-protobuf:schema-management",
+        "source": "doc:data/research/schema-registry-avro-protobuf",
+        "target": "tag:schema-management",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
         "id": "edge:data/research/schema-registry-avro-protobuf:manufacturing",
         "source": "doc:data/research/schema-registry-avro-protobuf",
         "target": "tag:manufacturing",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/data-products-api-design:api-design",
-        "source": "doc:data/research/data-products-api-design",
-        "target": "tag:api-design",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/data-products-api-design:data-products",
-        "source": "doc:data/research/data-products-api-design",
-        "target": "tag:data-products",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -3529,6 +3511,24 @@
     },
     {
       "data": {
+        "id": "edge:data/research/data-products-api-design:data-architecture",
+        "source": "doc:data/research/data-products-api-design",
+        "target": "tag:data-architecture",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:data/research/data-products-api-design:data-products",
+        "source": "doc:data/research/data-products-api-design",
+        "target": "tag:data-products",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
         "id": "edge:data/research/data-products-api-design:internal-data-platform",
         "source": "doc:data/research/data-products-api-design",
         "target": "tag:internal-data-platform",
@@ -3538,8 +3538,35 @@
     },
     {
       "data": {
-        "id": "edge:data/research/data-products-api-design:data-architecture",
+        "id": "edge:data/research/data-products-api-design:api-design",
         "source": "doc:data/research/data-products-api-design",
+        "target": "tag:api-design",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:data/research/data-mesh-implementation:federated-governance",
+        "source": "doc:data/research/data-mesh-implementation",
+        "target": "tag:federated-governance",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:data/research/data-mesh-implementation:domain-ownership-patterns",
+        "source": "doc:data/research/data-mesh-implementation",
+        "target": "tag:domain-ownership-patterns",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:data/research/data-mesh-implementation:data-architecture",
+        "source": "doc:data/research/data-mesh-implementation",
         "target": "tag:data-architecture",
         "sourcePillar": "data",
         "targetPillar": ""
@@ -3556,45 +3583,9 @@
     },
     {
       "data": {
-        "id": "edge:data/research/data-mesh-implementation:federated-governance",
-        "source": "doc:data/research/data-mesh-implementation",
-        "target": "tag:federated-governance",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/data-mesh-implementation:data-architecture",
-        "source": "doc:data/research/data-mesh-implementation",
-        "target": "tag:data-architecture",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/data-mesh-implementation:domain-ownership-patterns",
-        "source": "doc:data/research/data-mesh-implementation",
-        "target": "tag:domain-ownership-patterns",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/terraform-data-infrastructure:cloud-infrastructure",
+        "id": "edge:data/research/terraform-data-infrastructure:devops-practices",
         "source": "doc:data/research/terraform-data-infrastructure",
-        "target": "tag:cloud-infrastructure",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/terraform-data-infrastructure:infrastructure",
-        "source": "doc:data/research/terraform-data-infrastructure",
-        "target": "tag:infrastructure",
+        "target": "tag:devops-practices",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -3610,9 +3601,9 @@
     },
     {
       "data": {
-        "id": "edge:data/research/terraform-data-infrastructure:continuous-integration",
+        "id": "edge:data/research/terraform-data-infrastructure:dataops",
         "source": "doc:data/research/terraform-data-infrastructure",
-        "target": "tag:continuous-integration",
+        "target": "tag:dataops",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -3628,9 +3619,27 @@
     },
     {
       "data": {
-        "id": "edge:data/research/terraform-data-infrastructure:dataops",
+        "id": "edge:data/research/terraform-data-infrastructure:infrastructure",
         "source": "doc:data/research/terraform-data-infrastructure",
-        "target": "tag:dataops",
+        "target": "tag:infrastructure",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:data/research/terraform-data-infrastructure:continuous-integration",
+        "source": "doc:data/research/terraform-data-infrastructure",
+        "target": "tag:continuous-integration",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:data/research/terraform-data-infrastructure:cloud-infrastructure",
+        "source": "doc:data/research/terraform-data-infrastructure",
+        "target": "tag:cloud-infrastructure",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -3646,54 +3655,9 @@
     },
     {
       "data": {
-        "id": "edge:data/research/terraform-data-infrastructure:devops-practices",
-        "source": "doc:data/research/terraform-data-infrastructure",
-        "target": "tag:devops-practices",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
         "id": "edge:data/research/terraform-data-infrastructure:infrastructure-as-code",
         "source": "doc:data/research/terraform-data-infrastructure",
         "target": "tag:infrastructure-as-code",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/kubernetes-data-pipelines:infrastructure",
-        "source": "doc:data/research/kubernetes-data-pipelines",
-        "target": "tag:infrastructure",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/kubernetes-data-pipelines:data-engineering",
-        "source": "doc:data/research/kubernetes-data-pipelines",
-        "target": "tag:data-engineering",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/kubernetes-data-pipelines:dataops",
-        "source": "doc:data/research/kubernetes-data-pipelines",
-        "target": "tag:dataops",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/kubernetes-data-pipelines:resource-management",
-        "source": "doc:data/research/kubernetes-data-pipelines",
-        "target": "tag:resource-management",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -3709,18 +3673,27 @@
     },
     {
       "data": {
-        "id": "edge:data/research/kubernetes-data-pipelines:distributed-computing",
+        "id": "edge:data/research/kubernetes-data-pipelines:dataops",
         "source": "doc:data/research/kubernetes-data-pipelines",
-        "target": "tag:distributed-computing",
+        "target": "tag:dataops",
         "sourcePillar": "data",
         "targetPillar": ""
       }
     },
     {
       "data": {
-        "id": "edge:data/research/kubernetes-data-pipelines:container-orchestration",
+        "id": "edge:data/research/kubernetes-data-pipelines:data-engineering",
         "source": "doc:data/research/kubernetes-data-pipelines",
-        "target": "tag:container-orchestration",
+        "target": "tag:data-engineering",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:data/research/kubernetes-data-pipelines:infrastructure",
+        "source": "doc:data/research/kubernetes-data-pipelines",
+        "target": "tag:infrastructure",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -3736,36 +3709,27 @@
     },
     {
       "data": {
-        "id": "edge:data/research/feature-store-feast-vs-tecton:feature-engineering",
-        "source": "doc:data/research/feature-store-feast-vs-tecton",
-        "target": "tag:feature-engineering",
+        "id": "edge:data/research/kubernetes-data-pipelines:container-orchestration",
+        "source": "doc:data/research/kubernetes-data-pipelines",
+        "target": "tag:container-orchestration",
         "sourcePillar": "data",
         "targetPillar": ""
       }
     },
     {
       "data": {
-        "id": "edge:data/research/feature-store-feast-vs-tecton:data-engineering",
-        "source": "doc:data/research/feature-store-feast-vs-tecton",
-        "target": "tag:data-engineering",
+        "id": "edge:data/research/kubernetes-data-pipelines:distributed-computing",
+        "source": "doc:data/research/kubernetes-data-pipelines",
+        "target": "tag:distributed-computing",
         "sourcePillar": "data",
         "targetPillar": ""
       }
     },
     {
       "data": {
-        "id": "edge:data/research/feature-store-feast-vs-tecton:machine-learning-infrastructure",
-        "source": "doc:data/research/feature-store-feast-vs-tecton",
-        "target": "tag:machine-learning-infrastructure",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/feature-store-feast-vs-tecton:model-serving",
-        "source": "doc:data/research/feature-store-feast-vs-tecton",
-        "target": "tag:model-serving",
+        "id": "edge:data/research/kubernetes-data-pipelines:resource-management",
+        "source": "doc:data/research/kubernetes-data-pipelines",
+        "target": "tag:resource-management",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -3781,26 +3745,8 @@
     },
     {
       "data": {
-        "id": "edge:data/research/feature-store-feast-vs-tecton:manufacturing",
+        "id": "edge:data/research/feature-store-feast-vs-tecton:data-engineering",
         "source": "doc:data/research/feature-store-feast-vs-tecton",
-        "target": "tag:manufacturing",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/ml-pipeline-orchestration-feast-mlflow:feature-engineering",
-        "source": "doc:data/research/ml-pipeline-orchestration-feast-mlflow",
-        "target": "tag:feature-engineering",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/ml-pipeline-orchestration-feast-mlflow:data-engineering",
-        "source": "doc:data/research/ml-pipeline-orchestration-feast-mlflow",
         "target": "tag:data-engineering",
         "sourcePillar": "data",
         "targetPillar": ""
@@ -3808,18 +3754,36 @@
     },
     {
       "data": {
-        "id": "edge:data/research/ml-pipeline-orchestration-feast-mlflow:machine-learning",
-        "source": "doc:data/research/ml-pipeline-orchestration-feast-mlflow",
-        "target": "tag:machine-learning",
+        "id": "edge:data/research/feature-store-feast-vs-tecton:model-serving",
+        "source": "doc:data/research/feature-store-feast-vs-tecton",
+        "target": "tag:model-serving",
         "sourcePillar": "data",
         "targetPillar": ""
       }
     },
     {
       "data": {
-        "id": "edge:data/research/ml-pipeline-orchestration-feast-mlflow:dataops",
-        "source": "doc:data/research/ml-pipeline-orchestration-feast-mlflow",
-        "target": "tag:dataops",
+        "id": "edge:data/research/feature-store-feast-vs-tecton:machine-learning-infrastructure",
+        "source": "doc:data/research/feature-store-feast-vs-tecton",
+        "target": "tag:machine-learning-infrastructure",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:data/research/feature-store-feast-vs-tecton:feature-engineering",
+        "source": "doc:data/research/feature-store-feast-vs-tecton",
+        "target": "tag:feature-engineering",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:data/research/feature-store-feast-vs-tecton:manufacturing",
+        "source": "doc:data/research/feature-store-feast-vs-tecton",
+        "target": "tag:manufacturing",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -3844,9 +3808,45 @@
     },
     {
       "data": {
+        "id": "edge:data/research/ml-pipeline-orchestration-feast-mlflow:dataops",
+        "source": "doc:data/research/ml-pipeline-orchestration-feast-mlflow",
+        "target": "tag:dataops",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:data/research/ml-pipeline-orchestration-feast-mlflow:data-engineering",
+        "source": "doc:data/research/ml-pipeline-orchestration-feast-mlflow",
+        "target": "tag:data-engineering",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
         "id": "edge:data/research/ml-pipeline-orchestration-feast-mlflow:pipeline-orchestration",
         "source": "doc:data/research/ml-pipeline-orchestration-feast-mlflow",
         "target": "tag:pipeline-orchestration",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:data/research/ml-pipeline-orchestration-feast-mlflow:machine-learning",
+        "source": "doc:data/research/ml-pipeline-orchestration-feast-mlflow",
+        "target": "tag:machine-learning",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:data/research/ml-pipeline-orchestration-feast-mlflow:feature-engineering",
+        "source": "doc:data/research/ml-pipeline-orchestration-feast-mlflow",
+        "target": "tag:feature-engineering",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -3871,24 +3871,6 @@
     },
     {
       "data": {
-        "id": "edge:data/research/data-observability-lineage:incident-response-management",
-        "source": "doc:data/research/data-observability-lineage",
-        "target": "tag:incident-response-management",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/data-observability-lineage:data-quality-monitoring",
-        "source": "doc:data/research/data-observability-lineage",
-        "target": "tag:data-quality-monitoring",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
         "id": "edge:data/research/data-observability-lineage:dataops",
         "source": "doc:data/research/data-observability-lineage",
         "target": "tag:dataops",
@@ -3898,9 +3880,9 @@
     },
     {
       "data": {
-        "id": "edge:data/research/data-observability-lineage:observability",
+        "id": "edge:data/research/data-observability-lineage:incident-response-management",
         "source": "doc:data/research/data-observability-lineage",
-        "target": "tag:observability",
+        "target": "tag:incident-response-management",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -3916,27 +3898,18 @@
     },
     {
       "data": {
-        "id": "edge:data/research/open-source-data-platform:data-platform-on-budget",
-        "source": "doc:data/research/open-source-data-platform",
-        "target": "tag:data-platform-on-budget",
+        "id": "edge:data/research/data-observability-lineage:observability",
+        "source": "doc:data/research/data-observability-lineage",
+        "target": "tag:observability",
         "sourcePillar": "data",
         "targetPillar": ""
       }
     },
     {
       "data": {
-        "id": "edge:data/research/open-source-data-platform:infrastructure",
-        "source": "doc:data/research/open-source-data-platform",
-        "target": "tag:infrastructure",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/open-source-data-platform:complete-data-stack-deployment",
-        "source": "doc:data/research/open-source-data-platform",
-        "target": "tag:complete-data-stack-deployment",
+        "id": "edge:data/research/data-observability-lineage:data-quality-monitoring",
+        "source": "doc:data/research/data-observability-lineage",
+        "target": "tag:data-quality-monitoring",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -3952,6 +3925,15 @@
     },
     {
       "data": {
+        "id": "edge:data/research/open-source-data-platform:infrastructure",
+        "source": "doc:data/research/open-source-data-platform",
+        "target": "tag:infrastructure",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
         "id": "edge:data/research/open-source-data-platform:open-source-data-stack",
         "source": "doc:data/research/open-source-data-platform",
         "target": "tag:open-source-data-stack",
@@ -3961,9 +3943,18 @@
     },
     {
       "data": {
-        "id": "edge:data/research/sqlmesh-data-transformation:data-engineering",
-        "source": "doc:data/research/sqlmesh-data-transformation",
-        "target": "tag:data-engineering",
+        "id": "edge:data/research/open-source-data-platform:data-platform-on-budget",
+        "source": "doc:data/research/open-source-data-platform",
+        "target": "tag:data-platform-on-budget",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:data/research/open-source-data-platform:complete-data-stack-deployment",
+        "source": "doc:data/research/open-source-data-platform",
+        "target": "tag:complete-data-stack-deployment",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -3979,18 +3970,18 @@
     },
     {
       "data": {
-        "id": "edge:data/research/sqlmesh-data-transformation:data-transformation",
+        "id": "edge:data/research/sqlmesh-data-transformation:data-engineering",
         "source": "doc:data/research/sqlmesh-data-transformation",
-        "target": "tag:data-transformation",
+        "target": "tag:data-engineering",
         "sourcePillar": "data",
         "targetPillar": ""
       }
     },
     {
       "data": {
-        "id": "edge:data/research/sqlmesh-data-transformation:data-governance",
+        "id": "edge:data/research/sqlmesh-data-transformation:data-transformation",
         "source": "doc:data/research/sqlmesh-data-transformation",
-        "target": "tag:data-governance",
+        "target": "tag:data-transformation",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -4006,36 +3997,9 @@
     },
     {
       "data": {
-        "id": "edge:data/research/dbt-mesh-enterprise-scale:cloud-infrastructure",
-        "source": "doc:data/research/dbt-mesh-enterprise-scale",
-        "target": "tag:cloud-infrastructure",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/dbt-mesh-enterprise-scale:data-engineering",
-        "source": "doc:data/research/dbt-mesh-enterprise-scale",
-        "target": "tag:data-engineering",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/dbt-mesh-enterprise-scale:dataops",
-        "source": "doc:data/research/dbt-mesh-enterprise-scale",
-        "target": "tag:dataops",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/dbt-mesh-enterprise-scale:data-transformation",
-        "source": "doc:data/research/dbt-mesh-enterprise-scale",
-        "target": "tag:data-transformation",
+        "id": "edge:data/research/sqlmesh-data-transformation:data-governance",
+        "source": "doc:data/research/sqlmesh-data-transformation",
+        "target": "tag:data-governance",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -4051,9 +4015,45 @@
     },
     {
       "data": {
+        "id": "edge:data/research/dbt-mesh-enterprise-scale:dataops",
+        "source": "doc:data/research/dbt-mesh-enterprise-scale",
+        "target": "tag:dataops",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:data/research/dbt-mesh-enterprise-scale:data-engineering",
+        "source": "doc:data/research/dbt-mesh-enterprise-scale",
+        "target": "tag:data-engineering",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:data/research/dbt-mesh-enterprise-scale:data-transformation",
+        "source": "doc:data/research/dbt-mesh-enterprise-scale",
+        "target": "tag:data-transformation",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
         "id": "edge:data/research/dbt-mesh-enterprise-scale:data-governance",
         "source": "doc:data/research/dbt-mesh-enterprise-scale",
         "target": "tag:data-governance",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:data/research/dbt-mesh-enterprise-scale:cloud-infrastructure",
+        "source": "doc:data/research/dbt-mesh-enterprise-scale",
+        "target": "tag:cloud-infrastructure",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -4069,15 +4069,6 @@
     },
     {
       "data": {
-        "id": "edge:data/research/delta-lake-iceberg-hudi-comparison:data-engineering",
-        "source": "doc:data/research/delta-lake-iceberg-hudi-comparison",
-        "target": "tag:data-engineering",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
         "id": "edge:data/research/delta-lake-iceberg-hudi-comparison:dataops",
         "source": "doc:data/research/delta-lake-iceberg-hudi-comparison",
         "target": "tag:dataops",
@@ -4087,18 +4078,18 @@
     },
     {
       "data": {
-        "id": "edge:data/research/delta-lake-iceberg-hudi-comparison:big-data-storage",
+        "id": "edge:data/research/delta-lake-iceberg-hudi-comparison:data-engineering",
         "source": "doc:data/research/delta-lake-iceberg-hudi-comparison",
-        "target": "tag:big-data-storage",
+        "target": "tag:data-engineering",
         "sourcePillar": "data",
         "targetPillar": ""
       }
     },
     {
       "data": {
-        "id": "edge:data/research/delta-lake-iceberg-hudi-comparison:schema-management",
+        "id": "edge:data/research/delta-lake-iceberg-hudi-comparison:big-data-storage",
         "source": "doc:data/research/delta-lake-iceberg-hudi-comparison",
-        "target": "tag:schema-management",
+        "target": "tag:big-data-storage",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -4123,27 +4114,18 @@
     },
     {
       "data": {
+        "id": "edge:data/research/delta-lake-iceberg-hudi-comparison:schema-management",
+        "source": "doc:data/research/delta-lake-iceberg-hudi-comparison",
+        "target": "tag:schema-management",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
         "id": "edge:data/research/delta-lake-iceberg-hudi-comparison:data-lake-management",
         "source": "doc:data/research/delta-lake-iceberg-hudi-comparison",
         "target": "tag:data-lake-management",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/debezium-cdc-change-data-capture:data-replication",
-        "source": "doc:data/research/debezium-cdc-change-data-capture",
-        "target": "tag:data-replication",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/debezium-cdc-change-data-capture:event-driven-architecture",
-        "source": "doc:data/research/debezium-cdc-change-data-capture",
-        "target": "tag:event-driven-architecture",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -4168,9 +4150,27 @@
     },
     {
       "data": {
-        "id": "edge:data/research/debezium-cdc-change-data-capture:change-data-capture",
+        "id": "edge:data/research/debezium-cdc-change-data-capture:database-integration",
         "source": "doc:data/research/debezium-cdc-change-data-capture",
-        "target": "tag:change-data-capture",
+        "target": "tag:database-integration",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:data/research/debezium-cdc-change-data-capture:data-replication",
+        "source": "doc:data/research/debezium-cdc-change-data-capture",
+        "target": "tag:data-replication",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:data/research/debezium-cdc-change-data-capture:streaming",
+        "source": "doc:data/research/debezium-cdc-change-data-capture",
+        "target": "tag:streaming",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -4186,18 +4186,27 @@
     },
     {
       "data": {
-        "id": "edge:data/research/debezium-cdc-change-data-capture:database-integration",
+        "id": "edge:data/research/debezium-cdc-change-data-capture:change-data-capture",
         "source": "doc:data/research/debezium-cdc-change-data-capture",
-        "target": "tag:database-integration",
+        "target": "tag:change-data-capture",
         "sourcePillar": "data",
         "targetPillar": ""
       }
     },
     {
       "data": {
-        "id": "edge:data/research/debezium-cdc-change-data-capture:streaming",
+        "id": "edge:data/research/debezium-cdc-change-data-capture:event-driven-architecture",
         "source": "doc:data/research/debezium-cdc-change-data-capture",
-        "target": "tag:streaming",
+        "target": "tag:event-driven-architecture",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:data/research/apache-iceberg-lakehouse:big-data-migration",
+        "source": "doc:data/research/apache-iceberg-lakehouse",
+        "target": "tag:big-data-migration",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -4222,9 +4231,9 @@
     },
     {
       "data": {
-        "id": "edge:data/research/apache-iceberg-lakehouse:distributed-data-storage",
+        "id": "edge:data/research/apache-iceberg-lakehouse:schema-management",
         "source": "doc:data/research/apache-iceberg-lakehouse",
-        "target": "tag:distributed-data-storage",
+        "target": "tag:schema-management",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -4240,15 +4249,6 @@
     },
     {
       "data": {
-        "id": "edge:data/research/apache-iceberg-lakehouse:schema-management",
-        "source": "doc:data/research/apache-iceberg-lakehouse",
-        "target": "tag:schema-management",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
         "id": "edge:data/research/apache-iceberg-lakehouse:data-lake-engineering",
         "source": "doc:data/research/apache-iceberg-lakehouse",
         "target": "tag:data-lake-engineering",
@@ -4258,9 +4258,9 @@
     },
     {
       "data": {
-        "id": "edge:data/research/apache-iceberg-lakehouse:big-data-migration",
+        "id": "edge:data/research/apache-iceberg-lakehouse:distributed-data-storage",
         "source": "doc:data/research/apache-iceberg-lakehouse",
-        "target": "tag:big-data-migration",
+        "target": "tag:distributed-data-storage",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -4270,24 +4270,6 @@
         "id": "edge:data/research/kafka-streaming-event-driven:financial-technology",
         "source": "doc:data/research/kafka-streaming-event-driven",
         "target": "tag:financial-technology",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/kafka-streaming-event-driven:stream-processing",
-        "source": "doc:data/research/kafka-streaming-event-driven",
-        "target": "tag:stream-processing",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/kafka-streaming-event-driven:event-driven-architecture",
-        "source": "doc:data/research/kafka-streaming-event-driven",
-        "target": "tag:event-driven-architecture",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -4312,6 +4294,24 @@
     },
     {
       "data": {
+        "id": "edge:data/research/kafka-streaming-event-driven:stream-processing",
+        "source": "doc:data/research/kafka-streaming-event-driven",
+        "target": "tag:stream-processing",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:data/research/kafka-streaming-event-driven:distributed-systems",
+        "source": "doc:data/research/kafka-streaming-event-driven",
+        "target": "tag:distributed-systems",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
         "id": "edge:data/research/kafka-streaming-event-driven:streaming",
         "source": "doc:data/research/kafka-streaming-event-driven",
         "target": "tag:streaming",
@@ -4330,15 +4330,6 @@
     },
     {
       "data": {
-        "id": "edge:data/research/kafka-streaming-event-driven:distributed-systems",
-        "source": "doc:data/research/kafka-streaming-event-driven",
-        "target": "tag:distributed-systems",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
         "id": "edge:data/research/kafka-streaming-event-driven:manufacturing",
         "source": "doc:data/research/kafka-streaming-event-driven",
         "target": "tag:manufacturing",
@@ -4348,9 +4339,9 @@
     },
     {
       "data": {
-        "id": "edge:data/research/data-contracts:contract-versioning",
-        "source": "doc:data/research/data-contracts",
-        "target": "tag:contract-versioning",
+        "id": "edge:data/research/kafka-streaming-event-driven:event-driven-architecture",
+        "source": "doc:data/research/kafka-streaming-event-driven",
+        "target": "tag:event-driven-architecture",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -4366,15 +4357,6 @@
     },
     {
       "data": {
-        "id": "edge:data/research/data-contracts:data-quality",
-        "source": "doc:data/research/data-contracts",
-        "target": "tag:data-quality",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
         "id": "edge:data/research/data-contracts:schema-evolution",
         "source": "doc:data/research/data-contracts",
         "target": "tag:schema-evolution",
@@ -4384,18 +4366,36 @@
     },
     {
       "data": {
-        "id": "edge:data/research/data-contracts:schema-management",
+        "id": "edge:data/research/data-contracts:data-governance",
         "source": "doc:data/research/data-contracts",
-        "target": "tag:schema-management",
+        "target": "tag:data-governance",
         "sourcePillar": "data",
         "targetPillar": ""
       }
     },
     {
       "data": {
-        "id": "edge:data/research/data-contracts:data-governance",
+        "id": "edge:data/research/data-contracts:contract-versioning",
         "source": "doc:data/research/data-contracts",
-        "target": "tag:data-governance",
+        "target": "tag:contract-versioning",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:data/research/data-contracts:data-quality",
+        "source": "doc:data/research/data-contracts",
+        "target": "tag:data-quality",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:data/research/data-contracts:schema-management",
+        "source": "doc:data/research/data-contracts",
+        "target": "tag:schema-management",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -4420,9 +4420,9 @@
     },
     {
       "data": {
-        "id": "edge:data/research/airflow-prefect-dagster-comparison:software-architecture",
+        "id": "edge:data/research/airflow-prefect-dagster-comparison:orchestration",
         "source": "doc:data/research/airflow-prefect-dagster-comparison",
-        "target": "tag:software-architecture",
+        "target": "tag:orchestration",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -4438,27 +4438,9 @@
     },
     {
       "data": {
-        "id": "edge:data/research/airflow-prefect-dagster-comparison:observability",
+        "id": "edge:data/research/airflow-prefect-dagster-comparison:software-architecture",
         "source": "doc:data/research/airflow-prefect-dagster-comparison",
-        "target": "tag:observability",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/airflow-prefect-dagster-comparison:python-engineering",
-        "source": "doc:data/research/airflow-prefect-dagster-comparison",
-        "target": "tag:python-engineering",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/airflow-prefect-dagster-comparison:orchestration",
-        "source": "doc:data/research/airflow-prefect-dagster-comparison",
-        "target": "tag:orchestration",
+        "target": "tag:software-architecture",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -4474,6 +4456,15 @@
     },
     {
       "data": {
+        "id": "edge:data/research/airflow-prefect-dagster-comparison:python-engineering",
+        "source": "doc:data/research/airflow-prefect-dagster-comparison",
+        "target": "tag:python-engineering",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
         "id": "edge:data/research/airflow-prefect-dagster-comparison:workflow-orchestration",
         "source": "doc:data/research/airflow-prefect-dagster-comparison",
         "target": "tag:workflow-orchestration",
@@ -4483,9 +4474,18 @@
     },
     {
       "data": {
-        "id": "edge:data/research/data-quality-great-expectations:workflow-automation",
+        "id": "edge:data/research/airflow-prefect-dagster-comparison:observability",
+        "source": "doc:data/research/airflow-prefect-dagster-comparison",
+        "target": "tag:observability",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:data/research/data-quality-great-expectations:orchestration",
         "source": "doc:data/research/data-quality-great-expectations",
-        "target": "tag:workflow-automation",
+        "target": "tag:orchestration",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -4495,15 +4495,6 @@
         "id": "edge:data/research/data-quality-great-expectations:data-engineering",
         "source": "doc:data/research/data-quality-great-expectations",
         "target": "tag:data-engineering",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/data-quality-great-expectations:test-automation",
-        "source": "doc:data/research/data-quality-great-expectations",
-        "target": "tag:test-automation",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -4528,9 +4519,18 @@
     },
     {
       "data": {
-        "id": "edge:data/research/data-quality-great-expectations:orchestration",
+        "id": "edge:data/research/data-quality-great-expectations:workflow-automation",
         "source": "doc:data/research/data-quality-great-expectations",
-        "target": "tag:orchestration",
+        "target": "tag:workflow-automation",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:data/research/data-quality-great-expectations:test-automation",
+        "source": "doc:data/research/data-quality-great-expectations",
+        "target": "tag:test-automation",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -4546,27 +4546,9 @@
     },
     {
       "data": {
-        "id": "edge:data/research/dagster-2:dataops",
-        "source": "doc:data/research/dagster-2",
-        "target": "tag:dataops",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
         "id": "edge:data/research/dagster-2:dagster",
         "source": "doc:data/research/dagster-2",
         "target": "tag:dagster",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/dagster-2:etl",
-        "source": "doc:data/research/dagster-2",
-        "target": "tag:etl",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -4582,35 +4564,8 @@
     },
     {
       "data": {
-        "id": "edge:data/research/science-dataeng:data-ops",
-        "source": "doc:data/research/science-dataeng",
-        "target": "tag:data-ops",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/science-dataeng:genomics-workflows",
-        "source": "doc:data/research/science-dataeng",
-        "target": "tag:genomics-workflows",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/science-dataeng:biotech-genomics",
-        "source": "doc:data/research/science-dataeng",
-        "target": "tag:biotech-genomics",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/science-dataeng:dataops",
-        "source": "doc:data/research/science-dataeng",
+        "id": "edge:data/research/dagster-2:dataops",
+        "source": "doc:data/research/dagster-2",
         "target": "tag:dataops",
         "sourcePillar": "data",
         "targetPillar": ""
@@ -4618,9 +4573,9 @@
     },
     {
       "data": {
-        "id": "edge:data/research/science-dataeng:bioinformatics-pipelines",
-        "source": "doc:data/research/science-dataeng",
-        "target": "tag:bioinformatics-pipelines",
+        "id": "edge:data/research/dagster-2:etl",
+        "source": "doc:data/research/dagster-2",
+        "target": "tag:etl",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -4636,27 +4591,54 @@
     },
     {
       "data": {
-        "id": "edge:markets/research/stock-dataeng:feature-engineering",
-        "source": "doc:markets/research/stock-dataeng",
-        "target": "tag:feature-engineering",
-        "sourcePillar": "markets",
+        "id": "edge:data/research/science-dataeng:dataops",
+        "source": "doc:data/research/science-dataeng",
+        "target": "tag:dataops",
+        "sourcePillar": "data",
         "targetPillar": ""
       }
     },
     {
       "data": {
-        "id": "edge:markets/research/stock-dataeng:data-engineering",
-        "source": "doc:markets/research/stock-dataeng",
-        "target": "tag:data-engineering",
-        "sourcePillar": "markets",
+        "id": "edge:data/research/science-dataeng:data-ops",
+        "source": "doc:data/research/science-dataeng",
+        "target": "tag:data-ops",
+        "sourcePillar": "data",
         "targetPillar": ""
       }
     },
     {
       "data": {
-        "id": "edge:markets/research/stock-dataeng:data-pipeline-orchestration",
+        "id": "edge:data/research/science-dataeng:biotech-genomics",
+        "source": "doc:data/research/science-dataeng",
+        "target": "tag:biotech-genomics",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:data/research/science-dataeng:bioinformatics-pipelines",
+        "source": "doc:data/research/science-dataeng",
+        "target": "tag:bioinformatics-pipelines",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:data/research/science-dataeng:genomics-workflows",
+        "source": "doc:data/research/science-dataeng",
+        "target": "tag:genomics-workflows",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:markets/research/stock-dataeng:orchestration",
         "source": "doc:markets/research/stock-dataeng",
-        "target": "tag:data-pipeline-orchestration",
+        "target": "tag:orchestration",
         "sourcePillar": "markets",
         "targetPillar": ""
       }
@@ -4672,18 +4654,9 @@
     },
     {
       "data": {
-        "id": "edge:markets/research/stock-dataeng:machine-learning",
+        "id": "edge:markets/research/stock-dataeng:data-engineering",
         "source": "doc:markets/research/stock-dataeng",
-        "target": "tag:machine-learning",
-        "sourcePillar": "markets",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:markets/research/stock-dataeng:quantitative-finance",
-        "source": "doc:markets/research/stock-dataeng",
-        "target": "tag:quantitative-finance",
+        "target": "tag:data-engineering",
         "sourcePillar": "markets",
         "targetPillar": ""
       }
@@ -4699,9 +4672,27 @@
     },
     {
       "data": {
-        "id": "edge:markets/research/stock-dataeng:orchestration",
+        "id": "edge:markets/research/stock-dataeng:quantitative-finance",
         "source": "doc:markets/research/stock-dataeng",
-        "target": "tag:orchestration",
+        "target": "tag:quantitative-finance",
+        "sourcePillar": "markets",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:markets/research/stock-dataeng:machine-learning",
+        "source": "doc:markets/research/stock-dataeng",
+        "target": "tag:machine-learning",
+        "sourcePillar": "markets",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:markets/research/stock-dataeng:feature-engineering",
+        "source": "doc:markets/research/stock-dataeng",
+        "target": "tag:feature-engineering",
         "sourcePillar": "markets",
         "targetPillar": ""
       }
@@ -4717,9 +4708,27 @@
     },
     {
       "data": {
-        "id": "edge:aml/research/aml-dataeng:transaction-monitoring",
+        "id": "edge:markets/research/stock-dataeng:data-pipeline-orchestration",
+        "source": "doc:markets/research/stock-dataeng",
+        "target": "tag:data-pipeline-orchestration",
+        "sourcePillar": "markets",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:aml/research/aml-dataeng:real-time-data-processing",
         "source": "doc:aml/research/aml-dataeng",
-        "target": "tag:transaction-monitoring",
+        "target": "tag:real-time-data-processing",
+        "sourcePillar": "aml",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:aml/research/aml-dataeng:dataops",
+        "source": "doc:aml/research/aml-dataeng",
+        "target": "tag:dataops",
         "sourcePillar": "aml",
         "targetPillar": ""
       }
@@ -4729,6 +4738,51 @@
         "id": "edge:aml/research/aml-dataeng:data-engineering",
         "source": "doc:aml/research/aml-dataeng",
         "target": "tag:data-engineering",
+        "sourcePillar": "aml",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:aml/research/aml-dataeng:aml-reporting",
+        "source": "doc:aml/research/aml-dataeng",
+        "target": "tag:aml-reporting",
+        "sourcePillar": "aml",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:aml/research/aml-dataeng:streaming-etl",
+        "source": "doc:aml/research/aml-dataeng",
+        "target": "tag:streaming-etl",
+        "sourcePillar": "aml",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:aml/research/aml-dataeng:transaction-monitoring",
+        "source": "doc:aml/research/aml-dataeng",
+        "target": "tag:transaction-monitoring",
+        "sourcePillar": "aml",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:aml/research/aml-dataeng:aml",
+        "source": "doc:aml/research/aml-dataeng",
+        "target": "tag:aml",
+        "sourcePillar": "aml",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:aml/research/aml-dataeng:streaming",
+        "source": "doc:aml/research/aml-dataeng",
+        "target": "tag:streaming",
         "sourcePillar": "aml",
         "targetPillar": ""
       }
@@ -4753,81 +4807,9 @@
     },
     {
       "data": {
-        "id": "edge:aml/research/aml-dataeng:aml-reporting",
-        "source": "doc:aml/research/aml-dataeng",
-        "target": "tag:aml-reporting",
-        "sourcePillar": "aml",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:aml/research/aml-dataeng:dataops",
-        "source": "doc:aml/research/aml-dataeng",
-        "target": "tag:dataops",
-        "sourcePillar": "aml",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:aml/research/aml-dataeng:streaming-etl",
-        "source": "doc:aml/research/aml-dataeng",
-        "target": "tag:streaming-etl",
-        "sourcePillar": "aml",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:aml/research/aml-dataeng:streaming",
-        "source": "doc:aml/research/aml-dataeng",
-        "target": "tag:streaming",
-        "sourcePillar": "aml",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:aml/research/aml-dataeng:aml",
-        "source": "doc:aml/research/aml-dataeng",
-        "target": "tag:aml",
-        "sourcePillar": "aml",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:aml/research/aml-dataeng:real-time-data-processing",
-        "source": "doc:aml/research/aml-dataeng",
-        "target": "tag:real-time-data-processing",
-        "sourcePillar": "aml",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
         "id": "edge:data/research/dataops-science:biotech-genomics",
         "source": "doc:data/research/dataops-science",
         "target": "tag:biotech-genomics",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/dataops-science:machine-learning",
-        "source": "doc:data/research/dataops-science",
-        "target": "tag:machine-learning",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/dataops-science:dataops",
-        "source": "doc:data/research/dataops-science",
-        "target": "tag:dataops",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -4843,18 +4825,36 @@
     },
     {
       "data": {
-        "id": "edge:markets/research/dataops-markets:dataops",
-        "source": "doc:markets/research/dataops-markets",
+        "id": "edge:data/research/dataops-science:dataops",
+        "source": "doc:data/research/dataops-science",
         "target": "tag:dataops",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:data/research/dataops-science:machine-learning",
+        "source": "doc:data/research/dataops-science",
+        "target": "tag:machine-learning",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:markets/research/dataops-markets:orchestration",
+        "source": "doc:markets/research/dataops-markets",
+        "target": "tag:orchestration",
         "sourcePillar": "markets",
         "targetPillar": ""
       }
     },
     {
       "data": {
-        "id": "edge:markets/research/dataops-markets:streaming",
+        "id": "edge:markets/research/dataops-markets:dataops",
         "source": "doc:markets/research/dataops-markets",
-        "target": "tag:streaming",
+        "target": "tag:dataops",
         "sourcePillar": "markets",
         "targetPillar": ""
       }
@@ -4870,9 +4870,9 @@
     },
     {
       "data": {
-        "id": "edge:markets/research/dataops-markets:orchestration",
+        "id": "edge:markets/research/dataops-markets:streaming",
         "source": "doc:markets/research/dataops-markets",
-        "target": "tag:orchestration",
+        "target": "tag:streaming",
         "sourcePillar": "markets",
         "targetPillar": ""
       }
@@ -4888,9 +4888,9 @@
     },
     {
       "data": {
-        "id": "edge:aml/research/dataops-aml:regtech",
+        "id": "edge:aml/research/dataops-aml:dataops",
         "source": "doc:aml/research/dataops-aml",
-        "target": "tag:regtech",
+        "target": "tag:dataops",
         "sourcePillar": "aml",
         "targetPillar": ""
       }
@@ -4906,9 +4906,9 @@
     },
     {
       "data": {
-        "id": "edge:aml/research/dataops-aml:dataops",
+        "id": "edge:aml/research/dataops-aml:aml",
         "source": "doc:aml/research/dataops-aml",
-        "target": "tag:dataops",
+        "target": "tag:aml",
         "sourcePillar": "aml",
         "targetPillar": ""
       }
@@ -4924,6 +4924,15 @@
     },
     {
       "data": {
+        "id": "edge:aml/research/dataops-aml:regtech",
+        "source": "doc:aml/research/dataops-aml",
+        "target": "tag:regtech",
+        "sourcePillar": "aml",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
         "id": "edge:aml/research/dataops-aml:observability",
         "source": "doc:aml/research/dataops-aml",
         "target": "tag:observability",
@@ -4933,10 +4942,10 @@
     },
     {
       "data": {
-        "id": "edge:aml/research/dataops-aml:aml",
-        "source": "doc:aml/research/dataops-aml",
-        "target": "tag:aml",
-        "sourcePillar": "aml",
+        "id": "edge:markets/research/sp-500-rejects-spacex-also-blocking-entry-for-openai-and:anthropic-denied-s-p-500-entry",
+        "source": "doc:markets/research/sp-500-rejects-spacex-also-blocking-entry-for-openai-and",
+        "target": "tag:anthropic-denied-s-p-500-entry",
+        "sourcePillar": "markets",
         "targetPillar": ""
       }
     },
@@ -4960,15 +4969,6 @@
     },
     {
       "data": {
-        "id": "edge:markets/research/sp-500-rejects-spacex-also-blocking-entry-for-openai-and:anthropic-denied-s-p-500-entry",
-        "source": "doc:markets/research/sp-500-rejects-spacex-also-blocking-entry-for-openai-and",
-        "target": "tag:anthropic-denied-s-p-500-entry",
-        "sourcePillar": "markets",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
         "id": "edge:markets/research/meta-confirms-1000s-of-instagram-accounts-were-hacked-by:llm",
         "source": "doc:markets/research/meta-confirms-1000s-of-instagram-accounts-were-hacked-by",
         "target": "tag:llm",
@@ -4978,18 +4978,18 @@
     },
     {
       "data": {
-        "id": "edge:markets/research/meta-confirms-1000s-of-instagram-accounts-were-hacked-by:markets",
+        "id": "edge:markets/research/meta-confirms-1000s-of-instagram-accounts-were-hacked-by:stock-market",
         "source": "doc:markets/research/meta-confirms-1000s-of-instagram-accounts-were-hacked-by",
-        "target": "tag:markets",
+        "target": "tag:stock-market",
         "sourcePillar": "markets",
         "targetPillar": ""
       }
     },
     {
       "data": {
-        "id": "edge:markets/research/meta-confirms-1000s-of-instagram-accounts-were-hacked-by:stock-market",
+        "id": "edge:markets/research/meta-confirms-1000s-of-instagram-accounts-were-hacked-by:markets",
         "source": "doc:markets/research/meta-confirms-1000s-of-instagram-accounts-were-hacked-by",
-        "target": "tag:stock-market",
+        "target": "tag:markets",
         "sourcePillar": "markets",
         "targetPillar": ""
       }
@@ -5014,15 +5014,6 @@
     },
     {
       "data": {
-        "id": "edge:markets/research/stock-1:markets",
-        "source": "doc:markets/research/stock-1",
-        "target": "tag:markets",
-        "sourcePillar": "markets",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
         "id": "edge:markets/research/stock-1:semiconductor industry",
         "source": "doc:markets/research/stock-1",
         "target": "tag:semiconductor industry",
@@ -5032,9 +5023,9 @@
     },
     {
       "data": {
-        "id": "edge:markets/research/can-the-stockmarket-swallow-anthropic-spacex-and-openai:spacex",
-        "source": "doc:markets/research/can-the-stockmarket-swallow-anthropic-spacex-and-openai",
-        "target": "tag:spacex",
+        "id": "edge:markets/research/stock-1:markets",
+        "source": "doc:markets/research/stock-1",
+        "target": "tag:markets",
         "sourcePillar": "markets",
         "targetPillar": ""
       }
@@ -5050,15 +5041,6 @@
     },
     {
       "data": {
-        "id": "edge:markets/research/can-the-stockmarket-swallow-anthropic-spacex-and-openai:anthropic",
-        "source": "doc:markets/research/can-the-stockmarket-swallow-anthropic-spacex-and-openai",
-        "target": "tag:anthropic",
-        "sourcePillar": "markets",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
         "id": "edge:markets/research/can-the-stockmarket-swallow-anthropic-spacex-and-openai:science",
         "source": "doc:markets/research/can-the-stockmarket-swallow-anthropic-spacex-and-openai",
         "target": "tag:science",
@@ -5068,9 +5050,9 @@
     },
     {
       "data": {
-        "id": "edge:markets/research/can-the-stockmarket-swallow-anthropic-spacex-and-openai:swallow",
+        "id": "edge:markets/research/can-the-stockmarket-swallow-anthropic-spacex-and-openai:stockmarket",
         "source": "doc:markets/research/can-the-stockmarket-swallow-anthropic-spacex-and-openai",
-        "target": "tag:swallow",
+        "target": "tag:stockmarket",
         "sourcePillar": "markets",
         "targetPillar": ""
       }
@@ -5095,9 +5077,27 @@
     },
     {
       "data": {
-        "id": "edge:markets/research/can-the-stockmarket-swallow-anthropic-spacex-and-openai:stockmarket",
+        "id": "edge:markets/research/can-the-stockmarket-swallow-anthropic-spacex-and-openai:swallow",
         "source": "doc:markets/research/can-the-stockmarket-swallow-anthropic-spacex-and-openai",
-        "target": "tag:stockmarket",
+        "target": "tag:swallow",
+        "sourcePillar": "markets",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:markets/research/can-the-stockmarket-swallow-anthropic-spacex-and-openai:spacex",
+        "source": "doc:markets/research/can-the-stockmarket-swallow-anthropic-spacex-and-openai",
+        "target": "tag:spacex",
+        "sourcePillar": "markets",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:markets/research/can-the-stockmarket-swallow-anthropic-spacex-and-openai:anthropic",
+        "source": "doc:markets/research/can-the-stockmarket-swallow-anthropic-spacex-and-openai",
+        "target": "tag:anthropic",
         "sourcePillar": "markets",
         "targetPillar": ""
       }
@@ -5107,6 +5107,15 @@
         "id": "edge:markets/research/aml-1:aml",
         "source": "doc:markets/research/aml-1",
         "target": "tag:aml",
+        "sourcePillar": "markets",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:markets/research/stock-2:stock-market",
+        "source": "doc:markets/research/stock-2",
+        "target": "tag:stock-market",
         "sourcePillar": "markets",
         "targetPillar": ""
       }
@@ -5126,33 +5135,6 @@
         "source": "doc:markets/research/stock-2",
         "target": "tag:markets",
         "sourcePillar": "markets",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:markets/research/stock-2:stock-market",
-        "source": "doc:markets/research/stock-2",
-        "target": "tag:stock-market",
-        "sourcePillar": "markets",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/a-pictorial-introduction-to-differential-geometry-2017:introduction",
-        "source": "doc:data/research/a-pictorial-introduction-to-differential-geometry-2017",
-        "target": "tag:introduction",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/a-pictorial-introduction-to-differential-geometry-2017:pictorial",
-        "source": "doc:data/research/a-pictorial-introduction-to-differential-geometry-2017",
-        "target": "tag:pictorial",
-        "sourcePillar": "data",
         "targetPillar": ""
       }
     },
@@ -5185,9 +5167,27 @@
     },
     {
       "data": {
+        "id": "edge:data/research/a-pictorial-introduction-to-differential-geometry-2017:introduction",
+        "source": "doc:data/research/a-pictorial-introduction-to-differential-geometry-2017",
+        "target": "tag:introduction",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
         "id": "edge:data/research/a-pictorial-introduction-to-differential-geometry-2017:research",
         "source": "doc:data/research/a-pictorial-introduction-to-differential-geometry-2017",
         "target": "tag:research",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:data/research/a-pictorial-introduction-to-differential-geometry-2017:pictorial",
+        "source": "doc:data/research/a-pictorial-introduction-to-differential-geometry-2017",
+        "target": "tag:pictorial",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -5203,18 +5203,18 @@
     },
     {
       "data": {
-        "id": "edge:data/research/ey-canada-published-a-cybersecurity-report-and-most:aml",
+        "id": "edge:data/research/ey-canada-published-a-cybersecurity-report-and-most:cybersecurity",
         "source": "doc:data/research/ey-canada-published-a-cybersecurity-report-and-most",
-        "target": "tag:aml",
+        "target": "tag:cybersecurity",
         "sourcePillar": "data",
         "targetPillar": ""
       }
     },
     {
       "data": {
-        "id": "edge:data/research/ey-canada-published-a-cybersecurity-report-and-most:cybersecurity",
+        "id": "edge:data/research/ey-canada-published-a-cybersecurity-report-and-most:aml",
         "source": "doc:data/research/ey-canada-published-a-cybersecurity-report-and-most",
-        "target": "tag:cybersecurity",
+        "target": "tag:aml",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -5248,36 +5248,18 @@
     },
     {
       "data": {
-        "id": "edge:data/research/bun-runtime-support-now-limited-and-deprecated-science:now",
-        "source": "doc:data/research/bun-runtime-support-now-limited-and-deprecated-science",
-        "target": "tag:now",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/bun-runtime-support-now-limited-and-deprecated-science:deprecated",
-        "source": "doc:data/research/bun-runtime-support-now-limited-and-deprecated-science",
-        "target": "tag:deprecated",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/research/bun-runtime-support-now-limited-and-deprecated-science:runtime",
-        "source": "doc:data/research/bun-runtime-support-now-limited-and-deprecated-science",
-        "target": "tag:runtime",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
         "id": "edge:data/research/bun-runtime-support-now-limited-and-deprecated-science:data-engineering",
         "source": "doc:data/research/bun-runtime-support-now-limited-and-deprecated-science",
         "target": "tag:data-engineering",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:data/research/bun-runtime-support-now-limited-and-deprecated-science:science",
+        "source": "doc:data/research/bun-runtime-support-now-limited-and-deprecated-science",
+        "target": "tag:science",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -5302,9 +5284,18 @@
     },
     {
       "data": {
-        "id": "edge:data/research/bun-runtime-support-now-limited-and-deprecated-science:science",
+        "id": "edge:data/research/bun-runtime-support-now-limited-and-deprecated-science:deprecated",
         "source": "doc:data/research/bun-runtime-support-now-limited-and-deprecated-science",
-        "target": "tag:science",
+        "target": "tag:deprecated",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:data/research/bun-runtime-support-now-limited-and-deprecated-science:now",
+        "source": "doc:data/research/bun-runtime-support-now-limited-and-deprecated-science",
+        "target": "tag:now",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -5320,18 +5311,18 @@
     },
     {
       "data": {
-        "id": "edge:aml/research/cryptocurrency-mixers-under-global-regulatory-spotlight:technical analysis",
-        "source": "doc:aml/research/cryptocurrency-mixers-under-global-regulatory-spotlight",
-        "target": "tag:technical analysis",
-        "sourcePillar": "aml",
+        "id": "edge:data/research/bun-runtime-support-now-limited-and-deprecated-science:runtime",
+        "source": "doc:data/research/bun-runtime-support-now-limited-and-deprecated-science",
+        "target": "tag:runtime",
+        "sourcePillar": "data",
         "targetPillar": ""
       }
     },
     {
       "data": {
-        "id": "edge:aml/research/cryptocurrency-mixers-under-global-regulatory-spotlight:regtech",
+        "id": "edge:aml/research/cryptocurrency-mixers-under-global-regulatory-spotlight:fatf recommendations",
         "source": "doc:aml/research/cryptocurrency-mixers-under-global-regulatory-spotlight",
-        "target": "tag:regtech",
+        "target": "tag:fatf recommendations",
         "sourcePillar": "aml",
         "targetPillar": ""
       }
@@ -5347,19 +5338,37 @@
     },
     {
       "data": {
-        "id": "edge:aml/research/cryptocurrency-mixers-under-global-regulatory-spotlight:fatf recommendations",
+        "id": "edge:aml/research/cryptocurrency-mixers-under-global-regulatory-spotlight:aml",
         "source": "doc:aml/research/cryptocurrency-mixers-under-global-regulatory-spotlight",
-        "target": "tag:fatf recommendations",
+        "target": "tag:aml",
         "sourcePillar": "aml",
         "targetPillar": ""
       }
     },
     {
       "data": {
-        "id": "edge:aml/research/cryptocurrency-mixers-under-global-regulatory-spotlight:aml",
+        "id": "edge:aml/research/cryptocurrency-mixers-under-global-regulatory-spotlight:regtech",
         "source": "doc:aml/research/cryptocurrency-mixers-under-global-regulatory-spotlight",
-        "target": "tag:aml",
+        "target": "tag:regtech",
         "sourcePillar": "aml",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:aml/research/cryptocurrency-mixers-under-global-regulatory-spotlight:technical analysis",
+        "source": "doc:aml/research/cryptocurrency-mixers-under-global-regulatory-spotlight",
+        "target": "tag:technical analysis",
+        "sourcePillar": "aml",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:markets/research/stock-market:risk-management",
+        "source": "doc:markets/research/stock-market",
+        "target": "tag:risk-management",
+        "sourcePillar": "markets",
         "targetPillar": ""
       }
     },
@@ -5383,9 +5392,9 @@
     },
     {
       "data": {
-        "id": "edge:markets/research/stock-market:risk-management",
-        "source": "doc:markets/research/stock-market",
-        "target": "tag:risk-management",
+        "id": "edge:markets/research/stock-3:see",
+        "source": "doc:markets/research/stock-3",
+        "target": "tag:see",
         "sourcePillar": "markets",
         "targetPillar": ""
       }
@@ -5401,9 +5410,9 @@
     },
     {
       "data": {
-        "id": "edge:markets/research/stock-3:see",
+        "id": "edge:markets/research/stock-3:funding",
         "source": "doc:markets/research/stock-3",
-        "target": "tag:see",
+        "target": "tag:funding",
         "sourcePillar": "markets",
         "targetPillar": ""
       }
@@ -5413,6 +5422,15 @@
         "id": "edge:markets/research/stock-3:record",
         "source": "doc:markets/research/stock-3",
         "target": "tag:record",
+        "sourcePillar": "markets",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:markets/research/stock-3:$4.2b",
+        "source": "doc:markets/research/stock-3",
+        "target": "tag:$4.2b",
         "sourcePillar": "markets",
         "targetPillar": ""
       }
@@ -5446,72 +5464,9 @@
     },
     {
       "data": {
-        "id": "edge:markets/research/stock-3:funding",
-        "source": "doc:markets/research/stock-3",
-        "target": "tag:funding",
-        "sourcePillar": "markets",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:markets/research/stock-3:$4.2b",
-        "source": "doc:markets/research/stock-3",
-        "target": "tag:$4.2b",
-        "sourcePillar": "markets",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:markets/research/science-3:exoplanet",
-        "source": "doc:markets/research/science-3",
-        "target": "tag:exoplanet",
-        "sourcePillar": "markets",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
         "id": "edge:markets/research/science-3:stock",
         "source": "doc:markets/research/science-3",
         "target": "tag:stock",
-        "sourcePillar": "markets",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:markets/research/science-3:jwst",
-        "source": "doc:markets/research/science-3",
-        "target": "tag:jwst",
-        "sourcePillar": "markets",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:markets/research/science-3:detects",
-        "source": "doc:markets/research/science-3",
-        "target": "tag:detects",
-        "sourcePillar": "markets",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:markets/research/science-3:habitable",
-        "source": "doc:markets/research/science-3",
-        "target": "tag:habitable",
-        "sourcePillar": "markets",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:markets/research/science-3:research",
-        "source": "doc:markets/research/science-3",
-        "target": "tag:research",
         "sourcePillar": "markets",
         "targetPillar": ""
       }
@@ -5527,9 +5482,54 @@
     },
     {
       "data": {
+        "id": "edge:markets/research/science-3:habitable",
+        "source": "doc:markets/research/science-3",
+        "target": "tag:habitable",
+        "sourcePillar": "markets",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
         "id": "edge:markets/research/science-3:atmospheric",
         "source": "doc:markets/research/science-3",
         "target": "tag:atmospheric",
+        "sourcePillar": "markets",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:markets/research/science-3:exoplanet",
+        "source": "doc:markets/research/science-3",
+        "target": "tag:exoplanet",
+        "sourcePillar": "markets",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:markets/research/science-3:detects",
+        "source": "doc:markets/research/science-3",
+        "target": "tag:detects",
+        "sourcePillar": "markets",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:markets/research/science-3:research",
+        "source": "doc:markets/research/science-3",
+        "target": "tag:research",
+        "sourcePillar": "markets",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:markets/research/science-3:jwst",
+        "source": "doc:markets/research/science-3",
+        "target": "tag:jwst",
         "sourcePillar": "markets",
         "targetPillar": ""
       }
@@ -5563,9 +5563,27 @@
     },
     {
       "data": {
+        "id": "edge:aml/research/aml-1:aml-reporting",
+        "source": "doc:aml/research/aml-1",
+        "target": "tag:aml-reporting",
+        "sourcePillar": "aml",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
         "id": "edge:aml/research/aml-1:transaction-monitoring",
         "source": "doc:aml/research/aml-1",
         "target": "tag:transaction-monitoring",
+        "sourcePillar": "aml",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:aml/research/aml-1:aml",
+        "source": "doc:aml/research/aml-1",
+        "target": "tag:aml",
         "sourcePillar": "aml",
         "targetPillar": ""
       }
@@ -5581,15 +5599,6 @@
     },
     {
       "data": {
-        "id": "edge:aml/research/aml-1:aml-reporting",
-        "source": "doc:aml/research/aml-1",
-        "target": "tag:aml-reporting",
-        "sourcePillar": "aml",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
         "id": "edge:aml/research/aml-1:observability",
         "source": "doc:aml/research/aml-1",
         "target": "tag:observability",
@@ -5599,10 +5608,19 @@
     },
     {
       "data": {
-        "id": "edge:aml/research/aml-1:aml",
-        "source": "doc:aml/research/aml-1",
-        "target": "tag:aml",
-        "sourcePillar": "aml",
+        "id": "edge:markets/research/stock-5:rate",
+        "source": "doc:markets/research/stock-5",
+        "target": "tag:rate",
+        "sourcePillar": "markets",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:markets/research/stock-5:hardware",
+        "source": "doc:markets/research/stock-5",
+        "target": "tag:hardware",
+        "sourcePillar": "markets",
         "targetPillar": ""
       }
     },
@@ -5626,18 +5644,18 @@
     },
     {
       "data": {
-        "id": "edge:markets/research/stock-5:annual",
+        "id": "edge:markets/research/stock-5:$300b",
         "source": "doc:markets/research/stock-5",
-        "target": "tag:annual",
+        "target": "tag:$300b",
         "sourcePillar": "markets",
         "targetPillar": ""
       }
     },
     {
       "data": {
-        "id": "edge:markets/research/stock-5:hardware",
+        "id": "edge:markets/research/stock-5:annual",
         "source": "doc:markets/research/stock-5",
-        "target": "tag:hardware",
+        "target": "tag:annual",
         "sourcePillar": "markets",
         "targetPillar": ""
       }
@@ -5653,27 +5671,9 @@
     },
     {
       "data": {
-        "id": "edge:markets/research/stock-5:rate",
-        "source": "doc:markets/research/stock-5",
-        "target": "tag:rate",
-        "sourcePillar": "markets",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
         "id": "edge:markets/research/stock-5:benefits",
         "source": "doc:markets/research/stock-5",
         "target": "tag:benefits",
-        "sourcePillar": "markets",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:markets/research/stock-5:$300b",
-        "source": "doc:markets/research/stock-5",
-        "target": "tag:$300b",
         "sourcePillar": "markets",
         "targetPillar": ""
       }
@@ -5689,15 +5689,6 @@
     },
     {
       "data": {
-        "id": "edge:aml/research/aml-2:aml",
-        "source": "doc:aml/research/aml-2",
-        "target": "tag:aml",
-        "sourcePillar": "aml",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
         "id": "edge:aml/research/aml-2:crypto-finance",
         "source": "doc:aml/research/aml-2",
         "target": "tag:crypto-finance",
@@ -5707,10 +5698,10 @@
     },
     {
       "data": {
-        "id": "edge:markets/research/science-5:replication",
-        "source": "doc:markets/research/science-5",
-        "target": "tag:replication",
-        "sourcePillar": "markets",
+        "id": "edge:aml/research/aml-2:aml",
+        "source": "doc:aml/research/aml-2",
+        "target": "tag:aml",
+        "sourcePillar": "aml",
         "targetPillar": ""
       }
     },
@@ -5719,42 +5710,6 @@
         "id": "edge:markets/research/science-5:stock",
         "source": "doc:markets/research/science-5",
         "target": "tag:stock",
-        "sourcePillar": "markets",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:markets/research/science-5:claim",
-        "source": "doc:markets/research/science-5",
-        "target": "tag:claim",
-        "sourcePillar": "markets",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:markets/research/science-5:room",
-        "source": "doc:markets/research/science-5",
-        "target": "tag:room",
-        "sourcePillar": "markets",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:markets/research/science-5:results",
-        "source": "doc:markets/research/science-5",
-        "target": "tag:results",
-        "sourcePillar": "markets",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:markets/research/science-5:research",
-        "source": "doc:markets/research/science-5",
-        "target": "tag:research",
         "sourcePillar": "markets",
         "targetPillar": ""
       }
@@ -5770,28 +5725,55 @@
     },
     {
       "data": {
-        "id": "edge:markets/research/science-5:new",
+        "id": "edge:markets/research/science-5:results",
         "source": "doc:markets/research/science-5",
-        "target": "tag:new",
+        "target": "tag:results",
         "sourcePillar": "markets",
         "targetPillar": ""
       }
     },
     {
       "data": {
-        "id": "edge:aml/research/aml-3:regtech",
-        "source": "doc:aml/research/aml-3",
-        "target": "tag:regtech",
-        "sourcePillar": "aml",
+        "id": "edge:markets/research/science-5:room",
+        "source": "doc:markets/research/science-5",
+        "target": "tag:room",
+        "sourcePillar": "markets",
         "targetPillar": ""
       }
     },
     {
       "data": {
-        "id": "edge:aml/research/aml-3:beneficial ownership",
-        "source": "doc:aml/research/aml-3",
-        "target": "tag:beneficial ownership",
-        "sourcePillar": "aml",
+        "id": "edge:markets/research/science-5:research",
+        "source": "doc:markets/research/science-5",
+        "target": "tag:research",
+        "sourcePillar": "markets",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:markets/research/science-5:replication",
+        "source": "doc:markets/research/science-5",
+        "target": "tag:replication",
+        "sourcePillar": "markets",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:markets/research/science-5:claim",
+        "source": "doc:markets/research/science-5",
+        "target": "tag:claim",
+        "sourcePillar": "markets",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:markets/research/science-5:new",
+        "source": "doc:markets/research/science-5",
+        "target": "tag:new",
+        "sourcePillar": "markets",
         "targetPillar": ""
       }
     },
@@ -5824,6 +5806,33 @@
     },
     {
       "data": {
+        "id": "edge:aml/research/aml-3:beneficial ownership",
+        "source": "doc:aml/research/aml-3",
+        "target": "tag:beneficial ownership",
+        "sourcePillar": "aml",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:aml/research/aml-3:regtech",
+        "source": "doc:aml/research/aml-3",
+        "target": "tag:regtech",
+        "sourcePillar": "aml",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:markets/research/stock-6:semiconductors",
+        "source": "doc:markets/research/stock-6",
+        "target": "tag:semiconductors",
+        "sourcePillar": "markets",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
         "id": "edge:markets/research/stock-6:semiconductor industry",
         "source": "doc:markets/research/stock-6",
         "target": "tag:semiconductor industry",
@@ -5842,36 +5851,9 @@
     },
     {
       "data": {
-        "id": "edge:markets/research/stock-6:semiconductors",
-        "source": "doc:markets/research/stock-6",
-        "target": "tag:semiconductors",
-        "sourcePillar": "markets",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:markets/research/science-6:largest",
+        "id": "edge:markets/research/science-6:protein",
         "source": "doc:markets/research/science-6",
-        "target": "tag:largest",
-        "sourcePillar": "markets",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:markets/research/science-6:ever",
-        "source": "doc:markets/research/science-6",
-        "target": "tag:ever",
-        "sourcePillar": "markets",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:markets/research/science-6:stock",
-        "source": "doc:markets/research/science-6",
-        "target": "tag:stock",
+        "target": "tag:protein",
         "sourcePillar": "markets",
         "targetPillar": ""
       }
@@ -5887,18 +5869,18 @@
     },
     {
       "data": {
-        "id": "edge:markets/research/science-6:alphafold",
+        "id": "edge:markets/research/science-6:stock",
         "source": "doc:markets/research/science-6",
-        "target": "tag:alphafold",
+        "target": "tag:stock",
         "sourcePillar": "markets",
         "targetPillar": ""
       }
     },
     {
       "data": {
-        "id": "edge:markets/research/science-6:protein",
+        "id": "edge:markets/research/science-6:alphafold",
         "source": "doc:markets/research/science-6",
-        "target": "tag:protein",
+        "target": "tag:alphafold",
         "sourcePillar": "markets",
         "targetPillar": ""
       }
@@ -5914,6 +5896,15 @@
     },
     {
       "data": {
+        "id": "edge:markets/research/science-6:ever",
+        "source": "doc:markets/research/science-6",
+        "target": "tag:ever",
+        "sourcePillar": "markets",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
         "id": "edge:markets/research/science-6:research",
         "source": "doc:markets/research/science-6",
         "target": "tag:research",
@@ -5923,9 +5914,9 @@
     },
     {
       "data": {
-        "id": "edge:markets/research/stock-7:supply-chain",
-        "source": "doc:markets/research/stock-7",
-        "target": "tag:supply-chain",
+        "id": "edge:markets/research/science-6:largest",
+        "source": "doc:markets/research/science-6",
+        "target": "tag:largest",
         "sourcePillar": "markets",
         "targetPillar": ""
       }
@@ -5950,9 +5941,27 @@
     },
     {
       "data": {
+        "id": "edge:markets/research/stock-7:supply-chain",
+        "source": "doc:markets/research/stock-7",
+        "target": "tag:supply-chain",
+        "sourcePillar": "markets",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
         "id": "edge:aml/research/aml-4:beneficial ownership",
         "source": "doc:aml/research/aml-4",
         "target": "tag:beneficial ownership",
+        "sourcePillar": "aml",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:aml/research/aml-4:fatf recommendations",
+        "source": "doc:aml/research/aml-4",
+        "target": "tag:fatf recommendations",
         "sourcePillar": "aml",
         "targetPillar": ""
       }
@@ -5977,18 +5986,18 @@
     },
     {
       "data": {
-        "id": "edge:aml/research/aml-4:fatf recommendations",
-        "source": "doc:aml/research/aml-4",
-        "target": "tag:fatf recommendations",
-        "sourcePillar": "aml",
+        "id": "edge:markets/learn/sector-competitive-analysis:semiconductors",
+        "source": "doc:markets/learn/sector-competitive-analysis",
+        "target": "tag:semiconductors",
+        "sourcePillar": "markets",
         "targetPillar": ""
       }
     },
     {
       "data": {
-        "id": "edge:markets/learn/sector-competitive-analysis:semiconductors",
+        "id": "edge:markets/learn/sector-competitive-analysis:commodity trading",
         "source": "doc:markets/learn/sector-competitive-analysis",
-        "target": "tag:semiconductors",
+        "target": "tag:commodity trading",
         "sourcePillar": "markets",
         "targetPillar": ""
       }
@@ -6006,24 +6015,6 @@
       "data": {
         "id": "edge:markets/learn/sector-competitive-analysis:markets",
         "source": "doc:markets/learn/sector-competitive-analysis",
-        "target": "tag:markets",
-        "sourcePillar": "markets",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:markets/learn/sector-competitive-analysis:commodity trading",
-        "source": "doc:markets/learn/sector-competitive-analysis",
-        "target": "tag:commodity trading",
-        "sourcePillar": "markets",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:markets/learn/applying-market-analysis:markets",
-        "source": "doc:markets/learn/applying-market-analysis",
         "target": "tag:markets",
         "sourcePillar": "markets",
         "targetPillar": ""
@@ -6049,9 +6040,9 @@
     },
     {
       "data": {
-        "id": "edge:markets/learn/market-analysis-methods:macro analysis",
-        "source": "doc:markets/learn/market-analysis-methods",
-        "target": "tag:macro analysis",
+        "id": "edge:markets/learn/applying-market-analysis:markets",
+        "source": "doc:markets/learn/applying-market-analysis",
+        "target": "tag:markets",
         "sourcePillar": "markets",
         "targetPillar": ""
       }
@@ -6067,9 +6058,27 @@
     },
     {
       "data": {
+        "id": "edge:markets/learn/market-analysis-methods:macro analysis",
+        "source": "doc:markets/learn/market-analysis-methods",
+        "target": "tag:macro analysis",
+        "sourcePillar": "markets",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
         "id": "edge:markets/learn/market-analysis-methods:markets",
         "source": "doc:markets/learn/market-analysis-methods",
         "target": "tag:markets",
+        "sourcePillar": "markets",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:markets/learn/market-fundamentals:risk-management",
+        "source": "doc:markets/learn/market-fundamentals",
+        "target": "tag:risk-management",
         "sourcePillar": "markets",
         "targetPillar": ""
       }
@@ -6094,27 +6103,9 @@
     },
     {
       "data": {
-        "id": "edge:markets/learn/market-fundamentals:risk-management",
-        "source": "doc:markets/learn/market-fundamentals",
+        "id": "edge:aml/learn/designing-aml-program:risk-management",
+        "source": "doc:aml/learn/designing-aml-program",
         "target": "tag:risk-management",
-        "sourcePillar": "markets",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:aml/learn/designing-aml-program:regtech",
-        "source": "doc:aml/learn/designing-aml-program",
-        "target": "tag:regtech",
-        "sourcePillar": "aml",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:aml/learn/designing-aml-program:transaction-monitoring",
-        "source": "doc:aml/learn/designing-aml-program",
-        "target": "tag:transaction-monitoring",
         "sourcePillar": "aml",
         "targetPillar": ""
       }
@@ -6130,18 +6121,9 @@
     },
     {
       "data": {
-        "id": "edge:aml/learn/designing-aml-program:observability",
+        "id": "edge:aml/learn/designing-aml-program:transaction-monitoring",
         "source": "doc:aml/learn/designing-aml-program",
-        "target": "tag:observability",
-        "sourcePillar": "aml",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:aml/learn/designing-aml-program:risk-management",
-        "source": "doc:aml/learn/designing-aml-program",
-        "target": "tag:risk-management",
+        "target": "tag:transaction-monitoring",
         "sourcePillar": "aml",
         "targetPillar": ""
       }
@@ -6151,6 +6133,33 @@
         "id": "edge:aml/learn/designing-aml-program:aml",
         "source": "doc:aml/learn/designing-aml-program",
         "target": "tag:aml",
+        "sourcePillar": "aml",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:aml/learn/designing-aml-program:regtech",
+        "source": "doc:aml/learn/designing-aml-program",
+        "target": "tag:regtech",
+        "sourcePillar": "aml",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:aml/learn/designing-aml-program:observability",
+        "source": "doc:aml/learn/designing-aml-program",
+        "target": "tag:observability",
+        "sourcePillar": "aml",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:aml/learn/aml-enforcement-cases:aml-reporting",
+        "source": "doc:aml/learn/aml-enforcement-cases",
+        "target": "tag:aml-reporting",
         "sourcePillar": "aml",
         "targetPillar": ""
       }
@@ -6184,27 +6193,18 @@
     },
     {
       "data": {
-        "id": "edge:aml/learn/aml-enforcement-cases:aml-reporting",
-        "source": "doc:aml/learn/aml-enforcement-cases",
-        "target": "tag:aml-reporting",
-        "sourcePillar": "aml",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:aml/learn/money-laundering-mechanisms:aml",
-        "source": "doc:aml/learn/money-laundering-mechanisms",
-        "target": "tag:aml",
-        "sourcePillar": "aml",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
         "id": "edge:aml/learn/money-laundering-mechanisms:aml-typologies",
         "source": "doc:aml/learn/money-laundering-mechanisms",
         "target": "tag:aml-typologies",
+        "sourcePillar": "aml",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:aml/learn/money-laundering-mechanisms:trade-finance-crime",
+        "source": "doc:aml/learn/money-laundering-mechanisms",
+        "target": "tag:trade-finance-crime",
         "sourcePillar": "aml",
         "targetPillar": ""
       }
@@ -6220,9 +6220,18 @@
     },
     {
       "data": {
-        "id": "edge:aml/learn/money-laundering-mechanisms:trade-finance-crime",
+        "id": "edge:aml/learn/money-laundering-mechanisms:aml",
         "source": "doc:aml/learn/money-laundering-mechanisms",
-        "target": "tag:trade-finance-crime",
+        "target": "tag:aml",
+        "sourcePillar": "aml",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:aml/learn/aml-compliance-glossary:aml-reporting",
+        "source": "doc:aml/learn/aml-compliance-glossary",
+        "target": "tag:aml-reporting",
         "sourcePillar": "aml",
         "targetPillar": ""
       }
@@ -6247,10 +6256,10 @@
     },
     {
       "data": {
-        "id": "edge:aml/learn/aml-compliance-glossary:aml-reporting",
-        "source": "doc:aml/learn/aml-compliance-glossary",
-        "target": "tag:aml-reporting",
-        "sourcePillar": "aml",
+        "id": "edge:data/learn/designing-data-platform:data-architecture",
+        "source": "doc:data/learn/designing-data-platform",
+        "target": "tag:data-architecture",
+        "sourcePillar": "data",
         "targetPillar": ""
       }
     },
@@ -6277,15 +6286,6 @@
         "id": "edge:data/learn/designing-data-platform:regulatory compliance",
         "source": "doc:data/learn/designing-data-platform",
         "target": "tag:regulatory compliance",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/learn/designing-data-platform:data-architecture",
-        "source": "doc:data/learn/designing-data-platform",
-        "target": "tag:data-architecture",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -6328,18 +6328,9 @@
     },
     {
       "data": {
-        "id": "edge:data/learn/building-pipelines-dbt-dagster:etl",
+        "id": "edge:data/learn/building-pipelines-dbt-dagster:data lake",
         "source": "doc:data/learn/building-pipelines-dbt-dagster",
-        "target": "tag:etl",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/learn/building-pipelines-dbt-dagster:dataops",
-        "source": "doc:data/learn/building-pipelines-dbt-dagster",
-        "target": "tag:dataops",
+        "target": "tag:data lake",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -6355,9 +6346,9 @@
     },
     {
       "data": {
-        "id": "edge:data/learn/building-pipelines-dbt-dagster:data lake",
+        "id": "edge:data/learn/building-pipelines-dbt-dagster:dataops",
         "source": "doc:data/learn/building-pipelines-dbt-dagster",
-        "target": "tag:data lake",
+        "target": "tag:dataops",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -6373,9 +6364,9 @@
     },
     {
       "data": {
-        "id": "edge:data/learn/data-pipeline-architectures:cloud-infrastructure",
-        "source": "doc:data/learn/data-pipeline-architectures",
-        "target": "tag:cloud-infrastructure",
+        "id": "edge:data/learn/building-pipelines-dbt-dagster:etl",
+        "source": "doc:data/learn/building-pipelines-dbt-dagster",
+        "target": "tag:etl",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -6385,6 +6376,15 @@
         "id": "edge:data/learn/data-pipeline-architectures:streaming",
         "source": "doc:data/learn/data-pipeline-architectures",
         "target": "tag:streaming",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:data/learn/data-pipeline-architectures:cloud-infrastructure",
+        "source": "doc:data/learn/data-pipeline-architectures",
+        "target": "tag:cloud-infrastructure",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -6409,27 +6409,9 @@
     },
     {
       "data": {
-        "id": "edge:data/learn/data-engineering-basics:elt",
+        "id": "edge:data/learn/data-engineering-basics:data lake",
         "source": "doc:data/learn/data-engineering-basics",
-        "target": "tag:elt",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/learn/data-engineering-basics:dataops",
-        "source": "doc:data/learn/data-engineering-basics",
-        "target": "tag:dataops",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/learn/data-engineering-basics:batch processing",
-        "source": "doc:data/learn/data-engineering-basics",
-        "target": "tag:batch processing",
+        "target": "tag:data lake",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -6445,10 +6427,37 @@
     },
     {
       "data": {
-        "id": "edge:data/learn/data-engineering-basics:data lake",
+        "id": "edge:data/learn/data-engineering-basics:dataops",
         "source": "doc:data/learn/data-engineering-basics",
-        "target": "tag:data lake",
+        "target": "tag:dataops",
         "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:data/learn/data-engineering-basics:elt",
+        "source": "doc:data/learn/data-engineering-basics",
+        "target": "tag:elt",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:data/learn/data-engineering-basics:batch processing",
+        "source": "doc:data/learn/data-engineering-basics",
+        "target": "tag:batch processing",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:aml/learn/quiz-aml:software-quality",
+        "source": "doc:aml/learn/quiz-aml",
+        "target": "tag:software-quality",
+        "sourcePillar": "aml",
         "targetPillar": ""
       }
     },
@@ -6472,36 +6481,9 @@
     },
     {
       "data": {
-        "id": "edge:aml/learn/quiz-aml:software-quality",
-        "source": "doc:aml/learn/quiz-aml",
-        "target": "tag:software-quality",
-        "sourcePillar": "aml",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:markets/learn/science-method:learn",
-        "source": "doc:markets/learn/science-method",
-        "target": "tag:learn",
-        "sourcePillar": "markets",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
         "id": "edge:markets/learn/science-method:stock",
         "source": "doc:markets/learn/science-method",
         "target": "tag:stock",
-        "sourcePillar": "markets",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:markets/learn/science-method:reasoning",
-        "source": "doc:markets/learn/science-method",
-        "target": "tag:reasoning",
         "sourcePillar": "markets",
         "targetPillar": ""
       }
@@ -6526,6 +6508,15 @@
     },
     {
       "data": {
+        "id": "edge:markets/learn/science-method:learn",
+        "source": "doc:markets/learn/science-method",
+        "target": "tag:learn",
+        "sourcePillar": "markets",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
         "id": "edge:markets/learn/science-method:scientific",
         "source": "doc:markets/learn/science-method",
         "target": "tag:scientific",
@@ -6535,9 +6526,9 @@
     },
     {
       "data": {
-        "id": "edge:markets/learn/market-analysis:technical analysis",
-        "source": "doc:markets/learn/market-analysis",
-        "target": "tag:technical analysis",
+        "id": "edge:markets/learn/science-method:reasoning",
+        "source": "doc:markets/learn/science-method",
+        "target": "tag:reasoning",
         "sourcePillar": "markets",
         "targetPillar": ""
       }
@@ -6547,6 +6538,15 @@
         "id": "edge:markets/learn/market-analysis:earnings analysis",
         "source": "doc:markets/learn/market-analysis",
         "target": "tag:earnings analysis",
+        "sourcePillar": "markets",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:markets/learn/market-analysis:technical analysis",
+        "source": "doc:markets/learn/market-analysis",
+        "target": "tag:technical analysis",
         "sourcePillar": "markets",
         "targetPillar": ""
       }
@@ -6566,6 +6566,15 @@
         "source": "doc:markets/learn/market-analysis",
         "target": "tag:markets",
         "sourcePillar": "markets",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:aml/learn/aml-basics:aml-reporting",
+        "source": "doc:aml/learn/aml-basics",
+        "target": "tag:aml-reporting",
+        "sourcePillar": "aml",
         "targetPillar": ""
       }
     },
@@ -6598,27 +6607,9 @@
     },
     {
       "data": {
-        "id": "edge:aml/learn/aml-basics:aml-reporting",
-        "source": "doc:aml/learn/aml-basics",
-        "target": "tag:aml-reporting",
-        "sourcePillar": "aml",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/learn/learning-hub:data quality",
+        "id": "edge:data/learn/learning-hub:biotech genomics",
         "source": "doc:data/learn/learning-hub",
-        "target": "tag:data quality",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:data/learn/learning-hub:semiconductor industry",
-        "source": "doc:data/learn/learning-hub",
-        "target": "tag:semiconductor industry",
+        "target": "tag:biotech genomics",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -6634,9 +6625,18 @@
     },
     {
       "data": {
-        "id": "edge:data/learn/learning-hub:biotech genomics",
+        "id": "edge:data/learn/learning-hub:semiconductor industry",
         "source": "doc:data/learn/learning-hub",
-        "target": "tag:biotech genomics",
+        "target": "tag:semiconductor industry",
+        "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:data/learn/learning-hub:data quality",
+        "source": "doc:data/learn/learning-hub",
+        "target": "tag:data quality",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -6647,6 +6647,15 @@
         "source": "doc:data/learn/learning-hub",
         "target": "tag:aml",
         "sourcePillar": "data",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:aml/learn/trade-based-ml-sanctions:trade-finance-crime",
+        "source": "doc:aml/learn/trade-based-ml-sanctions",
+        "target": "tag:trade-finance-crime",
+        "sourcePillar": "aml",
         "targetPillar": ""
       }
     },
@@ -6679,18 +6688,9 @@
     },
     {
       "data": {
-        "id": "edge:aml/learn/trade-based-ml-sanctions:trade-finance-crime",
-        "source": "doc:aml/learn/trade-based-ml-sanctions",
-        "target": "tag:trade-finance-crime",
-        "sourcePillar": "aml",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:markets/learn/behavioral-finance-portfolio:portfolio",
+        "id": "edge:markets/learn/behavioral-finance-portfolio:risk-management",
         "source": "doc:markets/learn/behavioral-finance-portfolio",
-        "target": "tag:portfolio",
+        "target": "tag:risk-management",
         "sourcePillar": "markets",
         "targetPillar": ""
       }
@@ -6706,9 +6706,9 @@
     },
     {
       "data": {
-        "id": "edge:markets/learn/behavioral-finance-portfolio:risk-management",
+        "id": "edge:markets/learn/behavioral-finance-portfolio:portfolio",
         "source": "doc:markets/learn/behavioral-finance-portfolio",
-        "target": "tag:risk-management",
+        "target": "tag:portfolio",
         "sourcePillar": "markets",
         "targetPillar": ""
       }
@@ -6724,9 +6724,9 @@
     },
     {
       "data": {
-        "id": "edge:data/learn/data-ethics-privacy:regtech",
+        "id": "edge:data/learn/data-ethics-privacy:cybersecurity",
         "source": "doc:data/learn/data-ethics-privacy",
-        "target": "tag:regtech",
+        "target": "tag:cybersecurity",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -6751,28 +6751,10 @@
     },
     {
       "data": {
-        "id": "edge:data/learn/data-ethics-privacy:cybersecurity",
+        "id": "edge:data/learn/data-ethics-privacy:regtech",
         "source": "doc:data/learn/data-ethics-privacy",
-        "target": "tag:cybersecurity",
-        "sourcePillar": "data",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:aml/learn/crypto-aml:regtech",
-        "source": "doc:aml/learn/crypto-aml",
         "target": "tag:regtech",
-        "sourcePillar": "aml",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:aml/learn/crypto-aml:aml",
-        "source": "doc:aml/learn/crypto-aml",
-        "target": "tag:aml",
-        "sourcePillar": "aml",
+        "sourcePillar": "data",
         "targetPillar": ""
       }
     },
@@ -6790,6 +6772,24 @@
         "id": "edge:aml/learn/crypto-aml:crypto-aml",
         "source": "doc:aml/learn/crypto-aml",
         "target": "tag:crypto-aml",
+        "sourcePillar": "aml",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:aml/learn/crypto-aml:regtech",
+        "source": "doc:aml/learn/crypto-aml",
+        "target": "tag:regtech",
+        "sourcePillar": "aml",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:aml/learn/crypto-aml:aml",
+        "source": "doc:aml/learn/crypto-aml",
+        "target": "tag:aml",
         "sourcePillar": "aml",
         "targetPillar": ""
       }
@@ -6841,6 +6841,33 @@
     },
     {
       "data": {
+        "id": "edge:markets/learn/behavioral-design-learning:behavioral",
+        "source": "doc:markets/learn/behavioral-design-learning",
+        "target": "tag:behavioral",
+        "sourcePillar": "markets",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:markets/learn/behavioral-design-learning:education",
+        "source": "doc:markets/learn/behavioral-design-learning",
+        "target": "tag:education",
+        "sourcePillar": "markets",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:markets/learn/behavioral-design-learning:behind",
+        "source": "doc:markets/learn/behavioral-design-learning",
+        "target": "tag:behind",
+        "sourcePillar": "markets",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
         "id": "edge:markets/learn/behavioral-design-learning:learn",
         "source": "doc:markets/learn/behavioral-design-learning",
         "target": "tag:learn",
@@ -6859,36 +6886,18 @@
     },
     {
       "data": {
-        "id": "edge:markets/learn/behavioral-design-learning:platforms",
-        "source": "doc:markets/learn/behavioral-design-learning",
-        "target": "tag:platforms",
-        "sourcePillar": "markets",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:markets/learn/behavioral-design-learning:behind",
-        "source": "doc:markets/learn/behavioral-design-learning",
-        "target": "tag:behind",
-        "sourcePillar": "markets",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:markets/learn/behavioral-design-learning:education",
-        "source": "doc:markets/learn/behavioral-design-learning",
-        "target": "tag:education",
-        "sourcePillar": "markets",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
         "id": "edge:markets/learn/behavioral-design-learning:learning",
         "source": "doc:markets/learn/behavioral-design-learning",
         "target": "tag:learning",
+        "sourcePillar": "markets",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:markets/learn/behavioral-design-learning:platforms",
+        "source": "doc:markets/learn/behavioral-design-learning",
+        "target": "tag:platforms",
         "sourcePillar": "markets",
         "targetPillar": ""
       }
@@ -6904,18 +6913,18 @@
     },
     {
       "data": {
-        "id": "edge:markets/learn/behavioral-design-learning:behavioral",
-        "source": "doc:markets/learn/behavioral-design-learning",
-        "target": "tag:behavioral",
-        "sourcePillar": "markets",
+        "id": "edge:knowledge/dataops-trends-2026:data lake",
+        "source": "doc:knowledge/dataops-trends-2026",
+        "target": "tag:data lake",
+        "sourcePillar": "knowledge",
         "targetPillar": ""
       }
     },
     {
       "data": {
-        "id": "edge:knowledge/dataops-trends-2026:data lake",
+        "id": "edge:knowledge/dataops-trends-2026:orchestration",
         "source": "doc:knowledge/dataops-trends-2026",
-        "target": "tag:data lake",
+        "target": "tag:orchestration",
         "sourcePillar": "knowledge",
         "targetPillar": ""
       }
@@ -6934,15 +6943,6 @@
         "id": "edge:knowledge/dataops-trends-2026:dagster",
         "source": "doc:knowledge/dataops-trends-2026",
         "target": "tag:dagster",
-        "sourcePillar": "knowledge",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:knowledge/dataops-trends-2026:orchestration",
-        "source": "doc:knowledge/dataops-trends-2026",
-        "target": "tag:orchestration",
         "sourcePillar": "knowledge",
         "targetPillar": ""
       }
@@ -6976,18 +6976,18 @@
     },
     {
       "data": {
-        "id": "edge:data/learn/data-quality-engineering:dataops",
+        "id": "edge:data/learn/data-quality-engineering:software-quality",
         "source": "doc:data/learn/data-quality-engineering",
-        "target": "tag:dataops",
+        "target": "tag:software-quality",
         "sourcePillar": "data",
         "targetPillar": ""
       }
     },
     {
       "data": {
-        "id": "edge:data/learn/data-quality-engineering:software-quality",
+        "id": "edge:data/learn/data-quality-engineering:dataops",
         "source": "doc:data/learn/data-quality-engineering",
-        "target": "tag:software-quality",
+        "target": "tag:dataops",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -7003,9 +7003,9 @@
     },
     {
       "data": {
-        "id": "edge:data/learn/open-source-data-stack:apache iceberg",
+        "id": "edge:data/learn/open-source-data-stack:data lake",
         "source": "doc:data/learn/open-source-data-stack",
-        "target": "tag:apache iceberg",
+        "target": "tag:data lake",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -7030,9 +7030,9 @@
     },
     {
       "data": {
-        "id": "edge:data/learn/open-source-data-stack:data lake",
+        "id": "edge:data/learn/open-source-data-stack:apache iceberg",
         "source": "doc:data/learn/open-source-data-stack",
-        "target": "tag:data lake",
+        "target": "tag:apache iceberg",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -7048,18 +7048,18 @@
     },
     {
       "data": {
-        "id": "edge:knowledge/dataops-glossary:data-engineering",
+        "id": "edge:knowledge/dataops-glossary:documentation",
         "source": "doc:knowledge/dataops-glossary",
-        "target": "tag:data-engineering",
+        "target": "tag:documentation",
         "sourcePillar": "knowledge",
         "targetPillar": ""
       }
     },
     {
       "data": {
-        "id": "edge:knowledge/dataops-glossary:knowledge",
+        "id": "edge:knowledge/dataops-glossary:data-engineering",
         "source": "doc:knowledge/dataops-glossary",
-        "target": "tag:knowledge",
+        "target": "tag:data-engineering",
         "sourcePillar": "knowledge",
         "targetPillar": ""
       }
@@ -7075,8 +7075,17 @@
     },
     {
       "data": {
-        "id": "edge:knowledge/dataops-glossary:documentation",
+        "id": "edge:knowledge/dataops-glossary:knowledge",
         "source": "doc:knowledge/dataops-glossary",
+        "target": "tag:knowledge",
+        "sourcePillar": "knowledge",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:knowledge/open-source-tools:documentation",
+        "source": "doc:knowledge/open-source-tools",
         "target": "tag:documentation",
         "sourcePillar": "knowledge",
         "targetPillar": ""
@@ -7093,15 +7102,6 @@
     },
     {
       "data": {
-        "id": "edge:knowledge/open-source-tools:knowledge",
-        "source": "doc:knowledge/open-source-tools",
-        "target": "tag:knowledge",
-        "sourcePillar": "knowledge",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
         "id": "edge:knowledge/open-source-tools:platform",
         "source": "doc:knowledge/open-source-tools",
         "target": "tag:platform",
@@ -7111,9 +7111,9 @@
     },
     {
       "data": {
-        "id": "edge:knowledge/open-source-tools:documentation",
+        "id": "edge:knowledge/open-source-tools:knowledge",
         "source": "doc:knowledge/open-source-tools",
-        "target": "tag:documentation",
+        "target": "tag:knowledge",
         "sourcePillar": "knowledge",
         "targetPillar": ""
       }
@@ -7138,18 +7138,18 @@
     },
     {
       "data": {
-        "id": "edge:knowledge/about:data-engineering",
+        "id": "edge:knowledge/about:documentation",
         "source": "doc:knowledge/about",
-        "target": "tag:data-engineering",
+        "target": "tag:documentation",
         "sourcePillar": "knowledge",
         "targetPillar": ""
       }
     },
     {
       "data": {
-        "id": "edge:knowledge/about:knowledge",
+        "id": "edge:knowledge/about:data-engineering",
         "source": "doc:knowledge/about",
-        "target": "tag:knowledge",
+        "target": "tag:data-engineering",
         "sourcePillar": "knowledge",
         "targetPillar": ""
       }
@@ -7165,8 +7165,17 @@
     },
     {
       "data": {
-        "id": "edge:knowledge/about:documentation",
+        "id": "edge:knowledge/about:knowledge",
         "source": "doc:knowledge/about",
+        "target": "tag:knowledge",
+        "sourcePillar": "knowledge",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:knowledge/contact:documentation",
+        "source": "doc:knowledge/contact",
         "target": "tag:documentation",
         "sourcePillar": "knowledge",
         "targetPillar": ""
@@ -7183,15 +7192,6 @@
     },
     {
       "data": {
-        "id": "edge:knowledge/contact:knowledge",
-        "source": "doc:knowledge/contact",
-        "target": "tag:knowledge",
-        "sourcePillar": "knowledge",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
         "id": "edge:knowledge/contact:platform",
         "source": "doc:knowledge/contact",
         "target": "tag:platform",
@@ -7201,27 +7201,9 @@
     },
     {
       "data": {
-        "id": "edge:knowledge/contact:documentation",
+        "id": "edge:knowledge/contact:knowledge",
         "source": "doc:knowledge/contact",
-        "target": "tag:documentation",
-        "sourcePillar": "knowledge",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:knowledge/research-methodology:regulatory compliance",
-        "source": "doc:knowledge/research-methodology",
-        "target": "tag:regulatory compliance",
-        "sourcePillar": "knowledge",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:knowledge/research-methodology:dataops",
-        "source": "doc:knowledge/research-methodology",
-        "target": "tag:dataops",
+        "target": "tag:knowledge",
         "sourcePillar": "knowledge",
         "targetPillar": ""
       }
@@ -7237,9 +7219,18 @@
     },
     {
       "data": {
-        "id": "edge:knowledge/pillar-taxonomy:regtech",
-        "source": "doc:knowledge/pillar-taxonomy",
-        "target": "tag:regtech",
+        "id": "edge:knowledge/research-methodology:dataops",
+        "source": "doc:knowledge/research-methodology",
+        "target": "tag:dataops",
+        "sourcePillar": "knowledge",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:knowledge/research-methodology:regulatory compliance",
+        "source": "doc:knowledge/research-methodology",
+        "target": "tag:regulatory compliance",
         "sourcePillar": "knowledge",
         "targetPillar": ""
       }
@@ -7255,18 +7246,18 @@
     },
     {
       "data": {
-        "id": "edge:knowledge/pillar-taxonomy:sanctions screening",
+        "id": "edge:knowledge/pillar-taxonomy:fatf recommendations",
         "source": "doc:knowledge/pillar-taxonomy",
-        "target": "tag:sanctions screening",
+        "target": "tag:fatf recommendations",
         "sourcePillar": "knowledge",
         "targetPillar": ""
       }
     },
     {
       "data": {
-        "id": "edge:knowledge/pillar-taxonomy:fatf recommendations",
+        "id": "edge:knowledge/pillar-taxonomy:sanctions screening",
         "source": "doc:knowledge/pillar-taxonomy",
-        "target": "tag:fatf recommendations",
+        "target": "tag:sanctions screening",
         "sourcePillar": "knowledge",
         "targetPillar": ""
       }
@@ -7282,18 +7273,27 @@
     },
     {
       "data": {
-        "id": "edge:knowledge/changelog:data-engineering",
-        "source": "doc:knowledge/changelog",
-        "target": "tag:data-engineering",
+        "id": "edge:knowledge/pillar-taxonomy:regtech",
+        "source": "doc:knowledge/pillar-taxonomy",
+        "target": "tag:regtech",
         "sourcePillar": "knowledge",
         "targetPillar": ""
       }
     },
     {
       "data": {
-        "id": "edge:knowledge/changelog:knowledge",
+        "id": "edge:knowledge/changelog:documentation",
         "source": "doc:knowledge/changelog",
-        "target": "tag:knowledge",
+        "target": "tag:documentation",
+        "sourcePillar": "knowledge",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:knowledge/changelog:data-engineering",
+        "source": "doc:knowledge/changelog",
+        "target": "tag:data-engineering",
         "sourcePillar": "knowledge",
         "targetPillar": ""
       }
@@ -7309,8 +7309,17 @@
     },
     {
       "data": {
-        "id": "edge:knowledge/changelog:documentation",
+        "id": "edge:knowledge/changelog:knowledge",
         "source": "doc:knowledge/changelog",
+        "target": "tag:knowledge",
+        "sourcePillar": "knowledge",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:knowledge/faq:documentation",
+        "source": "doc:knowledge/faq",
         "target": "tag:documentation",
         "sourcePillar": "knowledge",
         "targetPillar": ""
@@ -7327,15 +7336,6 @@
     },
     {
       "data": {
-        "id": "edge:knowledge/faq:knowledge",
-        "source": "doc:knowledge/faq",
-        "target": "tag:knowledge",
-        "sourcePillar": "knowledge",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
         "id": "edge:knowledge/faq:platform",
         "source": "doc:knowledge/faq",
         "target": "tag:platform",
@@ -7345,27 +7345,9 @@
     },
     {
       "data": {
-        "id": "edge:knowledge/faq:documentation",
+        "id": "edge:knowledge/faq:knowledge",
         "source": "doc:knowledge/faq",
-        "target": "tag:documentation",
-        "sourcePillar": "knowledge",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:knowledge/glossary:sar",
-        "source": "doc:knowledge/glossary",
-        "target": "tag:sar",
-        "sourcePillar": "knowledge",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:knowledge/glossary:edd",
-        "source": "doc:knowledge/glossary",
-        "target": "tag:edd",
+        "target": "tag:knowledge",
         "sourcePillar": "knowledge",
         "targetPillar": ""
       }
@@ -7381,6 +7363,15 @@
     },
     {
       "data": {
+        "id": "edge:knowledge/glossary:cdd",
+        "source": "doc:knowledge/glossary",
+        "target": "tag:cdd",
+        "sourcePillar": "knowledge",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
         "id": "edge:knowledge/glossary:aml",
         "source": "doc:knowledge/glossary",
         "target": "tag:aml",
@@ -7390,9 +7381,18 @@
     },
     {
       "data": {
-        "id": "edge:knowledge/glossary:cdd",
+        "id": "edge:knowledge/glossary:edd",
         "source": "doc:knowledge/glossary",
-        "target": "tag:cdd",
+        "target": "tag:edd",
+        "sourcePillar": "knowledge",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:knowledge/glossary:sar",
+        "source": "doc:knowledge/glossary",
+        "target": "tag:sar",
         "sourcePillar": "knowledge",
         "targetPillar": ""
       }
@@ -7417,18 +7417,18 @@
     },
     {
       "data": {
-        "id": "edge:data/knowledge/cybernetic-foundations:dataops",
+        "id": "edge:data/knowledge/cybernetic-foundations:signal-quality",
         "source": "doc:data/knowledge/cybernetic-foundations",
-        "target": "tag:dataops",
+        "target": "tag:signal-quality",
         "sourcePillar": "data",
         "targetPillar": ""
       }
     },
     {
       "data": {
-        "id": "edge:data/knowledge/cybernetic-foundations:signal-quality",
+        "id": "edge:data/knowledge/cybernetic-foundations:dataops",
         "source": "doc:data/knowledge/cybernetic-foundations",
-        "target": "tag:signal-quality",
+        "target": "tag:dataops",
         "sourcePillar": "data",
         "targetPillar": ""
       }
@@ -7462,18 +7462,9 @@
     },
     {
       "data": {
-        "id": "edge:aml/research/square-root-price-impact-is-necessary-for-endogenous-manipul:aml",
+        "id": "edge:aml/research/square-root-price-impact-is-necessary-for-endogenous-manipul:trade-finance-crime",
         "source": "doc:aml/research/square-root-price-impact-is-necessary-for-endogenous-manipul",
-        "target": "tag:aml",
-        "sourcePillar": "aml",
-        "targetPillar": ""
-      }
-    },
-    {
-      "data": {
-        "id": "edge:aml/research/square-root-price-impact-is-necessary-for-endogenous-manipul:markets",
-        "source": "doc:aml/research/square-root-price-impact-is-necessary-for-endogenous-manipul",
-        "target": "tag:markets",
+        "target": "tag:trade-finance-crime",
         "sourcePillar": "aml",
         "targetPillar": ""
       }
@@ -7489,9 +7480,18 @@
     },
     {
       "data": {
-        "id": "edge:aml/research/square-root-price-impact-is-necessary-for-endogenous-manipul:trade-finance-crime",
+        "id": "edge:aml/research/square-root-price-impact-is-necessary-for-endogenous-manipul:aml",
         "source": "doc:aml/research/square-root-price-impact-is-necessary-for-endogenous-manipul",
-        "target": "tag:trade-finance-crime",
+        "target": "tag:aml",
+        "sourcePillar": "aml",
+        "targetPillar": ""
+      }
+    },
+    {
+      "data": {
+        "id": "edge:aml/research/square-root-price-impact-is-necessary-for-endogenous-manipul:markets",
+        "source": "doc:aml/research/square-root-price-impact-is-necessary-for-endogenous-manipul",
+        "target": "tag:markets",
         "sourcePillar": "aml",
         "targetPillar": ""
       }
