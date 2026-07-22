@@ -2780,3 +2780,7 @@ Sitemap: {SITE_URL}/sitemap.xml
     return 0
 
 
+if __name__ == "__main__":
+    sys.exit(main())
+
+
