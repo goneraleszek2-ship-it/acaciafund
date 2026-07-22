@@ -1,20 +1,34 @@
 {% extends "layout.j2" %}
 {% block main_content %}
 <section>
-  <div class="flex items-center gap-2 mb-2">
-    <span class="text-xl">{{ pillar_emojis.get(pillar, '') }}</span>
-    <hgroup>
+  <div class="flex items-center gap-3 mb-4">
+    <span class="text-2xl">{{ pillar_emojis.get(pillar, '') }}</span>
+    <div>
       <h1 class="text-2xl font-extrabold" style="color:var(--color-text)">{{ page_title }}</h1>
       {%- if page_description %}
       <p class="text-sm mt-1" style="color:var(--color-text-secondary)">{{ page_description }}</p>
       {%- endif %}
-    </hgroup>
+    </div>
   </div>
 
-  <div class="mt-6 space-y-4">
-    {%- if glossary_terms and glossary_terms | length > 0 %}
-    <details open class="ghost-card p-4">
-      <summary class="text-sm font-bold cursor-pointer select-none" style="color:var(--color-text)">Key Terms <span class="text-xs font-normal" style="color:var(--color-text-muted)">({{ glossary_terms | length }})</span></summary>
+  {%- set pillar_color = pconf.color if pconf else 'var(--color-accent)' %}
+
+  <div class="mb-6 flex flex-wrap items-center gap-3 text-xs" style="color:var(--color-text-muted)">
+    <span><strong style="color:var(--color-text)">{{ posts | length }}</strong> articles</span>
+    <span>&middot;</span>
+    <span class="difficulty-badge beginner">Beginner friendly</span>
+    {%- if glossary_terms %}
+    <span>&middot;</span>
+    <span><strong style="color:var(--color-text)">{{ glossary_terms | length }}</strong> key terms</span>
+    {%- endif %}
+  </div>
+
+  {%- if glossary_terms and glossary_terms | length > 0 %}
+  <div class="ghost-card p-4 mb-6">
+    <details open>
+      <summary class="text-sm font-bold cursor-pointer select-none" style="color:var(--color-text);list-style:none;display:flex;align-items:center;gap:0.5rem;">
+        <span style="font-size:1rem">&#128214;</span> Key Terms <span class="text-xs font-normal" style="color:var(--color-text-muted)">({{ glossary_terms | length }})</span>
+      </summary>
       <div class="flex flex-wrap gap-2 mt-3">
         {%- for term in glossary_terms[:12] %}
         <a href="{{ slug_to_url(term.slug) }}" class="px-3 py-1.5 text-sm transition hover:shadow-md no-underline rounded" style="background:var(--color-surface);border:1px solid var(--color-border);color:var(--color-text)">
@@ -26,31 +40,15 @@
         {%- endfor %}
       </div>
     </details>
-    {%- endif %}
+  </div>
+  {%- endif %}
 
-    {%- if latest_learn and latest_learn | length > 0 %}
-    <details class="ghost-card p-4">
-      <summary class="text-sm font-bold cursor-pointer select-none" style="color:var(--color-text)">Latest Lessons <span class="text-xs font-normal" style="color:var(--color-text-muted)">({{ latest_learn | length }})</span></summary>
-      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mt-3">
-        {%- for item in latest_learn[:6] %}
-        <a href="{{ slug_to_url(item.slug) }}" class="block transition hover:shadow-md no-underline" style="text-decoration:none">
-          <div class="p-3 rounded" style="background:var(--color-surface);border:1px solid var(--color-border)">
-            <span class="text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, #22c55e 15%, transparent);color:#22c55e">Learn</span>
-            <h3 class="mt-2 text-sm font-semibold" style="color:var(--color-text)">{{ item.title | striptags }}</h3>
-            <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">{{ item.description }}</p>
-            {%- if item.difficulty %}
-            <span class="mt-2 inline-block text-xs px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted)">{{ item.difficulty | capitalize }}</span>
-            {%- endif %}
-          </div>
-        </a>
-        {%- endfor %}
-      </div>
-    </details>
-    {%- endif %}
-
-    {%- if concept_cloud and concept_cloud | length > 0 %}
-    <details class="ghost-card p-4">
-      <summary class="text-sm font-bold cursor-pointer select-none" style="color:var(--color-text)">Concepts <span class="text-xs font-normal" style="color:var(--color-text-muted)">({{ concept_cloud | length }})</span></summary>
+  {%- if concept_cloud and concept_cloud | length > 0 %}
+  <div class="ghost-card p-4 mb-6">
+    <details>
+      <summary class="text-sm font-bold cursor-pointer select-none" style="color:var(--color-text);list-style:none;display:flex;align-items:center;gap:0.5rem;">
+        <span style="font-size:1rem">&#129504;</span> Concepts <span class="text-xs font-normal" style="color:var(--color-text-muted)">({{ concept_cloud | length }})</span>
+      </summary>
       <div class="flex flex-wrap gap-2 mt-3">
         {%- for concept in concept_cloud %}
         <span class="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 20%, transparent)">
@@ -60,37 +58,68 @@
         {%- endfor %}
       </div>
     </details>
-    {%- endif %}
+  </div>
+  {%- endif %}
+
+  {%- if latest_learn and latest_learn | length > 0 %}
+  <div class="ghost-card p-4 mb-6">
+    <details>
+      <summary class="text-sm font-bold cursor-pointer select-none" style="color:var(--color-text);list-style:none;display:flex;align-items:center;gap:0.5rem;">
+        <span style="font-size:1rem">&#128218;</span> Learning Paths <span class="text-xs font-normal" style="color:var(--color-text-muted)">({{ latest_learn | length }})</span>
+      </summary>
+      <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mt-3">
+        {%- for item in latest_learn[:6] %}
+        <a href="{{ slug_to_url(item.slug) }}" class="block transition hover:shadow-md no-underline" style="text-decoration:none">
+          <div class="p-3 rounded" style="background:var(--color-surface);border:1px solid var(--color-border)">
+            <span class="difficulty-badge beginner">Learn</span>
+            <h3 class="mt-2 text-sm font-semibold" style="color:var(--color-text)">{{ item.title | striptags }}</h3>
+            <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">{{ item.description }}</p>
+          </div>
+        </a>
+        {%- endfor %}
+      </div>
+    </details>
+  </div>
+  {%- endif %}
+
+  {%- if posts | length > 0 %}
+  <div class="flex items-center gap-3 mb-4">
+    <h2 class="text-base font-bold" style="color:var(--color-text)">All Articles</h2>
+    <div class="flex-1 h-px" style="background:var(--color-border)"></div>
   </div>
 
-  <div class="flex items-center gap-3 mt-6 mb-4">
-    <a href="/{{ pconf.url }}/synthesis/" class="text-xs px-3 py-1.5 rounded font-semibold no-underline transition hover:shadow-sm" style="background:var(--color-surface);border:1px solid var(--color-border);color:var(--color-text)">
-      Cross-Pillar Synthesis →
-    </a>
-  </div>
-
-  <div class="pillar-posts mt-2">
+  <div class="pillar-posts grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
     {% for post in posts %}
-    <article class="post-card mb-4 last:mb-0">
+    {%- set ptype = post.content_type | default("research") %}
+    {%- set pcolor = "#22c55e" if ptype == "learn" else ("#d97706" if ptype == "knowledge" else "#6366f1") %}
+    <a href="{{ slug_to_url(post.slug) }}" class="pillar-card ghost-card p-4 block no-underline">
       <div class="flex items-center gap-2 mb-2">
-        {%- set ptype = post.content_type | default("research") %}
-        {%- if ptype == "learn" %}
-        <span class="text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, #22c55e 15%, transparent);color:#22c55e">Learn</span>
-        {%- elif ptype == "knowledge" %}
-        <span class="text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, #d97706 15%, transparent);color:#d97706">Knowledge</span>
-        {%- else %}
-        <span class="text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, #6366f1 15%, transparent);color:#6366f1">Research</span>
+        <span class="text-xs px-2 py-0.5 rounded font-semibold" style="background:color-mix(in srgb, {{ pcolor }} 15%, transparent);color:{{ pcolor }}">{{ ptype | capitalize }}</span>
+        {%- if post.difficulty %}
+        <span class="difficulty-badge {% if post.difficulty == 'beginner' %}beginner{% elif post.difficulty == 'intermediate' %}intermediate{% else %}advanced{% endif %}">{{ post.difficulty | capitalize }}</span>
         {%- endif %}
       </div>
-      <h2><a href="{{ slug_to_url(post.slug) }}">{{ post.title }}</a></h2>
-      <p class="post-meta">
+      <h3 class="text-sm font-semibold" style="color:var(--color-text)">{{ post.title }}</h3>
+      <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">{{ post.description }}</p>
+      <div class="mt-2 text-xs" style="color:var(--color-text-muted)">
         <span>{{ post.date_str }}</span>
-        <span>•</span>
-        <span>{{ pconf.label if pconf else (post.pillar | replace('-', ' ') | title) }}</span>
-      </p>
-      <p>{{ post.description }}</p>
-    </article>
+      </div>
+    </a>
     {% endfor %}
+  </div>
+  {%- else %}
+  <div class="ghost-card p-6 text-center">
+    <p style="color:var(--color-text-muted)">No articles yet in this topic.</p>
+  </div>
+  {%- endif %}
+
+  <div class="flex items-center gap-3 mt-8">
+    <a href="/{{ pconf.url }}/synthesis/" class="text-xs px-3 py-1.5 rounded font-semibold no-underline transition hover:shadow-sm" style="background:var(--color-surface);border:1px solid var(--color-border);color:var(--color-text)">
+      Cross-Pillar Synthesis &rarr;
+    </a>
+    <a href="/search/?f_pillar={{ pillar }}" class="text-xs px-3 py-1.5 rounded font-semibold no-underline transition hover:shadow-sm" style="background:var(--color-surface);border:1px solid var(--color-border);color:var(--color-text)">
+      Search this topic &rarr;
+    </a>
   </div>
 </section>
 {% endblock %}

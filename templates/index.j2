@@ -1,25 +1,72 @@
 {% extends "layout.j2" %}
 {% block main_content %}
-<section class="mb-8">
-  <div class="ghost-card p-6 mb-6" style="border-left:4px solid var(--color-accent)">
-    <h1 class="text-2xl font-extrabold" style="color:var(--color-text)">{{ site_name }}</h1>
-    <p class="mt-2 text-sm" style="color:var(--color-text-secondary)">{{ site_description }}</p>
-    <div class="mt-4 flex flex-wrap gap-4 text-xs" style="color:var(--color-text-muted)">
-      <span><strong class="text-sm" style="color:var(--color-text)">{{ stat_article_count }}</strong> articles</span>
-      <span><strong class="text-sm" style="color:var(--color-text)">{{ stat_source_count }}</strong> sources</span>
-      <span><strong class="text-sm" style="color:var(--color-text)">{{ stat_topic_count }}</strong> topics</span>
-    </div>
-  </div>
 
+{%- set pillar_map = {'aml': 'compliance', 'stock': 'markets', 'data-engineering': 'data'} %}
+
+<section class="hero-section">
+  <h1>Master complex financial concepts<br>through the <span style="color:var(--color-accent)">Feynman Technique</span></h1>
+  <p class="hero-subtitle">Learn AML compliance, market microstructure, and data engineering through simple explanations, vivid analogies, and active recall — not jargon.</p>
+  <a href="/start-here/" class="hero-cta">Start Learning &rarr;</a>
+</section>
+
+<section class="how-it-works">
+  <div class="hiw-step">
+    <div class="step-number">1</div>
+    <h3>Pick a Topic</h3>
+    <p>Choose from compliance, markets, or data engineering — each explained from the ground up.</p>
+  </div>
+  <div class="hiw-step">
+    <div class="step-number">2</div>
+    <h3>Learn Simply</h3>
+    <p>Every concept starts with an ELI5, then builds through analogies, examples, and diagrams.</p>
+  </div>
+  <div class="hiw-step">
+    <div class="step-number">3</div>
+    <h3>Test Yourself</h3>
+    <p>Teach back what you learned, find gaps, and build real understanding that sticks.</p>
+  </div>
+</section>
+
+{%- if featured_posts and featured_posts | length > 0 %}
+<section class="mb-8">
+  <div class="flex items-center gap-2 mb-4">
+    <span style="font-size:1.25rem">&#9733;</span>
+    <h2 class="text-lg font-bold" style="color:var(--color-text)">Featured</h2>
+  </div>
+  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    {%- for item in featured_posts[:3] %}
+    {%- set fpillar = item.pillar or "aml" %}
+    {%- set fpc = pillar_config.get(fpillar, {}) %}
+    <a href="{{ slug_to_url(item.slug) }}" class="pillar-card ghost-card p-4 block no-underline" style="border-left:3px solid {{ fpc.get('color', '#6366f1') }}">
+      <span class="text-xs font-semibold" style="color:{{ fpc.get('color', '#6366f1') }}">{{ fpc.get('label', fpillar) }}</span>
+      <h3 class="mt-1 text-sm font-semibold" style="color:var(--color-text)">{{ item.title | striptags }}</h3>
+      <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">{{ item.description }}</p>
+    </a>
+    {%- endfor %}
+  </div>
+</section>
+{%- endif %}
+
+<section class="mb-8">
+  <h2 class="text-lg font-bold mb-4" style="color:var(--color-text)">Explore by Topic</h2>
   <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
     {%- for pillar_key in ['aml', 'stock', 'data-engineering'] %}
     {%- set pc = pillar_config.get(pillar_key, {}) %}
-    {%- set pillar_url = pc.get('url', pillar_key) %}
+    {%- set pillar_url = pc.get('url', pillar_map.get(pillar_key, pillar_key)) %}
     {%- set pillar_items = recent_posts | selectattr('pillar', 'equalto', pillar_key) | list %}
-    <div class="ghost-card p-4" style="border-top:3px solid {{ pc.get('color', '#6366f1') }}">
-      <div class="flex items-center gap-2 mb-3">
-        <span class="text-lg">{{ pillar_emojis.get(pillar_key, '') }}</span>
-        <h2 class="text-sm font-bold" style="color:var(--color-text)">{{ pc.get('label', pillar_key) }}</h2>
+    {%- set beginner_count = pillar_items | selectattr('difficulty', 'undefined') | list | length %}
+    <div class="pillar-card ghost-card p-4" style="border-top:3px solid {{ pc.get('color', '#6366f1') }}">
+      <div class="flex items-start gap-3 mb-3">
+        <span class="pillar-icon">{{ pillar_emojis.get(pillar_key, '') }}</span>
+        <div>
+          <h2 class="pillar-name" style="color:var(--color-text)">{{ pc.get('label', pillar_key) }}</h2>
+          <p class="pillar-desc">{{ pc.get('heading', '') }}</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-2 mb-3 pillar-stat">
+        <span>{{ pillar_items | length }} articles</span>
+        <span>&middot;</span>
+        <span class="difficulty-badge beginner">Beginner friendly</span>
       </div>
       {%- for item in pillar_items[:3] %}
       <a href="{{ slug_to_url(item.slug) }}" class="block py-2 border-t text-sm no-underline" style="border-color:var(--color-border);color:var(--color-text-secondary)" onmouseover="this.style.color='var(--color-accent)'" onmouseout="this.style.color='var(--color-text-secondary)'">
@@ -29,12 +76,7 @@
         {%- endif %}
       </a>
       {%- endfor %}
-      {%- if pillar_items | length > 3 %}
-      <a href="/{{ pillar_url }}/" class="block mt-2 text-xs font-semibold no-underline" style="color:var(--color-accent)">View all {{ pillar_items | length }} articles &rarr;</a>
-      {%- endif %}
-      {%- if pillar_items | length == 0 %}
-      <p class="text-xs py-2" style="color:var(--color-text-muted)">No recent articles</p>
-      {%- endif %}
+      <a href="/{{ pillar_url }}/" class="block mt-2 text-xs font-semibold no-underline" style="color:var(--color-accent)">Explore {{ pc.get('label', pillar_key) }} &rarr;</a>
     </div>
     {%- endfor %}
   </div>
@@ -43,18 +85,21 @@
 {%- if learn_items and learn_items | length > 0 %}
 <section class="mb-8">
   <div class="flex items-center justify-between mb-4">
-    <h2 class="text-lg font-bold" style="color:var(--color-text)">Learn Modules</h2>
+    <div class="flex items-center gap-2">
+      <span style="font-size:1.25rem">&#128218;</span>
+      <h2 class="text-lg font-bold" style="color:var(--color-text)">Learning Paths</h2>
+    </div>
     {%- set first_pillar = pillar_config.get(learn_items[0].pillar or 'aml', {}) %}
     <a href="/{{ first_pillar.get('url', 'data') }}/learn/" class="text-xs font-semibold no-underline" style="color:var(--color-accent)">View all &rarr;</a>
   </div>
   <div class="grid gap-3 sm:grid-cols-3">
     {%- for item in learn_items[:3] %}
-    <a href="{{ slug_to_url(item.slug) }}" class="ghost-card p-3 block no-underline transition hover:shadow-md">
-      <span class="text-xs font-semibold" style="color:#22c55e">Learn</span>
-      <h3 class="mt-1 text-sm font-semibold line-clamp-1" style="color:var(--color-text)">{{ item.title | striptags }}</h3>
+    <a href="{{ slug_to_url(item.slug) }}" class="pillar-card ghost-card p-3 block no-underline">
+      <span class="difficulty-badge beginner">Learn</span>
+      <h3 class="mt-2 text-sm font-semibold" style="color:var(--color-text)">{{ item.title | striptags }}</h3>
       <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">{{ item.description }}</p>
       {%- if item.difficulty %}
-      <span class="mt-2 inline-block text-[11px] px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted)">{{ item.difficulty | capitalize }}</span>
+      <span class="mt-2 inline-block text-xs px-2 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">{{ item.difficulty | capitalize }}</span>
       {%- endif %}
     </a>
     {%- endfor %}
@@ -65,14 +110,17 @@
 {%- if knowledge_items and knowledge_items | length > 0 %}
 <section class="mb-8">
   <div class="flex items-center justify-between mb-4">
-    <h2 class="text-lg font-bold" style="color:var(--color-text)">Knowledge Base</h2>
+    <div class="flex items-center gap-2">
+      <span style="font-size:1.25rem">&#128214;</span>
+      <h2 class="text-lg font-bold" style="color:var(--color-text)">Knowledge Base</h2>
+    </div>
     <a href="/knowledge/" class="text-xs font-semibold no-underline" style="color:var(--color-accent)">View all &rarr;</a>
   </div>
   <div class="grid gap-3 sm:grid-cols-3">
     {%- for item in knowledge_items[:3] %}
-    <a href="{{ slug_to_url(item.slug) }}" class="ghost-card p-3 block no-underline transition hover:shadow-md">
+    <a href="{{ slug_to_url(item.slug) }}" class="pillar-card ghost-card p-3 block no-underline">
       <span class="text-xs font-semibold" style="color:#d97706">Knowledge</span>
-      <h3 class="mt-1 text-sm font-semibold line-clamp-1" style="color:var(--color-text)">{{ item.title | striptags }}</h3>
+      <h3 class="mt-2 text-sm font-semibold" style="color:var(--color-text)">{{ item.title | striptags }}</h3>
       <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">{{ item.description }}</p>
     </a>
     {%- endfor %}
@@ -80,20 +128,15 @@
 </section>
 {%- endif %}
 
-{%- if featured_posts and featured_posts | length > 0 %}
-<section>
-  <h2 class="text-lg font-bold mb-4" style="color:var(--color-text)">Featured</h2>
-  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-    {%- for item in featured_posts[:3] %}
-    {%- set fpillar = item.pillar or "aml" %}
-    {%- set fpc = pillar_config.get(fpillar, {}) %}
-    <a href="{{ slug_to_url(item.slug) }}" class="ghost-card p-4 block no-underline transition hover:shadow-md" style="border-left:3px solid {{ fpc.get('color', '#6366f1') }}">
-      <span class="text-xs font-semibold" style="color:{{ fpc.get('color', '#6366f1') }}">{{ fpc.get('label', fpillar) }}</span>
-      <h3 class="mt-1 text-sm font-semibold" style="color:var(--color-text)">{{ item.title | striptags }}</h3>
-      <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">{{ item.description }}</p>
-    </a>
-    {%- endfor %}
+<section class="mb-8">
+  <div class="ghost-card p-5" style="border-left:4px solid #d97706;background:color-mix(in srgb, #d97706 4%, transparent)">
+    <div class="flex items-center gap-2 mb-2">
+      <span style="font-size:1.25rem">&#128161;</span>
+      <h2 class="text-base font-bold" style="color:var(--color-text)">Why the Feynman Technique?</h2>
+    </div>
+    <p class="text-sm" style="color:var(--color-text-secondary)">If you can't explain it simply, you don't understand it well enough. Every concept on Acacia is structured with this principle: start with a plain-English explanation, connect it through analogy, test it with examples, find the gaps, and build something real. No fluff. Just understanding.</p>
+    <a href="/start-here/" class="next-stage-btn mt-3">Learn how it works &rarr;</a>
   </div>
 </section>
-{%- endif %}
+
 {% endblock %}
