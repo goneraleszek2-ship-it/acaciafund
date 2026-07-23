@@ -85,15 +85,15 @@
   ],
   "data/research/data-mesh-implementation": [
     {
+      "slug": "data/learn/warehouse-vs-lake",
+      "score": 0.0909
+    },
+    {
       "slug": "data/learn/designing-data-platform",
       "score": 0.0714
     },
     {
       "slug": "data/research/sqlmesh-data-transformation",
-      "score": 0.0588
-    },
-    {
-      "slug": "aml/research/aml-1",
       "score": 0.0588
     }
   ],
@@ -411,12 +411,12 @@
       "score": 0.1667
     },
     {
-      "slug": "markets/research/meta-confirms-1000s-of-instagram-accounts-were-hacked-by",
-      "score": 0.1111
+      "slug": "markets/learn/introduction-to-market-indices",
+      "score": 0.125
     },
     {
-      "slug": "data/research/science-dataeng",
-      "score": 0.0769
+      "slug": "markets/research/meta-confirms-1000s-of-instagram-accounts-were-hacked-by",
+      "score": 0.1111
     }
   ],
   "markets/research/meta-confirms-1000s-of-instagram-accounts-were-hacked-by": [
@@ -1481,6 +1481,146 @@
     {
       "slug": "aml/learn/aml-enforcement-cases",
       "score": 0.2632
+    }
+  ],
+  "data/learn/what-is-data-engineering": [
+    {
+      "slug": "data/learn/sql-for-data-engineers",
+      "score": 0.4286
+    },
+    {
+      "slug": "data/learn/data-pipeline-basics",
+      "score": 0.375
+    },
+    {
+      "slug": "data/research/analytics-engineering-rise",
+      "score": 0.2
+    }
+  ],
+  "data/learn/sql-for-data-engineers": [
+    {
+      "slug": "data/learn/what-is-data-engineering",
+      "score": 0.4286
+    },
+    {
+      "slug": "data/learn/warehouse-vs-lake",
+      "score": 0.25
+    },
+    {
+      "slug": "data/learn/data-pipeline-basics",
+      "score": 0.2222
+    }
+  ],
+  "data/learn/data-pipeline-basics": [
+    {
+      "slug": "data/learn/what-is-data-engineering",
+      "score": 0.375
+    },
+    {
+      "slug": "data/learn/sql-for-data-engineers",
+      "score": 0.2222
+    },
+    {
+      "slug": "data/learn/data-pipeline-architectures",
+      "score": 0.125
+    }
+  ],
+  "data/learn/data-quality-basics": [
+    {
+      "slug": "data/research/data-observability-lineage",
+      "score": 0.1667
+    },
+    {
+      "slug": "data/learn/what-is-data-engineering",
+      "score": 0.1111
+    },
+    {
+      "slug": "data/learn/sql-for-data-engineers",
+      "score": 0.1111
+    }
+  ],
+  "data/learn/warehouse-vs-lake": [
+    {
+      "slug": "data/learn/sql-for-data-engineers",
+      "score": 0.25
+    },
+    {
+      "slug": "data/learn/designing-data-platform",
+      "score": 0.1818
+    },
+    {
+      "slug": "data/research/delta-lake-iceberg-hudi-comparison",
+      "score": 0.1111
+    }
+  ],
+  "markets/learn/how-stock-markets-work": [
+    {
+      "slug": "markets/learn/reading-financial-statements",
+      "score": 0.2857
+    },
+    {
+      "slug": "markets/learn/introduction-to-risk",
+      "score": 0.2857
+    },
+    {
+      "slug": "markets/learn/introduction-to-market-indices",
+      "score": 0.2857
+    }
+  ],
+  "markets/learn/reading-financial-statements": [
+    {
+      "slug": "markets/learn/introduction-to-risk",
+      "score": 0.3333
+    },
+    {
+      "slug": "markets/learn/introduction-to-market-indices",
+      "score": 0.3333
+    },
+    {
+      "slug": "markets/learn/how-stock-markets-work",
+      "score": 0.2857
+    }
+  ],
+  "markets/learn/what-are-etfs": [
+    {
+      "slug": "markets/learn/introduction-to-risk",
+      "score": 0.5
+    },
+    {
+      "slug": "markets/learn/reading-financial-statements",
+      "score": 0.2857
+    },
+    {
+      "slug": "markets/learn/introduction-to-market-indices",
+      "score": 0.2857
+    }
+  ],
+  "markets/learn/introduction-to-risk": [
+    {
+      "slug": "markets/learn/what-are-etfs",
+      "score": 0.5
+    },
+    {
+      "slug": "markets/learn/reading-financial-statements",
+      "score": 0.3333
+    },
+    {
+      "slug": "markets/learn/introduction-to-market-indices",
+      "score": 0.3333
+    }
+  ],
+  "markets/learn/introduction-to-market-indices": [
+    {
+      "slug": "markets/learn/reading-financial-statements",
+      "score": 0.3333
+    },
+    {
+      "slug": "markets/learn/introduction-to-risk",
+      "score": 0.3333
+    },
+    {
+      "slug": "markets/learn/how-stock-markets-work",
+      "score": 0.2857
     }
   ]
 }
