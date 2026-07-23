@@ -85,16 +85,16 @@
   ],
   "data/research/data-mesh-implementation": [
     {
+      "slug": "data/learn/data-mesh-in-practice",
+      "score": 0.1818
+    },
+    {
       "slug": "data/learn/warehouse-vs-lake",
       "score": 0.0909
     },
     {
       "slug": "data/learn/designing-data-platform",
       "score": 0.0714
-    },
-    {
-      "slug": "data/research/sqlmesh-data-transformation",
-      "score": 0.0588
     }
   ],
   "data/research/terraform-data-infrastructure": [
@@ -191,8 +191,8 @@
       "score": 0.4043
     },
     {
-      "slug": "data/research/data-contracts",
-      "score": 0.175
+      "slug": "data/learn/data-mesh-in-practice",
+      "score": 0.2069
     }
   ],
   "data/research/dbt-mesh-enterprise-scale": [
@@ -225,16 +225,16 @@
   ],
   "data/research/debezium-cdc-change-data-capture": [
     {
+      "slug": "data/learn/schema-management-evolution",
+      "score": 0.2
+    },
+    {
       "slug": "data/research/delta-lake-iceberg-hudi-comparison",
       "score": 0.1818
     },
     {
       "slug": "data/research/data-contracts",
       "score": 0.16
-    },
-    {
-      "slug": "data/research/schema-registry-avro-protobuf",
-      "score": 0.1579
     }
   ],
   "data/research/apache-iceberg-lakehouse": [
@@ -271,12 +271,12 @@
       "score": 0.3182
     },
     {
-      "slug": "data/learn/dataops-introduction",
-      "score": 0.1818
+      "slug": "data/learn/schema-management-evolution",
+      "score": 0.1905
     },
     {
-      "slug": "data/research/sqlmesh-data-transformation",
-      "score": 0.175
+      "slug": "data/learn/dataops-introduction",
+      "score": 0.1818
     }
   ],
   "data/research/airflow-prefect-dagster-comparison": [
@@ -953,16 +953,16 @@
   ],
   "data/learn/data-engineering-basics": [
     {
+      "slug": "data/learn/elt-reverse-etl-analytics-engineering",
+      "score": 0.3636
+    },
+    {
       "slug": "data/learn/building-pipelines-dbt-dagster",
       "score": 0.1875
     },
     {
       "slug": "knowledge/dataops-trends-2026",
       "score": 0.1875
-    },
-    {
-      "slug": "data/research/analytics-engineering-rise",
-      "score": 0.1538
     }
   ],
   "aml/learn/quiz-aml": [
@@ -1079,16 +1079,16 @@
   ],
   "data/learn/data-ethics-privacy": [
     {
+      "slug": "compliance/learn/ai-machine-learning-aml",
+      "score": 0.2308
+    },
+    {
       "slug": "aml/learn/crypto-aml",
       "score": 0.1739
     },
     {
       "slug": "aml/learn/aml-basics",
       "score": 0.1667
-    },
-    {
-      "slug": "aml/research/quantum-spectral-anomaly-detection",
-      "score": 0.1538
     }
   ],
   "aml/learn/crypto-aml": [
@@ -1191,16 +1191,16 @@
   ],
   "data/learn/open-source-data-stack": [
     {
+      "slug": "data/learn/change-data-capture-patterns",
+      "score": 0.2727
+    },
+    {
       "slug": "data/research/analytics-engineering-rise",
       "score": 0.1667
     },
     {
       "slug": "data/learn/dataops-introduction",
       "score": 0.1538
-    },
-    {
-      "slug": "data/learn/building-pipelines-dbt-dagster",
-      "score": 0.125
     }
   ],
   "knowledge/dataops-glossary": [
@@ -1401,16 +1401,16 @@
   ],
   "aml/compliance/what-is-money-laundering": [
     {
+      "slug": "compliance/learn/ml-typologies-current-trends",
+      "score": 0.1667
+    },
+    {
       "slug": "markets/research/stock-7",
       "score": 0.0833
     },
     {
-      "slug": "aml/compliance/aml-regulatory-landscape",
-      "score": 0.0769
-    },
-    {
-      "slug": "data/learn/dataops-introduction",
-      "score": 0.0714
+      "slug": "compliance/learn/aml-training-culture-esg",
+      "score": 0.0833
     }
   ],
   "aml/compliance/kyc-basics": [
@@ -1429,30 +1429,30 @@
   ],
   "aml/compliance/aml-regulatory-landscape": [
     {
+      "slug": "compliance/learn/sanctions-screening-global-regimes",
+      "score": 0.1667
+    },
+    {
       "slug": "aml/learn/aml-compliance-glossary",
       "score": 0.1333
     },
     {
       "slug": "aml/research/aml-3",
       "score": 0.1176
-    },
-    {
-      "slug": "aml/learn/designing-aml-program",
-      "score": 0.087
     }
   ],
   "aml/compliance/risk-based-approach-intro": [
     {
+      "slug": "compliance/learn/risk-based-approach-implementation",
+      "score": 0.25
+    },
+    {
+      "slug": "compliance/learn/correspondent-banking-derisking",
+      "score": 0.25
+    },
+    {
       "slug": "aml/compliance/kyc-basics",
       "score": 0.1905
-    },
-    {
-      "slug": "aml/learn/aml-compliance-glossary",
-      "score": 0.15
-    },
-    {
-      "slug": "aml/learn/designing-aml-program",
-      "score": 0.1481
     }
   ],
   "aml/compliance/sanctions-screening-basics": [
@@ -1465,8 +1465,8 @@
       "score": 0.2083
     },
     {
-      "slug": "data/research/terraform-data-infrastructure",
-      "score": 0.1905
+      "slug": "markets/learn/cross-asset-commodity-trading",
+      "score": 0.2
     }
   ],
   "aml/compliance/suspicious-activity-reports": [
@@ -1493,8 +1493,8 @@
       "score": 0.375
     },
     {
-      "slug": "data/research/analytics-engineering-rise",
-      "score": 0.2
+      "slug": "data/learn/pipeline-cost-optimization",
+      "score": 0.2222
     }
   ],
   "data/learn/sql-for-data-engineers": [
@@ -1521,22 +1521,22 @@
       "score": 0.2222
     },
     {
-      "slug": "data/learn/data-pipeline-architectures",
-      "score": 0.125
+      "slug": "data/learn/change-data-capture-patterns",
+      "score": 0.1818
     }
   ],
   "data/learn/data-quality-basics": [
     {
-      "slug": "data/research/data-observability-lineage",
-      "score": 0.1667
+      "slug": "data/learn/data-quality-observability-tools",
+      "score": 0.3333
     },
     {
-      "slug": "data/learn/what-is-data-engineering",
-      "score": 0.1111
+      "slug": "data/learn/data-contracts-lineage",
+      "score": 0.2222
     },
     {
-      "slug": "data/learn/sql-for-data-engineers",
-      "score": 0.1111
+      "slug": "data/learn/modern-data-catalog",
+      "score": 0.2222
     }
   ],
   "data/learn/warehouse-vs-lake": [
@@ -1587,11 +1587,11 @@
       "score": 0.5
     },
     {
-      "slug": "markets/learn/reading-financial-statements",
-      "score": 0.2857
+      "slug": "markets/learn/etf-ecosystem-creation-impact",
+      "score": 0.5
     },
     {
-      "slug": "markets/learn/introduction-to-market-indices",
+      "slug": "markets/learn/reading-financial-statements",
       "score": 0.2857
     }
   ],
@@ -1601,11 +1601,11 @@
       "score": 0.5
     },
     {
-      "slug": "markets/learn/reading-financial-statements",
-      "score": 0.3333
+      "slug": "markets/learn/factor-investing-risk-parity",
+      "score": 0.4286
     },
     {
-      "slug": "markets/learn/introduction-to-market-indices",
+      "slug": "markets/learn/reading-financial-statements",
       "score": 0.3333
     }
   ],
@@ -1621,6 +1621,510 @@
     {
       "slug": "markets/learn/how-stock-markets-work",
       "score": 0.2857
+    }
+  ],
+  "data/learn/data-contracts-lineage": [
+    {
+      "slug": "data/learn/data-quality-observability-tools",
+      "score": 0.4444
+    },
+    {
+      "slug": "data/learn/data-quality-basics",
+      "score": 0.2222
+    },
+    {
+      "slug": "data/learn/modern-data-catalog",
+      "score": 0.2
+    }
+  ],
+  "data/learn/data-mesh-in-practice": [
+    {
+      "slug": "data/learn/modern-data-catalog",
+      "score": 0.3333
+    },
+    {
+      "slug": "data/research/sqlmesh-data-transformation",
+      "score": 0.2069
+    },
+    {
+      "slug": "data/learn/data-security-access-control",
+      "score": 0.2
+    }
+  ],
+  "data/learn/change-data-capture-patterns": [
+    {
+      "slug": "data/learn/open-source-data-stack",
+      "score": 0.2727
+    },
+    {
+      "slug": "data/research/2027-data-engineering-predictions",
+      "score": 0.1875
+    },
+    {
+      "slug": "data/learn/data-pipeline-basics",
+      "score": 0.1818
+    }
+  ],
+  "data/learn/modern-data-catalog": [
+    {
+      "slug": "data/learn/data-mesh-in-practice",
+      "score": 0.3333
+    },
+    {
+      "slug": "data/learn/data-quality-basics",
+      "score": 0.2222
+    },
+    {
+      "slug": "data/learn/data-contracts-lineage",
+      "score": 0.2
+    }
+  ],
+  "data/learn/schema-management-evolution": [
+    {
+      "slug": "data/research/debezium-cdc-change-data-capture",
+      "score": 0.2
+    },
+    {
+      "slug": "data/research/data-contracts",
+      "score": 0.1905
+    },
+    {
+      "slug": "data/learn/data-contracts-lineage",
+      "score": 0.1818
+    }
+  ],
+  "data/learn/pipeline-cost-optimization": [
+    {
+      "slug": "data/learn/what-is-data-engineering",
+      "score": 0.2222
+    },
+    {
+      "slug": "data/learn/elt-reverse-etl-analytics-engineering",
+      "score": 0.1818
+    },
+    {
+      "slug": "data/learn/data-quality-observability-tools",
+      "score": 0.1818
+    }
+  ],
+  "data/learn/privacy-engineering-practice": [
+    {
+      "slug": "data/learn/data-security-access-control",
+      "score": 0.3333
+    },
+    {
+      "slug": "data/learn/regulatory-compliance-data-platforms",
+      "score": 0.3
+    },
+    {
+      "slug": "data/learn/data-ethics-privacy",
+      "score": 0.1538
+    }
+  ],
+  "data/learn/regulatory-compliance-data-platforms": [
+    {
+      "slug": "data/learn/privacy-engineering-practice",
+      "score": 0.3
+    },
+    {
+      "slug": "data/learn/data-security-access-control",
+      "score": 0.1818
+    },
+    {
+      "slug": "aml/compliance/risk-based-approach-intro",
+      "score": 0.1111
+    }
+  ],
+  "data/learn/data-versioning-reproducibility": [
+    {
+      "slug": "data/research/feature-store-feast-vs-tecton",
+      "score": 0.1765
+    },
+    {
+      "slug": "knowledge/system-architecture",
+      "score": 0.1667
+    },
+    {
+      "slug": "data/learn/data-quality-observability-cost",
+      "score": 0.125
+    }
+  ],
+  "data/learn/data-security-access-control": [
+    {
+      "slug": "data/learn/privacy-engineering-practice",
+      "score": 0.3333
+    },
+    {
+      "slug": "data/learn/data-mesh-in-practice",
+      "score": 0.2
+    },
+    {
+      "slug": "data/learn/regulatory-compliance-data-platforms",
+      "score": 0.1818
+    }
+  ],
+  "data/learn/elt-reverse-etl-analytics-engineering": [
+    {
+      "slug": "data/learn/data-engineering-basics",
+      "score": 0.3636
+    },
+    {
+      "slug": "data/learn/building-pipelines-dbt-dagster",
+      "score": 0.2
+    },
+    {
+      "slug": "data/learn/what-is-data-engineering",
+      "score": 0.2
+    }
+  ],
+  "data/learn/data-quality-observability-tools": [
+    {
+      "slug": "data/learn/data-contracts-lineage",
+      "score": 0.4444
+    },
+    {
+      "slug": "data/learn/data-quality-basics",
+      "score": 0.3333
+    },
+    {
+      "slug": "data/learn/pipeline-cost-optimization",
+      "score": 0.1818
+    }
+  ],
+  "markets/learn/algorithmic-trading-strategies": [
+    {
+      "slug": "markets/research/dataops-markets",
+      "score": 0.2333
+    },
+    {
+      "slug": "markets/learn/market-microstructure-order-books",
+      "score": 0.1538
+    },
+    {
+      "slug": "markets/research/science-2",
+      "score": 0.1333
+    }
+  ],
+  "markets/learn/market-microstructure-order-books": [
+    {
+      "slug": "markets/learn/dark-pools-off-exchange-trading",
+      "score": 0.3636
+    },
+    {
+      "slug": "markets/learn/sector-competitive-analysis",
+      "score": 0.2174
+    },
+    {
+      "slug": "markets/research/science-2",
+      "score": 0.2
+    }
+  ],
+  "markets/learn/factor-investing-risk-parity": [
+    {
+      "slug": "markets/learn/introduction-to-risk",
+      "score": 0.4286
+    },
+    {
+      "slug": "markets/learn/what-are-etfs",
+      "score": 0.2222
+    },
+    {
+      "slug": "markets/learn/fixed-income-macro-markets",
+      "score": 0.2
+    }
+  ],
+  "markets/learn/behavioral-finance-market-anomalies": [
+    {
+      "slug": "markets/learn/behavioral-finance-portfolio",
+      "score": 0.2222
+    },
+    {
+      "slug": "markets/learn/market-analysis-methods",
+      "score": 0.1905
+    },
+    {
+      "slug": "markets/learn/cryptocurrency-markets-structure",
+      "score": 0.1818
+    }
+  ],
+  "markets/learn/alternative-data-investing": [
+    {
+      "slug": "markets/learn/meta-analysis-statistics",
+      "score": 0.2
+    },
+    {
+      "slug": "markets/learn/volatility-trading-vix",
+      "score": 0.1667
+    },
+    {
+      "slug": "markets/learn/semiconductor-supply-chain",
+      "score": 0.1364
+    }
+  ],
+  "markets/learn/cryptocurrency-markets-structure": [
+    {
+      "slug": "markets/learn/dark-pools-off-exchange-trading",
+      "score": 0.2727
+    },
+    {
+      "slug": "markets/learn/fx-market-structure-global-currencies",
+      "score": 0.2727
+    },
+    {
+      "slug": "markets/learn/sector-competitive-analysis",
+      "score": 0.2273
+    }
+  ],
+  "markets/learn/volatility-trading-vix": [
+    {
+      "slug": "markets/learn/alternative-data-investing",
+      "score": 0.1667
+    },
+    {
+      "slug": "markets/research/stock-market",
+      "score": 0.1304
+    },
+    {
+      "slug": "markets/learn/market-fundamentals",
+      "score": 0.129
+    }
+  ],
+  "markets/learn/fixed-income-macro-markets": [
+    {
+      "slug": "markets/learn/fx-market-structure-global-currencies",
+      "score": 0.4444
+    },
+    {
+      "slug": "markets/learn/cross-asset-commodity-trading",
+      "score": 0.3
+    },
+    {
+      "slug": "markets/learn/semiconductor-supply-chain",
+      "score": 0.2
+    }
+  ],
+  "markets/learn/dark-pools-off-exchange-trading": [
+    {
+      "slug": "markets/learn/market-microstructure-order-books",
+      "score": 0.3636
+    },
+    {
+      "slug": "markets/learn/cryptocurrency-markets-structure",
+      "score": 0.2727
+    },
+    {
+      "slug": "markets/learn/sector-competitive-analysis",
+      "score": 0.2273
+    }
+  ],
+  "markets/learn/etf-ecosystem-creation-impact": [
+    {
+      "slug": "markets/learn/what-are-etfs",
+      "score": 0.5
+    },
+    {
+      "slug": "markets/learn/introduction-to-risk",
+      "score": 0.2222
+    },
+    {
+      "slug": "markets/learn/behavioral-finance-portfolio",
+      "score": 0.2105
+    }
+  ],
+  "markets/learn/cross-asset-commodity-trading": [
+    {
+      "slug": "markets/learn/fx-market-structure-global-currencies",
+      "score": 0.4
+    },
+    {
+      "slug": "markets/learn/fixed-income-macro-markets",
+      "score": 0.3
+    },
+    {
+      "slug": "aml/compliance/sanctions-screening-basics",
+      "score": 0.2
+    }
+  ],
+  "markets/learn/fx-market-structure-global-currencies": [
+    {
+      "slug": "markets/learn/fixed-income-macro-markets",
+      "score": 0.4444
+    },
+    {
+      "slug": "markets/learn/cross-asset-commodity-trading",
+      "score": 0.4
+    },
+    {
+      "slug": "markets/learn/cryptocurrency-markets-structure",
+      "score": 0.2727
+    }
+  ],
+  "compliance/learn/ml-typologies-current-trends": [
+    {
+      "slug": "aml/learn/money-laundering-mechanisms",
+      "score": 0.1875
+    },
+    {
+      "slug": "aml/research/quantum-spectral-anomaly-detection",
+      "score": 0.1818
+    },
+    {
+      "slug": "aml/compliance/what-is-money-laundering",
+      "score": 0.1667
+    }
+  ],
+  "compliance/learn/risk-based-approach-implementation": [
+    {
+      "slug": "compliance/learn/enhanced-due-diligence-pep",
+      "score": 0.2727
+    },
+    {
+      "slug": "aml/compliance/risk-based-approach-intro",
+      "score": 0.25
+    },
+    {
+      "slug": "aml/compliance/kyc-basics",
+      "score": 0.1875
+    }
+  ],
+  "compliance/learn/enhanced-due-diligence-pep": [
+    {
+      "slug": "compliance/learn/risk-based-approach-implementation",
+      "score": 0.2727
+    },
+    {
+      "slug": "aml/compliance/kyc-basics",
+      "score": 0.1875
+    },
+    {
+      "slug": "compliance/learn/entity-resolution-network-analysis",
+      "score": 0.1667
+    }
+  ],
+  "compliance/learn/entity-resolution-network-analysis": [
+    {
+      "slug": "aml/compliance/kyc-basics",
+      "score": 0.1875
+    },
+    {
+      "slug": "compliance/learn/enhanced-due-diligence-pep",
+      "score": 0.1667
+    },
+    {
+      "slug": "compliance/learn/correspondent-banking-derisking",
+      "score": 0.1667
+    }
+  ],
+  "compliance/learn/ai-machine-learning-aml": [
+    {
+      "slug": "aml/research/dataops-aml",
+      "score": 0.2632
+    },
+    {
+      "slug": "data/learn/data-ethics-privacy",
+      "score": 0.2308
+    },
+    {
+      "slug": "aml/learn/aml-enforcement-cases",
+      "score": 0.2
+    }
+  ],
+  "compliance/learn/crypto-aml-defi-mica": [
+    {
+      "slug": "aml/learn/crypto-aml",
+      "score": 0.25
+    },
+    {
+      "slug": "aml/learn/aml-compliance-glossary",
+      "score": 0.2143
+    },
+    {
+      "slug": "aml/learn/quiz-aml",
+      "score": 0.2
+    }
+  ],
+  "compliance/learn/correspondent-banking-derisking": [
+    {
+      "slug": "compliance/learn/sanctions-screening-global-regimes",
+      "score": 0.2727
+    },
+    {
+      "slug": "aml/compliance/risk-based-approach-intro",
+      "score": 0.25
+    },
+    {
+      "slug": "aml/compliance/kyc-basics",
+      "score": 0.1875
+    }
+  ],
+  "compliance/learn/aml-international-cooperation": [
+    {
+      "slug": "compliance/learn/entity-resolution-network-analysis",
+      "score": 0.1667
+    },
+    {
+      "slug": "compliance/learn/correspondent-banking-derisking",
+      "score": 0.1667
+    },
+    {
+      "slug": "compliance/learn/sanctions-screening-global-regimes",
+      "score": 0.1667
+    }
+  ],
+  "compliance/learn/aml-audit-examination": [
+    {
+      "slug": "compliance/learn/aml-training-culture-esg",
+      "score": 0.4444
+    },
+    {
+      "slug": "aml/learn/designing-aml-program",
+      "score": 0.1905
+    },
+    {
+      "slug": "compliance/learn/risk-based-approach-implementation",
+      "score": 0.1667
+    }
+  ],
+  "compliance/learn/trade-finance-tbml-detection": [
+    {
+      "slug": "aml/compliance/suspicious-activity-reports",
+      "score": 0.1765
+    },
+    {
+      "slug": "compliance/learn/entity-resolution-network-analysis",
+      "score": 0.1667
+    },
+    {
+      "slug": "compliance/learn/correspondent-banking-derisking",
+      "score": 0.1667
+    }
+  ],
+  "compliance/learn/sanctions-screening-global-regimes": [
+    {
+      "slug": "compliance/learn/correspondent-banking-derisking",
+      "score": 0.2727
+    },
+    {
+      "slug": "aml/compliance/aml-regulatory-landscape",
+      "score": 0.1667
+    },
+    {
+      "slug": "compliance/learn/risk-based-approach-implementation",
+      "score": 0.1667
+    }
+  ],
+  "compliance/learn/aml-training-culture-esg": [
+    {
+      "slug": "compliance/learn/aml-audit-examination",
+      "score": 0.4444
+    },
+    {
+      "slug": "compliance/learn/risk-based-approach-implementation",
+      "score": 0.1818
+    },
+    {
+      "slug": "aml/learn/designing-aml-program",
+      "score": 0.1429
     }
   ]
 }

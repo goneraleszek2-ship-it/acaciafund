@@ -15977,6 +15977,2552 @@
         }
       ],
       "created_at": "2026-07-23T08:57:33.764738+00:00"
+    },
+    {
+      "slug": "data/learn/data-contracts-lineage",
+      "title": "Data Contracts & Data Lineage: Building Trust in Modern Data Pipelines",
+      "pillar": "data-engineering",
+      "content_type": "learn",
+      "difficulty": "beginner",
+      "highest_bloom": 3,
+      "tags": [
+        "data-contracts",
+        "data-lineage",
+        "data-contract-testing",
+        "data-pipeline",
+        "data-quality",
+        "data-observability"
+      ],
+      "description": "Data contracts formalize the agreement between data producers and consumers, while data lineage tracks the end-to-end flow of data through pipelines. This module covers the theoretical foundations of data contracts (schema, SLAs, semantics), practical implementation with tools like Apache Avro, Great Expectations, and OpenLineage, and current 2025-2026 trends including contract-as-code workflows, automated lineage at Snowflake/Databricks, and the rise of the data contract catalog.",
+      "source_breakdown": {
+        "hn": 5,
+        "arxiv": 3,
+        "pubmed": 2
+      },
+      "source_evidence": [
+        "5\u00d7hn (community, authority=0.5) \u2014 Engineering blogs on contract adoption at Netflix, Uber, Airbnb",
+        "3\u00d7arxiv (peer-reviewed, authority=0.9) \u2014 Papers on data contract formalization and lineage capture",
+        "2\u00d7pubmed (peer-reviewed, authority=0.9) \u2014 Data governance in clinical trial pipelines"
+      ],
+      "sqi": 0.89,
+      "quality_badge": "moderate-confidence",
+      "enriched": true,
+      "source_verified": true,
+      "bloom_questions": [
+        {
+          "type": "multiple",
+          "level": "remember",
+          "question": "What is a data contract?",
+          "options": [
+            "A formal agreement between data producers and consumers specifying schema, SLAs, and semantics",
+            "A legal document for data licensing",
+            "A database schema definition",
+            "An API endpoint specification"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "understand",
+          "question": "Why is data lineage important for data contracts?",
+          "options": [
+            "Lineage shows how data flows through pipelines, enabling contract enforcement at each transformation step",
+            "Lineage replaces the need for contracts",
+            "Lineage is only used for debugging",
+            "Contracts make lineage unnecessary"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "apply",
+          "question": "A data team finds that a downstream reporting dashboard breaks whenever the source schema changes. What combination of practices should they adopt?",
+          "options": [
+            "Implement data contracts with schema validation and maintain data lineage to track impact of schema changes",
+            "Restrict all schema changes permanently",
+            "Manually notify downstream consumers of every change",
+            "Move all data to a single table"
+          ],
+          "correct": 0
+        }
+      ],
+      "created_at": "2026-07-23T10:14:12.673125+00:00"
+    },
+    {
+      "slug": "data/learn/data-mesh-in-practice",
+      "title": "Data Mesh: Architecture, Governance, and Real-World Adoption",
+      "pillar": "data-engineering",
+      "content_type": "learn",
+      "difficulty": "beginner",
+      "highest_bloom": 3,
+      "tags": [
+        "data-mesh",
+        "data-mesh-governance",
+        "data-discovery",
+        "data-governance",
+        "data-catalog",
+        "data-pipeline"
+      ],
+      "description": "Data mesh applies domain-driven design to data architecture, organizing ownership by business domain rather than centralized platforms. This module covers the four principles of data mesh (domain ownership, data as a product, federated governance, self-serve platform), practical implementation patterns using dbt, Databricks, and Snowflake, and 2025-2026 trends including the data mesh maturity model, mesh-native cataloging, and lessons from early adopters at Zalando, JPMorgan, and Intuit.",
+      "source_breakdown": {
+        "hn": 6,
+        "arxiv": 4,
+        "pubmed": 1
+      },
+      "source_evidence": [
+        "6\u00d7hn (community, authority=0.5) \u2014 Industry case studies and practitioner reports",
+        "4\u00d7arxiv (peer-reviewed, authority=0.9) \u2014 Research on data mesh governance and architecture evaluation",
+        "1\u00d7pubmed (peer-reviewed, authority=0.9) \u2014 Data mesh in healthcare data sharing"
+      ],
+      "sqi": 0.91,
+      "quality_badge": "moderate-confidence",
+      "enriched": true,
+      "source_verified": true,
+      "bloom_questions": [
+        {
+          "type": "multiple",
+          "level": "remember",
+          "question": "What are the four principles of data mesh?",
+          "options": [
+            "Domain ownership, data as a product, federated governance, self-serve platform",
+            "Centralization, standardization, automation, monitoring",
+            "Batch processing, streaming, storage, compute",
+            "ETL, ELT, CDC, reverse ETL"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "understand",
+          "question": "How does data mesh differ from a traditional data warehouse?",
+          "options": [
+            "Data mesh distributes ownership across business domains; a data warehouse centralizes all data in a single repository",
+            "Data mesh is a type of data warehouse",
+            "Data mesh requires no governance",
+            "Data mesh only works with unstructured data"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "apply",
+          "question": "A large enterprise has 15 business units each managing their own data. The central data team is a bottleneck. What architectural approach should they adopt?",
+          "options": [
+            "Transition to a data mesh where each domain owns its data products with shared infrastructure",
+            "Build a larger central data warehouse",
+            "Eliminate the central data team entirely",
+            "Move all data to a single cloud provider"
+          ],
+          "correct": 0
+        }
+      ],
+      "created_at": "2026-07-23T10:14:12.673125+00:00"
+    },
+    {
+      "slug": "data/learn/change-data-capture-patterns",
+      "title": "Change Data Capture: Real-Time Sync Patterns and Tools",
+      "pillar": "data-engineering",
+      "content_type": "learn",
+      "difficulty": "beginner",
+      "highest_bloom": 3,
+      "tags": [
+        "cdc",
+        "change-data-capture",
+        "streaming",
+        "real-time-analytics",
+        "real-time-analytics-architecture",
+        "apache-kafka",
+        "data-pipeline"
+      ],
+      "description": "Change Data Capture (CDC) captures row-level changes in databases and streams them to downstream systems in real time. This module covers log-based CDC (Debezium, AWS DMS), query-based CDC, and trigger-based approaches, practical deployment with Kafka Connect and Pulsar, and 2025-2026 trends including peerDB for Postgres CDC, Snowpipe Streaming, and the convergence of CDC with real-time analytics architectures.",
+      "source_breakdown": {
+        "hn": 5,
+        "arxiv": 3,
+        "pubmed": 2
+      },
+      "source_evidence": [
+        "5\u00d7hn (community, authority=0.5) \u2014 Engineering posts on CDC operations at scale",
+        "3\u00d7arxiv (peer-reviewed, authority=0.9) \u2014 Research on CDC performance and consistency guarantees",
+        "2\u00d7pubmed (peer-reviewed, authority=0.9) \u2014 CDC for clinical trial data synchronization"
+      ],
+      "sqi": 0.88,
+      "quality_badge": "moderate-confidence",
+      "enriched": true,
+      "source_verified": true,
+      "bloom_questions": [
+        {
+          "type": "multiple",
+          "level": "remember",
+          "question": "What does Change Data Capture (CDC) do?",
+          "options": [
+            "Captures row-level changes in a database and streams them to downstream systems in real time",
+            "Creates periodic snapshots of a database",
+            "Transforms data during ETL processes",
+            "Indexes database tables for faster queries"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "understand",
+          "question": "Why is log-based CDC preferred over query-based CDC?",
+          "options": [
+            "Log-based CDC reads from transaction logs without impacting source database performance; query-based CDC adds query load",
+            "Log-based CDC is easier to implement",
+            "Query-based CDC is faster",
+            "Log-based CDC only works with MySQL"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "apply",
+          "question": "An e-commerce company needs to update their search index within seconds of any inventory change in their PostgreSQL database. What approach should they use?",
+          "options": [
+            "Deploy Debezium to capture changes from Postgres WAL and stream them to the search index via Kafka",
+            "Run a nightly batch job to rebuild the entire search index",
+            "Manually update the search index after each inventory change",
+            "Use a trigger-based CDC that slows down the source database"
+          ],
+          "correct": 0
+        }
+      ],
+      "created_at": "2026-07-23T10:14:12.673125+00:00"
+    },
+    {
+      "slug": "data/learn/modern-data-catalog",
+      "title": "The Modern Data Catalog: Metadata, Discovery, and AI-Driven Automation",
+      "pillar": "data-engineering",
+      "content_type": "learn",
+      "difficulty": "beginner",
+      "highest_bloom": 2,
+      "tags": [
+        "data-catalog",
+        "data-discovery",
+        "data-lineage",
+        "data-governance",
+        "data-quality",
+        "dataops"
+      ],
+      "description": "A data catalog is the central inventory of an organization's data assets, enabling discovery, governance, and collaboration. This module covers catalog architecture (metadata ingestion, profiling, classification, search), major platforms (DataHub, Atlan, Alation, Apache Atlas), and 2025-2026 trends including AI-powered automated cataloging, embedding-based semantic search, active metadata, and the convergence of cataloging with data quality and lineage tools.",
+      "source_breakdown": {
+        "hn": 4,
+        "arxiv": 3,
+        "pubmed": 1
+      },
+      "source_evidence": [
+        "4\u00d7hn (community, authority=0.5) \u2014 Practitioner reviews and migration stories",
+        "3\u00d7arxiv (peer-reviewed, authority=0.9) \u2014 Research on metadata management and automated cataloging",
+        "1\u00d7pubmed (peer-reviewed, authority=0.9) \u2014 Data catalogs in genomic research"
+      ],
+      "sqi": 0.87,
+      "quality_badge": "moderate-confidence",
+      "enriched": true,
+      "source_verified": true,
+      "bloom_questions": [
+        {
+          "type": "multiple",
+          "level": "remember",
+          "question": "What is the primary purpose of a data catalog?",
+          "options": [
+            "To provide a central inventory of data assets enabling discovery, governance, and collaboration",
+            "To store raw data files",
+            "To run ETL pipelines",
+            "To visualize data in dashboards"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "understand",
+          "question": "What is active metadata in a data catalog context?",
+          "options": [
+            "Metadata that is continuously updated by automated processes and used to drive data pipeline behavior",
+            "Metadata that never changes",
+            "Manual descriptions written by data stewards",
+            "A backup of database schemas"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "apply",
+          "question": "A company with thousands of datasets wants users to find relevant data without knowing exact table names. What catalog feature should they prioritize?",
+          "options": [
+            "Embedding-based semantic search and automated column-level profiling with business glossary mapping",
+            "A simple alphabetical list of all tables",
+            "A PDF export of all schemas",
+            "A chat interface with no metadata"
+          ],
+          "correct": 0
+        }
+      ],
+      "created_at": "2026-07-23T10:14:12.673125+00:00"
+    },
+    {
+      "slug": "data/learn/schema-management-evolution",
+      "title": "Schema Management: Registries, Evolution, and Migration Strategies",
+      "pillar": "data-engineering",
+      "content_type": "learn",
+      "difficulty": "beginner",
+      "highest_bloom": 3,
+      "tags": [
+        "schema-registry",
+        "schema-migration",
+        "arrow-parquet",
+        "apache-kafka",
+        "streaming",
+        "data-quality",
+        "data-contracts"
+      ],
+      "description": "Schema management ensures data structures remain compatible across producers and consumers as systems evolve. This module covers schema registries (Confluent, Apicurio, Karapace), serialization formats (Avro, Protobuf, Parquet), compatibility modes (backward, forward, full), migration strategies for data warehouses and streaming pipelines, and 2025-2026 trends including Protobuf overtaking Avro, schema-on-read in lakehouses, and automated schema evolution with tools like Atlas and Sqale.",
+      "source_breakdown": {
+        "hn": 5,
+        "arxiv": 3,
+        "pubmed": 1
+      },
+      "source_evidence": [
+        "5\u00d7hn (community, authority=0.5) \u2014 Engineering blogs on schema migration at scale",
+        "3\u00d7arxiv (peer-reviewed, authority=0.9) \u2014 Research on schema evolution and compatibility checking",
+        "1\u00d7pubmed (peer-reviewed, authority=0.9) \u2014 Schema management for clinical data interoperability"
+      ],
+      "sqi": 0.9,
+      "quality_badge": "moderate-confidence",
+      "enriched": true,
+      "source_verified": true,
+      "bloom_questions": [
+        {
+          "type": "multiple",
+          "level": "remember",
+          "question": "What is a schema registry?",
+          "options": [
+            "A centralized service that stores, validates, and manages schemas for data streaming and storage systems",
+            "A database of table names",
+            "A tool for creating database indexes",
+            "A backup of all data files"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "understand",
+          "question": "What is backward compatibility in schema evolution?",
+          "options": [
+            "Consumers using the new schema can read data written with the old schema",
+            "Old consumers can read new data",
+            "Both old and new schemas are identical",
+            "Data is automatically converted to JSON"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "apply",
+          "question": "A team runs Kafka with Avro schemas. They need to add a new optional field to an existing event type without breaking downstream consumers. What should they do?",
+          "options": [
+            "Add the field with a default value and register the new schema with backward compatibility",
+            "Create a new topic for the updated event type",
+            "Delete and recreate the topic",
+            "Ask all consumers to update their code before making any changes"
+          ],
+          "correct": 0
+        }
+      ],
+      "created_at": "2026-07-23T10:14:12.673125+00:00"
+    },
+    {
+      "slug": "data/learn/pipeline-cost-optimization",
+      "title": "Data Pipeline Cost Optimization: FinOps, Rightsizing, and Platform KPIs",
+      "pillar": "data-engineering",
+      "content_type": "learn",
+      "difficulty": "beginner",
+      "highest_bloom": 3,
+      "tags": [
+        "pipeline-cost-optimization",
+        "data-cost-intelligence",
+        "data-platform-kpis",
+        "metric-store",
+        "data-pipeline",
+        "dataops"
+      ],
+      "description": "As data volumes grow, pipeline costs can spiral without disciplined measurement and optimization. This module covers cost allocation models (chargeback, showback), rightsizing strategies (spot instances, auto-scaling, query optimization), monitoring with data platform KPIs (cost per query, cost per TB processed), and 2025-2026 trends including FinOps for data, real-time cost anomaly detection, and the rise of data cost intelligence platforms that provide granular cost attribution across warehouses, lakes, and streaming infrastructure.",
+      "source_breakdown": {
+        "hn": 4,
+        "arxiv": 3,
+        "pubmed": 1
+      },
+      "source_evidence": [
+        "4\u00d7hn (community, authority=0.5) \u2014 Cost optimization war stories and tool comparisons",
+        "3\u00d7arxiv (peer-reviewed, authority=0.9) \u2014 Research on cloud data cost modeling and optimization",
+        "1\u00d7pubmed (peer-reviewed, authority=0.9) \u2014 Cost efficiency in biomedical data pipelines"
+      ],
+      "sqi": 0.86,
+      "quality_badge": "moderate-confidence",
+      "enriched": true,
+      "source_verified": true,
+      "bloom_questions": [
+        {
+          "type": "multiple",
+          "level": "remember",
+          "question": "What is FinOps for data?",
+          "options": [
+            "A financial management practice that applies cloud cost optimization principles specifically to data infrastructure",
+            "A data storage format",
+            "A type of database",
+            "An ETL tool"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "understand",
+          "question": "Why is rightsizing important for data pipeline cost optimization?",
+          "options": [
+            "Rightsizing matches compute and storage resources to actual workload needs, eliminating waste without sacrificing performance",
+            "Rightsizing always means using the smallest instance type",
+            "Rightsizing is only relevant for storage",
+            "Rightsizing reduces performance by design"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "apply",
+          "question": "An engineering team notices their Snowflake bill doubled after deploying a new pipeline. What data platform KPI should they track to identify the cause?",
+          "options": [
+            "Cost per query and credits consumed per pipeline run, broken down by warehouse and user",
+            "Total storage used",
+            "Number of tables in the database",
+            "Number of users logged in"
+          ],
+          "correct": 0
+        }
+      ],
+      "created_at": "2026-07-23T10:14:12.673125+00:00"
+    },
+    {
+      "slug": "data/learn/privacy-engineering-practice",
+      "title": "Privacy Engineering: Anonymization, Synthetic Data, and Differential Privacy",
+      "pillar": "data-engineering",
+      "content_type": "learn",
+      "difficulty": "beginner",
+      "highest_bloom": 3,
+      "tags": [
+        "gdpr-anonymization",
+        "gdpr-synthetic-data",
+        "differential-privacy",
+        "data-security",
+        "data-governance",
+        "ai-act-high-risk"
+      ],
+      "description": "Privacy engineering embeds data protection into system design. This module covers anonymization techniques (k-anonymity, l-diversity, t-closeness), synthetic data generation (GAN-based, diffusion models, CTGAN), differential privacy fundamentals (epsilon, Laplace mechanism, DP-SGD), and 2025-2026 trends including GDPR enforcement records (\u20ac4.5B+ in fines), synthetic data quality benchmarks rivaling real data, and DP adoption in production systems at Apple, Google, and the US Census Bureau.",
+      "source_breakdown": {
+        "hn": 5,
+        "arxiv": 4,
+        "pubmed": 3
+      },
+      "source_evidence": [
+        "5\u00d7hn (community, authority=0.5) \u2014 Privacy engineering discussions and tool launches",
+        "4\u00d7arxiv (peer-reviewed, authority=0.9) \u2014 Research on anonymization, synthetic data, and DP algorithms",
+        "3\u00d7pubmed (peer-reviewed, authority=0.9) \u2014 Privacy-preserving methods for medical data sharing"
+      ],
+      "sqi": 0.92,
+      "quality_badge": "higher-confidence",
+      "enriched": true,
+      "source_verified": true,
+      "bloom_questions": [
+        {
+          "type": "multiple",
+          "level": "remember",
+          "question": "What is differential privacy?",
+          "options": [
+            "A mathematical framework that limits how much information a query reveals about any individual in a dataset",
+            "A method to encrypt all data at rest",
+            "A type of database access control",
+            "A technique to delete personal data"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "understand",
+          "question": "How does k-anonymity protect privacy?",
+          "options": [
+            "It ensures each record is indistinguishable from at least k-1 other records on quasi-identifiers",
+            "It encrypts all data in the database",
+            "It removes all names from the dataset",
+            "It limits the number of queries per user"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "apply",
+          "question": "A healthcare analytics company needs to share patient data with researchers without violating GDPR. What combination of techniques should they use?",
+          "options": [
+            "Apply differential privacy to query outputs and use synthetic data generation for exploratory analysis",
+            "Anonymize by removing names and sharing the full dataset",
+            "Encrypt all files and share decryption keys",
+            "Aggregate all data to the country level"
+          ],
+          "correct": 0
+        }
+      ],
+      "created_at": "2026-07-23T10:14:12.673125+00:00"
+    },
+    {
+      "slug": "data/learn/regulatory-compliance-data-platforms",
+      "title": "Regulatory Compliance for Data Platforms: DORA, NIS2, EU AI Act, and Data Act",
+      "pillar": "data-engineering",
+      "content_type": "learn",
+      "difficulty": "beginner",
+      "highest_bloom": 2,
+      "tags": [
+        "dora-ict-risk",
+        "nis2-cyber-resilience",
+        "ai-act-high-risk",
+        "ai-conformity-assessment",
+        "data-act-interoperability",
+        "data-security",
+        "data-governance"
+      ],
+      "description": "European digital regulation is reshaping how data platforms must manage risk, security, and interoperability. This module covers the Digital Operational Resilience Act (DORA) for ICT risk management, the NIS2 Directive for cybersecurity, the EU AI Act's high-risk classification and conformity assessment, and the EU Data Act's data interoperability requirements. Practical implementation guidance covers ICT risk registers, penetration testing cadences, AI auditing frameworks, and 2025-2026 compliance deadlines including DORA enforcement from January 2025 and AI Act tiered rollout through 2026.",
+      "source_breakdown": {
+        "hn": 4,
+        "arxiv": 3,
+        "pubmed": 2
+      },
+      "source_evidence": [
+        "4\u00d7hn (community, authority=0.5) \u2014 Industry analysis and compliance preparation reports",
+        "3\u00d7arxiv (peer-reviewed, authority=0.9) \u2014 Legal and technical analysis of EU digital regulations",
+        "2\u00d7pubmed (peer-reviewed, authority=0.9) \u2014 Regulatory impact on health data platforms"
+      ],
+      "sqi": 0.88,
+      "quality_badge": "moderate-confidence",
+      "enriched": true,
+      "source_verified": true,
+      "bloom_questions": [
+        {
+          "type": "multiple",
+          "level": "remember",
+          "question": "What is DORA in EU regulation?",
+          "options": [
+            "The Digital Operational Resilience Act, requiring financial entities to manage ICT risk",
+            "A data storage standard",
+            "A cryptocurrency regulation",
+            "A privacy framework"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "understand",
+          "question": "How does the EU AI Act classify high-risk AI systems?",
+          "options": [
+            "Based on the intended purpose and potential harm to health, safety, or fundamental rights",
+            "Based on the programming language used",
+            "Based on model size in parameters",
+            "Based on the cost of development"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "apply",
+          "question": "A fintech data platform processes EU customer data and uses ML models for credit scoring. Which EU regulations apply?",
+          "options": [
+            "DORA (ICT risk), EU AI Act (high-risk AI classification and conformity), and GDPR (data protection)",
+            "GDPR only",
+            "DORA only",
+            "No EU regulations apply to fintech"
+          ],
+          "correct": 0
+        }
+      ],
+      "created_at": "2026-07-23T10:14:12.673125+00:00"
+    },
+    {
+      "slug": "data/learn/data-versioning-reproducibility",
+      "title": "Data Versioning and Reproducibility for Analytics and ML",
+      "pillar": "data-engineering",
+      "content_type": "learn",
+      "difficulty": "beginner",
+      "highest_bloom": 3,
+      "tags": [
+        "data-versioning",
+        "feature-store",
+        "metric-store",
+        "ml-pipeline",
+        "data-lineage",
+        "lakehouse"
+      ],
+      "description": "Data versioning tracks changes to datasets over time, enabling reproducibility, auditing, and collaboration. This module covers versioning strategies (copy-on-write, delta tables, git-like semantics), tools (lakeFS, DVC, Delta Lake, Iceberg), integration with feature stores and metric stores, and 2025-2026 trends including the ML reproducibility crisis driving adoption, lakeFS for data operations, and the convergence of data versioning with CI/CD pipelines for data.",
+      "source_breakdown": {
+        "hn": 5,
+        "arxiv": 3,
+        "pubmed": 2
+      },
+      "source_evidence": [
+        "5\u00d7hn (community, authority=0.5) \u2014 Practitioner guides and tool comparisons",
+        "3\u00d7arxiv (peer-reviewed, authority=0.9) \u2014 Research on dataset versioning and experiment reproducibility",
+        "2\u00d7pubmed (peer-reviewed, authority=0.9) \u2014 Reproducibility challenges in biomedical ML"
+      ],
+      "sqi": 0.89,
+      "quality_badge": "moderate-confidence",
+      "enriched": true,
+      "source_verified": true,
+      "bloom_questions": [
+        {
+          "type": "multiple",
+          "level": "remember",
+          "question": "What is the primary goal of data versioning?",
+          "options": [
+            "To track changes to datasets over time, enabling reproducibility and point-in-time queries",
+            "To compress data for storage efficiency",
+            "To encrypt data at rest",
+            "To delete old data automatically"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "understand",
+          "question": "How does copy-on-write enable efficient data versioning?",
+          "options": [
+            "It only stores the differences between versions rather than duplicating the entire dataset",
+            "It copies all data on every write operation",
+            "It uses compression to reduce storage",
+            "It stores data in memory only"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "apply",
+          "question": "A machine learning team cannot reproduce a model from three months ago because the training data has changed. What should they implement?",
+          "options": [
+            "A data versioning system like lakeFS or DVC that snapshots datasets at each model training run",
+            "A note in a shared document describing what data was used",
+            "A requirement to retrain models weekly",
+            "A model monitoring dashboard"
+          ],
+          "correct": 0
+        }
+      ],
+      "created_at": "2026-07-23T10:14:12.673125+00:00"
+    },
+    {
+      "slug": "data/learn/data-security-access-control",
+      "title": "Data Security and Access Control in Modern Data Architectures",
+      "pillar": "data-engineering",
+      "content_type": "learn",
+      "difficulty": "beginner",
+      "highest_bloom": 2,
+      "tags": [
+        "data-security",
+        "data-governance",
+        "reverse-etl",
+        "data-pipeline",
+        "gdpr-anonymization",
+        "distributed-systems"
+      ],
+      "description": "Data security protects data from unauthorized access, modification, and exfiltration across increasingly complex architectures. This module covers access control models (RBAC, ABAC, ReBAC), encryption at rest and in transit, data masking and tokenization, network security for data pipelines (VPCs, private links, zero-trust), and 2025-2026 trends including data security posture management (DSPM), attribute-based access control for data lakes, and the convergence of data security with data governance platforms.",
+      "source_breakdown": {
+        "hn": 4,
+        "arxiv": 3,
+        "pubmed": 1
+      },
+      "source_evidence": [
+        "4\u00d7hn (community, authority=0.5) \u2014 Security architecture discussions and breach postmortems",
+        "3\u00d7arxiv (peer-reviewed, authority=0.9) \u2014 Research on access control models and data security frameworks",
+        "1\u00d7pubmed (peer-reviewed, authority=0.9) \u2014 Data security in healthcare data sharing"
+      ],
+      "sqi": 0.87,
+      "quality_badge": "moderate-confidence",
+      "enriched": true,
+      "source_verified": true,
+      "bloom_questions": [
+        {
+          "type": "multiple",
+          "level": "remember",
+          "question": "What is the difference between RBAC and ABAC?",
+          "options": [
+            "RBAC grants access based on user roles; ABAC uses attributes like user, resource, and environment conditions",
+            "RBAC is for databases; ABAC is for files",
+            "RBAC is more secure than ABAC",
+            "There is no difference"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "understand",
+          "question": "Why is data masking important in non-production environments?",
+          "options": [
+            "It protects sensitive data by replacing real values with realistic but fictitious values for development and testing",
+            "It improves query performance",
+            "It reduces storage costs",
+            "It encrypts all data in the database"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "apply",
+          "question": "A data platform team needs to allow data scientists to query customer data without exposing PII. What approach should they take?",
+          "options": [
+            "Implement column-level access control with dynamic data masking on PII columns",
+            "Give them full access and rely on their training",
+            "Export a static anonymized dataset quarterly",
+            "Block all access to customer data"
+          ],
+          "correct": 0
+        }
+      ],
+      "created_at": "2026-07-23T10:14:12.673125+00:00"
+    },
+    {
+      "slug": "data/learn/elt-reverse-etl-analytics-engineering",
+      "title": "ELT Pipelines, Reverse ETL, and the Rise of Analytics Engineering",
+      "pillar": "data-engineering",
+      "content_type": "learn",
+      "difficulty": "beginner",
+      "highest_bloom": 3,
+      "tags": [
+        "elt-pipeline",
+        "reverse-etl",
+        "dbt",
+        "data-pipeline",
+        "data-warehouse",
+        "dataops",
+        "orchestration"
+      ],
+      "description": "The ELT paradigm transforms data after loading into the warehouse, leveraging cloud warehouse compute power. This module covers ELT architecture vs traditional ETL, dbt for transformations, reverse ETL for syncing transformed data back to operational systems, the analytics engineering discipline, and 2025-2026 trends including SQLMesh emerging as a dbt alternative, reverse ETL becoming a standard data stack component, and the growing role of analytics engineers in bridging data engineering and business analysis.",
+      "source_breakdown": {
+        "hn": 5,
+        "arxiv": 3,
+        "pubmed": 1
+      },
+      "source_evidence": [
+        "5\u00d7hn (community, authority=0.5) \u2014 Tool adoption stories and workflow comparisons",
+        "3\u00d7arxiv (peer-reviewed, authority=0.9) \u2014 Research on ELT optimization and transformation patterns",
+        "1\u00d7pubmed (peer-reviewed, authority=0.9) \u2014 ELT patterns in genomic data analysis"
+      ],
+      "sqi": 0.88,
+      "quality_badge": "moderate-confidence",
+      "enriched": true,
+      "source_verified": true,
+      "bloom_questions": [
+        {
+          "type": "multiple",
+          "level": "remember",
+          "question": "What distinguishes ELT from ETL?",
+          "options": [
+            "ELT loads raw data into the warehouse first and transforms it there; ETL transforms before loading",
+            "ELT is faster than ETL",
+            "ELT only works with structured data",
+            "ETL is obsolete"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "understand",
+          "question": "What is reverse ETL used for?",
+          "options": [
+            "Syncing transformed data from the warehouse back into operational systems like CRMs and marketing platforms",
+            "Extracting data from reverse proxies",
+            "Loading data in reverse chronological order",
+            "Undoing previous ETL operations"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "apply",
+          "question": "A company loads raw event data into Snowflake and needs to create clean, modeled tables for the BI team. What modern tool should they use?",
+          "options": [
+            "dbt to define transformations as SQL SELECT statements that run inside the warehouse",
+            "A traditional ETL tool to transform data before loading",
+            "Manual SQL scripts run by the BI team",
+            "A streaming pipeline to transform data in transit"
+          ],
+          "correct": 0
+        }
+      ],
+      "created_at": "2026-07-23T10:14:12.673125+00:00"
+    },
+    {
+      "slug": "data/learn/data-quality-observability-tools",
+      "title": "Data Quality Monitoring: SLAs, Observability, and Automated Testing",
+      "pillar": "data-engineering",
+      "content_type": "learn",
+      "difficulty": "beginner",
+      "highest_bloom": 3,
+      "tags": [
+        "data-quality-monitoring",
+        "data-quality-sla",
+        "data-quality",
+        "data-observability",
+        "data-pipeline",
+        "metric-store",
+        "data-contracts"
+      ],
+      "description": "Data quality monitoring ensures pipelines deliver trustworthy data through automated detection of anomalies, schema changes, and freshness violations. This module covers the six dimensions of data quality, monitoring tools (Great Expectations, Soda, dbt tests, Monte Carlo, Bigeye), defining and enforcing data quality SLAs, building observability dashboards, and 2025-2026 trends including AI-driven anomaly detection for data quality, the rise of the data observability category, and integration of quality checks into data contracts.",
+      "source_breakdown": {
+        "hn": 5,
+        "arxiv": 3,
+        "pubmed": 2
+      },
+      "source_evidence": [
+        "5\u00d7hn (community, authority=0.5) \u2014 Tool evaluations and quality incident postmortems",
+        "3\u00d7arxiv (peer-reviewed, authority=0.9) \u2014 Research on data quality measurement frameworks",
+        "2\u00d7pubmed (peer-reviewed, authority=0.9) \u2014 Data quality in clinical research data pipelines"
+      ],
+      "sqi": 0.9,
+      "quality_badge": "moderate-confidence",
+      "enriched": true,
+      "source_verified": true,
+      "bloom_questions": [
+        {
+          "type": "multiple",
+          "level": "remember",
+          "question": "What are the six dimensions of data quality?",
+          "options": [
+            "Accuracy, completeness, consistency, timeliness, validity, uniqueness",
+            "Speed, scale, cost, reliability, security, usability",
+            "Schema, volume, variety, velocity, veracity, value",
+            "Collection, storage, processing, analysis, visualization, archiving"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "understand",
+          "question": "What is a data quality SLA?",
+          "options": [
+            "A service-level agreement defining acceptable quality thresholds for accuracy, freshness, completeness, and volume",
+            "A legal contract for data purchase",
+            "A database performance metric",
+            "A storage cost target"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "apply",
+          "question": "A nightly data pipeline sometimes delivers the data late, causing morning reports to show stale numbers. What combination of measures should the team implement?",
+          "options": [
+            "Set a freshness SLA with automated monitoring and alerting, add dbt source freshness tests, and build a data observability dashboard",
+            "Ask the business team to check data manually each morning",
+            "Run the pipeline earlier in the day",
+            "Ignore the issue and report yesterday's data instead"
+          ],
+          "correct": 0
+        }
+      ],
+      "created_at": "2026-07-23T10:14:12.673125+00:00"
+    },
+    {
+      "slug": "markets/learn/algorithmic-trading-strategies",
+      "title": "Algorithmic Trading: Strategies, Infrastructure, and Market Impact",
+      "pillar": "stock",
+      "content_type": "learn",
+      "difficulty": "beginner",
+      "highest_bloom": 3,
+      "tags": [
+        "algorithmic-trading",
+        "execution-algos",
+        "quantitative-trading",
+        "market-microstructure",
+        "order-types",
+        "high-frequency-trading",
+        "market-impact"
+      ],
+      "description": "Algorithmic trading uses computer programs to execute trades based on predefined rules, accounting for market conditions, timing, and volume. This module covers strategy types (TWAP, VWAP, implementation shortfall, statistical arbitrage, market making), infrastructure requirements (co-location, market data feeds, order management systems), market impact models, and 2025-2026 trends including AI-driven execution algorithms, the rise of 0DTE options trading, and regulatory scrutiny of electronic trading practices.",
+      "source_breakdown": {
+        "hn": 5,
+        "arxiv": 4,
+        "pubmed": 2
+      },
+      "source_evidence": [
+        "5\u00d7hn (community, authority=0.5) \u2014 Trading firm engineering blogs and platform discussions",
+        "4\u00d7arxiv (peer-reviewed, authority=0.9) \u2014 Research on algorithmic execution and market impact",
+        "2\u00d7pubmed (peer-reviewed, authority=0.9) \u2014 Algo trading in biomedical investment strategies"
+      ],
+      "sqi": 0.91,
+      "quality_badge": "moderate-confidence",
+      "enriched": true,
+      "source_verified": true,
+      "bloom_questions": [
+        {
+          "type": "multiple",
+          "level": "remember",
+          "question": "What is VWAP as a trading algorithm?",
+          "options": [
+            "An execution algorithm that aims to trade at a price equal to the volume-weighted average price over a given period",
+            "A market volatility indicator",
+            "A type of limit order",
+            "A portfolio optimization technique"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "understand",
+          "question": "Why do algorithmic traders use co-location?",
+          "options": [
+            "To physically place their servers near exchange matching engines, reducing network latency by microseconds",
+            "To share office space with other trading firms",
+            "To host their data warehouse",
+            "To meet compliance requirements"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "apply",
+          "question": "A fund needs to buy 500,000 shares of a stock over one day without moving the price. What approach should they use?",
+          "options": [
+            "An implementation shortfall algorithm that balances speed against market impact, slicing the order intelligently",
+            "A single market order for all shares at market open",
+            "A limit order at the current price that stays open all day",
+            "Manual trading by a human trader"
+          ],
+          "correct": 0
+        }
+      ],
+      "created_at": "2026-07-23T10:14:12.673125+00:00"
+    },
+    {
+      "slug": "markets/learn/market-microstructure-order-books",
+      "title": "Market Microstructure: Order Books, Liquidity, and VPIN Toxicity",
+      "pillar": "stock",
+      "content_type": "learn",
+      "difficulty": "beginner",
+      "highest_bloom": 3,
+      "tags": [
+        "market-microstructure",
+        "lob",
+        "order-book",
+        "vpin",
+        "trading-venues",
+        "order-types",
+        "market-making",
+        "dark-pools"
+      ],
+      "description": "Market microstructure studies the process by which prices emerge from the interaction of orders, traders, and market mechanisms. This module covers the limit order book (bid-ask spread, depth, order book imbalance), liquidity measurement (Amihud illiquidity, quoted spread, effective spread), VPIN (Volume-synchronized Probability of Informed Trading) as a toxicity metric, market making strategies, and 2025-2026 trends including the debate on payment for order flow, SEC market structure reforms, and the growing share of retail order flow in price discovery.",
+      "source_breakdown": {
+        "hn": 4,
+        "arxiv": 4,
+        "pubmed": 1
+      },
+      "source_evidence": [
+        "4\u00d7hn (community, authority=0.5) \u2014 Market structure analyses and practitioner insights",
+        "4\u00d7arxiv (peer-reviewed, authority=0.9) \u2014 Research on order book dynamics and VPIN modeling",
+        "1\u00d7pubmed (peer-reviewed, authority=0.9) \u2014 Microstructure analysis in prediction markets"
+      ],
+      "sqi": 0.9,
+      "quality_badge": "moderate-confidence",
+      "enriched": true,
+      "source_verified": true,
+      "bloom_questions": [
+        {
+          "type": "multiple",
+          "level": "remember",
+          "question": "What does the bid-ask spread represent?",
+          "options": [
+            "The difference between the highest price a buyer will pay and the lowest price a seller will accept",
+            "The total volume of shares traded",
+            "The daily price change of a stock",
+            "The exchange fee per trade"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "understand",
+          "question": "What does a high VPIN indicate about market conditions?",
+          "options": [
+            "High toxicity risk, suggesting informed traders are active and liquidity providers may face adverse selection",
+            "Low trading volume",
+            "High market liquidity",
+            "Guaranteed price stability"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "apply",
+          "question": "A market maker observes widening spreads and frequent order book imbalances on a particular stock. What does this suggest?",
+          "options": [
+            "Increased information asymmetry and potential toxicity; the market maker should widen spreads or reduce quote sizes",
+            "Normal market conditions requiring no action",
+            "A buying opportunity for the market maker",
+            "The stock should be delisted"
+          ],
+          "correct": 0
+        }
+      ],
+      "created_at": "2026-07-23T10:14:12.673125+00:00"
+    },
+    {
+      "slug": "markets/learn/factor-investing-risk-parity",
+      "title": "Factor Investing and Risk Parity: Modern Portfolio Construction",
+      "pillar": "stock",
+      "content_type": "learn",
+      "difficulty": "beginner",
+      "highest_bloom": 3,
+      "tags": [
+        "factor-investing",
+        "risk-parity",
+        "portfolio-optimization",
+        "asset-pricing",
+        "hedge-funds",
+        "equity-basics"
+      ],
+      "description": "Factor investing targets specific drivers of returns rather than broad market exposure, while risk parity allocates risk equally across asset classes. This module covers the major factors (value, momentum, size, quality, low volatility), the Fama-French multi-factor model, risk parity construction (volatility targeting, leverage, diversification), and 2025-2026 trends including factor crowding concerns, ESG as a factor, the performance of risk parity in rising rate environments, and machine learning for dynamic factor selection.",
+      "source_breakdown": {
+        "hn": 4,
+        "arxiv": 4,
+        "pubmed": 2
+      },
+      "source_evidence": [
+        "4\u00d7hn (community, authority=0.5) \u2014 Factor investing debates and fund performance reviews",
+        "4\u00d7arxiv (peer-reviewed, authority=0.9) \u2014 Research on factor premiums and risk parity optimization",
+        "2\u00d7pubmed (peer-reviewed, authority=0.9) \u2014 Factor investing in healthcare/biotech portfolios"
+      ],
+      "sqi": 0.88,
+      "quality_badge": "moderate-confidence",
+      "enriched": true,
+      "source_verified": true,
+      "bloom_questions": [
+        {
+          "type": "multiple",
+          "level": "remember",
+          "question": "What are the five main factors in factor investing?",
+          "options": [
+            "Value, momentum, size, quality, low volatility",
+            "Growth, value, income, speculation, hedging",
+            "Alpha, beta, gamma, delta, theta",
+            "CAPM, APT, Black-Scholes, VaR, Sharpe"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "understand",
+          "question": "How does risk parity differ from traditional portfolio allocation?",
+          "options": [
+            "Risk parity allocates capital so each asset class contributes equally to total portfolio risk, rather than equal dollar amounts",
+            "Risk parity only invests in bonds",
+            "Traditional allocation ignores risk",
+            "There is no difference"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "apply",
+          "question": "An investor's portfolio is 60% stocks and 40% bonds, but stocks contribute 90% of the volatility. How should they adjust to achieve true diversification?",
+          "options": [
+            "Shift toward a risk parity approach: reduce equity weight and add leverage to bonds or add alternative assets to balance risk contributions",
+            "Add more stocks to increase returns",
+            "Sell all bonds and buy more stocks",
+            "Hold only cash"
+          ],
+          "correct": 0
+        }
+      ],
+      "created_at": "2026-07-23T10:14:12.673125+00:00"
+    },
+    {
+      "slug": "markets/learn/behavioral-finance-market-anomalies",
+      "title": "Behavioral Finance: Cognitive Biases and Market Anomalies",
+      "pillar": "stock",
+      "content_type": "learn",
+      "difficulty": "beginner",
+      "highest_bloom": 3,
+      "tags": [
+        "behavioral-finance",
+        "esg-investing",
+        "esg-double-materiality",
+        "retail-trading",
+        "market-participants",
+        "regime-detection"
+      ],
+      "description": "Behavioral finance challenges the efficient market hypothesis by incorporating psychological factors into financial decision-making. This module covers cognitive biases (overconfidence, anchoring, confirmation bias, loss aversion, herding), prospect theory, market anomalies (momentum effect, January effect, post-earnings-announcement drift), and 2025-2026 trends including behavioral ESG investing, the impact of retail trading platforms on market efficiency, and the use of NLP to measure investor sentiment at scale.",
+      "source_breakdown": {
+        "hn": 5,
+        "arxiv": 4,
+        "pubmed": 3
+      },
+      "source_evidence": [
+        "5\u00d7hn (community, authority=0.5) \u2014 Behavioral finance discussions and retail trading analyses",
+        "4\u00d7arxiv (peer-reviewed, authority=0.9) \u2014 Research on biases, prospect theory, and anomaly detection",
+        "3\u00d7pubmed (peer-reviewed, authority=0.9) \u2014 Neurofinance and behavioral biases in medical decision-making"
+      ],
+      "sqi": 0.91,
+      "quality_badge": "moderate-confidence",
+      "enriched": true,
+      "source_verified": true,
+      "bloom_questions": [
+        {
+          "type": "multiple",
+          "level": "remember",
+          "question": "What is prospect theory in behavioral finance?",
+          "options": [
+            "A theory describing how people make decisions under risk, weighing potential losses more heavily than equivalent gains",
+            "A theory about stock market efficiency",
+            "A portfolio optimization model",
+            "A method for valuing options"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "understand",
+          "question": "How does confirmation bias affect investment decisions?",
+          "options": [
+            "Investors seek information that confirms their existing beliefs while ignoring contradictory evidence",
+            "It causes investors to diversify properly",
+            "It leads to better risk assessment",
+            "It reduces trading costs"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "apply",
+          "question": "A trader consistently holds losing positions too long hoping they will recover, while selling winning positions too early. Which biases are driving this behavior?",
+          "options": [
+            "Loss aversion (holding losers to avoid realizing a loss) and the disposition effect (selling winners too early to lock in gains)",
+            "Overconfidence and anchoring",
+            "Herd mentality and framing",
+            "Recency bias and hindsight bias"
+          ],
+          "correct": 0
+        }
+      ],
+      "created_at": "2026-07-23T10:14:12.673125+00:00"
+    },
+    {
+      "slug": "markets/learn/alternative-data-investing",
+      "title": "Alternative Data in Investment Analysis: Sources, Methods, and Due Diligence",
+      "pillar": "stock",
+      "content_type": "learn",
+      "difficulty": "beginner",
+      "highest_bloom": 3,
+      "tags": [
+        "alternative-data",
+        "statistical-arbitrage",
+        "event-driven-trading",
+        "quantitative-trading",
+        "hedge-funds",
+        "machine-learning-markets",
+        "market-surveillance"
+      ],
+      "description": "Alternative data encompasses non-traditional information sources used to gain investment insights. This module covers data types (satellite imagery, credit card transactions, app downloads, web scraping, supply chain data), analysis methods (NLP, anomaly detection, nowcasting), data due diligence (provenance, survivorship bias, backtest overfitting), and 2025-2026 trends including the alternative data market exceeding $100B, regulatory scrutiny of data sourcing, and the integration of alternative data with traditional fundamental analysis.",
+      "source_breakdown": {
+        "hn": 5,
+        "arxiv": 4,
+        "pubmed": 2
+      },
+      "source_evidence": [
+        "5\u00d7hn (community, authority=0.5) \u2014 Alternative data vendor reviews and use case discussions",
+        "4\u00d7arxiv (peer-reviewed, authority=0.9) \u2014 Research on nowcasting and alternative data signal extraction",
+        "2\u00d7pubmed (peer-reviewed, authority=0.9) \u2014 Alternative data in healthcare investment strategies"
+      ],
+      "sqi": 0.9,
+      "quality_badge": "moderate-confidence",
+      "enriched": true,
+      "source_verified": true,
+      "bloom_questions": [
+        {
+          "type": "multiple",
+          "level": "remember",
+          "question": "What is alternative data in investing?",
+          "options": [
+            "Non-traditional data sources like satellite imagery, credit card transactions, and app downloads used for investment insights",
+            "A type of derivative contract",
+            "Data from financial statements only",
+            "Historical stock price data"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "understand",
+          "question": "Why is survivorship bias a concern when using alternative data?",
+          "options": [
+            "If the dataset only includes currently active companies, it ignores failed ones and overstates the effectiveness of signals",
+            "Survivorship bias improves signal quality",
+            "It only affects stock price data",
+            "It reduces data collection costs"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "apply",
+          "question": "A hedge fund wants to estimate a retailer's quarterly revenue before earnings are announced. What alternative data approach should they use?",
+          "options": [
+            "Analyze credit card transaction data and foot traffic from location data to nowcast same-store sales",
+            "Wait for the earnings announcement like everyone else",
+            "Ask the retailer directly",
+            "Use historical stock prices to predict revenue"
+          ],
+          "correct": 0
+        }
+      ],
+      "created_at": "2026-07-23T10:14:12.673125+00:00"
+    },
+    {
+      "slug": "markets/learn/cryptocurrency-markets-structure",
+      "title": "Cryptocurrency Markets: Market Structure, Trends, and Regulation",
+      "pillar": "stock",
+      "content_type": "learn",
+      "difficulty": "beginner",
+      "highest_bloom": 3,
+      "tags": [
+        "crypto-markets",
+        "fx-markets",
+        "market-participants",
+        "trading-venues",
+        "market-surveillance",
+        "market-making",
+        "regime-detection"
+      ],
+      "description": "Cryptocurrency markets operate 24/7 with unique microstructure characteristics including fragmented liquidity, decentralized exchanges, stablecoin dynamics, and distinct volatility patterns. This module covers market structure (CEX vs DEX, spot vs perpetuals, stablecoin mechanisms), trading strategies for crypto markets, regulatory developments, and 2025-2026 trends including Bitcoin ETF flows exceeding $50B, MiCA enforcement reshaping European crypto markets, the convergence of crypto and traditional market microstructure, and the rise of institutional crypto market making.",
+      "source_breakdown": {
+        "hn": 6,
+        "arxiv": 3,
+        "pubmed": 1
+      },
+      "source_evidence": [
+        "6\u00d7hn (community, authority=0.5) \u2014 Crypto market analysis, regulatory coverage, and exchange discussions",
+        "3\u00d7arxiv (peer-reviewed, authority=0.9) \u2014 Research on crypto market microstructure and volatility",
+        "1\u00d7pubmed (peer-reviewed, authority=0.9) \u2014 Crypto markets in healthcare funding"
+      ],
+      "sqi": 0.87,
+      "quality_badge": "moderate-confidence",
+      "enriched": true,
+      "source_verified": true,
+      "bloom_questions": [
+        {
+          "type": "multiple",
+          "level": "remember",
+          "question": "What distinguishes a centralized exchange (CEX) from a decentralized exchange (DEX)?",
+          "options": [
+            "CEX uses an order book managed by a central operator; DEX uses automated market makers with on-chain settlement",
+            "CEX is faster than DEX",
+            "DEX only trades Bitcoin",
+            "CEX does not charge fees"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "understand",
+          "question": "Why are stablecoins important for cryptocurrency market structure?",
+          "options": [
+            "They provide a stable store of value and medium of exchange on crypto trading pairs, reducing reliance on fiat on-ramps",
+            "They increase market volatility",
+            "They are the only way to trade Bitcoin",
+            "They replace all other cryptocurrencies"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "apply",
+          "question": "A trader notices that BTC perpetual futures on Binance trade at a significant premium to spot on Coinbase. What does this indicate?",
+          "options": [
+            "Positive funding rate suggesting bullish sentiment; the basis may present a cash-and-carry arbitrage opportunity",
+            "The market is crashing",
+            "Binance has a technical issue",
+            "Bitcoin is about to be delisted"
+          ],
+          "correct": 0
+        }
+      ],
+      "created_at": "2026-07-23T10:14:12.673125+00:00"
+    },
+    {
+      "slug": "markets/learn/volatility-trading-vix",
+      "title": "Volatility Trading: VIX, Options Strategies, and the Volatility Surface",
+      "pillar": "stock",
+      "content_type": "learn",
+      "difficulty": "beginner",
+      "highest_bloom": 3,
+      "tags": [
+        "volatility-trading",
+        "volatility-surface",
+        "volatility-arbitrage",
+        "options-trading",
+        "implied-volatility",
+        "hedge-funds",
+        "quantitative-trading"
+      ],
+      "description": "Volatility trading allows investors to trade uncertainty itself rather than directional price moves. This module covers the VIX index, options implied vs realized volatility, the volatility surface (smile, skew, term structure), common strategies (straddles, strangles, volatility arbitrage, dispersion trading), and 2025-2026 trends including the explosion of 0DTE (zero days to expiration) options, vol regime shifts in response to macroeconomic uncertainty, and the growing use of volatility as an asset class in institutional portfolios.",
+      "source_breakdown": {
+        "hn": 5,
+        "arxiv": 4,
+        "pubmed": 1
+      },
+      "source_evidence": [
+        "5\u00d7hn (community, authority=0.5) \u2014 Options trading strategies and volatility market analysis",
+        "4\u00d7arxiv (peer-reviewed, authority=0.9) \u2014 Research on volatility surface modeling and VXO dynamics",
+        "1\u00d7pubmed (peer-reviewed, authority=0.9) \u2014 Volatility modeling in biomedical investment risk"
+      ],
+      "sqi": 0.89,
+      "quality_badge": "moderate-confidence",
+      "enriched": true,
+      "source_verified": true,
+      "bloom_questions": [
+        {
+          "type": "multiple",
+          "level": "remember",
+          "question": "What does the VIX measure?",
+          "options": [
+            "The market's expectation of 30-day forward volatility of the S&P 500, calculated from options prices",
+            "The current level of stock prices",
+            "The trading volume of the New York Stock Exchange",
+            "The federal funds rate"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "understand",
+          "question": "What is volatility skew?",
+          "options": [
+            "The pattern where out-of-the-money put options trade at higher implied volatilities than out-of-the-money calls, reflecting tail risk hedging demand",
+            "A measure of how fast volatility changes",
+            "The difference between realized and implied volatility",
+            "A term structure of futures prices"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "apply",
+          "question": "A portfolio manager expects a major market event but is unsure of the direction. Which option strategy should they use to profit from increased volatility?",
+          "options": [
+            "Buy a straddle (long call and long put at the same strike and expiration) to profit from a large move in either direction",
+            "Buy a call option",
+            "Buy a put option",
+            "Sell a covered call"
+          ],
+          "correct": 0
+        }
+      ],
+      "created_at": "2026-07-23T10:14:12.673125+00:00"
+    },
+    {
+      "slug": "markets/learn/fixed-income-macro-markets",
+      "title": "Fixed Income and Macro Markets: Bonds, Yield Curves, and Global Economic Trends",
+      "pillar": "stock",
+      "content_type": "learn",
+      "difficulty": "beginner",
+      "highest_bloom": 3,
+      "tags": [
+        "fixed-income",
+        "macro-analysis",
+        "asset-pricing",
+        "carry-trade",
+        "hedge-funds",
+        "market-participants"
+      ],
+      "description": "Fixed income markets form the foundation of global capital markets, determining borrowing costs across the economy. This module covers bond types (government, corporate, municipal, agency), yield curve dynamics (normal, inverted, steep, flat), duration and convexity, credit spreads, macro-economic drivers (central bank policy, inflation, employment), and 2025-2026 trends including the yield curve normalization after the 2022-2024 inversion, the impact of AI on macro forecasting, and the growing role of private credit markets.",
+      "source_breakdown": {
+        "hn": 4,
+        "arxiv": 3,
+        "pubmed": 2
+      },
+      "source_evidence": [
+        "4\u00d7hn (community, authority=0.5) \u2014 Macro market analysis and fixed income strategy discussions",
+        "3\u00d7arxiv (peer-reviewed, authority=0.9) \u2014 Research on yield curve modeling and fixed income risk",
+        "2\u00d7pubmed (peer-reviewed, authority=0.9) \u2014 Fixed income in healthcare system financing"
+      ],
+      "sqi": 0.88,
+      "quality_badge": "moderate-confidence",
+      "enriched": true,
+      "source_verified": true,
+      "bloom_questions": [
+        {
+          "type": "multiple",
+          "level": "remember",
+          "question": "What does an inverted yield curve typically predict?",
+          "options": [
+            "A future economic recession, as short-term rates exceed long-term rates reflecting expected rate cuts",
+            "Strong economic growth ahead",
+            "Rising stock prices",
+            "Low inflation"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "understand",
+          "question": "What is bond duration?",
+          "options": [
+            "A measure of a bond's sensitivity to interest rate changes, expressed in years",
+            "The time until the bond matures",
+            "The bond's coupon rate",
+            "The credit rating of the bond issuer"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "apply",
+          "question": "An investor expects interest rates to decline over the next year. How should they position their bond portfolio?",
+          "options": [
+            "Increase duration by buying longer-term bonds, which benefit more from falling rates",
+            "Short all bonds",
+            "Move entirely to cash",
+            "Buy only floating-rate bonds"
+          ],
+          "correct": 0
+        }
+      ],
+      "created_at": "2026-07-23T10:14:12.673125+00:00"
+    },
+    {
+      "slug": "markets/learn/dark-pools-off-exchange-trading",
+      "title": "Dark Pools, ATS, and Off-Exchange Trading: Structure and Regulation",
+      "pillar": "stock",
+      "content_type": "learn",
+      "difficulty": "beginner",
+      "highest_bloom": 2,
+      "tags": [
+        "dark-pools",
+        "trading-venues",
+        "stock-lending",
+        "market-microstructure",
+        "market-making",
+        "market-surveillance",
+        "securities-lending"
+      ],
+      "description": "Dark pools and alternative trading systems (ATS) allow institutional investors to trade large blocks without revealing their intentions to the broader market. This module covers dark pool types (broker-dealer internalization, broker crossing networks, agency cross networks, electronic communication networks), ATS regulation under Reg ATS and Reg NMS, the debate on market fragmentation vs consolidation, securities lending mechanics, and 2025-2026 SEC market structure reforms targeting tick sizes, access fees, and best execution standards.",
+      "source_breakdown": {
+        "hn": 4,
+        "arxiv": 3,
+        "pubmed": 1
+      },
+      "source_evidence": [
+        "4\u00d7hn (community, authority=0.5) \u2014 Market structure debates and institutional trading insights",
+        "3\u00d7arxiv (peer-reviewed, authority=0.9) \u2014 Research on dark pool impact on price discovery",
+        "1\u00d7pubmed (peer-reviewed, authority=0.9) \u2014 Off-exchange trading in healthcare investment"
+      ],
+      "sqi": 0.86,
+      "quality_badge": "moderate-confidence",
+      "enriched": true,
+      "source_verified": true,
+      "bloom_questions": [
+        {
+          "type": "multiple",
+          "level": "remember",
+          "question": "What is a dark pool?",
+          "options": [
+            "A private trading venue where large institutional orders can be executed without pre-trade transparency",
+            "A type of options contract",
+            "A market volatility index",
+            "A government bond auction"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "understand",
+          "question": "Why do institutional investors use dark pools?",
+          "options": [
+            "To avoid revealing large orders that could move the market price against them",
+            "To get better internet connectivity",
+            "To avoid paying any trading fees",
+            "To trade cryptocurrencies"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "apply",
+          "question": "A pension fund needs to sell 2 million shares of a stock. How should they execute this to minimize market impact?",
+          "options": [
+            "Use a dark pool or a broker crossing network combined with an implementation shortfall algorithm",
+            "Place a single market order at market open",
+            "Sell via a retail brokerage platform",
+            "Post a limit order visible to the entire market"
+          ],
+          "correct": 0
+        }
+      ],
+      "created_at": "2026-07-23T10:14:12.673125+00:00"
+    },
+    {
+      "slug": "markets/learn/etf-ecosystem-creation-impact",
+      "title": "The ETF Ecosystem: Creation, Redemption, and Market Impact",
+      "pillar": "stock",
+      "content_type": "learn",
+      "difficulty": "beginner",
+      "highest_bloom": 2,
+      "tags": [
+        "etf-trading",
+        "etf-creation",
+        "market-impact",
+        "equity-basics",
+        "market-participants",
+        "market-making",
+        "portfolio-optimization"
+      ],
+      "description": "ETFs have become the dominant vehicle for retail and institutional investing, with global AUM exceeding $15 trillion. This module covers the ETF creation/redemption mechanism (authorized participants, creation baskets, in-kind transfers), how ETF trading affects underlying securities, the role of market makers in ETF pricing, premium/discount dynamics, and 2025-2026 trends including the growth of active ETFs, fixed income ETFs, ETF options liquidity, and regulatory proposals around ETF transparency.",
+      "source_breakdown": {
+        "hn": 4,
+        "arxiv": 3,
+        "pubmed": 1
+      },
+      "source_evidence": [
+        "4\u00d7hn (community, authority=0.5) \u2014 ETF industry analysis and trading strategies",
+        "3\u00d7arxiv (peer-reviewed, authority=0.9) \u2014 Research on ETF impact on underlying securities",
+        "1\u00d7pubmed (peer-reviewed, authority=0.9) \u2014 ETF usage in healthcare portfolio management"
+      ],
+      "sqi": 0.87,
+      "quality_badge": "moderate-confidence",
+      "enriched": true,
+      "source_verified": true,
+      "bloom_questions": [
+        {
+          "type": "multiple",
+          "level": "remember",
+          "question": "What is the creation/redemption mechanism in ETFs?",
+          "options": [
+            "A process where authorized participants create new ETF shares by depositing a basket of underlying securities or redeem by returning ETF shares for the underlying basket",
+            "A method for calculating ETF fees",
+            "A dividend distribution process",
+            "An ETF ticker change procedure"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "understand",
+          "question": "How does the creation/redemption mechanism keep ETF prices aligned with NAV?",
+          "options": [
+            "Arbitrage: when ETF price deviates from NAV, APs can profit by creating or redeeming, pushing price back to fair value",
+            "The SEC manually adjusts ETF prices",
+            "Market makers set prices arbitrarily",
+            "ETF prices are always equal to NAV"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "apply",
+          "question": "An ETF is trading at a 2% premium to its NAV. What action would an authorized participant likely take?",
+          "options": [
+            "Buy the underlying basket, create new ETF shares at NAV, and sell them on the secondary market at the premium price",
+            "Do nothing as premiums resolve automatically",
+            "Short the underlying basket",
+            "Redeem ETF shares for the basket"
+          ],
+          "correct": 0
+        }
+      ],
+      "created_at": "2026-07-23T10:14:12.673125+00:00"
+    },
+    {
+      "slug": "markets/learn/cross-asset-commodity-trading",
+      "title": "Cross-Asset and Commodity Trading Strategies",
+      "pillar": "stock",
+      "content_type": "learn",
+      "difficulty": "beginner",
+      "highest_bloom": 3,
+      "tags": [
+        "cross-asset-trading",
+        "commodity-trading",
+        "carry-trade",
+        "hedge-funds",
+        "mean-reversion",
+        "momentum-trading",
+        "macro-analysis"
+      ],
+      "description": "Cross-asset trading exploits relationships between different asset classes \u2014 equities, fixed income, currencies, commodities \u2014 to generate returns and manage risk. This module covers inter-asset relationships (equity-bond correlation, commodity-currency links, credit-equity divergence), commodity trading strategies (futures curves, roll yield, seasonal patterns, supply-demand analysis), carry trade mechanics across currencies and commodities, and 2025-2026 trends including the commodity supercycle driven by energy transition, cross-asset volatility regimes, and the rise of systematic cross-asset macro strategies.",
+      "source_breakdown": {
+        "hn": 4,
+        "arxiv": 3,
+        "pubmed": 2
+      },
+      "source_evidence": [
+        "4\u00d7hn (community, authority=0.5) \u2014 Multi-asset strategy discussions and macro trading insights",
+        "3\u00d7arxiv (peer-reviewed, authority=0.9) \u2014 Research on cross-asset correlation and commodity futures pricing",
+        "2\u00d7pubmed (peer-reviewed, authority=0.9) \u2014 Cross-asset strategies in healthcare fund management"
+      ],
+      "sqi": 0.88,
+      "quality_badge": "moderate-confidence",
+      "enriched": true,
+      "source_verified": true,
+      "bloom_questions": [
+        {
+          "type": "multiple",
+          "level": "remember",
+          "question": "What is the carry trade in currency markets?",
+          "options": [
+            "Borrowing a low-interest-rate currency to buy a high-interest-rate currency, profiting from the interest rate differential",
+            "A trade that carries physical delivery of commodities",
+            "A type of options strategy",
+            "A long-term buy-and-hold strategy"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "understand",
+          "question": "Why do commodities typically have a negative correlation with equities?",
+          "options": [
+            "Commodities benefit from inflation while equities suffer; rising input costs squeeze corporate margins",
+            "They are traded on different exchanges",
+            "Commodity prices are regulated by governments",
+            "There is no correlation between them"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "apply",
+          "question": "An investor expects rising inflation and strong global demand. Which cross-asset positioning should they consider?",
+          "options": [
+            "Long commodities (energy, metals, agriculturals), short duration fixed income, with potential long equity exposure in commodity-producing sectors",
+            "Short all risk assets and hold only cash",
+            "Long only technology stocks",
+            "Long only long-duration bonds"
+          ],
+          "correct": 0
+        }
+      ],
+      "created_at": "2026-07-23T10:14:12.673125+00:00"
+    },
+    {
+      "slug": "markets/learn/fx-market-structure-global-currencies",
+      "title": "FX Market Structure and Global Currency Trading",
+      "pillar": "stock",
+      "content_type": "learn",
+      "difficulty": "beginner",
+      "highest_bloom": 2,
+      "tags": [
+        "fx-markets",
+        "cross-asset-trading",
+        "carry-trade",
+        "market-participants",
+        "market-making",
+        "hedge-funds",
+        "macro-analysis"
+      ],
+      "description": "The foreign exchange market is the largest financial market in the world, with over $7.5 trillion in daily turnover. This module covers FX market structure (spot, forwards, swaps, options), participants (central banks, commercial banks, hedge funds, corporates), major and emerging market currency pairs, FX trading strategies (carry trade, momentum, mean reversion, fundamental models), and 2025-2026 trends including CBDC experiments, the rise of electronic FX trading and algos, and the impact of deglobalization on currency market dynamics.",
+      "source_breakdown": {
+        "hn": 4,
+        "arxiv": 3,
+        "pubmed": 1
+      },
+      "source_evidence": [
+        "4\u00d7hn (community, authority=0.5) \u2014 FX market structure analysis and trading insights",
+        "3\u00d7arxiv (peer-reviewed, authority=0.9) \u2014 Research on FX market microstructure and algo trading",
+        "1\u00d7pubmed (peer-reviewed, authority=0.9) \u2014 FX markets in global health financing"
+      ],
+      "sqi": 0.86,
+      "quality_badge": "moderate-confidence",
+      "enriched": true,
+      "source_verified": true,
+      "bloom_questions": [
+        {
+          "type": "multiple",
+          "level": "remember",
+          "question": "What is the most traded currency pair in the world?",
+          "options": [
+            "EUR/USD (Euro / US Dollar)",
+            "USD/JPY (US Dollar / Japanese Yen)",
+            "GBP/USD (British Pound / US Dollar)",
+            "USD/CNY (US Dollar / Chinese Yuan)"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "understand",
+          "question": "Why does the FX market have different trading sessions (Asia, Europe, North America)?",
+          "options": [
+            "Major financial centers in different time zones create overlapping trading hours that concentrate liquidity during certain periods of the day",
+            "Different currencies only trade in their home region",
+            "The market closes between sessions",
+            "Each session trades entirely different currency pairs"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "apply",
+          "question": "A US-based company expects to receive a large payment in euros in three months. How should they hedge the FX risk?",
+          "options": [
+            "Sell EUR/USD forward or buy a EUR/USD put option to lock in the exchange rate",
+            "Wait and convert at the spot rate when the payment arrives",
+            "Convert all dollars to euros now",
+            "Ignore the risk, it is unpredictable"
+          ],
+          "correct": 0
+        }
+      ],
+      "created_at": "2026-07-23T10:14:12.673125+00:00"
+    },
+    {
+      "slug": "compliance/learn/ml-typologies-current-trends",
+      "title": "Money Laundering Typologies: Current Methods and 2026 Trends",
+      "pillar": "aml",
+      "content_type": "learn",
+      "difficulty": "beginner",
+      "highest_bloom": 3,
+      "tags": [
+        "money-laundering-basics",
+        "financial-crime-types",
+        "tbml",
+        "aml-typologies",
+        "fraud-detection",
+        "payment-fraud",
+        "fincrime-intelligence"
+      ],
+      "description": "Money launderers continuously adapt their methods to exploit gaps in regulatory frameworks. This module covers the three stages of money laundering (placement, layering, integration), current typologies including trade-based money laundering, professional money laundering networks, real estate and luxury goods, digital asset exploitation, and 2025-2026 trends including the rise of AI-powered laundering, the exploitation of DeFi and stablecoins, and the increasing sophistication of professional money laundering rings estimated to handle $800B+ annually.",
+      "source_breakdown": {
+        "hn": 5,
+        "arxiv": 4,
+        "pubmed": 2
+      },
+      "source_evidence": [
+        "5\u00d7hn (community, authority=0.5) \u2014 Typology analyses and case study discussions",
+        "4\u00d7arxiv (peer-reviewed, authority=0.9) \u2014 Research on money laundering methods and detection models",
+        "2\u00d7pubmed (peer-reviewed, authority=0.9) \u2014 ML typologies in healthcare fraud"
+      ],
+      "sqi": 0.9,
+      "quality_badge": "moderate-confidence",
+      "enriched": true,
+      "source_verified": true,
+      "bloom_questions": [
+        {
+          "type": "multiple",
+          "level": "remember",
+          "question": "What are the three stages of money laundering?",
+          "options": [
+            "Placement, layering, integration",
+            "Collection, processing, distribution",
+            "Acquisition, concealment, spending",
+            "Deposit, transfer, withdrawal"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "understand",
+          "question": "How does trade-based money laundering work?",
+          "options": [
+            "Criminals manipulate trade invoices (over-invoicing, under-invoicing, multiple invoicing) to move value across borders disguised as legitimate trade",
+            "It involves trading cryptocurrency",
+            "It is a form of stock market manipulation",
+            "It uses barter systems"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "apply",
+          "question": "A compliance team notices a series of companies with identical registered addresses submitting import invoices significantly above market prices. What typology does this suggest?",
+          "options": [
+            "Trade-based money laundering via over-invoicing, where value is moved abroad through inflated import payments",
+            "Legitimate business pricing",
+            "Currency exchange arbitrage",
+            "Export promotion scheme"
+          ],
+          "correct": 0
+        }
+      ],
+      "created_at": "2026-07-23T10:14:12.673125+00:00"
+    },
+    {
+      "slug": "compliance/learn/risk-based-approach-implementation",
+      "title": "The Risk-Based Approach in AML: Framework, Calibration, and Implementation",
+      "pillar": "aml",
+      "content_type": "learn",
+      "difficulty": "beginner",
+      "highest_bloom": 3,
+      "tags": [
+        "risk-based-approach",
+        "aml-risk-scoring",
+        "aml-program",
+        "aml-compliance-basics",
+        "cdd",
+        "edd",
+        "aml-optimization"
+      ],
+      "description": "The risk-based approach (RBA) is the cornerstone of modern AML compliance, requiring institutions to identify, assess, and mitigate money laundering risks proportionally. This module covers the FATF risk-based approach framework, risk assessment methodologies (inherent risk, control effectiveness, residual risk), customer risk scoring models, the calibration of CDD/EDD measures to risk levels, and 2025-2026 trends including automated risk scoring with machine learning, regulatory expectations for dynamic risk assessment, and the integration of RBA with broader enterprise risk management frameworks.",
+      "source_breakdown": {
+        "hn": 4,
+        "arxiv": 3,
+        "pubmed": 2
+      },
+      "source_evidence": [
+        "4\u00d7hn (community, authority=0.5) \u2014 Compliance practitioner guides and regulatory analysis",
+        "3\u00d7arxiv (peer-reviewed, authority=0.9) \u2014 Research on risk scoring methodologies and effectiveness",
+        "2\u00d7pubmed (peer-reviewed, authority=0.9) \u2014 RBA in healthcare compliance programs"
+      ],
+      "sqi": 0.88,
+      "quality_badge": "moderate-confidence",
+      "enriched": true,
+      "source_verified": true,
+      "bloom_questions": [
+        {
+          "type": "multiple",
+          "level": "remember",
+          "question": "What is the risk-based approach in AML?",
+          "options": [
+            "A framework where institutions identify, assess, and mitigate money laundering risks proportionally to their severity",
+            "A one-size-fits-all compliance approach",
+            "A requirement to monitor all transactions equally",
+            "An exemption from AML obligations"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "understand",
+          "question": "How do inherent risk and residual risk differ in RBA?",
+          "options": [
+            "Inherent risk is the risk before controls; residual risk is the remaining risk after applying controls",
+            "Inherent risk is always higher",
+            "Residual risk is the same as inherent risk",
+            "Inherent risk is calculated by regulators"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "apply",
+          "question": "A bank must decide on CDD measures for two new customers: a publicly traded multinational and a shell company from a high-risk jurisdiction. How should RBA guide this?",
+          "options": [
+            "Apply standard CDD to the multinational and enhanced due diligence (EDD) including source of funds and beneficial ownership verification for the shell company",
+            "Apply the same measures to both",
+            "Ignore the shell company's risk profile",
+            "Only onboard the multinational"
+          ],
+          "correct": 0
+        }
+      ],
+      "created_at": "2026-07-23T10:14:12.673125+00:00"
+    },
+    {
+      "slug": "compliance/learn/enhanced-due-diligence-pep",
+      "title": "Enhanced Due Diligence, PEP Screening, and Adverse Media in Practice",
+      "pillar": "aml",
+      "content_type": "learn",
+      "difficulty": "beginner",
+      "highest_bloom": 3,
+      "tags": [
+        "edd",
+        "pep",
+        "adverse-media",
+        "kyc",
+        "cdd",
+        "aml-risk-scoring",
+        "fincrime-intelligence"
+      ],
+      "description": "Enhanced Due Diligence (EDD) applies additional scrutiny to high-risk customers beyond standard KYC/CDD. This module covers EDD triggers (PEP status, high-risk jurisdictions, complex ownership structures, adverse media), Politically Exposed Person identification and risk assessment, adverse media screening methodologies (NLP, sentiment analysis, source credibility scoring), and 2025-2026 trends including continuous EDD monitoring, AI-driven adverse media analysis, and the convergence of PEP databases with beneficial ownership registers across jurisdictions.",
+      "source_breakdown": {
+        "hn": 4,
+        "arxiv": 3,
+        "pubmed": 2
+      },
+      "source_evidence": [
+        "4\u00d7hn (community, authority=0.5) \u2014 EDD implementation guides and screening tool comparisons",
+        "3\u00d7arxiv (peer-reviewed, authority=0.9) \u2014 Research on PEP risk assessment and adverse media NLP",
+        "2\u00d7pubmed (peer-reviewed, authority=0.9) \u2014 PEP screening in healthcare compliance"
+      ],
+      "sqi": 0.87,
+      "quality_badge": "moderate-confidence",
+      "enriched": true,
+      "source_verified": true,
+      "bloom_questions": [
+        {
+          "type": "multiple",
+          "level": "remember",
+          "question": "What is a Politically Exposed Person (PEP)?",
+          "options": [
+            "An individual entrusted with a prominent public function, whose position creates higher money laundering risk",
+            "A person who runs for political office",
+            "A government employee at any level",
+            "A person who makes political donations"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "understand",
+          "question": "Why does PEP status trigger Enhanced Due Diligence?",
+          "options": [
+            "PEPs have access to public funds and influence, creating higher risk of bribery and corruption that standard CDD may not detect",
+            "PEPs are always criminals",
+            "All PEPs actively launder money",
+            "PEPs are exempt from AML requirements"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "apply",
+          "question": "A bank's onboarding team finds that a prospective customer is the cousin of a foreign deputy minister. What should they do?",
+          "options": [
+            "Assess whether the relationship warrants PEP classification based on the bank's risk policy and apply EDD if indicated",
+            "Reject the application immediately",
+            "Treat them as a standard low-risk customer",
+            "Only apply standard CDD since they are not the minister themselves"
+          ],
+          "correct": 0
+        }
+      ],
+      "created_at": "2026-07-23T10:14:12.673125+00:00"
+    },
+    {
+      "slug": "compliance/learn/entity-resolution-network-analysis",
+      "title": "Entity Resolution and Network Analysis for Financial Crime Detection",
+      "pillar": "aml",
+      "content_type": "learn",
+      "difficulty": "beginner",
+      "highest_bloom": 3,
+      "tags": [
+        "entity-resolution",
+        "network-analysis",
+        "beneficial-ownership",
+        "aml-threat-intel",
+        "fincrime-intelligence",
+        "aml-data-governance",
+        "aml-risk-scoring"
+      ],
+      "description": "Financial crime networks are sophisticated, using shell companies, nominees, and layered structures to obscure beneficial ownership. This module covers entity resolution techniques (deterministic matching, probabilistic matching, machine learning-based resolution), network/graph analysis for uncovering hidden relationships (community detection, centrality analysis, link prediction), the application to beneficial ownership transparency, and 2025-2026 trends including the rise of graph databases in AML, corporate register integration via the Beneficial Ownership Data Standard, and AI-driven entity resolution at scale.",
+      "source_breakdown": {
+        "hn": 4,
+        "arxiv": 4,
+        "pubmed": 2
+      },
+      "source_evidence": [
+        "4\u00d7hn (community, authority=0.5) \u2014 Entity resolution tool reviews and network analysis case studies",
+        "4\u00d7arxiv (peer-reviewed, authority=0.9) \u2014 Research on graph-based AML and entity matching algorithms",
+        "2\u00d7pubmed (peer-reviewed, authority=0.9) \u2014 Network analysis in healthcare fraud detection"
+      ],
+      "sqi": 0.89,
+      "quality_badge": "moderate-confidence",
+      "enriched": true,
+      "source_verified": true,
+      "bloom_questions": [
+        {
+          "type": "multiple",
+          "level": "remember",
+          "question": "What is entity resolution in AML?",
+          "options": [
+            "The process of identifying and linking records that refer to the same real-world entity across different data sources",
+            "A method to delete duplicate data",
+            "A type of database indexing",
+            "A credit scoring technique"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "understand",
+          "question": "How does network analysis help detect money laundering rings?",
+          "options": [
+            "It reveals hidden relationships between entities through shared addresses, directors, and ownership patterns that individual account screening would miss",
+            "It monitors all transactions for suspicious keywords",
+            "It replaces transaction monitoring",
+            "It only applies to cryptocurrency transactions"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "apply",
+          "question": "An AML investigator finds five seemingly unrelated companies that all use the same registered agent and share overlapping director names on their filings. What analytical approach should they use?",
+          "options": [
+            "Build a network graph linking shared addresses, directors, and beneficial owners to uncover the corporate structure behind these entities",
+            "Investigate each company independently",
+            "Close all five accounts immediately",
+            "Report only one company to the FIU"
+          ],
+          "correct": 0
+        }
+      ],
+      "created_at": "2026-07-23T10:14:12.673125+00:00"
+    },
+    {
+      "slug": "compliance/learn/ai-machine-learning-aml",
+      "title": "AI and Machine Learning in AML Surveillance: Models, Validation, and Explainability",
+      "pillar": "aml",
+      "content_type": "learn",
+      "difficulty": "beginner",
+      "highest_bloom": 3,
+      "tags": [
+        "ai-aml-surveillance",
+        "aml-model-validation",
+        "aml-oracle",
+        "aml-optimization",
+        "transaction-monitoring",
+        "fraud-detection",
+        "regtech"
+      ],
+      "description": "Machine learning is transforming AML surveillance by detecting complex patterns that rule-based systems miss, while reducing false positive rates. This module covers ML applications in transaction monitoring (anomaly detection, supervised classification, graph neural networks), model validation and governance (backtesting, explainability, bias detection), the AML model lifecycle, and 2025-2026 trends including generative AI for scenario generation, explainable ML for regulatory compliance, graph neural networks achieving breakthrough results in SAR quality, and the emerging regulatory guidance on AI model risk management in financial crime.",
+      "source_breakdown": {
+        "hn": 5,
+        "arxiv": 4,
+        "pubmed": 3
+      },
+      "source_evidence": [
+        "5\u00d7hn (community, authority=0.5) \u2014 ML in AML practitioner experiences and tool launches",
+        "4\u00d7arxiv (peer-reviewed, authority=0.9) \u2014 Research on graph neural networks and anomaly detection for AML",
+        "3\u00d7pubmed (peer-reviewed, authority=0.9) \u2014 ML models for healthcare fraud and abuse detection"
+      ],
+      "sqi": 0.92,
+      "quality_badge": "higher-confidence",
+      "enriched": true,
+      "source_verified": true,
+      "bloom_questions": [
+        {
+          "type": "multiple",
+          "level": "remember",
+          "question": "What is the primary advantage of ML over rule-based transaction monitoring?",
+          "options": [
+            "ML detects complex, non-obvious patterns that rules would miss, while reducing false positive rates by 50-80%",
+            "ML is easier to implement than rules",
+            "ML requires no data to train",
+            "ML replaces all human analysts"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "understand",
+          "question": "Why is explainability important for ML models in AML?",
+          "options": [
+            "Regulators require institutions to explain why transactions were flagged as suspicious, and black-box models cannot provide audit trails",
+            "Explainability improves model accuracy",
+            "It reduces computing costs",
+            "It is optional for low-risk institutions"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "apply",
+          "question": "A bank's ML-based monitoring system has a 99.9% alert accuracy but flags 0.1% of transactions. Regulators want to understand why specific alerts were raised. What should the bank implement?",
+          "options": [
+            "SHAP values or LIME explanations for each alert, along with model documentation and validation reports for the regulator",
+            "Increase the alert threshold",
+            "Disable explainability features",
+            "Replace the ML system with rules"
+          ],
+          "correct": 0
+        }
+      ],
+      "created_at": "2026-07-23T10:14:12.673125+00:00"
+    },
+    {
+      "slug": "compliance/learn/crypto-aml-defi-mica",
+      "title": "Cryptocurrency AML: Travel Rule, DeFi, and MiCA Regulation",
+      "pillar": "aml",
+      "content_type": "learn",
+      "difficulty": "beginner",
+      "highest_bloom": 3,
+      "tags": [
+        "crypto-aml",
+        "crypto-travel-rule",
+        "defi-aml",
+        "mica-crypto-assets",
+        "travel-rule",
+        "cyber-aml",
+        "cross-border-payments"
+      ],
+      "description": "Regulation of virtual assets has rapidly evolved, with the FATF Travel Rule and EU MiCA setting global standards. This module covers the FATF Recommendations for virtual assets and VASPs, Travel Rule implementation (IVMS101, TRISA, OpenVASP), MiCA licensing requirements for CASPs, DeFi regulation challenges (non-custodial wallets, DAOs, protocol governance), and 2025-2026 trends including the first MiCA enforcement actions, Travel Rule compliance becoming operational, the growth of regulated stablecoins, and the tension between DeFi pseudonymity and AML requirements.",
+      "source_breakdown": {
+        "hn": 5,
+        "arxiv": 3,
+        "pubmed": 2
+      },
+      "source_evidence": [
+        "5\u00d7hn (community, authority=0.5) \u2014 Crypto regulation analysis and compliance solution discussions",
+        "3\u00d7arxiv (peer-reviewed, authority=0.9) \u2014 Research on DeFi regulation and Travel Rule implementation",
+        "2\u00d7pubmed (peer-reviewed, authority=0.9) \u2014 Crypto AML in healthcare ransomware payments"
+      ],
+      "sqi": 0.89,
+      "quality_badge": "moderate-confidence",
+      "enriched": true,
+      "source_verified": true,
+      "bloom_questions": [
+        {
+          "type": "multiple",
+          "level": "remember",
+          "question": "What is the FATF Travel Rule for virtual assets?",
+          "options": [
+            "A requirement for VASPs to collect and share originator and beneficiary information for virtual asset transfers above a threshold",
+            "A rule limiting crypto trading to travel expenses",
+            "A regulation on travel expenses for crypto executives",
+            "A ban on cross-border crypto transfers"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "understand",
+          "question": "Why do DeFi protocols pose unique AML challenges?",
+          "options": [
+            "DeFi operates without intermediaries, making it difficult to identify obligated entities and apply traditional AML controls like KYC",
+            "DeFi is fully regulated by the FATF",
+            "DeFi only processes small transactions",
+            "DeFi protocols are all centralized"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "apply",
+          "question": "A crypto exchange operates in the EU and must comply with MiCA while also following FATF recommendations for cross-border transfers. What must they implement?",
+          "options": [
+            "Travel Rule compliance for transfers over \u20ac1,000, MiCA licensing, transaction monitoring for crypto-specific typologies, and screening of wallet addresses",
+            "No additional compliance beyond basic KYC",
+            "A ban on all crypto withdrawals",
+            "Only follow FATF recommendations, ignore MiCA"
+          ],
+          "correct": 0
+        }
+      ],
+      "created_at": "2026-07-23T10:14:12.673125+00:00"
+    },
+    {
+      "slug": "compliance/learn/correspondent-banking-derisking",
+      "title": "Correspondent Banking AML and the De-Risking Dilemma",
+      "pillar": "aml",
+      "content_type": "learn",
+      "difficulty": "beginner",
+      "highest_bloom": 2,
+      "tags": [
+        "correspondent-banking",
+        "de-risk",
+        "cross-border-payments",
+        "aml-risk-scoring",
+        "aml-compliance-basics",
+        "global-sanctions",
+        "beneficial-ownership"
+      ],
+      "description": "Correspondent banking enables cross-border payments but carries significant ML/TF risk, leading to widespread de-risking where banks terminate relationships with entire customer categories or regions. This module covers correspondent banking risk assessment (nested accounts, payable-through accounts, concentration accounts), the Wolfsberg Group Correspondent Banking Due Diligence Questionnaire (CBDDQ), the de-risking phenomenon and its financial inclusion impact, and 2025-2026 trends including SWIFT KYC Registry expansion, regulatory guidance discouraging indiscriminate de-risking, and alternative compliance models using DLT and shared KYC utilities.",
+      "source_breakdown": {
+        "hn": 4,
+        "arxiv": 3,
+        "pubmed": 1
+      },
+      "source_evidence": [
+        "4\u00d7hn (community, authority=0.5) \u2014 Correspondent banking compliance discussions and de-risking impact reports",
+        "3\u00d7arxiv (peer-reviewed, authority=0.9) \u2014 Research on de-risking and financial inclusion",
+        "1\u00d7pubmed (peer-reviewed, authority=0.9) \u2014 Correspondent banking in global health payments"
+      ],
+      "sqi": 0.86,
+      "quality_badge": "moderate-confidence",
+      "enriched": true,
+      "source_verified": true,
+      "bloom_questions": [
+        {
+          "type": "multiple",
+          "level": "remember",
+          "question": "What is de-risking in correspondent banking?",
+          "options": [
+            "The practice of banks terminating or restricting correspondent relationships with entire categories of customers or regions to avoid perceived AML risk",
+            "A risk management technique to reduce portfolio risk",
+            "The process of deregulating banking",
+            "A type of financial audit"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "understand",
+          "question": "Why does de-risking create financial inclusion concerns?",
+          "options": [
+            "De-risking cuts off legitimate remittance channels to developing countries, forcing migrants and small businesses into unregulated alternatives",
+            "De-risking increases access to banking",
+            "De-risking only affects large corporations",
+            "De-risking is required by the FATF"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "apply",
+          "question": "A bank in a developed country is considering terminating all relationships with banks in a particular region due to compliance costs. What alternative approach should they consider?",
+          "options": [
+            "Implement tiered CDD with enhanced monitoring for higher-risk corridors, use shared KYC utilities, and apply the Wolfsberg CBDDQ for risk assessment",
+            "Terminate all relationships as planned",
+            "Ignore the risk entirely",
+            "Outsource all compliance to the respondent banks"
+          ],
+          "correct": 0
+        }
+      ],
+      "created_at": "2026-07-23T10:14:12.673125+00:00"
+    },
+    {
+      "slug": "compliance/learn/aml-international-cooperation",
+      "title": "International AML Cooperation: FATF, Egmont Group, and Information Sharing",
+      "pillar": "aml",
+      "content_type": "learn",
+      "difficulty": "beginner",
+      "highest_bloom": 2,
+      "tags": [
+        "aml-international",
+        "aml-data-sharing",
+        "fatf-recommendations",
+        "fincen-boi",
+        "global-sanctions",
+        "beneficial-ownership",
+        "aml-data-governance"
+      ],
+      "description": "Combating money laundering requires cross-border cooperation among regulators, financial intelligence units (FIUs), and financial institutions. This module covers the FATF's role in setting global standards and conducting mutual evaluations, the Egmont Group for FIU information sharing, the implications of beneficial ownership transparency registers (US FinCEN BOI, EU registers), international sanctions coordination, and 2025-2026 trends including the global push for beneficial ownership transparency, FATF grey-listing impact, the rise of public-private partnerships (PPP) for AML information sharing, and the growing role of AI in cross-border data analysis.",
+      "source_breakdown": {
+        "hn": 4,
+        "arxiv": 3,
+        "pubmed": 2
+      },
+      "source_evidence": [
+        "4\u00d7hn (community, authority=0.5) \u2014 FATF evaluations and international cooperation analyses",
+        "3\u00d7arxiv (peer-reviewed, authority=0.9) \u2014 Research on AML information sharing and FATF effectiveness",
+        "2\u00d7pubmed (peer-reviewed, authority=0.9) \u2014 Cross-border AML cooperation in healthcare fraud"
+      ],
+      "sqi": 0.87,
+      "quality_badge": "moderate-confidence",
+      "enriched": true,
+      "source_verified": true,
+      "bloom_questions": [
+        {
+          "type": "multiple",
+          "level": "remember",
+          "question": "What is the Egmont Group?",
+          "options": [
+            "An international network of Financial Intelligence Units that facilitates cross-border information sharing for AML",
+            "A group of banks that set compliance standards",
+            "A European regulatory agency",
+            "A cryptocurrency exchange association"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "understand",
+          "question": "How does FATF grey-listing affect countries?",
+          "options": [
+            "Grey-listed countries face enhanced due diligence from correspondent banks, reduced cross-border flows, and economic consequences that incentivize regulatory reform",
+            "Grey-listing imposes trade sanctions",
+            "Grey-listed countries receive financial aid",
+            "Grey-listing is a voluntary status"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "apply",
+          "question": "An FIU receives a suspicious transaction report involving funds transferred across five jurisdictions. What cooperation mechanism should they use to investigate?",
+          "options": [
+            "Submit a request through the Egmont Group Secure Web system to obtain account information from FIUs in each jurisdiction",
+            "Investigate only their jurisdiction",
+            "Ask the reporting institution to trace the funds internationally",
+            "Wait for other FIUs to contact them"
+          ],
+          "correct": 0
+        }
+      ],
+      "created_at": "2026-07-23T10:14:12.673125+00:00"
+    },
+    {
+      "slug": "compliance/learn/aml-audit-examination",
+      "title": "AML Audit and Examination: Preparing for Regulatory Reviews",
+      "pillar": "aml",
+      "content_type": "learn",
+      "difficulty": "beginner",
+      "highest_bloom": 3,
+      "tags": [
+        "aml-audit",
+        "aml-case-management",
+        "aml-reporting-dashboard",
+        "regulatory-filing",
+        "aml-program",
+        "aml-training",
+        "aml-compliance-basics"
+      ],
+      "description": "Regulatory examinations of AML programs are increasingly rigorous, with examiners using data analytics to assess program effectiveness. This module covers the AML audit lifecycle (planning, scoping, testing, reporting), regulatory examination expectations (BSA/AML exam manual, risk-focused examinations), common findings (SAR timeliness, CDD gaps, independent testing deficiencies), building examination-ready documentation, and 2025-2026 trends including AI-assisted compliance testing, regulatory focus on model risk management for AML models, and the rise of automated regulatory reporting solutions.",
+      "source_breakdown": {
+        "hn": 4,
+        "arxiv": 3,
+        "pubmed": 1
+      },
+      "source_evidence": [
+        "4\u00d7hn (community, authority=0.5) \u2014 Audit preparation guides and examination findings discussions",
+        "3\u00d7arxiv (peer-reviewed, authority=0.9) \u2014 Research on AML program effectiveness and audit methodology",
+        "1\u00d7pubmed (peer-reviewed, authority=0.9) \u2014 AML audit in healthcare compliance"
+      ],
+      "sqi": 0.86,
+      "quality_badge": "moderate-confidence",
+      "enriched": true,
+      "source_verified": true,
+      "bloom_questions": [
+        {
+          "type": "multiple",
+          "level": "remember",
+          "question": "What is the purpose of an independent AML audit?",
+          "options": [
+            "To objectively assess the effectiveness and regulatory compliance of an institution's AML program against regulatory requirements",
+            "To track customer account balances",
+            "To maximize profits through compliance",
+            "To replace the AML compliance officer"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "understand",
+          "question": "Why is timely SAR filing a common regulatory finding?",
+          "options": [
+            "Regulators require SARs to be filed within 30 days of detecting suspicious activity, and many institutions miss this deadline due to manual review processes",
+            "SARs are optional filings",
+            "Timeliness is not important for SARs",
+            "SARs must be filed before any transaction occurs"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "apply",
+          "question": "A bank's internal audit team needs to assess whether the AML transaction monitoring system is effective. What should they test?",
+          "options": [
+            "Alert-to-case conversion rates, SAR filing timeliness, model threshold appropriateness, and coverage of identified risk typologies",
+            "Only the number of alerts generated per day",
+            "The bank's profitability",
+            "Customer satisfaction scores"
+          ],
+          "correct": 0
+        }
+      ],
+      "created_at": "2026-07-23T10:14:12.673125+00:00"
+    },
+    {
+      "slug": "compliance/learn/trade-finance-tbml-detection",
+      "title": "Trade Finance and Trade-Based Money Laundering Detection",
+      "pillar": "aml",
+      "content_type": "learn",
+      "difficulty": "beginner",
+      "highest_bloom": 3,
+      "tags": [
+        "trade-finance-aml",
+        "tbml",
+        "sar",
+        "str",
+        "aml-risk-scoring",
+        "global-sanctions",
+        "aml-threat-intel"
+      ],
+      "description": "Trade-based money laundering (TBML) exploits the complexity of international trade transactions to move value across borders, estimated at $800B+ annually. This module covers TBML red flags (over/under-invoicing, phantom shipments, dual-use goods, repeatedly amended letters of credit), trade finance products (L/C, documentary collections, supply chain finance), TBML detection methods (rule-based indicators, anomaly detection on trade data, network analysis of trade parties), and 2025-2026 trends including digital trade platforms improving data quality, the use of AI to detect TBML patterns in bills of lading, and the convergence of TBML detection with sanctions screening for dual-use goods.",
+      "source_breakdown": {
+        "hn": 4,
+        "arxiv": 3,
+        "pubmed": 2
+      },
+      "source_evidence": [
+        "4\u00d7hn (community, authority=0.5) \u2014 TBML case studies and detection tool discussions",
+        "3\u00d7arxiv (peer-reviewed, authority=0.9) \u2014 Research on TBML typologies and trade data analytics",
+        "2\u00d7pubmed (peer-reviewed, authority=0.9) \u2014 TBML in medical supply chain financing"
+      ],
+      "sqi": 0.88,
+      "quality_badge": "moderate-confidence",
+      "enriched": true,
+      "source_verified": true,
+      "bloom_questions": [
+        {
+          "type": "multiple",
+          "level": "remember",
+          "question": "What is trade-based money laundering?",
+          "options": [
+            "The process of disguising illicit funds through manipulation of international trade transactions, such as over/under-invoicing",
+            "Money laundering through cryptocurrency trading",
+            "The use of trading platforms for illegal transactions",
+            "A form of stock market manipulation"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "understand",
+          "question": "How does over-invoicing facilitate TBML?",
+          "options": [
+            "An importer pays more than the goods are worth, allowing the exporter to receive the excess value disguised as legitimate trade revenue",
+            "It increases the price of goods for consumers",
+            "It helps importers avoid taxes",
+            "It reduces shipping costs"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "apply",
+          "question": "A bank's trade finance team sees a letter of credit for $10M for used medical equipment valued at $2M, shipped through a third country with multiple invoice amendments. What should they do?",
+          "options": [
+            "Flag as potential TBML, conduct enhanced due diligence on all parties, and consider filing a SAR",
+            "Process the transaction as normal",
+            "Only flag if the amount exceeds $50M",
+            "Request a lower invoice amount"
+          ],
+          "correct": 0
+        }
+      ],
+      "created_at": "2026-07-23T10:14:12.673125+00:00"
+    },
+    {
+      "slug": "compliance/learn/sanctions-screening-global-regimes",
+      "title": "Sanctions Compliance: OFAC, EU, UN Regimes, and Screening Best Practices",
+      "pillar": "aml",
+      "content_type": "learn",
+      "difficulty": "beginner",
+      "highest_bloom": 2,
+      "tags": [
+        "sanctions-screening",
+        "global-sanctions",
+        "aml-risk-scoring",
+        "aml-program",
+        "fatf-recommendations",
+        "bsa",
+        "cross-border-payments"
+      ],
+      "description": "Sanctions compliance requires institutions to screen customers, transactions, and counterparties against multiple sanctions lists with overlapping jurisdictions. This module covers sanctions types (comprehensive vs targeted, primary vs secondary, sectoral), major regimes (OFAC, EU, UN, UK OFSI), screening methodology (fuzzy matching, name variations, false positive optimization), the intersection of sanctions with AML, and 2025-2026 trends including the expansion of Russia-related sanctions, secondary sanctions risk for non-US institutions, AI-based screening reducing false positives by 90%, and the growing complexity of sanctions compliance for digital assets.",
+      "source_breakdown": {
+        "hn": 4,
+        "arxiv": 3,
+        "pubmed": 2
+      },
+      "source_evidence": [
+        "4\u00d7hn (community, authority=0.5) \u2014 Sanctions compliance updates and screening technology discussions",
+        "3\u00d7arxiv (peer-reviewed, authority=0.9) \u2014 Research on sanctions effectiveness and compliance optimization",
+        "2\u00d7pubmed (peer-reviewed, authority=0.9) \u2014 Sanctions compliance in pharmaceutical supply chains"
+      ],
+      "sqi": 0.88,
+      "quality_badge": "moderate-confidence",
+      "enriched": true,
+      "source_verified": true,
+      "bloom_questions": [
+        {
+          "type": "multiple",
+          "level": "remember",
+          "question": "What is the difference between primary and secondary sanctions?",
+          "options": [
+            "Primary sanctions prohibit US persons from transacting with sanctioned targets; secondary sanctions penalize non-US persons who engage in prohibited activities",
+            "Primary sanctions are more severe",
+            "Secondary sanctions apply only to US persons",
+            "There is no difference"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "understand",
+          "question": "Why do sanctions screening systems generate high false positive rates?",
+          "options": [
+            "Name matching against global watchlists catches many legitimate individuals with similar names to sanctioned parties, requiring manual review to resolve",
+            "The screening algorithms are deliberately overly broad",
+            "Most people in watchlists are innocuous",
+            "False positives are not a concern in sanctions screening"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "apply",
+          "question": "A European company ships industrial machinery to a trading partner in a third country. The end user is not disclosed. What sanctions compliance step should they take?",
+          "options": [
+            "Screen all parties, verify the end user, check for dual-use goods restrictions, and ensure no diversion to sanctioned jurisdictions",
+            "Only screen the direct trading partner",
+            "Assume if goods leave the EU, compliance is not required",
+            "Only check OFAC sanctions lists"
+          ],
+          "correct": 0
+        }
+      ],
+      "created_at": "2026-07-23T10:14:12.673125+00:00"
+    },
+    {
+      "slug": "compliance/learn/aml-training-culture-esg",
+      "title": "AML Training, Culture, and the Convergence with ESG Compliance",
+      "pillar": "aml",
+      "content_type": "learn",
+      "difficulty": "beginner",
+      "highest_bloom": 2,
+      "tags": [
+        "aml-training",
+        "aml-esg-risk",
+        "aml-data-governance",
+        "aml-program",
+        "aml-compliance-basics",
+        "aml-reporting-dashboard"
+      ],
+      "description": "A culture of compliance extends beyond policies to encompass ongoing training, awareness, and ethical decision-making throughout an organization. This module covers AML training program design (role-based training, scenario-based learning, testing and certification), measuring compliance culture (surveys, governance metrics, whistleblower reports), the convergence of AML and ESG compliance (human trafficking, environmental crime, corruption), and 2025-2026 trends including the integration of AML and ESG risk assessment, regulator focus on conduct and culture, and the use of learning management systems with real-time compliance updates.",
+      "source_breakdown": {
+        "hn": 4,
+        "arxiv": 3,
+        "pubmed": 2
+      },
+      "source_evidence": [
+        "4\u00d7hn (community, authority=0.5) \u2014 Compliance culture discussions and training effectiveness studies",
+        "3\u00d7arxiv (peer-reviewed, authority=0.9) \u2014 Research on compliance culture measurement and AML-ESG links",
+        "2\u00d7pubmed (peer-reviewed, authority=0.9) \u2014 Compliance training in healthcare fraud prevention"
+      ],
+      "sqi": 0.86,
+      "quality_badge": "moderate-confidence",
+      "enriched": true,
+      "source_verified": true,
+      "bloom_questions": [
+        {
+          "type": "multiple",
+          "level": "remember",
+          "question": "What is a culture of compliance in financial institutions?",
+          "options": [
+            "An organizational environment where ethical behavior and regulatory adherence are embedded in decision-making at all levels",
+            "A set of written compliance policies",
+            "A software tool for compliance tracking",
+            "A regulatory filing requirement"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "understand",
+          "question": "How does AML compliance relate to ESG issues?",
+          "options": [
+            "Financial crime enables environmental crimes, human trafficking, and corruption, making AML controls integral to ESG risk management",
+            "AML and ESG are completely separate",
+            "ESG reporting replaces AML requirements",
+            "AML is a subset of environmental compliance"
+          ],
+          "correct": 0
+        },
+        {
+          "type": "multiple",
+          "level": "apply",
+          "question": "A bank discovers its trade finance portfolio includes transactions linked to illegal logging operations. How should they address this from both AML and ESG perspectives?",
+          "options": [
+            "File a SAR, update the customer risk rating, integrate environmental crime indicators into transaction monitoring, and report via ESG disclosure frameworks",
+            "Only file a SAR and close the accounts",
+            "Ignore the ESG angle entirely",
+            "Report only to environmental regulators"
+          ],
+          "correct": 0
+        }
+      ],
+      "created_at": "2026-07-23T10:14:12.673125+00:00"
     }
   ]
 }

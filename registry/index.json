@@ -1,13 +1,13 @@
 {
   "manifest_type": "registry-index",
-  "generated_at": "2026-07-23T09:03:56Z",
+  "generated_at": "2026-07-23T10:17:21Z",
   "counts": {
     "runs": 0,
-    "pages": 1607,
+    "pages": 1728,
     "pillars": {
-      "data-engineering": 50,
-      "stock": 37,
-      "aml": 23
+      "data-engineering": 62,
+      "stock": 49,
+      "aml": 35
     }
   },
   "latest_by_pillar": {},
@@ -672,6 +672,222 @@
       "pillar": "stock",
       "title": "Understanding Market Indices: S&P 500, Dow Jones, and NASDAQ",
       "published_at": ""
+    },
+    {
+      "content_id": "data/learn/data-contracts-lineage",
+      "pillar": "data-engineering",
+      "title": "Data Contracts & Data Lineage: Building Trust in Modern Data Pipelines",
+      "published_at": ""
+    },
+    {
+      "content_id": "data/learn/data-mesh-in-practice",
+      "pillar": "data-engineering",
+      "title": "Data Mesh: Architecture, Governance, and Real-World Adoption",
+      "published_at": ""
+    },
+    {
+      "content_id": "data/learn/change-data-capture-patterns",
+      "pillar": "data-engineering",
+      "title": "Change Data Capture: Real-Time Sync Patterns and Tools",
+      "published_at": ""
+    },
+    {
+      "content_id": "data/learn/modern-data-catalog",
+      "pillar": "data-engineering",
+      "title": "The Modern Data Catalog: Metadata, Discovery, and AI-Driven Automation",
+      "published_at": ""
+    },
+    {
+      "content_id": "data/learn/schema-management-evolution",
+      "pillar": "data-engineering",
+      "title": "Schema Management: Registries, Evolution, and Migration Strategies",
+      "published_at": ""
+    },
+    {
+      "content_id": "data/learn/pipeline-cost-optimization",
+      "pillar": "data-engineering",
+      "title": "Data Pipeline Cost Optimization: FinOps, Rightsizing, and Platform KPIs",
+      "published_at": ""
+    },
+    {
+      "content_id": "data/learn/privacy-engineering-practice",
+      "pillar": "data-engineering",
+      "title": "Privacy Engineering: Anonymization, Synthetic Data, and Differential Privacy",
+      "published_at": ""
+    },
+    {
+      "content_id": "data/learn/regulatory-compliance-data-platforms",
+      "pillar": "data-engineering",
+      "title": "Regulatory Compliance for Data Platforms: DORA, NIS2, EU AI Act, and Data Act",
+      "published_at": ""
+    },
+    {
+      "content_id": "data/learn/data-versioning-reproducibility",
+      "pillar": "data-engineering",
+      "title": "Data Versioning and Reproducibility for Analytics and ML",
+      "published_at": ""
+    },
+    {
+      "content_id": "data/learn/data-security-access-control",
+      "pillar": "data-engineering",
+      "title": "Data Security and Access Control in Modern Data Architectures",
+      "published_at": ""
+    },
+    {
+      "content_id": "data/learn/elt-reverse-etl-analytics-engineering",
+      "pillar": "data-engineering",
+      "title": "ELT Pipelines, Reverse ETL, and the Rise of Analytics Engineering",
+      "published_at": ""
+    },
+    {
+      "content_id": "data/learn/data-quality-observability-tools",
+      "pillar": "data-engineering",
+      "title": "Data Quality Monitoring: SLAs, Observability, and Automated Testing",
+      "published_at": ""
+    },
+    {
+      "content_id": "markets/learn/algorithmic-trading-strategies",
+      "pillar": "stock",
+      "title": "Algorithmic Trading: Strategies, Infrastructure, and Market Impact",
+      "published_at": ""
+    },
+    {
+      "content_id": "markets/learn/market-microstructure-order-books",
+      "pillar": "stock",
+      "title": "Market Microstructure: Order Books, Liquidity, and VPIN Toxicity",
+      "published_at": ""
+    },
+    {
+      "content_id": "markets/learn/factor-investing-risk-parity",
+      "pillar": "stock",
+      "title": "Factor Investing and Risk Parity: Modern Portfolio Construction",
+      "published_at": ""
+    },
+    {
+      "content_id": "markets/learn/behavioral-finance-market-anomalies",
+      "pillar": "stock",
+      "title": "Behavioral Finance: Cognitive Biases and Market Anomalies",
+      "published_at": ""
+    },
+    {
+      "content_id": "markets/learn/alternative-data-investing",
+      "pillar": "stock",
+      "title": "Alternative Data in Investment Analysis: Sources, Methods, and Due Diligence",
+      "published_at": ""
+    },
+    {
+      "content_id": "markets/learn/cryptocurrency-markets-structure",
+      "pillar": "stock",
+      "title": "Cryptocurrency Markets: Market Structure, Trends, and Regulation",
+      "published_at": ""
+    },
+    {
+      "content_id": "markets/learn/volatility-trading-vix",
+      "pillar": "stock",
+      "title": "Volatility Trading: VIX, Options Strategies, and the Volatility Surface",
+      "published_at": ""
+    },
+    {
+      "content_id": "markets/learn/fixed-income-macro-markets",
+      "pillar": "stock",
+      "title": "Fixed Income and Macro Markets: Bonds, Yield Curves, and Global Economic Trends",
+      "published_at": ""
+    },
+    {
+      "content_id": "markets/learn/dark-pools-off-exchange-trading",
+      "pillar": "stock",
+      "title": "Dark Pools, ATS, and Off-Exchange Trading: Structure and Regulation",
+      "published_at": ""
+    },
+    {
+      "content_id": "markets/learn/etf-ecosystem-creation-impact",
+      "pillar": "stock",
+      "title": "The ETF Ecosystem: Creation, Redemption, and Market Impact",
+      "published_at": ""
+    },
+    {
+      "content_id": "markets/learn/cross-asset-commodity-trading",
+      "pillar": "stock",
+      "title": "Cross-Asset and Commodity Trading Strategies",
+      "published_at": ""
+    },
+    {
+      "content_id": "markets/learn/fx-market-structure-global-currencies",
+      "pillar": "stock",
+      "title": "FX Market Structure and Global Currency Trading",
+      "published_at": ""
+    },
+    {
+      "content_id": "compliance/learn/ml-typologies-current-trends",
+      "pillar": "aml",
+      "title": "Money Laundering Typologies: Current Methods and 2026 Trends",
+      "published_at": ""
+    },
+    {
+      "content_id": "compliance/learn/risk-based-approach-implementation",
+      "pillar": "aml",
+      "title": "The Risk-Based Approach in AML: Framework, Calibration, and Implementation",
+      "published_at": ""
+    },
+    {
+      "content_id": "compliance/learn/enhanced-due-diligence-pep",
+      "pillar": "aml",
+      "title": "Enhanced Due Diligence, PEP Screening, and Adverse Media in Practice",
+      "published_at": ""
+    },
+    {
+      "content_id": "compliance/learn/entity-resolution-network-analysis",
+      "pillar": "aml",
+      "title": "Entity Resolution and Network Analysis for Financial Crime Detection",
+      "published_at": ""
+    },
+    {
+      "content_id": "compliance/learn/ai-machine-learning-aml",
+      "pillar": "aml",
+      "title": "AI and Machine Learning in AML Surveillance: Models, Validation, and Explainability",
+      "published_at": ""
+    },
+    {
+      "content_id": "compliance/learn/crypto-aml-defi-mica",
+      "pillar": "aml",
+      "title": "Cryptocurrency AML: Travel Rule, DeFi, and MiCA Regulation",
+      "published_at": ""
+    },
+    {
+      "content_id": "compliance/learn/correspondent-banking-derisking",
+      "pillar": "aml",
+      "title": "Correspondent Banking AML and the De-Risking Dilemma",
+      "published_at": ""
+    },
+    {
+      "content_id": "compliance/learn/aml-international-cooperation",
+      "pillar": "aml",
+      "title": "International AML Cooperation: FATF, Egmont Group, and Information Sharing",
+      "published_at": ""
+    },
+    {
+      "content_id": "compliance/learn/aml-audit-examination",
+      "pillar": "aml",
+      "title": "AML Audit and Examination: Preparing for Regulatory Reviews",
+      "published_at": ""
+    },
+    {
+      "content_id": "compliance/learn/trade-finance-tbml-detection",
+      "pillar": "aml",
+      "title": "Trade Finance and Trade-Based Money Laundering Detection",
+      "published_at": ""
+    },
+    {
+      "content_id": "compliance/learn/sanctions-screening-global-regimes",
+      "pillar": "aml",
+      "title": "Sanctions Compliance: OFAC, EU, UN Regimes, and Screening Best Practices",
+      "published_at": ""
+    },
+    {
+      "content_id": "compliance/learn/aml-training-culture-esg",
+      "pillar": "aml",
+      "title": "AML Training, Culture, and the Convergence with ESG Compliance",
+      "published_at": ""
     }
   ],
   "by_content_id": {
@@ -1224,8 +1440,188 @@
       "content_id": "markets/learn/introduction-to-market-indices",
       "pillar": "stock",
       "title": "Understanding Market Indices: S&P 500, Dow Jones, and NASDAQ"
+    },
+    "data/learn/data-contracts-lineage": {
+      "content_id": "data/learn/data-contracts-lineage",
+      "pillar": "data-engineering",
+      "title": "Data Contracts & Data Lineage: Building Trust in Modern Data Pipelines"
+    },
+    "data/learn/data-mesh-in-practice": {
+      "content_id": "data/learn/data-mesh-in-practice",
+      "pillar": "data-engineering",
+      "title": "Data Mesh: Architecture, Governance, and Real-World Adoption"
+    },
+    "data/learn/change-data-capture-patterns": {
+      "content_id": "data/learn/change-data-capture-patterns",
+      "pillar": "data-engineering",
+      "title": "Change Data Capture: Real-Time Sync Patterns and Tools"
+    },
+    "data/learn/modern-data-catalog": {
+      "content_id": "data/learn/modern-data-catalog",
+      "pillar": "data-engineering",
+      "title": "The Modern Data Catalog: Metadata, Discovery, and AI-Driven Automation"
+    },
+    "data/learn/schema-management-evolution": {
+      "content_id": "data/learn/schema-management-evolution",
+      "pillar": "data-engineering",
+      "title": "Schema Management: Registries, Evolution, and Migration Strategies"
+    },
+    "data/learn/pipeline-cost-optimization": {
+      "content_id": "data/learn/pipeline-cost-optimization",
+      "pillar": "data-engineering",
+      "title": "Data Pipeline Cost Optimization: FinOps, Rightsizing, and Platform KPIs"
+    },
+    "data/learn/privacy-engineering-practice": {
+      "content_id": "data/learn/privacy-engineering-practice",
+      "pillar": "data-engineering",
+      "title": "Privacy Engineering: Anonymization, Synthetic Data, and Differential Privacy"
+    },
+    "data/learn/regulatory-compliance-data-platforms": {
+      "content_id": "data/learn/regulatory-compliance-data-platforms",
+      "pillar": "data-engineering",
+      "title": "Regulatory Compliance for Data Platforms: DORA, NIS2, EU AI Act, and Data Act"
+    },
+    "data/learn/data-versioning-reproducibility": {
+      "content_id": "data/learn/data-versioning-reproducibility",
+      "pillar": "data-engineering",
+      "title": "Data Versioning and Reproducibility for Analytics and ML"
+    },
+    "data/learn/data-security-access-control": {
+      "content_id": "data/learn/data-security-access-control",
+      "pillar": "data-engineering",
+      "title": "Data Security and Access Control in Modern Data Architectures"
+    },
+    "data/learn/elt-reverse-etl-analytics-engineering": {
+      "content_id": "data/learn/elt-reverse-etl-analytics-engineering",
+      "pillar": "data-engineering",
+      "title": "ELT Pipelines, Reverse ETL, and the Rise of Analytics Engineering"
+    },
+    "data/learn/data-quality-observability-tools": {
+      "content_id": "data/learn/data-quality-observability-tools",
+      "pillar": "data-engineering",
+      "title": "Data Quality Monitoring: SLAs, Observability, and Automated Testing"
+    },
+    "markets/learn/algorithmic-trading-strategies": {
+      "content_id": "markets/learn/algorithmic-trading-strategies",
+      "pillar": "stock",
+      "title": "Algorithmic Trading: Strategies, Infrastructure, and Market Impact"
+    },
+    "markets/learn/market-microstructure-order-books": {
+      "content_id": "markets/learn/market-microstructure-order-books",
+      "pillar": "stock",
+      "title": "Market Microstructure: Order Books, Liquidity, and VPIN Toxicity"
+    },
+    "markets/learn/factor-investing-risk-parity": {
+      "content_id": "markets/learn/factor-investing-risk-parity",
+      "pillar": "stock",
+      "title": "Factor Investing and Risk Parity: Modern Portfolio Construction"
+    },
+    "markets/learn/behavioral-finance-market-anomalies": {
+      "content_id": "markets/learn/behavioral-finance-market-anomalies",
+      "pillar": "stock",
+      "title": "Behavioral Finance: Cognitive Biases and Market Anomalies"
+    },
+    "markets/learn/alternative-data-investing": {
+      "content_id": "markets/learn/alternative-data-investing",
+      "pillar": "stock",
+      "title": "Alternative Data in Investment Analysis: Sources, Methods, and Due Diligence"
+    },
+    "markets/learn/cryptocurrency-markets-structure": {
+      "content_id": "markets/learn/cryptocurrency-markets-structure",
+      "pillar": "stock",
+      "title": "Cryptocurrency Markets: Market Structure, Trends, and Regulation"
+    },
+    "markets/learn/volatility-trading-vix": {
+      "content_id": "markets/learn/volatility-trading-vix",
+      "pillar": "stock",
+      "title": "Volatility Trading: VIX, Options Strategies, and the Volatility Surface"
+    },
+    "markets/learn/fixed-income-macro-markets": {
+      "content_id": "markets/learn/fixed-income-macro-markets",
+      "pillar": "stock",
+      "title": "Fixed Income and Macro Markets: Bonds, Yield Curves, and Global Economic Trends"
+    },
+    "markets/learn/dark-pools-off-exchange-trading": {
+      "content_id": "markets/learn/dark-pools-off-exchange-trading",
+      "pillar": "stock",
+      "title": "Dark Pools, ATS, and Off-Exchange Trading: Structure and Regulation"
+    },
+    "markets/learn/etf-ecosystem-creation-impact": {
+      "content_id": "markets/learn/etf-ecosystem-creation-impact",
+      "pillar": "stock",
+      "title": "The ETF Ecosystem: Creation, Redemption, and Market Impact"
+    },
+    "markets/learn/cross-asset-commodity-trading": {
+      "content_id": "markets/learn/cross-asset-commodity-trading",
+      "pillar": "stock",
+      "title": "Cross-Asset and Commodity Trading Strategies"
+    },
+    "markets/learn/fx-market-structure-global-currencies": {
+      "content_id": "markets/learn/fx-market-structure-global-currencies",
+      "pillar": "stock",
+      "title": "FX Market Structure and Global Currency Trading"
+    },
+    "compliance/learn/ml-typologies-current-trends": {
+      "content_id": "compliance/learn/ml-typologies-current-trends",
+      "pillar": "aml",
+      "title": "Money Laundering Typologies: Current Methods and 2026 Trends"
+    },
+    "compliance/learn/risk-based-approach-implementation": {
+      "content_id": "compliance/learn/risk-based-approach-implementation",
+      "pillar": "aml",
+      "title": "The Risk-Based Approach in AML: Framework, Calibration, and Implementation"
+    },
+    "compliance/learn/enhanced-due-diligence-pep": {
+      "content_id": "compliance/learn/enhanced-due-diligence-pep",
+      "pillar": "aml",
+      "title": "Enhanced Due Diligence, PEP Screening, and Adverse Media in Practice"
+    },
+    "compliance/learn/entity-resolution-network-analysis": {
+      "content_id": "compliance/learn/entity-resolution-network-analysis",
+      "pillar": "aml",
+      "title": "Entity Resolution and Network Analysis for Financial Crime Detection"
+    },
+    "compliance/learn/ai-machine-learning-aml": {
+      "content_id": "compliance/learn/ai-machine-learning-aml",
+      "pillar": "aml",
+      "title": "AI and Machine Learning in AML Surveillance: Models, Validation, and Explainability"
+    },
+    "compliance/learn/crypto-aml-defi-mica": {
+      "content_id": "compliance/learn/crypto-aml-defi-mica",
+      "pillar": "aml",
+      "title": "Cryptocurrency AML: Travel Rule, DeFi, and MiCA Regulation"
+    },
+    "compliance/learn/correspondent-banking-derisking": {
+      "content_id": "compliance/learn/correspondent-banking-derisking",
+      "pillar": "aml",
+      "title": "Correspondent Banking AML and the De-Risking Dilemma"
+    },
+    "compliance/learn/aml-international-cooperation": {
+      "content_id": "compliance/learn/aml-international-cooperation",
+      "pillar": "aml",
+      "title": "International AML Cooperation: FATF, Egmont Group, and Information Sharing"
+    },
+    "compliance/learn/aml-audit-examination": {
+      "content_id": "compliance/learn/aml-audit-examination",
+      "pillar": "aml",
+      "title": "AML Audit and Examination: Preparing for Regulatory Reviews"
+    },
+    "compliance/learn/trade-finance-tbml-detection": {
+      "content_id": "compliance/learn/trade-finance-tbml-detection",
+      "pillar": "aml",
+      "title": "Trade Finance and Trade-Based Money Laundering Detection"
+    },
+    "compliance/learn/sanctions-screening-global-regimes": {
+      "content_id": "compliance/learn/sanctions-screening-global-regimes",
+      "pillar": "aml",
+      "title": "Sanctions Compliance: OFAC, EU, UN Regimes, and Screening Best Practices"
+    },
+    "compliance/learn/aml-training-culture-esg": {
+      "content_id": "compliance/learn/aml-training-culture-esg",
+      "pillar": "aml",
+      "title": "AML Training, Culture, and the Convergence with ESG Compliance"
     }
   },
   "by_run_id": {},
-  "checksum": "669eb02851d5252dfae5bb6c5897f8ff4c514987d862c304c310018cf54fc648"
+  "checksum": "0aef5427474f2a7ed88f7e3e0bac2fb421e7e17b8dc3fd813218c8b4ed552739"
 }

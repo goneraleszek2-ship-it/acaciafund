@@ -300,6 +300,113 @@
     "regime-detection",
     "retail-trading"
   ],
+  "compliance/learn/ai-machine-learning-aml": [
+    "ai-aml-surveillance",
+    "aml-model-validation",
+    "aml-optimization",
+    "aml-oracle",
+    "fraud-detection",
+    "regtech",
+    "transaction-monitoring"
+  ],
+  "compliance/learn/aml-audit-examination": [
+    "aml-audit",
+    "aml-case-management",
+    "aml-compliance-basics",
+    "aml-program",
+    "aml-reporting-dashboard",
+    "aml-training",
+    "regulatory-filing"
+  ],
+  "compliance/learn/aml-international-cooperation": [
+    "aml-data-governance",
+    "aml-data-sharing",
+    "aml-international",
+    "beneficial-ownership",
+    "fatf-recommendations",
+    "fincen-boi",
+    "global-sanctions"
+  ],
+  "compliance/learn/aml-training-culture-esg": [
+    "aml-compliance-basics",
+    "aml-data-governance",
+    "aml-esg-risk",
+    "aml-program",
+    "aml-reporting-dashboard",
+    "aml-training",
+    "esg-investing"
+  ],
+  "compliance/learn/correspondent-banking-derisking": [
+    "aml-compliance-basics",
+    "aml-risk-scoring",
+    "beneficial-ownership",
+    "correspondent-banking",
+    "cross-border-payments",
+    "de-risk",
+    "global-sanctions"
+  ],
+  "compliance/learn/crypto-aml-defi-mica": [
+    "cross-border-payments",
+    "crypto-aml",
+    "crypto-travel-rule",
+    "cyber-aml",
+    "defi-aml",
+    "mica-crypto-assets",
+    "travel-rule"
+  ],
+  "compliance/learn/enhanced-due-diligence-pep": [
+    "adverse-media",
+    "aml-risk-scoring",
+    "cdd",
+    "edd",
+    "fincrime-intelligence",
+    "kyc",
+    "pep"
+  ],
+  "compliance/learn/entity-resolution-network-analysis": [
+    "aml-data-governance",
+    "aml-risk-scoring",
+    "aml-threat-intel",
+    "beneficial-ownership",
+    "entity-resolution",
+    "fincrime-intelligence",
+    "network-analysis"
+  ],
+  "compliance/learn/ml-typologies-current-trends": [
+    "financial-crime-types",
+    "fincrime-intelligence",
+    "fraud-detection",
+    "money-laundering-basics",
+    "payment-fraud",
+    "tbml"
+  ],
+  "compliance/learn/risk-based-approach-implementation": [
+    "aml-compliance-basics",
+    "aml-optimization",
+    "aml-program",
+    "aml-risk-scoring",
+    "cdd",
+    "edd",
+    "risk-based-approach"
+  ],
+  "compliance/learn/sanctions-screening-global-regimes": [
+    "aml-program",
+    "aml-risk-scoring",
+    "bsa",
+    "cross-border-payments",
+    "fatf-recommendations",
+    "global-sanctions",
+    "sanctions-screening"
+  ],
+  "compliance/learn/trade-finance-tbml-detection": [
+    "aml-risk-scoring",
+    "aml-threat-intel",
+    "global-sanctions",
+    "sar",
+    "str",
+    "tbml",
+    "trade-finance-aml"
+  ],
   "data/knowledge/cybernetic-foundations": [
     "cyber-aml",
     "dataops"
@@ -322,6 +429,24 @@
     "model-cards",
     "orchestration"
   ],
+  "data/learn/change-data-capture-patterns": [
+    "apache-kafka",
+    "cdc",
+    "change-data-capture",
+    "data-pipeline",
+    "real-time-analytics",
+    "real-time-analytics-architecture",
+    "streaming"
+  ],
+  "data/learn/data-contracts-lineage": [
+    "data-contract-testing",
+    "data-contracts",
+    "data-governance",
+    "data-lineage",
+    "data-observability",
+    "data-pipeline",
+    "data-quality"
+  ],
   "data/learn/data-engineering-basics": [
     "apache-kafka",
     "batch-processing",
@@ -343,6 +468,14 @@
     "gdpr-anonymization",
     "regtech",
     "regulatory-filing"
+  ],
+  "data/learn/data-mesh-in-practice": [
+    "data-catalog",
+    "data-discovery",
+    "data-governance",
+    "data-mesh",
+    "data-mesh-governance",
+    "data-pipeline"
   ],
   "data/learn/data-pipeline-architectures": [
     "aml-oracle",
@@ -392,6 +525,32 @@
     "portfolio-optimization",
     "query-optimization"
   ],
+  "data/learn/data-quality-observability-tools": [
+    "data-contracts",
+    "data-observability",
+    "data-pipeline",
+    "data-quality",
+    "data-quality-monitoring",
+    "data-quality-sla",
+    "metric-store"
+  ],
+  "data/learn/data-security-access-control": [
+    "data-governance",
+    "data-pipeline",
+    "data-security",
+    "distributed-systems",
+    "etl",
+    "gdpr-anonymization",
+    "reverse-etl"
+  ],
+  "data/learn/data-versioning-reproducibility": [
+    "data-lineage",
+    "data-versioning",
+    "feature-store",
+    "lakehouse",
+    "metric-store",
+    "ml-pipeline"
+  ],
   "data/learn/dataops-introduction": [
     "data-observability",
     "data-pipeline",
@@ -411,6 +570,17 @@
     "lakehouse",
     "real-time-analytics-architecture"
   ],
+  "data/learn/elt-reverse-etl-analytics-engineering": [
+    "data-pipeline",
+    "data-warehouse",
+    "dataops",
+    "dbt",
+    "elt",
+    "elt-pipeline",
+    "etl",
+    "orchestration",
+    "reverse-etl"
+  ],
   "data/learn/learning-hub": [
     "cyber-aml",
     "data-quality",
@@ -429,6 +599,14 @@
     "regime-detection",
     "semiconductor-industry"
   ],
+  "data/learn/modern-data-catalog": [
+    "data-catalog",
+    "data-discovery",
+    "data-governance",
+    "data-lineage",
+    "data-quality",
+    "dataops"
+  ],
   "data/learn/open-source-data-stack": [
     "apache-iceberg",
     "cdc",
@@ -437,6 +615,40 @@
     "dbt",
     "real-time-analytics",
     "real-time-analytics-architecture"
+  ],
+  "data/learn/pipeline-cost-optimization": [
+    "data-cost-intelligence",
+    "data-pipeline",
+    "data-platform-kpis",
+    "dataops",
+    "metric-store",
+    "pipeline-cost-optimization"
+  ],
+  "data/learn/privacy-engineering-practice": [
+    "ai-act-high-risk",
+    "data-governance",
+    "data-security",
+    "differential-privacy",
+    "gdpr-anonymization",
+    "gdpr-synthetic-data"
+  ],
+  "data/learn/regulatory-compliance-data-platforms": [
+    "ai-act-high-risk",
+    "ai-conformity-assessment",
+    "data-act-interoperability",
+    "data-governance",
+    "data-security",
+    "dora-ict-risk",
+    "nis2-cyber-resilience"
+  ],
+  "data/learn/schema-management-evolution": [
+    "apache-kafka",
+    "arrow-parquet",
+    "data-contracts",
+    "data-quality",
+    "schema-migration",
+    "schema-registry",
+    "streaming"
   ],
   "data/learn/sql-for-data-engineers": [
     "data-pipeline",
@@ -812,6 +1024,24 @@
     "metric-store",
     "real-time-analytics-architecture"
   ],
+  "markets/learn/algorithmic-trading-strategies": [
+    "algorithmic-trading",
+    "execution-algos",
+    "high-frequency-trading",
+    "market-impact",
+    "market-microstructure",
+    "order-types",
+    "quantitative-trading"
+  ],
+  "markets/learn/alternative-data-investing": [
+    "alternative-data",
+    "event-driven-trading",
+    "hedge-funds",
+    "machine-learning-markets",
+    "market-surveillance",
+    "quantitative-trading",
+    "statistical-arbitrage"
+  ],
   "markets/learn/applying-market-analysis": [
     "dark-pools",
     "earnings-analysis",
@@ -835,6 +1065,14 @@
     "machine-learning-markets",
     "model-cards"
   ],
+  "markets/learn/behavioral-finance-market-anomalies": [
+    "behavioral-finance",
+    "esg-double-materiality",
+    "esg-investing",
+    "market-participants",
+    "regime-detection",
+    "retail-trading"
+  ],
   "markets/learn/behavioral-finance-portfolio": [
     "aml-oracle",
     "behavioral-finance",
@@ -853,6 +1091,66 @@
     "regime-detection"
   ],
   "markets/learn/crispr-gene-editing": [],
+  "markets/learn/cross-asset-commodity-trading": [
+    "carry-trade",
+    "commodity-trading",
+    "cross-asset-trading",
+    "hedge-funds",
+    "macro-analysis",
+    "mean-reversion",
+    "momentum-trading"
+  ],
+  "markets/learn/cryptocurrency-markets-structure": [
+    "crypto-markets",
+    "fx-markets",
+    "market-making",
+    "market-participants",
+    "market-surveillance",
+    "regime-detection",
+    "trading-venues"
+  ],
+  "markets/learn/dark-pools-off-exchange-trading": [
+    "dark-pools",
+    "market-making",
+    "market-microstructure",
+    "market-surveillance",
+    "stock-lending",
+    "trading-venues"
+  ],
+  "markets/learn/etf-ecosystem-creation-impact": [
+    "equity-basics",
+    "etf-creation",
+    "etf-trading",
+    "market-impact",
+    "market-making",
+    "market-participants",
+    "portfolio-optimization"
+  ],
+  "markets/learn/factor-investing-risk-parity": [
+    "asset-pricing",
+    "equity-basics",
+    "factor-investing",
+    "hedge-funds",
+    "portfolio-optimization",
+    "risk-parity"
+  ],
+  "markets/learn/fixed-income-macro-markets": [
+    "asset-pricing",
+    "carry-trade",
+    "fixed-income",
+    "hedge-funds",
+    "macro-analysis",
+    "market-participants"
+  ],
+  "markets/learn/fx-market-structure-global-currencies": [
+    "carry-trade",
+    "cross-asset-trading",
+    "fx-markets",
+    "hedge-funds",
+    "macro-analysis",
+    "market-making",
+    "market-participants"
+  ],
   "markets/learn/how-stock-markets-work": [
     "equity-basics",
     "market-participants",
@@ -933,6 +1231,16 @@
     "volatility-surface",
     "volatility-trading"
   ],
+  "markets/learn/market-microstructure-order-books": [
+    "dark-pools",
+    "lob",
+    "market-making",
+    "market-microstructure",
+    "order-book",
+    "order-types",
+    "trading-venues",
+    "vpin"
+  ],
   "markets/learn/meta-analysis-statistics": [
     "hedge-funds",
     "network-analysis",
@@ -981,6 +1289,14 @@
     "regime-detection",
     "semiconductor-industry",
     "supply-chain-analysis"
+  ],
+  "markets/learn/volatility-trading-vix": [
+    "hedge-funds",
+    "options-trading",
+    "quantitative-trading",
+    "volatility-arbitrage",
+    "volatility-surface",
+    "volatility-trading"
   ],
   "markets/learn/what-are-etfs": [
     "equity-basics",
