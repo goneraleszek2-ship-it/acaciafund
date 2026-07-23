@@ -261,23 +261,24 @@
         "market-data",
         "market-participants"
       ],
-      "eli5_explanation": "KYC is like a bouncer checking ID at a club \u2014 but for money. Before a bank lets you open an account, they need to see your passport, verify your address, and check you are not on any criminal watchlists. They do this because if they let criminals use their bank, the government fines them.",
-      "analogy": "Airport security for money: you show ID, they check databases, you get cleared (or flagged). Same three steps: identity, verification, screening.",
-      "concrete_example": "Alice opens a checking account at Chase. She provides her passport (identity), a utility bill (proof of address), and her Social Security number. Chase runs her name against OFAC sanctions list, checks her against PEP databases, and calculates a risk score. Alice is approved in 5 minutes. If she were a sanctioned entity from North Korea, she would be rejected immediately.",
+      "eli5_explanation": "Know Your Customer (KYC) is a concept in cdd kyc. In simple terms, Know Your Customer (KYC) covers customer due diligence within Compliance. This compliance concept addresses key topics in the customer due diligence within compliance domain. Also known as: KYC, know-",
+      "analogy": "Think of Know Your Customer (KYC) like checking IDs at a border crossing \u2014 it helps you handle cdd kyc tasks more effectively.",
+      "concrete_example": "Consider a scenario where Know Your Customer (KYC) applies: Know Your Customer (KYC) covers customer due diligence within Compliance. This compliance concept addresses key topics in the customer due diligence within compliance domain. Also known as: KYC, know-...",
       "feynman_diagram": null,
       "gap_questions": [
-        "Why check OFAC if we already have a passport? What additional risk does sanctions screening catch?",
-        "What happens if the utility bill is 4 months old \u2014 does that matter and why?",
-        "Can a bank skip KYC if the customer is a 'known person' like a celebrity?"
+        "What are the key components or steps involved in Know Your Customer (KYC)?",
+        "Can you explain Know Your Customer (KYC) without using jargon?",
+        "What happens if Know Your Customer (KYC) is not applied correctly?",
+        "How does Know Your Customer (KYC) relate to other concepts in cdd kyc?"
       ],
-      "teach_back_prompt": "Explain KYC to a friend who thinks it's just 'showing ID.' Cover the three parts (identity, verify, screen) and why each matters.",
+      "teach_back_prompt": "Explain Know Your Customer (KYC) as if teaching a colleague who is new to cdd kyc. Cover: what it is, how it works, and why it matters.",
       "build_exercise": {
-        "type": "code",
-        "prompt": "Write a Python function `validate_kyc(name: str, id_type: str, id_number: str, sanctions_list: list) -> dict` that returns {'approved': bool, 'reason': str}. Check if the name appears in the sanctions list and if the ID type is one of ['passport', 'driver_license', 'national_id'].",
-        "solution": "def validate_kyc(name, id_type, id_number, sanctions_list):\n    valid_ids = ['passport', 'driver_license', 'national_id']\n    if id_type not in valid_ids:\n        return {'approved': False, 'reason': f'Invalid ID type: {id_type}'}\n    if name.lower() in (s.lower() for s in sanctions_list):\n        return {'approved': False, 'reason': 'Name matched sanctions list'}\n    return {'approved': True, 'reason': 'KYC passed'}"
+        "type": "checklist",
+        "prompt": "Create a checklist that demonstrates Know Your Customer (KYC) in a real-world cdd kyc scenario. Walk through your design decisions.",
+        "solution": "A checklist for Know Your Customer (KYC) should include: 1. The core components of kyc 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 2,
-      "explanation_quality": 0.0,
+      "feynman_difficulty": 4,
+      "explanation_quality": 0.6,
       "created_at": "2026-07-23T04:21:38.901530+00:00",
       "updated_at": "2026-07-23T04:21:38.901535+00:00"
     },
@@ -566,23 +567,24 @@
       "semantic_contract_type": "",
       "philosophical_sources": [],
       "cross_pillar_analogs": [],
-      "eli5_explanation": "Sanctions screening is like checking a party guest list at the door \u2014 but instead of 'no exes allowed,' it is 'no people from countries the government has banned from doing business with.' Banks check every customer and every transaction against government blacklists every single time.",
-      "analogy": "Like an airport no-fly list, but for money. If your name matches someone on the list, your transaction gets frozen and reviewed by a human.",
-      "concrete_example": "A bank processes a $50,000 wire transfer from 'Industrial Corp' to an account in Iran. The screening system flags it because the destination country (Iran) is under comprehensive US sanctions. The transaction is blocked, a SAR is filed, and the compliance officer reviews within 24 hours.",
+      "eli5_explanation": "Sanctions Screening is a concept in sanctions. In simple terms, Sanctions Screening covers sanctions compliance in Compliance. This compliance concept addresses key topics in the sanctions compliance in compliance domain. Also known as: OFAC screening, sanctions l",
+      "analogy": "Think of Sanctions Screening like a no-fly list for financial transactions \u2014 it helps you handle sanctions tasks more effectively.",
+      "concrete_example": "Consider a scenario where Sanctions Screening applies: Sanctions Screening covers sanctions compliance in Compliance. This compliance concept addresses key topics in the sanctions compliance in compliance domain. Also known as: OFAC screening, sanctions l...",
       "feynman_diagram": null,
       "gap_questions": [
-        "What happens if a name is 'John Smith' and there are 500 John Smiths on the sanctions list?",
-        "Can you send money to a sanctioned country for humanitarian aid?",
-        "How often are sanctions lists updated and who must check?"
+        "What are the key components or steps involved in Sanctions Screening?",
+        "Can you explain Sanctions Screening without using jargon?",
+        "What happens if Sanctions Screening is not applied correctly?",
+        "How does Sanctions Screening relate to other concepts in sanctions?"
       ],
-      "teach_back_prompt": "Explain sanctions screening to a software engineer who needs to build an API for it. Cover fuzzy matching, false positives, and the escalation workflow.",
+      "teach_back_prompt": "Explain Sanctions Screening as if teaching a colleague who is new to sanctions. Cover: what it is, how it works, and why it matters.",
       "build_exercise": {
         "type": "code",
-        "prompt": "Write a Python function `screen_transaction(sender_name: str, recipient_country: str, sanctions_list: list[dict]) -> dict`. Return {'flagged': True/False, 'reason': str}. Flag if recipient_country is in sanctions_list countries or if sender_name has a fuzzy match (if lowercase name appears in any sanctions entry name).",
-        "solution": "def screen_transaction(sender_name, recipient_country, sanctions_list):\n    sanctioned_countries = {s['country'] for s in sanctions_list}\n    if recipient_country in sanctioned_countries:\n        return {'flagged': True, 'reason': f'Sanctioned country: {recipient_country}'}\n    for entry in sanctions_list:\n        if sender_name.lower() in entry.get('name', '').lower():\n            return {'flagged': True, 'reason': f'Name matched: {entry[\"name\"]}'}\n    return {'flagged': False, 'reason': 'Cleared'}"
+        "prompt": "Create a code that demonstrates Sanctions Screening in a real-world sanctions scenario. Walk through your design decisions.",
+        "solution": "A code for Sanctions Screening should include: 1. The core components of sanctions screening 2. How they interact 3. Expected outcomes or outputs"
       },
       "feynman_difficulty": 3,
-      "explanation_quality": 0.0,
+      "explanation_quality": 0.6,
       "created_at": "2026-07-23T04:21:38.901652+00:00",
       "updated_at": "2026-07-23T04:21:38.901655+00:00"
     },
@@ -615,23 +617,24 @@
         "mica-crypto-assets",
         "market-surveillance"
       ],
-      "eli5_explanation": "Transaction monitoring is a computer watching every bank transfer and credit card swipe 24/7, looking for things that do not make sense. Like if you normally buy coffee for $5 but suddenly send $50,000 to a country you have never emailed before \u2014 the computer flags it and a human checks if it is suspicious.",
-      "analogy": "Like a fraud detector at a casino that watches every bet. If someone walks in and immediately bets $1 million on black, the system alerts security \u2014 even if the person has ID.",
-      "concrete_example": "Maria's account normally shows deposits of $3,000/month and small local transactions. Suddenly over 3 days: $15,000 deposit (cash), $22,000 wire to Cyprus, $8,000 transfer to unknown crypto exchange. The monitoring system flags: velocity alert (3 unusual transactions in 3 days), amount threshold exceeded ($45k vs normal $3k), and geographic risk (Cyprus). Compliance reviews and files a SAR.",
+      "eli5_explanation": "Transaction Monitoring is a concept in transaction monitoring. In simple terms, Transaction Monitoring covers transaction monitoring within Compliance. This compliance concept addresses key topics in the transaction monitoring within compliance domain. Also known as: TM, transact",
+      "analogy": "Think of Transaction Monitoring like a security camera watching a bank vault 24/7 \u2014 it helps you handle transaction monitoring tasks more effectively.",
+      "concrete_example": "Consider a scenario where Transaction Monitoring applies: Transaction Monitoring covers transaction monitoring within Compliance. This compliance concept addresses key topics in the transaction monitoring within compliance domain. Also known as: TM, transact...",
       "feynman_diagram": null,
       "gap_questions": [
-        "What if a legitimate business legitimately moves large sums? How do you avoid false positives?",
-        "How many false positives are acceptable? 90%? 99%? Where is the line?",
-        "Can transaction monitoring catch money laundering that happens over 5 years with small amounts?"
+        "What are the key components or steps involved in Transaction Monitoring?",
+        "Can you explain Transaction Monitoring without using jargon?",
+        "What happens if Transaction Monitoring is not applied correctly?",
+        "How does Transaction Monitoring relate to other concepts in transaction monitoring?"
       ],
-      "teach_back_prompt": "Explain transaction monitoring to a small business owner who thinks 'banks just process payments.' Cover rules, scenarios, and what happens when something is flagged.",
+      "teach_back_prompt": "Explain Transaction Monitoring as if teaching a colleague who is new to transaction monitoring. Cover: what it is, how it works, and why it matters.",
       "build_exercise": {
         "type": "code",
-        "prompt": "Write a Python class `TransactionMonitor` with a method `evaluate(tx: dict, history: list[dict]) -> dict`. Flag if: amount > 10x average of history, or country changed from history pattern, or tx['amount'] > 10000 and tx['type'] == 'wire'. Return {'alert': bool, 'reasons': list}.",
-        "solution": "class TransactionMonitor:\n    def evaluate(self, tx, history):\n        reasons = []\n        amounts = [h['amount'] for h in history]\n        avg = sum(amounts) / len(amounts) if amounts else 0\n        if tx['amount'] > 10 * avg:\n            reasons.append(f'Amount {tx[\"amount\"]} > 10x avg {avg:.0f}')\n        if history and tx.get('country') and tx['country'] != history[-1].get('country'):\n            reasons.append(f'Country changed to {tx[\"country\"]}')\n        if tx.get('amount', 0) > 10000 and tx.get('type') == 'wire':\n            reasons.append('High-value wire transfer')\n        return {'alert': len(reasons) > 0, 'reasons': reasons}"
+        "prompt": "Create a code that demonstrates Transaction Monitoring in a real-world transaction monitoring scenario. Walk through your design decisions.",
+        "solution": "A code for Transaction Monitoring should include: 1. The core components of transaction monitoring 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 3,
-      "explanation_quality": 0.0,
+      "feynman_difficulty": 5,
+      "explanation_quality": 0.6,
       "created_at": "2026-07-23T04:21:38.901671+00:00",
       "updated_at": "2026-07-23T04:21:38.901674+00:00"
     },
@@ -755,23 +758,24 @@
       "cross_pillar_analogs": [
         "stock-lending"
       ],
-      "eli5_explanation": "Beneficial ownership answers the question: who REALLY owns this company? A company might be registered under a lawyer's name, but the actual owner \u2014 the one who gets the money \u2014 is someone else. Regulators make banks find that real person, because criminals hide behind fake owners.",
-      "analogy": "It is like a restaurant where the menu says 'Management reserves the right to refuse service' \u2014 but management is just a front. The actual owner is the person who paid for the kitchen.",
-      "concrete_example": "A shell company called 'Blue Ocean Trading Ltd' is registered to John Smith, a nominee director. But when the bank investigates, they find that all profits flow to a trust in Panama, whose beneficiary is Maria Garcia \u2014 the true owner. The bank must document this chain: Company \u2192 Nominee Director \u2192 Trust \u2192 Maria Garcia (UBO).",
+      "eli5_explanation": "Beneficial Ownership is a concept in regulations. In simple terms, Beneficial Ownership covers regulatory frameworks in Compliance. This compliance concept addresses key topics in the regulatory frameworks in compliance domain. Also known as: UBO, ultimate beneficial",
+      "analogy": "Think of Beneficial Ownership like a rulebook that everyone in the game must follow \u2014 it helps you handle regulations tasks more effectively.",
+      "concrete_example": "Consider a scenario where Beneficial Ownership applies: Beneficial Ownership covers regulatory frameworks in Compliance. This compliance concept addresses key topics in the regulatory frameworks in compliance domain. Also known as: UBO, ultimate beneficial...",
       "feynman_diagram": null,
       "gap_questions": [
-        "If a company is owned by another company, owned by a third company, where does the tracing stop?",
-        "Why would someone want to hide who really owns a company?",
-        "How do you verify beneficial ownership when the country has no public register?"
+        "What are the key components or steps involved in Beneficial Ownership?",
+        "Can you explain Beneficial Ownership without using jargon?",
+        "What happens if Beneficial Ownership is not applied correctly?",
+        "How does Beneficial Ownership relate to other concepts in regulations?"
       ],
-      "teach_back_prompt": "Explain beneficial ownership to an accountant who does tax returns but has never done AML work. Use the shell company example.",
+      "teach_back_prompt": "Explain Beneficial Ownership as if teaching a colleague who is new to regulations. Cover: what it is, how it works, and why it matters.",
       "build_exercise": {
-        "type": "code",
-        "prompt": "Write a Python function `find_ubo(ownership_chain: list[dict]) -> str` that follows a chain of ownership records (each with 'owner' and 'percentage' fields) and returns the ultimate individual owner. An entry with owner type 'individual' is the UBO.",
-        "solution": "def find_ubo(ownership_chain):\n    for entry in ownership_chain:\n        if entry.get('type') == 'individual':\n            return entry['owner']\n    return 'UBO not found \u2014 chain incomplete'"
+        "type": "diagram",
+        "prompt": "Create a diagram that demonstrates Beneficial Ownership in a real-world regulations scenario. Walk through your design decisions.",
+        "solution": "A diagram for Beneficial Ownership should include: 1. The core components of beneficial ownership 2. How they interact 3. Expected outcomes or outputs"
       },
       "feynman_difficulty": 3,
-      "explanation_quality": 0.0,
+      "explanation_quality": 0.8,
       "created_at": "2026-07-23T04:21:38.901722+00:00",
       "updated_at": "2026-07-23T04:21:38.901726+00:00"
     },
@@ -2863,23 +2867,24 @@
       "semantic_contract_type": "",
       "philosophical_sources": [],
       "cross_pillar_analogs": [],
-      "eli5_explanation": "A volatility surface is like a 3D map showing how scared the market is about future stock prices. It is a 3D shape: one axis is time (how far into the future), another is the stock price level (how much the option costs), and the height is 'implied volatility' (how uncertain the market feels about that price at that time). Usually, it looks like a smile or a smirk.",
-      "analogy": "Like a weather map showing not just today's temperature but the entire range of possible temperatures for every day next month, and how confident the forecast is for each day.",
-      "concrete_example": "AAPL stock is at $200. An options trader looks at the volatility surface: ATM options (strike=$200, 30 days) show IV=25%. OTM puts (strike=$170, 30 days) show IV=35% (higher = fear of downside). OTM calls (strike=$230, 30 days) show IV=28%. Far-dated options (365 days, strike=$200) show IV=22%. The surface shows a skew \u2014 downside puts are more expensive because the market fears a crash more than a rally.",
+      "eli5_explanation": "Implied Volatility Surface is a concept in market analysis. In simple terms, Implied Volatility Surface covers market analysis within Markets. This markets concept addresses key topics in the market analysis within markets domain. Also known as: IV surface, vol surface. Relate",
+      "analogy": "Think of Implied Volatility Surface like a weather forecast for financial markets \u2014 it helps you handle market analysis tasks more effectively.",
+      "concrete_example": "Consider a scenario where Implied Volatility Surface applies: Implied Volatility Surface covers market analysis within Markets. This markets concept addresses key topics in the market analysis within markets domain. Also known as: IV surface, vol surface. Relate...",
       "feynman_diagram": null,
       "gap_questions": [
-        "Why do out-of-the-money puts have higher IV than out-of-the-money calls? (The 'skew')",
-        "What happens to the volatility surface during a market crash?",
-        "Can you arbitrage a volatility surface that is not smooth?"
+        "What are the key components or steps involved in Implied Volatility Surface?",
+        "Can you explain Implied Volatility Surface without using jargon?",
+        "What happens if Implied Volatility Surface is not applied correctly?",
+        "How does Implied Volatility Surface relate to other concepts in market analysis?"
       ],
-      "teach_back_prompt": "Explain the volatility surface to a derivatives trader who knows Black-Scholes but has never read a surface heatmap.",
+      "teach_back_prompt": "Explain Implied Volatility Surface as if teaching a colleague who is new to market analysis. Cover: what it is, how it works, and why it matters.",
       "build_exercise": {
-        "type": "code",
-        "prompt": "Write a Python function `plot_vol_surface(strikes: list[float], expiries: list[int], vols: list[list[float]]) -> None` that prints an ASCII heatmap of the volatility surface: rows=strikes, columns=expiries, cells=vol with color indicator (H=high>0.4, M=medium>0.25, L=low).",
-        "solution": "def plot_vol_surface(strikes, expiries, vols):\n    print('Vol Surface:')\n    print('       ', ' '.join(f'{e:>5}d' for e in expiries))\n    for i, strike in enumerate(strikes):\n        row = f'{strike:>5} '\n        for j in range(len(expiries)):\n            v = vols[i][j]\n            c = 'H' if v > 0.4 else 'M' if v > 0.25 else 'L'\n            row += f'  {c}:{v:.2f}'\n        print(row)"
+        "type": "calc",
+        "prompt": "Create a calc that demonstrates Implied Volatility Surface in a real-world market analysis scenario. Walk through your design decisions.",
+        "solution": "A calc for Implied Volatility Surface should include: 1. The core components of volatility surface 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 4,
-      "explanation_quality": 0.0,
+      "feynman_difficulty": 2,
+      "explanation_quality": 0.8,
       "created_at": "2026-07-23T04:21:38.902427+00:00",
       "updated_at": "2026-07-23T04:21:38.902436+00:00"
     },
@@ -3303,23 +3308,24 @@
       "semantic_contract_type": "",
       "philosophical_sources": [],
       "cross_pillar_analogs": [],
-      "eli5_explanation": "Factor investing is like shopping for ingredients instead of buying a ready-made meal. Instead of buying 'the whole stock market' or an actively managed fund, you pick specific qualities (factors) that historically make stocks go up: size (small companies), value (cheap companies), momentum (hot companies), quality (good companies). You mix them like ingredients to make your own portfolio recipe.",
-      "analogy": "Like choosing athletes for a sports team: you do not just pick 'any player' \u2014 you pick for speed, strength, endurance, and skill. Each factor (attribute) contributes to the team's overall performance.",
-      "concrete_example": "A factor investor wants exposure to 'value' stocks. They buy an ETF tracking the MSCI World Value Index (cheap stocks: low P/E, low P/B). They also want 'momentum' \u2014 stocks that went up most in the last 12 months. They split their portfolio: 60% Value ETF, 40% Momentum ETF. Over 20 years, this factor mix might outperform the plain S&P 500 by 1-3% per year (net of fees).",
+      "eli5_explanation": "Factor Investing is a concept in strategies. In simple terms, Factor Investing covers trading and investment strategies for Markets. This markets concept addresses key topics in the trading and investment strategies for markets domain. Also known as: smart beta,",
+      "analogy": "Think of Factor Investing like a chess player thinking several moves ahead \u2014 it helps you handle strategies tasks more effectively.",
+      "concrete_example": "Consider a scenario where Factor Investing applies: Factor Investing covers trading and investment strategies for Markets. This markets concept addresses key topics in the trading and investment strategies for markets domain. Also known as: smart beta,...",
       "feynman_diagram": null,
       "gap_questions": [
-        "If everyone knows about factor premiums, why do they still exist? Shouldn't they be arbitraged away?",
-        "What happens to momentum investing during a market crash?",
-        "How do you know if a factor is 'real' vs. just data mining (p-hacking)?"
+        "What are the key components or steps involved in Factor Investing?",
+        "Can you explain Factor Investing without using jargon?",
+        "What happens if Factor Investing is not applied correctly?",
+        "How does Factor Investing relate to other concepts in strategies?"
       ],
-      "teach_back_prompt": "Explain factor investing to someone who only knows 'buy index funds and hold.' Cover why factors exist, how to implement them, and the biggest risk.",
+      "teach_back_prompt": "Explain Factor Investing as if teaching a colleague who is new to strategies. Cover: what it is, how it works, and why it matters.",
       "build_exercise": {
-        "type": "code",
-        "prompt": "Write a Python function `factor_correlation(factor_a: list[float], factor_b: list[float], returns: list[float]) -> dict` that computes correlation between two factor returns and the correlation of each factor with overall portfolio returns. Use numpy or manual Pearson formula.",
-        "solution": "import math\ndef factor_correlation(factor_a, factor_b, returns):\n    def corr(x, y):\n        n = len(x)\n        mx, my = sum(x)/n, sum(y)/n\n        num = sum((xi-mx)*(yi-my) for xi, yi in zip(x, y))\n        den = math.sqrt(sum((xi-mx)**2 for xi in x)) * math.sqrt(sum((yi-my)**2 for yi in y))\n        return num / den if den else 0\n    return {\n        'factor_a_corr': round(corr(factor_a, returns), 3),\n        'factor_b_corr': round(corr(factor_b, returns), 3),\n        'factor_a_vs_b': round(corr(factor_a, factor_b), 3)\n    }"
+        "type": "calc",
+        "prompt": "Create a calc that demonstrates Factor Investing in a real-world strategies scenario. Walk through your design decisions.",
+        "solution": "A calc for Factor Investing should include: 1. The core components of factor investing 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 3,
-      "explanation_quality": 0.0,
+      "feynman_difficulty": 4,
+      "explanation_quality": 0.6,
       "created_at": "2026-07-23T04:21:38.902577+00:00",
       "updated_at": "2026-07-23T04:21:38.902580+00:00"
     },
@@ -3570,23 +3576,24 @@
       "cross_pillar_analogs": [
         "data-quality"
       ],
-      "eli5_explanation": "Behavioral finance studies why smart people make dumb money decisions. It says: humans are not rational calculators. We panic-sell when prices drop (even though we should buy), we hold losing stocks too long (hoping they come back), and we follow the crowd into bubbles (like Bitcoin at $60k or tulips in 1637). Understanding these biases helps you avoid them.",
-      "analogy": "Like knowing the tricks a magician uses \u2014 once you know about 'misdirection,' you stop falling for it. Behavioral finance reveals the 'magic tricks' your own brain plays on you with money.",
-      "concrete_example": "In 2020, when COVID crashed markets by 30%, millions of investors panic-sold their stocks at the bottom. Those who held or bought more saw a 70% recovery within 6 months. The panic-sellers suffered from 'loss aversion' (fear of losing money is twice as powerful as desire for gains) and 'herding' (everyone else was selling, so it must be right).",
+      "eli5_explanation": "Behavioral Finance is a concept in foundations. In simple terms, Behavioral Finance covers foundational knowledge in Markets. This markets concept addresses key topics in the foundational knowledge in markets domain. Also known as: behavioral economics, behavioral ",
+      "analogy": "Think of Behavioral Finance like the laws of probability that govern market behavior \u2014 it helps you handle foundations tasks more effectively.",
+      "concrete_example": "Consider a scenario where Behavioral Finance applies: Behavioral Finance covers foundational knowledge in Markets. This markets concept addresses key topics in the foundational knowledge in markets domain. Also known as: behavioral economics, behavioral ...",
       "feynman_diagram": null,
       "gap_questions": [
-        "If behavioral biases are so well-known, why don't professional investors overcome them?",
-        "Is 'buy and hold' a behavioral strategy or a rational one?",
-        "Can AI trading systems suffer from behavioral biases too?"
+        "What are the key components or steps involved in Behavioral Finance?",
+        "Can you explain Behavioral Finance without using jargon?",
+        "What happens if Behavioral Finance is not applied correctly?",
+        "How does Behavioral Finance relate to other concepts in foundations?"
       ],
-      "teach_back_prompt": "Explain loss aversion and herding to a day trader who thinks they are 'completely rational.' Use the COVID crash as your example.",
+      "teach_back_prompt": "Explain Behavioral Finance as if teaching a colleague who is new to foundations. Cover: what it is, how it works, and why it matters.",
       "build_exercise": {
-        "type": "code",
-        "prompt": "Write a Python function `simulate_behavioral_portfolio(initial_value: float, days: int, panic_threshold: float, recovery_threshold: float) -> list[float]` that simulates a daily price series with random walk + a crash at day 30. Returns two portfolio values: one for a 'panic seller' (sells at crash) and one for a 'buy-and-hold' investor.",
-        "solution": "import random\ndef simulate_behavioral_portfolio(initial=10000, days=252, panic_threshold=0.3, recovery_threshold=0.7):\n    price = 100\n    prices = [price]\n    for d in range(days):\n        ret = random.gauss(0, 0.015)\n        if d == 30:\n            ret = -panic_threshold\n        price *= (1 + ret)\n        prices.append(price)\n    buy_hold = [initial * p / prices[0] for p in prices]\n    panic = [initial]\n    for d, p in enumerate(prices):\n        if d == 31:\n            panic.append(prices[30] * 0.95)  # sold at bottom\n        elif d > 31:\n            panic.append(panic[-1])\n        else:\n            panic.append(initial * p / prices[0])\n    return {'buy_hold': buy_hold, 'panic_seller': panic}"
+        "type": "diagram",
+        "prompt": "Create a diagram that demonstrates Behavioral Finance in a real-world foundations scenario. Walk through your design decisions.",
+        "solution": "A diagram for Behavioral Finance should include: 1. The core components of behavioral finance 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 2,
-      "explanation_quality": 0.0,
+      "feynman_difficulty": 3,
+      "explanation_quality": 0.6,
       "created_at": "2026-07-23T04:21:38.902661+00:00",
       "updated_at": "2026-07-23T04:21:38.902665+00:00"
     },
@@ -4995,23 +5002,24 @@
       "semantic_contract_type": "",
       "philosophical_sources": [],
       "cross_pillar_analogs": [],
-      "eli5_explanation": "ETL stands for Extract, Transform, Load. It is a three-step recipe for moving data from one place to another and making it useful. First, you pull data from somewhere (Extract \u2014 like copying files from a USB drive). Then, you clean it up (Transform \u2014 fixing typos, converting currencies, removing duplicates). Finally, you put it somewhere organized (Load \u2014 into a database where analysts can query it).",
-      "analogy": "Like cooking a meal: Extract = get ingredients from the fridge, Transform = chop vegetables and marinate meat, Load = plate the finished dish for serving.",
-      "concrete_example": "A retail company extracts sales data from 500 stores (each store's database). The ETL pipeline: (1) Extract: connects to each store's PostgreSQL, pulls daily transactions. (2) Transform: converts all prices to USD, maps product IDs to a unified catalog, removes test transactions, calculates total revenue per store. (3) Load: writes 500 cleaned CSV files into a Snowflake data warehouse for the analytics team.",
+      "eli5_explanation": "Extract-Transform-Load is a concept in foundations. In simple terms, Extract-Transform-Load covers foundational knowledge in Data Engineering. This data engineering concept addresses key topics in the foundational knowledge in data engineering domain. Also known as: ET",
+      "analogy": "Think of Extract-Transform-Load like the foundation of a building \u2014 invisible but load-bearing \u2014 it helps you handle foundations tasks more effectively.",
+      "concrete_example": "Consider a scenario where Extract-Transform-Load applies: Extract-Transform-Load covers foundational knowledge in Data Engineering. This data engineering concept addresses key topics in the foundational knowledge in data engineering domain. Also known as: ET...",
       "feynman_diagram": null,
       "gap_questions": [
-        "What happens if one store's database is down during the Extract phase?",
-        "Is it better to transform before or after loading into the warehouse? (ETL vs ELT)",
-        "How do you handle data types that change \u2014 like a field that used to be a number but now has text?"
+        "What are the key components or steps involved in Extract-Transform-Load?",
+        "Can you explain Extract-Transform-Load without using jargon?",
+        "What happens if Extract-Transform-Load is not applied correctly?",
+        "How does Extract-Transform-Load relate to other concepts in foundations?"
       ],
-      "teach_back_prompt": "Explain ETL to a business analyst who uses Excel but has never worked with databases. Use the cooking analogy.",
+      "teach_back_prompt": "Explain Extract-Transform-Load as if teaching a colleague who is new to foundations. Cover: what it is, how it works, and why it matters.",
       "build_exercise": {
-        "type": "code",
-        "prompt": "Write a Python function `etl_pipeline(extract_fn: callable, transform_fn: callable, load_fn: callable) -> dict`. Run extract, transform, load in sequence with error handling. If any step fails, log the error and return {'success': False, 'step': str, 'error': str}. On success, return {'success': True, 'rows_loaded': int}.",
-        "solution": "def etl_pipeline(extract_fn, transform_fn, load_fn):\n    try:\n        data = extract_fn()\n    except Exception as e:\n        return {'success': False, 'step': 'extract', 'error': str(e)}\n    try:\n        transformed = transform_fn(data)\n    except Exception as e:\n        return {'success': False, 'step': 'transform', 'error': str(e)}\n    try:\n        result = load_fn(transformed)\n    except Exception as e:\n        return {'success': False, 'step': 'load', 'error': str(e)}\n    return {'success': True, 'rows_loaded': len(transformed)}"
+        "type": "diagram",
+        "prompt": "Create a diagram that demonstrates Extract-Transform-Load in a real-world foundations scenario. Walk through your design decisions.",
+        "solution": "A diagram for Extract-Transform-Load should include: 1. The core components of etl 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 1,
-      "explanation_quality": 0.0,
+      "feynman_difficulty": 3,
+      "explanation_quality": 1.0,
       "created_at": "2026-07-23T04:21:38.903097+00:00",
       "updated_at": "2026-07-23T04:21:38.903100+00:00"
     },
@@ -5266,23 +5274,24 @@
         "high-frequency-trading",
         "payment-fraud"
       ],
-      "eli5_explanation": "Streaming is processing data as it arrives, like a conveyor belt. Instead of waiting all day to process a big batch at night, you handle each piece of data the moment it shows up. A bank watching for fraud does not wait until end of day \u2014 it checks every transaction instantly, in real-time, as it happens.",
-      "analogy": "Like a sushi conveyor belt: instead of cooking 100 meals at once (batch), sushi chefs prepare each plate as it goes on the belt (streaming). Each customer gets their food immediately instead of waiting for a batch service.",
-      "concrete_example": "A ride-sharing app like Uber processes GPS locations from 1 million active drivers every 5 seconds. Instead of storing all data and processing it at midnight, the streaming pipeline: (1) ingests each GPS ping as it arrives (Apache Kafka). (2) enriches it with surge pricing data in real-time (Apache Flink). (3) updates the rider's map with nearby drivers every 2 seconds. Total latency: under 500ms from GPS ping to map update.",
+      "eli5_explanation": "Stream Processing is a concept in advanced techniques. In simple terms, Stream Processing covers advanced techniques in Data Engineering. This data engineering concept addresses key topics in the advanced techniques in data engineering domain. Also known as: real-time pro",
+      "analogy": "Think of Stream Processing like a specialized tool in a data engineer's workshop \u2014 it helps you handle advanced techniques tasks more effectively.",
+      "concrete_example": "Consider a scenario where Stream Processing applies: Stream Processing covers advanced techniques in Data Engineering. This data engineering concept addresses key topics in the advanced techniques in data engineering domain. Also known as: real-time pro...",
       "feynman_diagram": null,
       "gap_questions": [
-        "What happens if the streaming pipeline falls behind \u2014 messages arrive faster than they can be processed?",
-        "How do you handle exactly-once processing in streaming when the network can fail?",
-        "When is batch processing actually better than streaming?"
+        "What are the key components or steps involved in Stream Processing?",
+        "Can you explain Stream Processing without using jargon?",
+        "What happens if Stream Processing is not applied correctly?",
+        "How does Stream Processing relate to other concepts in advanced techniques?"
       ],
-      "teach_back_prompt": "Explain stream processing to a database administrator who only knows batch ETL jobs. Cover Kafka, consumers, and the 'never wait' philosophy.",
+      "teach_back_prompt": "Explain Stream Processing as if teaching a colleague who is new to advanced techniques. Cover: what it is, how it works, and why it matters.",
       "build_exercise": {
-        "type": "code",
-        "prompt": "Write a Python class `StreamProcessor` with a method `process(event: dict) -> dict`. It should maintain a rolling 5-minute window average of event['value']. Return {'avg': float, 'event_count': int, 'alert': bool} if the current value deviates more than 3 standard deviations from the rolling average.",
-        "solution": "import statistics\nclass StreamProcessor:\n    def __init__(self, window_size=300):\n        self.window = []\n        self.max_size = window_size\n    def process(self, event):\n        self.window.append(event['value'])\n        if len(self.window) > self.max_size:\n            self.window.pop(0)\n        avg = statistics.mean(self.window)\n        if len(self.window) > 1:\n            std = statistics.stdev(self.window)\n            alert = abs(event['value'] - avg) > 3 * std\n        else:\n            alert = False\n        return {'avg': round(avg, 2), 'event_count': len(self.window), 'alert': alert}"
+        "type": "diagram",
+        "prompt": "Create a diagram that demonstrates Stream Processing in a real-world advanced techniques scenario. Walk through your design decisions.",
+        "solution": "A diagram for Stream Processing should include: 1. The core components of streaming 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 3,
-      "explanation_quality": 0.0,
+      "feynman_difficulty": 5,
+      "explanation_quality": 0.8,
       "created_at": "2026-07-23T04:21:38.903181+00:00",
       "updated_at": "2026-07-23T04:21:38.903184+00:00"
     },
@@ -5483,23 +5492,24 @@
       "semantic_contract_type": "",
       "philosophical_sources": [],
       "cross_pillar_analogs": [],
-      "eli5_explanation": "Apache Kafka is a super-fast, super-reliable message board where different computer programs post messages and other programs read them. Think of it as a mailing list for software: any program can send a message to a 'topic' (like 'user-signups' or 'payment-events'), and any other program can subscribe to get those messages instantly.",
-      "analogy": "Like a group chat for microservices. Instead of each service calling every other service directly (which gets messy), they all post to a shared chat room. The chat room keeps all the history, so if a new service joins, it can read everything that was posted before.",
-      "concrete_example": "Netflix uses Kafka to process 700 billion events per day. When you press play on a movie: (1) your click \u2192 Kafka topic 'play_events'. (2) Recommendation service reads that topic \u2192 updates your suggestions. (3) Analytics service reads same topic \u2192 tracks viewing stats. (4) Billing service reads same topic \u2192 charges your account. Each service reads the SAME message independently \u2014 Kafka does not delete it after one read.",
+      "eli5_explanation": "Apache Kafka is a concept in advanced techniques. In simple terms, Apache Kafka covers advanced techniques in Data Engineering. This data engineering concept addresses key topics in the advanced techniques in data engineering domain. Also known as: Kafka. Related con",
+      "analogy": "Think of Apache Kafka like a specialized tool in a data engineer's workshop \u2014 it helps you handle advanced techniques tasks more effectively.",
+      "concrete_example": "Consider a scenario where Apache Kafka applies: Apache Kafka covers advanced techniques in Data Engineering. This data engineering concept addresses key topics in the advanced techniques in data engineering domain. Also known as: Kafka. Related con...",
       "feynman_diagram": null,
       "gap_questions": [
-        "What happens if a consumer crashes \u2014 does it miss messages? How does Kafka handle this?",
-        "Why not just use a database instead of Kafka if both store messages?",
-        "Can Kafka lose data? What are the tradeoffs between speed and durability?"
+        "What are the key components or steps involved in Apache Kafka?",
+        "Can you explain Apache Kafka without using jargon?",
+        "What happens if Apache Kafka is not applied correctly?",
+        "How does Apache Kafka relate to other concepts in advanced techniques?"
       ],
-      "teach_back_prompt": "Explain Kafka to a backend engineer who has only used REST APIs and message queues like RabbitMQ. Focus on topics, partitions, offsets, and replayability.",
+      "teach_back_prompt": "Explain Apache Kafka as if teaching a colleague who is new to advanced techniques. Cover: what it is, how it works, and why it matters.",
       "build_exercise": {
-        "type": "code",
-        "prompt": "Write a Python class `InMemoryKafka` with methods: `create_topic(name: str)`, `produce(topic: str, message: dict) -> int`, `consume(topic: str, offset: int = -1) -> list[dict]`. Messages should be stored in order and replayable from any offset. Return the offset of the last message from produce.",
-        "solution": "class InMemoryKafka:\n    def __init__(self):\n        self._topics = {}\n    def create_topic(self, name):\n        if name not in self._topics:\n            self._topics[name] = []\n    def produce(self, topic, message):\n        self._topics.setdefault(topic, []).append(message)\n        return len(self._topics[topic]) - 1\n    def consume(self, topic, offset=-1):\n        msgs = self._topics.get(topic, [])\n        if offset < 0:\n            return msgs\n        return msgs[offset:]"
+        "type": "diagram",
+        "prompt": "Create a diagram that demonstrates Apache Kafka in a real-world advanced techniques scenario. Walk through your design decisions.",
+        "solution": "A diagram for Apache Kafka should include: 1. The core components of apache kafka 2. How they interact 3. Expected outcomes or outputs"
       },
       "feynman_difficulty": 3,
-      "explanation_quality": 0.0,
+      "explanation_quality": 0.6,
       "created_at": "2026-07-23T04:21:38.903250+00:00",
       "updated_at": "2026-07-23T04:21:38.903253+00:00"
     },
