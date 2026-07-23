@@ -1,125 +1,326 @@
 {
   "aml/compliance/aml-regulatory-landscape": [
     "aml-regulatory-framework",
-    "bsa"
+    "bsa",
+    "fatf-recommendations",
+    "nis2-cyber-resilience",
+    "regulatory-filing",
+    "travel-rule"
   ],
   "aml/compliance/kyc-basics": [
+    "aml-compliance-basics",
+    "aml-optimization",
+    "beneficial-ownership",
     "cdd",
+    "cross-border-payments",
+    "crypto-travel-rule",
+    "cyber-aml",
+    "entity-resolution",
+    "fincrime-intelligence",
+    "hedge-funds",
     "kyc"
   ],
   "aml/compliance/risk-based-approach-intro": [
+    "ai-act-high-risk",
+    "aml-compliance-basics",
+    "aml-esg-risk",
+    "aml-optimization",
     "aml-risk-scoring",
-    "risk-based-approach"
+    "cross-border-payments",
+    "crypto-travel-rule",
+    "de-risk",
+    "dora-ict-risk",
+    "esg-investing",
+    "portfolio-optimization",
+    "risk-based-approach",
+    "risk-parity"
   ],
   "aml/compliance/sanctions-screening-basics": [
+    "adverse-media",
+    "aml-compliance-basics",
+    "carry-trade",
+    "execution-algos",
+    "global-sanctions",
+    "hedge-funds",
     "kyc",
+    "mean-reversion",
+    "options-trading",
+    "regime-detection",
     "sanctions-screening"
   ],
   "aml/compliance/suspicious-activity-reports": [
+    "aml-optimization",
+    "aml-reporting-dashboard",
+    "aml-threat-intel",
+    "cross-border-payments",
+    "crypto-travel-rule",
+    "ctr",
+    "cyber-aml",
+    "fincen-boi",
+    "fincrime-intelligence",
+    "regulatory-reporting",
     "sar",
-    "str"
-  ],
-  "aml/compliance/what-is-money-laundering": [],
-  "aml/learn/aml-basics": [
-    "aml-compliance-basics",
-    "regtech"
-  ],
-  "aml/learn/aml-compliance-glossary": [
-    "aml-regulatory-framework",
-    "bsa",
-    "regtech"
-  ],
-  "aml/learn/aml-enforcement-cases": [
-    "regtech"
-  ],
-  "aml/learn/crypto-aml": [
-    "crypto-markets",
-    "defi-aml",
-    "regtech"
-  ],
-  "aml/learn/designing-aml-program": [
-    "aml-program",
-    "aml-risk-scoring",
-    "cdd",
-    "data-observability",
-    "pep",
-    "regtech",
+    "str",
     "transaction-monitoring"
   ],
+  "aml/compliance/what-is-money-laundering": [
+    "aml-compliance-basics",
+    "aml-threat-intel",
+    "financial-crime-types",
+    "hawkes-process",
+    "market-making",
+    "money-laundering-basics"
+  ],
+  "aml/learn/aml-basics": [
+    "aml-compliance-basics",
+    "aml-continuous-monitoring",
+    "beneficial-ownership",
+    "correspondent-banking",
+    "fraud-detection",
+    "hedge-funds",
+    "payment-fraud",
+    "regime-detection",
+    "regtech",
+    "regulatory-filing",
+    "transaction-monitoring"
+  ],
+  "aml/learn/aml-compliance-glossary": [
+    "aml-optimization",
+    "aml-regulatory-framework",
+    "bsa",
+    "cross-border-payments",
+    "crypto-travel-rule",
+    "fincen-boi",
+    "pep",
+    "regtech",
+    "regulatory-filing",
+    "travel-rule"
+  ],
+  "aml/learn/aml-enforcement-cases": [
+    "aml-continuous-monitoring",
+    "aml-optimization",
+    "cross-border-payments",
+    "crypto-travel-rule",
+    "ctr",
+    "hawkes-process",
+    "regtech",
+    "regulatory-filing",
+    "transaction-monitoring"
+  ],
+  "aml/learn/crypto-aml": [
+    "aml-optimization",
+    "aml-oracle",
+    "asset-pricing",
+    "cross-border-payments",
+    "crypto-aml",
+    "crypto-markets",
+    "crypto-travel-rule",
+    "defi-aml",
+    "fraud-detection",
+    "mica-crypto-assets",
+    "real-time-analytics",
+    "real-time-analytics-architecture",
+    "regtech",
+    "regulatory-filing",
+    "supply-chain-analysis",
+    "trade-finance-aml",
+    "travel-rule"
+  ],
+  "aml/learn/designing-aml-program": [
+    "ai-conformity-assessment",
+    "aml-case-management",
+    "aml-continuous-monitoring",
+    "aml-esg-risk",
+    "aml-optimization",
+    "aml-program",
+    "aml-risk-scoring",
+    "aml-training",
+    "cdd",
+    "cross-border-payments",
+    "crypto-travel-rule",
+    "ctr",
+    "data-observability",
+    "esg-investing",
+    "pep",
+    "regtech",
+    "regulatory-filing",
+    "transaction-monitoring",
+    "travel-rule"
+  ],
   "aml/learn/money-laundering-mechanisms": [
-    "tbml"
+    "carry-trade",
+    "crypto-travel-rule",
+    "ctr",
+    "etf-trading",
+    "fraud-detection",
+    "payment-fraud",
+    "regime-detection",
+    "tbml",
+    "trade-finance-aml"
   ],
   "aml/learn/quiz-aml": [
     "aml-compliance-basics",
+    "aml-optimization",
     "aml-regulatory-framework",
+    "cross-border-payments",
+    "crypto-travel-rule",
+    "fraud-detection",
+    "hedge-funds",
+    "mica-crypto-assets",
+    "payment-fraud",
+    "regime-detection",
     "regtech"
   ],
   "aml/learn/trade-based-ml-sanctions": [
+    "adverse-media",
+    "carry-trade",
     "regtech",
-    "tbml"
+    "regulatory-filing",
+    "tbml",
+    "transaction-monitoring"
   ],
   "aml/research/aml-1": [
+    "ctr",
     "data-observability",
+    "federated-learning",
+    "fraud-detection",
+    "machine-learning-markets",
+    "payment-fraud",
+    "regime-detection",
     "transaction-monitoring"
   ],
   "aml/research/aml-2": [
     "defi-aml"
   ],
   "aml/research/aml-3": [
+    "aml-optimization",
+    "aml-reporting-dashboard",
     "beneficial-ownership",
     "bsa",
+    "cross-border-payments",
+    "crypto-travel-rule",
+    "ctr",
     "fatf-recommendations",
-    "regtech"
+    "fincen-boi",
+    "regtech",
+    "regulatory-filing"
   ],
   "aml/research/aml-4": [
     "aml-esg-risk",
+    "aml-international",
     "aml-risk-scoring",
     "beneficial-ownership",
-    "fatf-recommendations"
+    "cross-border-payments",
+    "crypto-travel-rule",
+    "ctr",
+    "fatf-recommendations",
+    "lob",
+    "mica-crypto-assets",
+    "network-analysis",
+    "nis2-cyber-resilience",
+    "order-book",
+    "order-types",
+    "supply-chain-analysis"
   ],
   "aml/research/aml-dataeng": [
+    "ai-aml-surveillance",
+    "aml-audit",
+    "aml-data-governance",
+    "aml-data-sharing",
     "apache-flink",
     "apache-iceberg",
     "apache-kafka",
+    "arrow-parquet",
+    "batch-stream-merging",
+    "ctr",
     "dataops",
+    "debiasing-pipeline",
     "etl",
-    "streaming"
+    "hawkes-process",
+    "lakehouse",
+    "market-surveillance",
+    "real-time-analytics",
+    "real-time-analytics-architecture",
+    "streaming",
+    "transaction-monitoring"
   ],
   "aml/research/cryptocurrency-mixers-under-global-regulatory-spotlight": [
     "crypto-travel-rule",
+    "ctr",
     "fatf-recommendations",
     "global-sanctions",
     "mica-crypto-assets",
+    "momentum-trading",
+    "network-analysis",
     "regtech",
+    "regulatory-filing",
     "sanctions-screening",
+    "supply-chain-analysis",
     "technical-analysis",
     "travel-rule"
   ],
   "aml/research/dataops-aml": [
+    "aml-optimization",
+    "aml-oracle",
+    "cross-border-payments",
+    "crypto-travel-rule",
+    "ctr",
+    "cyber-aml",
     "data-observability",
     "data-quality",
     "data-quality-monitoring",
     "dataops",
+    "debiasing-pipeline",
+    "fincrime-intelligence",
+    "fraud-detection",
+    "real-time-analytics",
+    "real-time-analytics-architecture",
     "regtech",
+    "streaming",
     "transaction-monitoring"
   ],
-  "aml/research/quantum-spectral-anomaly-detection": [],
+  "aml/research/quantum-spectral-anomaly-detection": [
+    "fraud-detection",
+    "payment-fraud",
+    "regime-detection",
+    "transaction-monitoring"
+  ],
   "aml/research/square-root-price-impact-is-necessary-for-endogenous-manipul": [
-    "market-impact"
+    "carry-trade",
+    "federated-learning",
+    "fixed-income",
+    "machine-learning-markets",
+    "market-impact",
+    "market-indices",
+    "market-making",
+    "market-microstructure",
+    "market-participants",
+    "market-surveillance",
+    "mica-crypto-assets",
+    "regime-detection",
+    "retail-trading"
   ],
   "data/knowledge/cybernetic-foundations": [
+    "cyber-aml",
     "dataops"
   ],
   "data/learn/building-pipelines-dbt-dagster": [
+    "aml-model-validation",
+    "asset-pricing",
     "change-data-capture",
     "dagster",
     "data-lake",
     "data-quality",
     "dataops",
     "dbt",
+    "debiasing-pipeline",
     "elt",
     "elt-pipeline",
-    "etl"
+    "etl",
+    "hedge-funds",
+    "market-impact",
+    "model-cards",
+    "orchestration"
   ],
   "data/learn/data-engineering-basics": [
     "apache-kafka",
@@ -127,161 +328,369 @@
     "data-lake",
     "dataops",
     "elt",
-    "elt-pipeline"
+    "elt-pipeline",
+    "equity-basics",
+    "etl",
+    "orchestration",
+    "reverse-etl"
   ],
   "data/learn/data-ethics-privacy": [
     "ai-act-high-risk",
+    "aml-oracle",
     "dataops",
-    "regtech"
+    "differential-privacy",
+    "fraud-detection",
+    "gdpr-anonymization",
+    "regtech",
+    "regulatory-filing"
   ],
   "data/learn/data-pipeline-architectures": [
+    "aml-oracle",
     "batch-processing",
+    "batch-stream-merging",
     "dagster",
-    "dataops"
+    "dataops",
+    "debiasing-pipeline",
+    "event-driven-trading",
+    "hawkes-process",
+    "lakehouse",
+    "real-time-analytics-architecture",
+    "streaming"
   ],
   "data/learn/data-quality-engineering": [
     "data-observability",
     "data-quality",
-    "dataops"
+    "dataops",
+    "debiasing-pipeline"
   ],
   "data/learn/data-quality-observability-cost": [
+    "aml-optimization",
+    "carry-trade",
+    "data-lineage",
     "data-observability",
     "data-quality",
     "dataops",
-    "pipeline-cost-optimization"
+    "hedge-funds",
+    "mean-reversion",
+    "metric-store",
+    "options-trading",
+    "pipeline-cost-optimization",
+    "portfolio-optimization",
+    "query-optimization"
   ],
   "data/learn/dataops-introduction": [
     "data-observability",
     "data-pipeline",
     "data-quality",
     "dataops",
-    "etl"
+    "debiasing-pipeline",
+    "etl",
+    "hawkes-process",
+    "lakehouse",
+    "real-time-analytics",
+    "real-time-analytics-architecture"
   ],
   "data/learn/designing-data-platform": [
+    "aml-oracle",
     "data-mesh",
-    "dataops"
+    "dataops",
+    "lakehouse",
+    "real-time-analytics-architecture"
   ],
   "data/learn/learning-hub": [
+    "cyber-aml",
     "data-quality",
     "dataops",
+    "federated-learning",
+    "fincrime-intelligence",
+    "fixed-income",
+    "machine-learning-markets",
+    "market-impact",
+    "market-indices",
+    "market-making",
+    "market-microstructure",
+    "market-participants",
+    "market-surveillance",
+    "mica-crypto-assets",
+    "regime-detection",
     "semiconductor-industry"
   ],
   "data/learn/open-source-data-stack": [
     "apache-iceberg",
     "cdc",
     "change-data-capture",
-    "data-lake"
+    "data-lake",
+    "dbt",
+    "real-time-analytics",
+    "real-time-analytics-architecture"
   ],
   "data/research/2027-data-engineering-predictions": [
     "apache-iceberg",
-    "dataops"
+    "batch-stream-merging",
+    "data-catalog",
+    "dataops",
+    "debiasing-pipeline",
+    "real-time-analytics",
+    "real-time-analytics-architecture",
+    "streaming"
   ],
-  "data/research/a-pictorial-introduction-to-differential-geometry-2017": [],
+  "data/research/a-pictorial-introduction-to-differential-geometry-2017": [
+    "differential-privacy",
+    "momentum-trading"
+  ],
   "data/research/airflow-prefect-dagster-comparison": [
+    "aml-model-validation",
+    "aml-oracle",
+    "asset-pricing",
     "dagster",
     "data-observability",
-    "orchestration"
+    "distributed-systems",
+    "execution-algos",
+    "model-cards",
+    "orchestration",
+    "order-types"
   ],
   "data/research/analytics-engineering-rise": [
     "dataops",
     "elt",
     "elt-pipeline",
-    "etl"
+    "etl",
+    "orchestration",
+    "real-time-analytics",
+    "real-time-analytics-architecture"
   ],
   "data/research/apache-iceberg-lakehouse": [
+    "alternative-data",
+    "aml-data-governance",
+    "aml-data-sharing",
+    "apache-flink",
     "apache-iceberg",
     "arrow-parquet",
-    "dataops"
+    "carry-trade",
+    "crypto-travel-rule",
+    "ctr",
+    "data-act-interoperability",
+    "data-catalog",
+    "data-contract-testing",
+    "data-cost-intelligence",
+    "data-discovery",
+    "data-lake",
+    "data-mesh-governance",
+    "data-pipeline",
+    "data-platform-kpis",
+    "data-quality-sla",
+    "data-security",
+    "data-versioning",
+    "data-warehouse",
+    "data-warehouse-design",
+    "dataops",
+    "gdpr-synthetic-data",
+    "hedge-funds",
+    "lakehouse",
+    "market-data",
+    "mean-reversion",
+    "options-trading",
+    "travel-rule"
   ],
-  "data/research/bun-runtime-support-now-limited-and-deprecated-science": [],
+  "data/research/bun-runtime-support-now-limited-and-deprecated-science": [
+    "lob",
+    "momentum-trading",
+    "order-book"
+  ],
   "data/research/cost-optimization-data-pipelines": [
+    "aml-optimization",
     "apache-iceberg",
+    "carry-trade",
     "change-data-capture",
     "dataops",
+    "debiasing-pipeline",
+    "hawkes-process",
+    "hedge-funds",
+    "mean-reversion",
+    "options-trading",
     "pipeline-cost-optimization",
+    "portfolio-optimization",
     "query-optimization"
   ],
   "data/research/dagster-2": [
+    "aml-model-validation",
+    "asset-pricing",
     "dagster",
     "dataops",
+    "debiasing-pipeline",
     "etl",
+    "model-cards",
     "orchestration"
   ],
   "data/research/data-contracts": [
+    "data-contract-testing",
     "data-contracts",
+    "data-governance",
+    "data-quality",
+    "data-versioning",
     "dataops",
+    "debiasing-pipeline",
+    "fraud-detection",
+    "payment-fraud",
+    "real-time-analytics",
+    "real-time-analytics-architecture",
+    "regime-detection",
     "schema-migration",
     "schema-registry"
   ],
   "data/research/data-mesh-implementation": [
     "data-mesh",
-    "data-mesh-governance"
+    "data-mesh-governance",
+    "federated-learning"
   ],
   "data/research/data-platform-product-ux": [
-    "dataops"
+    "aml-reporting-dashboard",
+    "dataops",
+    "debiasing-pipeline"
   ],
   "data/research/data-products-api-design": [
+    "alternative-data",
+    "aml-model-validation",
+    "asset-pricing",
     "dagster",
+    "data-act-interoperability",
+    "data-cost-intelligence",
+    "data-discovery",
+    "data-pipeline",
+    "data-platform-kpis",
+    "data-quality-sla",
     "data-security",
-    "dataops"
+    "data-warehouse",
+    "data-warehouse-design",
+    "dataops",
+    "etl",
+    "gdpr-synthetic-data",
+    "market-data",
+    "market-impact",
+    "model-cards",
+    "reverse-etl"
   ],
   "data/research/data-quality-great-expectations": [
     "dagster",
     "data-quality",
-    "dataops"
+    "dataops",
+    "orchestration"
   ],
   "data/research/dataops-science": [
+    "aml-model-validation",
+    "aml-training",
+    "dataops",
+    "debiasing-pipeline",
+    "feature-store",
+    "ml-pipeline",
+    "model-cards"
+  ],
+  "data/research/ey-canada-published-a-cybersecurity-report-and-most": [
+    "ctr",
+    "cyber-aml",
+    "momentum-trading",
+    "nis2-cyber-resilience"
+  ],
+  "data/research/feature-store-feast-vs-tecton": [
+    "aml-model-validation",
+    "asset-pricing",
+    "batch-stream-merging",
     "dataops",
     "feature-store",
-    "ml-pipeline"
-  ],
-  "data/research/ey-canada-published-a-cybersecurity-report-and-most": [],
-  "data/research/feature-store-feast-vs-tecton": [
-    "dataops",
-    "ml-pipeline"
+    "market-impact",
+    "metric-store",
+    "ml-pipeline",
+    "model-cards"
   ],
   "data/research/kafka-streaming-event-driven": [
+    "apache-flink",
     "apache-kafka",
+    "arrow-parquet",
+    "batch-processing",
+    "batch-stream-merging",
+    "carry-trade",
+    "cyber-aml",
     "dataops",
+    "distributed-systems",
+    "event-driven-trading",
+    "fincrime-intelligence",
+    "hawkes-process",
+    "hedge-funds",
+    "lakehouse",
+    "mean-reversion",
+    "options-trading",
+    "real-time-analytics",
+    "real-time-analytics-architecture",
     "streaming"
   ],
   "data/research/kubernetes-data-pipelines": [
+    "aml-optimization",
     "apache-flink",
     "apache-kafka",
     "dagster",
     "dataops",
-    "pipeline-cost-optimization"
+    "debiasing-pipeline",
+    "orchestration",
+    "order-types",
+    "pipeline-cost-optimization",
+    "portfolio-optimization",
+    "query-optimization"
   ],
   "data/research/ml-pipeline-orchestration-feast-mlflow": [
+    "aml-model-validation",
+    "aml-training",
     "dagster",
     "dataops",
+    "debiasing-pipeline",
     "feature-store",
+    "lob",
     "ml-pipeline",
-    "orchestration"
+    "model-cards",
+    "orchestration",
+    "order-book"
   ],
   "data/research/schema-registry-avro-protobuf": [
+    "data-governance",
     "dataops",
+    "debiasing-pipeline",
+    "distributed-systems",
+    "lakehouse",
+    "real-time-analytics-architecture",
     "schema-migration",
     "schema-registry"
   ],
   "data/research/science-dataeng": [
+    "asset-pricing",
     "dagster",
-    "dataops"
+    "dataops",
+    "debiasing-pipeline",
+    "high-frequency-trading",
+    "orchestration"
   ],
   "data/research/terraform-data-infrastructure": [
     "apache-iceberg",
     "apache-kafka",
+    "carry-trade",
     "dagster",
-    "dataops"
+    "dataops",
+    "etf-trading",
+    "hedge-funds",
+    "mean-reversion",
+    "options-trading"
   ],
   "knowledge/about": [
-    "dataops"
+    "dataops",
+    "hedge-funds",
+    "lakehouse",
+    "real-time-analytics-architecture"
   ],
   "knowledge/changelog": [
     "dataops"
   ],
   "knowledge/contact": [
-    "dataops"
+    "ctr",
+    "dataops",
+    "hedge-funds"
   ],
   "knowledge/dataops-glossary": [
     "aml-continuous-monitoring",
@@ -292,20 +701,45 @@
     "etl"
   ],
   "knowledge/dataops-trends-2026": [
+    "ai-hardware",
+    "apache-flink",
+    "arrow-parquet",
     "dagster",
     "data-lake",
-    "dataops"
+    "dataops",
+    "lakehouse",
+    "momentum-trading",
+    "orchestration",
+    "real-time-analytics-architecture",
+    "retail-trading"
   ],
   "knowledge/diagrams": [
-    "dataops"
+    "dataops",
+    "debiasing-pipeline",
+    "lakehouse",
+    "order-types",
+    "real-time-analytics-architecture"
   ],
   "knowledge/faq": [
-    "distributed-systems"
+    "distributed-systems",
+    "hedge-funds"
   ],
   "knowledge/glossary": [
     "beneficial-ownership",
     "cdd",
+    "cyber-aml",
     "edd",
+    "fincrime-intelligence",
+    "fixed-income",
+    "machine-learning-markets",
+    "market-impact",
+    "market-indices",
+    "market-making",
+    "market-microstructure",
+    "market-participants",
+    "market-surveillance",
+    "mica-crypto-assets",
+    "regime-detection",
     "sar",
     "str"
   ],
@@ -319,101 +753,350 @@
   "knowledge/pillar-taxonomy": [
     "bsa",
     "fatf-recommendations",
+    "fixed-income",
     "global-sanctions",
     "kyc",
+    "machine-learning-markets",
+    "market-impact",
+    "market-indices",
+    "market-making",
+    "market-microstructure",
+    "market-participants",
+    "market-surveillance",
     "mica-crypto-assets",
+    "regime-detection",
     "regtech",
     "sanctions-screening"
   ],
   "knowledge/research-methodology": [
-    "dataops"
+    "dataops",
+    "debiasing-pipeline",
+    "hedge-funds"
   ],
   "knowledge/system-architecture": [
     "data-observability",
-    "dataops"
+    "dataops",
+    "debiasing-pipeline",
+    "fairness-metrics",
+    "hedge-funds",
+    "lakehouse",
+    "metric-store",
+    "real-time-analytics-architecture"
   ],
   "markets/learn/applying-market-analysis": [
-    "portfolio-optimization"
+    "dark-pools",
+    "earnings-analysis",
+    "macro-analysis",
+    "market-impact",
+    "market-indices",
+    "market-making",
+    "market-microstructure",
+    "market-participants",
+    "market-surveillance",
+    "network-analysis",
+    "portfolio-optimization",
+    "regime-detection",
+    "supply-chain-analysis",
+    "technical-analysis",
+    "vpin"
   ],
-  "markets/learn/behavioral-design-learning": [],
+  "markets/learn/behavioral-design-learning": [
+    "aml-model-validation",
+    "federated-learning",
+    "machine-learning-markets",
+    "model-cards"
+  ],
   "markets/learn/behavioral-finance-portfolio": [
+    "aml-oracle",
     "behavioral-finance",
-    "equity-basics"
+    "cyber-aml",
+    "equity-basics",
+    "esg-double-materiality",
+    "esg-investing",
+    "fincrime-intelligence",
+    "market-impact",
+    "market-indices",
+    "market-making",
+    "market-microstructure",
+    "market-participants",
+    "market-surveillance",
+    "portfolio-optimization",
+    "regime-detection"
   ],
   "markets/learn/crispr-gene-editing": [],
   "markets/learn/market-analysis": [
+    "ai-hardware",
     "earnings-analysis",
+    "hedge-funds",
+    "market-impact",
+    "market-indices",
+    "market-making",
+    "market-microstructure",
+    "market-participants",
+    "market-surveillance",
+    "momentum-trading",
+    "regime-detection",
+    "retail-trading",
     "technical-analysis"
   ],
   "markets/learn/market-analysis-methods": [
+    "ai-hardware",
     "earnings-analysis",
-    "macro-analysis"
+    "esg-investing",
+    "factor-investing",
+    "hedge-funds",
+    "macro-analysis",
+    "market-impact",
+    "market-indices",
+    "market-making",
+    "market-microstructure",
+    "market-participants",
+    "market-surveillance",
+    "momentum-trading",
+    "network-analysis",
+    "quantitative-trading",
+    "regime-detection",
+    "retail-trading",
+    "supply-chain-analysis"
   ],
   "markets/learn/market-fundamentals": [
+    "asset-pricing",
+    "commodity-trading",
+    "cyber-aml",
     "equity-basics",
+    "etf-creation",
+    "etf-trading",
+    "fincrime-intelligence",
+    "fixed-income",
+    "fx-markets",
+    "hedge-funds",
+    "machine-learning-markets",
+    "macro-analysis",
+    "market-impact",
+    "market-indices",
+    "market-making",
+    "market-microstructure",
     "market-participants",
-    "retail-trading"
+    "market-surveillance",
+    "mica-crypto-assets",
+    "regime-detection",
+    "retail-trading",
+    "stock-lending",
+    "technical-analysis",
+    "volatility-arbitrage",
+    "volatility-surface",
+    "volatility-trading"
   ],
-  "markets/learn/meta-analysis-statistics": [],
-  "markets/learn/science-method": [],
+  "markets/learn/meta-analysis-statistics": [
+    "hedge-funds",
+    "network-analysis",
+    "statistical-arbitrage",
+    "supply-chain-analysis"
+  ],
+  "markets/learn/science-method": [
+    "ai-conformity-assessment"
+  ],
   "markets/learn/sector-competitive-analysis": [
-    "semiconductor-industry"
+    "commodity-trading",
+    "cyber-aml",
+    "dark-pools",
+    "fincrime-intelligence",
+    "market-impact",
+    "market-indices",
+    "market-making",
+    "market-microstructure",
+    "market-participants",
+    "market-surveillance",
+    "network-analysis",
+    "order-types",
+    "regime-detection",
+    "semiconductor-industry",
+    "supply-chain-analysis",
+    "trading-venues"
   ],
   "markets/learn/semiconductor-supply-chain": [
-    "semiconductor-industry"
+    "carry-trade",
+    "fixed-income",
+    "hedge-funds",
+    "machine-learning-markets",
+    "market-impact",
+    "market-indices",
+    "market-making",
+    "market-microstructure",
+    "market-participants",
+    "market-surveillance",
+    "mean-reversion",
+    "mica-crypto-assets",
+    "options-trading",
+    "regime-detection",
+    "semiconductor-industry",
+    "supply-chain-analysis"
   ],
   "markets/research/ai-regulation": [
-    "ai-act-high-risk"
+    "ai-act-high-risk",
+    "momentum-trading"
   ],
-  "markets/research/aml-1": [],
-  "markets/research/can-the-stockmarket-swallow-anthropic-spacex-and-openai": [],
+  "markets/research/aml-1": [
+    "momentum-trading"
+  ],
+  "markets/research/can-the-stockmarket-swallow-anthropic-spacex-and-openai": [
+    "equity-basics",
+    "market-impact",
+    "market-indices",
+    "market-making",
+    "market-microstructure",
+    "market-participants",
+    "market-surveillance",
+    "momentum-trading",
+    "regime-detection"
+  ],
   "markets/research/dataops-markets": [
     "algorithmic-trading",
+    "aml-oracle",
+    "batch-stream-merging",
+    "cross-asset-trading",
     "dataops",
+    "debiasing-pipeline",
+    "etf-trading",
+    "event-driven-trading",
+    "execution-algos",
     "feature-store",
+    "fraud-detection",
+    "hawkes-process",
     "high-frequency-trading",
     "market-data",
+    "market-impact",
+    "market-indices",
+    "market-making",
+    "market-microstructure",
+    "market-participants",
+    "market-surveillance",
     "ml-pipeline",
-    "streaming"
+    "options-trading",
+    "orchestration",
+    "order-types",
+    "quantitative-trading",
+    "real-time-analytics",
+    "real-time-analytics-architecture",
+    "regime-detection",
+    "retail-trading",
+    "streaming",
+    "volatility-trading"
   ],
-  "markets/research/govuk-has-replaced-stripe-with-dutch-provider-adyen-aml": [],
-  "markets/research/meta-confirms-1000s-of-instagram-accounts-were-hacked-by": [],
+  "markets/research/govuk-has-replaced-stripe-with-dutch-provider-adyen-aml": [
+    "high-frequency-trading"
+  ],
+  "markets/research/meta-confirms-1000s-of-instagram-accounts-were-hacked-by": [
+    "equity-basics",
+    "high-frequency-trading"
+  ],
   "markets/research/science-2": [
-    "data-observability"
+    "aml-model-validation",
+    "asset-pricing",
+    "data-observability",
+    "lob",
+    "market-impact",
+    "model-cards",
+    "order-book",
+    "order-types"
   ],
-  "markets/research/science-3": [],
-  "markets/research/science-4": [],
-  "markets/research/science-5": [],
-  "markets/research/science-6": [],
+  "markets/research/science-3": [
+    "aml-model-validation",
+    "asset-pricing",
+    "market-impact",
+    "mica-crypto-assets",
+    "model-cards"
+  ],
+  "markets/research/science-4": [
+    "ctr"
+  ],
+  "markets/research/science-5": [
+    "momentum-trading",
+    "network-analysis",
+    "supply-chain-analysis"
+  ],
+  "markets/research/science-6": [
+    "aml-model-validation",
+    "etf-trading"
+  ],
   "markets/research/sp-500-rejects-spacex-also-blocking-entry-for-openai-and": [
+    "high-frequency-trading",
     "market-indices"
   ],
   "markets/research/stock-1": [
+    "aml-model-validation",
+    "asset-pricing",
+    "equity-basics",
+    "market-impact",
+    "model-cards",
+    "momentum-trading",
     "semiconductor-industry"
   ],
   "markets/research/stock-2": [
+    "equity-basics",
+    "momentum-trading",
     "semiconductor-industry"
   ],
-  "markets/research/stock-3": [],
-  "markets/research/stock-4": [],
-  "markets/research/stock-5": [],
+  "markets/research/stock-3": [
+    "hedge-funds"
+  ],
+  "markets/research/stock-4": [
+    "factor-investing",
+    "supply-chain-analysis"
+  ],
+  "markets/research/stock-5": [
+    "ai-hardware",
+    "network-analysis",
+    "supply-chain-analysis"
+  ],
   "markets/research/stock-6": [
-    "semiconductor-industry"
+    "network-analysis",
+    "semiconductor-industry",
+    "supply-chain-analysis"
   ],
   "markets/research/stock-7": [
-    "semiconductor-industry"
+    "hawkes-process",
+    "mean-reversion",
+    "semiconductor-industry",
+    "supply-chain-analysis"
   ],
   "markets/research/stock-dataeng": [
     "apache-iceberg",
+    "asset-pricing",
+    "crypto-travel-rule",
     "dagster",
     "dataops",
+    "debiasing-pipeline",
     "feature-store",
     "market-data",
-    "ml-pipeline"
+    "market-impact",
+    "market-indices",
+    "market-making",
+    "market-microstructure",
+    "market-participants",
+    "market-surveillance",
+    "ml-pipeline",
+    "orchestration",
+    "quantitative-trading",
+    "regime-detection",
+    "travel-rule"
   ],
   "markets/research/stock-market": [
     "equity-basics",
+    "fixed-income",
+    "machine-learning-markets",
+    "market-impact",
+    "market-indices",
+    "market-making",
+    "market-microstructure",
     "market-participants",
-    "retail-trading"
+    "market-surveillance",
+    "mica-crypto-assets",
+    "momentum-trading",
+    "regime-detection",
+    "retail-trading",
+    "volatility-arbitrage",
+    "volatility-surface",
+    "volatility-trading"
   ]
 }
