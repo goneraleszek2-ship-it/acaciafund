@@ -1331,16 +1331,16 @@
   ],
   "knowledge/glossary": [
     {
+      "slug": "aml/compliance/suspicious-activity-reports",
+      "score": 0.2857
+    },
+    {
       "slug": "markets/research/govuk-has-replaced-stripe-with-dutch-provider-adyen-aml",
       "score": 0.2
     },
     {
       "slug": "markets/research/aml-1",
       "score": 0.2
-    },
-    {
-      "slug": "data/research/ey-canada-published-a-cybersecurity-report-and-most",
-      "score": 0.1667
     }
   ],
   "knowledge/diagrams": [
@@ -1397,6 +1397,90 @@
     {
       "slug": "markets/research/govuk-has-replaced-stripe-with-dutch-provider-adyen-aml",
       "score": 0.25
+    }
+  ],
+  "aml/compliance/what-is-money-laundering": [
+    {
+      "slug": "aml/compliance/kyc-basics",
+      "score": 0.1429
+    },
+    {
+      "slug": "aml/compliance/aml-regulatory-landscape",
+      "score": 0.1429
+    },
+    {
+      "slug": "aml/compliance/risk-based-approach-intro",
+      "score": 0.1429
+    }
+  ],
+  "aml/compliance/kyc-basics": [
+    {
+      "slug": "aml/compliance/sanctions-screening-basics",
+      "score": 0.3333
+    },
+    {
+      "slug": "aml/compliance/what-is-money-laundering",
+      "score": 0.1429
+    },
+    {
+      "slug": "aml/compliance/risk-based-approach-intro",
+      "score": 0.1429
+    }
+  ],
+  "aml/compliance/aml-regulatory-landscape": [
+    {
+      "slug": "aml/compliance/what-is-money-laundering",
+      "score": 0.1429
+    },
+    {
+      "slug": "aml/research/aml-3",
+      "score": 0.125
+    },
+    {
+      "slug": "knowledge/pillar-taxonomy",
+      "score": 0.125
+    }
+  ],
+  "aml/compliance/risk-based-approach-intro": [
+    {
+      "slug": "aml/compliance/what-is-money-laundering",
+      "score": 0.1429
+    },
+    {
+      "slug": "aml/compliance/kyc-basics",
+      "score": 0.1429
+    },
+    {
+      "slug": "aml/compliance/sanctions-screening-basics",
+      "score": 0.1429
+    }
+  ],
+  "aml/compliance/sanctions-screening-basics": [
+    {
+      "slug": "aml/compliance/kyc-basics",
+      "score": 0.3333
+    },
+    {
+      "slug": "aml/compliance/what-is-money-laundering",
+      "score": 0.1429
+    },
+    {
+      "slug": "aml/compliance/risk-based-approach-intro",
+      "score": 0.1429
+    }
+  ],
+  "aml/compliance/suspicious-activity-reports": [
+    {
+      "slug": "knowledge/glossary",
+      "score": 0.2857
+    },
+    {
+      "slug": "aml/research/quantum-spectral-anomaly-detection",
+      "score": 0.1667
+    },
+    {
+      "slug": "aml/learn/aml-enforcement-cases",
+      "score": 0.1429
     }
   ]
 }

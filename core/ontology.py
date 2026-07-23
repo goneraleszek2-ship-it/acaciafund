@@ -231,6 +231,17 @@ PILLAR_KEYS = {"aml", "stock", "data-engineering", "cross-pillar"}
 # Pre-defined concept seeds per pillar (expandable)
 PILLAR_CONCEPT_SEEDS: Dict[str, List[Dict[str, Any]]] = {
     "aml": [
+        # Foundation layer
+        {"id": "money-laundering-basics", "label": "Money Laundering Basics", "category": "foundations",
+         "aliases": ["money laundering stages", "placement layering integration", "ML lifecycle"]},
+        {"id": "aml-regulatory-framework", "label": "AML Regulatory Framework", "category": "foundations",
+         "aliases": ["AML regulation", "regulatory landscape", "AML legal basis"]},
+        {"id": "financial-crime-types", "label": "Types of Financial Crime", "category": "foundations",
+         "aliases": ["financial crime categories", "fraud types", "economic crime"]},
+        {"id": "aml-compliance-basics", "label": "AML Compliance Principles", "category": "foundations",
+         "aliases": ["compliance basics", "AML fundamentals", "compliance culture"]},
+        {"id": "risk-based-approach", "label": "Risk-Based Approach in AML", "category": "foundations",
+         "aliases": ["RBA", "risk-based compliance", "AML risk management"]},
         {"id": "kyc", "label": "Know Your Customer (KYC)", "category": "cdd-kyc",
          "aliases": ["KYC", "know-your-customer"]},
         {"id": "cdd", "label": "Customer Due Diligence", "category": "cdd-kyc",
@@ -334,6 +345,17 @@ PILLAR_CONCEPT_SEEDS: Dict[str, List[Dict[str, Any]]] = {
          "aliases": ["decentralized finance", "DeFi regulation", "DeFi compliance"]},
     ],
     "stock": [
+        # Foundation layer
+        {"id": "equity-basics", "label": "Equity & Stock Basics", "category": "foundations",
+         "aliases": ["stocks", "shares", "equity securities", "common stock"]},
+        {"id": "order-types", "label": "Order Types & Execution", "category": "foundations",
+         "aliases": ["market order", "limit order", "stop loss", "order routing"]},
+        {"id": "market-participants", "label": "Market Participants", "category": "foundations",
+         "aliases": ["retail investors", "institutional investors", "market makers", "HFT firms"]},
+        {"id": "trading-venues", "label": "Trading Venues", "category": "foundations",
+         "aliases": ["stock exchanges", "NYSE", "NASDAQ", "dark pools", "ATS"]},
+        {"id": "market-indices", "label": "Market Indices", "category": "foundations",
+         "aliases": ["S&P 500", "Dow Jones", "index construction", "benchmark indices"]},
         {"id": "lob", "label": "Limit Order Book", "category": "foundations",
          "aliases": ["LOB", "order book"]},
         {"id": "market-microstructure", "label": "Market Microstructure", "category": "foundations",
@@ -740,6 +762,22 @@ PILLAR_RELATION_SEEDS: List[Tuple[str, str, str, str]] = [
     ("data-warehouse-design", "data-warehouse", "implements", "data-engineering"),
     ("data-quality-sla", "data-quality", "implements", "data-engineering"),
     ("pipeline-cost-optimization", "data-cost-intelligence", "implements", "data-engineering"),
+    # Wire up orphan concepts
+    ("aml-esg-risk", "aml-program", "related_to", "aml"),
+    ("aml-esg-risk", "esg-investing", "related_to", "aml"),
+    ("aml-international", "aml-data-sharing", "enables", "aml"),
+    ("aml-international", "regulatory-reporting", "enables", "aml"),
+    ("aml-reporting-dashboard", "regulatory-reporting", "implements", "aml"),
+    ("de-risk", "correspondent-banking", "related_to", "aml"),
+    ("de-risk", "aml-risk-scoring", "requires", "aml"),
+    ("fincen-boi", "beneficial-ownership", "implements", "aml"),
+    ("fincen-boi", "regulatory-filing", "implements", "aml"),
+    ("etf-creation", "etf-trading", "requires", "stock"),
+    ("etf-creation", "order-book", "enables", "stock"),
+    ("fx-markets", "market-microstructure", "related_to", "stock"),
+    ("fx-markets", "market-participants", "requires", "stock"),
+    ("stock-lending", "market-making", "enables", "stock"),
+    ("stock-lending", "market-impact", "related_to", "stock"),
 ]
 
 # Cross-pillar relations
@@ -785,6 +823,21 @@ CROSS_PILLAR_SEEDS: List[Tuple[str, str, str]] = [
     ("execution-algos", "real-time-analytics", "related_to"),
     ("machine-learning-markets", "data-quality", "related_to"),
     ("aml-risk-scoring", "fairness-metrics", "related_to"),
+    # AML ↔ Stock cross-pillar analogs
+    ("kyc", "market-data", "related_to"),
+    ("kyc", "market-participants", "related_to"),
+    ("transaction-monitoring", "market-surveillance", "related_to"),
+    ("sar", "market-impact", "related_to"),
+    ("entity-resolution", "order-book", "related_to"),
+    ("network-analysis", "market-microstructure", "related_to"),
+    ("beneficial-ownership", "stock-lending", "related_to"),
+    ("aml-program", "portfolio-optimization", "related_to"),
+    ("regtech", "algorithmic-trading", "related_to"),
+    ("risk-based-approach", "risk-parity", "related_to"),
+    ("aml-compliance-basics", "equity-basics", "related_to"),
+    ("aml-regulatory-framework", "market-indices", "related_to"),
+    ("financial-crime-types", "trading-venues", "related_to"),
+    ("money-laundering-basics", "order-types", "related_to"),
 ]
 
 

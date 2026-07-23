@@ -2659,6 +2659,78 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     if _item_page_count:
         print(f"  item sub-pages: {_item_page_count} pages")
 
+    # --- per-pillar knowledge-base tiered index pages ---
+    if ontology and ontology.concept_count() > 0:
+        _kb_count = 0
+        for _pillar_key, _pillar_url in PILLAR_URL_MAP.items():
+            _by_pillar = ontology.concepts_by_pillar()
+            _concepts = _by_pillar.get(_pillar_key, [])
+            if not _concepts:
+                continue
+            _tiers: dict[str, list] = {"foundations": [], "core": [], "advanced": [], "specialized": []}
+            for _c in _concepts:
+                _cat = (_c.category or "").lower()
+                if _cat == "foundations":
+                    _tiers["foundations"].append(_c)
+                elif _cat in ("cdd-kyc", "sar-str", "regulations", "reporting", "sanctions",
+                              "market-analysis", "strategies", "industry-analysis",
+                              "best-practices", "architecture", "streaming"):
+                    _tiers["core"].append(_c)
+                elif _cat in ("advanced-techniques", "regtech", "high-frequency-trading",
+                              "macro-analysis", "crypto-aml"):
+                    _tiers["advanced"].append(_c)
+                else:
+                    _tiers["specialized"].append(_c)
+            _kb_dir = OUTPUT_DIR / _pillar_url / "knowledge-base"
+            _kb_dir.mkdir(parents=True, exist_ok=True)
+            _kb_html = render_template(
+                "knowledge_base.j2",
+                content=_dummy(f"{_pillar_key.title()} Knowledge Base", "index",
+                               description=f"Wiki-style knowledge base for {_pillar_key}."),
+                pillar_key=_pillar_key,
+                pillar_url=_pillar_url,
+                pillar_label=PILLAR_CONFIG.get(_pillar_key, {}).get("label", _pillar_key.title()),
+                tiers=_tiers,
+                is_index=False,
+                page_path=f"{_pillar_url}/knowledge-base/",
+                **ctx_base,
+            )
+            (_kb_dir / "index.html").write_text(_kb_html, encoding="utf-8")
+            _kb_count += 1
+        print(f"  knowledge-base: {_kb_count} pages")
+
+    # --- source trust dashboard ---
+    _src_stats: dict[str, dict[str, int]] = defaultdict(lambda: {"total": 0, "with_evidence": 0, "high_confidence": 0})
+    _src_authority = {"arxiv": {"label": "arXiv", "type": "peer-reviewed", "authority": 0.9},
+                      "pubmed": {"label": "PubMed", "type": "peer-reviewed", "authority": 0.9},
+                      "hn": {"label": "Hacker News", "type": "community", "authority": 0.5}}
+    for _c in all_content:
+        _sb = getattr(_c, "source_breakdown", None) or {}
+        for _src, _cnt in _sb.items():
+            _src_stats[_src]["total"] += _cnt
+            _src_stats[_src]["with_evidence"] += 1
+            if getattr(_c, "quality_badge", "") == "high-confidence":
+                _src_stats[_src]["high_confidence"] += 1
+    _src_data = []
+    for _src_name, _s in sorted(_src_stats.items()):
+        _meta = _src_authority.get(_src_name, {"label": _src_name, "type": "unknown", "authority": 0.3})
+        _src_data.append({**_meta, "name": _src_name, **_s})
+    _src_dir = OUTPUT_DIR / "sources"
+    _src_dir.mkdir(parents=True, exist_ok=True)
+    _src_html = render_template(
+        "source_trust.j2",
+        content=_dummy("Source Trust Dashboard", "index",
+                       description="Source authority and trust metrics across all pillars."),
+        sources=_src_data,
+        authority_labels=_src_authority,
+        page_title="Source Trust Dashboard",
+        is_index=False,
+        page_path="sources/",
+        **ctx_base,
+    )
+    (_src_dir / "index.html").write_text(_src_html, encoding="utf-8")
+    print(f"  source-trust: 1 page")
+
     # --- ADMIN PANEL (via build_taxonomies) ---
     from core.images.manifest import load_manifest as _load_manifest
 

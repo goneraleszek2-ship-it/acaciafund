@@ -1,0 +1,38 @@
+{% extends "layout.j2" %}
+{% block main_content %}
+<section>
+  <h1>Source Trust Dashboard</h1>
+  <p class="subtitle">Authority assessment of content sources across all pillars</p>
+
+  <table class="source-trust-table">
+    <thead>
+      <tr>
+        <th>Source</th>
+        <th>Type</th>
+        <th>Authority Score</th>
+        <th>Total References</th>
+        <th>Items Using</th>
+        <th>High-Confidence Items</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for s in sources %}
+      <tr>
+        <td><strong>{{ s.label }}</strong></td>
+        <td><span class="source-type source-type-{{ s.type | replace('-', '_') }}">{{ s.type }}</span></td>
+        <td>{{ "%.1f" | format(s.authority) }}</td>
+        <td>{{ s.total }}</td>
+        <td>{{ s.with_evidence }}</td>
+        <td>{{ s.high_confidence }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <h2>Legitimacy Assessment</h2>
+  <ul>
+    <li><strong>Peer-reviewed</strong> (arXiv, PubMed): authority 0.9 — pre-prints and academic publications with editorial oversight</li>
+    <li><strong>Community</strong> (Hacker News): authority 0.5 — technically informed but lacks formal peer review</li>
+  </ul>
+</section>
+{% endblock %}

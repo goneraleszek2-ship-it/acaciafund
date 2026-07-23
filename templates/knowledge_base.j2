@@ -1,0 +1,26 @@
+{% extends "layout.j2" %}
+{% block main_content %}
+<section>
+  <h1>{{ pillar_label }} Knowledge Base</h1>
+  <p class="subtitle">Wiki-style knowledge structure: foundation → core → advanced → specialized</p>
+
+  {% for tier_key, tier_label in [("foundations", "Foundation"), ("core", "Core"), ("advanced", "Advanced"), ("specialized", "Specialized")] %}
+    {% set tier_concepts = tiers.get(tier_key, []) %}
+    {% if tier_concepts %}
+    <div class="knowledge-tier">
+      <h2>{{ tier_label }} <span class="tier-count">({{ tier_concepts|length }})</span></h2>
+      <ul class="kb-concept-list">
+        {% for c in tier_concepts %}
+        <li>
+          <a href="/concepts/{{ c.id }}/">{{ c.label }}</a>
+          {% if c.description %}
+          <span class="kb-description">{{ c.description[:120] }}{% if c.description|length > 120 %}…{% endif %}</span>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+  {% endfor %}
+</section>
+{% endblock %}

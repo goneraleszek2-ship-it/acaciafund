@@ -1,8 +1,31 @@
 {
+  "aml/compliance/aml-regulatory-landscape": [
+    "aml-regulatory-framework",
+    "bsa"
+  ],
+  "aml/compliance/kyc-basics": [
+    "cdd",
+    "kyc"
+  ],
+  "aml/compliance/risk-based-approach-intro": [
+    "aml-risk-scoring",
+    "risk-based-approach"
+  ],
+  "aml/compliance/sanctions-screening-basics": [
+    "kyc",
+    "sanctions-screening"
+  ],
+  "aml/compliance/suspicious-activity-reports": [
+    "sar",
+    "str"
+  ],
+  "aml/compliance/what-is-money-laundering": [],
   "aml/learn/aml-basics": [
+    "aml-compliance-basics",
     "regtech"
   ],
   "aml/learn/aml-compliance-glossary": [
+    "aml-regulatory-framework",
     "bsa",
     "regtech"
   ],
@@ -27,6 +50,8 @@
     "tbml"
   ],
   "aml/learn/quiz-aml": [
+    "aml-compliance-basics",
+    "aml-regulatory-framework",
     "regtech"
   ],
   "aml/learn/trade-based-ml-sanctions": [
@@ -312,7 +337,8 @@
   ],
   "markets/learn/behavioral-design-learning": [],
   "markets/learn/behavioral-finance-portfolio": [
-    "behavioral-finance"
+    "behavioral-finance",
+    "equity-basics"
   ],
   "markets/learn/crispr-gene-editing": [],
   "markets/learn/market-analysis": [
@@ -324,6 +350,8 @@
     "macro-analysis"
   ],
   "markets/learn/market-fundamentals": [
+    "equity-basics",
+    "market-participants",
     "retail-trading"
   ],
   "markets/learn/meta-analysis-statistics": [],
@@ -357,7 +385,9 @@
   "markets/research/science-4": [],
   "markets/research/science-5": [],
   "markets/research/science-6": [],
-  "markets/research/sp-500-rejects-spacex-also-blocking-entry-for-openai-and": [],
+  "markets/research/sp-500-rejects-spacex-also-blocking-entry-for-openai-and": [
+    "market-indices"
+  ],
   "markets/research/stock-1": [
     "semiconductor-industry"
   ],
@@ -382,6 +412,8 @@
     "ml-pipeline"
   ],
   "markets/research/stock-market": [
+    "equity-basics",
+    "market-participants",
     "retail-trading"
   ]
 }
