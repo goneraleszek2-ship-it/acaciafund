@@ -67,6 +67,12 @@ aml.fiu-nca = { url = "https://egmontgroup.org", name = "Egmont Group", frequenc
 aml.fintrac = { url = "https://www.fintrac-canafe.gc.ca", name = "FINTRAC", frequency = "weekly", relevance = 0.8, description = "Canada's Financial Transactions and Reports Analysis Centre" }
 aml.transact = { url = "https://www.payments.org", name = "Payments.org", frequency = "monthly", relevance = 0.7, description = "Payments industry — travel rule, virtual asset compliance" }
 aml.chainalysis = { url = "https://www.chainalysis.com", name = "Chainalysis", frequency = "weekly", relevance = 0.85, description = "Blockchain analytics — crypto AML, DeFi compliance research" }
+aml.aml-intelligence = { url = "https://www.amlintelligence.com", name = "AML Intelligence", frequency = "daily", relevance = 0.8, description = "Daily AML news, enforcement actions, regulatory developments" }
+aml.amla = { url = "https://www.amla.europa.eu", name = "AMLA", frequency = "weekly", relevance = 0.9, description = "EU Anti-Money Laundering Authority — rulebook, RTS, direct supervision" }
+aml.eba = { url = "https://www.eba.europa.eu/regulation-and-policy/anti-money-laundering", name = "EBA AML", frequency = "weekly", relevance = 0.85, description = "European Banking Authority — AML guidelines, RTS consultations, risk factors" }
+aml.gibsondunn = { url = "https://www.gibsondunn.com/category/anti-money-laundering-financial-institutions/", name = "Gibson Dunn AML", frequency = "weekly", relevance = 0.8, description = "Law firm analysis — AML enforcement, BSA developments, regulatory trends" }
+aml.mofo = { url = "https://www.mofo.com/topics/anti-money-laundering", name = "MoFo AML", frequency = "monthly", relevance = 0.8, description = "Morrison Foerster — AML quarterly newsletters, regulatory analysis" }
+aml.fincen-press = { url = "https://www.fincen.gov/news/press-releases", name = "FinCEN Press", frequency = "daily", relevance = 0.95, description = "FinCEN press releases — rulemakings, advisories, enforcement orders" }
 
 # Data Engineering pillar sources
 de.databricks = { url = "https://www.databricks.com/blog", name = "Databricks Blog", frequency = "daily", relevance = 0.9, description = "Lakehouse, Spark, Delta Lake, Unity Catalog — engineering blog" }
@@ -80,6 +86,12 @@ de.aws-big-data = { url = "https://aws.amazon.com/blogs/big-data/", name = "AWS 
 de.gcp-data = { url = "https://cloud.google.com/blog/products/data-analytics", name = "GCP Data Blog", frequency = "weekly", relevance = 0.75, description = "Google Cloud data analytics — BigQuery, Dataflow, Dataproc" }
 de.meltano = { url = "https://meltano.com/blog", name = "Meltano Blog", frequency = "monthly", relevance = 0.7, description = "Open-source ELT — Singer taps, Meltano SDK, data integration" }
 de.snowflake = { url = "https://www.snowflake.com/blog", name = "Snowflake Blog", frequency = "weekly", relevance = 0.8, description = "Snowflake — data warehousing, Snowpipe, dynamic tables" }
+de.streamnative = { url = "https://streamnative.io/blog", name = "StreamNative Blog", frequency = "weekly", relevance = 0.85, description = "Lakehouse-native streaming, Ursa for Kafka, Lakestream architecture" }
+de.data-engineer-things = { url = "https://dataengineerthings.substack.com", name = "Data Engineer Things", frequency = "weekly", relevance = 0.8, description = "Practitioner newsletter — data engineering trends, tooling, community" }
+de.dataverses = { url = "https://dataverses.io/resources/blog", name = "Dataverses Blog", frequency = "monthly", relevance = 0.8, description = "Data engineering trends reports, lakehouse benchmarks, AI-native platforms" }
+de.applydata = { url = "https://applydata.io/blog", name = "ApplyData", frequency = "monthly", relevance = 0.75, description = "Data & AI engineering trends — multimodal lakehouses, EDD, context engineering" }
+de.lakeops = { url = "https://lakeops.dev/blog", name = "LakeOps Blog", frequency = "weekly", relevance = 0.8, description = "Open Apache Lakehouse — modular architecture, vendor-neutral platforms" }
+de.iceberg-blog = { url = "https://iceberglakehouse.com", name = "Iceberg Lakehouse Blog", frequency = "weekly", relevance = 0.85, description = "Apache Iceberg deep dives — v4 development, ecosystem, community" }
 
 # Markets pillar sources
 ms.sec = { url = "https://www.sec.gov", name = "SEC", frequency = "daily", relevance = 0.9, description = "US Securities and Exchange Commission — filings, rules, enforcement" }
@@ -96,3 +108,8 @@ ms.quantocracy = { url = "https://quantocracy.com", name = "Quantocracy", freque
 ms.arxiv-math-fin = { url = "https://arxiv.org/list/math.FIN/recent", name = "arXiv math.FIN", frequency = "weekly", relevance = 0.85, description = "arXiv Quantitative Finance — mathematical finance papers, market models, portfolio theory" }
 ms.ssrn = { url = "https://www.ssrn.com/en/index.cfm/finance/", name = "SSRN Finance", frequency = "weekly", relevance = 0.8, description = "Social Science Research Network — finance and economics working papers" }
 ms.nber = { url = "https://www.nber.org/papers", name = "NBER", frequency = "weekly", relevance = 0.8, description = "National Bureau of Economic Research — working papers on markets, macro, corporate finance" }
+ms.quantmedia = { url = "https://quantmedia.substack.com", name = "QuantMedia", frequency = "weekly", relevance = 0.8, description = "US quant research — market microstructure, VPIN, options flow, volatility" }
+ms.anannye = { url = "https://www.anannye.org", name = "ANANNYE Journal", frequency = "monthly", relevance = 0.8, description = "Monthly quantitative finance research journal — factor models, volatility, risk" }
+ms.citadel = { url = "https://www.citadelsecurities.com/insights", name = "Citadel Securities", frequency = "semi-annual", relevance = 0.85, description = "Semi-annual market structure reports — OTC, options, equity microstructure" }
+ms.gs-marquee = { url = "https://marquee.gs.com/s/market-structure", name = "Goldman Sachs Marquee", frequency = "monthly", relevance = 0.8, description = "Market structure analysis — ETFs, index inclusion, liquidity trends" }
+ms.convextrade = { url = "https://convextrade.com/macro", name = "ConvexTrade Macro", frequency = "daily", relevance = 0.75, description = "Macro data dashboard — 150+ economic indicators, relative value, risk premia" }

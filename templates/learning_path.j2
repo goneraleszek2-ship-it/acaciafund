@@ -121,7 +121,7 @@
         {%- for item in (node.learn + node.research + node.knowledge)[:3] %}
         {%- set item_pillar = item.pillar or start_pillar %}
         {%- set item_color = pillar_color %}
-        <a href="/{{ item.slug }}/" class="block p-2 rounded text-xs no-underline transition hover:shadow-sm" style="background:var(--color-surface);border:1px solid var(--color-border);color:var(--color-text)">
+        <a href="{{ slug_to_url(item.slug) }}" class="block p-2 rounded text-xs no-underline transition hover:shadow-sm" style="background:var(--color-surface);border:1px solid var(--color-border);color:var(--color-text)">
           <span class="line-clamp-1 font-semibold">{{ item.title | striptags }}</span>
           <span class="block mt-0.5" style="color:var(--color-text-muted)">{{ item.content_type | capitalize }}</span>
         </a>

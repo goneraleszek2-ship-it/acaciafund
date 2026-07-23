@@ -103,6 +103,8 @@
       'supersedes': '#a855f7',
     };
 
+    var PILLAR_URL_MAP = { aml: 'compliance', stock: 'markets', 'data-engineering': 'data' };
+
     var PILLAR_COLORS = {
       'compliance': '#f59e0b',
       'markets': '#3b82f6',
@@ -217,10 +219,14 @@
 
       if (d.type === 'document') {
         var domain = d.domain || 'unknown';
-        var pColor = PILLAR_COLORS[domain] || '#888';
-        html += '<span class="detail-badge" style="background:' + pColor + '">' + domain + '</span>';
+        var urlDomain = PILLAR_URL_MAP[domain] || domain;
+        var pColor = PILLAR_COLORS[urlDomain] || '#888';
+        html += '<span class="detail-badge" style="background:' + pColor + '">' + urlDomain + '</span>';
         if (d.slug) {
-          html += '<a href="/' + d.slug.replace(/^\/+/, '') + '/" class="detail-link">View page &rarr;</a>';
+          var parts = d.slug.replace(/^\/+/, '').split('/');
+          var resolved = PILLAR_URL_MAP[parts[0]] || parts[0];
+          var url = '/' + [resolved].concat(parts.slice(1)).join('/') + '/';
+          html += '<a href="' + url + '" class="detail-link">View page &rarr;</a>';
         }
         html += '<div class="detail-section"><strong>ID:</strong> ' + d.id + '</div>';
       } else {
@@ -234,7 +240,7 @@
           html += '<div class="detail-neighbors">';
           nbrs.forEach(function(n) {
             var nd = n.data();
-            var pColor = PILLAR_COLORS[nd.domain] || '#888';
+            var pColor = PILLAR_COLORS[PILLAR_URL_MAP[nd.domain] || nd.domain] || '#888';
             html += '<span class="detail-neighbor" data-id="' + nd.id + '" style="border-left:3px solid ' + pColor + '">' + nd.label + '</span>';
           });
           html += '</div>';

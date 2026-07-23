@@ -108,7 +108,7 @@
           </summary>
           <ul class="mt-1 space-y-0.5 pl-2">
             {%- for item in items[:3] %}
-            <li><a href="/{{ item.slug }}/" class="no-underline hover:opacity-80" style="color:var(--color-text-muted)">{{ item.title | striptags | truncate(60) }}</a></li>
+            <li><a href="{{ slug_to_url(item.slug) }}" class="no-underline hover:opacity-80" style="color:var(--color-text-muted)">{{ item.title | striptags | truncate(60) }}</a></li>
             {%- endfor %}
           </ul>
         </details>

@@ -2293,12 +2293,12 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                         if _concept.id not in concept_content_map:
                             concept_content_map[_concept.id] = []
                         concept_content_map[_concept.id].append({
-                            "slug": _ci.slug,
+                            "slug": slug_to_fspath(_ci.slug),
                             "title": _ci.title,
                             "description": (_ci.description or "")[:120],
                             "pillar": _ci.pillar or "",
                             "content_type": _ci.content_type,
-                            "url": f"/{_ci.slug}/",
+                            "url": f"/{slug_to_fspath(_ci.slug)}/",
                             "score": round(_score, 2),
                         })
             except Exception:

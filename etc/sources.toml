@@ -28,3 +28,58 @@ url = "https://www.nber.org/rss/papers.xml"
 since_hours = 168
 max_results = 50
 cache_ttl_hours = 6
+
+[source.fincen]
+type = "rss"
+enabled = true
+category = "aml"
+quality_weight = 0.9
+[source.fincen.params]
+url = "https://www.fincen.gov/news/press-releases/feed"
+since_hours = 168
+max_results = 50
+cache_ttl_hours = 6
+
+[source.acams]
+type = "rss"
+enabled = true
+category = "aml"
+quality_weight = 0.85
+[source.acams.params]
+url = "https://www.acams.org/feed"
+since_hours = 168
+max_results = 50
+cache_ttl_hours = 12
+
+[source.chainalysis]
+type = "rss"
+enabled = true
+category = "aml"
+quality_weight = 0.8
+[source.chainalysis.params]
+url = "https://www.chainalysis.com/feed"
+since_hours = 168
+max_results = 50
+cache_ttl_hours = 12
+
+[source.streamnative]
+type = "rss"
+enabled = true
+category = "data-engineering"
+quality_weight = 0.85
+[source.streamnative.params]
+url = "https://streamnative.io/feed"
+since_hours = 168
+max_results = 50
+cache_ttl_hours = 6
+
+[source.data-engineer-things]
+type = "rss"
+enabled = true
+category = "data-engineering"
+quality_weight = 0.8
+[source.data-engineer-things.params]
+url = "https://dataengineerthings.substack.com/feed"
+since_hours = 168
+max_results = 50
+cache_ttl_hours = 6

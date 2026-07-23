@@ -141,7 +141,7 @@
         <span class="text-[10px] font-bold uppercase tracking-wider" style="color:{{ pillar_color }}">Best Match</span>
         <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:color-mix(in srgb, {{ pillar_color }} 15%, transparent);color:{{ pillar_color }}">{{ (best.score * 100) | round(0) }}%</span>
       </div>
-      <a href="{{ best.url }}" class="block no-underline" style="color:var(--color-text)">
+      <a href="{{ slug_to_url(best.slug) }}" class="block no-underline" style="color:var(--color-text)">
         <h3 class="text-sm font-bold">{{ best.title | striptags }}</h3>
         <p class="text-xs mt-1 line-clamp-2" style="color:var(--color-text-secondary)">{{ best.description }}</p>
         <div class="flex items-center gap-2 mt-1.5 text-[10px]" style="color:var(--color-text-muted)">
@@ -158,7 +158,7 @@
         {%- for item in related_items[1:] %}
         {%- set item_pillar = item.pillar or "aml" %}
         {%- set pc = pillar_config.get(item_pillar, pillar_config["aml"]) %}
-        <a href="{{ item.url }}" class="pillar-card ghost-card p-3 block transition" style="text-decoration:none">
+        <a href="{{ slug_to_url(item.slug) }}" class="pillar-card ghost-card p-3 block transition" style="text-decoration:none">
           <div class="flex items-start gap-2">
             <div class="shrink-0 mt-0.5">
               <span class="inline-block text-[10px] px-1.5 py-0.5 rounded" style="background:color-mix(in srgb, {{ pc.color | default('#6366f1') }} 15%, transparent);color:{{ pc.color | default('#6366f1') }}">

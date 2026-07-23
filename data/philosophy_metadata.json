@@ -40,7 +40,10 @@
     ],
     "cross_pillar_analogs": [
       "data-contracts"
-    ]
+    ],
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "semantic_contract_type": "regulatory"
   },
   "edd": {
     "philosophical_lineage": [
@@ -57,7 +60,10 @@
     ],
     "cross_pillar_analogs": [
       "portfolio-optimization"
-    ]
+    ],
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "semantic_contract_type": "regulatory"
   },
   "sar": {
     "philosophical_lineage": [
@@ -76,7 +82,9 @@
     ],
     "cross_pillar_analogs": [
       "data-quality"
-    ]
+    ],
+    "temporal_ontology": "state_based",
+    "semantic_contract_type": "regulatory"
   },
   "str": {
     "philosophical_lineage": [
@@ -90,6 +98,12 @@
     "governance_model": "hierarchical",
     "philosophical_sources": [
       "Kvanvig, Jonathan. The Value of Knowledge and the Pursuit of Understanding (2003)"
+    ],
+    "temporal_ontology": "state_based",
+    "semantic_contract_type": "regulatory",
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "design"
     ]
   },
   "ctr": {
@@ -99,7 +113,15 @@
     "epistemic_status": "regulatory",
     "normative_basis": "kantian_duty",
     "ontological_commitment": "realist",
-    "governance_model": "hierarchical"
+    "governance_model": "hierarchical",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "semantic_contract_type": "regulatory",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "design"
+    ]
   },
   "pep": {
     "philosophical_lineage": [
@@ -118,7 +140,9 @@
     ],
     "cross_pillar_analogs": [
       "distributed-systems"
-    ]
+    ],
+    "temporal_ontology": "state_based",
+    "semantic_contract_type": "regulatory"
   },
   "sanctions-screening": {
     "philosophical_lineage": [
@@ -133,6 +157,13 @@
     "philosophical_sources": [
       "Walzer, Michael. Just and Unjust Wars (1977)",
       "Nussbaum, Martha. Frontiers of Justice (2006)"
+    ],
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "semantic_contract_type": "regulatory",
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "design"
     ]
   },
   "transaction-monitoring": {
@@ -178,7 +209,11 @@
     ],
     "cross_pillar_analogs": [
       "schema-registry"
-    ]
+    ],
+    "normative_basis": "kantian_duty",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "hierarchical"
   },
   "network-analysis": {
     "philosophical_lineage": [
@@ -194,7 +229,12 @@
     "cross_pillar_analogs": [
       "distributed-systems",
       "data-mesh"
-    ]
+    ],
+    "normative_basis": "kantian_duty",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "regulatory"
   },
   "beneficial-ownership": {
     "philosophical_lineage": [
@@ -214,7 +254,10 @@
     "cross_pillar_analogs": [
       "data-mesh",
       "data-contracts"
-    ]
+    ],
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "hierarchical"
   },
   "fatf-recommendations": {
     "philosophical_lineage": [
@@ -231,7 +274,10 @@
     "cross_pillar_analogs": [
       "data-contracts",
       "data-governance"
-    ]
+    ],
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "semantic_contract_type": "regulatory"
   },
   "bsa": {
     "philosophical_lineage": [
@@ -244,7 +290,11 @@
     "governance_model": "hierarchical",
     "cross_pillar_analogs": [
       "data-governance"
-    ]
+    ],
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "semantic_contract_type": "regulatory",
+    "philosophical_sources": []
   },
   "tbml": {
     "philosophical_lineage": [
@@ -255,6 +305,15 @@
     "uncertainty_class": "ambiguity",
     "philosophical_sources": [
       "Zuboff, Shoshana. The Age of Surveillance Capitalism (2019)"
+    ],
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "regulatory",
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "design"
     ]
   },
   "regtech": {
@@ -273,7 +332,11 @@
       "orchestration",
       "ai-act-high-risk",
       "ai-conformity-assessment"
-    ]
+    ],
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "semantic_contract_type": "regulatory"
   },
   "travel-rule": {
     "philosophical_lineage": [
@@ -285,7 +348,12 @@
     "governance_model": "hierarchical",
     "cross_pillar_analogs": [
       "mica-crypto-assets"
-    ]
+    ],
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "semantic_contract_type": "regulatory",
+    "philosophical_sources": []
   },
   "adverse-media": {
     "philosophical_lineage": [
@@ -301,7 +369,11 @@
     "cross_pillar_analogs": [
       "ml-pipeline",
       "technical-analysis"
-    ]
+    ],
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "regulatory"
   },
   "aml-program": {
     "philosophical_lineage": [
@@ -318,7 +390,12 @@
       "fairness-metrics",
       "dora-ict-risk",
       "esg-double-materiality"
-    ]
+    ],
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "semantic_contract_type": "regulatory",
+    "philosophical_sources": []
   },
   "cyber-aml": {
     "philosophical_lineage": [
@@ -335,7 +412,13 @@
       "gdpr-anonymization",
       "differential-privacy",
       "nis2-cyber-resilience"
-    ]
+    ],
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "regulatory"
   },
   "correspondent-banking": {
     "philosophical_lineage": [
@@ -346,6 +429,15 @@
     "normative_basis": "utilitarian",
     "philosophical_sources": [
       "Simmel, Georg. The Philosophy of Money (1900)"
+    ],
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "regulatory",
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "design"
     ]
   },
   "crypto-aml": {
@@ -361,7 +453,12 @@
     "cross_pillar_analogs": [
       "data-security",
       "mica-crypto-assets"
-    ]
+    ],
+    "normative_basis": "kantian_duty",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "regulatory"
   },
   "regulatory-reporting": {
     "philosophical_lineage": [
@@ -372,7 +469,13 @@
     "cross_pillar_analogs": [
       "data-pipeline",
       "model-cards"
-    ]
+    ],
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "semantic_contract_type": "regulatory",
+    "philosophical_sources": []
   },
   "lob": {
     "philosophical_lineage": [
@@ -393,7 +496,9 @@
     "cross_pillar_analogs": [
       "kyc",
       "schema-registry"
-    ]
+    ],
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based"
   },
   "market-microstructure": {
     "philosophical_lineage": [
@@ -418,7 +523,9 @@
       "etl",
       "real-time-analytics",
       "gdpr-synthetic-data"
-    ]
+    ],
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based"
   },
   "volatility-surface": {
     "philosophical_lineage": [
@@ -438,7 +545,9 @@
     ],
     "cross_pillar_analogs": [
       "aml-program"
-    ]
+    ],
+    "normative_basis": "utilitarian",
+    "governance_model": "market_based"
   },
   "hawkes-process": {
     "philosophical_lineage": [
@@ -450,6 +559,14 @@
     "uncertainty_class": "measurable",
     "philosophical_sources": [
       "Hawkes, Alan G. Point Spectra... (1971) \u2014 Biometrika"
+    ],
+    "normative_basis": "utilitarian",
+    "temporal_ontology": "event_based",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "money-laundering-basics"
     ]
   },
   "vpin": {
@@ -464,7 +581,12 @@
     ],
     "cross_pillar_analogs": [
       "cdc"
-    ]
+    ],
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "pragmatist",
+    "temporal_ontology": "event_based",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive"
   },
   "portfolio-optimization": {
     "philosophical_lineage": [
@@ -486,7 +608,9 @@
       "edd",
       "debiasing-pipeline",
       "fairness-metrics"
-    ]
+    ],
+    "temporal_ontology": "event_based",
+    "semantic_contract_type": "constitutive"
   },
   "risk-parity": {
     "philosophical_lineage": [
@@ -498,7 +622,12 @@
     "uncertainty_class": "measurable",
     "philosophical_sources": [
       "Dalio, Ray. Principles (2017)"
-    ]
+    ],
+    "ontological_commitment": "pragmatist",
+    "temporal_ontology": "event_based",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "cross_pillar_analogs": []
   },
   "factor-investing": {
     "philosophical_lineage": [
@@ -513,7 +642,11 @@
     ],
     "cross_pillar_analogs": [
       "ml-pipeline"
-    ]
+    ],
+    "normative_basis": "utilitarian",
+    "temporal_ontology": "event_based",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive"
   },
   "technical-analysis": {
     "philosophical_lineage": [
@@ -527,7 +660,12 @@
     ],
     "cross_pillar_analogs": [
       "adverse-media"
-    ]
+    ],
+    "normative_basis": "utilitarian",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive"
   },
   "macro-analysis": {
     "philosophical_lineage": [
@@ -535,7 +673,16 @@
     ],
     "epistemic_status": "pragmatic",
     "ontological_commitment": "fictionalist",
-    "uncertainty_class": "knightian"
+    "uncertainty_class": "knightian",
+    "normative_basis": "utilitarian",
+    "temporal_ontology": "event_based",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "money-laundering-basics"
+    ]
   },
   "options-trading": {
     "philosophical_lineage": [
@@ -544,7 +691,16 @@
     ],
     "epistemic_status": "instrumental",
     "ontological_commitment": "fictionalist",
-    "temporal_ontology": "event_based"
+    "temporal_ontology": "event_based",
+    "normative_basis": "utilitarian",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "money-laundering-basics"
+    ]
   },
   "behavioral-finance": {
     "philosophical_lineage": [
@@ -563,7 +719,10 @@
     ],
     "cross_pillar_analogs": [
       "data-quality"
-    ]
+    ],
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive"
   },
   "market-impact": {
     "philosophical_lineage": [
@@ -578,7 +737,11 @@
     ],
     "cross_pillar_analogs": [
       "transaction-monitoring"
-    ]
+    ],
+    "normative_basis": "utilitarian",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive"
   },
   "statistical-arbitrage": {
     "philosophical_lineage": [
@@ -590,6 +753,14 @@
     "uncertainty_class": "measurable",
     "philosophical_sources": [
       "Ramsey, Frank. Truth and Probability (1926)"
+    ],
+    "normative_basis": "utilitarian",
+    "temporal_ontology": "event_based",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "money-laundering-basics"
     ]
   },
   "high-frequency-trading": {
@@ -612,7 +783,9 @@
       "streaming",
       "transaction-monitoring",
       "ai-act-high-risk"
-    ]
+    ],
+    "uncertainty_class": "probabilistic",
+    "semantic_contract_type": "constitutive"
   },
   "asset-pricing": {
     "philosophical_lineage": [
@@ -632,7 +805,10 @@
     ],
     "cross_pillar_analogs": [
       "aml-program"
-    ]
+    ],
+    "temporal_ontology": "event_based",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive"
   },
   "esg-investing": {
     "philosophical_lineage": [
@@ -652,40 +828,95 @@
     "cross_pillar_analogs": [
       "aml-program",
       "esg-double-materiality"
-    ]
+    ],
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based"
   },
   "supply-chain-analysis": {
     "philosophical_lineage": [
       "systems_theory"
     ],
     "epistemic_status": "instrumental",
-    "ontological_commitment": "realist"
+    "ontological_commitment": "realist",
+    "normative_basis": "utilitarian",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "money-laundering-basics"
+    ]
   },
   "semiconductor-industry": {
     "philosophical_lineage": [
       "political_economy"
     ],
     "epistemic_status": "pragmatic",
-    "ontological_commitment": "realist"
+    "ontological_commitment": "realist",
+    "normative_basis": "utilitarian",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "money-laundering-basics"
+    ]
   },
   "ai-hardware": {
     "philosophical_lineage": [
       "technology_philosophy"
     ],
     "epistemic_status": "instrumental",
-    "ontological_commitment": "realist"
+    "ontological_commitment": "realist",
+    "normative_basis": "utilitarian",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "money-laundering-basics"
+    ]
   },
   "commodity-trading": {
     "philosophical_lineage": [
       "political_economy"
     ],
-    "epistemic_status": "pragmatic"
+    "epistemic_status": "pragmatic",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "pragmatist",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "money-laundering-basics"
+    ]
   },
   "earnings-analysis": {
     "philosophical_lineage": [
       "accounting_theory"
     ],
-    "epistemic_status": "pragmatic"
+    "epistemic_status": "pragmatic",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "pragmatist",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "money-laundering-basics"
+    ]
   },
   "fixed-income": {
     "philosophical_lineage": [
@@ -694,6 +925,16 @@
     "epistemic_status": "instrumental",
     "philosophical_sources": [
       "Fisher, Irving. The Theory of Interest (1930)"
+    ],
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "pragmatist",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "money-laundering-basics"
     ]
   },
   "etl": {
@@ -713,7 +954,10 @@
     "cross_pillar_analogs": [
       "transaction-monitoring",
       "market-microstructure"
-    ]
+    ],
+    "normative_basis": "utilitarian",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed"
   },
   "elt": {
     "philosophical_lineage": [
@@ -725,6 +969,14 @@
     "temporal_ontology": "state_based",
     "philosophical_sources": [
       "Gadamer, Hans-Georg. Truth and Method (1960)"
+    ],
+    "normative_basis": "utilitarian",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical",
+    "cross_pillar_analogs": [
+      "design",
+      "money-laundering-basics"
     ]
   },
   "data-mesh": {
@@ -749,7 +1001,9 @@
       "network-analysis",
       "kyc",
       "federated-learning"
-    ]
+    ],
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable"
   },
   "data-contracts": {
     "philosophical_lineage": [
@@ -772,7 +1026,9 @@
       "beneficial-ownership",
       "model-cards",
       "data-act-interoperability"
-    ]
+    ],
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable"
   },
   "streaming": {
     "philosophical_lineage": [
@@ -793,7 +1049,10 @@
       "transaction-monitoring",
       "high-frequency-trading",
       "market-microstructure"
-    ]
+    ],
+    "normative_basis": "utilitarian",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed"
   },
   "batch-processing": {
     "philosophical_lineage": [
@@ -801,7 +1060,16 @@
     ],
     "epistemic_status": "instrumental",
     "ontological_commitment": "realist",
-    "temporal_ontology": "state_based"
+    "temporal_ontology": "state_based",
+    "normative_basis": "utilitarian",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "design",
+      "money-laundering-basics"
+    ]
   },
   "cdc": {
     "philosophical_lineage": [
@@ -812,7 +1080,12 @@
     "temporal_ontology": "event_based",
     "cross_pillar_analogs": [
       "vpin"
-    ]
+    ],
+    "normative_basis": "utilitarian",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical",
+    "philosophical_sources": []
   },
   "data-lake": {
     "philosophical_lineage": [
@@ -820,7 +1093,16 @@
     ],
     "epistemic_status": "pragmatic",
     "ontological_commitment": "realist",
-    "temporal_ontology": "state_based"
+    "temporal_ontology": "state_based",
+    "normative_basis": "utilitarian",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "design",
+      "money-laundering-basics"
+    ]
   },
   "data-warehouse": {
     "philosophical_lineage": [
@@ -829,7 +1111,16 @@
     ],
     "epistemic_status": "regulatory",
     "ontological_commitment": "realist",
-    "semantic_contract_type": "descriptive"
+    "semantic_contract_type": "descriptive",
+    "normative_basis": "utilitarian",
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "design",
+      "money-laundering-basics"
+    ]
   },
   "dbt": {
     "philosophical_lineage": [
@@ -837,7 +1128,17 @@
       "analytics_engineering"
     ],
     "epistemic_status": "instrumental",
-    "normative_basis": "pragmatic"
+    "normative_basis": "pragmatic",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "design",
+      "money-laundering-basics"
+    ]
   },
   "dagster": {
     "philosophical_lineage": [
@@ -845,7 +1146,14 @@
       "systems_theory"
     ],
     "epistemic_status": "instrumental",
-    "governance_model": "algorithmic"
+    "governance_model": "algorithmic",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable",
+    "semantic_contract_type": "technical",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": []
   },
   "apache-flink": {
     "philosophical_lineage": [
@@ -853,7 +1161,17 @@
       "distributed_computing"
     ],
     "epistemic_status": "instrumental",
-    "temporal_ontology": "processual"
+    "temporal_ontology": "processual",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "realist",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "design",
+      "money-laundering-basics"
+    ]
   },
   "apache-kafka": {
     "philosophical_lineage": [
@@ -862,13 +1180,33 @@
     ],
     "epistemic_status": "constitutive",
     "ontological_commitment": "processual",
-    "temporal_ontology": "event_based"
+    "temporal_ontology": "event_based",
+    "normative_basis": "utilitarian",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "design",
+      "money-laundering-basics"
+    ]
   },
   "apache-iceberg": {
     "philosophical_lineage": [
       "data_architecture"
     ],
-    "epistemic_status": "instrumental"
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "design",
+      "money-laundering-basics"
+    ]
   },
   "arrow-parquet": {
     "philosophical_lineage": [
@@ -876,7 +1214,17 @@
       "columnar_storage"
     ],
     "epistemic_status": "instrumental",
-    "ontological_commitment": "realist"
+    "ontological_commitment": "realist",
+    "normative_basis": "utilitarian",
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "design",
+      "money-laundering-basics"
+    ]
   },
   "schema-registry": {
     "philosophical_lineage": [
@@ -893,7 +1241,11 @@
       "entity-resolution",
       "lob",
       "data-act-interoperability"
-    ]
+    ],
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable"
   },
   "data-quality": {
     "philosophical_lineage": [
@@ -910,7 +1262,11 @@
     "cross_pillar_analogs": [
       "sar",
       "behavioral-finance"
-    ]
+    ],
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical"
   },
   "data-observability": {
     "philosophical_lineage": [
@@ -924,7 +1280,12 @@
     ],
     "cross_pillar_analogs": [
       "dora-ict-risk"
-    ]
+    ],
+    "normative_basis": "utilitarian",
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical"
   },
   "data-pipeline": {
     "philosophical_lineage": [
@@ -935,7 +1296,13 @@
     "ontological_commitment": "constructivist",
     "cross_pillar_analogs": [
       "regulatory-reporting"
-    ]
+    ],
+    "normative_basis": "utilitarian",
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical",
+    "philosophical_sources": []
   },
   "data-governance": {
     "philosophical_lineage": [
@@ -952,7 +1319,11 @@
     "cross_pillar_analogs": [
       "fatf-recommendations",
       "bsa"
-    ]
+    ],
+    "ontological_commitment": "realist",
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable",
+    "semantic_contract_type": "technical"
   },
   "orchestration": {
     "philosophical_lineage": [
@@ -963,14 +1334,31 @@
     "governance_model": "algorithmic",
     "cross_pillar_analogs": [
       "regtech"
-    ]
+    ],
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable",
+    "semantic_contract_type": "technical",
+    "philosophical_sources": []
   },
   "query-optimization": {
     "philosophical_lineage": [
       "philosophy_of_computation",
       "algorithms"
     ],
-    "epistemic_status": "instrumental"
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "design",
+      "money-laundering-basics"
+    ]
   },
   "real-time-analytics": {
     "philosophical_lineage": [
@@ -981,7 +1369,13 @@
     "temporal_ontology": "processual",
     "cross_pillar_analogs": [
       "market-microstructure"
-    ]
+    ],
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "realist",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical",
+    "philosophical_sources": []
   },
   "data-security": {
     "philosophical_lineage": [
@@ -1001,7 +1395,11 @@
       "gdpr-anonymization",
       "differential-privacy",
       "nis2-cyber-resilience"
-    ]
+    ],
+    "ontological_commitment": "realist",
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable",
+    "semantic_contract_type": "technical"
   },
   "distributed-systems": {
     "philosophical_lineage": [
@@ -1023,7 +1421,11 @@
       "cyber-aml",
       "federated-learning",
       "dora-ict-risk"
-    ]
+    ],
+    "normative_basis": "utilitarian",
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable",
+    "semantic_contract_type": "technical"
   },
   "ml-pipeline": {
     "philosophical_lineage": [
@@ -1039,7 +1441,12 @@
       "adverse-media",
       "factor-investing",
       "ai-conformity-assessment"
-    ]
+    ],
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "process_based",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical"
   },
   "gdpr-anonymization": {
     "philosophical_lineage": [
@@ -1358,6 +1765,1554 @@
     "cross_pillar_analogs": [
       "data-contracts",
       "schema-registry"
+    ]
+  },
+  "acid-transaction-management": {
+    "philosophical_lineage": [
+      "positivism",
+      "systems_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "design",
+      "money-laundering-basics"
+    ]
+  },
+  "design": {
+    "philosophical_lineage": [
+      "behavioral_economics",
+      "pragmatism"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "pragmatist",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "money-laundering-basics"
+    ]
+  },
+  "enterprise-architecture": {
+    "philosophical_lineage": [
+      "positivism",
+      "systems_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "design",
+      "money-laundering-basics"
+    ]
+  },
+  "funding": {
+    "philosophical_lineage": [
+      "behavioral_economics",
+      "pragmatism"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "pragmatist",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "money-laundering-basics"
+    ]
+  },
+  "infrastructure": {
+    "philosophical_lineage": [
+      "positivism",
+      "systems_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "design",
+      "money-laundering-basics"
+    ]
+  },
+  "research": {
+    "philosophical_lineage": [
+      "behavioral_economics",
+      "pragmatism"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "pragmatist",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "money-laundering-basics"
+    ]
+  },
+  "ux-design-patterns": {
+    "philosophical_lineage": [
+      "positivism",
+      "systems_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "design",
+      "money-laundering-basics"
+    ]
+  },
+  "money-laundering-basics": {
+    "philosophical_lineage": [
+      "legal_positivism",
+      "regulatory_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "regulatory",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": []
+  },
+  "aml-regulatory-framework": {
+    "philosophical_lineage": [
+      "legal_positivism",
+      "regulatory_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "regulatory",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": []
+  },
+  "financial-crime-types": {
+    "philosophical_lineage": [
+      "legal_positivism",
+      "regulatory_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "regulatory",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": []
+  },
+  "aml-compliance-basics": {
+    "philosophical_lineage": [
+      "legal_positivism",
+      "regulatory_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "regulatory",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": []
+  },
+  "risk-based-approach": {
+    "philosophical_lineage": [
+      "legal_positivism",
+      "regulatory_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "regulatory",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": []
+  },
+  "ai-aml-surveillance": {
+    "philosophical_lineage": [
+      "legal_positivism",
+      "regulatory_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "regulatory",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "design"
+    ]
+  },
+  "fincrime-intelligence": {
+    "philosophical_lineage": [
+      "legal_positivism",
+      "regulatory_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "regulatory",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "design"
+    ]
+  },
+  "fraud-detection": {
+    "philosophical_lineage": [
+      "legal_positivism",
+      "regulatory_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "regulatory",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "design"
+    ]
+  },
+  "cross-border-payments": {
+    "philosophical_lineage": [
+      "legal_positivism",
+      "regulatory_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "regulatory",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "design"
+    ]
+  },
+  "aml-optimization": {
+    "philosophical_lineage": [
+      "legal_positivism",
+      "regulatory_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "regulatory",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "design"
+    ]
+  },
+  "aml-training": {
+    "philosophical_lineage": [
+      "legal_positivism",
+      "regulatory_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "regulatory",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "design"
+    ]
+  },
+  "regulatory-filing": {
+    "philosophical_lineage": [
+      "legal_positivism",
+      "regulatory_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "regulatory",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "design"
+    ]
+  },
+  "aml-audit": {
+    "philosophical_lineage": [
+      "legal_positivism",
+      "regulatory_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "regulatory",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "design"
+    ]
+  },
+  "aml-risk-scoring": {
+    "philosophical_lineage": [
+      "legal_positivism",
+      "regulatory_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "regulatory",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": []
+  },
+  "aml-data-governance": {
+    "philosophical_lineage": [
+      "legal_positivism",
+      "regulatory_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "regulatory",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": []
+  },
+  "aml-reporting-dashboard": {
+    "philosophical_lineage": [
+      "legal_positivism",
+      "regulatory_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "regulatory",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "design"
+    ]
+  },
+  "aml-case-management": {
+    "philosophical_lineage": [
+      "legal_positivism",
+      "regulatory_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "regulatory",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "design"
+    ]
+  },
+  "aml-model-validation": {
+    "philosophical_lineage": [
+      "legal_positivism",
+      "regulatory_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "regulatory",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": []
+  },
+  "aml-threat-intel": {
+    "philosophical_lineage": [
+      "legal_positivism",
+      "regulatory_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "regulatory",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "design"
+    ]
+  },
+  "global-sanctions": {
+    "philosophical_lineage": [
+      "legal_positivism",
+      "regulatory_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "regulatory",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "design"
+    ]
+  },
+  "fincen-boi": {
+    "philosophical_lineage": [
+      "legal_positivism",
+      "regulatory_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "regulatory",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "design"
+    ]
+  },
+  "aml-esg-risk": {
+    "philosophical_lineage": [
+      "legal_positivism",
+      "regulatory_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "regulatory",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "design"
+    ]
+  },
+  "de-risk": {
+    "philosophical_lineage": [
+      "legal_positivism",
+      "regulatory_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "regulatory",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "design"
+    ]
+  },
+  "aml-continuous-monitoring": {
+    "philosophical_lineage": [
+      "legal_positivism",
+      "regulatory_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "regulatory",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "design"
+    ]
+  },
+  "aml-data-sharing": {
+    "philosophical_lineage": [
+      "legal_positivism",
+      "regulatory_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "regulatory",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "design"
+    ]
+  },
+  "aml-international": {
+    "philosophical_lineage": [
+      "legal_positivism",
+      "regulatory_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "regulatory",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "design"
+    ]
+  },
+  "trade-finance-aml": {
+    "philosophical_lineage": [
+      "legal_positivism",
+      "regulatory_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "regulatory",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": []
+  },
+  "payment-fraud": {
+    "philosophical_lineage": [
+      "legal_positivism",
+      "regulatory_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "regulatory",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": []
+  },
+  "aml-oracle": {
+    "philosophical_lineage": [
+      "legal_positivism",
+      "regulatory_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "regulatory",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "design"
+    ]
+  },
+  "crypto-travel-rule": {
+    "philosophical_lineage": [
+      "legal_positivism",
+      "regulatory_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "regulatory",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "design"
+    ]
+  },
+  "defi-aml": {
+    "philosophical_lineage": [
+      "legal_positivism",
+      "regulatory_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "kantian_duty",
+    "ontological_commitment": "constructivist",
+    "temporal_ontology": "state_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "hierarchical",
+    "semantic_contract_type": "regulatory",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "design"
+    ]
+  },
+  "equity-basics": {
+    "philosophical_lineage": [
+      "behavioral_economics",
+      "pragmatism"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "pragmatist",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": []
+  },
+  "order-types": {
+    "philosophical_lineage": [
+      "behavioral_economics",
+      "pragmatism"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "pragmatist",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": []
+  },
+  "market-participants": {
+    "philosophical_lineage": [
+      "behavioral_economics",
+      "pragmatism"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "pragmatist",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": []
+  },
+  "trading-venues": {
+    "philosophical_lineage": [
+      "behavioral_economics",
+      "pragmatism"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "pragmatist",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": []
+  },
+  "market-indices": {
+    "philosophical_lineage": [
+      "behavioral_economics",
+      "pragmatism"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "pragmatist",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": []
+  },
+  "etf-trading": {
+    "philosophical_lineage": [
+      "behavioral_economics",
+      "pragmatism"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "pragmatist",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "money-laundering-basics"
+    ]
+  },
+  "crypto-markets": {
+    "philosophical_lineage": [
+      "behavioral_economics",
+      "pragmatism"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "pragmatist",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "money-laundering-basics"
+    ]
+  },
+  "hedge-funds": {
+    "philosophical_lineage": [
+      "behavioral_economics",
+      "pragmatism"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "pragmatist",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "money-laundering-basics"
+    ]
+  },
+  "algorithmic-trading": {
+    "philosophical_lineage": [
+      "behavioral_economics",
+      "pragmatism"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "pragmatist",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": []
+  },
+  "retail-trading": {
+    "philosophical_lineage": [
+      "behavioral_economics",
+      "pragmatism"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "pragmatist",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "money-laundering-basics"
+    ]
+  },
+  "market-data": {
+    "philosophical_lineage": [
+      "behavioral_economics",
+      "pragmatism"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "pragmatist",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": []
+  },
+  "volatility-trading": {
+    "philosophical_lineage": [
+      "behavioral_economics",
+      "pragmatism"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "pragmatist",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "money-laundering-basics"
+    ]
+  },
+  "order-book": {
+    "philosophical_lineage": [
+      "behavioral_economics",
+      "pragmatism"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "pragmatist",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": []
+  },
+  "dark-pools": {
+    "philosophical_lineage": [
+      "behavioral_economics",
+      "pragmatism"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "pragmatist",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "money-laundering-basics"
+    ]
+  },
+  "market-making": {
+    "philosophical_lineage": [
+      "behavioral_economics",
+      "pragmatism"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "pragmatist",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "money-laundering-basics"
+    ]
+  },
+  "execution-algos": {
+    "philosophical_lineage": [
+      "behavioral_economics",
+      "pragmatism"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "pragmatist",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": []
+  },
+  "cross-asset-trading": {
+    "philosophical_lineage": [
+      "behavioral_economics",
+      "pragmatism"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "pragmatist",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "money-laundering-basics"
+    ]
+  },
+  "regime-detection": {
+    "philosophical_lineage": [
+      "behavioral_economics",
+      "pragmatism"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "pragmatist",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "money-laundering-basics"
+    ]
+  },
+  "carry-trade": {
+    "philosophical_lineage": [
+      "behavioral_economics",
+      "pragmatism"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "pragmatist",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "money-laundering-basics"
+    ]
+  },
+  "momentum-trading": {
+    "philosophical_lineage": [
+      "behavioral_economics",
+      "pragmatism"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "pragmatist",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "money-laundering-basics"
+    ]
+  },
+  "mean-reversion": {
+    "philosophical_lineage": [
+      "behavioral_economics",
+      "pragmatism"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "pragmatist",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "money-laundering-basics"
+    ]
+  },
+  "event-driven-trading": {
+    "philosophical_lineage": [
+      "behavioral_economics",
+      "pragmatism"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "pragmatist",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "money-laundering-basics"
+    ]
+  },
+  "alternative-data": {
+    "philosophical_lineage": [
+      "behavioral_economics",
+      "pragmatism"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "pragmatist",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": []
+  },
+  "etf-creation": {
+    "philosophical_lineage": [
+      "behavioral_economics",
+      "pragmatism"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "pragmatist",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "money-laundering-basics"
+    ]
+  },
+  "market-surveillance": {
+    "philosophical_lineage": [
+      "behavioral_economics",
+      "pragmatism"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "pragmatist",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": []
+  },
+  "stock-lending": {
+    "philosophical_lineage": [
+      "behavioral_economics",
+      "pragmatism"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "pragmatist",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": []
+  },
+  "fx-markets": {
+    "philosophical_lineage": [
+      "behavioral_economics",
+      "pragmatism"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "pragmatist",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "money-laundering-basics"
+    ]
+  },
+  "quantitative-trading": {
+    "philosophical_lineage": [
+      "behavioral_economics",
+      "pragmatism"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "pragmatist",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "money-laundering-basics"
+    ]
+  },
+  "volatility-arbitrage": {
+    "philosophical_lineage": [
+      "behavioral_economics",
+      "pragmatism"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "pragmatist",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "acid-transaction-management",
+      "money-laundering-basics"
+    ]
+  },
+  "machine-learning-markets": {
+    "philosophical_lineage": [
+      "behavioral_economics",
+      "pragmatism"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "pragmatist",
+    "temporal_ontology": "event_based",
+    "uncertainty_class": "probabilistic",
+    "governance_model": "market_based",
+    "semantic_contract_type": "constitutive",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": []
+  },
+  "data-catalog": {
+    "philosophical_lineage": [
+      "positivism",
+      "systems_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": []
+  },
+  "data-lineage": {
+    "philosophical_lineage": [
+      "positivism",
+      "systems_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "design",
+      "money-laundering-basics"
+    ]
+  },
+  "dataops": {
+    "philosophical_lineage": [
+      "positivism",
+      "systems_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "design",
+      "money-laundering-basics"
+    ]
+  },
+  "lakehouse": {
+    "philosophical_lineage": [
+      "positivism",
+      "systems_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "design",
+      "money-laundering-basics"
+    ]
+  },
+  "feature-store": {
+    "philosophical_lineage": [
+      "positivism",
+      "systems_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "design",
+      "money-laundering-basics"
+    ]
+  },
+  "data-versioning": {
+    "philosophical_lineage": [
+      "positivism",
+      "systems_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "design",
+      "money-laundering-basics"
+    ]
+  },
+  "metric-store": {
+    "philosophical_lineage": [
+      "positivism",
+      "systems_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "design",
+      "money-laundering-basics"
+    ]
+  },
+  "elt-pipeline": {
+    "philosophical_lineage": [
+      "positivism",
+      "systems_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "design",
+      "money-laundering-basics"
+    ]
+  },
+  "reverse-etl": {
+    "philosophical_lineage": [
+      "positivism",
+      "systems_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "design",
+      "money-laundering-basics"
+    ]
+  },
+  "data-contract-testing": {
+    "philosophical_lineage": [
+      "positivism",
+      "systems_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "design",
+      "money-laundering-basics"
+    ]
+  },
+  "data-discovery": {
+    "philosophical_lineage": [
+      "positivism",
+      "systems_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "design",
+      "money-laundering-basics"
+    ]
+  },
+  "data-cost-intelligence": {
+    "philosophical_lineage": [
+      "positivism",
+      "systems_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "design",
+      "money-laundering-basics"
+    ]
+  },
+  "data-platform-kpis": {
+    "philosophical_lineage": [
+      "positivism",
+      "systems_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "design",
+      "money-laundering-basics"
+    ]
+  },
+  "schema-migration": {
+    "philosophical_lineage": [
+      "positivism",
+      "systems_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "design",
+      "money-laundering-basics"
+    ]
+  },
+  "change-data-capture": {
+    "philosophical_lineage": [
+      "positivism",
+      "systems_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "design",
+      "money-laundering-basics"
+    ]
+  },
+  "real-time-analytics-architecture": {
+    "philosophical_lineage": [
+      "positivism",
+      "systems_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "design",
+      "money-laundering-basics"
+    ]
+  },
+  "data-mesh-governance": {
+    "philosophical_lineage": [
+      "positivism",
+      "systems_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "design",
+      "money-laundering-basics"
+    ]
+  },
+  "data-quality-monitoring": {
+    "philosophical_lineage": [
+      "positivism",
+      "systems_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "design",
+      "money-laundering-basics"
+    ]
+  },
+  "batch-stream-merging": {
+    "philosophical_lineage": [
+      "positivism",
+      "systems_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "design",
+      "money-laundering-basics"
+    ]
+  },
+  "data-warehouse-design": {
+    "philosophical_lineage": [
+      "positivism",
+      "systems_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "design",
+      "money-laundering-basics"
+    ]
+  },
+  "data-quality-sla": {
+    "philosophical_lineage": [
+      "positivism",
+      "systems_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "design",
+      "money-laundering-basics"
+    ]
+  },
+  "pipeline-cost-optimization": {
+    "philosophical_lineage": [
+      "positivism",
+      "systems_theory"
+    ],
+    "epistemic_status": "instrumental",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "process_based",
+    "uncertainty_class": "measurable",
+    "governance_model": "distributed",
+    "semantic_contract_type": "technical",
+    "philosophical_sources": [],
+    "cross_pillar_analogs": [
+      "design",
+      "money-laundering-basics"
     ]
   }
 }

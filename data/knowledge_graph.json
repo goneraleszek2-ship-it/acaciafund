@@ -93,8 +93,8 @@
       "score": 0.0909
     },
     {
-      "slug": "data/learn/designing-data-platform",
-      "score": 0.0714
+      "slug": "data/research/apache-iceberg-table-specification",
+      "score": 0.0833
     }
   ],
   "data/research/terraform-data-infrastructure": [
@@ -211,16 +211,16 @@
   ],
   "data/research/delta-lake-iceberg-hudi-comparison": [
     {
+      "slug": "data/research/apache-iceberg-table-specification",
+      "score": 0.2353
+    },
+    {
+      "slug": "data/research/armbrust-2021-lakehouse-architecture",
+      "score": 0.2222
+    },
+    {
       "slug": "data/research/apache-iceberg-lakehouse",
       "score": 0.2093
-    },
-    {
-      "slug": "data/research/schema-registry-avro-protobuf",
-      "score": 0.1818
-    },
-    {
-      "slug": "data/research/debezium-cdc-change-data-capture",
-      "score": 0.1818
     }
   ],
   "data/research/debezium-cdc-change-data-capture": [
@@ -1429,16 +1429,16 @@
   ],
   "aml/compliance/aml-regulatory-landscape": [
     {
+      "slug": "compliance/research/bueche-2022-fatf-virtual-assets-crypto",
+      "score": 0.3
+    },
+    {
+      "slug": "compliance/research/drezner-2022-global-governance-aml",
+      "score": 0.2222
+    },
+    {
       "slug": "compliance/learn/sanctions-screening-global-regimes",
       "score": 0.1667
-    },
-    {
-      "slug": "aml/learn/aml-compliance-glossary",
-      "score": 0.1333
-    },
-    {
-      "slug": "aml/research/aml-3",
-      "score": 0.1176
     }
   ],
   "aml/compliance/risk-based-approach-intro": [
@@ -1531,26 +1531,26 @@
       "score": 0.3333
     },
     {
-      "slug": "data/learn/data-contracts-lineage",
-      "score": 0.2222
+      "slug": "data/research/wang-strong-1996-data-quality-framework",
+      "score": 0.25
     },
     {
-      "slug": "data/learn/modern-data-catalog",
+      "slug": "data/learn/data-contracts-lineage",
       "score": 0.2222
     }
   ],
   "data/learn/warehouse-vs-lake": [
     {
+      "slug": "data/research/apache-iceberg-table-specification",
+      "score": 0.375
+    },
+    {
       "slug": "data/learn/sql-for-data-engineers",
       "score": 0.25
     },
     {
-      "slug": "data/learn/designing-data-platform",
-      "score": 0.1818
-    },
-    {
-      "slug": "data/research/delta-lake-iceberg-hudi-comparison",
-      "score": 0.1111
+      "slug": "data/research/armbrust-2021-lakehouse-architecture",
+      "score": 0.2
     }
   ],
   "markets/learn/how-stock-markets-work": [
@@ -1653,16 +1653,16 @@
   ],
   "data/learn/change-data-capture-patterns": [
     {
+      "slug": "data/research/kreps-2011-kafka-distributed-messaging",
+      "score": 0.3
+    },
+    {
       "slug": "data/learn/open-source-data-stack",
       "score": 0.2727
     },
     {
       "slug": "data/research/2027-data-engineering-predictions",
       "score": 0.1875
-    },
-    {
-      "slug": "data/learn/data-pipeline-basics",
-      "score": 0.1818
     }
   ],
   "data/learn/modern-data-catalog": [
@@ -1675,8 +1675,8 @@
       "score": 0.2222
     },
     {
-      "slug": "data/learn/data-contracts-lineage",
-      "score": 0.2
+      "slug": "data/research/wang-strong-1996-data-quality-framework",
+      "score": 0.2222
     }
   ],
   "data/learn/schema-management-evolution": [
@@ -1797,12 +1797,12 @@
       "score": 0.2333
     },
     {
-      "slug": "markets/learn/market-microstructure-order-books",
-      "score": 0.1538
+      "slug": "markets/research/amihud-2002-illiquidity-stock-returns",
+      "score": 0.1818
     },
     {
-      "slug": "markets/research/science-2",
-      "score": 0.1333
+      "slug": "markets/research/easley-1996-probability-informed-trading-pin",
+      "score": 0.1667
     }
   ],
   "markets/learn/market-microstructure-order-books": [
@@ -1839,12 +1839,12 @@
       "score": 0.2222
     },
     {
-      "slug": "markets/learn/market-analysis-methods",
-      "score": 0.1905
+      "slug": "markets/research/barber-odean-2000-trading-hazardous-wealth",
+      "score": 0.2
     },
     {
-      "slug": "markets/learn/cryptocurrency-markets-structure",
-      "score": 0.1818
+      "slug": "markets/learn/market-analysis-methods",
+      "score": 0.1905
     }
   ],
   "markets/learn/alternative-data-investing": [
@@ -2125,6 +2125,510 @@
     {
       "slug": "aml/learn/designing-aml-program",
       "score": 0.1429
+    }
+  ],
+  "aml/knowledge/aml-timeline-2024-2026": [
+    {
+      "slug": "data-engineering/knowledge/data-engineering-timeline-2024-2026",
+      "score": 0.2273
+    },
+    {
+      "slug": "stock/knowledge/stock-timeline-2024-2026",
+      "score": 0.2083
+    },
+    {
+      "slug": "markets/research/govuk-has-replaced-stripe-with-dutch-provider-adyen-aml",
+      "score": 0.0667
+    }
+  ],
+  "data-engineering/knowledge/data-engineering-timeline-2024-2026": [
+    {
+      "slug": "aml/knowledge/aml-timeline-2024-2026",
+      "score": 0.2273
+    },
+    {
+      "slug": "stock/knowledge/stock-timeline-2024-2026",
+      "score": 0.2174
+    },
+    {
+      "slug": "data/research/armbrust-2021-lakehouse-architecture",
+      "score": 0.1765
+    }
+  ],
+  "stock/knowledge/stock-timeline-2024-2026": [
+    {
+      "slug": "data-engineering/knowledge/data-engineering-timeline-2024-2026",
+      "score": 0.2174
+    },
+    {
+      "slug": "aml/knowledge/aml-timeline-2024-2026",
+      "score": 0.2083
+    },
+    {
+      "slug": "markets/learn/market-analysis",
+      "score": 0.0714
+    }
+  ],
+  "markets/research/kyle-1985-continuous-auctions-insider-trading": [
+    {
+      "slug": "markets/research/glosten-milgrom-1985-bid-ask-transaction-prices",
+      "score": 0.3077
+    },
+    {
+      "slug": "markets/research/easley-1996-probability-informed-trading-pin",
+      "score": 0.3077
+    },
+    {
+      "slug": "markets/research/amihud-2002-illiquidity-stock-returns",
+      "score": 0.2308
+    }
+  ],
+  "markets/research/glosten-milgrom-1985-bid-ask-transaction-prices": [
+    {
+      "slug": "markets/research/kyle-1985-continuous-auctions-insider-trading",
+      "score": 0.3077
+    },
+    {
+      "slug": "markets/research/easley-1996-probability-informed-trading-pin",
+      "score": 0.2727
+    },
+    {
+      "slug": "markets/research/amihud-2002-illiquidity-stock-returns",
+      "score": 0.1818
+    }
+  ],
+  "markets/research/easley-1996-probability-informed-trading-pin": [
+    {
+      "slug": "markets/research/kyle-1985-continuous-auctions-insider-trading",
+      "score": 0.3077
+    },
+    {
+      "slug": "markets/research/amihud-2002-illiquidity-stock-returns",
+      "score": 0.3
+    },
+    {
+      "slug": "markets/research/glosten-milgrom-1985-bid-ask-transaction-prices",
+      "score": 0.2727
+    }
+  ],
+  "markets/research/fama-french-1993-three-factor-model": [
+    {
+      "slug": "markets/research/fama-french-2015-five-factor-model",
+      "score": 0.2857
+    },
+    {
+      "slug": "markets/learn/factor-investing-risk-parity",
+      "score": 0.1538
+    },
+    {
+      "slug": "markets/research/stock-4",
+      "score": 0.0909
+    }
+  ],
+  "markets/research/fama-french-2015-five-factor-model": [
+    {
+      "slug": "markets/research/fama-french-1993-three-factor-model",
+      "score": 0.2857
+    },
+    {
+      "slug": "markets/learn/factor-investing-risk-parity",
+      "score": 0.1538
+    },
+    {
+      "slug": "markets/research/stock-4",
+      "score": 0.0909
+    }
+  ],
+  "markets/research/markowitz-1952-portfolio-selection": [
+    {
+      "slug": "markets/learn/factor-investing-risk-parity",
+      "score": 0.2
+    },
+    {
+      "slug": "markets/research/sharpe-1964-capital-asset-pricing-model",
+      "score": 0.2
+    },
+    {
+      "slug": "markets/research/black-scholes-1973-options-pricing-model",
+      "score": 0.1667
+    }
+  ],
+  "markets/research/sharpe-1964-capital-asset-pricing-model": [
+    {
+      "slug": "markets/learn/factor-investing-risk-parity",
+      "score": 0.2
+    },
+    {
+      "slug": "markets/research/markowitz-1952-portfolio-selection",
+      "score": 0.2
+    },
+    {
+      "slug": "markets/learn/introduction-to-risk",
+      "score": 0.1111
+    }
+  ],
+  "markets/research/black-scholes-1973-options-pricing-model": [
+    {
+      "slug": "markets/research/markowitz-1952-portfolio-selection",
+      "score": 0.1667
+    },
+    {
+      "slug": "markets/learn/market-fundamentals",
+      "score": 0.0909
+    },
+    {
+      "slug": "markets/research/shiller-1981-excess-volatility-stock-prices",
+      "score": 0.0833
+    }
+  ],
+  "markets/research/kahneman-tversky-1979-prospect-theory": [
+    {
+      "slug": "markets/research/barberis-thaler-2002-behavioral-finance-survey",
+      "score": 0.5
+    },
+    {
+      "slug": "markets/research/shiller-1981-excess-volatility-stock-prices",
+      "score": 0.1
+    },
+    {
+      "slug": "markets/learn/behavioral-finance-market-anomalies",
+      "score": 0.0909
+    }
+  ],
+  "markets/research/barberis-thaler-2002-behavioral-finance-survey": [
+    {
+      "slug": "markets/research/kahneman-tversky-1979-prospect-theory",
+      "score": 0.5
+    },
+    {
+      "slug": "markets/research/shiller-1981-excess-volatility-stock-prices",
+      "score": 0.2222
+    },
+    {
+      "slug": "markets/research/lakonishok-1994-contrarian-extrapolation-risk",
+      "score": 0.1818
+    }
+  ],
+  "markets/research/barber-odean-2000-trading-hazardous-wealth": [
+    {
+      "slug": "markets/learn/behavioral-finance-market-anomalies",
+      "score": 0.2
+    },
+    {
+      "slug": "markets/research/shiller-1981-excess-volatility-stock-prices",
+      "score": 0.1
+    },
+    {
+      "slug": "markets/research/kahneman-tversky-1979-prospect-theory",
+      "score": 0.0909
+    }
+  ],
+  "markets/research/shiller-1981-excess-volatility-stock-prices": [
+    {
+      "slug": "markets/research/barberis-thaler-2002-behavioral-finance-survey",
+      "score": 0.2222
+    },
+    {
+      "slug": "markets/research/lakonishok-1994-contrarian-extrapolation-risk",
+      "score": 0.2
+    },
+    {
+      "slug": "markets/learn/factor-investing-risk-parity",
+      "score": 0.1
+    }
+  ],
+  "markets/research/amihud-2002-illiquidity-stock-returns": [
+    {
+      "slug": "markets/research/easley-1996-probability-informed-trading-pin",
+      "score": 0.3
+    },
+    {
+      "slug": "markets/research/kyle-1985-continuous-auctions-insider-trading",
+      "score": 0.2308
+    },
+    {
+      "slug": "markets/learn/algorithmic-trading-strategies",
+      "score": 0.1818
+    }
+  ],
+  "markets/research/lakonishok-1994-contrarian-extrapolation-risk": [
+    {
+      "slug": "markets/research/shiller-1981-excess-volatility-stock-prices",
+      "score": 0.2
+    },
+    {
+      "slug": "markets/research/barberis-thaler-2002-behavioral-finance-survey",
+      "score": 0.1818
+    },
+    {
+      "slug": "markets/research/stock-4",
+      "score": 0.1111
+    }
+  ],
+  "markets/research/bollen-2011-twitter-mood-stock-market": [
+    {
+      "slug": "markets/research/shiller-1981-excess-volatility-stock-prices",
+      "score": 0.1
+    },
+    {
+      "slug": "markets/learn/behavioral-finance-market-anomalies",
+      "score": 0.0909
+    },
+    {
+      "slug": "markets/research/kahneman-tversky-1979-prospect-theory",
+      "score": 0.0909
+    }
+  ],
+  "data/research/fellegi-sunter-1969-record-linkage": [
+    {
+      "slug": "data/learn/data-quality-basics",
+      "score": 0.2222
+    },
+    {
+      "slug": "data/research/wang-strong-1996-data-quality-framework",
+      "score": 0.2222
+    },
+    {
+      "slug": "data/learn/modern-data-catalog",
+      "score": 0.2
+    }
+  ],
+  "data/research/wang-strong-1996-data-quality-framework": [
+    {
+      "slug": "data/learn/data-quality-basics",
+      "score": 0.25
+    },
+    {
+      "slug": "data/learn/modern-data-catalog",
+      "score": 0.2222
+    },
+    {
+      "slug": "data/research/fellegi-sunter-1969-record-linkage",
+      "score": 0.2222
+    }
+  ],
+  "data/research/dean-ghemawat-2004-mapreduce": [
+    {
+      "slug": "data/research/zaharia-2012-spark-rdds",
+      "score": 0.5
+    },
+    {
+      "slug": "data/learn/what-is-data-engineering",
+      "score": 0.2222
+    },
+    {
+      "slug": "data/learn/sql-for-data-engineers",
+      "score": 0.2222
+    }
+  ],
+  "data/research/chang-2006-bigtable-distributed-storage": [
+    {
+      "slug": "data/research/stonebraker-2018-database-cycles",
+      "score": 0.3333
+    },
+    {
+      "slug": "data/research/dean-ghemawat-2004-mapreduce",
+      "score": 0.2
+    },
+    {
+      "slug": "data/research/zaharia-2012-spark-rdds",
+      "score": 0.2
+    }
+  ],
+  "data/research/akidau-2015-dataflow-model-stream-processing": [
+    {
+      "slug": "data/research/kreps-2011-kafka-distributed-messaging",
+      "score": 0.3333
+    },
+    {
+      "slug": "data/learn/change-data-capture-patterns",
+      "score": 0.1818
+    },
+    {
+      "slug": "data/research/debezium-cdc-change-data-capture",
+      "score": 0.1333
+    }
+  ],
+  "data/research/armbrust-2021-lakehouse-architecture": [
+    {
+      "slug": "data/research/apache-iceberg-table-specification",
+      "score": 0.625
+    },
+    {
+      "slug": "data/research/delta-lake-iceberg-hudi-comparison",
+      "score": 0.2222
+    },
+    {
+      "slug": "data/learn/warehouse-vs-lake",
+      "score": 0.2
+    }
+  ],
+  "data/research/kreps-2011-kafka-distributed-messaging": [
+    {
+      "slug": "data/research/akidau-2015-dataflow-model-stream-processing",
+      "score": 0.3333
+    },
+    {
+      "slug": "data/learn/change-data-capture-patterns",
+      "score": 0.3
+    },
+    {
+      "slug": "data/research/2027-data-engineering-predictions",
+      "score": 0.2
+    }
+  ],
+  "data/research/zaharia-2012-spark-rdds": [
+    {
+      "slug": "data/research/dean-ghemawat-2004-mapreduce",
+      "score": 0.5
+    },
+    {
+      "slug": "data/learn/what-is-data-engineering",
+      "score": 0.2222
+    },
+    {
+      "slug": "data/learn/sql-for-data-engineers",
+      "score": 0.2222
+    }
+  ],
+  "data/research/apache-iceberg-table-specification": [
+    {
+      "slug": "data/research/armbrust-2021-lakehouse-architecture",
+      "score": 0.625
+    },
+    {
+      "slug": "data/learn/warehouse-vs-lake",
+      "score": 0.375
+    },
+    {
+      "slug": "data/research/delta-lake-iceberg-hudi-comparison",
+      "score": 0.2353
+    }
+  ],
+  "data/research/stonebraker-2018-database-cycles": [
+    {
+      "slug": "data/research/chang-2006-bigtable-distributed-storage",
+      "score": 0.3333
+    },
+    {
+      "slug": "data/learn/sql-for-data-engineers",
+      "score": 0.2222
+    },
+    {
+      "slug": "data/research/wang-strong-1996-data-quality-framework",
+      "score": 0.2222
+    }
+  ],
+  "compliance/research/levi-reuter-2006-money-laundering-review": [
+    {
+      "slug": "compliance/research/unger-2007-amounts-effects-money-laundering",
+      "score": 0.5
+    },
+    {
+      "slug": "compliance/research/drezner-2022-global-governance-aml",
+      "score": 0.5
+    },
+    {
+      "slug": "compliance/research/soudijn-2021-trade-based-money-laundering",
+      "score": 0.2857
+    }
+  ],
+  "compliance/research/takats-2007-crying-wolf-aml": [
+    {
+      "slug": "compliance/research/naheem-2015-aml-transaction-monitoring-systems",
+      "score": 0.5714
+    },
+    {
+      "slug": "compliance/research/collier-2020-suspicious-activity-reports-uk",
+      "score": 0.375
+    },
+    {
+      "slug": "compliance/research/levi-reuter-2006-money-laundering-review",
+      "score": 0.2222
+    }
+  ],
+  "compliance/research/unger-2007-amounts-effects-money-laundering": [
+    {
+      "slug": "compliance/research/levi-reuter-2006-money-laundering-review",
+      "score": 0.5
+    },
+    {
+      "slug": "compliance/research/drezner-2022-global-governance-aml",
+      "score": 0.3333
+    },
+    {
+      "slug": "compliance/research/soudijn-2021-trade-based-money-laundering",
+      "score": 0.3333
+    }
+  ],
+  "compliance/research/drezner-2022-global-governance-aml": [
+    {
+      "slug": "compliance/research/levi-reuter-2006-money-laundering-review",
+      "score": 0.5
+    },
+    {
+      "slug": "compliance/research/unger-2007-amounts-effects-money-laundering",
+      "score": 0.3333
+    },
+    {
+      "slug": "compliance/research/bueche-2022-fatf-virtual-assets-crypto",
+      "score": 0.25
+    }
+  ],
+  "compliance/research/soudijn-2021-trade-based-money-laundering": [
+    {
+      "slug": "compliance/research/unger-2007-amounts-effects-money-laundering",
+      "score": 0.3333
+    },
+    {
+      "slug": "compliance/research/levi-reuter-2006-money-laundering-review",
+      "score": 0.2857
+    },
+    {
+      "slug": "aml/learn/trade-based-ml-sanctions",
+      "score": 0.2
+    }
+  ],
+  "compliance/research/naheem-2015-aml-transaction-monitoring-systems": [
+    {
+      "slug": "compliance/research/takats-2007-crying-wolf-aml",
+      "score": 0.5714
+    },
+    {
+      "slug": "compliance/research/collier-2020-suspicious-activity-reports-uk",
+      "score": 0.25
+    },
+    {
+      "slug": "compliance/research/unger-2007-amounts-effects-money-laundering",
+      "score": 0.125
+    }
+  ],
+  "compliance/research/collier-2020-suspicious-activity-reports-uk": [
+    {
+      "slug": "compliance/research/takats-2007-crying-wolf-aml",
+      "score": 0.375
+    },
+    {
+      "slug": "compliance/research/levi-reuter-2006-money-laundering-review",
+      "score": 0.25
+    },
+    {
+      "slug": "compliance/research/naheem-2015-aml-transaction-monitoring-systems",
+      "score": 0.25
+    }
+  ],
+  "compliance/research/bueche-2022-fatf-virtual-assets-crypto": [
+    {
+      "slug": "aml/compliance/aml-regulatory-landscape",
+      "score": 0.3
+    },
+    {
+      "slug": "compliance/research/drezner-2022-global-governance-aml",
+      "score": 0.25
+    },
+    {
+      "slug": "compliance/research/unger-2007-amounts-effects-money-laundering",
+      "score": 0.1111
     }
   ]
 }

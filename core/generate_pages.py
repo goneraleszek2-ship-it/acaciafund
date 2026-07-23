@@ -161,7 +161,7 @@ def get_layer(url_path: str) -> str:
         return "learn"
     elif "/knowledge/" in url_path:
         return "knowledge"
-    elif "/aml/" in url_path or "/stock/" in url_path or "/data-engineering/" in url_path:
+    elif "/compliance/" in url_path or "/markets/" in url_path or "/data/" in url_path:
         return "research"
     return "research"
 
