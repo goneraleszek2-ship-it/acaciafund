@@ -2311,6 +2311,26 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
         else:
             _lp_journeys = {}
 
+        # Build reverse index: concept_id → list of paths it appears in
+        _concept_to_paths: dict[str, list[dict]] = {}
+        for _jid, _jny in _lp_journeys.items():
+            for _path in _jny.paths:
+                _concept_ids = [c["id"] for c in _path.concepts]
+                for _pos, _cid in enumerate(_concept_ids):
+                    _entry = {
+                        "journey_id": _jid,
+                        "journey_label": _jny.start_label,
+                        "journey_pillar": _jny.start_pillar,
+                        "path_depth": _path.total_depth,
+                        "position": _pos,
+                        "total_in_path": len(_concept_ids),
+                        "prev_id": _concept_ids[_pos - 1] if _pos > 0 else None,
+                        "prev_label": _path.concepts[_pos - 1]["label"] if _pos > 0 else None,
+                        "next_id": _concept_ids[_pos + 1] if _pos < len(_concept_ids) - 1 else None,
+                        "next_label": _path.concepts[_pos + 1]["label"] if _pos < len(_concept_ids) - 1 else None,
+                    }
+                    _concept_to_paths.setdefault(_cid, []).append(_entry)
+
         concept_dir = OUTPUT_DIR / "concepts"
         concept_dir.mkdir(parents=True, exist_ok=True)
         _concept_count = 0
@@ -2333,7 +2353,25 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                 _related_items.sort(key=lambda x: x["score"], reverse=True)
                 _related_items = _related_items[:12]
 
+                # Build prerequisite/dependent lists with direction
+                _prereqs = []
+                _deps = []
+                for _rel in ontology.relations_for(_concept.id):
+                    if _rel.relation_type == "requires":
+                        if _rel.source_id == _concept.id:
+                            # This concept requires target → target is a prerequisite
+                            _other = ontology.get_concept(_rel.target_id)
+                            if _other:
+                                _prereqs.append({"id": _other.id, "label": _other.label, "pillar": _other.pillar})
+                        else:
+                            # Source requires this concept → source is a dependent
+                            _other = ontology.get_concept(_rel.source_id)
+                            if _other:
+                                _deps.append({"id": _other.id, "label": _other.label, "pillar": _other.pillar})
+
+                _lp_ctx = _concept_to_paths.get(_concept.id, [])
                 _has_lp = _concept.id in _lp_journeys if _lp_journeys else False
+                _has_lp_ctx = len(_lp_ctx) > 0
                 concept_html = render_template(
                     "concept_detail.j2",
                     content=_dummy(
@@ -2367,10 +2405,15 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                         "build_exercise": getattr(_concept, "build_exercise", None),
                         "feynman_difficulty": getattr(_concept, "feynman_difficulty", 1),
                         "explanation_quality": getattr(_concept, "explanation_quality", 0.0),
+                        "sqi": getattr(_concept, "explanation_quality", 0.0),
                     },
                     has_learning_path=_has_lp,
+                    has_lp_ctx=_has_lp_ctx,
+                    learning_paths=_lp_ctx,
                     related_items=_related_items,
                     related_concepts=_related_concepts,
+                    prerequisites=_prereqs,
+                    dependents=_deps,
                     page_path=f"concepts/{_concept.id}/",
                     **ctx_base,
                 )
@@ -2402,6 +2445,42 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                 (_lp_dir / "index.html").write_text(_lp_html, encoding="utf-8")
                 _lp_count += 1
             print(f"  learning paths: {_lp_count} pages")
+
+            # --- Learning paths index page ---
+            try:
+                _lp_index_entries = []
+                for _jid, _jny in sorted(_lp_journeys.items()):
+                    _pc = PILLAR_CONFIG.get(_jny.start_pillar, {})
+                    _max_depth = max((p.total_depth for p in _jny.paths), default=1)
+                    _lp_index_entries.append({
+                        "id": _jid,
+                        "label": _jny.start_label,
+                        "pillar": _jny.start_pillar,
+                        "pillar_label": _pc.get("label", _jny.start_pillar),
+                        "pillar_color": _pc.get("color", "#6366f1"),
+                        "pillar_url": _pc.get("url", _jny.start_pillar),
+                        "path_count": len(_jny.paths),
+                        "node_count": len(_jny.nodes),
+                        "max_depth": _max_depth,
+                        "pillar_span": max((p.pillar_span for p in _jny.paths), default=1),
+                    })
+                _lp_index_html = render_template(
+                    "learning_paths_index.j2",
+                    content=_dummy(
+                        "Learning Paths — AcaciaFund",
+                        "index",
+                        description=f"Browse {len(_lp_index_entries)} structured learning paths across all pillars.",
+                    ),
+                    paths=_lp_index_entries,
+                    total_paths=len(_lp_index_entries),
+                    page_path="learning-paths/",
+                    **ctx_base,
+                )
+                _lp_index_dir = OUTPUT_DIR / "learning-paths"
+                _lp_index_dir.mkdir(parents=True, exist_ok=True)
+                (_lp_index_dir / "index.html").write_text(_lp_index_html, encoding="utf-8")
+            except Exception as _lpe:
+                print(f"  learning-paths index: error — {_lpe}")
 
         # --- Feynman learning path pages ---
         _feynman_paths = compute_feynman_learning_paths(ontology)

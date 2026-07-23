@@ -23,7 +23,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "order-types"
+      ],
       "eli5_explanation": "Money Laundering Basics is a concept in foundations. In simple terms, A core concept in foundations.",
       "analogy": "Think of Money Laundering Basics like the compliance rulebook that governs every transaction \u2014 it helps you handle foundations tasks more effectively.",
       "concrete_example": "Consider a scenario where Money Laundering Basics applies: A core concept in foundations....",
@@ -68,7 +70,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "market-indices"
+      ],
       "eli5_explanation": "AML Regulatory Framework is a concept in foundations. In simple terms, A core concept in foundations.",
       "analogy": "Think of AML Regulatory Framework like the compliance rulebook that governs every transaction \u2014 it helps you handle foundations tasks more effectively.",
       "concrete_example": "Consider a scenario where AML Regulatory Framework applies: A core concept in foundations....",
@@ -113,7 +117,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "trading-venues"
+      ],
       "eli5_explanation": "Types of Financial Crime is a concept in foundations. In simple terms, A core concept in foundations.",
       "analogy": "Think of Types of Financial Crime like the compliance rulebook that governs every transaction \u2014 it helps you handle foundations tasks more effectively.",
       "concrete_example": "Consider a scenario where Types of Financial Crime applies: A core concept in foundations....",
@@ -158,7 +164,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "equity-basics"
+      ],
       "eli5_explanation": "AML Compliance Principles is a concept in foundations. In simple terms, A core concept in foundations.",
       "analogy": "Think of AML Compliance Principles like the compliance rulebook that governs every transaction \u2014 it helps you handle foundations tasks more effectively.",
       "concrete_example": "Consider a scenario where AML Compliance Principles applies: A core concept in foundations....",
@@ -175,7 +183,7 @@
         "prompt": "Create a diagram that demonstrates AML Compliance Principles in a real-world foundations scenario. Walk through your design decisions.",
         "solution": "A diagram for AML Compliance Principles should include: 1. The core components of aml compliance basics 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 2,
+      "feynman_difficulty": 3,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.901497+00:00",
       "updated_at": "2026-07-23T04:21:38.901501+00:00"
@@ -203,7 +211,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "risk-parity"
+      ],
       "eli5_explanation": "Risk-Based Approach in AML is a concept in foundations. In simple terms, A core concept in foundations.",
       "analogy": "Think of Risk-Based Approach in AML like the compliance rulebook that governs every transaction \u2014 it helps you handle foundations tasks more effectively.",
       "concrete_example": "Consider a scenario where Risk-Based Approach in AML applies: A core concept in foundations....",
@@ -247,7 +257,10 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "market-data",
+        "market-participants"
+      ],
       "eli5_explanation": "KYC is like a bouncer checking ID at a club \u2014 but for money. Before a bank lets you open an account, they need to see your passport, verify your address, and check you are not on any criminal watchlists. They do this because if they let criminals use their bank, the government fines them.",
       "analogy": "Airport security for money: you show ID, they check databases, you get cleared (or flagged). Same three steps: identity, verification, screening.",
       "concrete_example": "Alice opens a checking account at Chase. She provides her passport (identity), a utility bill (proof of address), and her Social Security number. Chase runs her name against OFAC sanctions list, checks her against PEP databases, and calculates a risk score. Alice is approved in 5 minutes. If she were a sanctioned entity from North Korea, she would be rejected immediately.",
@@ -376,7 +389,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "market-impact"
+      ],
       "eli5_explanation": "Suspicious Activity Report is a concept in sar str. In simple terms, A core concept in sar str.",
       "analogy": "Think of Suspicious Activity Report like a smoke alarm that triggers when something unusual happens \u2014 it helps you handle sar str tasks more effectively.",
       "concrete_example": "Consider a scenario where Suspicious Activity Report applies: A core concept in sar str....",
@@ -393,7 +408,7 @@
         "prompt": "Create a flowchart that demonstrates Suspicious Activity Report in a real-world sar str scenario. Walk through your design decisions.",
         "solution": "A flowchart for Suspicious Activity Report should include: 1. The core components of sar 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 2,
+      "feynman_difficulty": 3,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.901591+00:00",
       "updated_at": "2026-07-23T04:21:38.901594+00:00"
@@ -593,7 +608,13 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "streaming",
+        "cdc",
+        "ai-act-high-risk",
+        "mica-crypto-assets",
+        "market-surveillance"
+      ],
       "eli5_explanation": "Transaction monitoring is a computer watching every bank transfer and credit card swipe 24/7, looking for things that do not make sense. Like if you normally buy coffee for $5 but suddenly send $50,000 to a country you have never emailed before \u2014 the computer flags it and a human checks if it is suspicious.",
       "analogy": "Like a fraud detector at a casino that watches every bet. If someone walks in and immediately bets $1 million on black, the system alerts security \u2014 even if the person has ID.",
       "concrete_example": "Maria's account normally shows deposits of $3,000/month and small local transactions. Suddenly over 3 days: $15,000 deposit (cash), $22,000 wire to Cyprus, $8,000 transfer to unknown crypto exchange. The monitoring system flags: velocity alert (3 unusual transactions in 3 days), amount threshold exceeded ($45k vs normal $3k), and geographic risk (Cyprus). Compliance reviews and files a SAR.",
@@ -636,7 +657,10 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "data-quality",
+        "order-book"
+      ],
       "eli5_explanation": "Entity Resolution is a concept in advanced techniques. In simple terms, A core concept in advanced techniques.",
       "analogy": "Think of Entity Resolution like a master craftsman using specialized compliance tools \u2014 it helps you handle advanced techniques tasks more effectively.",
       "concrete_example": "Consider a scenario where Entity Resolution applies: A core concept in advanced techniques....",
@@ -680,7 +704,10 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "data-mesh",
+        "market-microstructure"
+      ],
       "eli5_explanation": "Network Analysis for AML is a concept in advanced techniques. In simple terms, A core concept in advanced techniques.",
       "analogy": "Think of Network Analysis for AML like a master craftsman using specialized compliance tools \u2014 it helps you handle advanced techniques tasks more effectively.",
       "concrete_example": "Consider a scenario where Network Analysis for AML applies: A core concept in advanced techniques....",
@@ -697,7 +724,7 @@
         "prompt": "Create a diagram that demonstrates Network Analysis for AML in a real-world advanced techniques scenario. Walk through your design decisions.",
         "solution": "A diagram for Network Analysis for AML should include: 1. The core components of network analysis 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 3,
+      "feynman_difficulty": 4,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.901704+00:00",
       "updated_at": "2026-07-23T04:21:38.901707+00:00"
@@ -725,7 +752,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "stock-lending"
+      ],
       "eli5_explanation": "Beneficial ownership answers the question: who REALLY owns this company? A company might be registered under a lawyer's name, but the actual owner \u2014 the one who gets the money \u2014 is someone else. Regulators make banks find that real person, because criminals hide behind fake owners.",
       "analogy": "It is like a restaurant where the menu says 'Management reserves the right to refuse service' \u2014 but management is just a front. The actual owner is the person who paid for the kitchen.",
       "concrete_example": "A shell company called 'Blue Ocean Trading Ltd' is registered to John Smith, a nominee director. But when the bank investigates, they find that all profits flow to a trust in Panama, whose beneficiary is Maria Garcia \u2014 the true owner. The bank must document this chain: Company \u2192 Nominee Director \u2192 Trust \u2192 Maria Garcia (UBO).",
@@ -767,7 +796,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "data-contracts"
+      ],
       "eli5_explanation": "FATF Recommendations is a concept in regulations. In simple terms, A core concept in regulations.",
       "analogy": "Think of FATF Recommendations like a rulebook that everyone in the game must follow \u2014 it helps you handle regulations tasks more effectively.",
       "concrete_example": "Consider a scenario where FATF Recommendations applies: A core concept in regulations....",
@@ -784,7 +815,7 @@
         "prompt": "Create a diagram that demonstrates FATF Recommendations in a real-world regulations scenario. Walk through your design decisions.",
         "solution": "A diagram for FATF Recommendations should include: 1. The core components of fatf recommendations 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 2,
+      "feynman_difficulty": 3,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.901736+00:00",
       "updated_at": "2026-07-23T04:21:38.901739+00:00"
@@ -828,7 +859,7 @@
         "prompt": "Create a diagram that demonstrates Bank Secrecy Act in a real-world regulations scenario. Walk through your design decisions.",
         "solution": "A diagram for Bank Secrecy Act should include: 1. The core components of bsa 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 2,
+      "feynman_difficulty": 3,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.901749+00:00",
       "updated_at": "2026-07-23T04:21:38.901753+00:00"
@@ -898,7 +929,10 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "dagster",
+        "algorithmic-trading"
+      ],
       "eli5_explanation": "Regulatory Technology is a concept in regtech. In simple terms, A core concept in regtech.",
       "analogy": "Think of Regulatory Technology like a robotic process assistant automating compliance paperwork \u2014 it helps you handle regtech tasks more effectively.",
       "concrete_example": "Consider a scenario where Regulatory Technology applies: A core concept in regtech....",
@@ -959,7 +993,7 @@
         "prompt": "Create a diagram that demonstrates FATF Travel Rule in a real-world regulations scenario. Walk through your design decisions.",
         "solution": "A diagram for FATF Travel Rule should include: 1. The core components of travel rule 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 2,
+      "feynman_difficulty": 3,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.901796+00:00",
       "updated_at": "2026-07-23T04:21:38.901799+00:00"
@@ -986,7 +1020,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "ml-pipeline"
+      ],
       "eli5_explanation": "Adverse Media Screening is a concept in cdd kyc. In simple terms, A core concept in cdd kyc.",
       "analogy": "Think of Adverse Media Screening like checking IDs at a border crossing \u2014 it helps you handle cdd kyc tasks more effectively.",
       "concrete_example": "Consider a scenario where Adverse Media Screening applies: A core concept in cdd kyc....",
@@ -1030,7 +1066,11 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "orchestration",
+        "esg-double-materiality",
+        "portfolio-optimization"
+      ],
       "eli5_explanation": "AML Compliance Program is a concept in risk assessment. In simple terms, A core concept in risk assessment.",
       "analogy": "Think of AML Compliance Program like an insurance adjuster evaluating risk factors \u2014 it helps you handle risk assessment tasks more effectively.",
       "concrete_example": "Consider a scenario where AML Compliance Program applies: A core concept in risk assessment....",
@@ -1047,7 +1087,7 @@
         "prompt": "Create a matrix that demonstrates AML Compliance Program in a real-world risk assessment scenario. Walk through your design decisions.",
         "solution": "A matrix for AML Compliance Program should include: 1. The core components of aml program 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 3,
+      "feynman_difficulty": 4,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.901832+00:00",
       "updated_at": "2026-07-23T04:21:38.901835+00:00"
@@ -1074,7 +1114,10 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "distributed-systems",
+        "nis2-cyber-resilience"
+      ],
       "eli5_explanation": "Cyber AML / Financial Cybercrime is a concept in advanced techniques. In simple terms, A core concept in advanced techniques.",
       "analogy": "Think of Cyber AML / Financial Cybercrime like a master craftsman using specialized compliance tools \u2014 it helps you handle advanced techniques tasks more effectively.",
       "concrete_example": "Consider a scenario where Cyber AML / Financial Cybercrime applies: A core concept in advanced techniques....",
@@ -1091,7 +1134,7 @@
         "prompt": "Create a diagram that demonstrates Cyber AML / Financial Cybercrime in a real-world advanced techniques scenario. Walk through your design decisions.",
         "solution": "A diagram for Cyber AML / Financial Cybercrime should include: 1. The core components of cyber aml 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 3,
+      "feynman_difficulty": 4,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.901846+00:00",
       "updated_at": "2026-07-23T04:21:38.901854+00:00"
@@ -1162,7 +1205,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "data-pipeline"
+      ],
       "eli5_explanation": "Regulatory Reporting Automation is a concept in regtech. In simple terms, A core concept in regtech.",
       "analogy": "Think of Regulatory Reporting Automation like a robotic process assistant automating compliance paperwork \u2014 it helps you handle regtech tasks more effectively.",
       "concrete_example": "Consider a scenario where Regulatory Reporting Automation applies: A core concept in regtech....",
@@ -1179,7 +1224,7 @@
         "prompt": "Create a code that demonstrates Regulatory Reporting Automation in a real-world regtech scenario. Walk through your design decisions.",
         "solution": "A code for Regulatory Reporting Automation should include: 1. The core components of regulatory reporting 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 2,
+      "feynman_difficulty": 3,
       "explanation_quality": 0.5,
       "created_at": "2026-07-23T04:21:38.901881+00:00",
       "updated_at": "2026-07-23T04:21:38.901884+00:00"
@@ -1207,7 +1252,10 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "data-security",
+        "mica-crypto-assets"
+      ],
       "eli5_explanation": "Cryptocurrency AML is a concept in advanced techniques. In simple terms, A core concept in advanced techniques.",
       "analogy": "Think of Cryptocurrency AML like a master craftsman using specialized compliance tools \u2014 it helps you handle advanced techniques tasks more effectively.",
       "concrete_example": "Consider a scenario where Cryptocurrency AML applies: A core concept in advanced techniques....",
@@ -1253,7 +1301,10 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "crypto-aml",
+        "transaction-monitoring"
+      ],
       "eli5_explanation": "MiCA \u2014 Markets in Crypto-Assets Regulation is a concept in crypto aml. In simple terms, A core concept in crypto aml.",
       "analogy": "Think of MiCA \u2014 Markets in Crypto-Assets Regulation like a digital border patrol for virtual currencies \u2014 it helps you handle crypto aml tasks more effectively.",
       "concrete_example": "Consider a scenario where MiCA \u2014 Markets in Crypto-Assets Regulation applies: A core concept in crypto aml....",
@@ -1316,7 +1367,7 @@
         "prompt": "Create a diagram that demonstrates AI in AML Surveillance in a real-world advanced techniques scenario. Walk through your design decisions.",
         "solution": "A diagram for AI in AML Surveillance should include: 1. The core components of ai aml surveillance 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 3,
+      "feynman_difficulty": 4,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.901924+00:00",
       "updated_at": "2026-07-23T04:21:38.901927+00:00"
@@ -1361,7 +1412,7 @@
         "prompt": "Create a diagram that demonstrates Financial Crime Intelligence in a real-world advanced techniques scenario. Walk through your design decisions.",
         "solution": "A diagram for Financial Crime Intelligence should include: 1. The core components of fincrime intelligence 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 3,
+      "feynman_difficulty": 4,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.901944+00:00",
       "updated_at": "2026-07-23T04:21:38.901948+00:00"
@@ -1659,7 +1710,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "fairness-metrics"
+      ],
       "eli5_explanation": "AML Risk Scoring Models is a concept in risk assessment. In simple terms, A core concept in risk assessment.",
       "analogy": "Think of AML Risk Scoring Models like an insurance adjuster evaluating risk factors \u2014 it helps you handle risk assessment tasks more effectively.",
       "concrete_example": "Consider a scenario where AML Risk Scoring Models applies: A core concept in risk assessment....",
@@ -1676,7 +1729,7 @@
         "prompt": "Create a matrix that demonstrates AML Risk Scoring Models in a real-world risk assessment scenario. Walk through your design decisions.",
         "solution": "A matrix for AML Risk Scoring Models should include: 1. The core components of aml risk scoring 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 2,
+      "feynman_difficulty": 3,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.902054+00:00",
       "updated_at": "2026-07-23T04:21:38.902057+00:00"
@@ -1704,7 +1757,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "data-governance"
+      ],
       "eli5_explanation": "AML Data Governance is a concept in architecture. In simple terms, A core concept in architecture.",
       "analogy": "Think of AML Data Governance like a specialized tool in a toolbox \u2014 it helps you handle architecture tasks more effectively.",
       "concrete_example": "Consider a scenario where AML Data Governance applies: A core concept in architecture....",
@@ -1838,7 +1893,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "data-quality"
+      ],
       "eli5_explanation": "AML Model Validation is a concept in advanced techniques. In simple terms, A core concept in advanced techniques.",
       "analogy": "Think of AML Model Validation like a master craftsman using specialized compliance tools \u2014 it helps you handle advanced techniques tasks more effectively.",
       "concrete_example": "Consider a scenario where AML Model Validation applies: A core concept in advanced techniques....",
@@ -1855,7 +1912,7 @@
         "prompt": "Create a diagram that demonstrates AML Model Validation in a real-world advanced techniques scenario. Walk through your design decisions.",
         "solution": "A diagram for AML Model Validation should include: 1. The core components of aml model validation 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 3,
+      "feynman_difficulty": 4,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.902113+00:00",
       "updated_at": "2026-07-23T04:21:38.902116+00:00"
@@ -1991,7 +2048,7 @@
         "prompt": "Create a diagram that demonstrates FinCEN BOI Reporting in a real-world reporting scenario. Walk through your design decisions.",
         "solution": "A diagram for FinCEN BOI Reporting should include: 1. The core components of fincen boi 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 2,
+      "feynman_difficulty": 3,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.902162+00:00",
       "updated_at": "2026-07-23T04:21:38.902166+00:00"
@@ -2036,7 +2093,7 @@
         "prompt": "Create a matrix that demonstrates AML-ESG Integration in a real-world risk assessment scenario. Walk through your design decisions.",
         "solution": "A matrix for AML-ESG Integration should include: 1. The core components of aml esg risk 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 2,
+      "feynman_difficulty": 3,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.902176+00:00",
       "updated_at": "2026-07-23T04:21:38.902180+00:00"
@@ -2216,7 +2273,7 @@
         "prompt": "Create a diagram that demonstrates International AML Cooperation in a real-world regulations scenario. Walk through your design decisions.",
         "solution": "A diagram for International AML Cooperation should include: 1. The core components of aml international 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 2,
+      "feynman_difficulty": 3,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.902238+00:00",
       "updated_at": "2026-07-23T04:21:38.902241+00:00"
@@ -2244,7 +2301,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "cdc"
+      ],
       "eli5_explanation": "Trade Finance AML is a concept in risk assessment. In simple terms, A core concept in risk assessment.",
       "analogy": "Think of Trade Finance AML like an insurance adjuster evaluating risk factors \u2014 it helps you handle risk assessment tasks more effectively.",
       "concrete_example": "Consider a scenario where Trade Finance AML applies: A core concept in risk assessment....",
@@ -2261,7 +2320,7 @@
         "prompt": "Create a matrix that demonstrates Trade Finance AML in a real-world risk assessment scenario. Walk through your design decisions.",
         "solution": "A matrix for Trade Finance AML should include: 1. The core components of trade finance aml 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 2,
+      "feynman_difficulty": 3,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.902255+00:00",
       "updated_at": "2026-07-23T04:21:38.902258+00:00"
@@ -2290,7 +2349,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "streaming"
+      ],
       "eli5_explanation": "Payment Fraud Detection is a concept in transaction monitoring. In simple terms, A core concept in transaction monitoring.",
       "analogy": "Think of Payment Fraud Detection like a security camera watching a bank vault 24/7 \u2014 it helps you handle transaction monitoring tasks more effectively.",
       "concrete_example": "Consider a scenario where Payment Fraud Detection applies: A core concept in transaction monitoring....",
@@ -2471,7 +2532,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "aml-compliance-basics"
+      ],
       "eli5_explanation": "Equity & Stock Basics is a concept in foundations. In simple terms, A core concept in foundations.",
       "analogy": "Think of Equity & Stock Basics like the laws of probability that govern market behavior \u2014 it helps you handle foundations tasks more effectively.",
       "concrete_example": "Consider a scenario where Equity & Stock Basics applies: A core concept in foundations....",
@@ -2488,7 +2551,7 @@
         "prompt": "Create a diagram that demonstrates Equity & Stock Basics in a real-world foundations scenario. Walk through your design decisions.",
         "solution": "A diagram for Equity & Stock Basics should include: 1. The core components of equity basics 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 1,
+      "feynman_difficulty": 2,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.902327+00:00",
       "updated_at": "2026-07-23T04:21:38.902330+00:00"
@@ -2517,7 +2580,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "money-laundering-basics"
+      ],
       "eli5_explanation": "Order Types & Execution is a concept in foundations. In simple terms, A core concept in foundations.",
       "analogy": "Think of Order Types & Execution like the laws of probability that govern market behavior \u2014 it helps you handle foundations tasks more effectively.",
       "concrete_example": "Consider a scenario where Order Types & Execution applies: A core concept in foundations....",
@@ -2534,7 +2599,7 @@
         "prompt": "Create a diagram that demonstrates Order Types & Execution in a real-world foundations scenario. Walk through your design decisions.",
         "solution": "A diagram for Order Types & Execution should include: 1. The core components of order types 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 1,
+      "feynman_difficulty": 2,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.902340+00:00",
       "updated_at": "2026-07-23T04:21:38.902344+00:00"
@@ -2563,7 +2628,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "kyc"
+      ],
       "eli5_explanation": "Market Participants is a concept in foundations. In simple terms, A core concept in foundations.",
       "analogy": "Think of Market Participants like the laws of probability that govern market behavior \u2014 it helps you handle foundations tasks more effectively.",
       "concrete_example": "Consider a scenario where Market Participants applies: A core concept in foundations....",
@@ -2610,7 +2677,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "financial-crime-types"
+      ],
       "eli5_explanation": "Trading Venues is a concept in foundations. In simple terms, A core concept in foundations.",
       "analogy": "Think of Trading Venues like the laws of probability that govern market behavior \u2014 it helps you handle foundations tasks more effectively.",
       "concrete_example": "Consider a scenario where Trading Venues applies: A core concept in foundations....",
@@ -2627,7 +2696,7 @@
         "prompt": "Create a diagram that demonstrates Trading Venues in a real-world foundations scenario. Walk through your design decisions.",
         "solution": "A diagram for Trading Venues should include: 1. The core components of trading venues 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 1,
+      "feynman_difficulty": 2,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.902375+00:00",
       "updated_at": "2026-07-23T04:21:38.902378+00:00"
@@ -2656,7 +2725,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "aml-regulatory-framework"
+      ],
       "eli5_explanation": "Market Indices is a concept in foundations. In simple terms, A core concept in foundations.",
       "analogy": "Think of Market Indices like the laws of probability that govern market behavior \u2014 it helps you handle foundations tasks more effectively.",
       "concrete_example": "Consider a scenario where Market Indices applies: A core concept in foundations....",
@@ -2673,7 +2744,7 @@
         "prompt": "Create a diagram that demonstrates Market Indices in a real-world foundations scenario. Walk through your design decisions.",
         "solution": "A diagram for Market Indices should include: 1. The core components of market indices 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 1,
+      "feynman_difficulty": 2,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.902388+00:00",
       "updated_at": "2026-07-23T04:21:38.902392+00:00"
@@ -2717,7 +2788,7 @@
         "prompt": "Create a diagram that demonstrates Limit Order Book in a real-world foundations scenario. Walk through your design decisions.",
         "solution": "A diagram for Limit Order Book should include: 1. The core components of lob 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 1,
+      "feynman_difficulty": 2,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.902402+00:00",
       "updated_at": "2026-07-23T04:21:38.902406+00:00"
@@ -2743,7 +2814,11 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "streaming",
+        "real-time-analytics",
+        "network-analysis"
+      ],
       "eli5_explanation": "Market Microstructure is a concept in foundations. In simple terms, A core concept in foundations.",
       "analogy": "Think of Market Microstructure like the laws of probability that govern market behavior \u2014 it helps you handle foundations tasks more effectively.",
       "concrete_example": "Consider a scenario where Market Microstructure applies: A core concept in foundations....",
@@ -2760,7 +2835,7 @@
         "prompt": "Create a diagram that demonstrates Market Microstructure in a real-world foundations scenario. Walk through your design decisions.",
         "solution": "A diagram for Market Microstructure should include: 1. The core components of market microstructure 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 2,
+      "feynman_difficulty": 3,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.902415+00:00",
       "updated_at": "2026-07-23T04:21:38.902418+00:00"
@@ -2932,7 +3007,7 @@
         "prompt": "Create a diagram that demonstrates Supply Chain Analysis in a real-world industry analysis scenario. Walk through your design decisions.",
         "solution": "A diagram for Supply Chain Analysis should include: 1. The core components of supply chain analysis 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 1,
+      "feynman_difficulty": 2,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.902477+00:00",
       "updated_at": "2026-07-23T04:21:38.902480+00:00"
@@ -3136,7 +3211,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "aml-program"
+      ],
       "eli5_explanation": "Portfolio Optimization is a concept in strategies. In simple terms, A core concept in strategies.",
       "analogy": "Think of Portfolio Optimization like a chess player thinking several moves ahead \u2014 it helps you handle strategies tasks more effectively.",
       "concrete_example": "Consider a scenario where Portfolio Optimization applies: A core concept in strategies....",
@@ -3179,7 +3256,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "risk-based-approach"
+      ],
       "eli5_explanation": "Risk Parity is a concept in strategies. In simple terms, A core concept in strategies.",
       "analogy": "Think of Risk Parity like a chess player thinking several moves ahead \u2014 it helps you handle strategies tasks more effectively.",
       "concrete_example": "Consider a scenario where Risk Parity applies: A core concept in strategies....",
@@ -3196,7 +3275,7 @@
         "prompt": "Create a calc that demonstrates Risk Parity in a real-world strategies scenario. Walk through your design decisions.",
         "solution": "A calc for Risk Parity should include: 1. The core components of risk parity 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 2,
+      "feynman_difficulty": 3,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.902563+00:00",
       "updated_at": "2026-07-23T04:21:38.902566+00:00"
@@ -3327,7 +3406,7 @@
         "prompt": "Create a calc that demonstrates Macroeconomic Analysis in a real-world market analysis scenario. Walk through your design decisions.",
         "solution": "A calc for Macroeconomic Analysis should include: 1. The core components of macro analysis 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 1,
+      "feynman_difficulty": 2,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.902606+00:00",
       "updated_at": "2026-07-23T04:21:38.902609+00:00"
@@ -3371,7 +3450,7 @@
         "prompt": "Create a calc that demonstrates Options Trading Strategies in a real-world strategies scenario. Walk through your design decisions.",
         "solution": "A calc for Options Trading Strategies should include: 1. The core components of options trading 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 3,
+      "feynman_difficulty": 4,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.902619+00:00",
       "updated_at": "2026-07-23T04:21:38.902622+00:00"
@@ -3488,7 +3567,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "data-quality"
+      ],
       "eli5_explanation": "Behavioral finance studies why smart people make dumb money decisions. It says: humans are not rational calculators. We panic-sell when prices drop (even though we should buy), we hold losing stocks too long (hoping they come back), and we follow the crowd into bubbles (like Bitcoin at $60k or tulips in 1637). Understanding these biases helps you avoid them.",
       "analogy": "Like knowing the tricks a magician uses \u2014 once you know about 'misdirection,' you stop falling for it. Behavioral finance reveals the 'magic tricks' your own brain plays on you with money.",
       "concrete_example": "In 2020, when COVID crashed markets by 30%, millions of investors panic-sold their stocks at the bottom. Those who held or bought more saw a 70% recovery within 6 months. The panic-sellers suffered from 'loss aversion' (fear of losing money is twice as powerful as desire for gains) and 'herding' (everyone else was selling, so it must be right).",
@@ -3532,7 +3613,10 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "distributed-systems",
+        "sar"
+      ],
       "eli5_explanation": "Market Impact Models is a concept in advanced techniques. In simple terms, A core concept in advanced techniques.",
       "analogy": "Think of Market Impact Models like a high-precision instrument in a trader's toolkit \u2014 it helps you handle advanced techniques tasks more effectively.",
       "concrete_example": "Consider a scenario where Market Impact Models applies: A core concept in advanced techniques....",
@@ -3622,7 +3706,10 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "streaming",
+        "ai-act-high-risk"
+      ],
       "eli5_explanation": "High Frequency Trading is a concept in advanced techniques. In simple terms, A core concept in advanced techniques.",
       "analogy": "Think of High Frequency Trading like a high-precision instrument in a trader's toolkit \u2014 it helps you handle advanced techniques tasks more effectively.",
       "concrete_example": "Consider a scenario where High Frequency Trading applies: A core concept in advanced techniques....",
@@ -3639,7 +3726,7 @@
         "prompt": "Create a diagram that demonstrates High Frequency Trading in a real-world advanced techniques scenario. Walk through your design decisions.",
         "solution": "A diagram for High Frequency Trading should include: 1. The core components of high frequency trading 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 3,
+      "feynman_difficulty": 4,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.902706+00:00",
       "updated_at": "2026-07-23T04:21:38.902709+00:00"
@@ -3713,7 +3800,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "aml-program"
+      ],
       "eli5_explanation": "ESG Double Materiality is a concept in industry analysis. In simple terms, A core concept in industry analysis.",
       "analogy": "Think of ESG Double Materiality like a medical diagnosis of an entire industry \u2014 it helps you handle industry analysis tasks more effectively.",
       "concrete_example": "Consider a scenario where ESG Double Materiality applies: A core concept in industry analysis....",
@@ -3730,7 +3819,7 @@
         "prompt": "Create a diagram that demonstrates ESG Double Materiality in a real-world industry analysis scenario. Walk through your design decisions.",
         "solution": "A diagram for ESG Double Materiality should include: 1. The core components of esg double materiality 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 2,
+      "feynman_difficulty": 3,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.902731+00:00",
       "updated_at": "2026-07-23T04:21:38.902735+00:00"
@@ -3775,7 +3864,7 @@
         "prompt": "Create a calc that demonstrates ETF Trading & Structure in a real-world market analysis scenario. Walk through your design decisions.",
         "solution": "A calc for ETF Trading & Structure should include: 1. The core components of etf trading 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 2,
+      "feynman_difficulty": 3,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.902748+00:00",
       "updated_at": "2026-07-23T04:21:38.902751+00:00"
@@ -3893,7 +3982,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "regtech"
+      ],
       "eli5_explanation": "Algorithmic Trading is a concept in advanced techniques. In simple terms, A core concept in advanced techniques.",
       "analogy": "Think of Algorithmic Trading like a high-precision instrument in a trader's toolkit \u2014 it helps you handle advanced techniques tasks more effectively.",
       "concrete_example": "Consider a scenario where Algorithmic Trading applies: A core concept in advanced techniques....",
@@ -3910,7 +4001,7 @@
         "prompt": "Create a diagram that demonstrates Algorithmic Trading in a real-world advanced techniques scenario. Walk through your design decisions.",
         "solution": "A diagram for Algorithmic Trading should include: 1. The core components of algorithmic trading 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 3,
+      "feynman_difficulty": 4,
       "explanation_quality": 0.5,
       "created_at": "2026-07-23T04:21:38.902790+00:00",
       "updated_at": "2026-07-23T04:21:38.902793+00:00"
@@ -3984,7 +4075,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "kyc"
+      ],
       "eli5_explanation": "Market Data Infrastructure is a concept in foundations. In simple terms, A core concept in foundations.",
       "analogy": "Think of Market Data Infrastructure like the laws of probability that govern market behavior \u2014 it helps you handle foundations tasks more effectively.",
       "concrete_example": "Consider a scenario where Market Data Infrastructure applies: A core concept in foundations....",
@@ -4001,7 +4094,7 @@
         "prompt": "Create a diagram that demonstrates Market Data Infrastructure in a real-world foundations scenario. Walk through your design decisions.",
         "solution": "A diagram for Market Data Infrastructure should include: 1. The core components of market data 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 2,
+      "feynman_difficulty": 3,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.902814+00:00",
       "updated_at": "2026-07-23T04:21:38.902817+00:00"
@@ -4046,7 +4139,7 @@
         "prompt": "Create a calc that demonstrates Volatility Trading in a real-world strategies scenario. Walk through your design decisions.",
         "solution": "A calc for Volatility Trading should include: 1. The core components of volatility trading 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 3,
+      "feynman_difficulty": 4,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.902831+00:00",
       "updated_at": "2026-07-23T04:21:38.902834+00:00"
@@ -4075,7 +4168,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "entity-resolution"
+      ],
       "eli5_explanation": "Order Book Dynamics is a concept in market microstructure. In simple terms, A core concept in market microstructure.",
       "analogy": "Think of Order Book Dynamics like a specialized tool in a toolbox \u2014 it helps you handle market microstructure tasks more effectively.",
       "concrete_example": "Consider a scenario where Order Book Dynamics applies: A core concept in market microstructure....",
@@ -4212,7 +4307,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "real-time-analytics"
+      ],
       "eli5_explanation": "Execution Algorithms is a concept in high frequency trading. In simple terms, A core concept in high frequency trading.",
       "analogy": "Think of Execution Algorithms like a specialized tool in a toolbox \u2014 it helps you handle high frequency trading tasks more effectively.",
       "concrete_example": "Consider a scenario where Execution Algorithms applies: A core concept in high frequency trading....",
@@ -4229,7 +4326,7 @@
         "prompt": "Create a diagram that demonstrates Execution Algorithms in a real-world high frequency trading scenario. Walk through your design decisions.",
         "solution": "A diagram for Execution Algorithms should include: 1. The core components of execution algos 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 2,
+      "feynman_difficulty": 3,
       "explanation_quality": 0.5,
       "created_at": "2026-07-23T04:21:38.902885+00:00",
       "updated_at": "2026-07-23T04:21:38.902893+00:00"
@@ -4529,7 +4626,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "data-catalog"
+      ],
       "eli5_explanation": "Alternative Data in Markets is a concept in market microstructure. In simple terms, A core concept in market microstructure.",
       "analogy": "Think of Alternative Data in Markets like a specialized tool in a toolbox \u2014 it helps you handle market microstructure tasks more effectively.",
       "concrete_example": "Consider a scenario where Alternative Data in Markets applies: A core concept in market microstructure....",
@@ -4546,7 +4645,7 @@
         "prompt": "Create a diagram that demonstrates Alternative Data in Markets in a real-world market microstructure scenario. Walk through your design decisions.",
         "solution": "A diagram for Alternative Data in Markets should include: 1. The core components of alternative data 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 2,
+      "feynman_difficulty": 3,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.902992+00:00",
       "updated_at": "2026-07-23T04:21:38.902995+00:00"
@@ -4591,7 +4690,7 @@
         "prompt": "Create a diagram that demonstrates ETF Creation & Redemption in a real-world market microstructure scenario. Walk through your design decisions.",
         "solution": "A diagram for ETF Creation & Redemption should include: 1. The core components of etf creation 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 2,
+      "feynman_difficulty": 3,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.903005+00:00",
       "updated_at": "2026-07-23T04:21:38.903008+00:00"
@@ -4619,7 +4718,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "transaction-monitoring"
+      ],
       "eli5_explanation": "Market Surveillance is a concept in market microstructure. In simple terms, A core concept in market microstructure.",
       "analogy": "Think of Market Surveillance like a specialized tool in a toolbox \u2014 it helps you handle market microstructure tasks more effectively.",
       "concrete_example": "Consider a scenario where Market Surveillance applies: A core concept in market microstructure....",
@@ -4636,7 +4737,7 @@
         "prompt": "Create a diagram that demonstrates Market Surveillance in a real-world market microstructure scenario. Walk through your design decisions.",
         "solution": "A diagram for Market Surveillance should include: 1. The core components of market surveillance 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 2,
+      "feynman_difficulty": 3,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.903017+00:00",
       "updated_at": "2026-07-23T04:21:38.903020+00:00"
@@ -4664,7 +4765,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "beneficial-ownership"
+      ],
       "eli5_explanation": "Securities Lending is a concept in market microstructure. In simple terms, A core concept in market microstructure.",
       "analogy": "Think of Securities Lending like a specialized tool in a toolbox \u2014 it helps you handle market microstructure tasks more effectively.",
       "concrete_example": "Consider a scenario where Securities Lending applies: A core concept in market microstructure....",
@@ -4681,7 +4784,7 @@
         "prompt": "Create a diagram that demonstrates Securities Lending in a real-world market microstructure scenario. Walk through your design decisions.",
         "solution": "A diagram for Securities Lending should include: 1. The core components of stock lending 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 2,
+      "feynman_difficulty": 3,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.903029+00:00",
       "updated_at": "2026-07-23T04:21:38.903032+00:00"
@@ -4845,7 +4948,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "data-quality"
+      ],
       "eli5_explanation": "Machine Learning in Markets is a concept in advanced techniques. In simple terms, A core concept in advanced techniques.",
       "analogy": "Think of Machine Learning in Markets like a high-precision instrument in a trader's toolkit \u2014 it helps you handle advanced techniques tasks more effectively.",
       "concrete_example": "Consider a scenario where Machine Learning in Markets applies: A core concept in advanced techniques....",
@@ -4862,7 +4967,7 @@
         "prompt": "Create a diagram that demonstrates Machine Learning in Markets in a real-world advanced techniques scenario. Walk through your design decisions.",
         "solution": "A diagram for Machine Learning in Markets should include: 1. The core components of machine learning markets 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 3,
+      "feynman_difficulty": 4,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.903084+00:00",
       "updated_at": "2026-07-23T04:21:38.903087+00:00"
@@ -4975,7 +5080,10 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "transaction-monitoring",
+        "trade-finance-aml"
+      ],
       "eli5_explanation": "Change Data Capture is a concept in advanced techniques. In simple terms, A core concept in advanced techniques.",
       "analogy": "Think of Change Data Capture like a specialized tool in a data engineer's workshop \u2014 it helps you handle advanced techniques tasks more effectively.",
       "concrete_example": "Consider a scenario where Change Data Capture applies: A core concept in advanced techniques....",
@@ -5035,7 +5143,7 @@
         "prompt": "Create a diagram that demonstrates Data Lake in a real-world foundations scenario. Walk through your design decisions.",
         "solution": "A diagram for Data Lake should include: 1. The core components of data lake 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 1,
+      "feynman_difficulty": 2,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.903138+00:00",
       "updated_at": "2026-07-23T04:21:38.903141+00:00"
@@ -5079,7 +5187,7 @@
         "prompt": "Create a diagram that demonstrates Data Warehouse in a real-world foundations scenario. Walk through your design decisions.",
         "solution": "A diagram for Data Warehouse should include: 1. The core components of data warehouse 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 1,
+      "feynman_difficulty": 2,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.903153+00:00",
       "updated_at": "2026-07-23T04:21:38.903156+00:00"
@@ -5105,7 +5213,10 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "network-analysis",
+        "data-act-interoperability"
+      ],
       "eli5_explanation": "Data Mesh is a concept in architecture. In simple terms, A core concept in architecture.",
       "analogy": "Think of Data Mesh like a blueprint for a complex machine \u2014 it helps you handle architecture tasks more effectively.",
       "concrete_example": "Consider a scenario where Data Mesh applies: A core concept in architecture....",
@@ -5149,7 +5260,12 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "transaction-monitoring",
+        "market-microstructure",
+        "high-frequency-trading",
+        "payment-fraud"
+      ],
       "eli5_explanation": "Streaming is processing data as it arrives, like a conveyor belt. Instead of waiting all day to process a big batch at night, you handle each piece of data the moment it shows up. A bank watching for fraud does not wait until end of day \u2014 it checks every transaction instantly, in real-time, as it happens.",
       "analogy": "Like a sushi conveyor belt: instead of cooking 100 meals at once (batch), sushi chefs prepare each plate as it goes on the belt (streaming). Each customer gets their food immediately instead of waiting for a batch service.",
       "concrete_example": "A ride-sharing app like Uber processes GPS locations from 1 million active drivers every 5 seconds. Instead of storing all data and processing it at midnight, the streaming pipeline: (1) ingests each GPS ping as it arrives (Apache Kafka). (2) enriches it with surge pricing data in real-time (Apache Flink). (3) updates the rider's map with nearby drivers every 2 seconds. Total latency: under 500ms from GPS ping to map update.",
@@ -5209,7 +5325,7 @@
         "prompt": "Create a diagram that demonstrates Batch Processing in a real-world foundations scenario. Walk through your design decisions.",
         "solution": "A diagram for Batch Processing should include: 1. The core components of batch processing 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 1,
+      "feynman_difficulty": 2,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.903193+00:00",
       "updated_at": "2026-07-23T04:21:38.903197+00:00"
@@ -5278,7 +5394,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "regtech"
+      ],
       "eli5_explanation": "Dagster Orchestrator is a concept in advanced techniques. In simple terms, A core concept in advanced techniques.",
       "analogy": "Think of Dagster Orchestrator like a specialized tool in a data engineer's workshop \u2014 it helps you handle advanced techniques tasks more effectively.",
       "concrete_example": "Consider a scenario where Dagster Orchestrator applies: A core concept in advanced techniques....",
@@ -5295,7 +5413,7 @@
         "prompt": "Create a diagram that demonstrates Dagster Orchestrator in a real-world advanced techniques scenario. Walk through your design decisions.",
         "solution": "A diagram for Dagster Orchestrator should include: 1. The core components of dagster 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 3,
+      "feynman_difficulty": 4,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.903218+00:00",
       "updated_at": "2026-07-23T04:21:38.903226+00:00"
@@ -5495,7 +5613,10 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "fatf-recommendations",
+        "dora-ict-risk"
+      ],
       "eli5_explanation": "Data Contracts is a concept in architecture. In simple terms, A core concept in architecture.",
       "analogy": "Think of Data Contracts like a blueprint for a complex machine \u2014 it helps you handle architecture tasks more effectively.",
       "concrete_example": "Consider a scenario where Data Contracts applies: A core concept in architecture....",
@@ -5512,7 +5633,7 @@
         "prompt": "Create a diagram that demonstrates Data Contracts in a real-world architecture scenario. Walk through your design decisions.",
         "solution": "A diagram for Data Contracts should include: 1. The core components of data contracts 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 3,
+      "feynman_difficulty": 4,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.903294+00:00",
       "updated_at": "2026-07-23T04:21:38.903297+00:00"
@@ -5539,7 +5660,12 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "entity-resolution",
+        "behavioral-finance",
+        "aml-model-validation",
+        "machine-learning-markets"
+      ],
       "eli5_explanation": "Data Quality is a concept in best practices. In simple terms, A core concept in best practices.",
       "analogy": "Think of Data Quality like a maintenance checklist for a power plant \u2014 it helps you handle best practices tasks more effectively.",
       "concrete_example": "Consider a scenario where Data Quality applies: A core concept in best practices....",
@@ -5556,7 +5682,7 @@
         "prompt": "Create a checklist that demonstrates Data Quality in a real-world best practices scenario. Walk through your design decisions.",
         "solution": "A checklist for Data Quality should include: 1. The core components of data quality 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 1,
+      "feynman_difficulty": 3,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.903306+00:00",
       "updated_at": "2026-07-23T04:21:38.903309+00:00"
@@ -5629,7 +5755,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "dora-ict-risk"
+      ],
       "eli5_explanation": "Data Observability is a concept in best practices. In simple terms, A core concept in best practices.",
       "analogy": "Think of Data Observability like a maintenance checklist for a power plant \u2014 it helps you handle best practices tasks more effectively.",
       "concrete_example": "Consider a scenario where Data Observability applies: A core concept in best practices....",
@@ -5673,7 +5801,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "regulatory-reporting"
+      ],
       "eli5_explanation": "Data Pipeline Architecture is a concept in architecture. In simple terms, A core concept in architecture.",
       "analogy": "Think of Data Pipeline Architecture like a blueprint for a complex machine \u2014 it helps you handle architecture tasks more effectively.",
       "concrete_example": "Consider a scenario where Data Pipeline Architecture applies: A core concept in architecture....",
@@ -5718,7 +5848,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "aml-data-governance"
+      ],
       "eli5_explanation": "Data Governance is a concept in architecture. In simple terms, A core concept in architecture.",
       "analogy": "Think of Data Governance like a blueprint for a complex machine \u2014 it helps you handle architecture tasks more effectively.",
       "concrete_example": "Consider a scenario where Data Governance applies: A core concept in architecture....",
@@ -5763,7 +5895,10 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "aml-program",
+        "dora-ict-risk"
+      ],
       "eli5_explanation": "Workflow Orchestration is a concept in advanced techniques. In simple terms, A core concept in advanced techniques.",
       "analogy": "Think of Workflow Orchestration like a specialized tool in a data engineer's workshop \u2014 it helps you handle advanced techniques tasks more effectively.",
       "concrete_example": "Consider a scenario where Workflow Orchestration applies: A core concept in advanced techniques....",
@@ -5780,7 +5915,7 @@
         "prompt": "Create a diagram that demonstrates Workflow Orchestration in a real-world advanced techniques scenario. Walk through your design decisions.",
         "solution": "A diagram for Workflow Orchestration should include: 1. The core components of orchestration 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 3,
+      "feynman_difficulty": 4,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.903397+00:00",
       "updated_at": "2026-07-23T04:21:38.903399+00:00"
@@ -5853,7 +5988,10 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "market-microstructure",
+        "execution-algos"
+      ],
       "eli5_explanation": "Real-Time Analytics is a concept in advanced techniques. In simple terms, A core concept in advanced techniques.",
       "analogy": "Think of Real-Time Analytics like a specialized tool in a data engineer's workshop \u2014 it helps you handle advanced techniques tasks more effectively.",
       "concrete_example": "Consider a scenario where Real-Time Analytics applies: A core concept in advanced techniques....",
@@ -5870,7 +6008,7 @@
         "prompt": "Create a diagram that demonstrates Real-Time Analytics in a real-world advanced techniques scenario. Walk through your design decisions.",
         "solution": "A diagram for Real-Time Analytics should include: 1. The core components of real time analytics 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 3,
+      "feynman_difficulty": 4,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.903427+00:00",
       "updated_at": "2026-07-23T04:21:38.903430+00:00"
@@ -5899,7 +6037,10 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "crypto-aml",
+        "nis2-cyber-resilience"
+      ],
       "eli5_explanation": "Data Security & Access Control is a concept in best practices. In simple terms, A core concept in best practices.",
       "analogy": "Think of Data Security & Access Control like a maintenance checklist for a power plant \u2014 it helps you handle best practices tasks more effectively.",
       "concrete_example": "Consider a scenario where Data Security & Access Control applies: A core concept in best practices....",
@@ -5944,7 +6085,11 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "cyber-aml",
+        "market-impact",
+        "dora-ict-risk"
+      ],
       "eli5_explanation": "Distributed Systems for Data is a concept in architecture. In simple terms, A core concept in architecture.",
       "analogy": "Think of Distributed Systems for Data like a blueprint for a complex machine \u2014 it helps you handle architecture tasks more effectively.",
       "concrete_example": "Consider a scenario where Distributed Systems for Data applies: A core concept in architecture....",
@@ -5961,7 +6106,7 @@
         "prompt": "Create a diagram that demonstrates Distributed Systems for Data in a real-world architecture scenario. Walk through your design decisions.",
         "solution": "A diagram for Distributed Systems for Data should include: 1. The core components of distributed systems 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 3,
+      "feynman_difficulty": 5,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.903453+00:00",
       "updated_at": "2026-07-23T04:21:38.903456+00:00"
@@ -5989,7 +6134,10 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "adverse-media",
+        "ai-act-high-risk"
+      ],
       "eli5_explanation": "ML Pipeline Engineering is a concept in advanced techniques. In simple terms, A core concept in advanced techniques.",
       "analogy": "Think of ML Pipeline Engineering like a specialized tool in a data engineer's workshop \u2014 it helps you handle advanced techniques tasks more effectively.",
       "concrete_example": "Consider a scenario where ML Pipeline Engineering applies: A core concept in advanced techniques....",
@@ -6006,7 +6154,7 @@
         "prompt": "Create a diagram that demonstrates ML Pipeline Engineering in a real-world advanced techniques scenario. Walk through your design decisions.",
         "solution": "A diagram for ML Pipeline Engineering should include: 1. The core components of ml pipeline 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 3,
+      "feynman_difficulty": 4,
       "explanation_quality": 0.5,
       "created_at": "2026-07-23T04:21:38.903465+00:00",
       "updated_at": "2026-07-23T04:21:38.903469+00:00"
@@ -6052,7 +6200,7 @@
         "prompt": "Create a checklist that demonstrates GDPR Anonymization & Pseudonymization in a real-world best practices scenario. Walk through your design decisions.",
         "solution": "A checklist for GDPR Anonymization & Pseudonymization should include: 1. The core components of gdpr anonymization 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 2,
+      "feynman_difficulty": 3,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.903479+00:00",
       "updated_at": "2026-07-23T04:21:38.903482+00:00"
@@ -6098,7 +6246,7 @@
         "prompt": "Create a diagram that demonstrates Synthetic Data Generation for GDPR Compliance in a real-world advanced techniques scenario. Walk through your design decisions.",
         "solution": "A diagram for Synthetic Data Generation for GDPR Compliance should include: 1. The core components of gdpr synthetic data 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 3,
+      "feynman_difficulty": 4,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.903499+00:00",
       "updated_at": "2026-07-23T04:21:38.903502+00:00"
@@ -6144,7 +6292,7 @@
         "prompt": "Create a checklist that demonstrates Debiasing Pipeline in a real-world best practices scenario. Walk through your design decisions.",
         "solution": "A checklist for Debiasing Pipeline should include: 1. The core components of debiasing pipeline 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 2,
+      "feynman_difficulty": 3,
       "explanation_quality": 0.5,
       "created_at": "2026-07-23T04:21:38.903512+00:00",
       "updated_at": "2026-07-23T04:21:38.903515+00:00"
@@ -6311,7 +6459,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "aml-risk-scoring"
+      ],
       "eli5_explanation": "Fairness Metrics in ML is a concept in best practices. In simple terms, A core concept in best practices.",
       "analogy": "Think of Fairness Metrics in ML like a maintenance checklist for a power plant \u2014 it helps you handle best practices tasks more effectively.",
       "concrete_example": "Consider a scenario where Fairness Metrics in ML applies: A core concept in best practices....",
@@ -6328,7 +6478,7 @@
         "prompt": "Create a checklist that demonstrates Fairness Metrics in ML in a real-world best practices scenario. Walk through your design decisions.",
         "solution": "A checklist for Fairness Metrics in ML should include: 1. The core components of fairness metrics 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 1,
+      "feynman_difficulty": 2,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.903565+00:00",
       "updated_at": "2026-07-23T04:21:38.903568+00:00"
@@ -6357,7 +6507,12 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "transaction-monitoring",
+        "high-frequency-trading",
+        "ml-pipeline",
+        "ai-conformity-assessment"
+      ],
       "eli5_explanation": "EU AI Act \u2014 High-Risk Classification is a concept in regulations. In simple terms, A core concept in regulations.",
       "analogy": "Think of EU AI Act \u2014 High-Risk Classification like a data governance rulebook for safe handling \u2014 it helps you handle regulations tasks more effectively.",
       "concrete_example": "Consider a scenario where EU AI Act \u2014 High-Risk Classification applies: A core concept in regulations....",
@@ -6374,7 +6529,7 @@
         "prompt": "Create a diagram that demonstrates EU AI Act \u2014 High-Risk Classification in a real-world regulations scenario. Walk through your design decisions.",
         "solution": "A diagram for EU AI Act \u2014 High-Risk Classification should include: 1. The core components of ai act high risk 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 3,
+      "feynman_difficulty": 4,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.903581+00:00",
       "updated_at": "2026-07-23T04:21:38.903584+00:00"
@@ -6403,7 +6558,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "ai-act-high-risk"
+      ],
       "eli5_explanation": "AI Conformity Assessment & Auditing is a concept in regulations. In simple terms, A core concept in regulations.",
       "analogy": "Think of AI Conformity Assessment & Auditing like a data governance rulebook for safe handling \u2014 it helps you handle regulations tasks more effectively.",
       "concrete_example": "Consider a scenario where AI Conformity Assessment & Auditing applies: A core concept in regulations....",
@@ -6449,7 +6606,13 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "data-observability",
+        "distributed-systems",
+        "data-contracts",
+        "orchestration",
+        "nis2-cyber-resilience"
+      ],
       "eli5_explanation": "DORA \u2014 ICT Risk Management is a concept in regulations. In simple terms, A core concept in regulations.",
       "analogy": "Think of DORA \u2014 ICT Risk Management like a data governance rulebook for safe handling \u2014 it helps you handle regulations tasks more effectively.",
       "concrete_example": "Consider a scenario where DORA \u2014 ICT Risk Management applies: A core concept in regulations....",
@@ -6466,7 +6629,7 @@
         "prompt": "Create a diagram that demonstrates DORA \u2014 ICT Risk Management in a real-world regulations scenario. Walk through your design decisions.",
         "solution": "A diagram for DORA \u2014 ICT Risk Management should include: 1. The core components of dora ict risk 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 3,
+      "feynman_difficulty": 4,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.903610+00:00",
       "updated_at": "2026-07-23T04:21:38.903613+00:00"
@@ -6495,7 +6658,11 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "cyber-aml",
+        "data-security",
+        "dora-ict-risk"
+      ],
       "eli5_explanation": "NIS2 Directive \u2014 Cybersecurity Resilience is a concept in best practices. In simple terms, A core concept in best practices.",
       "analogy": "Think of NIS2 Directive \u2014 Cybersecurity Resilience like a maintenance checklist for a power plant \u2014 it helps you handle best practices tasks more effectively.",
       "concrete_example": "Consider a scenario where NIS2 Directive \u2014 Cybersecurity Resilience applies: A core concept in best practices....",
@@ -6512,7 +6679,7 @@
         "prompt": "Create a checklist that demonstrates NIS2 Directive \u2014 Cybersecurity Resilience in a real-world best practices scenario. Walk through your design decisions.",
         "solution": "A checklist for NIS2 Directive \u2014 Cybersecurity Resilience should include: 1. The core components of nis2 cyber resilience 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 3,
+      "feynman_difficulty": 4,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.903628+00:00",
       "updated_at": "2026-07-23T04:21:38.903630+00:00"
@@ -6541,7 +6708,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "data-mesh"
+      ],
       "eli5_explanation": "EU Data Act \u2014 Data Interoperability is a concept in architecture. In simple terms, A core concept in architecture.",
       "analogy": "Think of EU Data Act \u2014 Data Interoperability like a blueprint for a complex machine \u2014 it helps you handle architecture tasks more effectively.",
       "concrete_example": "Consider a scenario where EU Data Act \u2014 Data Interoperability applies: A core concept in architecture....",
@@ -6587,7 +6756,9 @@
       "governance_model": "",
       "semantic_contract_type": "",
       "philosophical_sources": [],
-      "cross_pillar_analogs": [],
+      "cross_pillar_analogs": [
+        "alternative-data"
+      ],
       "eli5_explanation": "Data Catalog is a concept in architecture. In simple terms, A core concept in architecture.",
       "analogy": "Think of Data Catalog like a blueprint for a complex machine \u2014 it helps you handle architecture tasks more effectively.",
       "concrete_example": "Consider a scenario where Data Catalog applies: A core concept in architecture....",
@@ -6604,7 +6775,7 @@
         "prompt": "Create a diagram that demonstrates Data Catalog in a real-world architecture scenario. Walk through your design decisions.",
         "solution": "A diagram for Data Catalog should include: 1. The core components of data catalog 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 3,
+      "feynman_difficulty": 4,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.903656+00:00",
       "updated_at": "2026-07-23T04:21:38.903659+00:00"
@@ -6695,7 +6866,7 @@
         "prompt": "Create a checklist that demonstrates DataOps in a real-world best practices scenario. Walk through your design decisions.",
         "solution": "A checklist for DataOps should include: 1. The core components of dataops 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 2,
+      "feynman_difficulty": 3,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.903680+00:00",
       "updated_at": "2026-07-23T04:21:38.903683+00:00"
@@ -6740,7 +6911,7 @@
         "prompt": "Create a diagram that demonstrates Lakehouse Architecture in a real-world architecture scenario. Walk through your design decisions.",
         "solution": "A diagram for Lakehouse Architecture should include: 1. The core components of lakehouse 2. How they interact 3. Expected outcomes or outputs"
       },
-      "feynman_difficulty": 3,
+      "feynman_difficulty": 4,
       "explanation_quality": 0.3,
       "created_at": "2026-07-23T04:21:38.903692+00:00",
       "updated_at": "2026-07-23T04:21:38.903695+00:00"
@@ -9682,6 +9853,1464 @@
       "evidence": [],
       "pillar": "cross-pillar",
       "created_at": "2026-07-23T04:21:38.911003+00:00"
+    },
+    {
+      "source_id": "money-laundering-basics",
+      "target_id": "financial-crime-types",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.923561+00:00"
+    },
+    {
+      "source_id": "aml-compliance-basics",
+      "target_id": "money-laundering-basics",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.923751+00:00"
+    },
+    {
+      "source_id": "aml-compliance-basics",
+      "target_id": "aml-regulatory-framework",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.923835+00:00"
+    },
+    {
+      "source_id": "risk-based-approach",
+      "target_id": "aml-compliance-basics",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.923912+00:00"
+    },
+    {
+      "source_id": "aml-risk-scoring",
+      "target_id": "risk-based-approach",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.923986+00:00"
+    },
+    {
+      "source_id": "aml-risk-scoring",
+      "target_id": "cdd",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.924059+00:00"
+    },
+    {
+      "source_id": "aml-program",
+      "target_id": "aml-compliance-basics",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.924134+00:00"
+    },
+    {
+      "source_id": "aml-training",
+      "target_id": "aml-compliance-basics",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.924228+00:00"
+    },
+    {
+      "source_id": "kyc",
+      "target_id": "aml-compliance-basics",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.924301+00:00"
+    },
+    {
+      "source_id": "cdd",
+      "target_id": "kyc",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.924375+00:00"
+    },
+    {
+      "source_id": "edd",
+      "target_id": "cdd",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.924451+00:00"
+    },
+    {
+      "source_id": "pep",
+      "target_id": "cdd",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.924527+00:00"
+    },
+    {
+      "source_id": "fincen-boi",
+      "target_id": "beneficial-ownership",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.924626+00:00"
+    },
+    {
+      "source_id": "adverse-media",
+      "target_id": "kyc",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.924760+00:00"
+    },
+    {
+      "source_id": "entity-resolution",
+      "target_id": "kyc",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.924852+00:00"
+    },
+    {
+      "source_id": "sanctions-screening",
+      "target_id": "kyc",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.924931+00:00"
+    },
+    {
+      "source_id": "global-sanctions",
+      "target_id": "sanctions-screening",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.925009+00:00"
+    },
+    {
+      "source_id": "transaction-monitoring",
+      "target_id": "kyc",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.925088+00:00"
+    },
+    {
+      "source_id": "transaction-monitoring",
+      "target_id": "risk-based-approach",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.925164+00:00"
+    },
+    {
+      "source_id": "sar",
+      "target_id": "transaction-monitoring",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.925242+00:00"
+    },
+    {
+      "source_id": "str",
+      "target_id": "transaction-monitoring",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.925322+00:00"
+    },
+    {
+      "source_id": "ctr",
+      "target_id": "transaction-monitoring",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.925401+00:00"
+    },
+    {
+      "source_id": "regulatory-reporting",
+      "target_id": "transaction-monitoring",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.925480+00:00"
+    },
+    {
+      "source_id": "regulatory-filing",
+      "target_id": "regulatory-reporting",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.925558+00:00"
+    },
+    {
+      "source_id": "aml-reporting-dashboard",
+      "target_id": "regulatory-reporting",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.925646+00:00"
+    },
+    {
+      "source_id": "aml-case-management",
+      "target_id": "sar",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.925726+00:00"
+    },
+    {
+      "source_id": "aml-international",
+      "target_id": "sar",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.925806+00:00"
+    },
+    {
+      "source_id": "regtech",
+      "target_id": "transaction-monitoring",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.925886+00:00"
+    },
+    {
+      "source_id": "aml-optimization",
+      "target_id": "regtech",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.925968+00:00"
+    },
+    {
+      "source_id": "aml-oracle",
+      "target_id": "regtech",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.926048+00:00"
+    },
+    {
+      "source_id": "aml-model-validation",
+      "target_id": "aml-oracle",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.926129+00:00"
+    },
+    {
+      "source_id": "aml-threat-intel",
+      "target_id": "transaction-monitoring",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.926211+00:00"
+    },
+    {
+      "source_id": "ai-aml-surveillance",
+      "target_id": "transaction-monitoring",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.926294+00:00"
+    },
+    {
+      "source_id": "crypto-aml",
+      "target_id": "transaction-monitoring",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.926377+00:00"
+    },
+    {
+      "source_id": "travel-rule",
+      "target_id": "crypto-aml",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.926460+00:00"
+    },
+    {
+      "source_id": "crypto-travel-rule",
+      "target_id": "travel-rule",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.926541+00:00"
+    },
+    {
+      "source_id": "mica-crypto-assets",
+      "target_id": "crypto-aml",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.926647+00:00"
+    },
+    {
+      "source_id": "trade-finance-aml",
+      "target_id": "transaction-monitoring",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.926730+00:00"
+    },
+    {
+      "source_id": "correspondent-banking",
+      "target_id": "trade-finance-aml",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.926813+00:00"
+    },
+    {
+      "source_id": "fraud-detection",
+      "target_id": "transaction-monitoring",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.926920+00:00"
+    },
+    {
+      "source_id": "payment-fraud",
+      "target_id": "fraud-detection",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.927003+00:00"
+    },
+    {
+      "source_id": "cyber-aml",
+      "target_id": "fraud-detection",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.927086+00:00"
+    },
+    {
+      "source_id": "aml-esg-risk",
+      "target_id": "aml-compliance-basics",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.927171+00:00"
+    },
+    {
+      "source_id": "aml-data-governance",
+      "target_id": "aml-program",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.927266+00:00"
+    },
+    {
+      "source_id": "aml-data-sharing",
+      "target_id": "aml-data-governance",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.927354+00:00"
+    },
+    {
+      "source_id": "aml-continuous-monitoring",
+      "target_id": "transaction-monitoring",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.927439+00:00"
+    },
+    {
+      "source_id": "fincrime-intelligence",
+      "target_id": "aml-threat-intel",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.927524+00:00"
+    },
+    {
+      "source_id": "network-analysis",
+      "target_id": "fincrime-intelligence",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.927609+00:00"
+    },
+    {
+      "source_id": "equity-basics",
+      "target_id": "market-participants",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.927695+00:00"
+    },
+    {
+      "source_id": "order-types",
+      "target_id": "equity-basics",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.927781+00:00"
+    },
+    {
+      "source_id": "trading-venues",
+      "target_id": "order-types",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.927957+00:00"
+    },
+    {
+      "source_id": "market-indices",
+      "target_id": "equity-basics",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.928060+00:00"
+    },
+    {
+      "source_id": "order-book",
+      "target_id": "order-types",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.928149+00:00"
+    },
+    {
+      "source_id": "lob",
+      "target_id": "order-book",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.928237+00:00"
+    },
+    {
+      "source_id": "market-impact",
+      "target_id": "market-microstructure",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.928350+00:00"
+    },
+    {
+      "source_id": "vpin",
+      "target_id": "market-impact",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.928438+00:00"
+    },
+    {
+      "source_id": "market-data",
+      "target_id": "trading-venues",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.928526+00:00"
+    },
+    {
+      "source_id": "market-surveillance",
+      "target_id": "market-microstructure",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.928616+00:00"
+    },
+    {
+      "source_id": "dark-pools",
+      "target_id": "trading-venues",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.928754+00:00"
+    },
+    {
+      "source_id": "high-frequency-trading",
+      "target_id": "market-microstructure",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.928849+00:00"
+    },
+    {
+      "source_id": "execution-algos",
+      "target_id": "order-types",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.928940+00:00"
+    },
+    {
+      "source_id": "algorithmic-trading",
+      "target_id": "execution-algos",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.929031+00:00"
+    },
+    {
+      "source_id": "quantitative-trading",
+      "target_id": "algorithmic-trading",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.929121+00:00"
+    },
+    {
+      "source_id": "statistical-arbitrage",
+      "target_id": "quantitative-trading",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.929210+00:00"
+    },
+    {
+      "source_id": "mean-reversion",
+      "target_id": "statistical-arbitrage",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.929300+00:00"
+    },
+    {
+      "source_id": "momentum-trading",
+      "target_id": "quantitative-trading",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.929413+00:00"
+    },
+    {
+      "source_id": "event-driven-trading",
+      "target_id": "quantitative-trading",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.929505+00:00"
+    },
+    {
+      "source_id": "carry-trade",
+      "target_id": "quantitative-trading",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.929596+00:00"
+    },
+    {
+      "source_id": "volatility-trading",
+      "target_id": "quantitative-trading",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.929688+00:00"
+    },
+    {
+      "source_id": "volatility-arbitrage",
+      "target_id": "volatility-trading",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.929779+00:00"
+    },
+    {
+      "source_id": "volatility-surface",
+      "target_id": "volatility-trading",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.929872+00:00"
+    },
+    {
+      "source_id": "options-trading",
+      "target_id": "volatility-trading",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.929962+00:00"
+    },
+    {
+      "source_id": "machine-learning-markets",
+      "target_id": "quantitative-trading",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.930056+00:00"
+    },
+    {
+      "source_id": "regime-detection",
+      "target_id": "machine-learning-markets",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.930150+00:00"
+    },
+    {
+      "source_id": "portfolio-optimization",
+      "target_id": "equity-basics",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.930244+00:00"
+    },
+    {
+      "source_id": "factor-investing",
+      "target_id": "portfolio-optimization",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.930364+00:00"
+    },
+    {
+      "source_id": "risk-parity",
+      "target_id": "portfolio-optimization",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.930458+00:00"
+    },
+    {
+      "source_id": "esg-investing",
+      "target_id": "portfolio-optimization",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.930554+00:00"
+    },
+    {
+      "source_id": "esg-double-materiality",
+      "target_id": "esg-investing",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.930649+00:00"
+    },
+    {
+      "source_id": "macro-analysis",
+      "target_id": "market-indices",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.930742+00:00"
+    },
+    {
+      "source_id": "earnings-analysis",
+      "target_id": "equity-basics",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.930837+00:00"
+    },
+    {
+      "source_id": "technical-analysis",
+      "target_id": "market-data",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.930932+00:00"
+    },
+    {
+      "source_id": "behavioral-finance",
+      "target_id": "portfolio-optimization",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.931027+00:00"
+    },
+    {
+      "source_id": "hawkes-process",
+      "target_id": "high-frequency-trading",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.931122+00:00"
+    },
+    {
+      "source_id": "hedge-funds",
+      "target_id": "portfolio-optimization",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.931216+00:00"
+    },
+    {
+      "source_id": "crypto-markets",
+      "target_id": "market-participants",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.931313+00:00"
+    },
+    {
+      "source_id": "commodity-trading",
+      "target_id": "market-participants",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.931426+00:00"
+    },
+    {
+      "source_id": "fixed-income",
+      "target_id": "market-participants",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.931526+00:00"
+    },
+    {
+      "source_id": "cross-asset-trading",
+      "target_id": "portfolio-optimization",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.931624+00:00"
+    },
+    {
+      "source_id": "etf-creation",
+      "target_id": "market-participants",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.931720+00:00"
+    },
+    {
+      "source_id": "etf-trading",
+      "target_id": "etf-creation",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.931817+00:00"
+    },
+    {
+      "source_id": "stock-lending",
+      "target_id": "market-participants",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.931915+00:00"
+    },
+    {
+      "source_id": "supply-chain-analysis",
+      "target_id": "macro-analysis",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.932014+00:00"
+    },
+    {
+      "source_id": "alternative-data",
+      "target_id": "technical-analysis",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.932118+00:00"
+    },
+    {
+      "source_id": "semiconductor-industry",
+      "target_id": "supply-chain-analysis",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.932220+00:00"
+    },
+    {
+      "source_id": "batch-processing",
+      "target_id": "data-pipeline",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.932342+00:00"
+    },
+    {
+      "source_id": "streaming",
+      "target_id": "data-pipeline",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.932443+00:00"
+    },
+    {
+      "source_id": "elt",
+      "target_id": "data-pipeline",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.932572+00:00"
+    },
+    {
+      "source_id": "elt-pipeline",
+      "target_id": "elt",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.932741+00:00"
+    },
+    {
+      "source_id": "etl",
+      "target_id": "elt",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.932846+00:00"
+    },
+    {
+      "source_id": "orchestration",
+      "target_id": "data-pipeline",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.932950+00:00"
+    },
+    {
+      "source_id": "data-quality",
+      "target_id": "data-pipeline",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.933050+00:00"
+    },
+    {
+      "source_id": "data-quality-monitoring",
+      "target_id": "data-quality",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.933150+00:00"
+    },
+    {
+      "source_id": "data-quality-sla",
+      "target_id": "data-quality-monitoring",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.933250+00:00"
+    },
+    {
+      "source_id": "data-observability",
+      "target_id": "data-pipeline",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.933352+00:00"
+    },
+    {
+      "source_id": "data-lineage",
+      "target_id": "data-observability",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.933454+00:00"
+    },
+    {
+      "source_id": "data-warehouse",
+      "target_id": "data-pipeline",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.933556+00:00"
+    },
+    {
+      "source_id": "data-warehouse-design",
+      "target_id": "data-warehouse",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.933657+00:00"
+    },
+    {
+      "source_id": "data-lake",
+      "target_id": "data-warehouse",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.933757+00:00"
+    },
+    {
+      "source_id": "lakehouse",
+      "target_id": "data-lake",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.933858+00:00"
+    },
+    {
+      "source_id": "data-mesh",
+      "target_id": "lakehouse",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.933959+00:00"
+    },
+    {
+      "source_id": "data-mesh-governance",
+      "target_id": "data-mesh",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.934062+00:00"
+    },
+    {
+      "source_id": "data-catalog",
+      "target_id": "data-mesh",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.934182+00:00"
+    },
+    {
+      "source_id": "data-discovery",
+      "target_id": "data-catalog",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.934290+00:00"
+    },
+    {
+      "source_id": "data-governance",
+      "target_id": "data-quality",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.934395+00:00"
+    },
+    {
+      "source_id": "data-security",
+      "target_id": "data-governance",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.934502+00:00"
+    },
+    {
+      "source_id": "data-contracts",
+      "target_id": "data-governance",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.934606+00:00"
+    },
+    {
+      "source_id": "data-contract-testing",
+      "target_id": "data-contracts",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.934726+00:00"
+    },
+    {
+      "source_id": "differential-privacy",
+      "target_id": "data-security",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.934832+00:00"
+    },
+    {
+      "source_id": "gdpr-anonymization",
+      "target_id": "data-governance",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.934937+00:00"
+    },
+    {
+      "source_id": "gdpr-synthetic-data",
+      "target_id": "gdpr-anonymization",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.935043+00:00"
+    },
+    {
+      "source_id": "federated-learning",
+      "target_id": "differential-privacy",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.935147+00:00"
+    },
+    {
+      "source_id": "debiasing-pipeline",
+      "target_id": "data-quality",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.935253+00:00"
+    },
+    {
+      "source_id": "fairness-metrics",
+      "target_id": "debiasing-pipeline",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.935357+00:00"
+    },
+    {
+      "source_id": "apache-kafka",
+      "target_id": "streaming",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.935507+00:00"
+    },
+    {
+      "source_id": "cdc",
+      "target_id": "apache-kafka",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.935615+00:00"
+    },
+    {
+      "source_id": "change-data-capture",
+      "target_id": "cdc",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.935724+00:00"
+    },
+    {
+      "source_id": "real-time-analytics",
+      "target_id": "streaming",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.935834+00:00"
+    },
+    {
+      "source_id": "real-time-analytics-architecture",
+      "target_id": "real-time-analytics",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.935944+00:00"
+    },
+    {
+      "source_id": "apache-flink",
+      "target_id": "real-time-analytics",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.936058+00:00"
+    },
+    {
+      "source_id": "data-versioning",
+      "target_id": "data-lake",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.936166+00:00"
+    },
+    {
+      "source_id": "schema-migration",
+      "target_id": "data-versioning",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.936275+00:00"
+    },
+    {
+      "source_id": "schema-registry",
+      "target_id": "schema-migration",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.936387+00:00"
+    },
+    {
+      "source_id": "apache-iceberg",
+      "target_id": "lakehouse",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.936496+00:00"
+    },
+    {
+      "source_id": "arrow-parquet",
+      "target_id": "lakehouse",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.936605+00:00"
+    },
+    {
+      "source_id": "query-optimization",
+      "target_id": "data-warehouse-design",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.936762+00:00"
+    },
+    {
+      "source_id": "metric-store",
+      "target_id": "data-warehouse",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.936877+00:00"
+    },
+    {
+      "source_id": "ml-pipeline",
+      "target_id": "data-pipeline",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.936988+00:00"
+    },
+    {
+      "source_id": "ai-conformity-assessment",
+      "target_id": "ml-pipeline",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.937129+00:00"
+    },
+    {
+      "source_id": "data-platform-kpis",
+      "target_id": "data-warehouse",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.937238+00:00"
+    },
+    {
+      "source_id": "pipeline-cost-optimization",
+      "target_id": "data-platform-kpis",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.937347+00:00"
+    },
+    {
+      "source_id": "data-cost-intelligence",
+      "target_id": "pipeline-cost-optimization",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.937457+00:00"
+    },
+    {
+      "source_id": "reverse-etl",
+      "target_id": "data-warehouse",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.937566+00:00"
+    },
+    {
+      "source_id": "data-act-interoperability",
+      "target_id": "data-mesh",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.937678+00:00"
+    },
+    {
+      "source_id": "dataops",
+      "target_id": "data-pipeline",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.937789+00:00"
+    },
+    {
+      "source_id": "dbt",
+      "target_id": "dataops",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.937901+00:00"
+    },
+    {
+      "source_id": "dagster",
+      "target_id": "dataops",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.938014+00:00"
+    },
+    {
+      "source_id": "distributed-systems",
+      "target_id": "data-pipeline",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.938128+00:00"
+    },
+    {
+      "source_id": "dora-ict-risk",
+      "target_id": "data-governance",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.938243+00:00"
+    },
+    {
+      "source_id": "nis2-cyber-resilience",
+      "target_id": "dora-ict-risk",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.938358+00:00"
+    },
+    {
+      "source_id": "ai-act-high-risk",
+      "target_id": "ai-conformity-assessment",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T07:56:45.938470+00:00"
+    },
+    {
+      "source_id": "market-data",
+      "target_id": "data-pipeline",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.938596+00:00"
+    },
+    {
+      "source_id": "machine-learning-markets",
+      "target_id": "ml-pipeline",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.938713+00:00"
+    },
+    {
+      "source_id": "trading-venues",
+      "target_id": "distributed-systems",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.938887+00:00"
+    },
+    {
+      "source_id": "market-surveillance",
+      "target_id": "data-pipeline",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:45.939006+00:00"
+    },
+    {
+      "source_id": "ai-aml-surveillance",
+      "target_id": "ml-pipeline",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.939124+00:00"
+    },
+    {
+      "source_id": "regtech",
+      "target_id": "data-pipeline",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:45.939239+00:00"
+    },
+    {
+      "source_id": "fatf-recommendations",
+      "target_id": "aml-regulatory-framework",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:57.885576+00:00"
+    },
+    {
+      "source_id": "bsa",
+      "target_id": "aml-regulatory-framework",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:57.885788+00:00"
+    },
+    {
+      "source_id": "tbml",
+      "target_id": "trade-finance-aml",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T07:56:57.885918+00:00"
+    },
+    {
+      "source_id": "ai-hardware",
+      "target_id": "semiconductor-industry",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:57.886043+00:00"
+    },
+    {
+      "source_id": "market-making",
+      "target_id": "execution-algos",
+      "relation_type": "requires",
+      "strength": 1.0,
+      "evidence": [],
+      "pillar": "stock",
+      "created_at": "2026-07-23T07:56:57.886165+00:00"
     }
   ],
   "resource_links": []

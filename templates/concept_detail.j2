@@ -77,34 +77,114 @@
   <div class="lg:col-span-2">
     {% include 'partials/feynman_card.j2' %}
 
+    {# --- Learning path flow for ALL concepts --- #}
+    {%- if learning_paths and learning_paths | length > 0 %}
+    <section class="mb-8">
+      <h2 class="text-lg font-semibold mb-4" style="color:var(--color-text)">Learning Path</h2>
+      {%- for lp in learning_paths[:3] %}
+      <div class="ghost-card p-3 mb-3">
+        <div class="flex items-center justify-between mb-2">
+          <a href="/learning-paths/{{ lp.journey_id }}/" class="text-xs font-semibold no-underline transition hover:opacity-80" style="color:var(--color-accent)">{{ lp.journey_label }}</a>
+          <span class="text-[10px]" style="color:var(--color-text-muted)">Step {{ lp.position + 1 }} of {{ lp.total_in_path }}</span>
+        </div>
+        <div class="flex items-center gap-1 overflow-x-auto pb-1">
+          {%- if lp.prev_id %}
+          <a href="/concepts/{{ lp.prev_id }}/" class="text-xs px-2 py-1 rounded whitespace-nowrap no-underline" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">
+            {{ lp.prev_label }}
+          </a>
+          <span class="text-xs" style="color:var(--color-text-muted)">&rarr;</span>
+          {%- endif %}
+          <span class="text-xs px-2 py-1 rounded font-semibold whitespace-nowrap" style="background:color-mix(in srgb, {{ pillar_color }} 15%, transparent);color:{{ pillar_color }};border:1px solid {{ pillar_color }}">
+            {{ concept.label }}
+          </span>
+          {%- if lp.next_id %}
+          <span class="text-xs" style="color:var(--color-text-muted)">&rarr;</span>
+          <a href="/concepts/{{ lp.next_id }}/" class="text-xs px-2 py-1 rounded whitespace-nowrap no-underline" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">
+            {{ lp.next_label }}
+          </a>
+          {%- endif %}
+        </div>
+      </div>
+      {%- endfor %}
+
+      {# Prev / Next navigation buttons #}
+      {%- set first_lp = learning_paths[0] %}
+      <div class="flex items-center justify-between gap-2">
+        {%- if first_lp.prev_id %}
+        <a href="/concepts/{{ first_lp.prev_id }}/" class="flex items-center gap-1 text-xs font-semibold no-underline transition hover:opacity-80 px-3 py-2 rounded" style="background:var(--color-surface);color:var(--color-text);border:1px solid var(--color-border)">
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+          {{ first_lp.prev_label }}
+        </a>
+        {%- else %}
+        <div></div>
+        {%- endif %}
+        {%- if first_lp.next_id %}
+        <a href="/concepts/{{ first_lp.next_id }}/" class="flex items-center gap-1 text-xs font-semibold no-underline transition hover:opacity-80 px-3 py-2 rounded" style="background:var(--color-surface);color:var(--color-text);border:1px solid var(--color-border)">
+          {{ first_lp.next_label }}
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+        </a>
+        {%- else %}
+        <div></div>
+        {%- endif %}
+      </div>
+    </section>
+    {%- endif %}
+
+    {# --- Related Content with quality badges --- #}
     <section class="mb-8">
       <h2 class="text-lg font-semibold mb-4" style="color:var(--color-text)">Related Content</h2>
     {%- if related_items and related_items | length > 0 %}
-    <div class="grid gap-4 sm:grid-cols-2">
-      {%- for item in related_items %}
-      {%- set item_pillar = item.pillar or "aml" %}
-      {%- set pc = pillar_config.get(item_pillar, pillar_config["aml"]) %}
-      <a href="{{ item.url }}" class="pillar-card ghost-card p-4 block transition" style="text-decoration:none">
-        <div class="flex items-start gap-3">
-          <div class="shrink-0 mt-0.5">
-            <span class="inline-block text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, {{ pc.color | default('#6366f1') }} 15%, transparent);color:{{ pc.color | default('#6366f1') }}">
-              {{ pc.label | default(item_pillar) }}
-            </span>
-          </div>
-          <div class="flex-1 min-w-0">
-            <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">{{ item.title | striptags }}</h3>
-            <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">{{ item.description }}</p>
-            <div class="mt-1.5 flex items-center gap-2 text-[10px]" style="color:var(--color-text-muted)">
-              <span>{{ item.content_type | capitalize }}</span>
-              {%- if item.score %}
-              <span class="font-semibold" style="color:var(--color-accent)">{{ (item.score * 100) | round(0) }}% match</span>
-              {%- endif %}
-            </div>
-          </div>
+    {%- set best = related_items[0] %}
+    {%- set best_pc = pillar_config.get(best.pillar or 'aml', pillar_config['aml']) %}
+    <div class="mb-4 p-4 rounded-lg" style="background:color-mix(in srgb, {{ pillar_color }} 8%, transparent);border:1px solid color-mix(in srgb, {{ pillar_color }} 25%, transparent)">
+      <div class="flex items-center gap-2 mb-2">
+        <span class="text-[10px] font-bold uppercase tracking-wider" style="color:{{ pillar_color }}">Best Match</span>
+        <span class="text-[10px] px-1.5 py-0.5 rounded" style="background:color-mix(in srgb, {{ pillar_color }} 15%, transparent);color:{{ pillar_color }}">{{ (best.score * 100) | round(0) }}%</span>
+      </div>
+      <a href="{{ best.url }}" class="block no-underline" style="color:var(--color-text)">
+        <h3 class="text-sm font-bold">{{ best.title | striptags }}</h3>
+        <p class="text-xs mt-1 line-clamp-2" style="color:var(--color-text-secondary)">{{ best.description }}</p>
+        <div class="flex items-center gap-2 mt-1.5 text-[10px]" style="color:var(--color-text-muted)">
+          <span class="inline-block px-1.5 py-0.5 rounded" style="background:color-mix(in srgb, {{ best_pc.color | default('#6366f1') }} 15%, transparent);color:{{ best_pc.color | default('#6366f1') }}">{{ best_pc.label | default(best.pillar) }}</span>
+          <span>{{ best.content_type | capitalize }}</span>
         </div>
       </a>
-      {%- endfor %}
     </div>
+
+    {%- if related_items | length > 1 %}
+    <details class="ghost-card p-3" {% if related_items | length > 2 %}open{% endif %}>
+      <summary class="text-xs font-semibold cursor-pointer" style="color:var(--color-text-muted)">All {{ related_items | length }} items</summary>
+      <div class="grid gap-3 mt-3 sm:grid-cols-2">
+        {%- for item in related_items[1:] %}
+        {%- set item_pillar = item.pillar or "aml" %}
+        {%- set pc = pillar_config.get(item_pillar, pillar_config["aml"]) %}
+        <a href="{{ item.url }}" class="pillar-card ghost-card p-3 block transition" style="text-decoration:none">
+          <div class="flex items-start gap-2">
+            <div class="shrink-0 mt-0.5">
+              <span class="inline-block text-[10px] px-1.5 py-0.5 rounded" style="background:color-mix(in srgb, {{ pc.color | default('#6366f1') }} 15%, transparent);color:{{ pc.color | default('#6366f1') }}">
+                {{ pc.label | default(item_pillar) }}
+              </span>
+            </div>
+            <div class="flex-1 min-w-0">
+              <h3 class="text-xs font-semibold truncate" style="color:var(--color-text)">{{ item.title | striptags }}</h3>
+              <p class="mt-0.5 text-[11px] line-clamp-2" style="color:var(--color-text-secondary)">{{ item.description }}</p>
+              <div class="mt-1 flex items-center gap-2 text-[10px]" style="color:var(--color-text-muted)">
+                <span>{{ item.content_type | capitalize }}</span>
+                {%- if item.score %}
+                <span class="font-semibold" style="color:var(--color-accent)">{{ (item.score * 100) | round(0) }}%</span>
+                {%- endif %}
+                {# SQI indicator if available #}
+                {%- if item.sqi %}
+                <span class="px-1 rounded" style="background:color-mix(in srgb, {% if item.sqi >= 0.8 %}#22c55e{% elif item.sqi >= 0.5 %}#f59e0b{% else %}#ef4444{% endif %} 10%, transparent);color:{% if item.sqi >= 0.8 %}#22c55e{% elif item.sqi >= 0.5 %}#f59e0b{% else %}#ef4444{% endif %}">SQI {{ (item.sqi * 100) | round(0) }}</span>
+                {%- endif %}
+              </div>
+            </div>
+          </div>
+        </a>
+        {%- endfor %}
+      </div>
+    </details>
+    {%- endif %}
     {%- else %}
     <p class="text-sm ghost-card p-4" style="color:var(--color-text-muted)">No content references this concept yet.</p>
     {%- endif %}
@@ -114,12 +194,52 @@
 <div class="space-y-6">
   {%- include 'partials/concept_map.j2' %}
 
+  {# --- Prerequisite / Dependent mini-graph --- #}
+  {%- if prerequisites or dependents %}
+  <section>
+    <h3 class="text-sm font-semibold mb-3" style="color:var(--color-text)">Prerequisite Graph</h3>
+    <div class="space-y-2">
+      {%- if prerequisites %}
+      <div>
+        <span class="text-[10px] font-semibold uppercase tracking-wider" style="color:var(--color-text-muted)">Requires</span>
+        <div class="flex flex-wrap gap-1 mt-1">
+          {%- for prereq in prerequisites[:6] %}
+          <a href="/concepts/{{ prereq.id }}/" class="text-xs px-2 py-1 rounded no-underline transition hover:opacity-80" style="background:color-mix(in srgb, #22c55e 12%, transparent);color:#22c55e;border:1px solid color-mix(in srgb, #22c55e 25%, transparent)">
+            {{ prereq.label }}
+          </a>
+          {%- endfor %}
+        </div>
+      </div>
+      {%- endif %}
+      {%- if dependents %}
+      <div>
+        <span class="text-[10px] font-semibold uppercase tracking-wider" style="color:var(--color-text-muted)">Enables</span>
+        <div class="flex flex-wrap gap-1 mt-1">
+          {%- for dep in dependents[:6] %}
+          <a href="/concepts/{{ dep.id }}/" class="text-xs px-2 py-1 rounded no-underline transition hover:opacity-80" style="background:color-mix(in srgb, #a855f7 12%, transparent);color:#a855f7;border:1px solid color-mix(in srgb, #a855f7 25%, transparent)">
+            {{ dep.label }}
+          </a>
+          {%- endfor %}
+        </div>
+      </div>
+      {%- endif %}
+      {%- if (prerequisites | length) > 6 or (dependents | length) > 6 %}
+      <a href="/graph/?concept={{ concept.id }}" class="block text-xs font-semibold no-underline" style="color:var(--color-accent)">View full graph &rarr;</a>
+      {%- endif %}
+    </div>
+  </section>
+  {%- endif %}
+
   <section>
     <h3 class="text-sm font-semibold mb-3" style="color:var(--color-text)">Explore</h3>
     <div class="space-y-2">
       {%- set concept_pillar = concept.pillar or "aml" %}
       {%- set concept_pillar_url = pillar_config.get(concept_pillar, {}).get('url', concept_pillar) %}
-      {%- if has_learning_path %}
+      {%- if has_lp_ctx %}
+      <a href="/learning-paths/{{ learning_paths[0].journey_id }}/" class="block p-3 rounded-lg transition hover:shadow-sm" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);border:1px solid var(--color-accent);text-decoration:none">
+        <span class="text-sm font-semibold" style="color:var(--color-accent)">Full Learning Path &rarr;</span>
+      </a>
+      {%- elif has_learning_path %}
       <a href="/{{ concept_pillar_url }}/learn/{{ concept.id }}/" class="block p-3 rounded-lg transition hover:shadow-sm" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);border:1px solid var(--color-accent);text-decoration:none">
         <span class="text-sm font-semibold" style="color:var(--color-accent)">Learning Path &rarr;</span>
       </a>
@@ -134,8 +254,8 @@
       <a href="/search/?q={{ concept.label | urlencode }}" class="block p-3 rounded-lg transition hover:shadow-sm" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
         <span class="text-sm" style="color:var(--color-text)">Search: {{ concept.label }}</span>
       </a>
-      <a href="/{{ concept_pillar_url }}/learn/feynman-path/" class="block p-3 rounded-lg transition hover:shadow-sm" style="background:color-mix(in srgb, #d97706 10%, transparent);border:1px solid #d97706;text-decoration:none">
-        <span class="text-sm font-semibold" style="color:#d97706">Feynman Learning Path &rarr;</span>
+      <a href="/learning-paths/" class="block p-3 rounded-lg transition hover:shadow-sm" style="background:var(--color-surface);border:1px solid var(--color-border);text-decoration:none">
+        <span class="text-sm" style="color:var(--color-text)">All Learning Paths</span>
       </a>
     </div>
   </section>
@@ -143,12 +263,10 @@
   <div class="flex items-center gap-2" data-feedback="{{ concept.id }}">
     <span class="text-xs" style="color:var(--color-text-muted)">Was this helpful?</span>
     <button class="feedback-btn" data-value="yes">
-      <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"/></svg>
-      Yes
+      <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.500 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"/></svg>
     </button>
     <button class="feedback-btn" data-value="no">
-      <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.5 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5"/></svg>
-      No
+      <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.500 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5"/></svg>
     </button>
   </div>
 </div>
