@@ -51,7 +51,7 @@ jobs:
           pip install --no-cache-dir pytest
 
       - name: Restore build cache
-        uses: actions/cache@v4
+        uses: actions/cache@v6
         with:
           path: |
             .build_cache.json
