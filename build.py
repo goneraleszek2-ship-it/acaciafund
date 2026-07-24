@@ -2113,27 +2113,23 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                     weekly_count += 1
 
             # Weekly index page (/weekly/)
+            JSON_KEY_TO_URL = {"aml": "compliance", "markets": "markets", "data-engineering": "data"}
             weeks_by_pillar: dict[str, list] = {"aml": [], "markets": [], "data-engineering": []}
             for w in weeks:
                 wid = w["week_id"]
                 dr = w.get("date_range", "")
-                for p_id, p_lbl in [("aml", "Compliance"), ("markets", "Markets"), ("data-engineering", "Data Engineering")]:
-                    pwd = w.get("pillars", {}).get(p_id if p_id != "markets" else "markets", {})
+                for p_id in ("aml", "markets", "data-engineering"):
+                    pwd = w.get("pillars", {}).get(p_id, {})
                     ev_cnt = len(pwd.get("events", []))
                     tagline = pwd.get("feynman_takeaway", "")[:120] if pwd.get("feynman_takeaway") else ""
                     if pwd:
-                        weeks_by_pillar.setdefault(p_id if p_id != "markets" else "stock", []).append({
+                        weeks_by_pillar[p_id].append({
                             "week_id": wid,
                             "date_range": dr,
                             "vibe": pwd.get("vibe", "🔄"),
                             "events_count": ev_cnt,
                             "tagline": tagline,
                         })
-            # Map to URL keys
-            for p_id in list(weeks_by_pillar.keys()):
-                url_key = pillar_url_map.get(p_id, p_id)
-                if url_key != p_id:
-                    weeks_by_pillar[url_key] = weeks_by_pillar.pop(p_id)
 
             wk_dir = OUTPUT_DIR / "weekly"
             wk_dir.mkdir(parents=True, exist_ok=True)
@@ -2145,9 +2141,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                     description="Browse weekly Feynman-style notes across AML, Markets, and Data Engineering pillars.",
                 ),
                 weeks_by_pillar=weeks_by_pillar,
-                pillar_labels={"aml": "Compliance", "markets": "Markets", "data-engineering": "Data Engineering"},
-                pillar_urls=pillar_url_map,
-                active_pillar="markets",
+                pillar_urls=JSON_KEY_TO_URL,
                 is_index=False,
                 page_path="weekly/",
                 **ctx_base,

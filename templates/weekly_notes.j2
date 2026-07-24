@@ -4,72 +4,67 @@
 
 {% block head %}
 {{ super() }}
-<style>
-.weekly-header { margin-bottom: 2rem; }
-.weekly-nav { display: flex; justify-content: space-between; align-items: center; margin: 1.5rem 0; }
-.weekly-nav a { padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none; font-weight: 500; }
-.weekly-nav a:hover { background: var(--accent-bg, #f0f0f0); }
-.weekly-date { font-size: 0.9rem; color: var(--muted, #666); }
-.vibe-badge { display: inline-block; padding: 0.25rem 0.75rem; border-radius: 999px; background: var(--accent-bg, #eef); font-size: 0.85rem; }
-.event-card { border: 1px solid var(--border, #e0e0e0); border-radius: 0.75rem; padding: 1.25rem; margin-bottom: 1.25rem; background: var(--card-bg, #fff); }
-.event-card h3 { margin-top: 0; margin-bottom: 0.5rem; }
-.event-meta { font-size: 0.85rem; color: var(--muted, #666); margin-bottom: 0.75rem; }
-.feynman-quote { background: var(--accent-bg, #f8f8ff); border-left: 3px solid #6366f1; padding: 0.75rem 1rem; margin: 0.75rem 0; border-radius: 0 0.5rem 0.5rem 0; font-style: italic; }
-.analogy-box { background: #fefce8; border-left: 3px solid #eab308; padding: 0.75rem 1rem; margin: 0.75rem 0; border-radius: 0 0.5rem 0.5rem 0; }
-.why-box { background: #f0fdf4; border-left: 3px solid #22c55e; padding: 0.75rem 1rem; margin: 0.75rem 0; border-radius: 0 0.5rem 0.5rem 0; }
-.event-links { margin-top: 0.75rem; display: flex; gap: 0.5rem; flex-wrap: wrap; }
-.event-links a { font-size: 0.85rem; padding: 0.25rem 0.75rem; border-radius: 0.5rem; background: var(--accent-bg, #eef); text-decoration: none; }
-.event-links a:hover { background: var(--accent, #dde); }
-.takeaway-box { background: linear-gradient(135deg, var(--accent-bg, #eef), #fff); border: 1px solid var(--border, #e0e0e0); border-radius: 0.75rem; padding: 1rem; margin-bottom: 2rem; text-align: center; }
-.takeaway-box p { margin: 0; font-size: 1.05rem; }
-.week-empty { color: var(--muted, #666); font-style: italic; padding: 2rem; text-align: center; }
-.pillar-tabs { display: flex; gap: 0.5rem; margin: 1rem 0; flex-wrap: wrap; }
-.pillar-tab { padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none; font-weight: 500; border: 1px solid var(--border, #e0e0e0); }
-.pillar-tab.active { background: var(--accent, #6366f1); color: white; border-color: var(--accent, #6366f1); }
-</style>
+<link rel="stylesheet" href="{{ 'css/weekly.css' | asset }}">
 {% endblock %}
 
-{% block content %}
+{% block main_content %}
+{% set data = all_pillars[pillar] %}
+{% set pillar_events = data.events | default([]) %}
+{% set event_count = pillar_events | length %}
+{% set palette = {"aml": {"color": "#f97316", "accent": "#fb923c"}, "markets": {"color": "#34d399", "accent": "#6ee7b7"}, "data-engineering": {"color": "#818cf8", "accent": "#a5b4fc"}} %}
+{% set pc = palette.get(pillar, palette["markets"]) %}
+
 <div class="weekly-header">
     <h1>{{ pillar_name }} Weekly Notes</h1>
-    <p class="weekly-date">{{ date_range }} · {{ week_id }}</p>
+    <p class="weekly-date">{{ date_range }} · <strong>{{ week_id }}</strong></p>
+    {% if event_count > 0 %}
+    <p class="weekly-stats">{{ event_count }} event{% if event_count != 1 %}s{% endif %} this week</p>
+    {% endif %}
 </div>
 
 <div class="pillar-tabs">
     {% for p_id, p_data in all_pillars.items() %}
-    <a href="/{{ pillar_urls[p_id] }}/weekly/{{ week_id }}/" class="pillar-tab {% if p_id == pillar %}active{% endif %}">
+    {% set p_palette = palette.get(p_id, palette["markets"]) %}
+    <a href="/{{ pillar_urls[p_id] }}/weekly/{{ week_id }}/" class="pillar-tab {% if p_id == pillar %}active{% endif %}" {% if p_id == pillar %}style="background:{{ pc.color }};border-color:{{ pc.color }}"{% endif %}>
         {{ p_data.vibe }} {{ p_names[p_id] }}
     </a>
     {% endfor %}
 </div>
 
-{% set data = all_pillars[pillar] %}
-
+{% if data.feynman_takeaway %}
 <div class="takeaway-box">
-    <p>🧠 <strong>Feynman Takeaway:</strong> {{ data.feynman_takeaway }}</p>
+    <p><strong>🧠 Feynman Takeaway</strong><br>{{ data.feynman_takeaway }}</p>
 </div>
+{% endif %}
 
-{% if data.events %}
-    {% for event in data.events %}
-    <div class="event-card">
-        <div class="event-meta">{{ event.date }} · {{ event.title }}</div>
+{% if pillar_events %}
+<div class="events-grid">
+    {% for event in pillar_events %}
+    <div class="event-card" style="border-left:3px solid {{ pc.color }}">
+        <div class="event-meta">
+            <span class="date-badge">{{ event.date }}</span>
+            <span>{{ event.title }}</span>
+        </div>
         <h3>{{ event.title }}</h3>
 
         {% if event.feynman %}
-        <div class="feynman-quote">
-            <strong>🤔 In plain English:</strong> {{ event.feynman }}
+        <div class="card-section feynman">
+            <strong>In plain English</strong>
+            {{ event.feynman }}
         </div>
         {% endif %}
 
         {% if event.analogy %}
-        <div class="analogy-box">
-            <strong>💡 Analogy:</strong> {{ event.analogy }}
+        <div class="card-section analogy">
+            <strong>Analogy</strong>
+            {{ event.analogy }}
         </div>
         {% endif %}
 
         {% if event.why_it_matters %}
-        <div class="why-box">
-            <strong>🎯 Why it matters:</strong> {{ event.why_it_matters }}
+        <div class="card-section why">
+            <strong>Why it matters</strong>
+            {{ event.why_it_matters }}
         </div>
         {% endif %}
 
@@ -82,21 +77,22 @@
         {% endif %}
     </div>
     {% endfor %}
+</div>
 {% else %}
-    <div class="week-empty">
-        No significant {{ pillar_name }} developments recorded for this week.
-    </div>
+<div class="week-empty">
+    No significant {{ pillar_name }} developments recorded for this week.
+</div>
 {% endif %}
 
 <div class="weekly-nav">
     {% if prev_week %}
-    <a href="/{{ pillar_urls[pillar] }}/weekly/{{ prev_week }}/">← Previous Week</a>
+    <a href="/{{ pillar_urls[pillar] }}/weekly/{{ prev_week }}/">← {{ prev_week }}</a>
     {% else %}
     <span></span>
     {% endif %}
-    <a href="/weekly/">📅 All Weeks</a>
+    <span class="nav-center"><a href="/weekly/">📅 All Weeks</a></span>
     {% if next_week %}
-    <a href="/{{ pillar_urls[pillar] }}/weekly/{{ next_week }}/">Next Week →</a>
+    <a href="/{{ pillar_urls[pillar] }}/weekly/{{ next_week }}/">{{ next_week }} →</a>
     {% else %}
     <span></span>
     {% endif %}

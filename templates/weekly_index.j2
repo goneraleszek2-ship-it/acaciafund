@@ -4,58 +4,48 @@
 
 {% block head %}
 {{ super() }}
-<style>
-.archive-header { margin-bottom: 2rem; }
-.pillar-section { margin-bottom: 2.5rem; }
-.pillar-section h2 { display: flex; align-items: center; gap: 0.5rem; font-size: 1.5rem; }
-.week-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; margin: 1rem 0; }
-.week-card { border: 1px solid var(--border, #e0e0e0); border-radius: 0.75rem; padding: 1rem; text-decoration: none; color: inherit; transition: box-shadow 0.2s; background: var(--card-bg, #fff); }
-.week-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.08); }
-.week-card .vibe { font-size: 1.25rem; }
-.week-card .title { font-weight: 600; margin: 0.25rem 0; }
-.week-card .date { font-size: 0.85rem; color: var(--muted, #666); }
-.week-card .tagline { font-size: 0.9rem; color: var(--muted, #666); margin-top: 0.25rem; }
-.pillar-tabs { display: flex; gap: 0.5rem; margin: 1rem 0; flex-wrap: wrap; }
-.pillar-tab { padding: 0.5rem 1rem; border-radius: 0.5rem; text-decoration: none; font-weight: 500; border: 1px solid var(--border, #e0e0e0); }
-.pillar-tab.active { background: var(--accent, #6366f1); color: white; border-color: var(--accent, #6366f1); }
-.empty-state { color: var(--muted, #666); font-style: italic; padding: 2rem; }
-</style>
+<link rel="stylesheet" href="{{ 'css/weekly.css' | asset }}">
 {% endblock %}
 
-{% block content %}
+{% block main_content %}
+{% set pillar_keys = {"aml": "Compliance", "markets": "Markets", "data-engineering": "Data Engineering"} %}
+{% set pillar_colors = {"aml": "#f97316", "markets": "#34d399", "data-engineering": "#818cf8"} %}
+
 <div class="archive-header">
     <h1>📅 Weekly Notes Archive</h1>
     <p>Feynman-style weekly briefings across all three pillars. Each event is explained with a simple analogy, a plain-English explanation, and why it matters.</p>
 </div>
 
-<div class="pillar-tabs">
-{% for p_id, p_name in pillar_labels.items() %}
-    <a href="/weekly/?pillar={{ p_id }}" class="pillar-tab {% if p_id == active_pillar %}active{% endif %}">
-        {{ p_name }}
-    </a>
+<div class="all-pillar-grid">
+    {% for p_id, p_name in pillar_keys.items() %}
+    {% set color = pillar_colors[p_id] %}
+    <div class="pillar-section">
+        <h2>
+            <span class="pillar-indicator" style="background:{{ color }}"></span>
+            {{ p_name }}
+        </h2>
+        {% set weeks = weeks_by_pillar.get(p_id, []) %}
+        {% if weeks %}
+        <div class="week-grid">
+            {% for w in weeks %}
+            <a href="/{{ pillar_urls[p_id] }}/weekly/{{ w.week_id }}/" class="week-card" style="border-left:3px solid {{ color }}">
+                {% if loop.index <= 2 %}
+                <span class="latest-badge">Latest</span>
+                {% endif %}
+                <div class="vibe">{{ w.vibe }}</div>
+                <div class="week-id">{{ w.week_id }}</div>
+                <div class="date-range">{{ w.date_range }}</div>
+                <div class="event-count">{{ w.events_count }} event{% if w.events_count != 1 %}s{% endif %}</div>
+                {% if w.tagline %}
+                <div class="event-preview">{{ w.tagline }}</div>
+                {% endif %}
+            </a>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">No weekly notes yet for {{ p_name }}.</div>
+        {% endif %}
+    </div>
     {% endfor %}
 </div>
-
-{% for p_id, p_name in pillar_names.items() %}
-{% if p_id == active_pillar %}
-<div class="pillar-section">
-    <h2>{{ p_name }}</h2>
-    {% set weeks = weeks_by_pillar.get(p_id, []) %}
-    {% if weeks %}
-    <div class="week-grid">
-        {% for w in weeks %}
-        <a href="/{{ pillar_urls[p_id] }}/weekly/{{ w.week_id }}/" class="week-card">
-            <div class="vibe">{{ w.vibe }}</div>
-            <div class="title">{{ w.week_id }}</div>
-            <div class="date">{{ w.date_range }}</div>
-            <div class="tagline">{{ w.events_count }} events · {{ w.tagline[:100] }}</div>
-        </a>
-        {% endfor %}
-    </div>
-    {% else %}
-    <div class="empty-state">No weekly notes yet for {{ p_name }}.</div>
-    {% endif %}
-</div>
-{% endif %}
-{% endfor %}
 {% endblock %}
