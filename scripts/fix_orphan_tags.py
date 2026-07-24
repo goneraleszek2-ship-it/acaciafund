@@ -308,8 +308,6 @@ def find_orphan_tags(all_tags, concept_by_id, all_labels_aliases_lower):
     """Find tags that don't directly match any concept label, alias, or id."""
     orphans = []
     for t in all_tags:
-        t_lower = t.lower()
-        ntag = normalize(t)
         # Check if tag matches any label, alias, or id
         matched = False
         for cid, c in concept_by_id.items():

@@ -2,8 +2,6 @@
 """Backfill body_html, quality metadata, and flashcards for empty registry items."""
 
 import json
-import math
-import re
 import os
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -1592,7 +1590,7 @@ def _generate_fallback_html(title, description, item):
     difficulty = item.get("difficulty", "intermediate")
     tags = item.get("tags", [])
 
-    parts = [f'<h2>Overview</h2>']
+    parts = ['<h2>Overview</h2>']
     if description:
         parts.append(f'<p>{description}</p>')
     else:
@@ -1610,7 +1608,7 @@ def _generate_fallback_html(title, description, item):
     parts.append('\n<h2>Key Takeaways</h2>\n<ul>')
     parts.append(f'<li>Understand the core principles and concepts underlying {title.lower()}.</li>')
     parts.append(f'<li>Recognize practical applications within {pillar.replace("-", " ")} workflows and decision-making.</li>')
-    parts.append(f'<li>Identify connections to related topics and advanced study areas.</li>')
+    parts.append('<li>Identify connections to related topics and advanced study areas.</li>')
     parts.append('</ul>')
 
     return '\n\n'.join(parts)
@@ -1618,7 +1616,6 @@ def _generate_fallback_html(title, description, item):
 
 def generate_flashcards(item, body_html):
     """Generate flashcards based on body_html content."""
-    slug = item["slug"]
     content_type = item["content_type"]
 
     # Use pre-defined flashcards if available
@@ -1644,8 +1641,6 @@ def generate_flashcards(item, body_html):
                 })
         if takeaways:
             for t in takeaways[:2]:
-                words = t.split()
-                question_words = words[:4] + ["...?"]
                 cards.append({
                     "front": t[:80] + ("..." if len(t) > 80 else ""),
                     "back": t
@@ -1667,7 +1662,6 @@ def generate_quality_metadata(item):
 
     sqi = item.get("sqi", 0.5)
     content_type = item.get("content_type", "knowledge")
-    slug = item.get("slug", "")
 
     # quality_badge
     if "quality_badge" not in item:
@@ -1742,7 +1736,6 @@ def backfill():
     }
 
     for i, item in enumerate(content):
-        slug = item.get("slug", "?")
 
         # 1. Generate body_html if missing
         if not item.get("body_html"):

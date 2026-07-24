@@ -2812,7 +2812,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
         **ctx_base,
     )
     (_src_dir / "index.html").write_text(_src_html, encoding="utf-8")
-    print(f"  source-trust: 1 page")
+    print("  source-trust: 1 page")
 
     # --- ADMIN PANEL (via build_taxonomies) ---
     from core.images.manifest import load_manifest as _load_manifest
