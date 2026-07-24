@@ -2058,6 +2058,108 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
             (_bloom_dir / "index.html").write_text(_bloom_html, encoding="utf-8")
             _extra_count += 1
 
+    # --- WEEKLY NOTES PAGES ---
+    weekly_notes_path = PROJECT_ROOT / "data" / "weekly_notes.json"
+    if weekly_notes_path.exists():
+        try:
+            with open(weekly_notes_path) as f:
+                weekly_data = json.load(f)
+            weeks = weekly_data.get("weeks", [])
+            weeks.sort(key=lambda w: w["week_id"], reverse=True)
+
+            pillar_url_map = {"aml": "compliance", "stock": "markets", "data-engineering": "data"}
+
+            # Per-week per-pillar pages
+            weekly_count = 0
+            for wi, w in enumerate(weeks):
+                wid = w["week_id"]
+                pillars_data = w.get("pillars", {})
+                prev_id = weeks[wi + 1]["week_id"] if wi + 1 < len(weeks) else None
+                next_id = weeks[wi - 1]["week_id"] if wi > 0 else None
+
+                JSON_TO_URL_KEY = {"aml": "aml", "markets": "stock", "data-engineering": "data-engineering"}
+                JSON_TO_DISPLAY = {"aml": "Compliance", "markets": "Markets", "data-engineering": "Data Engineering"}
+                for p_id in ("aml", "markets", "data-engineering"):
+                    pillar_data = pillars_data.get(p_id)
+                    if not pillar_data:
+                        continue
+
+                    url_key = JSON_TO_URL_KEY[p_id]
+                    p_url = pillar_url_map.get(url_key, url_key)
+                    out_dir = OUTPUT_DIR / p_url / "weekly" / wid
+                    out_dir.mkdir(parents=True, exist_ok=True)
+
+                    html = render_template(
+                        "weekly_notes.j2",
+                        content=_dummy(
+                            f"Week {wid} — {JSON_TO_DISPLAY[p_id]} — AcaciaFund",
+                            "weekly",
+                            description=f"Feynman-style weekly notes for {JSON_TO_DISPLAY[p_id]} — week {wid}.",
+                        ),
+                        week_id=wid,
+                        date_range=w.get("date_range", ""),
+                        pillar=p_id,
+                        pillar_name=JSON_TO_DISPLAY[p_id],
+                        all_pillars=pillars_data,
+                        pillar_urls={k: pillar_url_map.get(JSON_TO_URL_KEY[k], JSON_TO_URL_KEY[k]) for k in pillars_data},
+                        p_names=JSON_TO_DISPLAY,
+                        prev_week=prev_id,
+                        next_week=next_id,
+                        is_index=False,
+                        page_path=f"{p_url}/weekly/{wid}/",
+                        **ctx_base,
+                    )
+                    (out_dir / "index.html").write_text(html, encoding="utf-8")
+                    weekly_count += 1
+
+            # Weekly index page (/weekly/)
+            weeks_by_pillar: dict[str, list] = {"aml": [], "markets": [], "data-engineering": []}
+            for w in weeks:
+                wid = w["week_id"]
+                dr = w.get("date_range", "")
+                for p_id, p_lbl in [("aml", "Compliance"), ("markets", "Markets"), ("data-engineering", "Data Engineering")]:
+                    pwd = w.get("pillars", {}).get(p_id if p_id != "markets" else "markets", {})
+                    ev_cnt = len(pwd.get("events", []))
+                    tagline = pwd.get("feynman_takeaway", "")[:120] if pwd.get("feynman_takeaway") else ""
+                    if pwd:
+                        weeks_by_pillar.setdefault(p_id if p_id != "markets" else "stock", []).append({
+                            "week_id": wid,
+                            "date_range": dr,
+                            "vibe": pwd.get("vibe", "🔄"),
+                            "events_count": ev_cnt,
+                            "tagline": tagline,
+                        })
+            # Map to URL keys
+            for p_id in list(weeks_by_pillar.keys()):
+                url_key = pillar_url_map.get(p_id, p_id)
+                if url_key != p_id:
+                    weeks_by_pillar[url_key] = weeks_by_pillar.pop(p_id)
+
+            wk_dir = OUTPUT_DIR / "weekly"
+            wk_dir.mkdir(parents=True, exist_ok=True)
+            wk_html = render_template(
+                "weekly_index.j2",
+                content=_dummy(
+                    "Weekly Notes Archive — AcaciaFund",
+                    "index",
+                    description="Browse weekly Feynman-style notes across AML, Markets, and Data Engineering pillars.",
+                ),
+                weeks_by_pillar=weeks_by_pillar,
+                pillar_labels={"aml": "Compliance", "markets": "Markets", "data-engineering": "Data Engineering"},
+                pillar_urls=pillar_url_map,
+                active_pillar="markets",
+                is_index=False,
+                page_path="weekly/",
+                **ctx_base,
+            )
+            (wk_dir / "index.html").write_text(wk_html, encoding="utf-8")
+            weekly_count += 1
+            print(f"  weekly notes: {weekly_count} pages")
+        except Exception as e:
+            print(f"  weekly notes: error — {e}")
+    else:
+        print("  weekly notes: data/weekly_notes.json not found")
+
     if _extra_count:
         print(f"  extra indexes: {_extra_count} pages")
 
