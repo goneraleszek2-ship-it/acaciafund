@@ -1060,7 +1060,8 @@
         "cdc",
         "ai-act-high-risk",
         "mica-crypto-assets",
-        "market-surveillance"
+        "market-surveillance",
+        "lakestream-architecture"
       ],
       "eli5_explanation": "Transaction Monitoring is a concept in transaction monitoring. In simple terms, Transaction Monitoring covers transaction monitoring within Compliance. This compliance concept addresses key topics in the transaction monitoring within compliance domain. Also known as: TM, transact",
       "analogy": "Think of Transaction Monitoring like a security camera watching a bank vault 24/7 \u2014 it helps you handle transaction monitoring tasks more effectively.",
@@ -7125,7 +7126,8 @@
         "Nissenbaum, Helen. Privacy in Context (2009)"
       ],
       "cross_pillar_analogs": [
-        "aml-data-governance"
+        "aml-data-governance",
+        "aml-program-reform"
       ],
       "eli5_explanation": "Data Governance is a concept in architecture. In simple terms, Data Governance covers architectural patterns for Data Engineering. This data engineering concept addresses key topics in the architectural patterns for data engineering domain. Also known as: data ca",
       "analogy": "Think of Data Governance like a blueprint for a complex machine \u2014 it helps you handle architecture tasks more effectively.",
@@ -9944,7 +9946,8 @@
         "Akidau, Tyler, et al. 'MillWheel: Fault-Tolerant Stream Processing at Internet Scale.' VLDB (2013)"
       ],
       "cross_pillar_analogs": [
-        "transaction-monitoring"
+        "transaction-monitoring",
+        "lakestream-architecture"
       ],
       "eli5_explanation": "Stream Processing & The Dataflow Model is a concept in advanced techniques. In simple terms, The Dataflow Model, introduced by Akidau et al. (2015), provides a unified framework for processing both batch and streaming data. It defines a general approach to handling unbounded, out-of-order dat",
       "analogy": "Think of Stream Processing & The Dataflow Model like a specialized tool in a data engineer's workshop \u2014 it helps you handle advanced techniques tasks more effectively.",
@@ -10001,7 +10004,8 @@
         "Armbrust, Michael, et al. 'Delta Lake: High-Performance ACID Table Storage over Cloud Object Stores.' VLDB (2020)"
       ],
       "cross_pillar_analogs": [
-        "aml-data-sharing"
+        "aml-data-sharing",
+        "lakestream-architecture"
       ],
       "eli5_explanation": "Lakehouse Architecture is a concept in architecture. In simple terms, The Lakehouse architecture, formalized by Armbrust et al. (2021), combines the flexibility of data lakes (cheap object storage, diverse data types) with the reliability of data warehouses (ACID transa",
       "analogy": "Think of Lakehouse Architecture like a blueprint for a complex machine \u2014 it helps you handle architecture tasks more effectively.",
@@ -10138,6 +10142,121 @@
       "explanation_quality": 0.8,
       "created_at": "2026-07-23T18:13:21.197628+00:00",
       "updated_at": "2026-07-23T18:13:21.197628+00:00"
+    },
+    {
+      "id": "lakestream-architecture",
+      "label": "Lakestream Architecture",
+      "description": "Lakestream Architecture represents the convergence of streaming and lakehouse paradigms, where a single copy of data in Kafka topics simultaneously serves real-time stream processing and Iceberg table reads. Formalized by StreamNative in 2026, it achieves 95% cost reduction by eliminating separate streaming and batch storage layers. The default 2026 stack is Debezium (CDC) \u2192 Kafka (transport) \u2192 Flink (processing) \u2192 Iceberg (storage). Extends the lakehouse architecture pioneered by Armbrust et al. (2021) with first-class streaming semantics.",
+      "pillar": "data-engineering",
+      "category": "streaming",
+      "aliases": [
+        "lakestream",
+        "StreamNative Lakestream",
+        "streaming-first lakehouse",
+        "streaming-lakehouse",
+        "stream batch unification"
+      ],
+      "properties": {},
+      "source_inspiration": "StreamNative Lakestream architecture whitepaper (2026); Debezium + Kafka + Flink + Iceberg stack",
+      "confidence_score": 1.0,
+      "philosophical_lineage": [
+        "event_logging",
+        "distributed_consensus",
+        "systems_theory"
+      ],
+      "epistemic_status": "constitutive",
+      "normative_basis": "utilitarian",
+      "ontological_commitment": "processual",
+      "temporal_ontology": "event_based",
+      "uncertainty_class": "measurable",
+      "governance_model": "distributed",
+      "semantic_contract_type": "technical",
+      "philosophical_sources": [
+        "StreamNative. 'Lakestream: One Copy for Streaming and Lakehouse.' 2026.",
+        "Armbrust, Michael, et al. 'Lakehouse: A New Generation of Open Platforms.' CIDR 2021.",
+        "Akidau, Tyler, et al. 'The Dataflow Model.' VLDB 2015."
+      ],
+      "cross_pillar_analogs": [
+        "transaction-monitoring"
+      ],
+      "eli5_explanation": "Lakestream Architecture is a concept in streaming. In simple terms, Lakestream Architecture represents the convergence of streaming and lakehouse paradigms, where a single copy of data in Kafka topics simultaneously serves real-time stream processing and Iceberg table",
+      "analogy": "Think of Lakestream Architecture like a specialized tool in a toolbox \u2014 it helps you handle streaming tasks more effectively.",
+      "concrete_example": "Consider a scenario where Lakestream Architecture applies: Lakestream Architecture represents the convergence of streaming and lakehouse paradigms, where a single copy of data in Kafka topics simultaneously serves real-time stream processing and Iceberg table...",
+      "feynman_diagram": null,
+      "gap_questions": [
+        "What are the key components or steps involved in Lakestream Architecture?",
+        "Can you explain Lakestream Architecture without using jargon?",
+        "What happens if Lakestream Architecture is not applied correctly?",
+        "How does Lakestream Architecture relate to other concepts in streaming?"
+      ],
+      "teach_back_prompt": "Explain Lakestream Architecture as if teaching a colleague who is new to streaming. Cover: what it is, how it works, and why it matters.",
+      "build_exercise": {
+        "type": "diagram",
+        "prompt": "Create a diagram that demonstrates Lakestream Architecture in a real-world streaming scenario. Walk through your design decisions.",
+        "solution": "A diagram for Lakestream Architecture should include: 1. The core components of lakestream architecture 2. How they interact 3. Expected outcomes or outputs"
+      },
+      "feynman_difficulty": 4,
+      "explanation_quality": 0.6,
+      "created_at": "2026-07-23T20:16:40.381690+00:00",
+      "updated_at": "2026-07-23T20:16:40.381710+00:00"
+    },
+    {
+      "id": "aml-program-reform",
+      "label": "AML Program Reform",
+      "description": "AML Program Reform covers the 2026 restructuring of US AML compliance requirements. The Federal Reserve's July 2026 proposed rule, FinCEN's April 2026 AML/CFT program rule, and the GENIUS Act collectively create the most significant BSA overhaul in 20+ years. Key elements include risk-based resource allocation, effectiveness-based supervision (only 'significant failures' trigger enforcement), board-level program approval, US-based compliance officer requirement, and explicit regulatory encouragement of AI/ML adoption for compliance. This represents a paradigm shift from prescriptive checklist-based compliance to outcomes-oriented risk management.",
+      "pillar": "aml",
+      "category": "regulations",
+      "aliases": [
+        "AML program reform 2026",
+        "Fed AML proposal",
+        "FinCEN program rule",
+        "BSA overhaul 2026",
+        "effectiveness-based supervision",
+        "risk-based resource allocation"
+      ],
+      "properties": {},
+      "source_inspiration": "Federal Reserve proposed rule on AML program requirements (July 7, 2026); FinCEN proposed AML/CFT program rule (April 2026); GENIUS Act (2026)",
+      "confidence_score": 1.0,
+      "philosophical_lineage": [
+        "legal_positivism",
+        "regulatory_theory",
+        "risk_governance"
+      ],
+      "epistemic_status": "regulatory",
+      "normative_basis": "utilitarian",
+      "ontological_commitment": "constructivist",
+      "temporal_ontology": "process_based",
+      "uncertainty_class": "knightian",
+      "governance_model": "hierarchical",
+      "semantic_contract_type": "regulatory",
+      "philosophical_sources": [
+        "Federal Register. 'Proposed Rule: AML Program Requirements.' July 7, 2026.",
+        "FinCEN. 'Proposed AML/CFT Program Rule.' April 2026.",
+        "GENIUS Act. 2026."
+      ],
+      "cross_pillar_analogs": [
+        "data-governance"
+      ],
+      "eli5_explanation": "AML Program Reform is a concept in regulations. In simple terms, AML Program Reform covers the 2026 restructuring of US AML compliance requirements. The Federal Reserve's July 2026 proposed rule, FinCEN's April 2026 AML/CFT program rule, and the GENIUS Act collecti",
+      "analogy": "Think of AML Program Reform like a rulebook that everyone in the game must follow \u2014 it helps you handle regulations tasks more effectively.",
+      "concrete_example": "Consider a scenario where AML Program Reform applies: AML Program Reform covers the 2026 restructuring of US AML compliance requirements. The Federal Reserve's July 2026 proposed rule, FinCEN's April 2026 AML/CFT program rule, and the GENIUS Act collecti...",
+      "feynman_diagram": null,
+      "gap_questions": [
+        "What are the key components or steps involved in AML Program Reform?",
+        "Can you explain AML Program Reform without using jargon?",
+        "What happens if AML Program Reform is not applied correctly?",
+        "How does AML Program Reform relate to other concepts in regulations?"
+      ],
+      "teach_back_prompt": "Explain AML Program Reform as if teaching a colleague who is new to regulations. Cover: what it is, how it works, and why it matters.",
+      "build_exercise": {
+        "type": "diagram",
+        "prompt": "Create a diagram that demonstrates AML Program Reform in a real-world regulations scenario. Walk through your design decisions.",
+        "solution": "A diagram for AML Program Reform should include: 1. The core components of aml program reform 2. How they interact 3. Expected outcomes or outputs"
+      },
+      "feynman_difficulty": 4,
+      "explanation_quality": 0.8,
+      "created_at": "2026-07-23T20:16:40.381734+00:00",
+      "updated_at": "2026-07-23T20:16:40.381738+00:00"
     }
   ],
   "relations": [
@@ -13956,6 +14075,96 @@
       "evidence": [],
       "pillar": "cross-pillar",
       "created_at": "2026-07-23T18:13:21.197628+00:00"
+    },
+    {
+      "source_id": "lakestream-architecture",
+      "target_id": "lakehouse-architecture",
+      "relation_type": "supersedes",
+      "strength": 0.8,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T20:16:40.399841+00:00"
+    },
+    {
+      "source_id": "lakestream-architecture",
+      "target_id": "stream-processing-model",
+      "relation_type": "enables",
+      "strength": 0.7,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T20:16:40.399951+00:00"
+    },
+    {
+      "source_id": "lakestream-architecture",
+      "target_id": "apache-kafka",
+      "relation_type": "requires",
+      "strength": 0.9,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T20:16:40.400034+00:00"
+    },
+    {
+      "source_id": "lakestream-architecture",
+      "target_id": "apache-flink",
+      "relation_type": "requires",
+      "strength": 0.8,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T20:16:40.400115+00:00"
+    },
+    {
+      "source_id": "lakestream-architecture",
+      "target_id": "apache-iceberg",
+      "relation_type": "requires",
+      "strength": 0.9,
+      "evidence": [],
+      "pillar": "data-engineering",
+      "created_at": "2026-07-23T20:16:40.400195+00:00"
+    },
+    {
+      "source_id": "aml-program-reform",
+      "target_id": "aml-regulatory-framework",
+      "relation_type": "part_of",
+      "strength": 0.8,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T20:16:40.400282+00:00"
+    },
+    {
+      "source_id": "aml-program-reform",
+      "target_id": "bsa",
+      "relation_type": "regulates",
+      "strength": 0.9,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T20:16:40.400364+00:00"
+    },
+    {
+      "source_id": "aml-program-reform",
+      "target_id": "risk-based-approach",
+      "relation_type": "influences",
+      "strength": 0.9,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T20:16:40.400448+00:00"
+    },
+    {
+      "source_id": "aml-program-reform",
+      "target_id": "aml-program",
+      "relation_type": "influences",
+      "strength": 0.9,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T20:16:40.400530+00:00"
+    },
+    {
+      "source_id": "aml-program-reform",
+      "target_id": "beneficial-ownership",
+      "relation_type": "related_to",
+      "strength": 0.5,
+      "evidence": [],
+      "pillar": "aml",
+      "created_at": "2026-07-23T20:16:40.400611+00:00"
     }
   ],
   "resource_links": []

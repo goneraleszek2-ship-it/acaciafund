@@ -814,7 +814,6 @@ CROSS_PILLAR_SEEDS: List[Tuple[str, str, str]] = [
     ("mica-crypto-assets", "transaction-monitoring", "regulates"),
     ("esg-double-materiality", "aml-program", "related_to"),
     ("data-act-interoperability", "data-mesh", "related_to"),
-    ("aml-data-governance", "data-governance", "related_to"),
     ("market-surveillance", "transaction-monitoring", "related_to"),
     ("alternative-data", "data-catalog", "related_to"),
     ("payment-fraud", "streaming", "related_to"),
