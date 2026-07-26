@@ -99,7 +99,6 @@ TECH_PATTERNS: dict[str, list[str]] = {
     "Apache ZooKeeper": [r"\bzookeeper\b"],
     "Jaeger": [r"\bjaeger\b"],
     "OpenTelemetry": [r"\bopen.telemetry\b", r"\bopentelemetry\b"],
-    "Snowflake": [r"\bsnowflake\b"],
     "Starburst": [r"\bstarburst\b"],
 }
 
