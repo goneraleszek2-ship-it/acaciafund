@@ -2773,6 +2773,49 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     else:
         print("  tags: 0 pages")
 
+    # --- TECHNOLOGY / TOOL PAGES (data engineering only) ---
+    tool_items: dict[str, list] = defaultdict(list)
+    for c in all_content:
+        for t in getattr(c, "technologies", []) or []:
+            tool_items[t.lower().strip()].append(c)
+    if tool_items:
+        _tool_pages = 0
+        for tool_name, tool_posts in sorted(tool_items.items()):
+            tool_slug = re.sub(r"[^a-z0-9]+", "-", tool_name.lower()).strip("-")
+            if not tool_slug:
+                continue
+            tool_out = OUTPUT_DIR / "data" / "tools" / tool_slug / "index.html"
+            tool_out.parent.mkdir(parents=True, exist_ok=True)
+            tool_html = render_template(
+                "tag_index.j2",
+                content=_dummy(f"Tool: {tool_name}", "tool"),
+                tag=tool_name,
+                items=sorted(tool_posts, key=lambda x: getattr(x, "title", "") or ""),
+                is_index=False,
+                page_path=f"data/tools/{tool_slug}/",
+                **ctx_base,
+            )
+            tool_out.write_text(tool_html, encoding="utf-8")
+            _tool_pages += 1
+        # Tool index page
+        tool_idx_out = OUTPUT_DIR / "data" / "tools" / "index.html"
+        tool_idx_out.parent.mkdir(parents=True, exist_ok=True)
+        tool_idx_html = render_template(
+            "tag_index.j2",
+            content=_dummy("Tools & Technologies", "tool"),
+            tag="",
+            items=[],
+            all_tags=sorted(tool_items.keys()),
+            is_index=False,
+            page_path="data/tools/",
+            **ctx_base,
+        )
+        tool_idx_out.write_text(tool_idx_html, encoding="utf-8")
+        _tool_pages += 1
+        print(f"  tools: {_tool_pages} pages")
+    else:
+        print("  tools: 0 pages")
+
     # --- ALPHABETICAL INDEX (A-Z browser, MathWorld-inspired) ---
     try:
         from scripts.generate_alpha_index import generate_alpha_index

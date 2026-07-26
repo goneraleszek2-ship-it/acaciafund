@@ -332,11 +332,16 @@
     if (filters.pillar.length && !filters.pillar.includes(entry.pillar || '')) return false;
     if (filters.type.length && !filters.type.includes(entry.content_type || '')) return false;
     if (filters.difficulty.length && !filters.difficulty.includes(entry.difficulty || '')) return false;
+    if (filters.technology.length) {
+      var techs = entry.technologies || [];
+      var hasMatch = filters.technology.some(function(t) { return techs.indexOf(t) !== -1; });
+      if (!hasMatch) return false;
+    }
     return true;
   }
 
   function readFilters() {
-    const filters = { pillar: [], type: [], difficulty: [] };
+    const filters = { pillar: [], type: [], difficulty: [], technology: [] };
     document.querySelectorAll('.filter-checkbox:checked').forEach(cb => {
       const group = cb.getAttribute('data-group');
       if (group && filters.hasOwnProperty(group)) filters[group].push(cb.value);
@@ -346,7 +351,7 @@
 
   function syncFiltersToUrl(filters) {
     const url = new URL(window.location);
-    for (const key of ['pillar', 'type', 'difficulty']) {
+    for (const key of ['pillar', 'type', 'difficulty', 'technology']) {
       if (filters[key].length) url.searchParams.set('f_' + key, filters[key].join(','));
       else url.searchParams.delete('f_' + key);
     }
@@ -394,6 +399,39 @@
   let displayedCount = 0;
   let currentTerms = [];
   let selectedIndex = -1;
+
+  function populateTechFilters(index) {
+    var container = document.getElementById('tech-filter-list');
+    if (!container) return;
+    var techMap = {};
+    for (var i = 0; i < index.length; i++) {
+      var techs = index[i].technologies || [];
+      for (var j = 0; j < techs.length; j++) {
+        techMap[techs[j]] = (techMap[techs[j]] || 0) + 1;
+      }
+    }
+    var sorted = Object.keys(techMap).sort(function(a, b) { return techMap[b] - techMap[a]; });
+    var topTechs = sorted.slice(0, 20);
+    if (!topTechs.length) {
+      container.innerHTML = '<span style="font-size:0.75rem;color:var(--color-text-muted,#666)">No technologies detected</span>';
+      return;
+    }
+    container.innerHTML = topTechs.map(function(t) {
+      return '<label style="display:flex;align-items:center;gap:0.4rem;font-size:0.85rem;padding:0.2rem 0;cursor:pointer" title="' + techMap[t] + ' items">' +
+        '<input type="checkbox" value="' + escapeHtml(t) + '" class="filter-checkbox" data-group="technology"> ' +
+        escapeHtml(t) +
+        '<span style="font-size:0.65rem;color:var(--color-text-muted,#888);margin-left:auto">' + techMap[t] + '</span>' +
+        '</label>';
+    }).join('') +
+    (sorted.length > 20 ? '<details style="font-size:0.75rem;margin-top:0.25rem"><summary style="cursor:pointer;color:var(--color-text-muted,#888)">+' + (sorted.length - 20) + ' more</summary>' +
+      sorted.slice(20).map(function(t) {
+        return '<label style="display:flex;align-items:center;gap:0.4rem;font-size:0.8rem;padding:0.15rem 0;cursor:pointer" title="' + techMap[t] + ' items">' +
+          '<input type="checkbox" value="' + escapeHtml(t) + '" class="filter-checkbox" data-group="technology"> ' +
+          escapeHtml(t) +
+          '<span style="font-size:0.65rem;color:var(--color-text-muted,#888);margin-left:auto">' + techMap[t] + '</span>' +
+          '</label>';
+      }).join('') + '</details>' : '');
+  }
 
   function fetchIndex() {
     if (searchIndex) return Promise.resolve(searchIndex);
@@ -509,6 +547,15 @@
     const terms = query.trim() ? tokenize(query) : [];
 
     fetchIndex().then(index => {
+      populateTechFilters(index);
+      // Restore technology filter checkboxes from URL after populating
+      var techParams = new URLSearchParams(window.location.search).get('f_technology');
+      if (techParams) {
+        var techVals = techParams.split(',');
+        document.querySelectorAll('#tech-filter-list .filter-checkbox').forEach(function(cb) {
+          if (techVals.indexOf(cb.value) !== -1) cb.checked = true;
+        });
+      }
       const filters = readFilters();
       allScored = index
         .filter(function(e) {

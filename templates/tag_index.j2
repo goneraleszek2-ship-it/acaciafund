@@ -2,12 +2,31 @@
 {% block main_content %}
 <section>
   <h1>{{ content.title }}</h1>
+  {%- if all_tags and not items %}
   <div class="tag-cloud">
     {% for tag in all_tags %}
-    <a href="/tags/{{ tag | lower | replace(' ', '-') | replace('_', '-') }}/" class="tag-item">
-      {{ tag }}
-    </a>
+    {%- set tag_url = tag | lower | replace(' ', '-') | replace('_', '-') %}
+    <a href="/tags/{{ tag_url }}/" class="tag-item">{{ tag }}</a>
     {% endfor %}
   </div>
+  {%- endif %}
+    {%- if items %}
+  <div class="mt-4 space-y-3">
+    {% for item in items %}
+    {%- set item_slug = item.slug %}
+    {%- set item_title = item.title %}
+    {%- set item_date_str = item.date_str or '' %}
+    {%- if not item_date_str and item.created_at %}
+      {%- set item_date_str = item.created_at | string %}
+    {%- endif %}
+    <div class="ghost-card p-4">
+      <a href="/{{ item_slug | replace('data-engineering', 'data') }}/" class="text-decoration-none font-semibold text-sm hover-underline">{{ item_title }}</a>
+      {%- if item_date_str %}
+      <span class="text-xs text-muted ml-2">{{ item_date_str[:10] }}</span>
+      {%- endif %}
+    </div>
+    {% endfor %}
+  </div>
+  {%- endif %}
 </section>
 {% endblock %}
