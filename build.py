@@ -630,6 +630,17 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
 
     failed_count = 0
 
+    # --- JS Bundling ---
+    # Concatenate JS files into entry points before asset pipeline
+    _t0 = time.time()
+    try:
+        from scripts.bundle_js import bundle as bundle_js
+        bundle_js(dev=True, out_dir=str(PIPELINE_STATIC_DIR / "js"))
+        print(f"  JS bundling complete")
+    except ImportError:
+        print(f"  JS bundler not available, skipping")
+    _record_timing("js_bundling", time.time() - _t0)
+
     # --- Asset Pipeline (fingerprinting and minification) ---
     # Must be after build_hash is computed but before template rendering
     _t0 = time.time()

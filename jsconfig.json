@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "checkJs": true,
+    "allowJs": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "outDir": "dist/static/js",
+    "rootDir": "static/js",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["static/js/*"]
+    }
+  },
+  "include": ["static/js/**/*.js"],
+  "exclude": ["node_modules", "dist"]
+}

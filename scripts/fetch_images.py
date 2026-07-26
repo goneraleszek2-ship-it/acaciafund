@@ -25,6 +25,7 @@ from pathlib import Path
 from typing import Any
 
 import requests
+from dotenv import load_dotenv
 from PIL import ImageStat
 
 # core/images is the visual management system — Tier 1 (manifest), Tier 2 (auto-fetch), Tier 3 (SVG fallback)
@@ -42,6 +43,7 @@ except ImportError:
     HAS_PIL = False
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
+load_dotenv(PROJECT_ROOT / ".env")
 REGISTRY_PATH = PROJECT_ROOT / "registry.json"
 IMAGES_DIR = PROJECT_ROOT / "static" / "images" / "generated"
 USER_AGENT = "AcaciaFund/1.0 (image-fetcher; +https://acaciafund.org)"
@@ -1470,6 +1472,14 @@ def download_image(url: str, dest: Path, retries: int = 0) -> tuple[bool, str, i
             _GLOBAL_CONTENT_HASHES[content_md5] = dest.name
             dest_path = dest.with_suffix(ext)
             dest_path.write_bytes(data)
+            if HAS_PIL and ext == ".webp" and w > 0 and h > 0:
+                for resize_w in (800, 400):
+                    ratio = resize_w / w
+                    variant = img.resize((resize_w, int(h * ratio)), Image.Resampling.LANCZOS)
+                    vout = BytesIO()
+                    variant.save(vout, format="WEBP", quality=85, method=6)
+                    variant_path = dest.parent / f"{dest.stem}_{resize_w}w{ext}"
+                    variant_path.write_bytes(vout.getvalue())
             if not HAS_PIL and w == 0:
                 try:
                     img = Image.open(BytesIO(data))

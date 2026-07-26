@@ -175,7 +175,7 @@
         html += '<div class="space-y-2">';
         (q.options || []).forEach((opt, i) => {
           html += `<label class="quiz-option flex items-center gap-3 p-3 rounded-lg cursor-pointer transition" style="background:var(--color-bg);border:1px solid var(--color-border)" tabindex="0" data-idx="${i}">
-            <span class="quiz-radio shrink-0 w-5 h-5 rounded-full border-2 flex items-center justify-center" style="border-color:var(--color-text-muted)"></span>
+            <span class="quiz-radio shrink-0" style="width:1.25em;height:1.25em;border-radius:50%;border:2px solid var(--color-text-muted);display:inline-flex;align-items:center;justify-content:center"></span>
             <span class="text-sm" style="color:var(--color-text)">${this._esc(opt)}</span>
           </label>`;
         });
@@ -208,12 +208,12 @@
           o.style.borderColor = '#22c55e';
           o.style.background = 'color-mix(in srgb, #22c55e 10%, transparent)';
           o.querySelector('.quiz-radio').style.borderColor = '#22c55e';
-          o.querySelector('.quiz-radio').innerHTML = '<svg class="w-3 h-3" fill="none" stroke="#22c55e" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>';
+          o.querySelector('.quiz-radio').innerHTML = '<svg class="icon-sm" fill="none" stroke="#22c55e" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg>';
         } else if (i === idx && i !== correct) {
           o.style.borderColor = '#ef4444';
           o.style.background = 'color-mix(in srgb, #ef4444 10%, transparent)';
           o.querySelector('.quiz-radio').style.borderColor = '#ef4444';
-          o.querySelector('.quiz-radio').innerHTML = '<svg class="w-3 h-3" fill="none" stroke="#ef4444" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"/></svg>';
+          o.querySelector('.quiz-radio').innerHTML = '<svg class="icon-sm" fill="none" stroke="#ef4444" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"/></svg>';
         }
       });
 
@@ -295,14 +295,14 @@
           <div class="flashcard-inner">
             <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
               <div class="flex items-start gap-2">
-                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
+                <svg class="icon-inline mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
                 <span class="font-semibold text-sm" style="color:var(--color-text)">${this._esc(term)}</span>
               </div>
               <p class="mt-2 text-[11px]" style="color:var(--color-text-muted)">Tap or press Space to reveal</p>
             </div>
             <div class="flashcard-back rounded-lg p-4" style="background:var(--color-accent);color:#fff">
               <div class="flex items-start gap-2">
-                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <svg class="icon-inline mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                 <span class="text-sm flashcard-back-text">${this._esc(def)}</span>
               </div>
             </div>
@@ -324,7 +324,7 @@
           <div class="flashcard-inner">
             <div class="flashcard-front rounded-lg p-4" style="background:var(--color-surface);border:1px solid var(--color-border)">
               <div class="flex items-start gap-2 mb-3">
-                <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                <svg class="icon-inline mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
                 <span class="font-semibold text-sm" style="color:var(--color-text)">${this._esc(term)}</span>
               </div>
               <textarea class="gen-answer w-full rounded p-2 text-sm" rows="3"
@@ -341,7 +341,7 @@
                 <div>
                   <p class="text-[11px] opacity-80 mb-1">Correct answer:</p>
                   <div class="flex items-start gap-2">
-                    <svg class="w-4 h-4 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <svg class="icon-inline mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                     <span class="text-sm flashcard-back-text">${this._esc(def)}</span>
                   </div>
                 </div>

@@ -55,11 +55,11 @@
   {# LAYER 2: ANALOGY #}
   {% if concept.analogy %}
   <details class="feynman-layer analogy-layer analogy-layer-details mb-3 group">
-    <summary class="flex items-center gap-2 cursor-pointer py-2 px-3 list-none select-none rounded" style="color:var(--color-text)">
+    <summary class="flex items-center gap-2 cursor-pointer py-2 px-3 list-none select-none rounded text-default">
       <span style="color:#2563eb">{{ stage_icons["link"] | safe }}</span>
       <span class="text-xs font-semibold uppercase tracking-wider" style="color:#2563eb">Analogy</span>
     </summary>
-    <div class="mt-2 p-3 rounded text-sm ml-2" style="background:color-mix(in srgb, #2563eb 6%, transparent);border:1px solid color-mix(in srgb, #2563eb 15%, transparent);color:var(--color-text-secondary)">
+    <div class="mt-2 p-3 rounded text-sm ml-2 text-secondary" style="background:color-mix(in srgb, #2563eb 6%, transparent);border:1px solid color-mix(in srgb, #2563eb 15%, transparent)">
       {{ concept.analogy }}
     </div>
   </details>
@@ -68,11 +68,11 @@
   {# LAYER 3: EXAMPLE #}
   {% if concept.concrete_example %}
   <details class="feynman-layer example-layer mb-3 group">
-    <summary class="flex items-center gap-2 cursor-pointer py-2 px-3 list-none select-none rounded" style="color:var(--color-text)">
+    <summary class="flex items-center gap-2 cursor-pointer py-2 px-3 list-none select-none rounded text-default">
       <span style="color:#16a34a">{{ stage_icons["code"] | safe }}</span>
       <span class="text-xs font-semibold uppercase tracking-wider" style="color:#16a34a">Example</span>
     </summary>
-    <div class="mt-2 p-3 rounded text-sm ml-2" style="background:color-mix(in srgb, #16a34a 6%, transparent);border:1px solid color-mix(in srgb, #16a34a 15%, transparent);color:var(--color-text-secondary)">
+    <div class="mt-2 p-3 rounded text-sm ml-2 text-secondary" style="background:color-mix(in srgb, #16a34a 6%, transparent);border:1px solid color-mix(in srgb, #16a34a 15%, transparent)">
       {{ concept.concrete_example }}
     </div>
   </details>
@@ -81,11 +81,11 @@
   {# LAYER 4: DIAGRAM #}
   {% if concept.feynman_diagram %}
   <details class="feynman-layer diagram-layer mb-3 group">
-    <summary class="flex items-center gap-2 cursor-pointer py-2 px-3 list-none select-none rounded" style="color:var(--color-text)">
+    <summary class="flex items-center gap-2 cursor-pointer py-2 px-3 list-none select-none rounded text-default">
       <span style="color:#7c3aed">{{ stage_icons["eye"] | safe }}</span>
       <span class="text-xs font-semibold uppercase tracking-wider" style="color:#7c3aed">Diagram</span>
     </summary>
-    <div class="mt-2 p-3 rounded text-sm ml-2" style="background:color-mix(in srgb, #7c3aed 6%, transparent);border:1px solid color-mix(in srgb, #7c3aed 15%, transparent);color:var(--color-text-secondary)">
+    <div class="mt-2 p-3 rounded text-sm ml-2 text-secondary" style="background:color-mix(in srgb, #7c3aed 6%, transparent);border:1px solid color-mix(in srgb, #7c3aed 15%, transparent)">
       {{ concept.feynman_diagram | safe }}
     </div>
   </details>
@@ -94,13 +94,13 @@
   {# LAYER 5: GAP QUESTIONS #}
   {% if concept.gap_questions and concept.gap_questions | length > 0 %}
   <details class="feynman-layer gaps-layer mb-3 group">
-    <summary class="flex items-center gap-2 cursor-pointer py-2 px-3 list-none select-none rounded" style="color:var(--color-text)">
+    <summary class="flex items-center gap-2 cursor-pointer py-2 px-3 list-none select-none rounded text-default">
       <span style="color:#dc2626">{{ stage_icons["search"] | safe }}</span>
       <span class="text-xs font-semibold uppercase tracking-wider" style="color:#dc2626">Find Gaps</span>
     </summary>
     <div class="mt-2 ml-2 space-y-2">
       {% for q in concept.gap_questions %}
-      <div class="p-2 rounded text-sm" style="background:color-mix(in srgb, #dc2626 6%, transparent);border:1px solid color-mix(in srgb, #dc2626 12%, transparent);color:var(--color-text-secondary)">
+      <div class="p-2 rounded text-sm text-secondary" style="background:color-mix(in srgb, #dc2626 6%, transparent);border:1px solid color-mix(in srgb, #dc2626 12%, transparent)">
         {{ q }}
       </div>
       {% endfor %}
@@ -112,30 +112,30 @@
   {% if concept.teach_back_prompt %}
   <div class="feynman-layer teachback-layer mb-3 p-4 rounded" style="background:color-mix(in srgb, var(--color-accent) 8%, transparent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent)">
     <div class="flex items-center gap-2 mb-2">
-      <span style="color:var(--color-accent)">{{ stage_icons["chat"] | safe }}</span>
-      <span class="text-xs font-semibold uppercase tracking-wider" style="color:var(--color-accent)">Teach Back</span>
+      <span class="text-accent">{{ stage_icons["chat"] | safe }}</span>
+      <span class="text-xs font-semibold uppercase tracking-wider text-accent">Teach Back</span>
     </div>
-    <p class="text-sm mb-2" style="color:var(--color-text-secondary)">{{ concept.teach_back_prompt }}</p>
-    <textarea class="teachback-input w-full min-h-[60px] p-2 text-sm rounded border" placeholder="Write your explanation here..." style="background:var(--color-bg);border-color:var(--color-border);color:var(--color-text);resize:vertical" data-teachback="{{ concept.id }}"></textarea>
-    <button class="teachback-submit mt-2 text-xs px-3 py-1.5 rounded font-semibold border-0 cursor-pointer" style="background:var(--color-accent);color:#fff" data-submit-teachback="{{ concept.id }}">Submit Explanation</button>
+    <p class="text-sm mb-2 text-secondary">{{ concept.teach_back_prompt }}</p>
+    <textarea class="teachback-input w-full min-h-[60px] p-2 text-sm rounded border bg-bg border-default text-default" placeholder="Write your explanation here..." style="resize:vertical" data-teachback="{{ concept.id }}"></textarea>
+    <button class="teachback-submit mt-2 text-xs px-3 py-1.5 rounded font-semibold border-0 btn-primary cursor-pointer" data-submit-teachback="{{ concept.id }}">Submit Explanation</button>
   </div>
   {% endif %}
 
   {# LAYER 7: BUILD #}
   {% if concept.build_exercise %}
   <details class="feynman-layer build-layer group">
-    <summary class="flex items-center gap-2 cursor-pointer py-2 px-3 list-none select-none rounded" style="color:var(--color-text)">
+    <summary class="flex items-center gap-2 cursor-pointer py-2 px-3 list-none select-none rounded text-default">
       <span style="color:#ea580c">{{ stage_icons["wrench"] | safe }}</span>
       <span class="text-xs font-semibold uppercase tracking-wider" style="color:#ea580c">Create</span>
     </summary>
     <div class="mt-2 p-3 rounded text-sm ml-2" style="background:color-mix(in srgb, #ea580c 6%, transparent);border:1px solid color-mix(in srgb, #ea580c 15%, transparent)">
-      <p class="font-mono mb-2" style="color:var(--color-text)">{{ concept.build_exercise.prompt }}</p>
+      <p class="font-mono mb-2 text-default">{{ concept.build_exercise.prompt }}</p>
       {% if concept.build_exercise.type == "code" %}
-      <textarea class="build-exercise-input w-full min-h-[120px] p-2 text-xs font-mono rounded border" placeholder="Write your solution..." style="background:var(--color-bg);border-color:var(--color-border);color:var(--color-text);resize:vertical"></textarea>
+      <textarea class="build-exercise-input w-full min-h-[120px] p-2 text-xs font-mono rounded border bg-bg border-default text-default" placeholder="Write your solution..." style="resize:vertical"></textarea>
       {% endif %}
       <details class="mt-2">
-        <summary class="text-xs cursor-pointer select-none" style="color:var(--color-text-muted)">Show solution</summary>
-        <pre class="mt-2 p-3 text-xs font-mono rounded overflow-x-auto" style="background:var(--color-bg);border:1px solid var(--color-border);color:var(--color-text-secondary)">{{ concept.build_exercise.solution }}</pre>
+        <summary class="text-xs cursor-pointer select-none text-muted">Show solution</summary>
+        <pre class="mt-2 p-3 text-xs font-mono rounded overflow-x-auto bg-bg border-default text-secondary">{{ concept.build_exercise.solution }}</pre>
       </details>
     </div>
   </details>
@@ -143,7 +143,7 @@
 
   {# Footer #}
   {% if concept.feynman_difficulty %}
-  <div class="mt-4 pt-3 border-t flex items-center gap-3 text-xs" style="border-color:var(--color-border);color:var(--color-text-muted)">
+  <div class="mt-4 pt-3 border-t border-muted flex items-center gap-3 text-xs text-muted">
     <span>Difficulty:</span>
     <span class="difficulty-badge {{ diff_class }}">{{ diff_label }} &mdash; {{ diff }}/5</span>
     <span class="flex gap-0.5 ml-auto">

@@ -1,6 +1,6 @@
 <div class="concept-map ghost-card p-5">
-  <h3 class="text-sm font-semibold mb-4 flex items-center gap-2" style="color:var(--color-text)">
-    <svg class="w-4 h-4" fill="none" stroke="{{ pillar_config.get(concept.pillar or 'aml', {}).get('color', '#6366f1') }}" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
+  <h3 class="text-sm font-semibold mb-4 flex items-center gap-2 text-default">
+    <svg class="icon-inline" fill="none" stroke="{{ pillar_config.get(concept.pillar or 'aml', {}).get('color', '#6366f1') }}" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/></svg>
     Concept Map
   </h3>
 
@@ -16,18 +16,18 @@
 
   <div class="space-y-4">
     <div>
-      <p class="text-xs font-semibold mb-2 uppercase tracking-wider" style="color:var(--color-text-muted)">Requires</p>
+      <p class="text-xs font-semibold mb-2 uppercase tracking-wider text-muted">Requires</p>
       {%- if prereqs %}
       <div class="flex flex-wrap gap-1.5">
         {%- for pr in prereqs[:6] %}
-        <a href="/concepts/{{ pr.id }}/" class="text-xs px-2 py-1 rounded transition hover:opacity-80" style="background:color-mix(in srgb, #ef4444 10%, transparent);color:#ef4444;text-decoration:none">← {{ pr.label }}</a>
+        <a href="/concepts/{{ pr.id }}/" class="text-xs px-2 py-1 rounded transition hover:opacity-80 text-decoration-none" style="background:color-mix(in srgb, #ef4444 10%, transparent);color:#ef4444">← {{ pr.label }}</a>
         {%- endfor %}
         {%- if prereqs | length > 6 %}
-        <span class="text-xs px-2 py-1" style="color:var(--color-text-muted)">+{{ prereqs | length - 6 }} more</span>
+        <span class="text-xs px-2 py-1 text-muted">+{{ prereqs | length - 6 }} more</span>
         {%- endif %}
       </div>
       {%- else %}
-      <p class="text-xs" style="color:var(--color-text-muted)">None</p>
+      <p class="text-xs text-muted">None</p>
       {%- endif %}
     </div>
 
@@ -36,23 +36,23 @@
     </div>
 
     <div>
-      <p class="text-xs font-semibold mb-2 uppercase tracking-wider" style="color:var(--color-text-muted)">Enables</p>
+      <p class="text-xs font-semibold mb-2 uppercase tracking-wider text-muted">Enables</p>
       {%- if dependents %}
       <div class="flex flex-wrap gap-1.5">
         {%- for dep in dependents[:6] %}
-        <a href="/concepts/{{ dep.id }}/" class="text-xs px-2 py-1 rounded transition hover:opacity-80" style="background:color-mix(in srgb, #22c55e 10%, transparent);color:#22c55e;text-decoration:none">{{ dep.label }} →</a>
+        <a href="/concepts/{{ dep.id }}/" class="text-xs px-2 py-1 rounded transition hover:opacity-80 text-decoration-none" style="background:color-mix(in srgb, #22c55e 10%, transparent);color:#22c55e">{{ dep.label }} →</a>
         {%- endfor %}
         {%- if dependents | length > 6 %}
-        <span class="text-xs px-2 py-1" style="color:var(--color-text-muted)">+{{ dependents | length - 6 }} more</span>
+        <span class="text-xs px-2 py-1 text-muted">+{{ dependents | length - 6 }} more</span>
         {%- endif %}
       </div>
       {%- else %}
-      <p class="text-xs" style="color:var(--color-text-muted)">None</p>
+      <p class="text-xs text-muted">None</p>
       {%- endif %}
     </div>
   </div>
 
-  <div class="mt-4 pt-3 border-t text-[10px] flex gap-3" style="border-color:var(--color-border);color:var(--color-text-muted)">
+  <div class="mt-4 pt-3 border-t border-muted text-[10px] flex gap-3 text-muted">
     <span>← requires</span>
     <span>enables →</span>
   </div>

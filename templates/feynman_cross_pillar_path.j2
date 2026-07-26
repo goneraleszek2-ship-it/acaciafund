@@ -1,23 +1,23 @@
 {% extends "layout.j2" %}
 {% block main_content %}
-<nav aria-label="Breadcrumb" class="mb-4 text-xs" style="color:var(--color-text-muted)">
+<nav aria-label="Breadcrumb" class="mb-4 text-xs text-muted">
   <ol class="flex flex-wrap items-center gap-1.5">
-    <li><a href="/" class="hover:text-[var(--color-accent)] transition">Home</a></li>
+    <li><a href="/" class="hover-accent transition">Home</a></li>
     <li aria-hidden="true">/</li>
-    <li><a href="/{{ pillar_url }}/" class="hover:text-[var(--color-accent)] transition">{{ pillar_label }}</a></li>
+    <li><a href="/{{ pillar_url }}/" class="hover-accent transition">{{ pillar_label }}</a></li>
     <li aria-hidden="true">/</li>
-    <li><a href="/{{ pillar_url }}/learn/" class="hover:text-[var(--color-accent)] transition">Learn</a></li>
+    <li><a href="/{{ pillar_url }}/learn/" class="hover-accent transition">Learn</a></li>
     <li aria-hidden="true">/</li>
     <li aria-current="page">Feynman Synthesis</li>
   </ol>
 </nav>
 
 <header class="mb-8">
-  <h1 class="text-3xl font-extrabold flex items-center gap-3" style="color:var(--color-text)">
+  <h1 class="text-3xl font-extrabold flex items-center gap-3 text-default">
     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/></svg>
     Cross-Pillar Feynman Synthesis
   </h1>
-  <p class="mt-2 text-sm" style="color:var(--color-text-muted)">
+  <p class="mt-2 text-sm text-muted">
     {{ total_triples }} analog connections between <strong>{{ pillar_label }}</strong> concepts and concepts in other pillars.
     Use these cross-domain analogies to deepen your Feynman understanding.
   </p>
@@ -25,7 +25,7 @@
 
 {% if connected_pillars %}
 <div class="flex flex-wrap gap-2 mb-6">
-  <span class="text-xs font-semibold self-center" style="color:var(--color-text-muted)">Connected to:</span>
+  <span class="text-xs font-semibold self-center text-muted">Connected to:</span>
   {% for cp in connected_pillars %}
   {% set cp_label = {"aml": "Compliance", "stock": "Markets", "data-engineering": "Data Engineering"}.get(cp, cp) %}
   {% set cp_color = {"aml": "#ef4444", "stock": "#f59e0b", "data-engineering": "#3b82f6"}.get(cp, "#6366f1") %}
@@ -47,34 +47,34 @@
         <div class="flex items-center gap-2 mb-1">
           {% set sp_color = {"aml": "#ef4444", "stock": "#f59e0b", "data-engineering": "#3b82f6"}.get(triple.source_pillar, "#6366f1") %}
           <span class="text-xs font-semibold px-1.5 py-0.5 rounded" style="background:color-mix(in srgb, {{ sp_color }} 15%, transparent);color:{{ sp_color }}">{{ triple.source_pillar }}</span>
-          <a href="/concepts/{{ triple.source_id }}/" class="text-sm font-bold hover:text-[var(--color-accent)] transition truncate" style="color:var(--color-text)">{{ source.get("label", triple.source_id) }}</a>
+          <a href="/concepts/{{ triple.source_id }}/" class="text-sm font-bold truncate hover-accent transition text-default">{{ source.get("label", triple.source_id) }}</a>
         </div>
         {% if source.get("eli5_explanation") %}
-        <p class="text-xs leading-relaxed mt-1" style="color:var(--color-text-secondary)">{{ source.get("eli5_explanation")[:150] }}{% if source.get("eli5_explanation")|length > 150 %}...{% endif %}</p>
+        <p class="text-xs leading-relaxed mt-1 text-secondary">{{ source.get("eli5_explanation")[:150] }}{% if source.get("eli5_explanation")|length > 150 %}...{% endif %}</p>
         {% endif %}
       </div>
 
       <div class="flex items-center gap-2 shrink-0 px-3">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)">
+        <svg class="icon-lg text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
         </svg>
-        <span class="text-[10px] font-semibold uppercase tracking-wider" style="color:var(--color-accent)">Analog</span>
+        <span class="text-[10px] font-semibold uppercase tracking-wider text-accent">Analog</span>
       </div>
 
       <div class="flex-1 min-w-0">
         <div class="flex items-center gap-2 mb-1">
           {% set tp_color = {"aml": "#ef4444", "stock": "#f59e0b", "data-engineering": "#3b82f6"}.get(triple.target_pillar, "#6366f1") %}
           <span class="text-xs font-semibold px-1.5 py-0.5 rounded" style="background:color-mix(in srgb, {{ tp_color }} 15%, transparent);color:{{ tp_color }}">{{ triple.target_pillar }}</span>
-          <a href="/concepts/{{ triple.target_id }}/" class="text-sm font-bold hover:text-[var(--color-accent)] transition truncate" style="color:var(--color-text)">{{ target.get("label", triple.target_id) }}</a>
+          <a href="/concepts/{{ triple.target_id }}/" class="text-sm font-bold truncate hover-accent transition text-default">{{ target.get("label", triple.target_id) }}</a>
         </div>
         {% if target.get("eli5_explanation") %}
-        <p class="text-xs leading-relaxed mt-1" style="color:var(--color-text-secondary)">{{ target.get("eli5_explanation")[:150] }}{% if target.get("eli5_explanation")|length > 150 %}...{% endif %}</p>
+        <p class="text-xs leading-relaxed mt-1 text-secondary">{{ target.get("eli5_explanation")[:150] }}{% if target.get("eli5_explanation")|length > 150 %}...{% endif %}</p>
         {% endif %}
       </div>
     </div>
 
     {% if source.get("difficulty") and target.get("difficulty") %}
-    <div class="mt-3 pt-2 border-t flex items-center gap-4 text-[10px]" style="border-color:var(--color-border);color:var(--color-text-muted)">
+    <div class="mt-3 pt-2 border-t border-muted flex items-center gap-4 text-[10px] text-muted">
       <span>Difficulty: {{ source.get("difficulty", 2) }} ↔ {{ target.get("difficulty", 2) }}</span>
       <span class="flex gap-1">
         {% for d in range(5) %}
@@ -92,7 +92,7 @@
 
 {% if not triples %}
 <div class="ghost-card p-8 text-center">
-  <p class="text-sm" style="color:var(--color-text-muted)">No cross-pillar analog connections found for {{ pillar_label }}.</p>
+  <p class="text-sm text-muted">No cross-pillar analog connections found for {{ pillar_label }}.</p>
 </div>
 {% endif %}
 

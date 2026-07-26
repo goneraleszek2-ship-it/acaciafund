@@ -1,10 +1,10 @@
 {% extends "layout.j2" %}
 {% block main_content %}
-<nav aria-label="Breadcrumb" class="mb-4 text-xs" style="color:var(--color-text-muted)">
+<nav aria-label="Breadcrumb" class="mb-4 text-xs text-muted">
   <ol class="flex flex-wrap items-center gap-1.5">
-    <li><a href="/" class="hover:text-[var(--color-accent)] transition">Home</a></li>
+    <li><a href="/" class="hover-accent transition">Home</a></li>
     <li aria-hidden="true">/</li>
-    <li><a href="/{{ pillar_url }}/" class="hover:text-[var(--color-accent)] transition">{{ pillar_label }}</a></li>
+    <li><a href="/{{ pillar_url }}/" class="hover-accent transition">{{ pillar_label }}</a></li>
     <li aria-hidden="true">/</li>
     <li aria-current="page">Feynman Learning Path</li>
   </ol>
@@ -13,20 +13,20 @@
 <header class="mb-6">
   <div class="flex items-center gap-2 mb-2 flex-wrap">
     <span class="text-xs px-2 py-0.5 rounded font-semibold" style="background:color-mix(in srgb, {{ pillar_color }} 15%, transparent);color:{{ pillar_color }}">{{ pillar_label }}</span>
-    <span class="text-xs px-2 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Feynman Path</span>
+    <span class="badge-outline">Feynman Path</span>
   </div>
-  <h1 class="text-2xl font-extrabold" style="color:var(--color-text)">Feynman Learning Path</h1>
-  <p class="mt-1 text-sm" style="color:var(--color-text-muted)">
+  <h1 class="text-2xl font-extrabold text-default">Feynman Learning Path</h1>
+  <p class="mt-1 text-sm text-muted">
     {{ total_concepts }} concepts &middot; {{ stages | length }} stages
     &middot; Difficulty: {{ difficulty_tiers | join(", ") }}
   </p>
 </header>
 
 <div class="mb-6 ghost-card p-4" style="border-left:4px solid {{ pillar_color }}">
-  <p class="text-xs leading-relaxed" style="color:var(--color-text-secondary)">
+  <p class="text-xs leading-relaxed text-secondary">
     The Feynman Technique is a four-step learning method: pick a concept, teach it to a child,
     identify gaps, review and simplify. This path scaffolds concepts through six progressive stages:
-    <strong class="font-semibold" style="color:var(--color-text)">Explain &rarr; Analogize &rarr; Exemplify &rarr; Find Gaps &rarr; Build &rarr; Teach Back</strong>.
+    <strong class="font-semibold text-default">Explain &rarr; Analogize &rarr; Exemplify &rarr; Find Gaps &rarr; Build &rarr; Teach Back</strong>.
     Complete each stage before moving to the next.
   </p>
 </div>
@@ -40,13 +40,13 @@
     <div class="path-stage" data-stage="{{ loop.index }}">
       <div class="flex items-center gap-3 mb-2">
         <div>
-          <h2 class="text-base font-bold" style="color:var(--color-text)">{{ stage.label }}</h2>
-          <p class="text-xs" style="color:var(--color-text-muted)">{{ stage.description }}</p>
+          <h2 class="text-base font-bold text-default">{{ stage.label }}</h2>
+          <p class="text-xs text-muted">{{ stage.description }}</p>
         </div>
-        <span class="ml-auto text-xs" style="color:var(--color-text-muted)">{{ concept_count }} concepts</span>
+        <span class="ml-auto text-xs text-muted">{{ concept_count }} concepts</span>
       </div>
 
-      <p class="text-xs italic mb-3 px-3 py-2 rounded" style="background:var(--color-bg);color:var(--color-text-secondary);border-left:3px solid {{ pillar_color }}">
+      <p class="text-xs italic mb-3 px-3 py-2 rounded bg-bg text-secondary" style="border-left:3px solid {{ pillar_color }}">
         {{ stage.prompt }}
       </p>
 
@@ -54,15 +54,15 @@
         {%- for cid in stage.concept_ids %}
         {%- set concept = concept_map.get(cid, {}) %}
         {%- set fd = concept.get("feynman_difficulty", 1) %}
-        <div class="flex items-center gap-2 py-1.5 px-3 rounded transition hover:bg-[var(--color-bg)]" style="border:1px solid var(--color-border);border-radius:6px;margin-bottom:0.25rem">
-          <span class="text-xs shrink-0 w-5 text-right" style="color:var(--color-text-muted)">{{ loop.index }}.</span>
-          <a href="/concepts/{{ cid }}/" class="text-sm font-semibold no-underline hover:opacity-80 transition" style="color:var(--color-accent);flex:1">
+        <div class="flex items-center gap-2 py-1.5 px-3 rounded transition hover:bg-[var(--color-bg)] border-default" style="margin-bottom:0.25rem">
+          <span class="text-xs shrink-0 w-5 text-right text-muted">{{ loop.index }}.</span>
+          <a href="/concepts/{{ cid }}/" class="text-sm font-semibold text-decoration-none hover-accent transition flex-1 text-accent">
             {{ concept.get("label", cid) }}
           </a>
           <span class="difficulty-badge {% if fd <= 2 %}beginner{% elif fd == 3 %}intermediate{% else %}advanced{% endif %} text-[10px] py-0.5 px-1.5">
             D{{ fd }}
           </span>
-          <a href="/concepts/{{ cid }}/" class="text-xs no-underline" style="color:var(--color-text-muted)" data-tooltip="Open concept detail">
+          <a href="/concepts/{{ cid }}/" class="text-xs text-decoration-none text-muted" data-tooltip="Open concept detail">
             &rarr;
           </a>
         </div>
@@ -78,19 +78,19 @@
 </div>
 
 <div class="mt-6 ghost-card p-4">
-  <h3 class="text-sm font-bold mb-2" style="color:var(--color-text)">How to use this path</h3>
-  <ol class="text-xs space-y-1" style="color:var(--color-text-muted)">
-    <li>1. Start at <strong class="font-semibold" style="color:var(--color-text)">Stage 1 (ELI5)</strong> &mdash; read each concept's plain-English explanation.</li>
-    <li>2. Move to <strong class="font-semibold" style="color:var(--color-text)">Stage 2 (Analogy)</strong> &mdash; internalise the real-world mapping.</li>
-    <li>3. Work through <strong class="font-semibold" style="color:var(--color-text)">Stage 3 (Concrete)</strong> &mdash; run the code or follow the numbers.</li>
-    <li>4. Test yourself with <strong class="font-semibold" style="color:var(--color-text)">Stage 4 (Gap Map)</strong> &mdash; honestly flag what you don't know.</li>
-    <li>5. Prove you understand with <strong class="font-semibold" style="color:var(--color-text)">Stage 5 (Build)</strong> &mdash; create something real.</li>
-    <li>6. Solidify with <strong class="font-semibold" style="color:var(--color-text)">Stage 6 (Teach Back)</strong> &mdash; explain it to someone else.</li>
+  <h3 class="text-sm font-bold mb-2 text-default">How to use this path</h3>
+  <ol class="text-xs space-y-1 text-muted">
+    <li>1. Start at <strong class="font-semibold text-default">Stage 1 (ELI5)</strong> &mdash; read each concept's plain-English explanation.</li>
+    <li>2. Move to <strong class="font-semibold text-default">Stage 2 (Analogy)</strong> &mdash; internalise the real-world mapping.</li>
+    <li>3. Work through <strong class="font-semibold text-default">Stage 3 (Concrete)</strong> &mdash; run the code or follow the numbers.</li>
+    <li>4. Test yourself with <strong class="font-semibold text-default">Stage 4 (Gap Map)</strong> &mdash; honestly flag what you don't know.</li>
+    <li>5. Prove you understand with <strong class="font-semibold text-default">Stage 5 (Build)</strong> &mdash; create something real.</li>
+    <li>6. Solidify with <strong class="font-semibold text-default">Stage 6 (Teach Back)</strong> &mdash; explain it to someone else.</li>
   </ol>
 </div>
 {%- else %}
 <div class="ghost-card p-8 text-center">
-  <p class="text-sm" style="color:var(--color-text-muted)">No concepts with Feynman metadata in this pillar yet. Add feynman_metadata.json entries to build a path.</p>
+  <p class="text-sm text-muted">No concepts with Feynman metadata in this pillar yet. Add feynman_metadata.json entries to build a path.</p>
 </div>
 {%- endif %}
 

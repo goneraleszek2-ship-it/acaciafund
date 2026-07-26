@@ -4,7 +4,6 @@
 
 {% block head %}
 {{ super() }}
-<link rel="stylesheet" href="{{ 'css/weekly.css' | asset }}">
 {% endblock %}
 
 {% block main_content %}
@@ -43,7 +42,13 @@
             {% endfor %}
         </div>
         {% else %}
-        <div class="empty-state">No weekly notes yet for {{ p_name }}.</div>
+        <div class="empty-state">
+            <p>No weekly notes yet for {{ p_name }}.</p>
+            <div class="empty-state-actions">
+                <a href="/{{ pillar_urls[p_id] }}/" class="btn btn-ghost btn-sm">Browse {{ p_name }}</a>
+                <a href="/search/?f_pillar={{ pillar_urls[p_id] }}" class="btn btn-ghost btn-sm">Search {{ p_name }}</a>
+            </div>
+        </div>
         {% endif %}
     </div>
     {% endfor %}

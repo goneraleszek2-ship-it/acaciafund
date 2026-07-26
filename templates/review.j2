@@ -1,19 +1,19 @@
 {% extends "layout.j2" %}
 {% block main_content %}
-<nav aria-label="Breadcrumb" class="mb-4 text-xs" style="color:var(--color-text-muted)">
+<nav aria-label="Breadcrumb" class="mb-4 text-xs text-muted">
   <ol class="flex flex-wrap items-center gap-1.5">
-    <li><a href="/" class="hover:text-[var(--color-accent)] transition">Home</a></li>
+    <li><a href="/" class="hover-accent transition">Home</a></li>
     <li aria-hidden="true">/</li>
     <li aria-current="page">Review Dashboard</li>
   </ol>
 </nav>
 
 <header class="mb-8">
-  <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">Review Dashboard</h1>
-  <p class="mt-2 text-sm" style="color:var(--color-text-muted)">Spaced repetition tracking for flashcards and ontology concepts across all pillars.</p>
+  <h1 class="text-3xl font-extrabold text-default">Review Dashboard</h1>
+  <p class="mt-2 text-sm text-muted">Spaced repetition tracking for flashcards and ontology concepts across all pillars.</p>
 </header>
 
-<div class="flex gap-1 mb-6 p-1 rounded-lg" style="background:var(--color-bg);border:1px solid var(--color-border)" role="tablist" aria-label="Review mode">
+<div class="flex gap-1 mb-6 p-1 rounded-lg bg-bg border-default" role="tablist" aria-label="Review mode">
   <button class="review-tab flex-1 px-3 py-2 text-xs font-semibold rounded-md transition" role="tab" aria-selected="true" data-tab="all" style="background:var(--color-surface);color:var(--color-text)">All</button>
   <button class="review-tab flex-1 px-3 py-2 text-xs font-semibold rounded-md transition" role="tab" aria-selected="false" data-tab="flashcards" style="color:var(--color-text-muted)">Flashcards</button>
   <button class="review-tab flex-1 px-3 py-2 text-xs font-semibold rounded-md transition" role="tab" aria-selected="false" data-tab="concepts" style="color:var(--color-text-muted)">Concepts</button>
@@ -23,64 +23,64 @@
 <div id="review-flashcard-section">
   <div class="grid gap-6 sm:grid-cols-3 mb-8">
   <div class="ghost-card p-6 text-center">
-    <div id="stat-due" class="text-4xl font-bold" style="color:var(--color-accent)">0</div>
-    <div class="text-xs font-meta mt-1" style="color:var(--color-text-muted)">Cards Due</div>
+    <div id="stat-due" class="text-4xl font-bold text-accent">0</div>
+    <div class="text-xs font-meta mt-1 text-muted">Cards Due</div>
   </div>
   <div class="ghost-card p-6 text-center">
     <div id="stat-streak" class="text-4xl font-bold" style="color:#22c55e">0</div>
-    <div class="text-xs font-meta mt-1" style="color:var(--color-text-muted)">Day Streak</div>
+    <div class="text-xs font-meta mt-1 text-muted">Day Streak</div>
   </div>
   <div class="ghost-card p-6 text-center">
     <div id="stat-mastered" class="text-4xl font-bold" style="color:#3b82f6">0</div>
-    <div class="text-xs font-meta mt-1" style="color:var(--color-text-muted)">Mastered</div>
+    <div class="text-xs font-meta mt-1 text-muted">Mastered</div>
   </div>
 </div>
 
 <section class="mb-8">
-  <h2 class="text-lg font-semibold mb-4" style="color:var(--color-text)">Activity (last 90 days)</h2>
+  <h2 class="text-lg font-semibold mb-4 text-default">Activity (last 90 days)</h2>
   <div id="heatmap" class="flex flex-wrap gap-1" role="img" aria-label="Review activity heatmap"></div>
 </section>
 
 <section class="mb-8">
-  <h2 class="text-lg font-semibold mb-4" style="color:var(--color-text)">Due by Pillar</h2>
+  <h2 class="text-lg font-semibold mb-4 text-default">Due by Pillar</h2>
   <div class="grid gap-4 sm:grid-cols-3" id="pillar-due">
     <div class="ghost-card p-4 text-center">
       <div class="text-2xl font-bold" style="color:#ef4444">0</div>
-      <div class="text-xs" style="color:var(--color-text-muted)">Compliance</div>
+      <div class="text-xs text-muted">Compliance</div>
     </div>
     <div class="ghost-card p-4 text-center">
       <div class="text-2xl font-bold" style="color:#f59e0b">0</div>
-      <div class="text-xs" style="color:var(--color-text-muted)">Markets</div>
+      <div class="text-xs text-muted">Markets</div>
     </div>
     <div class="ghost-card p-4 text-center">
       <div class="text-2xl font-bold" style="color:#3b82f6">0</div>
-      <div class="text-xs" style="color:var(--color-text-muted)">Data Engineering</div>
+      <div class="text-xs text-muted">Data Engineering</div>
     </div>
   </div>
 </section>
 
 <div class="text-center">
-  <a href="/review/queue/" class="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded-lg transition hover:opacity-80" style="background:var(--color-accent);color:#fff">
-    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+  <a href="/review/queue/" class="btn btn-primary inline-flex items-center gap-2">
+    <svg class="icon-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
     Start Review
   </a>
 </div>
 </div>
 
-<hr class="my-8" style="border-color:var(--color-border)">
+<hr class="my-8 border-muted">
 
 <div id="review-concept-section">
 <section>
-  <h2 class="text-xl font-extrabold mb-2" style="color:var(--color-text)">Concept Mastery</h2>
-  <p class="text-sm mb-6" style="color:var(--color-text-muted)">Track retention of all 70+ ontology concepts across pillars. Includes gap detection and interleaved practice.</p>
+  <h2 class="text-xl font-extrabold mb-2 text-default">Concept Mastery</h2>
+  <p class="text-sm mb-6 text-muted">Track retention of all 70+ ontology concepts across pillars. Includes gap detection and interleaved practice.</p>
   <div id="concept-mastery-dashboard"></div>
 </section>
 </div>
 
 <div id="review-feynman-section" style="display:none">
 <section>
-  <h2 class="text-xl font-extrabold mb-2" style="color:var(--color-text)">Feynman Technique</h2>
-  <p class="text-sm mb-6" style="color:var(--color-text-muted)">Deepen understanding by explaining concepts in your own words — ELI5, teach-back, analogies, gap-finding, and build exercises. Self-assess after each attempt.</p>
+  <h2 class="text-xl font-extrabold mb-2 text-default">Feynman Technique</h2>
+  <p class="text-sm mb-6 text-muted">Deepen understanding by explaining concepts in your own words — ELI5, teach-back, analogies, gap-finding, and build exercises. Self-assess after each attempt.</p>
   <div id="feynman-mode-selector" class="flex flex-wrap gap-2 mb-6">
     <button data-feynman-mode="eli5" class="feynman-mode-btn px-4 py-2 text-xs font-semibold rounded-lg transition" style="background:#22c55e;color:#fff">Explain Like I'm 5</button>
     <button data-feynman-mode="teach_back" class="feynman-mode-btn px-4 py-2 text-xs font-semibold rounded-lg transition" style="background:#3b82f6;color:#fff">Teach Back</button>
@@ -89,19 +89,19 @@
     <button data-feynman-mode="build_it" class="feynman-mode-btn px-4 py-2 text-xs font-semibold rounded-lg transition" style="background:#8b5cf6;color:#fff">Build It</button>
   </div>
   <div id="feynman-mastery-bars" class="mb-6">
-    <h3 class="text-sm font-semibold mb-3" style="color:var(--color-text)">Feynman Mastery (SM-2 + mode completion bonus)</h3>
+    <h3 class="text-sm font-semibold mb-3 text-default">Feynman Mastery (SM-2 + mode completion bonus)</h3>
     <div id="feynman-mastery-container" class="space-y-3"></div>
   </div>
   <div class="text-center">
-    <button id="start-feynman-session" class="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded-lg transition hover:opacity-80" style="background:var(--color-accent);color:#fff">
-      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
+    <button id="start-feynman-session" class="btn btn-primary inline-flex items-center gap-2">
+    <svg class="icon-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
       Start Feynman Practice
     </button>
   </div>
 </section>
 </div>
 
-<script src="/static/js/retention_engine.js"></script>
+<script src="{{ 'js/retention.js' | asset }}" defer></script>
 <script>
 (function() {
   const cards = {{ flashcard_cards | safe }};

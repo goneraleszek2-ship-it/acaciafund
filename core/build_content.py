@@ -213,10 +213,16 @@ def inject_section_images(body_html: str, section_images: list[dict], article=No
                     figure_style = "background:var(--color-bg);border:1px solid var(--color-border)"
                     caption_id = f"sec-caption-{section_idx}" if credit else ""
                     aria_attr = f' aria-describedby="{caption_id}"' if credit else ""
+                    base_url = url.rsplit(".", 1)[0]
+                    ext_url = url.rsplit(".", 1)[1]
+                    src_400 = f"{base_url}_400w.{ext_url}"
+                    src_800 = f"{base_url}_800w.{ext_url}"
+                    srcset = f"{src_400} 400w, {src_800} 800w, {url} 1200w"
                     f = [
                         f'<figure class="section-image {style_class} my-6 rounded-lg overflow-hidden"',
                         f' style="{figure_style}"{aria_attr}>',
-                        f'<img src="{url}" alt="{alt_}" width="{w}" height="{h}"',
+                        f'<img src="{url}" srcset="{srcset}" sizes="(max-width: 400px) 400px, (max-width: 800px) 800px, 1200px"',
+                        f' alt="{alt_}" width="{w}" height="{h}"',
                         ' loading="lazy" decoding="async"',
                         ' class="w-full h-auto object-cover">',
                     ]
@@ -257,10 +263,16 @@ def inject_section_images(body_html: str, section_images: list[dict], article=No
                     figure_style = "background:var(--color-bg);border:1px solid var(--color-border)"
                     caption_id = f"sec-caption-{section_idx}" if credit else ""
                     aria_attr = f' aria-describedby="{caption_id}"' if credit else ""
+                    base_url = url.rsplit(".", 1)[0]
+                    ext_url = url.rsplit(".", 1)[1]
+                    src_400 = f"{base_url}_400w.{ext_url}"
+                    src_800 = f"{base_url}_800w.{ext_url}"
+                    srcset = f"{src_400} 400w, {src_800} 800w, {url} 1200w"
                     f = [
                         f'<figure class="section-image {style_class} my-6 rounded-lg overflow-hidden"',
                         f' style="{figure_style}"{aria_attr}>',
-                        f'<img src="{url}" alt="{alt_}" width="{w}" height="{h}"',
+                        f'<img src="{url}" srcset="{srcset}" sizes="(max-width: 400px) 400px, (max-width: 800px) 800px, 1200px"',
+                        f' alt="{alt_}" width="{w}" height="{h}"',
                         ' loading="lazy" decoding="async"',
                         ' class="w-full h-auto object-cover">',
                     ]

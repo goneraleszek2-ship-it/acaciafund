@@ -1,38 +1,42 @@
 {% extends "layout.j2" %}
 {% block main_content %}
-<nav aria-label="Breadcrumb" class="mb-4 text-xs" style="color:var(--color-text-muted)">
+<nav aria-label="Breadcrumb" class="mb-4 text-xs text-muted">
   <ol class="flex flex-wrap items-center gap-1.5">
-    <li><a href="/" class="hover:text-[var(--color-accent)] transition">Home</a></li>
+    <li><a href="/" class="hover-accent transition">Home</a></li>
     <li aria-hidden="true">/</li>
-    <li><a href="/review/" class="hover:text-[var(--color-accent)] transition">Review</a></li>
+    <li><a href="/review/" class="hover-accent transition">Review</a></li>
     <li aria-hidden="true">/</li>
     <li aria-current="page">Queue</li>
   </ol>
 </nav>
 
 <header class="mb-6">
-  <h1 class="text-2xl font-extrabold" style="color:var(--color-text)">Review Queue</h1>
-  <p class="mt-1 text-sm" style="color:var(--color-text-muted)">Swipe or use keyboard. Space = flip, 1-4 = grade.</p>
+  <h1 class="text-2xl font-extrabold text-default">Review Queue</h1>
+  <p class="mt-1 text-sm text-muted">Swipe or use keyboard. Space = flip, 1-4 = grade.</p>
 </header>
 
 <div class="flex items-center justify-between mb-6">
-  <div id="queue-progress" class="text-sm font-meta" style="color:var(--color-text-muted)">0 / 0 reviewed</div>
-  <div id="queue-due" class="text-sm font-semibold" style="color:var(--color-accent)">0 due</div>
+  <div id="queue-progress" class="text-sm font-meta text-muted">0 / 0 reviewed</div>
+  <div id="queue-due" class="text-sm font-semibold text-accent">0 due</div>
 </div>
 
 <div id="queue-empty" class="hidden ghost-card p-8 text-center">
-  <svg class="w-12 h-12 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-  <p class="text-sm font-semibold" style="color:var(--color-text)">All caught up!</p>
-  <p class="text-xs mt-1" style="color:var(--color-text-muted)">No cards due for review right now.</p>
-  <a href="/review/" class="inline-block mt-4 px-4 py-2 text-xs font-semibold rounded-lg" style="background:var(--color-accent);color:#fff">Back to Dashboard</a>
+  <svg class="empty-state-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+  <p class="text-sm font-semibold text-default">All caught up!</p>
+  <p class="text-xs mt-1 text-muted">No cards due for review right now.</p>
+  <div class="flex flex-wrap justify-center gap-2 mt-4">
+    <a href="/review/" class="btn btn-primary btn-sm">Back to Dashboard</a>
+    <a href="/weekly/" class="btn btn-ghost btn-sm">Weekly Notes</a>
+    <a href="/search/" class="btn btn-ghost btn-sm">Browse Content</a>
+  </div>
 </div>
 
 <div id="queue-active" class="flex flex-col items-center">
   <div id="queue-card-container" class="w-full max-w-lg" role="region" aria-label="Flashcard review" aria-live="polite">
   </div>
   <div id="queue-nav" class="mt-4 flex gap-3 hidden">
-    <button id="queue-skip" class="px-4 py-2 text-xs font-semibold rounded-lg" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border);min-width:44px;min-height:44px">Skip</button>
-    <button id="queue-done" class="px-4 py-2 text-xs font-semibold rounded-lg" style="background:var(--color-accent);color:#fff;min-width:44px;min-height:44px">Done</button>
+    <button id="queue-skip" class="btn btn-ghost" style="min-width:44px;min-height:44px">Skip</button>
+    <button id="queue-done" class="btn btn-primary" style="min-width:44px;min-height:44px">Done</button>
   </div>
 </div>
 
@@ -76,7 +80,7 @@
 
   function renderCard() {
     if (idx >= dueCards.length) {
-      container.innerHTML = '<div class="ghost-card p-6 text-center"><p class="text-sm font-semibold" style="color:var(--color-text)">Queue complete!</p></div>';
+      container.innerHTML = '<div class="ghost-card p-6 text-center"><p class="text-sm font-semibold text-default">Queue complete!</p></div>';
       navEl.classList.add('hidden');
       return;
     }

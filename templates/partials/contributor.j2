@@ -4,7 +4,7 @@
   <div class="flex flex-wrap gap-3">
     {%- for c in contributors %}
     <div class="flex items-center gap-2 text-sm">
-      <span class="w-6 h-6 rounded-full bg-surface border border-muted flex items-center justify-center text-xs font-semibold text-muted">
+      <span class="avatar-circle text-xs font-semibold text-muted">
         {{- (c.name or '?')[:1] -}}
       </span>
       <div>

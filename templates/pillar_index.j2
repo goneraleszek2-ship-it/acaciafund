@@ -4,37 +4,37 @@
   <div class="flex items-center gap-3 mb-4">
     <span class="text-2xl">{{ pillar_emojis.get(pillar, '') }}</span>
     <div>
-      <h1 class="text-2xl font-extrabold" style="color:var(--color-text)">{{ page_title }}</h1>
+      <h1 class="text-2xl font-extrabold text-default">{{ page_title }}</h1>
       {%- if page_description %}
-      <p class="text-sm mt-1" style="color:var(--color-text-secondary)">{{ page_description }}</p>
+      <p class="text-sm mt-1 text-secondary">{{ page_description }}</p>
       {%- endif %}
     </div>
   </div>
 
   {%- set pillar_color = pconf.color if pconf else 'var(--color-accent)' %}
 
-  <div class="mb-6 flex flex-wrap items-center gap-3 text-xs" style="color:var(--color-text-muted)">
-    <span><strong style="color:var(--color-text)">{{ posts | length }}</strong> articles</span>
+  <div class="mb-6 flex flex-wrap items-center gap-3 text-xs text-muted">
+    <span><strong class="text-default">{{ posts | length }}</strong> articles</span>
     <span>&middot;</span>
     <span class="difficulty-badge beginner">Beginner friendly</span>
     {%- if glossary_terms %}
     <span>&middot;</span>
-    <span><strong style="color:var(--color-text)">{{ glossary_terms | length }}</strong> key terms</span>
+    <span><strong class="text-default">{{ glossary_terms | length }}</strong> key terms</span>
     {%- endif %}
   </div>
 
   {%- if glossary_terms and glossary_terms | length > 0 %}
   <div class="ghost-card p-4 mb-6">
     <details open>
-      <summary class="text-sm font-bold cursor-pointer select-none" style="color:var(--color-text);list-style:none;display:flex;align-items:center;gap:0.5rem;">
-        <span style="font-size:1rem">&#128214;</span> Key Terms <span class="text-xs font-normal" style="color:var(--color-text-muted)">({{ glossary_terms | length }})</span>
+      <summary class="text-sm font-bold cursor-pointer select-none text-default" style="list-style:none;display:flex;align-items:center;gap:0.5rem;">
+        <span style="font-size:1rem">&#128214;</span> Key Terms <span class="text-xs font-normal text-muted">({{ glossary_terms | length }})</span>
       </summary>
       <div class="flex flex-wrap gap-2 mt-3">
         {%- for term in glossary_terms[:12] %}
-        <a href="{{ slug_to_url(term.slug) }}" class="px-3 py-1.5 text-sm transition hover:shadow-md no-underline rounded" style="background:var(--color-surface);border:1px solid var(--color-border);color:var(--color-text)">
+        <a href="{{ slug_to_url(term.slug) }}" class="px-3 py-1.5 text-sm transition hover:shadow-md no-underline rounded bg-surface border-muted text-default">
           <span class="font-semibold">{{ term.label }}</span>
           {%- if term.description %}
-          <span class="text-xs ml-1" style="color:var(--color-text-muted)">— {{ term.description[:60] }}{% if term.description | length > 60 %}...{% endif %}</span>
+          <span class="text-xs ml-1 text-muted">— {{ term.description[:60] }}{% if term.description | length > 60 %}...{% endif %}</span>
           {%- endif %}
         </a>
         {%- endfor %}
@@ -46,15 +46,15 @@
   {%- if concept_cloud and concept_cloud | length > 0 %}
   <div class="ghost-card p-4 mb-6">
     <details>
-      <summary class="text-sm font-bold cursor-pointer select-none" style="color:var(--color-text);list-style:none;display:flex;align-items:center;gap:0.5rem;">
-        <span style="font-size:1rem">&#129504;</span> Concepts <span class="text-xs font-normal" style="color:var(--color-text-muted)">({{ concept_cloud | length }})</span>
+      <summary class="text-sm font-bold cursor-pointer select-none text-default" style="list-style:none;display:flex;align-items:center;gap:0.5rem;">
+        <span style="font-size:1rem">&#129504;</span> Concepts <span class="text-xs font-normal text-muted">({{ concept_cloud | length }})</span>
       </summary>
       <div class="flex flex-wrap gap-2 mt-3">
         {%- for concept in concept_cloud %}
-        <span class="inline-flex items-center gap-1 text-xs px-2.5 py-1 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 20%, transparent)">
+        <a href="/search/?f_tags={{ concept.label | urlencode }}" class="concept-cloud-tag">
           {{ concept.label }}
           <span class="opacity-60">({{ concept.count }})</span>
-        </span>
+        </a>
         {%- endfor %}
       </div>
     </details>
@@ -64,16 +64,16 @@
   {%- if latest_learn and latest_learn | length > 0 %}
   <div class="ghost-card p-4 mb-6">
     <details>
-      <summary class="text-sm font-bold cursor-pointer select-none" style="color:var(--color-text);list-style:none;display:flex;align-items:center;gap:0.5rem;">
-        <span style="font-size:1rem">&#128218;</span> Learning Paths <span class="text-xs font-normal" style="color:var(--color-text-muted)">({{ latest_learn | length }})</span>
+      <summary class="text-sm font-bold cursor-pointer select-none text-default" style="list-style:none;display:flex;align-items:center;gap:0.5rem;">
+        <span style="font-size:1rem">&#128218;</span> Learning Paths <span class="text-xs font-normal text-muted">({{ latest_learn | length }})</span>
       </summary>
       <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 mt-3">
         {%- for item in latest_learn[:6] %}
-        <a href="{{ slug_to_url(item.slug) }}" class="block transition hover:shadow-md no-underline" style="text-decoration:none">
-          <div class="p-3 rounded" style="background:var(--color-surface);border:1px solid var(--color-border)">
+        <a href="{{ slug_to_url(item.slug) }}" class="block transition hover:shadow-md no-underline">
+          <div class="p-3 rounded ghost-card">
             <span class="difficulty-badge beginner">Learn</span>
-            <h3 class="mt-2 text-sm font-semibold" style="color:var(--color-text)">{{ item.title | striptags }}</h3>
-            <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">{{ item.description }}</p>
+            <h3 class="mt-2 text-sm font-semibold text-default">{{ item.title | striptags }}</h3>
+            <p class="mt-1 text-xs line-clamp-2 text-secondary">{{ item.description }}</p>
           </div>
         </a>
         {%- endfor %}
@@ -84,8 +84,8 @@
 
   {%- if posts | length > 0 %}
   <div class="flex items-center gap-3 mb-4">
-    <h2 class="text-base font-bold" style="color:var(--color-text)">All Articles</h2>
-    <div class="flex-1 h-px" style="background:var(--color-border)"></div>
+    <h2 class="text-base font-bold text-default">All Articles</h2>
+    <div class="flex-1 h-px bg-border"></div>
   </div>
 
   <div class="pillar-posts grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -99,9 +99,9 @@
         <span class="difficulty-badge {% if post.difficulty == 'beginner' %}beginner{% elif post.difficulty == 'intermediate' %}intermediate{% else %}advanced{% endif %}">{{ post.difficulty | capitalize }}</span>
         {%- endif %}
       </div>
-      <h3 class="text-sm font-semibold" style="color:var(--color-text)">{{ post.title }}</h3>
-      <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">{{ post.description }}</p>
-      <div class="mt-2 text-xs" style="color:var(--color-text-muted)">
+      <h3 class="text-sm font-semibold text-default">{{ post.title }}</h3>
+      <p class="mt-1 text-xs line-clamp-2 text-secondary">{{ post.description }}</p>
+      <div class="mt-2 text-xs text-muted">
         <span>{{ post.date_str }}</span>
       </div>
     </a>
@@ -109,15 +109,15 @@
   </div>
   {%- else %}
   <div class="ghost-card p-6 text-center">
-    <p style="color:var(--color-text-muted)">No articles yet in this topic.</p>
+    <p class="text-muted">No articles yet in this topic.</p>
   </div>
   {%- endif %}
 
   <div class="flex items-center gap-3 mt-8">
-    <a href="/{{ pconf.url }}/synthesis/" class="text-xs px-3 py-1.5 rounded font-semibold no-underline transition hover:shadow-sm" style="background:var(--color-surface);border:1px solid var(--color-border);color:var(--color-text)">
+    <a href="/{{ pconf.url }}/synthesis/" class="text-xs px-3 py-1.5 rounded font-semibold no-underline transition hover:shadow-sm bg-surface border-muted text-default">
       Cross-Pillar Synthesis &rarr;
     </a>
-    <a href="/search/?f_pillar={{ pillar }}" class="text-xs px-3 py-1.5 rounded font-semibold no-underline transition hover:shadow-sm" style="background:var(--color-surface);border:1px solid var(--color-border);color:var(--color-text)">
+    <a href="/search/?f_pillar={{ pillar }}" class="text-xs px-3 py-1.5 rounded font-semibold no-underline transition hover:shadow-sm bg-surface border-muted text-default">
       Search this topic &rarr;
     </a>
   </div>

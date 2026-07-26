@@ -4,7 +4,6 @@
 
 {% block head %}
 {{ super() }}
-<link rel="stylesheet" href="{{ 'css/weekly.css' | asset }}">
 {% endblock %}
 
 {% block main_content %}
@@ -41,9 +40,14 @@
 <div class="events-grid">
     {% for event in pillar_events %}
     <div class="event-card" style="border-left:3px solid {{ pc.color }}">
-        <div class="event-meta">
-            <span class="date-badge">{{ event.date }}</span>
-            <span>{{ event.title }}</span>
+        <div class="event-card-header">
+            <div class="event-meta">
+                <span class="date-badge">{{ event.date }}</span>
+                <span>{{ event.title }}</span>
+            </div>
+            {% if event.fingerprint_svg %}
+            <div class="event-fingerprint">{{ event.fingerprint_svg | safe }}</div>
+            {% endif %}
         </div>
         <h3>{{ event.title }}</h3>
 
@@ -80,7 +84,11 @@
 </div>
 {% else %}
 <div class="week-empty">
-    No significant {{ pillar_name }} developments recorded for this week.
+    <p>No significant {{ pillar_name }} developments recorded for this week.</p>
+    <div class="week-empty-actions">
+        <a href="/weekly/" class="btn btn-ghost btn-sm">Browse Archive</a>
+        <a href="/{{ pillar_urls[pillar] }}/" class="btn btn-ghost btn-sm">Explore {{ pillar_name }}</a>
+    </div>
 </div>
 {% endif %}
 

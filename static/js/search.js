@@ -129,9 +129,17 @@
 
   function fetchIndex() {
     if (searchIndex) return Promise.resolve(searchIndex);
-    const base = document.querySelector('script[src*="search.js"]');
-    const prefix = base ? base.src.replace(/js\/search\.js.*$/, '') : '';
-    return fetch(prefix + 'static/search-index.json')
+    const base = document.querySelector('script[src*="search.js"], script[src*="app.js"]');
+    const prefix = base ? base.src.replace(/js\/\w+\.js.*$/, '') : '';
+
+    // If a single pillar is pre-filtered, load just that chunk
+    const filters = readFilters();
+    let url = prefix + 'static/search-index.json';
+    if (filters.pillar.length === 1) {
+      url = prefix + 'static/search-index.' + filters.pillar[0] + '.json';
+    }
+
+    return fetch(url)
       .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
       .then(data => { searchIndex = data; return data; });
   }
@@ -203,27 +211,38 @@
     }
   }
 
-  function runSearch(query) {
+  function runSearch(query, tagFilter) {
     const container = document.getElementById('search-results');
     const statsEl = document.getElementById('search-stats');
     if (!container) return;
 
-    if (!query.trim()) {
+    if (!query.trim() && !tagFilter) {
       container.innerHTML = '<p style="color:var(--color-text-muted, #888);text-align:center;margin-top:2rem">Type to search across all content...</p>';
       if (statsEl) statsEl.textContent = '';
       return;
     }
 
-    const terms = tokenize(query);
-    if (!terms.length) return;
+    const terms = query.trim() ? tokenize(query) : [];
 
     fetchIndex().then(index => {
       const filters = readFilters();
       allScored = index
-        .filter(e => matchesFilters(e, filters))
-        .map(e => ({ entry: e, score: scoreEntry(e, terms) }))
-        .filter(x => x.score > 0)
-        .sort((a, b) => b.score - a.score);
+        .filter(function(e) {
+          if (!matchesFilters(e, filters)) return false;
+          if (tagFilter) {
+            var concepts = e.ontology_concepts || [];
+            var tags = e.tags || [];
+            var matchesTag = concepts.some(function(c) { return c.toLowerCase() === tagFilter.toLowerCase(); })
+              || tags.some(function(t) { return t.toLowerCase() === tagFilter.toLowerCase(); });
+            if (!matchesTag) return false;
+          }
+          return true;
+        })
+        .map(function(e) {
+          return { entry: e, score: terms.length ? scoreEntry(e, terms) : 1 };
+        })
+        .filter(function(x) { return x.score > 0; })
+        .sort(function(a, b) { return b.score - a.score; });
       currentTerms = terms;
       displayedCount = PAGE_SIZE;
       selectedIndex = -1;
@@ -234,16 +253,19 @@
           : 'No results';
       }
 
-      saveQuery(query);
-      firePlausible('search', { query: query, results: allScored.length, terms: terms.length });
+      if (query.trim()) {
+        saveQuery(query);
+        firePlausible('search', { query: query, results: allScored.length, terms: terms.length });
+      }
 
       if (!allScored.length) {
-        container.innerHTML = '<p style="color:var(--color-text-muted, #888);text-align:center;margin-top:2rem">No results for "' + escapeHtml(query) + '"</p>';
+        var msg = tagFilter ? 'No results tagged "' + escapeHtml(tagFilter) + '"' : 'No results for "' + escapeHtml(query) + '"';
+        container.innerHTML = '<div style="text-align:center;margin-top:2rem"><p style="color:var(--color-text-muted, #888)">' + msg + '</p><p style="font-size:0.8rem;color:var(--color-text-muted, #888);margin-top:0.5rem">Try different keywords or browse by pillar:</p><div style="display:flex;gap:0.5rem;justify-content:center;margin-top:0.75rem"><a href="/compliance/" class="inline-block px-3 py-1.5 text-xs font-semibold rounded-lg" style="background:var(--color-surface,#f0f0f0);color:var(--color-text,#333)">Compliance</a><a href="/markets/" class="inline-block px-3 py-1.5 text-xs font-semibold rounded-lg" style="background:var(--color-surface,#f0f0f0);color:var(--color-text,#333)">Markets</a><a href="/data/" class="inline-block px-3 py-1.5 text-xs font-semibold rounded-lg" style="background:var(--color-surface,#f0f0f0);color:var(--color-text,#333)">Data</a></div></div>';
         return;
       }
 
       renderPage();
-    }).catch(err => {
+    }).catch(function(err) {
       container.innerHTML = '<p style="color:#ef4444;text-align:center;margin-top:2rem">Failed to load search index</p>';
     });
   }
@@ -251,7 +273,8 @@
   function doSearch() {
     const input = document.getElementById('search-input');
     if (!input) return;
-    runSearch(input.value);
+    const params = new URLSearchParams(window.location.search);
+    runSearch(input.value, params.get('f_tags') || '');
   }
 
   document.addEventListener('DOMContentLoaded', function() {
@@ -261,15 +284,39 @@
     // Restore filters from URL
     const params = new URLSearchParams(window.location.search);
     const q = params.get('q') || '';
+    const tagFilter = params.get('f_tags') || '';
     document.querySelectorAll('.filter-checkbox').forEach(cb => {
       const group = cb.getAttribute('data-group');
       const urlVal = params.get('f_' + group);
       if (urlVal && urlVal.split(',').includes(cb.value)) cb.checked = true;
     });
 
-    if (q) {
+    // Show active tag filter badge
+    if (tagFilter) {
+      var tagBar = document.getElementById('tag-filter-bar') || (function() {
+        var el = document.createElement('div');
+        el.id = 'tag-filter-bar';
+        el.className = 'flex flex-wrap items-center gap-2 mb-4';
+        var container = document.getElementById('search-results');
+        if (container) container.parentNode.insertBefore(el, container);
+        return el;
+      })();
+      tagBar.innerHTML = '<span class="text-xs font-semibold" style="color:var(--color-text-muted)">Tagged:</span>'
+        + '<span class="inline-flex items-center gap-1 text-xs px-2 py-1 rounded-full" style="background:color-mix(in srgb, var(--color-accent) 12%, transparent);color:var(--color-accent)">'
+        + tagFilter
+        + '<button id="clear-tag-filter" class="ml-1" style="background:none;border:none;cursor:pointer;color:inherit;padding:0;line-height:1" aria-label="Clear tag filter">&times;</button></span>';
+      document.getElementById('clear-tag-filter').addEventListener('click', function() {
+        var url = new URL(window.location);
+        url.searchParams.delete('f_tags');
+        history.replaceState(null, '', url);
+        tagBar.innerHTML = '';
+        runSearch(input.value);
+      });
+    }
+
+    if (q || tagFilter) {
       input.value = q;
-      runSearch(q);
+      runSearch(q, tagFilter);
     }
 
     // Filter checkbox change handler
@@ -277,6 +324,10 @@
       cb.addEventListener('change', function() {
         const filters = readFilters();
         syncFiltersToUrl(filters);
+        // Invalidate search index cache when pillar filters change
+        if (cb.getAttribute('data-group') === 'pillar') {
+          searchIndex = null;
+        }
         doSearch();
       });
     });
@@ -288,6 +339,7 @@
         document.querySelectorAll('.filter-checkbox:checked').forEach(cb => cb.checked = false);
         const filters = readFilters();
         syncFiltersToUrl(filters);
+        searchIndex = null;
         doSearch();
       });
     }

@@ -25,8 +25,12 @@
         {% include "macros/pillar_badge.html" %}
       </div>
       {%- if featured_image %}
+      {% set base = featured_image.rsplit('.', 1)[0] %}
+      {% set ext = featured_image.rsplit('.', 1)[1] %}
+      {% set src_400 = base ~ '_400w.' ~ ext %}
+      {% set src_800 = base ~ '_800w.' ~ ext %}
       <div class="mb-4">
-        <img src="{{ featured_image }}" alt="{{ content.title | striptags }}" class="w-full rounded-lg img-hero" loading="lazy">
+        <img src="{{ featured_image }}" srcset="{{ src_400 }} 400w, {{ src_800 }} 800w, {{ featured_image }} 1200w" sizes="(max-width: 400px) 400px, (max-width: 800px) 800px, 1200px" alt="{{ content.title | striptags }}" class="w-full rounded-lg img-hero" loading="lazy" decoding="async">
         {%- if image_credit %}
         <span class="block text-xs mt-1 text-muted">{{ image_credit }}</span>
         {%- endif %}
@@ -79,7 +83,7 @@
     {%- if source_synthesis and source_synthesis | length > 0 %}
     <section class="mt-12 pt-8 border-t border-muted">
       <h2 class="text-2xl font-bold mb-4 inline-flex items-center gap-2 text-default">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         Source Synthesis
       </h2>
       <div class="space-y-3">
@@ -184,5 +188,4 @@
   </article>
 
 {% include 'partials/newsletter.html' %}
-<script src="{{ 'js/progressive_disclosure.js' | asset }}" defer></script>
 {% endblock %}

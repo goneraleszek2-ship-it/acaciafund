@@ -374,7 +374,7 @@
 
       html += '<div class="text-center">';
       html += '<button id="start-interleaved-session" class="inline-flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded-lg transition hover:opacity-80" style="background:var(--color-accent);color:#fff">';
-      html += '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>';
+      html += '<svg class="icon-lg" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>';
       html += 'Start Interleaved Practice';
       html += '</button>';
       html += '</div>';
@@ -429,7 +429,7 @@
       if (idx >= items.length) {
         container.innerHTML = `
           <div class="ghost-card p-6 text-center">
-            <svg class="w-12 h-12 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <svg class="empty-state-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             <p class="text-sm font-semibold mb-1" style="color:var(--color-text)">Session Complete!</p>
             <p class="text-xs" style="color:var(--color-text-muted)">${title}</p>
             <button id="session-close-btn" class="mt-4 px-4 py-2 text-xs font-semibold rounded-lg" style="background:var(--color-accent);color:#fff">Done</button>
@@ -638,7 +638,7 @@
       if (idx >= items.length) {
         container.innerHTML = `
           <div class="ghost-card p-6 text-center">
-            <svg class="w-12 h-12 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <svg class="empty-state-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
             <p class="text-sm font-semibold mb-1" style="color:var(--color-text)">Feynman Session Complete!</p>
             <p class="text-xs" style="color:var(--color-text-muted)">${title} — ${history.filter(h => h.quality >= 3).length} high-quality explanations</p>
             <button id="feynman-session-close" class="mt-4 px-4 py-2 text-xs font-semibold rounded-lg" style="background:var(--color-accent);color:#fff">Done</button>

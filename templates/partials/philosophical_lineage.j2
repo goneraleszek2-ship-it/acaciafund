@@ -84,11 +84,11 @@
   "consensus_theory": "Consensus Theory",
   "induction": "Induction",
 } %}
-<section class="mt-8 pt-6 border-t" style="border-color:var(--color-border)">
+<section class="mt-8 pt-6 border-t border-muted">
   <details>
-    <summary class="text-sm font-bold cursor-pointer" style="color:var(--color-text)">
+    <summary class="text-sm font-bold cursor-pointer text-default">
       <span class="inline-flex items-center gap-2">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+        <svg class="icon-inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
         Philosophical Lineage
       </span>
     </summary>
@@ -104,11 +104,11 @@
 
       {%- if concept.philosophical_sources and concept.philosophical_sources | length > 0 %}
       <div>
-        <h4 class="text-xs font-semibold mb-1.5" style="color:var(--color-text-muted)">Primary Sources</h4>
+        <h4 class="text-xs font-semibold mb-1.5 text-muted">Primary Sources</h4>
         <ul class="space-y-1">
           {%- for source in concept.philosophical_sources %}
-          <li class="text-xs pl-3 relative" style="color:var(--color-text-secondary)">
-            <span class="absolute left-0 top-0" style="color:var(--color-accent)">—</span>
+          <li class="text-xs pl-3 relative text-secondary">
+            <span class="absolute left-0 top-0 text-accent">—</span>
             {{ source }}
           </li>
           {%- endfor %}
@@ -118,10 +118,10 @@
 
       {%- if concept.cross_pillar_analogs and concept.cross_pillar_analogs | length > 0 %}
       <div>
-        <h4 class="text-xs font-semibold mb-1.5" style="color:var(--color-text-muted)">Same Pattern in Other Pillars</h4>
+        <h4 class="text-xs font-semibold mb-1.5 text-muted">Same Pattern in Other Pillars</h4>
         <div class="flex flex-wrap gap-1.5">
           {%- for analog in concept.cross_pillar_analogs %}
-          <a href="/concepts/{{ analog }}/" class="text-[11px] px-2 py-0.5 rounded-full no-underline font-medium transition hover:shadow-sm" style="background:var(--color-bg);color:var(--color-text-secondary);border:1px solid var(--color-border)">
+          <a href="/concepts/{{ analog }}/" class="text-[11px] px-2 py-0.5 rounded-full text-decoration-none font-medium transition hover:shadow-sm bg-bg text-secondary border-default">
             {{ analog | replace('-', ' ') | title }}
           </a>
           {%- endfor %}

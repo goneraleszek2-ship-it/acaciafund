@@ -1,17 +1,17 @@
 {% extends "layout.j2" %}
 {% block main_content %}
 
-<nav aria-label="Breadcrumb" class="mb-4 text-xs" style="color:var(--color-text-muted)">
+<nav aria-label="Breadcrumb" class="mb-4 text-xs text-muted">
   <ol class="flex flex-wrap items-center gap-1.5">
-    <li><a href="/" class="hover:text-[var(--color-accent)] transition">Home</a></li>
+    <li><a href="/" class="hover-accent transition">Home</a></li>
     <li aria-hidden="true">/</li>
     <li aria-current="page">Learning Paths</li>
   </ol>
 </nav>
 
 <header class="mb-8">
-  <h1 class="text-3xl font-extrabold" style="color:var(--color-text)">Learning Paths</h1>
-  <p class="mt-2 text-sm" style="color:var(--color-text-muted)">
+  <h1 class="text-3xl font-extrabold text-default">Learning Paths</h1>
+  <p class="mt-2 text-sm text-muted">
     {{ total_paths }} structured learning journeys across all pillars
   </p>
 </header>
@@ -26,26 +26,26 @@
 {%- set pillar_paths = paths | selectattr('pillar', 'equalto', pkey) | list %}
 {%- if pillar_paths %}
 <section class="mb-8">
-  <h2 class="text-lg font-bold mb-4 flex items-center gap-2" style="color:var(--color-text)">
-    <span class="inline-block w-3 h-3 rounded-full" style="background:{{ pinfo.color }}"></span>
+  <h2 class="text-lg font-bold mb-4 flex items-center gap-2 text-default">
+    <span class="theme-dot" style="background:{{ pinfo.color }}"></span>
     {{ pinfo.label }}
-    <span class="text-xs font-normal" style="color:var(--color-text-muted)">({{ pillar_paths | length }})</span>
+    <span class="text-xs font-normal text-muted">({{ pillar_paths | length }})</span>
   </h2>
   <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
     {%- for p in pillar_paths %}
-    <a href="/learning-paths/{{ p.id }}/" class="block p-4 rounded-lg transition hover:shadow-md no-underline" style="background:var(--color-surface);border:1px solid var(--color-border)">
+    <a href="/learning-paths/{{ p.id }}/" class="block p-4 rounded-lg transition hover:shadow-md no-underline ghost-card">
       <div class="flex items-center gap-2 mb-2">
         <span class="text-xs px-1.5 py-0.5 rounded" style="background:color-mix(in srgb, {{ pinfo.color }} 15%, transparent);color:{{ pinfo.color }}">
           {{ pinfo.label }}
         </span>
-        <span class="text-[10px]" style="color:var(--color-text-muted)">{{ p.path_count }} path{% if p.path_count != 1 %}s{% endif %}</span>
+        <span class="text-xs text-muted">{{ p.path_count }} path{% if p.path_count != 1 %}s{% endif %}</span>
       </div>
-      <h3 class="text-sm font-semibold" style="color:var(--color-text)">{{ p.label }}</h3>
-      <div class="flex items-center gap-3 mt-2 text-[10px]" style="color:var(--color-text-muted)">
+      <h3 class="text-sm font-semibold text-default">{{ p.label }}</h3>
+      <div class="flex items-center gap-3 mt-2 text-xs text-muted">
         <span>{{ p.node_count }} concepts</span>
         <span>Depth {{ p.max_depth }}</span>
         {%- if p.pillar_span > 1 %}
-        <span style="color:var(--color-accent)">{{ p.pillar_span }} pillars</span>
+        <span class="text-accent">{{ p.pillar_span }} pillars</span>
         {%- endif %}
       </div>
     </a>

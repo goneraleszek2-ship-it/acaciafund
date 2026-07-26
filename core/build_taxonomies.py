@@ -983,6 +983,17 @@ def generate_search_pages(
         json.dumps(search_index, ensure_ascii=False), encoding="utf-8"
     )
     print(f"  search: search-index.json ({len(search_index)} entries)")
+
+    # Generate per-pillar search index chunks for faster initial loads
+    for pillar_key in ("aml", "stock", "data-engineering"):
+        pillar_entries = [e for e in search_index if e.get("pillar") == pillar_key]
+        if pillar_entries:
+            chunk_path = static_dst_dir / f"search-index.{pillar_key}.json"
+            chunk_path.write_text(
+                json.dumps(pillar_entries, ensure_ascii=False), encoding="utf-8"
+            )
+            print(f"  search: search-index.{pillar_key}.json ({len(pillar_entries)} entries)")
+
     pages_generated += 1
 
     search_dir = output_dir / "search"

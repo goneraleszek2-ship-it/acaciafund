@@ -1,10 +1,10 @@
 {% extends "layout.j2" %}
 {% block main_content %}
-<nav aria-label="Breadcrumb" class="mb-4 text-xs" style="color:var(--color-text-muted)">
+<nav aria-label="Breadcrumb" class="mb-4 text-xs text-muted">
   <ol class="flex flex-wrap items-center gap-1.5">
-    <li><a href="/" class="hover:text-[var(--color-accent)] transition">Home</a></li>
+    <li><a href="/" class="hover-accent transition">Home</a></li>
     <li aria-hidden="true">/</li>
-    <li><a href="/{{ pillar_url }}/" class="hover:text-[var(--color-accent)] transition">{{ pillar_label }}</a></li>
+    <li><a href="/{{ pillar_url }}/" class="hover-accent transition">{{ pillar_label }}</a></li>
     <li aria-hidden="true">/</li>
     <li aria-current="page">Learning Path</li>
   </ol>
@@ -13,36 +13,36 @@
 <header class="mb-6">
   <div class="flex items-center gap-2 mb-2">
     <span class="text-xs px-2 py-0.5 rounded font-semibold" style="background:color-mix(in srgb, {{ pillar_color }} 15%, transparent);color:{{ pillar_color }}">{{ pillar_label }}</span>
-    <span class="text-xs px-2 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">Learning Path</span>
+    <span class="badge-outline">Learning Path</span>
   </div>
-  <h1 class="text-2xl font-extrabold" style="color:var(--color-text)">{{ journey_label }}</h1>
-  <p class="mt-1 text-sm" style="color:var(--color-text-muted)">
+  <h1 class="text-2xl font-extrabold text-default">{{ journey_label }}</h1>
+  <p class="mt-1 text-sm text-muted">
     {{ total_nodes }} concepts · {{ path_count }} path{{ 's' if path_count != 1 }} · {{ pillar_span }} pillar{{ 's' if pillar_span != 1 }}
   </p>
 </header>
 
 <div id="lp-progress-bar" class="ghost-card p-3 mb-6">
   <div class="flex items-center justify-between mb-1">
-    <span class="text-xs font-semibold" style="color:var(--color-text)">Progress</span>
-    <span id="lp-progress-text" class="text-xs" style="color:var(--color-text-muted)">0 / {{ total_nodes }} complete</span>
+    <span class="text-xs font-semibold text-default">Progress</span>
+    <span id="lp-progress-text" class="text-xs text-muted">0 / {{ total_nodes }} complete</span>
   </div>
-  <div class="h-2 rounded-full overflow-hidden" style="background:var(--color-border)">
+  <div class="h-2 rounded-full overflow-hidden bg-border">
     <div id="lp-progress-fill" class="h-full rounded-full transition-all" style="width:0%;background:{{ pillar_color }}"></div>
   </div>
 </div>
 
 {%- if paths and paths | length > 0 %}
 <section class="mb-8">
-  <h2 class="text-sm font-bold mb-3" style="color:var(--color-text)">Flow</h2>
+  <h2 class="text-sm font-bold mb-3 text-default">Flow</h2>
   <div class="flex items-start gap-1 overflow-x-auto pb-2">
     {%- set first_path = paths[0] %}
     {%- for concept in first_path.concepts %}
     <div class="flex items-center gap-1 shrink-0">
-      <a href="/concepts/{{ concept.id }}/" class="px-3 py-2 rounded text-xs font-semibold whitespace-nowrap no-underline transition hover:opacity-80" style="background:color-mix(in srgb, {{ pillar_color }} 12%, transparent);color:{{ pillar_color }};border:1px solid color-mix(in srgb, {{ pillar_color }} 25%, transparent)">
+      <a href="/concepts/{{ concept.id }}/" class="px-3 py-2 rounded text-xs font-semibold whitespace-nowrap text-decoration-none transition hover:opacity-80" style="background:color-mix(in srgb, {{ pillar_color }} 12%, transparent);color:{{ pillar_color }};border:1px solid color-mix(in srgb, {{ pillar_color }} 25%, transparent)">
         {{ concept.label }}
       </a>
       {%- if not loop.last %}
-      <svg class="w-4 h-4 shrink-0" fill="none" stroke="var(--color-text-muted)" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+      <svg class="icon-inline shrink-0 text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
       {%- endif %}
     </div>
     {%- endfor %}
@@ -51,20 +51,20 @@
 
 {%- if path_count > 1 %}
 <section class="mb-8">
-  <h2 class="text-sm font-bold mb-3" style="color:var(--color-text)">All Paths</h2>
+  <h2 class="text-sm font-bold mb-3 text-default">All Paths</h2>
   <div class="space-y-2">
     {%- for path in paths %}
     <div class="ghost-card p-3 cursor-pointer transition hover:shadow-md path-option" data-path-index="{{ loop.index0 }}">
       <div class="flex items-center justify-between">
         <div class="flex items-center gap-1 overflow-x-auto">
           {%- for concept in path.concepts %}
-          <a href="/concepts/{{ concept.id }}/" class="text-xs px-2 py-0.5 rounded whitespace-nowrap no-underline" style="background:color-mix(in srgb, {{ pillar_color }} 10%, transparent);color:{{ pillar_color }}">{{ concept.label }}</a>
+          <a href="/concepts/{{ concept.id }}/" class="text-xs px-2 py-0.5 rounded whitespace-nowrap text-decoration-none" style="background:color-mix(in srgb, {{ pillar_color }} 10%, transparent);color:{{ pillar_color }}">{{ concept.label }}</a>
           {%- if not loop.last %}
-          <span class="text-xs" style="color:var(--color-text-muted)">→</span>
+          <span class="text-xs text-muted">→</span>
           {%- endif %}
           {%- endfor %}
         </div>
-        <span class="text-xs shrink-0 ml-2" style="color:var(--color-text-muted)">{{ path.depth }} step{{ 's' if path.depth != 1 }}</span>
+        <span class="text-xs shrink-0 ml-2 text-muted">{{ path.depth }} step{{ 's' if path.depth != 1 }}</span>
       </div>
     </div>
     {%- endfor %}
@@ -74,20 +74,20 @@
 {%- endif %}
 
 <section>
-  <h2 class="text-sm font-bold mb-4" style="color:var(--color-text)">Concepts in this Path</h2>
+  <h2 class="text-sm font-bold mb-4 text-default">Concepts in this Path</h2>
   <div class="space-y-4">
     {%- for node in nodes %}
     <div class="ghost-card p-4 path-node" data-concept-id="{{ node.concept_id }}" data-node-idx="{{ loop.index0 }}">
       <div class="flex items-start justify-between mb-2">
         <div class="flex items-center gap-2">
-          <span class="inline-flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold" style="background:color-mix(in srgb, {{ pillar_color }} 15%, transparent);color:{{ pillar_color }}">
+          <span class="node-step-num" style="background:color-mix(in srgb, {{ pillar_color }} 15%, transparent);color:{{ pillar_color }}">
             {{ loop.index }}
           </span>
-          <a href="/concepts/{{ node.concept_id }}/" class="text-sm font-semibold no-underline transition hover:opacity-80" style="color:var(--color-text)">{{ node.label }}</a>
+          <a href="/concepts/{{ node.concept_id }}/" class="text-sm font-semibold text-decoration-none transition hover:opacity-80 text-default">{{ node.label }}</a>
         </div>
         <div class="flex items-center gap-2 shrink-0">
-          <span class="lp-complete-btn inline-flex items-center gap-1 px-2 py-1 text-[10px] font-semibold rounded cursor-pointer transition hover:opacity-80" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">
-            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+          <span class="lp-complete-btn inline-flex items-center gap-1 px-2 py-1 text-[10px] font-semibold rounded cursor-pointer transition hover:opacity-80 bg-bg text-muted border-default">
+            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
             Mark Done
           </span>
           <span class="text-xs px-2 py-0.5 rounded bloom-badge" style="
@@ -112,23 +112,23 @@
         </div>
       </div>
       <div class="flex items-center gap-2 mb-3">
-        <span class="text-xs px-1.5 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-muted);border:1px solid var(--color-border)">{{ node.pillar | capitalize }}</span>
-        <span class="text-xs" style="color:var(--color-text-muted)">{{ node.total_content }} items</span>
-        <a href="/review/" class="text-xs font-semibold no-underline transition hover:opacity-80" style="color:var(--color-accent)">Review on Dashboard →</a>
+        <span class="badge-outline">{{ node.pillar | capitalize }}</span>
+        <span class="text-xs text-muted">{{ node.total_content }} items</span>
+        <a href="/review/" class="text-xs font-semibold text-decoration-none transition hover:opacity-80 text-accent">Review on Dashboard →</a>
       </div>
       {%- if node.learn or node.research or node.knowledge %}
       <div class="grid gap-2 sm:grid-cols-3">
         {%- for item in (node.learn + node.research + node.knowledge)[:3] %}
         {%- set item_pillar = item.pillar or start_pillar %}
         {%- set item_color = pillar_color %}
-        <a href="{{ slug_to_url(item.slug) }}" class="block p-2 rounded text-xs no-underline transition hover:shadow-sm" style="background:var(--color-surface);border:1px solid var(--color-border);color:var(--color-text)">
+        <a href="{{ slug_to_url(item.slug) }}" class="block p-2 rounded text-xs text-decoration-none transition hover:shadow-sm bg-surface border-default text-default">
           <span class="line-clamp-1 font-semibold">{{ item.title | striptags }}</span>
-          <span class="block mt-0.5" style="color:var(--color-text-muted)">{{ item.content_type | capitalize }}</span>
+          <span class="block mt-0.5 text-muted">{{ item.content_type | capitalize }}</span>
         </a>
         {%- endfor %}
       </div>
       {%- else %}
-      <p class="text-xs" style="color:var(--color-text-muted)">No linked content for this concept yet.</p>
+      <p class="text-xs text-muted">No linked content for this concept yet.</p>
       {%- endif %}
     </div>
     {%- endfor %}
@@ -161,12 +161,12 @@
         btn.style.borderColor = '#22c55e';
         btn.style.color = '#22c55e';
         btn.style.background = 'color-mix(in srgb, #22c55e 10%, transparent)';
-        btn.innerHTML = '<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Done';
+        btn.innerHTML = '<svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Done';
       } else {
         btn.style.borderColor = '';
         btn.style.color = '';
         btn.style.background = '';
-        btn.innerHTML = '<svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Mark Done';
+        btn.innerHTML = '<svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Mark Done';
       }
     });
   }
