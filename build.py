@@ -636,9 +636,9 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     try:
         from scripts.bundle_js import bundle as bundle_js
         bundle_js(dev=True, out_dir=str(PIPELINE_STATIC_DIR / "js"))
-        print(f"  JS bundling complete")
+        print("  JS bundling complete")
     except ImportError:
-        print(f"  JS bundler not available, skipping")
+        print("  JS bundler not available, skipping")
     _record_timing("js_bundling", time.time() - _t0)
 
     # --- Asset Pipeline (fingerprinting and minification) ---
@@ -2776,7 +2776,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     # --- ALPHABETICAL INDEX (A-Z browser, MathWorld-inspired) ---
     try:
         from scripts.generate_alpha_index import generate_alpha_index
-        alpha_page_count = generate_alpha_index(
+        generate_alpha_index(
             OUTPUT_DIR, all_content, render_template, ctx_base,
             pillar_config=PILLAR_CONFIG,
         )

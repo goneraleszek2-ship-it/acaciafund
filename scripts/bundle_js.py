@@ -10,9 +10,7 @@ Usage:
 """
 
 import argparse
-import os
 import re
-import shutil
 from pathlib import Path
 
 STATIC_JS = Path(__file__).resolve().parent.parent / "static" / "js"
