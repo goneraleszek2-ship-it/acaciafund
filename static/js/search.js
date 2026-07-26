@@ -40,12 +40,16 @@
     const desc = (entry.description || '').toLowerCase();
     const tags = (entry.tags || []).join(' ').toLowerCase();
     const concepts = (entry.ontology_concepts || []).join(' ').toLowerCase();
+    const technologies = (entry.technologies || []).join(' ').toLowerCase();
+    const use_cases = (entry.use_cases || []).join(' ').toLowerCase();
     let score = 0;
 
     for (const t of terms) {
       if (title.includes(t)) score += 10;
       if (tags.includes(t)) score += 4;
       if (concepts.includes(t)) score += 6;
+      if (technologies.includes(t)) score += 3;
+      if (use_cases.includes(t)) score += 2;
       if (desc.includes(t)) score += 2;
     }
 
@@ -178,6 +182,22 @@
         html += '<span style="font-size:0.65rem;padding:1px 6px;border-radius:9999px;background:color-mix(in srgb, var(--color-accent, #818cf8) 12%, transparent);color:var(--color-accent, #818cf8);border:1px solid color-mix(in srgb, var(--color-accent, #818cf8) 25%, transparent)">' + escapeHtml(c) + '</span>';
       }
       if (concepts.length > 5) html += '<span style="font-size:0.65rem;color:var(--color-text-muted, #888)">+' + (concepts.length - 5) + '</span>';
+      html += '</div>';
+    }
+    if (entry.technologies && entry.technologies.length) {
+      html += '<div style="display:flex;gap:0.25rem;flex-wrap:wrap;margin-top:0.3rem">';
+      for (const tech of entry.technologies.slice(0, 4)) {
+        html += '<span style="font-size:0.65rem;padding:1px 6px;border-radius:4px;background:color-mix(in srgb, #22c55e 12%, transparent);color:#22c55e;border:1px solid color-mix(in srgb, #22c55e 25%, transparent)">&#9881; ' + escapeHtml(tech) + '</span>';
+      }
+      if (entry.technologies.length > 4) html += '<span style="font-size:0.65rem;color:var(--color-text-muted, #888)">+' + (entry.technologies.length - 4) + '</span>';
+      html += '</div>';
+    }
+    if (entry.use_cases && entry.use_cases.length) {
+      html += '<div style="display:flex;gap:0.25rem;flex-wrap:wrap;margin-top:0.25rem">';
+      for (const uc of entry.use_cases.slice(0, 3)) {
+        html += '<span style="font-size:0.6rem;padding:1px 5px;border-radius:9999px;background:color-mix(in srgb, var(--color-accent, #818cf8) 10%, transparent);color:var(--color-text-muted, #bbb)">' + escapeHtml(uc.replace(/-/g, ' ')) + '</span>';
+      }
+      if (entry.use_cases.length > 3) html += '<span style="font-size:0.6rem;color:var(--color-text-muted, #888)">+' + (entry.use_cases.length - 3) + '</span>';
       html += '</div>';
     }
     if (entry.tags && entry.tags.length) {

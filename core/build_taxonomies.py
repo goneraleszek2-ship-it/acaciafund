@@ -958,6 +958,8 @@ def generate_search_pages(
             "tags": getattr(c, "tags", None) or [],
             "date_str": getattr(c, "date_str", None) or "",
             "difficulty": getattr(c, "difficulty", None) or "",
+            "technologies": getattr(c, "technologies", None) or [],
+            "use_cases": getattr(c, "use_cases", None) or [],
         }
 
         # Include SQI for quality-aware search

@@ -55,6 +55,8 @@ class Content:
     curated_relations: Optional[List[Dict[str, Any]]] = None
     quality_flags: List[str] = field(default_factory=list)
     flashcards: List[Dict[str, Any]] = field(default_factory=list)
+    technologies: List[str] = field(default_factory=list)
+    use_cases: List[str] = field(default_factory=list)
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "Content":
@@ -118,4 +120,6 @@ class Content:
             quality_flags=data.get("quality_flags", []),
             knowledge_category=data.get("knowledge_category", "reference"),
             flashcards=data.get("flashcards", []),
+            technologies=data.get("technologies", []),
+            use_cases=data.get("use_cases", []),
         )

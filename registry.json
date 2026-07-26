@@ -1318,7 +1318,24 @@
    ],
    "quality_badge": "moderate-confidence",
    "source_verified": true,
-   "highest_bloom": 6
+   "highest_bloom": 6,
+   "technologies": [
+    "Dagster",
+    "dbt",
+    "Apache Iceberg"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "ml-engineering",
+    "orchestration",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "data/research/data-platform-product-ux",
@@ -1460,7 +1477,24 @@
    ],
    "quality_badge": "moderate-confidence",
    "source_verified": true,
-   "highest_bloom": 6
+   "highest_bloom": 6,
+   "technologies": [
+    "Dagster",
+    "dbt",
+    "Apache Iceberg",
+    "Apache Parquet"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "orchestration",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "data/research/analytics-engineering-rise",
@@ -1601,7 +1635,25 @@
    ],
    "quality_badge": "moderate-confidence",
    "source_verified": true,
-   "highest_bloom": 6
+   "highest_bloom": 6,
+   "technologies": [
+    "Dagster",
+    "dbt",
+    "Apache Iceberg",
+    "Apache Parquet",
+    "SQLMesh"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "orchestration",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "data/research/cost-optimization-data-pipelines",
@@ -1751,7 +1803,25 @@
    ],
    "quality_badge": "moderate-confidence",
    "source_verified": true,
-   "highest_bloom": 6
+   "highest_bloom": 6,
+   "technologies": [
+    "Dagster",
+    "dbt",
+    "Apache Iceberg",
+    "Apache Parquet"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "infrastructure",
+    "orchestration",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "data/research/schema-registry-avro-protobuf",
@@ -1899,7 +1969,24 @@
    ],
    "quality_badge": "moderate-confidence",
    "source_verified": true,
-   "highest_bloom": 6
+   "highest_bloom": 6,
+   "technologies": [
+    "Apache Flink",
+    "Apache Hadoop",
+    "Apache Kafka",
+    "Kubernetes"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "infrastructure",
+    "privacy-security",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "data/research/data-products-api-design",
@@ -2057,7 +2144,26 @@
    ],
    "quality_badge": "moderate-confidence",
    "source_verified": true,
-   "highest_bloom": 6
+   "highest_bloom": 6,
+   "technologies": [
+    "Dagster",
+    "dbt",
+    "Apache Iceberg",
+    "Apache Parquet"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "ml-engineering",
+    "orchestration",
+    "privacy-security",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "data/research/data-mesh-implementation",
@@ -2199,7 +2305,24 @@
    ],
    "quality_badge": "moderate-confidence",
    "source_verified": true,
-   "highest_bloom": 6
+   "highest_bloom": 6,
+   "technologies": [
+    "Dagster",
+    "dbt",
+    "Apache Iceberg",
+    "Apache Parquet"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "orchestration",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "data/research/terraform-data-infrastructure",
@@ -2349,7 +2472,28 @@
    ],
    "quality_badge": "moderate-confidence",
    "source_verified": true,
-   "highest_bloom": 6
+   "highest_bloom": 6,
+   "technologies": [
+    "Dagster",
+    "dbt",
+    "dbt Cloud",
+    "Apache Iceberg",
+    "Apache Kafka",
+    "Apache Parquet",
+    "Terraform"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "infrastructure",
+    "orchestration",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "data/research/kubernetes-data-pipelines",
@@ -2498,7 +2642,30 @@
    ],
    "quality_badge": "moderate-confidence",
    "source_verified": true,
-   "highest_bloom": 6
+   "highest_bloom": 6,
+   "technologies": [
+    "Apache Airflow",
+    "Dagster",
+    "dbt",
+    "Apache Flink",
+    "Apache Iceberg",
+    "Apache Kafka",
+    "Kubernetes",
+    "Apache Parquet",
+    "Apache Spark"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "infrastructure",
+    "orchestration",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "data/research/feature-store-feast-vs-tecton",
@@ -2647,7 +2814,27 @@
    ],
    "quality_badge": "moderate-confidence",
    "source_verified": true,
-   "highest_bloom": 6
+   "highest_bloom": 6,
+   "technologies": [
+    "Dagster",
+    "dbt",
+    "Feast",
+    "Apache Iceberg",
+    "Apache Parquet"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "infrastructure",
+    "ml-engineering",
+    "orchestration",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "data/research/ml-pipeline-orchestration-feast-mlflow",
@@ -2798,7 +2985,29 @@
    ],
    "quality_badge": "moderate-confidence",
    "source_verified": true,
-   "highest_bloom": 6
+   "highest_bloom": 6,
+   "technologies": [
+    "Dagster",
+    "dbt",
+    "Feast",
+    "Apache Iceberg",
+    "MLflow",
+    "Apache Parquet",
+    "Apache Spark"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "infrastructure",
+    "ml-engineering",
+    "orchestration",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "data/research/data-observability-lineage",
@@ -2938,7 +3147,25 @@
    ],
    "quality_badge": "moderate-confidence",
    "source_verified": true,
-   "highest_bloom": 5
+   "highest_bloom": 5,
+   "technologies": [
+    "Dagster",
+    "dbt",
+    "Great Expectations",
+    "Apache Iceberg",
+    "Apache Parquet"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "orchestration",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "data/research/open-source-data-platform",
@@ -3074,7 +3301,32 @@
    ],
    "quality_badge": "moderate-confidence",
    "source_verified": true,
-   "highest_bloom": 5
+   "highest_bloom": 5,
+   "technologies": [
+    "Superset",
+    "Dagster",
+    "Databricks",
+    "dbt",
+    "DuckDB",
+    "Apache Iceberg",
+    "Kubernetes",
+    "Apache Parquet",
+    "Snowflake",
+    "Terraform",
+    "Trino"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "infrastructure",
+    "orchestration",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "data/research/sqlmesh-data-transformation",
@@ -3234,7 +3486,27 @@
    ],
    "quality_badge": "moderate-confidence",
    "source_verified": true,
-   "highest_bloom": 5
+   "highest_bloom": 5,
+   "technologies": [
+    "Dagster",
+    "dbt",
+    "Apache Iceberg",
+    "Apache Parquet",
+    "SQLMesh"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "ml-engineering",
+    "orchestration",
+    "privacy-security",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "data/research/dbt-mesh-enterprise-scale",
@@ -3378,7 +3650,28 @@
    ],
    "quality_badge": "moderate-confidence",
    "source_verified": true,
-   "highest_bloom": 5
+   "highest_bloom": 5,
+   "technologies": [
+    "Dagster",
+    "dbt",
+    "dbt Cloud",
+    "dbt Mesh",
+    "Apache Iceberg",
+    "Apache Parquet"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "infrastructure",
+    "ml-engineering",
+    "orchestration",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "data/research/delta-lake-iceberg-hudi-comparison",
@@ -3523,7 +3816,30 @@
    ],
    "quality_badge": "moderate-confidence",
    "source_verified": true,
-   "highest_bloom": 5
+   "highest_bloom": 5,
+   "technologies": [
+    "Dagster",
+    "dbt",
+    "Delta Lake",
+    "DuckDB",
+    "Apache Flink",
+    "Apache Hudi",
+    "Apache Iceberg",
+    "Apache Parquet",
+    "Apache Spark",
+    "Trino"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "orchestration",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "data/research/debezium-cdc-change-data-capture",
@@ -3665,7 +3981,27 @@
    ],
    "quality_badge": "moderate-confidence",
    "source_verified": true,
-   "highest_bloom": 5
+   "highest_bloom": 5,
+   "technologies": [
+    "Dagster",
+    "dbt",
+    "Debezium",
+    "Apache Flink",
+    "Apache Iceberg",
+    "Apache Kafka",
+    "Apache Parquet"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "orchestration",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "data/research/apache-iceberg-lakehouse",
@@ -3833,7 +4169,27 @@
    ],
    "quality_badge": "moderate-confidence",
    "source_verified": true,
-   "highest_bloom": 5
+   "highest_bloom": 5,
+   "technologies": [
+    "Dagster",
+    "dbt",
+    "Apache Flink",
+    "Apache Hive",
+    "Apache Iceberg",
+    "Apache Parquet"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "orchestration",
+    "privacy-security",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "data/research/kafka-streaming-event-driven",
@@ -3990,7 +4346,26 @@
    ],
    "quality_badge": "moderate-confidence",
    "source_verified": true,
-   "highest_bloom": 5
+   "highest_bloom": 5,
+   "technologies": [
+    "Dagster",
+    "dbt",
+    "Apache Flink",
+    "Apache Iceberg",
+    "Apache Kafka",
+    "Apache Parquet"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "orchestration",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "data/research/data-contracts",
@@ -4138,7 +4513,25 @@
    ],
    "quality_badge": "moderate-confidence",
    "source_verified": true,
-   "highest_bloom": 5
+   "highest_bloom": 5,
+   "technologies": [
+    "Dagster",
+    "dbt",
+    "Great Expectations",
+    "Apache Iceberg",
+    "Apache Parquet"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "orchestration",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "data/research/airflow-prefect-dagster-comparison",
@@ -4282,7 +4675,27 @@
    ],
    "quality_badge": "moderate-confidence",
    "source_verified": true,
-   "highest_bloom": 5
+   "highest_bloom": 5,
+   "technologies": [
+    "Apache Airflow",
+    "Dagster",
+    "dbt",
+    "Apache Iceberg",
+    "Apache Parquet",
+    "Prefect"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "ml-engineering",
+    "orchestration",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "data/research/data-quality-great-expectations",
@@ -4420,7 +4833,26 @@
    ],
    "quality_badge": "moderate-confidence",
    "source_verified": true,
-   "highest_bloom": 5
+   "highest_bloom": 5,
+   "technologies": [
+    "Apache Airflow",
+    "Dagster",
+    "dbt",
+    "Great Expectations",
+    "Apache Iceberg",
+    "Apache Parquet"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "orchestration",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "data/research/dagster-2",
@@ -4559,7 +4991,25 @@
    ],
    "quality_badge": "moderate-confidence",
    "source_verified": true,
-   "highest_bloom": 5
+   "highest_bloom": 5,
+   "technologies": [
+    "Dagster",
+    "dbt",
+    "Apache Iceberg",
+    "Apache Parquet"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "ml-engineering",
+    "orchestration",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "data/research/science-dataeng",
@@ -4698,7 +5148,25 @@
    ],
    "quality_badge": "moderate-confidence",
    "source_verified": true,
-   "highest_bloom": 5
+   "highest_bloom": 5,
+   "technologies": [
+    "Dagster",
+    "dbt",
+    "Great Expectations",
+    "Apache Iceberg",
+    "Apache Parquet"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "orchestration",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "markets/research/stock-dataeng",
@@ -5142,7 +5610,26 @@
    ],
    "quality_badge": "moderate-confidence",
    "source_verified": true,
-   "highest_bloom": 5
+   "highest_bloom": 5,
+   "technologies": [
+    "Dagster",
+    "dbt",
+    "Apache Iceberg",
+    "Apache Parquet"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "infrastructure",
+    "ml-engineering",
+    "orchestration",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "markets/research/dataops-markets",
@@ -7480,7 +7967,20 @@
    "reading_time": 3,
    "highest_bloom": 5,
    "quality_badge": "high-confidence",
-   "source_verified": true
+   "source_verified": true,
+   "technologies": [
+    "Apache Parquet"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "ml-engineering",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "aml/research/cryptocurrency-mixers-under-global-regulatory-spotlight",
@@ -11167,7 +11667,42 @@
      "dataops",
      "regulatory compliance"
     ]
-   }
+   },
+   "technologies": [
+    "Airbyte",
+    "Superset",
+    "Dagster",
+    "Databricks",
+    "dbt",
+    "dbt Cloud",
+    "dbt Mesh",
+    "DuckDB",
+    "Feast",
+    "Fivetran",
+    "Apache Flink",
+    "Grafana",
+    "Great Expectations",
+    "Apache Iceberg",
+    "Apache Kafka",
+    "Metabase",
+    "MinIO",
+    "Prometheus",
+    "Snowflake"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "infrastructure",
+    "ml-engineering",
+    "orchestration",
+    "privacy-security",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "data/learn/data-quality-observability-cost",
@@ -11347,7 +11882,34 @@
      "query-optimization",
      "options-trading"
     ]
-   }
+   },
+   "technologies": [
+    "Apache Airflow",
+    "BigQuery",
+    "Dagster",
+    "dbt",
+    "Delta Lake",
+    "Feast",
+    "Great Expectations",
+    "Apache Iceberg",
+    "Apache Kafka",
+    "Redis",
+    "Snowflake",
+    "Apache Spark"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "infrastructure",
+    "ml-engineering",
+    "orchestration",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "data/learn/building-pipelines-dbt-dagster",
@@ -11526,7 +12088,28 @@
      "data lake",
      "dbt"
     ]
-   }
+   },
+   "technologies": [
+    "Apache Airflow",
+    "Dagster",
+    "dbt",
+    "dbt Mesh",
+    "Materialize",
+    "Apache Parquet",
+    "Prefect",
+    "Segment"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "ml-engineering",
+    "orchestration",
+    "streaming"
+   ]
   },
   {
    "slug": "data/learn/data-pipeline-architectures",
@@ -11701,7 +12284,34 @@
      "streaming",
      "batch-stream-merging"
     ]
-   }
+   },
+   "technologies": [
+    "Apache Airflow",
+    "Dagster",
+    "dbt",
+    "Debezium",
+    "Apache Flink",
+    "Apache Hive",
+    "Apache Kafka",
+    "Prefect",
+    "RisingWave",
+    "Apache Spark",
+    "Spark SQL",
+    "Trino"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "infrastructure",
+    "ml-engineering",
+    "orchestration",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "data/learn/data-engineering-basics",
@@ -11870,7 +12480,42 @@
      "data lake",
      "batch processing"
     ]
-   }
+   },
+   "technologies": [
+    "Airbyte",
+    "Apache Airflow",
+    "BigQuery",
+    "Dagster",
+    "dbt",
+    "Debezium",
+    "Delta Lake",
+    "Feast",
+    "Fivetran",
+    "Apache Flink",
+    "Great Expectations",
+    "Apache Iceberg",
+    "Apache Kafka",
+    "Metabase",
+    "Prefect",
+    "Pulsar",
+    "Redshift",
+    "Snowflake",
+    "Apache Spark",
+    "SQLMesh"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "infrastructure",
+    "ml-engineering",
+    "orchestration",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "aml/learn/quiz-aml",
@@ -12609,7 +13254,14 @@
    "reading_time": 2,
    "highest_bloom": 5,
    "quality_badge": "high-confidence",
-   "source_verified": true
+   "source_verified": true,
+   "technologies": [],
+   "use_cases": [
+    "data-pipeline",
+    "data-quality",
+    "ml-engineering",
+    "privacy-security"
+   ]
   },
   {
    "slug": "aml/learn/trade-based-ml-sanctions",
@@ -13225,7 +13877,15 @@
    "reading_time": 2,
    "highest_bloom": 5,
    "quality_badge": "high-confidence",
-   "source_verified": true
+   "source_verified": true,
+   "technologies": [],
+   "use_cases": [
+    "data-governance",
+    "data-pipeline",
+    "infrastructure",
+    "ml-engineering",
+    "privacy-security"
+   ]
   },
   {
    "slug": "aml/learn/crypto-aml",
@@ -13797,7 +14457,36 @@
    "reading_time": 3,
    "highest_bloom": 2,
    "quality_badge": "high-confidence",
-   "source_verified": true
+   "source_verified": true,
+   "technologies": [
+    "Apache Airflow",
+    "Dagster",
+    "Databricks",
+    "dbt",
+    "Delta Lake",
+    "DuckDB",
+    "Apache Flink",
+    "Great Expectations",
+    "Apache Hive",
+    "Apache Hudi",
+    "Apache Iceberg",
+    "Apache Kafka",
+    "Apache Parquet",
+    "Snowflake",
+    "Apache Spark",
+    "Trino"
+   ],
+   "use_cases": [
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "ml-engineering",
+    "orchestration",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "data/learn/dataops-introduction",
@@ -13964,7 +14653,34 @@
    "reading_time": 1,
    "highest_bloom": 5,
    "quality_badge": "high-confidence",
-   "source_verified": true
+   "source_verified": true,
+   "technologies": [
+    "Airbyte",
+    "Apache Airflow",
+    "Dagster",
+    "dbt",
+    "Apache Flink",
+    "Grafana",
+    "Great Expectations",
+    "Apache Kafka",
+    "MLflow",
+    "Apache NiFi",
+    "Prefect",
+    "Prometheus",
+    "RisingWave",
+    "SQLMesh"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "ml-engineering",
+    "orchestration",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "data/learn/data-quality-engineering",
@@ -14113,7 +14829,16 @@
    "reading_time": 1,
    "highest_bloom": 5,
    "quality_badge": "high-confidence",
-   "source_verified": true
+   "source_verified": true,
+   "technologies": [
+    "Great Expectations"
+   ],
+   "use_cases": [
+    "data-pipeline",
+    "data-quality",
+    "orchestration",
+    "schema-management"
+   ]
   },
   {
    "slug": "data/learn/open-source-data-stack",
@@ -14269,7 +14994,40 @@
    "reading_time": 1,
    "highest_bloom": 5,
    "quality_badge": "high-confidence",
-   "source_verified": true
+   "source_verified": true,
+   "technologies": [
+    "Airbyte",
+    "Apache Airflow",
+    "Superset",
+    "Dagster",
+    "dbt",
+    "Debezium",
+    "Delta Lake",
+    "Feast",
+    "Grafana",
+    "Great Expectations",
+    "Apache Iceberg",
+    "Kubernetes",
+    "Metabase",
+    "MinIO",
+    "MLflow",
+    "Apache NiFi",
+    "Prefect",
+    "Prometheus",
+    "Apache Spark",
+    "Trino"
+   ],
+   "use_cases": [
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "infrastructure",
+    "ml-engineering",
+    "orchestration",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "knowledge/dataops-glossary",
@@ -14341,7 +15099,27 @@
    "reading_time": 1,
    "highest_bloom": 2,
    "quality_badge": "moderate-confidence",
-   "source_verified": true
+   "source_verified": true,
+   "technologies": [
+    "Apache Airflow",
+    "Dagster",
+    "Databricks",
+    "dbt",
+    "Great Expectations",
+    "Prefect"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "ml-engineering",
+    "orchestration",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "knowledge/open-source-tools",
@@ -14413,7 +15191,47 @@
    "reading_time": 2,
    "highest_bloom": 2,
    "quality_badge": "moderate-confidence",
-   "source_verified": true
+   "source_verified": true,
+   "technologies": [
+    "Airbyte",
+    "Apache Airflow",
+    "Dagster",
+    "dbt",
+    "Debezium",
+    "Delta Lake",
+    "DuckDB",
+    "Feast",
+    "Apache Flink",
+    "Grafana",
+    "Great Expectations",
+    "Apache Iceberg",
+    "Apache Kafka",
+    "Kubernetes",
+    "MinIO",
+    "MLflow",
+    "MongoDB",
+    "Apache NiFi",
+    "OpenTelemetry",
+    "PostgreSQL",
+    "Prefect",
+    "Prometheus",
+    "RisingWave",
+    "SQLMesh",
+    "Trino"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "infrastructure",
+    "ml-engineering",
+    "orchestration",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "knowledge/system-architecture",
@@ -14489,7 +15307,25 @@
    "reading_time": 3,
    "highest_bloom": 2,
    "quality_badge": "moderate-confidence",
-   "source_verified": true
+   "source_verified": true,
+   "technologies": [
+    "Apache Airflow",
+    "dbt",
+    "dbt Cloud",
+    "Great Expectations"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "infrastructure",
+    "orchestration",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "knowledge/about",
@@ -14567,7 +15403,16 @@
    "reading_time": 1,
    "highest_bloom": 2,
    "quality_badge": "moderate-confidence",
-   "source_verified": true
+   "source_verified": true,
+   "technologies": [],
+   "use_cases": [
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "infrastructure",
+    "streaming"
+   ]
   },
   {
    "slug": "knowledge/contact",
@@ -14644,7 +15489,11 @@
    "reading_time": 1,
    "highest_bloom": 2,
    "quality_badge": "moderate-confidence",
-   "source_verified": true
+   "source_verified": true,
+   "technologies": [],
+   "use_cases": [
+    "data-pipeline"
+   ]
   },
   {
    "slug": "knowledge/research-methodology",
@@ -14717,7 +15566,13 @@
    "reading_time": 2,
    "highest_bloom": 2,
    "quality_badge": "moderate-confidence",
-   "source_verified": true
+   "source_verified": true,
+   "technologies": [],
+   "use_cases": [
+    "data-pipeline",
+    "data-quality",
+    "schema-management"
+   ]
   },
   {
    "slug": "knowledge/pillar-taxonomy",
@@ -14803,7 +15658,29 @@
    "reading_time": 2,
    "highest_bloom": 2,
    "quality_badge": "moderate-confidence",
-   "source_verified": true
+   "source_verified": true,
+   "technologies": [
+    "Apache Airflow",
+    "Dagster",
+    "dbt",
+    "Delta Lake",
+    "Apache Flink",
+    "Great Expectations",
+    "Apache Iceberg",
+    "Apache Kafka",
+    "Prefect",
+    "SQLMesh"
+   ],
+   "use_cases": [
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "infrastructure",
+    "ml-engineering",
+    "orchestration",
+    "streaming"
+   ]
   },
   {
    "slug": "knowledge/changelog",
@@ -14878,7 +15755,12 @@
    "reading_time": 1,
    "highest_bloom": 2,
    "quality_badge": "moderate-confidence",
-   "source_verified": true
+   "source_verified": true,
+   "technologies": [],
+   "use_cases": [
+    "data-pipeline",
+    "infrastructure"
+   ]
   },
   {
    "slug": "knowledge/faq",
@@ -14954,7 +15836,15 @@
    "reading_time": 2,
    "highest_bloom": 2,
    "quality_badge": "moderate-confidence",
-   "source_verified": true
+   "source_verified": true,
+   "technologies": [],
+   "use_cases": [
+    "data-pipeline",
+    "data-quality",
+    "infrastructure",
+    "ml-engineering",
+    "orchestration"
+   ]
   },
   {
    "slug": "knowledge/glossary",
@@ -15039,7 +15929,22 @@
    "reading_time": 2,
    "highest_bloom": 2,
    "quality_badge": "moderate-confidence",
-   "source_verified": true
+   "source_verified": true,
+   "technologies": [
+    "dbt",
+    "Apache Iceberg"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "ml-engineering",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "knowledge/diagrams",
@@ -15105,7 +16010,16 @@
    "reading_time": 3,
    "highest_bloom": 2,
    "quality_badge": "high-confidence",
-   "source_verified": true
+   "source_verified": true,
+   "technologies": [],
+   "use_cases": [
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "ml-engineering",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "data/knowledge/cybernetic-foundations",
@@ -15171,7 +16085,17 @@
    "knowledge_category": "foundations",
    "highest_bloom": 2,
    "quality_badge": "high-confidence",
-   "source_verified": true
+   "source_verified": true,
+   "technologies": [],
+   "use_cases": [
+    "data-governance",
+    "data-pipeline",
+    "data-quality",
+    "infrastructure",
+    "ml-engineering",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "aml/research/quantum-spectral-anomaly-detection",
@@ -15899,6 +16823,21 @@
      "front": "Data engineering provides the infrastructure foundation for all data-driven work...",
      "back": "Data engineering provides the infrastructure foundation for all data-driven work in an organization."
     }
+   ],
+   "technologies": [
+    "Apache Airflow",
+    "dbt",
+    "Apache Spark"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "infrastructure",
+    "ml-engineering",
+    "orchestration"
    ]
   },
   {
@@ -16006,6 +16945,13 @@
      "front": "SQL is the universal language for structured data manipulation and remains essen...",
      "back": "SQL is the universal language for structured data manipulation and remains essential for data engineers."
     }
+   ],
+   "technologies": [],
+   "use_cases": [
+    "batch-processing",
+    "data-lakehouse",
+    "data-pipeline",
+    "elt-analytics-engineering"
    ]
   },
   {
@@ -16114,6 +17060,16 @@
      "front": "Batch pipelines are optimized for throughput and handle large volumes of histori...",
      "back": "Batch pipelines are optimized for throughput and handle large volumes of historical data at scheduled intervals."
     }
+   ],
+   "technologies": [],
+   "use_cases": [
+    "batch-processing",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "infrastructure",
+    "orchestration",
+    "streaming"
    ]
   },
   {
@@ -16221,6 +17177,12 @@
      "front": "Data quality is measured across six dimensions: accuracy, completeness, consiste...",
      "back": "Data quality is measured across six dimensions: accuracy, completeness, consistency, timeliness, validity, and uniqueness."
     }
+   ],
+   "technologies": [],
+   "use_cases": [
+    "data-governance",
+    "data-pipeline",
+    "data-quality"
    ]
   },
   {
@@ -16328,6 +17290,17 @@
      "front": "Data warehouses offer optimized SQL performance with schema-on-write for structu...",
      "back": "Data warehouses offer optimized SQL performance with schema-on-write for structured analytics."
     }
+   ],
+   "technologies": [
+    "Databricks",
+    "Apache Iceberg"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "schema-management"
    ]
   },
   {
@@ -16967,6 +17940,18 @@
      "front": "Data contracts establish formal agreements between producers and consumers, prev...",
      "back": "Data contracts establish formal agreements between producers and consumers, preventing breaking changes."
     }
+   ],
+   "technologies": [
+    "Databricks",
+    "Great Expectations",
+    "Snowflake"
+   ],
+   "use_cases": [
+    "data-governance",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "schema-management"
    ]
   },
   {
@@ -17077,6 +18062,19 @@
      "front": "Data mesh decentralizes data ownership to domain teams while providing shared in...",
      "back": "Data mesh decentralizes data ownership to domain teams while providing shared infrastructure."
     }
+   ],
+   "technologies": [
+    "Databricks",
+    "dbt",
+    "Snowflake"
+   ],
+   "use_cases": [
+    "data-governance",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "infrastructure",
+    "ml-engineering"
    ]
   },
   {
@@ -17188,6 +18186,20 @@
      "front": "CDC captures database changes in real time and streams them to downstream system...",
      "back": "CDC captures database changes in real time and streams them to downstream systems without batch loads."
     }
+   ],
+   "technologies": [
+    "Debezium",
+    "Apache Kafka",
+    "MongoDB",
+    "PostgreSQL",
+    "Pulsar"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-pipeline",
+    "infrastructure",
+    "schema-management",
+    "streaming"
    ]
   },
   {
@@ -17298,6 +18310,14 @@
      "front": "Modern data catalogs combine technical, business, and operational metadata in a ...",
      "back": "Modern data catalogs combine technical, business, and operational metadata in a searchable platform."
     }
+   ],
+   "technologies": [],
+   "use_cases": [
+    "data-governance",
+    "data-pipeline",
+    "data-quality",
+    "ml-engineering",
+    "streaming"
    ]
   },
   {
@@ -17409,6 +18429,19 @@
      "front": "Schema registries centralize versioning and validation to prevent incompatible c...",
      "back": "Schema registries centralize versioning and validation to prevent incompatible changes."
     }
+   ],
+   "technologies": [
+    "Apache Kafka",
+    "Apache Parquet"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "schema-management",
+    "streaming"
    ]
   },
   {
@@ -17519,6 +18552,22 @@
      "front": "Cloud data costs can spiral without proper governance and optimization practices...",
      "back": "Cloud data costs can spiral without proper governance and optimization practices."
     }
+   ],
+   "technologies": [
+    "Apache Airflow",
+    "dbt",
+    "Apache Parquet"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "infrastructure",
+    "orchestration",
+    "streaming"
    ]
   },
   {
@@ -17629,6 +18678,14 @@
      "front": "Privacy engineering embeds data protection into system design, not just complian...",
      "back": "Privacy engineering embeds data protection into system design, not just compliance checklists."
     }
+   ],
+   "technologies": [],
+   "use_cases": [
+    "data-governance",
+    "data-pipeline",
+    "data-quality",
+    "ml-engineering",
+    "privacy-security"
    ]
   },
   {
@@ -17740,6 +18797,12 @@
      "front": "Compliance requirements must be engineered into data architecture from the begin...",
      "back": "Compliance requirements must be engineered into data architecture from the beginning."
     }
+   ],
+   "technologies": [],
+   "use_cases": [
+    "data-governance",
+    "ml-engineering",
+    "privacy-security"
    ]
   },
   {
@@ -17850,6 +18913,19 @@
      "front": "Data versioning enables rollback, audit, and comparison of datasets over time.",
      "back": "Data versioning enables rollback, audit, and comparison of datasets over time."
     }
+   ],
+   "technologies": [
+    "Delta Lake",
+    "dvc",
+    "Apache Iceberg"
+   ],
+   "use_cases": [
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "infrastructure",
+    "ml-engineering",
+    "schema-management"
    ]
   },
   {
@@ -17960,6 +19036,17 @@
      "front": "Defense in depth applies multiple security layers to protect against any single ...",
      "back": "Defense in depth applies multiple security layers to protect against any single point of failure."
     }
+   ],
+   "technologies": [],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "elt-analytics-engineering",
+    "infrastructure",
+    "privacy-security",
+    "streaming"
    ]
   },
   {
@@ -18071,6 +19158,19 @@
      "front": "ELT leverages warehouse compute for transformation, providing scalability over t...",
      "back": "ELT leverages warehouse compute for transformation, providing scalability over traditional ETL approaches."
     }
+   ],
+   "technologies": [
+    "dbt",
+    "Snowflake",
+    "SQLMesh"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-pipeline",
+    "elt-analytics-engineering",
+    "infrastructure",
+    "orchestration",
+    "schema-management"
    ]
   },
   {
@@ -18182,6 +19282,20 @@
      "front": "Data observability provides holistic visibility into data health across freshnes...",
      "back": "Data observability provides holistic visibility into data health across freshness, distribution, volume, schema, and lineage."
     }
+   ],
+   "technologies": [
+    "dbt",
+    "Great Expectations"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-pipeline",
+    "data-quality",
+    "elt-analytics-engineering",
+    "ml-engineering",
+    "schema-management",
+    "streaming"
    ]
   },
   {
@@ -21106,7 +22220,25 @@
      "2024"
     ]
    },
-   "lineage": {}
+   "lineage": {},
+   "technologies": [
+    "Databricks",
+    "Delta Lake",
+    "Apache Flink",
+    "Apache Iceberg",
+    "Apache Kafka",
+    "Snowflake"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "infrastructure",
+    "ml-engineering",
+    "schema-management",
+    "streaming"
+   ]
   },
   {
    "slug": "stock/knowledge/stock-timeline-2024-2026",
@@ -22944,7 +24076,12 @@
    "trending_html": "",
    "image_credit": "",
    "og_svg": "",
-   "featured_image": ""
+   "featured_image": "",
+   "technologies": [],
+   "use_cases": [
+    "data-governance",
+    "data-quality"
+   ]
   },
   {
    "slug": "data/research/wang-strong-1996-data-quality-framework",
@@ -23044,7 +24181,13 @@
    "trending_html": "",
    "image_credit": "",
    "og_svg": "",
-   "featured_image": ""
+   "featured_image": "",
+   "technologies": [],
+   "use_cases": [
+    "data-governance",
+    "data-pipeline",
+    "data-quality"
+   ]
   },
   {
    "slug": "data/research/dean-ghemawat-2004-mapreduce",
@@ -23145,7 +24288,11 @@
    "trending_html": "",
    "image_credit": "",
    "og_svg": "",
-   "featured_image": ""
+   "featured_image": "",
+   "technologies": [],
+   "use_cases": [
+    "data-pipeline"
+   ]
   },
   {
    "slug": "data/research/chang-2006-bigtable-distributed-storage",
@@ -23246,7 +24393,12 @@
    "trending_html": "",
    "image_credit": "",
    "og_svg": "",
-   "featured_image": ""
+   "featured_image": "",
+   "technologies": [],
+   "use_cases": [
+    "data-pipeline",
+    "schema-management"
+   ]
   },
   {
    "slug": "data/research/akidau-2015-dataflow-model-stream-processing",
@@ -23347,7 +24499,16 @@
    "trending_html": "",
    "image_credit": "",
    "og_svg": "",
-   "featured_image": ""
+   "featured_image": "",
+   "technologies": [
+    "Apache Beam",
+    "GCP Dataflow"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "ml-engineering",
+    "streaming"
+   ]
   },
   {
    "slug": "data/research/armbrust-2021-lakehouse-architecture",
@@ -23449,7 +24610,17 @@
    "trending_html": "",
    "image_credit": "",
    "og_svg": "",
-   "featured_image": ""
+   "featured_image": "",
+   "technologies": [
+    "Apache Iceberg"
+   ],
+   "use_cases": [
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "infrastructure",
+    "schema-management"
+   ]
   },
   {
    "slug": "data/research/kreps-2011-kafka-distributed-messaging",
@@ -23550,7 +24721,14 @@
    "trending_html": "",
    "image_credit": "",
    "og_svg": "",
-   "featured_image": ""
+   "featured_image": "",
+   "technologies": [
+    "Apache Kafka"
+   ],
+   "use_cases": [
+    "data-pipeline",
+    "streaming"
+   ]
   },
   {
    "slug": "data/research/zaharia-2012-spark-rdds",
@@ -23651,7 +24829,13 @@
    "trending_html": "",
    "image_credit": "",
    "og_svg": "",
-   "featured_image": ""
+   "featured_image": "",
+   "technologies": [
+    "Apache Spark"
+   ],
+   "use_cases": [
+    "data-pipeline"
+   ]
   },
   {
    "slug": "data/research/apache-iceberg-table-specification",
@@ -23752,7 +24936,16 @@
    "trending_html": "",
    "image_credit": "",
    "og_svg": "",
-   "featured_image": ""
+   "featured_image": "",
+   "technologies": [
+    "Apache Iceberg"
+   ],
+   "use_cases": [
+    "data-lakehouse",
+    "data-pipeline",
+    "infrastructure",
+    "schema-management"
+   ]
   },
   {
    "slug": "data/research/stonebraker-2018-database-cycles",
@@ -23853,7 +25046,12 @@
    "trending_html": "",
    "image_credit": "",
    "og_svg": "",
-   "featured_image": ""
+   "featured_image": "",
+   "technologies": [],
+   "use_cases": [
+    "batch-processing",
+    "data-pipeline"
+   ]
   },
   {
    "slug": "compliance/research/levi-reuter-2006-money-laundering-review",
@@ -24877,6 +26075,26 @@
      "question": "How does the convergence of streaming platforms and AI agent infrastructure change data engineering team structures and skill requirements?",
      "level": "evaluate"
     }
+   ],
+   "technologies": [
+    "Debezium",
+    "Apache Flink",
+    "Apache Iceberg",
+    "Apache Kafka",
+    "PostgreSQL",
+    "RisingWave",
+    "Terraform"
+   ],
+   "use_cases": [
+    "batch-processing",
+    "data-governance",
+    "data-lakehouse",
+    "data-pipeline",
+    "data-quality",
+    "infrastructure",
+    "ml-engineering",
+    "schema-management",
+    "streaming"
    ]
   },
   {
