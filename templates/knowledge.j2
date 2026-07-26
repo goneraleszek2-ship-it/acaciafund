@@ -3,41 +3,18 @@
 {% from "macros/breadcrumbs.html" import breadcrumbs %}
 {% block main_content %}
 {{ breadcrumbs(page_path, content.title) }}
-<div id="reading-progress" style="position:fixed;top:0;left:0;height:3px;z-index:9999;width:0%;background:var(--color-accent)"></div>
+<div id="reading-progress"></div>
 
-<div class="flex gap-8 {% if toc_items %}md:flex-row{% endif %} flex-col">
-  {%- if toc_items %}
-  <aside class="toc-sidebar shrink-0 order-last md:order-first md:sticky md:top-20 md:self-start md:max-h-[calc(100vh-6rem)] md:overflow-y-auto md:w-52">
-    <div class="flex items-center justify-between mb-3">
-      <h2 class="text-xs font-semibold uppercase tracking-wide" style="color:var(--color-text-muted)">On this page</h2>
-      <button id="focus-toggle" class="text-xs px-2 py-1 rounded" style="color:var(--color-text-muted);background:var(--color-bg)" title="Focus mode" aria-label="Toggle focus mode">
-        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 4h4M6 20h4M18 4h-4M18 20h-4M4 6v4M4 18v4M20 6v4M20 18v4"/></svg>
-      </button>
-    </div>
-    <nav aria-label="Table of contents">
-      <ul class="space-y-1 text-sm">
-        {%- for item in toc_items %}
-        <li>
-          <a href="#{{ item.id }}" class="toc-link block py-1 {% if item.tag == 'h3' %}pl-4 text-xs{% endif %} rounded px-2 transition" style="color:var(--color-text-muted)">
-            {{ item.text }}
-          </a>
-        </li>
-        {%- endfor %}
-      </ul>
-    </nav>
-  </aside>
-  {%- endif %}
-
-  <article class="min-w-0 flex-1">
-    <nav aria-label="Breadcrumb" class="mb-4 text-xs" style="color:var(--color-text-muted)">
+<article>
+    <nav aria-label="Breadcrumb" class="mb-4 text-xs text-muted">
       <ol class="flex flex-wrap items-center gap-1.5">
-        <li><a href="/" class="hover:text-[var(--color-accent)] transition">Home</a></li>
+        <li><a href="/" class="hover-accent transition">Home</a></li>
         <li aria-hidden="true">/</li>
         {%- set pillar_key = content.pillar or "aml" %}
         {%- set pc = pillar_config.get(pillar_key, pillar_config["aml"]) %}
-        <li><a href="/{{ pc.url }}/" class="hover:text-[var(--color-accent)] transition">{{ pc.label }}</a></li>
+        <li><a href="/{{ pc.url }}/" class="hover-accent transition">{{ pc.label }}</a></li>
         <li aria-hidden="true">/</li>
-        <li aria-current="page" class="truncate max-w-[200px]">{{ content.title | striptags }}</li>
+        <li aria-current="page" class="truncate max-w-200px">{{ content.title | striptags }}</li>
       </ol>
     </nav>
     <header class="mb-6">
@@ -46,12 +23,12 @@
         {% set pillar = content.pillar %}
         {% include "macros/pillar_badge.html" %}
         {%- if kcat %}
-        <span class="text-xs px-2 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-secondary);border:1px solid var(--color-border)">{{ kcat | capitalize }}</span>
+        <span class="badge-outline">{{ kcat | capitalize }}</span>
         {%- endif %}
       </div>
-      <h1 class="text-3xl font-extrabold leading-tight" style="color:var(--color-text)">{{ content.title | striptags }}</h1>
+      <h1 class="text-3xl font-extrabold leading-tight text-default">{{ content.title | striptags }}</h1>
       {%- if content.date_str %}
-      <div class="mt-2 flex items-center gap-2 text-sm" style="color:var(--color-text-muted)">
+      <div class="mt-2 flex items-center gap-2 text-sm text-muted">
         <time datetime="{{ content.date_str }}">{{ content.date_str }}</time>
         {%- if content.reading_time %}<span aria-hidden="true"> · </span><span>{{ content.reading_time }} min read</span>{% endif %}
       </div>
@@ -64,7 +41,7 @@
     {% include 'partials/normative_basis.j2' %}
     {%- endif %}
 
-    <div class="prose prose-lg prose-blue max-w-none">
+    <div class="prose-body">
       {{ page_body | default(content.body_html) | safe }}
     </div>
 
@@ -76,8 +53,8 @@
     {% include 'partials/article_metadata.j2' %}
 
     {%- if content.bloom_questions and content.bloom_questions | length > 0 %}
-    <section class="mt-12 pt-8 border-t">
-      <h2 class="text-2xl font-bold mb-4">Bloom Taxonomy Questions</h2>
+    <section class="mt-12 pt-8 border-t border-muted">
+      <h2 class="text-2xl font-bold mb-4 text-default">Bloom Taxonomy Questions</h2>
       <div class="space-y-4">
         {%- for q in content.bloom_questions %}
         <div class="ghost-card p-4">
@@ -99,20 +76,20 @@
     {%- endif %}
 
     {%- if source_synthesis and source_synthesis | length > 0 %}
-    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
-      <h2 class="text-2xl font-bold mb-4 inline-flex items-center gap-2" style="color:var(--color-text)">
+    <section class="mt-12 pt-8 border-t border-muted">
+      <h2 class="text-2xl font-bold mb-4 inline-flex items-center gap-2 text-default">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         Source Synthesis
       </h2>
       <div class="space-y-3">
         {%- for syn in source_synthesis | sort(attribute='synthesis_score') | reverse %}
-        <div class="synthesis-card p-4 rounded-lg transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border)">
+        <div class="ghost-card p-4">
           <div class="flex items-start gap-3">
             <div class="flex-1">
-              <h3 class="text-sm font-semibold" style="color:var(--color-text)">
-                <a href="{{ syn.get('source_url', '#') }}" target="_blank" rel="noopener" class="hover:text-[var(--color-accent)] transition">{{ syn.get('source_title', 'Source') }}</a>
+              <h3 class="text-sm font-semibold text-default">
+                <a href="{{ syn.get('source_url', '#') }}" target="_blank" rel="noopener" class="hover-accent transition">{{ syn.get('source_title', 'Source') }}</a>
               </h3>
-              <p class="mt-1 text-xs" style="color:var(--color-text-secondary)">{{ syn.get('synthesis_text', '') }}</p>
+              <p class="mt-1 text-xs text-secondary">{{ syn.get('synthesis_text', '') }}</p>
             </div>
           </div>
         </div>
@@ -122,14 +99,14 @@
     {%- endif %}
 
     {%- if external_references and external_references | length > 0 %}
-    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
-      <h2 class="text-2xl font-bold mb-4 inline-flex items-center gap-2" style="color:var(--color-text)">
+    <section class="mt-12 pt-8 border-t border-muted">
+      <h2 class="text-2xl font-bold mb-4 inline-flex items-center gap-2 text-default">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
         Further Reading
       </h2>
       <div class="grid gap-3 sm:grid-cols-2">
         {%- for ref in external_references %}
-        <a href="{{ ref.url }}" target="_blank" rel="noopener" class="ghost-card p-4 block transition hover:shadow-md" style="text-decoration:none">
+        <a href="{{ ref.url }}" target="_blank" rel="noopener" class="ghost-card p-4 block transition hover:shadow-md text-decoration-none">
           <div class="flex items-start gap-3">
             <div class="shrink-0 mt-0.5">
               <span class="inline-block text-xs px-2 py-0.5 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">
@@ -137,9 +114,9 @@
               </span>
             </div>
             <div class="flex-1 min-w-0">
-              <h3 class="text-sm font-semibold truncate" style="color:var(--color-text)">{{ ref.title }}</h3>
+              <h3 class="text-sm font-semibold truncate text-default">{{ ref.title }}</h3>
               {%- if ref.description %}
-              <p class="mt-1 text-xs line-clamp-2" style="color:var(--color-text-secondary)">{{ ref.description }}</p>
+              <p class="mt-1 text-xs line-clamp-2 text-secondary">{{ ref.description }}</p>
               {%- endif %}
             </div>
           </div>
@@ -150,12 +127,12 @@
     {%- endif %}
 
     {%- if ontology_concepts and ontology_concepts | length > 0 %}
-    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
-      <h2 class="text-2xl font-bold mb-2 flex items-center gap-2" style="color:var(--color-text)">
+    <section class="mt-12 pt-8 border-t border-muted">
+      <h2 class="text-2xl font-bold mb-2 flex items-center gap-2 text-default">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
         Feynman Concept Cards
       </h2>
-      <p class="text-sm mb-6" style="color:var(--color-text-muted)">Master each concept: read the ELI5, explore analogies, work examples, and teach it back.</p>
+      <p class="text-sm mb-6 text-muted">Master each concept: read the ELI5, explore analogies, work examples, and teach it back.</p>
       <div class="space-y-6" id="feynman-concept-cards">
         {%- for _concept in ontology_concepts %}
         {% set concept = _concept %}{% include 'partials/feynman_card.j2' %}
@@ -171,11 +148,11 @@
         {%- for rp in related_research %}
         {%- set rpillar = rp.pillar or "aml" %}
         {%- set rpc = pillar_config.get(rpillar, pillar_config["aml"]) %}
-        <a href="{{ slug_to_url(rp.slug) }}" class="ghost-card block text-decoration:none">
+        <a href="{{ slug_to_url(rp.slug) }}" class="ghost-card block text-decoration-none">
           <div class="p-3">
             {% set pillar = rp.pillar %}
             {% include "macros/pillar_badge.html" %}
-            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">{{ rp.title | striptags }}</span>
+            <span class="block mt-2 text-sm font-semibold text-default">{{ rp.title | striptags }}</span>
           </div>
         </a>
         {%- endfor %}
@@ -190,19 +167,24 @@
         {%- for rl in related_learn %}
         {%- set rpillar = rl.pillar or "aml" %}
         {%- set rpc = pillar_config.get(rpillar, pillar_config["aml"]) %}
-        <a href="{{ slug_to_url(rl.slug) }}" class="ghost-card block text-decoration:none">
+        <a href="{{ slug_to_url(rl.slug) }}" class="ghost-card block text-decoration-none">
           <div class="p-3">
             {% set pillar = rl.pillar %}
             {% include "macros/pillar_badge.html" %}
-            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">{{ rl.title | striptags }}</span>
+            <span class="block mt-2 text-sm font-semibold text-default">{{ rl.title | striptags }}</span>
           </div>
         </a>
         {%- endfor %}
       </div>
     </section>
     {%- endif %}
+
+    {# MathWorld-inspired sections #}
+    {% include 'partials/see_also.j2' %}
+    {% include 'partials/explore_tools.j2' %}
+    {% include 'partials/contributor.j2' %}
+    {% include 'partials/citation.j2' %}
   </article>
-</div>
 
 <script src="{{ 'js/learning_hub.js' | asset }}" defer></script>
 {% include 'partials/newsletter.html' %}

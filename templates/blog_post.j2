@@ -2,43 +2,20 @@
 {% from "macros/breadcrumbs.html" import breadcrumbs %}
 {% block main_content %}
 {{ breadcrumbs(page_path, content.title) }}
-<div id="reading-progress" style="position:fixed;top:0;left:0;height:3px;z-index:9999;width:0%;background:var(--color-accent)"></div>
+<div id="reading-progress"></div>
 
-<div class="flex gap-8 {% if toc_items %}md:flex-row{% endif %} flex-col">
-  {%- if toc_items %}
-  <aside class="toc-sidebar shrink-0 order-last md:order-first md:sticky md:top-20 md:self-start md:max-h-[calc(100vh-6rem)] md:overflow-y-auto md:w-52">
-    <div class="flex items-center justify-between mb-3">
-      <h2 class="text-xs font-semibold uppercase tracking-wide" style="color:var(--color-text-muted)">On this page</h2>
-      <button id="focus-toggle" class="text-xs px-2 py-1 rounded" style="color:var(--color-text-muted);background:var(--color-bg)" title="Focus mode" aria-label="Toggle focus mode">
-        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 4h4M6 20h4M18 4h-4M18 20h-4M4 6v4M4 18v4M20 6v4M20 18v4"/></svg>
-      </button>
-    </div>
-    <nav aria-label="Table of contents">
-      <ul class="space-y-1 text-sm">
-        {%- for item in toc_items %}
-        <li>
-          <a href="#{{ item.id }}" class="toc-link block py-1 {% if item.tag == 'h3' %}pl-4 text-xs{% endif %} rounded px-2 transition" style="color:var(--color-text-muted)">
-            {{ item.text }}
-          </a>
-        </li>
-        {%- endfor %}
-      </ul>
-    </nav>
-  </aside>
-  {%- endif %}
-
-  <article class="min-w-0 flex-1">
-    <nav aria-label="Breadcrumb" class="mb-4 text-xs" style="color:var(--color-text-muted)">
+<article>
+    <nav aria-label="Breadcrumb" class="mb-4 text-xs text-muted">
       <ol class="flex flex-wrap items-center gap-1.5">
-        <li><a href="/" class="hover:text-[var(--color-accent)] transition">Home</a></li>
+        <li><a href="/" class="hover-accent transition">Home</a></li>
         <li aria-hidden="true">/</li>
         {%- set pillar_key = content.pillar or "aml" %}
         {%- set pc = pillar_config.get(pillar_key, pillar_config["aml"]) %}
-        <li><a href="/{{ pc.url }}/" class="hover:text-[var(--color-accent)] transition">{{ pc.label }}</a></li>
+        <li><a href="/{{ pc.url }}/" class="hover-accent transition">{{ pc.label }}</a></li>
         <li aria-hidden="true">/</li>
-        <li><a href="/{{ pc.url }}/research/" class="hover:text-[var(--color-accent)] transition">Research</a></li>
+        <li><a href="/{{ pc.url }}/research/" class="hover-accent transition">Research</a></li>
         <li aria-hidden="true">/</li>
-        <li aria-current="page" class="truncate max-w-[200px]">{{ content.title | striptags }}</li>
+        <li aria-current="page" class="truncate max-w-200px">{{ content.title | striptags }}</li>
       </ol>
     </nav>
     <header class="mb-6">
@@ -49,21 +26,21 @@
       </div>
       {%- if featured_image %}
       <div class="mb-4">
-        <img src="{{ featured_image }}" alt="{{ content.title | striptags }}" class="w-full rounded-lg" style="max-height:400px;object-fit:cover" loading="lazy">
+        <img src="{{ featured_image }}" alt="{{ content.title | striptags }}" class="w-full rounded-lg img-hero" loading="lazy">
         {%- if image_credit %}
-        <span class="block text-xs mt-1" style="color:var(--color-text-muted)">{{ image_credit }}</span>
+        <span class="block text-xs mt-1 text-muted">{{ image_credit }}</span>
         {%- endif %}
       </div>
       {%- endif %}
-      <h1 class="text-3xl font-extrabold leading-tight" style="color:var(--color-text)">{{ content.title | striptags }}</h1>
+      <h1 class="text-3xl font-extrabold leading-tight text-default">{{ content.title | striptags }}</h1>
       {%- if content.date_str or content.source_url %}
-      <div class="mt-2 flex items-center gap-2 text-sm flex-wrap" style="color:var(--color-text-muted)">
+      <div class="mt-2 flex items-center gap-2 text-sm flex-wrap text-muted">
         {%- if content.date_str %}
         <time datetime="{{ content.date_str }}">{{ content.date_str }}</time>
         {%- endif %}
         {%- if content.source_url %}
         {%- if content.date_str %}<span aria-hidden="true"> · </span>{% endif %}
-        <a href="{{ content.source_url }}" target="_blank" rel="noopener" class="hover:text-[var(--color-accent)] transition">Source &nearr;</a>
+        <a href="{{ content.source_url }}" target="_blank" rel="noopener" class="hover-accent transition">Source &nearr;</a>
         {%- endif %}
       </div>
       {%- endif %}
@@ -71,26 +48,26 @@
 
     {% include 'partials/visual_abstract.j2' %}
 
-    <div class="prose prose-lg prose-blue max-w-none">
+    <div class="prose-body">
       {{ page_body | default(content.body_html) | safe }}
     </div>
 
     {% include 'partials/article_metadata.j2' %}
 
     {%- if cross_pillar_items and cross_pillar_items | length > 0 %}
-    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
+    <section class="mt-12 pt-8 border-t border-muted">
       <h2 class="text-2xl font-bold mb-6">Cross-Pillar Connections</h2>
       <div class="grid gap-4 sm:grid-cols-2">
         {%- for cp in cross_pillar_items %}
         {%- set cpp = cp.pillar or "aml" %}
         {%- set cpc = pillar_config.get(cpp, pillar_config["aml"]) %}
-        <a href="{{ slug_to_url(cp.slug) }}" class="ghost-card block text-decoration:none">
+        <a href="{{ slug_to_url(cp.slug) }}" class="ghost-card block text-decoration-none">
           <div class="p-3">
             {% set pillar = cp.pillar %}
             {% include "macros/pillar_badge.html" %}
-            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">{{ cp.title | striptags }}</span>
+            <span class="block mt-2 text-sm font-semibold text-default">{{ cp.title | striptags }}</span>
             {%- if cp.description %}
-            <span class="block mt-1 text-xs" style="color:var(--color-text-muted)">{{ cp.description | truncate(100) }}</span>
+            <span class="block mt-1 text-xs text-muted">{{ cp.description | truncate(100) }}</span>
             {%- endif %}
           </div>
         </a>
@@ -100,20 +77,20 @@
     {%- endif %}
 
     {%- if source_synthesis and source_synthesis | length > 0 %}
-    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
-      <h2 class="text-2xl font-bold mb-4 inline-flex items-center gap-2" style="color:var(--color-text)">
+    <section class="mt-12 pt-8 border-t border-muted">
+      <h2 class="text-2xl font-bold mb-4 inline-flex items-center gap-2 text-default">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         Source Synthesis
       </h2>
       <div class="space-y-3">
         {%- for syn in source_synthesis | sort(attribute='synthesis_score') | reverse %}
-        <div class="synthesis-card p-4 rounded-lg transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border)">
+        <div class="synthesis-card ghost-card p-4">
           <div class="flex items-start gap-3">
             <div class="flex-1">
-              <h3 class="text-sm font-semibold" style="color:var(--color-text)">
-                <a href="{{ syn.get('source_url', '#') }}" target="_blank" rel="noopener" class="hover:text-[var(--color-accent)] transition">{{ syn.get('source_title', 'Source') }}</a>
+              <h3 class="text-sm font-semibold text-default">
+                <a href="{{ syn.get('source_url', '#') }}" target="_blank" rel="noopener" class="hover-accent transition">{{ syn.get('source_title', 'Source') }}</a>
               </h3>
-              <p class="mt-1 text-xs" style="color:var(--color-text-secondary)">{{ syn.get('synthesis_text', '') }}</p>
+              <p class="mt-1 text-xs text-secondary">{{ syn.get('synthesis_text', '') }}</p>
             </div>
           </div>
         </div>
@@ -123,14 +100,14 @@
     {%- endif %}
 
     {%- if external_references and external_references | length > 0 %}
-    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
+    <section class="mt-12 pt-8 border-t border-muted">
       <h2 class="text-2xl font-bold mb-4">Further Reading</h2>
       <ul class="space-y-2">
         {%- for ref in external_references %}
         <li>
-          <a href="{{ ref.url }}" target="_blank" rel="noopener" class="text-sm hover:text-[var(--color-accent)] transition">{{ ref.title }}</a>
+          <a href="{{ ref.url }}" target="_blank" rel="noopener" class="text-sm hover-accent transition">{{ ref.title }}</a>
           {%- if ref.description %}
-          <p class="text-xs mt-0.5" style="color:var(--color-text-muted)">{{ ref.description }}</p>
+          <p class="text-xs mt-0.5 text-muted">{{ ref.description }}</p>
           {%- endif %}
         </li>
         {%- endfor %}
@@ -145,13 +122,13 @@
         {%- for rp in related_posts %}
         {%- set rpillar = rp.pillar or "aml" %}
         {%- set rpc = pillar_config.get(rpillar, pillar_config["aml"]) %}
-        <a href="{{ slug_to_url(rp.slug) }}" class="ghost-card block text-decoration:none">
+        <a href="{{ slug_to_url(rp.slug) }}" class="ghost-card block text-decoration-none">
           <div class="p-3">
             {% set pillar = rp.pillar %}
             {% include "macros/pillar_badge.html" %}
-            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">{{ rp.title | striptags }}</span>
+            <span class="block mt-2 text-sm font-semibold text-default">{{ rp.title | striptags }}</span>
             {%- if rp.date_str %}
-            <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">{{ rp.date_str }}</span>
+            <span class="block mt-1 text-xs font-meta text-muted">{{ rp.date_str }}</span>
             {%- endif %}
           </div>
         </a>
@@ -167,13 +144,13 @@
         {%- for rl in related_learn %}
         {%- set rlpillar = rl.pillar or "aml" %}
         {%- set rlpc = pillar_config.get(rlpillar, pillar_config["aml"]) %}
-        <a href="{{ slug_to_url(rl.slug) }}" class="ghost-card block text-decoration:none">
+        <a href="{{ slug_to_url(rl.slug) }}" class="ghost-card block text-decoration-none">
           <div class="p-3">
             {% set pillar = rl.pillar %}
             {% include "macros/pillar_badge.html" %}
-            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">{{ rl.title | striptags }}</span>
+            <span class="block mt-2 text-sm font-semibold text-default">{{ rl.title | striptags }}</span>
             {%- if rl.description %}
-            <span class="block mt-1 text-xs" style="color:var(--color-text-muted)">{{ rl.description | truncate(80) }}</span>
+            <span class="block mt-1 text-xs text-muted">{{ rl.description | truncate(80) }}</span>
             {%- endif %}
           </div>
         </a>
@@ -185,21 +162,26 @@
     {%- if prev_post or next_post %}
     <nav class="mt-12 pt-6 border-t grid grid-cols-2 gap-4" aria-label="Article navigation">
       {%- if prev_post %}
-      <a href="{{ slug_to_url(prev_post.slug) }}" class="ghost-card group block p-3 text-decoration:none">
-        <span class="text-xs" style="color:var(--color-text-muted)">&larr; Previous</span>
-        <span class="block text-sm font-medium group-hover:text-blue-600 truncate">{{ prev_post.title | striptags }}</span>
+      <a href="{{ slug_to_url(prev_post.slug) }}" class="ghost-card group block p-3 text-decoration-none">
+        <span class="text-xs text-muted">&larr; Previous</span>
+        <span class="block text-sm font-medium group-hover-accent truncate">{{ prev_post.title | striptags }}</span>
       </a>
       {%- endif %}
       {%- if next_post %}
-      <a href="{{ slug_to_url(next_post.slug) }}" class="ghost-card group block p-3 text-decoration:none">
-        <span class="text-xs" style="color:var(--color-text-muted)">Next &rarr;</span>
-        <span class="block text-sm font-medium group-hover:text-blue-600 truncate">{{ next_post.title | striptags }}</span>
+      <a href="{{ slug_to_url(next_post.slug) }}" class="ghost-card group block p-3 text-decoration-none">
+        <span class="text-xs text-muted">Next &rarr;</span>
+        <span class="block text-sm font-medium group-hover-accent truncate">{{ next_post.title | striptags }}</span>
       </a>
       {%- endif %}
     </nav>
     {%- endif %}
+
+    {# MathWorld-inspired sections #}
+    {% include 'partials/see_also.j2' %}
+    {% include 'partials/explore_tools.j2' %}
+    {% include 'partials/contributor.j2' %}
+    {% include 'partials/citation.j2' %}
   </article>
-</div>
 
 {% include 'partials/newsletter.html' %}
 <script src="{{ 'js/progressive_disclosure.js' | asset }}" defer></script>

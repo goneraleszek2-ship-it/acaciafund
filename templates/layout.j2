@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +7,9 @@
     <meta name="description" content="{{ content.description | default(site_description) }}">
     <link rel="icon" href="/favicon.ico">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
     <link rel="stylesheet" href="{{ 'css/style.css' | asset }}">
     <link rel="stylesheet" href="{{ 'css/theme.css' | asset }}">
@@ -19,13 +22,13 @@
     </script>
 {% endif %}
 
+    <script>!function(){var t,d=document.documentElement;try{t=localStorage.getItem('acacia_theme')}catch(e){}if(t){d.classList.add(t);d.setAttribute('data-theme',t)}else if(window.matchMedia('(prefers-color-scheme:dark)').matches){d.classList.add('dark');d.setAttribute('data-theme','dark')}}();</script>
+    <script>document.addEventListener('keydown',function(e){if(e.key==='Tab')document.body.classList.add('keyboard-nav')});document.addEventListener('mousedown',function(){document.body.classList.remove('keyboard-nav')});</script>
     <style>
-        nav { border-bottom: 1px solid var(--pico-muted-border-color); margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; }
-        nav ul { margin: 0; padding: 0; }
-        footer hr { margin-bottom: var(--pico-spacing); }
-        .logo { font-size: 1.25rem; font-weight: 700; text-decoration: none; }
-        .nav-subtitle { font-size: 0.65rem; color: var(--color-text-muted); display: block; line-height: 1.2; }
-        .nav-start-here { background: var(--color-accent); color: #fff !important; border-radius: 999px; padding: 0.3rem 0.75rem !important; font-weight: 600; }
+        .logo { font-size: 1.2rem; font-weight: 700; text-decoration: none; letter-spacing: -0.02em; }
+        .nav-empty { opacity: 0.25; pointer-events: none; width: 1px; }
+        .mode-toggle-sm { display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.7rem; color: var(--color-text-muted); }
+        .mode-toggle-sm select { font-size: 0.7rem; padding: 0.15rem 0.4rem; border-radius: 4px; background: var(--color-surface); color: var(--color-text); border: 1px solid var(--color-border); font-family: inherit; cursor: pointer; }
     </style>
 {% if plausible_domain %}
     <script defer data-domain="{{ plausible_domain }}" src="https://{{ plausible_domain }}/js/script.js"></script>
@@ -38,18 +41,29 @@
                 <li><strong><a href="/" class="contrast logo">Acacia</a></strong></li>
             </ul>
             <ul>
-                <li><a href="/start-here/" class="nav-start-here">Start Here</a></li>
-                <li><a href="/compliance/">Compliance <span class="nav-subtitle">Financial crime</span></a></li>
-                <li><a href="/markets/">Markets <span class="nav-subtitle">Trading &amp; microstructure</span></a></li>
-                <li><a href="/data/">Data <span class="nav-subtitle">Engineering &amp; pipelines</span></a></li>
-                <li><a href="/review/">My Progress</a></li>
-                <li><a href="/search/">Search</a></li>
+                <li><a href="/start-here/" style="font-weight:500">Start Here</a></li>
+                <li><a href="/compliance/">Compliance</a></li>
+                <li><a href="/markets/">Markets</a></li>
+                <li><a href="/data/">Data</a></li>
+                <li><span class="nav-empty">|</span></li>
+                <li><a href="/review/" style="font-size:0.85rem">Review</a></li>
+                <li><a href="/letters/" style="font-size:0.85rem">A-Z</a></li>
+                <li><a href="/search/" style="font-size:0.85rem">Search</a></li>
                 <li>
-                  <div id="learning-mode-toggle" class="mode-toggle">
-                    <button data-mode="beginner" class="active" type="button">Beginner</button>
-                    <button data-mode="intermediate" type="button">Advanced</button>
-                    <button data-mode="expert" type="button">Expert</button>
-                  </div>
+                  <span class="mode-toggle-sm">
+                    <label for="mode-select" class="sr-only">Mode</label>
+                    <select id="mode-select" aria-label="Learning mode">
+                      <option value="beginner" selected>Beginner</option>
+                      <option value="intermediate">Advanced</option>
+                      <option value="expert">Expert</option>
+                    </select>
+                  </span>
+                </li>
+                <li>
+                  <button id="theme-toggle" type="button" aria-label="Toggle theme" style="background:none;border:none;color:var(--color-text-muted);cursor:pointer;padding:0.25rem;line-height:1;font-size:1rem">
+                    <svg id="theme-icon-moon" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+                    <svg id="theme-icon-sun" width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="display:none"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
+                  </button>
                 </li>
             </ul>
         </nav>
@@ -64,9 +78,9 @@
         <small>&copy; {{ year }} AcaciaFund &middot; Generated by the Acacia pipeline.</small>
     </footer>
 
-    <script src="{{ 'js/main.js' | asset }}"></script>
-    <script src="{{ 'js/search.js' | asset }}"></script>
-    <script src="{{ 'js/progressive_disclosure.js' | asset }}"></script>
+    <script src="{{ 'js/main.js' | asset }}" defer></script>
+    <script src="{{ 'js/search.js' | asset }}" defer></script>
+    <script src="{{ 'js/progressive_disclosure.js' | asset }}" defer></script>
 
 </body>
 </html>

@@ -744,6 +744,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
         "build_hash": build_hash,
         "year": year,
         "site_url": SITE_URL,
+        "now": now,
         "plausible_domain": PLAUSIBLE_DOMAIN,
         "pillar_config": PILLAR_CONFIG,
         "pillar_emojis": PILLAR_EMOJIS,
@@ -1862,6 +1863,18 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     for p in fresh_posts[:6]:
         recent_pictograms[p.slug] = pick_card_pictogram(p)
 
+    # Per-pillar recent items: ensure all 3 pillars are represented
+    per_pillar_recent = []
+    for _p in ("aml", "stock", "data-engineering"):
+        _pp = [p for p in fresh_posts if p.pillar == _p][:3]
+        per_pillar_recent.extend(_pp)
+    # Then fill remaining slots with the next-best from fresh_posts
+    _seen = {p.slug for p in per_pillar_recent}
+    for _p in fresh_posts:
+        if _p.slug not in _seen and len(per_pillar_recent) < 12:
+            per_pillar_recent.append(_p)
+            _seen.add(_p.slug)
+
     index_html = render_template(
         "index.j2",
         content=_dummy(
@@ -1873,7 +1886,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
         page_path="",
         og_image_url=home_og_url,
         featured_posts=featured,
-        recent_posts=fresh_posts[:6],
+        recent_posts=per_pillar_recent,
         learn_items=learn_items[:6],
         knowledge_items=knowledge_items[:6],
         hero_article=hero_article,
@@ -2068,6 +2081,21 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
             weeks.sort(key=lambda w: w["week_id"], reverse=True)
 
             pillar_url_map = {"aml": "compliance", "stock": "markets", "data-engineering": "data"}
+            FINGERPRINT_COLORS = {"aml": "#f97316", "markets": "#34d399", "data-engineering": "#818cf8"}
+
+            def _event_fingerprint(title: str, pillar_key: str) -> str:
+                h = int(hashlib.md5(title.encode()).hexdigest()[:6], 16)
+                base = FINGERPRINT_COLORS.get(pillar_key, "#6366f1")
+                bars = []
+                for col in range(4):
+                    cx = 8 + col * 28
+                    bh = 4 + ((h >> (col * 4)) % 8)
+                    for row in range(3):
+                        if (h >> (col + row * 7)) & 1:
+                            ry = 6 + row * 9
+                            op = 0.25 + (((h >> (col * 3 + row * 2)) % 4) * 0.15)
+                            bars.append(f'<rect x="{cx}" y="{ry}" width="3" height="{bh}" rx="1" fill="{base}" opacity="{op}"/>')
+                return f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 34" width="120" height="34" aria-hidden="true"><rect width="120" height="34" rx="4" fill="{base}" opacity="0.06"/>{chr(10).join(bars)}</svg>'
 
             # Per-week per-pillar pages
             weekly_count = 0
@@ -2088,6 +2116,9 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                     p_url = pillar_url_map.get(url_key, url_key)
                     out_dir = OUTPUT_DIR / p_url / "weekly" / wid
                     out_dir.mkdir(parents=True, exist_ok=True)
+
+                    for event in pillar_data.get("events", []):
+                        event["fingerprint_svg"] = _event_fingerprint(event.get("title", ""), p_id)
 
                     html = render_template(
                         "weekly_notes.j2",
@@ -2731,6 +2762,16 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     else:
         print("  tags: 0 pages")
 
+    # --- ALPHABETICAL INDEX (A-Z browser, MathWorld-inspired) ---
+    try:
+        from scripts.generate_alpha_index import generate_alpha_index
+        alpha_page_count = generate_alpha_index(
+            OUTPUT_DIR, all_content, render_template, ctx_base,
+            pillar_config=PILLAR_CONFIG,
+        )
+    except ImportError as _ae:
+        print(f"  alpha-index: skipped (generate_alpha_index not available: {_ae})")
+
     # --- per-letter tag index pages ---
     _letter_tag_items: dict[str, list] = defaultdict(list)
     for _tag_slug in sorted(tag_items.keys()):
@@ -2976,6 +3017,15 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     for slug_clean in tag_slugs:
         sm.append(
             f"  <url><loc>{SITE_URL}/tags/{slug_clean}/</loc><lastmod>{today}</lastmod><changefreq>weekly</changefreq><priority>0.3</priority></url>"
+        )
+    # Alpha index (A-Z browser)
+    sm.append(
+        f"  <url><loc>{SITE_URL}/letters/</loc><lastmod>{today}</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>"
+    )
+    import string as _string
+    for _letter in list(_string.ascii_lowercase) + ["digit"]:
+        sm.append(
+            f"  <url><loc>{SITE_URL}/letters/{_letter}/</loc><lastmod>{today}</lastmod><changefreq>weekly</changefreq><priority>0.4</priority></url>"
         )
     sm.append("</urlset>")
     (OUTPUT_DIR / "sitemap.xml").write_text("\n".join(sm), encoding="utf-8")

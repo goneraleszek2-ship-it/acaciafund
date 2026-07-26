@@ -2,41 +2,18 @@
 {% from "macros/breadcrumbs.html" import breadcrumbs %}
 {% block main_content %}
 {{ breadcrumbs(page_path, content.title) }}
-<div id="reading-progress" style="position:fixed;top:0;left:0;height:3px;z-index:9999;width:0%;background:var(--color-accent)"></div>
+<div id="reading-progress"></div>
 
-<div class="flex gap-8 {% if toc_items %}md:flex-row{% endif %} flex-col">
-  {%- if toc_items %}
-  <aside class="toc-sidebar shrink-0 order-last md:order-first md:sticky md:top-20 md:self-start md:max-h-[calc(100vh-6rem)] md:overflow-y-auto md:w-52">
-    <div class="flex items-center justify-between mb-3">
-      <h2 class="text-xs font-semibold uppercase tracking-wide" style="color:var(--color-text-muted)">On this page</h2>
-      <button id="focus-toggle" class="text-xs px-2 py-1 rounded" style="color:var(--color-text-muted);background:var(--color-bg)" title="Focus mode" aria-label="Toggle focus mode">
-        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 4h4M6 20h4M18 4h-4M18 20h-4M4 6v4M4 18v4M20 6v4M20 18v4"/></svg>
-      </button>
-    </div>
-    <nav aria-label="Table of contents">
-      <ul class="space-y-1 text-sm">
-        {%- for item in toc_items %}
-        <li>
-          <a href="#{{ item.id }}" class="toc-link block py-1 {% if item.tag == 'h3' %}pl-4 text-xs{% endif %} rounded px-2 transition" style="color:var(--color-text-muted)">
-            {{ item.text }}
-          </a>
-        </li>
-        {%- endfor %}
-      </ul>
-    </nav>
-  </aside>
-  {%- endif %}
-
-  <article class="min-w-0 flex-1">
-    <nav aria-label="Breadcrumb" class="mb-4 text-xs" style="color:var(--color-text-muted)">
+<article>
+    <nav aria-label="Breadcrumb" class="mb-4 text-xs text-muted">
       <ol class="flex flex-wrap items-center gap-1.5">
-        <li><a href="/" class="hover:text-[var(--color-accent)] transition">Home</a></li>
+        <li><a href="/" class="hover-accent transition">Home</a></li>
         <li aria-hidden="true">/</li>
         {%- set pillar_key = content.pillar or "aml" %}
         {%- set pc = pillar_config.get(pillar_key, pillar_config["aml"]) %}
-        <li><a href="/{{ pc.url }}/" class="hover:text-[var(--color-accent)] transition">{{ pc.label }}</a></li>
+        <li><a href="/{{ pc.url }}/" class="hover-accent transition">{{ pc.label }}</a></li>
         <li aria-hidden="true">/</li>
-        <li aria-current="page" class="truncate max-w-[200px]">{{ content.title | striptags }}</li>
+        <li aria-current="page" class="truncate max-w-200px">{{ content.title | striptags }}</li>
       </ol>
     </nav>
     <header class="mb-6">
@@ -45,12 +22,12 @@
         {% set pillar = content.pillar %}
         {% include "macros/pillar_badge.html" %}
         {%- if content.difficulty %}
-        <span class="text-xs px-2 py-0.5 rounded" style="background:var(--color-bg);color:var(--color-text-secondary);border:1px solid var(--color-border)">{{ content.difficulty | capitalize }}</span>
+        <span class="badge-outline">{{ content.difficulty | capitalize }}</span>
         {%- endif %}
       </div>
-      <h1 class="text-3xl font-extrabold leading-tight" style="color:var(--color-text)">{{ content.title | striptags }}</h1>
+      <h1 class="text-3xl font-extrabold leading-tight text-default">{{ content.title | striptags }}</h1>
       {%- if content.date_str %}
-      <div class="mt-2 flex items-center gap-2 text-sm" style="color:var(--color-text-muted)">
+      <div class="mt-2 flex items-center gap-2 text-sm text-muted">
         <time datetime="{{ content.date_str }}">{{ content.date_str }}</time>
         {%- if content.reading_time %}<span aria-hidden="true"> · </span><span>{{ content.reading_time }} min read</span>{% endif %}
       </div>
@@ -61,21 +38,19 @@
 
     {% include 'partials/visual_abstract.j2' %}
 
-    <div id="lesson-body">
-    <div class="prose prose-lg prose-blue max-w-none">
+    <div class="prose-body">
       {{ page_body | default(content.body_html) | safe }}
-    </div>
     </div>
 
     {% include 'partials/article_metadata.j2' %}
 
     {%- if ontology_concepts and ontology_concepts | length > 0 %}
-    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
-      <h2 class="text-2xl font-bold mb-2 flex items-center gap-2" style="color:var(--color-text)">
+    <section class="mt-12 pt-8 border-t border-muted">
+      <h2 class="text-2xl font-bold mb-2 flex items-center gap-2 text-default">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
         Feynman Concept Cards
       </h2>
-      <p class="text-sm mb-6" style="color:var(--color-text-muted)">Master each building block: read the ELI5, explore the analogy, work the example, find your gaps, teach it back, build it.</p>
+      <p class="text-sm mb-6 text-muted">Master each building block: read the ELI5, explore the analogy, work the example, find your gaps, teach it back, build it.</p>
       <div class="space-y-6" id="feynman-concept-cards">
         {%- for oc in ontology_concepts %}
         {% set concept = oc %}{% include 'partials/feynman_card.j2' %}
@@ -85,47 +60,47 @@
     {%- endif %}
 
     {# End-of-lesson Feynman Synthesis #}
-    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
-      <h2 class="text-2xl font-bold mb-4 flex items-center gap-2" style="color:var(--color-text)">
+    <section class="mt-12 pt-8 border-t border-muted">
+      <h2 class="text-2xl font-bold mb-4 flex items-center gap-2 text-default">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
         Feynman Synthesis — Prove You Understand
       </h2>
       <div class="grid gap-4 sm:grid-cols-2">
-        <div class="p-4 rounded" style="background:var(--color-surface);border:1px solid var(--color-border)">
-          <h3 class="text-sm font-semibold mb-2" style="color:var(--color-text)">1. The One-Pager</h3>
-          <p class="text-xs mb-3" style="color:var(--color-text-muted)">Explain this lesson's core idea to a smart 15-year-old. No jargon allowed.</p>
-          <textarea class="w-full min-h-[100px] p-2 text-sm rounded border feynman-synthesis-input" id="feynman-onepager" placeholder="Your explanation..." style="background:var(--color-bg);border-color:var(--color-border);color:var(--color-text);resize:vertical"></textarea>
+        <div class="ghost-card p-4">
+          <h3 class="text-sm font-semibold mb-2 text-default">1. The One-Pager</h3>
+          <p class="text-xs mb-3 text-muted">Explain this lesson's core idea to a smart 15-year-old. No jargon allowed.</p>
+          <textarea class="w-full min-h-[100px] p-2 text-sm rounded border feynman-synthesis-input bg-surface border-muted text-default" id="feynman-onepager" placeholder="Your explanation..." style="resize:vertical"></textarea>
         </div>
-        <div class="p-4 rounded" style="background:var(--color-surface);border:1px solid var(--color-border)">
-          <h3 class="text-sm font-semibold mb-2" style="color:var(--color-text)">2. The Gap Map</h3>
-          <p class="text-xs mb-3" style="color:var(--color-text-muted)">List 3 things you are still unsure about. Be specific.</p>
-          <textarea class="w-full min-h-[100px] p-2 text-sm rounded border feynman-synthesis-input" id="feynman-gaps" placeholder="1. ...\n2. ...\n3. ..." style="background:var(--color-bg);border-color:var(--color-border);color:var(--color-text);resize:vertical"></textarea>
+        <div class="ghost-card p-4">
+          <h3 class="text-sm font-semibold mb-2 text-default">2. The Gap Map</h3>
+          <p class="text-xs mb-3 text-muted">List 3 things you are still unsure about. Be specific.</p>
+          <textarea class="w-full min-h-[100px] p-2 text-sm rounded border feynman-synthesis-input bg-surface border-muted text-default" id="feynman-gaps" placeholder="1. ...\n2. ...\n3. ..." style="resize:vertical"></textarea>
         </div>
       </div>
       <div class="mt-4 flex gap-3">
-        <button id="save-feynman-synthesis" class="px-4 py-2 text-sm font-semibold rounded border-0 cursor-pointer" style="background:var(--color-accent);color:#fff">Save My Synthesis</button>
-        <button id="submit-feynman-synthesis" class="px-4 py-2 text-sm font-semibold rounded cursor-pointer" style="background:transparent;border:1px solid var(--color-accent);color:var(--color-accent)">Submit for Review</button>
+        <button id="save-feynman-synthesis" class="btn-primary-sm">Save My Synthesis</button>
+        <button id="submit-feynman-synthesis" class="btn-outline-sm">Submit for Review</button>
       </div>
     </section>
 
     {%- if quiz_json %}
-    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)" id="quiz-section" data-quiz='{{ quiz_json }}' data-quiz-lesson="{{ page_path }}">
-      <h2 class="text-2xl font-bold mb-4" style="color:var(--color-text)">Knowledge Check</h2>
-      <p class="text-sm mb-4" style="color:var(--color-text-muted)">Test your understanding of this lesson.</p>
-      <div id="quiz-score" class="mb-4 text-sm font-semibold" style="color:var(--color-text-secondary)"></div>
+    <section class="mt-12 pt-8 border-t border-muted" id="quiz-section" data-quiz='{{ quiz_json }}' data-quiz-lesson="{{ page_path }}">
+      <h2 class="text-2xl font-bold mb-4 text-default">Knowledge Check</h2>
+      <p class="text-sm mb-4 text-muted">Test your understanding of this lesson.</p>
+      <div id="quiz-score" class="mb-4 text-sm font-semibold text-secondary"></div>
       <div id="quiz-container"></div>
-      <div id="quiz-summary" class="mt-6 p-4 rounded-lg hidden" style="background:var(--color-surface);border:1px solid var(--color-border)"></div>
-      <button id="quiz-retry" class="mt-3 hidden px-4 py-2 text-sm font-semibold rounded-lg transition hover:opacity-80" style="background:var(--color-accent);color:#fff">Retry Quiz</button>
+      <div id="quiz-summary" class="mt-6 p-4 rounded-lg hidden ghost-card"></div>
+      <button id="quiz-retry" class="mt-3 hidden btn-primary-sm">Retry Quiz</button>
     </section>
     {%- endif %}
 
     {%- if content.flashcards and content.flashcards | length > 0 %}
-    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
-      <h2 class="text-2xl font-bold mb-6 inline-flex items-center gap-2" style="color:var(--color-text)">
+    <section class="mt-12 pt-8 border-t border-muted">
+      <h2 class="text-2xl font-bold mb-6 inline-flex items-center gap-2 text-default">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>
         Flashcards
       </h2>
-      <p class="text-xs mb-4" style="color:var(--color-text-muted)">Space = flip &middot; 1-4 = grade &middot; Swipe on mobile</p>
+      <p class="text-xs mb-4 text-muted">Space = flip &middot; 1-4 = grade &middot; Swipe on mobile</p>
       <div class="grid gap-4 sm:grid-cols-2" id="flashcard-grid">
         {%- for fc in content.flashcards[:12] %}
         {%- set fc_term = fc.term | default(fc.front | default("")) %}
@@ -141,7 +116,7 @@
       </div>
     </section>
     <div class="mt-8 text-center">
-      <button id="mark-complete-btn" data-track-lesson="{{ page_path }}" class="inline-flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition" style="background:var(--color-accent);color:#fff">
+      <button id="mark-complete-btn" data-track-lesson="{{ page_path }}" class="btn-primary-sm inline-flex items-center gap-2">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
         <span id="complete-btn-text">Mark Complete</span>
       </button>
@@ -149,31 +124,31 @@
     {%- endif %}
 
     {%- if quiz_json %}
-    <section class="mt-12 pt-8 border-t" id="quiz-section" data-quiz='{{ quiz_json }}' data-quiz-lesson="{{ page_path }}">
-      <h2 class="text-2xl font-bold mb-4" style="color:var(--color-text)">Knowledge Check</h2>
-      <p class="text-sm mb-4" style="color:var(--color-text-muted)">Test your understanding of this lesson.</p>
-      <div id="quiz-score" class="mb-4 text-sm font-semibold" style="color:var(--color-text-secondary)"></div>
+    <section class="mt-12 pt-8 border-t border-muted" id="quiz-section" data-quiz='{{ quiz_json }}' data-quiz-lesson="{{ page_path }}">
+      <h2 class="text-2xl font-bold mb-4 text-default">Knowledge Check</h2>
+      <p class="text-sm mb-4 text-muted">Test your understanding of this lesson.</p>
+      <div id="quiz-score" class="mb-4 text-sm font-semibold text-secondary"></div>
       <div id="quiz-container"></div>
-      <div id="quiz-summary" class="mt-6 p-4 rounded-lg hidden" style="background:var(--color-surface);border:1px solid var(--color-border)"></div>
-      <button id="quiz-retry" class="mt-3 hidden px-4 py-2 text-sm font-semibold rounded-lg transition hover:opacity-80" style="background:var(--color-accent);color:#fff">Retry Quiz</button>
+      <div id="quiz-summary" class="mt-6 p-4 rounded-lg hidden ghost-card"></div>
+      <button id="quiz-retry" class="mt-3 hidden btn-primary-sm">Retry Quiz</button>
     </section>
     {%- endif %}
 
     {%- if source_synthesis and source_synthesis | length > 0 %}
-    <section class="mt-12 pt-8 border-t" style="border-color:var(--color-border)">
-      <h2 class="text-2xl font-bold mb-4 inline-flex items-center gap-2" style="color:var(--color-text)">
+    <section class="mt-12 pt-8 border-t border-muted">
+      <h2 class="text-2xl font-bold mb-4 inline-flex items-center gap-2 text-default">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         Source Synthesis
       </h2>
       <div class="space-y-3">
         {%- for syn in source_synthesis | sort(attribute='synthesis_score') | reverse %}
-        <div class="synthesis-card p-4 rounded-lg transition hover:shadow-md" style="background:var(--color-surface);border:1px solid var(--color-border)">
+        <div class="ghost-card p-4">
           <div class="flex items-start gap-3">
             <div class="flex-1">
-              <h3 class="text-sm font-semibold" style="color:var(--color-text)">
-                <a href="{{ syn.get('source_url', '#') }}" target="_blank" rel="noopener" class="hover:text-[var(--color-accent)] transition">{{ syn.get('source_title', 'Source') }}</a>
+              <h3 class="text-sm font-semibold text-default">
+                <a href="{{ syn.get('source_url', '#') }}" target="_blank" rel="noopener" class="hover-accent transition">{{ syn.get('source_title', 'Source') }}</a>
               </h3>
-              <p class="mt-1 text-xs" style="color:var(--color-text-secondary)">{{ syn.get('synthesis_text', '') }}</p>
+              <p class="mt-1 text-xs text-secondary">{{ syn.get('synthesis_text', '') }}</p>
             </div>
           </div>
         </div>
@@ -189,13 +164,13 @@
         {%- for rp in related_research %}
         {%- set rpillar = rp.pillar or "aml" %}
         {%- set rpc = pillar_config.get(rpillar, pillar_config["aml"]) %}
-        <a href="{{ slug_to_url(rp.slug) }}" class="ghost-card block text-decoration:none">
+        <a href="{{ slug_to_url(rp.slug) }}" class="ghost-card block text-decoration-none">
           <div class="p-3">
             {% set pillar = rp.pillar %}
             {% include "macros/pillar_badge.html" %}
-            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">{{ rp.title | striptags }}</span>
+            <span class="block mt-2 text-sm font-semibold text-default">{{ rp.title | striptags }}</span>
             {%- if rp.date_str %}
-            <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">{{ rp.date_str }}</span>
+            <span class="block mt-1 text-xs font-meta text-muted">{{ rp.date_str }}</span>
             {%- endif %}
           </div>
         </a>
@@ -211,13 +186,13 @@
         {%- for rk in related_knowledge %}
         {%- set rpillar = rk.pillar or "aml" %}
         {%- set rpc = pillar_config.get(rpillar, pillar_config["aml"]) %}
-        <a href="{{ slug_to_url(rk.slug) }}" class="ghost-card block text-decoration:none">
+        <a href="{{ slug_to_url(rk.slug) }}" class="ghost-card block text-decoration-none">
           <div class="p-3">
             {% set pillar = rk.pillar %}
             {% include "macros/pillar_badge.html" %}
-            <span class="block mt-2 text-sm font-semibold" style="color:var(--color-text)">{{ rk.title | striptags }}</span>
+            <span class="block mt-2 text-sm font-semibold text-default">{{ rk.title | striptags }}</span>
             {%- if rk.date_str %}
-            <span class="block mt-1 text-xs font-meta" style="color:var(--color-text-muted)">{{ rk.date_str }}</span>
+            <span class="block mt-1 text-xs font-meta text-muted">{{ rk.date_str }}</span>
             {%- endif %}
           </div>
         </a>
@@ -229,21 +204,26 @@
     {%- if prev_lesson or next_lesson %}
     <nav class="mt-12 pt-6 border-t grid grid-cols-2 gap-4" aria-label="Lesson navigation">
       {%- if prev_lesson %}
-      <a href="{{ slug_to_url(prev_lesson.slug) }}" class="ghost-card group block p-3 text-decoration:none">
-        <span class="text-xs" style="color:var(--color-text-muted)">&larr; Previous Lesson</span>
-        <span class="block text-sm font-medium group-hover:text-blue-600 truncate">{{ prev_lesson.title | striptags }}</span>
+      <a href="{{ slug_to_url(prev_lesson.slug) }}" class="ghost-card group block p-3 text-decoration-none">
+        <span class="text-xs text-muted">&larr; Previous Lesson</span>
+        <span class="block text-sm font-medium group-hover-accent truncate">{{ prev_lesson.title | striptags }}</span>
       </a>
       {%- endif %}
       {%- if next_lesson %}
-      <a href="{{ slug_to_url(next_lesson.slug) }}" class="ghost-card group block p-3 text-decoration:none">
-        <span class="text-xs" style="color:var(--color-text-muted)">Next Lesson &rarr;</span>
-        <span class="block text-sm font-medium group-hover:text-blue-600 truncate">{{ next_lesson.title | striptags }}</span>
+      <a href="{{ slug_to_url(next_lesson.slug) }}" class="ghost-card group block p-3 text-decoration-none">
+        <span class="text-xs text-muted">Next Lesson &rarr;</span>
+        <span class="block text-sm font-medium group-hover-accent truncate">{{ next_lesson.title | striptags }}</span>
       </a>
       {%- endif %}
     </nav>
     {%- endif %}
+
+    {# MathWorld-inspired sections #}
+    {% include 'partials/see_also.j2' %}
+    {% include 'partials/explore_tools.j2' %}
+    {% include 'partials/contributor.j2' %}
+    {% include 'partials/citation.j2' %}
   </article>
-</div>
 
 <script src="{{ 'js/learning_hub.js' | asset }}" defer></script>
 <script src="{{ 'js/pretest_gate.js' | asset }}" defer></script>

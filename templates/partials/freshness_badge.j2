@@ -1,0 +1,20 @@
+{%- if last_verified or content.date_str %}
+{%- set today = now | default('') %}
+{%- set ref_date = last_verified or content.date_str %}
+{%- if ref_date and today %}
+{%- set days_ago = ((today | string)[:10] if today is string else '') %}
+{# Simple freshness heuristic: check if date contains current year #}
+{%- set is_this_year = ref_date[:4] == (today | string)[:4] if today is string else false %}
+{%- if is_this_year %}
+<span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style="background:color-mix(in srgb, #22c55e 15%, transparent);color:#22c55e">
+  <span class="w-1.5 h-1.5 rounded-full bg-current"></span>
+  Fresh
+</span>
+{%- else %}
+<span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full" style="background:color-mix(in srgb, #ef4444 15%, transparent);color:#ef4444">
+  <span class="w-1.5 h-1.5 rounded-full bg-current"></span>
+  Stale
+</span>
+{%- endif %}
+{%- endif %}
+{%- endif %}

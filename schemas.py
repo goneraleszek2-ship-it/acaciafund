@@ -22,6 +22,13 @@ class ContentItem(BaseModel):
     enriched_at: Optional[str] = None
     citations: Optional[List[str]] = None
 
+    # MathWorld-inspired fields
+    contributors: Optional[List[dict]] = None
+    see_also: Optional[List[dict]] = None
+    explore_tools: Optional[List[dict]] = None
+    subject_classifications: Optional[List[List[str]]] = None
+    last_verified: Optional[str] = None
+
     model_config = {"extra": "allow"}
 
 

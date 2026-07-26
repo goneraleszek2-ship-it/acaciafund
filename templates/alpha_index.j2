@@ -1,0 +1,96 @@
+{% extends "layout.j2" %}
+{% from "macros/breadcrumbs.html" import breadcrumbs %}
+{% block main_content %}
+{{ breadcrumbs(page_path, content.title) }}
+
+<div class="alpha-index">
+    <header class="mb-6">
+        <h1 class="text-3xl font-extrabold text-default">{{ page_title }}</h1>
+        <p class="mt-1 text-sm text-muted">
+            Browse all entries across every topic.
+        </p>
+    </header>
+
+    {# Letter navigation grid #}
+    <nav class="letter-grid mb-8" aria-label="Alphabetical index">
+        <div class="flex flex-wrap gap-1.5">
+            {%- for letter in all_letters %}
+            {%- set count = letter_counts.get(letter, 0) %}
+            {%- set letter_url = 'letters/' + ('digit' if letter == '0-9' else letter.lower()) + '/' %}
+            <a href="/{{ letter_url }}"
+               class="letter-cell inline-flex items-center justify-center w-10 h-10 rounded text-sm font-semibold transition {% if current_letter == letter %}bg-accent text-white{% else %}bg-surface border border-muted hover-accent{% endif %}"
+               title="{{ count }} entr{{ 'y' if count == 1 else 'ies' }}">
+                {{ letter }}
+            </a>
+            {%- endfor %}
+        </div>
+    </nav>
+
+    {%- if current_letter %}
+    {# Per-letter page: list entries #}
+    <section class="entry-list">
+        <h2 class="text-xl font-bold mb-4 text-default">Entries starting with "{{ current_letter }}"</h2>
+        {%- if entries %}
+        <div class="space-y-2">
+            {%- for entry in entries %}
+            <a href="/{{ entry.pillar_url }}/{{ entry.content_type }}/{{ entry.slug.split('/')[-1] }}/"
+               class="entry-row block ghost-card p-3 transition hover:shadow-md text-decoration-none">
+                <div class="flex items-center gap-2 mb-1">
+                    {%- if entry.pillar_label %}
+                    <span class="pillar-pill text-xs px-2 py-0.5 rounded-full border"
+                          style="border-color:var(--color-accent);color:var(--color-accent)">
+                        {{ entry.pillar_label }}
+                    </span>
+                    {%- endif %}
+                    <span class="text-xs text-muted px-2 py-0.5 rounded bg-surface">{{ entry.content_type | capitalize }}</span>
+                    {%- if entry.date_str %}
+                    <span class="text-xs text-muted ml-auto">{{ entry.date_str }}</span>
+                    {%- endif %}
+                </div>
+                <span class="font-semibold text-default">{{ entry.title }}</span>
+                {%- if entry.description %}
+                <p class="text-xs text-muted mt-1 line-clamp-1">{{ entry.description }}</p>
+                {%- endif %}
+            </a>
+            {%- endfor %}
+        </div>
+        {%- else %}
+        <p class="text-muted text-sm">No entries found for this letter.</p>
+        {%- endif %}
+    </section>
+    {%- else %}
+    {# Master index page: show letter summaries #}
+    <section class="master-index">
+        {%- for entry in master_entries %}
+        {%- set letter_url = 'letters/' + ('digit' if entry.letter == '0-9' else entry.letter.lower()) + '/' %}
+        <div class="letter-section mb-6">
+            <div class="flex items-center gap-3 mb-3">
+                <a href="/{{ letter_url }}"
+                   class="inline-flex items-center justify-center w-10 h-10 rounded bg-surface border border-muted text-lg font-bold hover-accent transition">
+                    {{ entry.letter }}
+                </a>
+                <div>
+                    <a href="/{{ letter_url }}" class="font-semibold hover-accent text-default">{{ entry.letter }}</a>
+                    <span class="text-sm text-muted ml-2">{{ entry.count }} entr{{ 'y' if entry.count == 1 else 'ies' }}</span>
+                </div>
+            </div>
+            {%- if entry.sample %}
+            <div class="grid gap-1.5 sm:grid-cols-2 lg:grid-cols-3 ml-13">
+                {%- for s in entry.sample %}
+                <span class="text-xs text-muted truncate">{{ s.title }}</span>
+                {%- endfor %}
+            </div>
+            {%- endif %}
+        </div>
+        {%- endfor %}
+    </section>
+    {%- endif %}
+</div>
+
+<style>
+    .ml-13 { margin-left: 3.25rem; }
+    .letter-cell { text-decoration: none; }
+    .letter-cell:hover { transform: scale(1.05); }
+    .entry-row:hover { border-color: var(--color-accent); }
+</style>
+{% endblock %}

@@ -1,0 +1,16 @@
+<footer class="mt-12 pt-6 border-t border-muted">
+  <p class="text-xs text-muted">
+    <strong>Cite this as:</strong>
+    {%- set cite_url = site_url + '/' + (page_path or '') %}
+    &ldquo;{{ content.title | striptags }}.&rdquo;
+    <em>AcaciaFund Knowledge Repository</em>.
+    <a href="{{ cite_url }}" class="hover-accent">{{ cite_url }}</a>.
+    Accessed {{ now | default('') }}.
+  </p>
+  {%- if content.date_str or last_verified %}
+  <p class="text-xs text-muted mt-1">
+    {%- if content.date_str %}Published {{ content.date_str }}.{% endif %}
+    {%- if last_verified %}Last verified {{ last_verified }}.{% endif %}
+  </p>
+  {%- endif %}
+</footer>

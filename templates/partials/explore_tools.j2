@@ -1,0 +1,36 @@
+{%- if explore_tools and explore_tools | length > 0 %}
+<section class="mt-12 pt-8 border-t border-muted">
+  <h2 class="text-2xl font-bold mb-4 inline-flex items-center gap-2 text-default">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+    Explore With
+  </h2>
+  <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+    {%- for tool in explore_tools %}
+    <a href="{{ tool.url }}"
+       target="_blank" rel="noopener"
+       class="ghost-card p-4 block transition hover:shadow-md text-decoration-none">
+      <div class="flex items-start gap-3">
+        <div class="shrink-0">
+          {%- set tool_icon = tool.tool_type or 'notebook' %}
+          <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent)">
+            {%- if tool_icon == 'notebook' %}
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            {%- elif tool_icon == 'sql' %}
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4"/></svg>
+            {%- else %}
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg>
+            {%- endif %}
+          </span>
+        </div>
+        <div class="flex-1 min-w-0">
+          <span class="text-sm font-semibold text-default hover-accent">{{ tool.label }}</span>
+          {%- if tool.description %}
+          <p class="text-xs text-muted mt-0.5 line-clamp-2">{{ tool.description }}</p>
+          {%- endif %}
+        </div>
+      </div>
+    </a>
+    {%- endfor %}
+  </div>
+</section>
+{%- endif %}
