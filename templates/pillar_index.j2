@@ -91,18 +91,31 @@
   <div class="pillar-posts grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
     {% for post in posts %}
     {%- set ptype = post.content_type | default("research") %}
-    {%- set pcolor = "#22c55e" if ptype == "learn" else ("#d97706" if ptype == "knowledge" else "#6366f1") %}
-    <a href="{{ slug_to_url(post.slug) }}" class="pillar-card ghost-card p-4 block no-underline">
+    {%- set card_class = "pillar-card-" ~ pillar %}
+    <a href="{{ slug_to_url(post.slug) }}" class="{{ card_class }} ghost-card p-4 block no-underline transition hover:shadow-md" data-pillar="{{ pillar }}">
       <div class="flex items-center gap-2 mb-2">
-        <span class="text-xs px-2 py-0.5 rounded font-semibold" style="background:color-mix(in srgb, {{ pcolor }} 15%, transparent);color:{{ pcolor }}">{{ ptype | capitalize }}</span>
+        {%- if ptype == "learn" %}
+        <span class="text-xs px-2 py-0.5 rounded font-semibold" style="background:rgba(99,102,241,0.12);color:#6366f1">Learn</span>
+        {%- elif ptype == "knowledge" %}
+        <span class="text-xs px-2 py-0.5 rounded font-semibold" style="background:rgba(16,185,129,0.12);color:#10b981">Knowledge</span>
+        {%- else %}
+        <span class="text-xs px-2 py-0.5 rounded font-semibold" style="background:rgba(99,102,241,0.12);color:#6366f1">Research</span>
+        {%- endif %}
         {%- if post.difficulty %}
         <span class="difficulty-badge {% if post.difficulty == 'beginner' %}beginner{% elif post.difficulty == 'intermediate' %}intermediate{% else %}advanced{% endif %}">{{ post.difficulty | capitalize }}</span>
+        {%- endif %}
+        {%- if ptype == "learn" %}
+        <span class="stage-icon stage-icon-ingest">📖 {{ (post.reading_time or 10) }} min</span>
         {%- endif %}
       </div>
       <h3 class="text-sm font-semibold text-default">{{ post.title }}</h3>
       <p class="mt-1 text-xs line-clamp-2 text-secondary">{{ post.description }}</p>
-      <div class="mt-2 text-xs text-muted">
+      <div class="mt-2 flex items-center gap-2 text-xs text-muted">
         <span>{{ post.date_str }}</span>
+        {%- if post.ontology_concepts %}
+        <span class="concept-dot">●</span>
+        <span>{{ post.ontology_concepts | length }} concepts</span>
+        {%- endif %}
       </div>
     </a>
     {% endfor %}

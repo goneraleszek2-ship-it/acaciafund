@@ -187,6 +187,37 @@ DATA_CATEGORY_BOOSTS: dict[str, float] = {
     "cs.db": 0.15, "cs.dc": 0.15,
 }
 
+# ── Per-pillar negative keywords (penalize off-topic content) ────────────
+DATA_NEGATIVE_TAGS: list[str] = [
+    r"\bgenom", r"\bcrispr", r"\bprotein", r"\bdna\b", r"\brna\b", r"\bcell\b",
+    r"\bbiology", r"\bbioinformatic", r"\bprotein", r"\bclinical.trial",
+    r"\boncolog", r"\bpatient", r"\bdisease", r"\btherapy", r"\bdiagnos",
+    r"\bdifferential.geom", r"\btopolog", r"\bhomolog", r"\bmanifold\b",
+    r"\bbun\s+runtime", r"\bdeno\s+runtime",
+    r"\btranscranial", r"\bdopamine", r"\bneurolog", r"\bpsychiatr",
+]
+
+AML_NEGATIVE_TAGS: list[str] = [
+    r"\bgenom", r"\bcrispr", r"\bcell\b", r"\bbiology", r"\bprotein",
+    r"\bdifferential.geom", r"\btopolog", r"\bmanifold",
+    r"\btranscranial", r"\bneurolog",
+]
+
+MARKET_NEGATIVE_TAGS: list[str] = [
+    r"\bgenom", r"\bcrispr", r"\bcell\b", r"\bbiology", r"\bprotein",
+    r"\bdifferential.geom", r"\btopolog", r"\bmanifold",
+    r"\btranscranial", r"\bneurolog",
+]
+
+NEGATIVE_PENALTY = -0.25
+
+# ── Map pillar slug → negative keyword list ──────────────────────────────
+PILLAR_NEGATIVE_TAGS: dict[str, list[str]] = {
+    "aml": AML_NEGATIVE_TAGS,
+    "data": DATA_NEGATIVE_TAGS,
+    "market": MARKET_NEGATIVE_TAGS,
+}
+
 # ── Financial Markets & Macroeconomics ───────────────────────────────────
 
 MARKET_TAGS: dict[str, list[str]] = {
@@ -328,8 +359,12 @@ def score_pillar_relevance(
     text: str,
     config: PillarConfig,
     categories: list[str] | None = None,
+    negative_tags: list[str] | None = None,
 ) -> tuple[float, list[str]]:
     """Score text against a pillar's keyword matrix.
+
+    Applies positive keyword matches and category boosts, then subtracts
+    a penalty for each negative keyword hit (off-topic content).
 
     Returns (score, detected_tags) where score ∈ [0.0, 1.0].
     """
@@ -364,10 +399,17 @@ def score_pillar_relevance(
 
     # If only category boost (no keyword hits), use reduced score
     if hits == 0:
-        return min(1.0, category_bonus * 2), detected
+        score = min(1.0, category_bonus * 2)
+    else:
+        score = kw_score * 1.5 + category_bonus
+        score = min(1.0, score)
 
-    score = kw_score * 1.5 + category_bonus
-    return min(1.0, score), detected
+    # Negative keyword penalty (off-topic content)
+    if negative_tags:
+        negative_hits = sum(1 for p in negative_tags if re.search(p, lower))
+        score += negative_hits * NEGATIVE_PENALTY
+
+    return max(0.0, score), detected
 
 
 # =========================================================================
@@ -393,7 +435,7 @@ def fetch_arxiv_for_pillar(
         title = p.get("title", "")
         abstract = p.get("abstract", "")
         cats = p.get("categories") or []
-        score, tags = score_pillar_relevance(f"{title} {abstract}", config, cats)
+        score, tags = score_pillar_relevance(f"{title} {abstract}", config, cats, negative_tags=PILLAR_NEGATIVE_TAGS.get(config.slug_name))
         threshold = config.arxiv_min_score
         if score >= threshold:
             p["_relevance_score"] = round(score, 3)
@@ -430,7 +472,7 @@ def fetch_hn_for_pillar(
     relevant: list[dict[str, Any]] = []
     for s in stories:
         title = s.get("title", "")
-        score, tags = score_pillar_relevance(title, config)
+        score, tags = score_pillar_relevance(title, config, negative_tags=PILLAR_NEGATIVE_TAGS.get(config.slug_name))
         threshold = config.hn_min_score
         if score >= threshold:
             s["_relevance_score"] = round(score, 3)
@@ -633,7 +675,7 @@ def fetch_sec_edgar_for_pillar(
     for f in filings:
         title = f.get("title", "")
         summary = f.get("summary", "")
-        score, tags = score_pillar_relevance(f"{title} {summary}", config)
+        score, tags = score_pillar_relevance(f"{title} {summary}", config, negative_tags=PILLAR_NEGATIVE_TAGS.get(config.slug_name))
         if score >= threshold:
             f["_relevance_score"] = round(score, 3)
             f["_detected_tags"] = tags
@@ -686,7 +728,7 @@ def fetch_ssrn_for_pillar(
     for p in papers:
         title = p.get("title", "")
         summary = p.get("summary", "")
-        score, tags = score_pillar_relevance(f"{title} {summary}", config)
+        score, tags = score_pillar_relevance(f"{title} {summary}", config, negative_tags=PILLAR_NEGATIVE_TAGS.get(config.slug_name))
         if score >= threshold:
             p["_relevance_score"] = round(score, 3)
             p["_detected_tags"] = tags
@@ -739,7 +781,7 @@ def fetch_nber_for_pillar(
     for p in papers:
         title = p.get("title", "")
         summary = p.get("summary", "")
-        score, tags = score_pillar_relevance(f"{title} {summary}", config)
+        score, tags = score_pillar_relevance(f"{title} {summary}", config, negative_tags=PILLAR_NEGATIVE_TAGS.get(config.slug_name))
         if score >= threshold:
             p["_relevance_score"] = round(score, 3)
             p["_detected_tags"] = tags
@@ -815,7 +857,7 @@ def fetch_pubmed_for_pillar(
     for p in papers:
         title = p.get("title", "")
         summary = p.get("abstract", "")
-        score, tags = score_pillar_relevance(f"{title} {summary}", config)
+        score, tags = score_pillar_relevance(f"{title} {summary}", config, negative_tags=PILLAR_NEGATIVE_TAGS.get(config.slug_name))
         if score >= threshold:
             p["_relevance_score"] = round(score, 3)
             p["_detected_tags"] = tags
@@ -895,7 +937,7 @@ def fetch_s2_for_pillar(
     for p in papers:
         title = p.get("title", "")
         abstract = p.get("abstract", "")
-        score, tags = score_pillar_relevance(f"{title} {abstract}", config)
+        score, tags = score_pillar_relevance(f"{title} {abstract}", config, negative_tags=PILLAR_NEGATIVE_TAGS.get(config.slug_name))
         if score >= threshold:
             p["_relevance_score"] = round(score, 3)
             p["_detected_tags"] = tags

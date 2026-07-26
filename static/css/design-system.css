@@ -1615,6 +1615,61 @@ details.ghost-card[open] summary::before {
   .week-grid { grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); }
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   PILLAR-SPECIFIC COMPONENTS
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Pillar color dots (search filters, badges) ── */
+.pillar-dot { display: inline-block; width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.pillar-dot-aml { background: #f59e0b; box-shadow: 0 0 4px rgba(245, 158, 11, 0.4); }
+.pillar-dot-markets { background: #16a34a; box-shadow: 0 0 4px rgba(22, 163, 74, 0.4); }
+.pillar-dot-data { background: #6366f1; box-shadow: 0 0 4px rgba(99, 102, 241, 0.4); }
+
+/* ── Pillar accent borders ── */
+[data-pillar="aml"] { border-left-color: #f59e0b; }
+[data-pillar="stock"] { border-left-color: #16a34a; }
+[data-pillar="data-engineering"] { border-left-color: #6366f1; }
+
+/* ── Pillar card variants ── */
+.pillar-card-aml { border-left: 3px solid #f59e0b; background: linear-gradient(135deg, rgba(245,158,11,0.04), transparent 60%); }
+.pillar-card-aml:hover { border-left-color: #d97706; background: linear-gradient(135deg, rgba(245,158,11,0.08), transparent 60%); }
+.pillar-card-markets { border-left: 3px solid #16a34a; background: linear-gradient(135deg, rgba(22,163,74,0.04), transparent 60%); }
+.pillar-card-markets:hover { border-left-color: #15803d; background: linear-gradient(135deg, rgba(22,163,74,0.08), transparent 60%); }
+.pillar-card-data { border-left: 3px solid #6366f1; background: linear-gradient(135deg, rgba(99,102,241,0.04), transparent 60%); }
+.pillar-card-data:hover { border-left-color: #4f46e5; background: linear-gradient(135deg, rgba(99,102,241,0.08), transparent 60%); }
+
+/* ── Data Engineering pipeline-flow background ── */
+.pillar-bg-data {
+  background-image:
+    linear-gradient(45deg, rgba(99,102,241,0.06) 25%, transparent 25%),
+    linear-gradient(-45deg, rgba(99,102,241,0.06) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, rgba(99,102,241,0.06) 75%),
+    linear-gradient(-45deg, transparent 75%, rgba(99,102,241,0.06) 75%);
+  background-size: 32px 32px;
+  background-position: 0 0, 0 16px, 16px -16px, -16px 0px;
+}
+
+/* ── Pillar result cards (search, listing) ── */
+.search-result[data-pillar="aml"] { border-left: 3px solid #f59e0b; }
+.search-result[data-pillar="stock"] { border-left: 3px solid #16a34a; }
+.search-result[data-pillar="data-engineering"] { border-left: 3px solid #6366f1; }
+
+.difficulty-badge.beginner { color: #16a34a; }
+.difficulty-badge.intermediate { color: #f59e0b; }
+.difficulty-badge.advanced { color: #ef4444; }
+
+/* ── Data Engineering: pipeline stage indicators ── */
+.stage-icon {
+  display: inline-flex; align-items: center; gap: 0.25rem;
+  padding: 0.15rem 0.45rem; border-radius: 4px;
+  font-size: 0.65rem; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.03em;
+}
+.stage-icon-ingest { background: rgba(99,102,241,0.12); color: #6366f1; }
+.stage-icon-transform { background: rgba(139,92,246,0.12); color: #8b5cf6; }
+.stage-icon-serve { background: rgba(16,185,129,0.12); color: #10b981; }
+.stage-icon-orchestrate { background: rgba(245,158,11,0.12); color: #f59e0b; }
+
 /* ── Print styles (from theme.css + style.css) ── */
 @media print {
   .no-print {
