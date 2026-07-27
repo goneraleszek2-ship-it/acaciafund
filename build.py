@@ -3195,8 +3195,28 @@ Sitemap: {SITE_URL}/sitemap.xml
         "/science/*  /data/research/:splat  301",
         "/contact/*  /knowledge/contact/:splat  301",
     ]
+    # Include redirects from redirects.json (blog→research, pillar rewrites, etc.)
+    redirects_path = PROJECT_ROOT / "redirects.json"
+    if redirects_path.exists():
+        try:
+            redirects_data = json.loads(redirects_path.read_text(encoding="utf-8"))
+            for old_path, new_path in redirects_data.items():
+                rule = f"/{old_path}  /{new_path}  301"
+                if rule not in redirects:
+                    redirects.append(rule)
+        except (json.JSONDecodeError, OSError):
+            pass
     (OUTPUT_DIR / "_redirects").write_text("\n".join(redirects) + "\n", encoding="utf-8")
     print("  redirects: _redirects")
+
+    # --- Entry Freshness Check ---
+    _t_fresh = time.time()
+    try:
+        from scripts.check_entry_freshness import main as _run_freshness
+        _run_freshness()
+    except Exception as _fe:
+        print(f"  freshness: check skipped ({_fe})")
+    _record_timing("freshness_check", time.time() - _t_fresh)
 
     # --- Copy llms.txt to site root (geo-checker expects /llms.txt) ---
     llms_src = STATIC_DST_DIR / "llms.txt"

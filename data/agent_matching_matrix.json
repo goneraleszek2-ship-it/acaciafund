@@ -1,0 +1,78 @@
+{
+  "description": "Task-to-provider matching matrix for AcaciaFund agentic pipeline",
+  "version": "1.0",
+  "categories": {
+    "css_layout": {
+      "preferred": "nvidia_nim",
+      "model": "nvidia/qwen3-coder",
+      "fallback": "groq_free",
+      "reason": "Fast layout generation"
+    },
+    "regex_cleaning": {
+      "preferred": "nvidia_nim",
+      "model": "nvidia/qwen3-coder",
+      "fallback": "groq_free",
+      "reason": "Lightweight text processing"
+    },
+    "jinja_logic": {
+      "preferred": "openrouter_free",
+      "model": "qwen-2.5-coder-free",
+      "fallback": "nvidia_nim",
+      "reason": "Lightweight formatting"
+    },
+    "system_architecture": {
+      "preferred": "nvidia_nim",
+      "model": "nvidia/nemotron-3-super-120b",
+      "fallback": "google_ai_studio",
+      "reason": "Heavy reasoning"
+    },
+    "content_enrichment": {
+      "preferred": "nvidia_nim",
+      "model": "nvidia/qwen3-coder",
+      "fallback": "openrouter_free",
+      "reason": "Structured metadata generation"
+    },
+    "source_synthesis": {
+      "preferred": "google_ai_studio",
+      "model": "gemini-1.5-pro-latest",
+      "fallback": "nvidia_nim",
+      "reason": "Long context synthesis"
+    },
+    "glossary_generation": {
+      "preferred": "nvidia_nim",
+      "model": "nvidia/qwen3-coder",
+      "fallback": "groq_free",
+      "reason": "Structured glossary entries"
+    },
+    "learn_module": {
+      "preferred": "nvidia_nim",
+      "model": "nvidia/nemotron-3-super-120b",
+      "fallback": "google_ai_studio",
+      "reason": "Educational content with Bloom taxonomy"
+    },
+    "research": {
+      "preferred": "nvidia_nim",
+      "model": "nvidia/nemotron-3-super-120b",
+      "fallback": "google_ai_studio",
+      "reason": "Deep research with citations"
+    }
+  },
+  "health_config": {
+    "nvidia_nim": {
+      "cooldown_seconds": 60,
+      "max_consecutive_failures": 3
+    },
+    "groq_free": {
+      "cooldown_seconds": 30,
+      "max_consecutive_failures": 3
+    },
+    "openrouter_free": {
+      "cooldown_seconds": 30,
+      "max_consecutive_failures": 3
+    },
+    "google_ai_studio": {
+      "cooldown_seconds": 60,
+      "max_consecutive_failures": 3
+    }
+  }
+}
