@@ -13,6 +13,8 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Dict, List, Optional, Set, Tuple
 
+from loguru import logger
+
 if TYPE_CHECKING:
     from core.ontology_cache import OntologyCache
 
@@ -851,6 +853,12 @@ class OntologyManager:
         self._pillar_index: Dict[str, Set[str]] = defaultdict(set)  # pillar → {concept_ids}
         self._category_index: Dict[str, Set[str]] = defaultdict(set)  # category → {concept_ids}
         self._cache: Optional[OntologyCache] = None
+        self._revision: int = 0  # incremented on mutations; read by PhraseMatcher
+
+    def _bump_revision(self):
+        """Increment revision counter and invalidate the spaCy matcher."""
+        self._revision += 1
+        _invalidate_matcher()
 
     # ---- Concepts ----
 
@@ -867,6 +875,7 @@ class OntologyManager:
             existing.updated_at = datetime.now(timezone.utc).isoformat()
             if self._cache:
                 self._cache.invalidate()
+            self._bump_revision()
             return
         self._concepts[concept.id] = concept
         self._pillar_index[concept.pillar].add(concept.id)
@@ -875,6 +884,7 @@ class OntologyManager:
             self._alias_index[alias.lower()] = concept.id
         if self._cache:
             self._cache.invalidate()
+        self._bump_revision()
 
     def get_concept(self, concept_id: str) -> Optional[Concept]:
         return self._concepts.get(concept_id)
@@ -1187,10 +1197,88 @@ class OntologyManager:
             summary[pillar] = {"concepts": c_count, "relations": r_count}
         return summary
 
+# ---------------------------------------------------------------------------
+# Text-based concept extraction (spaCy PhraseMatcher with regex fallback)
+# ---------------------------------------------------------------------------
 
-# ---------------------------------------------------------------------------
-# Text-based concept extraction (lightweight keyword matcher)
-# ---------------------------------------------------------------------------
+_NLP = None
+_PHRASE_MATCHER = None
+_MATCHER_REVISION = -1
+
+
+def _load_nlp():
+    """Load spaCy English model lazily (once per process)."""
+    global _NLP
+    if _NLP is None:
+        try:
+            import spacy
+            _NLP = spacy.load("en_core_web_sm", disable=["parser", "ner", "lemmatizer"])
+            logger.info("spaCy PhraseMatcher loaded for concept extraction")
+        except Exception as e:
+            logger.warning(f"spaCy model unavailable ({e}), using regex fallback")
+            _NLP = False  # sentinel: don't retry
+    return _NLP if _NLP is not False else None
+
+
+def _strip_parens(label: str) -> str:
+    """Strip parenthetical annotations from labels for matching."""
+    import re as _re
+    cleaned = _re.sub(r'\s*\([^)]*\)', '', label).strip()
+    return cleaned or label
+
+
+def _collect_phrases(manager: OntologyManager) -> Dict[str, str]:
+    """Collect all unique label/alias texts -> concept_id.
+
+    For labels with parentheses (e.g. 'Know Your Customer (KYC)'),
+    adds both the full label and the parenthetical-stripped version.
+    """
+    phrases: Dict[str, str] = {}
+    for cid, concept in manager._concepts.items():
+        stripped = _strip_parens(concept.label)
+        if stripped and stripped not in phrases:
+            phrases[stripped] = cid
+        if concept.label not in phrases:
+            phrases[concept.label] = cid
+        for alias in concept.aliases:
+            alias_s = _strip_parens(alias)
+            if alias_s and alias_s not in phrases and alias_s != stripped:
+                phrases[alias_s] = cid
+            if alias not in phrases and alias != concept.label:
+                phrases[alias] = cid
+    return phrases
+
+
+def _build_phrase_matcher(manager: OntologyManager):
+    """Build or rebuild the spaCy PhraseMatcher from the manager's concepts.
+
+    Uses a revision counter to avoid rebuilding on every call.
+    """
+    global _PHRASE_MATCHER, _MATCHER_REVISION
+    current_revision = getattr(manager, '_revision', 0)
+    if _PHRASE_MATCHER is not None and _MATCHER_REVISION == current_revision:
+        return _PHRASE_MATCHER
+
+    nlp = _load_nlp()
+    if nlp is None:
+        _PHRASE_MATCHER = None
+        return None
+
+    try:
+        from spacy.matcher import PhraseMatcher
+    except ImportError:
+        _PHRASE_MATCHER = None
+        return None
+
+    phrases = _collect_phrases(manager)
+    matcher = PhraseMatcher(nlp.vocab, attr="LOWER")
+    patterns = [nlp.make_doc(text) for text in phrases]
+    if patterns:
+        matcher.add("CONCEPTS", patterns)
+    _PHRASE_MATCHER = matcher
+    _MATCHER_REVISION = current_revision
+    return matcher
+
 
 def extract_concepts_from_text(
     text: str,
@@ -1198,21 +1286,75 @@ def extract_concepts_from_text(
     *,
     min_confidence: float = 0.5,
 ) -> List[Tuple[Concept, float]]:
-    """Match text against known concepts (label + aliases). Returns (concept, confidence)."""
-    import re as _re
+    """Match text against known concepts (label + aliases). Returns (concept, confidence).
+
+    Uses spaCy PhraseMatcher for token-aware matching when available.
+    Falls back to regex word-boundary matching when spaCy model is unavailable.
+    """
     if not text:
         return []
+
+    matcher = _build_phrase_matcher(manager)
+    if matcher is not None:
+        return _extract_with_spacy(text, manager, matcher, min_confidence)
+    return _extract_with_regex(text, manager, min_confidence)
+
+
+def _extract_with_spacy(
+    text: str,
+    manager: OntologyManager,
+    matcher: Any,
+    min_confidence: float,
+) -> List[Tuple[Concept, float]]:
+    """Concept extraction using spaCy PhraseMatcher (token-aware)."""
+    nlp = _NLP
+    if nlp is None:
+        return _extract_with_regex(text, manager, min_confidence)
+
+    doc = nlp(text)
+    matches = matcher(doc)
+    phrases = _collect_phrases(manager)
+    phrase_to_cid = {k.lower(): v for k, v in phrases.items()}
+    seen: Dict[str, float] = {}
+
+    for match_id, start, end in matches:
+        span_text = doc[start:end].text.lower()
+        cid = phrase_to_cid.get(span_text, "")
+        if not cid:
+            continue
+        concept = manager._concepts.get(cid)
+        if concept is None:
+            continue
+        # Determine if this is a label match or alias match
+        label_lower = concept.label.lower()
+        label_stripped = _strip_parens(concept.label).lower()
+        is_label_match = (
+            span_text == label_lower
+            or span_text == label_stripped
+        )
+        score = concept.confidence_score if is_label_match else concept.confidence_score * 0.9
+        if score >= min_confidence and cid not in seen:
+            seen[cid] = score
+    return [(manager._concepts[cid], score) for cid, score in
+            sorted(seen.items(), key=lambda x: -x[1])]
+
+
+def _extract_with_regex(
+    text: str,
+    manager: OntologyManager,
+    min_confidence: float,
+) -> List[Tuple[Concept, float]]:
+    """Fallback concept extraction using regex word-boundary matching."""
+    import re as _re
     text_lower = text.lower()
     seen: Dict[str, float] = {}
     for concept in manager._concepts.values():
-        # Check label — use word-boundary matching to avoid substring false positives
         label = concept.label.lower()
         if _re.search(r'\b' + _re.escape(label) + r'\b', text_lower):
             score = concept.confidence_score
             if score >= min_confidence and concept.id not in seen:
                 seen[concept.id] = score
                 continue
-        # Check aliases — use word-boundary matching
         for alias in concept.aliases:
             alias_lower = alias.lower()
             if _re.search(r'\b' + _re.escape(alias_lower) + r'\b', text_lower) and alias_lower != label:
@@ -1222,3 +1364,9 @@ def extract_concepts_from_text(
                     break
     return [(manager._concepts[cid], score) for cid, score in
             sorted(seen.items(), key=lambda x: -x[1])]
+
+
+def _invalidate_matcher():
+    """Force PhraseMatcher rebuild on next extraction (called when concepts change)."""
+    global _MATCHER_REVISION
+    _MATCHER_REVISION = -1

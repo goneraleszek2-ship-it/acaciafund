@@ -1,7 +1,25 @@
 import json
 import os
 import time
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, Tuple
+
+from .llm_client import AcaciaLLMClient, LLMConfig
+
+# ── Provider name mapping: router label → aisuite provider key ──
+_ROUTER_TO_AISUITE: dict[str, str] = {
+    "nvidia_nim": "openai",
+    "groq_free": "groq",
+    "openrouter_free": "openai",
+    "google_ai_studio": "google",
+}
+
+# ── Router label → model hint for aisuite ──
+_ROUTER_TO_MODEL: dict[str, str] = {
+    "nvidia_nim": "nvidia/nemotron-3-super-120b",
+    "groq_free": "mixtral-8x7b-32768",
+    "openrouter_free": "qwen-2.5-coder-free",
+    "google_ai_studio": "gemini-1.5-pro-latest",
+}
 
 
 class StrategicTaskRouter:
@@ -114,8 +132,43 @@ class StrategicTaskRouter:
         self.provider_health[provider]["consecutive_failures"] += 1
 
 
+    def get_client(
+        self, category: str, payload_size: int = 0
+    ) -> Tuple[AcaciaLLMClient, str]:
+        """Return an AcaciaLLMClient + model string for the given task category."""
+        route = self.determine_optimal_route(category, payload_size)
+        provider = route.get("provider", "openai")
+        model = route.get("model", "gpt-4o-mini")
+        aisuite_provider = _ROUTER_TO_AISUITE.get(provider, "openai")
+        env_key_map = {
+            "openai": "OPENAI_API_KEY",
+            "groq": "GROQ_API_KEY",
+            "google": "GOOGLE_API_KEY",
+        }
+        env_var = env_key_map.get(aisuite_provider, "OPENAI_API_KEY")
+        if not os.environ.get(env_var):
+            provider = "openai"
+            model = "gpt-4o-mini"
+            aisuite_provider = "openai"
+        config = LLMConfig(
+            provider=aisuite_provider,
+            model=model,
+            temperature=0.3 if "reasoning" in route.get("reason", "") else 0.4,
+        )
+        client = AcaciaLLMClient(config=config)
+        return client, model
+
+
 # Backward compatibility
 def get_optimal_model_for_task(category: str) -> str:
     router = StrategicTaskRouter()
     result = router.determine_optimal_route(category, payload_size=0)
     return result["model"]  # type: ignore[no-any-return]
+
+
+def get_client_for_task(
+    category: str, payload_size: int = 0
+) -> Tuple[AcaciaLLMClient, str]:
+    """Convenience: one-call to get a client + model for a task category."""
+    router = StrategicTaskRouter()
+    return router.get_client(category, payload_size)

@@ -288,6 +288,15 @@ def is_future_post(post) -> bool:
 
 
 def main():  # pyright: ignore[reportGeneralTypeIssues]
+    import argparse
+    _parser = argparse.ArgumentParser(description="AcaciaFund static site generator")
+    _parser.add_argument("--run-agents", nargs="?", const="enrich", default=None,
+                         choices=["enrich", "research", "learn", "glossary", "synthesis", "all"],
+                         help="Run agentic pipeline phase before building")
+    _parser.add_argument("--agent-pillar", default="aml", help="Pillar for agent operations")
+    _parser.add_argument("--agent-max-items", type=int, default=10, help="Max items for agent phases")
+    _args, _ = _parser.parse_known_args()
+
     print("Starting AcaciaFund generator...")
     start_time = time.time()
     _timings: dict[str, float] = {}
@@ -416,6 +425,43 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
         return result
 
     env.filters["filter_entities"] = filter_entities
+
+    _PROSE_SECTION_RE = re.compile(
+        r'<div\s+class="section-harvester"[^>]*>\s*'
+        r'<details[^>]*>\s*<summary[^>]*>(.*?</h[23]>)'
+        r'\s*</summary>\s*<div\s+class="section-body">(.*?)</div>'
+        r'\s*</details>\s*</div>',
+        re.DOTALL | re.IGNORECASE,
+    )
+
+    def _unwrap_harvester(m: re.Match) -> str:
+        heading = m.group(1)
+        body = m.group(2)
+        return f'<section class="prose-section">{heading}{body}</section>'
+
+    def wrap_prose_sections(html: str) -> str:
+        html = html or ""
+        if "prose-section" in html:
+            return html
+        if "section-harvester" in html:
+            html = _PROSE_SECTION_RE.sub(_unwrap_harvester, html)
+            return html
+        parts = re.split(r'(<h[23]\b[^>]*>.*?</h[23]>)', html, flags=re.DOTALL | re.IGNORECASE)
+        if len(parts) <= 1:
+            return html
+        result = []
+        before = parts[0]
+        if before.strip():
+            result.append(f'<section class="prose-section">{before}</section>')
+        i = 1
+        while i < len(parts):
+            full_heading = parts[i]
+            after = parts[i + 1] if i + 1 < len(parts) else ""
+            result.append(f'<section class="prose-section">{full_heading}{after}</section>')
+            i += 2
+        return "".join(result)
+
+    env.filters["wrap_prose_sections"] = wrap_prose_sections
 
     DIGEST_PATTERN = re.compile(r"--\s*[🛡️📈⚙️🧬🗓️]\s*\S+\s+\d{4}-\d{2}-\d{2}\s*$")
 
@@ -587,6 +633,49 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
             sqi_backfilled += 1
     if sqi_backfilled:
         print(f"  sqi: backfilled {sqi_backfilled} items")
+
+    # ── Agentic Pipeline (optional) ──
+    if _args.run_agents:
+        _t_agent = time.time()
+        try:
+            import logging as _ag_logging
+            _ag_logging.basicConfig(level=_ag_logging.WARNING, format="%(asctime)s [%(levelname)s] %(message)s")
+            from scripts.run_agentic_pipeline import (
+                run_enrichment,
+                run_glossary,
+                run_learn_modules,
+                run_research,
+                run_synthesis,
+            )
+
+            _items_raw = json.loads(REGISTRY_PATH.read_text(encoding="utf-8")).get("content", [])
+            _phase = _args.run_agents
+            _pillar = _args.agent_pillar
+            _max = _args.agent_max_items
+            _dry = False
+
+            if _phase in ("enrich", "all"):
+                _c = run_enrichment(_items_raw, _max, _dry)
+                print(f"  agents: enriched {_c} items")
+
+            if _phase in ("research", "all"):
+                _c = run_research(_pillar, "emerging technologies", _max, _dry)
+                print(f"  agents: researched {_c} items")
+
+            if _phase in ("learn", "all"):
+                _c = run_learn_modules(_max, _dry)
+                print(f"  agents: generated {_c} learn modules")
+
+            if _phase in ("glossary", "all"):
+                _c = run_glossary(_dry)
+                print(f"  agents: generated {_c} glossary entries")
+
+            if _phase in ("synthesis", "all"):
+                _c = run_synthesis("cross-pillar synthesis", _pillar, min(_max, 5), _dry)
+                print(f"  agents: synthesized {_c} topics")
+        except Exception as _ae:
+            print(f"  agents: phase skipped ({_ae})")
+        _record_timing("agentic_pipeline", time.time() - _t_agent)
 
     _t0 = time.time()
     # Generate knowledge graph for semantic cross-linking
