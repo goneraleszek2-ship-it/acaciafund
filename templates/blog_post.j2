@@ -40,7 +40,7 @@
       {%- if content.date_str or content.source_url %}
       <div class="mt-2 flex items-center gap-2 text-sm flex-wrap text-muted">
         {%- if content.date_str %}
-        <time datetime="{{ content.date_str }}">{{ content.date_str }}</time>
+        <time datetime="{{ content.date_str }}">{{ content.date_str | format_date }}</time>
         {%- endif %}
         {%- if content.source_url %}
         {%- if content.date_str %}<span aria-hidden="true"> · </span>{% endif %}
@@ -53,7 +53,7 @@
     {% include 'partials/visual_abstract.j2' %}
 
     <div class="prose-body">
-      {{ page_body | default(content.body_html) | safe }}
+      {{ page_body | default(content.body_html) | wrap_prose_sections | safe }}
     </div>
 
     {% include 'partials/article_metadata.j2' %}
@@ -132,7 +132,7 @@
             {% include "macros/pillar_badge.html" %}
             <span class="block mt-2 text-sm font-semibold text-default">{{ rp.title | striptags }}</span>
             {%- if rp.date_str %}
-            <span class="block mt-1 text-xs font-meta text-muted">{{ rp.date_str }}</span>
+            <span class="block mt-1 text-xs font-meta text-muted">{{ rp.date_str | format_date }}</span>
             {%- endif %}
           </div>
         </a>

@@ -1,7 +1,10 @@
+{% from "macros/breadcrumbs.html" import breadcrumbs %}
 {% extends "layout.j2" %}
 {% block main_content %}
 
 {%- set pillar_map = {'aml': 'compliance', 'stock': 'markets', 'data-engineering': 'data'} %}
+
+{{ breadcrumbs('', 'Home') }}
 
 <section class="hero-section">
   <h1>Master complex financial concepts<br>through the <span class="text-accent">Feynman Technique</span></h1>
@@ -75,7 +78,7 @@
       <a href="{{ slug_to_url(item.slug) }}" class="block py-2 border-t text-sm no-underline hover-link text-secondary">
         <span class="line-clamp-1">{{ item.title | striptags }}</span>
         {%- if item.date_str %}
-        <span class="text-xs block text-muted">{{ item.date_str }}</span>
+        <span class="text-xs block text-muted">{{ item.date_str | format_date }}</span>
         {%- endif %}
       </a>
       {%- endfor %}

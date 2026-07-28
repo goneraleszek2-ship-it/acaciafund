@@ -287,6 +287,25 @@ def is_future_post(post) -> bool:
     return False
 
 
+def _interleave_by_pillar(items, count):
+    """Interleave items by pillar (aml, stock, data-engineering) to ensure balance."""
+    if not items:
+        return []
+    pillars = ['aml', 'stock', 'data-engineering']
+    by_pillar = {p: [i for i in items if getattr(i, 'pillar', None) == p] for p in pillars}
+    result = []
+    idx = 0
+    while len(result) < count:
+        any_added = False
+        for p in pillars:
+            if idx < len(by_pillar[p]):
+                result.append(by_pillar[p][idx])
+                any_added = True
+        if not any_added:
+            break
+        idx += 1
+    return result[:count]
+
 def main():  # pyright: ignore[reportGeneralTypeIssues]
     import argparse
     _parser = argparse.ArgumentParser(description="AcaciaFund static site generator")
@@ -472,6 +491,20 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
         return ("Synthesis", "synthesis")
 
     env.filters["content_subtype"] = content_subtype_label
+
+    def format_date(value):
+        if not value:
+            return ""
+        date_part = value[:10]
+        try:
+            parts = date_part.split("-")
+            year, month, day = parts[0], int(parts[1]), int(parts[2])
+            months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+            return f"{months[month-1]} {day}, {year}"
+        except (ValueError, IndexError):
+            return date_part
+
+    env.filters["format_date"] = format_date
 
     # --- Trend Detection System ---
     trend_detection_path = PROJECT_ROOT / "dist" / "trend_detection.parquet"
@@ -1930,7 +1963,18 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
         p for p in published_research
         if not _get_created(p) or _get_created(p) >= ninety_days_ago
     ]
-    featured = fresh_posts[:3] if len(fresh_posts) >= 3 else published_research[:3]
+    featured = []
+    for _p in ("aml", "stock", "data-engineering"):
+        _pp = [p for p in fresh_posts if p.pillar == _p][:1]
+        featured.extend(_pp)
+    if len(featured) < 3:
+        _seen = {p.slug for p in featured}
+        for _p in fresh_posts:
+            if _p.slug not in _seen:
+                featured.append(_p)
+                _seen.add(_p.slug)
+                if len(featured) >= 3:
+                    break
     # Hero: highest-SQI article from last 7 days
     seven_days_ago = now - timedelta(days=7)
     recent_articles = [
@@ -1987,7 +2031,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
         og_image_url=home_og_url,
         featured_posts=featured,
         recent_posts=per_pillar_recent,
-        learn_items=learn_items[:6],
+        learn_items=_interleave_by_pillar(learn_items, 6),
         knowledge_items=knowledge_items[:6],
         hero_article=hero_article,
         stat_article_count=len(all_content),

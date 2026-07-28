@@ -44,7 +44,7 @@
                     {%- endif %}
                     <span class="text-xs text-muted px-2 py-0.5 rounded bg-surface">{{ entry.content_type | capitalize }}</span>
                     {%- if entry.date_str %}
-                    <span class="text-xs text-muted ml-auto">{{ entry.date_str }}</span>
+                    <span class="text-xs text-muted ml-auto">{{ entry.date_str | format_date }}</span>
                     {%- endif %}
                 </div>
                 <span class="font-semibold text-default">{{ entry.title }}</span>

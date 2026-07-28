@@ -1,5 +1,7 @@
+{% from "macros/breadcrumbs.html" import breadcrumbs %}
 {% extends "layout.j2" %}
 {% block main_content %}
+{{ breadcrumbs('start-here', 'Start Here') }}
 <section class="hero-section">
   <h1>Your learning&nbsp;journey starts here</h1>
   <p class="hero-subtitle">Pick a topic below and start mastering complex concepts through the Feynman Technique — simple explanations, vivid analogies, and active recall.</p>

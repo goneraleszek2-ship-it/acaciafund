@@ -22,7 +22,7 @@
     <div class="ghost-card p-4">
       <a href="/{{ item_slug | replace('data-engineering', 'data') }}/" class="text-decoration-none font-semibold text-sm hover-underline">{{ item_title }}</a>
       {%- if item_date_str %}
-      <span class="text-xs text-muted ml-2">{{ item_date_str[:10] }}</span>
+      <span class="text-xs text-muted ml-2">{{ item_date_str | format_date }}</span>
       {%- endif %}
     </div>
     {% endfor %}

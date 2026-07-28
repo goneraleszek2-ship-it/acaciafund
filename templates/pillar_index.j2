@@ -111,7 +111,7 @@
       <h3 class="text-sm font-semibold text-default">{{ post.title }}</h3>
       <p class="mt-1 text-xs line-clamp-2 text-secondary">{{ post.description }}</p>
       <div class="mt-2 flex items-center gap-2 text-xs text-muted">
-        <span>{{ post.date_str }}</span>
+        <span>{{ post.date_str | format_date }}</span>
         {%- if post.ontology_concepts %}
         <span class="concept-dot">●</span>
         <span>{{ post.ontology_concepts | length }} concepts</span>

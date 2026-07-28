@@ -1,5 +1,7 @@
+{% from "macros/breadcrumbs.html" import breadcrumbs %}
 {% extends "layout.j2" %}
 {% block main_content %}
+{{ breadcrumbs('search', 'Search') }}
 <h1 class="text-center mb-6">Search</h1>
 
 <div class="search-layout">
