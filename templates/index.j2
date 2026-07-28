@@ -6,7 +6,10 @@
 <section class="hero-section">
   <h1>Master complex financial concepts<br>through the <span class="text-accent">Feynman Technique</span></h1>
   <p class="hero-subtitle">Learn AML compliance, market microstructure, and data engineering through simple explanations, vivid analogies, and active recall — not jargon.</p>
-  <a href="/start-here/" class="hero-cta">Start Learning &rarr;</a>
+  <div class="hero-actions">
+    <a href="/start-here/" class="hero-cta">Start Learning &rarr;</a>
+    <a href="/search/" class="hero-cta-ghost">Search topics &rarr;</a>
+  </div>
 </section>
 
 <section class="how-it-works">
@@ -72,12 +75,43 @@
       <a href="{{ slug_to_url(item.slug) }}" class="block py-2 border-t text-sm no-underline hover-link text-secondary">
         <span class="line-clamp-1">{{ item.title | striptags }}</span>
         {%- if item.date_str %}
-        <span class="text-[11px] block text-muted">{{ item.date_str }}</span>
+        <span class="text-xs block text-muted">{{ item.date_str }}</span>
         {%- endif %}
       </a>
       {%- endfor %}
       <a href="/{{ pillar_url }}/" class="block mt-2 text-xs font-semibold no-underline text-accent">Explore {{ pc.get('label', pillar_key) }} &rarr;</a>
     </div>
+    {%- endfor %}
+  </div>
+</section>
+
+{%- set knowledge_categories = [
+  { 'icon': '⚙️', 'name': 'Platform', 'cat': 'platform' },
+  { 'icon': '🧭', 'name': 'Guide', 'cat': 'guide' },
+  { 'icon': '📖', 'name': 'Reference', 'cat': 'reference' },
+  { 'icon': '🔗', 'name': 'Architecture', 'cat': 'architecture' },
+  { 'icon': '📚', 'name': 'Foundations', 'cat': 'foundations' },
+  { 'icon': '🔬', 'name': 'Advanced', 'cat': 'advanced-techniques' },
+  { 'icon': '✅', 'name': 'Best Practices', 'cat': 'best-practices' },
+  { 'icon': '📋', 'name': 'Regulations', 'cat': 'regulations' },
+  { 'icon': '📊', 'name': 'Industry', 'cat': 'industry-analysis' },
+  { 'icon': '📈', 'name': 'Markets', 'cat': 'market-analysis' },
+  { 'icon': '🎯', 'name': 'Strategies', 'cat': 'strategies' },
+  { 'icon': '🧪', 'name': 'Methodology', 'cat': 'methodology' },
+  { 'icon': '💻', 'name': 'Tutorials', 'cat': 'tutorial-code' },
+] %}
+
+<section class="mb-8">
+  <div class="flex items-center gap-2 mb-4">
+    <span class="text-xl">&#128218;</span>
+    <h2 class="text-lg font-bold text-default">Browse by Category</h2>
+  </div>
+  <div class="knowledge-category-grid">
+    {%- for cat in knowledge_categories %}
+    <a href="/knowledge/?f_category={{ cat.cat }}" class="knowledge-cat-card">
+      <span class="cat-icon">{{ cat.icon }}</span>
+      <span class="cat-name">{{ cat.name }}</span>
+    </a>
     {%- endfor %}
   </div>
 </section>

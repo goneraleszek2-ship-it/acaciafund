@@ -28,6 +28,8 @@
 {% endif %}
 </head>
 <body>
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    <div id="nav-overlay" class="nav-overlay" aria-hidden="true"></div>
     <header class="container">
         <nav>
             <ul>
@@ -62,7 +64,7 @@
         </nav>
     </header>
 
-    <main class="container">
+    <main id="main-content" class="container">
         {% block main_content %}{% endblock %}
     </main>
 

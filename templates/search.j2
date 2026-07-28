@@ -1,39 +1,6 @@
 {% extends "layout.j2" %}
 {% block main_content %}
-<style>
-  .search-layout { display: flex; gap: 1.5rem; max-width: 960px; margin: 0 auto; }
-  .search-sidebar { width: 200px; flex-shrink: 0; }
-  .search-sidebar h3 { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-muted, #666); margin-bottom: 0.5rem; }
-  .search-sidebar .filter-group { margin-bottom: 1.25rem; }
-  .search-sidebar label { display: flex; align-items: center; gap: 0.4rem; font-size: 0.85rem; padding: 0.25rem 0; cursor: pointer; }
-  .search-sidebar label:hover { color: var(--color-accent, #818cf8); }
-  .search-sidebar input[type="checkbox"] { accent-color: var(--color-accent, #818cf8); }
-  .search-sidebar .pillar-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; }
-  .search-sidebar .reset-btn { font-size: 0.75rem; padding: 0.3rem 0.6rem; border-radius: 4px; border: 1px solid var(--color-border, #333); background: transparent; color: var(--color-text-muted, #888); cursor: pointer; width: 100%; }
-  .search-sidebar .reset-btn:hover { color: var(--color-text, #e8e6e3); border-color: var(--color-accent, #818cf8); }
-  .search-main { flex: 1; min-width: 0; }
-  .search-input-wrap { max-width: 100%; margin-bottom: 1rem; }
-  .search-input-wrap input { position: relative; width: 100%; padding: 0.75rem 1rem; font-size: 1.1rem;
-    border-radius: 8px; border: 1px solid var(--color-border, #333);
-    background: var(--color-surface, #1a1a2e); color: var(--color-text, #e8e6e3); box-sizing: border-box;
-  }
-  .search-input-wrap input:focus { outline: none; border-color: var(--color-accent, #818cf8); }
-  .search-input-wrap { position: relative; }
-  #search-suggestions { display: none; position: absolute; top: 100%; left: 0; right: 0; z-index: 100; background: var(--color-surface, #1a1a2e); border: 1px solid var(--color-border, #333); border-top: none; border-radius: 0 0 8px 8px; max-height: 300px; overflow-y: auto; }
-  .suggestion-item:hover { background: color-mix(in srgb, var(--color-accent, #818cf8) 10%, transparent); }
-  .suggestion-item mark { background: transparent; color: var(--color-accent, #818cf8); font-weight: 700; }
-  #search-stats { font-size: 0.85rem; color: var(--color-text-muted, #888); margin-bottom: 1rem; }
-  .search-result:hover { border-color: var(--color-accent, #818cf8) !important; }
-  #search-results { max-width: 100%; }
-  @media (max-width: 768px) {
-    .search-layout { flex-direction: column; }
-    .search-sidebar { width: 100%; }
-    .search-sidebar .filter-row { display: flex; gap: 1.5rem; flex-wrap: wrap; }
-    .search-sidebar .filter-group { margin-bottom: 0; }
-  }
-</style>
-
-<h1 style="text-align:center;margin-bottom:1.5rem">Search</h1>
+<h1 class="text-center mb-6">Search</h1>
 
 <div class="search-layout">
   <aside class="search-sidebar" id="search-filters">
@@ -65,7 +32,7 @@
   </aside>
   <div class="search-main">
     <div class="search-input-wrap">
-      <input type="text" id="search-input" placeholder="Search articles, lessons, guides... (press / to focus)" autocomplete="off">
+      <input type="text" id="search-input" placeholder="Search research, learn, knowledge... (press / to focus)" autocomplete="off">
       <div id="search-suggestions"></div>
     </div>
     <div id="search-stats"></div>

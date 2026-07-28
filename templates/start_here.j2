@@ -1,55 +1,12 @@
 {% extends "layout.j2" %}
 {% block main_content %}
 <section class="hero-section">
-  <h1>Welcome to Acacia</h1>
-  <p class="hero-subtitle">A learning platform built on the Feynman Technique — master complex concepts through simple explanations, analogies, and active recall.</p>
+  <h1>Your learning&nbsp;journey starts here</h1>
+  <p class="hero-subtitle">Pick a topic below and start mastering complex concepts through the Feynman Technique — simple explanations, vivid analogies, and active recall.</p>
 </section>
 
 <section class="mb-8">
-  <h2 class="text-lg font-bold mb-4 text-default">How It Works</h2>
-  <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-    <div class="ghost-card p-5 text-center">
-      <div class="step-circle">1</div>
-      <h3 class="text-sm font-bold mb-2 text-default">Choose a Topic</h3>
-      <p class="text-xs text-secondary line-height-base">Pick from <strong>Compliance</strong> (AML, sanctions, KYC), <strong>Markets</strong> (microstructure, volatility, trading), or <strong>Data Engineering</strong> (pipelines, streaming, schemas).</p>
-    </div>
-    <div class="ghost-card p-5 text-center">
-      <div class="step-circle">2</div>
-      <h3 class="text-sm font-bold mb-2 text-default">Learn Step by Step</h3>
-      <p class="text-xs text-secondary line-height-base">Every concept starts with a plain-English explanation (ELI5), then builds through analogies, real examples, diagrams, and reflective questions.</p>
-    </div>
-    <div class="ghost-card p-5 text-center">
-      <div class="step-circle">3</div>
-      <h3 class="text-sm font-bold mb-2 text-default">Prove You Understand</h3>
-      <p class="text-xs text-secondary line-height-base">Teach back what you learned, complete build exercises, and track your mastery through spaced repetition and gap detection.</p>
-    </div>
-  </div>
-</section>
-
-<section class="mb-8">
-  <h2 class="text-lg font-bold mb-4 text-default">The Feynman Technique</h2>
-  <div class="ghost-card p-5 feynman-cta-card">
-    <p class="text-sm mb-4 text-secondary line-height-relaxed">
-      <strong class="text-default">&ldquo;If you can't explain it simply, you don't understand it well enough.&rdquo;</strong>
-      &mdash; Richard Feynman
-    </p>
-    <p class="text-sm mb-3 text-secondary line-height-relaxed">
-      The Feynman Technique is a four-step method for learning anything deeply:
-    </p>
-    <ol class="text-sm space-y-2 text-secondary line-height-base">
-      <li><strong class="text-default">Choose a concept</strong> &mdash; pick something you want to learn.</li>
-      <li><strong class="text-default">Explain it to a child</strong> &mdash; use simple language, no jargon.</li>
-      <li><strong class="text-default">Identify gaps</strong> &mdash; where did you struggle? Go back to the source.</li>
-      <li><strong class="text-default">Review and simplify</strong> &mdash; refine your explanation, find better analogies.</li>
-    </ol>
-    <p class="text-sm mt-3 text-secondary line-height-relaxed">
-      Acacia extends this into six progressive stages: <strong class="text-default">Explain &rarr; Analogize &rarr; Exemplify &rarr; Diagram &rarr; Find Gaps &rarr; Build &rarr; Teach Back</strong>.
-    </p>
-  </div>
-</section>
-
-<section class="mb-8">
-  <h2 class="text-lg font-bold mb-4 text-default">Where to Start</h2>
+  <h2 class="text-lg font-bold mb-4 text-default">Choose Your Path</h2>
   <div class="grid gap-4 sm:grid-cols-3">
     <a href="/compliance/" class="pillar-card ghost-card p-4 no-underline block card-accent-top" style="--card-color:#f97316">
       <span class="pillar-icon">&127991;</span>
@@ -73,32 +30,60 @@
 </section>
 
 <section class="mb-8">
+  <h2 class="text-lg font-bold mb-2 text-default">How Learning Works</h2>
+  <div class="grid gap-4 sm:grid-cols-3 text-center">
+    <div class="ghost-card p-5">
+      <div class="step-circle">1</div>
+      <h3 class="text-sm font-bold mb-2 text-default">Pick a Topic</h3>
+      <p class="text-xs text-secondary line-height-base">Each pillar is explained from the ground up.</p>
+    </div>
+    <div class="ghost-card p-5">
+      <div class="step-circle">2</div>
+      <h3 class="text-sm font-bold mb-2 text-default">Learn Simply</h3>
+      <p class="text-xs text-secondary line-height-base">ELI5 first, then analogies, examples, and diagrams.</p>
+    </div>
+    <div class="ghost-card p-5">
+      <div class="step-circle">3</div>
+      <h3 class="text-sm font-bold mb-2 text-default">Test Yourself</h3>
+      <p class="text-xs text-secondary line-height-base">Teach back, build exercises, spaced repetition.</p>
+    </div>
+  </div>
+  <details class="ghost-card mt-3" style="padding:1rem">
+    <summary class="text-sm font-semibold text-default" style="cursor:pointer;user-select:none;list-style:none;display:flex;align-items:center;gap:0.5rem">
+      <span style="transition:transform 0.2s">&#9654;</span> About the Feynman Technique
+    </summary>
+    <div class="mt-3 text-sm text-secondary line-height-relaxed">
+      <p class="mb-3"><strong class="text-default">&ldquo;If you can't explain it simply, you don't understand it well enough.&rdquo;</strong> &mdash; Richard Feynman</p>
+      <ol class="space-y-2">
+        <li><strong class="text-default">Choose a concept</strong> — pick something you want to learn.</li>
+        <li><strong class="text-default">Explain it simply</strong> — use plain language, no jargon.</li>
+        <li><strong class="text-default">Identify gaps</strong> — where did you struggle? Go back.</li>
+        <li><strong class="text-default">Review and simplify</strong> — refine and find better analogies.</li>
+      </ol>
+      <p class="mt-3">Acacia extends this into six stages: <strong class="text-default">Explain &rarr; Analogize &rarr; Exemplify &rarr; Diagram &rarr; Find Gaps &rarr; Build &rarr; Teach Back</strong>.</p>
+    </div>
+  </details>
+</section>
+
+<section class="mb-8">
   <h2 class="text-lg font-bold mb-4 text-default">Learning Tips</h2>
   <div class="grid gap-4 sm:grid-cols-2">
     <div class="ghost-card p-4">
       <h3 class="text-sm font-bold mb-2 text-default">Start with ELI5</h3>
-      <p class="text-xs text-secondary line-height-base">Every concept has an "Explain Like I'm 5" section. Read that first. If you can't understand the ELI5, find a simpler prerequisite concept.</p>
+      <p class="text-xs text-secondary line-height-base">Every concept has an "Explain Like I'm 5" section. Read that first. If you can't understand it, find a simpler prerequisite.</p>
     </div>
     <div class="ghost-card p-4">
-      <h3 class="text-sm font-bold mb-2 text-default">Use the Learning Paths</h3>
-      <p class="text-xs text-secondary line-height-base">Feynman Learning Paths organize concepts into progressive stages. Follow them in order for the best results.</p>
+      <h3 class="text-sm font-bold mb-2 text-default">Use Learning Paths</h3>
+      <p class="text-xs text-secondary line-height-base">Each pillar has progressive learning paths. Follow them in order for the best results.</p>
     </div>
     <div class="ghost-card p-4">
-      <h3 class="text-sm font-bold mb-2 text-default">Test Yourself</h3>
-      <p class="text-xs text-secondary line-height-base">Use the Teach Back and Build exercise sections. Writing your own explanation is the best way to find gaps in your understanding.</p>
+      <h3 class="text-sm font-bold mb-2 text-default">Test Yourself Often</h3>
+      <p class="text-xs text-secondary line-height-base">Use Teach Back and Build exercises. Writing your own explanation is the best way to find gaps.</p>
     </div>
     <div class="ghost-card p-4">
       <h3 class="text-sm font-bold mb-2 text-default">Track Your Progress</h3>
-      <p class="text-xs text-secondary line-height-base">Visit <a href="/review/" class="text-accent">My Progress</a> to see your mastery across all concepts and get personalized review recommendations.</p>
+      <p class="text-xs text-secondary line-height-base">Visit <a href="/review/" class="text-accent">My Progress</a> to see mastery across all concepts and get personalized review recommendations.</p>
     </div>
-  </div>
-</section>
-
-<section>
-  <div class="ghost-card p-6 text-center">
-    <h2 class="text-base font-bold mb-2 text-default">Ready to start learning?</h2>
-    <p class="text-sm mb-4 text-secondary">Pick a topic above or explore the full knowledge base.</p>
-    <a href="/search/" class="hero-cta">Browse All Topics &rarr;</a>
   </div>
 </section>
 {% endblock %}
