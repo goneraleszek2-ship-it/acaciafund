@@ -14,6 +14,12 @@ dependencies = [
     "pandas>=2.0",
     "pyarrow>=14.0",
     "simpleicons>=7.0",
+    "spacy>=3.0",
+    "loguru>=0.7",
+    "rich>=13.0",
+    "httpx>=0.27",
+    "aisuite>=0.1.0",
+    "instructor>=1.0.0",
 ]
 
 [project.optional-dependencies]
