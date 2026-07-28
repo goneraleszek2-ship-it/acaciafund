@@ -1,4 +1,5 @@
 {% extends "layout.j2" %}
+{% from "macros/breadcrumbs.html" import breadcrumbs %}
 {% block title %}{{ pillar_name }} — Week {{ week_id }} Notes | AcaciaFund{% endblock %}
 {% block description %}Feynman-style weekly notes for {{ pillar_name }} — the most important developments in simple language with analogies, significance, and links to deeper analysis.{% endblock %}
 
@@ -7,6 +8,7 @@
 {% endblock %}
 
 {% block main_content %}
+{{ breadcrumbs('weekly', pillar_name ~ ' Weekly Notes') }}
 {% set data = all_pillars[pillar] %}
 {% set pillar_events = data.events | default([]) %}
 {% set event_count = pillar_events | length %}

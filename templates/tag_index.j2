@@ -1,6 +1,8 @@
 {% extends "layout.j2" %}
+{% from "macros/breadcrumbs.html" import breadcrumbs %}
 {% block main_content %}
 <section>
+  {{ breadcrumbs('tags', content.title) }}
   <h1>{{ content.title }}</h1>
   {%- if all_tags and not items %}
   <div class="tag-cloud">

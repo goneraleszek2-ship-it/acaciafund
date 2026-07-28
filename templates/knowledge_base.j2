@@ -1,6 +1,8 @@
 {% extends "layout.j2" %}
+{% from "macros/breadcrumbs.html" import breadcrumbs %}
 {% block main_content %}
 <section>
+  {{ breadcrumbs('knowledge-base', pillar_label ~ ' Knowledge Base') }}
   <h1>{{ pillar_label }} Knowledge Base</h1>
   <p class="subtitle">Wiki-style knowledge structure: foundation → core → advanced → specialized</p>
 

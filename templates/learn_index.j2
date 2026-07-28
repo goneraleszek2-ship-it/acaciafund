@@ -1,6 +1,8 @@
 {% extends "layout.j2" %}
+{% from "macros/breadcrumbs.html" import breadcrumbs %}
 {% block main_content %}
 <section>
+  {{ breadcrumbs('learn', content.title | default("Learning Hub")) }}
   <h1>{{ content.title | default("Learning Hub") }}</h1>
   {% if content.description %}
   <p>{{ content.description }}</p>

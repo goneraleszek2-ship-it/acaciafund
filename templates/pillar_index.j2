@@ -1,6 +1,8 @@
 {% extends "layout.j2" %}
+{% from "macros/breadcrumbs.html" import breadcrumbs %}
 {% block main_content %}
 <section>
+  {{ breadcrumbs('pillar', page_title) }}
   <div class="flex items-center gap-3 mb-4">
     <span class="text-2xl">{{ pillar_emojis.get(pillar, '') }}</span>
     <div>

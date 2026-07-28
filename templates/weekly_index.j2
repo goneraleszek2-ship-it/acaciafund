@@ -1,4 +1,5 @@
 {% extends "layout.j2" %}
+{% from "macros/breadcrumbs.html" import breadcrumbs %}
 {% block title %}Weekly Notes Archive | AcaciaFund{% endblock %}
 {% block description %}Browse our weekly Feynman-style notes archive — simple explanations of the most important developments across AML/compliance, stock markets, and data engineering.{% endblock %}
 
@@ -7,6 +8,7 @@
 {% endblock %}
 
 {% block main_content %}
+{{ breadcrumbs('weekly', 'Weekly Notes Archive') }}
 {% set pillar_keys = {"aml": "Compliance", "markets": "Markets", "data-engineering": "Data Engineering"} %}
 {% set pillar_colors = {"aml": "#f97316", "markets": "#34d399", "data-engineering": "#818cf8"} %}
 

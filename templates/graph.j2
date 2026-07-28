@@ -1,6 +1,8 @@
 {% extends "layout.j2" %}
+{% from "macros/breadcrumbs.html" import breadcrumbs %}
 {% block main_content %}
 <section>
+  {{ breadcrumbs('graph', 'Knowledge Graph') }}
   <hgroup>
     <h1>Knowledge Graph</h1>
     <p>Interactive topology of {{ node_count }} semantic nodes and {{ edge_count }} relationships across the Acacia knowledge repository.</p>

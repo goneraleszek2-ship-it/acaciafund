@@ -44,7 +44,6 @@
   function initMobileNav() {
     var nav = document.querySelector('nav');
     if (!nav) return;
-    var overlay = document.getElementById('nav-overlay');
     var toggle = nav.querySelector('.nav-toggle');
     if (!toggle) {
       toggle = document.createElement('button');
@@ -57,32 +56,9 @@
     }
     var menu = nav.querySelector('ul:last-child');
     if (!menu) return;
-    function openNav() {
-      menu.classList.add('open');
-      toggle.setAttribute('aria-expanded', 'true');
-      if (overlay) overlay.classList.add('open');
-      document.body.style.overflow = 'hidden';
-    }
-    function closeNav() {
-      menu.classList.remove('open');
-      toggle.setAttribute('aria-expanded', 'false');
-      if (overlay) overlay.classList.remove('open');
-      document.body.style.overflow = '';
-    }
     toggle.addEventListener('click', function () {
-      if (menu.classList.contains('open')) {
-        closeNav();
-      } else {
-        openNav();
-      }
-    });
-    if (overlay) {
-      overlay.addEventListener('click', closeNav);
-    }
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && menu.classList.contains('open')) {
-        closeNav();
-      }
+      var open = menu.classList.toggle('open');
+      toggle.setAttribute('aria-expanded', open);
     });
   }
 
@@ -255,45 +231,6 @@
     }
   }
 
-  /* ── Pillar Progress Indicator ── */
-  function initPillarProgress() {
-    var visited = new Set();
-    try {
-      var saved = JSON.parse(localStorage.getItem('acacia_pillars_visited') || '[]');
-      saved.forEach(function (p) { visited.add(p); });
-    } catch (_) {}
-    var links = document.querySelectorAll(
-      'a[href="/compliance/"], a[href="/markets/"], a[href="/data/"]'
-    );
-    links.forEach(function (link) {
-      link.addEventListener('click', function () {
-        var href = link.getAttribute('href');
-        var pillar;
-        if (href.indexOf('/compliance/') === 0) pillar = 'aml';
-        else if (href.indexOf('/markets/') === 0) pillar = 'stock';
-        else if (href.indexOf('/data/') === 0) pillar = 'data-engineering';
-        if (pillar) {
-          visited.add(pillar);
-          try {
-            localStorage.setItem('acacia_pillars_visited', JSON.stringify([].concat(Array.from(visited))));
-          } catch (_) {}
-          updateProgressBadge(visited.size);
-        }
-      });
-    });
-    function updateProgressBadge(count) {
-      var existing = document.getElementById('pillar-progress-badge');
-      if (existing) existing.remove();
-      var badge = document.createElement('span');
-      badge.id = 'pillar-progress-badge';
-      badge.style.cssText = 'display:inline-flex;align-items:center;gap:0.25rem;font-size:0.7rem;padding:0.15rem 0.5rem;border-radius:999px;background:color-mix(in srgb,var(--color-accent) 12%,transparent);color:var(--color-accent);border:1px solid color-mix(in srgb,var(--color-accent) 25%,transparent);margin-left:0.5rem;';
-      badge.textContent = count + '/3 pillars explored';
-      var hero = document.querySelector('.hero-actions') || document.querySelector('.hero-section');
-      if (hero) hero.appendChild(badge);
-    }
-    if (visited.size > 0) updateProgressBadge(visited.size);
-  }
-
   /* ── Init All ── */
   function init() {
     initTheme();
@@ -306,7 +243,6 @@
     initFeedback();
     initDeepDive();
     initContinueReading();
-    initPillarProgress();
     /* Keyboard nav indicator */
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Tab') document.body.classList.add('keyboard-nav');
