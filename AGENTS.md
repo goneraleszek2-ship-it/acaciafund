@@ -216,15 +216,16 @@ The portal is being restructured from a *content repository* into a *schema-buil
 - **15 learning path pages** + **3 pillar synthesis pages** — all enhanced at build time
 - **Cross-pillar analog matrix** leverages the 39 ontology concepts with `cross_pillar_analogs` data
 
-#### Does Not Exist ✗
+#### Now Exists ✓
 | Component | File | Priority |
 |-----------|------|----------|
-| Source trail (claim→citation mapping) | `core/source_trail.py` | P4 |
-| Contradiction detection | `core/contradiction.py` | P4 |
-| Evidence grading (GRADE-style) | `core/evidence_grade.py` | P4 |
-| Hypothesis tracker | `templates/research_workspace.j2` | P4 |
-| Research export (PDF/MD) | `scripts/export_research.py` | P4 |
-| Adaptive difficulty/interest/modality | `core/adaptive.py` | P5 |
+| Source trail (claim→citation mapping) | `core/source_trail.py` | P4 ✓ |
+| Contradiction detection | `core/contradiction.py` | P4 ✓ |
+| Evidence grading (GRADE-style) | `core/evidence_grade.py` | P4 ✓ |
+| Hypothesis workspace | `templates/research_workspace.j2` | P4 ✓ |
+| Research export (MD/JSON) | `scripts/export_research.py` | P4 ✓ |
+| Adaptive difficulty/interest/modality | `core/adaptive.py` | P5 ✓ |
+| | **Build integration** | `build.py` §2866 — source trails, contradictions, evidence grades, adaptive profiles built from content |
 
 ## Architecture
 
@@ -506,10 +507,15 @@ result = df.filter(pl.col('price') > 100).collect()
 | `tests/test_schema_builder.py` | **19** | core/schema_builder.py: prerequisite graph, learning paths, Bloom categorization |
 | `tests/test_progressive_disclosure.js` | **8** | static/js/progressive_disclosure.js: parseSections, toggleSection pure functions |
 | `tests/test_retention_engine.py` | **38** | core/retention_engine.py: SM-2, gap detection, interleaving, data generation |
+| `tests/test_source_trail.py` | **23** | core/source_trail.py: claim→citation mapping, SourceTrailManager, extraction, verification |
+| `tests/test_contradiction.py` | **40** | core/contradiction.py: negation/antonym/numeric contradiction detection, ContradictionDetector, clustering |
+| `tests/test_evidence_grade.py` | **24** | core/evidence_grade.py: GRADE-style evidence quality scoring, EvidenceGrader, downgrade/upgrade criteria |
+| `tests/test_export_research.py` | **14** | scripts/export_research.py: Markdown/JSON report generation from trails, contradictions, grades |
+| `tests/test_adaptive.py` | **31** | core/adaptive.py: user profiling, difficulty adaptation, modality suggestion, content ranking |
 
 JS tests run via `node tests/test_progressive_disclosure.js` (no npm/playwright needed).
 
-**Total: 507 Python tests + 8 JS tests.**
+**Total: 639 Python tests + 8 JS tests.**
 
 ### Phase 1.5 Files (Cognitive Load Amputation — July 2026)
 
@@ -791,3 +797,14 @@ For any agent working on this codebase:
    python3 build.py 2>&1 | tail -20
    ```
 6. **Credit**: Add yourself to `AGENTS.md` credits after completing Phase 1.
+
+### Credits
+
+Contributors who completed Phase 1 (Schema Builder & Dual Coding):
+- **opencode (big-pickle)** — core/schema_builder.py implementation (build_prerequisite_graph, compute_learning_paths, categorize_by_bloom, Feynman learning path system)
+- **opencode (big-pickle)** — core/source_trail.py implementation (claim→citation mapping, SourceTrailManager, claim extraction, URL matching)
+- **opencode (big-pickle)** — core/contradiction.py implementation (negation/antonym/numeric contradiction detection, ContradictionDetector, contradiction clustering)
+- **opencode (big-pickle)** — core/evidence_grade.py implementation (GRADE-style evidence quality scoring, EvidenceGrader, downgrade/upgrade criteria with contradiction integration)
+- **opencode (big-pickle)** — templates/research_workspace.j2 (hypothesis workspace template with claim/contradiction/evidence views)
+- **opencode (big-pickle)** — scripts/export_research.py (Markdown/JSON research report export from source trails, contradictions, and grades)
+- **opencode (big-pickle)** — core/adaptive.py (adaptive presentation engine: UserProfile, difficulty adaptation, modality suggestion, content ranking)

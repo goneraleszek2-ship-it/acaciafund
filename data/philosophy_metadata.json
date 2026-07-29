@@ -3314,5 +3314,135 @@
       "design",
       "money-laundering-basics"
     ]
+  },
+  "aml-effectiveness": {
+    "philosophical_lineage": [
+      "utilitarian-ethics",
+      "regulatory-theory",
+      "deterrence-theory"
+    ],
+    "epistemic_status": "empirical",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "regulatory",
+    "temporal_ontology": "present",
+    "uncertainty_class": "aleatoric",
+    "governance_model": "regulatory",
+    "semantic_contract_type": "policy",
+    "philosophical_sources": [
+      "Levi, Michael, and Peter Reuter. 'Money Laundering: A Review.' Crime and Justice (2006)",
+      "Naylor, R.T. Wages of Crime: Black Markets, Illegal Finance, and the Underworld Economy (2002)",
+      "Sharman, J.C. The Desperate Quest for Grand Corruption (2020)"
+    ],
+    "cross_pillar_analogs": [
+      "model-cards"
+    ]
+  },
+  "transaction-monitoring-theory": {
+    "philosophical_lineage": [
+      "signaling-theory",
+      "game-theory",
+      "regulatory-theory"
+    ],
+    "epistemic_status": "theoretical",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "regulatory",
+    "temporal_ontology": "present",
+    "uncertainty_class": "epistemic",
+    "governance_model": "regulatory",
+    "semantic_contract_type": "policy",
+    "philosophical_sources": [
+      "Tak\u00e1ts, El\u00f6d. 'A Theory of Crying Wolf.' JLEO (2011)"
+    ],
+    "cross_pillar_analogs": [
+      "data-quality"
+    ]
+  },
+  "lakestream-architecture": {
+    "philosophical_lineage": [
+      "systems-theory",
+      "data-management",
+      "stream-processing"
+    ],
+    "epistemic_status": "pragmatic",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "process",
+    "temporal_ontology": "real-time",
+    "uncertainty_class": "epistemic",
+    "governance_model": "autonomous",
+    "semantic_contract_type": "schema",
+    "philosophical_sources": [
+      "StreamNative. 'Lakestream: One Copy for Streaming and Lakehouse.' (2026)",
+      "Armbrust, Michael, et al. 'Lakehouse: A New Generation of Open Platforms.' (CIDR 2021)",
+      "Akidau, Tyler, et al. 'The Dataflow Model.' (VLDB 2015)"
+    ],
+    "cross_pillar_analogs": [
+      "transaction-monitoring"
+    ]
+  },
+  "aml-program-reform": {
+    "philosophical_lineage": [
+      "legal-theory",
+      "regulatory-theory",
+      "institutional-design"
+    ],
+    "epistemic_status": "normative",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "regulatory",
+    "temporal_ontology": "future",
+    "uncertainty_class": "epistemic",
+    "governance_model": "regulatory",
+    "semantic_contract_type": "policy",
+    "philosophical_sources": [
+      "Federal Register. 'Proposed Rule: AML Program Requirements.' (July 7, 2026)",
+      "FinCEN. 'Proposed AML/CFT Program Rule.' (April 2026)",
+      "GENIUS Act. (2026)"
+    ],
+    "cross_pillar_analogs": [
+      "data-governance"
+    ]
+  },
+  "fama-french-model": {
+    "philosophical_lineage": [
+      "empiricism",
+      "financial-economics",
+      "factor-theory"
+    ],
+    "epistemic_status": "empirical",
+    "normative_basis": "pragmatic",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "historical",
+    "uncertainty_class": "aleatoric",
+    "governance_model": "autonomous",
+    "semantic_contract_type": "measure",
+    "philosophical_sources": [
+      "Fama, Eugene F., and Kenneth R. French. 'Common Risk Factors in the Returns on Stocks and Bonds.' JFE (1993)",
+      "Fama, Eugene F., and Kenneth R. French. 'A Five-Factor Asset Pricing Model.' JFE (2015)",
+      "Fama, Eugene F., and Kenneth R. French. 'Size, Value, and Momentum in International Stock Returns.' JFE (2012)"
+    ],
+    "cross_pillar_analogs": [
+      "feature-store"
+    ]
+  },
+  "efficient-market-hypothesis": {
+    "philosophical_lineage": [
+      "rational-choice-theory",
+      "financial-economics",
+      "information-theory"
+    ],
+    "epistemic_status": "theoretical",
+    "normative_basis": "utilitarian",
+    "ontological_commitment": "realist",
+    "temporal_ontology": "present",
+    "uncertainty_class": "aleatoric",
+    "governance_model": "autonomous",
+    "semantic_contract_type": "measure",
+    "philosophical_sources": [
+      "Fama, Eugene F. 'Efficient Capital Markets.' Journal of Finance (1970)",
+      "Fama, Eugene F. 'Market Efficiency, Long-Term Returns, and Behavioral Finance.' JFE (1998)",
+      "Malkiel, Burton. A Random Walk Down Wall Street (1973)"
+    ],
+    "cross_pillar_analogs": [
+      "data-governance"
+    ]
   }
 }

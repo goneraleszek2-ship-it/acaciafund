@@ -2219,7 +2219,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     weekly_notes_path = PROJECT_ROOT / "data" / "weekly_notes.json"
     if weekly_notes_path.exists():
         try:
-            with open(weekly_notes_path) as f:
+            with open(weekly_notes_path, encoding="utf-8") as f:
                 weekly_data = json.load(f)
             weeks = weekly_data.get("weeks", [])
             weeks.sort(key=lambda w: w["week_id"], reverse=True)
@@ -2862,6 +2862,113 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
             (_synth_dir / "index.html").write_text(_synth_html, encoding="utf-8")
             _synth_count += 1
         print(f"  synthesis: {_synth_count} pillar pages")
+
+    # --- Research modules: source trail, contradictions, evidence grade, adaptive ---
+    if ontology and ontology.concept_count() > 0:
+        try:
+            from core.source_trail import (
+                SourceTrailManager,
+                build_trails_for_item,
+                extract_claims_from_text,
+            )
+
+            _trail_manager = SourceTrailManager(ontology=ontology)
+            _trail_count = 0
+            for _item in all_content:
+                _body = getattr(_item, "body_html", "") or ""
+                if len(_body) < 100:
+                    continue
+                _concept_ids = [
+                    _c.id for _c, _s in extract_concepts_from_text(
+                        re.sub(r"<[^>]+>", " ", _body)[:2000], ontology
+                    )
+                    if _s >= 0.35
+                ]
+                _trail = build_trails_for_item(
+                    slug=_item.slug,
+                    title=getattr(_item, "title", ""),
+                    body=_body,
+                    pillar=getattr(_item, "pillar", ""),
+                    concept_ids=_concept_ids[:5],
+                    ontology=ontology,
+                )
+                if _trail.claims:
+                    _trail_manager.add_trail(_item.slug, _trail)
+                    _trail_count += 1
+            if _trail_count:
+                print(f"  source-trails: {_trail_count} items, {sum(len(t.claims) for t in _trail_manager.all_trails())} claims")
+
+            from core.contradiction import detect_contradictions, contradiction_summary
+            _contradiction_report = detect_contradictions(_trail_manager)
+            if _contradiction_report.total_pairs > 0:
+                print(f"  contradictions: {_contradiction_report.total_pairs} pairs")
+                for _line in contradiction_summary(_contradiction_report).split("\n"):
+                    print(f"    {_line}")
+
+            from core.evidence_grade import grade_evidence, quality_summary
+            _scores = grade_evidence(_trail_manager)
+            if _scores:
+                _level_counts = {}
+                for _s in _scores:
+                    _level_counts[_s.level.value] = _level_counts.get(_s.level.value, 0) + 1
+                _dist = ", ".join(f"{k}: {v}" for k, v in sorted(_level_counts.items()))
+                print(f"  evidence-grades: {len(_scores)} claims ({_dist})")
+
+        except ImportError as _ie:
+            print(f"  research-modules: not available — {_ie}")
+        except Exception as _re:
+            print(f"  research-modules: error — {_re}")
+
+    try:
+        from core.adaptive import (
+            AdaptiveEngine,
+            UserProfile,
+            build_content_profile,
+            rank_content,
+        )
+        _all_profiles = []
+        for _item in all_content:
+            _sqi_v = getattr(_item, "sqi", 0.0) or 0.0
+            _pillar_v = getattr(_item, "pillar", "") or ""
+            _ctype_v = getattr(_item, "content_type", "") or ""
+            _title_v = getattr(_item, "title", "") or ""
+            _desc_v = getattr(_item, "description", "") or ""
+            _p = build_content_profile(
+                slug=_item.slug,
+                pillar=_pillar_v,
+                content_type=_ctype_v,
+                difficulty=getattr(_item, "difficulty", "intermediate") or "intermediate",
+                sqi=_sqi_v,
+                title=_title_v,
+                description=_desc_v[:200],
+            )
+            _all_profiles.append(_p)
+        print(f"  adaptive: {len(_all_profiles)} content profiles built")
+
+        _pillar_profiles: dict[str, list] = {}
+        for _p in _all_profiles:
+            _pillar_profiles.setdefault(_p.pillar, []).append(_p)
+
+        for _pillar_key in ["aml", "stock", "data-engineering"]:
+            _pillar_url = PILLAR_URL_MAP.get(_pillar_key, _pillar_key)
+            _pillar_label = PILLAR_NAMES.get(_pillar_key, _pillar_key.title())
+
+            _default_user = UserProfile(
+                pillar_interest={_pillar_key: 0.7},
+                modality_preference="read",
+            )
+            _recs = rank_content(
+                _pillar_profiles.get(_pillar_key, []),
+                user=_default_user,
+                top_n=5,
+                min_score=0.3,
+            )
+            if _recs:
+                print(f"    {_pillar_label}: {len(_recs)} recommendations")
+    except ImportError as _ie:
+        print(f"  adaptive: not available — {_ie}")
+    except Exception as _ae:
+        print(f"  adaptive: error — {_ae}")
 
     # --- 404 ---
     _suggestions = sorted(all_content, key=lambda c: hashlib.md5(c.slug.encode()).hexdigest())[:3]

@@ -1,0 +1,178 @@
+{% extends "layout.j2" %}
+{% from "macros/breadcrumbs.html" import breadcrumbs %}
+{% block main_content %}
+
+{%- set pillar_url = pillar_config.get(active_pillar or 'aml', {}).get('url', 'compliance') %}
+{%- set pillar_label = pillar_config.get(active_pillar or 'aml', {}).get('label', 'Compliance') %}
+{%- set pillar_color = pillar_config.get(active_pillar or 'aml', {}).get('color', 'var(--color-accent)') %}
+
+<section>
+  {{ breadcrumbs('research-workspace', 'Research Workspace' + (' &mdash; ' + hypothesis.label if hypothesis else '')) }}
+
+  <header class="mb-8">
+    <h1 class="text-2xl font-extrabold text-default">
+      {%- if hypothesis %}
+      {{ hypothesis.label }}
+      {%- else %}
+      Research Workspace
+      {%- endif %}
+    </h1>
+    <p class="subtitle text-muted mt-2">
+      {%- if hypothesis and hypothesis.description %}
+      {{ hypothesis.description }}
+      {%- else %}
+      Hypothesis workspace with source trail analysis, contradiction detection, and evidence quality scoring.
+      {%- endif %}
+    </p>
+    {%- if hypothesis and hypothesis.concept_ids %}
+    <div class="flex flex-wrap gap-1.5 mt-3">
+      {%- for cid in hypothesis.concept_ids %}
+      <a href="/concepts/{{ cid }}/" class="badge-outline text-xs">{{ cid | replace('-', ' ') | title }}</a>
+      {%- endfor %}
+    </div>
+    {%- endif %}
+  </header>
+
+  {%- if not claims %}
+  <div class="ghost-card p-6 text-center">
+    <p class="text-muted">No claims loaded. Use the export script to generate a research workspace from source trails.</p>
+  </div>
+  {%- else %}
+
+  {# --- Claims Overview --- #}
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold mb-4 text-default">Claims ({{ claims | length }})</h2>
+    <div class="grid gap-3">
+      {%- for claim in claims %}
+      {%- set score = evidence_map.get(claim.claim_text) if evidence_map else None %}
+      <div class="ghost-card p-4">
+        <div class="flex items-start justify-between gap-3">
+          <div class="flex-1 min-w-0">
+            <p class="text-sm text-default">{{ claim.claim_text }}</p>
+            <div class="flex flex-wrap items-center gap-2 mt-2 text-xs text-muted">
+              <span class="pillar-pill-sm" style="background:color-mix(in srgb, {{ pillar_color }} 15%, transparent);color:{{ pillar_color }}">{{ claim.pillar | default(active_pillar) | capitalize }}</span>
+              {%- if claim.citations %}
+              <span>{{ claim.citations | length }} citation(s)</span>
+              <span>{{ claim.citations | selectattr('verified') | list | length }} verified</span>
+              {%- endif %}
+              {%- if score %}
+              <span class="evidence-badge evidence-{{ score.level.value }}">
+                {{ score.level.value | replace('_', ' ') | title }} ({{ (score.score * 100) | round }})
+              </span>
+              {%- endif %}
+            </div>
+            {%- if claim.citations %}
+            <details class="mt-2">
+              <summary class="text-xs cursor-pointer text-muted font-semibold">Sources ({{ claim.citations | length }})</summary>
+              <ul class="mt-2 space-y-1.5">
+                {%- for cit in claim.citations %}
+                <li class="text-xs flex items-start gap-2">
+                  <span class="shrink-0 mt-0.5 {% if cit.verified %}text-green-500{% else %}text-muted{% endif %}">
+                    {%- if cit.verified %}&check;{% else %}&#x25CB;{% endif %}
+                  </span>
+                  <span>
+                    {%- if cit.url %}
+                    <a href="{{ cit.url }}" class="text-accent" target="_blank" rel="noopener">{{ cit.title or cit.url | truncate(50) }}</a>
+                    {%- else %}
+                    {{ cit.title or 'Unnamed source' }}
+                    {%- endif %}
+                    <span class="text-muted">&middot; credibility: {{ cit.credibility_score }}</span>
+                  </span>
+                </li>
+                {%- endfor %}
+              </ul>
+            </details>
+            {%- endif %}
+          </div>
+          {%- if score %}
+          <div class="shrink-0 text-center" style="min-width:60px">
+            <div class="text-2xl font-bold {% if score.score >= 0.8 %}text-green-500{% elif score.score >= 0.5 %}text-yellow-500{% else %}text-red-400{% endif %}">
+              {{ (score.score * 100) | round }}
+            </div>
+            <div class="text-xs text-muted">Quality</div>
+          </div>
+          {%- endif %}
+        </div>
+      </div>
+      {%- endfor %}
+    </div>
+  </section>
+
+  {# --- Contradictions --- #}
+  {%- if contradictions and contradictions.pairs %}
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold mb-4 text-default">
+      Contradictions ({{ contradictions.total_pairs }})
+      <span class="text-sm font-normal text-muted">&middot; {{ contradictions.by_severity.get('high', 0) }} high, {{ contradictions.by_severity.get('medium', 0) }} medium, {{ contradictions.by_severity.get('low', 0) }} low</span>
+    </h2>
+    <div class="grid gap-3">
+      {%- for pair in contradictions.pairs %}
+      <div class="ghost-card p-4 border-l-4 {% if pair.severity.value == 'high' %}border-red-500{% elif pair.severity.value == 'medium' %}border-yellow-500{% else %}border-gray-400{% endif %}">
+        <div class="flex items-start gap-2 mb-2">
+          <span class="contradiction-type-badge type-{{ pair.contradiction_type.value }}">{{ pair.contradiction_type.value | title }}</span>
+          <span class="severity-badge severity-{{ pair.severity.value }}">{{ pair.severity.value | title }}</span>
+          <span class="text-xs text-muted">confidence: {{ pair.confidence }}</span>
+        </div>
+        <div class="grid gap-2 sm:grid-cols-2">
+          <div class="text-sm ghost-card p-2 bg-surface">{{ pair.claim_a }}</div>
+          <div class="text-sm ghost-card p-2 bg-surface">{{ pair.claim_b }}</div>
+        </div>
+        {%- if pair.concept_ids %}
+        <div class="flex flex-wrap gap-1.5 mt-2">
+          {%- for cid in pair.concept_ids %}
+          <span class="badge-outline text-xs">{{ cid | replace('-', ' ') | title }}</span>
+          {%- endfor %}
+        </div>
+        {%- endif %}
+      </div>
+      {%- endfor %}
+    </div>
+  </section>
+  {%- endif %}
+
+  {# --- Evidence Quality Distribution --- #}
+  {%- if evidence_scores %}
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold mb-4 text-default">Evidence Quality Distribution</h2>
+    {%- set high_count = evidence_scores | selectattr('level.value', 'equalto', 'high') | list | length %}
+    {%- set moderate_count = evidence_scores | selectattr('level.value', 'equalto', 'moderate') | list | length %}
+    {%- set low_count = evidence_scores | selectattr('level.value', 'equalto', 'low') | list | length %}
+    {%- set very_low_count = evidence_scores | selectattr('level.value', 'equalto', 'very_low') | list | length %}
+    <div class="grid gap-3 sm:grid-cols-4">
+      <div class="ghost-card p-3 text-center">
+        <div class="text-lg font-bold text-green-500">{{ high_count }}</div>
+        <div class="text-xs text-muted">High</div>
+      </div>
+      <div class="ghost-card p-3 text-center">
+        <div class="text-lg font-bold text-yellow-500">{{ moderate_count }}</div>
+        <div class="text-xs text-muted">Moderate</div>
+      </div>
+      <div class="ghost-card p-3 text-center">
+        <div class="text-lg font-bold text-orange-400">{{ low_count }}</div>
+        <div class="text-xs text-muted">Low</div>
+      </div>
+      <div class="ghost-card p-3 text-center">
+        <div class="text-lg font-bold text-red-400">{{ very_low_count }}</div>
+        <div class="text-xs text-muted">Very Low</div>
+      </div>
+    </div>
+  </section>
+  {%- endif %}
+
+  {# --- Export --- #}
+  <section class="mb-8">
+    <h2 class="text-lg font-semibold mb-4 text-default">Export</h2>
+    <div class="flex flex-wrap gap-3">
+      <a href="/research/workspace/{{ hypothesis.id | default('research') }}/export/?format=md" class="btn-ghost-sm">
+        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="inline-block mr-1"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+        Export Markdown
+      </a>
+      <a href="/research/workspace/{{ hypothesis.id | default('research') }}/export/?format=json" class="btn-ghost-sm">
+        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24" class="inline-block mr-1"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+        Export JSON
+      </a>
+    </div>
+  </section>
+  {%- endif %}
+</section>
+{% endblock %}

@@ -91,7 +91,15 @@ class AcaciaLLMClient:
         temperature: float | None = None,
         max_tokens: int | None = None,
     ) -> LLMResult:
-        self._ensure_client()
+        try:
+            self._ensure_client()
+        except ImportError as e:
+            return LLMResult(
+                content=None,
+                model=model or self.config.model,
+                provider=self.config.provider,
+                error=str(e),
+            )
         provider, model_name = self._parse_model(model or self.config.model)
         full_model = f"{provider}:{model_name}"
         try:
@@ -126,7 +134,10 @@ class AcaciaLLMClient:
         model: str | None = None,
         temperature: float | None = None,
     ) -> BaseModel | None:
-        self._ensure_client()
+        try:
+            self._ensure_client()
+        except ImportError:
+            return None
         provider, model_name = self._parse_model(model or self.config.model)
         full_model = f"{provider}:{model_name}"
 

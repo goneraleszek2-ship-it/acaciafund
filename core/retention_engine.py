@@ -287,8 +287,12 @@ def sm2_compute(
             interval = round(interval * ease)
         reps += 1
 
-    # ease factor update (mapped from 0-3 to 0-5 range for SM-2 formula)
-    q5 = quality * 5.0 / 3.0
+    # ease factor update: map 0-3 front-end scale to SM-2 0-5 scale
+    #   0 (Again) → 1  (complete blackout)
+    #   1 (Hard)  → 2  (incorrect but answer easy to recall)
+    #   2 (Good)  → 4.5  (correct, slight ease increase)
+    #   3 (Easy)  → 5  (perfect response)
+    q5 = {0: 1.0, 1: 2.0, 2: 4.5, 3: 5.0}[quality]
     ease += 0.1 - (5 - q5) * (0.08 + (5 - q5) * 0.02)
     ease = max(1.3, ease)
 
