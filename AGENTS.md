@@ -813,3 +813,4 @@ Contributors who completed Phase 1 (Schema Builder & Dual Coding):
 - **opencode (big-pickle)** — reading flow assistance (focus mode, guided reading line, settings panel with toggle controls)
 - **opencode (big-pickle)** — pre-existing test fixes (SM-2 ease factor mapping in retention_engine.py, aisuite ImportError handling in llm_client.py, ontology data consistency fixes)
 - **opencode (big-pickle)** — productionization (run_tests.sh test runner, AGENTS.md updates, all 833 tests green, git + push)
+- **opencode (big-pickle)** — article outline / sticky table of contents (auto-generated from h2/h3, nested ToC with scroll-spy, desktop sidebar layout, mobile inline card)

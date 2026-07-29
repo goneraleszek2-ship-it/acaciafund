@@ -349,6 +349,120 @@
     }
   }
 
+  /* ── Article Outline / Table of Contents ── */
+  function initArticleOutline() {
+    var prose = document.querySelector('.prose-body');
+    if (!prose) return;
+
+    var headings = prose.querySelectorAll('h2, h3');
+    if (headings.length < 2) return;
+
+    /* Assign stable IDs to headings */
+    var usedIds = {};
+    headings.forEach(function (h) {
+      var baseId = (h.textContent || '').trim().toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^a-z0-9-]/g, '')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '');
+      if (!baseId) baseId = 'section';
+      var id = baseId;
+      var counter = 1;
+      while (usedIds[id]) { id = baseId + '-' + counter; counter++; }
+      usedIds[id] = true;
+      h.id = id;
+    });
+
+    /* Build nested items: h2 → top-level, h3 → child of preceding h2 */
+    var items = [];
+    var currentH2 = null;
+    headings.forEach(function (h) {
+      var title = (h.textContent || '').trim();
+      if (h.tagName === 'H2') {
+        currentH2 = { id: h.id, title: title, children: [] };
+        items.push(currentH2);
+      } else if (h.tagName === 'H3' && currentH2) {
+        currentH2.children.push({ id: h.id, title: title });
+      }
+    });
+
+    if (items.length < 1) return;
+
+    /* Render ToC as nested <ol> */
+    function buildList(arr, hClass) {
+      var ol = document.createElement('ol');
+      arr.forEach(function (item) {
+        var li = document.createElement('li');
+        var a = document.createElement('a');
+        a.href = '#' + item.id;
+        a.textContent = item.title;
+        a.className = hClass || 'toc-h2';
+        a.setAttribute('data-toc-id', item.id);
+        li.appendChild(a);
+        if (item.children && item.children.length) {
+          li.appendChild(buildList(item.children, 'toc-h3'));
+        }
+        ol.appendChild(li);
+      });
+      return ol;
+    }
+
+    var toc = document.createElement('nav');
+    toc.className = 'article-toc';
+    toc.setAttribute('aria-label', 'On this page');
+
+    var inner = document.createElement('div');
+    inner.className = 'article-toc-inner';
+    var title = document.createElement('div');
+    title.className = 'article-toc-title';
+    title.textContent = 'On this page';
+    inner.appendChild(title);
+    inner.appendChild(buildList(items));
+    toc.appendChild(inner);
+
+    /* Insert ToC right after the article header */
+    var article = prose.closest('article');
+    if (!article) return;
+    var header = article.querySelector('header');
+    if (header) {
+      header.after(toc);
+    } else {
+      article.prepend(toc);
+    }
+    article.classList.add('article-with-toc');
+
+    /* ScrollSpy: highlight current section */
+    var links = toc.querySelectorAll('a[data-toc-id]');
+    var targets = [];
+    links.forEach(function (a) {
+      var el = document.getElementById(a.getAttribute('data-toc-id'));
+      if (el) targets.push({ link: a, el: el });
+    });
+
+    function updateActive() {
+      var fromTop = window.scrollY + 130;
+      var current = null;
+      targets.forEach(function (t) {
+        if (t.el.offsetTop <= fromTop) current = t;
+      });
+      links.forEach(function (a) { a.classList.remove('active'); });
+      if (current) current.link.classList.add('active');
+    }
+
+    window.addEventListener('scroll', updateActive, { passive: true });
+    updateActive();
+
+    /* Smooth scroll for ToC clicks */
+    toc.addEventListener('click', function (e) {
+      var a = e.target.closest('a[data-toc-id]');
+      if (!a) return;
+      e.preventDefault();
+      var id = a.getAttribute('data-toc-id');
+      var target = document.getElementById(id);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  }
+
   /* ── Init All ── */
   function init() {
     initTheme();
@@ -366,6 +480,7 @@
     initReadingGuide();
     initDensity();
     initEntranceAnimations();
+    initArticleOutline();
     /* Keyboard nav indicator */
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Tab') document.body.classList.add('keyboard-nav');
