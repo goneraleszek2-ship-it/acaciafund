@@ -4,7 +4,7 @@
 {{ breadcrumbs(page_path, content.title) }}
 <div id="reading-progress"></div>
 
-<article>
+<article class="entrance-fade">
     <nav aria-label="Breadcrumb" class="mb-4 text-xs text-muted">
       <ol class="flex flex-wrap items-center gap-1.5">
         <li><a href="/" class="hover-accent transition">Home</a></li>
@@ -18,7 +18,7 @@
         <li aria-current="page" class="truncate max-w-200px">{{ content.title | striptags }}</li>
       </ol>
     </nav>
-    <header class="mb-6">
+    <header class="mb-6 entrance-slide-up">
       <div class="flex items-center gap-2 mb-2">
         {{ layer_badge | default("") | safe }}
         {% set pillar = content.pillar %}
@@ -59,13 +59,13 @@
     {% include 'partials/article_metadata.j2' %}
 
     {%- if cross_pillar_items and cross_pillar_items | length > 0 %}
-    <section class="mt-12 pt-8 border-t border-muted">
+    <section class="mt-12 pt-8 border-t border-muted entrance-slide-up" style="--stagger-index: 5">
       <h2 class="text-2xl font-bold mb-6">Cross-Pillar Connections</h2>
       <div class="grid gap-4 sm:grid-cols-2">
         {%- for cp in cross_pillar_items %}
         {%- set cpp = cp.pillar or "aml" %}
         {%- set cpc = pillar_config.get(cpp, pillar_config["aml"]) %}
-        <a href="{{ slug_to_url(cp.slug) }}" class="ghost-card block text-decoration-none">
+        <a href="{{ slug_to_url(cp.slug) }}" class="ghost-card block text-decoration-none hover-lift">
           <div class="p-3">
             {% set pillar = cp.pillar %}
             {% include "macros/pillar_badge.html" %}
@@ -81,14 +81,14 @@
     {%- endif %}
 
     {%- if source_synthesis and source_synthesis | length > 0 %}
-    <section class="mt-12 pt-8 border-t border-muted">
+    <section class="mt-12 pt-8 border-t border-muted entrance-slide-up" style="--stagger-index: 6">
       <h2 class="text-2xl font-bold mb-4 inline-flex items-center gap-2 text-default">
         <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
         Source Synthesis
       </h2>
       <div class="space-y-3">
         {%- for syn in source_synthesis | sort(attribute='synthesis_score') | reverse %}
-        <div class="synthesis-card ghost-card p-4">
+        <div class="synthesis-card ghost-card p-4 hover-lift">
           <div class="flex items-start gap-3">
             <div class="flex-1">
               <h3 class="text-sm font-semibold text-default">
@@ -104,7 +104,7 @@
     {%- endif %}
 
     {%- if external_references and external_references | length > 0 %}
-    <section class="mt-12 pt-8 border-t border-muted">
+    <section class="mt-12 pt-8 border-t border-muted entrance-slide-up" style="--stagger-index: 7">
       <h2 class="text-2xl font-bold mb-4">Further Reading</h2>
       <ul class="space-y-2">
         {%- for ref in external_references %}

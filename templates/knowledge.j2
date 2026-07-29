@@ -5,7 +5,7 @@
 {{ breadcrumbs(page_path, content.title) }}
 <div id="reading-progress"></div>
 
-<article>
+<article class="entrance-fade">
     <nav aria-label="Breadcrumb" class="mb-4 text-xs text-muted">
       <ol class="flex flex-wrap items-center gap-1.5">
         <li><a href="/" class="hover-accent transition">Home</a></li>
@@ -17,7 +17,7 @@
         <li aria-current="page" class="truncate max-w-200px">{{ content.title | striptags }}</li>
       </ol>
     </nav>
-    <header class="mb-6">
+    <header class="mb-6 entrance-slide-up">
       <div class="flex items-center gap-2 mb-2">
         {{ layer_badge | default("") | safe }}
         {% set pillar = content.pillar %}

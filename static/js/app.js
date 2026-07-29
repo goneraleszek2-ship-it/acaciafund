@@ -195,6 +195,124 @@
     });
   }
 
+  /* ── Settings Panel ── */
+  function initSettings() {
+    var panel = document.getElementById('settings-panel');
+    var toggle = document.getElementById('settings-toggle');
+    var close = document.getElementById('settings-close');
+    if (!panel || !toggle) return;
+    function open() {
+      panel.classList.add('open');
+      panel.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    function closePanel() {
+      panel.classList.remove('open');
+      panel.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+    toggle.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (panel.classList.contains('open')) { closePanel(); } else { open(); }
+    });
+    if (close) close.addEventListener('click', closePanel);
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && panel.classList.contains('open')) closePanel();
+    });
+    panel.addEventListener('click', function (e) {
+      if (e.target === panel) closePanel();
+    });
+  }
+
+  /* ── Focus Mode ── */
+  function initFocusMode() {
+    var cb = document.getElementById('focus-toggle');
+    if (!cb) return;
+    var active;
+    try { active = localStorage.getItem('acacia_focus') === 'true'; } catch (_) { active = false; }
+    function apply(val) {
+      document.documentElement.setAttribute('data-focus', val ? 'true' : 'false');
+      cb.checked = val;
+      try { localStorage.setItem('acacia_focus', val ? 'true' : 'false'); } catch (_) {}
+    }
+    cb.addEventListener('change', function () { apply(cb.checked); });
+    apply(active);
+  }
+
+  /* ── Reading Guide Line ── */
+  function initReadingGuide() {
+    var cb = document.getElementById('guide-toggle');
+    if (!cb) return;
+    var guide = document.createElement('div');
+    guide.className = 'reading-guide';
+    guide.id = 'reading-guide-line';
+    document.body.appendChild(guide);
+    var active;
+    try { active = localStorage.getItem('acacia_reading_guide') === 'true'; } catch (_) { active = false; }
+    function apply(val) {
+      cb.checked = val;
+      try { localStorage.setItem('acacia_reading_guide', val ? 'true' : 'false'); } catch (_) {}
+      if (val) {
+        guide.classList.add('visible');
+      } else {
+        guide.classList.remove('visible');
+      }
+    }
+    cb.addEventListener('change', function () { apply(cb.checked); });
+    if (active) {
+      apply(true);
+      function updateGuide() {
+        var winH = window.innerHeight;
+        var top = window.scrollY + winH * 0.4;
+        if (top >= window.scrollY + 60) {
+          guide.style.top = top + 'px';
+        }
+      }
+      window.addEventListener('scroll', updateGuide);
+      window.addEventListener('resize', updateGuide);
+      updateGuide();
+    }
+  }
+
+  /* ── Information Density ── */
+  function initDensity() {
+    var btns = document.querySelectorAll('.density-btn');
+    if (!btns.length) return;
+    var current;
+    try { current = localStorage.getItem('acacia_density') || 'standard'; } catch (_) { current = 'standard'; }
+    function apply(density) {
+      document.documentElement.setAttribute('data-density', density);
+      btns.forEach(function (b) {
+        b.classList.toggle('active', b.getAttribute('data-density') === density);
+      });
+      try { localStorage.setItem('acacia_density', density); } catch (_) {}
+    }
+    btns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        apply(btn.getAttribute('data-density'));
+      });
+    });
+    apply(current);
+  }
+
+  /* ── Entrance Animations (IntersectionObserver) ── */
+  function initEntranceAnimations() {
+    if ('IntersectionObserver' in window) {
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.style.animationPlayState = 'running';
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+      document.querySelectorAll('.entrance-fade, .entrance-slide-up, .entrance-slide-down').forEach(function (el) {
+        el.style.animationPlayState = 'paused';
+        observer.observe(el);
+      });
+    }
+  }
+
   /* ── Theme Toggle ── */
   function initTheme() {
     var btn = document.getElementById('theme-toggle');
@@ -243,6 +361,11 @@
     initFeedback();
     initDeepDive();
     initContinueReading();
+    initSettings();
+    initFocusMode();
+    initReadingGuide();
+    initDensity();
+    initEntranceAnimations();
     /* Keyboard nav indicator */
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Tab') document.body.classList.add('keyboard-nav');

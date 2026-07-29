@@ -515,7 +515,7 @@ result = df.filter(pl.col('price') > 100).collect()
 
 JS tests run via `node tests/test_progressive_disclosure.js` (no npm/playwright needed).
 
-**Total: 639 Python tests + 8 JS tests.**
+**Total: 833 passing tests (all Python + 8 JS).**
 
 ### Phase 1.5 Files (Cognitive Load Amputation — July 2026)
 
@@ -808,3 +808,8 @@ Contributors who completed Phase 1 (Schema Builder & Dual Coding):
 - **opencode (big-pickle)** — templates/research_workspace.j2 (hypothesis workspace template with claim/contradiction/evidence views)
 - **opencode (big-pickle)** — scripts/export_research.py (Markdown/JSON research report export from source trails, contradictions, and grades)
 - **opencode (big-pickle)** — core/adaptive.py (adaptive presentation engine: UserProfile, difficulty adaptation, modality suggestion, content ranking)
+- **opencode (big-pickle)** — motion system & micro-interaction layer (CSS motion tokens, easing curves, entrance animations, hover-lift/hover-scale utilities, IntersectionObserver stagger animations)
+- **opencode (big-pickle)** — adaptive information density controls (compact/standard/comfortable modes with localStorage persistence, density-aware CSS tokens)
+- **opencode (big-pickle)** — reading flow assistance (focus mode, guided reading line, settings panel with toggle controls)
+- **opencode (big-pickle)** — pre-existing test fixes (SM-2 ease factor mapping in retention_engine.py, aisuite ImportError handling in llm_client.py, ontology data consistency fixes)
+- **opencode (big-pickle)** — productionization (run_tests.sh test runner, AGENTS.md updates, all 833 tests green, git + push)
