@@ -737,13 +737,46 @@
     const el = document.getElementById('search-suggestions');
     if (!el) return;
     const history = getHistory();
-    const matching = filter ? history.filter(h => h.includes(filter.toLowerCase())) : history;
-    if (!matching.length) { el.innerHTML = ''; el.style.display = 'none'; return; }
-    el.innerHTML = matching.map((h, i) =>
-      '<div class="suggestion-item" data-suggestion="' + escapeHtml(h) + '" data-idx="' + i + '" style="padding:0.5rem 0.75rem;cursor:pointer;font-size:0.9rem;border-bottom:1px solid var(--color-border, #333)">' +
-      highlightTerms(escapeHtml(h), filter ? filter.split(/\s+/) : []) +
-      '</div>'
-    ).join('');
+    const matchingHistory = filter ? history.filter(h => h.includes(filter.toLowerCase())) : history;
+
+    /* Match concepts/tags from search index */
+    var matchingConcepts = [];
+    if (searchIndex && filter) {
+      var conceptSet = {};
+      searchIndex.forEach(function (entry) {
+        (entry.ontology_concepts || []).forEach(function (c) {
+          if (c.toLowerCase().includes(filter.toLowerCase())) conceptSet[c] = true;
+        });
+        (entry.tags || []).forEach(function (t) {
+          if (t.toLowerCase().includes(filter.toLowerCase())) conceptSet[t] = true;
+        });
+      });
+      matchingConcepts = Object.keys(conceptSet).slice(0, 6);
+    }
+
+    var hasHistory = matchingHistory.length > 0;
+    var hasConcepts = matchingConcepts.length > 0;
+    if (!hasHistory && !hasConcepts) { el.innerHTML = ''; el.style.display = 'none'; return; }
+
+    var html = '';
+    if (hasHistory) {
+      html += matchingHistory.map(function (h, i) {
+        return '<div class="suggestion-item" data-suggestion="' + escapeHtml(h) + '" data-type="history" style="padding:0.5rem 0.75rem;cursor:pointer;font-size:0.9rem;border-bottom:1px solid var(--color-border)">' +
+          highlightTerms(escapeHtml(h), filter ? filter.split(/\s+/) : []) +
+          '</div>';
+      }).join('');
+    }
+    if (hasConcepts) {
+      if (hasHistory) html += '<div class="suggestion-section-label">Concepts & Tags</div>';
+      html += matchingConcepts.map(function (c) {
+        return '<div class="suggestion-item" data-suggestion="' + escapeHtml(c) + '" data-type="concept" style="padding:0.5rem 0.75rem;cursor:pointer;font-size:0.9rem;display:flex;align-items:center;gap:0.5rem">' +
+          '<svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>' +
+          highlightTerms(escapeHtml(c), filter ? filter.split(/\s+/) : []) +
+          '</div>';
+      }).join('');
+    }
+
+    el.innerHTML = html;
     el.style.display = 'block';
   }
 
@@ -1069,16 +1102,27 @@
     // Suggestion click handler
     document.getElementById('search-suggestions').addEventListener('click', function(e) {
       const item = e.target.closest('.suggestion-item');
-      if (item) {
-        const suggestion = item.getAttribute('data-suggestion');
-        if (suggestion) {
-          input.value = suggestion;
-          this.style.display = 'none';
-          const url = new URL(window.location);
-          url.searchParams.set('q', suggestion);
-          history.replaceState(null, '', url);
-          runSearch(suggestion);
-        }
+      if (!item) return;
+      const suggestion = item.getAttribute('data-suggestion');
+      const type = item.getAttribute('data-type') || 'history';
+      if (!suggestion) return;
+      this.style.display = 'none';
+
+      if (type === 'concept') {
+        // Concept suggestion: apply as tag filter
+        var url = new URL(window.location);
+        url.searchParams.set('f_tags', suggestion);
+        url.searchParams.delete('q');
+        history.replaceState(null, '', url);
+        input.value = '';
+        runSearch('', suggestion);
+      } else {
+        // History suggestion: fill search box
+        input.value = suggestion;
+        var url = new URL(window.location);
+        url.searchParams.set('q', suggestion);
+        history.replaceState(null, '', url);
+        runSearch(suggestion);
       }
     });
 
