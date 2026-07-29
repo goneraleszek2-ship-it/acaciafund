@@ -463,6 +463,126 @@
     });
   }
 
+  /* ── Keyboard Shortcuts ── */
+  function initKeyboardShortcuts() {
+    var sheet = null;
+
+    function showCheatSheet() {
+      if (sheet) { sheet.remove(); sheet = null; return; }
+      sheet = document.createElement('div');
+      sheet.className = 'shortcuts-overlay';
+      sheet.setAttribute('role', 'dialog');
+      sheet.setAttribute('aria-label', 'Keyboard shortcuts');
+      sheet.innerHTML =
+        '<div class="shortcuts-modal">' +
+          '<div class="shortcuts-header"><span class="shortcuts-title">Keyboard Shortcuts</span><button class="shortcuts-close" aria-label="Close">&times;</button></div>' +
+          '<div class="shortcuts-body">' +
+            '<div class="shortcut-row"><kbd>?</kbd><span>Toggle this help</span></div>' +
+            '<div class="shortcut-row"><kbd>s</kbd><span>Focus search</span></div>' +
+            '<div class="shortcut-row"><kbd>t</kbd><span>Toggle dark/light theme</span></div>' +
+            '<div class="shortcut-row"><kbd>n</kbd><span>Next article</span></div>' +
+            '<div class="shortcut-row"><kbd>p</kbd><span>Previous article</span></div>' +
+            '<div class="shortcut-row"><kbd>f</kbd><span>Toggle focus mode</span></div>' +
+            '<div class="shortcut-row"><kbd>g</kbd><span>Toggle reading guide</span></div>' +
+            '<div class="shortcut-row"><kbd>[</kbd><span>Compact density</span></div>' +
+            '<div class="shortcut-row"><kbd>]</kbd><span>Comfortable density</span></div>' +
+            '<div class="shortcut-row"><kbd>=</kbd><span>Standard density</span></div>' +
+            '<div class="shortcut-row"><kbd>Esc</kbd><span>Close this / blur</span></div>' +
+          '</div>' +
+        '</div>';
+      document.body.appendChild(sheet);
+      sheet.querySelector('.shortcuts-close').addEventListener('click', function () {
+        sheet.remove(); sheet = null;
+      });
+      sheet.addEventListener('click', function (e) {
+        if (e.target === sheet) { sheet.remove(); sheet = null; }
+      });
+    }
+
+    function closeCheatSheet() {
+      if (sheet) { sheet.remove(); sheet = null; }
+    }
+
+    document.addEventListener('keydown', function (e) {
+      /* Ignore if typing in an input/textarea */
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable) return;
+
+      switch (e.key) {
+        case '?': case 'h':
+          if (!e.ctrlKey && !e.metaKey) { e.preventDefault(); showCheatSheet(); }
+          break;
+        case 'Escape':
+          if (sheet) { closeCheatSheet(); return; }
+          break;
+        case 's':
+          if (!e.ctrlKey && !e.metaKey) {
+            e.preventDefault();
+            var si = document.getElementById('search-input');
+            if (si) { si.focus(); }
+          }
+          break;
+        case 't':
+          if (!e.ctrlKey && !e.metaKey) {
+            e.preventDefault();
+            var tb = document.getElementById('theme-toggle');
+            if (tb) tb.click();
+          }
+          break;
+        case 'n':
+          if (!e.ctrlKey && !e.metaKey) {
+            var nn = document.querySelector('link[rel="next"]') ||
+                     document.querySelector('nav[aria-label="Article navigation"] a:last-child') ||
+                     document.querySelector('nav[aria-label="Lesson navigation"] a:last-child');
+            if (nn && nn.href) { e.preventDefault(); window.location.href = nn.href; }
+          }
+          break;
+        case 'p':
+          if (!e.ctrlKey && !e.metaKey) {
+            var pp = document.querySelector('link[rel="prev"]') ||
+                     document.querySelector('nav[aria-label="Article navigation"] a:first-child') ||
+                     document.querySelector('nav[aria-label="Lesson navigation"] a:first-child');
+            if (pp && pp.href) { e.preventDefault(); window.location.href = pp.href; }
+          }
+          break;
+        case 'f':
+          if (!e.ctrlKey && !e.metaKey) {
+            e.preventDefault();
+            var fc = document.getElementById('focus-toggle');
+            if (fc) { fc.checked = !fc.checked; fc.dispatchEvent(new Event('change')); }
+          }
+          break;
+        case 'g':
+          if (!e.ctrlKey && !e.metaKey) {
+            e.preventDefault();
+            var gc = document.getElementById('guide-toggle');
+            if (gc) { gc.checked = !gc.checked; gc.dispatchEvent(new Event('change')); }
+          }
+          break;
+        case '[':
+          if (!e.ctrlKey && !e.metaKey) {
+            e.preventDefault();
+            var compactBtn = document.querySelector('.density-btn[data-density="compact"]');
+            if (compactBtn) compactBtn.click();
+          }
+          break;
+        case ']':
+          if (!e.ctrlKey && !e.metaKey) {
+            e.preventDefault();
+            var comfortableBtn = document.querySelector('.density-btn[data-density="comfortable"]');
+            if (comfortableBtn) comfortableBtn.click();
+          }
+          break;
+        case '=':
+          if (!e.ctrlKey && !e.metaKey) {
+            e.preventDefault();
+            var standardBtn = document.querySelector('.density-btn[data-density="standard"]');
+            if (standardBtn) standardBtn.click();
+          }
+          break;
+      }
+    });
+  }
+
   /* ── Init All ── */
   function init() {
     initTheme();
@@ -481,6 +601,7 @@
     initDensity();
     initEntranceAnimations();
     initArticleOutline();
+    initKeyboardShortcuts();
     /* Keyboard nav indicator */
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Tab') document.body.classList.add('keyboard-nav');
