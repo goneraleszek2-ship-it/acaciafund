@@ -1,0 +1,173 @@
+{% extends "admin/base.html" %}
+{% block admin_content %}
+<style>
+  .stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+  @keyframes statFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes skeletonPulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+  .skeleton { background: var(--color-surface); border-radius: 6px; animation: skeletonPulse 1.5s ease-in-out infinite; display: inline-block; }
+  .skeleton-text { height: 1.2rem; width: 60%; margin-bottom: 0.3rem; }
+  .skeleton-value { height: 2rem; width: 40%; margin-bottom: 0.3rem; }
+  .stat-card { border: 1px solid var(--color-border); border-radius: 10px; padding: 1.25rem; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); cursor: default; position: relative; overflow: hidden; }
+  .stat-card:hover { border-color: var(--color-accent); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+  .stat-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: var(--color-accent); transform: scaleX(0); transition: transform 0.3s ease; transform-origin: left; }
+  .stat-card:hover::after { transform: scaleX(1); }
+  .stat-card .stat-value { font-size: 2rem; font-weight: 700; letter-spacing: -0.02em; }
+  .stat-card .stat-label { font-size: 0.75rem; color: var(--color-text-muted); margin-top: 0.25rem; text-transform: uppercase; letter-spacing: 0.04em; }
+  .stat-card .stat-sub { font-size: 0.7rem; color: var(--color-text-muted); margin-top: 0.5rem; }
+  .pillar-bar { display: flex; height: 8px; border-radius: 4px; overflow: hidden; margin-top: 0.75rem; }
+  .pillar-bar .seg { transition: width 0.3s; }
+  .quick-actions { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 0.75rem; margin-bottom: 2rem; }
+  .section-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-muted); margin-bottom: 0.75rem; }
+  .activity-list { border: 1px solid var(--color-border); border-radius: 10px; overflow: hidden; }
+  .activity-item { padding: 0.75rem 1rem; border-bottom: 1px solid var(--color-border); font-size: 0.8rem; display: flex; gap: 0.75rem; align-items: center; }
+  .activity-item:last-child { border-bottom: none; }
+  .activity-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .cms-notification { position: fixed; top: 1rem; right: 1rem; padding: 0.75rem 1.25rem; border-radius: 8px; font-size: 0.85rem; font-weight: 600; z-index: 9999; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+  .cms-notification.show { opacity: 1; pointer-events: auto; }
+  .cms-notification.success { background: #22c55e; color: #fff; }
+  .cms-notification.error { background: #ef4444; color: #fff; }
+  .build-status { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.3rem 0.75rem; border-radius: 999px; font-size: 0.75rem; font-weight: 600; }
+  .build-status.idle { background: color-mix(in srgb, #6b7280 12%, transparent); color: #6b7280; }
+  .build-status.running { background: color-mix(in srgb, #d97706 12%, transparent); color: #d97706; }
+  .build-status.ready { background: color-mix(in srgb, #22c55e 12%, transparent); color: #22c55e; }
+</style>
+
+<h1 style="margin-bottom:0.25rem">CMS Dashboard</h1>
+<p style="color:var(--color-text-secondary);font-size:0.85rem;margin-bottom:1.5rem">Content overview and quick actions.</p>
+
+<div id="cms-notification" class="cms-notification"></div>
+
+<div class="stats-grid" id="stats-grid">
+  <div class="stat-card" style="animation:statFadeIn 0.4s ease both">
+    <div class="stat-value" id="stat-total">...</div>
+    <div class="stat-label">Total Items</div>
+  </div>
+  <div class="stat-card" style="animation:statFadeIn 0.4s ease 0.1s both">
+    <div class="stat-value" id="stat-with-body">...</div>
+    <div class="stat-label">With Body</div>
+  </div>
+  <div class="stat-card" style="animation:statFadeIn 0.4s ease 0.2s both">
+    <div class="stat-value" id="stat-with-tags">...</div>
+    <div class="stat-label">With Tags</div>
+  </div>
+  <div class="stat-card" style="animation:statFadeIn 0.4s ease 0.3s both">
+    <div class="stat-value" id="stat-types">...</div>
+    <div class="stat-label">Content Types</div>
+  </div>
+</div>
+
+<div class="section-title">Quick Actions</div>
+<div class="quick-actions">
+  <a href="/admin/cms_editor.html" class="btn btn-outline">
+    <span style="font-size:1.2rem">&#10010;</span> New Content
+  </a>
+  <a href="/admin/cms_list.html" class="btn btn-outline">
+    <span style="font-size:1.2rem">&#9776;</span> Browse All
+  </a>
+  <a href="/admin/cms_media.html" class="btn btn-outline">
+    <span style="font-size:1.2rem">&#128247;</span> Media Library
+  </a>
+  <a href="/api/cms/export" class="btn btn-outline" download>
+    <span style="font-size:1.2rem">&#10515;</span> Export JSON
+  </a>
+  <a href="#" class="btn btn-outline" id="build-quick-btn">
+    <span style="font-size:1.2rem">&#9889;</span> Trigger Build
+  </a>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:1.5rem">
+  <div>
+    <div class="section-title">Pillar Distribution</div>
+    <div id="pillar-stats"></div>
+  </div>
+  <div>
+    <div class="section-title">Type Distribution</div>
+    <div id="type-stats"></div>
+  </div>
+</div>
+
+<div class="section-title" style="margin-top:1.5rem">System Status</div>
+<div style="display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:1.5rem">
+  <span class="build-status idle" id="build-status">&#9679; Build Idle</span>
+  <span style="font-size:0.75rem;color:var(--color-text-muted);align-self:center" id="last-run">Last build: --</span>
+</div>
+
+<script>
+(function() {
+  var notify = document.getElementById('cms-notification');
+
+  function notifyMsg(msg, type) {
+    notify.textContent = msg;
+    notify.className = 'cms-notification ' + type + ' show';
+    setTimeout(function() { notify.classList.remove('show'); }, 3000);
+  }
+
+  function loadStats() {
+    fetch('/api/cms/stats').then(function(r) { return r.json(); }).then(function(s) {
+      if (!s.ok) { notifyMsg('Failed to load stats', 'error'); return; }
+      document.getElementById('stat-total').textContent = s.total;
+      document.getElementById('stat-with-body').textContent = s.with_body;
+      document.getElementById('stat-with-tags').textContent = s.with_tags;
+      document.getElementById('stat-types').textContent = Object.keys(s.by_type || {}).length;
+
+      // Pillar stats
+      var pillarHtml = '';
+      var pillars = s.by_pillar || {};
+      var totalP = s.total || 1;
+      var colors = {aml: '#ea580c', stock: '#16a34a', 'data-engineering': '#6366f1'};
+      Object.keys(pillars).forEach(function(k) {
+        var pct = (pillars[k] / totalP * 100).toFixed(1);
+        var label = {aml: 'Compliance', stock: 'Markets', 'data-engineering': 'Data'}[k] || k;
+        pillarHtml += '<div style="margin-bottom:0.75rem">';
+        pillarHtml += '<div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:0.25rem"><span>' + label + '</span><span>' + pillars[k] + '</span></div>';
+        pillarHtml += '<div style="height:6px;background:var(--color-border);border-radius:3px;overflow:hidden"><div style="height:100%;width:' + pct + '%;background:' + (colors[k] || '#888') + ';border-radius:3px;transition:width 0.5s"></div></div>';
+        pillarHtml += '</div>';
+      });
+      document.getElementById('pillar-stats').innerHTML = pillarHtml;
+
+      // Type stats
+      var typeHtml = '';
+      var types = s.by_type || {};
+      var typeColors = {research: '#3b82f6', learn: '#d97706', knowledge: '#a855f7'};
+      Object.keys(types).forEach(function(k) {
+        var pct = (types[k] / totalP * 100).toFixed(1);
+        var tlabel = {research: 'Research', learn: 'Learn', knowledge: 'Knowledge'}[k] || k;
+        typeHtml += '<div style="margin-bottom:0.75rem">';
+        typeHtml += '<div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:0.25rem"><span>' + tlabel + '</span><span>' + types[k] + '</span></div>';
+        typeHtml += '<div style="height:6px;background:var(--color-border);border-radius:3px;overflow:hidden"><div style="height:100%;width:' + pct + '%;background:' + (typeColors[k] || '#888') + ';border-radius:3px;transition:width 0.5s"></div></div>';
+        typeHtml += '</div>';
+      });
+      document.getElementById('type-stats').innerHTML = typeHtml;
+
+      if (s.last_run) document.getElementById('last-run').textContent = 'Last build: ' + new Date(s.last_run).toLocaleString();
+    }).catch(function(err) {
+      notifyMsg('Network error: ' + err.message, 'error');
+    });
+  }
+
+  // Build button
+  document.getElementById('build-quick-btn').addEventListener('click', function(e) {
+    e.preventDefault();
+    if (!confirm('Trigger a full site rebuild?')) return;
+    var btn = e.currentTarget;
+    btn.innerHTML = '<span class="qa-icon">&#9899;</span> Building...';
+    fetch('/api/cms/build', { method: 'POST' }).then(function(r) { return r.json(); }).then(function(result) {
+      btn.innerHTML = '<span class="qa-icon">&#9889;</span> Trigger Build';
+      if (result.ok) {
+        notifyMsg('Build started', 'success');
+        var st = document.getElementById('build-status');
+        st.className = 'build-status running';
+        st.innerHTML = '&#9679; Building...';
+      } else {
+        notifyMsg('Build: ' + (result.error || 'check logs'), 'error');
+      }
+    }).catch(function(err) {
+      btn.innerHTML = '<span class="qa-icon">&#9889;</span> Trigger Build';
+      notifyMsg('Network error: ' + err.message, 'error');
+    });
+  });
+
+  loadStats();
+})();
+</script>
+{% endblock %}

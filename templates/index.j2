@@ -111,7 +111,7 @@
   </div>
   <div class="knowledge-category-grid">
     {%- for cat in knowledge_categories %}
-    <a href="/knowledge/?f_category={{ cat.cat }}" class="knowledge-cat-card">
+    <a href="/knowledge/{{ cat.cat }}/" class="knowledge-cat-card">
       <span class="cat-icon">{{ cat.icon }}</span>
       <span class="cat-name">{{ cat.name }}</span>
     </a>

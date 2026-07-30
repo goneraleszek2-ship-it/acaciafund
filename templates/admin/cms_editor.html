@@ -1,0 +1,754 @@
+{% extends "admin/base.html" %}
+{% block admin_content %}
+<style>
+  .editor-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; min-height: calc(100vh - 12rem); }
+  .editor-form { display: flex; flex-direction: column; gap: 0.75rem; }
+  .editor-form label { font-size: 0.75rem; font-weight: 600; color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.04em; }
+  .editor-form input, .editor-form select, .editor-form textarea { padding: 0.5rem 0.75rem; border-radius: 6px; border: 1px solid var(--color-border); background: var(--color-input-bg); color: var(--color-input-text); font-size: 0.875rem; font-family: inherit; }
+  .editor-form textarea { resize: vertical; min-height: 60px; }
+  .editor-form textarea#body_html { min-height: 400px; font-family: var(--font-mono); font-size: 0.8125rem; line-height: 1.6; }
+  .editor-form .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .editor-form .form-group { display: flex; flex-direction: column; gap: 0.3rem; }
+  .editor-actions { display: flex; gap: 0.75rem; align-items: center; margin-top: 0.5rem; }
+  .editor-actions .btn-build { border: 1px solid #d97706; background: color-mix(in srgb, #d97706 10%, transparent); color: #d97706; }
+  .editor-actions .btn-build:hover { background: #d97706; color: #fff; }
+  .editor-preview { border: 1px solid var(--color-border); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; }
+  .editor-preview-header { padding: 0.5rem 0.75rem; font-size: 0.7rem; font-weight: 600; color: var(--color-text-muted); background: var(--color-surface); border-bottom: 1px solid var(--color-border); display: flex; justify-content: space-between; align-items: center; }
+  .editor-preview-iframe { flex: 1; width: 100%; border: none; background: #fff; }
+  .editor-meta { display: flex; gap: 0.5rem; flex-wrap: wrap; font-size: 0.75rem; color: var(--color-text-muted); margin-top: 0.25rem; }
+  .editor-meta span { display: inline-flex; align-items: center; gap: 0.3rem; }
+  @keyframes tagFadeIn { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: scale(1); } }
+  @keyframes tagFadeOut { from { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(0.85); } }
+  @keyframes tagShake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
+  .editor-tags-input { display: flex; flex-wrap: wrap; gap: 0.3rem; padding: 0.3rem; border: 1px solid var(--color-border); border-radius: 6px; background: var(--color-input-bg); min-height: 38px; transition: border-color 0.2s; }
+  .editor-tags-input:focus-within { border-color: var(--color-accent); box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.1); }
+  .editor-tags-input .tag { display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.15rem 0.5rem; border-radius: 4px; font-size: 0.7rem; background: color-mix(in srgb, var(--color-accent) 12%, transparent); color: var(--color-accent); border: 1px solid color-mix(in srgb, var(--color-accent) 25%, transparent); animation: tagFadeIn 0.2s ease both; cursor: default; }
+  .editor-tags-input .tag.removing { animation: tagFadeOut 0.15s ease both; }
+  .editor-tags-input .tag.shake { animation: tagShake 0.3s ease; }
+  .editor-tags-input .tag .remove-tag { cursor: pointer; font-size: 0.8rem; line-height: 1; margin-left: 0.1rem; opacity: 0.7; transition: opacity 0.15s, transform 0.15s; border-radius: 50%; }
+  .editor-tags-input .tag .remove-tag:hover { opacity: 1; transform: scale(1.2); }
+  .editor-tags-input input { border: none; outline: none; flex: 1; min-width: 80px; padding: 0.25rem; font-size: 0.8rem; background: transparent; color: var(--color-input-text); }
+  .editor-concept-suggest { position: relative; }
+  .editor-concept-dropdown { position: absolute; top: 100%; left: 0; right: 0; z-index: 100; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 0 0 6px 6px; max-height: 200px; overflow-y: auto; display: none; }
+  .editor-concept-dropdown div { padding: 0.35rem 0.75rem; font-size: 0.8rem; cursor: pointer; transition: background 0.1s; }
+  .editor-concept-dropdown div:hover { background: color-mix(in srgb, var(--color-accent) 10%, transparent); color: var(--color-accent); }
+  .editor-saved-indicator { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.75rem; color: #22c55e; opacity: 0; transition: opacity 0.3s; }
+  .editor-saved-indicator.show { opacity: 1; }
+  .cms-notification { position: fixed; top: 1rem; right: 1rem; padding: 0.75rem 1.25rem; border-radius: 8px; font-size: 0.85rem; font-weight: 600; z-index: 9999; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+  .cms-notification.show { opacity: 1; pointer-events: auto; }
+  .cms-notification.success { background: #22c55e; color: #fff; }
+  .cms-notification.error { background: #ef4444; color: #fff; }
+  .field-error { font-size: 0.7rem; color: #ef4444; margin-top: 0.2rem; display: none; }
+  .field-error.visible { display: block; }
+  .editor-form input.invalid, .editor-form select.invalid, .editor-form textarea.invalid { border-color: #ef4444; background: color-mix(in srgb, #ef4444 5%, transparent); }
+  .editor-form input.invalid:focus, .editor-form select.invalid:focus, .editor-form textarea.invalid:focus { box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.25); }
+  .editor-toolbar-btn { padding: 0.3rem 0.6rem; border-radius: 4px; border: 1px solid var(--color-border); background: var(--color-surface); color: var(--color-text); cursor: pointer; font-family: inherit; font-size: 0.7rem; transition: all 0.15s; display: inline-flex; align-items: center; justify-content: center; min-width: 28px; }
+  .editor-toolbar-btn:hover { border-color: var(--color-accent); color: var(--color-accent); background: color-mix(in srgb, var(--color-accent) 5%, transparent); }
+  .editor-toolbar-btn.active { border-color: var(--color-accent); background: color-mix(in srgb, var(--color-accent) 15%, transparent); color: var(--color-accent); }
+  .editor-modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9998; display: none; align-items: center; justify-content: center; }
+  .editor-modal-overlay.active { display: flex; }
+  .editor-modal { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 12px; padding: 1.5rem; max-width: 700px; width: 90%; max-height: 80vh; overflow-y: auto; }
+  .editor-modal h3 { margin-bottom: 1rem; }
+  .editor-modal .modal-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 0.75rem; max-height: 400px; overflow-y: auto; }
+  .editor-modal .modal-grid-item { border: 1px solid var(--color-border); border-radius: 6px; overflow: hidden; cursor: pointer; transition: all 0.15s; }
+  .editor-modal .modal-grid-item:hover { border-color: var(--color-accent); }
+  .editor-modal .modal-grid-item img { width: 100%; height: 80px; object-fit: cover; display: block; }
+  .editor-modal .modal-grid-item .name { font-size: 0.6rem; padding: 0.3rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .editor-modal .modal-close { float: right; padding: 0.25rem 0.5rem; border-radius: 4px; border: 1px solid var(--color-border); background: none; color: var(--color-text); cursor: pointer; font-size: 0.85rem; }
+  @media (max-width: 900px) { .editor-layout { grid-template-columns: 1fr; } .editor-preview { min-height: 400px; } }
+  .history-item { padding: 0.75rem; border: 1px solid var(--color-border); border-radius: 8px; margin-bottom: 0.5rem; transition: all 0.15s; }
+  .history-item:hover { border-color: var(--color-accent); background: color-mix(in srgb, var(--color-accent) 3%, transparent); }
+  .history-item .history-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.75rem; margin-bottom: 0.3rem; }
+  .history-item .history-time { color: var(--color-text); font-weight: 600; }
+  .history-item .history-preview { font-size: 0.7rem; color: var(--color-text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .history-item .history-restore-btn { font-size: 0.7rem; padding: 0.2rem 0.5rem; }
+  .history-item.current { border-color: var(--color-accent); background: color-mix(in srgb, var(--color-accent) 6%, transparent); }
+  .history-item.current .history-time::after { content: ' (current)'; font-size: 0.65rem; color: var(--color-accent); font-weight: 400; }
+</style>
+
+<h1 style="margin-bottom:1rem">{% if is_new %}New Content{% else %}Edit: {{ item.title | striptags }}{% endif %}</h1>
+{% if not item and not is_new %}
+<div class="cms-empty" style="text-align:center;padding:3rem;color:var(--color-text-muted)">
+  <p>Content not found. <a href="/admin/cms_list.html" style="color:var(--color-accent)">Back to list</a></p>
+</div>
+{% else %}
+
+<div id="cms-notification" class="cms-notification"></div>
+<div class="editor-saved-indicator" id="saved-indicator">&#10003; Saved</div>
+
+<div class="editor-layout">
+  <div class="editor-form" id="editor-form">
+    <input type="hidden" id="original-slug" value="{{ item.slug if item else '' }}">
+
+    <div class="form-group">
+      <label for="title">Title <span style="color:#ef4444">*</span></label>
+      <input type="text" id="title" value="{{ item.title if item else '' }}" placeholder="Article title" required>
+      <div class="field-error" id="title-error">Title must be at least 3 characters</div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="slug">Slug <span style="color:#ef4444">*</span></label>
+        <input type="text" id="slug" value="{{ item.slug if item else '' }}" placeholder="e.g. aml/research/topic-name" required>
+        <div class="field-error" id="slug-error">Slug must match format: pillar/type/topic-name</div>
+      </div>
+      <div class="form-group">
+        <label for="date_str">Date</label>
+        <input type="date" id="date_str" value="{{ item.date_str if item else '' }}">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label for="pillar">Pillar</label>
+        <select id="pillar">
+          <option value="aml" {% if item and item.pillar == 'aml' %}selected{% endif %}>Compliance</option>
+          <option value="stock" {% if item and item.pillar == 'stock' %}selected{% endif %}>Markets</option>
+          <option value="data-engineering" {% if item and item.pillar == 'data-engineering' %}selected{% endif %}>Data</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="content_type">Content Type</label>
+        <select id="content_type">
+          <option value="research" {% if item and item.content_type == 'research' %}selected{% endif %}>Research</option>
+          <option value="learn" {% if item and item.content_type == 'learn' %}selected{% endif %}>Learn</option>
+          <option value="knowledge" {% if item and item.content_type == 'knowledge' %}selected{% endif %}>Knowledge</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="difficulty">Difficulty</label>
+        <select id="difficulty">
+          <option value="">Auto</option>
+          <option value="beginner" {% if item and item.difficulty == 'beginner' %}selected{% endif %}>Beginner</option>
+          <option value="intermediate" {% if item and item.difficulty == 'intermediate' %}selected{% endif %}>Intermediate</option>
+          <option value="advanced" {% if item and item.difficulty == 'advanced' %}selected{% endif %}>Advanced</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="description">Description</label>
+      <textarea id="description" rows="3" placeholder="Brief summary shown in search results and cards">{{ item.description if item else '' }}</textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Tags</label>
+      <div class="editor-tags-input" id="tags-container">
+        {% if item and item.tags %}
+        {% for tag in item.tags %}
+        <span class="tag">{{ tag }}<span class="remove-tag" data-tag="{{ tag }}">&times;</span></span>
+        {% endfor %}
+        {% endif %}
+        <input type="text" id="tag-input" placeholder="Add tag..." autocomplete="off">
+      </div>
+      <div class="editor-concept-suggest">
+        <div class="editor-concept-dropdown" id="concept-dropdown"></div>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="body_html">Body HTML</label>
+      <div style="display:flex;gap:0.25rem;flex-wrap:wrap;margin-bottom:0.3rem">
+        <button type="button" class="editor-toolbar-btn" data-tag="strong" title="Bold (Ctrl+B)" aria-label="Bold"><b>B</b></button>
+        <button type="button" class="editor-toolbar-btn" data-tag="em" title="Italic (Ctrl+I)" aria-label="Italic"><i>I</i></button>
+        <button type="button" class="editor-toolbar-btn" data-tag="h2" title="Heading 2" aria-label="Heading 2">H2</button>
+        <button type="button" class="editor-toolbar-btn" data-tag="h3" title="Heading 3" aria-label="Heading 3">H3</button>
+        <button type="button" class="editor-toolbar-btn" data-tag="a" title="Insert link" aria-label="Insert link">&#128279;</button>
+        <button type="button" class="editor-toolbar-btn" data-tag="code" title="Code block" aria-label="Code block">&lt;/&gt;</button>
+        <button type="button" class="editor-toolbar-btn" data-tag="blockquote" title="Blockquote" aria-label="Blockquote">&ldquo;</button>
+        <button type="button" class="editor-toolbar-btn" data-tag="ul" title="Unordered list" aria-label="Unordered list">&#8226;</button>
+        <button type="button" class="editor-toolbar-btn" data-tag="ol" title="Ordered list" aria-label="Ordered list">1.</button>
+        <button type="button" class="editor-toolbar-btn" id="insert-media-btn" title="Insert image" aria-label="Insert image">&#128247;</button>
+        <button type="button" class="editor-toolbar-btn" id="insert-hr-btn" title="Horizontal rule" aria-label="Insert horizontal rule">&mdash;</button>
+        <span style="flex:1"></span>
+        <span id="word-count-badge" style="font-size:0.65rem;color:var(--color-text-muted);padding:0.2rem 0.4rem;background:var(--color-surface);border-radius:4px;align-self:center"></span>
+      </div>
+      <textarea id="body_html" placeholder="HTML content body">{{ item.body_html if item else '' }}</textarea>
+    </div>
+
+    <div class="editor-actions">
+      <button class="btn btn-primary" id="save-btn">&#10003; Save</button>
+      <button class="btn btn-outline" id="save-preview-btn">Save &amp; Preview</button>
+      {% if item and item.slug %}
+      <a href="/{{ slug_to_url(item.slug) }}/" target="_blank" class="btn btn-outline">View Live</a>
+      <button class="btn btn-outline" id="history-btn" style="color:var(--color-accent)">&#128214; History</button>
+      {% endif %}
+      <button class="btn btn-build" id="build-btn">&#9889; Trigger Build</button>
+      <a href="/admin/cms_list.html" class="btn btn-outline" style="margin-left:auto">&larr; Back to List</a>
+    </div>
+  </div>
+
+  <div class="editor-preview">
+    <div class="editor-preview-header">
+      <span>Preview</span>
+      <span id="word-count" style="font-weight:400"></span>
+    </div>
+    <iframe class="editor-preview-iframe" id="preview-frame"></iframe>
+    <script>
+      (function() {
+        var previewHtml = {{ preview_html | tojson if preview_html else '' }};
+        if (previewHtml) {
+          document.getElementById('preview-frame').srcdoc = previewHtml;
+        } else {
+          document.getElementById('preview-frame').srcdoc = '<html><body style="padding:2rem;color:#666;font-family:sans-serif"><p>Save to generate preview...</p></body></html>';
+        }
+      })();
+    </script>
+  </div>
+</div>
+
+<div class="editor-modal-overlay" id="media-modal" role="dialog" aria-modal="true" aria-label="Select image">
+  <div class="editor-modal">
+    <h3>Select Image <button class="modal-close" id="media-modal-close" aria-label="Close media selection">&times;</button></h3>
+    <div style="margin-bottom:0.75rem">
+      <input type="text" id="media-modal-search" placeholder="Filter images..." style="width:100%;padding:0.4rem 0.6rem;border-radius:6px;border:1px solid var(--color-border);background:var(--color-input-bg);color:var(--color-input-text);font-size:0.8rem">
+    </div>
+    <div id="media-modal-grid" class="modal-grid"></div>
+    <p id="media-modal-empty" style="text-align:center;padding:2rem;color:var(--color-text-muted);display:none;font-size:0.85rem">No images found. Upload some in the Media Library.</p>
+  </div>
+</div>
+
+<div class="editor-modal-overlay" id="history-modal" role="dialog" aria-modal="true" aria-label="Version history">
+  <div class="editor-modal" style="max-width:600px">
+    <h3>Version History <button class="modal-close" id="history-modal-close" aria-label="Close version history">&times;</button></h3>
+    <div id="history-loading" style="text-align:center;padding:2rem;color:var(--color-text-muted);font-size:0.85rem">Loading history...</div>
+    <div id="history-empty" style="text-align:center;padding:2rem;color:var(--color-text-muted);font-size:0.85rem;display:none">No previous versions found.</div>
+    <div id="history-list" style="max-height:400px;overflow-y:auto;display:none"></div>
+  </div>
+</div>
+
+<script>
+(function() {
+  var notify = document.getElementById('cms-notification');
+  var savedInd = document.getElementById('saved-indicator');
+  var saveBtn = document.getElementById('save-btn');
+  var savePreviewBtn = document.getElementById('save-preview-btn');
+  var buildBtn = document.getElementById('build-btn');
+  var previewFrame = document.getElementById('preview-frame');
+  var tagInput = document.getElementById('tag-input');
+  var tagsContainer = document.getElementById('tags-container');
+  var conceptDropdown = document.getElementById('concept-dropdown');
+
+  function notifyMsg(msg, type) {
+    notify.textContent = msg;
+    notify.className = 'cms-notification ' + type + ' show';
+    setTimeout(function() { notify.classList.remove('show'); }, 3000);
+  }
+
+  function showSaved() {
+    savedInd.classList.add('show');
+    setTimeout(function() { savedInd.classList.remove('show'); }, 2000);
+  }
+
+  function getTags() {
+    var tags = [];
+    tagsContainer.querySelectorAll('.tag').forEach(function(el) {
+      var text = el.textContent.replace('\u00D7', '').trim();
+      if (text) tags.push(text);
+    });
+    return tags;
+  }
+
+  function addTag(name, animate) {
+    name = name.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '');
+    if (!name) return;
+    var existing = getTags();
+    if (existing.indexOf(name) !== -1) {
+      var existingTag = tagsContainer.querySelector('.tag[data-tagname="' + name + '"]');
+      if (existingTag) { existingTag.classList.add('shake'); setTimeout(function() { existingTag.classList.remove('shake'); }, 300); }
+      return;
+    }
+    var span = document.createElement('span');
+    span.className = 'tag';
+    span.setAttribute('data-tagname', name);
+    span.innerHTML = name + '<span class="remove-tag" data-tag="' + name + '">&times;</span>';
+    if (animate === false) span.style.animation = 'none';
+    tagsContainer.insertBefore(span, tagInput);
+    return span;
+  }
+
+  tagsContainer.addEventListener('click', function(e) {
+    if (e.target.classList.contains('remove-tag')) {
+      var tagEl = e.target.parentElement;
+      tagEl.classList.add('removing');
+      setTimeout(function() { tagEl.remove(); checkDirty(); }, 150);
+    }
+  });
+
+  tagInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter' || e.key === ',') {
+      e.preventDefault();
+      addTag(tagInput.value);
+      tagInput.value = '';
+      conceptDropdown.style.display = 'none';
+    }
+    if (e.key === 'Backspace' && !tagInput.value) {
+      var tags = tagsContainer.querySelectorAll('.tag');
+      if (tags.length) tags[tags.length - 1].remove();
+    }
+  });
+
+  tagInput.addEventListener('input', function() {
+    var val = tagInput.value.trim().toLowerCase();
+    if (val.length < 1) { conceptDropdown.style.display = 'none'; return; }
+    var allConcepts = {{ concept_names | tojson }};
+    var matches = allConcepts.filter(function(c) { return c.toLowerCase().includes(val); }).slice(0, 8);
+    if (matches.length) {
+      conceptDropdown.innerHTML = matches.map(function(m) { return '<div data-concept="' + m + '">' + m + '</div>'; }).join('');
+      conceptDropdown.style.display = 'block';
+    } else {
+      conceptDropdown.style.display = 'none';
+    }
+  });
+
+  conceptDropdown.addEventListener('click', function(e) {
+    var div = e.target.closest('[data-concept]');
+    if (div) {
+      addTag(div.getAttribute('data-concept'));
+      tagInput.value = '';
+      conceptDropdown.style.display = 'none';
+      tagInput.focus();
+    }
+  });
+
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.editor-concept-suggest')) {
+      conceptDropdown.style.display = 'none';
+    }
+  });
+
+  function getFormData() {
+    return {
+      slug: document.getElementById('slug').value.trim(),
+      title: document.getElementById('title').value.trim(),
+      description: document.getElementById('description').value.trim(),
+      body_html: document.getElementById('body_html').value,
+      pillar: document.getElementById('pillar').value,
+      content_type: document.getElementById('content_type').value,
+      difficulty: document.getElementById('difficulty').value || null,
+      date_str: document.getElementById('date_str').value || null,
+      tags: getTags()
+    };
+  }
+
+  // --- Auto-slug from title ---
+  var isNew = {{ 'true' if is_new else 'false' }};
+  var titleEl = document.getElementById('title');
+  var slugEl = document.getElementById('slug');
+  var pillarEl = document.getElementById('pillar');
+  var typeEl = document.getElementById('content_type');
+
+  function slugify(text) {
+    return text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+  }
+
+  function autoSlug() {
+    if (!isNew) return;
+    var title = titleEl.value.trim();
+    if (!title) { return; }
+    var pillar = pillarEl.value;
+    var ctype = typeEl.value;
+    slugEl.value = pillar + '/' + ctype + '/' + slugify(title);
+  }
+
+  titleEl.addEventListener('input', autoSlug);
+  pillarEl.addEventListener('change', autoSlug);
+  typeEl.addEventListener('change', autoSlug);
+
+  // --- Unsaved changes warning ---
+  var formEls = [
+    document.getElementById('title'),
+    document.getElementById('slug'),
+    document.getElementById('description'),
+    document.getElementById('body_html'),
+    document.getElementById('pillar'),
+    document.getElementById('content_type'),
+    document.getElementById('difficulty'),
+    document.getElementById('date_str'),
+  ];
+  var formDirty = false;
+
+  function checkDirty() {
+    var was = formDirty;
+    formDirty = formEls.some(function(el) { return el.value !== el.defaultValue; });
+    formDirty = formDirty || getTags().join(',') !== ({{ (item.tags | default([]) | sort | join(',')) | tojson }});
+    if (formDirty !== was && formDirty) {
+      notifyMsg('You have unsaved changes', 'error');
+    }
+  }
+
+  formEls.forEach(function(el) { el.addEventListener('input', checkDirty); });
+  tagInput.addEventListener('input', checkDirty);
+
+  window.addEventListener('beforeunload', function(e) {
+    if (formDirty) {
+      e.preventDefault();
+      e.returnValue = 'You have unsaved changes. Leave anyway?';
+    }
+  });
+
+  // Mark saved as clean
+  function markClean() {
+    formDirty = false;
+    formEls.forEach(function(el) { el.defaultValue = el.value; });
+  }
+
+  // --- Body HTML Toolbar ---
+  var bodyEl = document.getElementById('body_html');
+  var wordCountBadge = document.getElementById('word-count-badge');
+  var mediaModal = document.getElementById('media-modal');
+  var mediaModalGrid = document.getElementById('media-modal-grid');
+  var mediaModalEmpty = document.getElementById('media-modal-empty');
+  var mediaModalSearch = document.getElementById('media-modal-search');
+  var insertMediaBtn = document.getElementById('insert-media-btn');
+  var insertHrBtn = document.getElementById('insert-hr-btn');
+
+  function wrapSelection(openTag, closeTag) {
+    var start = bodyEl.selectionStart;
+    var end = bodyEl.selectionEnd;
+    var text = bodyEl.value;
+    var selected = text.substring(start, end);
+    if (openTag === 'a' && selected) {
+      var url = prompt('Enter link URL:', 'https://');
+      if (!url) return;
+      var replacement = '<a href="' + url.replace(/"/g, '&quot;') + '">' + selected + '</a>';
+    } else if (openTag === 'img') {
+      return; // handled separately
+    } else if (openTag === 'h2' || openTag === 'h3') {
+      var lineStart = text.lastIndexOf('\n', start - 1) + 1;
+      var lineEnd = text.indexOf('\n', end);
+      if (lineEnd === -1) lineEnd = text.length;
+      var line = text.substring(lineStart, lineEnd);
+      var stripped = line.replace(/^<h[23]>/, '').replace(/<\/h[23]>$/, '').trim();
+      if (stripped) {
+        replacement = '<' + openTag + '>' + stripped + '</' + openTag + '>';
+        bodyEl.setRangeText(replacement, lineStart, lineEnd, 'end');
+        bodyEl.focus();
+        return;
+      }
+      replacement = '<' + openTag + '>' + (selected || 'Heading') + '</' + openTag + '>';
+    } else {
+      replacement = openTag + (selected || 'text') + closeTag;
+    }
+    bodyEl.setRangeText(replacement, start, end, 'end');
+    bodyEl.focus();
+  }
+
+  document.querySelectorAll('[data-tag]').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      var tag = btn.getAttribute('data-tag');
+      var closeMap = {strong: '</strong>', em: '</em>', code: '</code>', blockquote: '</blockquote>', ul: '</ul>\n', ol: '</ol>\n'};
+      var openMap = {strong: '<strong>', em: '<em>', code: '<code>', blockquote: '<blockquote>\n', ul: '<ul>\n  <li>', ol: '<ol>\n  <li>'};
+      wrapSelection(tag, closeMap[tag] || '</' + tag + '>');
+    });
+  });
+
+  // Insert horizontal rule
+  insertHrBtn.addEventListener('click', function() {
+    var pos = bodyEl.selectionStart;
+    bodyEl.setRangeText('\n<hr>\n', pos, pos, 'end');
+    bodyEl.focus();
+  });
+
+  // Open media modal
+  insertMediaBtn.addEventListener('click', function() {
+    mediaModal.classList.add('active');
+    loadMediaModal('');
+    var focusable = mediaModal.querySelectorAll('button, input, [tabindex]:not([tabindex="-1"])');
+    if (focusable.length) setTimeout(function() { focusable[0].focus(); }, 50);
+  });
+
+  function closeMediaModal() {
+    mediaModal.classList.remove('active');
+    insertMediaBtn.focus();
+  }
+  document.getElementById('media-modal-close').addEventListener('click', closeMediaModal);
+  mediaModal.addEventListener('click', function(e) { if (e.target === mediaModal) closeMediaModal(); });
+
+  // Trap focus within modal
+  mediaModal.addEventListener('keydown', function(e) {
+    if (e.key !== 'Tab') return;
+    var focusable = mediaModal.querySelectorAll('button, input, [tabindex]:not([tabindex="-1"])');
+    if (!focusable.length) return;
+    var first = focusable[0], last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+
+  mediaModalSearch.addEventListener('input', function() {
+    loadMediaModal(mediaModalSearch.value.trim().toLowerCase());
+  });
+
+  function loadMediaModal(filter) {
+    fetch('/api/cms/media/list').then(function(r) { return r.json(); }).then(function(data) {
+      if (!data.ok || !data.files.length) {
+        mediaModalGrid.innerHTML = '';
+        mediaModalEmpty.style.display = 'block';
+        return;
+      }
+      var files = data.files;
+      if (filter) {
+        files = files.filter(function(f) { return f.filename.toLowerCase().includes(filter); });
+      }
+      if (!files.length) {
+        mediaModalGrid.innerHTML = '';
+        mediaModalEmpty.style.display = 'block';
+        return;
+      }
+      mediaModalEmpty.style.display = 'none';
+      var html = '';
+      files.forEach(function(f) {
+        var isSvg = f.filename.toLowerCase().endsWith('.svg');
+        html += '<div class="modal-grid-item" data-url="' + f.url + '" data-filename="' + f.filename + '">';
+        if (isSvg) {
+          html += '<div style="height:80px;display:flex;align-items:center;justify-content:center;background:var(--color-surface);padding:0.5rem"><img src="' + f.url + '" style="max-height:100%;max-width:100%"></div>';
+        } else {
+          html += '<img src="' + f.url + '" loading="lazy">';
+        }
+        html += '<div class="name">' + f.filename + '</div></div>';
+      });
+      mediaModalGrid.innerHTML = html;
+
+      mediaModalGrid.querySelectorAll('.modal-grid-item').forEach(function(item) {
+        item.addEventListener('click', function() {
+          var url = item.getAttribute('data-url');
+          var pos = bodyEl.selectionStart;
+          var alt = item.getAttribute('data-filename').replace(/\.[^.]+$/, '').replace(/[_-]/g, ' ');
+          var imgTag = '<img src="' + url + '" alt="' + alt + '">';
+          bodyEl.setRangeText(imgTag, pos, pos, 'end');
+          bodyEl.focus();
+          closeMediaModal();
+        });
+      });
+    });
+  }
+
+  // --- Word count ---
+  function updateWordCount() {
+    var body = bodyEl.value;
+    var text = body.replace(/<[^>]+>/g, '').trim();
+    var words = text ? text.split(/\s+/).length : 0;
+    var chars = text.length;
+    var wc = words + ' words, ' + chars + ' chars';
+    document.getElementById('word-count').textContent = wc;
+    if (wordCountBadge) wordCountBadge.textContent = wc;
+  }
+  bodyEl.addEventListener('input', updateWordCount);
+  updateWordCount();
+
+  function clearErrors() {
+    document.querySelectorAll('.field-error').forEach(function(el) { el.classList.remove('visible'); });
+    document.querySelectorAll('.editor-form .invalid').forEach(function(el) { el.classList.remove('invalid'); });
+  }
+
+  function showError(fieldId, errorId) {
+    var field = document.getElementById(fieldId);
+    if (field) field.classList.add('invalid');
+    var err = document.getElementById(errorId);
+    if (err) err.classList.add('visible');
+  }
+
+  function validate(data) {
+    clearErrors();
+    var valid = true;
+    if (!data.title || data.title.length < 3) { showError('title', 'title-error'); valid = false; }
+    if (!data.slug) { showError('slug', 'slug-error'); valid = false; }
+    else if (!/^[a-z-]+\/[a-z-]+\/[a-z0-9-]+$/.test(data.slug)) { showError('slug', 'slug-error'); valid = false; }
+    return valid;
+  }
+
+  // Real-time validation
+  document.getElementById('title').addEventListener('blur', function() {
+    var el = document.getElementById('title');
+    var err = document.getElementById('title-error');
+    if (el.value.length > 0 && el.value.length < 3) { el.classList.add('invalid'); err.classList.add('visible'); }
+    else { el.classList.remove('invalid'); err.classList.remove('visible'); }
+  });
+  document.getElementById('slug').addEventListener('blur', function() {
+    var el = document.getElementById('slug');
+    var err = document.getElementById('slug-error');
+    if (el.value && !/^[a-z-]+\/[a-z-]+\/[a-z0-9-]+$/.test(el.value)) { el.classList.add('invalid'); err.classList.add('visible'); }
+    else { el.classList.remove('invalid'); err.classList.remove('visible'); }
+  });
+
+  function save(doPreview) {
+    var data = getFormData();
+    if (!validate(data)) {
+      notifyMsg('Please fix the highlighted fields', 'error');
+      var firstInvalid = document.querySelector('.editor-form .invalid');
+      if (firstInvalid) firstInvalid.focus();
+      return;
+    }
+
+    saveBtn.disabled = true;
+    saveBtn.textContent = 'Saving...';
+
+    fetch('/api/cms/save', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    }).then(function(r) { return r.json(); }).then(function(result) {
+      saveBtn.disabled = false;
+      saveBtn.innerHTML = '&#10003; Save';
+      if (result.ok) {
+        showSaved();
+        markClean();
+        if (doPreview && result.preview_html) {
+          previewFrame.srcdoc = result.preview_html;
+        }
+        if (result.slug && result.slug !== data.slug) {
+          document.getElementById('slug').value = result.slug;
+          document.getElementById('original-slug').value = result.slug;
+        }
+        {% if is_new %}
+        isNew = false;
+        {% endif %}
+      } else {
+        notifyMsg('Save failed: ' + (result.error || 'unknown'), 'error');
+      }
+    }).catch(function(err) {
+      saveBtn.disabled = false;
+      saveBtn.innerHTML = '&#10003; Save';
+      notifyMsg('Network error: ' + err.message, 'error');
+    });
+  }
+
+  saveBtn.addEventListener('click', function() { save(true); });
+  savePreviewBtn.addEventListener('click', function() { save(true); });
+
+  buildBtn.addEventListener('click', function() {
+    if (!confirm('Trigger a full site rebuild? This may take a minute.')) return;
+    buildBtn.disabled = true;
+    buildBtn.textContent = 'Building...';
+    fetch('/api/cms/build', { method: 'POST' }).then(function(r) { return r.json(); }).then(function(result) {
+      buildBtn.disabled = false;
+      buildBtn.innerHTML = '&#9889; Trigger Build';
+      if (result.ok) {
+        notifyMsg('Build triggered successfully', 'success');
+      } else {
+        notifyMsg('Build failed: ' + (result.error || 'check logs'), 'error');
+      }
+    }).catch(function(err) {
+      buildBtn.disabled = false;
+      buildBtn.innerHTML = '&#9889; Trigger Build';
+      notifyMsg('Build error: ' + err.message, 'error');
+    });
+  });
+
+  // Keyboard shortcuts hint
+  var kbHint = document.createElement('span');
+  kbHint.style.cssText = 'font-size:0.7rem;color:var(--color-text-muted);margin-left:auto';
+  kbHint.textContent = 'Ctrl+S to save';
+  document.querySelector('.editor-actions').appendChild(kbHint);
+
+  // Keyboard shortcuts
+  document.addEventListener('keydown', function(e) {
+    if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+      e.preventDefault();
+      save(true);
+    }
+  });
+
+  // Version history
+  var historyBtn = document.getElementById('history-btn');
+  var historyModal = document.getElementById('history-modal');
+  var historyClose = document.getElementById('history-modal-close');
+  var historyLoading = document.getElementById('history-loading');
+  var historyEmpty = document.getElementById('history-empty');
+  var historyList = document.getElementById('history-list');
+  var currentSlug = document.getElementById('original-slug').value;
+
+  function openHistory() {
+    if (!currentSlug) return;
+    historyModal.classList.add('active');
+    historyLoading.style.display = 'block';
+    historyEmpty.style.display = 'none';
+    historyList.style.display = 'none';
+    historyList.innerHTML = '';
+    fetch('/api/cms/versions?slug=' + encodeURIComponent(currentSlug))
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        historyLoading.style.display = 'none';
+        if (!data.ok || !data.versions || data.versions.length === 0) {
+          historyEmpty.style.display = 'block';
+          return;
+        }
+        historyList.style.display = 'block';
+        data.versions.forEach(function(v, i) {
+          var item = v.data || {};
+          var isCurrent = i === 0;
+          var div = document.createElement('div');
+          div.className = 'history-item' + (isCurrent ? ' current' : '');
+          var dt = new Date(v.datetime || v.timestamp);
+          var timeStr = dt.toLocaleString(undefined, { dateStyle: 'medium', timeStyle: 'short' });
+          var titlePreview = (item.title || 'Untitled').substring(0, 80);
+          div.innerHTML =
+            '<div class="history-meta">' +
+              '<span class="history-time">' + timeStr + '</span>' +
+              '<button class="btn btn-ghost history-restore-btn">Restore</button>' +
+            '</div>' +
+            '<div class="history-preview">' + titlePreview + '</div>';
+          if (!isCurrent) {
+            div.querySelector('.history-restore-btn').addEventListener('click', function() {
+              if (!confirm('Restore version from ' + timeStr + '? Current changes will be saved as a version first.')) return;
+              var btn = this;
+              btn.disabled = true;
+              btn.textContent = '...';
+              fetch('/api/cms/restore', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ slug: currentSlug, timestamp: v.timestamp })
+              }).then(function(r) { return r.json(); }).then(function(result) {
+                if (result.ok) {
+                  notifyMsg('Version restored', 'success');
+                  historyModal.classList.remove('active');
+                  setTimeout(function() { window.location.reload(); }, 500);
+                } else {
+                  notifyMsg('Restore failed: ' + (result.error || 'unknown'), 'error');
+                  btn.disabled = false;
+                  btn.textContent = 'Restore';
+                }
+              }).catch(function(err) {
+                notifyMsg('Restore error: ' + err.message, 'error');
+                btn.disabled = false;
+                btn.textContent = 'Restore';
+              });
+            });
+          } else {
+            div.querySelector('.history-restore-btn').style.display = 'none';
+          }
+          historyList.appendChild(div);
+        });
+      })
+      .catch(function(err) {
+        historyLoading.style.display = 'none';
+        historyEmpty.style.display = 'block';
+        historyEmpty.textContent = 'Error loading history: ' + err.message;
+      });
+  }
+
+  if (historyBtn) {
+    historyBtn.addEventListener('click', openHistory);
+  }
+
+  if (historyClose) {
+    historyClose.addEventListener('click', function() { historyModal.classList.remove('active'); });
+  }
+
+  // Close on overlay click
+  if (historyModal) {
+    historyModal.addEventListener('click', function(e) {
+      if (e.target === historyModal) historyModal.classList.remove('active');
+    });
+  }
+
+  // Trap focus in history modal
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && historyModal && historyModal.classList.contains('active')) {
+      historyModal.classList.remove('active');
+    }
+  });
+})();
+</script>
+{% endif %}
+{% endblock %}

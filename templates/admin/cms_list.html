@@ -1,0 +1,486 @@
+{% extends "admin/base.html" %}
+{% block admin_content %}
+<style>
+  .cms-toolbar { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; margin-bottom: 1.5rem; }
+  .cms-toolbar input[type="search"] { flex: 1; min-width: 200px; padding: 0.5rem 0.75rem; border-radius: 6px; border: 1px solid var(--color-border); background: var(--color-input-bg); color: var(--color-input-text); font-size: 0.875rem; }
+  .cms-toolbar select { padding: 0.5rem 0.75rem; border-radius: 6px; border: 1px solid var(--color-border); background: var(--color-input-bg); color: var(--color-input-text); font-size: 0.875rem; }
+  .cms-toolbar .cms-count { font-size: 0.8rem; color: var(--color-text-muted); white-space: nowrap; }
+  .cms-table { width: 100%; border-collapse: collapse; font-size: 0.8125rem; }
+  .cms-table th { text-align: left; padding: 0.6rem 0.75rem; font-weight: 600; color: var(--color-text-muted); border-bottom: 2px solid var(--color-border); cursor: pointer; user-select: none; white-space: nowrap; }
+  .cms-table th:hover { color: var(--color-text); }
+  .cms-table th.cms-check-col { width: 2rem; text-align: center; cursor: default; padding: 0.6rem 0.25rem; }
+  .cms-table td { padding: 0.5rem 0.75rem; border-bottom: 1px solid var(--color-border); vertical-align: top; }
+  .cms-table td.cms-check-col { width: 2rem; text-align: center; padding: 0.5rem 0.25rem; vertical-align: middle; }
+  .cms-table tr:hover td { background: color-mix(in srgb, var(--color-accent) 3%, transparent); }
+  .cms-table tr.cms-selected td { background: color-mix(in srgb, var(--color-accent) 6%, transparent); }
+  .cms-checkbox { width: 16px; height: 16px; cursor: pointer; accent-color: var(--color-accent); }
+  .cms-bulk-bar { display: none; align-items: center; gap: 0.75rem; padding: 0.5rem 0.75rem; margin-bottom: 0.75rem; border-radius: 8px; background: color-mix(in srgb, var(--color-accent) 6%, transparent); border: 1px solid color-mix(in srgb, var(--color-accent) 20%, transparent); font-size: 0.8rem; }
+  .cms-bulk-bar.visible { display: flex; }
+  .cms-bulk-bar .bulk-count { font-weight: 600; color: var(--color-accent); }
+  .cms-bulk-bar .btn { padding: 0.3rem 0.6rem; font-size: 0.75rem; }
+  .cms-table .cms-title a { color: var(--color-accent); text-decoration: none; font-weight: 500; }
+  .cms-table .cms-title a:hover { text-decoration: underline; }
+  .cms-table .cms-title .cms-slug { display: block; font-size: 0.65rem; color: var(--color-text-muted); margin-top: 0.1rem; font-family: var(--font-mono); }
+  .cms-pill { display: inline-block; font-size: 0.65rem; padding: 0.15rem 0.5rem; border-radius: 999px; font-weight: 600; }
+  .cms-pill.aml { background: color-mix(in srgb, #ea580c 12%, transparent); color: #ea580c; }
+  .cms-pill.stock { background: color-mix(in srgb, #16a34a 12%, transparent); color: #16a34a; }
+  .cms-pill.data-engineering { background: color-mix(in srgb, #6366f1 12%, transparent); color: #6366f1; }
+  .cms-pill.research { background: color-mix(in srgb, #3b82f6 12%, transparent); color: #3b82f6; }
+  .cms-pill.learn { background: color-mix(in srgb, #d97706 12%, transparent); color: #d97706; }
+  .cms-pill.knowledge { background: color-mix(in srgb, #a855f7 12%, transparent); color: #a855f7; }
+  .cms-tags { display: flex; gap: 0.25rem; flex-wrap: wrap; margin-top: 0.2rem; }
+  .cms-tag { font-size: 0.6rem; padding: 0.1rem 0.35rem; border-radius: 4px; background: var(--color-surface); border: 1px solid var(--color-border); color: var(--color-text-muted); }
+  .cms-actions { white-space: nowrap; display: flex; gap: 0.25rem; }
+  .cms-actions { display: flex; gap: 0.25rem; align-items: center; }
+  .cms-actions .btn { padding: 0.25rem 0.5rem; font-size: 0.7rem; }
+  .cms-empty { text-align: center; padding: 4rem 2rem; color: var(--color-text-muted); }
+  .cms-empty-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.3; }
+  .cms-empty h2 { font-size: 1.1rem; color: var(--color-text); margin-bottom: 0.5rem; }
+  .cms-empty p { font-size: 0.85rem; margin-bottom: 1.5rem; max-width: 400px; margin-left: auto; margin-right: auto; }
+  .cms-empty-actions { display: flex; gap: 0.75rem; justify-content: center; }
+  .cms-pagination { display: flex; align-items: center; justify-content: center; gap: 0.35rem; margin-top: 1.5rem; font-size: 0.8rem; }
+  .cms-pagination a, .cms-pagination strong, .cms-pagination span { padding: 0.3rem 0.6rem; border-radius: 5px; border: 1px solid var(--color-border); background: var(--color-surface); color: var(--color-text); text-decoration: none; font-size: 0.8rem; transition: all 0.15s ease; }
+  .cms-pagination a:hover { border-color: var(--color-accent); color: var(--color-accent); }
+  .cms-pagination strong { border-color: var(--color-accent); background: color-mix(in srgb, var(--color-accent) 8%, transparent); color: var(--color-accent); }
+  .cms-pagination span { border: none; background: none; }
+  .cms-notification { position: fixed; top: 1rem; right: 1rem; padding: 0.75rem 1.25rem; border-radius: 8px; font-size: 0.85rem; font-weight: 600; z-index: 9999; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+  .cms-notification.show { opacity: 1; pointer-events: auto; }
+  .cms-notification.success { background: #22c55e; color: #fff; }
+  .cms-notification.error { background: #ef4444; color: #fff; }
+  @keyframes skeletonPulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+  .skeleton { background: var(--color-surface); border-radius: 6px; animation: skeletonPulse 1.5s ease-in-out infinite; display: inline-block; }
+  .skeleton-row { height: 2.5rem; width: 100%; margin-bottom: 0.5rem; border-radius: 4px; }
+  .cms-search-wrap { position: relative; flex: 1; min-width: 200px; }
+  .cms-search-wrap input[type="search"] { width: 100%; padding: 0.5rem 0.75rem; border-radius: 6px; border: 1px solid var(--color-border); background: var(--color-input-bg); color: var(--color-input-text); font-size: 0.875rem; box-sizing: border-box; }
+  .cms-autocomplete { position: absolute; top: 100%; left: 0; right: 0; z-index: 100; background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 0 0 8px 8px; max-height: 300px; overflow-y: auto; display: none; box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+  .cms-autocomplete.visible { display: block; }
+  .cms-autocomplete .ac-item { display: flex; align-items: center; gap: 0.5rem; padding: 0.5rem 0.75rem; cursor: pointer; transition: background 0.1s; font-size: 0.8rem; }
+  .cms-autocomplete .ac-item:hover, .cms-autocomplete .ac-item.highlighted { background: color-mix(in srgb, var(--color-accent) 8%, transparent); }
+  .cms-autocomplete .ac-item .ac-title { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--color-text); }
+  .cms-autocomplete .ac-item .ac-slug { font-size: 0.65rem; color: var(--color-text-muted); font-family: var(--font-mono); }
+  .cms-autocomplete .ac-item .ac-pill { font-size: 0.6rem; padding: 0.1rem 0.35rem; border-radius: 4px; background: color-mix(in srgb, var(--color-accent) 10%, transparent); color: var(--color-accent); flex-shrink: 0; }
+  .cms-autocomplete .ac-empty { padding: 1rem; text-align: center; color: var(--color-text-muted); font-size: 0.8rem; }
+  .cms-autocomplete .ac-loading { padding: 0.75rem; text-align: center; color: var(--color-text-muted); font-size: 0.75rem; }
+</style>
+
+<h1 style="margin-bottom:0.5rem">Content Manager</h1>
+<p class="text-sm" style="color:var(--color-text-secondary);margin-bottom:1.5rem">Browse, search, edit, and manage all portal content.</p>
+
+<div class="cms-toolbar">
+  <div class="cms-search-wrap">
+    <input type="search" id="cms-search" placeholder="Search title, slug, tags..." value="{{ search_query or '' }}" autocomplete="off">
+    <div class="cms-autocomplete" id="cms-autocomplete"></div>
+  </div>
+  <select id="cms-pillar-filter">
+    <option value="">All Pillars</option>
+    <option value="aml" {% if pillar_filter == 'aml' %}selected{% endif %}>Compliance</option>
+    <option value="stock" {% if pillar_filter == 'stock' %}selected{% endif %}>Markets</option>
+    <option value="data-engineering" {% if pillar_filter == 'data-engineering' %}selected{% endif %}>Data</option>
+  </select>
+  <select id="cms-type-filter">
+    <option value="">All Types</option>
+    <option value="research" {% if type_filter == 'research' %}selected{% endif %}>Research</option>
+    <option value="learn" {% if type_filter == 'learn' %}selected{% endif %}>Learn</option>
+    <option value="knowledge" {% if type_filter == 'knowledge' %}selected{% endif %}>Knowledge</option>
+  </select>
+  <span class="cms-count" id="cms-count">{{ items|length }} / {{ total }} items</span>
+  <a href="/admin/cms_editor.html" class="btn btn-primary" style="margin-left:auto">+ New Content</a>
+  <a href="/api/cms/export" class="btn btn-secondary" style="text-decoration:none;font-size:0.8rem" download>Export JSON</a>
+</div>
+</div>
+
+<div id="cms-notification" class="cms-notification"></div>
+
+<div class="cms-bulk-bar" id="bulk-bar">
+  <span class="bulk-count" id="bulk-count">0 selected</span>
+  <button class="btn btn-danger" id="bulk-delete-btn">Delete Selected</button>
+  <button class="btn btn-warning" id="bulk-duplicate-btn">Duplicate Selected</button>
+  <button class="btn btn-outline" id="bulk-export-btn">Export Selected</button>
+  <button class="btn btn-ghost" id="bulk-clear-btn" style="margin-left:auto">Clear</button>
+</div>
+
+{% if items %}
+<div class="overflow-x-auto">
+  <table class="cms-table">
+    <thead>
+      <tr>
+        <th class="cms-check-col"><input type="checkbox" class="cms-checkbox" id="select-all" aria-label="Select all"></th>
+        <th>Title</th>
+        <th>Pillar</th>
+        <th>Type</th>
+        <th>Date</th>
+        <th>Tags</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in items %}
+      <tr data-slug="{{ item.slug }}">
+        <td class="cms-check-col"><input type="checkbox" class="cms-checkbox cms-row-checkbox" value="{{ item.slug }}" aria-label="Select {{ item.title | striptags }}"></td>
+        <td class="cms-title">
+          <a href="/admin/cms_editor.html?slug={{ item.slug | urlencode }}">{{ item.title | striptags | truncate(60) }}</a>
+          <span class="cms-slug">{{ item.slug }}</span>
+        </td>
+        <td><span class="cms-pill {{ item.pillar or 'aml' }}">{{ item.pillar or '—' }}</span></td>
+        <td><span class="cms-pill {{ item.content_type or 'research' }}">{{ item.content_type or '—' }}</span></td>
+        <td style="white-space:nowrap;font-size:0.75rem;color:var(--color-text-muted)">{{ item.date_str or '—' }}</td>
+        <td>
+          {% if item.tags %}
+          <div class="cms-tags">
+            {% for tag in item.tags[:4] %}
+            <span class="cms-tag">{{ tag }}</span>
+            {% endfor %}
+            {% if item.tags | length > 4 %}
+            <span class="cms-tag">+{{ item.tags | length - 4 }}</span>
+            {% endif %}
+          </div>
+          {% endif %}
+        </td>
+        <td class="cms-actions">
+          <a href="/admin/cms_editor.html?slug={{ item.slug | urlencode }}" class="btn btn-ghost">Edit</a>
+          <a href="/{{ item.slug | replace('/', '/') }}/" target="_blank" class="btn btn-ghost">View</a>
+          <button class="btn btn-ghost btn-danger delete-btn" data-title="{{ item.title | striptags }}">Delete</button>
+          <button class="btn btn-ghost duplicate-btn" style="color:#d97706">Duplicate</button>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% if total_pages > 1 %}
+<div class="cms-pagination">
+  {% if page > 1 %}
+  <a href="?page={{ page - 1 }}{% if search_query %}&search={{ search_query }}{% endif %}{% if pillar_filter %}&pillar={{ pillar_filter }}{% endif %}{% if type_filter %}&content_type={{ type_filter }}{% endif %}">&larr; Prev</a>
+  {% endif %}
+  {% for p in range(1, total_pages + 1) %}
+    {% if p == page %}
+    <strong>{{ p }}</strong>
+    {% elif p == 1 or p == total_pages or (p >= page - 2 and p <= page + 2) %}
+    <a href="?page={{ p }}{% if search_query %}&search={{ search_query }}{% endif %}{% if pillar_filter %}&pillar={{ pillar_filter }}{% endif %}{% if type_filter %}&content_type={{ type_filter }}{% endif %}">{{ p }}</a>
+    {% elif p == page - 3 or p == page + 3 %}
+    <span>&hellip;</span>
+    {% endif %}
+  {% endfor %}
+  {% if page < total_pages %}
+  <a href="?page={{ page + 1 }}{% if search_query %}&search={{ search_query }}{% endif %}{% if pillar_filter %}&pillar={{ pillar_filter }}{% endif %}{% if type_filter %}&content_type={{ type_filter }}{% endif %}">Next &rarr;</a>
+  {% endif %}
+  <span style="margin-left:0.75rem;color:var(--color-text-muted);font-size:0.7rem">Page {{ page }} of {{ total_pages }}</span>
+</div>
+{% endif %}
+{% else %}
+<div class="cms-empty">
+  <div class="cms-empty-icon">&#128196;</div>
+  <h2>No content found</h2>
+  <p>No items match your current search or filters. Try different keywords or clear your filters.</p>
+  <div class="cms-empty-actions">
+    <a href="/admin/cms_editor.html" class="btn btn-primary">+ New Content</a>
+    <a href="/admin/cms_list.html" class="btn btn-outline">Clear Filters</a>
+  </div>
+</div>
+{% endif %}
+
+<script>
+(function() {
+  var searchEl = document.getElementById('cms-search');
+  var pillarEl = document.getElementById('cms-pillar-filter');
+  var typeEl = document.getElementById('cms-type-filter');
+  var notify = document.getElementById('cms-notification');
+  var selectAll = document.getElementById('select-all');
+  var bulkBar = document.getElementById('bulk-bar');
+  var bulkCount = document.getElementById('bulk-count');
+  var debounceTimer;
+  var selected = new Set();
+
+  function notifyMsg(msg, type) {
+    notify.textContent = msg;
+    notify.className = 'cms-notification ' + type + ' show';
+    setTimeout(function() { notify.classList.remove('show'); }, 3000);
+  }
+
+  function reloadResults() {
+    var params = new URLSearchParams();
+    if (searchEl.value) params.set('search', searchEl.value);
+    if (pillarEl.value) params.set('pillar', pillarEl.value);
+    if (typeEl.value) params.set('content_type', typeEl.value);
+    window.location.search = params.toString();
+  }
+
+  searchEl.addEventListener('input', function() {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(reloadResults, 350);
+    autocompleteSearch(searchEl.value);
+  });
+  pillarEl.addEventListener('change', reloadResults);
+  typeEl.addEventListener('change', reloadResults);
+
+  // Search autocomplete
+  var autocompleteEl = document.getElementById('cms-autocomplete');
+  var acHighlightIndex = -1;
+  var acResults = [];
+  var acTimer;
+
+  function autocompleteSearch(q) {
+    clearTimeout(acTimer);
+    if (q.length < 2) {
+      autocompleteEl.classList.remove('visible');
+      autocompleteEl.innerHTML = '';
+      return;
+    }
+    autocompleteEl.innerHTML = '<div class="ac-loading">Searching...</div>';
+    autocompleteEl.classList.add('visible');
+    acTimer = setTimeout(function() {
+      var suggestUrl = '/api/cms/suggest?q=' + encodeURIComponent(q);
+      if (pillarEl.value) suggestUrl += '&pillar=' + encodeURIComponent(pillarEl.value);
+      if (typeEl.value) suggestUrl += '&content_type=' + encodeURIComponent(typeEl.value);
+      fetch(suggestUrl)
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (!data.ok || !data.results) {
+            autocompleteEl.innerHTML = '<div class="ac-empty">Error loading suggestions</div>';
+            return;
+          }
+          acResults = data.results;
+          acHighlightIndex = -1;
+          if (acResults.length === 0) {
+            autocompleteEl.innerHTML = '<div class="ac-empty">No matches found</div>';
+            return;
+          }
+          var html = '';
+          acResults.forEach(function(item) {
+            var pclass = 'cms-pill ' + (item.pillar || 'aml');
+            html += '<div class="ac-item" data-slug="' + item.slug + '">' +
+              '<span class="ac-pill ' + pclass + '">' + (item.pillar || '') + '</span>' +
+              '<span class="ac-title">' + item.title + '</span>' +
+              '<span class="ac-slug">' + item.slug + '</span>' +
+            '</div>';
+          });
+          autocompleteEl.innerHTML = html;
+        })
+        .catch(function() {
+          autocompleteEl.innerHTML = '<div class="ac-empty">Error loading suggestions</div>';
+        });
+    }, 150);
+  }
+
+  autocompleteEl.addEventListener('click', function(e) {
+    var item = e.target.closest('.ac-item');
+    if (!item) return;
+    var slug = item.getAttribute('data-slug');
+    if (slug) {
+      autocompleteEl.classList.remove('visible');
+      window.location.href = '/admin/cms_editor.html?slug=' + encodeURIComponent(slug);
+    }
+  });
+
+  searchEl.addEventListener('keydown', function(e) {
+    var items = autocompleteEl.querySelectorAll('.ac-item');
+    if (items.length === 0) return;
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      acHighlightIndex = Math.min(acHighlightIndex + 1, items.length - 1);
+      updateHighlight(items);
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      acHighlightIndex = Math.max(acHighlightIndex - 1, -1);
+      updateHighlight(items);
+    } else if (e.key === 'Enter' && acHighlightIndex >= 0) {
+      e.preventDefault();
+      var slug = items[acHighlightIndex].getAttribute('data-slug');
+      if (slug) {
+        autocompleteEl.classList.remove('visible');
+        window.location.href = '/admin/cms_editor.html?slug=' + encodeURIComponent(slug);
+      }
+    } else if (e.key === 'Escape') {
+      autocompleteEl.classList.remove('visible');
+    }
+  });
+
+  function updateHighlight(items) {
+    items.forEach(function(el, i) {
+      el.classList.toggle('highlighted', i === acHighlightIndex);
+    });
+    if (acHighlightIndex >= 0) {
+      items[acHighlightIndex].scrollIntoView({ block: 'nearest' });
+    }
+  }
+
+  // Close autocomplete on click outside
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.cms-search-wrap')) {
+      autocompleteEl.classList.remove('visible');
+    }
+  });
+
+  // Bulk selection
+  function updateBulkBar() {
+    var count = selected.size;
+    if (count > 0) {
+      bulkBar.classList.add('visible');
+      bulkCount.textContent = count + ' selected';
+    } else {
+      bulkBar.classList.remove('visible');
+    }
+    document.querySelectorAll('.cms-row-checkbox').forEach(function(cb) {
+      cb.checked = selected.has(cb.value);
+    });
+    selectAll.checked = document.querySelectorAll('.cms-row-checkbox').length > 0 &&
+      document.querySelectorAll('.cms-row-checkbox:checked').length === document.querySelectorAll('.cms-row-checkbox').length;
+    document.querySelectorAll('.cms-table tbody tr').forEach(function(row) {
+      var slug = row.getAttribute('data-slug');
+      row.classList.toggle('cms-selected', selected.has(slug));
+    });
+  }
+
+  selectAll.addEventListener('change', function() {
+    document.querySelectorAll('.cms-row-checkbox').forEach(function(cb) {
+      if (selectAll.checked) {
+        selected.add(cb.value);
+      } else {
+        selected.delete(cb.value);
+      }
+    });
+    updateBulkBar();
+  });
+
+  document.addEventListener('change', function(e) {
+    var cb = e.target.closest('.cms-row-checkbox');
+    if (!cb) return;
+    if (cb.checked) {
+      selected.add(cb.value);
+    } else {
+      selected.delete(cb.value);
+    }
+    updateBulkBar();
+  });
+
+  // Individual delete
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('.delete-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var row = btn.closest('tr');
+    var slug = row.getAttribute('data-slug');
+    var title = btn.getAttribute('data-title') || slug;
+    if (!confirm('Permanently delete "' + title + '"? This cannot be undone.')) return;
+    fetch('/api/cms/delete', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ slug: slug })
+    }).then(function(r) { return r.json(); }).then(function(data) {
+      if (data.ok) {
+        notifyMsg('Deleted "' + title + '"', 'success');
+        selected.delete(slug);
+        updateBulkBar();
+        if (row) { row.style.opacity = '0.3'; setTimeout(function() { row.remove(); }, 300); }
+      } else {
+        notifyMsg('Delete failed: ' + (data.error || 'unknown'), 'error');
+      }
+    }).catch(function(err) {
+      notifyMsg('Network error: ' + err.message, 'error');
+    });
+  });
+
+  // Individual duplicate
+  document.addEventListener('click', function(e) {
+    var btn = e.target.closest('.duplicate-btn');
+    if (!btn) return;
+    e.preventDefault();
+    var row = btn.closest('tr');
+    var slug = row.getAttribute('data-slug');
+    if (!slug) return;
+    btn.disabled = true;
+    btn.textContent = '...';
+    fetch('/api/cms/duplicate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ slug: slug })
+    }).then(function(r) { return r.json(); }).then(function(data) {
+      btn.disabled = false;
+      btn.innerHTML = 'Duplicate';
+      if (data.ok) {
+        notifyMsg('Duplicated. New slug: ' + data.new_slug, 'success');
+        setTimeout(function() { window.location.href = '/admin/cms_editor.html?slug=' + encodeURIComponent(data.new_slug); }, 500);
+      } else {
+        notifyMsg('Duplicate failed: ' + (data.error || 'unknown'), 'error');
+      }
+    }).catch(function(err) {
+      btn.disabled = false;
+      btn.innerHTML = 'Duplicate';
+      notifyMsg('Network error: ' + err.message, 'error');
+    });
+  });
+
+  // Bulk delete
+  document.getElementById('bulk-delete-btn').addEventListener('click', function() {
+    if (selected.size === 0) return;
+    if (!confirm('Permanently delete ' + selected.size + ' selected items? This cannot be undone.')) return;
+    var promises = [];
+    var slugs = Array.from(selected);
+    var btn = this;
+    btn.disabled = true;
+    btn.textContent = 'Deleting...';
+    slugs.forEach(function(slug) {
+      promises.push(fetch('/api/cms/delete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ slug: slug })
+      }).then(function(r) { return r.json(); }));
+    });
+    Promise.all(promises).then(function(results) {
+      var ok = results.filter(function(r) { return r.ok; }).length;
+      notifyMsg('Deleted ' + ok + ' / ' + slugs.length + ' items', 'success');
+      selected.clear();
+      updateBulkBar();
+      setTimeout(function() { window.location.reload(); }, 1000);
+    }).catch(function(err) {
+      notifyMsg('Bulk delete error: ' + err.message, 'error');
+      btn.disabled = false;
+      btn.textContent = 'Delete Selected';
+    });
+  });
+
+  // Bulk duplicate
+  document.getElementById('bulk-duplicate-btn').addEventListener('click', function() {
+    if (selected.size === 0) return;
+    var slugs = Array.from(selected);
+    var btn = this;
+    btn.disabled = true;
+    btn.textContent = 'Duplicating...';
+    var promises = [];
+    slugs.forEach(function(slug) {
+      promises.push(fetch('/api/cms/duplicate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ slug: slug })
+      }).then(function(r) { return r.json(); }));
+    });
+    Promise.all(promises).then(function(results) {
+      var ok = results.filter(function(r) { return r.ok; }).length;
+      notifyMsg('Duplicated ' + ok + ' / ' + slugs.length + ' items', 'success');
+      btn.disabled = false;
+      btn.textContent = 'Duplicate Selected';
+      selected.clear();
+      updateBulkBar();
+      setTimeout(function() { window.location.reload(); }, 1000);
+    }).catch(function(err) {
+      notifyMsg('Bulk duplicate error: ' + err.message, 'error');
+      btn.disabled = false;
+      btn.textContent = 'Duplicate Selected';
+    });
+  });
+
+  // Bulk export
+  document.getElementById('bulk-export-btn').addEventListener('click', function() {
+    if (selected.size === 0) return;
+    var slugs = Array.from(selected);
+    window.open('/api/cms/export?slugs=' + encodeURIComponent(slugs.join(',')), '_blank');
+  });
+
+  // Clear selection
+  document.getElementById('bulk-clear-btn').addEventListener('click', function() {
+    selected.clear();
+    updateBulkBar();
+  });
+})();
+</script>
+{% endblock %}

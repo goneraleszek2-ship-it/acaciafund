@@ -1,6 +1,9 @@
 {% extends "layout.j2" %}
 {% block main_content %}
+<a href="#admin-main-content" class="skip-link">Skip to main content</a>
 <style>
+  .skip-link { position: fixed; top: -100%; left: 1rem; z-index: 99999; padding: 0.5rem 1rem; background: var(--color-accent); color: #fff; border-radius: 0 0 6px 6px; font-size: 0.85rem; font-weight: 600; text-decoration: none; transition: top 0.2s; }
+  .skip-link:focus { top: 0; }
   .admin-layout { display: flex; gap: 1.5rem; min-height: calc(100vh - 10rem); }
   .admin-sidebar { width: 14rem; flex-shrink: 0; }
   .admin-sidebar nav { position: sticky; top: 5rem; }
@@ -10,7 +13,20 @@
   }
   .admin-sidebar a:hover { background: var(--color-surface, #1a1a2e); color: var(--color-text, #e8e6e3); }
   .admin-sidebar a.active { background: var(--color-accent, #818cf8); color: #fff; font-weight: 600; }
-  .admin-sidebar .sidebar-section { margin-bottom: 1rem; }
+  .admin-sidebar .sidebar-section { margin-bottom: 0.5rem; }
+  .admin-sidebar .sidebar-section details { margin-bottom: 0; }
+  .admin-sidebar .sidebar-section summary {
+    font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+    color: var(--color-text-muted, #666); padding: 0.35rem 0.75rem; cursor: pointer; user-select: none;
+    border-radius: 4px; transition: color 0.15s;
+    list-style: none; display: flex; align-items: center; gap: 0.35rem;
+  }
+  .admin-sidebar .sidebar-section summary::-webkit-details-marker { display: none; }
+  .admin-sidebar .sidebar-section summary::before {
+    content: '\25B6'; font-size: 0.5rem; transition: transform 0.2s ease; display: inline-block;
+  }
+  .admin-sidebar .sidebar-section details[open] summary::before { transform: rotate(90deg); }
+  .admin-sidebar .sidebar-section summary:hover { color: var(--color-text, #e8e6e3); }
   .admin-sidebar .sidebar-label {
     font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
     color: var(--color-text-muted, #666); padding: 0 0.75rem; margin-bottom: 0.25rem;
@@ -21,30 +37,50 @@
 <div class="admin-layout">
   <aside class="admin-sidebar">
     <nav aria-label="Admin navigation">
-      <div class="sidebar-section">
-        <div class="sidebar-label">Overview</div>
+      <details class="sidebar-section" open>
+        <summary class="sidebar-label" tabindex="0">Overview</summary>
         <a href="/admin/dashboard.html" class="{% if active_page == 'dashboard' %}active{% endif %}">Dashboard</a>
         <a href="/admin/quality.html" class="{% if active_page == 'quality' %}active{% endif %}">Quality</a>
         <a href="/admin/coverage.html" class="{% if active_page == 'coverage' %}active{% endif %}">Coverage</a>
         <a href="/admin/telemetry.html" class="{% if active_page == 'telemetry' %}active{% endif %}">Telemetry</a>
-      </div>
-      <div class="sidebar-section">
-        <div class="sidebar-label">Content</div>
+      </details>
+      <details class="sidebar-section" open>
+        <summary class="sidebar-label" tabindex="0">Content</summary>
+        <a href="/admin/cms_dashboard.html" class="{% if active_page == 'cms_dashboard' %}active{% endif %}">CMS Dashboard</a>
+        <a href="/admin/cms_list.html" class="{% if active_page == 'cms_list' %}active{% endif %}">CMS Manager</a>
+        <a href="/admin/cms_media.html" class="{% if active_page == 'cms_media' %}active{% endif %}">Media Library</a>
         <a href="/admin/articles.html" class="{% if active_page == 'articles' %}active{% endif %}">Articles</a>
         <a href="/admin/gallery.html" class="{% if active_page == 'gallery' %}active{% endif %}">Gallery</a>
         <a href="/admin/manifest.html" class="{% if active_page == 'manifest' %}active{% endif %}">Manifest</a>
         <a href="/admin/pipeline.html" class="{% if active_page == 'pipeline' %}active{% endif %}">Pipeline</a>
-      </div>
-      <div class="sidebar-section">
-        <div class="sidebar-label">Intelligence</div>
+      </details>
+      <details class="sidebar-section" open>
+        <summary class="sidebar-label" tabindex="0">Intelligence</summary>
         <a href="/admin/sources.html" class="{% if active_page == 'sources' %}active{% endif %}">Sources</a>
         <a href="/admin/ontology.html" class="{% if active_page == 'ontology' %}active{% endif %}">Ontology</a>
         <a href="/admin/feynman.html" class="{% if active_page == 'feynman' %}active{% endif %}">Feynman</a>
-      </div>
+      </details>
     </nav>
   </aside>
-  <div class="admin-content">
+  <div class="admin-content" id="admin-main-content">
     {% block admin_content %}{% endblock %}
   </div>
 </div>
+
+<script>
+(function() {
+  // Persist sidebar collapse state
+  var details = document.querySelectorAll('.admin-sidebar details');
+  details.forEach(function(d) {
+    var summary = d.querySelector('summary');
+    if (!summary) return;
+    var label = summary.textContent.trim().toLowerCase().replace(/\s+/g, '-');
+    var saved = localStorage.getItem('admin-sidebar-' + label);
+    if (saved === 'closed') d.removeAttribute('open');
+    d.addEventListener('toggle', function() {
+      localStorage.setItem('admin-sidebar-' + label, d.open ? 'open' : 'closed');
+    });
+  });
+})();
+</script>
 {% endblock %}

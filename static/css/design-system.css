@@ -258,6 +258,61 @@ input:focus, textarea:focus {
   padding: 0.25rem 0.75rem;
   font-size: 0.8125rem;
 }
+.btn-lg {
+  padding: 0.625rem 1.5rem;
+  font-size: 1rem;
+}
+.btn-outline {
+  background: transparent;
+  color: var(--color-text);
+  border-color: var(--color-border);
+}
+.btn-outline:hover {
+  background: var(--color-surface);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+.btn-icon-only {
+  padding: 0.4rem;
+  min-width: 2rem;
+  min-height: 2rem;
+  justify-content: center;
+}
+.btn-danger {
+  background: transparent;
+  color: #ef4444;
+  border-color: transparent;
+}
+.btn-danger:hover {
+  background: color-mix(in srgb, #ef4444 10%, transparent);
+  border-color: #ef4444;
+}
+.btn-success {
+  background: #22c55e;
+  color: #fff;
+  border-color: #22c55e;
+}
+.btn-success:hover {
+  opacity: 0.9;
+}
+.btn-warning {
+  background: #d97706;
+  color: #fff;
+  border-color: #d97706;
+}
+.btn-warning:hover {
+  opacity: 0.9;
+}
+.btn:disabled,
+.btn.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+.btn:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
 
 /* ── Aspect Ratio Utilities (CLS prevention) — from theme.css ── */
 .aspect-w-16 {

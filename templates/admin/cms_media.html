@@ -1,0 +1,218 @@
+{% extends "admin/base.html" %}
+{% block admin_content %}
+<style>
+  .media-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem; margin-top: 1.5rem; }
+  .media-card { border: 1px solid var(--color-border); border-radius: 8px; overflow: hidden; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer; position: relative; }
+  .media-card:hover { border-color: var(--color-accent); transform: translateY(-3px); box-shadow: 0 6px 16px rgba(0,0,0,0.12); }
+  .media-card.selected { border-color: var(--color-accent); box-shadow: 0 0 0 2px var(--color-accent), 0 4px 12px rgba(79,70,229,0.15); }
+  .media-card.selected::before { content: ''; position: absolute; inset: 0; background: color-mix(in srgb, var(--color-accent) 8%, transparent); z-index: 1; pointer-events: none; }
+  .media-card img { width: 100%; height: 160px; object-fit: cover; display: block; background: #f0f0f0; transition: transform 0.3s ease; }
+  .media-card:hover img { transform: scale(1.03); }
+  .media-card .media-info { padding: 0.5rem 0.75rem; position: relative; z-index: 2; }
+  .media-card .media-name { font-size: 0.75rem; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .media-card .media-meta { font-size: 0.6rem; color: var(--color-text-muted); margin-top: 0.15rem; }
+  .media-card .media-check { position: absolute; top: 0.5rem; right: 0.5rem; width: 22px; height: 22px; border-radius: 50%; background: var(--color-accent); color: #fff; display: none; align-items: center; justify-content: center; font-size: 0.75rem; z-index: 2; box-shadow: 0 2px 4px rgba(0,0,0,0.2); animation: tagFadeIn 0.2s ease; }
+  .media-card.selected .media-check { display: flex; }
+  .media-upload-zone { border: 2px dashed var(--color-border); border-radius: 12px; padding: 3rem; text-align: center; transition: all 0.2s; cursor: pointer; }
+  .media-upload-zone:hover, .media-upload-zone.dragover { border-color: var(--color-accent); background: color-mix(in srgb, var(--color-accent) 5%, transparent); }
+  .media-upload-zone .upload-icon { font-size: 2.5rem; margin-bottom: 0.75rem; opacity: 0.5; }
+  .media-upload-zone p { font-size: 0.85rem; color: var(--color-text-muted); }
+  .media-toolbar { display: flex; gap: 0.75rem; align-items: center; flex-wrap: wrap; margin-bottom: 1.5rem; }
+  .media-toolbar .btn { font-size: 0.85rem; }
+  .media-count { font-size: 0.8rem; color: var(--color-text-muted); }
+  .cms-notification { position: fixed; top: 1rem; right: 1rem; padding: 0.75rem 1.25rem; border-radius: 8px; font-size: 0.85rem; font-weight: 600; z-index: 9999; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+  .cms-notification.show { opacity: 1; pointer-events: auto; }
+  .cms-notification.success { background: #22c55e; color: #fff; }
+  .cms-notification.error { background: #ef4444; color: #fff; }
+  .media-empty { text-align: center; padding: 4rem 2rem; color: var(--color-text-muted); }
+  .media-empty-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.3; }
+  .media-empty h2 { font-size: 1.1rem; color: var(--color-text); margin-bottom: 0.5rem; }
+  .media-empty p { font-size: 0.85rem; margin-bottom: 1.5rem; max-width: 400px; margin-left: auto; margin-right: auto; }
+  .media-progress { width: 100%; height: 4px; background: var(--color-border); border-radius: 2px; overflow: hidden; margin-top: 1rem; display: none; }
+  .media-progress.active { display: block; }
+  .media-progress-bar { height: 100%; background: var(--color-accent); width: 0%; transition: width 0.3s ease; border-radius: 2px; }
+  #file-input { display: none; }
+  @keyframes skeletonPulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+  @keyframes tagFadeIn { from { opacity: 0; transform: scale(0.85); } to { opacity: 1; transform: scale(1); } }
+  .skeleton-card { height: 200px; background: var(--color-surface); border-radius: 8px; animation: skeletonPulse 1.5s ease-in-out infinite; }
+</style>
+
+<h1 style="margin-bottom:0.5rem">Media Manager</h1>
+<p class="text-sm" style="color:var(--color-text-secondary);margin-bottom:1.5rem">Upload, browse, and manage images for your content.</p>
+
+<div id="cms-notification" class="cms-notification"></div>
+
+<div class="media-upload-zone" id="upload-zone">
+  <div class="upload-icon">&#128247;</div>
+  <p><strong>Drop images here</strong> or click to browse</p>
+  <p style="font-size:0.75rem;margin-top:0.5rem">PNG, JPG, GIF, WebP, SVG &mdash; max 10MB</p>
+  <div class="media-progress" id="upload-progress">
+    <div class="media-progress-bar" id="upload-progress-bar"></div>
+  </div>
+</div>
+<input type="file" id="file-input" accept="image/png,image/jpeg,image/gif,image/webp,image/svg+xml" multiple>
+
+<div class="media-toolbar">
+  <span class="media-count" id="media-count">Loading...</span>
+  <div style="margin-left:auto;display:flex;gap:0.5rem">
+    <button class="btn btn-danger" id="delete-selected-btn" disabled>&times; Delete Selected</button>
+  </div>
+</div>
+
+<div id="media-grid-container">
+  <div class="media-grid" id="media-skeleton">
+    <div class="skeleton-card"></div>
+    <div class="skeleton-card"></div>
+    <div class="skeleton-card"></div>
+    <div class="skeleton-card"></div>
+    <div class="skeleton-card"></div>
+    <div class="skeleton-card"></div>
+  </div>
+</div>
+
+<div class="media-empty" id="media-empty" style="display:none">
+  <div class="media-empty-icon">&#128247;</div>
+  <h2>No media yet</h2>
+  <p>Upload images using the drop zone above or click to browse. Supported formats: PNG, JPG, GIF, WebP, SVG.</p>
+</div>
+
+<script>
+(function() {
+  var uploadZone = document.getElementById('upload-zone');
+  var fileInput = document.getElementById('file-input');
+  var gridContainer = document.getElementById('media-grid-container');
+  var emptyState = document.getElementById('media-empty');
+  var mediaCount = document.getElementById('media-count');
+  var deleteBtn = document.getElementById('delete-selected-btn');
+  var progressBar = document.getElementById('upload-progress-bar');
+  var progress = document.getElementById('upload-progress');
+  var notify = document.getElementById('cms-notification');
+  var selected = new Set();
+
+  function notifyMsg(msg, type) {
+    notify.textContent = msg;
+    notify.className = 'cms-notification ' + type + ' show';
+    setTimeout(function() { notify.classList.remove('show'); }, 3000);
+  }
+
+  function formatSize(bytes) {
+    if (bytes < 1024) return bytes + ' B';
+    if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+    return (bytes / 1048576).toFixed(1) + ' MB';
+  }
+
+  function loadMedia() {
+    fetch('/api/cms/media/list').then(function(r) { return r.json(); }).then(function(data) {
+      if (!data.ok) { notifyMsg('Failed to load media', 'error'); return; }
+      var skeleton = document.getElementById('media-skeleton');
+      if (skeleton) skeleton.style.display = 'none';
+      var files = data.files || [];
+      mediaCount.textContent = files.length + ' file' + (files.length !== 1 ? 's' : '');
+      if (files.length === 0) {
+        gridContainer.innerHTML = '';
+        emptyState.style.display = 'block';
+        return;
+      }
+      emptyState.style.display = 'none';
+      var html = '<div class="media-grid">';
+      files.forEach(function(f) {
+        var exts = f.filename.split('.').pop().toLowerCase();
+        var isSvg = exts === 'svg';
+        html += '<div class="media-card" data-filename="' + f.filename + '" data-url="' + f.url + '">';
+        if (isSvg) {
+          html += '<div style="height:160px;display:flex;align-items:center;justify-content:center;background:var(--color-surface);padding:1rem"><img src="' + f.url + '" style="max-height:100%;max-width:100%"></div>';
+        } else {
+          html += '<img src="' + f.url + '" loading="lazy" alt="' + f.filename + '">';
+        }
+        html += '<div class="media-info">';
+        html += '<div class="media-name">' + f.filename + '</div>';
+        html += '<div class="media-meta">' + formatSize(f.size) + '</div>';
+        html += '</div>';
+        html += '<div class="media-check">&#10003;</div>';
+        html += '</div>';
+      });
+      html += '</div>';
+      gridContainer.innerHTML = html;
+
+      // Click to select
+      gridContainer.querySelectorAll('.media-card').forEach(function(card) {
+        card.addEventListener('click', function(e) {
+          var fn = card.getAttribute('data-filename');
+          if (selected.has(fn)) {
+            selected.delete(fn);
+            card.classList.remove('selected');
+          } else {
+            selected.add(fn);
+            card.classList.add('selected');
+          }
+          deleteBtn.disabled = selected.size === 0;
+        });
+      });
+    }).catch(function(err) {
+      notifyMsg('Network error: ' + err.message, 'error');
+    });
+  }
+
+  function uploadFiles(files) {
+    Array.from(files).forEach(function(file) {
+      var formData = new FormData();
+      formData.append('file', file);
+      progress.classList.add('active');
+      progressBar.style.width = '50%';
+      fetch('/api/cms/media/upload', {
+        method: 'POST',
+        body: formData
+      }).then(function(r) { return r.json(); }).then(function(data) {
+        if (data.ok) {
+          notifyMsg('Uploaded: ' + file.name, 'success');
+          loadMedia();
+        } else {
+          notifyMsg('Upload failed: ' + (data.error || 'unknown'), 'error');
+        }
+      }).catch(function(err) {
+        notifyMsg('Upload error: ' + err.message, 'error');
+      }).finally(function() {
+        progressBar.style.width = '100%';
+        setTimeout(function() { progress.classList.remove('active'); progressBar.style.width = '0%'; }, 500);
+      });
+    });
+  }
+
+  // Upload zone click
+  uploadZone.addEventListener('click', function() { fileInput.click(); });
+  fileInput.addEventListener('change', function() { uploadFiles(fileInput.files); fileInput.value = ''; });
+
+  // Drag and drop
+  uploadZone.addEventListener('dragover', function(e) { e.preventDefault(); uploadZone.classList.add('dragover'); });
+  uploadZone.addEventListener('dragleave', function() { uploadZone.classList.remove('dragover'); });
+  uploadZone.addEventListener('drop', function(e) {
+    e.preventDefault();
+    uploadZone.classList.remove('dragover');
+    uploadFiles(e.dataTransfer.files);
+  });
+
+  // Delete selected
+  deleteBtn.addEventListener('click', function() {
+    if (selected.size === 0) return;
+    if (!confirm('Delete ' + selected.size + ' selected file' + (selected.size !== 1 ? 's' : '') + '?')) return;
+    var promises = [];
+    selected.forEach(function(fn) {
+      promises.push(fetch('/api/cms/media/delete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ filename: fn })
+      }).then(function(r) { return r.json(); }));
+    });
+    Promise.all(promises).then(function(results) {
+      var ok = results.filter(function(r) { return r.ok; }).length;
+      notifyMsg('Deleted ' + ok + ' file' + (ok !== 1 ? 's' : ''), 'success');
+      selected.clear();
+      deleteBtn.disabled = true;
+      loadMedia();
+    });
+  });
+
+  loadMedia();
+})();
+</script>
+{% endblock %}
