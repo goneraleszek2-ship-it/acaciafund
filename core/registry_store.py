@@ -232,6 +232,7 @@ class SqliteRegistryStore(RegistryStore):
     def conn(self) -> sqlite3.Connection:
         if self._conn is None:
             self._connect()
+        assert self._conn is not None
         return self._conn
 
     def load(self) -> dict:

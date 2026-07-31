@@ -33,6 +33,7 @@ class CMS:
         if self._data is None:
             with open(self.registry_path) as f:
                 self._data = json.load(f)
+        assert self._data is not None
         return self._data
 
     def _save(self):

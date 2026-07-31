@@ -116,4 +116,4 @@ class ResearcherAgent(BaseAgent):
             self.user_message(f"Pillar: {pillar}\nTopic: {topic}\nList sub-topics to research:"),
         ]
         result = self.llm_structured(messages, list[str])
-        return result  # type: ignore[return-value]
+        return result

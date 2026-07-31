@@ -431,12 +431,12 @@ def fetch_arxiv_for_pillar(
         logger.debug(f"  arXiv returned {len(papers)} total papers")
 
     relevant: list[dict[str, Any]] = []
+    threshold = config.arxiv_min_score
     for p in papers:
         title = p.get("title", "")
         abstract = p.get("abstract", "")
         cats = p.get("categories") or []
         score, tags = score_pillar_relevance(f"{title} {abstract}", config, cats, negative_tags=PILLAR_NEGATIVE_TAGS.get(config.slug_name))
-        threshold = config.arxiv_min_score
         if score >= threshold:
             p["_relevance_score"] = round(score, 3)
             p["_detected_tags"] = tags
@@ -470,10 +470,10 @@ def fetch_hn_for_pillar(
         logger.debug(f"  HN returned {len(stories)} stories")
 
     relevant: list[dict[str, Any]] = []
+    threshold = config.hn_min_score
     for s in stories:
         title = s.get("title", "")
         score, tags = score_pillar_relevance(title, config, negative_tags=PILLAR_NEGATIVE_TAGS.get(config.slug_name))
-        threshold = config.hn_min_score
         if score >= threshold:
             s["_relevance_score"] = round(score, 3)
             s["_detected_tags"] = tags
@@ -523,7 +523,8 @@ def _source_to_item(
     slug = f"{pillar_url}/research/{slug_base}"
 
     if tags is None:
-        tags = source.get("_detected_tags", [])
+        detected = source.get("_detected_tags") or []
+        tags = list(detected)
 
     # Insert base pillar tag if missing
     base_tag = _PILLAR_BASE_TAGS.get(pillar)

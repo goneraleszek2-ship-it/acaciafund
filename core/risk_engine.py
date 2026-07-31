@@ -9,16 +9,10 @@ from __future__ import annotations
 import json
 import time
 from dataclasses import dataclass, field
-from enum import Enum
 from pathlib import Path
 from typing import Any, Callable
 
-
-class RiskLevel(str, Enum):
-    READ = "read"
-    WRITE_LOCAL = "write_local"
-    EXEC = "exec"
-    EXTERNAL = "external"
+from core.agent_tools import RiskLevel
 
 
 @dataclass

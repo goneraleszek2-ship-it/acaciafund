@@ -1201,8 +1201,8 @@ class OntologyManager:
 # Text-based concept extraction (spaCy PhraseMatcher with regex fallback)
 # ---------------------------------------------------------------------------
 
-_NLP = None
-_PHRASE_MATCHER = None
+_NLP: Any = None
+_PHRASE_MATCHER: Any = None
 _MATCHER_REVISION = -1
 
 

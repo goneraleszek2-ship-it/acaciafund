@@ -42,7 +42,7 @@ def build_concept_content_map(
     items: list[dict],
     ontology: OntologyManager,
     min_confidence: float = 0.35,
-) -> dict[str, list[dict]]:
+) -> tuple[dict[str, list[dict]], dict[str, list[str]]]:
     concept_map: dict[str, list[dict]] = {}
     content_map: dict[str, list[str]] = {}
 

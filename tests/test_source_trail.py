@@ -201,7 +201,9 @@ class TestSourceTrailManager:
         count = mgr.verify_citations()
 
         assert count == 1
-        citations = mgr.get_trail("test").claims[0].citations
+        trail = mgr.get_trail("test")
+        assert trail is not None
+        citations = trail.claims[0].citations
         fatf_cit = next(c for c in citations if "fatf" in c.url)
         unknown_cit = next(c for c in citations if "unknown" in c.url)
         assert fatf_cit.verified is True

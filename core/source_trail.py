@@ -234,7 +234,7 @@ class SourceTrailManager:
 
 
 def extract_claims_from_text(
-    text: str,
+    text: str | None,
     min_length: int = 40,
     max_length: int = 300,
 ) -> List[str]:

@@ -1,6 +1,6 @@
 import os
 
-from mem0 import Memory
+from mem0 import Memory  # type: ignore[reportAttributeAccessIssue]
 
 
 def setup():

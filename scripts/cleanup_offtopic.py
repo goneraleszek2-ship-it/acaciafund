@@ -136,8 +136,8 @@ def main() -> int:
         for item in sorted(to_remove, key=lambda x: x.get("slug", "")):
             slug = item.get("slug", "?")
             title = item.get("title", "")[:100]
-            neg_hits = title_has_negative_tags(title, PILLAR_NEGATIVE_TAGS.get(
-                REGISTRY_PILLAR_TO_INTERNAL.get(item.get("pillar", "")), []))
+            internal_pillar = REGISTRY_PILLAR_TO_INTERNAL.get(item.get("pillar", ""), "")
+            neg_hits = title_has_negative_tags(title, PILLAR_NEGATIVE_TAGS.get(internal_pillar, []))
             logger.info(f"  • {slug}")
             logger.info(f"    Title: {title}")
             logger.info(f"    Negative matches: {neg_hits}")

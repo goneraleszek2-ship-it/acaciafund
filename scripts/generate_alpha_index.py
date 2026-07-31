@@ -15,7 +15,7 @@ from typing import Any, Callable
 logger = logging.getLogger(__name__)
 
 
-def _make_content(title="", description=""):
+def _make_content(title="", description="") -> Any:
     """Create a simple content object for template rendering."""
     return type("obj", (object,), {
         "title": title,

@@ -114,7 +114,9 @@ class TestOntologyManager:
         c2 = Concept(id="kyc", label="KYC v2", pillar="aml")
         mgr.add_concept(c1)
         mgr.add_concept(c2)
-        assert mgr.get_concept("kyc").label == "KYC v1"
+        c = mgr.get_concept("kyc")
+        assert c is not None
+        assert c.label == "KYC v1"
 
     def test_add_concept_overwrite(self):
         mgr = OntologyManager()
@@ -122,7 +124,9 @@ class TestOntologyManager:
         c2 = Concept(id="kyc", label="KYC v2", pillar="aml")
         mgr.add_concept(c1)
         mgr.add_concept(c2, overwrite=True)
-        assert mgr.get_concept("kyc").label == "KYC v2"
+        c = mgr.get_concept("kyc")
+        assert c is not None
+        assert c.label == "KYC v2"
 
     def test_alias_resolution(self):
         mgr = OntologyManager()

@@ -69,6 +69,7 @@ def build_preview_html(item: Dict[str, Any]) -> str:
 class CMSHandler(SimpleHTTPRequestHandler):
     cms = CMS()
     template_cache: Dict[str, str] = {}
+    _build_running: bool = False
 
     def __init__(self, *args, **kwargs):
         self._jinja_env = None

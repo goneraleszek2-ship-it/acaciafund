@@ -290,7 +290,7 @@ class ContradictionDetector:
 
         for i in range(len(claims)):
             for j in range(i + 1, len(claims)):
-                pair_key = tuple(sorted([claims[i].claim_text, claims[j].claim_text]))
+                pair_key = (claims[i].claim_text, claims[j].claim_text)
                 if pair_key in seen:
                     continue
                 seen.add(pair_key)

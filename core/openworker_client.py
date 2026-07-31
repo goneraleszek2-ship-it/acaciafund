@@ -91,7 +91,7 @@ class OpenWorkerClient:
             "priority": priority,
             "tags": tags or [],
         }
-        result = self._session.post("/tasks", json=payload)
+        result = self._session.post("/tasks", payload=payload)
         task_id = result.get("task_id", "")
         if not task_id:
             raise OpenWorkerError(f"No task_id in response: {result}")
@@ -145,16 +145,16 @@ class OpenWorkerClient:
     def _handle_approval(self, task_id: str, status: dict[str, Any]):
         if not self.approval_callback:
             logger.warning(f"Task {task_id[:8]}... needs approval but no callback set — denying")
-            self._session.post(f"/tasks/{task_id}/deny", json={"reason": "No approval callback configured"})
+            self._session.post(f"/tasks/{task_id}/deny", payload={"reason": "No approval callback configured"})
             return
         tool_name = (status.get("approval_request") or {}).get("tool_name", "unknown")
         args = (status.get("approval_request") or {}).get("args", {})
         risk_level = (status.get("approval_request") or {}).get("risk_level", "read")
         approved = self.approval_callback(tool_name, args, risk_level)
         if approved:
-            self._session.post(f"/tasks/{task_id}/approve", json={})
+            self._session.post(f"/tasks/{task_id}/approve", payload={})
         else:
-            self._session.post(f"/tasks/{task_id}/deny", json={"reason": "Denied by callback"})
+            self._session.post(f"/tasks/{task_id}/deny", payload={"reason": "Denied by callback"})
 
     def submit_and_wait(
         self,
@@ -179,8 +179,8 @@ class _HttpxSession:
         r.raise_for_status()
         return r.json()
 
-    def post(self, path: str, json: dict[str, Any]) -> dict[str, Any]:
-        r = self._client.post(path, json=json)
+    def post(self, path: str, payload: dict[str, Any]) -> dict[str, Any]:
+        r = self._client.post(path, json=payload)
         r.raise_for_status()
         return r.json()
 
@@ -210,8 +210,8 @@ class _UrllibSession:
     def get(self, path: str) -> dict[str, Any]:
         return self._request("GET", path)
 
-    def post(self, path: str, json: dict[str, Any]) -> dict[str, Any]:
-        return self._request("POST", path, body=json.dumps(json).encode())
+    def post(self, path: str, payload: dict[str, Any]) -> dict[str, Any]:
+        return self._request("POST", path, body=json.dumps(payload).encode())
 
     def delete(self, path: str) -> dict[str, Any]:
         return self._request("DELETE", path)

@@ -12,15 +12,35 @@ from __future__ import annotations
 import logging
 import time
 from dataclasses import dataclass, field
-from typing import Any, Callable
-
-from pydantic import BaseModel
+from typing import Any, Callable, Protocol
 
 from core.agent_tools import ALL_TOOLS, RiskLevel, Tool, ToolExecutor
 from core.llm_client import AcaciaLLMClient, LLMConfig, LLMResult
 from core.risk_engine import RiskEngine
 
 logger = logging.getLogger(__name__)
+
+
+class LLMClientLike(Protocol):
+    """Duck-typed LLM client (real AcaciaLLMClient or test mock)."""
+
+    def chat_with_retry(
+        self,
+        messages: list[dict[str, str]],
+        *,
+        model: str | None = None,
+        temperature: float | None = None,
+        max_tokens: int | None = None,
+    ) -> LLMResult: ...
+
+    def structured(
+        self,
+        messages: list[dict[str, str]],
+        response_model: type[Any],
+        *,
+        model: str | None = None,
+        temperature: float | None = None,
+    ) -> Any | None: ...
 
 
 @dataclass
@@ -52,7 +72,7 @@ class BaseAgent:
         approval_callback: Callable[[str, dict[str, Any], RiskLevel], bool] | None = None,
     ):
         self.config = config or AgentConfig()
-        self.llm = llm_client or AcaciaLLMClient(config=self.config.llm_config)
+        self.llm: LLMClientLike = llm_client or AcaciaLLMClient(config=self.config.llm_config)
         self.risk = risk_engine or RiskEngine(
             approval_callback=approval_callback,
             auto_approve_read=self.config.auto_approve_read,
@@ -90,11 +110,11 @@ class BaseAgent:
     def llm_structured(
         self,
         messages: list[dict[str, str]],
-        response_model: type[BaseModel],
+        response_model: type[Any],
         *,
         model: str | None = None,
         temperature: float | None = None,
-    ) -> BaseModel | None:
+    ) -> Any | None:
         self.llm_calls += 1
         return self.llm.structured(
             messages=messages,

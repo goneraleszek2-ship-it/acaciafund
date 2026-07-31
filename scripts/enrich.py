@@ -828,6 +828,8 @@ Return ONLY valid JSON with these fields:
 No markdown, no code fences, just JSON."""
 
         raw = self._llm_call(system_prompt, user_prompt, temperature=0.4, max_tokens=500)
+        if raw is None:
+            return None
         return self._parse_llm_json(raw)
 
     # ----------------------------------------------------------------
@@ -863,6 +865,8 @@ Return ONLY valid JSON:
 No markdown, no code fences, just JSON."""
 
         raw = self._llm_call(system_prompt, user_prompt, temperature=0.3, max_tokens=400)
+        if raw is None:
+            return None
         return self._parse_llm_json(raw)
 
 

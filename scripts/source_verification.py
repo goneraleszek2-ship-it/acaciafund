@@ -16,7 +16,7 @@ from __future__ import annotations
 import json
 import re
 from pathlib import Path
-from typing import Any
+from typing import Any, cast
 
 import pandas as pd
 import tomllib
@@ -406,9 +406,9 @@ def main():
     # Save summary statistics
     stats = {
         "total_articles": len(df),
-        "mean_source_score": float(df["source_score"].mean()),
-        "verified_count": int(df["verified"].sum()),
-        "unverified_count": int((~df["verified"]).sum()),
+        "mean_source_score": float(cast(Any, df["source_score"].mean())),
+        "verified_count": int(cast(Any, df["verified"].sum())),
+        "unverified_count": int(cast(Any, (~df["verified"]).sum())),
         "source_type_distribution": df["source_type"].value_counts().to_dict(),
     }
 
