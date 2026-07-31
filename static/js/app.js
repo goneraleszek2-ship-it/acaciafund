@@ -195,124 +195,6 @@
     });
   }
 
-  /* ── Settings Panel ── */
-  function initSettings() {
-    var panel = document.getElementById('settings-panel');
-    var toggle = document.getElementById('settings-toggle');
-    var close = document.getElementById('settings-close');
-    if (!panel || !toggle) return;
-    function open() {
-      panel.classList.add('open');
-      panel.setAttribute('aria-hidden', 'false');
-      document.body.style.overflow = 'hidden';
-    }
-    function closePanel() {
-      panel.classList.remove('open');
-      panel.setAttribute('aria-hidden', 'true');
-      document.body.style.overflow = '';
-    }
-    toggle.addEventListener('click', function (e) {
-      e.stopPropagation();
-      if (panel.classList.contains('open')) { closePanel(); } else { open(); }
-    });
-    if (close) close.addEventListener('click', closePanel);
-    document.addEventListener('keydown', function (e) {
-      if (e.key === 'Escape' && panel.classList.contains('open')) closePanel();
-    });
-    panel.addEventListener('click', function (e) {
-      if (e.target === panel) closePanel();
-    });
-  }
-
-  /* ── Focus Mode ── */
-  function initFocusMode() {
-    var cb = document.getElementById('focus-toggle');
-    if (!cb) return;
-    var active;
-    try { active = localStorage.getItem('acacia_focus') === 'true'; } catch (_) { active = false; }
-    function apply(val) {
-      document.documentElement.setAttribute('data-focus', val ? 'true' : 'false');
-      cb.checked = val;
-      try { localStorage.setItem('acacia_focus', val ? 'true' : 'false'); } catch (_) {}
-    }
-    cb.addEventListener('change', function () { apply(cb.checked); });
-    apply(active);
-  }
-
-  /* ── Reading Guide Line ── */
-  function initReadingGuide() {
-    var cb = document.getElementById('guide-toggle');
-    if (!cb) return;
-    var guide = document.createElement('div');
-    guide.className = 'reading-guide';
-    guide.id = 'reading-guide-line';
-    document.body.appendChild(guide);
-    var active;
-    try { active = localStorage.getItem('acacia_reading_guide') === 'true'; } catch (_) { active = false; }
-    function apply(val) {
-      cb.checked = val;
-      try { localStorage.setItem('acacia_reading_guide', val ? 'true' : 'false'); } catch (_) {}
-      if (val) {
-        guide.classList.add('visible');
-      } else {
-        guide.classList.remove('visible');
-      }
-    }
-    cb.addEventListener('change', function () { apply(cb.checked); });
-    if (active) {
-      apply(true);
-      function updateGuide() {
-        var winH = window.innerHeight;
-        var top = window.scrollY + winH * 0.4;
-        if (top >= window.scrollY + 60) {
-          guide.style.top = top + 'px';
-        }
-      }
-      window.addEventListener('scroll', updateGuide);
-      window.addEventListener('resize', updateGuide);
-      updateGuide();
-    }
-  }
-
-  /* ── Information Density ── */
-  function initDensity() {
-    var btns = document.querySelectorAll('.density-btn');
-    if (!btns.length) return;
-    var current;
-    try { current = localStorage.getItem('acacia_density') || 'standard'; } catch (_) { current = 'standard'; }
-    function apply(density) {
-      document.documentElement.setAttribute('data-density', density);
-      btns.forEach(function (b) {
-        b.classList.toggle('active', b.getAttribute('data-density') === density);
-      });
-      try { localStorage.setItem('acacia_density', density); } catch (_) {}
-    }
-    btns.forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        apply(btn.getAttribute('data-density'));
-      });
-    });
-    apply(current);
-  }
-
-  /* ── Entrance Animations (IntersectionObserver) ── */
-  function initEntranceAnimations() {
-    if ('IntersectionObserver' in window) {
-      var observer = new IntersectionObserver(function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.style.animationPlayState = 'running';
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-      document.querySelectorAll('.entrance-fade, .entrance-slide-up, .entrance-slide-down').forEach(function (el) {
-        el.style.animationPlayState = 'paused';
-        observer.observe(el);
-      });
-    }
-  }
-
   /* ── Theme Toggle ── */
   function initTheme() {
     var btn = document.getElementById('theme-toggle');
@@ -349,240 +231,6 @@
     }
   }
 
-  /* ── Article Outline / Table of Contents ── */
-  function initArticleOutline() {
-    var prose = document.querySelector('.prose-body');
-    if (!prose) return;
-
-    var headings = prose.querySelectorAll('h2, h3');
-    if (headings.length < 2) return;
-
-    /* Assign stable IDs to headings */
-    var usedIds = {};
-    headings.forEach(function (h) {
-      var baseId = (h.textContent || '').trim().toLowerCase()
-        .replace(/\s+/g, '-')
-        .replace(/[^a-z0-9-]/g, '')
-        .replace(/-+/g, '-')
-        .replace(/^-|-$/g, '');
-      if (!baseId) baseId = 'section';
-      var id = baseId;
-      var counter = 1;
-      while (usedIds[id]) { id = baseId + '-' + counter; counter++; }
-      usedIds[id] = true;
-      h.id = id;
-    });
-
-    /* Build nested items: h2 → top-level, h3 → child of preceding h2 */
-    var items = [];
-    var currentH2 = null;
-    headings.forEach(function (h) {
-      var title = (h.textContent || '').trim();
-      if (h.tagName === 'H2') {
-        currentH2 = { id: h.id, title: title, children: [] };
-        items.push(currentH2);
-      } else if (h.tagName === 'H3' && currentH2) {
-        currentH2.children.push({ id: h.id, title: title });
-      }
-    });
-
-    if (items.length < 1) return;
-
-    /* Render ToC as nested <ol> */
-    function buildList(arr, hClass) {
-      var ol = document.createElement('ol');
-      arr.forEach(function (item) {
-        var li = document.createElement('li');
-        var a = document.createElement('a');
-        a.href = '#' + item.id;
-        a.textContent = item.title;
-        a.className = hClass || 'toc-h2';
-        a.setAttribute('data-toc-id', item.id);
-        li.appendChild(a);
-        if (item.children && item.children.length) {
-          li.appendChild(buildList(item.children, 'toc-h3'));
-        }
-        ol.appendChild(li);
-      });
-      return ol;
-    }
-
-    var toc = document.createElement('nav');
-    toc.className = 'article-toc';
-    toc.setAttribute('aria-label', 'On this page');
-
-    var inner = document.createElement('div');
-    inner.className = 'article-toc-inner';
-    var title = document.createElement('div');
-    title.className = 'article-toc-title';
-    title.textContent = 'On this page';
-    inner.appendChild(title);
-    inner.appendChild(buildList(items));
-    toc.appendChild(inner);
-
-    /* Insert ToC right after the article header */
-    var article = prose.closest('article');
-    if (!article) return;
-    var header = article.querySelector('header');
-    if (header) {
-      header.after(toc);
-    } else {
-      article.prepend(toc);
-    }
-    article.classList.add('article-with-toc');
-
-    /* ScrollSpy: highlight current section */
-    var links = toc.querySelectorAll('a[data-toc-id]');
-    var targets = [];
-    links.forEach(function (a) {
-      var el = document.getElementById(a.getAttribute('data-toc-id'));
-      if (el) targets.push({ link: a, el: el });
-    });
-
-    function updateActive() {
-      var fromTop = window.scrollY + 130;
-      var current = null;
-      targets.forEach(function (t) {
-        if (t.el.offsetTop <= fromTop) current = t;
-      });
-      links.forEach(function (a) { a.classList.remove('active'); });
-      if (current) current.link.classList.add('active');
-    }
-
-    window.addEventListener('scroll', updateActive, { passive: true });
-    updateActive();
-
-    /* Smooth scroll for ToC clicks */
-    toc.addEventListener('click', function (e) {
-      var a = e.target.closest('a[data-toc-id]');
-      if (!a) return;
-      e.preventDefault();
-      var id = a.getAttribute('data-toc-id');
-      var target = document.getElementById(id);
-      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    });
-  }
-
-  /* ── Keyboard Shortcuts ── */
-  function initKeyboardShortcuts() {
-    var sheet = null;
-
-    function showCheatSheet() {
-      if (sheet) { sheet.remove(); sheet = null; return; }
-      sheet = document.createElement('div');
-      sheet.className = 'shortcuts-overlay';
-      sheet.setAttribute('role', 'dialog');
-      sheet.setAttribute('aria-label', 'Keyboard shortcuts');
-      sheet.innerHTML =
-        '<div class="shortcuts-modal">' +
-          '<div class="shortcuts-header"><span class="shortcuts-title">Keyboard Shortcuts</span><button class="shortcuts-close" aria-label="Close">&times;</button></div>' +
-          '<div class="shortcuts-body">' +
-            '<div class="shortcut-row"><kbd>?</kbd><span>Toggle this help</span></div>' +
-            '<div class="shortcut-row"><kbd>s</kbd><span>Focus search</span></div>' +
-            '<div class="shortcut-row"><kbd>t</kbd><span>Toggle dark/light theme</span></div>' +
-            '<div class="shortcut-row"><kbd>n</kbd><span>Next article</span></div>' +
-            '<div class="shortcut-row"><kbd>p</kbd><span>Previous article</span></div>' +
-            '<div class="shortcut-row"><kbd>f</kbd><span>Toggle focus mode</span></div>' +
-            '<div class="shortcut-row"><kbd>g</kbd><span>Toggle reading guide</span></div>' +
-            '<div class="shortcut-row"><kbd>[</kbd><span>Compact density</span></div>' +
-            '<div class="shortcut-row"><kbd>]</kbd><span>Comfortable density</span></div>' +
-            '<div class="shortcut-row"><kbd>=</kbd><span>Standard density</span></div>' +
-            '<div class="shortcut-row"><kbd>Esc</kbd><span>Close this / blur</span></div>' +
-          '</div>' +
-        '</div>';
-      document.body.appendChild(sheet);
-      sheet.querySelector('.shortcuts-close').addEventListener('click', function () {
-        sheet.remove(); sheet = null;
-      });
-      sheet.addEventListener('click', function (e) {
-        if (e.target === sheet) { sheet.remove(); sheet = null; }
-      });
-    }
-
-    function closeCheatSheet() {
-      if (sheet) { sheet.remove(); sheet = null; }
-    }
-
-    document.addEventListener('keydown', function (e) {
-      /* Ignore if typing in an input/textarea */
-      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || e.target.isContentEditable) return;
-
-      switch (e.key) {
-        case '?': case 'h':
-          if (!e.ctrlKey && !e.metaKey) { e.preventDefault(); showCheatSheet(); }
-          break;
-        case 'Escape':
-          if (sheet) { closeCheatSheet(); return; }
-          break;
-        case 's':
-          if (!e.ctrlKey && !e.metaKey) {
-            e.preventDefault();
-            var si = document.getElementById('search-input');
-            if (si) { si.focus(); }
-          }
-          break;
-        case 't':
-          if (!e.ctrlKey && !e.metaKey) {
-            e.preventDefault();
-            var tb = document.getElementById('theme-toggle');
-            if (tb) tb.click();
-          }
-          break;
-        case 'n':
-          if (!e.ctrlKey && !e.metaKey) {
-            var nn = document.querySelector('link[rel="next"]') ||
-                     document.querySelector('nav[aria-label="Article navigation"] a:last-child') ||
-                     document.querySelector('nav[aria-label="Lesson navigation"] a:last-child');
-            if (nn && nn.href) { e.preventDefault(); window.location.href = nn.href; }
-          }
-          break;
-        case 'p':
-          if (!e.ctrlKey && !e.metaKey) {
-            var pp = document.querySelector('link[rel="prev"]') ||
-                     document.querySelector('nav[aria-label="Article navigation"] a:first-child') ||
-                     document.querySelector('nav[aria-label="Lesson navigation"] a:first-child');
-            if (pp && pp.href) { e.preventDefault(); window.location.href = pp.href; }
-          }
-          break;
-        case 'f':
-          if (!e.ctrlKey && !e.metaKey) {
-            e.preventDefault();
-            var fc = document.getElementById('focus-toggle');
-            if (fc) { fc.checked = !fc.checked; fc.dispatchEvent(new Event('change')); }
-          }
-          break;
-        case 'g':
-          if (!e.ctrlKey && !e.metaKey) {
-            e.preventDefault();
-            var gc = document.getElementById('guide-toggle');
-            if (gc) { gc.checked = !gc.checked; gc.dispatchEvent(new Event('change')); }
-          }
-          break;
-        case '[':
-          if (!e.ctrlKey && !e.metaKey) {
-            e.preventDefault();
-            var compactBtn = document.querySelector('.density-btn[data-density="compact"]');
-            if (compactBtn) compactBtn.click();
-          }
-          break;
-        case ']':
-          if (!e.ctrlKey && !e.metaKey) {
-            e.preventDefault();
-            var comfortableBtn = document.querySelector('.density-btn[data-density="comfortable"]');
-            if (comfortableBtn) comfortableBtn.click();
-          }
-          break;
-        case '=':
-          if (!e.ctrlKey && !e.metaKey) {
-            e.preventDefault();
-            var standardBtn = document.querySelector('.density-btn[data-density="standard"]');
-            if (standardBtn) standardBtn.click();
-          }
-          break;
-      }
-    });
-  }
-
   /* ── Init All ── */
   function init() {
     initTheme();
@@ -595,13 +243,6 @@
     initFeedback();
     initDeepDive();
     initContinueReading();
-    initSettings();
-    initFocusMode();
-    initReadingGuide();
-    initDensity();
-    initEntranceAnimations();
-    initArticleOutline();
-    initKeyboardShortcuts();
     /* Keyboard nav indicator */
     document.addEventListener('keydown', function(e) {
       if (e.key === 'Tab') document.body.classList.add('keyboard-nav');
@@ -737,46 +378,13 @@
     const el = document.getElementById('search-suggestions');
     if (!el) return;
     const history = getHistory();
-    const matchingHistory = filter ? history.filter(h => h.includes(filter.toLowerCase())) : history;
-
-    /* Match concepts/tags from search index */
-    var matchingConcepts = [];
-    if (searchIndex && filter) {
-      var conceptSet = {};
-      searchIndex.forEach(function (entry) {
-        (entry.ontology_concepts || []).forEach(function (c) {
-          if (c.toLowerCase().includes(filter.toLowerCase())) conceptSet[c] = true;
-        });
-        (entry.tags || []).forEach(function (t) {
-          if (t.toLowerCase().includes(filter.toLowerCase())) conceptSet[t] = true;
-        });
-      });
-      matchingConcepts = Object.keys(conceptSet).slice(0, 6);
-    }
-
-    var hasHistory = matchingHistory.length > 0;
-    var hasConcepts = matchingConcepts.length > 0;
-    if (!hasHistory && !hasConcepts) { el.innerHTML = ''; el.style.display = 'none'; return; }
-
-    var html = '';
-    if (hasHistory) {
-      html += matchingHistory.map(function (h, i) {
-        return '<div class="suggestion-item" data-suggestion="' + escapeHtml(h) + '" data-type="history" style="padding:0.5rem 0.75rem;cursor:pointer;font-size:0.9rem;border-bottom:1px solid var(--color-border)">' +
-          highlightTerms(escapeHtml(h), filter ? filter.split(/\s+/) : []) +
-          '</div>';
-      }).join('');
-    }
-    if (hasConcepts) {
-      if (hasHistory) html += '<div class="suggestion-section-label">Concepts & Tags</div>';
-      html += matchingConcepts.map(function (c) {
-        return '<div class="suggestion-item" data-suggestion="' + escapeHtml(c) + '" data-type="concept" style="padding:0.5rem 0.75rem;cursor:pointer;font-size:0.9rem;display:flex;align-items:center;gap:0.5rem">' +
-          '<svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="flex-shrink:0"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>' +
-          highlightTerms(escapeHtml(c), filter ? filter.split(/\s+/) : []) +
-          '</div>';
-      }).join('');
-    }
-
-    el.innerHTML = html;
+    const matching = filter ? history.filter(h => h.includes(filter.toLowerCase())) : history;
+    if (!matching.length) { el.innerHTML = ''; el.style.display = 'none'; return; }
+    el.innerHTML = matching.map((h, i) =>
+      '<div class="suggestion-item" data-suggestion="' + escapeHtml(h) + '" data-idx="' + i + '" style="padding:0.5rem 0.75rem;cursor:pointer;font-size:0.9rem;border-bottom:1px solid var(--color-border, #333)">' +
+      highlightTerms(escapeHtml(h), filter ? filter.split(/\s+/) : []) +
+      '</div>'
+    ).join('');
     el.style.display = 'block';
   }
 
@@ -1102,27 +710,16 @@
     // Suggestion click handler
     document.getElementById('search-suggestions').addEventListener('click', function(e) {
       const item = e.target.closest('.suggestion-item');
-      if (!item) return;
-      const suggestion = item.getAttribute('data-suggestion');
-      const type = item.getAttribute('data-type') || 'history';
-      if (!suggestion) return;
-      this.style.display = 'none';
-
-      if (type === 'concept') {
-        // Concept suggestion: apply as tag filter
-        var url = new URL(window.location);
-        url.searchParams.set('f_tags', suggestion);
-        url.searchParams.delete('q');
-        history.replaceState(null, '', url);
-        input.value = '';
-        runSearch('', suggestion);
-      } else {
-        // History suggestion: fill search box
-        input.value = suggestion;
-        var url = new URL(window.location);
-        url.searchParams.set('q', suggestion);
-        history.replaceState(null, '', url);
-        runSearch(suggestion);
+      if (item) {
+        const suggestion = item.getAttribute('data-suggestion');
+        if (suggestion) {
+          input.value = suggestion;
+          this.style.display = 'none';
+          const url = new URL(window.location);
+          url.searchParams.set('q', suggestion);
+          history.replaceState(null, '', url);
+          runSearch(suggestion);
+        }
       }
     });
 

@@ -4,10 +4,8 @@ Usage:
     python3 -c "from scripts.cms_api import CMS; c = CMS(); print(len(c.list()))"
 """
 import json
-import os
 import shutil
 import subprocess
-import time
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple

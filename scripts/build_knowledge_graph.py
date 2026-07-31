@@ -13,7 +13,7 @@ OUTPUT_PATH = ROOT / "data" / "knowledge_graph.json"
 
 
 def load_registry():
-    with open(REGISTRY_PATH, "r") as f:
+    with open(REGISTRY_PATH, "r", encoding="utf-8") as f:
         data = json.load(f)
     # Assuming data has a "content" list of items
     return data.get("content", [])
@@ -51,7 +51,7 @@ def build_graph():
         graph[slug1] = [{"slug": s2, "score": round(s, 4)} for s2, s in top3]
     # Write output
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
-    with open(OUTPUT_PATH, "w") as f:
+    with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
         json.dump(graph, f, indent=2)
     print(f"Knowledge graph written to {OUTPUT_PATH}")
     return graph

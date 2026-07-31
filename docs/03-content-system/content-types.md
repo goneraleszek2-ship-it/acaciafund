@@ -2,7 +2,7 @@
 
 AcaciaFund has three content types: **Research**, **Learn**, and **Knowledge**. Each type uses a different Jinja2 template and serves a distinct purpose in the content taxonomy.
 
-## Research (~163 items)
+## Research (96 items)
 
 **Template:** `research.j2`
 **Purpose:** External content ingestion and synthesis from authoritative sources.
@@ -23,7 +23,7 @@ body_html → clean HTML → extract headings → inject section images
 → render template → write output
 ```
 
-## Learn (~54 items, 18 per pillar)
+## Learn (83 items)
 
 **Template:** `learn.j2`
 **Purpose:** Interactive educational modules using Bloom's taxonomy.
@@ -43,7 +43,7 @@ body_html → clean HTML → extract headings → inject section images
 
 **Generation:** Auto-generated via `scripts/generate_learn_modules.py`
 
-## Knowledge (~43 items)
+## Knowledge (16 items)
 
 **Template:** `knowledge.j2`
 **Purpose:** Platform documentation, methodology, architecture decisions.
@@ -54,10 +54,10 @@ body_html → clean HTML → extract headings → inject section images
 - **Cross-pillar navigation** — Connections to related content in other pillars
 
 **Cross-pillar categories:**
-Knowledge items use 11 cross-pillar categories (defined in `build.py:KNOWLEDGE_CATEGORIES`):
-`methodology`, `tooling`, `architecture`, `tutorial`, `reference`, `tutorial-code`, `case-study`, `benchmark`, `comparison`, `deep-dive`, `landscape`
+Knowledge items use 13 cross-pillar categories (defined in `build.py:KNOWLEDGE_CATEGORIES`):
+`platform`, `guide`, `reference`, `architecture`, `foundations`, `advanced-techniques`, `best-practices`, `regulations`, `industry-analysis`, `market-analysis`, `strategies`, `methodology`, `tutorial-code`
 
-These are resolved to pillar-specific subcategories via `config.py:KNOWLEDGE_TO_PILLAR_CATEGORY`.
+These are resolved to pillar-specific subcategories via `config.py:KNOWLEDGE_TO_PILLAR_CATEGORY`. Categories with no items still get a landing page at `/knowledge/{cat}/`.
 
 ## Rendering Differences
 

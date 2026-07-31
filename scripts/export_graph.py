@@ -38,7 +38,7 @@ def _domain(slug: str) -> str:
 
 
 def load_registry() -> list[dict]:
-    with open(REGISTRY_PATH, "r") as f:
+    with open(REGISTRY_PATH, "r", encoding="utf-8") as f:
         data = json.load(f)
     return data.get("content", [])
 
@@ -135,7 +135,7 @@ def build_graph() -> dict:
     graph = {"nodes": nodes, "edges": edges}
 
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
-    with open(OUTPUT_PATH, "w") as f:
+    with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
         json.dump(graph, f, indent=2)
     print(f"Graph written to {OUTPUT_PATH}")
     return graph

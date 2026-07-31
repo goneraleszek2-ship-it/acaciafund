@@ -1,19 +1,78 @@
 # Testing Overview
 
-AcaciaFund has **163+ tests** across 8 test files, covering core modules, build output, redirects, and taxonomy generation.
+AcaciaFund has **855 tests** — **847 Python tests across 37 modules** plus **8 JS tests** — covering core modules, the cognitive architecture (schema builder, retention, adaptive), research provenance, build output, redirects, and taxonomy generation.
+
+> **Note:** Counts verified 2026-07-30 via `python3 -m pytest tests/ --co` (847 collected) + `node tests/test_progressive_disclosure.js` (8).
 
 ## Test Files
 
+### Core & Infrastructure
+
 | File | Tests | Covers |
 |------|-------|--------|
+| `tests/test_ingestion.py` | 64 | Content ingestion pipeline |
 | `tests/test_ontology.py` | 39 | Ontology models, manager, extraction, seeding |
+| `tests/test_urls.py` | 34 | URL helpers, pillar mapping, slug conversion |
+| `tests/test_metadata.py` | 28 | Manifest building, JSON utils, schema validation |
+| `tests/test_contracts.py` | 24 | MOSA architecture contract tests |
+| `tests/test_data.py` | 17 | Domain extraction, entity/theme extraction |
+| `tests/test_content.py` | 11 | Content dataclass construction |
+| `tests/test_build_cache.py` | 14 | Build cache, incremental builds |
+| `tests/test_assets.py` | 15 | Asset pipeline |
+| `tests/test_score.py` | 17 | Content scoring |
+| `tests/test_smoke.py` | 9 | Registry validation, schema enforcement |
+| `tests/test_build_smoke.py` | 22 | Build output verification |
+| `tests/test_redirects.py` | 11 | Redirect rules validation |
+
+### Cognitive Architecture
+
+| File | Tests | Covers |
+|------|-------|--------|
+| `tests/test_schema_builder.py` | 29 | Prerequisite DAGs, learning paths, Bloom categorization |
+| `tests/test_learning_paths.py` | 9 | Learning path generation |
+| `tests/test_retention_engine.py` | 38 | SM-2, gap detection, interleaving, data generation |
+| `tests/test_adaptive.py` | 31 | User profiling, difficulty, modality, ranking |
+| `tests/test_sm2.py` | 13 | SM-2 algorithm |
+| `tests/test_philosophy_integration.py` | 11 | Philosophical metadata integration |
+| `tests/test_alpha_index.py` | 7 | A–Z index generation |
+
+### Research Provenance
+
+| File | Tests | Covers |
+|------|-------|--------|
+| `tests/test_source_trail.py` | 23 | Claim→citation mapping, SourceTrailManager |
+| `tests/test_contradiction.py` | 40 | Negation/antonym/numeric detection, clustering |
+| `tests/test_evidence_grade.py` | 24 | GRADE-style evidence scoring |
+| `tests/test_export_research.py` | 14 | Research report export |
+
+### Generation & Rendering
+
+| File | Tests | Covers |
+|------|-------|--------|
+| `tests/test_generate_pages.py` | 40 | Headings, related, reading time, SQI badge, fingerprint |
+| `tests/test_compositor.py` | 26 | SVG renderers (timeline, flow, comparisons, badges) |
+| `tests/test_extractors.py` | 18 | Timeline/flow/comparison extraction |
+| `tests/test_generate_learn_modules.py` | 17 | Learn module generation |
 | `tests/test_learn_generation.py` | 14 | Learn module generation pipeline |
-| `tests/test_urls.py` | 18 | URL helpers, pillar mapping, slug conversion |
-| `tests/test_build_cache.py` | 18 | Build cache, incremental builds |
-| `tests/test_smoke.py` | 34 | Registry validation, schema enforcement |
-| `tests/test_build_smoke.py` | 12 | Build output verification |
-| `tests/test_redirects.py` | 8 | Redirect rules validation |
-| `tests/test_build_taxonomies.py` | 20 | Taxonomy generation (all 5 functions) |
+
+### Taxonomies, Sources & Agents
+
+| File | Tests | Covers |
+|------|-------|--------|
+| `tests/test_build_taxonomies.py` | 51 | Taxonomy generation (admin, search, tag, pillar, feed) |
+| `tests/test_check_source_freshness.py` | 8 | Source freshness staleness computation |
+| `tests/test_source_synthesis.py` | 19 | Tag extraction, synthesis description, key insights |
+| `tests/test_agent_tools.py` | 16 | Agent tool definitions |
+| `tests/test_agents.py` | 22 | Agent pipeline |
+| `tests/test_risk_engine.py` | 16 | Risk engine callbacks |
+| `tests/test_llm_client.py` | 11 | LLM client abstraction |
+| `tests/test_enrich.py` | 45 | Content enrichment |
+
+### JavaScript
+
+| File | Tests | Covers |
+|------|-------|--------|
+| `tests/test_progressive_disclosure.js` | 8 | `parseSections`, `toggleSection` pure functions |
 
 ## Test Configuration
 
@@ -46,10 +105,13 @@ python3 -m pytest tests/test_urls.py::test_pillar_to_url -v
 | Layer | Approach | Tools |
 |-------|----------|-------|
 | Core modules | Unit tests with mocks | pytest, SimpleNamespace |
+| Cognitive architecture | Pure-function tests (schema builder, SM-2, adaptive) | pytest |
+| Research provenance | Detection tests (claims, contradictions, grading) | pytest |
 | Build pipeline | Smoke tests on output | Path I/O, subprocess |
 | Templates | Minimal (snapshot-like assertions) | String matching |
 | Content | Registry validation | Pydantic schema validation |
 | Scripts | Integration tests (where feasible) | Direct import + mock |
+| JS | Pure-function tests via Node (no npm/playwright) | `node tests/test_progressive_disclosure.js` |
 
 ## Key Patterns
 
@@ -89,6 +151,9 @@ if not registry_path.exists():
 |--------|-------------|----------------------|
 | `core/urls.py` | Only `config.py` | ✅ Yes (fast, no heavy deps) |
 | `core/ontology.py` | Pydantic, `config.py` | ✅ Yes |
+| `core/schema_builder.py` | networkx, `core/ontology.py` | ✅ Yes |
+| `core/retention_engine.py` | Python stdlib + pydantic | ✅ Yes |
+| `core/adaptive.py` | Python stdlib | ✅ Yes |
 | `core/build_taxonomies.py` | `config.py`, `core/urls.py` | ✅ Yes |
 | `core/build_cache.py` | Python stdlib | ✅ Yes |
 | `build.py` | pandas, Jinja2, PIL | ❌ No (slow imports) |

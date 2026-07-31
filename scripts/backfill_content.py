@@ -14,7 +14,7 @@ REGISTRY_PATH = os.path.join(ROOT_DIR, "registry.json")
 
 TOPIC_CONTENT = {
     # ── AML research articles ──
-    "aml/compliance/what-is-money-laundering": {
+    "aml/research/what-is-money-laundering": {
         "overview_paras": [
             "Money laundering is the process by which illegally obtained funds are made to appear legitimate. Criminals use a variety of techniques to disguise the origin of proceeds from drug trafficking, fraud, corruption, and other serious offenses. The act of laundering money is essential to organized crime because it allows criminals to use their illicit gains without drawing suspicion from law enforcement or financial regulators.",
             "The typical money laundering process is broken into three stages: placement, layering, and integration. During placement, illicit funds are introduced into the financial system through deposits, purchases, or other transactions. Layering involves moving funds through complex transactions to obscure their origin, often crossing multiple jurisdictions. Finally, integration returns the laundered money to the criminal as seemingly legitimate wealth. Combating money laundering requires a coordinated effort between financial institutions, regulators, and law enforcement agencies worldwide."
@@ -43,7 +43,7 @@ TOPIC_CONTENT = {
             {"front": "What is trade-based money laundering?", "back": "Over- or under-invoicing goods and services to move value across borders without attracting regulatory attention."}
         ]
     },
-    "aml/compliance/kyc-basics": {
+    "aml/research/kyc-basics": {
         "overview_paras": [
             "Know Your Customer (KYC) is the cornerstone of anti-money laundering compliance. It refers to the process by which financial institutions verify the identity of their clients, assess their risk profile, and understand the nature of their financial activities. KYC is not merely a regulatory checkbox but a fundamental risk management practice that protects institutions from being used for financial crime.",
             "A robust KYC framework consists of three key components: customer identification program (CIP), customer due diligence (CDD), and ongoing monitoring. CIP requires collecting and verifying identifying information such as name, address, date of birth, and government-issued ID numbers. CDD involves assessing the customer's risk level based on factors like occupation, source of funds, and geographic location. Ongoing monitoring ensures that customer activity remains consistent with their stated profile throughout the business relationship."
@@ -72,7 +72,7 @@ TOPIC_CONTENT = {
             {"front": "What is beneficial ownership?", "back": "Identifying the natural persons who ultimately own or control a legal entity, preventing shell company abuse."}
         ]
     },
-    "aml/compliance/aml-regulatory-landscape": {
+    "aml/research/aml-regulatory-landscape": {
         "overview_paras": [
             "The global AML regulatory landscape is a complex web of international standards, national laws, and industry guidelines designed to combat money laundering and terrorist financing. At the apex sits the Financial Action Task Force (FATF), an intergovernmental body that sets international standards and evaluates countries' compliance. FATF's 40 Recommendations provide the framework that national regulators use to design their own AML regimes.",
             "In the United States, the Bank Secrecy Act (BSA) of 1970 and the USA PATRIOT Act of 2001 form the backbone of AML regulation. The BSA requires financial institutions to maintain records, file reports such as Currency Transaction Reports (CTRs) and Suspicious Activity Reports (SARs), and implement compliance programs. The European Union's AML Directives (now the AMLR) create a harmonized framework across member states, while jurisdictions like Singapore, Hong Kong, and the UAE operate their own robust regulatory systems."
@@ -101,7 +101,7 @@ TOPIC_CONTENT = {
             {"front": "How much have global AML penalties totaled in recent years?", "back": "Over $10 billion in fines and penalties across major jurisdictions."}
         ]
     },
-    "aml/compliance/risk-based-approach-intro": {
+    "aml/research/risk-based-approach-intro": {
         "overview_paras": [
             "The risk-based approach (RBA) is the foundational methodology of modern AML compliance. Rather than applying uniform controls to all customers, the RBA requires institutions to identify, assess, and understand the money laundering and terrorist financing risks they face, then apply proportionate measures to mitigate those risks. This approach is endorsed by the FATF and embedded in virtually every major AML regulatory framework worldwide.",
             "At its core, the RBA recognizes that not all customers, products, or jurisdictions pose equal risk. A retail bank serving local customers faces different risks than a private bank handling cross-border wealth management. Under the RBA, institutions allocate their compliance resources where they are most needed — applying enhanced scrutiny to high-risk relationships while streamlining controls for low-risk ones. This targeted approach makes compliance both more effective and more efficient."
@@ -130,7 +130,7 @@ TOPIC_CONTENT = {
             {"front": "Why does FATF endorse the RBA?", "back": "It makes compliance more effective by focusing resources on highest-risk areas and more efficient by streamlining low-risk controls."}
         ]
     },
-    "aml/compliance/sanctions-screening-basics": {
+    "aml/research/sanctions-screening-basics": {
         "overview_paras": [
             "Sanctions screening is a critical component of AML compliance that involves checking customer names and transactions against government-maintained sanctions lists. These lists identify individuals, entities, and countries subject to economic sanctions imposed by bodies such as the US Office of Foreign Assets Control (OFAC), the European Union, the United Nations, and the UK Office of Financial Sanctions Implementation (OFSI).",
             "The screening process involves matching customer data against sanctions databases using name matching algorithms that account for variations in spelling, transliteration, and name formats. When a potential match is found, compliance teams must investigate and determine whether it is a true match or a false positive. Effective sanctions screening requires sophisticated technology, well-designed matching algorithms, and skilled analysts to resolve alerts efficiently."
@@ -159,7 +159,7 @@ TOPIC_CONTENT = {
             {"front": "What type of liability applies to sanctions violations?", "back": "Strict liability — institutions are responsible regardless of intent or knowledge."}
         ]
     },
-    "aml/compliance/suspicious-activity-reports": {
+    "aml/research/suspicious-activity-reports": {
         "overview_paras": [
             "Suspicious Activity Reports (SARs) and Suspicious Transaction Reports (STRs) are the primary mechanisms through which financial institutions report potentially illicit activity to financial intelligence units (FIUs). In the United States, SARs are filed with the Financial Crimes Enforcement Network (FinCEN), while other jurisdictions have their own reporting systems such as the UK's SAR regime through the National Crime Agency (NCA).",
             "The decision to file a SAR requires careful judgment by compliance professionals. Institutions must identify unusual activity that may indicate money laundering, terrorist financing, fraud, or other financial crime. This involves monitoring transactions for red flags such as unusual patterns, amounts inconsistent with customer profiles, rapid movement of funds, or activity involving high-risk jurisdictions. Timely and accurate SAR filing is essential for law enforcement to investigate and disrupt financial crime networks."
@@ -1718,7 +1718,7 @@ def generate_quality_metadata(item):
 
 def backfill():
     """Main backfill function."""
-    with open(REGISTRY_PATH) as f:
+    with open(REGISTRY_PATH, encoding="utf-8") as f:
         reg = json.load(f)
 
     content = reg["content"]
@@ -1756,7 +1756,7 @@ def backfill():
 
     # Write back
     reg["content"] = content
-    with open(REGISTRY_PATH, "w") as f:
+    with open(REGISTRY_PATH, "w", encoding="utf-8") as f:
         json.dump(reg, f, indent=2)
 
     # Summary

@@ -33,7 +33,7 @@ class BuildCache:
         """Load cache from disk."""
         if self.cache_file.exists():
             try:
-                with open(self.cache_file, 'r') as f:
+                with open(self.cache_file, 'r', encoding='utf-8') as f:
                     data = json.load(f)
 
                 if data.get('version') == CACHE_VERSION and data.get('url_structure_version') == URL_STRUCTURE_VERSION:
@@ -66,7 +66,7 @@ class BuildCache:
             'entries': self.cache
         }
 
-        with open(self.cache_file, 'w') as f:
+        with open(self.cache_file, 'w', encoding='utf-8') as f:
             json.dump(data, f, indent=2)
 
         print(f"💾 Cache saved: {len(self.cache)} entries")

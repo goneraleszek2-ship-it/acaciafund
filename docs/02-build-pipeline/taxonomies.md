@@ -117,6 +117,6 @@ generate_feed(dist_dir, all_content, render_template, ctx_base)
 
 ## Testing
 
-All 5 functions are tested in `tests/test_build_taxonomies.py` (20 tests) using mocked `render_template` and in-memory temporary directories.
+All 5 functions are tested in `tests/test_build_taxonomies.py` (51 tests) using mocked `render_template` and in-memory temporary directories.
 
 > **See also:** [Asset Pipeline](asset-pipeline.md), [Troubleshooting](troubleshooting.md)

@@ -22,9 +22,9 @@ from typing import Dict, List, Optional
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from core.contradiction import ContradictionReport, detect_contradictions
-from core.evidence_grade import EvidenceScore, grade_evidence
-from core.source_trail import SourceTrailManager
+from core.contradiction import ContradictionReport, detect_contradictions  # noqa: E402
+from core.evidence_grade import EvidenceScore, grade_evidence  # noqa: E402
+from core.source_trail import SourceTrailManager  # noqa: E402
 
 logger = logging.getLogger(__name__)
 

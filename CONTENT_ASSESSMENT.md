@@ -1,5 +1,8 @@
 # AcaciaFund — Live Site Content Assessment
 
+> **Status: Historical record** — this audit documents the 2026-07-08 production outage where ~97 blog posts returned 404.
+> **Resolution:** The issues described here were resolved by the URL Structure v3.0 refactor (2026-07-10) and subsequent rebuilds. As of 2026-07-30 the site generates **2,505 pages with 0 broken internal links** and the sitemap reflects correct knowledge paths. Retained for reference and root-cause analysis.
+
 **Date:** 2026-07-08  
 **URL:** https://www.acaciafund.org/
 

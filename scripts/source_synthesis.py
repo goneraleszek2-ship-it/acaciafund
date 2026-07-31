@@ -61,7 +61,7 @@ def load_registry():
     """Load registry.json for article metadata."""
     registry_path = PROJECT_ROOT / "registry.json"
     if registry_path.exists():
-        with open(registry_path, "r") as f:
+        with open(registry_path, "r", encoding="utf-8") as f:
             return json.load(f)
     return {"content": []}
 
@@ -500,7 +500,7 @@ def generate_synthesis_data():
                 json_rec[k] = v
         json_records.append(json_rec)
 
-    with open(json_path, "w") as f:
+    with open(json_path, "w", encoding="utf-8") as f:
         json.dump(json_records, f, indent=2, default=str)
     print(f"Saved synthesis data to {json_path}")
 

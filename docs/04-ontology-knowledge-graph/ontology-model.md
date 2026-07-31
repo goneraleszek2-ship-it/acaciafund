@@ -1,6 +1,6 @@
 # Ontology Model
 
-The ontology framework (`core/ontology.py`, 27,485 bytes) provides structured knowledge representation across the three pillars. It uses Pydantic v2 models and supports concept management, relation mapping, text extraction, and Cytoscape export.
+The ontology framework (`core/ontology.py`, ~75 KB) provides structured knowledge representation across the three pillars. It uses Pydantic v2 models and supports concept management, relation mapping, text extraction, philosophical metadata, and Cytoscape export. For the canonical overview, see [`ONTOLOGY.md`](../../ONTOLOGY.md).
 
 ## Data Models
 
@@ -14,6 +14,16 @@ classDiagram
         +list aliases
         +float confidence_score
         +str source_inspiration
+        +str philosophical_lineage
+        +str epistemic_status
+        +str normative_basis
+        +str ontological_commitment
+        +str temporal_ontology
+        +str uncertainty_class
+        +str governance_model
+        +str semantic_contract_type
+        +list philosophical_sources
+        +list cross_pillar_analogs
     }
 
     class Relation {
@@ -60,6 +70,16 @@ classDiagram
 | `aliases` | list[str] | Alternative names for text matching |
 | `confidence_score` | float | Extraction confidence (0.0–1.0) |
 | `source_inspiration` | str | Originating source URL or org |
+| `philosophical_lineage` | str | Thinker → concept → technique genealogy |
+| `epistemic_status` | str | Epistemic role (Constitutive, Instrumental, Regulatory, …) |
+| `normative_basis` | str | Normative theory (Kantian, Utilitarian, Rawlsian, …) |
+| `ontological_commitment` | str | What the concept presumes to exist |
+| `temporal_ontology` | str | Time model the concept operates under |
+| `uncertainty_class` | str | How uncertainty is represented |
+| `governance_model` | str | Who/what governs application of the concept |
+| `semantic_contract_type` | str | Nature of the concept's semantic contract |
+| `philosophical_sources` | list[str] | Primary philosophical references |
+| `cross_pillar_analogs` | list[dict] | Same epistemic pattern in other pillars |
 
 ### Relation
 
@@ -67,7 +87,7 @@ classDiagram
 |-------|------|-------------|
 | `source_id` | str | Source concept ID |
 | `target_id` | str | Target concept ID |
-| `relation_type` | str | `part_of`, `enables`, `mitigates`, `requires`, `competes_with` |
+| `relation_type` | str | One of 10 types: `part_of`, `enables`, `requires`, `influences`, `detects`, `regulates`, `supersedes`, `measures`, `implements`, `related_to` |
 | `strength` | float | Relationship strength (0.0–1.0, use `strength` not `weight`) |
 | `pillar` | str | Pillar or `cross-pillar` |
 
@@ -115,7 +135,7 @@ The central class for managing the ontology:
 | `to_cytograph_nodes()` / `to_cytograph_edges()` | Export to Cytoscape format |
 | `merge_into_cytograph(cytograph)` | Merge into existing Cytoscape graph |
 | `seed_pillar(pillar)` | Seed canonical concepts for a pillar |
-| `seed_all_pillars()` | Seed all 3 pillars (16 concepts each) |
+| `seed_all_pillars()` | Seed all 3 pillars |
 | `seed_relations()` | Create cross-pillar relations |
 | `concept_count()` | Total number of concepts |
 | `relation_count()` | Total number of relations |
@@ -124,10 +144,21 @@ The central class for managing the ontology:
 
 | Metric | Value |
 |--------|-------|
-| Total concepts | 48 (16 per pillar) |
-| Total relations | 47 |
-| Cross-pillar relations | 8 |
-| Relation types | 5 (`part_of`, `enables`, `mitigates`, `requires`, `competes_with`) |
+| Total concepts | 192 (58 compliance, 64 markets, 70 data) |
+| Total relations | 434 |
+| Relation types | 10 (`part_of`, `enables`, `requires`, `influences`, `detects`, `regulates`, `supersedes`, `measures`, `implements`, `related_to`) |
+| Concepts with `epistemic_status` | 192 |
+| Concepts with `cross_pillar_analogs` | 192 |
+
+> **Note:** Counts verified 2026-07-30 from `data/ontology.json`. The earlier documentation value of 48 concepts / 5 relation types reflects the initial seed and is obsolete.
+
+## Philosophical Foundations (Phase 2B)
+
+Every concept carries 10 philosophical metadata fields (see Concept table). These are merged into the ontology by `scripts/enrich_philosophy.py` from `data/philosophy_metadata.json`, validated bidirectionally by `scripts/validate_cross_pillar.py`, and rendered on concept detail pages via the partials `philosophical_lineage.j2`, `epistemic_badge.j2`, `normative_basis.j2`, and `cross_pillar_philosophy.j2`.
+
+## Retention Integration (Phase 3)
+
+`core/retention_engine.py` schedules all 192 concepts through SM-2 review with gap detection and interleaved practice. Concept review data is exported to `dist/static/review_concepts.json` at build time for the client-side engine (`static/js/retention_engine.js`).
 
 ## Persistence
 

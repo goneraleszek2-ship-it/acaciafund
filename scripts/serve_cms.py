@@ -8,22 +8,20 @@ Serves the static site and provides:
 Usage:
     python3 scripts/serve_cms.py [--port 8000] [--bind 0.0.0.0]
 """
+import copy
+import hashlib
+import html as html_mod
 import json
-import os
+import mimetypes
 import re
 import sys
-import html as html_mod
 import threading
-import mimetypes
-import io
-import hashlib
 import uuid
-import copy
 from datetime import datetime, timezone
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from pathlib import Path
 from typing import Any, Dict
-from urllib.parse import urlparse, parse_qs
+from urllib.parse import parse_qs, urlparse
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
@@ -34,8 +32,8 @@ ALLOWED_EXTENSIONS = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".svg", ".ico"}
 MAX_UPLOAD_SIZE = 10 * 1024 * 1024  # 10MB
 
 sys.path.insert(0, str(ROOT))
-from scripts.cms_api import CMS, CONTENT_TYPES, PILLARS, DIFFICULTIES
-from core.urls import slug_to_url
+from core.urls import slug_to_url  # noqa: E402
+from scripts.cms_api import CMS, CONTENT_TYPES, PILLARS  # noqa: E402
 
 
 def build_preview_html(item: Dict[str, Any]) -> str:
@@ -95,7 +93,6 @@ class CMSHandler(SimpleHTTPRequestHandler):
 
     def _asset_filter(self, path: str) -> str:
         """Resolve asset paths — for the CMS server we just pass through since dist/ is built."""
-        import hashlib
         local = (DIST / path.lstrip("/")).resolve()
         if local.exists() and local.is_file():
             h = hashlib.md5(local.read_bytes()).hexdigest()[:8]
@@ -133,6 +130,14 @@ class CMSHandler(SimpleHTTPRequestHandler):
     def serve_static_or_404(self, path: str):
         """Try to serve a static file from dist/ or return 404."""
         local = (DIST / path.lstrip("/")).resolve()
+        if not str(local).startswith(str(DIST)):
+            self.send_error(404, "Not Found")
+            return
+        if local.is_dir():
+            local = local / "index.html"
+        elif not local.exists() and not path.endswith("/"):
+            # Try with trailing slash -> index.html
+            local = (DIST / path.lstrip("/") / "index.html").resolve()
         if local.exists() and local.is_file() and str(local).startswith(str(DIST)):
             self.send_response(200)
             suffix = local.suffix
@@ -548,7 +553,7 @@ def main():
 
     server = HTTPServer((args.bind, args.port), CMSHandler)
     print(f"\n{'='*55}")
-    print(f"  AcaciaFund CMS Server")
+    print("  AcaciaFund CMS Server")
     print(f"  Admin: http://{args.bind}:{args.port}/admin/cms_list.html")
     print(f"  API:   http://{args.bind}:{args.port}/api/cms/")
     print(f"  Site:  http://{args.bind}:{args.port}/")

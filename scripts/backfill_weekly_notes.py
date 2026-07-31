@@ -682,7 +682,7 @@ weeks = [
 
 # Write the file
 OUT.parent.mkdir(parents=True, exist_ok=True)
-with open(OUT, "w") as f:
+with open(OUT, "w", encoding="utf-8") as f:
     json.dump({"weeks": weeks}, f, indent=2, ensure_ascii=False)
 
 print(f"Written {len(weeks)} weeks to {OUT}")

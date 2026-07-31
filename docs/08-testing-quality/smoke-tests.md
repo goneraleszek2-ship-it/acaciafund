@@ -2,7 +2,7 @@
 
 Smoke tests verify build output integrity and registry schema compliance without testing the build logic itself.
 
-## Build Smoke Tests (`test_build_smoke.py` — 12 tests)
+## Build Smoke Tests (`test_build_smoke.py` — 22 tests)
 
 These tests run against the built output in `dist/` and verify:
 
@@ -31,28 +31,28 @@ These tests run against the built output in `dist/` and verify:
 |------|----------|
 | `test_admin_pages_are_html` | All admin pages contain valid HTML |
 
-## Registry Smoke Tests (`test_smoke.py` — 34 tests)
+## Registry Smoke Tests (`test_smoke.py` — 9 tests)
 
 These tests validate `registry.json` against the schema:
 
-### Schema Validation (26 tests)
-
-Each field is checked for:
-- Presence (required fields)
-- Type correctness
-- Value constraints
-
-### Data Integrity (8 tests)
+### Schema & Validation
 
 | Test | Verifies |
 |------|----------|
-| `test_no_duplicate_slugs` | All slugs are unique |
-| `test_slug_format` | Slugs match `{pillar}/{content_type}/{topic}` |
-| `test_pillar_integrity` | All pillars are in `PILLAR_URL_MAP` |
-| `test_content_type_integrity` | All content_types are `research`/`learn`/`knowledge` |
-| `test_difficulty_integrity` | All difficulties are `beginner`/`intermediate`/`advanced` |
-| `test_sqi_in_range` | All SQI values are 0.0–1.0 |
-| `test_reading_time_positive` | Reading times are > 0 |
+| `test_registry_loads_and_matches_schema` | Registry parses as `RegistryData` |
+| `test_registry_content_items_have_mandatory_fields` | Required fields present on all items |
+| `test_registry_content_items_parse_as_content` | Items construct as `Content` objects |
+| `test_validate_content_strict_returns_empty_skip_list` | Strict validation passes clean registry |
+| `test_validate_content_non_strict_skips_invalid` | Non-strict mode skips (not crashes) |
+| `test_validate_content_returns_3_tuple` | Validator returns `(items, errors, warnings)` |
+
+### Registry I/O
+
+| Test | Verifies |
+|------|----------|
+| `test_registry_io_load_missing` | Loading a missing file raises cleanly |
+| `test_registry_io_save_and_load_round_trip` | Save/load roundtrip preserves data |
+| `test_registry_io_atomicity` | Writes are atomic (no partial file) |
 
 ## Running Smoke Tests
 

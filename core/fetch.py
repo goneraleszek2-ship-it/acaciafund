@@ -46,7 +46,7 @@ def _cached_request(url: str, cache_key: str, ttl_hours: int = 24) -> str | None
     if cache_path.exists():
         age_hours = (now - cache_path.stat().st_mtime) / 3600
         if age_hours < ttl_hours:
-            with open(cache_path) as f:
+            with open(cache_path, encoding="utf-8") as f:
                 cached: dict[str, Any] = json.load(f)
                 if cached.get("url") == url:
                     data = cached.get("data")
@@ -56,7 +56,7 @@ def _cached_request(url: str, cache_key: str, ttl_hours: int = 24) -> str | None
     # fresh fetch
     data = _request(url)
     if data is not None:
-        with open(cache_path, "w") as f:
+        with open(cache_path, "w", encoding="utf-8") as f:
             json.dump({"url": url, "ts": now, "data": data}, f)
     return data
 

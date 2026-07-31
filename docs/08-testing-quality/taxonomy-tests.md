@@ -1,6 +1,6 @@
 # Taxonomy Tests
 
-`tests/test_build_taxonomies.py` provides **20 tests** covering all 5 public functions in `core/build_taxonomies.py`.
+`tests/test_build_taxonomies.py` provides **51 tests** covering all 5 public functions in `core/build_taxonomies.py`.
 
 ## Test Structure
 

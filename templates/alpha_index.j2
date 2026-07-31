@@ -33,7 +33,7 @@
         {%- if entries %}
         <div class="space-y-2">
             {%- for entry in entries %}
-            <a href="/{{ entry.pillar_url }}/{{ entry.content_type }}/{{ entry.slug.split('/')[-1] }}/"
+            <a href="{{ slug_to_url(entry.slug) }}"
                class="entry-row block ghost-card p-3 transition hover:shadow-md text-decoration-none">
                 <div class="flex items-center gap-2 mb-1">
                     {%- if entry.pillar_label %}

@@ -233,7 +233,7 @@ def main() -> int:
         args.dry_run = False
 
     registry_path = ROOT / "registry.json"
-    with open(registry_path) as f:
+    with open(registry_path, encoding="utf-8") as f:
         registry = json.load(f)
 
     content: list[dict[str, Any]] = registry.get("content", [])
@@ -278,7 +278,7 @@ def main() -> int:
 
     if not args.dry_run and enriched > 0:
         registry["content"] = content
-        with open(registry_path, "w") as f:
+        with open(registry_path, "w", encoding="utf-8") as f:
             json.dump(registry, f, indent=1)
         logger.info(f"Updated {enriched} items in {registry_path}")
     elif enriched > 0:

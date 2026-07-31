@@ -1,6 +1,6 @@
 from . import sources as sources
-from .assets import AssetManager, create_asset_manager
 from .agent_tools import ALL_TOOLS, TOOL_MAP, RiskLevel, Tool, ToolExecutor
+from .assets import AssetManager, create_asset_manager
 from .dto import (
     KnowledgeDTO,
     LearnDTO,
@@ -11,7 +11,6 @@ from .dto import (
     TrendInfo,
 )
 from .llm_client import AcaciaLLMClient, LLMConfig, LLMResult
-from .risk_engine import RiskEngine, make_auto_callback, make_cli_approval_callback
 from .metadata import (
     build_asset_manifest,
     build_run_manifest,
@@ -36,6 +35,7 @@ from .ontology import (
     Relation,
     ResourceLink,
 )
+from .risk_engine import RiskEngine, make_auto_callback, make_cli_approval_callback
 
 __all__ = [
     "ALL_TOOLS",

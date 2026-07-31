@@ -16,7 +16,7 @@ Unit tests cover core modules with no heavy dependencies on pandas/Jinja2/PIL.
 | Persistence | `save()` / `load()` roundtrip |
 | Cytoscape export | `to_cytograph_nodes()`, `to_cytograph_edges()` |
 
-## URL Tests (`test_urls.py` — 18 tests)
+## URL Tests (`test_urls.py` — 34 tests)
 
 | Test Group | Description |
 |------------|-------------|
@@ -28,7 +28,7 @@ Unit tests cover core modules with no heavy dependencies on pandas/Jinja2/PIL.
 | `slug_to_path()` | Slug → output file path |
 | Edge cases | Empty slugs, missing pillars, URL-unsafe chars |
 
-## Build Cache Tests (`test_build_cache.py` — 18 tests)
+## Build Cache Tests (`test_build_cache.py` — 14 tests)
 
 | Test Group | Description |
 |------------|-------------|

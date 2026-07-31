@@ -1,88 +1,4 @@
 {
-  "aml/compliance/aml-regulatory-landscape": [
-    "aml-compliance-basics",
-    "aml-program",
-    "aml-program-reform",
-    "aml-regulatory-framework",
-    "bsa",
-    "design",
-    "fatf-recommendations",
-    "money-laundering-basics",
-    "nis2-cyber-resilience",
-    "regulatory-filing",
-    "travel-rule"
-  ],
-  "aml/compliance/kyc-basics": [
-    "aml-compliance-basics",
-    "aml-optimization",
-    "beneficial-ownership",
-    "cdd",
-    "cross-border-payments",
-    "crypto-travel-rule",
-    "cyber-aml",
-    "entity-resolution",
-    "fincrime-intelligence",
-    "hedge-funds",
-    "kyc",
-    "travel-rule"
-  ],
-  "aml/compliance/risk-based-approach-intro": [
-    "ai-act-high-risk",
-    "aml-compliance-basics",
-    "aml-esg-risk",
-    "aml-optimization",
-    "aml-regulatory-framework",
-    "aml-risk-scoring",
-    "cross-border-payments",
-    "crypto-travel-rule",
-    "de-risk",
-    "dora-ict-risk",
-    "esg-investing",
-    "fatf-recommendations",
-    "portfolio-optimization",
-    "risk-based-approach",
-    "risk-parity",
-    "travel-rule"
-  ],
-  "aml/compliance/sanctions-screening-basics": [
-    "adverse-media",
-    "aml-compliance-basics",
-    "carry-trade",
-    "execution-algos",
-    "global-sanctions",
-    "hedge-funds",
-    "kyc",
-    "mean-reversion",
-    "options-trading",
-    "regime-detection",
-    "sanctions-screening",
-    "statistical-arbitrage"
-  ],
-  "aml/compliance/suspicious-activity-reports": [
-    "aml-compliance-basics",
-    "aml-optimization",
-    "aml-reporting-dashboard",
-    "aml-threat-intel",
-    "cross-border-payments",
-    "crypto-travel-rule",
-    "ctr",
-    "cyber-aml",
-    "fincen-boi",
-    "fincrime-intelligence",
-    "regulatory-reporting",
-    "sar",
-    "str",
-    "transaction-monitoring",
-    "travel-rule"
-  ],
-  "aml/compliance/what-is-money-laundering": [
-    "aml-compliance-basics",
-    "aml-threat-intel",
-    "financial-crime-types",
-    "hawkes-process",
-    "market-making",
-    "money-laundering-basics"
-  ],
   "aml/knowledge/aml-timeline-2024-2026": [
     "aml-compliance-basics",
     "aml-regulatory-framework",
@@ -185,6 +101,13 @@
     "transaction-monitoring",
     "travel-rule"
   ],
+  "aml/learn/kyc-cdd-workflows": [
+    "aml-compliance-basics",
+    "cdd",
+    "edd",
+    "fatf-recommendations",
+    "kyc"
+  ],
   "aml/learn/money-laundering-mechanisms": [
     "carry-trade",
     "crypto-markets",
@@ -213,6 +136,20 @@
     "regime-detection",
     "regtech",
     "travel-rule"
+  ],
+  "aml/learn/sanctions-screening": [
+    "aml-compliance-basics",
+    "fatf-recommendations",
+    "global-sanctions",
+    "pep",
+    "sanctions-screening"
+  ],
+  "aml/learn/sar-filing-scenarios": [
+    "aml-compliance-basics",
+    "bsa",
+    "ctr",
+    "fincen-boi",
+    "sar"
   ],
   "aml/learn/trade-based-ml-sanctions": [
     "adverse-media",
@@ -309,6 +246,19 @@
     "streaming",
     "transaction-monitoring"
   ],
+  "aml/research/aml-regulatory-landscape": [
+    "aml-compliance-basics",
+    "aml-program",
+    "aml-program-reform",
+    "aml-regulatory-framework",
+    "bsa",
+    "design",
+    "fatf-recommendations",
+    "money-laundering-basics",
+    "nis2-cyber-resilience",
+    "regulatory-filing",
+    "travel-rule"
+  ],
   "aml/research/cryptocurrency-mixers-under-global-regulatory-spotlight": [
     "aml-compliance-basics",
     "crypto-travel-rule",
@@ -363,6 +313,20 @@
     "regulatory-filing",
     "risk-based-approach"
   ],
+  "aml/research/kyc-basics": [
+    "aml-compliance-basics",
+    "aml-optimization",
+    "beneficial-ownership",
+    "cdd",
+    "cross-border-payments",
+    "crypto-travel-rule",
+    "cyber-aml",
+    "entity-resolution",
+    "fincrime-intelligence",
+    "hedge-funds",
+    "kyc",
+    "travel-rule"
+  ],
   "aml/research/quantum-spectral-anomaly-detection": [
     "aml-compliance-basics",
     "aml-regulatory-framework",
@@ -372,6 +336,38 @@
     "regime-detection",
     "research",
     "transaction-monitoring"
+  ],
+  "aml/research/risk-based-approach-intro": [
+    "ai-act-high-risk",
+    "aml-compliance-basics",
+    "aml-esg-risk",
+    "aml-optimization",
+    "aml-regulatory-framework",
+    "aml-risk-scoring",
+    "cross-border-payments",
+    "crypto-travel-rule",
+    "de-risk",
+    "dora-ict-risk",
+    "esg-investing",
+    "fatf-recommendations",
+    "portfolio-optimization",
+    "risk-based-approach",
+    "risk-parity",
+    "travel-rule"
+  ],
+  "aml/research/sanctions-screening-basics": [
+    "adverse-media",
+    "aml-compliance-basics",
+    "carry-trade",
+    "execution-algos",
+    "global-sanctions",
+    "hedge-funds",
+    "kyc",
+    "mean-reversion",
+    "options-trading",
+    "regime-detection",
+    "sanctions-screening",
+    "statistical-arbitrage"
   ],
   "aml/research/square-root-price-impact-is-necessary-for-endogenous-manipul": [
     "ai-act-high-risk",
@@ -392,6 +388,31 @@
     "research",
     "retail-trading",
     "trade-finance-aml"
+  ],
+  "aml/research/suspicious-activity-reports": [
+    "aml-compliance-basics",
+    "aml-optimization",
+    "aml-reporting-dashboard",
+    "aml-threat-intel",
+    "cross-border-payments",
+    "crypto-travel-rule",
+    "ctr",
+    "cyber-aml",
+    "fincen-boi",
+    "fincrime-intelligence",
+    "regulatory-reporting",
+    "sar",
+    "str",
+    "transaction-monitoring",
+    "travel-rule"
+  ],
+  "aml/research/what-is-money-laundering": [
+    "aml-compliance-basics",
+    "aml-threat-intel",
+    "financial-crime-types",
+    "hawkes-process",
+    "market-making",
+    "money-laundering-basics"
   ],
   "compliance/learn/ai-machine-learning-aml": [
     "adverse-media",
@@ -841,6 +862,10 @@
     "real-time-analytics",
     "real-time-analytics-architecture"
   ],
+  "data/learn/partitioning-strategies": [
+    "arrow-parquet",
+    "data-pipeline"
+  ],
   "data/learn/pipeline-cost-optimization": [
     "data-cost-intelligence",
     "data-pipeline",
@@ -861,6 +886,13 @@
     "differential-privacy",
     "gdpr-anonymization",
     "gdpr-synthetic-data"
+  ],
+  "data/learn/pyspark-fundamentals": [
+    "data-contracts",
+    "data-pipeline",
+    "lakehouse",
+    "mapreduce",
+    "streaming"
   ],
   "data/learn/regulatory-compliance-data-platforms": [
     "ai-act-high-risk",
@@ -884,6 +916,17 @@
     "schema-migration",
     "schema-registry",
     "streaming"
+  ],
+  "data/learn/spike-data-pipelines": [
+    "dagster",
+    "data-pipeline",
+    "data-quality",
+    "dataops",
+    "dbt",
+    "etl",
+    "ml-pipeline",
+    "model-cards",
+    "orchestration"
   ],
   "data/learn/sql-for-data-engineers": [
     "data-pipeline",
@@ -1679,6 +1722,15 @@
     "volatility-surface",
     "volatility-trading"
   ],
+  "markets/learn/market-microstructure": [
+    "apache-iceberg",
+    "lob",
+    "market-making",
+    "market-microstructure",
+    "market-participants",
+    "order-book",
+    "order-types"
+  ],
   "markets/learn/market-microstructure-order-books": [
     "dark-pools",
     "efficient-market-hypothesis",
@@ -1700,6 +1752,16 @@
     "research",
     "statistical-arbitrage",
     "supply-chain-analysis"
+  ],
+  "markets/learn/quantitative-methods-intro": [
+    "algorithmic-trading",
+    "factor-investing",
+    "high-frequency-trading",
+    "mean-reversion",
+    "portfolio-optimization",
+    "risk-parity",
+    "statistical-arbitrage",
+    "volatility-surface"
   ],
   "markets/learn/reading-financial-statements": [
     "earnings-analysis",
@@ -1747,6 +1809,10 @@
     "semiconductor-industry",
     "statistical-arbitrage",
     "supply-chain-analysis"
+  ],
+  "markets/learn/volatility-analysis": [
+    "market-indices",
+    "volatility-surface"
   ],
   "markets/learn/volatility-trading-vix": [
     "hedge-funds",

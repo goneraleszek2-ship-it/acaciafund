@@ -5,10 +5,11 @@
   {{ breadcrumbs('tags', content.title) }}
   <h1>{{ content.title }}</h1>
   {%- if all_tags and not items %}
+  {%- set cloud_prefix = cloud_prefix or 'tags/' %}
   <div class="tag-cloud">
     {% for tag in all_tags %}
     {%- set tag_url = tag | lower | replace(' ', '-') | replace('_', '-') %}
-    <a href="/tags/{{ tag_url }}/" class="tag-item">{{ tag }}</a>
+    <a href="/{{ cloud_prefix }}{{ tag_url }}/" class="tag-item">{{ tag }}</a>
     {% endfor %}
   </div>
   {%- endif %}
@@ -22,7 +23,7 @@
       {%- set item_date_str = item.created_at | string %}
     {%- endif %}
     <div class="ghost-card p-4">
-      <a href="/{{ item_slug | replace('data-engineering', 'data') }}/" class="text-decoration-none font-semibold text-sm hover-underline">{{ item_title }}</a>
+      <a href="{{ slug_to_url(item_slug) }}" class="text-decoration-none font-semibold text-sm hover-underline">{{ item_title }}</a>
       {%- if item_date_str %}
       <span class="text-xs text-muted ml-2">{{ item_date_str | format_date }}</span>
       {%- endif %}

@@ -1,5 +1,10 @@
 # Knowledge Repository Design — MathWorld-Inspired Architecture
 
+> **Status: Design Proposal**
+> **Implemented:** A–Z browse (`/letters/` via `templates/alpha_index.j2` + `scripts/generate_alpha_index.py`), "See Also" and "Explore With" partials (`see_also.j2`, `explore_tools.j2`), freshness badges (`freshness_badge.j2`).
+> **Not yet implemented:** Contributor attribution footer, standardized citation format, hierarchical subject-classification tags, per-entry contributor credit in registry.
+> **Last reviewed:** 2026-07-30
+
 ## 1. Design Philosophy
 
 MathWorld succeeds because it is:
@@ -330,7 +335,7 @@ class ExploreTool(BaseModel):
 │                                                               │
 │  ONTOLOGY LAYER (Concept Graph)                              │
 │  ┌──────────────────────────────────────────────────────┐   │
-│  │ 72 Concepts · 8 Relation Types · Philosophical       │   │
+│  │ 192 Concepts · 10 Relation Types · Philosophical     │   │
 │  │ Metadata · Cross-Pillar Analogs · Schema Builder     │   │
 │  └──────────────────────────────────────────────────────┘   │
 │                                                               │

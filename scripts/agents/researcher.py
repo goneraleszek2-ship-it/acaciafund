@@ -11,13 +11,10 @@ Takes a topic + pillar and produces structured research items with:
 from __future__ import annotations
 
 import logging
-from datetime import datetime, timezone
-from typing import Any
 
 from pydantic import BaseModel, Field
 
-from core.agent_tools import RiskLevel
-from scripts.agents.base import AgentConfig, AgentResult, BaseAgent
+from scripts.agents.base import AgentConfig, BaseAgent
 
 logger = logging.getLogger(__name__)
 

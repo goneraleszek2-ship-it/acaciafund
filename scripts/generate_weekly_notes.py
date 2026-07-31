@@ -55,7 +55,7 @@ def gather_recent_registry_items(days_back: int = 7) -> dict[str, list[dict]]:
     cutoff = datetime.now(tz.utc) - timedelta(days=days_back)
     items_by_pillar: dict[str, list[dict]] = {"aml": [], "markets": [], "data-engineering": []}
     try:
-        with open(REGISTRY_PATH) as f:
+        with open(REGISTRY_PATH, encoding="utf-8") as f:
             registry = json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
         return items_by_pillar
@@ -82,7 +82,7 @@ def gather_recent_registry_items(days_back: int = 7) -> dict[str, list[dict]]:
 def gather_source_freshness_changes() -> list[dict]:
     """Gather source freshness changes (degraded → error, etc.)."""
     try:
-        with open(SOURCE_HEALTH_PATH) as f:
+        with open(SOURCE_HEALTH_PATH, encoding="utf-8") as f:
             health = json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
         return []
@@ -135,7 +135,7 @@ def generate_current_week(force: bool = False) -> bool:
     date_range = f"{mon.strftime('%b %-d')} – {sun.strftime('%b %-d')}"
 
     try:
-        with open(WEEKLY_NOTES_PATH) as f:
+        with open(WEEKLY_NOTES_PATH, encoding="utf-8") as f:
             data: dict[str, Any] = json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
         data = {"weeks": []}
@@ -162,7 +162,7 @@ def generate_current_week(force: bool = False) -> bool:
     else:
         data["weeks"].append(new_week)
 
-    with open(WEEKLY_NOTES_PATH, "w") as f:
+    with open(WEEKLY_NOTES_PATH, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
     return True
 

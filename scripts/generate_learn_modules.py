@@ -904,7 +904,7 @@ def main():
         ontology = OntologyManager.load(ONTOLOGY_PATH)
 
     # Load registry
-    with open(REGISTRY_PATH) as f:
+    with open(REGISTRY_PATH, encoding="utf-8") as f:
         registry = json.load(f)
 
     existing_slugs = {item.get("slug") for item in registry.get("content", [])}
@@ -987,7 +987,7 @@ def main():
         logger.info("\n  Skipping auto-generation (use --infer for LLM-generated modules)")
 
     # Save registry
-    with open(REGISTRY_PATH, "w") as f:
+    with open(REGISTRY_PATH, "w", encoding="utf-8") as f:
         json.dump(registry, f, indent=2, default=str)
 
     logger.info(f"\n  Total new modules: {created}")

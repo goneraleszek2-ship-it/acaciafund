@@ -1156,6 +1156,35 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
         _kc_count += 1
     if _kc_count:
         print(f"  knowledge-categories: {_kc_count} pages")
+    _kc_empty_count = 0
+    for _kc_id, _kc_cfg in KNOWLEDGE_CATEGORIES.items():
+        if _kc_id in grouped:
+            continue
+        _kc_html = render_template(
+            "knowledge_index.j2",
+            content=_dummy(
+                f"{_kc_cfg.get('label', _kc_id.title())} — Knowledge — AcaciaFund",
+                "index",
+                description=_kc_cfg.get("description", f"Knowledge category: {_kc_id}."),
+            ),
+            items=[],
+            grouped={},
+            categories=KNOWLEDGE_CATEGORIES,
+            thumbnail_base=thumb_base,
+            thumbnail_key=thumbnail_key,
+            page_title=_kc_cfg.get("label", _kc_id.title()),
+            is_index=False,
+            page_path=f"knowledge/{_kc_id}/",
+            layer="knowledge",
+            layer_icon=LAYER_ICONS["knowledge"],
+            **ctx_base,
+        )
+        _kc_dir = knowledge_dir / _kc_id
+        _kc_dir.mkdir(parents=True, exist_ok=True)
+        (_kc_dir / "index.html").write_text(_kc_html, encoding="utf-8")
+        _kc_empty_count += 1
+    if _kc_empty_count:
+        print(f"  knowledge-categories-empty: {_kc_empty_count} pages")
 
     # --- LEARN PAGES ---
     BLOOM_ORDER = {
@@ -2869,7 +2898,6 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
             from core.source_trail import (
                 SourceTrailManager,
                 build_trails_for_item,
-                extract_claims_from_text,
             )
 
             _trail_manager = SourceTrailManager(ontology=ontology)
@@ -2898,14 +2926,14 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
             if _trail_count:
                 print(f"  source-trails: {_trail_count} items, {sum(len(t.claims) for t in _trail_manager.all_trails())} claims")
 
-            from core.contradiction import detect_contradictions, contradiction_summary
+            from core.contradiction import contradiction_summary, detect_contradictions
             _contradiction_report = detect_contradictions(_trail_manager)
             if _contradiction_report.total_pairs > 0:
                 print(f"  contradictions: {_contradiction_report.total_pairs} pairs")
                 for _line in contradiction_summary(_contradiction_report).split("\n"):
                     print(f"    {_line}")
 
-            from core.evidence_grade import grade_evidence, quality_summary
+            from core.evidence_grade import grade_evidence
             _scores = grade_evidence(_trail_manager)
             if _scores:
                 _level_counts = {}
@@ -2921,7 +2949,6 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
 
     try:
         from core.adaptive import (
-            AdaptiveEngine,
             UserProfile,
             build_content_profile,
             rank_content,
@@ -3048,6 +3075,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
             all_tags=sorted(tool_items.keys()),
             is_index=False,
             page_path="data/tools/",
+            cloud_prefix="data/tools/",
             **ctx_base,
         )
         tool_idx_out.write_text(tool_idx_html, encoding="utf-8")

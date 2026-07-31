@@ -1,12 +1,3 @@
-"""Schema builder — transforms ontology prerequisite relations into learning-path DAGs.
-
-Provides:
-  build_prerequisite_graph(manager) → nx.DiGraph
-  compute_learning_paths(graph, start_concept_id, depth) → List[LearningPath]
-  categorize_by_bloom(concept_id, graph) → str
-  compute_feynman_learning_paths(manager) → List[FeynmanLearningPath]
-"""
-
 from __future__ import annotations
 
 import logging
@@ -35,11 +26,6 @@ class LearningPath:
 
 
 def build_prerequisite_graph(manager: OntologyManager) -> nx.DiGraph:
-    """Build a directed graph from 'requires' relations only.
-
-    Skips edges that would introduce a cycle (logs a warning).
-    Each node carries 'id', 'label', 'pillar' attributes.
-    """
     graph = nx.DiGraph()
 
     for relation in manager._relations:
@@ -72,11 +58,6 @@ def compute_learning_paths(
     start_concept_id: str,
     depth: int = 3,
 ) -> List[LearningPath]:
-    """BFS from start concept to find all learning paths up to `depth` hops.
-
-    Returns paths sorted by total_depth descending (longest path first).
-    Returns empty list if start_concept_id has no outgoing 'requires' edges.
-    """
     if start_concept_id not in graph:
         return []
 
@@ -114,16 +95,6 @@ def compute_learning_paths(
 
 
 def categorize_by_bloom(concept_id: str, graph: nx.DiGraph) -> str:
-    """Map a concept's position in the prerequisite DAG to a Bloom taxonomy level.
-
-    Rules:
-      - Depth 0 (no incoming 'requires') → "remember"
-      - Depth 1-2 → "apply"
-      - Depth 3+ → "evaluate"
-
-    Depth is the longest distance from any root (node with no predecessors
-    in the 'requires' graph) to this concept.
-    """
     if concept_id not in graph:
         return "remember"
 
@@ -154,8 +125,6 @@ FEYNMAN_STAGE_TYPES = ["eli5", "analogy", "concrete", "gap_map", "build", "teach
 
 @dataclass
 class FeynmanStage:
-    """A single stage in a Feynman learning path."""
-
     stage_type: str
     label: str
     description: str
@@ -166,8 +135,6 @@ class FeynmanStage:
 
 @dataclass
 class FeynmanLearningPath:
-    """A structured learning journey using Feynman technique stages."""
-
     pillar: str
     stages: List[FeynmanStage] = field(default_factory=list)
     total_concepts: int = 0
@@ -176,7 +143,6 @@ class FeynmanLearningPath:
 
 @dataclass
 class CrossPillarFeynmanTriple:
-    """A triple of analog concepts across pillars."""
     source_id: str
     source_pillar: str
     target_id: str
@@ -186,8 +152,7 @@ class CrossPillarFeynmanTriple:
 
 @dataclass
 class CrossPillarFeynmanPath:
-    """A cross-pillar Feynman synthesis grouping analog concepts together."""
-    pillar: str  # hosting pillar
+    pillar: str
     triples: List[CrossPillarFeynmanTriple] = field(default_factory=list)
     total_triples: int = 0
     connected_pillars: List[str] = field(default_factory=list)
@@ -197,11 +162,6 @@ def _order_by_prerequisites(
     concept_ids: List[str],
     manager: OntologyManager,
 ) -> List[str]:
-    """Topological sort by prerequisite ('requires') relations.
-
-    Concepts with no prerequisites come first within their group.
-    Falls back to original order if no DAG can be built.
-    """
     if len(concept_ids) <= 1:
         return concept_ids
 
@@ -247,34 +207,20 @@ STAGE_DEFS: Dict[str, Dict] = {
     },
     "gap_map": {
         "label": "Gap Map",
-        "description": (
-            "Identify what you don't know yet — questions that expose"
-            " understanding gaps."
-        ),
-        "prompt": (
-            "Answer these gap-detection questions. If you can't, review the"
-            " prerequisite concepts first."
-        ),
+        "description": "Identify what you don't know yet — questions that expose understanding gaps.",
+        "prompt": "Answer these gap-detection questions. If you can't, review the prerequisite concepts first.",
         "difficulty_range": (1, 5),
     },
     "build": {
         "label": "Build Exercise",
-        "description": (
-            "Create something — code, a diagram, or a calculation — to prove"
-            " understanding."
-        ),
+        "description": "Create something — code, a diagram, or a calculation — to prove understanding.",
         "prompt": "Complete the hands-on exercise to verify deep understanding.",
         "difficulty_range": (2, 5),
     },
     "teach_back": {
         "label": "Teach Back",
-        "description": (
-            "Explain the concept in your own words as if teaching a peer."
-        ),
-        "prompt": (
-            "Teach this concept back. Cover: what it is, how it works,"
-            " why it matters."
-        ),
+        "description": "Explain the concept in your own words as if teaching a peer.",
+        "prompt": "Teach this concept back. Cover: what it is, how it works, why it matters.",
         "difficulty_range": (3, 5),
     },
 }
@@ -283,20 +229,6 @@ STAGE_DEFS: Dict[str, Dict] = {
 def compute_feynman_learning_paths(
     manager: OntologyManager,
 ) -> List[FeynmanLearningPath]:
-    """Build Feynman-scaffolded learning paths for each pillar.
-
-    Groups concepts by pillar, orders by Feynman difficulty within each pillar,
-    then assigns concepts to sequential Feynman stages:
-
-      1. ELI5       — difficulty 1-2 concepts with eli5_explanation
-      2. Analogy    — difficulty 1-2 concepts with analogy
-      3. Concrete   — difficulty 2-3 concepts with concrete_example
-      4. Gap Map    — all concepts with gap_questions (checkpoints)
-      5. Build      — concepts with build_exercise (hands-on)
-      6. Teach Back — all concepts (final checkpoints)
-
-    Within each stage, concepts are topologically sorted by prerequisites.
-    """
     pillars: Dict[str, List[Concept]] = {}
     for c in manager._concepts.values():
         pillars.setdefault(c.pillar, []).append(c)
@@ -307,7 +239,6 @@ def compute_feynman_learning_paths(
         if not concepts:
             continue
 
-        # Sort concepts by feynman_difficulty
         sorted_concepts = sorted(concepts, key=lambda c: (
             getattr(c, "feynman_difficulty", 1) or 1,
             c.label,
@@ -347,7 +278,6 @@ def compute_feynman_learning_paths(
                 candidate_ids.append(c.id)
 
             if stage_type in ("gap_map", "build", "teach_back"):
-                # Make sure gap_map, build, teach_back include ALL concepts from earlier stages too
                 for prev_cid in all_ids:
                     if prev_cid not in candidate_ids and prev_cid not in seen_ids:
                         candidate_ids.append(prev_cid)
@@ -385,14 +315,6 @@ def compute_feynman_learning_paths(
 def compute_cross_pillar_feynman_paths(
     manager: OntologyManager,
 ) -> List[CrossPillarFeynmanPath]:
-    """Build cross-pillar Feynman synthesis paths using cross_pillar_analogs.
-
-    For each pillar, finds concepts that have analogs in OTHER pillars and
-    groups them into triples. This creates "synthesis" paths that connect
-    concepts across domains — the core of the Feynman technique.
-
-    Returns one CrossPillarFeynmanPath per pillar (hosted from that pillar's perspective).
-    """
     concepts = list(manager._concepts.values())
     analog_map: Dict[str, List[str]] = {}
 

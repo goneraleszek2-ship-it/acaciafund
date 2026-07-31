@@ -47,9 +47,9 @@ KNOWLEDGE_TO_PILLAR_CATEGORY = {
 
 ## Category Coverage
 
-11 categories × 3 pillars = 33 buckets. All buckets should ideally have at least 1 item.
+13 cross-pillar knowledge categories (defined in `build.py:KNOWLEDGE_CATEGORIES`). Categories with at least one item generate populated landing pages; categories without items generate placeholder landing pages so all `/knowledge/{cat}/` URLs resolve.
 
-**Current state:** All 33 buckets filled.
+**Current state:** All 13 categories resolve to landing pages (5 populated, 8 placeholder as of 2026-07-30).
 
 ## Pillar Subcategories Reference
 

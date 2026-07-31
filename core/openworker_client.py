@@ -205,7 +205,7 @@ class _UrllibSession:
         if body:
             req.add_header("Content-Type", "application/json")
         r = urllib.request.urlopen(req, timeout=self.timeout)
-        return json.loads(r.read().decode())
+        return json.loads(r.read().decode("utf-8"))
 
     def get(self, path: str) -> dict[str, Any]:
         return self._request("GET", path)

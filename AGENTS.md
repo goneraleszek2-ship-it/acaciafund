@@ -122,7 +122,7 @@ This codebase has been built in sequential sprints. Understanding what came befo
 | Foundation fixes | Concept extraction word-boundary fix, alias expansion, full category remapping, knowledge-to-pillar mapping, description backfill |
 | Quality fixes | SQI backfill script, search recall improvement (threshold 0.35, body window 800), niche concept alias expansion |
 
-**Current state:** ~420 registry items, ~1213 pages, 3 clean pillars, 72 ontology concepts (all with philosophical metadata), 32 inspiration sources. Quality gate: passing. 507 Python tests + 8 JS tests passing.
+**Current state:** 195 registry items, 2,505 generated pages, 3 clean pillars, 192 ontology concepts (all with philosophical metadata), 32 inspiration sources. Quality gate: passing. 855 tests passing (847 Python + 8 JS). Metrics verified 2026-07-30 — see `SYSTEM_ARCHITECTURE.md` for the canonical reference.
 
 ## Cognitive Architecture (Phase 4)
 
@@ -173,7 +173,7 @@ The portal is being restructured from a *content repository* into a *schema-buil
 - **Philosophical foundations layer** integrated into Knowledge content type (not a separate section)
 - **Concept model** extended with 10 philosophical metadata fields: `philosophical_lineage`, `epistemic_status`, `normative_basis`, `ontological_commitment`, `temporal_ontology`, `uncertainty_class`, `governance_model`, `semantic_contract_type`, `philosophical_sources`, `cross_pillar_analogs`
 - **`scripts/enrich_philosophy.py`** — reads `data/philosophy_metadata.json`, merges into ontology
-- **72 ontology concepts** enriched with philosophical metadata (all have `epistemic_status`)
+- **192 ontology concepts** enriched with philosophical metadata (all have `epistemic_status`)
 - **4 new template partials**: `philosophical_lineage.j2` (expandable genealogy), `epistemic_badge.j2` (inline epistemic role indicator), `normative_basis.j2` (inline normative theory display), `cross_pillar_philosophy.j2` ("Same pattern in other pillars")
 - **`concept_detail.j2`** — shows philosophical lineage, epistemic badge, normative basis, primary sources, cross-pillar analogs
 - **`knowledge.j2`** — Concept Explorer shows epistemic badges, lineage tags (up to 3), cross-pillar analog links for each extracted concept
@@ -190,11 +190,11 @@ The portal is being restructured from a *content repository* into a *schema-buil
 | `tests/test_philosophy_integration.py` | 11 tests for philosophical foundations |
 
 #### Now Exists ✓ (Phase 3 — July 2026)
-- **Portal-wide concept review** via `RetentionEngine` in `retention_engine.js` — reviews all 72 ontology concepts with SM-2 scheduling
+- **Portal-wide concept review** via `RetentionEngine` in `retention_engine.js` — reviews all 192 ontology concepts with SM-2 scheduling
 - **Gap detection** (`core/retention_engine.py` + JS) — identifies unseen, overdue (7+ days), and low-mastery (<0.3) concepts
 - **Interleaved practice scheduler** — automatically mixes concepts across all 3 pillars, prioritizing due and unseen items
 - **Concept mastery dashboard** — rendered dynamically in `review.j2` via `concept-mastery-dashboard` container; shows per-pillar mastery bars, gap reports, and interleaved session trigger
-- **`static/review_concepts.json`** — auto-generated at build time from ontology (72 concepts with metadata)
+- **`static/review_concepts.json`** — auto-generated at build time from ontology (192 concepts with metadata)
 - **38 tests** for retention engine (`tests/test_retention_engine.py`): SM-2 algorithm, mastery scoring, gap detection, interleaving, data generation
 
 | File | Purpose |
@@ -202,7 +202,7 @@ The portal is being restructured from a *content repository* into a *schema-buil
 | `core/retention_engine.py` | SM-2 algorithm, gap detection, interleaved scheduling, concept review data generation |
 | `static/js/retention_engine.js` | Client-side retention engine: concept review cards, mastery dashboard, interleaved sessions |
 | `templates/review.j2` | Updated with concept mastery dashboard section + retention_engine.js |
-| `static/review_concepts.json` | Build-generated concept review data (72 concepts, camelCase keys) |
+| `static/review_concepts.json` | Build-generated concept review data (192 concepts, camelCase keys) |
 | `tests/test_retention_engine.py` | 38 tests for all retention engine components |
 
 #### Partially Exists ⚠️
@@ -246,11 +246,11 @@ Navigation shows only: Compliance, Markets, Data.
 ### URL Hierarchy
 
 ```
-/{pillar_url}/research/{topic}     # 163 items
-/{pillar_url}/learn/{topic}        # 54 items (18 per pillar)
-/{pillar_url}/knowledge/{topic}    # 43 items
+/{pillar_url}/research/{topic}     # 96 items
+/{pillar_url}/learn/{topic}        # 83 items
+/{pillar_url}/knowledge/{topic}    # 16 items
 /{pillar_url}/glossary             # Auto-generated from ontology
-/knowledge/{platform-page}         # Cross-pillar (12 pages)
+/knowledge/{platform-page}         # Cross-pillar (13 categories)
 /search/?q=query                   # Client-side search
 /admin/*.html                      # 12 admin dashboard pages
 /graph/                            # Cytoscape knowledge graph
@@ -258,9 +258,9 @@ Navigation shows only: Compliance, Markets, Data.
 
 ### Content Categories
 
-**Research** (163): External content ingestion from arXiv, HN, PubMed
-**Learn** (54): Interactive modules with Bloom questions, flashcards, code examples
-**Knowledge** (43): Platform docs, glossary, tutorials, methodology
+**Research** (96): External content ingestion from arXiv, HN, PubMed
+**Learn** (83): Interactive modules with Bloom questions, flashcards, code examples
+**Knowledge** (16): Platform docs, glossary, tutorials, methodology
 
 ### Pillar Content Distribution
 
@@ -308,13 +308,13 @@ scripts/knowledge_ingester.py  →  registry.json  →  build.py  →  dist/
 | File | Purpose |
 |---|---|
 | `config.py` | `PILLAR_URL_MAP`, `PILLAR_URL_REVERSE`, `PILLAR_SUBCATEGORIES`, `PILLAR_EMOJIS`, `PILLAR_NAMES`, site config |
-| `build.py` | Main build (~3394 lines) — content rendering, graph, admin, search, feed, cross-pillar synthesis |
+| `build.py` | Main build (~3726 lines) — content rendering, graph, admin, search, feed, cross-pillar synthesis |
 | `core/urls.py` | Pure URL helpers (`slug_to_path`, `slug_to_fspath`, `canonical_path`, `slug_to_url`, `pillar_to_url`, `url_to_pillar`) |
 | `core/ontology.py` | Ontology framework: Concept, Relation, ResourceLink, InspirationSource models; OntologyManager; concept extraction; Cytoscape export |
 | `core/build_taxonomies.py` | Taxonomy generation: admin pages, search index, tag pages, pillar pages, feed, ontology admin |
 | `core/build_cache.py` | Incremental build cache with parallel_map support |
 | `schemas.py` | Pydantic models for registry validation (`RegistryData`) |
-| `registry.json` | Content registry (260 items) |
+| `registry.json` | Content registry (195 items) |
 | `core/schema_builder.py` | **NEW** Schema builder: prerequisite graphs, learning paths, Bloom categorization |
 | `static/js/progressive_disclosure.js` | **NEW** Collapsible article sections (Cognitive Load Theory) |
 | `templates/partials/visual_abstract.j2` | **NEW** Dual-coded article summary partial (visual abstract) |
@@ -331,7 +331,7 @@ scripts/knowledge_ingester.py  →  registry.json  →  build.py  →  dist/
 | `scripts/fetch_images.py` | Unsplash image fetching (imported by `core/build_taxonomies.py` as `CURATED_KNOWN`) |
 | `scripts/deploy_cloudflare.py` | Cloudflare Pages deployment trigger |
 | `etc/pillars.toml` | Pillar definitions + `[inspiration_sources]` (32 authoritative sources per pillar) |
-| `data/ontology.json` | Persisted ontology (48 concepts, 47 relations) |
+| `data/ontology.json` | Persisted ontology (192 concepts, 434 relations) |
 | `data/source_health.json` | Persistent freshness data (32 sources) |
 | `.github/workflows/source-refresh.yml` | Weekly Monday 04:00 UTC refresh — ontology, glossary, freshness, build, deploy |
 
@@ -487,35 +487,48 @@ result = df.filter(pl.col('price') > 100).collect()
 
 | File | Tests | Coverage |
 |---|---|---|---|
-| `tests/test_ontology.py` | 39 | Ontology models, manager, extraction, seeding |
-| `tests/test_learn_generation.py` | 14 | Learn module generation pipeline |
-| `tests/test_urls.py` | 18 | URL helpers, pillar mapping, slug conversion |
-| `tests/test_build_cache.py` | 18 | Build cache, incremental builds |
-| `tests/test_smoke.py` | 34 | Registry validation, schema enforcement |
-| `tests/test_build_smoke.py` | 12 | Build output verification |
-| `tests/test_redirects.py` | 8 | Redirect rules validation |
+| `tests/test_ingestion.py` | 64 | Ingestion pipeline (registry normalization, schemas, dedup) |
 | `tests/test_build_taxonomies.py` | 51 | Taxonomy generation (all 5 generators) |
-| `tests/test_compositor.py` | **26** | core/compositor.py: SVG renderers (timeline, flow, comparisons, badges, numbers, connections) |
-| `tests/test_generate_pages.py` | **40** | core/generate_pages.py: extract_headings, find_related, reading_time, sanitize, SQI badge, fingerprint |
-| `tests/test_extractors.py` | **19** | core/extractors.py: timeline, flow, comparison extraction from text |
-| `tests/test_check_source_freshness.py` | **8** | scripts/check_source_freshness.py: compute_staleness contract tests |
-| `tests/test_source_synthesis.py` | **18** | scripts/source_synthesis.py: extract_tags, synthesis_description, key_insights |
-| `tests/test_data.py` | 15 | core/data.py: domain extraction, entity/theme extraction, DLQ writing, logging |
-| `tests/test_content.py` | 11 | core/content.py: Content dataclass construction, defaults, dict parsing |
+| `tests/test_enrich.py` | 45 | Content enrichment (concept extraction, SQI scoring) |
+| `tests/test_contradiction.py` | 40 | core/contradiction.py: negation/antonym/numeric contradiction detection, ContradictionDetector, clustering |
+| `tests/test_generate_pages.py` | 40 | core/generate_pages.py: extract_headings, find_related, reading_time, sanitize, SQI badge, fingerprint |
+| `tests/test_ontology.py` | 39 | Ontology models, manager, extraction, seeding |
+| `tests/test_retention_engine.py` | 38 | core/retention_engine.py: SM-2, gap detection, interleaving, data generation |
+| `tests/test_urls.py` | 34 | URL helpers, pillar mapping, slug conversion |
+| `tests/test_adaptive.py` | 31 | core/adaptive.py: user profiling, difficulty adaptation, modality suggestion, content ranking |
+| `tests/test_schema_builder.py` | 29 | core/schema_builder.py: prerequisite graph, learning paths, Bloom categorization |
 | `tests/test_metadata.py` | 28 | core/metadata.py: manifest building, JSON utils, schema validation |
-| `tests/test_contracts.py` | **24** | MOSA architecture contract tests (config schema, module interfaces, signature validation) |
-| `tests/test_schema_builder.py` | **19** | core/schema_builder.py: prerequisite graph, learning paths, Bloom categorization |
+| `tests/test_compositor.py` | 26 | core/compositor.py: SVG renderers (timeline, flow, comparisons, badges, numbers, connections) |
+| `tests/test_contracts.py` | 24 | MOSA architecture contract tests (config schema, module interfaces, signature validation) |
+| `tests/test_evidence_grade.py` | 24 | core/evidence_grade.py: GRADE-style evidence quality scoring, EvidenceGrader, downgrade/upgrade criteria |
+| `tests/test_source_trail.py` | 23 | core/source_trail.py: claim→citation mapping, SourceTrailManager, extraction, verification |
+| `tests/test_agents.py` | 22 | Agent tooling (enrichment, glossary, researcher, synthesis) |
+| `tests/test_build_smoke.py` | 22 | Build output verification |
+| `tests/test_source_synthesis.py` | 19 | scripts/source_synthesis.py: extract_tags, synthesis_description, key_insights |
+| `tests/test_extractors.py` | 18 | core/extractors.py: timeline, flow, comparison extraction from text |
+| `tests/test_data.py` | 17 | core/data.py: domain extraction, entity/theme extraction, DLQ writing, logging |
+| `tests/test_generate_learn_modules.py` | 17 | Learn module generation internals |
+| `tests/test_score.py` | 17 | core/score.py: SQI scoring, cross-pillar counting |
+| `tests/test_agent_tools.py` | 16 | Tool executor, risk levels, tool registry |
+| `tests/test_risk_engine.py` | 16 | Risk engine (tool approval, callback enforcement) |
+| `tests/test_assets.py` | 15 | Asset manager, uploads, thumbnails |
+| `tests/test_build_cache.py` | 14 | Build cache, incremental builds |
+| `tests/test_export_research.py` | 14 | scripts/export_research.py: Markdown/JSON report generation from trails, contradictions, grades |
+| `tests/test_learn_generation.py` | 14 | Learn module generation pipeline |
+| `tests/test_sm2.py` | 13 | SM-2 spaced repetition algorithm (ease factor, interval scheduling) |
+| `tests/test_content.py` | 11 | core/content.py: Content dataclass construction, defaults, dict parsing |
+| `tests/test_llm_client.py` | 11 | LLM client wrappers (aisuite ImportError handling) |
+| `tests/test_philosophy_integration.py` | 11 | Philosophy metadata: model fields, ontology enrichment, cross-pillar validation |
+| `tests/test_redirects.py` | 11 | Redirect rules validation |
+| `tests/test_learning_paths.py` | 9 | core/learning_paths.py: cross-pillar synthesis, journey enrichment |
+| `tests/test_smoke.py` | 9 | Registry validation, schema enforcement |
+| `tests/test_check_source_freshness.py` | 8 | scripts/check_source_freshness.py: compute_staleness contract tests |
+| `tests/test_alpha_index.py` | 7 | Alphabetical index generation |
 | `tests/test_progressive_disclosure.js` | **8** | static/js/progressive_disclosure.js: parseSections, toggleSection pure functions |
-| `tests/test_retention_engine.py` | **38** | core/retention_engine.py: SM-2, gap detection, interleaving, data generation |
-| `tests/test_source_trail.py` | **23** | core/source_trail.py: claim→citation mapping, SourceTrailManager, extraction, verification |
-| `tests/test_contradiction.py` | **40** | core/contradiction.py: negation/antonym/numeric contradiction detection, ContradictionDetector, clustering |
-| `tests/test_evidence_grade.py` | **24** | core/evidence_grade.py: GRADE-style evidence quality scoring, EvidenceGrader, downgrade/upgrade criteria |
-| `tests/test_export_research.py` | **14** | scripts/export_research.py: Markdown/JSON report generation from trails, contradictions, grades |
-| `tests/test_adaptive.py` | **31** | core/adaptive.py: user profiling, difficulty adaptation, modality suggestion, content ranking |
 
 JS tests run via `node tests/test_progressive_disclosure.js` (no npm/playwright needed).
 
-**Total: 833 passing tests (all Python + 8 JS).**
+**Total: 855 passing tests (847 Python + 8 JS).** (Verified 2026-07-30: `python3 -m pytest tests/ --co` → 847 collected across 37 modules.)
 
 ### Phase 1.5 Files (Cognitive Load Amputation — July 2026)
 
@@ -812,7 +825,7 @@ Contributors who completed Phase 1 (Schema Builder & Dual Coding):
 - **opencode (big-pickle)** — adaptive information density controls (compact/standard/comfortable modes with localStorage persistence, density-aware CSS tokens)
 - **opencode (big-pickle)** — reading flow assistance (focus mode, guided reading line, settings panel with toggle controls)
 - **opencode (big-pickle)** — pre-existing test fixes (SM-2 ease factor mapping in retention_engine.py, aisuite ImportError handling in llm_client.py, ontology data consistency fixes)
-- **opencode (big-pickle)** — productionization (run_tests.sh test runner, AGENTS.md updates, all 833 tests green, git + push)
+- **opencode (big-pickle)** — productionization (run_tests.sh test runner, AGENTS.md updates, all 855 tests green, git + push)
 - **opencode (big-pickle)** — article outline / sticky table of contents (auto-generated from h2/h3, nested ToC with scroll-spy, desktop sidebar layout, mobile inline card)
 - **opencode (big-pickle)** — keyboard shortcuts (press ? for cheat sheet overlay, s/t/n/p/f/g for navigation and theme)
 - **opencode (big-pickle)** — search autocomplete with concept suggestions (ontology concepts and tags shown as selectable filter suggestions alongside search history)

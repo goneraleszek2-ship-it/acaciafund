@@ -839,7 +839,7 @@ def generate_admin_pages(
         hand_crafted_ids = set()
         if feynman_path.exists():
             try:
-                with open(feynman_path) as f:
+                with open(feynman_path, encoding="utf-8") as f:
                     hand_crafted_ids = set(json.load(f).keys())
             except Exception:
                 pass

@@ -31,9 +31,9 @@ Domain-specific terminology used throughout the AcaciaFund codebase and document
 
 | Term | Definition |
 |------|------------|
-| **Knowledge Category** | One of 11 cross-pillar categories: methodology, tooling, architecture, tutorial, reference, etc. Mapped to pillar subcategories. |
-| **Learn Module** | Interactive educational content with Bloom questions and flashcards. ~54 total, 18 per pillar. |
-| **Ontology** | Structured knowledge representation: concepts + relations + external resources. 48 concepts, 47 relations. |
+| **Knowledge Category** | One of 13 cross-pillar categories: platform, guide, reference, architecture, foundations, advanced-techniques, best-practices, regulations, industry-analysis, market-analysis, strategies, methodology, tutorial-code. Mapped to pillar subcategories. |
+| **Learn Module** | Interactive educational content with Bloom questions and flashcards. 83 total. |
+| **Ontology** | Structured knowledge representation: concepts + relations + external resources. 192 concepts, 434 relations. |
 | **OntologyManager** | Central class for managing the ontology: add/query/seed/extract/export/persist. |
 
 ## P–S
@@ -44,8 +44,8 @@ Domain-specific terminology used throughout the AcaciaFund codebase and document
 | **Plausible** | Privacy-preserving web analytics. Tracks search events and result clicks without cookies. |
 | **Pydantic v2** | Python data validation library used for registry schema (`schemas.py`) and ontology models (`core/ontology.py`). |
 | **Quality Gate** | SQI threshold at 0.65. Items below are flagged but don't block the build. |
-| **Relation** | Directed relationship between two ontology concepts. Types: part_of, enables, mitigates, requires, competes_with. |
-| **Research** | Content type for external article ingestion from arXiv, HN, PubMed, etc. ~163 items. |
+| **Relation** | Directed relationship between two ontology concepts. Types: part_of, enables, requires, influences, detects, regulates, supersedes, measures, implements, related_to. |
+| **Research** | Content type for external article ingestion from arXiv, HN, PubMed, etc. 96 items. |
 | **SQI** | Semantic Quality Index (0.0–1.0). Composite score from readability, topicality, recency, and concept coverage. |
 
 ## T–Z

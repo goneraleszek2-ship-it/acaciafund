@@ -15,8 +15,7 @@ from typing import Any
 
 from pydantic import BaseModel, Field
 
-from core.agent_tools import RiskLevel
-from scripts.agents.base import AgentConfig, AgentResult, BaseAgent
+from scripts.agents.base import AgentConfig, BaseAgent
 
 logger = logging.getLogger(__name__)
 

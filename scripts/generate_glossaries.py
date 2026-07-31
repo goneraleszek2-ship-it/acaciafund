@@ -71,14 +71,14 @@ def load_inspiration_sources():
 def load_registry():
     """Load the content registry."""
     if REGISTRY_PATH.exists():
-        with open(REGISTRY_PATH) as f:
+        with open(REGISTRY_PATH, encoding="utf-8") as f:
             return json.load(f)
     return {"content": [], "pipeline_stages": {}}
 
 
 def save_registry(registry):
     """Save the content registry."""
-    with open(REGISTRY_PATH, "w") as f:
+    with open(REGISTRY_PATH, "w", encoding="utf-8") as f:
         json.dump(registry, f, indent=2, default=str)
 
 

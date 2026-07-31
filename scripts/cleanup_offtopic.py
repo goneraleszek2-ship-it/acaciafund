@@ -29,7 +29,7 @@ from typing import Any
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from scripts.knowledge_ingester import PILLAR_NEGATIVE_TAGS, PILLAR_CONFIGS, score_pillar_relevance
+from scripts.knowledge_ingester import PILLAR_CONFIGS, PILLAR_NEGATIVE_TAGS  # noqa: E402
 
 logger = logging.getLogger(__name__)
 
@@ -77,7 +77,7 @@ def main() -> int:
         args.dry_run = False
 
     registry_path = ROOT / "registry.json"
-    with open(registry_path) as f:
+    with open(registry_path, encoding="utf-8") as f:
         registry = json.load(f)
 
     content: list[dict[str, Any]] = registry.get("content", [])
@@ -146,7 +146,7 @@ def main() -> int:
     if not args.dry_run and to_remove:
         remove_slugs = {item.get("slug") for item in to_remove}
         registry["content"] = [item for item in kept if item.get("slug") not in remove_slugs]
-        with open(registry_path, "w") as f:
+        with open(registry_path, "w", encoding="utf-8") as f:
             json.dump(registry, f, indent=1)
         logger.info(f"Removed {len(to_remove)} items from {registry_path}")
         logger.info(f"Registry now has {len(registry['content'])} items")

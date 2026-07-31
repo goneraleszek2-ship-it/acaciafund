@@ -49,7 +49,7 @@ def enrich_feynman(
     """
     manager = OntologyManager.load(ontology_path)
 
-    with open(feynman_path) as f:
+    with open(feynman_path, encoding="utf-8") as f:
         feynman_data: Dict[str, Dict[str, Any]] = json.load(f)
 
     enriched = 0
@@ -241,7 +241,7 @@ def enrich_all_with_stubs(ontology_path: str | Path, output_path: str | Path | N
 
     feynman_path = Path(ontology_path).parent / "feynman_metadata.json"
     if feynman_path.exists():
-        with open(feynman_path) as f:
+        with open(feynman_path, encoding="utf-8") as f:
             feynman_data: Dict[str, Dict[str, Any]] = json.load(f)
     else:
         feynman_data = {}

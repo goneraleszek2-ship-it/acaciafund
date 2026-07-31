@@ -352,7 +352,7 @@ def main():
 
     # Load registry
     registry_path = Path(__file__).parent.parent / "registry.json"
-    with open(registry_path) as f:
+    with open(registry_path, encoding="utf-8") as f:
         registry = json.load(f)
 
     content = registry.get("content", [])
@@ -413,7 +413,7 @@ def main():
     }
 
     stats_path = Path(__file__).parent.parent / "dist" / "source_verification_stats.json"
-    with open(stats_path, "w") as f:
+    with open(stats_path, "w", encoding="utf-8") as f:
         json.dump(stats, f, indent=2)
     print(f"Saved source verification statistics to {stats_path}")
 

@@ -39,7 +39,7 @@ class StrategicTaskRouter:
 
     def _load_matrix(self) -> Dict[str, Any]:
         try:
-            with open(self.matrix_path, "r") as f:
+            with open(self.matrix_path, "r", encoding="utf-8") as f:
                 return json.load(f)  # type: ignore[no-any-return]
         except (FileNotFoundError, json.JSONDecodeError):
             return {}

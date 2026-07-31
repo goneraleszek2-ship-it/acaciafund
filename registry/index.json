@@ -1,13 +1,13 @@
 {
   "manifest_type": "registry-index",
-  "generated_at": "2026-07-26T19:45:46Z",
+  "generated_at": "2026-07-31T10:33:39Z",
   "counts": {
     "runs": 0,
-    "pages": 2422,
+    "pages": 2505,
     "pillars": {
-      "data-engineering": 72,
-      "stock": 63,
-      "aml": 45
+      "data-engineering": 76,
+      "stock": 66,
+      "aml": 48
     }
   },
   "latest_by_pillar": {},
@@ -77,6 +77,12 @@
       "content_id": "data/research/ml-pipeline-orchestration-feast-mlflow",
       "pillar": "data-engineering",
       "title": "ML Pipeline Orchestration: From Notebook to Production with Feast and MLflow",
+      "published_at": "2026-06-09T00:00:00Z"
+    },
+    {
+      "content_id": "data/research/debezium-cdc-change-data-capture",
+      "pillar": "data-engineering",
+      "title": "Debezium and CDC: Capturing Database Changes at Scale",
       "published_at": "2026-06-09T00:00:00Z"
     },
     {
@@ -548,37 +554,37 @@
       "published_at": "2026-07-06T00:00:00Z"
     },
     {
-      "content_id": "aml/compliance/what-is-money-laundering",
+      "content_id": "aml/research/what-is-money-laundering",
       "pillar": "aml",
       "title": "What Is Money Laundering? A Beginner's Guide",
       "published_at": ""
     },
     {
-      "content_id": "aml/compliance/kyc-basics",
+      "content_id": "aml/research/kyc-basics",
       "pillar": "aml",
       "title": "KYC Fundamentals: Identity Verification in Financial Services",
       "published_at": ""
     },
     {
-      "content_id": "aml/compliance/aml-regulatory-landscape",
+      "content_id": "aml/research/aml-regulatory-landscape",
       "pillar": "aml",
       "title": "Understanding the AML Regulatory Landscape",
       "published_at": ""
     },
     {
-      "content_id": "aml/compliance/risk-based-approach-intro",
+      "content_id": "aml/research/risk-based-approach-intro",
       "pillar": "aml",
       "title": "The Risk-Based Approach in AML: A Practical Introduction",
       "published_at": ""
     },
     {
-      "content_id": "aml/compliance/sanctions-screening-basics",
+      "content_id": "aml/research/sanctions-screening-basics",
       "pillar": "aml",
       "title": "Sanctions Screening: How It Works and Why It Matters",
       "published_at": ""
     },
     {
-      "content_id": "aml/compliance/suspicious-activity-reports",
+      "content_id": "aml/research/suspicious-activity-reports",
       "pillar": "aml",
       "title": "Suspicious Activity Reports: What Every Compliance Professional Should Know",
       "published_at": ""
@@ -1092,6 +1098,60 @@
       "pillar": "stock",
       "title": "July 2026 Market Conditions: Earnings Fuel Waning, Oil at $95+, and Sector Rotation Underway",
       "published_at": "2026-07-23"
+    },
+    {
+      "content_id": "data/learn/pyspark-fundamentals",
+      "pillar": "data-engineering",
+      "title": "PySpark Fundamentals: Distributed Data Processing at Scale",
+      "published_at": "2026-07-31"
+    },
+    {
+      "content_id": "data/learn/partitioning-strategies",
+      "pillar": "data-engineering",
+      "title": "Partitioning Strategies: Optimizing Data Layout for Performance",
+      "published_at": "2026-07-31"
+    },
+    {
+      "content_id": "data/learn/spike-data-pipelines",
+      "pillar": "data-engineering",
+      "title": "Building Resilient Data Pipelines with Spark and dbt",
+      "published_at": "2026-07-31"
+    },
+    {
+      "content_id": "aml/learn/kyc-cdd-workflows",
+      "pillar": "aml",
+      "title": "KYC/CDD Workflows: From Onboarding to Ongoing Monitoring",
+      "published_at": "2026-07-31"
+    },
+    {
+      "content_id": "aml/learn/sar-filing-scenarios",
+      "pillar": "aml",
+      "title": "SAR Filing Scenarios: Identifying and Reporting Suspicious Activity",
+      "published_at": "2026-07-31"
+    },
+    {
+      "content_id": "aml/learn/sanctions-screening",
+      "pillar": "aml",
+      "title": "Sanctions Screening: Tools, Techniques, and Compliance Challenges",
+      "published_at": "2026-07-31"
+    },
+    {
+      "content_id": "markets/learn/quantitative-methods-intro",
+      "pillar": "stock",
+      "title": "Quantitative Methods in Finance: From Descriptive Statistics to Factor Models",
+      "published_at": "2026-07-31"
+    },
+    {
+      "content_id": "markets/learn/volatility-analysis",
+      "pillar": "stock",
+      "title": "Volatility Analysis: Measuring, Modeling, and Trading Uncertainty",
+      "published_at": "2026-07-31"
+    },
+    {
+      "content_id": "markets/learn/market-microstructure",
+      "pillar": "stock",
+      "title": "Market Microstructure: How Trades Execute and Prices Form",
+      "published_at": "2026-07-31"
     }
   ],
   "by_content_id": {
@@ -1149,6 +1209,11 @@
       "content_id": "data/research/ml-pipeline-orchestration-feast-mlflow",
       "pillar": "data-engineering",
       "title": "ML Pipeline Orchestration: From Notebook to Production with Feast and MLflow"
+    },
+    "data/research/debezium-cdc-change-data-capture": {
+      "content_id": "data/research/debezium-cdc-change-data-capture",
+      "pillar": "data-engineering",
+      "title": "Debezium and CDC: Capturing Database Changes at Scale"
     },
     "data/research/apache-iceberg-lakehouse": {
       "content_id": "data/research/apache-iceberg-lakehouse",
@@ -1540,33 +1605,33 @@
       "pillar": "aml",
       "title": "Square-Root Price Impact Is Necessary for Endogenous Manipulation Cycles in Learning-Agent Markets"
     },
-    "aml/compliance/what-is-money-laundering": {
-      "content_id": "aml/compliance/what-is-money-laundering",
+    "aml/research/what-is-money-laundering": {
+      "content_id": "aml/research/what-is-money-laundering",
       "pillar": "aml",
       "title": "What Is Money Laundering? A Beginner's Guide"
     },
-    "aml/compliance/kyc-basics": {
-      "content_id": "aml/compliance/kyc-basics",
+    "aml/research/kyc-basics": {
+      "content_id": "aml/research/kyc-basics",
       "pillar": "aml",
       "title": "KYC Fundamentals: Identity Verification in Financial Services"
     },
-    "aml/compliance/aml-regulatory-landscape": {
-      "content_id": "aml/compliance/aml-regulatory-landscape",
+    "aml/research/aml-regulatory-landscape": {
+      "content_id": "aml/research/aml-regulatory-landscape",
       "pillar": "aml",
       "title": "Understanding the AML Regulatory Landscape"
     },
-    "aml/compliance/risk-based-approach-intro": {
-      "content_id": "aml/compliance/risk-based-approach-intro",
+    "aml/research/risk-based-approach-intro": {
+      "content_id": "aml/research/risk-based-approach-intro",
       "pillar": "aml",
       "title": "The Risk-Based Approach in AML: A Practical Introduction"
     },
-    "aml/compliance/sanctions-screening-basics": {
-      "content_id": "aml/compliance/sanctions-screening-basics",
+    "aml/research/sanctions-screening-basics": {
+      "content_id": "aml/research/sanctions-screening-basics",
       "pillar": "aml",
       "title": "Sanctions Screening: How It Works and Why It Matters"
     },
-    "aml/compliance/suspicious-activity-reports": {
-      "content_id": "aml/compliance/suspicious-activity-reports",
+    "aml/research/suspicious-activity-reports": {
+      "content_id": "aml/research/suspicious-activity-reports",
       "pillar": "aml",
       "title": "Suspicious Activity Reports: What Every Compliance Professional Should Know"
     },
@@ -1994,8 +2059,53 @@
       "content_id": "markets/research/july-2026-market-conditions",
       "pillar": "stock",
       "title": "July 2026 Market Conditions: Earnings Fuel Waning, Oil at $95+, and Sector Rotation Underway"
+    },
+    "data/learn/pyspark-fundamentals": {
+      "content_id": "data/learn/pyspark-fundamentals",
+      "pillar": "data-engineering",
+      "title": "PySpark Fundamentals: Distributed Data Processing at Scale"
+    },
+    "data/learn/partitioning-strategies": {
+      "content_id": "data/learn/partitioning-strategies",
+      "pillar": "data-engineering",
+      "title": "Partitioning Strategies: Optimizing Data Layout for Performance"
+    },
+    "data/learn/spike-data-pipelines": {
+      "content_id": "data/learn/spike-data-pipelines",
+      "pillar": "data-engineering",
+      "title": "Building Resilient Data Pipelines with Spark and dbt"
+    },
+    "aml/learn/kyc-cdd-workflows": {
+      "content_id": "aml/learn/kyc-cdd-workflows",
+      "pillar": "aml",
+      "title": "KYC/CDD Workflows: From Onboarding to Ongoing Monitoring"
+    },
+    "aml/learn/sar-filing-scenarios": {
+      "content_id": "aml/learn/sar-filing-scenarios",
+      "pillar": "aml",
+      "title": "SAR Filing Scenarios: Identifying and Reporting Suspicious Activity"
+    },
+    "aml/learn/sanctions-screening": {
+      "content_id": "aml/learn/sanctions-screening",
+      "pillar": "aml",
+      "title": "Sanctions Screening: Tools, Techniques, and Compliance Challenges"
+    },
+    "markets/learn/quantitative-methods-intro": {
+      "content_id": "markets/learn/quantitative-methods-intro",
+      "pillar": "stock",
+      "title": "Quantitative Methods in Finance: From Descriptive Statistics to Factor Models"
+    },
+    "markets/learn/volatility-analysis": {
+      "content_id": "markets/learn/volatility-analysis",
+      "pillar": "stock",
+      "title": "Volatility Analysis: Measuring, Modeling, and Trading Uncertainty"
+    },
+    "markets/learn/market-microstructure": {
+      "content_id": "markets/learn/market-microstructure",
+      "pillar": "stock",
+      "title": "Market Microstructure: How Trades Execute and Prices Form"
     }
   },
   "by_run_id": {},
-  "checksum": "915e6f099ed1db6f3705ea9d1562b6b00f1b69c7c07a69b51311334a54e85d32"
+  "checksum": "5fea6958a6fe74fa9d9426b36d2598be4de7cc6c1617b42180114357ab8fc92b"
 }

@@ -1130,11 +1130,11 @@ def prune_and_archive_registry(
 
     existing_archive = []
     if archive_path.exists():
-        with open(archive_path) as f:
+        with open(archive_path, encoding="utf-8") as f:
             existing_archive = json.load(f).get("items", [])
 
     existing_archive.extend(archive)
-    with open(archive_path, "w") as f:
+    with open(archive_path, "w", encoding="utf-8") as f:
         json.dump({"items": existing_archive, "archived_at": datetime.now(timezone.utc).isoformat()}, f, indent=1)
 
     registry_data["content"] = active
