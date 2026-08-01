@@ -1,0 +1,28 @@
+/* AcaciaFund type system — self-hosted variable fonts
+   Body: Manrope (geometric grotesque, friendly, highly readable)
+   Display: Fraunces (soft editorial serif with optical sizing)
+*/
+
+@font-face {
+  font-family: 'Manrope';
+  font-style: normal;
+  font-weight: 400 800;
+  font-display: swap;
+  src: url(/static/fonts/Manrope-var.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'Fraunces';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url(/static/fonts/Fraunces-var.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'Fraunces';
+  font-style: italic;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url(/static/fonts/Fraunces-var-italic.woff2) format('woff2');
+}

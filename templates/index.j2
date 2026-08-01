@@ -1,43 +1,77 @@
-{% from "macros/breadcrumbs.html" import breadcrumbs %}
 {% extends "layout.j2" %}
 {% block main_content %}
 
 {%- set pillar_map = {'aml': 'compliance', 'stock': 'markets', 'data-engineering': 'data'} %}
+{%- set pillar_order = ['aml', 'stock', 'data-engineering'] %}
 
-{{ breadcrumbs('', 'Home') }}
-
-<section class="hero-section">
-  <h1>Master complex financial concepts<br>through the <span class="text-accent">Feynman Technique</span></h1>
-  <p class="hero-subtitle">Learn AML compliance, market microstructure, and data engineering through simple explanations, vivid analogies, and active recall — not jargon.</p>
+<!-- Hero — the AcaciaFund business card -->
+<section class="home-hero">
+  <p class="hero-eyebrow">AcaciaFund &middot; Compliance &middot; Markets &middot; Data</p>
+  <h1 class="hero-title">Invest in understanding,<br><em class="hero-accent">to build resilience.</em></h1>
+  <p class="hero-sub">Three pillars of modern finance — explained from first principles,<br class="hide-sm"> in plain language, with ideas you can hold on to.</p>
   <div class="hero-actions">
-    <a href="/start-here/" class="hero-cta">Start Learning &rarr;</a>
-    <a href="/search/" class="hero-cta-ghost">Search topics &rarr;</a>
+    <a href="/start-here/" class="hero-cta">Begin here &rarr;</a>
+    <a href="/search/" class="hero-cta-ghost">Browse the library</a>
   </div>
 </section>
 
-<section class="how-it-works">
-  <div class="hiw-step">
-    <div class="step-number">1</div>
-    <h3>Pick a Topic</h3>
-    <p>Choose from compliance, markets, or data engineering — each explained from the ground up.</p>
+<!-- The three pillars — the business card body -->
+<section class="home-section">
+  <div class="pillar-grid">
+    {%- for pillar_key in pillar_order %}
+    {%- set pc = pillar_config.get(pillar_key, {}) %}
+    {%- set pillar_url = pc.get('url', pillar_map.get(pillar_key, pillar_key)) %}
+    {%- set pillar_items = recent_posts | selectattr('pillar', 'equalto', pillar_key) | list %}
+    {%- set pillar_count = pillar_items | length %}
+    <a href="/{{ pillar_url }}/" class="business-card" style="--card-color:{{ pc.get('color', '#6366f1') }}">
+      <span class="bc-index">{{ "%02d" | format(loop.index) }}</span>
+      <span class="bc-icon">{{ pillar_emojis.get(pillar_key, '') }}</span>
+      <h2 class="bc-title">{{ pc.get('label', pillar_key) }}</h2>
+      <p class="bc-desc">{{ pc.get('heading', '') }}</p>
+      <ul class="bc-picks">
+        {%- for item in pillar_items[:3] %}
+        <li class="bc-pick"><span>{{ item.title | striptags }}</span></li>
+        {%- endfor %}
+      </ul>
+      <span class="bc-foot">
+        <span>{{ pillar_count }} articles</span>
+        <span class="bc-go">Explore &rarr;</span>
+      </span>
+    </a>
+    {%- endfor %}
   </div>
-  <div class="hiw-step">
-    <div class="step-number">2</div>
-    <h3>Learn Simply</h3>
-    <p>Every concept starts with an ELI5, then builds through analogies, examples, and diagrams.</p>
-  </div>
-  <div class="hiw-step">
-    <div class="step-number">3</div>
-    <h3>Test Yourself</h3>
-    <p>Teach back what you learned, find gaps, and build real understanding that sticks.</p>
+</section>
+
+<!-- How it works -->
+<section class="home-section home-how">
+  <p class="section-label">How it works</p>
+  <div class="hiw-step-row">
+    <div class="hiw-step">
+      <div class="step-number">1</div>
+      <h3>Pick a Topic</h3>
+      <p>Choose from compliance, markets, or data engineering — each explained from the ground up.</p>
+    </div>
+    <div class="hiw-step">
+      <div class="step-number">2</div>
+      <h3>Learn Simply</h3>
+      <p>Every concept starts with an ELI5, then builds through analogies, examples, and diagrams.</p>
+    </div>
+    <div class="hiw-step">
+      <div class="step-number">3</div>
+      <h3>Test Yourself</h3>
+      <p>Teach back what you learned, find gaps, and build real understanding that sticks.</p>
+    </div>
   </div>
 </section>
 
 {%- if featured_posts and featured_posts | length > 0 %}
-<section class="mb-8">
-  <div class="flex items-center gap-2 mb-4">
-    <span class="text-xl">&#9733;</span>
-    <h2 class="text-lg font-bold text-default">Featured</h2>
+<section class="home-section">
+  <div class="section-head">
+    <div>
+      <p class="section-label">Fresh thinking</p>
+      <h2 class="section-title">Featured</h2>
+    </div>
+    <a href="/search/" class="section-link">View all &rarr;</a>
   </div>
   <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
     {%- for item in featured_posts[:3] %}
@@ -53,40 +87,36 @@
 </section>
 {%- endif %}
 
-<section class="mb-8">
-  <h2 class="text-lg font-bold mb-4 text-default">Explore by Topic</h2>
-  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-    {%- for pillar_key in ['aml', 'stock', 'data-engineering'] %}
-    {%- set pc = pillar_config.get(pillar_key, {}) %}
-    {%- set pillar_url = pc.get('url', pillar_map.get(pillar_key, pillar_key)) %}
-    {%- set pillar_items = recent_posts | selectattr('pillar', 'equalto', pillar_key) | list %}
-    {%- set beginner_count = pillar_items | selectattr('difficulty', 'undefined') | list | length %}
-    <div class="pillar-card ghost-card p-4 card-accent-top" style="--card-color:{{ pc.get('color', '#6366f1') }}">
-      <div class="flex items-start gap-3 mb-3">
-        <span class="pillar-icon">{{ pillar_emojis.get(pillar_key, '') }}</span>
-        <div>
-          <h2 class="pillar-name text-default">{{ pc.get('label', pillar_key) }}</h2>
-          <p class="pillar-desc">{{ pc.get('heading', '') }}</p>
-        </div>
-      </div>
-      <div class="flex items-center gap-2 mb-3 pillar-stat">
-        <span>{{ pillar_items | length }} articles</span>
-        <span>&middot;</span>
-        <span class="difficulty-badge beginner">Beginner friendly</span>
-      </div>
-      {%- for item in pillar_items[:3] %}
-      <a href="{{ slug_to_url(item.slug) }}" class="block py-2 border-t text-sm no-underline hover-link text-secondary">
-        <span class="line-clamp-1">{{ item.title | striptags }}</span>
-        {%- if item.date_str %}
-        <span class="text-xs block text-muted">{{ item.date_str | format_date }}</span>
-        {%- endif %}
-      </a>
-      {%- endfor %}
-      <a href="/{{ pillar_url }}/" class="block mt-2 text-xs font-semibold no-underline text-accent">Explore {{ pc.get('label', pillar_key) }} &rarr;</a>
+{%- if news_items and news_items | length > 0 %}
+<section class="home-section">
+  <div class="section-head">
+    <div>
+      <p class="section-label">Fresh from the field</p>
+      <h2 class="section-title">Latest Signals</h2>
     </div>
+    <a href="/news/" class="section-link">All news &rarr;</a>
+  </div>
+  <div class="news-list">
+    {%- for item in news_items[:6] %}
+    {%- set npillar = item.pillar or "aml" %}
+    {%- set npc = pillar_config.get(npillar, {}) %}
+    {%- set item_url = item.url | sanitize_url %}
+    {%- if item_url %}<a href="{{ item_url }}" class="news-item" rel="noopener" target="_blank" style="--card-color:{{ npc.get('color', '#6366f1') }}">{% else %}<span class="news-item" style="--card-color:{{ npc.get('color', '#6366f1') }}">{% endif %}
+      <span class="news-dot"></span>
+      <span class="news-body">
+        <span class="news-title">{{ item.title }}</span>
+        <span class="news-meta">
+          {%- if item.source %}{{ item.source }}{% endif %}
+          {%- if item.published_at %} &middot; {{ item.published_at | format_date }}{% endif %}
+          {%- if item.points and item.points > 0 %} &middot; {{ item.points }} points{% endif %}
+        </span>
+      </span>
+      <span class="news-go" aria-hidden="true">&rarr;</span>
+    {%- if item_url %}</a>{% else %}</span>{% endif %}
     {%- endfor %}
   </div>
 </section>
+{%- endif %}
 
 {%- set knowledge_categories = [
   { 'icon': '⚙️', 'name': 'Platform', 'cat': 'platform' },
@@ -104,10 +134,13 @@
   { 'icon': '💻', 'name': 'Tutorials', 'cat': 'tutorial-code' },
 ] %}
 
-<section class="mb-8">
-  <div class="flex items-center gap-2 mb-4">
-    <span class="text-xl">&#128218;</span>
-    <h2 class="text-lg font-bold text-default">Browse by Category</h2>
+<section class="home-section">
+  <div class="section-head">
+    <div>
+      <p class="section-label">The library</p>
+      <h2 class="section-title">Browse by Category</h2>
+    </div>
+    <a href="/knowledge/" class="section-link">All knowledge &rarr;</a>
   </div>
   <div class="knowledge-category-grid">
     {%- for cat in knowledge_categories %}
@@ -120,14 +153,14 @@
 </section>
 
 {%- if learn_items and learn_items | length > 0 %}
-<section class="mb-8">
-  <div class="flex items-center justify-between mb-4">
-    <div class="flex items-center gap-2">
-      <span class="text-xl">&#128218;</span>
-      <h2 class="text-lg font-bold text-default">Learning Paths</h2>
+<section class="home-section">
+  <div class="section-head">
+    <div>
+      <p class="section-label">Interactive</p>
+      <h2 class="section-title">Learning Paths</h2>
     </div>
     {%- set first_pillar = pillar_config.get(learn_items[0].pillar or 'aml', {}) %}
-    <a href="/{{ first_pillar.get('url', 'data') }}/learn/" class="text-xs font-semibold no-underline text-accent">View all &rarr;</a>
+    <a href="/{{ first_pillar.get('url', 'data') }}/learn/" class="section-link">View all &rarr;</a>
   </div>
   <div class="grid gap-3 sm:grid-cols-3">
     {%- for item in learn_items[:3] %}
@@ -144,34 +177,13 @@
 </section>
 {%- endif %}
 
-{%- if knowledge_items and knowledge_items | length > 0 %}
-<section class="mb-8">
-  <div class="flex items-center justify-between mb-4">
-    <div class="flex items-center gap-2">
-      <span class="text-xl">&#128214;</span>
-      <h2 class="text-lg font-bold text-default">Knowledge Base</h2>
-    </div>
-    <a href="/knowledge/" class="text-xs font-semibold no-underline text-accent">View all &rarr;</a>
-  </div>
-  <div class="grid gap-3 sm:grid-cols-3">
-    {%- for item in knowledge_items[:3] %}
-    <a href="{{ slug_to_url(item.slug) }}" class="pillar-card ghost-card p-3 block no-underline">
-      <span class="badge-knowledge">Knowledge</span>
-      <h3 class="mt-2 text-sm font-semibold text-default">{{ item.title | striptags }}</h3>
-      <p class="mt-1 text-xs line-clamp-2 text-secondary">{{ item.description }}</p>
-    </a>
-    {%- endfor %}
-  </div>
-</section>
-{%- endif %}
-
-<section class="mb-8">
+<section class="home-section">
   <div class="ghost-card p-5 feynman-cta-card">
     <div class="flex items-center gap-2 mb-2">
       <span class="text-xl">&#128161;</span>
       <h2 class="text-base font-bold text-default">Why the Feynman Technique?</h2>
     </div>
-    <p class="text-sm text-secondary">If you can't explain it simply, you don't understand it well enough. Every concept on Acacia is structured with this principle: start with a plain-English explanation, connect it through analogy, test it with examples, find the gaps, and build something real. No fluff. Just understanding.</p>
+    <p class="text-sm text-secondary">If you can't explain it simply, you don't understand it well enough. Every concept on AcaciaFund is structured with this principle: start with a plain-English explanation, connect it through analogy, test it with examples, find the gaps, and build something real. No fluff. Just understanding.</p>
     <a href="/start-here/" class="next-stage-btn mt-3">Learn how it works &rarr;</a>
   </div>
 </section>

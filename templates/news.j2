@@ -1,0 +1,60 @@
+{% extends "layout.j2" %}
+{% block main_content %}
+
+{%- set pillar_map = {'aml': 'compliance', 'stock': 'markets', 'data-engineering': 'data'} %}
+
+<section class="home-hero news-hero">
+  <p class="hero-eyebrow">Fresh from the field</p>
+  <h1 class="hero-title">News &amp; <em class="hero-accent">signals</em></h1>
+  <p class="hero-sub">A curated, pillar-scored digest of what's moving in compliance, markets, and data engineering — gathered automatically from public sources.</p>
+</section>
+
+{%- if news_items and news_items | length > 0 %}
+
+{%- for pillar_key in ['aml', 'stock', 'data-engineering'] %}
+{%- set pc = pillar_config.get(pillar_key, {}) %}
+{%- set pillar_url = pc.get('url', pillar_map.get(pillar_key, pillar_key)) %}
+{%- set pillar_news = news_items | selectattr('pillar', 'equalto', pillar_key) | list %}
+{%- if pillar_news and pillar_news | length > 0 %}
+<section class="home-section">
+  <div class="section-head">
+    <div>
+      <p class="section-label">{{ pc.get('label', pillar_key) }}</p>
+      <h2 class="section-title">{{ pillar_emojis.get(pillar_key, '') }} {{ pc.get('label', pillar_key) }}</h2>
+    </div>
+    <a href="/{{ pillar_url }}/" class="section-link">Explore pillar &rarr;</a>
+  </div>
+  <div class="news-list">
+    {%- for item in pillar_news %}
+    {%- set item_url = item.url | sanitize_url %}
+    {%- if item_url %}<a href="{{ item_url }}" class="news-item" rel="noopener" target="_blank" style="--card-color:{{ pc.get('color', '#6366f1') }}">{% else %}<span class="news-item" style="--card-color:{{ pc.get('color', '#6366f1') }}">{% endif %}
+      <span class="news-dot"></span>
+      <span class="news-body">
+        <span class="news-title">{{ item.title }}</span>
+        <span class="news-meta">
+          {%- if item.source %}{{ item.source }}{% endif %}
+          {%- if item.published_at %} &middot; {{ item.published_at | format_date }}{% endif %}
+          {%- if item.points and item.points > 0 %} &middot; {{ item.points }} points{% endif %}
+        </span>
+      </span>
+      <span class="news-go" aria-hidden="true">&rarr;</span>
+    {%- if item_url %}</a>{% else %}</span>{% endif %}
+    {%- endfor %}
+  </div>
+</section>
+{%- endif %}
+{%- endfor %}
+
+{%- if news_fetched_at %}
+<p class="news-foot">Digest gathered {{ news_fetched_at | format_date }} by the Acacia pipeline.</p>
+{%- endif %}
+
+{%- else %}
+<section class="home-section">
+  <div class="ghost-card p-5">
+    <p class="text-sm text-secondary">The news digest is warming up. Run <code>python3 scripts/fetch_news.py</code> to gather the latest signals from the field.</p>
+  </div>
+</section>
+{%- endif %}
+
+{% endblock %}

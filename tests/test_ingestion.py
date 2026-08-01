@@ -6,7 +6,7 @@ Tests pure helper functions, deduplication, and registry operations.
 from __future__ import annotations
 
 import json
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 from unittest.mock import MagicMock, patch
@@ -580,7 +580,7 @@ class TestPruneAndArchiveRegistry:
         now = datetime.now(timezone.utc)
         items: list[dict[str, Any]] = []
         for i in range(5):
-            created = now.replace(day=now.day - i).isoformat()
+            created = (now - timedelta(days=i)).isoformat()
             items.append({
                 "slug": f"item-{i}",
                 "title": f"Item {i}",
