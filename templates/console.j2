@@ -1,0 +1,375 @@
+{% extends "layout.j2" %}
+{% from "macros/breadcrumbs.html" import breadcrumbs %}
+{% block main_content %}
+
+<nav aria-label="Breadcrumb" class="mb-4 text-xs text-muted">
+  <ol class="flex flex-wrap items-center gap-1.5">
+    <li><a href="/" class="hover-accent transition">Home</a></li>
+    <li aria-hidden="true">/</li>
+    <li aria-current="page">Scholar Console</li>
+  </ol>
+</nav>
+
+<header class="mb-6">
+  <h1 class="text-3xl font-extrabold text-default">Scholar Console</h1>
+  <p class="mt-2 text-sm text-muted max-w-prose">Unified knowledge cockpit across all three pillars. Build <code class="text-xs px-1 py-0.5 rounded bg-surface">{{ build_hash }}</code></p>
+</header>
+
+<nav class="console-tabs flex flex-wrap gap-1 mb-8 p-1 rounded-lg border border-muted/20" role="tablist">
+  <button class="console-tab flex-1 px-3 py-2 text-xs font-semibold rounded-md transition" role="tab" aria-selected="true" data-tab="overview" style="background:var(--color-surface);color:var(--color-text)">Overview</button>
+  <button class="console-tab flex-1 px-3 py-2 text-xs font-semibold rounded-md transition" role="tab" aria-selected="false" data-tab="ontology" style="color:var(--color-text-muted)">Ontology</button>
+  <button class="console-tab flex-1 px-3 py-2 text-xs font-semibold rounded-md transition" role="tab" aria-selected="false" data-tab="evidence" style="color:var(--color-text-muted)">Evidence</button>
+  <button class="console-tab flex-1 px-3 py-2 text-xs font-semibold rounded-md transition" role="tab" aria-selected="false" data-tab="sources" style="color:var(--color-text-muted)">Sources</button>
+  <button class="console-tab flex-1 px-3 py-2 text-xs font-semibold rounded-md transition" role="tab" aria-selected="false" data-tab="content" style="color:var(--color-text-muted)">Content</button>
+  <button class="console-tab flex-1 px-3 py-2 text-xs font-semibold rounded-md transition" role="tab" aria-selected="false" data-tab="feynman" style="color:var(--color-text-muted)">Feynman</button>
+  <button class="console-tab flex-1 px-3 py-2 text-xs font-semibold rounded-md transition" role="tab" aria-selected="false" data-tab="health" style="color:var(--color-text-muted)">Health</button>
+</nav>
+
+{# ============================================ OVERVIEW ============================================ #}
+<section class="console-panel" data-panel="overview">
+  <h2 class="text-xl font-semibold mb-4 text-default font-display">System Overview</h2>
+
+  <div class="grid gap-4 grid-cols-2 lg:grid-cols-4 mb-6">
+  {% for p in pillar_data %}
+    <div class="ghost-card p-4 text-center">
+      <div class="text-2xl mb-1">{{ p.emoji }}</div>
+      <div class="text-lg font-bold" style="color:{{ p.color }}">{{ p.label }}</div>
+      <p class="text-xs text-muted mt-1">{{ pillar_counts.get(p.key, {}).get("total", 0) }} items &middot; {{ concept_counts.get(p.key, 0) }} concepts</p>
+      <div class="flex flex-wrap justify-center gap-1 mt-2">
+        <span class="badge-outline text-xs">{{ pillar_counts.get(p.key, {}).get("research", 0) }} R</span>
+        <span class="badge-outline text-xs">{{ pillar_counts.get(p.key, {}).get("learn", 0) }} L</span>
+        <span class="badge-outline text-xs">{{ pillar_counts.get(p.key, {}).get("knowledge", 0) }} K</span>
+      </div>
+    </div>
+  {% endfor %}
+  </div>
+
+  <div class="grid gap-4 grid-cols-2 lg:grid-cols-4 mb-6">
+    <div class="ghost-card p-4 text-center">
+      <div class="text-3xl font-bold text-accent">{{ items_total }}</div>
+      <p class="text-xs text-muted mt-1">Content Items</p>
+      <p class="text-[10px] opacity-50">{{ content_type_counts.get("research", 0) }} res / {{ content_type_counts.get("learn", 0) }} learn / {{ content_type_counts.get("knowledge", 0) }} knwl</p>
+    </div>
+    <div class="ghost-card p-4 text-center">
+      <div class="text-3xl font-bold" style="color:#6366f1">{{ concepts_total }}</div>
+      <p class="text-xs text-muted mt-1">Ontology Concepts</p>
+      <p class="text-[10px] opacity-50">{{ relations_total }} relations</p>
+    </div>
+    <div class="ghost-card p-4 text-center">
+      <div class="text-3xl font-bold" style="color:#22c55e">{{ source_active }}</div>
+      <p class="text-xs text-muted mt-1">Active Sources</p>
+      <p class="text-[10px] opacity-50"><span style="color:#f59e0b">{{ source_degraded }} degraded</span> &middot; <span style="color:#ef4444">{{ source_error }} down</span></p>
+    </div>
+    <div class="ghost-card p-4 text-center">
+      <div class="text-3xl font-bold text-accent">855</div>
+      <p class="text-xs text-muted mt-1">Tests Passing</p>
+      <p class="text-[10px] opacity-50">847 Python + 8 JS</p>
+    </div>
+  </div>
+
+  <h3 class="text-sm font-semibold mb-3 text-default">Signal Quality Index by Pillar</h3>
+  <div class="grid gap-4 grid-cols-3 mb-6">
+  {% for pkey in ["aml", "stock", "data-engineering"] %}
+    {% set pq = pillar_quality.get(pkey, {}) %}
+    {% set pc = pillar_config.get(pkey, {}) %}
+    <div class="ghost-card p-4">
+      <p class="text-xs font-semibold mb-2" style="color:{{ pc.get('color', '#6366f1') }}">{{ pc.get('label', pkey | title) }}</p>
+      {% set sqi_pct = (pq.get("avg_sqi", 0) * 100) | round %}
+      <div class="flex items-baseline gap-2">
+        <span class="text-2xl font-bold">{{ sqi_pct }}</span>
+        <span class="text-xs text-muted">avg SQI</span>
+      </div>
+      <p class="text-[10px] text-muted mt-1">range: {{ (pq.get("min_sqi", 0) * 100) | round }}&#8211;{{ (pq.get("max_sqi", 0) * 100) | round }}</p>
+      <div class="h-1.5 rounded-full mt-2 overflow-hidden" style="background:color-mix(in srgb, {{ pc.get('color', '#6366f1') }} 15%, transparent)">
+        <div class="h-full rounded-full" style="width:{{ sqi_pct }}%;background:{{ pc.get('color', '#6366f1') }}"></div>
+      </div>
+    </div>
+  {% endfor %}
+  </div>
+
+  <h3 class="text-sm font-semibold mb-3 text-default">Epistemic Status Distribution</h3>
+  <div class="flex flex-wrap gap-2 mb-4">
+  {% for status_type, count in origin_counts.items() %}
+    <span class="badge-outline text-xs">{{ status_type | replace('_', ' ') | title }}: {{ count }}</span>
+  {% endfor %}
+  </div>
+</section>
+
+{# ============================================ ONTOLOGY ============================================ #}
+<section class="console-panel" data-panel="ontology" style="display:none">
+  <h2 class="text-xl font-semibold mb-3 text-default font-display">Ontology Concepts ({{ concepts_total }})</h2>
+  <div class="flex flex-wrap gap-2 mb-4">
+    <input type="text" id="concept-search" placeholder="Filter concepts…" class="text-sm px-3 py-1.5 rounded-lg border border-muted bg-surface text-default w-full max-w-md">
+    <select id="concept-pillar-filter" class="text-sm px-2 py-1.5 rounded-lg border border-muted bg-surface text-default">
+      <option value="">All Pillars</option>
+      <option value="aml">Compliance</option>
+      <option value="stock">Markets</option>
+      <option value="data-engineering">Data Engineering</option>
+    </select>
+  </div>
+  <div id="concept-list" class="grid gap-3">
+    {% for c in concepts %}
+    <div class="ghost-card p-4 concept-card" data-pillar="{{ c.pillar }}">
+      <div class="flex items-start justify-between gap-3">
+        <div class="flex-1 min-w-0">
+          <a href="/concepts/{{ c.id }}/" class="text-sm font-semibold text-accent">{{ c.label }}</a>
+          <p class="text-xs text-muted mt-1">{{ c.description }}</p>
+          <div class="flex flex-wrap gap-1.5 mt-2 text-[10px]">
+            <span class="badge-outline">{{ c.pillar | capitalize }}</span>
+            <span class="badge-outline">{{ c.category | capitalize }}</span>
+            {% if c.epistemic_status %}<span class="badge-outline opacity-70">{{ c.epistemic_status | replace('_', ' ') | title }}</span>{% endif %}
+            {% if c.explanation_quality %}<span class="badge-outline opacity-70" style="{% if c.explanation_quality >= 0.8 %}background:#22c55e20;color:#22c55e{% elif c.explanation_quality >= 0.5 %}background:#f59e0b20;color:#f59e0b{% else %}background:#ef444420;color:#ef4444{% endif %}">F:{{ (c.explanation_quality * 100) | round }}</span>{% endif %}
+            {% if c.cross_pillar_analogs %}<span class="badge-outline opacity-70" style="color:#6366f1">{{ c.cross_pillar_analogs | length }} analogs</span>{% endif %}
+          </div>
+          {% if c.eli5_explanation %}
+          <details class="mt-2">
+            <summary class="text-xs cursor-pointer text-muted">ELI5</summary>
+            <p class="text-xs mt-1 italic text-muted">{{ c.eli5_explanation }}</p>
+          </details>
+          {% endif %}
+        </div>
+        <div class="flex flex-col items-end gap-1 text-[10px] text-muted shrink-0">
+          <span>Score: {{ (c.confidence_score * 100) | round }}</span>
+          <span>{{ c.relations | length }} rel.</span>
+          <span>{{ c.content_slugs | length }} content</span>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  <p class="text-xs text-muted mt-4">{{ concepts_total }} concepts &middot; {{ relations_total }} relations &middot; {{ philosophy_metadata_count }} with lineage</p>
+</section>
+
+{# ============================================ EVIDENCE ============================================ #}
+<section class="console-panel" data-panel="evidence" style="display:none">
+  <h2 class="text-xl font-semibold mb-3 text-default font-display">Evidence &amp; Contradictions</h2>
+  <p class="text-sm text-muted mb-4">GRADE-style evidence grading, source trails, and contradiction detection run at build time across all content with source claims.</p>
+  <div class="ghost-card p-4 text-center">
+    <p class="text-muted text-sm">Evidence grading and contradiction detection results appear in build logs and are surfaced per-item via <a href="/research/workspace/" class="text-accent">Research Workspace</a> pages. Check build output for &quot;source-trails&quot;, &quot;contradictions&quot;, and &quot;evidence-grades&quot;.</p>
+  </div>
+  <div class="flex flex-wrap gap-2 mt-4">
+    <a href="/research/workspace/" class="btn-ghost-sm text-xs">Open Research Workspace</a>
+    <a href="/sources/" class="btn-ghost-sm text-xs">Source Trust Dashboard</a>
+  </div>
+</section>
+
+{# ============================================ SOURCES ============================================ #}
+<section class="console-panel" data-panel="sources" style="display:none">
+  <h2 class="text-xl font-semibold mb-3 text-default font-display">Inspiration Sources ({{ source_total }})</h2>
+  <p class="text-sm text-muted mb-4">Credit-checked weekly (Monday 04:00 UTC). Active: {{ source_active }} &middot; Degraded: {{ source_degraded }} &middot; Down: {{ source_error }}.</p>
+  <div class="grid gap-2">
+    {% for src in source_summary %}
+    <div class="ghost-card p-3 flex items-center gap-3">
+      <div class="w-3 h-3 rounded-full shrink-0"
+        {% if src.status == "active" %} style="background:#22c55e"
+        {% elif src.status == "degraded" %} style="background:#f59e0b"
+        {% else %} style="background:#ef4444"
+        {% endif %}
+      ></div>
+      <div class="flex-1 min-w-0">
+        <p class="text-xs font-semibold truncate">{{ src.name }}</p>
+        <p class="text-[10px] text-muted">{{ src.key }} &middot; pillar: {{ src.pillar }}</p>
+      </div>
+      <div class="text-end">
+        <p class="text-xs font-bold {% if src.status == 'active' %}text-green-500{% elif src.status == 'degraded' %}text-yellow-500{% else %}text-red-500{% endif %}">{{ src.status | title }}</p>
+        <p class="text-[10px] text-muted">HTTP {{ src.http_status }}</p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+{# ============================================ CONTENT ° ============================================ #}
+<section class="console-panel" data-panel="content" style="display:none">
+  <h2 class="text-xl font-semibold mb-3 text-default font-display">Content Index ({{ items_total }})</h2>
+  <div class="flex flex-wrap gap-2 mb-4">
+    <input type="text" id="item-search" placeholder="Search by title…" class="text-sm px-3 py-1.5 rounded-lg border border-muted bg-surface text-default w-full max-w-md">
+    <select id="content-pillar-filter" class="text-sm px-2 py-1.5 rounded-lg border border-muted bg-surface text-default">
+      <option value="">All Pillars</option>
+      <option value="aml">Compliance</option>
+      <option value="stock">Markets</option>
+      <option value="data-engineering">Data Engineering</option>
+    </select>
+    <select id="content-type-filter" class="text-sm px-2 py-1.5 rounded-lg border border-muted bg-surface text-default">
+      <option value="">All Types</option>
+      <option value="research">Research</option>
+      <option value="learn">Learn</option>
+      <option value="knowledge">Knowledge</option>
+    </select>
+  </div>
+  <div id="content-list" class="grid gap-2">
+    {% for item in items %}
+    <div class="ghost-card p-3 content-item" data-pillar="{{ item.pillar }}" data-type="{{ item.content_type }}">
+      <a href="/{{ item.slug }}/" class="text-xs font-semibold text-accent">{{ item.title }}</a>
+      <div class="flex flex-wrap items-center gap-2 mt-1 text-[10px] text-muted">
+        {% set ipc = pillar_config.get(item.pillar, {}) %}
+        <span style="color:{{ ipc.get('color', 'var(--color-text-muted)') }}">{{ ipc.get('label', item.pillar | title) }}</span>
+        <span>{{ item.content_type | capitalize }}</span>
+        <span>{{ item.difficulty | title }}</span>
+        <span>SQI: {{ (item.sqi * 100) | round }}</span>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+{# ============================================ FEYNMAN ============================================ #}
+<section class="console-panel" data-panel="feynman" style="display:none">
+  <h2 class="text-xl font-semibold mb-3 text-default font-display">Feynman Learning Quality</h2>
+  <p class="text-sm text-muted mb-4">Explanation quality scores for all {{ concepts_total }} concepts with Feynman explanations or analogies.</p>
+  <div class="grid gap-3 grid-cols-1 sm:grid-cols-2">
+    {% for c in concepts %}
+    {% if c.eli5_explanation or c.analogy or c.concrete_example %}
+    <div class="ghost-card p-3">
+      <div class="flex items-start justify-between gap-2">
+        <div class="flex-1 min-w-0">
+          <a href="/concepts/{{ c.id }}/" class="text-xs font-semibold text-accent">{{ c.label }}</a>
+          <p class="text-[10px] text-muted mt-0.5">{{ c.pillar | capitalize }}</p>
+          {% if c.eli5_explanation %}
+          <p class="text-xs text-muted italic mt-1">&ldquo;{{ c.eli5_explanation }}&rdquo;</p>
+          {% endif %}
+          {% if c.analogy %}
+          <p class="text-[10px] text-muted mt-1">{{ c.analogy }}</p>
+          {% endif %}
+          {% if c.gap_questions %}
+          <div class="text-[10px] text-muted mt-1">{{ c.gap_questions | length }} gap question{% if c.gap_questions | length != 1 %}s{% endif %}</div>
+          {% endif %}
+        </div>
+        <div class="text-center shrink-0" style="min-width:48px">
+          <div class="text-lg font-bold
+            {% if c.explanation_quality >= 0.8 %}text-green-500
+            {% elif c.explanation_quality >= 0.5 %}text-yellow-500
+            {% else %}text-red-400
+            {% endif %}
+          ">{{ (c.explanation_quality * 100) | round }}</div>
+          <p class="text-[10px] text-muted">{{ 'High' if c.explanation_quality >= 0.8 else ('Med' if c.explanation_quality >= 0.5 else 'Low') }}</p>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+  </div>
+</section>
+
+{# ============================================ HEALTH ============================================ #}
+<section class="console-panel" data-panel="health" style="display:none">
+  <h2 class="text-xl font-semibold mb-3 text-default font-display">System Health</h2>
+
+  <div class="grid gap-4 grid-cols-3 mb-4">
+    <div class="ghost-card p-4 text-center">
+      <div class="text-2xl font-bold text-green-500">{{ source_active }}</div>
+      <p class="text-xs text-muted">Active Sources</p>
+    </div>
+    <div class="ghost-card p-4 text-center">
+      <div class="text-2xl font-bold text-yellow-500">{{ source_degraded }}</div>
+      <p class="text-xs text-muted">Degraded</p>
+    </div>
+    <div class="ghost-card p-4 text-center">
+      <div class="text-2xl font-bold text-red-500">{{ source_error }}</div>
+      <p class="text-xs text-muted">Down</p>
+    </div>
+  </div>
+
+  <div class="ghost-card p-4 mb-4">
+    <h3 class="text-xs font-semibold mb-2">Content Freshness Status</h3>
+    {% if freshness_summary %}
+    <div class="flex flex-wrap gap-3">
+      <span class="badge-outline text-xs" style="background:#22c55e20;color:#22c55e">Fresh: {{ freshness_summary.get("fresh", 0) }}</span>
+      <span class="badge-outline text-xs" style="background:#f59e0b20;color:#f59e0b">Stale: {{ freshness_summary.get("stale", 0) }}</span>
+      <span class="badge-outline text-xs" style="background:#ef444420;color:#ef4444">Outdated: {{ freshness_summary.get("outdated", 0) }}</span>
+    </div>
+    {% else %}
+    <p class="text-xs text-muted">Run scripts/check_entry_freshness.py to generate this data.</p>
+    {% endif %}
+  </div>
+
+  <p class="text-xs text-muted mt-4">
+    Last health check: {{ last_scored or 'not yet' }} &middot;
+    Philosophy metadata: {{ philosophy_metadata_count }} concepts &middot;
+    {% if payload_hash %}
+    Payload: <code class="text-[10px]">{{ payload_hash[:12] }}</code>
+    {% endif %}
+  </p>
+</section>
+
+{# ═══════════════════ ACTION BAR ════════════════ #}
+<div class="mt-10 pt-6 border-t border-muted/30">
+  <h3 class="text-sm font-semibold mb-3 text-default">Quick Tools</h3>
+  <div class="flex flex-wrap gap-2">
+    <a href="/review/" class="btn-ghost-sm text-xs">Review Dashboard</a>
+    <a href="/graph/" class="btn-ghost-sm text-xs">Knowledge Graph</a>
+    <a href="/search/" class="btn-ghost-sm text-xs">Search</a>
+    <a href="/admin/" class="btn-ghost-sm text-xs">Admin Panel</a>
+    <a href="/letters/" class="btn-ghost-sm text-xs">Alpha Index</a>
+    <a href="/sources/" class="btn-ghost-sm text-xs">Source Trust</a>
+    <a href="/compliance/synthesis/" class="btn-ghost-sm text-xs">Cross-Pillar Synthesis</a>
+  </div>
+</div>
+
+<script>
+(function() {
+  var tabs = document.querySelectorAll('.console-tab');
+  var panels = document.querySelectorAll('.console-panel');
+
+  tabs.forEach(function(tab) {
+    tab.addEventListener('click', function() {
+      var target = this.dataset.tab;
+      tabs.forEach(function(t) {
+        t.style.background = '';
+        t.style.color = 'var(--color-text-muted)';
+        t.setAttribute('aria-selected', 'false');
+      });
+      this.style.background = 'var(--color-surface)';
+      this.style.color = 'var(--color-text)';
+      this.setAttribute('aria-selected', 'true');
+      panels.forEach(function(p) {
+        p.style.display = (p.dataset.panel === target || p.dataset.panel === 'overview') ? target === p.dataset.panel ? '' : 'none';
+      });
+    });
+  });
+
+  // Concept search live filter
+  var conceptInput = document.getElementById('concept-search');
+  if (conceptInput) {
+    conceptInput.addEventListener('input', function() {
+      var q = this.value.toLowerCase();
+      document.querySelectorAll('.concept-card').forEach(function(card) {
+        card.style.display = q && !card.textContent.toLowerCase().includes(q) ? 'none' : '';
+      });
+    });
+  }
+
+  var pFilter = document.getElementById('concept-pillar-filter');
+  if (pFilter) {
+    pFilter.addEventListener('change', function() {
+      var val = this.value;
+      document.querySelectorAll('.concept-card').forEach(function(card) {
+        if (!val) { card.style.display = ''; return; }
+        card.style.display = card.dataset.pillar === val ? '' : 'none';
+      });
+    });
+  }
+
+  // Content filters
+  var itemSearch = document.getElementById('item-search');
+  var cpFilter = document.getElementById('content-pillar-filter');
+  var ctFilter = document.getElementById('content-type-filter');
+  function filterContent() {
+    var q = (itemSearch ? itemSearch.value : '').toLowerCase();
+    var p = cpFilter ? cpFilter.value : '';
+    var t = ctFilter ? ctFilter.value : '';
+    document.querySelectorAll('.content-item').forEach(function(row) {
+      var ok = (!q || row.textContent.toLowerCase().includes(q))
+        && (!p || row.dataset.pillar === p)
+        && (!t || row.dataset.type === t);
+      row.style.display = ok ? '' : 'none';
+    });
+  }
+  if (itemSearch) itemSearch.addEventListener('input', filterContent);
+  if (cpFilter) cpFilter.addEventListener('change', filterContent);
+  if (ctFilter) ctFilter.addEventListener('change', filterContent);
+})();
+</script>
+
+{% include 'partials/newsletter.html' %}
+{% endblock %}

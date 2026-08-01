@@ -306,6 +306,20 @@ def _interleave_by_pillar(items, count):
         idx += 1
     return result[:count]
 
+def _load_news_data():
+    """Load the news digest from data/news.json (best-effort, never fails the build)."""
+    news_path = PROJECT_ROOT / "data" / "news.json"
+    if not news_path.exists():
+        return {"fetched_at": "", "items": []}
+    try:
+        with news_path.open("r", encoding="utf-8") as _f:
+            data = json.load(_f)
+        items = data.get("items", []) or []
+        return {"fetched_at": data.get("fetched_at", ""), "items": items}
+    except (OSError, ValueError):
+        return {"fetched_at": "", "items": []}
+
+
 def main():  # pyright: ignore[reportGeneralTypeIssues]
     import argparse
     _parser = argparse.ArgumentParser(description="AcaciaFund static site generator")
@@ -505,6 +519,16 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
             return date_part
 
     env.filters["format_date"] = format_date
+
+    def sanitize_url(value):
+        if not value:
+            return ""
+        value = value.strip()
+        if value.lower().startswith(("http://", "https://")):
+            return value
+        return ""
+
+    env.filters["sanitize_url"] = sanitize_url
 
     # --- Trend Detection System ---
     trend_detection_path = PROJECT_ROOT / "dist" / "trend_detection.parquet"
@@ -2048,6 +2072,11 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
             per_pillar_recent.append(_p)
             _seen.add(_p.slug)
 
+    # --- news digest context (best-effort: empty list if data/news.json is missing) ---
+    _news_data = _load_news_data()
+    news_items = _news_data["items"]
+    news_fetched_at = _news_data["fetched_at"]
+
     index_html = render_template(
         "index.j2",
         content=_dummy(
@@ -2070,6 +2099,8 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
         recent_pictograms=recent_pictograms,
         thumbnail_base=f"{SITE_URL}/static/images",
         thumbnail_key=thumbnail_key,
+        news_items=news_items,
+        news_fetched_at=news_fetched_at,
         **ctx_base,
     )
     (OUTPUT_DIR / "index.html").write_text(index_html, encoding="utf-8")
@@ -2091,6 +2122,26 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     start_here_dir.mkdir(parents=True, exist_ok=True)
     (start_here_dir / "index.html").write_text(start_here_html, encoding="utf-8")
     print("  start-here: start-here/index.html")
+
+    # --- /news/ news digest page ---
+    news_html = render_template(
+        "news.j2",
+        content=_dummy(
+            "News & Signals — AcaciaFund",
+            "index",
+            description="A best-effort digest of recent signals across compliance, markets, and data engineering — gathered from curated feeds.",
+        ),
+        is_index=False,
+        page_path="news/",
+        page_title="News & Signals",
+        news_items=news_items,
+        news_fetched_at=news_fetched_at,
+        **ctx_base,
+    )
+    news_dir = OUTPUT_DIR / "news"
+    news_dir.mkdir(parents=True, exist_ok=True)
+    (news_dir / "index.html").write_text(news_html, encoding="utf-8")
+    print(f"  news: news/index.html ({len(news_items)} items)")
 
     # --- date-based archive pages ---
     _archive_items: dict[str, list] = defaultdict(list)
@@ -2997,6 +3048,32 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     except Exception as _ae:
         print(f"  adaptive: error — {_ae}")
 
+    # --- Scholar Console ---
+    try:
+        from core.console_generator import generate_console_payload
+        _console_payload = generate_console_payload(
+            all_content=all_content,
+            ontology=ontology,
+            concept_cache=_concept_cache,
+            build_hash=build_hash,
+            site_url=SITE_URL,
+        )
+        _console_html = render_template(
+            "console.j2",
+            content=_dummy("Scholar Console — AcaciaFund", "index",
+                           description="Unified knowledge cockpit across all three pillars: ontology, evidence, sources, and pipeline health."),
+            page_path="scholar/",
+            is_index=False,
+            **_console_payload,
+            **ctx_base,
+        )
+        _console_dir = OUTPUT_DIR / "scholar"
+        _console_dir.mkdir(parents=True, exist_ok=True)
+        (_console_dir / "index.html").write_text(_console_html, encoding="utf-8")
+        print("  scholar-console: /scholar/")
+    except Exception as _ce:
+        print(f"  scholar-console: skipped ({_ce})")
+
     # --- 404 ---
     _suggestions = sorted(all_content, key=lambda c: hashlib.md5(c.slug.encode()).hexdigest())[:3]
     html = render_template(
@@ -3304,7 +3381,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
 
     # --- SITEMAP ---
     today = datetime.now(timezone.utc).date().isoformat()
-    section_pages = [pillar_to_url(p) for p in PILLAR_CONFIG] + ["research", "learn", "knowledge", "search"]
+    section_pages = [pillar_to_url(p) for p in PILLAR_CONFIG] + ["research", "learn", "knowledge", "search", "scholar"]
     tag_slugs = []
     for tag_slug in sorted(tag_items.keys()):
         slug_clean = re.sub(r"[^a-z0-9]+", "-", tag_slug).strip("-")
