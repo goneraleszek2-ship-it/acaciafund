@@ -122,6 +122,14 @@ TOPIC_ICONS: dict[str, dict] = {
         "type": "abstract",
         "paths": '<rect x="2" y="8" width="20" height="14" rx="2"/><path d="M12 2L2 8h20L12 2z"/><path d="M8 14v4M12 14v4M16 14v4"/>',
     },
+    "transaction_monitoring": {
+        "type": "abstract",
+        "paths": '<path d="M12 4L4 8v8l8 4 8-4V8l-8-4z"/><path d="M12 9v3l2 2"/>',
+    },
+    "kyc": {
+        "type": "abstract",
+        "paths": '<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/><path d="M15 12l1.5 1.5L19 11"/>',
+    },
     # Markets pillar
     "semiconductor": {
         "type": "abstract",
@@ -139,6 +147,10 @@ TOPIC_ICONS: dict[str, dict] = {
     "manufacturing": {
         "type": "abstract",
         "paths": '<path d="M4 4h16v16H4z"/><circle cx="12" cy="12" r="4"/><path d="M12 8v8M8 12h8"/>',
+    },
+    "fintech": {
+        "type": "abstract",
+        "paths": '<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M8 5v2M16 5v2"/>',
     },
     # Science pillar
     "dna": {
