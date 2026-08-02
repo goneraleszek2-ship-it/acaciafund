@@ -69,9 +69,9 @@ aml.transact = { url = "https://www.payments.org", name = "Payments.org", freque
 aml.chainalysis = { url = "https://www.chainalysis.com", name = "Chainalysis", frequency = "weekly", relevance = 0.85, description = "Blockchain analytics — crypto AML, DeFi compliance research" }
 aml.aml-intelligence = { url = "https://www.amlintelligence.com", name = "AML Intelligence", frequency = "daily", relevance = 0.8, description = "Daily AML news, enforcement actions, regulatory developments" }
 aml.amla = { url = "https://www.amla.europa.eu", name = "AMLA", frequency = "weekly", relevance = 0.9, description = "EU Anti-Money Laundering Authority — rulebook, RTS, direct supervision" }
-aml.eba = { url = "https://www.eba.europa.eu/regulation-and-policy/anti-money-laundering", name = "EBA AML", frequency = "weekly", relevance = 0.85, description = "European Banking Authority — AML guidelines, RTS consultations, risk factors" }
-aml.gibsondunn = { url = "https://www.gibsondunn.com/category/anti-money-laundering-financial-institutions/", name = "Gibson Dunn AML", frequency = "weekly", relevance = 0.8, description = "Law firm analysis — AML enforcement, BSA developments, regulatory trends" }
-aml.mofo = { url = "https://www.mofo.com/topics/anti-money-laundering", name = "MoFo AML", frequency = "monthly", relevance = 0.8, description = "Morrison Foerster — AML quarterly newsletters, regulatory analysis" }
+aml.eba = { url = "https://www.eba.europa.eu/regulation-and-policy/anti-money-laundering-and-countering-financing-terrorism", name = "EBA AML", frequency = "weekly", relevance = 0.85, description = "European Banking Authority — AML guidelines, RTS consultations, risk factors" }
+aml.gibsondunn = { url = "https://www.gibsondunn.com/practice/anti-money-laundering/", name = "Gibson Dunn AML", frequency = "weekly", relevance = 0.8, description = "Law firm analysis — AML enforcement, BSA developments, regulatory trends" }
+aml.mofo = { url = "https://www.mofo.com/capabilities/bsa-aml-advisory-compliance-enforcement", name = "MoFo AML", frequency = "monthly", relevance = 0.8, description = "Morrison Foerster — AML quarterly newsletters, regulatory analysis" }
 aml.fincen-press = { url = "https://www.fincen.gov/news/press-releases", name = "FinCEN Press", frequency = "daily", relevance = 0.95, description = "FinCEN press releases — rulemakings, advisories, enforcement orders" }
 
 # Data Engineering pillar sources
@@ -100,16 +100,16 @@ ms.imf = { url = "https://www.imf.org/en/Publications", name = "IMF", frequency 
 ms.msci = { url = "https://www.msci.com/research-and-insights", name = "MSCI", frequency = "weekly", relevance = 0.85, description = "MSCI research — factor investing, ESG, market analytics" }
 ms.bloomberg = { url = "https://www.bloomberg.com/professional/insights", name = "Bloomberg Insights", frequency = "weekly", relevance = 0.8, description = "Bloomberg Intelligence — market research, sector analysis" }
 ms.spglobal = { url = "https://www.spglobal.com/marketintelligence", name = "S&P Global", frequency = "weekly", relevance = 0.8, description = "S&P Capital IQ — market data, credit ratings, analytics" }
-ms.man = { url = "https://man.com/insights", name = "Man Group", frequency = "monthly", relevance = 0.75, description = "Man AHL — quantitative research, systematic strategies" }
+ms.man = { url = "https://www.man.com/insights", name = "Man Group", frequency = "monthly", relevance = 0.75, description = "Man AHL — quantitative research, systematic strategies" }
 ms.aqr = { url = "https://www.aqr.com/Insights", name = "AQR", frequency = "monthly", relevance = 0.8, description = "AQR Capital — academic research on factors, momentum, value" }
 ms.reuters = { url = "https://www.reuters.com/markets", name = "Reuters Markets", frequency = "daily", relevance = 0.7, description = "Reuters — market news, economic data, commodities" }
 ms.ft = { url = "https://www.ft.com/markets", name = "FT Markets", frequency = "daily", relevance = 0.7, description = "Financial Times — markets coverage, analysis, commentary" }
 ms.quantocracy = { url = "https://quantocracy.com", name = "Quantocracy", frequency = "weekly", relevance = 0.75, description = "Quantitative finance aggregator — research papers, strategies" }
 ms.arxiv-math-fin = { url = "https://arxiv.org/list/math.FIN/recent", name = "arXiv math.FIN", frequency = "weekly", relevance = 0.85, description = "arXiv Quantitative Finance — mathematical finance papers, market models, portfolio theory" }
-ms.ssrn = { url = "https://www.ssrn.com/en/index.cfm/finance/", name = "SSRN Finance", frequency = "weekly", relevance = 0.8, description = "Social Science Research Network — finance and economics working papers" }
+ms.ssrn = { url = "https://www.ssrn.com/index.cfm/en/fen/", name = "SSRN Finance", frequency = "weekly", relevance = 0.8, description = "Social Science Research Network — finance and economics working papers" }
 ms.nber = { url = "https://www.nber.org/papers", name = "NBER", frequency = "weekly", relevance = 0.8, description = "National Bureau of Economic Research — working papers on markets, macro, corporate finance" }
-ms.quantmedia = { url = "https://quantmedia.substack.com", name = "QuantMedia", frequency = "weekly", relevance = 0.8, description = "US quant research — market microstructure, VPIN, options flow, volatility" }
-ms.anannye = { url = "https://www.anannye.org", name = "ANANNYE Journal", frequency = "monthly", relevance = 0.8, description = "Monthly quantitative finance research journal — factor models, volatility, risk" }
+ms.quantmedia = { url = "https://quantmedia.io/", name = "QuantMedia", frequency = "weekly", relevance = 0.8, description = "US quant research — market microstructure, VPIN, options flow, volatility" }
+ms.anannye = { url = "https://journal.anannye.com/", name = "ANANNYE Journal", frequency = "monthly", relevance = 0.8, description = "Monthly quantitative finance research journal — factor models, volatility, risk" }
 ms.citadel = { url = "https://www.citadelsecurities.com/insights", name = "Citadel Securities", frequency = "semi-annual", relevance = 0.85, description = "Semi-annual market structure reports — OTC, options, equity microstructure" }
 ms.gs-marquee = { url = "https://marquee.gs.com/s/market-structure", name = "Goldman Sachs Marquee", frequency = "monthly", relevance = 0.8, description = "Market structure analysis — ETFs, index inclusion, liquidity trends" }
 ms.convextrade = { url = "https://convextrade.com/macro", name = "ConvexTrade Macro", frequency = "daily", relevance = 0.75, description = "Macro data dashboard — 150+ economic indicators, relative value, risk premia" }
