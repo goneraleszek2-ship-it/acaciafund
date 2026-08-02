@@ -453,7 +453,7 @@ PILLAR_CONCEPT_SEEDS: Dict[str, List[Dict[str, Any]]] = {
         {"id": "fx-markets", "label": "FX Market Structure", "category": "market-microstructure",
          "aliases": ["forex", "spot FX", "FX swap", "FX prime brokerage"]},
         {"id": "quantitative-trading", "label": "Quantitative Trading", "category": "trading-strategies",
-         "aliases": ["quant trading", "systematic trading", "quantitative strategies"]},
+         "aliases": ["quant trading", "systematic trading", "quantitative strategies", "q-fin", "math.fin"]},
         {"id": "volatility-arbitrage", "label": "Volatility Arbitrage", "category": "trading-strategies",
          "aliases": ["vol arb", "dispersion trading", "volatility strategies"]},
         {"id": "machine-learning-markets", "label": "Machine Learning in Markets", "category": "advanced-techniques",

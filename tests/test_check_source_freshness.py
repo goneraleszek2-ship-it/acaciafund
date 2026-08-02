@@ -4,8 +4,13 @@ Uses contract-testing approach: test function promises, not implementation.
 """
 
 from datetime import datetime, timedelta, timezone
+from unittest.mock import patch
 
-from scripts.check_source_freshness import compute_staleness
+from scripts.check_source_freshness import (
+    _RETRIES,
+    _request_with_retry,
+    compute_staleness,
+)
 
 # ── compute_staleness ──
 #
@@ -55,3 +60,70 @@ class TestComputeStaleness:
             naive = naive.split("+")[0]
         result = compute_staleness(naive)
         assert result == 2
+
+
+# ── _request_with_retry ──
+#
+# Contract:
+#   _request_with_retry(url, method, timeout) -> (response, error)
+#   - Success → (response, None)
+#   - Non-transient HTTP error (4xx/5xx not in transient set) → return immediately
+#   - Transient status (429, 5xx) or connection error → retry up to _RETRIES times
+
+
+class TestRequestWithRetry:
+    def test_success_returns_response_no_retry(self):
+        with patch("scripts.check_source_freshness._request", return_value=("RESP", None)) as mock:
+            resp, err = _request_with_retry("http://x", "GET", 10)
+        assert resp == "RESP"
+        assert err is None
+        assert mock.call_count == 1
+
+    def test_non_transient_http_error_no_retry(self):
+        from urllib.error import HTTPError
+
+        err = HTTPError("http://x", 403, "Forbidden", {}, None)
+        with patch("scripts.check_source_freshness._request", return_value=(None, err)) as mock:
+            resp, returned_err = _request_with_retry("http://x", "GET", 10)
+        assert resp is None
+        assert returned_err is err
+        assert mock.call_count == 1
+
+    def test_transient_error_retries_then_gives_up(self):
+        err = OSError("boom")
+        with patch("scripts.check_source_freshness._request", return_value=(None, err)) as mock, patch(
+            "scripts.check_source_freshness.time.sleep"
+        ):
+            resp, returned_err = _request_with_retry("http://x", "GET", 10)
+        assert resp is None
+        assert returned_err is err
+        assert mock.call_count == _RETRIES + 1
+
+    def test_transient_http_status_retries(self):
+        from urllib.error import HTTPError
+
+        err = HTTPError("http://x", 429, "Too Many Requests", {}, None)
+        with patch("scripts.check_source_freshness._request", return_value=(None, err)) as mock, patch(
+            "scripts.check_source_freshness.time.sleep"
+        ):
+            resp, returned_err = _request_with_retry("http://x", "GET", 10)
+        assert resp is None
+        assert returned_err is err
+        assert mock.call_count == _RETRIES + 1
+
+    def test_recovers_on_second_attempt(self):
+        calls = {"n": 0}
+
+        def flaky(url, method, timeout):
+            calls["n"] += 1
+            if calls["n"] == 1:
+                return None, OSError("rate-limited")
+            return "RESP", None
+
+        with patch("scripts.check_source_freshness._request", side_effect=flaky) as mock, patch(
+            "scripts.check_source_freshness.time.sleep"
+        ):
+            resp, err = _request_with_retry("http://x", "GET", 10)
+        assert resp == "RESP"
+        assert err is None
+        assert mock.call_count == 2

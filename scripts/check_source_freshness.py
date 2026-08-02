@@ -79,6 +79,31 @@ def _request(url: str, method: str, timeout: int) -> tuple[HTTPResponse | None, 
 # that respond fine to GET — falling back avoids false-positive degradation.
 _HEAD_REJECT_CODES = {400, 401, 403, 405, 406, 501}
 
+# Status codes that indicate transient server / rate-limit issues worth retrying.
+_TRANSIENT_CODES = {429, 500, 502, 503, 504}
+_RETRIES = 2
+_RETRY_BACKOFF_SECONDS = 2.0
+
+
+def _request_with_retry(url: str, method: str, timeout: int) -> tuple[HTTPResponse | None, Exception | None]:
+    """Request with exponential backoff retries for transient failures.
+
+    Retries connection errors, timeouts, and transient status codes
+    (429, 5xx). Other HTTP errors (bot blocks, auth failures) return
+    immediately so the HEAD -> GET fallback can handle them.
+    """
+    last_err: Exception | None = None
+    for attempt in range(_RETRIES + 1):
+        resp, err = _request(url, method, timeout)
+        if resp is not None:
+            return resp, None
+        last_err = err
+        if isinstance(err, HTTPError) and err.code not in _TRANSIENT_CODES:
+            return None, err
+        if attempt < _RETRIES:
+            time.sleep(_RETRY_BACKOFF_SECONDS * (2**attempt))
+    return None, last_err
+
 
 def check_url(url: str, timeout: int = 15) -> dict:
     """Check URL health via HEAD, falling back to GET when HEAD is rejected."""
@@ -90,7 +115,7 @@ def check_url(url: str, timeout: int = 15) -> dict:
     }
     start = time.monotonic()
 
-    resp, err = _request(url, "HEAD", timeout)
+    resp, err = _request_with_retry(url, "HEAD", timeout)
     if resp is None:
         if isinstance(err, HTTPError):
             result["http_status"] = err.code
@@ -100,7 +125,7 @@ def check_url(url: str, timeout: int = 15) -> dict:
         # HEAD blocked / unsupported → retry with GET
         http_status = result.get("http_status")
         if isinstance(http_status, int) and http_status in _HEAD_REJECT_CODES:
-            resp, err = _request(url, "GET", timeout)
+            resp, err = _request_with_retry(url, "GET", timeout)
             if resp is None:
                 if isinstance(err, HTTPError):
                     result["http_status"] = err.code
