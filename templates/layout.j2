@@ -103,7 +103,16 @@
 
     <footer class="container">
         <hr>
-        <small>&copy; {{ year }} AcaciaFund &middot; Invest in understanding, to build resilience. &middot; <a href="/news/" style="color:inherit;text-decoration:underline">News &amp; signals</a></small>
+        <div style="display:flex;flex-wrap:wrap;gap:1rem;align-items:center;justify-content:space-between">
+            <small>&copy; {{ year }} AcaciaFund &middot; Invest in understanding, to build resilience. &middot; <a href="/news/" style="color:inherit;text-decoration:underline">News &amp; signals</a></small>
+            <nav style="display:flex;flex-wrap:wrap;gap:1rem;font-size:0.8rem" aria-label="Footer">
+                <a href="/graph/" style="color:inherit;text-decoration:none">Knowledge Graph</a>
+                <a href="/scholar/" style="color:inherit;text-decoration:none">Console</a>
+                <a href="/review/" style="color:inherit;text-decoration:none">Review</a>
+                <a href="/letters/" style="color:inherit;text-decoration:none">A-Z Index</a>
+                <a href="/search/" style="color:inherit;text-decoration:none">Search</a>
+            </nav>
+        </div>
     </footer>
 
     <script src="{{ 'js/app.js' | asset }}" defer></script>

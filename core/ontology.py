@@ -8,6 +8,7 @@ and provides concept extraction/matching utilities for ingestion pipelines.
 from __future__ import annotations
 
 import json
+import os
 from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
@@ -997,7 +998,19 @@ class OntologyManager:
         return mgr
 
     def save(self, path: Path | str) -> None:
-        Path(path).write_text(json.dumps(self.to_dict(), indent=2, default=str), encoding="utf-8")
+        """Atomically write the ontology with fsync to survive crash/power loss."""
+        target = Path(path)
+        target.parent.mkdir(parents=True, exist_ok=True)
+        tmp = target.with_suffix(target.suffix + ".tmp")
+        try:
+            with open(tmp, "w", encoding="utf-8") as f:
+                json.dump(self.to_dict(), f, indent=2, default=str, ensure_ascii=False)
+                f.flush()
+                os.fsync(f.fileno())
+            os.replace(tmp, target)
+        finally:
+            if tmp.exists():
+                tmp.unlink(missing_ok=True)
 
     @classmethod
     def load(cls, path: Path | str) -> "OntologyManager":

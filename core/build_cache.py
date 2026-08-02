@@ -6,6 +6,7 @@ Implements mtime/SHA-256 based incremental builds to reduce build time from 18.9
 
 import hashlib
 import json
+import os
 import time
 from pathlib import Path
 from typing import Any, Dict, Optional
@@ -56,7 +57,7 @@ class BuildCache:
             print("ℹ️  No existing cache found")
 
     def save(self) -> None:
-        """Save cache to disk."""
+        """Save cache to disk atomically with fsync."""
         data = {
             'version': CACHE_VERSION,
             'url_structure_version': URL_STRUCTURE_VERSION,
@@ -66,8 +67,16 @@ class BuildCache:
             'entries': self.cache
         }
 
-        with open(self.cache_file, 'w', encoding='utf-8') as f:
-            json.dump(data, f, indent=2)
+        tmp = self.cache_file.with_suffix(self.cache_file.suffix + '.tmp')
+        try:
+            with open(tmp, 'w', encoding='utf-8') as f:
+                json.dump(data, f, indent=2)
+                f.flush()
+                os.fsync(f.fileno())
+            os.replace(tmp, self.cache_file)
+        finally:
+            if tmp.exists():
+                tmp.unlink(missing_ok=True)
 
         print(f"💾 Cache saved: {len(self.cache)} entries")
 

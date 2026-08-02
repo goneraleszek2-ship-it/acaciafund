@@ -49,6 +49,18 @@ def parse_date(date_str: str | None) -> date | None:
     return None
 
 
+def compute_freshness_with_review(
+    last_verified: date | None, last_reviewed: date | None
+) -> str:
+    """Compute freshness using the most recent of last_verified/last_reviewed.
+
+    A manual review (last_reviewed) signals an item is current, but a newer
+    last_verified still wins when it is more recent.
+    """
+    anchor = last_reviewed if last_reviewed and (not last_verified or last_reviewed > last_verified) else last_verified
+    return compute_freshness(anchor)
+
+
 def main() -> int:
     if not REGISTRY_PATH.exists():
         print(f"Registry not found: {REGISTRY_PATH}")
@@ -77,14 +89,16 @@ def main() -> int:
         title = item.get("title", slug)
         date_str = item.get("date_str") or item.get("last_verified")
         last_verified = parse_date(date_str)
+        last_reviewed = parse_date(item.get("last_reviewed"))
 
-        freshness = compute_freshness(last_verified)
+        freshness = compute_freshness_with_review(last_verified, last_reviewed)
 
         freshness_report["entries"].append({
             "slug": slug,
             "title": title,
             "freshness": freshness,
             "last_verified": last_verified.isoformat() if last_verified else None,
+            "last_reviewed": last_reviewed.isoformat() if last_reviewed else None,
         })
         freshness_report["summary"][freshness] += 1
 

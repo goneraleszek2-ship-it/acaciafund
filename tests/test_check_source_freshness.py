@@ -48,3 +48,10 @@ class TestComputeStaleness:
         result = compute_staleness(epoch)
         assert result is not None
         assert result > 365
+
+    def test_naive_datetime_is_treated_as_utc(self):
+        naive = (datetime.now(timezone.utc) - timedelta(days=2)).isoformat(timespec="seconds")
+        if "+" in naive or "Z" in naive:
+            naive = naive.split("+")[0]
+        result = compute_staleness(naive)
+        assert result == 2

@@ -1704,7 +1704,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
             all_concepts = ontology.concepts_by_pillar()
             pillar_concepts = all_concepts.get(pillar, [])
             concept_cloud_for_pillar = [
-                {"label": c.label, "count": len(ontology.related_concepts(c.id))}
+                {"id": c.id, "label": c.label, "count": len(ontology.related_concepts(c.id))}
                 for c in pillar_concepts[:15]
             ]
 

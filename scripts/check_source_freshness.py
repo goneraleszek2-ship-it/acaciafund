@@ -106,10 +106,30 @@ def compute_staleness(last_verified: str | None) -> int | None:
         return None
     try:
         last = datetime.fromisoformat(last_verified)
+        # Treat naive timestamps as UTC to compare against aware 'now'
+        if last.tzinfo is None:
+            last = last.replace(tzinfo=timezone.utc)
         delta = datetime.now(timezone.utc) - last
-        return delta.days
+        return max(delta.days, 0)
     except (ValueError, TypeError):
         return None
+
+
+def load_prior_verified() -> dict[str, str]:
+    """Load last_verified per source key from the persisted health report."""
+    prior: dict[str, str] = {}
+    if not HEALTH_PERSIST.exists():
+        return prior
+    try:
+        data = json.loads(HEALTH_PERSIST.read_text(encoding="utf-8"))
+        for src in data.get("sources", []):
+            key = src.get("key")
+            last = src.get("last_verified")
+            if key and last:
+                prior[key] = last
+    except (OSError, ValueError, json.JSONDecodeError):
+        pass
+    return prior
 
 
 def main():
@@ -126,6 +146,9 @@ def main():
 
     print(f"\nChecking {len(sources)} inspiration sources...\n")
 
+    prior_verified = load_prior_verified()
+    now = datetime.now(timezone.utc).isoformat()
+
     results = []
     active = 0
     degraded = 0
@@ -133,12 +156,15 @@ def main():
 
     for src in sources:
         health = check_url(src["url"])
-        staleness = compute_staleness(src.get("last_verified"))
+        last_verified = prior_verified.get(src["key"])
+        staleness = compute_staleness(last_verified)
 
         entry = {
             **src,
             **health,
-            "last_verified": datetime.now(timezone.utc).isoformat(),
+            # Only bump last_verified on a successful check; keep the prior
+            # timestamp on failure so staleness reflects real decay.
+            "last_verified": now if health["status"] == "active" else (last_verified or now),
             "staleness_days": staleness,
         }
         results.append(entry)

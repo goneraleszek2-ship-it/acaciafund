@@ -20,6 +20,7 @@ BUNDLES = {
         "main.js",
         "search.js",
         "progressive_disclosure.js",
+        "review_badge.js",
     ],
     "learning.js": [
         "pretest_gate.js",

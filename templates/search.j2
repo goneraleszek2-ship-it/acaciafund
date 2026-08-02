@@ -5,40 +5,41 @@
 <h1 class="text-center mb-6">Search</h1>
 
 <div class="search-layout">
-  <aside class="search-sidebar" id="search-filters">
+  <aside class="search-sidebar" id="search-filters" role="complementary" aria-label="Search filters">
     <div class="filter-row">
-      <div class="filter-group" id="filter-pillar">
-        <h3>Pillar</h3>
-        <label><input type="checkbox" value="aml" class="filter-checkbox" data-group="pillar"><span class="pillar-dot pillar-dot-aml"></span> Compliance</label>
-        <label><input type="checkbox" value="stock" class="filter-checkbox" data-group="pillar"><span class="pillar-dot pillar-dot-markets"></span> Markets</label>
-        <label><input type="checkbox" value="data-engineering" class="filter-checkbox" data-group="pillar"><span class="pillar-dot pillar-dot-data"></span> Data</label>
+      <div class="filter-group" id="filter-pillar" role="group" aria-labelledby="filter-pillar-heading">
+        <h3 id="filter-pillar-heading">Pillar</h3>
+        <label><input type="checkbox" value="aml" class="filter-checkbox" data-group="pillar"><span class="pillar-dot pillar-dot-aml"></span> Compliance <span class="filter-count" data-group="pillar" data-value="aml" aria-hidden="true"></span></label>
+        <label><input type="checkbox" value="stock" class="filter-checkbox" data-group="pillar"><span class="pillar-dot pillar-dot-markets"></span> Markets <span class="filter-count" data-group="pillar" data-value="stock" aria-hidden="true"></span></label>
+        <label><input type="checkbox" value="data-engineering" class="filter-checkbox" data-group="pillar"><span class="pillar-dot pillar-dot-data"></span> Data <span class="filter-count" data-group="pillar" data-value="data-engineering" aria-hidden="true"></span></label>
       </div>
-      <div class="filter-group" id="filter-type">
-        <h3>Type</h3>
-        <label><input type="checkbox" value="research" class="filter-checkbox" data-group="type"> Research</label>
-        <label><input type="checkbox" value="learn" class="filter-checkbox" data-group="type"> Learn</label>
-        <label><input type="checkbox" value="knowledge" class="filter-checkbox" data-group="type"> Knowledge</label>
+      <div class="filter-group" id="filter-type" role="group" aria-labelledby="filter-type-heading">
+        <h3 id="filter-type-heading">Type</h3>
+        <label><input type="checkbox" value="research" class="filter-checkbox" data-group="type"> Research <span class="filter-count" data-group="type" data-value="research" aria-hidden="true"></span></label>
+        <label><input type="checkbox" value="learn" class="filter-checkbox" data-group="type"> Learn <span class="filter-count" data-group="type" data-value="learn" aria-hidden="true"></span></label>
+        <label><input type="checkbox" value="knowledge" class="filter-checkbox" data-group="type"> Knowledge <span class="filter-count" data-group="type" data-value="knowledge" aria-hidden="true"></span></label>
       </div>
-      <div class="filter-group" id="filter-difficulty">
-        <h3>Difficulty</h3>
-        <label><input type="checkbox" value="beginner" class="filter-checkbox" data-group="difficulty"> Beginner</label>
-        <label><input type="checkbox" value="intermediate" class="filter-checkbox" data-group="difficulty"> Intermediate</label>
-        <label><input type="checkbox" value="advanced" class="filter-checkbox" data-group="difficulty"> Advanced</label>
+      <div class="filter-group" id="filter-difficulty" role="group" aria-labelledby="filter-difficulty-heading">
+        <h3 id="filter-difficulty-heading">Difficulty</h3>
+        <label><input type="checkbox" value="beginner" class="filter-checkbox" data-group="difficulty"> Beginner <span class="filter-count" data-group="difficulty" data-value="beginner" aria-hidden="true"></span></label>
+        <label><input type="checkbox" value="intermediate" class="filter-checkbox" data-group="difficulty"> Intermediate <span class="filter-count" data-group="difficulty" data-value="intermediate" aria-hidden="true"></span></label>
+        <label><input type="checkbox" value="advanced" class="filter-checkbox" data-group="difficulty"> Advanced <span class="filter-count" data-group="difficulty" data-value="advanced" aria-hidden="true"></span></label>
       </div>
-      <div class="filter-group" id="filter-technology">
-        <h3>Technology</h3>
+      <div class="filter-group" id="filter-technology" role="group" aria-labelledby="filter-technology-heading">
+        <h3 id="filter-technology-heading">Technology</h3>
         <div id="tech-filter-list"></div>
       </div>
     </div>
     <button class="reset-btn" id="reset-filters">Reset filters</button>
   </aside>
-  <div class="search-main">
+  <div class="search-main" role="region" aria-label="Search results">
     <div class="search-input-wrap">
-      <input type="text" id="search-input" placeholder="Search research, learn, knowledge... (press / to focus)" autocomplete="off">
-      <div id="search-suggestions"></div>
+      <label for="search-input" class="sr-only">Search query</label>
+      <input type="text" id="search-input" placeholder="Search research, learn, knowledge... (press / to focus)" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="search-suggestions" aria-autocomplete="list" aria-label="Search query">
+      <div id="search-suggestions" role="listbox" aria-label="Search suggestions"></div>
     </div>
-    <div id="search-stats"></div>
-    <div id="search-results"></div>
+    <div id="search-stats" role="status" aria-live="polite"></div>
+    <div id="search-results" role="region" aria-label="Results" aria-live="polite"></div>
   </div>
 </div>
 

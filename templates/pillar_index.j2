@@ -53,7 +53,7 @@
       </summary>
       <div class="flex flex-wrap gap-2 mt-3">
         {%- for concept in concept_cloud %}
-        <a href="/search/?f_tags={{ concept.label | urlencode }}" class="concept-cloud-tag">
+        <a href="/concepts/{{ concept.id }}/" class="concept-cloud-tag" {% if concept.description %}title="{{ concept.description }}"{% endif %}>
           {{ concept.label }}
           <span class="opacity-60">({{ concept.count }})</span>
         </a>

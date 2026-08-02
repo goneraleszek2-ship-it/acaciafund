@@ -35,6 +35,56 @@
     return q.toLowerCase().split(/\s+/).filter(Boolean);
   }
 
+  function stem(w) {
+    w = w.toLowerCase();
+    if (w.length > 5) {
+      if (w.endsWith('ing')) w = w.slice(0, -3);
+      else if (w.endsWith('ingly')) w = w.slice(0, -5);
+      else if (w.endsWith('ed')) w = w.slice(0, -2);
+      else if (w.endsWith('tion')) w = w.slice(0, -4);
+      else if (w.endsWith('s') && !w.endsWith('ss')) w = w.slice(0, -1);
+      else if (w.endsWith('ies')) w = w.slice(0, -3) + 'y';
+    }
+    return w;
+  }
+
+  function levenshtein(a, b) {
+    if (a === b) return 0;
+    if (!a.length) return b.length;
+    if (!b.length) return a.length;
+    const prev = new Array(b.length + 1);
+    for (let j = 0; j <= b.length; j++) prev[j] = j;
+    for (let i = 1; i <= a.length; i++) {
+      const cur = [i];
+      for (let j = 1; j <= b.length; j++) {
+        cur[j] = Math.min(
+          prev[j] + 1,
+          cur[j - 1] + 1,
+          prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)
+        );
+      }
+      for (let j = 0; j <= b.length; j++) prev[j] = cur[j];
+    }
+    return prev[b.length];
+  }
+
+  // Returns true if term matches text via substring, stemming, or fuzzy edit distance.
+  function termMatches(term, text) {
+    if (!text) return false;
+    if (text.includes(term)) return true;
+    const st = stem(term);
+    if (st.length >= 3 && text.includes(st)) return true;
+    // Fuzzy: within 1 edit for terms >= 4 chars, and term length similar to a candidate word
+    if (term.length >= 4) {
+      const words = text.split(/[^a-z0-9+.-]+/);
+      for (const w of words) {
+        if (Math.abs(w.length - term.length) > 1) continue;
+        if (levenshtein(w, term) <= 1) return true;
+      }
+    }
+    return false;
+  }
+
   function scoreEntry(entry, terms) {
     const title = (entry.title || '').toLowerCase();
     const desc = (entry.description || '').toLowerCase();
@@ -45,12 +95,12 @@
     let score = 0;
 
     for (const t of terms) {
-      if (title.includes(t)) score += 10;
-      if (tags.includes(t)) score += 4;
-      if (concepts.includes(t)) score += 6;
-      if (technologies.includes(t)) score += 3;
-      if (use_cases.includes(t)) score += 2;
-      if (desc.includes(t)) score += 2;
+      if (termMatches(t, title)) score += 10;
+      if (termMatches(t, tags)) score += 4;
+      if (termMatches(t, concepts)) score += 6;
+      if (termMatches(t, technologies)) score += 3;
+      if (termMatches(t, use_cases)) score += 2;
+      if (termMatches(t, desc)) score += 2;
     }
 
     score += (entry.concept_boost || 0) * 5;
@@ -85,6 +135,30 @@
     return filters;
   }
 
+  function updateFacetCounts(index) {
+    const counts = {};
+    for (const group of ['pillar', 'type', 'difficulty']) {
+      counts[group] = {};
+      document.querySelectorAll('.filter-checkbox[data-group="' + group + '"]').forEach(cb => {
+        counts[group][cb.value] = 0;
+      });
+    }
+    for (const e of index) {
+      const p = e.pillar || '';
+      const t = e.content_type || '';
+      const d = e.difficulty || '';
+      if (counts.pillar.hasOwnProperty(p)) counts.pillar[p] += 1;
+      if (counts.type.hasOwnProperty(t)) counts.type[t] += 1;
+      if (counts.difficulty.hasOwnProperty(d)) counts.difficulty[d] += 1;
+    }
+    document.querySelectorAll('.filter-count').forEach(el => {
+      const g = el.getAttribute('data-group');
+      const v = el.getAttribute('data-value');
+      const n = (counts[g] && counts[g][v]) || 0;
+      el.textContent = n ? '(' + n + ')' : '';
+    });
+  }
+
   function syncFiltersToUrl(filters) {
     const url = new URL(window.location);
     for (const key of ['pillar', 'type', 'difficulty', 'technology']) {
@@ -96,6 +170,25 @@
 
   const STORAGE_KEY = 'ac_search_history';
   const MAX_SUGGESTIONS = 10;
+
+  let conceptIndex = null;
+
+  function fetchConcepts() {
+    if (conceptIndex) return Promise.resolve(conceptIndex);
+    const base = document.querySelector('script[src*="search.js"], script[src*="app.js"]');
+    const prefix = base ? base.src.replace(/js\/\w+\.js.*$/, '') : '';
+    return fetch(prefix + 'static/review_concepts.json')
+      .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(data => {
+        conceptIndex = (data.concepts || []).map(c => ({
+          label: c.label || c.conceptSlug || '',
+          slug: c.conceptSlug || (c.id || '').replace(/^concept:/, ''),
+          aliases: (c.aliases || []).filter(a => typeof a === 'string' && a.length > 1)
+        }));
+        return conceptIndex;
+      })
+      .catch(() => { conceptIndex = []; return conceptIndex; });
+  }
 
   function getHistory() {
     try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || []; } catch { return []; }
@@ -110,18 +203,58 @@
     try { localStorage.setItem(STORAGE_KEY, JSON.stringify(history)); } catch {}
   }
 
+  function setSuggestionsOpen(el, open) {
+    el.style.display = open ? 'block' : 'none';
+    const input = document.getElementById('search-input');
+    if (input) input.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+
   function renderSuggestions(filter) {
     const el = document.getElementById('search-suggestions');
     if (!el) return;
+    const needle = (filter || '').toLowerCase().trim();
+    const needleTerms = needle ? tokenize(needle) : [];
+
     const history = getHistory();
-    const matching = filter ? history.filter(h => h.includes(filter.toLowerCase())) : history;
-    if (!matching.length) { el.innerHTML = ''; el.style.display = 'none'; return; }
-    el.innerHTML = matching.map((h, i) =>
-      '<div class="suggestion-item" data-suggestion="' + escapeHtml(h) + '" data-idx="' + i + '" style="padding:0.5rem 0.75rem;cursor:pointer;font-size:0.9rem;border-bottom:1px solid var(--color-border, #333)">' +
-      highlightTerms(escapeHtml(h), filter ? filter.split(/\s+/) : []) +
+    const matchingHistory = needle
+      ? history.filter(h => h.toLowerCase().includes(needle))
+      : history;
+
+    const concepts = conceptIndex || [];
+    const matchingConcepts = needle
+      ? concepts.filter(c =>
+          c.label.toLowerCase().includes(needle) ||
+          c.aliases.some(a => a.toLowerCase().includes(needle)) ||
+          needleTerms.every(t => c.label.toLowerCase().includes(t)))
+      : [];
+
+    const historyHtml = matchingHistory.slice(0, 4).map((h, i) =>
+      '<div class="suggestion-item" role="option" data-suggestion="' + escapeHtml(h) + '" data-idx="' + i + '" data-kind="history" style="padding:0.5rem 0.75rem;cursor:pointer;font-size:0.9rem;border-bottom:1px solid var(--color-border, #333);display:flex;align-items:center;gap:0.5rem">' +
+      '<span style="font-size:0.75rem;opacity:0.6">&#128337;</span>' +
+      highlightTerms(escapeHtml(h), needle ? needleTerms : []) +
       '</div>'
     ).join('');
-    el.style.display = 'block';
+
+    const conceptHtml = matchingConcepts.slice(0, 6).map(c =>
+      '<a class="suggestion-item" role="option" href="/concepts/' + encodeURIComponent(c.slug) + '/" data-kind="concept" style="display:flex;align-items:center;gap:0.5rem;padding:0.5rem 0.75rem;cursor:pointer;font-size:0.9rem;border-bottom:1px solid var(--color-border, #333);text-decoration:none;color:inherit">' +
+      '<span style="font-size:0.75rem;opacity:0.6">&#128214;</span>' +
+      '<span style="color:var(--color-accent, #818cf8);font-weight:600">' + highlightTerms(escapeHtml(c.label), needleTerms) + '</span>' +
+      '<span style="font-size:0.7rem;opacity:0.6;margin-left:auto">Concept</span>' +
+      '</a>'
+    ).join('');
+
+    if (!needle && !matchingHistory.length && !conceptHtml) {
+      el.innerHTML = '';
+      setSuggestionsOpen(el, false);
+      return;
+    }
+
+    const combined = [];
+    if (conceptHtml) combined.push(conceptHtml);
+    if (historyHtml) combined.push(historyHtml);
+    if (!combined.length) { el.innerHTML = ''; setSuggestionsOpen(el, false); return; }
+    el.innerHTML = combined.join('');
+    setSuggestionsOpen(el, true);
   }
 
   function firePlausible(event, props) {
@@ -284,6 +417,7 @@
 
     fetchIndex().then(index => {
       populateTechFilters(index);
+      updateFacetCounts(index);
       // Restore technology filter checkboxes from URL after populating
       var techParams = new URLSearchParams(window.location.search).get('f_technology');
       if (techParams) {
@@ -415,7 +549,7 @@
     input.addEventListener('input', function() {
       clearTimeout(debounce);
       const val = input.value;
-      renderSuggestions(val);
+      fetchConcepts().then(() => renderSuggestions(val));
       debounce = setTimeout(() => {
         const url = new URL(window.location);
         if (val) url.searchParams.set('q', val);
@@ -425,11 +559,11 @@
       }, 200);
     });
 
-    input.addEventListener('focus', function() { renderSuggestions(this.value); });
+    input.addEventListener('focus', function() { fetchConcepts().then(() => renderSuggestions(this.value)); });
     input.addEventListener('blur', function() {
       setTimeout(function() {
         const el = document.getElementById('search-suggestions');
-        if (el) el.style.display = 'none';
+        if (el) setSuggestionsOpen(el, false);
       }, 200);
     });
 
@@ -450,7 +584,7 @@
         const suggestion = item.getAttribute('data-suggestion');
         if (suggestion) {
           input.value = suggestion;
-          this.style.display = 'none';
+          setSuggestionsOpen(this, false);
           const url = new URL(window.location);
           url.searchParams.set('q', suggestion);
           history.replaceState(null, '', url);
