@@ -1,13 +1,13 @@
 {
   "manifest_type": "registry-index",
-  "generated_at": "2026-07-31T10:33:39Z",
+  "generated_at": "2026-08-02T07:29:53Z",
   "counts": {
     "runs": 0,
-    "pages": 2505,
+    "pages": 2625,
     "pillars": {
-      "data-engineering": 76,
-      "stock": 66,
-      "aml": 48
+      "data-engineering": 86,
+      "stock": 70,
+      "aml": 52
     }
   },
   "latest_by_pillar": {},
@@ -1152,6 +1152,114 @@
       "pillar": "stock",
       "title": "Market Microstructure: How Trades Execute and Prices Form",
       "published_at": "2026-07-31"
+    },
+    {
+      "content_id": "compliance/knowledge/explainer-kyc",
+      "pillar": "aml",
+      "title": "Know Your Customer: Why banks ask for your ID",
+      "published_at": "2026-07-31"
+    },
+    {
+      "content_id": "compliance/knowledge/explainer-sar",
+      "pillar": "aml",
+      "title": "Suspicious Activity: When many small moments tell one story",
+      "published_at": "2026-07-31"
+    },
+    {
+      "content_id": "markets/knowledge/explainer-order-book",
+      "pillar": "stock",
+      "title": "The Order Book: A market where everyone shouts their price",
+      "published_at": "2026-07-31"
+    },
+    {
+      "content_id": "markets/knowledge/explainer-volatility",
+      "pillar": "stock",
+      "title": "Volatility: The market's heart rate",
+      "published_at": "2026-07-31"
+    },
+    {
+      "content_id": "data/knowledge/explainer-etl",
+      "pillar": "data-engineering",
+      "title": "ETL: The kitchen where raw data becomes a meal",
+      "published_at": "2026-07-31"
+    },
+    {
+      "content_id": "data/knowledge/explainer-schema",
+      "pillar": "data-engineering",
+      "title": "Schema: The dictionary that lets two systems agree",
+      "published_at": "2026-07-31"
+    },
+    {
+      "content_id": "markets/research/u-s-debt-to-gdp-ratio-reaches-123",
+      "pillar": "stock",
+      "title": "U.S. debt-to-GDP ratio reaches 123%",
+      "published_at": "2026-07-31"
+    },
+    {
+      "content_id": "markets/research/citadel-buys-situational-awarenesss-stock-portfolio-after-bi",
+      "pillar": "stock",
+      "title": "Citadel Buys Situational Awareness's Stock Portfolio After Big Losses in AI",
+      "published_at": "2026-07-30"
+    },
+    {
+      "content_id": "data/research/sqlite-in-production-optimizing-wal-mode-concurrency-and-vfs",
+      "pillar": "data-engineering",
+      "title": "SQLite in Production: Optimizing WAL Mode, Concurrency, and VFS Layers",
+      "published_at": "2026-07-29"
+    },
+    {
+      "content_id": "data/research/rune-1-1-adds-python-an-emacs-editor-a-symbol-index-and-is-n",
+      "pillar": "data-engineering",
+      "title": "Rune 1.1: adds Python, an Emacs editor, a symbol index and is now free",
+      "published_at": "2026-07-30"
+    },
+    {
+      "content_id": "data/research/choose-duckdb-rather-than-sqlite",
+      "pillar": "data-engineering",
+      "title": "Choose DuckDB rather than SQLite",
+      "published_at": "2026-07-29"
+    },
+    {
+      "content_id": "data/research/cosmosescape-taking-over-every-database-in-azure-cosmos-db",
+      "pillar": "data-engineering",
+      "title": "CosmosEscape: Taking over Every Database in Azure Cosmos DB",
+      "published_at": "2026-07-30"
+    },
+    {
+      "content_id": "data/research/the-development-pipeline-is-a-production-system",
+      "pillar": "data-engineering",
+      "title": "The development pipeline is a production system",
+      "published_at": "2026-08-01"
+    },
+    {
+      "content_id": "data/research/show-hn-a-local-merge-queue-for-parallel-claude-code-agents",
+      "pillar": "data-engineering",
+      "title": "Show HN: A local merge queue for parallel Claude Code agents",
+      "published_at": "2026-07-30"
+    },
+    {
+      "content_id": "data/knowledge/law-markets-data-triangle",
+      "pillar": "data-engineering",
+      "title": "The Law–Markets–Data Triangle: Three Speeds, One System",
+      "published_at": "2026-08-02"
+    },
+    {
+      "content_id": "compliance/knowledge/law-and-language",
+      "pillar": "aml",
+      "title": "Law & Language: How Rules Learn to Mean",
+      "published_at": "2026-08-02"
+    },
+    {
+      "content_id": "data/knowledge/compliance-by-design",
+      "pillar": "data-engineering",
+      "title": "Compliance-by-Design: When the Rulebook Lives in the Pipeline",
+      "published_at": "2026-08-02"
+    },
+    {
+      "content_id": "compliance/knowledge/computational-constitutionalism",
+      "pillar": "aml",
+      "title": "From Analog Rule to Computational Constitutionalism",
+      "published_at": "2026-08-02"
     }
   ],
   "by_content_id": {
@@ -2104,8 +2212,98 @@
       "content_id": "markets/learn/market-microstructure",
       "pillar": "stock",
       "title": "Market Microstructure: How Trades Execute and Prices Form"
+    },
+    "compliance/knowledge/explainer-kyc": {
+      "content_id": "compliance/knowledge/explainer-kyc",
+      "pillar": "aml",
+      "title": "Know Your Customer: Why banks ask for your ID"
+    },
+    "compliance/knowledge/explainer-sar": {
+      "content_id": "compliance/knowledge/explainer-sar",
+      "pillar": "aml",
+      "title": "Suspicious Activity: When many small moments tell one story"
+    },
+    "markets/knowledge/explainer-order-book": {
+      "content_id": "markets/knowledge/explainer-order-book",
+      "pillar": "stock",
+      "title": "The Order Book: A market where everyone shouts their price"
+    },
+    "markets/knowledge/explainer-volatility": {
+      "content_id": "markets/knowledge/explainer-volatility",
+      "pillar": "stock",
+      "title": "Volatility: The market's heart rate"
+    },
+    "data/knowledge/explainer-etl": {
+      "content_id": "data/knowledge/explainer-etl",
+      "pillar": "data-engineering",
+      "title": "ETL: The kitchen where raw data becomes a meal"
+    },
+    "data/knowledge/explainer-schema": {
+      "content_id": "data/knowledge/explainer-schema",
+      "pillar": "data-engineering",
+      "title": "Schema: The dictionary that lets two systems agree"
+    },
+    "markets/research/u-s-debt-to-gdp-ratio-reaches-123": {
+      "content_id": "markets/research/u-s-debt-to-gdp-ratio-reaches-123",
+      "pillar": "stock",
+      "title": "U.S. debt-to-GDP ratio reaches 123%"
+    },
+    "markets/research/citadel-buys-situational-awarenesss-stock-portfolio-after-bi": {
+      "content_id": "markets/research/citadel-buys-situational-awarenesss-stock-portfolio-after-bi",
+      "pillar": "stock",
+      "title": "Citadel Buys Situational Awareness's Stock Portfolio After Big Losses in AI"
+    },
+    "data/research/sqlite-in-production-optimizing-wal-mode-concurrency-and-vfs": {
+      "content_id": "data/research/sqlite-in-production-optimizing-wal-mode-concurrency-and-vfs",
+      "pillar": "data-engineering",
+      "title": "SQLite in Production: Optimizing WAL Mode, Concurrency, and VFS Layers"
+    },
+    "data/research/rune-1-1-adds-python-an-emacs-editor-a-symbol-index-and-is-n": {
+      "content_id": "data/research/rune-1-1-adds-python-an-emacs-editor-a-symbol-index-and-is-n",
+      "pillar": "data-engineering",
+      "title": "Rune 1.1: adds Python, an Emacs editor, a symbol index and is now free"
+    },
+    "data/research/choose-duckdb-rather-than-sqlite": {
+      "content_id": "data/research/choose-duckdb-rather-than-sqlite",
+      "pillar": "data-engineering",
+      "title": "Choose DuckDB rather than SQLite"
+    },
+    "data/research/cosmosescape-taking-over-every-database-in-azure-cosmos-db": {
+      "content_id": "data/research/cosmosescape-taking-over-every-database-in-azure-cosmos-db",
+      "pillar": "data-engineering",
+      "title": "CosmosEscape: Taking over Every Database in Azure Cosmos DB"
+    },
+    "data/research/the-development-pipeline-is-a-production-system": {
+      "content_id": "data/research/the-development-pipeline-is-a-production-system",
+      "pillar": "data-engineering",
+      "title": "The development pipeline is a production system"
+    },
+    "data/research/show-hn-a-local-merge-queue-for-parallel-claude-code-agents": {
+      "content_id": "data/research/show-hn-a-local-merge-queue-for-parallel-claude-code-agents",
+      "pillar": "data-engineering",
+      "title": "Show HN: A local merge queue for parallel Claude Code agents"
+    },
+    "data/knowledge/law-markets-data-triangle": {
+      "content_id": "data/knowledge/law-markets-data-triangle",
+      "pillar": "data-engineering",
+      "title": "The Law–Markets–Data Triangle: Three Speeds, One System"
+    },
+    "compliance/knowledge/law-and-language": {
+      "content_id": "compliance/knowledge/law-and-language",
+      "pillar": "aml",
+      "title": "Law & Language: How Rules Learn to Mean"
+    },
+    "data/knowledge/compliance-by-design": {
+      "content_id": "data/knowledge/compliance-by-design",
+      "pillar": "data-engineering",
+      "title": "Compliance-by-Design: When the Rulebook Lives in the Pipeline"
+    },
+    "compliance/knowledge/computational-constitutionalism": {
+      "content_id": "compliance/knowledge/computational-constitutionalism",
+      "pillar": "aml",
+      "title": "From Analog Rule to Computational Constitutionalism"
     }
   },
   "by_run_id": {},
-  "checksum": "5fea6958a6fe74fa9d9426b36d2598be4de7cc6c1617b42180114357ab8fc92b"
+  "checksum": "1b700ae9d4a4eec28a4bd1d605cd575334d7166900a40cd1fa8daf1c89afb9de"
 }

@@ -60,7 +60,6 @@ SLOW_GROUPS=(
     "tests/test_learn_generation.py"
     "tests/test_retention_engine.py"
 )
-)
 
 echo "=========================================
  AcaciaFund Test Runner

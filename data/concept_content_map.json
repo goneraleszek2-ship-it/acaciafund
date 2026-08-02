@@ -414,6 +414,22 @@
     "market-making",
     "money-laundering-basics"
   ],
+  "compliance/knowledge/computational-constitutionalism": [
+    "computational-constitutionalism",
+    "design"
+  ],
+  "compliance/knowledge/explainer-kyc": [
+    "aml-compliance-basics",
+    "kyc"
+  ],
+  "compliance/knowledge/explainer-sar": [
+    "regime-detection",
+    "sar",
+    "transaction-monitoring"
+  ],
+  "compliance/knowledge/law-and-language": [
+    "aml-compliance-basics"
+  ],
   "compliance/learn/ai-machine-learning-aml": [
     "adverse-media",
     "ai-aml-surveillance",
@@ -604,10 +620,29 @@
     "lakestream-architecture",
     "streaming"
   ],
+  "data/knowledge/compliance-by-design": [
+    "aml-compliance-basics",
+    "compliance-by-design",
+    "data-contracts",
+    "data-governance",
+    "design"
+  ],
   "data/knowledge/cybernetic-foundations": [
     "cyber-aml",
     "data-quality-sla",
     "dataops"
+  ],
+  "data/knowledge/explainer-etl": [
+    "data-pipeline",
+    "etl"
+  ],
+  "data/knowledge/explainer-schema": [
+    "data-contracts",
+    "data-pipeline"
+  ],
+  "data/knowledge/law-markets-data-triangle": [
+    "law-markets-data-triangle",
+    "regulatory-lag"
   ],
   "data/learn/building-pipelines-dbt-dagster": [
     "aml-model-validation",
@@ -1055,6 +1090,16 @@
     "data-pipeline",
     "distributed-systems"
   ],
+  "data/research/choose-duckdb-rather-than-sqlite": [
+    "dataops",
+    "lakehouse",
+    "lakehouse-architecture"
+  ],
+  "data/research/cosmosescape-taking-over-every-database-in-azure-cosmos-db": [
+    "dataops",
+    "lakehouse",
+    "lakehouse-architecture"
+  ],
   "data/research/cost-optimization-data-pipelines": [
     "aml-optimization",
     "apache-iceberg",
@@ -1264,6 +1309,10 @@
     "orchestration",
     "order-book"
   ],
+  "data/research/rune-1-1-adds-python-an-emacs-editor-a-symbol-index-and-is-n": [
+    "dataops",
+    "query-optimization"
+  ],
   "data/research/schema-registry-avro-protobuf": [
     "arrow-parquet",
     "data-governance",
@@ -1286,6 +1335,14 @@
     "high-frequency-trading",
     "ml-pipeline",
     "orchestration"
+  ],
+  "data/research/show-hn-a-local-merge-queue-for-parallel-claude-code-agents": [
+    "dataops",
+    "distributed-systems"
+  ],
+  "data/research/sqlite-in-production-optimizing-wal-mode-concurrency-and-vfs": [
+    "dataops",
+    "distributed-systems"
   ],
   "data/research/stonebraker-2018-database-cycles": [
     "data-pipeline",
@@ -1322,6 +1379,9 @@
     "mean-reversion",
     "options-trading",
     "statistical-arbitrage"
+  ],
+  "data/research/the-development-pipeline-is-a-production-system": [
+    "dataops"
   ],
   "data/research/wang-strong-1996-data-quality-framework": [
     "data-governance",
@@ -1484,6 +1544,14 @@
     "metric-store",
     "real-time-analytics",
     "real-time-analytics-architecture"
+  ],
+  "markets/knowledge/explainer-order-book": [
+    "lob",
+    "market-microstructure",
+    "order-book"
+  ],
+  "markets/knowledge/explainer-volatility": [
+    "volatility-surface"
   ],
   "markets/learn/algorithmic-trading-strategies": [
     "algorithmic-trading",
@@ -1883,6 +1951,9 @@
     "regime-detection",
     "research"
   ],
+  "markets/research/citadel-buys-situational-awarenesss-stock-portfolio-after-bi": [
+    "market-microstructure"
+  ],
   "markets/research/dataops-markets": [
     "algorithmic-trading",
     "aml-oracle",
@@ -2107,6 +2178,9 @@
     "volatility-arbitrage",
     "volatility-surface",
     "volatility-trading"
+  ],
+  "markets/research/u-s-debt-to-gdp-ratio-reaches-123": [
+    "market-microstructure"
   ],
   "stock/knowledge/stock-timeline-2024-2026": [
     "data-pipeline",
