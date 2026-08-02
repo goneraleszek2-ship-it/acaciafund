@@ -962,6 +962,17 @@ def generate_search_pages(
             "use_cases": getattr(c, "use_cases", None) or [],
         }
 
+        # Bloom taxonomy level for cognitive-skill faceting
+        _bloom_num = getattr(c, "highest_bloom", 0) or 0
+        entry["bloom"] = {
+            1: "remember",
+            2: "understand",
+            3: "apply",
+            4: "analyze",
+            5: "evaluate",
+            6: "create",
+        }.get(_bloom_num, "")
+
         # Include SQI for quality-aware search
         sqi_val = getattr(c, "sqi", 0.0) or 0.0
         signals = getattr(c, "signals", None) or {}

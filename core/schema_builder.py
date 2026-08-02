@@ -109,10 +109,16 @@ def categorize_by_bloom(concept_id: str, graph: nx.DiGraph) -> str:
             except nx.NetworkXNoPath:
                 continue
 
-    if depth >= 3:
+    if depth >= 5:
+        return "create"
+    if depth >= 4:
         return "evaluate"
-    if depth >= 1:
+    if depth >= 3:
+        return "analyze"
+    if depth >= 2:
         return "apply"
+    if depth >= 1:
+        return "understand"
     return "remember"
 
 

@@ -1,0 +1,59 @@
+{% extends "layout.j2" %}
+{% block main_content %}
+<nav aria-label="Breadcrumb" class="mb-4 text-xs text-muted">
+  <ol class="flex flex-wrap items-center gap-1.5">
+    <li><a href="/" class="hover-accent transition">Home</a></li>
+    <li aria-hidden="true">/</li>
+    {% if mode == "learn" %}
+    <li><a href="/cross-pillar/" class="hover-accent transition">Cross-Pillar</a></li>
+    <li aria-hidden="true">/</li>
+    <li aria-current="page">Learn</li>
+    {% else %}
+    <li aria-current="page">Cross-Pillar</li>
+    {% endif %}
+  </ol>
+</nav>
+
+<header class="mb-8">
+  <h1 class="text-3xl font-extrabold flex items-center gap-3 text-default">
+    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+    {% if mode == "learn" %}Cross-Pillar Learn{% else %}Cross-Pillar Synthesis{% endif %}
+  </h1>
+  <p class="mt-2 text-sm text-muted">
+    {% if mode == "learn" %}
+    Cross-domain Feynman learning paths and analog synthesis spanning Compliance, Markets, and Data Engineering.
+    {% else %}
+    Concepts that span multiple pillars — where law, markets, and data meet. Explore the synthesis concepts below or the cross-pillar Feynman pages in Learn.
+    {% endif %}
+  </p>
+</header>
+
+{% if mode != "learn" and concepts %}
+<section class="mb-10">
+  <h2 class="text-lg font-semibold mb-4 text-default">Synthesis Concepts ({{ concepts | length }})</h2>
+  <div class="grid gap-3 sm:grid-cols-2">
+    {% for c in concepts %}
+    <a href="/concepts/{{ c.id }}/" class="ghost-card p-4 hover-accent transition block">
+      <span class="pillar-pill" style="background:color-mix(in srgb, #6366f1 15%, transparent);color:#6366f1">Cross-Pillar</span>
+      <h3 class="text-sm font-bold mt-2 text-default">{{ c.label }}</h3>
+      {% if c.description %}<p class="text-xs leading-relaxed mt-1 text-muted">{{ c.description[:180] }}{% if c.description | length > 180 %}...{% endif %}</p>{% endif %}
+    </a>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<section class="mb-8">
+  <h2 class="text-lg font-semibold mb-4 text-default">Learn</h2>
+  <div class="grid gap-3 sm:grid-cols-2">
+    <a href="/cross-pillar/learn/feynman-path/" class="ghost-card p-4 hover-accent transition block">
+      <h3 class="text-sm font-bold text-default">Feynman Learning Path</h3>
+      <p class="text-xs leading-relaxed mt-1 text-muted">Cross-domain Feynman learning path with analog connections.</p>
+    </a>
+    <a href="/cross-pillar/learn/feynman-synthesis/" class="ghost-card p-4 hover-accent transition block">
+      <h3 class="text-sm font-bold text-default">Feynman Synthesis</h3>
+      <p class="text-xs leading-relaxed mt-1 text-muted">Cross-pillar analog synthesis with connected-pillar badges.</p>
+    </a>
+  </div>
+</section>
+{% endblock %}

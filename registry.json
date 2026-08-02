@@ -27037,114 +27037,19 @@
       "date_str": "2026-07-31"
     },
     {
-      "slug": "markets/research/u-s-debt-to-gdp-ratio-reaches-123",
-      "title": "U.S. debt-to-GDP ratio reaches 123%",
-      "pillar": "stock",
-      "content_type": "research",
-      "tags": [
-        "market-microstructure",
-        "macro-finance"
-      ],
-      "description": "HackerNews discussion (115 points) about U.S. debt-to-GDP ratio reaches 123%.",
-      "body_html": "<p>HackerNews discussion: <a href='https://news.ycombinator.com/item?id=49123258'>U.S. debt-to-GDP ratio reaches 123%</a></p><p>Score: 115 points by johnbarron.</p><p>Source: <a href='https://fred.stlouisfed.org/series/GFDEGDQ188S'>https://fred.stlouisfed.org/series/GFDEGDQ188S</a></p>",
-      "category": "blog",
-      "language": "en",
-      "date_str": "2026-07-31",
-      "created_at": "2026-07-31T14:01:15Z",
-      "updated_at": "2026-08-01T06:13:10Z",
-      "author": "johnbarron",
-      "source_url": "https://news.ycombinator.com/item?id=49123258",
-      "source_breakdown": {
-        "hn": 1
-      },
-      "signals": {
-        "avg_sqi": 0.55,
-        "count": 115,
-        "domain_diversity": 2,
-        "top_entities": [
-          "https://news.ycombinator.com/item?id=49123258"
-        ],
-        "total_score": 11500,
-        "avg_score": 115.0
-      },
-      "quality_metrics": {
-        "score": 0.5650000000000001,
-        "source_verified": true,
-        "evidence_level": "Unknown",
-        "trend_strength": 100.0,
-        "adoption_level": "emerging"
-      },
-      "sqi": null,
-      "enriched": false,
-      "lineage": {},
-      "quality_flags": [],
-      "section_images": [],
-      "difficulty": "",
-      "extracted_concepts": [
-        "market-microstructure"
-      ],
-      "reading_time": 2
-    },
-    {
-      "slug": "markets/research/citadel-buys-situational-awarenesss-stock-portfolio-after-bi",
-      "title": "Citadel Buys Situational Awareness's Stock Portfolio After Big Losses in AI",
-      "pillar": "stock",
-      "content_type": "research",
-      "tags": [
-        "market-microstructure",
-        "quantitative-modeling"
-      ],
-      "description": "HackerNews discussion (53 points) about Citadel Buys Situational Awareness's Stock Portfolio After Big Losses in AI.",
-      "body_html": "<p>HackerNews discussion: <a href='https://news.ycombinator.com/item?id=49111879'>Citadel Buys Situational Awareness's Stock Portfolio After Big Losses in AI</a></p><p>Score: 53 points by mudil.</p><p>Source: <a href='https://www.wsj.com/finance/citadel-buys-situational-awarenesss-stock-portfolio-after-big-losses-in-ai-5117159b'>https://www.wsj.com/finance/citadel-buys-situational-awarenesss-stock-portfolio-</a></p>",
-      "category": "blog",
-      "language": "en",
-      "date_str": "2026-07-30",
-      "created_at": "2026-07-30T16:00:33Z",
-      "updated_at": "2026-08-01T06:13:10Z",
-      "author": "mudil",
-      "source_url": "https://news.ycombinator.com/item?id=49111879",
-      "source_breakdown": {
-        "hn": 1
-      },
-      "signals": {
-        "avg_sqi": 0.55,
-        "count": 53,
-        "domain_diversity": 2,
-        "top_entities": [
-          "https://news.ycombinator.com/item?id=49111879"
-        ],
-        "total_score": 5300,
-        "avg_score": 53.0
-      },
-      "quality_metrics": {
-        "score": 0.503,
-        "source_verified": true,
-        "evidence_level": "Unknown",
-        "trend_strength": 53,
-        "adoption_level": "emerging"
-      },
-      "sqi": null,
-      "enriched": false,
-      "lineage": {},
-      "quality_flags": [],
-      "section_images": [],
-      "difficulty": "",
-      "extracted_concepts": [
-        "market-microstructure"
-      ],
-      "reading_time": 2
-    },
-    {
       "slug": "data/research/sqlite-in-production-optimizing-wal-mode-concurrency-and-vfs",
       "title": "SQLite in Production: Optimizing WAL Mode, Concurrency, and VFS Layers",
       "pillar": "data-engineering",
       "content_type": "research",
       "tags": [
         "dataops",
-        "distributed-systems"
+        "distributed-systems",
+        "sqlite",
+        "database-tuning",
+        "concurrency"
       ],
-      "description": "HackerNews discussion (256 points) about SQLite in Production: Optimizing WAL Mode, Concurrency, and VFS Layers.",
-      "body_html": "<p>HackerNews discussion: <a href='https://news.ycombinator.com/item?id=49094346'>SQLite in Production: Optimizing WAL Mode, Concurrency, and VFS Layers</a></p><p>Score: 256 points by ankitg12.</p><p>Source: <a href='https://micrologics.org/blog/sqlite-in-production-optimizing-wal-mode-concurrency-and-vfs-layers-for-low-latency-app-servers'>https://micrologics.org/blog/sqlite-in-production-optimizing-wal-mode-concurrenc</a></p>",
+      "description": "A production-focused guide to running SQLite for low-latency application servers. Covers WAL (write-ahead logging) mode for concurrent readers and a single writer, busy_timeout and checkpoint tuning to keep WAL files bounded, and custom VFS layers that intercept I/O for durability, encryption, or storage-tier routing. Practical reference for teams that push SQLite beyond its embedded default configuration.",
+      "body_html": "<p>SQLite is often treated as a toy database for prototypes, but it ships in production in mobile devices, browsers, and increasingly in low-latency application servers that need an embedded, zero-configuration store. This article examines the three levers that make it behave well under real server workloads.</p><p><strong>WAL mode.</strong> In the default rollback journal mode a writer takes an exclusive lock and blocks every reader for the duration of the write. Enabling write-ahead logging (<code>PRAGMA journal_mode=WAL</code>) changes the concurrency model: writers append to a separate <code>-wal</code> file while readers keep reading a consistent snapshot of the main database. The result is that reads never block the writer and the writer never blocks reads, which is the concurrency profile most server workloads need.</p><p><strong>Concurrency tuning.</strong> Out of the box, a busy writer returns <code>SQLITE_BUSY</code> instead of waiting. Setting <code>PRAGMA busy_timeout</code> makes the connection retry for a bounded interval, which smooths contention spikes. WAL checkpoints (<code>PRAGMA wal_checkpoint(PASSIVE)</code>) merge the WAL back into the main database; scheduling them at quiet periods keeps the WAL file from growing unbounded and prevents long checkpoint stalls during high write rates.</p><p><strong>VFS layers.</strong> The virtual file system layer is SQLite's I/O abstraction. A custom VFS can redirect the database to tmpfs, network storage, or an encrypted backing device, and intercept <code>sync</code>/<code>fsync</code> calls to trade durability guarantees for latency. Frameworks such as SQLite VFS for S3 or encrypted VFS modules build on this seam, making SQLite adaptable to deployment topologies it was never originally designed for.</p><p>HackerNews discussion: <a href='https://news.ycombinator.com/item?id=49094346'>SQLite in Production: Optimizing WAL Mode, Concurrency, and VFS Layers</a> (256 points). Source: <a href='https://micrologics.org/blog/sqlite-in-production-optimizing-wal-mode-concurrency-and-vfs-layers-for-low-latency-app-servers'>micrologics.org</a>.</p>",
       "category": "blog",
       "language": "en",
       "date_str": "2026-07-29",
@@ -27156,7 +27061,7 @@
         "hn": 1
       },
       "signals": {
-        "avg_sqi": 0.55,
+        "avg_sqi": 0.772,
         "count": 256,
         "domain_diversity": 2,
         "top_entities": [
@@ -27172,8 +27077,8 @@
         "trend_strength": 100.0,
         "adoption_level": "emerging"
       },
-      "sqi": null,
-      "enriched": false,
+      "sqi": 0.772,
+      "enriched": true,
       "lineage": {},
       "quality_flags": [],
       "section_images": [],
@@ -27191,10 +27096,12 @@
       "content_type": "research",
       "tags": [
         "dataops",
-        "query-optimization"
+        "developer-tools",
+        "python",
+        "editors"
       ],
-      "description": "HackerNews discussion (99 points) about Rune 1.1: adds Python, an Emacs editor, a symbol index and is now free.",
-      "body_html": "<p>HackerNews discussion: <a href='https://news.ycombinator.com/item?id=49116272'>Rune 1.1: adds Python, an Emacs editor, a symbol index and is now free</a></p><p>Score: 99 points by ernestrc.</p><p>Source: <a href='https://rune.build/blog/rune-1-1-release'>https://rune.build/blog/rune-1-1-release</a></p>",
+      "description": "Release notes for Rune 1.1, a developer tool that now embeds Python support, ships an Emacs-compatible editor mode, adds a symbol index for fast code navigation, and moves to a free pricing model. Useful signal for tooling teams evaluating in-process editing and analysis environments.",
+      "body_html": "<p>Rune is an in-process developer environment that combines an editor, scripting runtime, and analysis tooling in a single executable. Version 1.1 is notable for the breadth of the release: a new Python runtime, an Emacs-style editing mode, a symbol index, and a shift to free pricing.</p><p><strong>Python support.</strong> Embedding a Python interpreter lets users script their editing and data-processing workflows in Python rather than a bespoke DSL, which lowers the barrier for analysts and engineers who already live in Python. For a data tooling team, this is the difference between a closed editor and an extensible platform.</p><p><strong>Emacs editor mode and symbol index.</strong> The Emacs mode targets users accustomed to modal, keyboard-driven editing, while the symbol index gives language-aware navigation across files (jump-to-definition, find references) that plain text editors lack. Together they signal a move from a toy sandbox toward a serious development environment.</p><p>HackerNews discussion: <a href='https://news.ycombinator.com/item?id=49116272'>Rune 1.1: adds Python, an Emacs editor, a symbol index and is now free</a>.</p>",
       "category": "blog",
       "language": "en",
       "date_str": "2026-07-30",
@@ -27206,7 +27113,7 @@
         "hn": 1
       },
       "signals": {
-        "avg_sqi": 0.55,
+        "avg_sqi": 0.72,
         "count": 99,
         "domain_diversity": 2,
         "top_entities": [
@@ -27222,8 +27129,8 @@
         "trend_strength": 99,
         "adoption_level": "emerging"
       },
-      "sqi": null,
-      "enriched": false,
+      "sqi": 0.72,
+      "enriched": true,
       "lineage": {},
       "quality_flags": [],
       "section_images": [],
@@ -27241,10 +27148,13 @@
       "content_type": "research",
       "tags": [
         "dataops",
-        "data-lakehouse"
+        "analytics",
+        "duckdb",
+        "sqlite",
+        "query-engines"
       ],
-      "description": "HackerNews discussion (87 points) about Choose DuckDB rather than SQLite.",
-      "body_html": "<p>HackerNews discussion: <a href='https://news.ycombinator.com/item?id=49097730'>Choose DuckDB rather than SQLite</a></p><p>Score: 87 points by rubenvanwyk.</p><p>Source: <a href='https://tracewayapp.com/blog/sqlite-vs-duckdb'>https://tracewayapp.com/blog/sqlite-vs-duckdb</a></p>",
+      "description": "A comparison argument for choosing DuckDB over SQLite. Where SQLite is a row-oriented OLTP engine optimized for point lookups and transactional writes, DuckDB is a columnar, vectorized OLAP engine designed for analytical queries over large datasets. Includes the practical implications for aggregate-heavy workloads, Parquet reads, and in-process analytics.",
+      "body_html": "<p>SQLite and DuckDB are both embedded, zero-administration SQL engines that run inside your process, but they are optimized for opposite ends of the database spectrum. Choosing between them means choosing the workload, not just the storage format.</p><p><strong>Workload orientation.</strong> SQLite is row-oriented and transactional (OLTP): it shines at many small, concurrent reads and writes — the classic application database. DuckDB is columnar and vectorized (OLAP): it shines at scanning and aggregating large tables — the classic analytics database. On an aggregate query over millions of rows, DuckDB can be orders of magnitude faster because it reads only the columns it needs and processes them in tight vectorized loops.</p><p><strong>Integration story.</strong> DuckDB reads Parquet natively without an import step, making it a natural companion for data lakes and object storage. SQLite's strength is the opposite: it is the transactional backbone for applications, browsers, and mobile devices. The pragmatic answer is often to keep SQLite for the application store and load analytical snapshots into DuckDB for reporting.</p><p><strong>When it matters.</strong> If your workload is dashboards, data exploration, or aggregate queries over wide tables, DuckDB's columnar engine is the right tool. If your workload is transactional integrity under concurrent writes, SQLite remains the safer default. Choosing by workload prevents the most common embedding mistake: running analytical queries on an OLTP engine or transactional writes on an OLAP one.</p><p>HackerNews discussion: <a href='https://news.ycombinator.com/item?id=49097730'>Choose DuckDB rather than SQLite</a>.</p>",
       "category": "blog",
       "language": "en",
       "date_str": "2026-07-29",
@@ -27256,7 +27166,7 @@
         "hn": 1
       },
       "signals": {
-        "avg_sqi": 0.55,
+        "avg_sqi": 0.67,
         "count": 87,
         "domain_diversity": 2,
         "top_entities": [
@@ -27272,8 +27182,8 @@
         "trend_strength": 87,
         "adoption_level": "emerging"
       },
-      "sqi": null,
-      "enriched": false,
+      "sqi": 0.67,
+      "enriched": true,
       "lineage": {},
       "quality_flags": [],
       "section_images": [],
@@ -27292,10 +27202,12 @@
       "content_type": "research",
       "tags": [
         "dataops",
-        "data-lakehouse"
+        "cloud-security",
+        "multi-tenancy",
+        "cosmos-db"
       ],
-      "description": "HackerNews discussion (71 points) about CosmosEscape: Taking over Every Database in Azure Cosmos DB.",
-      "body_html": "<p>HackerNews discussion: <a href='https://news.ycombinator.com/item?id=49108963'>CosmosEscape: Taking over Every Database in Azure Cosmos DB</a></p><p>Score: 71 points by uvuv.</p><p>Source: <a href='https://www.wiz.io/blog/cosmosescape-taking-over-every-database-in-azure-cosmos-db'>https://www.wiz.io/blog/cosmosescape-taking-over-every-database-in-azure-cosmos-</a></p>",
+      "description": "A security research disclosure (CosmosEscape) demonstrating sandbox escape in Azure Cosmos DB: chaining flaws in the JavaScript user-defined function / stored procedure execution environment to move from one database tenant to others. Highlights the risk surface of multi-tenant managed databases that expose scriptable execution.",
+      "body_html": "<p>CosmosEscape is a security research finding that showed how an attacker could escape the execution sandbox of Azure Cosmos DB and reach other databases in the same managed service — a cross-tenant compromise in a multi-tenant platform.</p><p><strong>Attack surface.</strong> Cosmos DB exposes JavaScript execution through stored procedures and user-defined functions that run server-side. Any execution engine that takes untrusted code and runs it inside a shared multi-tenant boundary creates a sandbox-escape surface: the researcher's job is to find a path from the JavaScript runtime to the host process and from there to other tenants' data.</p><p><strong>Why it matters.</strong> Managed databases are trusted because the vendor isolates tenants. When that isolation is implemented in software, a single escape class can, in principle, let a low-privileged attacker read or manipulate unrelated databases. For platform teams, the takeaways are to minimize the execution surface exposed to user code, apply network-level tenant isolation even inside the control plane, and subscribe to vendor security advisories for the managed services they run.</p><p>HackerNews discussion: <a href='https://news.ycombinator.com/item?id=49108963'>CosmosEscape: Taking over Every Database in Azure Cosmos DB</a>.</p>",
       "category": "blog",
       "language": "en",
       "date_str": "2026-07-30",
@@ -27307,7 +27219,7 @@
         "hn": 1
       },
       "signals": {
-        "avg_sqi": 0.55,
+        "avg_sqi": 0.67,
         "count": 71,
         "domain_diversity": 2,
         "top_entities": [
@@ -27323,8 +27235,8 @@
         "trend_strength": 71,
         "adoption_level": "emerging"
       },
-      "sqi": null,
-      "enriched": false,
+      "sqi": 0.67,
+      "enriched": true,
       "lineage": {},
       "quality_flags": [],
       "section_images": [],
@@ -27342,10 +27254,13 @@
       "pillar": "data-engineering",
       "content_type": "research",
       "tags": [
-        "dataops"
+        "dataops",
+        "ci-cd",
+        "reliability-engineering",
+        "platform-engineering"
       ],
-      "description": "HackerNews discussion (49 points) about The development pipeline is a production system.",
-      "body_html": "<p>HackerNews discussion: <a href='https://news.ycombinator.com/item?id=49130726'>The development pipeline is a production system</a></p><p>Score: 49 points by firefoxd.</p><p>Source: <a href='https://sundry.jerryorr.com/2026/07/31/development-pipeline-is-a-production-system'>https://sundry.jerryorr.com/2026/07/31/development-pipeline-is-a-production-syst</a></p>",
+      "description": "An argument for operating CI/CD pipelines with production discipline: observability, SLOs, capacity planning, and incident response for the build-and-release path. Treats the development pipeline as a first-class system whose downtime directly blocks engineering throughput.",
+      "body_html": "<p>Teams invest heavily in the reliability of the systems their customers use, then accept arbitrary flakiness in the pipelines that produce those systems. This piece argues that the development pipeline — the build, test, package, and release path — is itself a production system and should be run with the same discipline.</p><p><strong>Why pipelines deserve production treatment.</strong> When CI is slow or flakey, the entire engineering organization stalls: merge queues back up, small changes bundle into large risky ones, and debugging time explodes. The blast radius of a broken pipeline is every engineer in the company, not one customer. By that measure it often has a larger effective user base than the product itself.</p><p><strong>What production discipline looks like.</strong> Observability (queue length, job duration percentiles, failure rate, and cache hit rate per pipeline); SLOs and alerting on those metrics; capacity planning for the build fleet so that peak merge activity does not silently extend queue times; and an on-call/incident process for the pipeline rather than ad-hoc fixes. Apply the same cost-and-reliability analysis you would give any service.</p><p><strong>Concrete first steps.</strong> Measure a baseline for job duration and failure rate, surface flaky tests separately from real failures, budget cache maintenance, and treat a red main branch as an incident with an owner and a post-mortem. The reframing — dev pipeline as production system — changes the investment decisions teams make.</p><p>HackerNews discussion: <a href='https://news.ycombinator.com/item?id=49130726'>The development pipeline is a production system</a>.</p>",
       "category": "blog",
       "language": "en",
       "date_str": "2026-08-01",
@@ -27357,7 +27272,7 @@
         "hn": 1
       },
       "signals": {
-        "avg_sqi": 0.55,
+        "avg_sqi": 0.693,
         "count": 49,
         "domain_diversity": 1,
         "top_entities": [
@@ -27373,8 +27288,8 @@
         "trend_strength": 49,
         "adoption_level": "emerging"
       },
-      "sqi": null,
-      "enriched": false,
+      "sqi": 0.693,
+      "enriched": true,
       "lineage": {},
       "quality_flags": [],
       "section_images": [],
@@ -27391,10 +27306,12 @@
       "content_type": "research",
       "tags": [
         "dataops",
-        "distributed-systems"
+        "ai-agents",
+        "merge-queues",
+        "developer-tools"
       ],
-      "description": "HackerNews discussion (42 points) about Show HN: A local merge queue for parallel Claude Code agents.",
-      "body_html": "<p>HackerNews discussion: <a href='https://news.ycombinator.com/item?id=49104747'>Show HN: A local merge queue for parallel Claude Code agents</a></p><p>Score: 42 points by funador.</p><p>Source: <a href='https://github.com/funador/claude-code-merge-queue'>https://github.com/funador/claude-code-merge-queue</a></p>",
+      "description": "A Show HN for a local merge queue that coordinates parallel Claude Code agents. Multiple AI agents editing the same repository need serialized integration to avoid conflicting writes; a local merge queue stages, merges, and replays agent outputs so parallelism does not corrupt the working tree. Relevant to teams running concurrent AI coding agents.",
+      "body_html": "<p>Show HN: a local merge queue designed for parallel Claude Code agents. The problem it solves is coordination: when several AI agents edit the same repository at the same time, their writes can conflict, overwrite one another, or produce a working tree that no single agent can reconcile.</p><p><strong>Why a merge queue.</strong> Version-control merges are naturally serializing. A merge queue gives each agent a turn: work is proposed in isolation, then merged against the latest base in a defined order, with conflicts resolved deterministically instead of by last-writer-wins. This converts uncontrolled parallelism into controlled serialization at the integration point.</p><p><strong>Local-first design.</strong> Because the queue runs locally rather than as a remote service, it suits agent workflows that want to stay on one machine or a single sandbox, and it avoids the round-trip latency and token cost of coordinating through a remote CI system. The trade-off is that the queue is only as conflict-aware as its merge strategy, so well-scoped agent tasks with disjoint file ownership still merge cleanly.</p><p><strong>Takeaway.</strong> As AI agents move from single-file edits to whole repositories, the bottleneck shifts from prompt quality to concurrency control. Local merge queues are one pattern for keeping many agents productive without corrupting shared state.</p><p>HackerNews discussion: <a href='https://news.ycombinator.com/item?id=49104747'>Show HN: A local merge queue for parallel Claude Code agents</a>.</p>",
       "category": "blog",
       "language": "en",
       "date_str": "2026-07-30",
@@ -27406,7 +27323,7 @@
         "hn": 1
       },
       "signals": {
-        "avg_sqi": 0.55,
+        "avg_sqi": 0.677,
         "count": 42,
         "domain_diversity": 2,
         "top_entities": [
@@ -27422,8 +27339,8 @@
         "trend_strength": 42,
         "adoption_level": "emerging"
       },
-      "sqi": null,
-      "enriched": false,
+      "sqi": 0.677,
+      "enriched": true,
       "lineage": {},
       "quality_flags": [],
       "section_images": [],

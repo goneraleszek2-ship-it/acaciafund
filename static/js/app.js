@@ -382,6 +382,7 @@
     if (filters.pillar.length && !filters.pillar.includes(entry.pillar || '')) return false;
     if (filters.type.length && !filters.type.includes(entry.content_type || '')) return false;
     if (filters.difficulty.length && !filters.difficulty.includes(entry.difficulty || '')) return false;
+    if (filters.bloom.length && !filters.bloom.includes(entry.bloom || '')) return false;
     if (filters.technology.length) {
       var techs = entry.technologies || [];
       var hasMatch = filters.technology.some(function(t) { return techs.indexOf(t) !== -1; });
@@ -391,7 +392,7 @@
   }
 
   function readFilters() {
-    const filters = { pillar: [], type: [], difficulty: [], technology: [] };
+    const filters = { pillar: [], type: [], difficulty: [], bloom: [], technology: [] };
     document.querySelectorAll('.filter-checkbox:checked').forEach(cb => {
       const group = cb.getAttribute('data-group');
       if (group && filters.hasOwnProperty(group)) filters[group].push(cb.value);
@@ -401,7 +402,7 @@
 
   function updateFacetCounts(index) {
     const counts = {};
-    for (const group of ['pillar', 'type', 'difficulty']) {
+    for (const group of ['pillar', 'type', 'difficulty', 'bloom']) {
       counts[group] = {};
       document.querySelectorAll('.filter-checkbox[data-group="' + group + '"]').forEach(cb => {
         counts[group][cb.value] = 0;
@@ -411,9 +412,11 @@
       const p = e.pillar || '';
       const t = e.content_type || '';
       const d = e.difficulty || '';
+      const b = e.bloom || '';
       if (counts.pillar.hasOwnProperty(p)) counts.pillar[p] += 1;
       if (counts.type.hasOwnProperty(t)) counts.type[t] += 1;
       if (counts.difficulty.hasOwnProperty(d)) counts.difficulty[d] += 1;
+      if (counts.bloom.hasOwnProperty(b)) counts.bloom[b] += 1;
     }
     document.querySelectorAll('.filter-count').forEach(el => {
       const g = el.getAttribute('data-group');
@@ -425,7 +428,7 @@
 
   function syncFiltersToUrl(filters) {
     const url = new URL(window.location);
-    for (const key of ['pillar', 'type', 'difficulty', 'technology']) {
+    for (const key of ['pillar', 'type', 'difficulty', 'bloom', 'technology']) {
       if (filters[key].length) url.searchParams.set('f_' + key, filters[key].join(','));
       else url.searchParams.delete('f_' + key);
     }

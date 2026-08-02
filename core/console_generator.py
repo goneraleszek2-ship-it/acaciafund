@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any
 
 from config import PILLAR_CONFIG, PROJECT_ROOT
+from core.urls import canonical_path, slug_to_fspath, slug_to_path
 
 
 def _safe_json(path: Path) -> dict[str, Any]:
@@ -36,8 +37,10 @@ def generate_console_payload(
 
     items = []
     for c in all_content:
+        _slug = getattr(c, "slug", "")
         items.append({
-            "slug": getattr(c, "slug", ""),
+            "slug": _slug,
+            "url": f"/{canonical_path(slug_to_path(slug_to_fspath(_slug)))}" if _slug else "",
             "title": getattr(c, "title", ""),
             "description": (getattr(c, "description", "") or "")[:200],
             "pillar": getattr(c, "pillar", ""),

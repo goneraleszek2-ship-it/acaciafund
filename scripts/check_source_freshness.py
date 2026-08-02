@@ -16,8 +16,9 @@ import json
 import sys
 import time
 from datetime import datetime, timezone
+from http.client import HTTPResponse
 from pathlib import Path
-from urllib.error import HTTPError, URLError
+from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
 import tomllib
@@ -62,8 +63,25 @@ def load_inspiration_sources() -> list[dict]:
     return sources
 
 
+def _request(url: str, method: str, timeout: int) -> tuple[HTTPResponse | None, Exception | None]:
+    """Single HTTP request; returns (response, error)."""
+    req = Request(url, method=method, headers={
+        "User-Agent": "AcaciaFund-SourceChecker/1.0",
+        "Accept": "*/*",
+    })
+    try:
+        return urlopen(req, timeout=timeout), None
+    except Exception as e:  # noqa: BLE001 - HTTPError, URLError, TimeoutError, OSError
+        return None, e
+
+
+# Status codes that commonly mean "we reject HEAD requests / bot traffic" but
+# that respond fine to GET — falling back avoids false-positive degradation.
+_HEAD_REJECT_CODES = {400, 401, 403, 405, 406, 501}
+
+
 def check_url(url: str, timeout: int = 15) -> dict:
-    """HEAD request to check URL health. Returns status dict."""
+    """Check URL health via HEAD, falling back to GET when HEAD is rejected."""
     result = {
         "http_status": None,
         "latency_ms": None,
@@ -71,31 +89,39 @@ def check_url(url: str, timeout: int = 15) -> dict:
         "status": "unknown",
     }
     start = time.monotonic()
-    try:
-        req = Request(url, method="HEAD", headers={
-            "User-Agent": "AcaciaFund-SourceChecker/1.0",
-            "Accept": "*/*",
-        })
-        resp = urlopen(req, timeout=timeout)
+
+    resp, err = _request(url, "HEAD", timeout)
+    if resp is None:
+        if isinstance(err, HTTPError):
+            result["http_status"] = err.code
+            result["error"] = str(err)
+        else:
+            result["error"] = str(err) if err else "unknown error"
+        # HEAD blocked / unsupported → retry with GET
+        http_status = result.get("http_status")
+        if isinstance(http_status, int) and http_status in _HEAD_REJECT_CODES:
+            resp, err = _request(url, "GET", timeout)
+            if resp is None:
+                if isinstance(err, HTTPError):
+                    result["http_status"] = err.code
+                    result["error"] = f"{result['error']}; GET: {err}"
+                else:
+                    result["error"] = f"{result['error']}; GET: {err}"
+            else:
+                result["http_status"] = resp.status
+                result["error"] = "HEAD blocked; verified via GET"
+                resp.close()
+    else:
         result["http_status"] = resp.status
-        result["latency_ms"] = int((time.monotonic() - start) * 1000)
-        if 200 <= resp.status < 400:
-            result["status"] = "active"
-        elif 400 <= resp.status < 500:
-            result["status"] = "degraded"
-        else:
-            result["status"] = "error"
-    except HTTPError as e:
-        result["http_status"] = e.code
-        result["latency_ms"] = int((time.monotonic() - start) * 1000)
-        result["error"] = str(e)
-        if 400 <= e.code < 500:
-            result["status"] = "degraded"
-        else:
-            result["status"] = "error"
-    except (URLError, OSError, TimeoutError) as e:
-        result["latency_ms"] = int((time.monotonic() - start) * 1000)
-        result["error"] = str(e)
+        resp.close()
+
+    result["latency_ms"] = int((time.monotonic() - start) * 1000)
+    status = result.get("http_status")
+    if isinstance(status, int) and 200 <= status < 400:
+        result["status"] = "active"
+    elif isinstance(status, int) and 400 <= status < 500:
+        result["status"] = "degraded"
+    else:
         result["status"] = "error"
     return result
 

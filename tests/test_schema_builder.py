@@ -204,13 +204,14 @@ class TestCategorizeByBloom:
         level = categorize_by_bloom("foundations", graph)
         assert level == "apply"
 
-    def test_mid_chain_is_apply(self, acyclic_manager):
+    def test_mid_chain_is_understand(self, acyclic_manager):
+        """streaming is at depth 1 from root apache-kafka → understand"""
         graph = build_prerequisite_graph(acyclic_manager)
         level = categorize_by_bloom("streaming", graph)
-        assert level in ("apply", "analyze")
+        assert level == "understand"
 
     def test_deep_node_is_evaluate(self):
-        """Chain of 5 nodes (a->b->c->d->e), 'e' is at depth 4 → evaluate/create."""
+        """Chain of 5 nodes (a->b->c->d->e), 'e' is at depth 4 → evaluate."""
         mgr = OntologyManager()
         for cid in ["a", "b", "c", "d", "e"]:
             mgr.add_concept(Concept(id=cid, label=f"Concept {cid}", pillar="aml"))
@@ -218,7 +219,18 @@ class TestCategorizeByBloom:
             mgr.add_relation(Relation(source_id=src, target_id=tgt, relation_type="requires"))
         graph = build_prerequisite_graph(mgr)
         level = categorize_by_bloom("e", graph)
-        assert level in ("evaluate", "create"), f"Got {level}"
+        assert level == "evaluate", f"Got {level}"
+
+    def test_deep_node_is_create(self):
+        """Chain of 6 nodes (a->b->c->d->e->f), 'f' is at depth 5 → create."""
+        mgr = OntologyManager()
+        for cid in ["a", "b", "c", "d", "e", "f"]:
+            mgr.add_concept(Concept(id=cid, label=f"Concept {cid}", pillar="aml"))
+        for src, tgt in [("a", "b"), ("b", "c"), ("c", "d"), ("d", "e"), ("e", "f")]:
+            mgr.add_relation(Relation(source_id=src, target_id=tgt, relation_type="requires"))
+        graph = build_prerequisite_graph(mgr)
+        level = categorize_by_bloom("f", graph)
+        assert level == "create", f"Got {level}"
 
     def test_unknown_concept(self, acyclic_manager):
         level = categorize_by_bloom("nonexistent", build_prerequisite_graph(acyclic_manager))

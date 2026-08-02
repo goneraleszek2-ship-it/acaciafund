@@ -1232,13 +1232,33 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
         if l_item.bloom_questions:
             max_lvl = 0
             for q in l_item.bloom_questions:
-                bl = q.get("bloom_level", "")
+                bl = q.get("bloom_level") or q.get("level") or ""
                 lvl = BLOOM_ORDER.get(bl, 0)
                 if lvl > max_lvl:
                     max_lvl = lvl
             l_item.highest_bloom = max_lvl
         else:
             l_item.highest_bloom = 0
+
+    for r_item in research_items:
+        if r_item.bloom_questions and r_item.highest_bloom == 0:
+            max_lvl = 0
+            for q in r_item.bloom_questions:
+                bl = q.get("bloom_level") or q.get("level") or ""
+                lvl = BLOOM_ORDER.get(bl, 0)
+                if lvl > max_lvl:
+                    max_lvl = lvl
+            r_item.highest_bloom = max_lvl
+
+    for k_item in knowledge_items:
+        if k_item.bloom_questions and k_item.highest_bloom == 0:
+            max_lvl = 0
+            for q in k_item.bloom_questions:
+                bl = q.get("bloom_level") or q.get("level") or ""
+                lvl = BLOOM_ORDER.get(bl, 0)
+                if lvl > max_lvl:
+                    max_lvl = lvl
+            k_item.highest_bloom = max_lvl
 
     learn_lessons = sorted(
         [li for li in learn_items if li.slug != "learn"],
@@ -2617,7 +2637,13 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     if ontology and ontology.concept_count() > 0:
         try:
             from core.retention_engine import generate_concept_review_json, save_concept_review_json
-            _concept_review_items = generate_concept_review_json(ontology)
+            from core.schema_builder import build_prerequisite_graph, categorize_by_bloom
+            _prereq_graph = build_prerequisite_graph(ontology)
+            _bloom_map = {
+                concept.id: categorize_by_bloom(concept.id, _prereq_graph)
+                for concept in ontology._concepts.values()
+            }
+            _concept_review_items = generate_concept_review_json(ontology, bloom_map=_bloom_map)
             _review_data_path = STATIC_DST_DIR / "review_concepts.json"
             save_concept_review_json(_concept_review_items, _review_data_path)
             _review_data_size = _review_data_path.stat().st_size if _review_data_path.exists() else 0
@@ -2943,6 +2969,43 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
             _synth_count += 1
         print(f"  synthesis: {_synth_count} pillar pages")
 
+        # --- Cross-pillar index pages (synthesis landing + learn landing) ---
+        _cp_concepts = sorted(
+            ontology.concepts_by_pillar().get("cross-pillar", []),
+            key=lambda c: c.label.lower(),
+        )
+        _cp_index_html = render_template(
+            "cross_pillar_index.j2",
+            content=_dummy(
+                "Cross-Pillar Synthesis — AcaciaFund",
+                "index",
+                description="Concepts and Feynman learning paths spanning Compliance, Markets, and Data Engineering.",
+            ),
+            mode="overview",
+            concepts=[{"id": c.id, "label": c.label, "description": c.description} for c in _cp_concepts],
+            page_path="cross-pillar/",
+            **ctx_base,
+        )
+        (_cp_dir := OUTPUT_DIR / "cross-pillar").mkdir(parents=True, exist_ok=True)
+        (_cp_dir / "index.html").write_text(_cp_index_html, encoding="utf-8")
+        print(f"  cross-pillar: /cross-pillar/ ({len(_cp_concepts)} concepts)")
+
+        _cp_learn_html = render_template(
+            "cross_pillar_index.j2",
+            content=_dummy(
+                "Cross-Pillar Learn — AcaciaFund",
+                "index",
+                description="Cross-domain Feynman learning paths and analog synthesis.",
+            ),
+            mode="learn",
+            concepts=[{"id": c.id, "label": c.label, "description": c.description} for c in _cp_concepts],
+            page_path="cross-pillar/learn/",
+            **ctx_base,
+        )
+        (_cp_learn_dir := OUTPUT_DIR / "cross-pillar" / "learn").mkdir(parents=True, exist_ok=True)
+        (_cp_learn_dir / "index.html").write_text(_cp_learn_html, encoding="utf-8")
+        print("  cross-pillar: /cross-pillar/learn/")
+
     # --- Research modules: source trail, contradictions, evidence grade, adaptive ---
     if ontology and ontology.concept_count() > 0:
         try:
@@ -2992,6 +3055,30 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                     _level_counts[_s.level.value] = _level_counts.get(_s.level.value, 0) + 1
                 _dist = ", ".join(f"{k}: {v}" for k, v in sorted(_level_counts.items()))
                 print(f"  evidence-grades: {len(_scores)} claims ({_dist})")
+
+            _ws_claims = []
+            for _trail in _trail_manager.all_trails():
+                for _claim in _trail.claims:
+                    _ws_claims.append(_claim)
+            _ws_evidence_map = {_s.claim: _s for _s in _scores}
+            _ws_html = render_template(
+                "research_workspace.j2",
+                content=_dummy(
+                    "Research Workspace — AcaciaFund",
+                    "index",
+                    description="Hypothesis workspace with source trail analysis, contradiction detection, and evidence quality scoring.",
+                ),
+                hypothesis={},
+                claims=_ws_claims,
+                contradictions=_contradiction_report,
+                evidence_scores=_scores,
+                evidence_map=_ws_evidence_map,
+                page_path="research/workspace/",
+                **ctx_base,
+            )
+            (_ws_dir := OUTPUT_DIR / "research" / "workspace").mkdir(parents=True, exist_ok=True)
+            (_ws_dir / "index.html").write_text(_ws_html, encoding="utf-8")
+            print(f"  research-workspace: /research/workspace/ ({len(_ws_claims)} claims)")
 
         except ImportError as _ie:
             print(f"  research-modules: not available — {_ie}")
@@ -3064,7 +3151,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                            description="Unified knowledge cockpit across all three pillars: ontology, evidence, sources, and pipeline health."),
             page_path="scholar/",
             is_index=False,
-            **_console_payload,
+            **{k: v for k, v in _console_payload.items() if k not in ("build_hash", "site_url")},
             **ctx_base,
         )
         _console_dir = OUTPUT_DIR / "scholar"
