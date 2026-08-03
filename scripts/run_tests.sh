@@ -185,3 +185,13 @@ fi
 
 echo ""
 echo "All tests passed."
+
+# Coverage report (informational, non-blocking)
+if [ "${SKIP_COVERAGE:-0}" != "1" ] && $PYTHON -c "import pytest_cov" &>/dev/null; then
+    echo ""
+    echo "--- Coverage (core + scripts, informational) ---"
+    timeout 180 $PYTHON -m pytest tests/ -q --cov=core --cov=scripts \
+        --cov-report=term:skip-covered --no-header -p no:cacheprovider \
+        >> "$RESULTS_FILE" 2>&1 || echo "  coverage report skipped (timeout or error)"
+    grep -E "^(TOTAL|core/|scripts/)" "$RESULTS_FILE" | tail -15
+fi

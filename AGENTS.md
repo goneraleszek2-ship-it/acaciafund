@@ -559,15 +559,16 @@ node tests/test_progressive_disclosure.js
 
 # All core tests (excludes build-dependent tests that may hang)
 python3 -u -m pytest tests/test_schema_builder.py tests/test_ontology.py tests/test_compositor.py tests/test_extractors.py tests/test_contracts.py tests/test_urls.py tests/test_data.py tests/test_content.py tests/test_metadata.py tests/test_learn_generation.py tests/test_build_cache.py tests/test_generate_pages.py tests/test_check_source_freshness.py tests/test_source_synthesis.py tests/test_smoke.py -v > /tmp/test_core.log 2>&1
-``` Tests use `python3 -m pytest tests/ -v`. Target: 80% line coverage across core/ and scripts/ (currently at ~55%).
+``` Tests use `python3 -m pytest tests/ -v`. Target: 80% line coverage across core/ and scripts/ (baseline 2026-08-03: core 75%, `core/build_taxonomies.py` 74%, scripts 22%, combined 37% — scripts drag the total; see `docs/08-testing-quality/test-overview.md` for the per-module table).
 
 ### Testing Strategy
 
 - **Core modules** (`core/urls.py`, `core/ontology.py`) are well-tested.
-- **`build.py` and `core/build_taxonomies.py`** are tested via smoke tests only (build output inspection).
-- **Scripts** are tested indirectly via workflow integration.
-- **Fully tested**: `core/compositor.py` (26), `core/generate_pages.py` (40), `core/extractors.py` (19), `scripts/check_source_freshness.py` (8), `scripts/source_synthesis.py` (18)
-- **No unit tests** for: `core/generate.py`, `core/score.py`, `core/visuals.py`, `core/bloom.py`, `core/brand.py`, `core/assets.py`, `scripts/source_verification.py`.
+- **`build.py` and `core/build_taxonomies.py`** are tested via smoke tests only (build output inspection); `core/build_taxonomies.py` still reaches 74% through `tests/test_build_taxonomies.py`.
+- **Scripts** are tested indirectly via workflow integration (only 5 of 45 scripts have direct tests).
+- **Fully tested** (75%+): `core/compositor.py` (26), `core/generate_pages.py` (40), `core/extractors.py` (19), `core/urls.py` (34), `core/score.py` (17), `scripts/check_source_freshness.py` (8), `scripts/source_synthesis.py` (18)
+- **Now tested** (added July 2026): `core/generate.py`, `core/visuals.py`, `core/bloom.py`, `core/brand.py`, `core/assets.py`, `scripts/source_verification.py` — all have dedicated test files.
+- **No direct tests** (biggest coverage gaps): `scripts/serve_cms.py` (389 stmts), `scripts/fix_orphan_tags.py` (326), `scripts/cms_api.py` (204), `scripts/run_agentic_pipeline.py` (200), `scripts/backfill_content.py` (196).
 
 ### Running Tests
 

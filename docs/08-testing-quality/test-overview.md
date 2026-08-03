@@ -113,7 +113,21 @@ timeout 300 python3 -m pytest tests/ -v --timeout=60
 
 # Specific test
 python3 -m pytest tests/test_urls.py::test_pillar_to_url -v
+
+# Coverage (core + scripts)
+python3 -m pytest tests/ -q --cov=core --cov=scripts --cov-report=term-missing
 ```
+
+## Coverage Baseline (2026-08-03)
+
+| Scope | Statements | Covered | Coverage |
+|-------|-----------:|--------:|---------:|
+| `core/` | 4,048 | 3,061 | 75% |
+| `core/build_taxonomies.py` | 527 | 390 | 74% |
+| `scripts/` | 5,426 | 1,211 | 22% |
+| **Combined** | 15,105 | 9,474 | **37%** |
+
+Target: 80% line coverage across `core/` and `scripts/`. Core modules are near target; the combined figure is dragged down by scripts with no direct tests (`scripts/serve_cms.py` 389 stmts, `scripts/fix_orphan_tags.py` 326, `scripts/cms_api.py` 204, `scripts/run_agentic_pipeline.py` 200, `scripts/backfill_content.py` 196). Measure with: `python3 -m pytest tests/ -q --cov=core --cov=scripts --cov-report=term-missing` (takes ~50s).
 
 ## Testing Strategy
 

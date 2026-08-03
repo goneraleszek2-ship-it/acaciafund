@@ -6,9 +6,13 @@ Uses contract-testing approach: test function promises, not implementation.
 from datetime import date
 
 from scripts.check_entry_freshness import (
+    build_freshness_report,
     compute_freshness,
     compute_freshness_with_review,
+    mark_items,
     parse_date,
+    select_by_status,
+    verification_anchor,
 )
 
 
@@ -65,3 +69,57 @@ class TestComputeFreshnessWithReview:
         reviewed = recent - timedelta(days=120)
         assert compute_freshness_with_review(recent, reviewed) == "fresh"
         assert compute_freshness_with_review(recent, None) == "fresh"
+
+
+class TestVerificationAnchor:
+    def test_uses_most_recent_anchor(self):
+        assert verification_anchor({"date_str": "2026-08-01"}) == "fresh"
+        assert verification_anchor({"date_str": "2026-01-01"}) == "outdated"
+        assert verification_anchor({"date_str": "2026-01-01", "last_verified": "2026-08-01"}) == "fresh"
+        assert verification_anchor({"date_str": "2026-01-01", "last_reviewed": "2026-08-01"}) == "fresh"
+        assert verification_anchor({}) == "never"
+
+
+class TestBuildFreshnessReport:
+    def test_summary_and_entries(self):
+        items = [
+            {"slug": "a", "title": "A", "date_str": "2026-08-01"},
+            {"slug": "b", "title": "B", "date_str": "2026-06-01"},
+            {"slug": "c", "title": "C"},
+        ]
+        report = build_freshness_report(items, today=date(2026, 8, 3))
+        assert report["total_items"] == 3
+        assert report["summary"] == {"fresh": 1, "stale": 1, "outdated": 0, "never": 1}
+        statuses = {e["slug"]: e["freshness"] for e in report["entries"]}
+        assert statuses == {"a": "fresh", "b": "stale", "c": "never"}
+
+
+class TestSelectByStatus:
+    def test_filters_by_status(self):
+        items = [
+            {"slug": "a", "date_str": "2026-08-01"},
+            {"slug": "b", "date_str": "2026-06-01"},
+            {"slug": "c"},
+        ]
+        today = date(2026, 8, 3)
+        assert [i["slug"] for i in select_by_status(items, ["never"], today=today)] == ["c"]
+        assert [i["slug"] for i in select_by_status(items, ["stale", "outdated"], today=today)] == ["b"]
+        assert [i["slug"] for i in select_by_status(items, ["fresh"], today=today)] == ["a"]
+
+
+class TestMarkItems:
+    def test_sets_field_on_matching_slugs(self):
+        items = [
+            {"slug": "a", "title": "A"},
+            {"slug": "b", "title": "B"},
+        ]
+        marked = mark_items(items, ["a"], "last_verified", today=date(2026, 8, 3))
+        assert len(marked) == 1
+        assert items[0]["last_verified"] == "2026-08-03"
+        assert "last_verified" not in items[1]
+        assert marked[0]["slug"] == "a"
+
+    def test_unknown_slugs_are_ignored(self):
+        items = [{"slug": "a"}]
+        marked = mark_items(items, ["nope"], "last_reviewed", today=date(2026, 8, 3))
+        assert marked == []
