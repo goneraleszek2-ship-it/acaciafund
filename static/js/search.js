@@ -244,9 +244,7 @@
 
   function fetchConcepts() {
     if (conceptIndex) return Promise.resolve(conceptIndex);
-    const base = document.querySelector('script[src*="search.js"], script[src*="app.js"]');
-    const prefix = base ? base.src.replace(/js\/\w+\.js.*$/, '') : '';
-    return fetch(prefix + 'static/review_concepts.json')
+    return fetch(staticBase() + 'review_concepts.json')
       .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
       .then(data => {
         conceptIndex = (data.concepts || []).map(c => ({
@@ -345,14 +343,34 @@
       '</div>'
     ).join('');
 
+    let titleHtml = '';
+    if (needle && searchIndex) {
+      titleHtml = searchIndex
+        .filter(function(e) { return e.title && e.title.toLowerCase().includes(needle); })
+        .slice(0, 4)
+        .map(function(e) {
+          return '<div class="suggestion-item" role="option" data-suggestion="' + escapeHtml(e.title) + '" data-kind="title" style="padding:0.5rem 0.75rem;cursor:pointer;font-size:0.9rem;border-bottom:1px solid var(--color-border, #333);display:flex;align-items:center;gap:0.5rem">' +
+            '<span style="font-size:0.75rem;opacity:0.6">&#128269;</span>' +
+            highlightTerms(escapeHtml(e.title), needleTerms) +
+            '<span style="font-size:0.7rem;opacity:0.6;margin-left:auto">' + escapeHtml(CT_LABELS[e.content_type] || e.content_type || '') + '</span>' +
+            '</div>';
+        })
+        .join('');
+    }
+
     if (!needle && !matchingHistory.length && !conceptHtml) {
       el.innerHTML = '';
       setSuggestionsOpen(el, false);
       return;
     }
 
+    if (needle && !searchIndex) {
+      fetchIndex().then(function() { renderSuggestions(filter); }).catch(function() {});
+    }
+
     const combined = [];
     if (conceptHtml) combined.push(conceptHtml);
+    if (titleHtml) combined.push(titleHtml);
     if (historyHtml) combined.push(historyHtml);
     if (!combined.length) { el.innerHTML = ''; setSuggestionsOpen(el, false); return; }
     el.innerHTML = combined.join('');
@@ -405,16 +423,25 @@
       }).join('') + '</details>' : '');
   }
 
+  function staticBase() {
+    const base = document.querySelector('script[src*="search.js"], script[src*="app.js"]');
+    if (base) {
+      const m = base.src.match(/^(.*\/static\/)js\/[^/]+\.js(?:$|[?#])/);
+      if (m) return m[1];
+      const m2 = base.src.match(/^(.*\/)js\/[^/]+\.js(?:$|[?#])/);
+      if (m2) return m2[1];
+    }
+    return window.location.origin + '/static/';
+  }
+
   function fetchIndex() {
     if (searchIndex) return Promise.resolve(searchIndex);
-    const base = document.querySelector('script[src*="search.js"], script[src*="app.js"]');
-    const prefix = base ? base.src.replace(/js\/\w+\.js.*$/, '') : '';
 
     // If a single pillar is pre-filtered, load just that chunk
     const filters = readFilters();
-    let url = prefix + 'static/search-index.json';
+    let url = staticBase() + 'search-index.json';
     if (filters.pillar.length === 1) {
-      url = prefix + 'static/search-index.' + filters.pillar[0] + '.json';
+      url = staticBase() + 'search-index.' + filters.pillar[0] + '.json';
     }
 
     return fetch(url)
@@ -510,8 +537,13 @@
     const statsEl = document.getElementById('search-stats');
     if (!container) return;
 
-    if (!query.trim() && !tagFilter) {
-      container.innerHTML = '<p style="color:var(--color-text-muted, #888);text-align:center;margin-top:2rem">Type to search across all content...</p>';
+    const filtersActive = (function() {
+      const f = readFilters();
+      return f.pillar.length || f.type.length || f.difficulty.length || f.bloom.length || f.technology.length;
+    })();
+
+    if (!query.trim() && !tagFilter && !filtersActive) {
+      container.innerHTML = '<p style="color:var(--color-text-muted, #888);text-align:center;margin-top:2rem">Type to search across all content, or pick a filter to browse...</p>';
       if (statsEl) statsEl.textContent = '';
       return;
     }
@@ -546,7 +578,13 @@
           return { entry: e, score: terms.length ? scoreEntry(e, terms) : 1 };
         })
         .filter(function(x) { return x.score > 0; })
-        .sort(function(a, b) { return b.score - a.score; });
+        .sort(function(a, b) {
+          if (terms.length) return b.score - a.score;
+          const sa = a.entry.avg_sqi || 0;
+          const sb = b.entry.avg_sqi || 0;
+          if (sb !== sa) return sb - sa;
+          return String(b.entry.date_str || '').localeCompare(String(a.entry.date_str || ''));
+        });
       currentTerms = terms;
       displayedCount = PAGE_SIZE;
       selectedIndex = -1;
@@ -661,6 +699,22 @@
         syncFiltersToUrl(filters);
         searchIndex = null;
         doSearch();
+      });
+    }
+
+    // Mobile filter toggle
+    const filtersToggle = document.getElementById('search-filters-toggle');
+    const filtersSidebar = document.getElementById('search-filters');
+    if (filtersToggle && filtersSidebar) {
+      if (document.querySelector('.filter-checkbox:checked') !== null) {
+        filtersSidebar.classList.add('search-sidebar-open');
+        filtersToggle.setAttribute('aria-expanded', 'true');
+        filtersToggle.textContent = 'Hide filters';
+      }
+      filtersToggle.addEventListener('click', function() {
+        const open = filtersSidebar.classList.toggle('search-sidebar-open');
+        filtersToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        filtersToggle.textContent = open ? 'Hide filters' : 'Filters';
       });
     }
 
@@ -779,10 +833,10 @@
         const selectedEl = document.querySelector('.search-result[data-idx="' + selectedIndex + '"]');
         if (selectedEl) selectedEl.scrollIntoView({ block: 'nearest' });
       }
-      if (e.key === 'Enter' && selectedIndex >= 0 && selectedIndex < allScored.length) {
+      if (e.key === 'Enter' && allScored.length) {
+        const idx = (selectedIndex >= 0 && selectedIndex < allScored.length) ? selectedIndex : 0;
         e.preventDefault();
-        const entry = allScored[selectedIndex].entry;
-        window.location.href = slugToUrl(entry.slug);
+        window.location.href = slugToUrl(allScored[idx].entry.slug);
       }
     });
   });

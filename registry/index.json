@@ -1,11 +1,11 @@
 {
   "manifest_type": "registry-index",
-  "generated_at": "2026-08-02T20:16:53Z",
+  "generated_at": "2026-08-03T13:32:52Z",
   "counts": {
     "runs": 0,
-    "pages": 2669,
+    "pages": 2677,
     "pillars": {
-      "data-engineering": 86,
+      "data-engineering": 87,
       "stock": 68,
       "aml": 52
     }
@@ -77,6 +77,12 @@
       "content_id": "data/research/ml-pipeline-orchestration-feast-mlflow",
       "pillar": "data-engineering",
       "title": "ML Pipeline Orchestration: From Notebook to Production with Feast and MLflow",
+      "published_at": "2026-06-09T00:00:00Z"
+    },
+    {
+      "content_id": "data/research/delta-lake-iceberg-hudi-comparison",
+      "pillar": "data-engineering",
+      "title": "Delta Lake vs Apache Iceberg vs Apache Hudi: Lakehouse Format Shootout",
       "published_at": "2026-06-09T00:00:00Z"
     },
     {
@@ -1306,6 +1312,11 @@
       "pillar": "data-engineering",
       "title": "ML Pipeline Orchestration: From Notebook to Production with Feast and MLflow"
     },
+    "data/research/delta-lake-iceberg-hudi-comparison": {
+      "content_id": "data/research/delta-lake-iceberg-hudi-comparison",
+      "pillar": "data-engineering",
+      "title": "Delta Lake vs Apache Iceberg vs Apache Hudi: Lakehouse Format Shootout"
+    },
     "data/research/debezium-cdc-change-data-capture": {
       "content_id": "data/research/debezium-cdc-change-data-capture",
       "pillar": "data-engineering",
@@ -2283,5 +2294,5 @@
     }
   },
   "by_run_id": {},
-  "checksum": "cd24ea77b0c5278e3966f8543d43b6686690018e0886691661f7e33222aa3c37"
+  "checksum": "d188475714e11e39fd9c5c3c3252fa8cad6cb72b4a3a229dda7a210226826a14"
 }
