@@ -17,7 +17,7 @@
 
 <!-- The three pillars — the business card body -->
 <section class="home-section">
-  <div class="pillar-grid">
+  <div class="pillar-grid entrance-stagger" data-reveal>
     {%- for pillar_key in pillar_order %}
     {%- set pc = pillar_config.get(pillar_key, {}) %}
     {%- set pillar_url = pc.get('url', pillar_map.get(pillar_key, pillar_key)) %}

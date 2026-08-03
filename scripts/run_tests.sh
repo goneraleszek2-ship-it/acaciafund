@@ -32,7 +32,6 @@ TEST_GROUPS=(
 
     # Schema builder & retention (light dependencies)
     "tests/test_schema_builder.py"
-    "tests/test_retention_engine.py"
 
     # Utility modules
     "tests/test_compositor.py"
@@ -50,7 +49,39 @@ TEST_GROUPS=(
     "tests/test_urls.py"
     "tests/test_build_cache.py"
     "tests/test_check_source_freshness.py"
+    "tests/test_check_entry_freshness.py"
     "tests/test_source_synthesis.py"
+
+    # Bloom, brand, visuals, generate (August 2026 suites)
+    "tests/test_bloom.py"
+    "tests/test_brand.py"
+    "tests/test_visuals.py"
+    "tests/test_generate.py"
+    "tests/test_source_verification.py"
+
+    # Agents & risk
+    "tests/test_agent_tools.py"
+    "tests/test_agents.py"
+    "tests/test_risk_engine.py"
+    "tests/test_llm_client.py"
+
+    # Content & enrichment
+    "tests/test_enrich.py"
+    "tests/test_ingestion.py"
+    "tests/test_score.py"
+    "tests/test_assets.py"
+    "tests/test_sm2.py"
+
+    # Learning paths & philosophy
+    "tests/test_learning_paths.py"
+    "tests/test_philosophy_integration.py"
+    "tests/test_alpha_index.py"
+    "tests/test_redirects.py"
+
+    # Smoke & generate pipelines
+    "tests/test_smoke.py"
+    "tests/test_build_smoke.py"
+    "tests/test_generate_learn_modules.py"
 
     # Legacy/slow tests (run individually)
     "tests/test_build_taxonomies.py"
@@ -59,6 +90,13 @@ TEST_GROUPS=(
 SLOW_GROUPS=(
     "tests/test_learn_generation.py"
     "tests/test_retention_engine.py"
+)
+
+JS_TESTS=(
+    "tests/test_progressive_disclosure.js"
+    "tests/test_toc.js"
+    "tests/test_adaptive_ui.js"
+    "tests/test_search_discovery.js"
 )
 
 echo "=========================================
@@ -119,16 +157,30 @@ fi
 
 # JS tests
 echo ""
-echo "--- Progressive Disclosure JS ---"
-if command -v node &>/dev/null && [ -f "tests/test_progressive_disclosure.js" ]; then
-    if timeout 30 node tests/test_progressive_disclosure.js; then
-        echo -e "${GREEN}JS tests passed${NC}"
-    else
-        echo -e "${RED}JS tests failed${NC}"
-        exit 1
-    fi
+echo "--- JS Tests ---"
+if command -v node &>/dev/null; then
+    for js_test in "${JS_TESTS[@]}"; do
+        echo -ne "  ${js_test}... "
+        if [ -f "$js_test" ] && timeout 30 node "$js_test"; then
+            echo -e "${GREEN}PASS${NC}"
+            PASS=$((PASS + 1))
+        else
+            echo -e "${RED}FAIL${NC}"
+            FAIL=$((FAIL + 1))
+            FAILED_TESTS="$FAILED_TESTS $js_test"
+        fi
+    done
 else
-    echo -e "${YELLOW}JS tests skipped (node not found or no test file)${NC}"
+    echo -e "${YELLOW}JS tests skipped (node not found)${NC}"
+fi
+
+if [ -n "$FAILED_TESTS" ]; then
+    echo ""
+    echo "Failed tests:"
+    for f in $FAILED_TESTS; do
+        echo "  - $f"
+    done
+    exit 1
 fi
 
 echo ""

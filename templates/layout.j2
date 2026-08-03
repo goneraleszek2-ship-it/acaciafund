@@ -17,7 +17,7 @@
     </script>
 {% endif %}
 
-    <script>!function(){var t,d=document.documentElement;try{t=localStorage.getItem('acacia_theme')}catch(e){}if(t){d.classList.add(t);d.setAttribute('data-theme',t)}else if(window.matchMedia('(prefers-color-scheme:dark)').matches){d.classList.add('dark');d.setAttribute('data-theme','dark')}}();</script>
+    <script>!function(){var t,d=document.documentElement;try{d.classList.add('js')}catch(e){}try{t=localStorage.getItem('acacia_theme')}catch(e){}if(t){d.classList.add(t);d.setAttribute('data-theme',t)}else if(window.matchMedia('(prefers-color-scheme:dark)').matches){d.classList.add('dark');d.setAttribute('data-theme','dark')}}();</script>
     <style>
         .logo { font-size: 1.25rem; font-weight: 700; text-decoration: none; letter-spacing: -0.02em; font-family: var(--font-display); }
         .logo .logo-mark { color: var(--color-accent); }
@@ -93,6 +93,26 @@
             <button type="button" class="density-btn" data-density="compact">Compact</button>
             <button type="button" class="density-btn active" data-density="standard">Standard</button>
             <button type="button" class="density-btn" data-density="comfortable">Comfortable</button>
+          </div>
+        </div>
+        <div class="settings-section">
+          <h4 class="settings-heading">Presentation</h4>
+          <p class="settings-hint">Preferred way to absorb content.</p>
+          <div class="settings-density" id="modality-options">
+            <button type="button" class="density-btn" data-modality="visual">Visual</button>
+            <button type="button" class="density-btn active" data-modality="balanced">Balanced</button>
+            <button type="button" class="density-btn" data-modality="verbal">Verbal</button>
+          </div>
+        </div>
+        <div class="settings-section">
+          <h4 class="settings-heading">Learning Profile</h4>
+          <div class="settings-row settings-row-between">
+            <span>Difficulty</span>
+            <button type="button" id="calibrate-btn" class="settings-mini-btn">Calibrate</button>
+          </div>
+          <div class="settings-row settings-row-between">
+            <span>Interests</span>
+            <button type="button" id="interests-btn" class="settings-mini-btn">Choose</button>
           </div>
         </div>
       </div>

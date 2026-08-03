@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# pyright: reportPrivateImportUsage=false
 """Zero-copy vectorized analytics server using Apache Arrow Flight protocol.
 
 Implements a gRPC-based Arrow Flight server that streams columnar record

@@ -235,6 +235,12 @@
     {%- endif %}
   </section>
 
+  {# --- Concept next-actions (Phase 5) --- #}
+  <section>
+    <h3 class="text-sm font-semibold mb-3 text-default">Next actions</h3>
+    <div data-concept-actions data-concept-id="{{ concept.id }}" data-concept-label="{{ concept.label }}" data-concept-pillar="{{ concept.pillar | default('aml') }}"></div>
+  </section>
+
   <div class="flex items-center gap-2" data-feedback="{{ concept.id }}">
     <span class="text-xs text-muted">Was this helpful?</span>
     <button class="feedback-btn" data-value="yes">

@@ -1,8 +1,8 @@
 # Testing Overview
 
-AcaciaFund has **855 tests** — **847 Python tests across 37 modules** plus **8 JS tests** — covering core modules, the cognitive architecture (schema builder, retention, adaptive), research provenance, build output, redirects, and taxonomy generation.
+AcaciaFund has **1036 tests** — **1028 Python tests across 43 modules** plus **8 JS tests** — covering core modules, the cognitive architecture (schema builder, retention, adaptive), research provenance, build output, redirects, taxonomy generation, and new test suites for bloom, brand, visuals, generate, and source verification.
 
-> **Note:** Counts verified 2026-07-30 via `python3 -m pytest tests/ --co` (847 collected) + `node tests/test_progressive_disclosure.js` (8).
+> **Note:** Counts verified 2026-08-03 via `python3 -m pytest tests/ --co` (1028 collected across 43 modules) + `node tests/test_progressive_disclosure.js` (8). Full suite runs in ~28s.
 
 ## Test Files
 
@@ -61,12 +61,24 @@ AcaciaFund has **855 tests** — **847 Python tests across 37 modules** plus **8
 |------|-------|--------|
 | `tests/test_build_taxonomies.py` | 51 | Taxonomy generation (admin, search, tag, pillar, feed) |
 | `tests/test_check_source_freshness.py` | 8 | Source freshness staleness computation |
+| `tests/test_check_entry_freshness.py` | 11 | Entry freshness validation (registry, review, verified dates) |
 | `tests/test_source_synthesis.py` | 19 | Tag extraction, synthesis description, key insights |
 | `tests/test_agent_tools.py` | 16 | Agent tool definitions |
 | `tests/test_agents.py` | 22 | Agent pipeline |
 | `tests/test_risk_engine.py` | 16 | Risk engine callbacks |
 | `tests/test_llm_client.py` | 11 | LLM client abstraction |
 | `tests/test_enrich.py` | 45 | Content enrichment |
+
+### New Test Suites (August 2026)
+
+| File | Tests | Covers |
+|------|-------|--------|
+| `tests/test_bloom.py` | 36 | Bloom taxonomy classification (6 levels), keyword matching, points thresholds, bigram extraction |
+| `tests/test_brand.py` | 46 | Brand tokens, logo/domain/micro/section icons, patterns, sparklines |
+| `tests/test_visuals.py` | 29 | Topic icon registry, subtopic picking, topic words, color helpers, thumbnail/OG SVG |
+| `tests/test_generate.py` | 14 | Deep analysis, cross-pillar, classification confidence, trending sections |
+| `tests/test_source_verification.py` | 38 | Source classification, verification, scoring, domain extraction, article-level analysis |
+| `tests/test_check_entry_freshness.py` | 11 | Entry freshness validation (registry, review, verified dates) |
 
 ### JavaScript
 
@@ -122,6 +134,42 @@ Used in `test_build_taxonomies.py`:
 ```python
 from unittest.mock import MagicMock
 mock_render = MagicMock(return_value="<html>Rendered</html>")
+```
+
+### Testing Bloom Classification
+
+In `test_bloom.py`:
+
+```python
+from core.bloom import classify_bloom_level, BLOOM_LEVELS
+
+def test_classify_bloom_level_all_levels():
+    for level in BLOOM_LEVELS:
+        result = classify_bloom_level(level)
+        assert result == level
+```
+
+### Testing Brand Tokens
+
+In `test_brand.py`:
+
+```python
+from core.brand import resolve_brand_token
+
+def test_resolve_brand_token_logo():
+    assert resolve_brand_token("logo", "aml") == "shield-check"
+```
+
+### Testing Visuals
+
+In `test_visuals.py`:
+
+```python
+from core.visuals import resolve_topic_icon
+
+def test_resolve_topic_icon_subtopic_priority():
+    result = resolve_topic_icon("aml", "kyc")
+    assert result == "shield"  # brand subtopic icon takes priority
 ```
 
 ### Temporary Directories

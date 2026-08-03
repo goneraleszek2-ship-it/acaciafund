@@ -122,7 +122,7 @@ This codebase has been built in sequential sprints. Understanding what came befo
 | Foundation fixes | Concept extraction word-boundary fix, alias expansion, full category remapping, knowledge-to-pillar mapping, description backfill |
 | Quality fixes | SQI backfill script, search recall improvement (threshold 0.35, body window 800), niche concept alias expansion |
 
-**Current state:** 195 registry items, 2,505 generated pages, 3 clean pillars, 192 ontology concepts (all with philosophical metadata), 32 inspiration sources. Quality gate: passing. 855 tests passing (847 Python + 8 JS). Metrics verified 2026-07-30 — see `SYSTEM_ARCHITECTURE.md` for the canonical reference.
+**Current state:** 195 registry items, 2,505 generated pages, 3 clean pillars, 192 ontology concepts (all with philosophical metadata), 32 inspiration sources. Quality gate: passing. 1036 tests passing (1028 Python across 43 modules + 8 JS). Metrics verified 2026-08-03 — see `docs/08-testing-quality/test-overview.md` for the canonical reference.
 
 ## Cognitive Architecture (Phase 4)
 
@@ -825,7 +825,7 @@ Contributors who completed Phase 1 (Schema Builder & Dual Coding):
 - **opencode (big-pickle)** — adaptive information density controls (compact/standard/comfortable modes with localStorage persistence, density-aware CSS tokens)
 - **opencode (big-pickle)** — reading flow assistance (focus mode, guided reading line, settings panel with toggle controls)
 - **opencode (big-pickle)** — pre-existing test fixes (SM-2 ease factor mapping in retention_engine.py, aisuite ImportError handling in llm_client.py, ontology data consistency fixes)
-- **opencode (big-pickle)** — productionization (run_tests.sh test runner, AGENTS.md updates, all 855 tests green, git + push)
+- **opencode (big-pickle)** — productionization (run_tests.sh test runner, AGENTS.md updates, docs/metrics sync, all 1036 tests green, pyright config fix, git + push)
 - **opencode (big-pickle)** — article outline / sticky table of contents (auto-generated from h2/h3, nested ToC with scroll-spy, desktop sidebar layout, mobile inline card)
 - **opencode (big-pickle)** — keyboard shortcuts (press ? for cheat sheet overlay, s/t/n/p/f/g for navigation and theme)
 - **opencode (big-pickle)** — search autocomplete with concept suggestions (ontology concepts and tags shown as selectable filter suggestions alongside search history)

@@ -1,7 +1,7 @@
 """Bundle JS files into optimized entry points.
 
 Entry points:
-  app.js       → main.js + search.js + progressive_disclosure.js (always loaded)
+  app.js       → main.js + reading.js + toc.js + shortcuts.js + motion.js + adaptive.js + search.js + progressive_disclosure.js + review_badge.js (always loaded)
   learning.js  → learning_hub.js + pretest_gate.js + feynman_synthesis.js (learn pages)
   retention.js → retention_engine.js (review pages)
 
@@ -18,6 +18,11 @@ STATIC_JS = Path(__file__).resolve().parent.parent / "static" / "js"
 BUNDLES = {
     "app.js": [
         "main.js",
+        "reading.js",
+        "toc.js",
+        "shortcuts.js",
+        "motion.js",
+        "adaptive.js",
         "search.js",
         "progressive_disclosure.js",
         "review_badge.js",

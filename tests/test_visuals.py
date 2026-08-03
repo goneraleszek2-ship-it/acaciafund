@@ -128,8 +128,11 @@ class TestGenerateThumbnail:
         assert _SVG_TAG.search(svg)
 
     def test_deterministic(self):
-        kwargs = dict(title="Same title for thumb", pillar="aml", scores={"sqi": 0.5})
-        assert generate_thumbnail_svg(**kwargs) == generate_thumbnail_svg(**kwargs)
+        assert generate_thumbnail_svg(
+            title="Same title for thumb", pillar="aml", scores={"sqi": 0.5}
+        ) == generate_thumbnail_svg(
+            title="Same title for thumb", pillar="aml", scores={"sqi": 0.5}
+        )
 
     def test_sqi_bar_present(self):
         svg = generate_thumbnail_svg("Title", "stock", {"sqi": 0.6})
@@ -154,5 +157,8 @@ class TestGenerateOgImage:
         assert title in svg
 
     def test_deterministic(self):
-        kwargs = dict(title="Same og title", pillar="aml", scores={"sqi": 0.5}, date_str="2026-01-01")
-        assert generate_og_image(**kwargs) == generate_og_image(**kwargs)
+        assert generate_og_image(
+            title="Same og title", pillar="aml", scores={"sqi": 0.5}, date_str="2026-01-01"
+        ) == generate_og_image(
+            title="Same og title", pillar="aml", scores={"sqi": 0.5}, date_str="2026-01-01"
+        )

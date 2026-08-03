@@ -4,6 +4,7 @@ Uses contract-testing approach: test function promises, not implementation.
 """
 
 from datetime import datetime, timedelta, timezone
+from email.message import Message
 from unittest.mock import patch
 
 from scripts.check_source_freshness import (
@@ -82,7 +83,7 @@ class TestRequestWithRetry:
     def test_non_transient_http_error_no_retry(self):
         from urllib.error import HTTPError
 
-        err = HTTPError("http://x", 403, "Forbidden", {}, None)
+        err = HTTPError("http://x", 403, "Forbidden", Message(), None)
         with patch("scripts.check_source_freshness._request", return_value=(None, err)) as mock:
             resp, returned_err = _request_with_retry("http://x", "GET", 10)
         assert resp is None
@@ -102,7 +103,7 @@ class TestRequestWithRetry:
     def test_transient_http_status_retries(self):
         from urllib.error import HTTPError
 
-        err = HTTPError("http://x", 429, "Too Many Requests", {}, None)
+        err = HTTPError("http://x", 429, "Too Many Requests", Message(), None)
         with patch("scripts.check_source_freshness._request", return_value=(None, err)) as mock, patch(
             "scripts.check_source_freshness.time.sleep"
         ):

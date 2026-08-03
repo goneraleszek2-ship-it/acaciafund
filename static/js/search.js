@@ -52,18 +52,26 @@
     if (a === b) return 0;
     if (!a.length) return b.length;
     if (!b.length) return a.length;
-    const prev = new Array(b.length + 1);
+    const prev2 = new Array(b.length + 1).fill(0);
+    const prev = new Array(b.length + 1).fill(0);
+    const cur = new Array(b.length + 1).fill(0);
     for (let j = 0; j <= b.length; j++) prev[j] = j;
     for (let i = 1; i <= a.length; i++) {
-      const cur = [i];
+      cur[0] = i;
       for (let j = 1; j <= b.length; j++) {
         cur[j] = Math.min(
           prev[j] + 1,
           cur[j - 1] + 1,
           prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1)
         );
+        if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) {
+          cur[j] = Math.min(cur[j], prev2[j - 2] + 1);
+        }
       }
-      for (let j = 0; j <= b.length; j++) prev[j] = cur[j];
+      for (let j = 0; j <= b.length; j++) {
+        prev2[j] = prev[j];
+        prev[j] = cur[j];
+      }
     }
     return prev[b.length];
   }
@@ -83,6 +91,64 @@
       }
     }
     return false;
+  }
+
+  /* ── "Did you mean?" spelling correction (pure) ── */
+
+  function buildVocabulary(index, concepts) {
+    const set = {};
+    const add = function(text) {
+      if (!text) return;
+      String(text).toLowerCase().split(/[^a-z0-9+.-]+/).forEach(function(w) {
+        if (w.length > 3) set[w] = true;
+      });
+    };
+    (index || []).forEach(function(e) {
+      add(e.title);
+      (e.tags || []).forEach(add);
+      (e.ontology_concepts || []).forEach(add);
+      (e.technologies || []).forEach(add);
+      (e.use_cases || []).forEach(add);
+    });
+    (concepts || []).forEach(function(c) {
+      add(c.label);
+      (c.aliases || []).forEach(add);
+    });
+    return Object.keys(set);
+  }
+
+  // Returns the closest vocabulary word within `maxEdits`, or null for an exact match / no candidate.
+  function bestCorrection(token, vocab, maxEdits) {
+    if (token.length < 3) return null;
+    const limit = token.length >= 6 ? (maxEdits || 2) : Math.min(1, maxEdits || 1);
+    let best = null;
+    let bestDist = Infinity;
+    for (let i = 0; i < vocab.length; i++) {
+      const w = vocab[i];
+      const dist = levenshtein(w, token);
+      if (dist === 0) return null;
+      if (dist > limit) continue;
+      if (dist < bestDist) { bestDist = dist; best = w; }
+    }
+    return best;
+  }
+
+  // Returns a corrected query string when most tokens have close vocabulary matches, else null.
+  function didYouMean(query, vocab, maxEdits) {
+    if (!query || !vocab || !vocab.length) return null;
+    const tokens = tokenize(query);
+    if (!tokens.length) return null;
+    const corrected = [];
+    let changed = 0;
+    for (const t of tokens) {
+      const w = bestCorrection(t, vocab, maxEdits);
+      if (w) { corrected.push(w); changed++; }
+      else corrected.push(t);
+    }
+    if (!changed) return null;
+    if (changed * 2 <= tokens.length) return null;
+    const out = corrected.join(' ');
+    return out.toLowerCase() === query.toLowerCase() ? null : out;
   }
 
   function scoreEntry(entry, terms) {
@@ -186,11 +252,23 @@
         conceptIndex = (data.concepts || []).map(c => ({
           label: c.label || c.conceptSlug || '',
           slug: c.conceptSlug || (c.id || '').replace(/^concept:/, ''),
-          aliases: (c.aliases || []).filter(a => typeof a === 'string' && a.length > 1)
+          aliases: (c.aliases || []).filter(a => typeof a === 'string' && a.length > 1),
+          pillar: c.pillar || '',
+          category: c.category || ''
         }));
         return conceptIndex;
       })
       .catch(() => { conceptIndex = []; return conceptIndex; });
+  }
+
+  function getInterests() {
+    try { return JSON.parse(localStorage.getItem('acacia_interests')) || []; } catch { return []; }
+  }
+
+  let vocabCache = null;
+  function getVocabulary(index) {
+    if (!vocabCache) vocabCache = buildVocabulary(index, conceptIndex || []);
+    return vocabCache;
   }
 
   function getHistory() {
@@ -224,26 +302,47 @@
       : history;
 
     const concepts = conceptIndex || [];
-    const matchingConcepts = needle
-      ? concepts.filter(c =>
-          c.label.toLowerCase().includes(needle) ||
-          c.aliases.some(a => a.toLowerCase().includes(needle)) ||
-          needleTerms.every(t => c.label.toLowerCase().includes(t)))
-      : [];
+
+    let conceptHtml = '';
+    if (needle) {
+      const matchingConcepts = concepts.filter(c =>
+        c.label.toLowerCase().includes(needle) ||
+        c.aliases.some(a => a.toLowerCase().includes(needle)) ||
+        needleTerms.every(t => c.label.toLowerCase().includes(t)));
+      conceptHtml = matchingConcepts.slice(0, 6).map(c =>
+        '<a class="suggestion-item" role="option" href="/concepts/' + encodeURIComponent(c.slug) + '/" data-kind="concept" style="display:flex;align-items:center;gap:0.5rem;padding:0.5rem 0.75rem;cursor:pointer;font-size:0.9rem;border-bottom:1px solid var(--color-border, #333);text-decoration:none;color:inherit">' +
+        '<span style="font-size:0.75rem;opacity:0.6">&#128214;</span>' +
+        '<span style="color:var(--color-accent, #818cf8);font-weight:600">' + highlightTerms(escapeHtml(c.label), needleTerms) + '</span>' +
+        '<span style="font-size:0.7rem;opacity:0.6;margin-left:auto">Concept</span>' +
+        '</a>'
+      ).join('');
+    } else {
+      // Exploration prompts: prefer the user's interest categories, fall back to top concepts.
+      const interests = getInterests();
+      const pick = interests.length
+        ? concepts.filter(c => interests.some(i => i.pillar === c.pillar && i.category === c.category))
+        : concepts;
+      const seen = {};
+      const chips = [];
+      pick.forEach(function(c) {
+        if (seen[c.label]) return;
+        seen[c.label] = true;
+        chips.push(c);
+      });
+      conceptHtml = chips.slice(0, 5).map(c =>
+        '<a class="suggestion-item" role="option" href="/concepts/' + encodeURIComponent(c.slug) + '/" data-kind="concept" style="display:flex;align-items:center;gap:0.5rem;padding:0.5rem 0.75rem;cursor:pointer;font-size:0.9rem;border-bottom:1px solid var(--color-border, #333);text-decoration:none;color:inherit">' +
+        '<span style="font-size:0.75rem;opacity:0.6">&#128214;</span>' +
+        '<span style="color:var(--color-accent, #818cf8);font-weight:600">' + escapeHtml(c.label) + '</span>' +
+        '<span style="font-size:0.7rem;opacity:0.6;margin-left:auto">' + (interests.length ? 'For you' : 'Explore') + '</span>' +
+        '</a>'
+      ).join('');
+    }
 
     const historyHtml = matchingHistory.slice(0, 4).map((h, i) =>
       '<div class="suggestion-item" role="option" data-suggestion="' + escapeHtml(h) + '" data-idx="' + i + '" data-kind="history" style="padding:0.5rem 0.75rem;cursor:pointer;font-size:0.9rem;border-bottom:1px solid var(--color-border, #333);display:flex;align-items:center;gap:0.5rem">' +
       '<span style="font-size:0.75rem;opacity:0.6">&#128337;</span>' +
       highlightTerms(escapeHtml(h), needle ? needleTerms : []) +
       '</div>'
-    ).join('');
-
-    const conceptHtml = matchingConcepts.slice(0, 6).map(c =>
-      '<a class="suggestion-item" role="option" href="/concepts/' + encodeURIComponent(c.slug) + '/" data-kind="concept" style="display:flex;align-items:center;gap:0.5rem;padding:0.5rem 0.75rem;cursor:pointer;font-size:0.9rem;border-bottom:1px solid var(--color-border, #333);text-decoration:none;color:inherit">' +
-      '<span style="font-size:0.75rem;opacity:0.6">&#128214;</span>' +
-      '<span style="color:var(--color-accent, #818cf8);font-weight:600">' + highlightTerms(escapeHtml(c.label), needleTerms) + '</span>' +
-      '<span style="font-size:0.7rem;opacity:0.6;margin-left:auto">Concept</span>' +
-      '</a>'
     ).join('');
 
     if (!needle && !matchingHistory.length && !conceptHtml) {
@@ -271,6 +370,7 @@
   let displayedCount = 0;
   let currentTerms = [];
   let selectedIndex = -1;
+  let suggestionIndex = -1;
 
   function populateTechFilters(index) {
     var container = document.getElementById('tech-filter-list');
@@ -463,8 +563,15 @@
       }
 
       if (!allScored.length) {
+        var suggestion = null;
+        if (query.trim()) suggestion = didYouMean(query, getVocabulary(index), 2);
         var msg = tagFilter ? 'No results tagged "' + escapeHtml(tagFilter) + '"' : 'No results for "' + escapeHtml(query) + '"';
-        container.innerHTML = '<div style="text-align:center;margin-top:2rem"><p style="color:var(--color-text-muted, #888)">' + msg + '</p><p style="font-size:0.8rem;color:var(--color-text-muted, #888);margin-top:0.5rem">Try different keywords or browse by pillar:</p><div style="display:flex;gap:0.5rem;justify-content:center;margin-top:0.75rem"><a href="/compliance/" class="inline-block px-3 py-1.5 text-xs font-semibold rounded-lg" style="background:var(--color-surface,#f0f0f0);color:var(--color-text,#333)">Compliance</a><a href="/markets/" class="inline-block px-3 py-1.5 text-xs font-semibold rounded-lg" style="background:var(--color-surface,#f0f0f0);color:var(--color-text,#333)">Markets</a><a href="/data/" class="inline-block px-3 py-1.5 text-xs font-semibold rounded-lg" style="background:var(--color-surface,#f0f0f0);color:var(--color-text,#333)">Data</a></div></div>';
+        var html = '<div style="text-align:center;margin-top:2rem"><p style="color:var(--color-text-muted, #888)">' + msg + '</p>';
+        if (suggestion) {
+          html += '<p style="font-size:0.9rem;margin-top:0.5rem;color:var(--color-text, #e8e6e3)">Did you mean: <a href="#" data-didyoumean="' + escapeHtml(suggestion) + '" style="color:var(--color-accent, #818cf8);font-weight:600;text-decoration:underline">' + escapeHtml(suggestion) + '</a>?</p>';
+        }
+        html += '<p style="font-size:0.8rem;color:var(--color-text-muted, #888);margin-top:0.5rem">Try different keywords or browse by pillar:</p><div style="display:flex;gap:0.5rem;justify-content:center;margin-top:0.75rem"><a href="/compliance/" class="inline-block px-3 py-1.5 text-xs font-semibold rounded-lg" style="background:var(--color-surface,#f0f0f0);color:var(--color-text,#333)">Compliance</a><a href="/markets/" class="inline-block px-3 py-1.5 text-xs font-semibold rounded-lg" style="background:var(--color-surface,#f0f0f0);color:var(--color-text,#333)">Markets</a><a href="/data/" class="inline-block px-3 py-1.5 text-xs font-semibold rounded-lg" style="background:var(--color-surface,#f0f0f0);color:var(--color-text,#333)">Data</a></div></div>';
+        container.innerHTML = html;
         return;
       }
 
@@ -481,7 +588,16 @@
     runSearch(input.value, params.get('f_tags') || '');
   }
 
-  document.addEventListener('DOMContentLoaded', function() {
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+      didYouMean: didYouMean,
+      bestCorrection: bestCorrection,
+      buildVocabulary: buildVocabulary,
+    };
+  }
+
+  if (typeof document !== 'undefined') {
+    document.addEventListener('DOMContentLoaded', function() {
     const input = document.getElementById('search-input');
     if (!input) return;
 
@@ -570,8 +686,20 @@
       }, 200);
     });
 
-    // Click delegation for result clicks (Plausible tracking)
+    // Click delegation for result clicks (Plausible tracking) + "Did you mean?" correction
     document.getElementById('search-results').addEventListener('click', function(e) {
+      const dym = e.target.closest('[data-didyoumean]');
+      if (dym) {
+        e.preventDefault();
+        const corrected = dym.getAttribute('data-didyoumean');
+        input.value = corrected;
+        setSuggestionsOpen(document.getElementById('search-suggestions'), false);
+        const url = new URL(window.location);
+        url.searchParams.set('q', corrected);
+        history.replaceState(null, '', url);
+        runSearch(corrected);
+        return;
+      }
       const result = e.target.closest('.search-result');
       if (result) {
         const slug = result.getAttribute('data-slug');
@@ -588,6 +716,7 @@
         if (suggestion) {
           input.value = suggestion;
           setSuggestionsOpen(this, false);
+          suggestionIndex = -1;
           const url = new URL(window.location);
           url.searchParams.set('q', suggestion);
           history.replaceState(null, '', url);
@@ -606,7 +735,33 @@
         input.value = '';
         input.blur();
         selectedIndex = -1;
+        suggestionIndex = -1;
+        setSuggestionsOpen(document.getElementById('search-suggestions'), false);
         runSearch('');
+        return;
+      }
+      const suggestionsEl = document.getElementById('search-suggestions');
+      const suggestionsOpen = suggestionsEl && suggestionsEl.style.display === 'block';
+      const sugItems = suggestionsOpen ? suggestionsEl.querySelectorAll('.suggestion-item') : [];
+      if (suggestionsOpen && (e.key === 'ArrowDown' || e.key === 'ArrowUp')) {
+        if (!sugItems.length) return;
+        e.preventDefault();
+        const dir = e.key === 'ArrowDown' ? 1 : -1;
+        suggestionIndex = (suggestionIndex + dir + sugItems.length) % sugItems.length;
+        sugItems.forEach(function(el, i) { el.classList.toggle('suggestion-active', i === suggestionIndex); });
+        sugItems[suggestionIndex].scrollIntoView({ block: 'nearest' });
+        return;
+      }
+      if (suggestionsOpen && e.key === 'Enter') {
+        e.preventDefault();
+        const target = sugItems.length ? (sugItems[suggestionIndex] || sugItems[0]) : null;
+        if (target) target.click();
+        return;
+      }
+      if (suggestionsOpen && e.key === 'Escape') {
+        setSuggestionsOpen(suggestionsEl, false);
+        suggestionIndex = -1;
+        e.preventDefault();
         return;
       }
       if (e.key === 'Escape' && selectedIndex >= 0) {
@@ -631,4 +786,5 @@
       }
     });
   });
+  }
 })();

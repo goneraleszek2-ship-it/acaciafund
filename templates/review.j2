@@ -21,7 +21,7 @@
 </div>
 
 <div id="review-flashcard-section">
-  <div class="grid gap-6 sm:grid-cols-3 mb-8">
+  <div class="grid gap-6 sm:grid-cols-3 mb-8 entrance-stagger" data-reveal>
   <div class="ghost-card p-6 text-center">
     <div id="stat-due" class="text-4xl font-bold text-accent">0</div>
     <div class="text-xs font-meta mt-1 text-muted">Cards Due</div>
@@ -74,6 +74,14 @@
   <h2 class="text-xl font-extrabold mb-2 text-default">Concept Mastery</h2>
   <p class="text-sm mb-6 text-muted">Track retention of all 70+ ontology concepts across pillars. Includes gap detection and interleaved practice.</p>
   <div id="concept-mastery-dashboard"></div>
+</section>
+</div>
+
+<div id="review-path-section">
+<section>
+  <h2 class="text-xl font-extrabold mb-2 text-default">My Learning Path</h2>
+  <p class="text-sm mb-6 text-muted">Concepts you have saved from concept pages, with review status from your mastery data.</p>
+  <div id="my-path-list"></div>
 </section>
 </div>
 
@@ -236,14 +244,15 @@ document.querySelectorAll('.review-tab').forEach(function(tab) {
     var flashcardSec = document.getElementById('review-flashcard-section');
     var conceptSec = document.getElementById('review-concept-section');
     var feynmanSec = document.getElementById('review-feynman-section');
+    var pathSec = document.getElementById('review-path-section');
     if (mode === 'all') {
-      flashcardSec.style.display = ''; conceptSec.style.display = ''; feynmanSec.style.display = '';
+      flashcardSec.style.display = ''; conceptSec.style.display = ''; feynmanSec.style.display = ''; pathSec.style.display = '';
     } else if (mode === 'flashcards') {
-      flashcardSec.style.display = ''; conceptSec.style.display = 'none'; feynmanSec.style.display = 'none';
+      flashcardSec.style.display = ''; conceptSec.style.display = 'none'; feynmanSec.style.display = 'none'; pathSec.style.display = 'none';
     } else if (mode === 'concepts') {
-      flashcardSec.style.display = 'none'; conceptSec.style.display = ''; feynmanSec.style.display = 'none';
+      flashcardSec.style.display = 'none'; conceptSec.style.display = ''; feynmanSec.style.display = 'none'; pathSec.style.display = '';
     } else if (mode === 'feynman') {
-      flashcardSec.style.display = 'none'; conceptSec.style.display = 'none'; feynmanSec.style.display = '';
+      flashcardSec.style.display = 'none'; conceptSec.style.display = 'none'; feynmanSec.style.display = ''; pathSec.style.display = 'none';
     }
   });
 });
