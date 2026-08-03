@@ -147,10 +147,10 @@ The central class for managing the ontology:
 | Total concepts | 192 (58 compliance, 64 markets, 70 data) |
 | Total relations | 434 |
 | Relation types | 10 (`part_of`, `enables`, `requires`, `influences`, `detects`, `regulates`, `supersedes`, `measures`, `implements`, `related_to`) |
-| Concepts with `epistemic_status` | 192 |
-| Concepts with `cross_pillar_analogs` | 192 |
+| Concepts with `epistemic_status` | 199 |
+| Concepts with `cross_pillar_analogs` | 199 |
 
-> **Note:** Counts verified 2026-07-30 from `data/ontology.json`. The earlier documentation value of 48 concepts / 5 relation types reflects the initial seed and is obsolete.
+> **Note:** Counts verified 2026-08-03 from `data/ontology.json`. The earlier documentation value of 48 concepts / 5 relation types reflects the initial seed and is obsolete.
 
 ## Philosophical Foundations (Phase 2B)
 
@@ -158,7 +158,7 @@ Every concept carries 10 philosophical metadata fields (see Concept table). Thes
 
 ## Retention Integration (Phase 3)
 
-`core/retention_engine.py` schedules all 192 concepts through SM-2 review with gap detection and interleaved practice. Concept review data is exported to `dist/static/review_concepts.json` at build time for the client-side engine (`static/js/retention_engine.js`).
+`core/retention_engine.py` schedules all 199 concepts through SM-2 review with gap detection and interleaved practice. Concept review data is exported to `dist/static/review_concepts.json` at build time for the client-side engine (`static/js/retention_engine.js`).
 
 ## Persistence
 

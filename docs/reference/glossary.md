@@ -33,7 +33,7 @@ Domain-specific terminology used throughout the AcaciaFund codebase and document
 |------|------------|
 | **Knowledge Category** | One of 13 cross-pillar categories: platform, guide, reference, architecture, foundations, advanced-techniques, best-practices, regulations, industry-analysis, market-analysis, strategies, methodology, tutorial-code. Mapped to pillar subcategories. |
 | **Learn Module** | Interactive educational content with Bloom questions and flashcards. 83 total. |
-| **Ontology** | Structured knowledge representation: concepts + relations + external resources. 192 concepts, 434 relations. |
+| **Ontology** | Structured knowledge representation: concepts + relations + external resources. 199 concepts, 449 relations. |
 | **OntologyManager** | Central class for managing the ontology: add/query/seed/extract/export/persist. |
 
 ## P–S

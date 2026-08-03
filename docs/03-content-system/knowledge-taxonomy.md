@@ -49,7 +49,7 @@ KNOWLEDGE_TO_PILLAR_CATEGORY = {
 
 13 cross-pillar knowledge categories (defined in `build.py:KNOWLEDGE_CATEGORIES`). Categories with at least one item generate populated landing pages; categories without items generate placeholder landing pages so all `/knowledge/{cat}/` URLs resolve.
 
-**Current state:** All 13 categories resolve to landing pages (5 populated, 8 placeholder as of 2026-07-30).
+**Current state:** All 13 categories resolve to landing pages (6 populated — platform 4, reference 6, foundations 9, guide 3, architecture 3, regulations 1 — and 7 placeholder as of 2026-08-03). Placeholder: advanced-techniques, best-practices, industry-analysis, market-analysis, strategies, methodology, tutorial-code. (Counts verified from `dist/knowledge/*/index.html` item cards.)
 
 ## Pillar Subcategories Reference
 

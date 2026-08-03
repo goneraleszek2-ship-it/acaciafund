@@ -63,7 +63,7 @@ graph LR
 
 ### 2. Registry (`registry.json`)
 
-Central JSON file (195 items — 96 research, 83 learn, 16 knowledge) validated against `schemas.py:RegistryData`. Each item has:
+Central JSON file (207 items — 98 research, 83 learn, 26 knowledge) validated against `schemas.py:RegistryData`. Each item has:
 - Slug (internal key format)
 - Content metadata (title, description, author, date)
 - Body HTML

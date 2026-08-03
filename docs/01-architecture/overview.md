@@ -34,7 +34,7 @@ graph TD
     end
 
     subgraph "Output (dist/)"
-        HTML["HTML pages (2,505)"]
+        HTML["HTML pages (2,677)"]
         STATIC["static/ assets"]
         FEED["feed.xml"]
         GRAPHDATA["graph-data.json"]

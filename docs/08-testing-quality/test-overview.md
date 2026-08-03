@@ -1,8 +1,8 @@
 # Testing Overview
 
-AcaciaFund has **1036 tests** — **1028 Python tests across 43 modules** plus **8 JS tests** — covering core modules, the cognitive architecture (schema builder, retention, adaptive), research provenance, build output, redirects, taxonomy generation, and new test suites for bloom, brand, visuals, generate, and source verification.
+AcaciaFund has **1036 tests** — **1028 Python tests across 43 modules** plus **62 JS tests across 4 files** — covering core modules, the cognitive architecture (schema builder, retention, adaptive), research provenance, build output, redirects, taxonomy generation, and new test suites for bloom, brand, visuals, generate, and source verification.
 
-> **Note:** Counts verified 2026-08-03 via `python3 -m pytest tests/ --co` (1028 collected across 43 modules) + `node tests/test_progressive_disclosure.js` (8). Full suite runs in ~28s.
+> **Note:** Counts verified 2026-08-03 via `python3 -m pytest tests/ --co` (1028 collected across 43 modules) + 4 JS suites (62 tests). Full suite runs in ~28s.
 
 ## Test Files
 
@@ -85,6 +85,9 @@ AcaciaFund has **1036 tests** — **1028 Python tests across 43 modules** plus *
 | File | Tests | Covers |
 |------|-------|--------|
 | `tests/test_progressive_disclosure.js` | 8 | `parseSections`, `toggleSection` pure functions |
+| `tests/test_toc.js` | 12 | `createItems`, `linkClass` pure functions |
+| `tests/test_adaptive_ui.js` | 19 | Density modes, difficulty/modality helpers |
+| `tests/test_search_discovery.js` | 23 | `didYouMean`, `bestCorrection`, `buildVocabulary`, scoring |
 
 ## Test Configuration
 
@@ -123,7 +126,7 @@ python3 -m pytest tests/test_urls.py::test_pillar_to_url -v
 | Templates | Minimal (snapshot-like assertions) | String matching |
 | Content | Registry validation | Pydantic schema validation |
 | Scripts | Integration tests (where feasible) | Direct import + mock |
-| JS | Pure-function tests via Node (no npm/playwright) | `node tests/test_progressive_disclosure.js` |
+| JS | Pure-function tests via Node (no npm/playwright) | `node tests/test_*.js` (all 4 suites via `run_tests.sh`) |
 
 ## Key Patterns
 

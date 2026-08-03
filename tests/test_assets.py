@@ -108,6 +108,69 @@ class TestFileExistsWithHash:
         assert asset_manager.file_exists_with_hash("nope.css") is False
 
 
+class TestPruneStaleHashedFiles:
+    def test_removes_old_hashed_file(self, asset_manager, tmp_path):
+        src = tmp_path / "static"
+        src.mkdir()
+        (src / "app.js").write_text("var x = 1;")
+        asset_manager.process_directory(src)
+        stale = asset_manager.dist_static_dir / "app.deadbeef.js"
+        stale.write_text("var old = 2;")
+        pruned = asset_manager.prune_stale_hashed_files()
+        assert pruned == 1
+        assert not stale.exists()
+
+    def test_keeps_current_hashed_and_plain_files(self, asset_manager, tmp_path):
+        src = tmp_path / "static"
+        src.mkdir()
+        (src / "app.js").write_text("var x = 1;")
+        asset_manager.process_directory(src)
+        current = asset_manager.dist_static_dir / asset_manager.asset_map["app.js"]
+        plain = asset_manager.dist_static_dir / "app.js"
+        plain.write_text("var x = 1;")
+        pruned = asset_manager.prune_stale_hashed_files()
+        assert pruned == 0
+        assert current.exists()
+        assert plain.exists()
+
+    def test_keeps_unmanaged_hashed_looking_files(self, asset_manager, tmp_path):
+        src = tmp_path / "static"
+        src.mkdir()
+        (src / "app.js").write_text("var x = 1;")
+        asset_manager.process_directory(src)
+        vendor = asset_manager.dist_static_dir / "vendor" / "lib.12345678.js"
+        vendor.parent.mkdir(parents=True)
+        vendor.write_text("var lib = 1;")
+        pruned = asset_manager.prune_stale_hashed_files()
+        assert pruned == 0
+        assert vendor.exists()
+
+    def test_prunes_nested_dir_files(self, asset_manager, tmp_path):
+        src = tmp_path / "static"
+        src.mkdir()
+        js_dir = src / "js"
+        js_dir.mkdir()
+        (js_dir / "app.js").write_text("var x = 1;")
+        asset_manager.process_directory(src)
+        stale = asset_manager.dist_static_dir / "js" / "app.deadbeef.js"
+        stale.write_text("var old = 2;")
+        pruned = asset_manager.prune_stale_hashed_files()
+        assert pruned == 1
+        assert not stale.exists()
+        assert (asset_manager.dist_static_dir / asset_manager.asset_map["js/app.js"]).exists()
+
+    def test_prunes_during_process_directory(self, asset_manager, tmp_path):
+        src = tmp_path / "static"
+        src.mkdir()
+        (src / "app.js").write_text("var x = 1;")
+        stale = asset_manager.dist_static_dir / "app.12345678.js"
+        stale.write_text("var old = 2;")
+        asset_manager.process_directory(src)
+        assert asset_manager.pruned_count == 1
+        assert not stale.exists()
+        assert asset_manager.dist_static_dir / asset_manager.asset_map["app.js"] is not None
+
+
 class TestCreateAssetManager:
     def test_factory_returns_configured_instance(self, tmp_path):
         dist_static = tmp_path / "dist" / "static"

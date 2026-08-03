@@ -42,7 +42,7 @@ m.save('data/ontology.json')
 "
 ```
 
-Seeds the ontology (192 concepts, 434 relations).
+Seeds the ontology (199 concepts, 449 relations).
 
 ### 2. Source Synthesis & Verification
 

@@ -792,7 +792,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     _t0 = time.time()
     asset_manager = create_asset_manager(STATIC_DST_DIR, build_hash)
     asset_map = asset_manager.process_directory(PIPELINE_STATIC_DIR)
-    print(f"  Asset pipeline: {len(asset_map)} assets processed")
+    print(f"  Asset pipeline: {len(asset_map)} assets processed, {asset_manager.pruned_count} stale hashed files pruned")
     # Add asset resolver filter to env
     env.filters["asset"] = asset_manager.resolve_path
     _record_timing("asset_pipeline", time.time() - _t0)

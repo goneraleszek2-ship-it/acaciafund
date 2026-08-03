@@ -50,9 +50,9 @@ Freshness status for all 32 inspiration sources:
 
 | File | Description | Update Frequency |
 |------|-------------|-----------------|
-| `registry.json` | Content registry (195 items) | On content change |
+| `registry.json` | Content registry (207 items) | On content change |
 | `.build_cache.json` | Incremental build cache | Every build |
-| `data/ontology.json` | Persisted ontology (192 concepts, 434 relations) | Weekly + manual |
+| `data/ontology.json` | Persisted ontology (199 concepts, 449 relations) | Weekly + manual |
 | `data/source_health.json` | Source freshness data | Weekly |
 
 ## Health Indicators

@@ -23,6 +23,7 @@ class AssetManager:
         self.build_hash = build_hash[:8]  # Use first 8 chars for shorter filenames
         self.asset_map: Dict[str, str] = {}  # original_path -> hashed_path
         self.processed_files: List[Path] = []
+        self.pruned_count: int = 0
 
     def _compute_file_hash(self, file_path: Path) -> str:
         """Compute MD5 hash of a file's contents."""
@@ -118,7 +119,42 @@ class AssetManager:
         # Save manifest
         self._save_manifest()
 
+        # Remove hashed files from previous builds no longer referenced
+        pruned = self.prune_stale_hashed_files()
+        self.pruned_count = pruned
+
         return self.asset_map
+
+    def prune_stale_hashed_files(self) -> int:
+        """Remove fingerprint-named files from previous builds no longer referenced.
+
+        Only files matching the ``name.<8-hex>.ext`` pattern whose original
+        source is still managed by this pipeline are candidates, so plain
+        copies (e.g. ``app.js``) and vendor files are never touched.
+
+        Returns:
+            Number of stale hashed files removed
+        """
+        current_hashed = set(self.asset_map.values())
+        stale_pattern = re.compile(r"^(.+)\.([0-9a-f]{8})\.(css|js)$")
+        removed = 0
+        for pattern in ("**/*.css", "**/*.js"):
+            for file_path in self.dist_static_dir.glob(pattern):
+                if not file_path.is_file():
+                    continue
+                rel = str(file_path.relative_to(self.dist_static_dir))
+                if rel in current_hashed:
+                    continue
+                m = stale_pattern.match(file_path.name)
+                if not m:
+                    continue
+                rel_parent = rel.removesuffix(file_path.name).rstrip("/")
+                original = f"{rel_parent}/{m.group(1)}.{m.group(3)}" if rel_parent else f"{m.group(1)}.{m.group(3)}"
+                if original not in self.asset_map:
+                    continue
+                file_path.unlink()
+                removed += 1
+        return removed
 
     def _save_manifest(self) -> None:
         """Save asset mapping to manifest file."""

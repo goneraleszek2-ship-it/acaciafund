@@ -122,7 +122,7 @@ This codebase has been built in sequential sprints. Understanding what came befo
 | Foundation fixes | Concept extraction word-boundary fix, alias expansion, full category remapping, knowledge-to-pillar mapping, description backfill |
 | Quality fixes | SQI backfill script, search recall improvement (threshold 0.35, body window 800), niche concept alias expansion |
 
-**Current state:** 195 registry items, 2,505 generated pages, 3 clean pillars, 192 ontology concepts (all with philosophical metadata), 32 inspiration sources. Quality gate: passing. 1036 tests passing (1028 Python across 43 modules + 8 JS). Metrics verified 2026-08-03 — see `docs/08-testing-quality/test-overview.md` for the canonical reference.
+**Current state:** 207 registry items, 2,677 generated pages, 3 clean pillars, 199 ontology concepts (all with philosophical metadata), 32 inspiration sources. Quality gate: passing. 1036 tests passing (1028 Python across 43 modules + 62 JS across 4 files). Metrics verified 2026-08-03 — see `docs/08-testing-quality/test-overview.md` for the canonical reference.
 
 ## Cognitive Architecture (Phase 4)
 
@@ -173,7 +173,7 @@ The portal is being restructured from a *content repository* into a *schema-buil
 - **Philosophical foundations layer** integrated into Knowledge content type (not a separate section)
 - **Concept model** extended with 10 philosophical metadata fields: `philosophical_lineage`, `epistemic_status`, `normative_basis`, `ontological_commitment`, `temporal_ontology`, `uncertainty_class`, `governance_model`, `semantic_contract_type`, `philosophical_sources`, `cross_pillar_analogs`
 - **`scripts/enrich_philosophy.py`** — reads `data/philosophy_metadata.json`, merges into ontology
-- **192 ontology concepts** enriched with philosophical metadata (all have `epistemic_status`)
+- **199 ontology concepts** enriched with philosophical metadata (all have `epistemic_status`)
 - **4 new template partials**: `philosophical_lineage.j2` (expandable genealogy), `epistemic_badge.j2` (inline epistemic role indicator), `normative_basis.j2` (inline normative theory display), `cross_pillar_philosophy.j2` ("Same pattern in other pillars")
 - **`concept_detail.j2`** — shows philosophical lineage, epistemic badge, normative basis, primary sources, cross-pillar analogs
 - **`knowledge.j2`** — Concept Explorer shows epistemic badges, lineage tags (up to 3), cross-pillar analog links for each extracted concept
@@ -190,11 +190,11 @@ The portal is being restructured from a *content repository* into a *schema-buil
 | `tests/test_philosophy_integration.py` | 11 tests for philosophical foundations |
 
 #### Now Exists ✓ (Phase 3 — July 2026)
-- **Portal-wide concept review** via `RetentionEngine` in `retention_engine.js` — reviews all 192 ontology concepts with SM-2 scheduling
+- **Portal-wide concept review** via `RetentionEngine` in `retention_engine.js` — reviews all 199 ontology concepts with SM-2 scheduling
 - **Gap detection** (`core/retention_engine.py` + JS) — identifies unseen, overdue (7+ days), and low-mastery (<0.3) concepts
 - **Interleaved practice scheduler** — automatically mixes concepts across all 3 pillars, prioritizing due and unseen items
 - **Concept mastery dashboard** — rendered dynamically in `review.j2` via `concept-mastery-dashboard` container; shows per-pillar mastery bars, gap reports, and interleaved session trigger
-- **`static/review_concepts.json`** — auto-generated at build time from ontology (192 concepts with metadata)
+- **`static/review_concepts.json`** — auto-generated at build time from ontology (199 concepts with metadata)
 - **38 tests** for retention engine (`tests/test_retention_engine.py`): SM-2 algorithm, mastery scoring, gap detection, interleaving, data generation
 
 | File | Purpose |
@@ -202,7 +202,7 @@ The portal is being restructured from a *content repository* into a *schema-buil
 | `core/retention_engine.py` | SM-2 algorithm, gap detection, interleaved scheduling, concept review data generation |
 | `static/js/retention_engine.js` | Client-side retention engine: concept review cards, mastery dashboard, interleaved sessions |
 | `templates/review.j2` | Updated with concept mastery dashboard section + retention_engine.js |
-| `static/review_concepts.json` | Build-generated concept review data (192 concepts, camelCase keys) |
+| `static/review_concepts.json` | Build-generated concept review data (199 concepts, camelCase keys) |
 | `tests/test_retention_engine.py` | 38 tests for all retention engine components |
 
 #### Partially Exists ⚠️
@@ -235,9 +235,9 @@ Three pillars with internal keys and URL segments:
 
 | Internal Key | URL Segment | Label | Items |
 |---|---|---|---|
-| `aml` | `compliance` | Compliance | 92 |
-| `stock` | `markets` | Markets | 61 |
-| `data-engineering` | `data` | Data Engineering | 107 |
+| `aml` | `compliance` | Compliance | 52 |
+| `stock` | `markets` | Markets | 68 |
+| `data-engineering` | `data` | Data Engineering | 87 |
 
 **Single source of truth:** `config.py` → `PILLAR_URL_MAP`
 
@@ -314,7 +314,7 @@ scripts/knowledge_ingester.py  →  registry.json  →  build.py  →  dist/
 | `core/build_taxonomies.py` | Taxonomy generation: admin pages, search index, tag pages, pillar pages, feed, ontology admin |
 | `core/build_cache.py` | Incremental build cache with parallel_map support |
 | `schemas.py` | Pydantic models for registry validation (`RegistryData`) |
-| `registry.json` | Content registry (195 items) |
+| `registry.json` | Content registry (207 items) |
 | `core/schema_builder.py` | **NEW** Schema builder: prerequisite graphs, learning paths, Bloom categorization |
 | `static/js/progressive_disclosure.js` | **NEW** Collapsible article sections (Cognitive Load Theory) |
 | `templates/partials/visual_abstract.j2` | **NEW** Dual-coded article summary partial (visual abstract) |
@@ -331,7 +331,7 @@ scripts/knowledge_ingester.py  →  registry.json  →  build.py  →  dist/
 | `scripts/fetch_images.py` | Unsplash image fetching (imported by `core/build_taxonomies.py` as `CURATED_KNOWN`) |
 | `scripts/deploy_cloudflare.py` | Cloudflare Pages deployment trigger |
 | `etc/pillars.toml` | Pillar definitions + `[inspiration_sources]` (32 authoritative sources per pillar) |
-| `data/ontology.json` | Persisted ontology (192 concepts, 434 relations) |
+| `data/ontology.json` | Persisted ontology (199 concepts, 449 relations) |
 | `data/source_health.json` | Persistent freshness data (32 sources) |
 | `.github/workflows/source-refresh.yml` | Weekly Monday 04:00 UTC refresh — ontology, glossary, freshness, build, deploy |
 
@@ -525,10 +525,13 @@ result = df.filter(pl.col('price') > 100).collect()
 | `tests/test_check_source_freshness.py` | 8 | scripts/check_source_freshness.py: compute_staleness contract tests |
 | `tests/test_alpha_index.py` | 7 | Alphabetical index generation |
 | `tests/test_progressive_disclosure.js` | **8** | static/js/progressive_disclosure.js: parseSections, toggleSection pure functions |
+| `tests/test_toc.js` | **12** | static/js/toc.js: createItems, linkClass pure functions |
+| `tests/test_adaptive_ui.js` | **19** | static/js/adaptive.js: density modes, difficulty/modality helpers |
+| `tests/test_search_discovery.js` | **23** | static/js/search.js: didYouMean, bestCorrection, buildVocabulary, scoring |
 
-JS tests run via `node tests/test_progressive_disclosure.js` (no npm/playwright needed).
+JS tests run via `node tests/test_*.js` for each file (no npm/playwright needed). `scripts/run_tests.sh` runs all 4 suites.
 
-**Total: 855 passing tests (847 Python + 8 JS).** (Verified 2026-07-30: `python3 -m pytest tests/ --co` → 847 collected across 37 modules.)
+**Total: 1036 passing tests (1028 Python across 43 modules + 62 JS across 4 files).** (Verified 2026-08-03: `python3 -m pytest tests/ --co` → 1028 collected across 43 modules; JS suites run via `run_tests.sh`.)
 
 ### Phase 1.5 Files (Cognitive Load Amputation — July 2026)
 

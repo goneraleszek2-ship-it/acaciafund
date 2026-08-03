@@ -1,6 +1,6 @@
 # AcaciaFund — System Architecture
 
-> **Version:** 3.0 (URL structure) · **Last updated:** 2026-07-30
+> **Version:** 3.0 (URL structure) · **Last updated:** 2026-08-03
 > This document is the canonical reference for the entire AcaciaFund system. It is maintained alongside the code; if a number here disagrees with another document, this document wins.
 
 ---
@@ -9,9 +9,9 @@
 
 ### 1.1 Purpose
 
-AcaciaFund is a **static-first, cognitive learning platform** covering three financial domains — **Compliance** (AML/CTF), **Markets**, and **Data Engineering**. It converts a JSON content registry into a fully static, edge-deployed website (2,505 pages) enriched with:
+AcaciaFund is a **static-first, cognitive learning platform** covering three financial domains — **Compliance** (AML/CTF), **Markets**, and **Data Engineering**. It converts a JSON content registry into a fully static, edge-deployed website (2,677 pages) enriched with:
 
-- An **ontology-backed knowledge graph** (192 concepts, 434 relations)
+- An **ontology-backed knowledge graph** (199 concepts, 449 relations)
 - **Bloom-taxonomy** content classification (Remember → Create)
 - **Schema-built learning paths** (prerequisite DAGs)
 - **SM-2 spaced repetition** for durable retention
@@ -67,9 +67,9 @@ flowchart LR
     end
 
     subgraph Repo["Repository"]
-        REG[registry.json<br/>195 items]
+        REG[registry.json<br/>207 items]
         SCHEMA[schemas.py<br/>Pydantic]
-        ONT[data/ontology.json<br/>192 concepts]
+        ONT[data/ontology.json<br/>199 concepts]
     end
 
     subgraph Build["Build Engine"]
@@ -80,7 +80,7 @@ flowchart LR
     end
 
     subgraph Out["Static Output (dist/)"]
-        HTML[2,505 HTML pages]
+        HTML[2,677 HTML pages]
         IDX[search-index.json]
         GRAPH[graph-data.json]
         FEED[feed.xml · sitemap.xml]
@@ -151,24 +151,23 @@ flowchart LR
 | Static output | dist/ HTML + JSON (Cloudflare Pages) |
 | Analytics | Plausible |
 | Lint / Typecheck | Ruff, Pyright |
-| Tests | Pytest (847 Python + 8 JS), typeguard, anyio |
+| Tests | Pytest (1028 Python + 62 JS), typeguard, anyio |
 
-### 2.4 Current Metrics (verified 2026-07-30)
+### 2.4 Current Metrics (verified 2026-08-03)
 
 | Metric | Value |
 |--------|-------|
-| Generated pages | 2,505 |
-| Registry items | 195 (96 research, 83 learn, 16 knowledge) |
-| Items rendered | 181 (5 future-dated filtered at build) |
-| Ontology concepts | 192 (58 compliance, 64 markets, 70 data) |
-| Ontology relations | 434 |
+| Generated pages | 2,677 |
+| Registry items | 207 (98 research, 83 learn, 26 knowledge) |
+| Ontology concepts | 199 (58 compliance, 64 markets, 70 data, 7 cross-pillar) |
+| Ontology relations | 449 |
 | Relation types | 10 |
 | Knowledge categories | 13 |
 | Pillar subcategories | 42 (14 × 3) |
 | Inspiration sources | 32 |
-| SQI (avg / min / max) | 0.886 / 0.700 / 0.955 |
-| Full build time | ~76s |
-| Tests | 855 |
+| SQI (avg / min / max) | 0.871 / 0.670 / 0.955 |
+| Full build time | ~93s |
+| Tests | 1036 |
 
 ---
 
@@ -306,7 +305,7 @@ dist/ ──► Cloudflare Pages CDN
 - SM-2 algorithm with ease-factor mapping.
 - Gap detection (unseen, overdue 7+ days, low-mastery < 0.3).
 - Interleaved practice scheduler mixing all 3 pillars.
-- `static/review_concepts.json` generated at build (192 concepts with metadata).
+- `static/review_concepts.json` generated at build (199 concepts with metadata).
 - Rendered in `/review/` (mastery dashboard) and `/review-queue/` (flashcard queue) via `static/js/retention_engine.js`.
 
 ### 5.4 Adaptive Presentation (`core/adaptive.py`)
@@ -456,7 +455,7 @@ bash scripts/run_tests.sh                       # full test suite wrapper
 
 ### 10.2 Testing
 
-- **847 Python tests** across 37 modules + **8 JS tests** (`tests/test_progressive_disclosure.js`).
+- **1028 Python tests** across 43 modules + **62 JS tests** across 4 files (`test_progressive_disclosure.js`, `test_toc.js`, `test_adaptive_ui.js`, `test_search_discovery.js`).
 - Coverage highlights: ontology (39), build_taxonomies (51), retention (38), contradiction (40), generate_pages (40), ingestion (64), adaptive (31), schema_builder (29).
 - Golden rules: use `python3`; tests import from `core/urls.py` (not `build.py`) to avoid heavy deps; timeout long runs.
 
