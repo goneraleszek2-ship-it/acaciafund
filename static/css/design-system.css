@@ -485,11 +485,18 @@ nav {
   flex-wrap: wrap;
   gap: 0.5rem;
 }
-nav ul { margin: 0; padding: 0; display: flex; align-items: center; gap: 0.25rem; flex-wrap: wrap; }
-nav ul li { list-style: none; }
+nav ul, nav ol { margin: 0; padding: 0; list-style: none; display: flex; align-items: center; gap: 0.25rem; flex-wrap: wrap; }
+nav ul li, nav ol li { list-style: none; }
 nav ul li a { display: block; padding: 0.35rem 0.5rem; font-size: 0.9rem; text-decoration: none; color: var(--color-text-secondary); border-radius: 6px; transition: color 0.15s ease, background 0.15s ease; }
 nav ul li a:hover { color: var(--color-text); background: var(--color-surface-hover); }
 footer hr { margin-bottom: 1rem; }
+
+/* ── Container & card list resets (chrome only — prose & index listings keep markers) ── */
+.ghost-card ul, .ghost-card ol,
+.ghost-card details ul, details.ghost-card ul { list-style: none; margin: 0; padding: 0; }
+ul.lineage-sources { list-style: none; margin: 0; padding: 0; }
+ul.legend-list, ul.kb-concept-list { list-style: none; margin: 0; padding: 0; }
+section.mt-12 ul.space-y-2 { list-style: none; margin: 0; padding: 0; }
 
 /* ── Article Body Prose (from style.css) ── */
 .prose-body {
@@ -2942,6 +2949,7 @@ body.nav-open {
     height: 100dvh;
     flex-direction: column;
     align-items: flex-start;
+    list-style: none;
     padding: 4.5rem 1.5rem 2rem;
     margin: 0;
     gap: 0.25rem;
