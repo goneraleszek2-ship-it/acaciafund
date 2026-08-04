@@ -23,7 +23,8 @@
         .logo .logo-mark { color: var(--color-accent); }
         .nav-empty { opacity: 0.25; pointer-events: none; width: 1px; }
         .mode-toggle-sm { display: inline-flex; align-items: center; gap: 0.25rem; font-size: 0.7rem; color: var(--color-text-muted); }
-        .mode-toggle-sm select { font-size: 0.7rem; padding: 0.15rem 0.4rem; border-radius: 4px; background: var(--color-surface); color: var(--color-text); border: 1px solid var(--color-border); font-family: inherit; cursor: pointer; }
+        .mode-toggle-sm select { font-size: 1rem; padding: 0.15rem 0.4rem; border-radius: 4px; background: var(--color-surface); color: var(--color-text); border: 1px solid var(--color-border); font-family: inherit; cursor: pointer; }
+        #settings-toggle, #theme-toggle { min-width: 40px; min-height: 40px; display: inline-flex; align-items: center; justify-content: center; }
     </style>
 {% if plausible_domain %}
     <script defer data-domain="{{ plausible_domain }}" src="https://{{ plausible_domain }}/js/script.js"></script>
@@ -33,11 +34,14 @@
     <a href="#main-content" class="skip-link">Skip to main content</a>
     <div id="nav-overlay" class="nav-overlay" aria-hidden="true"></div>
     <header class="container">
-        <nav>
+        <nav aria-label="Main navigation">
             <ul>
                 <li><strong><a href="/" class="contrast logo"><span class="logo-mark">Acacia</span>Fund</a></strong></li>
             </ul>
-            <ul>
+            <button class="nav-toggle" type="button" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primary-menu">
+              <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+            </button>
+            <ul id="primary-menu">
                 <li><a href="/start-here/" style="font-weight:500">Start Here</a></li>
                 <li><a href="/news/" style="font-weight:500">News</a></li>
                 <li><a href="/compliance/">Compliance</a></li>

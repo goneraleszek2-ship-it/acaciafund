@@ -39,24 +39,53 @@
   }
 
   /* ── Mobile Nav Toggle ── */
+  function navState(open) {
+    return {
+      expanded: open ? 'true' : 'false',
+      label: open ? 'Close navigation menu' : 'Open navigation menu',
+    };
+  }
+
   function initMobileNav() {
     var nav = document.querySelector('nav');
     if (!nav) return;
     var toggle = nav.querySelector('.nav-toggle');
-    if (!toggle) {
-      toggle = document.createElement('button');
-      toggle.className = 'nav-toggle';
-      toggle.setAttribute('aria-label', 'Toggle navigation');
-      toggle.setAttribute('aria-expanded', 'false');
-      toggle.innerHTML = '<svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>';
-      var firstUl = nav.querySelector('ul');
-      if (firstUl) firstUl.after(toggle);
-    }
+    if (!toggle) return;
     var menu = nav.querySelector('ul:last-child');
+    var overlay = document.getElementById('nav-overlay');
     if (!menu) return;
+
+    function setOpen(open) {
+      menu.classList.toggle('open', open);
+      var state = navState(open);
+      toggle.setAttribute('aria-expanded', state.expanded);
+      toggle.setAttribute('aria-label', state.label);
+      if (overlay) overlay.classList.toggle('open', open);
+      document.body.classList.toggle('nav-open', open);
+      if (open) {
+        var first = menu.querySelector('a, button');
+        if (first) first.focus();
+      } else if (document.activeElement && menu.contains(document.activeElement)) {
+        toggle.focus();
+      }
+    }
+
     toggle.addEventListener('click', function () {
-      var open = menu.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', open);
+      setOpen(!menu.classList.contains('open'));
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && menu.classList.contains('open')) {
+        setOpen(false);
+      }
+    });
+    if (overlay) {
+      overlay.addEventListener('click', function () { setOpen(false); });
+    }
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 768 && menu.classList.contains('open')) {
+        setOpen(false);
+      }
     });
   }
 
@@ -250,10 +279,18 @@
     });
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+      navState: navState,
+    };
+  }
+
+  if (typeof document !== 'undefined') {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
   }
 
 })();

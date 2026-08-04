@@ -550,6 +550,9 @@
 
     const terms = query.trim() ? tokenize(query) : [];
 
+    container.setAttribute('aria-busy', 'true');
+    container.innerHTML = '<div class="search-loading" role="status"><span class="search-spinner" aria-hidden="true"></span> Loading search index...</div>';
+
     fetchIndex().then(index => {
       populateTechFilters(index);
       updateFacetCounts(index);
@@ -614,8 +617,16 @@
       }
 
       renderPage();
+      container.setAttribute('aria-busy', 'false');
     }).catch(function(err) {
-      container.innerHTML = '<p style="color:#ef4444;text-align:center;margin-top:2rem">Failed to load search index</p>';
+      container.setAttribute('aria-busy', 'false');
+      var retryBtn = '<button id="search-retry" type="button" style="margin-top:0.75rem;padding:0.5rem 1rem;background:var(--color-surface,#f0f0f0);border:1px solid var(--color-border,#333);border-radius:8px;color:var(--color-text,#333);cursor:pointer;font-size:0.85rem;font-weight:600">Retry</button>';
+      container.innerHTML = '<div style="text-align:center;margin-top:2rem"><p style="color:#ef4444">Failed to load search index</p>' + retryBtn + '</div>';
+      var retry = document.getElementById('search-retry');
+      if (retry) retry.addEventListener('click', function() {
+        searchIndex = null;
+        runSearch(query, tagFilter);
+      });
     });
   }
 

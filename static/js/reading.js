@@ -21,12 +21,40 @@
     var toggle = document.getElementById('settings-toggle');
     var close = document.getElementById('settings-close');
     if (!panel || !toggle) return;
+    var lastFocus = null;
 
     function setOpen(open) {
       panel.classList.toggle('open', open);
       panel.setAttribute('aria-hidden', open ? 'false' : 'true');
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      if (open && close) close.focus();
+      if (open) {
+        lastFocus = document.activeElement;
+        if (close) close.focus();
+      } else if (lastFocus) {
+        lastFocus.focus();
+        lastFocus = null;
+      }
+    }
+
+    function focusables() {
+      return Array.prototype.slice.call(panel.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'));
+    }
+
+    function trapFocus(e) {
+      if (!panel.classList.contains('open')) return;
+      var f = focusables();
+      if (f.length === 0) return;
+      var first = f[0];
+      var last = f[f.length - 1];
+      if (e.key === 'Tab') {
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     }
 
     toggle.addEventListener('click', function () {
@@ -37,6 +65,7 @@
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && panel.classList.contains('open')) setOpen(false);
     });
+    document.addEventListener('keydown', trapFocus);
     document.addEventListener('click', function (e) {
       if (panel.classList.contains('open') && !panel.contains(e.target) && !toggle.contains(e.target)) {
         setOpen(false);

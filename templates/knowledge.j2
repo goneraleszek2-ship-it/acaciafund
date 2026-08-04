@@ -1,8 +1,6 @@
 {% extends "layout.j2" %}
 {% include "macros/pillar_badge.html" %}
-{% from "macros/breadcrumbs.html" import breadcrumbs %}
 {% block main_content %}
-{{ breadcrumbs(page_path, content.title) }}
 <div id="reading-progress"></div>
 
 <article class="entrance-fade">

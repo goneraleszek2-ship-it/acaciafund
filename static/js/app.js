@@ -41,24 +41,53 @@
   }
 
   /* ── Mobile Nav Toggle ── */
+  function navState(open) {
+    return {
+      expanded: open ? 'true' : 'false',
+      label: open ? 'Close navigation menu' : 'Open navigation menu',
+    };
+  }
+
   function initMobileNav() {
     var nav = document.querySelector('nav');
     if (!nav) return;
     var toggle = nav.querySelector('.nav-toggle');
-    if (!toggle) {
-      toggle = document.createElement('button');
-      toggle.className = 'nav-toggle';
-      toggle.setAttribute('aria-label', 'Toggle navigation');
-      toggle.setAttribute('aria-expanded', 'false');
-      toggle.innerHTML = '<svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>';
-      var firstUl = nav.querySelector('ul');
-      if (firstUl) firstUl.after(toggle);
-    }
+    if (!toggle) return;
     var menu = nav.querySelector('ul:last-child');
+    var overlay = document.getElementById('nav-overlay');
     if (!menu) return;
+
+    function setOpen(open) {
+      menu.classList.toggle('open', open);
+      var state = navState(open);
+      toggle.setAttribute('aria-expanded', state.expanded);
+      toggle.setAttribute('aria-label', state.label);
+      if (overlay) overlay.classList.toggle('open', open);
+      document.body.classList.toggle('nav-open', open);
+      if (open) {
+        var first = menu.querySelector('a, button');
+        if (first) first.focus();
+      } else if (document.activeElement && menu.contains(document.activeElement)) {
+        toggle.focus();
+      }
+    }
+
     toggle.addEventListener('click', function () {
-      var open = menu.classList.toggle('open');
-      toggle.setAttribute('aria-expanded', open);
+      setOpen(!menu.classList.contains('open'));
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && menu.classList.contains('open')) {
+        setOpen(false);
+      }
+    });
+    if (overlay) {
+      overlay.addEventListener('click', function () { setOpen(false); });
+    }
+    window.addEventListener('resize', function () {
+      if (window.innerWidth > 768 && menu.classList.contains('open')) {
+        setOpen(false);
+      }
     });
   }
 
@@ -252,10 +281,18 @@
     });
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
-  } else {
-    init();
+  if (typeof module !== 'undefined' && module.exports) {
+    module.exports = {
+      navState: navState,
+    };
+  }
+
+  if (typeof document !== 'undefined') {
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
   }
 
 })();
@@ -285,12 +322,40 @@
     var toggle = document.getElementById('settings-toggle');
     var close = document.getElementById('settings-close');
     if (!panel || !toggle) return;
+    var lastFocus = null;
 
     function setOpen(open) {
       panel.classList.toggle('open', open);
       panel.setAttribute('aria-hidden', open ? 'false' : 'true');
       toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-      if (open && close) close.focus();
+      if (open) {
+        lastFocus = document.activeElement;
+        if (close) close.focus();
+      } else if (lastFocus) {
+        lastFocus.focus();
+        lastFocus = null;
+      }
+    }
+
+    function focusables() {
+      return Array.prototype.slice.call(panel.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'));
+    }
+
+    function trapFocus(e) {
+      if (!panel.classList.contains('open')) return;
+      var f = focusables();
+      if (f.length === 0) return;
+      var first = f[0];
+      var last = f[f.length - 1];
+      if (e.key === 'Tab') {
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
     }
 
     toggle.addEventListener('click', function () {
@@ -301,6 +366,7 @@
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && panel.classList.contains('open')) setOpen(false);
     });
+    document.addEventListener('keydown', trapFocus);
     document.addEventListener('click', function (e) {
       if (panel.classList.contains('open') && !panel.contains(e.target) && !toggle.contains(e.target)) {
         setOpen(false);
@@ -545,6 +611,7 @@
   ];
 
   var overlay = null;
+  var lastFocus = null;
 
   function isTyping(e) {
     var t = e.target;
@@ -605,6 +672,7 @@
 
   function showCheatSheet() {
     if (!overlay) overlay = buildOverlay();
+    lastFocus = document.activeElement;
     document.body.appendChild(overlay);
     var closeBtn = overlay.querySelector('.shortcuts-close');
     if (closeBtn) closeBtn.focus();
@@ -612,6 +680,26 @@
 
   function hideCheatSheet() {
     if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay);
+    if (lastFocus) {
+      lastFocus.focus();
+      lastFocus = null;
+    }
+  }
+
+  function trapCheatSheetFocus(e) {
+    if (!overlay || !overlay.parentNode) return;
+    if (e.key !== 'Tab') return;
+    var f = overlay.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])');
+    if (f.length === 0) return;
+    var first = f[0];
+    var last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
   }
 
   /* ── Actions ── */
@@ -711,6 +799,7 @@
   }
 
   document.addEventListener('keydown', onKeydown);
+  document.addEventListener('keydown', trapCheatSheetFocus);
 })();
 
 
@@ -1875,6 +1964,9 @@
 
     const terms = query.trim() ? tokenize(query) : [];
 
+    container.setAttribute('aria-busy', 'true');
+    container.innerHTML = '<div class="search-loading" role="status"><span class="search-spinner" aria-hidden="true"></span> Loading search index...</div>';
+
     fetchIndex().then(index => {
       populateTechFilters(index);
       updateFacetCounts(index);
@@ -1939,8 +2031,16 @@
       }
 
       renderPage();
+      container.setAttribute('aria-busy', 'false');
     }).catch(function(err) {
-      container.innerHTML = '<p style="color:#ef4444;text-align:center;margin-top:2rem">Failed to load search index</p>';
+      container.setAttribute('aria-busy', 'false');
+      var retryBtn = '<button id="search-retry" type="button" style="margin-top:0.75rem;padding:0.5rem 1rem;background:var(--color-surface,#f0f0f0);border:1px solid var(--color-border,#333);border-radius:8px;color:var(--color-text,#333);cursor:pointer;font-size:0.85rem;font-weight:600">Retry</button>';
+      container.innerHTML = '<div style="text-align:center;margin-top:2rem"><p style="color:#ef4444">Failed to load search index</p>' + retryBtn + '</div>';
+      var retry = document.getElementById('search-retry');
+      if (retry) retry.addEventListener('click', function() {
+        searchIndex = null;
+        runSearch(query, tagFilter);
+      });
     });
   }
 

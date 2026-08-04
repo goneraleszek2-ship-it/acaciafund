@@ -14,6 +14,7 @@
   ];
 
   var overlay = null;
+  var lastFocus = null;
 
   function isTyping(e) {
     var t = e.target;
@@ -74,6 +75,7 @@
 
   function showCheatSheet() {
     if (!overlay) overlay = buildOverlay();
+    lastFocus = document.activeElement;
     document.body.appendChild(overlay);
     var closeBtn = overlay.querySelector('.shortcuts-close');
     if (closeBtn) closeBtn.focus();
@@ -81,6 +83,26 @@
 
   function hideCheatSheet() {
     if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay);
+    if (lastFocus) {
+      lastFocus.focus();
+      lastFocus = null;
+    }
+  }
+
+  function trapCheatSheetFocus(e) {
+    if (!overlay || !overlay.parentNode) return;
+    if (e.key !== 'Tab') return;
+    var f = overlay.querySelectorAll('button, [href], [tabindex]:not([tabindex="-1"])');
+    if (f.length === 0) return;
+    var first = f[0];
+    var last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
   }
 
   /* ── Actions ── */
@@ -180,4 +202,5 @@
   }
 
   document.addEventListener('keydown', onKeydown);
+  document.addEventListener('keydown', trapCheatSheetFocus);
 })();
