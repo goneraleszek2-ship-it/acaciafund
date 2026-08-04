@@ -1,13 +1,13 @@
 {
   "manifest_type": "registry-index",
-  "generated_at": "2026-08-04T08:39:01Z",
+  "generated_at": "2026-08-04T16:26:18Z",
   "counts": {
     "runs": 0,
-    "pages": 2765,
+    "pages": 2625,
     "pillars": {
-      "data-engineering": 91,
-      "stock": 72,
-      "aml": 56
+      "data-engineering": 92,
+      "stock": 73,
+      "aml": 57
     }
   },
   "latest_by_pillar": {},
@@ -1326,6 +1326,24 @@
       "pillar": "aml",
       "title": "SQL Window Functions for Transaction Monitoring",
       "published_at": "2026-08-04"
+    },
+    {
+      "content_id": "compliance/glossary",
+      "pillar": "aml",
+      "title": "Compliance Glossary",
+      "published_at": ""
+    },
+    {
+      "content_id": "markets/glossary",
+      "pillar": "stock",
+      "title": "Markets Glossary",
+      "published_at": ""
+    },
+    {
+      "content_id": "data/glossary",
+      "pillar": "data-engineering",
+      "title": "Data Engineering Glossary",
+      "published_at": ""
     }
   ],
   "by_content_id": {
@@ -2423,8 +2441,23 @@
       "content_id": "compliance/knowledge/sql-window-functions-aml",
       "pillar": "aml",
       "title": "SQL Window Functions for Transaction Monitoring"
+    },
+    "compliance/glossary": {
+      "content_id": "compliance/glossary",
+      "pillar": "aml",
+      "title": "Compliance Glossary"
+    },
+    "markets/glossary": {
+      "content_id": "markets/glossary",
+      "pillar": "stock",
+      "title": "Markets Glossary"
+    },
+    "data/glossary": {
+      "content_id": "data/glossary",
+      "pillar": "data-engineering",
+      "title": "Data Engineering Glossary"
     }
   },
   "by_run_id": {},
-  "checksum": "e6f05eabccc3d740bd5c01f2b2eec96bfd893c0c11a4f8021a458ecc1e5039e2"
+  "checksum": "bd25e5c767b06668ffec5ef5492ad7a8538515a1fcac906d8424e48c892be176"
 }

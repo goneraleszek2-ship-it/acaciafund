@@ -1423,8 +1423,8 @@
       "score": 0.375
     },
     {
-      "slug": "data/learn/pipeline-cost-optimization",
-      "score": 0.2222
+      "slug": "data/glossary",
+      "score": 0.25
     }
   ],
   "data/learn/sql-for-data-engineers": [
@@ -2641,8 +2641,8 @@
       "score": 0.2222
     },
     {
-      "slug": "data/research/analytics-engineering-rise",
-      "score": 0.1818
+      "slug": "data/glossary",
+      "score": 0.2222
     }
   ],
   "aml/learn/kyc-cdd-workflows": [
@@ -2655,11 +2655,15 @@
       "score": 0.2667
     },
     {
-      "slug": "aml/learn/sar-filing-scenarios",
-      "score": 0.2
+      "slug": "compliance/glossary",
+      "score": 0.2222
     }
   ],
   "aml/learn/sar-filing-scenarios": [
+    {
+      "slug": "compliance/glossary",
+      "score": 0.2222
+    },
     {
       "slug": "compliance/research/collier-2020-suspicious-activity-reports-uk",
       "score": 0.2
@@ -2667,13 +2671,13 @@
     {
       "slug": "aml/learn/kyc-cdd-workflows",
       "score": 0.2
-    },
-    {
-      "slug": "aml/learn/sanctions-screening",
-      "score": 0.2
     }
   ],
   "aml/learn/sanctions-screening": [
+    {
+      "slug": "compliance/glossary",
+      "score": 0.2222
+    },
     {
       "slug": "aml/learn/kyc-cdd-workflows",
       "score": 0.2
@@ -2681,23 +2685,19 @@
     {
       "slug": "aml/learn/sar-filing-scenarios",
       "score": 0.2
-    },
-    {
-      "slug": "markets/research/govuk-has-replaced-stripe-with-dutch-provider-adyen-aml",
-      "score": 0.1429
     }
   ],
   "markets/learn/quantitative-methods-intro": [
+    {
+      "slug": "markets/glossary",
+      "score": 0.25
+    },
     {
       "slug": "markets/knowledge/mean-reversion-primer",
       "score": 0.125
     },
     {
       "slug": "markets/research/meta-confirms-1000s-of-instagram-accounts-were-hacked-by",
-      "score": 0.1111
-    },
-    {
-      "slug": "markets/research/stock-2",
       "score": 0.1111
     }
   ],
@@ -3119,6 +3119,48 @@
     {
       "slug": "compliance/research/naheem-2015-aml-transaction-monitoring-systems",
       "score": 0.25
+    }
+  ],
+  "compliance/glossary": [
+    {
+      "slug": "markets/glossary",
+      "score": 0.4286
+    },
+    {
+      "slug": "data/glossary",
+      "score": 0.4286
+    },
+    {
+      "slug": "aml/learn/kyc-cdd-workflows",
+      "score": 0.2222
+    }
+  ],
+  "markets/glossary": [
+    {
+      "slug": "compliance/glossary",
+      "score": 0.4286
+    },
+    {
+      "slug": "data/glossary",
+      "score": 0.4286
+    },
+    {
+      "slug": "markets/learn/quantitative-methods-intro",
+      "score": 0.25
+    }
+  ],
+  "data/glossary": [
+    {
+      "slug": "compliance/glossary",
+      "score": 0.4286
+    },
+    {
+      "slug": "markets/glossary",
+      "score": 0.4286
+    },
+    {
+      "slug": "knowledge/dataops-glossary",
+      "score": 0.2857
     }
   ]
 }
