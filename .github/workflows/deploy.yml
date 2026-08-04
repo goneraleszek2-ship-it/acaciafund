@@ -68,6 +68,9 @@ jobs:
       - name: Enrich registry
         run: python scripts/enrich.py
 
+      - name: Fetch field news (RSS feeds + Hacker News + GDELT)
+        run: python scripts/fetch_news.py
+
       - name: Pre-build smoke tests
         run: python -m pytest tests/test_smoke.py -v
 

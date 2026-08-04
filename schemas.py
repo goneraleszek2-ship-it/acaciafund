@@ -13,6 +13,7 @@ class ContentItem(BaseModel):
     content_type: str = Field(..., pattern=r"^(research|learn|knowledge)$")
     pillar: str = Field(..., min_length=1)
     tags: List[str] = Field(default_factory=list)
+    category: Optional[str] = None
     body_html: str = ""
     description: str = ""
     date_str: Optional[str] = None

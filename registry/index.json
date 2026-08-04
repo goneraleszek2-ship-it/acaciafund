@@ -1,13 +1,13 @@
 {
   "manifest_type": "registry-index",
-  "generated_at": "2026-08-03T18:06:40Z",
+  "generated_at": "2026-08-04T08:39:01Z",
   "counts": {
     "runs": 0,
-    "pages": 2677,
+    "pages": 2765,
     "pillars": {
-      "data-engineering": 87,
-      "stock": 68,
-      "aml": 52
+      "data-engineering": 91,
+      "stock": 72,
+      "aml": 56
     }
   },
   "latest_by_pillar": {},
@@ -1254,6 +1254,78 @@
       "pillar": "aml",
       "title": "From Analog Rule to Computational Constitutionalism",
       "published_at": "2026-08-02"
+    },
+    {
+      "content_id": "data/knowledge/exactly-once-streaming",
+      "pillar": "data-engineering",
+      "title": "Exactly-Once Semantics in Stream Processing",
+      "published_at": "2026-08-04"
+    },
+    {
+      "content_id": "compliance/knowledge/network-analysis-aml",
+      "pillar": "aml",
+      "title": "Network Analysis for AML Investigations",
+      "published_at": "2026-08-04"
+    },
+    {
+      "content_id": "data/knowledge/sqi-scoring-explained",
+      "pillar": "data-engineering",
+      "title": "SQI Scoring Explained: How Acacia Ranks Sources",
+      "published_at": "2026-08-04"
+    },
+    {
+      "content_id": "compliance/knowledge/cdd-kyc-verification-checklist",
+      "pillar": "aml",
+      "title": "CDD/KYC Verification Checklist",
+      "published_at": "2026-08-04"
+    },
+    {
+      "content_id": "markets/knowledge/yield-curve-primer",
+      "pillar": "stock",
+      "title": "Reading the Yield Curve",
+      "published_at": "2026-08-04"
+    },
+    {
+      "content_id": "markets/knowledge/volatility-regimes",
+      "pillar": "stock",
+      "title": "Volatility Regimes: Identifying and Trading Them",
+      "published_at": "2026-08-04"
+    },
+    {
+      "content_id": "markets/knowledge/mean-reversion-primer",
+      "pillar": "stock",
+      "title": "Mean Reversion Strategies 101",
+      "published_at": "2026-08-04"
+    },
+    {
+      "content_id": "markets/knowledge/risk-parity-basics",
+      "pillar": "stock",
+      "title": "Risk Parity Basics",
+      "published_at": "2026-08-04"
+    },
+    {
+      "content_id": "data/knowledge/bloom-self-study-framework",
+      "pillar": "data-engineering",
+      "title": "Bloom's Taxonomy as a Self-Study Framework",
+      "published_at": "2026-08-04"
+    },
+    {
+      "content_id": "compliance/knowledge/red-team-testing-aml",
+      "pillar": "aml",
+      "title": "Red-Team Testing an AML Program",
+      "published_at": "2026-08-04"
+    },
+    {
+      "content_id": "data/knowledge/polars-pipeline-tutorial",
+      "pillar": "data-engineering",
+      "title": "Polars Tutorial: A Transaction-Flow Pipeline",
+      "published_at": "2026-08-04"
+    },
+    {
+      "content_id": "compliance/knowledge/sql-window-functions-aml",
+      "pillar": "aml",
+      "title": "SQL Window Functions for Transaction Monitoring",
+      "published_at": "2026-08-04"
     }
   ],
   "by_content_id": {
@@ -2291,8 +2363,68 @@
       "content_id": "compliance/knowledge/computational-constitutionalism",
       "pillar": "aml",
       "title": "From Analog Rule to Computational Constitutionalism"
+    },
+    "data/knowledge/exactly-once-streaming": {
+      "content_id": "data/knowledge/exactly-once-streaming",
+      "pillar": "data-engineering",
+      "title": "Exactly-Once Semantics in Stream Processing"
+    },
+    "compliance/knowledge/network-analysis-aml": {
+      "content_id": "compliance/knowledge/network-analysis-aml",
+      "pillar": "aml",
+      "title": "Network Analysis for AML Investigations"
+    },
+    "data/knowledge/sqi-scoring-explained": {
+      "content_id": "data/knowledge/sqi-scoring-explained",
+      "pillar": "data-engineering",
+      "title": "SQI Scoring Explained: How Acacia Ranks Sources"
+    },
+    "compliance/knowledge/cdd-kyc-verification-checklist": {
+      "content_id": "compliance/knowledge/cdd-kyc-verification-checklist",
+      "pillar": "aml",
+      "title": "CDD/KYC Verification Checklist"
+    },
+    "markets/knowledge/yield-curve-primer": {
+      "content_id": "markets/knowledge/yield-curve-primer",
+      "pillar": "stock",
+      "title": "Reading the Yield Curve"
+    },
+    "markets/knowledge/volatility-regimes": {
+      "content_id": "markets/knowledge/volatility-regimes",
+      "pillar": "stock",
+      "title": "Volatility Regimes: Identifying and Trading Them"
+    },
+    "markets/knowledge/mean-reversion-primer": {
+      "content_id": "markets/knowledge/mean-reversion-primer",
+      "pillar": "stock",
+      "title": "Mean Reversion Strategies 101"
+    },
+    "markets/knowledge/risk-parity-basics": {
+      "content_id": "markets/knowledge/risk-parity-basics",
+      "pillar": "stock",
+      "title": "Risk Parity Basics"
+    },
+    "data/knowledge/bloom-self-study-framework": {
+      "content_id": "data/knowledge/bloom-self-study-framework",
+      "pillar": "data-engineering",
+      "title": "Bloom's Taxonomy as a Self-Study Framework"
+    },
+    "compliance/knowledge/red-team-testing-aml": {
+      "content_id": "compliance/knowledge/red-team-testing-aml",
+      "pillar": "aml",
+      "title": "Red-Team Testing an AML Program"
+    },
+    "data/knowledge/polars-pipeline-tutorial": {
+      "content_id": "data/knowledge/polars-pipeline-tutorial",
+      "pillar": "data-engineering",
+      "title": "Polars Tutorial: A Transaction-Flow Pipeline"
+    },
+    "compliance/knowledge/sql-window-functions-aml": {
+      "content_id": "compliance/knowledge/sql-window-functions-aml",
+      "pillar": "aml",
+      "title": "SQL Window Functions for Transaction Monitoring"
     }
   },
   "by_run_id": {},
-  "checksum": "f9f3dbc230f07db10c3b6da2a6b1babc100f75b1f59a5bf96d276d48a79fee8b"
+  "checksum": "e6f05eabccc3d740bd5c01f2b2eec96bfd893c0c11a4f8021a458ecc1e5039e2"
 }

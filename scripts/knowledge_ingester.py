@@ -493,6 +493,50 @@ def fetch_hn_for_pillar(
 # Default pillar tags inserted when no tags detected
 _PILLAR_BASE_TAGS = {"aml": "aml", "data": "dataops", "market": "market-microstructure"}
 
+# Map detected tag → canonical PILLAR_SUBCATEGORIES key (per ingester pillar slug).
+# The base tag is the generic fallback for items with no specific theme.
+TAG_TO_SUBCATEGORY: dict[str, dict[str, str]] = {
+    "aml": {
+        "aml": "cdd-kyc",
+        "transaction-monitoring": "transaction-monitoring",
+        "regtech": "regtech",
+        "financial-intelligence": "financial-intelligence",
+        "crypto-aml": "crypto-aml",
+        "trade-finance-crime": "trade-based-ml",
+        "risk-management": "risk-assessment",
+    },
+    "data": {
+        "dataops": "pipeline-architecture",
+        "schema-governance": "schema-management",
+        "stream-processing": "streaming",
+        "data-lakehouse": "storage-formats",
+        "data-quality": "data-quality",
+        "distributed-systems": "platform-engineering",
+        "query-optimization": "analytics-engineering",
+    },
+    "market": {
+        "market-microstructure": "market-microstructure",
+        "systemic-risk": "risk-management",
+        "quantitative-modeling": "quantitative-methods",
+        "macro-finance": "macro-economics",
+        "sec-filings": "earnings-analysis",
+    },
+}
+
+
+def category_from_tags(tags: list[str], pillar: str) -> str:
+    """Map detected pillar tags to a canonical PILLAR_SUBCATEGORIES key.
+
+    Prefers the first non-base tag that maps; falls back to the pillar's
+    base tag mapping when only generic tags are present.
+    """
+    mapping = TAG_TO_SUBCATEGORY.get(pillar, {})
+    base_tag = _PILLAR_BASE_TAGS.get(pillar)
+    for tag in tags:
+        if tag in mapping and tag != base_tag:
+            return mapping[tag]
+    return mapping.get(base_tag, "blog")
+
 
 def _source_to_item(
     source: dict,
@@ -567,7 +611,7 @@ def _source_to_item(
         "tags": tags,
         "description": description,
         "body_html": body_html,
-        "category": "blog",
+        "category": category_from_tags(tags, pillar),
         "language": "en",
         "date_str": slug_date,
         "created_at": date_str or now_iso,
@@ -810,6 +854,69 @@ def _nber_to_item(paper: dict, config: PillarConfig) -> dict[str, Any] | None:
         date_str=published, summary=summary, author="NBER",
         avg_sqi=0.75, score=0.75,
         quality_extra={"evidence_level": "Academic"},
+    )
+
+
+# ── GDELT DOC 2.0 (keyless fresh news; registry ingestion for AML only) ──
+
+GDELT_MIN_SCORE = 0.25
+GDELT_MAX_PER_PILLAR = 15
+GDELT_TIMESPAN = "2d"
+
+
+def fetch_gdelt_for_pillar(
+    config: PillarConfig,
+    days_back: int = 7,
+    *,
+    verbose: bool = False,
+) -> list[dict]:
+    """Fetch GDELT articles for a pillar and keep those passing the score gate.
+
+    GDELT returns no abstracts, so summaries are synthesised from the source
+    domain — quality-gated via ``GDELT_MIN_SCORE`` (higher than HN/arXiv
+    thresholds) to avoid diluting registry quality.
+    """
+    from core.fetch import GDELT_QUERIES, fetch_gdelt_articles
+
+    query = GDELT_QUERIES.get(config.slug_name)
+    if not query:
+        return []
+    articles = fetch_gdelt_articles(query, max_records=GDELT_MAX_PER_PILLAR, timespan=GDELT_TIMESPAN)
+    if verbose:
+        logger.debug(f"  GDELT returned {len(articles)} raw articles")
+    relevant: list[dict] = []
+    for a in articles:
+        title = (a.get("title") or "").strip()
+        domain = (a.get("domain") or "").strip()
+        score, tags = score_pillar_relevance(title, config, negative_tags=PILLAR_NEGATIVE_TAGS.get(config.slug_name))
+        if score < GDELT_MIN_SCORE:
+            continue
+        a["_relevance_score"] = round(score, 3)
+        a["_detected_tags"] = tags
+        a["_pillar"] = config.slug_name
+        a["_summary"] = f"Fresh {config.label} news item published by {domain or 'GDELT'}."
+        relevant.append(a)
+    relevant.sort(key=lambda a: a["_relevance_score"], reverse=True)
+    relevant = relevant[:GDELT_MAX_PER_PILLAR]
+    if verbose:
+        logger.debug(f"  {config.slug_name}-relevant GDELT (score >= {GDELT_MIN_SCORE}): {len(relevant)}")
+    return relevant
+
+
+def _gdelt_to_item(article: dict, config: PillarConfig) -> dict[str, Any] | None:
+    """Convert a GDELT article dict into a registry content item."""
+    title = (article.get("title") or "").strip()
+    url = (article.get("url") or "").strip()
+    seendate = (article.get("seendate") or "").strip()
+    if not title or not url:
+        return None
+    published = f"{seendate[:4]}-{seendate[4:6]}-{seendate[6:8]}" if len(seendate) >= 8 else ""
+    summary = article.get("_summary", "")
+    return _source_to_item(
+        article, config, source_key="gdelt", title=title, url=url,
+        date_str=published, summary=summary, author="GDELT News",
+        avg_sqi=0.60, score=0.60,
+        quality_extra={"evidence_level": "News"},
     )
 
 
@@ -1231,6 +1338,20 @@ def ingest_pillar(
             s2_count = sum(1 for i in items if i.get('source_breakdown', {}).get('semantic-scholar'))
             logger.debug(f"  → {s2_count} Semantic Scholar items for {config.slug_name}")
 
+    if source in ("gdelt", "all"):
+        if config.slug_name != "aml":
+            if verbose:
+                logger.debug("  GDELT registry ingestion is enabled for AML only (news.json covers all pillars)")
+        else:
+            articles = fetch_gdelt_for_pillar(config, days_back, verbose=verbose)
+            for a in articles:
+                item = _gdelt_to_item(a, config)
+                if item is not None:
+                    items.append(item)
+            if verbose:
+                gdelt_count = sum(1 for i in items if i.get('source_breakdown', {}).get('gdelt'))
+                logger.debug(f"  → {gdelt_count} GDELT items for {config.slug_name}")
+
     return items
 
 
@@ -1251,7 +1372,7 @@ def main() -> int:
     )
     parser.add_argument(
         "--source",
-        choices=["arxiv", "hn", "sec-edgar", "ssrn", "nber", "pubmed", "semantic-scholar", "all"],
+        choices=["arxiv", "hn", "sec-edgar", "ssrn", "nber", "pubmed", "semantic-scholar", "gdelt", "all"],
         default="all",
         help="Which source to fetch from (default: all)",
     )

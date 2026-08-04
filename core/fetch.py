@@ -774,3 +774,87 @@ def fetch_nber(
     for p in papers:
         p["source"] = "nber"
     return papers
+
+
+# ── GDELT DOC 2.0 (keyless, free, fresh news) ──
+
+GDELT_DOC_URL = "https://api.gdeltproject.org/api/v2/doc/doc"
+
+# Per-pillar keyword queries (GDELT boolean syntax; phrases quoted, OR-joined)
+GDELT_QUERIES: dict[str, str] = {
+    "aml": (
+        '"money laundering" OR "anti-money laundering" OR sanctions OR FinCEN '
+        'OR FATF OR "beneficial ownership" OR "financial crime" OR "sanctions evasion"'
+    ),
+    "data": (
+        '"data engineering" OR "data pipeline" OR lakehouse OR "Apache Iceberg" '
+        'OR "data lake" OR "stream processing" OR "data quality" OR "data platform"'
+    ),
+    "market": (
+        '"Federal Reserve" OR "stock market" OR "quantitative trading" OR '
+        '"market microstructure" OR volatility OR "interest rates" OR inflation OR ETFs'
+    ),
+}
+
+# Combined query for the news pipeline — ONE request/day (GDELT rate-limits
+# aggressively; a single request is far more reliable than one per pillar).
+GDELT_ALL_QUERY = " OR ".join(GDELT_QUERIES.values())
+
+
+def fetch_gdelt_articles(
+    query: str,
+    *,
+    max_records: int = 40,
+    timespan: str = "2d",
+    timeout: int = 30,
+) -> list[dict]:
+    """Fetch fresh news articles from the GDELT DOC 2.0 API (no key required).
+
+    GDELT enforces one request per 5 seconds; on HTTP 429 we wait 6s and
+    retry up to ``max_retries`` times (stricter than the generic backoff).
+    Returns list of {title, url, seendate, domain, language}.  GDELT does not
+    provide abstracts, so consumers synthesise descriptions.
+    """
+    params = urllib.parse.urlencode(
+        {
+            "query": f"{query} sourcelang:english",
+            "mode": "artlist",
+            "format": "json",
+            "maxrecords": max_records,
+            "timespan": timespan,
+            "sort": "datedesc",
+        }
+    )
+    url = f"{GDELT_DOC_URL}?{params}"
+    raw = None
+    last_err = None
+    for attempt, wait in enumerate((0, 10, 25), start=1):
+        if attempt > 1:
+            time.sleep(wait)
+        raw = _request(url, timeout=timeout, max_retries=1)
+        if raw is not None:
+            break
+        last_err = "429/error"
+    if raw is None:
+        write_dlq("gdelt", url, "All retries exhausted", {"query": query, "err": last_err})
+        return []
+    try:
+        data = json.loads(raw)
+    except json.JSONDecodeError:
+        return []
+    articles = []
+    for a in data.get("articles", []):
+        title = (a.get("title") or "").strip()
+        url = (a.get("url") or "").strip()
+        if not title or not url:
+            continue
+        articles.append(
+            {
+                "title": title,
+                "url": url,
+                "seendate": a.get("seendate", ""),
+                "domain": a.get("domain", ""),
+                "language": a.get("language", ""),
+            }
+        )
+    return articles

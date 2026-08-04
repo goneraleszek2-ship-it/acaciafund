@@ -24,3 +24,8 @@ registry.json.bak
 tmp/
 .venv-test/
 *.backup
+
+# Build artifacts
+.coverage
+.dlq/
+.ruff_cache/

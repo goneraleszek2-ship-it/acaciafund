@@ -29,30 +29,64 @@ from xml.etree import ElementTree as ET
 PROJECT_ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
-from core.data import USER_AGENT  # noqa: E402
-
 NEWS_PATH = PROJECT_ROOT / "data" / "news.json"
 
 DEFAULT_LIMIT = 45
 PER_PILLAR_CAP = 10
 
 # ── RSS / Atom feeds per pillar (best-effort; failures are skipped) ──────
+# Every URL below was verified live (HTTP 200 + parseable XML) at 2026-08-04.
+# Feeds that died in the past: FinCEN/ACAMS/FATF rss (404/403), NASDAQ rss
+# (404), Flink feed.xml (404) — kept out of the list until their publishers
+# restore working feeds.
 FEEDS: list[dict[str, Any]] = [
-    {"name": "FinCEN", "pillar": "aml", "url": "https://www.fincen.gov/rss.xml"},
-    {"name": "ACAMS", "pillar": "aml", "url": "https://www.acams.org/feed/"},
-    {"name": "FATF", "pillar": "aml", "url": "https://www.fatf-gafi.org/en/fatf.rss"},
-    {"name": "MarketWatch", "pillar": "market", "url": "https://feeds.content.dowjones.io/public/rss/mw_topstories"},
-    {"name": "NASDAQ", "pillar": "market", "url": "https://www.nasdaq.com/rss/markets/market-news"},
-    {"name": "Traders Magazine", "pillar": "market", "url": "https://www.tradersmagazine.com/feed/"},
+    # ── AML / Compliance / Regulation ────────────────────────────────
+    {"name": "SEC Press Releases", "pillar": "aml", "url": "https://www.sec.gov/news/pressreleases.rss"},
+    {"name": "Federal Reserve", "pillar": "aml", "url": "https://www.federalreserve.gov/feeds/press_all.xml"},
+    {"name": "ECB Press", "pillar": "aml", "url": "https://www.ecb.europa.eu/rss/press.xml"},
+    {"name": "EBA", "pillar": "aml", "url": "https://www.eba.europa.eu/rss.xml"},
+    {"name": "Bank of England", "pillar": "aml", "url": "https://www.bankofengland.co.uk/rss/news"},
+    {"name": "Chainalysis", "pillar": "aml", "url": "https://www.chainalysis.com/blog/feed/"},
+    {"name": "Compliance Week", "pillar": "aml", "url": "https://www.complianceweek.com/rss"},
+    {"name": "CryptoNews", "pillar": "aml", "url": "https://cryptonews.com/feed/"},
+    # ── Data Engineering / DataOps ───────────────────────────────────
     {"name": "InfoQ", "pillar": "data", "url": "https://www.infoq.com/feed/"},
     {"name": "Datanami", "pillar": "data", "url": "https://www.datanami.com/feed/"},
-    {"name": "Apache Flink", "pillar": "data", "url": "https://flink.apache.org/feed.xml"},
+    {"name": "Databricks", "pillar": "data", "url": "https://www.databricks.com/blog/feed.xml"},
+    {"name": "dbt Labs", "pillar": "data", "url": "https://www.getdbt.com/blog/rss.xml"},
+    {"name": "Dagster", "pillar": "data", "url": "https://dagster.io/blog/rss.xml"},
+    {"name": "Data Engineer Things", "pillar": "data", "url": "https://dataengineerthings.substack.com/feed"},
+    {"name": "High Scalability", "pillar": "data", "url": "https://highscalability.com/rss/"},
+    # ── Markets / Finance ────────────────────────────────────────────
+    {"name": "MarketWatch", "pillar": "market", "url": "https://feeds.content.dowjones.io/public/rss/mw_topstories"},
+    {"name": "Traders Magazine", "pillar": "market", "url": "https://www.tradersmagazine.com/feed/"},
+    {"name": "BBC Business", "pillar": "market", "url": "https://feeds.bbci.co.uk/news/business/rss.xml"},
+    {"name": "Guardian Business", "pillar": "market", "url": "https://www.theguardian.com/business/rss"},
+    {"name": "Financial Times", "pillar": "market", "url": "https://www.ft.com/rss/home"},
+    {"name": "Seeking Alpha", "pillar": "market", "url": "https://seekingalpha.com/market_currents.xml"},
+    {"name": "Yahoo Finance", "pillar": "market", "url": "https://finance.yahoo.com/news/rssindex"},
+    {"name": "ZeroHedge", "pillar": "market", "url": "https://feeds.feedburner.com/zerohedge/feed"},
 ]
 
+# GDELT DOC 2.0 is keyless/free.  A single combined query per run keeps us
+# well under GDELT's aggressive per-IP rate limits; pillar assignment happens
+# locally via keyword scoring.  GDELT provides no abstracts — only
+# title/url/domain.
+GDELT_MAX_RECORDS = 80
+GDELT_TIMESPAN = "2d"
 
-def _http_get(url: str, timeout: int = 20) -> str | None:
+
+def _http_get(url: str, timeout: int = 15) -> str | None:
     try:
-        req = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+        req = urllib.request.Request(
+            url,
+            headers={
+                "User-Agent": (
+                    "Mozilla/5.0 (X11; Linux x86_64) AcaciaFund-NewsBot/3.0 "
+                    "(https://www.acaciafund.org; admin@acaciafund.org)"
+                )
+            },
+        )
         with urllib.request.urlopen(req, timeout=timeout) as resp:
             return resp.read().decode("utf-8", errors="replace")
     except Exception:
@@ -172,15 +206,54 @@ def fetch_feed_items() -> list[dict[str, Any]]:
                     "source": feed["name"],
                     "source_type": "feed",
                     "points": 0,
+                    "pillar": feed["pillar"],
                     "published_at": it["published_at"],
                 }
             )
     return items
 
 
+def fetch_gdelt_items(
+    max_records: int = GDELT_MAX_RECORDS,
+    timespan: str = GDELT_TIMESPAN,
+) -> list[dict[str, Any]]:
+    """Fetch fresh news via GDELT DOC 2.0 (keyless) — one combined query.
+
+    Pillar assignment happens later in main() via keyword scoring; items
+    carry no declared pillar here.
+    """
+    from core.fetch import GDELT_ALL_QUERY, fetch_gdelt_articles
+
+    articles = fetch_gdelt_articles(GDELT_ALL_QUERY, max_records=max_records, timespan=timespan)
+    items: list[dict[str, Any]] = []
+    for a in articles:
+        seendate = re.sub(r"\D", "", a.get("seendate", ""))
+        published = None
+        if len(seendate) >= 14:
+            try:
+                published = (
+                    f"{seendate[:4]}-{seendate[4:6]}-{seendate[6:8]}"
+                    f"T{seendate[8:10]}:{seendate[10:12]}:{seendate[12:14]}Z"
+                )
+            except ValueError:
+                published = None
+        items.append(
+            {
+                "title": a.get("title", ""),
+                "url": a.get("url", ""),
+                "source": a.get("domain", ""),
+                "source_type": "gdelt",
+                "points": 0,
+                "published_at": published,
+            }
+        )
+    return items
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--hn-only", action="store_true", help="Skip RSS feeds")
+    parser.add_argument("--no-gdelt", action="store_true", help="Skip GDELT fetch")
     parser.add_argument("--limit", type=int, default=DEFAULT_LIMIT, help="Max total items")
     parser.add_argument("--min-score", type=float, default=0.15, help="Pillar relevance threshold")
     args = parser.parse_args()
@@ -202,17 +275,24 @@ def main() -> int:
     hn_items = fetch_hn_items()
     raw_items.extend(hn_items)
     print(f"  hn:    {len(hn_items)} raw items")
+    if not args.no_gdelt:
+        gdelt_items = fetch_gdelt_items()
+        raw_items.extend(gdelt_items)
+        print(f"  gdelt: {len(gdelt_items)} raw items")
 
     # Score and assign each item to its best pillar
+    # Tie-break: when pillars tie on score, prefer the feed's declared pillar
+    # (feed topic labels are more precise than keyword scoring alone).
     scored: list[dict[str, Any]] = []
     for it in raw_items:
         title = it["title"] or ""
         if not title:
             continue
         best_pillar, best_score = None, 0.0
+        preferred = it.get("pillar")  # feed slug already matches ingester keys
         for slug, cfg in PILLAR_CONFIGS.items():
             score, _ = score_pillar_relevance(title, cfg)
-            if score > best_score:
+            if score > best_score or (score == best_score and slug == preferred):
                 best_score, best_pillar = score, slug
         if best_pillar is None or best_score < args.min_score:
             continue

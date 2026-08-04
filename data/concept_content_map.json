@@ -367,7 +367,8 @@
     "options-trading",
     "regime-detection",
     "sanctions-screening",
-    "statistical-arbitrage"
+    "statistical-arbitrage",
+    "transaction-monitoring"
   ],
   "aml/research/square-root-price-impact-is-necessary-for-endogenous-manipul": [
     "ai-act-high-risk",
@@ -414,6 +415,16 @@
     "market-making",
     "money-laundering-basics"
   ],
+  "compliance/knowledge/cdd-kyc-verification-checklist": [
+    "aml-risk-scoring",
+    "beneficial-ownership",
+    "cdd",
+    "edd",
+    "fatf-recommendations",
+    "kyc",
+    "model-cards",
+    "pep"
+  ],
   "compliance/knowledge/computational-constitutionalism": [
     "computational-constitutionalism",
     "design"
@@ -429,6 +440,21 @@
   ],
   "compliance/knowledge/law-and-language": [
     "aml-compliance-basics"
+  ],
+  "compliance/knowledge/network-analysis-aml": [
+    "aml-risk-scoring",
+    "entity-resolution",
+    "network-analysis",
+    "transaction-monitoring"
+  ],
+  "compliance/knowledge/red-team-testing-aml": [
+    "aml-program",
+    "fatf-recommendations",
+    "risk-based-approach",
+    "sar"
+  ],
+  "compliance/knowledge/sql-window-functions-aml": [
+    "transaction-monitoring"
   ],
   "compliance/learn/ai-machine-learning-aml": [
     "adverse-media",
@@ -563,6 +589,7 @@
   ],
   "compliance/research/bueche-2022-fatf-virtual-assets-crypto": [
     "aml-regulatory-framework",
+    "crypto-aml",
     "defi-aml",
     "fatf-recommendations",
     "travel-rule"
@@ -620,6 +647,7 @@
     "lakestream-architecture",
     "streaming"
   ],
+  "data/knowledge/bloom-self-study-framework": [],
   "data/knowledge/compliance-by-design": [
     "aml-compliance-basics",
     "compliance-by-design",
@@ -632,6 +660,12 @@
     "data-quality-sla",
     "dataops"
   ],
+  "data/knowledge/exactly-once-streaming": [
+    "apache-flink",
+    "apache-kafka",
+    "data-pipeline",
+    "streaming"
+  ],
   "data/knowledge/explainer-etl": [
     "data-pipeline",
     "etl"
@@ -643,6 +677,15 @@
   "data/knowledge/law-markets-data-triangle": [
     "law-markets-data-triangle",
     "regulatory-lag"
+  ],
+  "data/knowledge/polars-pipeline-tutorial": [
+    "arrow-parquet",
+    "data-contracts",
+    "data-pipeline"
+  ],
+  "data/knowledge/sqi-scoring-explained": [
+    "data-quality",
+    "research"
   ],
   "data/learn/building-pipelines-dbt-dagster": [
     "aml-model-validation",
@@ -1008,6 +1051,8 @@
     "dagster",
     "data-observability",
     "data-pipeline",
+    "data-quality",
+    "dataops",
     "distributed-systems",
     "execution-algos",
     "model-cards",
@@ -1074,6 +1119,7 @@
     "apache-iceberg",
     "data-lake",
     "data-pipeline",
+    "distributed-systems",
     "lakehouse",
     "lakehouse-architecture",
     "schema-registry"
@@ -1083,19 +1129,26 @@
     "data-lake",
     "data-pipeline",
     "data-platform-kpis",
+    "distributed-systems",
     "lakehouse",
     "lakehouse-architecture"
   ],
   "data/research/chang-2006-bigtable-distributed-storage": [
     "data-pipeline",
-    "distributed-systems"
+    "distributed-systems",
+    "lakehouse",
+    "lakehouse-architecture"
   ],
   "data/research/choose-duckdb-rather-than-sqlite": [
     "arrow-parquet",
-    "dataops"
+    "dataops",
+    "lakehouse",
+    "lakehouse-architecture"
   ],
   "data/research/cosmosescape-taking-over-every-database-in-azure-cosmos-db": [
     "dataops",
+    "lakehouse",
+    "lakehouse-architecture",
     "research"
   ],
   "data/research/cost-optimization-data-pipelines": [
@@ -1109,6 +1162,8 @@
     "distributed-systems",
     "hawkes-process",
     "hedge-funds",
+    "lakehouse",
+    "lakehouse-architecture",
     "mean-reversion",
     "options-trading",
     "pipeline-cost-optimization",
@@ -1124,6 +1179,7 @@
     "dataops",
     "debiasing-pipeline",
     "design",
+    "distributed-systems",
     "etl",
     "model-cards",
     "orchestration"
@@ -1206,6 +1262,7 @@
   ],
   "data/research/dean-ghemawat-2004-mapreduce": [
     "data-pipeline",
+    "distributed-systems",
     "mapreduce"
   ],
   "data/research/debezium-cdc-change-data-capture": [
@@ -1215,7 +1272,10 @@
     "change-data-capture",
     "data-lake",
     "dataops",
+    "distributed-systems",
     "event-driven-trading",
+    "lakehouse",
+    "lakehouse-architecture",
     "schema-migration",
     "schema-registry",
     "streaming"
@@ -1252,7 +1312,8 @@
     "market-impact",
     "metric-store",
     "ml-pipeline",
-    "model-cards"
+    "model-cards",
+    "query-optimization"
   ],
   "data/research/fellegi-sunter-1969-record-linkage": [
     "data-governance",
@@ -1288,6 +1349,8 @@
   "data/research/kreps-2011-kafka-distributed-messaging": [
     "apache-kafka",
     "data-pipeline",
+    "dataops",
+    "distributed-systems",
     "event-driven-trading",
     "real-time-analytics",
     "streaming"
@@ -1322,7 +1385,8 @@
     "order-book"
   ],
   "data/research/rune-1-1-adds-python-an-emacs-editor-a-symbol-index-and-is-n": [
-    "dataops"
+    "dataops",
+    "query-optimization"
   ],
   "data/research/schema-registry-avro-protobuf": [
     "arrow-parquet",
@@ -1341,6 +1405,7 @@
     "asset-pricing",
     "dagster",
     "data-pipeline",
+    "data-quality",
     "dataops",
     "debiasing-pipeline",
     "high-frequency-trading",
@@ -1349,11 +1414,14 @@
   ],
   "data/research/show-hn-a-local-merge-queue-for-parallel-claude-code-agents": [
     "dataops",
-    "design"
+    "design",
+    "distributed-systems"
   ],
   "data/research/sqlite-in-production-optimizing-wal-mode-concurrency-and-vfs": [
     "dataops",
-    "distributed-systems"
+    "distributed-systems",
+    "lakehouse",
+    "lakehouse-architecture"
   ],
   "data/research/stonebraker-2018-database-cycles": [
     "data-pipeline",
@@ -1365,6 +1433,7 @@
     "apache-kafka",
     "cdc",
     "change-data-capture",
+    "dataops",
     "etl",
     "lakehouse",
     "lakehouse-architecture",
@@ -1403,6 +1472,7 @@
   ],
   "data/research/zaharia-2012-spark-rdds": [
     "data-pipeline",
+    "distributed-systems",
     "mapreduce"
   ],
   "knowledge/about": [
@@ -1564,6 +1634,24 @@
   ],
   "markets/knowledge/explainer-volatility": [
     "volatility-surface"
+  ],
+  "markets/knowledge/mean-reversion-primer": [
+    "mean-reversion",
+    "statistical-arbitrage"
+  ],
+  "markets/knowledge/risk-parity-basics": [
+    "risk-based-approach",
+    "risk-parity",
+    "volatility-surface"
+  ],
+  "markets/knowledge/volatility-regimes": [
+    "regime-detection",
+    "risk-based-approach",
+    "statistical-arbitrage",
+    "volatility-surface"
+  ],
+  "markets/knowledge/yield-curve-primer": [
+    "macro-analysis"
   ],
   "markets/learn/algorithmic-trading-strategies": [
     "algorithmic-trading",
@@ -2030,7 +2118,8 @@
     "earnings-analysis",
     "equity-basics",
     "macro-analysis",
-    "market-indices"
+    "market-indices",
+    "market-microstructure"
   ],
   "markets/research/kahneman-tversky-1979-prospect-theory": [
     "behavioral-finance",

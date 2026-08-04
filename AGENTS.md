@@ -122,7 +122,7 @@ This codebase has been built in sequential sprints. Understanding what came befo
 | Foundation fixes | Concept extraction word-boundary fix, alias expansion, full category remapping, knowledge-to-pillar mapping, description backfill |
 | Quality fixes | SQI backfill script, search recall improvement (threshold 0.35, body window 800), niche concept alias expansion |
 
-**Current state:** 207 registry items, 2,677 generated pages, 3 clean pillars, 199 ontology concepts (all with philosophical metadata), 32 inspiration sources. Quality gate: passing. 1036 tests passing (1028 Python across 43 modules + 62 JS across 4 files). Metrics verified 2026-08-03 — see `docs/08-testing-quality/test-overview.md` for the canonical reference.
+**Current state:** 223 registry items (102 research / 83 learn / 38 knowledge, all 13 knowledge categories populated), 2,677 generated pages, 3 clean pillars, 199 ontology concepts (all with philosophical metadata), 65 inspiration sources. Daily news pipeline: 23 live RSS feeds + Hacker News + GDELT (keyless). Quality gate: passing. 1057 tests passing (1036 + 21 category/news pipeline tests). Metrics verified 2026-08-04 — see `docs/08-testing-quality/test-overview.md` for the canonical reference.
 
 ## Cognitive Architecture (Phase 4)
 
@@ -159,7 +159,7 @@ The portal is being restructured from a *content repository* into a *schema-buil
 - Bloom taxonomy questions on learn/knowledge pages
 - Visual article fingerprints (tartan SVG patterns)
 - Pillar badge macros (`templates/macros/pillar_badge.html`)
-- Source freshness checker (32 weekly HTTP checks)
+- Source freshness checker (65 weekly HTTP checks)
 - Cross-pillar content connections (`find_cross_pillar()` in `build.py`)
 - Schema builder (prerequisite→path DAG) | `core/schema_builder.py` | P1 ✓
 - Visual abstract (SVG + 3-bullet summary) | `templates/partials/visual_abstract.j2` | P1 ✓
@@ -314,13 +314,17 @@ scripts/knowledge_ingester.py  →  registry.json  →  build.py  →  dist/
 | `core/build_taxonomies.py` | Taxonomy generation: admin pages, search index, tag pages, pillar pages, feed, ontology admin |
 | `core/build_cache.py` | Incremental build cache with parallel_map support |
 | `schemas.py` | Pydantic models for registry validation (`RegistryData`) |
-| `registry.json` | Content registry (207 items) |
+| `registry.json` | Content registry (223 items) |
 | `core/schema_builder.py` | **NEW** Schema builder: prerequisite graphs, learning paths, Bloom categorization |
 | `static/js/progressive_disclosure.js` | **NEW** Collapsible article sections (Cognitive Load Theory) |
 | `templates/partials/visual_abstract.j2` | **NEW** Dual-coded article summary partial (visual abstract) |
 | `templates/partials/concept_map.j2` | **NEW** Per-article concept neighborhood map partial |
 | `seed_learn.py` | Learn module prerequisites and curated relations |
-| `scripts/check_source_freshness.py` | HTTP HEAD checker for 32 inspiration sources |
+| `scripts/check_source_freshness.py` | HTTP HEAD checker for 65 inspiration sources |
+| `scripts/fetch_news.py` | Daily news pipeline: 23 verified RSS feeds + Hacker News + GDELT (keyless, one combined query), writes `data/news.json` |
+| `scripts/check_rss_feeds.py` | RSS feed health check (24 feeds, `--json`, exit 1 on dead feeds) |
+| `scripts/backfill_categories.py` | Backfills canonical `category` on research items from tags (`--dry-run|--apply|--validate`) |
+| `scripts/generate_knowledge_modules.py` | Generates knowledge-module pages from 12 hand-authored templates (2 per previously empty category) |
 | `scripts/check_links_and_sqi.py` | Broken link checker + SQI audit + external reference inventory |
 | `scripts/backfill_sqi.py` | SQI backfill for all items missing quality scores |
 | `scripts/knowledge_ingester.py` | Multi-pillar knowledge ingestion (arXiv, HN, PubMed) with ontology concept extraction |
@@ -332,7 +336,7 @@ scripts/knowledge_ingester.py  →  registry.json  →  build.py  →  dist/
 | `scripts/deploy_cloudflare.py` | Cloudflare Pages deployment trigger |
 | `etc/pillars.toml` | Pillar definitions + `[inspiration_sources]` (32 authoritative sources per pillar) |
 | `data/ontology.json` | Persisted ontology (199 concepts, 449 relations) |
-| `data/source_health.json` | Persistent freshness data (32 sources) |
+| `data/source_health.json` | Persistent freshness data (65 sources) |
 | `.github/workflows/source-refresh.yml` | Weekly Monday 04:00 UTC refresh — ontology, glossary, freshness, build, deploy |
 
 ### Admin Dashboard
@@ -375,7 +379,7 @@ Client-side fuzzy search via `static/js/search.js`:
 
 ### Source Freshness
 
-32 inspiration sources from `etc/pillars.toml` are HTTP-checked weekly:
+65 inspiration sources from `etc/pillars.toml` are HTTP-checked weekly:
 - `scripts/check_source_freshness.py` — HEADs each source, writes `dist/source_health.json` + `data/source_health.json`
 - Admin sources page shows freshness badge and per-source status
 - `--update-ontology` flag merges freshness data into `data/ontology.json`
@@ -531,7 +535,7 @@ result = df.filter(pl.col('price') > 100).collect()
 
 JS tests run via `node tests/test_*.js` for each file (no npm/playwright needed). `scripts/run_tests.sh` runs all 4 suites.
 
-**Total: 1036 passing tests (1028 Python across 43 modules + 62 JS across 4 files).** (Verified 2026-08-03: `python3 -m pytest tests/ --co` → 1028 collected across 43 modules; JS suites run via `run_tests.sh`.)
+**Total: 1057 passing tests (1036 + 21 in `tests/test_category_mapping.py` covering tag→subcategory mapping, category backfill, and the news/GDELT pipeline).** (Verified 2026-08-04: `python3 -m pytest tests/ --co` → 1049 collected across 44 modules; JS suites run via `run_tests.sh`.)
 
 ### Phase 1.5 Files (Cognitive Load Amputation — July 2026)
 
@@ -628,7 +632,8 @@ python3 -u -m pytest tests/ -v > /tmp/test_results.log 2>&1
 - **Weekly refresh**: `.github/workflows/source-refresh.yml` — Monday 04:00 UTC
   - Regenerates ontology, glossaries
   - Runs source synthesis + verification
-  - Checks source freshness (32 sources)
+  - Checks source freshness (65 sources)
+  - Runs `scripts/fetch_news.py` (daily news: 23 RSS feeds + HN + GDELT) and regenerates `data/news.json`
   - Full rebuild
   - Links check + SQI audit
   - Uploads artifacts (30-day retention)
