@@ -21,6 +21,11 @@ if TYPE_CHECKING:
 
 from pydantic import BaseModel, Field
 
+from core.ontology_extra_seeds import (
+    PILLAR_EXTRA_CONCEPT_SEEDS,
+    PILLAR_EXTRA_RELATION_SEEDS,
+)
+
 # ---------------------------------------------------------------------------
 # Pydantic models
 # ---------------------------------------------------------------------------
@@ -1086,11 +1091,24 @@ class OntologyManager:
                 added += 1
         return added
 
+    def seed_extra_concepts(self) -> int:
+        """Seed concepts from PILLAR_EXTRA_CONCEPT_SEEDS. Returns count added."""
+        added = 0
+        for seed in PILLAR_EXTRA_CONCEPT_SEEDS:
+            concept_id = seed["id"]
+            if concept_id not in self._concepts:
+                data = dict(seed)
+                pillar = data.pop("pillar", "cross-pillar")
+                self.add_concept(Concept(pillar=pillar, **data))
+                added += 1
+        return added
+
     def seed_all_pillars(self) -> int:
         """Seed all pillars. Returns total concepts added."""
         total = 0
         for pillar in PILLAR_CONCEPT_SEEDS:
             total += self.seed_pillar(pillar)
+        total += self.seed_extra_concepts()
         if self._cache:
             self._cache.invalidate()
         return total
@@ -1108,6 +1126,12 @@ class OntologyManager:
             if src in self._concepts and tgt in self._concepts:
                 self.add_relation(Relation(
                     source_id=src, target_id=tgt, relation_type=rtype, pillar="cross-pillar",
+                ))
+                added += 1
+        for src, tgt, rtype, pillar in PILLAR_EXTRA_RELATION_SEEDS:
+            if src in self._concepts and tgt in self._concepts:
+                self.add_relation(Relation(
+                    source_id=src, target_id=tgt, relation_type=rtype, pillar=pillar,
                 ))
                 added += 1
         return added

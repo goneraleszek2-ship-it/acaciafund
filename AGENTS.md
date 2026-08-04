@@ -122,7 +122,7 @@ This codebase has been built in sequential sprints. Understanding what came befo
 | Foundation fixes | Concept extraction word-boundary fix, alias expansion, full category remapping, knowledge-to-pillar mapping, description backfill |
 | Quality fixes | SQI backfill script, search recall improvement (threshold 0.35, body window 800), niche concept alias expansion |
 
-**Current state:** 223 registry items (102 research / 83 learn / 38 knowledge, all 13 knowledge categories populated), 2,677 generated pages, 3 clean pillars, 199 ontology concepts (all with philosophical metadata), 65 inspiration sources. Daily news pipeline: 23 live RSS feeds + Hacker News + GDELT (keyless). Quality gate: passing. 1057 tests passing (1036 + 21 category/news pipeline tests). Metrics verified 2026-08-04 — see `docs/08-testing-quality/test-overview.md` for the canonical reference.
+**Current state:** 226 registry items, 2,780 generated pages, 3 clean pillars, 199 ontology concepts (all with philosophical metadata, 447 canonical relations), 65 inspiration sources. Daily news pipeline: 23 live RSS feeds + Hacker News + GDELT (keyless). Quality gate: passing. 1057 tests passing (1036 + 21 category/news pipeline tests). Metrics verified 2026-08-04 — see `docs/08-testing-quality/test-overview.md` for the canonical reference.
 
 ## Cognitive Architecture (Phase 4)
 
@@ -311,6 +311,7 @@ scripts/knowledge_ingester.py  →  registry.json  →  build.py  →  dist/
 | `build.py` | Main build (~3726 lines) — content rendering, graph, admin, search, feed, cross-pillar synthesis |
 | `core/urls.py` | Pure URL helpers (`slug_to_path`, `slug_to_fspath`, `canonical_path`, `slug_to_url`, `pillar_to_url`, `url_to_pillar`) |
 | `core/ontology.py` | Ontology framework: Concept, Relation, ResourceLink, InspirationSource models; OntologyManager; concept extraction; Cytoscape export |
+| `core/ontology_extra_seeds.py` | **Codified extra ontology seeds** — 30 concepts + 211 relations beyond `PILLAR_CONCEPT_SEEDS` (markets theory, law–markets–data synthesis, data-engineering foundations). Folded into `seed_all_pillars()`/`seed_relations()` so refreshes are idempotent (reproduces exactly 199 concepts / 447 relations). |
 | `core/build_taxonomies.py` | Taxonomy generation: admin pages, search index, tag pages, pillar pages, feed, ontology admin |
 | `core/build_cache.py` | Incremental build cache with parallel_map support |
 | `schemas.py` | Pydantic models for registry validation (`RegistryData`) |
