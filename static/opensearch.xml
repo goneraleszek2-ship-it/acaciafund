@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OpenSearchDescription xmlns="http://a9.com/-/spec/opensearch/1.1/">
+  <ShortName>AcaciaFund</ShortName>
+  <Description>Search AcaciaFund research, learn modules, and knowledge base on market structure, compliance systems, and data pipelines.</Description>
+  <Tags>finance compliance data-engineering aml markets</Tags>
+  <InputEncoding>UTF-8</InputEncoding>
+  <OutputEncoding>UTF-8</OutputEncoding>
+  <Url type="text/html" template="https://www.acaciafund.org/search/?q={searchTerms}"/>
+  <Url type="application/opensearchdescription+xml" rel="self" template="https://www.acaciafund.org/static/opensearch.xml"/>
+  <AdultContent>false</AdultContent>
+  <Language>en</Language>
+  <Copyright>Copyright 2026 AcaciaFund</Copyright>
+</OpenSearchDescription>
