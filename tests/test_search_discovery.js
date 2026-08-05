@@ -37,6 +37,13 @@ assert(search.didYouMean('x', vocab) === null, 'single short token -> null');
 assert(search.didYouMean('compilance baz', vocab) === null, 'only half the tokens corrected -> null');
 assert(search.didYouMean('transaction', vocab, 1) === null, 'exact match multi-token guard');
 
+/* prefix-extension guard: a short valid term must not be "corrected" into a
+   longer vocab word it is merely a prefix of (e.g. "aml" vs "amla") */
+assert(search.bestCorrection('aml', ['amla'], 2) === null, 'prefix extension -> no correction');
+assert(search.bestCorrection('amla', ['aml'], 2) === null, 'prefix extension (reversed) -> no correction');
+assert(search.didYouMean('aml', ['amla']) === null, 'didYouMean skips prefix-extension candidates');
+assert(search.bestCorrection('volatilty', ['volatility'], 2) === 'volatility', 'real typo still corrected after prefix guard');
+
 /* ── buildVocabulary ── */
 
 const index = [

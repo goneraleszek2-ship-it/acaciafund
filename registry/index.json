@@ -1,11 +1,11 @@
 {
   "manifest_type": "registry-index",
-  "generated_at": "2026-08-05T05:48:09Z",
+  "generated_at": "2026-08-05T08:49:34Z",
   "counts": {
     "runs": 0,
-    "pages": 2792,
+    "pages": 2827,
     "pillars": {
-      "data-engineering": 92,
+      "data-engineering": 96,
       "stock": 73,
       "aml": 57
     }
@@ -77,6 +77,30 @@
       "content_id": "data/research/ml-pipeline-orchestration-feast-mlflow",
       "pillar": "data-engineering",
       "title": "ML Pipeline Orchestration: From Notebook to Production with Feast and MLflow",
+      "published_at": "2026-06-09T00:00:00Z"
+    },
+    {
+      "content_id": "data/research/data-observability-lineage",
+      "pillar": "data-engineering",
+      "title": "Data Observability: Monitoring, Lineage, and Incident Response for Pipelines",
+      "published_at": "2026-06-09T00:00:00Z"
+    },
+    {
+      "content_id": "data/research/open-source-data-platform",
+      "pillar": "data-engineering",
+      "title": "Building a Data Platform on a Budget: The Open Source Stack in 2026",
+      "published_at": "2026-06-09T00:00:00Z"
+    },
+    {
+      "content_id": "data/research/sqlmesh-data-transformation",
+      "pillar": "data-engineering",
+      "title": "SQLMesh: The SQL-First Data Transformation Framework Challenging dbt",
+      "published_at": "2026-06-09T00:00:00Z"
+    },
+    {
+      "content_id": "data/research/dbt-mesh-enterprise-scale",
+      "pillar": "data-engineering",
+      "title": "dbt Mesh: Decentralizing Data Transformation at Enterprise Scale",
       "published_at": "2026-06-09T00:00:00Z"
     },
     {
@@ -1402,6 +1426,26 @@
       "pillar": "data-engineering",
       "title": "ML Pipeline Orchestration: From Notebook to Production with Feast and MLflow"
     },
+    "data/research/data-observability-lineage": {
+      "content_id": "data/research/data-observability-lineage",
+      "pillar": "data-engineering",
+      "title": "Data Observability: Monitoring, Lineage, and Incident Response for Pipelines"
+    },
+    "data/research/open-source-data-platform": {
+      "content_id": "data/research/open-source-data-platform",
+      "pillar": "data-engineering",
+      "title": "Building a Data Platform on a Budget: The Open Source Stack in 2026"
+    },
+    "data/research/sqlmesh-data-transformation": {
+      "content_id": "data/research/sqlmesh-data-transformation",
+      "pillar": "data-engineering",
+      "title": "SQLMesh: The SQL-First Data Transformation Framework Challenging dbt"
+    },
+    "data/research/dbt-mesh-enterprise-scale": {
+      "content_id": "data/research/dbt-mesh-enterprise-scale",
+      "pillar": "data-engineering",
+      "title": "dbt Mesh: Decentralizing Data Transformation at Enterprise Scale"
+    },
     "data/research/delta-lake-iceberg-hudi-comparison": {
       "content_id": "data/research/delta-lake-iceberg-hudi-comparison",
       "pillar": "data-engineering",
@@ -2459,5 +2503,5 @@
     }
   },
   "by_run_id": {},
-  "checksum": "11e60244132477c3f043ee8cf05c2b1313e25ea28a3660cb7c5b84fb00932064"
+  "checksum": "ffe402e942e41aa26c0d51ecd4f40e74b08797b7c87de89e629e214a3f8541c1"
 }

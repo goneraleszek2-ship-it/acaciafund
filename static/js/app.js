@@ -1539,6 +1539,9 @@
     let bestDist = Infinity;
     for (let i = 0; i < vocab.length; i++) {
       const w = vocab[i];
+      // Skip prefix-extension matches: a valid short term ("aml") must not be
+      // "corrected" to a longer vocab word it is merely a prefix of ("amla").
+      if (w.startsWith(token) || token.startsWith(w)) continue;
       const dist = levenshtein(w, token);
       if (dist === 0) return null;
       if (dist > limit) continue;
@@ -1807,6 +1810,11 @@
   function populateTechFilters(index) {
     var container = document.getElementById('tech-filter-list');
     if (!container) return;
+    // Preserve current selection across re-renders (this runs on every search)
+    var checkedTechs = {};
+    container.querySelectorAll('.filter-checkbox:checked').forEach(function(cb) {
+      checkedTechs[cb.value] = true;
+    });
     var techMap = {};
     for (var i = 0; i < index.length; i++) {
       var techs = index[i].technologies || [];
@@ -1835,6 +1843,9 @@
           '<span style="font-size:0.65rem;color:var(--color-text-muted,#888);margin-left:auto">' + techMap[t] + '</span>' +
           '</label>';
       }).join('') + '</details>' : '');
+    container.querySelectorAll('.filter-checkbox').forEach(function(cb) {
+      if (checkedTechs[cb.value]) cb.checked = true;
+    });
   }
 
   function staticBase() {
@@ -2102,17 +2113,18 @@
       runSearch(q, tagFilter);
     }
 
-    // Filter checkbox change handler
-    document.querySelectorAll('.filter-checkbox').forEach(cb => {
-      cb.addEventListener('change', function() {
-        const filters = readFilters();
-        syncFiltersToUrl(filters);
-        // Invalidate search index cache when pillar filters change
-        if (cb.getAttribute('data-group') === 'pillar') {
-          searchIndex = null;
-        }
-        doSearch();
-      });
+    // Filter checkbox change handler (delegated: technology checkboxes are
+    // injected dynamically by populateTechFilters after every search)
+    document.addEventListener('change', function(e) {
+      const cb = e.target && e.target.classList && e.target.classList.contains('filter-checkbox') ? e.target : null;
+      if (!cb) return;
+      const filters = readFilters();
+      syncFiltersToUrl(filters);
+      // Invalidate search index cache when pillar filters change
+      if (cb.getAttribute('data-group') === 'pillar') {
+        searchIndex = null;
+      }
+      doSearch();
     });
 
     // Reset filters

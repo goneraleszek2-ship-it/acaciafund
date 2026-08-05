@@ -17,10 +17,17 @@ from datetime import date, datetime, timedelta
 from pathlib import Path
 from typing import Any
 
+from core.urls import canonical_path, slug_to_fspath
+
 PROJECT_ROOT = Path(__file__).parent.parent
 WEEKLY_NOTES_PATH = PROJECT_ROOT / "data" / "weekly_notes.json"
 REGISTRY_PATH = PROJECT_ROOT / "registry.json"
 SOURCE_HEALTH_PATH = PROJECT_ROOT / "data" / "source_health.json"
+
+
+def canonical_url_for_slug(slug: str) -> str:
+    """Translate a registry slug to its canonical URL path (e.g. 'aml/learn/x' → '/compliance/learn/x/')."""
+    return "/" + canonical_path(slug_to_fspath(slug)).strip("/") + "/"
 
 
 def iso_week_range(year: int, week: int) -> tuple[date, date]:
@@ -111,7 +118,7 @@ def make_placeholder_events(recent_items: list[dict]) -> list[dict]:
             "feynman": f"PLACEHOLDER: {desc}",
             "analogy": "PLACEHOLDER: Add Feynman analogy here.",
             "why_it_matters": "PLACEHOLDER: Add significance here.",
-            "links": [{"label": title[:60], "url": f"/{item.get('slug', '')}/"}],
+            "links": [{"label": title[:60], "url": canonical_url_for_slug(item.get("slug", ""))}],
         })
     return events
 
