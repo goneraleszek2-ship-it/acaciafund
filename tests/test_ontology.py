@@ -261,6 +261,53 @@ class TestOntologySeeding:
         mgr.seed_all_pillars()  # should not add duplicates
         assert mgr.concept_count() == first_count
 
+    def test_canonical_baseline(self):
+        """Guard: seeding must reproduce the canonical 199 concepts / 447 relations.
+
+        Regression guard for the weekly-refresh bug that silently dropped 30
+        concepts (199 -> 169) because they existed only as persisted state.
+        Keeps the baseline reproducible from code alone.
+        """
+        mgr = OntologyManager()
+        mgr.seed_all_pillars()
+        mgr.seed_relations()
+        assert mgr.concept_count() == 199
+        assert mgr.relation_count() == 447
+        expected_extras = {
+            "acid-transaction-management",
+            "algorithmic-cascade",
+            "aml-effectiveness",
+            "aml-program-reform",
+            "black-scholes",
+            "capital-asset-pricing-model",
+            "compliance-by-design",
+            "computational-constitutionalism",
+            "contestability",
+            "data-quality-framework",
+            "design",
+            "digital-neofeudalism",
+            "efficient-market-hypothesis",
+            "enterprise-architecture",
+            "fama-french-model",
+            "funding",
+            "glosten-milgrom",
+            "infrastructure",
+            "kyle-model",
+            "lakehouse-architecture",
+            "lakestream-architecture",
+            "law-markets-data-triangle",
+            "mapreduce",
+            "prospect-theory",
+            "record-linkage",
+            "regulatory-lag",
+            "research",
+            "stream-processing-model",
+            "transaction-monitoring-theory",
+            "ux-design-patterns",
+        }
+        ids = {c.id for c in mgr._concepts.values()}
+        assert expected_extras <= ids, f"Missing extra concepts: {expected_extras - ids}"
+
 
 class TestOntologyGraphExport:
     def test_to_cytograph_nodes(self):

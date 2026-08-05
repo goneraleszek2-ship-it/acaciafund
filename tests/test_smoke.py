@@ -147,3 +147,18 @@ def test_registry_io_atomicity(tmp_path):
 
     loaded = load_registry(reg_path)
     assert loaded["content"][0]["slug"] == "atom-1"
+
+
+def test_ontology_canonical_baseline():
+    """Guard: fresh seeding reproduces the canonical 199 concepts / 447 relations.
+
+    Runs in CI on every push (test_smoke.py is the CI smoke suite). Prevents the
+    weekly-refresh regression that silently dropped 30 concepts from the ontology.
+    """
+    from core.ontology import OntologyManager
+
+    mgr = OntologyManager()
+    mgr.seed_all_pillars()
+    mgr.seed_relations()
+    assert mgr.concept_count() == 199, f"Expected 199 concepts, got {mgr.concept_count()}"
+    assert mgr.relation_count() == 447, f"Expected 447 relations, got {mgr.relation_count()}"
