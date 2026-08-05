@@ -13,6 +13,7 @@ class Content:
     title: str
     pillar: str
     content_type: str
+    category: str = ""
     created_at: Optional[datetime] = None
     date_str: Optional[str] = None
     tags: List[str] = field(default_factory=list)
@@ -85,6 +86,7 @@ class Content:
             title=data.get("title", ""),
             pillar=data.get("pillar", ""),
             content_type=data.get("content_type", "research"),
+            category=data.get("category", ""),
             created_at=created_at,
             date_str=date_str,
             tags=tags,

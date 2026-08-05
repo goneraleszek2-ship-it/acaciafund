@@ -1756,7 +1756,7 @@
     return (v === 'newest' || v === 'sqi') ? v : 'relevance';
   }
 
-  const FILTER_LABELS = { pillar: 'Pillar', type: 'Type', difficulty: 'Difficulty', bloom: 'Bloom', technology: 'Technology' };
+  const FILTER_LABELS = { pillar: 'Pillar', type: 'Type', difficulty: 'Difficulty', bloom: 'Bloom', technology: 'Technology', category: 'Category' };
   const FILTER_VALUE_LABELS = {
     pillar: { aml: 'Compliance', stock: 'Markets', 'data-engineering': 'Data' },
     type: { research: 'Research', learn: 'Learn', knowledge: 'Knowledge' },
@@ -1769,7 +1769,7 @@
     if (!el) return;
     const filters = readFilters();
     const chips = [];
-    for (const group of ['pillar', 'type', 'difficulty', 'bloom', 'technology']) {
+    for (const group of ['pillar', 'type', 'difficulty', 'bloom', 'category', 'technology']) {
       (filters[group] || []).forEach(function(v) {
         const vLabel = (FILTER_VALUE_LABELS[group] && FILTER_VALUE_LABELS[group][v]) || v;
         chips.push({ group: group, value: v, text: (FILTER_LABELS[group] || group) + ': ' + vLabel });
@@ -1786,6 +1786,7 @@
     if (filters.type.length && !filters.type.includes(entry.content_type || '')) return false;
     if (filters.difficulty.length && !filters.difficulty.includes(entry.difficulty || '')) return false;
     if (filters.bloom.length && !filters.bloom.includes(entry.bloom || '')) return false;
+    if (filters.category.length && !filters.category.includes(entry.category || '')) return false;
     if (filters.technology.length) {
       var techs = entry.technologies || [];
       var hasMatch = filters.technology.some(function(t) { return techs.indexOf(t) !== -1; });
@@ -1795,7 +1796,7 @@
   }
 
   function readFilters() {
-    const filters = { pillar: [], type: [], difficulty: [], bloom: [], technology: [] };
+    const filters = { pillar: [], type: [], difficulty: [], bloom: [], category: [], technology: [] };
     document.querySelectorAll('.filter-checkbox:checked').forEach(cb => {
       const group = cb.getAttribute('data-group');
       if (group && filters.hasOwnProperty(group)) filters[group].push(cb.value);
@@ -1831,7 +1832,7 @@
 
   function syncFiltersToUrl(filters) {
     const url = new URL(window.location);
-    for (const key of ['pillar', 'type', 'difficulty', 'bloom', 'technology']) {
+    for (const key of ['pillar', 'type', 'difficulty', 'bloom', 'category', 'technology']) {
       if (filters[key].length) url.searchParams.set('f_' + key, filters[key].join(','));
       else url.searchParams.delete('f_' + key);
     }
@@ -2035,6 +2036,55 @@
     });
   }
 
+  function prettyLabel(key) {
+    return String(key || '').replace(/-/g, ' ').replace(/\b\w/g, function(m) { return m.toUpperCase(); });
+  }
+
+  // Dynamic category facet: top categories by count over entries matching the
+  // current pillar/type selection (mirrors populateTechFilters behavior).
+  function populateCategories(index) {
+    const container = document.getElementById('category-filter-list');
+    if (!container) return;
+    const checkedCats = {};
+    container.querySelectorAll('.filter-checkbox:checked').forEach(function(cb) {
+      checkedCats[cb.value] = true;
+    });
+    const filters = readFilters();
+    const catMap = {};
+    for (let i = 0; i < index.length; i++) {
+      const e = index[i];
+      if (filters.pillar.length && !filters.pillar.includes(e.pillar || '')) continue;
+      if (filters.type.length && !filters.type.includes(e.content_type || '')) continue;
+      const cat = e.category || '';
+      if (!cat) continue;
+      catMap[cat] = (catMap[cat] || 0) + 1;
+    }
+    const sorted = Object.keys(catMap).sort(function(a, b) { return catMap[b] - catMap[a]; });
+    const topCats = sorted.slice(0, 12);
+    if (!topCats.length) {
+      container.innerHTML = '<span style="font-size:0.75rem;color:var(--color-text-muted,#666)">No categories detected</span>';
+      return;
+    }
+    container.innerHTML = topCats.map(function(c) {
+      return '<label style="display:flex;align-items:center;gap:0.4rem;font-size:0.85rem;padding:0.2rem 0;cursor:pointer" title="' + catMap[c] + ' items">' +
+        '<input type="checkbox" value="' + escapeHtml(c) + '" class="filter-checkbox" data-group="category"> ' +
+        escapeHtml(prettyLabel(c)) +
+        '<span style="font-size:0.65rem;color:var(--color-text-muted,#888);margin-left:auto">' + catMap[c] + '</span>' +
+        '</label>';
+    }).join('') +
+    (sorted.length > 12 ? '<details style="font-size:0.75rem;margin-top:0.25rem"><summary style="cursor:pointer;color:var(--color-text-muted,#888)">+' + (sorted.length - 12) + ' more</summary>' +
+      sorted.slice(12).map(function(c) {
+        return '<label style="display:flex;align-items:center;gap:0.4rem;font-size:0.8rem;padding:0.15rem 0;cursor:pointer" title="' + catMap[c] + ' items">' +
+          '<input type="checkbox" value="' + escapeHtml(c) + '" class="filter-checkbox" data-group="category"> ' +
+          escapeHtml(prettyLabel(c)) +
+          '<span style="font-size:0.65rem;color:var(--color-text-muted,#888);margin-left:auto">' + catMap[c] + '</span>' +
+          '</label>';
+      }).join('') + '</details>' : '');
+    container.querySelectorAll('.filter-checkbox').forEach(function(cb) {
+      if (checkedCats[cb.value]) cb.checked = true;
+    });
+  }
+
   function staticBase() {
     const base = document.querySelector('script[src*="search.js"], script[src*="app.js"]');
     if (base) {
@@ -2046,7 +2096,7 @@
     return window.location.origin + '/static/';
   }
 
-  const INDEX_CACHE_VERSION = 'v1';
+  const INDEX_CACHE_VERSION = 'v2';
 
   function fetchIndex() {
     if (searchIndex) return Promise.resolve(searchIndex);
@@ -2168,7 +2218,7 @@
 
     const filtersActive = (function() {
       const f = readFilters();
-      return f.pillar.length || f.type.length || f.difficulty.length || f.bloom.length || f.technology.length;
+      return f.pillar.length || f.type.length || f.difficulty.length || f.bloom.length || f.category.length || f.technology.length;
     })();
 
     if (!query.trim() && !tagFilter && !filtersActive) {
@@ -2185,6 +2235,7 @@
 
     fetchIndex().then(index => {
       populateTechFilters(index);
+      populateCategories(index);
       updateFacetCounts(index);
       // Restore technology filter checkboxes from URL after populating
       var techParams = new URLSearchParams(window.location.search).get('f_technology');
@@ -2192,6 +2243,13 @@
         var techVals = techParams.split(',');
         document.querySelectorAll('#tech-filter-list .filter-checkbox').forEach(function(cb) {
           if (techVals.indexOf(cb.value) !== -1) cb.checked = true;
+        });
+      }
+      var catParams = new URLSearchParams(window.location.search).get('f_category');
+      if (catParams) {
+        var catVals = catParams.split(',');
+        document.querySelectorAll('#category-filter-list .filter-checkbox').forEach(function(cb) {
+          if (catVals.indexOf(cb.value) !== -1) cb.checked = true;
         });
       }
       const filters = readFilters();
@@ -2285,6 +2343,8 @@
       entryFieldText: entryFieldText,
       getSynonymMap: getSynonymMap,
       applySort: applySort,
+      matchesFilters: matchesFilters,
+      prettyLabel: prettyLabel,
     };
   }
 

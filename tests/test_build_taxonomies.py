@@ -44,6 +44,7 @@ def _make_item(**kwargs):
         "difficulty": "",
         "reading_time": 0,
         "knowledge_category": "",
+        "category": "",
     }
     defaults.update(kwargs)
     return type("MockContent", (object,), defaults)()
@@ -376,6 +377,21 @@ class TestGenerateSearchPages:
         assert len(idx) == 1
         assert idx[0]["title"] == "Test"
 
+    def test_search_index_category(self, tmp_path):
+        output_dir = tmp_path / "site"
+        static_dir = tmp_path / "static"
+        static_dir.mkdir(parents=True)
+        items = [
+            _make_item(slug="a", title="Categorized", category="streaming"),
+            _make_item(slug="b", title="Plain", category=""),
+        ]
+        render_template = MagicMock(return_value="<html>search</html>")
+        generate_search_pages(output_dir, static_dir, items, render_template, {}, _dummy)
+        idx = json.loads((static_dir / "search-index.json").read_text())
+        assert len(idx) == 2
+        assert idx[0]["category"] == "streaming"
+        assert idx[1]["category"] == ""
+
     def test_search_concept_enrichment(self, tmp_path):
         output_dir = tmp_path / "site"
         static_dir = tmp_path / "static"
@@ -387,8 +403,8 @@ class TestGenerateSearchPages:
             _concepts = {"concept-1": type("c", (object,), {"id": "concept-1", "label": "Concept One"})}
 
         render_template = MagicMock(return_value="<html>search</html>")
-        pages = generate_search_pages(output_dir, static_dir, items, render_template, {}, _dummy,
-                                       ontology=FakeOntology(), concept_cache=concept_cache)
+        generate_search_pages(output_dir, static_dir, items, render_template, {}, _dummy,
+                              ontology=FakeOntology(), concept_cache=concept_cache)
         idx = json.loads((static_dir / "search-index.json").read_text())
         assert "Concept One" in idx[0]["ontology_concepts"]
         assert idx[0]["concept_boost"] > 0

@@ -955,6 +955,7 @@ def generate_search_pages(
             "slug": slug,
             "pillar": getattr(c, "pillar", None) or "",
             "content_type": getattr(c, "content_type", None) or "",
+            "category": getattr(c, "category", None) or "",
             "tags": getattr(c, "tags", None) or [],
             "date_str": getattr(c, "date_str", None) or "",
             "difficulty": getattr(c, "difficulty", None) or "",

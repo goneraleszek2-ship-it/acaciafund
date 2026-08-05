@@ -142,6 +142,20 @@ assert(relBrowse[1].entry.title === 'Old', 'relevance browse: SQI desc then date
 const sortedCopy = search.applySort(sortScored, 'newest', false);
 assert(sortedCopy !== sortScored && sortScored[0].entry.title === 'Old', 'applySort does not mutate input');
 
+/* ── matchesFilters (category facet) ── */
+
+const noFilter = { pillar: [], type: [], difficulty: [], bloom: [], category: [], technology: [] };
+const catFilter = { pillar: [], type: [], difficulty: [], bloom: [], category: ['streaming'], technology: [] };
+const catEntry = { pillar: 'data-engineering', content_type: 'research', difficulty: '', bloom: '', category: 'streaming', technologies: [] };
+const plainEntry = { pillar: 'data-engineering', content_type: 'research', difficulty: '', bloom: '', category: '', technologies: [] };
+assert(search.matchesFilters(catEntry, noFilter) === true, 'no filters -> everything matches');
+assert(search.matchesFilters(catEntry, catFilter) === true, 'category filter: matching entry passes');
+assert(search.matchesFilters({ ...catEntry, category: 'batch-processing' }, catFilter) === false, 'category filter: non-matching entry fails');
+assert(search.matchesFilters(plainEntry, catFilter) === false, 'category filter: empty-category entry excluded when active');
+assert(search.matchesFilters(plainEntry, noFilter) === true, 'no filter: empty-category entry passes');
+const multiCat = { pillar: [], type: [], difficulty: [], bloom: [], category: ['streaming', 'batch-processing'], technology: [] };
+assert(search.matchesFilters(catEntry, multiCat) === true, 'category filter: multiple values OR semantics');
+
 console.log('');
 console.log('Search discovery tests: ' + passed + ' passed, ' + failed + ' failed');
 process.exit(failed ? 1 : 0);
