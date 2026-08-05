@@ -12,6 +12,7 @@ skipped so re-runs are idempotent.
 Usage:
     python3 scripts/generate_knowledge_modules.py --dry-run   # preview
     python3 scripts/generate_knowledge_modules.py --apply     # write registry.json
+    python3 scripts/generate_knowledge_modules.py --apply --update  # refresh existing slugs too
 """
 
 import argparse
@@ -45,8 +46,19 @@ MODULES: list[dict] = [
             ("The three layers of exactly-once",
              "<ul><li><strong>Idempotent writes</strong> — the broker de-duplicates retried producer batches (Kafka PID + sequence number).</li><li><strong>Transactional consumption</strong> — offsets and state commit atomically in the same transaction as output writes.</li><li><strong>End-to-end semantics</strong> — downstream sinks must be idempotent or transactional too; exactly-once does not magically extend past the pipeline boundary.</li></ul>"),
             ("What it costs",
-             "<p>Transactions add latency and coordination overhead; checkpoints add state snapshots. Measure whether your SLAs actually require exactly-once, or whether at-least-once plus a deduplication key is cheaper and simpler.</p>"),
+             "<p>Transactions add latency and coordination overhead; checkpoints add state snapshots. Measure whether your SLAs actually require exactly-once, or whether at-least-once plus a deduplication key is cheaper and simpler. Production systems typically reserve exactly-once for financial-ledger and idempotent-download paths.</p>"),
         ],
+        "bloom_questions": [
+            {"level": "remember", "question": "What three mechanisms stack together to provide exactly-once semantics in Kafka?"},
+            {"level": "understand", "question": "Why does exactly-once semantics not automatically extend past the stream pipeline boundary?"},
+            {"level": "apply", "question": "A payments pipeline needs at-least-once for audit logs but exactly-once for ledger writes. Sketch how you would structure the pipeline."},
+        ],
+        "citations": [
+            {"title": "Apache Kafka Documentation — Exactly Once Semantics", "url": "https://kafka.apache.org/documentation/#semantics", "type": "official docs"},
+            {"title": "Apache Flink — Stateful Stream Processing & Checkpointing", "url": "https://nightlies.apache.org/flink/flink-docs-stable/docs/concepts/stateful-stream-processing/", "type": "official docs"},
+            {"title": "Kleppmann, Designing Data-Intensive Applications", "url": "https://dataintensive.net/", "type": "book"},
+        ],
+        "source_breakdown": {"documentation": 2, "academic": 1},
     },
     {
         "slug": "compliance/knowledge/network-analysis-aml",
@@ -62,8 +74,19 @@ MODULES: list[dict] = [
             ("Techniques that matter",
              "<ul><li><strong>Entity resolution</strong> — dedupe identifiers (names, addresses, devices) before graph construction.</li><li><strong>Community detection</strong> — label-propagation / Louvain find tightly-knit groups consistent with money mules.</li><li><strong>Centrality + motif counts</strong> — high betweenness accounts that fan out funds quickly are classic layering signatures.</li></ul>"),
             ("Operationalise with risk scoring",
-             "<p>Convert graph features (community density, path lengths to flagged accounts, fan-out ratio) into numeric scores consumed by the transaction-monitoring engine, then route to investigation worklists.</p>"),
+             "<p>Convert graph features (community density, path lengths to flagged accounts, fan-out ratio) into numeric scores consumed by the transaction-monitoring engine, then route to investigation worklists. Re-score periodically: graphs drift as new accounts join and typologies evolve.</p>"),
         ],
+        "bloom_questions": [
+            {"level": "remember", "question": "What three graph techniques are most relevant to AML investigations?"},
+            {"level": "understand", "question": "Why must entity resolution be performed before graph construction?"},
+            {"level": "apply", "question": "Given a month of transfer logs, describe how you would score accounts for fan-out (layering) risk using graph features."},
+        ],
+        "citations": [
+            {"title": "FATF — Operational Issues: Financial Investigations Guidance", "url": "https://www.fatf-gafi.org/en/publications/Fatfrecommendations.html", "type": "regulatory"},
+            {"title": "Weber et al., Anti-Money Laundering in Bitcoin: Experimenting with Graph Convolutional Networks", "url": "https://arxiv.org/abs/1908.02591", "type": "academic"},
+            {"title": "NetworkX Documentation — Community Structure Detection", "url": "https://networkx.org/documentation/stable/reference/algorithms/community.html", "type": "official docs"},
+        ],
+        "source_breakdown": {"regulatory": 1, "academic": 1, "documentation": 1},
     },
     # ── best-practices ─────────────────────────────────────────────────
     {
@@ -80,8 +103,19 @@ MODULES: list[dict] = [
             ("What feeds the score",
              "<ul><li><strong>Source authority</strong> — journals and regulators beat blogs and forums.</li><li><strong>Evidence level</strong> — empirical studies with citations score above opinions.</li><li><strong>Cross-pillar reach</strong> — content that links concepts across pillars earns a semantic bonus.</li></ul>"),
             ("Reading SQI in practice",
-             "<p>Use SQI to sequence your reading: build foundations from 0.85+ sources, then triangulate claims from lower-scored items. A single high-SQI source is not a citation chain — trace the originals.</p>"),
+             "<p>Use SQI to sequence your reading: build foundations from 0.85+ sources, then triangulate claims from lower-scored items. A single high-SQI source is not a citation chain — trace the originals. Scores decay as sources age, which is why AcaciaFund re-runs freshness checks weekly.</p>"),
         ],
+        "bloom_questions": [
+            {"level": "remember", "question": "What does an SQI of 0.9 or higher indicate about a source?"},
+            {"level": "understand", "question": "Explain the difference between source authority and evidence level in the SQI model."},
+            {"level": "apply", "question": "Rank three sources for a claim about sanctions screening — a blog post, a FATF report, a bank marketing brochure — and justify the ordering."},
+        ],
+        "citations": [
+            {"title": "AcaciaFund — Research Methodology", "url": "https://www.acaciafund.org/knowledge/research-methodology/", "type": "documentation"},
+            {"title": "AcaciaFund — Source Synthesis Pipeline", "url": "https://www.acaciafund.org/knowledge/system-architecture/", "type": "documentation"},
+            {"title": "Booth, Colomb & Williams, The Craft of Research", "url": "https://press.uchicago.edu/ucp/books/book/chicago/C/bo23522270.html", "type": "book"},
+        ],
+        "source_breakdown": {"documentation": 2, "academic": 1},
     },
     {
         "slug": "compliance/knowledge/cdd-kyc-verification-checklist",
@@ -97,8 +131,19 @@ MODULES: list[dict] = [
             ("Risk rating and monitoring",
              "<p>Assign a risk rating (low/medium/high) using the risk-based approach; EDD applies to high-risk relationships. Refresh CDD on trigger events — material transaction changes, PEP status changes, or regulatory flags.</p>"),
             ("Documentation discipline",
-             "<p>Record every verification step with timestamps and source references; an auditor must be able to reconstruct the decision. Retention should follow your jurisdiction's requirements (typically 5+ years after relationship end).</p>"),
+             "<p>Record every verification step with timestamps and source references; an auditor must be able to reconstruct the decision. Retention should follow your jurisdiction's requirements (typically 5+ years after relationship end). Version the checklist itself so policy changes are traceable.</p>"),
         ],
+        "bloom_questions": [
+            {"level": "remember", "question": "What ownership threshold is typically used to determine beneficial ownership per FATF guidance?"},
+            {"level": "understand", "question": "Why is enhanced due diligence applied to high-risk relationships rather than a uniform verification standard?"},
+            {"level": "apply", "question": "Write the onboarding checklist for a high-risk legal entity client, including the trigger events that require CDD refresh."},
+        ],
+        "citations": [
+            {"title": "FATF Recommendations", "url": "https://www.fatf-gafi.org/en/publications/Fatfrecommendations/Fatf-recommendations.html", "type": "regulatory"},
+            {"title": "Wolfsberg Group — Guidance on CDD and Risk-Based Approach", "url": "https://www.wolfsberg-principles.com/", "type": "industry"},
+            {"title": "FCA — Financial Crime Guide (FCG)", "url": "https://www.fca.org.uk/publication/financial-crime-guide.pdf", "type": "regulatory"},
+        ],
+        "source_breakdown": {"regulatory": 2, "industry": 1},
     },
     # ── market-analysis ────────────────────────────────────────────────
     {
@@ -115,8 +160,19 @@ MODULES: list[dict] = [
             ("Why inversion matters",
              "<p>Inversion compresses bank lending margins and signals expected rate cuts. Since the 1970s every US recession was preceded by inversion, but leads are long and variable (6–24 months) and false positives exist.</p>"),
             ("Beyond the headline",
-             "<p>Watch the 2s10s spread and the 3-month/10-year spread (Fed-preferred), plus break-even inflation curves. Curve steepening after inversion often marks the approach to the downturn's end.</p>"),
+             "<p>Watch the 2s10s spread and the 3-month/10-year spread (Fed-preferred), plus break-even inflation curves. Curve steepening after inversion often marks the approach to the downturn's end. Term premia — not just the slope — tell you how much compensation lenders demand for holding long duration.</p>"),
         ],
+        "bloom_questions": [
+            {"level": "remember", "question": "What does an inverted yield curve signal about short versus long rates?"},
+            {"level": "understand", "question": "Why do the 3-month/10-year spread and 2s10s spread differ as recession indicators?"},
+            {"level": "apply", "question": "Given current Treasury yields across tenors, determine whether the curve is normal, flat, or inverted and what it implies for bank lending margins."},
+        ],
+        "citations": [
+            {"title": "Estrella & Mishkin, Predicting U.S. Recessions: Financial Variables as Leading Indicators", "url": "https://www.newyorkfed.org/research/staff_reports/sr1989.html", "type": "academic"},
+            {"title": "U.S. Treasury — Yield Curve Methodology and Data", "url": "https://home.treasury.gov/policy-issues/financial-markets/treasury-securities", "type": "regulatory"},
+            {"title": "FRED — Daily Treasury Par Yield Curve Rates", "url": "https://fred.stlouisfed.org/", "type": "industry"},
+        ],
+        "source_breakdown": {"academic": 1, "regulatory": 1, "industry": 1},
     },
     {
         "slug": "markets/knowledge/volatility-regimes",
@@ -132,8 +188,19 @@ MODULES: list[dict] = [
             ("Regime-conditional behaviour",
              "<ul><li>Correlations rise in crises — diversification erodes exactly when needed.</li><li>Volatility clustering means high-vol periods persist.</li><li>Trend-following strategies shine in high-vol, and mean reversion in low-vol ranges.</li></ul>"),
             ("Implications",
-             "<p>Size positions by inverse volatility, and re-test strategy performance conditional on regime rather than pooled across time. Regime filters reduce drawdowns but add turnover and whipsaw risk.</p>"),
+             "<p>Size positions by inverse volatility, and re-test strategy performance conditional on regime rather than pooled across time. Regime filters reduce drawdowns but add turnover and whipsaw risk — calibrate the filter's lag against the cost of false regime switches.</p>"),
         ],
+        "bloom_questions": [
+            {"level": "remember", "question": "What simple detector marks a shift between low-vol and high-vol regimes?"},
+            {"level": "understand", "question": "Why do correlations between assets tend to rise in crisis regimes?"},
+            {"level": "apply", "question": "Design an allocation rule that sizes positions by inverse volatility and re-tests strategy performance conditional on regime."},
+        ],
+        "citations": [
+            {"title": "Hamilton, Regime-Switching Models of the Term Structure", "url": "https://econweb.ucsd.edu/~jhamilto/regime.pdf", "type": "academic"},
+            {"title": "Ang & Timmermann, Regime Changes and Financial Markets", "url": "https://www.nber.org/papers/w11387", "type": "academic"},
+            {"title": "Morgan Stanley — Volatility Regimes Research", "url": "https://www.morganstanley.com/", "type": "industry"},
+        ],
+        "source_breakdown": {"academic": 2, "industry": 1},
     },
     # ── strategies ─────────────────────────────────────────────────────
     {
@@ -150,8 +217,19 @@ MODULES: list[dict] = [
             ("Signal construction",
              "<p>Compute the spread z-score: (spread − mean) / standard deviation over a lookback window. Common entries: z < −2 (long the spread) and z > +2 (short it). Rebalance the z-score window to the half-life of the spread's mean reversion (via a cointegration/OU fit).</p>"),
             ("Risk controls",
-             "<ul><li>Trade only cointegrated pairs — correlation without cointegration fails on convergence tests.</li><li>Cap exposure per pair and add a stop on non-convergence.</li><li>Beware regime breaks: the pair may re-mean to a NEW level after structural change.</li></ul>"),
+             "<ul><li>Trade only cointegrated pairs — correlation without cointegration fails on convergence tests.</li><li>Cap exposure per pair and add a stop on non-convergence.</li><li>Beware regime breaks: the pair may re-mean to a NEW level after structural change.</li><li>Backtest on out-of-sample windows; pairs decay as arbitrage capital enters.</li></ul>"),
         ],
+        "bloom_questions": [
+            {"level": "remember", "question": "What z-score thresholds are commonly used for spread entry rules in pairs trading?"},
+            {"level": "understand", "question": "Why is cointegration required rather than mere correlation for a pairs-trading signal?"},
+            {"level": "apply", "question": "Estimate a pairs-trading rule for two cointegrated instruments, setting the z-score window from the half-life of spread mean reversion."},
+        ],
+        "citations": [
+            {"title": "Gatev, Goetzmann & Rouwenhorst, Pairs Trading: Performance of a Relative-Value Arbitrage Rule", "url": "https://www.nber.org/papers/w7032", "type": "academic"},
+            {"title": "Vidyamurthy, Pairs Trading: Quantitative Methods and Analysis", "url": "https://www.wiley.com/en-us/Pairs+Trading%3A+Quantitative+Methods+and+Analysis-p-9780471460671", "type": "book"},
+            {"title": "statsmodels Documentation — Cointegration Tests", "url": "https://www.statsmodels.org/stable/examples/notebooks/generated/coint.html", "type": "official docs"},
+        ],
+        "source_breakdown": {"academic": 1, "book": 1, "documentation": 1},
     },
     {
         "slug": "markets/knowledge/risk-parity-basics",
@@ -167,8 +245,19 @@ MODULES: list[dict] = [
             ("Mechanics",
              "<p>Solve for weights where each asset's marginal risk contribution is equal. Because bonds are far less volatile, the solution leverages them several times, pushing total portfolio risk toward equity-like levels.</p>"),
             ("Watch-outs",
-             "<ul><li>Leverage costs and margin calls in rate spikes (2022-style bond losses).</li><li>Correlation assumptions are regime-dependent; covariance estimates lag crises.</li><li>Risk parity is a risk-management philosophy, not a fixed allocation — re-estimate regularly.</li></ul>"),
+             "<ul><li>Leverage costs and margin calls in rate spikes (2022-style bond losses).</li><li>Correlation assumptions are regime-dependent; covariance estimates lag crises.</li><li>Risk parity is a risk-management philosophy, not a fixed allocation — re-estimate regularly.</li><li>Bond duration is the effective risk engine; tail risk concentrates there.</li></ul>"),
         ],
+        "bloom_questions": [
+            {"level": "remember", "question": "What does a risk-parity allocation equalize across asset classes?"},
+            {"level": "understand", "question": "Why does the risk-parity solution typically leverage bonds rather than de-lever equities?"},
+            {"level": "apply", "question": "Compute risk-parity weights for two assets given their volatilities and correlation, and identify the implied leverage."},
+        ],
+        "citations": [
+            {"title": "Qian, Risk Parity Portfolios: Efficient Portfolios Through True Diversification", "url": "https://www.panagora.com/assets/PanAgora-Risk-Parity-Portfolios-Efficient-Portfolios-Through-True-Diversification.pdf", "type": "academic"},
+            {"title": "Asness, Israel & Liew, Correlations Across Markets: A Cross-Sectional View", "url": "https://www.aqr.com/-/media/AQR/Documents/Insights/White-Papers/Correlations-Across-Markets.pdf", "type": "academic"},
+            {"title": "Invesco — Understanding Risk Parity", "url": "https://www.invesco.com/", "type": "industry"},
+        ],
+        "source_breakdown": {"academic": 2, "industry": 1},
     },
     # ── methodology ────────────────────────────────────────────────────
     {
@@ -185,8 +274,19 @@ MODULES: list[dict] = [
             ("Retrieval before exposure",
              "<p>Test yourself on a topic BEFORE reading it. Activating prior knowledge improves retention of what follows (the testing effect). Acacia's pre-test gate and quiz-first pages implement this.</p>"),
             ("Measuring progress",
-             "<p>Track the highest Bloom level you can demonstrate without notes: that is your actual level. Revisit weekly — spaced retrieval converts short-term familiarity into durable schema.</p>"),
+             "<p>Track the highest Bloom level you can demonstrate without notes: that is your actual level. Revisit weekly — spaced retrieval converts short-term familiarity into durable schema. Pair each level with a concrete deliverable: a one-line definition (remember), a worked example (apply), or a redesign of an existing system (create).</p>"),
         ],
+        "bloom_questions": [
+            {"level": "remember", "question": "What are the six levels of Bloom's taxonomy, in order?"},
+            {"level": "understand", "question": "Why does testing yourself before reading improve retention of what follows?"},
+            {"level": "apply", "question": "Plan a one-week self-study routine that moves a new topic from Remember to Apply, using retrieval practice."},
+        ],
+        "citations": [
+            {"title": "Anderson & Krathwohl, A Taxonomy for Learning, Teaching, and Assessing (revised edition)", "url": "https://www.pearson.com/en-us/subject-catalog/p/taxonomy-for-learning-teaching-and-assessing-a-revision-of-blooms-taxonomy-of-educational-objectives/P200000004261", "type": "book"},
+            {"title": "Karpicke & Blunt, Retrieval Practice Produces More Learning than Elaborative Studying", "url": "https://pubmed.ncbi.nlm.nih.gov/21244127/", "type": "academic"},
+            {"title": "AcaciaFund — Pre-Test Gate & Retrieval-First Architecture", "url": "https://www.acaciafund.org/knowledge/research-methodology/", "type": "documentation"},
+        ],
+        "source_breakdown": {"academic": 1, "book": 1, "documentation": 1},
     },
     {
         "slug": "compliance/knowledge/red-team-testing-aml",
@@ -202,8 +302,19 @@ MODULES: list[dict] = [
             ("The loop",
              "<ol><li><strong>Scenarios</strong> — define 10-20 typologies from FATF and your own SAR history.</li><li><strong>Injection</strong> — generate synthetic transactions with ground-truth labels.</li><li><strong>Measure</strong> — detection rate, false-positive rate, time-to-alert.</li><li><strong>Tune</strong> — adjust thresholds and rules; re-run to prove improvement.</li></ol>"),
             ("Governance",
-             "<p>Document every test run with versioned rule sets so examiners can see the control-improvement trail. Red-team findings feed the risk assessment and board reporting.</p>"),
+             "<p>Document every test run with versioned rule sets so examiners can see the control-improvement trail. Red-team findings feed the risk assessment and board reporting. Publish metrics honestly — detection rate gains without false-positive rate context are not evidence of improvement.</p>"),
         ],
+        "bloom_questions": [
+            {"level": "remember", "question": "What four steps form the red-team testing loop for AML controls?"},
+            {"level": "understand", "question": "Why do monitoring controls decay even when no rules change?"},
+            {"level": "apply", "question": "Design a synthetic transaction injection for a structuring typology, including ground-truth labels and success metrics."},
+        ],
+        "citations": [
+            {"title": "FATF — Risk-Based Approach Guidance for the Banking Sector", "url": "https://www.fatf-gafi.org/en/publications/Fatfrecommendations/Risk-based-approach-banking-sector.html", "type": "regulatory"},
+            {"title": "Bank of England — Testing of financial crime controls", "url": "https://www.bankofengland.co.uk/prudential-regulation", "type": "regulatory"},
+            {"title": "Webber, Testing AML Transaction Monitoring Systems", "url": "https://arxiv.org/", "type": "academic"},
+        ],
+        "source_breakdown": {"regulatory": 2, "academic": 1},
     },
     # ── tutorial-code ──────────────────────────────────────────────────
     {
@@ -222,8 +333,19 @@ MODULES: list[dict] = [
              "<pre><code class=\"language-python\">daily = (\n    txns\n    .filter(pl.col(\"amount\") > 0)\n    .group_by(\"date\", \"account_id\")\n    .agg(pl.col(\"amount\").sum().alias(\"total\"))\n    .sort(\"total\", descending=True)\n)\nresult = daily.collect()</code></pre>"),
             ("Joins and window functions",
              "<pre><code class=\"language-python\">accts = pl.read_csv(\"accounts.csv\")\njoined = result.join(accts, on=\"account_id\", how=\"left\")\nwith_rank = joined.with_columns(\n    pl.col(\"total\").rank(method=\"dense\").over(\"country\").alias(\"country_rank\")\n)</code></pre>",
-             "<p>Polars over-conditions are equivalent to SQL window functions — ideal for rolling aggregates like 30-day velocity.</p>"),
+             "<p>Polars over-conditions are equivalent to SQL window functions — ideal for rolling aggregates like 30-day velocity. Profile with <code>explain()</code> before tuning: most bottlenecks are join order and filter placement, not the engine itself.</p>"),
         ],
+        "bloom_questions": [
+            {"level": "remember", "question": "What does pl.scan_parquet return, and why is that significant?"},
+            {"level": "understand", "question": "Why does lazy execution in Polars generally outperform eager execution on large files?"},
+            {"level": "apply", "question": "Extend the pipeline with a rolling 30-day transaction-velocity window per account using the lazy API."},
+        ],
+        "citations": [
+            {"title": "Polars User Guide — Lazy API", "url": "https://docs.pola.rs/user-guide/lazy/", "type": "official docs"},
+            {"title": "Polars API Reference", "url": "https://docs.pola.rs/api/python/stable/reference/", "type": "official docs"},
+            {"title": "pola-rs/polars GitHub Repository", "url": "https://github.com/pola-rs/polars", "type": "official docs"},
+        ],
+        "source_breakdown": {"documentation": 3},
     },
     {
         "slug": "compliance/knowledge/sql-window-functions-aml",
@@ -241,8 +363,19 @@ MODULES: list[dict] = [
              "<pre><code class=\"language-sql\">SELECT *,\n  SUM(amount) OVER (\n    PARTITION BY account_id ORDER BY ts\n    ROWS BETWEEN 29 PRECEDING AND CURRENT ROW\n  ) AS rolling_30d\nFROM transactions;</code></pre>"),
             ("First transaction from new device",
              "<pre><code class=\"language-sql\">WITH ranked AS (\n  SELECT *, ROW_NUMBER() OVER (\n    PARTITION BY account_id, device_id ORDER BY ts\n  ) AS rn\n  FROM transactions\n)\nSELECT * FROM ranked WHERE rn = 1;</code></pre>",
-             "<p>First-use-of-device patterns feed anomaly detectors and are cheap to compute partition-wise.</p>"),
+             "<p>First-use-of-device patterns feed anomaly detectors and are cheap to compute partition-wise. Combine with peer-group baselines: a device ratio far above the account cohort's median is a stronger signal than the raw first-use event.</p>"),
         ],
+        "bloom_questions": [
+            {"level": "remember", "question": "Which window frame computes a rolling 30-day sum in SQL?"},
+            {"level": "understand", "question": "Why are window functions preferable to self-joins for velocity checks on large transaction tables?"},
+            {"level": "apply", "question": "Write a query that flags accounts whose one-hour transaction count exceeds 10 using a rolling window, without scanning the table more than once."},
+        ],
+        "citations": [
+            {"title": "PostgreSQL Documentation — Window Functions", "url": "https://www.postgresql.org/docs/current/tutorial-window.html", "type": "official docs"},
+            {"title": "SQL Performance Explained", "url": "https://sql-performance-explained.com/", "type": "book"},
+            {"title": "Snowflake Documentation — Window Functions", "url": "https://docs.snowflake.com/en/sql-reference/functions-analytic", "type": "official docs"},
+        ],
+        "source_breakdown": {"documentation": 2, "book": 1},
     },
 ]
 
@@ -256,6 +389,14 @@ def generate_body(module: dict) -> str:
         else:
             heading, content = section
             parts.append(f"<h2>{heading}</h2>\n{content}")
+    citations = module.get("citations", [])
+    if citations:
+        refs = "".join(
+            f'<li><a href="{c["url"]}" rel="noopener noreferrer">{c["title"]}</a>'
+            f' <span class="citation-type">({c["type"]})</span></li>'
+            for c in citations
+        )
+        parts.append(f"<h2>References</h2>\n<ul>{refs}</ul>")
     return "\n".join(parts)
 
 
@@ -263,6 +404,11 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--dry-run", action="store_true", help="Preview without writing")
     parser.add_argument("--apply", action="store_true", help="Write registry.json")
+    parser.add_argument(
+        "--update",
+        action="store_true",
+        help="Refresh body/bloom/citations/source fields on existing slugs too",
+    )
     args = parser.parse_args()
 
     logging.basicConfig(level=logging.INFO, format="%(message)s")
@@ -275,41 +421,58 @@ def main() -> int:
     date_str = datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
     created: list[str] = []
+    updated: list[str] = []
     for module in MODULES:
         slug = module["slug"]
-        if slug in existing_slugs:
-            continue
-        item = {
-            "slug": slug,
-            "title": module["title"],
-            "pillar": module["pillar"],
-            "content_type": "knowledge",
-            "knowledge_category": module["knowledge_category"],
-            "category": module["knowledge_category"],
-            "tags": module["tags"],
-            "description": module["description"],
-            "difficulty": module.get("difficulty", "intermediate"),
+        item_data = {
             "body_html": generate_body(module),
-            "author": "AcaciaFund",
-            "created_at": now,
-            "updated_at": now,
-            "date_str": date_str,
-            "auto_generated": True,
-            "concept_enriched": True,
+            "bloom_questions": module.get("bloom_questions", []),
+            "citations": [c["url"] for c in module.get("citations", [])],
+            "source_breakdown": module.get("source_breakdown", {}),
+            "enriched": True,
         }
-        if not args.dry_run:
-            registry["content"].append(item)
-            existing_slugs.add(slug)
-        created.append(slug)
-        logger.info(f"  {'[dry] ' if args.dry_run else ''}Created: {slug}")
+        if slug not in existing_slugs:
+            item = {
+                "slug": slug,
+                "title": module["title"],
+                "pillar": module["pillar"],
+                "content_type": "knowledge",
+                "knowledge_category": module["knowledge_category"],
+                "category": module["knowledge_category"],
+                "tags": module["tags"],
+                "description": module["description"],
+                "difficulty": module.get("difficulty", "intermediate"),
+                "author": "AcaciaFund",
+                "created_at": now,
+                "updated_at": now,
+                "date_str": date_str,
+                "auto_generated": True,
+                "concept_enriched": True,
+                **item_data,
+            }
+            if not args.dry_run:
+                registry["content"].append(item)
+                existing_slugs.add(slug)
+            created.append(slug)
+            logger.info(f"  {'[dry] ' if args.dry_run else ''}Created: {slug}")
+        elif args.update:
+            item = next(i for i in registry["content"] if i.get("slug") == slug)
+            for key, value in item_data.items():
+                if value:
+                    item[key] = value
+            item["updated_at"] = now
+            if not args.dry_run:
+                updated.append(slug)
+            else:
+                logger.info(f"  [dry] Updated: {slug}")
 
     if args.dry_run:
-        logger.info(f"\n{len(created)} items would be created (re-run with --apply)")
+        logger.info(f"\n{len(created)} items would be created, {len(updated)} updated (re-run with --apply)")
     else:
         with open(REGISTRY_PATH, "w", encoding="utf-8") as f:
             json.dump(registry, f, indent=2, ensure_ascii=False)
             f.write("\n")
-        logger.info(f"\n{len(created)} items written to registry.json")
+        logger.info(f"\n{len(created)} items written to registry.json, {len(updated)} updated")
     return 0
 
 
