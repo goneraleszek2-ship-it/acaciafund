@@ -76,21 +76,100 @@
     return prev[b.length];
   }
 
-  // Returns true if term matches text via substring, stemming, or fuzzy edit distance.
-  function termMatches(term, text) {
-    if (!text) return false;
-    if (text.includes(term)) return true;
+  function normalizeToken(w) {
+    return String(w).toLowerCase().replace(/[^a-z0-9]+/g, '');
+  }
+
+  // Curated domain synonym pairs (both directions, hyphen + space variants handled by the map).
+  const SYNONYM_PAIRS = [
+    ['aml', 'anti-money-laundering'],
+    ['aml', 'amla'],
+    ['kyc', 'know-your-customer'],
+    ['kyc', 'cdd'],
+    ['cdd', 'customer-due-diligence'],
+    ['sar', 'suspicious-activity-report'],
+    ['str', 'suspicious-transaction-report'],
+    ['etf', 'exchange-traded-fund'],
+    ['etl', 'extract-transform-load'],
+    ['elt', 'extract-load-transform'],
+    ['dbt', 'data-build-tool'],
+    ['sql', 'structured-query-language'],
+    ['boi', 'beneficial-ownership-information'],
+  ];
+
+  let synonymMap = null;
+  function getSynonymMap() {
+    if (synonymMap) return synonymMap;
+    const m = {};
+    const add = function(key, value) {
+      const k = normalizeToken(key);
+      if (!k || k.length < 2) return;
+      const v = String(value).toLowerCase();
+      if (k === normalizeToken(v)) return;
+      (m[k] = m[k] || []).push(v);
+    };
+    SYNONYM_PAIRS.forEach(function(pair) {
+      const a = pair[0], b = pair[1];
+      add(a, b); add(b, a);
+      add(a, b.replace(/-/g, ' ')); add(b.replace(/-/g, ' '), a);
+    });
+    synonymMap = m;
+    return m;
+  }
+
+  // Build an alias → concept-label map from review_concepts.json data.
+  function buildAliasMap(concepts) {
+    const m = {};
+    (concepts || []).forEach(function(c) {
+      const label = String(c.label || '').toLowerCase();
+      const labelKey = normalizeToken(label);
+      if (!labelKey) return;
+      (c.aliases || []).forEach(function(a) {
+        const key = normalizeToken(a);
+        if (!key || key === labelKey || key.length < 2) return;
+        (m[key] = m[key] || []).push(label);
+      });
+    });
+    return m;
+  }
+
+  // Expand a query token into itself + synonyms + concept-label aliases.
+  function expandTerm(token, synMap, aliasMap) {
+    const out = [token];
+    const seen = { [token]: true };
+    const push = function(s) {
+      if (!s) return;
+      const v = String(s).toLowerCase();
+      if (seen[v]) return;
+      seen[v] = true;
+      out.push(v);
+    };
+    const key = normalizeToken(token);
+    ((synMap || {})[key] || []).forEach(push);
+    ((aliasMap || {})[key] || []).forEach(push);
+    return out;
+  }
+
+  // Returns 0 = no match, 1 = fuzzy-only (edit distance), 2 = substring/stem match.
+  function matchLevel(term, text) {
+    if (!text) return 0;
+    if (text.includes(term)) return 2;
     const st = stem(term);
-    if (st.length >= 3 && text.includes(st)) return true;
+    if (st.length >= 3 && text.includes(st)) return 2;
     // Fuzzy: within 1 edit for terms >= 4 chars, and term length similar to a candidate word
     if (term.length >= 4) {
       const words = text.split(/[^a-z0-9+.-]+/);
       for (const w of words) {
         if (Math.abs(w.length - term.length) > 1) continue;
-        if (levenshtein(w, term) <= 1) return true;
+        if (levenshtein(w, term) <= 1) return 1;
       }
     }
-    return false;
+    return 0;
+  }
+
+  // Returns true if term matches text via substring, stemming, or fuzzy edit distance.
+  function termMatches(term, text) {
+    return matchLevel(term, text) > 0;
   }
 
   /* ── "Did you mean?" spelling correction (pure) ── */
@@ -154,22 +233,69 @@
     return out.toLowerCase() === query.toLowerCase() ? null : out;
   }
 
-  function scoreEntry(entry, terms) {
-    const title = (entry.title || '').toLowerCase();
-    const desc = (entry.description || '').toLowerCase();
-    const tags = (entry.tags || []).join(' ').toLowerCase();
-    const concepts = (entry.ontology_concepts || []).join(' ').toLowerCase();
-    const technologies = (entry.technologies || []).join(' ').toLowerCase();
-    const use_cases = (entry.use_cases || []).join(' ').toLowerCase();
+  function entryFieldText(entry) {
+    return {
+      title: (entry.title || '').toLowerCase(),
+      desc: (entry.description || '').toLowerCase(),
+      tags: (entry.tags || []).join(' ').toLowerCase(),
+      concepts: (entry.ontology_concepts || []).join(' ').toLowerCase(),
+      technologies: (entry.technologies || []).join(' ').toLowerCase(),
+      use_cases: (entry.use_cases || []).join(' ').toLowerCase(),
+    };
+  }
+
+  // Freshness bonus: recent items (by date_str) rank higher, decaying to a floor of +0.5 over a year.
+  function dateBoost(dateStr) {
+    if (!dateStr) return 0;
+    const iso = String(dateStr).slice(0, 10);
+    const d = new Date(iso + 'T00:00:00Z');
+    if (isNaN(d.getTime())) return 0;
+    const days = (Date.now() - d.getTime()) / 86400000;
+    if (days < 0) return 0.5;
+    return Math.max(0.5, 2 - days / 365);
+  }
+
+  // Multi-term AND: every term must match at least one field (via synonyms/aliases too).
+  function entryHasAllTerms(entry, terms, synMap, aliasMap) {
+    const fields = entryFieldText(entry);
+    const fieldVals = Object.keys(fields).map(k => fields[k]);
+    for (const t of terms) {
+      const expanded = expandTerm(t, synMap, aliasMap);
+      const anyMatch = fieldVals.some(function(f) {
+        return expanded.some(function(e) { return matchLevel(e, f) > 0; });
+      });
+      if (!anyMatch) return false;
+    }
+    return true;
+  }
+
+  function scoreEntry(entry, terms, synMap, aliasMap) {
+    const fields = entryFieldText(entry);
+    const weights = { title: 10, tags: 4, concepts: 6, technologies: 3, use_cases: 2, desc: 2 };
     let score = 0;
 
-    for (const t of terms) {
-      if (termMatches(t, title)) score += 10;
-      if (termMatches(t, tags)) score += 4;
-      if (termMatches(t, concepts)) score += 6;
-      if (termMatches(t, technologies)) score += 3;
-      if (termMatches(t, use_cases)) score += 2;
-      if (termMatches(t, desc)) score += 2;
+    for (let i = 0; i < terms.length; i++) {
+      const t = terms[i];
+      const expanded = expandTerm(t, synMap, aliasMap);
+      let bestLevel = 0;
+      let fieldScore = 0;
+      for (const key in weights) {
+        let level = 0;
+        for (let j = 0; j < expanded.length; j++) {
+          level = Math.max(level, matchLevel(expanded[j], fields[key]));
+        }
+        if (!level) continue;
+        if (level === 2) fieldScore += weights[key];
+        bestLevel = Math.max(bestLevel, level);
+      }
+      if (bestLevel === 2) {
+        score += fieldScore;
+        // First-token title bonus: exact match of the leading query term in the title
+        if (i === 0 && matchLevel(t, fields.title) === 2) score += 2;
+      } else if (bestLevel === 1) {
+        // Fuzzy-only matches are capped: typo recovery without fuzzy spam
+        score += 2;
+      }
     }
 
     score += (entry.concept_boost || 0) * 5;
@@ -179,6 +305,8 @@
     else if (sqi >= 0.65) score += 0.25;
 
     if (entry.difficulty) score += 0.5;
+
+    score += dateBoost(entry.date_str);
 
     return score;
   }
@@ -244,6 +372,7 @@
   const MAX_SUGGESTIONS = 10;
 
   let conceptIndex = null;
+  let aliasMap = null;
 
   function fetchConcepts() {
     if (conceptIndex) return Promise.resolve(conceptIndex);
@@ -257,6 +386,7 @@
           pillar: c.pillar || '',
           category: c.category || ''
         }));
+        aliasMap = buildAliasMap(conceptIndex);
         return conceptIndex;
       })
       .catch(() => { conceptIndex = []; return conceptIndex; });
@@ -576,20 +706,28 @@
         });
       }
       const filters = readFilters();
-      allScored = index
-        .filter(function(e) {
-          if (!matchesFilters(e, filters)) return false;
-          if (tagFilter) {
-            var concepts = e.ontology_concepts || [];
-            var tags = e.tags || [];
-            var matchesTag = concepts.some(function(c) { return c.toLowerCase() === tagFilter.toLowerCase(); })
-              || tags.some(function(t) { return t.toLowerCase() === tagFilter.toLowerCase(); });
-            if (!matchesTag) return false;
-          }
-          return true;
-        })
+      const synMap = getSynonymMap();
+      const aliases = buildAliasMap(conceptIndex || []);
+      let filtered = index.filter(function(e) {
+        if (!matchesFilters(e, filters)) return false;
+        if (tagFilter) {
+          var concepts = e.ontology_concepts || [];
+          var tags = e.tags || [];
+          var matchesTag = concepts.some(function(c) { return c.toLowerCase() === tagFilter.toLowerCase(); })
+            || tags.some(function(t) { return t.toLowerCase() === tagFilter.toLowerCase(); });
+          if (!matchesTag) return false;
+        }
+        return true;
+      });
+      // Multi-term AND semantics: if every term matches somewhere, require all of them;
+      // otherwise fall back to any-term (OR) so over-specific queries still surface hits.
+      if (terms.length > 1) {
+        const allTerm = filtered.filter(function(e) { return entryHasAllTerms(e, terms, synMap, aliases); });
+        if (allTerm.length) filtered = allTerm;
+      }
+      allScored = filtered
         .map(function(e) {
-          return { entry: e, score: terms.length ? scoreEntry(e, terms) : 1 };
+          return { entry: e, score: terms.length ? scoreEntry(e, terms, synMap, aliases) : 1 };
         })
         .filter(function(x) { return x.score > 0; })
         .sort(function(a, b) {
@@ -653,6 +791,15 @@
       didYouMean: didYouMean,
       bestCorrection: bestCorrection,
       buildVocabulary: buildVocabulary,
+      scoreEntry: scoreEntry,
+      matchLevel: matchLevel,
+      termMatches: termMatches,
+      expandTerm: expandTerm,
+      entryHasAllTerms: entryHasAllTerms,
+      dateBoost: dateBoost,
+      buildAliasMap: buildAliasMap,
+      entryFieldText: entryFieldText,
+      getSynonymMap: getSynonymMap,
     };
   }
 
@@ -660,6 +807,9 @@
     document.addEventListener('DOMContentLoaded', function() {
     const input = document.getElementById('search-input');
     if (!input) return;
+
+    // Preload concepts early so synonym/alias expansion is ready before the first search
+    fetchConcepts();
 
     // Restore filters from URL
     const params = new URLSearchParams(window.location.search);

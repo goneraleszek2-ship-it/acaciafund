@@ -64,6 +64,64 @@ assert(Array.isArray(emptyVocab) && emptyVocab.length === 0, 'empty index -> emp
 const strictVocab = ['sanctions', 'screening'];
 assert(search.didYouMean('santion', strictVocab) === 'sanctions', 'vocabulary-driven correction works');
 
+/* ── matchLevel ── */
+
+assert(search.matchLevel('sanctions', 'sanctions screening') === 2, 'substring match -> level 2');
+assert(search.matchLevel('monitoring', 'monitored systems') === 2, 'stem match -> level 2');
+assert(search.matchLevel('compliance', 'complicance reports') === 1, 'fuzzy match -> level 1');
+assert(search.matchLevel('zebra', 'sanctions screening') === 0, 'no match -> level 0');
+assert(search.matchLevel('aml', 'anti money laundering') === 0, 'short token no substring match');
+
+/* ── synonyms + expansion ── */
+
+const synMap = search.getSynonymMap();
+assert(Array.isArray(synMap['aml']) && synMap['aml'].indexOf('anti-money-laundering') !== -1, 'synonym map: aml -> anti-money-laundering');
+assert(synMap['aml'].indexOf('anti money laundering') !== -1, 'synonym map: aml -> spaced variant');
+assert(synMap['kyc'].indexOf('cdd') !== -1, 'synonym map: kyc -> cdd');
+assert(synMap['knowyourcustomer'].indexOf('kyc') !== -1, 'synonym map: reverse direction works');
+
+const expanded = search.expandTerm('kyc', synMap, {});
+assert(expanded.indexOf('know-your-customer') !== -1, 'expandTerm includes hyphenated synonym');
+assert(expanded.indexOf('know your customer') !== -1, 'expandTerm includes spaced synonym');
+assert(expanded.indexOf('kyc') === 0, 'expandTerm keeps original token first');
+
+const aliasMap = search.buildAliasMap([{ label: 'Beneficial Ownership', aliases: ['ubo', 'ownership'] }]);
+assert(aliasMap['ubo'] && aliasMap['ubo'].indexOf('beneficial ownership') !== -1, 'buildAliasMap maps alias -> label');
+const expandedAlias = search.expandTerm('ubo', {}, aliasMap);
+assert(expandedAlias.indexOf('beneficial ownership') !== -1, 'expandTerm uses concept aliases');
+
+/* ── entryHasAllTerms (multi-term AND) ── */
+
+const andEntry = { title: 'Kafka Streams Transformation', tags: ['kafka'], ontology_concepts: [], technologies: [], use_cases: [], description: '' };
+assert(search.entryHasAllTerms(andEntry, ['kafka', 'transformation'], {}, {}) === true, 'AND: both terms present -> true');
+assert(search.entryHasAllTerms(andEntry, ['kafka', 'spark'], {}, {}) === false, 'AND: missing term -> false');
+assert(search.entryHasAllTerms({ title: 'Know Your Customer onboarding', tags: [], ontology_concepts: [], technologies: [], use_cases: [], description: '' }, ['kyc'], synMap, {}) === true, 'AND via synonym phrase matches');
+
+/* ── scoreEntry: fuzzy cap, title bonus, synonym scoring ── */
+
+const sEntry = { title: 'Compliance reporting', description: 'compliance reporting basics', tags: [], ontology_concepts: [], technologies: [], use_cases: [], difficulty: 'beginner', avg_sqi: 0, date_str: '' };
+const fuzzyScore = search.scoreEntry(sEntry, ['complicance'], {}, {});
+assert(fuzzyScore === 2.5, 'fuzzy-only term capped at +2 (+0.5 difficulty) -> ' + fuzzyScore);
+const exactScore = search.scoreEntry(sEntry, ['compliance'], {}, {});
+assert(exactScore === 14.5, 'exact term scores normally (10+2 desc+2 bonus+0.5) -> ' + exactScore);
+assert(exactScore > fuzzyScore * 2, 'exact matches rank far above fuzzy-only matches');
+
+const kycEntry = { title: 'Know Your Customer onboarding', description: '', tags: [], ontology_concepts: [], technologies: [], use_cases: [], difficulty: 'beginner', avg_sqi: 0, date_str: '' };
+assert(search.scoreEntry(kycEntry, ['kyc'], synMap, {}) === 10.5, 'synonym query scores on phrase title match -> ' + search.scoreEntry(kycEntry, ['kyc'], synMap, {}));
+
+const firstTokenEntry = { title: 'Kafka pipelines', description: '', tags: [], ontology_concepts: [], technologies: [], use_cases: [], difficulty: '', avg_sqi: 0, date_str: '' };
+assert(search.scoreEntry(firstTokenEntry, ['kafka', 'pipelines'], {}, {}) === 22, 'first-token title bonus applied once -> ' + search.scoreEntry(firstTokenEntry, ['kafka', 'pipelines'], {}, {}));
+
+/* ── dateBoost ── */
+
+assert(search.dateBoost('') === 0, 'no date -> no boost');
+assert(search.dateBoost('garbage') === 0, 'invalid date -> no boost');
+assert(search.dateBoost('2026-06-09') > search.dateBoost('2024-01-01'), 'recent items boosted more than old ones');
+assert(search.dateBoost('2024-01-01') >= 0.5, 'old items floor at +0.5');
+const dated = { title: 'Sanctions Screening', description: '', tags: [], ontology_concepts: [], technologies: [], use_cases: [], difficulty: '', avg_sqi: 0, date_str: '2026-06-09' };
+const undated = { title: 'Sanctions Screening', description: '', tags: [], ontology_concepts: [], technologies: [], use_cases: [], difficulty: '', avg_sqi: 0, date_str: '' };
+assert(search.scoreEntry(dated, ['sanctions'], {}, {}) > search.scoreEntry(undated, ['sanctions'], {}, {}), 'newer item outscores undated item');
+
 console.log('');
 console.log('Search discovery tests: ' + passed + ' passed, ' + failed + ' failed');
 process.exit(failed ? 1 : 0);
