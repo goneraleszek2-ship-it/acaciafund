@@ -311,6 +311,62 @@
     return score;
   }
 
+  // Pure sort for result lists. Modes: relevance (score when querying, SQI+date when
+  // browsing), newest (date_str desc, undated last), sqi (avg_sqi desc, date tiebreak).
+  function applySort(scored, mode, hasQuery) {
+    const list = scored.slice();
+    if (mode === 'newest') {
+      list.sort(function(a, b) {
+        const da = String(a.entry.date_str || '');
+        const db = String(b.entry.date_str || '');
+        if (da !== db) return db.localeCompare(da);
+        return b.score - a.score;
+      });
+      return list;
+    }
+    if (mode === 'sqi' || !hasQuery) {
+      list.sort(function(a, b) {
+        const sa = a.entry.avg_sqi || 0;
+        const sb = b.entry.avg_sqi || 0;
+        if (sb !== sa) return sb - sa;
+        return String(b.entry.date_str || '').localeCompare(String(a.entry.date_str || ''));
+      });
+      return list;
+    }
+    list.sort(function(a, b) { return b.score - a.score; });
+    return list;
+  }
+
+  function readSort() {
+    const v = new URLSearchParams(window.location.search).get('sort');
+    return (v === 'newest' || v === 'sqi') ? v : 'relevance';
+  }
+
+  const FILTER_LABELS = { pillar: 'Pillar', type: 'Type', difficulty: 'Difficulty', bloom: 'Bloom', technology: 'Technology' };
+  const FILTER_VALUE_LABELS = {
+    pillar: { aml: 'Compliance', stock: 'Markets', 'data-engineering': 'Data' },
+    type: { research: 'Research', learn: 'Learn', knowledge: 'Knowledge' },
+    difficulty: { beginner: 'Beginner', intermediate: 'Intermediate', advanced: 'Advanced' },
+    bloom: { remember: 'Remember', understand: 'Understand', apply: 'Apply', analyze: 'Analyze', evaluate: 'Evaluate', create: 'Create' },
+  };
+
+  function renderFilterChips() {
+    const el = document.getElementById('active-filter-chips');
+    if (!el) return;
+    const filters = readFilters();
+    const chips = [];
+    for (const group of ['pillar', 'type', 'difficulty', 'bloom', 'technology']) {
+      (filters[group] || []).forEach(function(v) {
+        const vLabel = (FILTER_VALUE_LABELS[group] && FILTER_VALUE_LABELS[group][v]) || v;
+        chips.push({ group: group, value: v, text: (FILTER_LABELS[group] || group) + ': ' + vLabel });
+      });
+    }
+    if (!chips.length) { el.innerHTML = ''; return; }
+    el.innerHTML = chips.map(function(c) {
+      return '<button type="button" class="filter-chip" data-group="' + escapeHtml(c.group) + '" data-value="' + escapeHtml(c.value) + '" aria-label="Remove filter ' + escapeHtml(c.text) + '" style="display:inline-flex;align-items:center;gap:0.3rem;font-size:0.75rem;padding:0.2rem 0.55rem;margin:0 0.25rem 0.25rem 0;border-radius:9999px;border:1px solid var(--color-border,#333);background:color-mix(in srgb, var(--color-accent,#818cf8) 10%, transparent);color:var(--color-text,#e8e6e3);cursor:pointer">&times; ' + escapeHtml(c.text) + '</button>';
+    }).join('');
+  }
+
   function matchesFilters(entry, filters) {
     if (filters.pillar.length && !filters.pillar.includes(entry.pillar || '')) return false;
     if (filters.type.length && !filters.type.includes(entry.content_type || '')) return false;
@@ -387,6 +443,7 @@
           category: c.category || ''
         }));
         aliasMap = buildAliasMap(conceptIndex);
+        vocabCache = null;
         return conceptIndex;
       })
       .catch(() => { conceptIndex = []; return conceptIndex; });
@@ -575,6 +632,8 @@
     return window.location.origin + '/static/';
   }
 
+  const INDEX_CACHE_VERSION = 'v1';
+
   function fetchIndex() {
     if (searchIndex) return Promise.resolve(searchIndex);
 
@@ -585,9 +644,24 @@
       url = staticBase() + 'search-index.' + filters.pillar[0] + '.json';
     }
 
+    // sessionStorage cache: instant repeat searches within the same tab (version-stamped)
+    const cacheKey = 'ac_search_index_' + INDEX_CACHE_VERSION + ':' + url;
+    try {
+      const cached = window.sessionStorage.getItem(cacheKey);
+      if (cached) {
+        const data = JSON.parse(cached);
+        searchIndex = data;
+        return Promise.resolve(data);
+      }
+    } catch (e) {}
+
     return fetch(url)
       .then(r => { if (!r.ok) throw new Error(r.status); return r.json(); })
-      .then(data => { searchIndex = data; return data; });
+      .then(data => {
+        searchIndex = data;
+        try { window.sessionStorage.setItem(cacheKey, JSON.stringify(data)); } catch (e) {}
+        return data;
+      });
   }
 
   function renderResult(entry, terms, idx) {
@@ -686,6 +760,7 @@
     if (!query.trim() && !tagFilter && !filtersActive) {
       container.innerHTML = '<p style="color:var(--color-text-muted, #888);text-align:center;margin-top:2rem">Type to search across all content, or pick a filter to browse...</p>';
       if (statsEl) statsEl.textContent = '';
+      renderFilterChips();
       return;
     }
 
@@ -729,14 +804,9 @@
         .map(function(e) {
           return { entry: e, score: terms.length ? scoreEntry(e, terms, synMap, aliases) : 1 };
         })
-        .filter(function(x) { return x.score > 0; })
-        .sort(function(a, b) {
-          if (terms.length) return b.score - a.score;
-          const sa = a.entry.avg_sqi || 0;
-          const sb = b.entry.avg_sqi || 0;
-          if (sb !== sa) return sb - sa;
-          return String(b.entry.date_str || '').localeCompare(String(a.entry.date_str || ''));
-        });
+        .filter(function(x) { return x.score > 0; });
+      allScored = applySort(allScored, readSort(), terms.length > 0);
+      renderFilterChips();
       currentTerms = terms;
       displayedCount = PAGE_SIZE;
       selectedIndex = -1;
@@ -800,6 +870,7 @@
       buildAliasMap: buildAliasMap,
       entryFieldText: entryFieldText,
       getSynonymMap: getSynonymMap,
+      applySort: applySort,
     };
   }
 
@@ -810,6 +881,37 @@
 
     // Preload concepts early so synonym/alias expansion is ready before the first search
     fetchConcepts();
+
+    // Restore sort control from URL
+    const sortSel = document.getElementById('search-sort');
+    if (sortSel) {
+      sortSel.value = readSort();
+      sortSel.addEventListener('change', function() {
+        const url = new URL(window.location);
+        if (this.value && this.value !== 'relevance') url.searchParams.set('sort', this.value);
+        else url.searchParams.delete('sort');
+        history.replaceState(null, '', url);
+        runSearch(input.value);
+      });
+    }
+
+    // Active-filter chips: click a chip to remove that filter
+    const chipsEl = document.getElementById('active-filter-chips');
+    if (chipsEl) {
+      chipsEl.addEventListener('click', function(e) {
+        const chip = e.target.closest('.filter-chip');
+        if (!chip) return;
+        const group = chip.getAttribute('data-group');
+        const value = chip.getAttribute('data-value');
+        document.querySelectorAll('.filter-checkbox[data-group="' + group + '"]').forEach(function(cb) {
+          if (cb.value === value) cb.checked = false;
+        });
+        const filters = readFilters();
+        syncFiltersToUrl(filters);
+        if (group === 'pillar') searchIndex = null;
+        doSearch();
+      });
+    }
 
     // Restore filters from URL
     const params = new URLSearchParams(window.location.search);
@@ -847,6 +949,8 @@
     if (q || tagFilter) {
       input.value = q;
       runSearch(q, tagFilter);
+    } else {
+      renderFilterChips();
     }
 
     // Filter checkbox change handler (delegated: technology checkboxes are

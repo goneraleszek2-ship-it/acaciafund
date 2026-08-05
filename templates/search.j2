@@ -42,12 +42,21 @@
     </div>
     <button class="reset-btn" id="reset-filters">Reset filters</button>
   </aside>
-  <div class="search-main" role="region" aria-label="Search results">
+    <div class="search-main" role="region" aria-label="Search results">
     <div class="search-input-wrap">
       <label for="search-input" class="sr-only">Search query</label>
       <input type="text" id="search-input" placeholder="Search research, learn, knowledge... (press / to focus)" autocomplete="off" role="combobox" aria-expanded="false" aria-controls="search-suggestions" aria-autocomplete="list" aria-label="Search query">
       <div id="search-suggestions" role="listbox" aria-label="Search suggestions"></div>
     </div>
+    <div class="search-toolbar" style="display:flex;align-items:center;gap:0.5rem;margin-bottom:0.5rem;flex-wrap:wrap">
+      <label for="search-sort" class="sr-only">Sort results</label>
+      <select id="search-sort" aria-label="Sort results" style="font-size:0.8rem;padding:0.3rem 0.5rem;border-radius:6px;border:1px solid var(--color-border,#333);background:var(--color-surface,#f0f0f0);color:var(--color-text,#333);cursor:pointer">
+        <option value="relevance">Sort: Relevance</option>
+        <option value="newest">Sort: Newest</option>
+        <option value="sqi">Sort: Highest quality</option>
+      </select>
+    </div>
+    <div id="active-filter-chips" role="region" aria-label="Active filters" style="margin-bottom:0.5rem"></div>
     <div id="search-stats" role="status" aria-live="polite"></div>
     <div id="search-results" role="region" aria-label="Results" aria-live="off"></div>
   </div>

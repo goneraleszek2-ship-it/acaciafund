@@ -122,6 +122,26 @@ const dated = { title: 'Sanctions Screening', description: '', tags: [], ontolog
 const undated = { title: 'Sanctions Screening', description: '', tags: [], ontology_concepts: [], technologies: [], use_cases: [], difficulty: '', avg_sqi: 0, date_str: '' };
 assert(search.scoreEntry(dated, ['sanctions'], {}, {}) > search.scoreEntry(undated, ['sanctions'], {}, {}), 'newer item outscores undated item');
 
+/* ── applySort ── */
+
+const sortScored = [
+  { entry: { title: 'Old', date_str: '2024-01-01', avg_sqi: 0.7 }, score: 5 },
+  { entry: { title: 'New', date_str: '2026-06-09', avg_sqi: 0.6 }, score: 8 },
+  { entry: { title: 'Undated', date_str: '', avg_sqi: 0.9 }, score: 10 },
+];
+const newest = search.applySort(sortScored, 'newest', true);
+assert(newest[0].entry.title === 'New', 'newest: most recent first');
+assert(newest[2].entry.title === 'Undated', 'newest: undated items last');
+const sqiSorted = search.applySort(sortScored, 'sqi', true);
+assert(sqiSorted[0].entry.title === 'Undated' && sqiSorted[0].entry.avg_sqi === 0.9, 'sqi: highest quality first');
+const relQuery = search.applySort(sortScored, 'relevance', true);
+assert(relQuery[0].entry.title === 'Undated' && relQuery[0].score === 10, 'relevance with query: score desc');
+const relBrowse = search.applySort(sortScored, 'relevance', false);
+assert(relBrowse[0].entry.title === 'Undated', 'relevance browse: SQI desc then date');
+assert(relBrowse[1].entry.title === 'Old', 'relevance browse: SQI desc then date (second)');
+const sortedCopy = search.applySort(sortScored, 'newest', false);
+assert(sortedCopy !== sortScored && sortScored[0].entry.title === 'Old', 'applySort does not mutate input');
+
 console.log('');
 console.log('Search discovery tests: ' + passed + ' passed, ' + failed + ' failed');
 process.exit(failed ? 1 : 0);
