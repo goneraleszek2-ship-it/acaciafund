@@ -111,6 +111,7 @@
     "regtech"
   ],
   "aml/learn/sanctions-screening": [
+    "design",
     "global-sanctions",
     "pep",
     "sanctions-screening"
@@ -266,7 +267,6 @@
     "fraud-detection",
     "payment-fraud",
     "regime-detection",
-    "research",
     "transaction-monitoring"
   ],
   "aml/research/risk-based-approach-intro": [
@@ -312,7 +312,6 @@
     "market-surveillance",
     "mica-crypto-assets",
     "regime-detection",
-    "research",
     "retail-trading"
   ],
   "aml/research/suspicious-activity-reports": [
@@ -370,7 +369,6 @@
   ],
   "compliance/knowledge/law-and-language": [],
   "compliance/knowledge/network-analysis-aml": [
-    "aml-risk-scoring",
     "entity-resolution",
     "network-analysis",
     "transaction-monitoring"
@@ -503,8 +501,8 @@
   ],
   "compliance/research/bueche-2022-fatf-virtual-assets-crypto": [
     "aml-regulatory-framework",
+    "cdd",
     "crypto-aml",
-    "defi-aml",
     "fatf-recommendations",
     "travel-rule"
   ],
@@ -517,17 +515,18 @@
   "compliance/research/drezner-2022-global-governance-aml": [
     "aml-effectiveness",
     "aml-regulatory-framework",
-    "fatf-recommendations"
+    "fatf-recommendations",
+    "kyc"
   ],
   "compliance/research/levi-reuter-2006-money-laundering-review": [
     "aml-effectiveness",
     "aml-regulatory-framework",
+    "research",
     "sar",
     "str"
   ],
   "compliance/research/naheem-2015-aml-transaction-monitoring-systems": [
     "aml-effectiveness",
-    "data-quality",
     "transaction-monitoring"
   ],
   "compliance/research/soudijn-2021-trade-based-money-laundering": [
@@ -922,6 +921,7 @@
     "order-types"
   ],
   "data/research/akidau-2015-dataflow-model-stream-processing": [
+    "high-frequency-trading",
     "real-time-analytics",
     "stream-processing-model",
     "streaming"
@@ -974,15 +974,15 @@
   ],
   "data/research/apache-iceberg-table-specification": [
     "apache-iceberg",
+    "arrow-parquet",
     "data-lake",
     "distributed-systems",
     "lakehouse",
-    "lakehouse-architecture",
-    "schema-registry"
+    "lakehouse-architecture"
   ],
   "data/research/armbrust-2021-lakehouse-architecture": [
     "apache-iceberg",
-    "data-lake",
+    "arrow-parquet",
     "distributed-systems",
     "lakehouse",
     "lakehouse-architecture"
@@ -1201,6 +1201,7 @@
   "data/research/kreps-2011-kafka-distributed-messaging": [
     "apache-kafka",
     "dataops",
+    "design",
     "distributed-systems",
     "real-time-analytics",
     "streaming"
@@ -1802,7 +1803,8 @@
     "supply-chain-analysis"
   ],
   "markets/learn/volatility-analysis": [
-    "market-indices"
+    "market-indices",
+    "volatility-trading"
   ],
   "markets/learn/volatility-trading-vix": [
     "hedge-funds",
@@ -1828,6 +1830,7 @@
   ],
   "markets/research/amihud-2002-illiquidity-stock-returns": [
     "asset-pricing",
+    "design",
     "equity-basics",
     "market-impact",
     "market-microstructure",
@@ -1838,7 +1841,7 @@
   ],
   "markets/research/barber-odean-2000-trading-hazardous-wealth": [
     "behavioral-finance",
-    "equity-basics",
+    "design",
     "retail-trading"
   ],
   "markets/research/barberis-thaler-2002-behavioral-finance-survey": [
@@ -1848,7 +1851,6 @@
   "markets/research/black-scholes-1973-options-pricing-model": [
     "asset-pricing",
     "black-scholes",
-    "equity-basics",
     "options-trading"
   ],
   "markets/research/bollen-2011-twitter-mood-stock-market": [
@@ -1916,7 +1918,6 @@
   ],
   "markets/research/fama-french-2015-five-factor-model": [
     "asset-pricing",
-    "equity-basics",
     "factor-investing",
     "fama-french-model"
   ],
@@ -1985,8 +1986,7 @@
   "markets/research/shiller-1981-excess-volatility-stock-prices": [
     "asset-pricing",
     "behavioral-finance",
-    "efficient-market-hypothesis",
-    "statistical-arbitrage"
+    "efficient-market-hypothesis"
   ],
   "markets/research/sp-500-rejects-spacex-also-blocking-entry-for-openai-and": [
     "high-frequency-trading",

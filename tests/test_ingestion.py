@@ -25,6 +25,8 @@ _slugify = _ki._slugify
 jaccard_similarity = _ki.jaccard_similarity
 score_pillar_relevance = _ki.score_pillar_relevance
 _source_to_item = _ki._source_to_item
+_build_research_body = _ki._build_research_body
+_split_paragraphs = _ki._split_paragraphs
 deduplicate = _ki.deduplicate
 prune_and_archive_registry = _ki.prune_and_archive_registry
 _existing_slugs = _ki._existing_slugs
@@ -310,17 +312,50 @@ class TestSourceToItem:
         assert result["signals"]["avg_sqi"] == 0.80
         assert result["quality_metrics"]["score"] == 0.85
 
-    def test_body_html_fallback_to_summary_paragraph(self) -> None:
+    def test_body_html_fallback_is_structured(self) -> None:
         config = make_mock_pillar_config("aml")
         result = _source_to_item(
-            {"_detected_tags": []},
+            {"_detected_tags": ["kyc", "cdd"]},
             config,
             source_key="arxiv",
             title="Test",
             summary="A short summary.",
         )
         assert result is not None
-        assert result["body_html"] == "<p>A short summary.</p>"
+        body = result["body_html"]
+        assert body.startswith("<h2>Overview</h2>")
+        assert "<h2>Key Topics</h2>" in body
+        assert "<h2>Why It Matters</h2>" in body
+        assert "<h2>Key Takeaways</h2>" in body
+        assert body.count("<p>") >= 2
+        assert body.count("<li>") >= 3
+        assert "<strong>Kyc:</strong>" in body
+
+    def test_body_html_fallback_empty_summary_still_structured(self) -> None:
+        config = make_mock_pillar_config("aml")
+        result = _source_to_item(
+            {"_detected_tags": []},
+            config,
+            source_key="arxiv",
+            title="Test",
+            summary="",
+        )
+        assert result is not None
+        assert result["body_html"].startswith("<h2>Overview</h2>")
+
+    def test_split_paragraphs_groups_sentences(self) -> None:
+        text = "One. Two. Three. Four. Five. Six. Seven."
+        paras = _split_paragraphs(text, per=3)
+        assert len(paras) == 3
+        assert paras[0] == "One. Two. Three."
+        assert paras[-1] == "Seven."
+
+    def test_build_research_body_uses_supplied_fields_only(self) -> None:
+        title = "Streaming Pipelines"
+        body = _build_research_body("A summary.", title, ["streaming", "kafka"], "data engineering")
+        assert "Streaming Pipelines" in body
+        assert "data engineering" in body
+        assert "A summary." in body
 
     def test_description_truncated_at_300(self) -> None:
         config = make_mock_pillar_config("aml")

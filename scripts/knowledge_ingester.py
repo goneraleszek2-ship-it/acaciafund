@@ -293,6 +293,59 @@ PILLAR_CONFIGS: dict[str, PillarConfig] = {
 INGESTER_TO_PILLAR = {"aml": "aml", "data": "data-engineering", "market": "stock"}
 from config import PILLAR_URL_MAP  # noqa: E402
 
+_PILLAR_LABELS = {
+    "aml": "AML and compliance",
+    "stock": "markets",
+    "data-engineering": "data engineering",
+}
+
+_SENT_BOUNDARY = re.compile(r"(?<=[.!?])\s+(?=[A-Z0-9\"'(])")
+
+
+def _split_paragraphs(text: str, per: int = 3) -> list[str]:
+    """Split a long abstract into short paragraphs at sentence boundaries."""
+    sents = [s.strip() for s in _SENT_BOUNDARY.split(text) if s.strip()]
+    if len(sents) <= per:
+        return [text]
+    return [" ".join(sents[i : i + per]) for i in range(0, len(sents), per)]
+
+
+def _build_research_body(summary: str, title: str, tags: list[str], pillar_label: str) -> str:
+    """Structured multi-paragraph research body from fields that actually exist.
+
+    Newly ingested items must ship with at least a few paragraphs instead of a
+    single <p> wrapper: summaries are split into paragraphs when long enough,
+    tags become a key-topics list, and the closing sections frame the item for
+    practitioners without inventing facts beyond the source material.
+    """
+    summary = (summary or "").strip()
+    parts: list[str] = []
+    parts.append("<h2>Overview</h2>")
+    if summary:
+        parts.extend(f"<p>{p}</p>" for p in _split_paragraphs(summary))
+    else:
+        parts.append(f"<p>An analysis of {title.strip('.')} in the context of {pillar_label}.</p>")
+    if tags:
+        parts.append("<h2>Key Topics</h2>\n<ul>")
+        for t in list(dict.fromkeys(tags))[:8]:
+            label = t.replace("-", " ").title()
+            parts.append(
+                f"<li><strong>{label}:</strong> A theme covered by this item within the {pillar_label} context.</li>"
+            )
+        parts.append("</ul>")
+    parts.append("<h2>Why It Matters</h2>")
+    parts.append(
+        f"<p>This item adds to the {pillar_label} knowledge base. Practitioners can use it to stay current on "
+        f"{title.strip('.')}, but should validate its claims against primary sources and more recent work before "
+        f"relying on it in production decisions.</p>"
+    )
+    parts.append("<h2>Key Takeaways</h2>\n<ul>")
+    parts.append(f"<li>Understand how {title.strip('.')} relates to {pillar_label} workflows and controls.</li>")
+    parts.append("<li>Assess evidence quality and freshness before acting on the findings.</li>")
+    parts.append("<li>Use the tagged topics to connect this item to related content in the library.</li>")
+    parts.append("</ul>")
+    return "\n".join(parts)
+
 # =========================================================================
 # Shared Utilities
 # =========================================================================
@@ -577,7 +630,7 @@ def _source_to_item(
     tags = list(dict.fromkeys(tags))
 
     if not body_html:
-        body_html = f"<p>{summary}</p>" if summary else ""
+        body_html = _build_research_body(summary, title, tags, _PILLAR_LABELS.get(registry_pillar, registry_pillar))
     if not summary:
         summary = title[:200]
     description = summary[:300].rstrip() + ("..." if len(summary) > 300 else "") if summary else title[:200]
@@ -659,9 +712,11 @@ def _arxiv_to_item(paper: dict, config: PillarConfig) -> dict[str, Any] | None:
                 elif cat_lower == "q-fin.cp":
                     tags.append("computational-finance")
 
+    registry_pillar = INGESTER_TO_PILLAR.get(config.slug_name, config.slug_name)
     return _source_to_item(
         paper, config, source_key="arxiv", title=title, url=url,
-        date_str=published, summary=abstract, body_html=f"<p>{abstract}</p>",
+        date_str=published, summary=abstract,
+        body_html=_build_research_body(abstract, title, tags, _PILLAR_LABELS.get(registry_pillar, registry_pillar)),
         author="Leszek", tags=tags, avg_sqi=0.75, score=0.75,
     )
 
