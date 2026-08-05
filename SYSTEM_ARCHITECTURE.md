@@ -9,7 +9,7 @@
 
 ### 1.1 Purpose
 
-AcaciaFund is a **static-first, cognitive learning platform** covering three financial domains — **Compliance** (AML/CTF), **Markets**, and **Data Engineering**. It converts a JSON content registry into a fully static, edge-deployed website (2,780 pages) enriched with:
+AcaciaFund is a **static-first, cognitive learning platform** covering three financial domains — **Compliance** (AML/CTF), **Markets**, and **Data Engineering**. It converts a JSON content registry into a fully static, edge-deployed website (2,827 pages) enriched with:
 
 - An **ontology-backed knowledge graph** (199 concepts, 447 relations)
 - **Bloom-taxonomy** content classification (Remember → Create)
@@ -80,7 +80,7 @@ flowchart LR
     end
 
     subgraph Out["Static Output (dist/)"]
-        HTML[2,780 HTML pages]
+        HTML[2,827 HTML pages]
         IDX[search-index.json]
         GRAPH[graph-data.json]
         FEED[feed.xml · sitemap.xml]
@@ -151,13 +151,13 @@ flowchart LR
 | Static output | dist/ HTML + JSON (Cloudflare Pages) |
 | Analytics | Plausible |
 | Lint / Typecheck | Ruff, Pyright |
-| Tests | Pytest (1028 Python + 62 JS), typeguard, anyio |
+| Tests | Pytest (1070 Python + 106 JS), typeguard, anyio |
 
 ### 2.4 Current Metrics (verified 2026-08-03)
 
 | Metric | Value |
 |--------|-------|
-| Generated pages | 2,780 |
+| Generated pages | 2,827 |
 | Registry items | 226 (102 research, 83 learn, 41 knowledge) |
 | Ontology concepts | 199 (58 compliance, 64 markets, 70 data, 7 cross-pillar) |
 | Ontology relations | 449 |
@@ -167,7 +167,7 @@ flowchart LR
 | Inspiration sources | 32 |
 | SQI (avg / min / max) | 0.871 / 0.670 / 0.955 |
 | Full build time | ~93s |
-| Tests | 1036 |
+| Tests | 1176 |
 
 ---
 
@@ -455,7 +455,7 @@ bash scripts/run_tests.sh                       # full test suite wrapper
 
 ### 10.2 Testing
 
-- **1028 Python tests** across 43 modules + **62 JS tests** across 4 files (`test_progressive_disclosure.js`, `test_toc.js`, `test_adaptive_ui.js`, `test_search_discovery.js`).
+- **1070 Python tests** across 45 modules + **106 JS tests** across 4 files (`test_progressive_disclosure.js`, `test_toc.js`, `test_adaptive_ui.js`, `test_search_discovery.js`).
 - Coverage highlights: ontology (39), build_taxonomies (51), retention (38), contradiction (40), generate_pages (40), ingestion (64), adaptive (31), schema_builder (29).
 - Golden rules: use `python3`; tests import from `core/urls.py` (not `build.py`) to avoid heavy deps; timeout long runs.
 

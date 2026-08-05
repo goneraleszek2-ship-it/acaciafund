@@ -122,7 +122,7 @@ This codebase has been built in sequential sprints. Understanding what came befo
 | Foundation fixes | Concept extraction word-boundary fix, alias expansion, full category remapping, knowledge-to-pillar mapping, description backfill |
 | Quality fixes | SQI backfill script, search recall improvement (threshold 0.35, body window 800), niche concept alias expansion |
 
-**Current state:** 226 registry items, 2,780 generated pages, 3 clean pillars, 199 ontology concepts (all with philosophical metadata, 447 canonical relations), 65 inspiration sources. Daily news pipeline: 23 live RSS feeds + Hacker News + GDELT (keyless). Quality gate: passing, all 2,780 pages SQI >= 0.65. 1066 Python tests across 45 modules (+ 62 JS tests in 4 suites). Metrics verified 2026-08-05 — see `docs/08-testing-quality/test-overview.md` for the canonical reference.
+**Current state:** 226 registry items, 2,827 generated pages, 3 clean pillars, 199 ontology concepts (all with philosophical metadata, 447 canonical relations), 65 inspiration sources. Daily news pipeline: 23 live RSS feeds + Hacker News + GDELT (keyless). Quality gate: passing, all 2,827 pages SQI >= 0.65. 1070 Python tests across 45 modules (+ 106 JS tests in 4 suites). Metrics verified 2026-08-05 — see `docs/08-testing-quality/test-overview.md` for the canonical reference.
 
 ## Cognitive Architecture (Phase 4)
 
@@ -235,9 +235,9 @@ Three pillars with internal keys and URL segments:
 
 | Internal Key | URL Segment | Label | Items |
 |---|---|---|---|
-| `aml` | `compliance` | Compliance | 52 |
-| `stock` | `markets` | Markets | 68 |
-| `data-engineering` | `data` | Data Engineering | 87 |
+| `aml` | `compliance` | Compliance | 57 |
+| `stock` | `markets` | Markets | 73 |
+| `data-engineering` | `data` | Data Engineering | 96 |
 
 **Single source of truth:** `config.py` → `PILLAR_URL_MAP`
 
@@ -246,9 +246,9 @@ Navigation shows only: Compliance, Markets, Data.
 ### URL Hierarchy
 
 ```
-/{pillar_url}/research/{topic}     # 96 items
+/{pillar_url}/research/{topic}     # 102 items
 /{pillar_url}/learn/{topic}        # 83 items
-/{pillar_url}/knowledge/{topic}    # 16 items
+/{pillar_url}/knowledge/{topic}    # 41 items
 /{pillar_url}/glossary             # Auto-generated from ontology
 /knowledge/{platform-page}         # Cross-pillar (13 categories)
 /search/?q=query                   # Client-side search
@@ -315,7 +315,7 @@ scripts/knowledge_ingester.py  →  registry.json  →  build.py  →  dist/
 | `core/build_taxonomies.py` | Taxonomy generation: admin pages, search index, tag pages, pillar pages, feed, ontology admin |
 | `core/build_cache.py` | Incremental build cache with parallel_map support |
 | `schemas.py` | Pydantic models for registry validation (`RegistryData`) |
-| `registry.json` | Content registry (223 items) |
+| `registry.json` | Content registry (226 items) |
 | `core/schema_builder.py` | **NEW** Schema builder: prerequisite graphs, learning paths, Bloom categorization |
 | `static/js/progressive_disclosure.js` | **NEW** Collapsible article sections (Cognitive Load Theory) |
 | `templates/partials/visual_abstract.j2` | **NEW** Dual-coded article summary partial (visual abstract) |
@@ -492,8 +492,8 @@ result = df.filter(pl.col('price') > 100).collect()
 
 | File | Tests | Coverage |
 |---|---|---|---|
-| `tests/test_ingestion.py` | 64 | Ingestion pipeline (registry normalization, schemas, dedup) |
-| `tests/test_build_taxonomies.py` | 51 | Taxonomy generation (all 5 generators) |
+| `tests/test_ingestion.py` | 67 | Ingestion pipeline (registry normalization, schemas, dedup) |
+| `tests/test_build_taxonomies.py` | 52 | Taxonomy generation (all 5 generators) |
 | `tests/test_enrich.py` | 45 | Content enrichment (concept extraction, SQI scoring) |
 | `tests/test_contradiction.py` | 40 | core/contradiction.py: negation/antonym/numeric contradiction detection, ContradictionDetector, clustering |
 | `tests/test_generate_pages.py` | 40 | core/generate_pages.py: extract_headings, find_related, reading_time, sanitize, SQI badge, fingerprint |
@@ -533,11 +533,11 @@ result = df.filter(pl.col('price') > 100).collect()
 | `tests/test_progressive_disclosure.js` | **8** | static/js/progressive_disclosure.js: parseSections, toggleSection pure functions |
 | `tests/test_toc.js` | **12** | static/js/toc.js: createItems, linkClass pure functions |
 | `tests/test_adaptive_ui.js` | **19** | static/js/adaptive.js: density modes, difficulty/modality helpers |
-| `tests/test_search_discovery.js` | **23** | static/js/search.js: didYouMean, bestCorrection, buildVocabulary, scoring |
+| `tests/test_search_discovery.js` | **67** | static/js/search.js: didYouMean, scoring, synonyms/aliases, category & tech facets, sorting |
 
 JS tests run via `node tests/test_*.js` for each file (no npm/playwright needed). `scripts/run_tests.sh` runs all 4 suites.
 
-**Total: 1066 Python tests collected across 45 modules, including 5 guard tests in `tests/test_generate_knowledge_modules.py` (knowledge-module SQI fields) and 21 in `tests/test_category_mapping.py` (tag→subcategory mapping, category backfill, news/GDELT pipeline).** (Verified 2026-08-05 via `python3 -m pytest tests/ --co`; JS suites run via `run_tests.sh`.)
+**Total: 1070 Python tests collected across 45 modules, including 5 guard tests in `tests/test_generate_knowledge_modules.py` (knowledge-module SQI fields) and 21 in `tests/test_category_mapping.py` (tag→subcategory mapping, category backfill, news/GDELT pipeline).** (Verified 2026-08-05 via `python3 -m pytest tests/ --co`; JS suites run via `run_tests.sh`.)
 
 ### Phase 1.5 Files (Cognitive Load Amputation — July 2026)
 

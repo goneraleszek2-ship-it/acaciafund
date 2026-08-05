@@ -1,8 +1,8 @@
 # Testing Overview
 
-AcaciaFund has **1066 Python tests across 45 modules** plus **62 JS tests across 4 files** — covering core modules, the cognitive architecture (schema builder, retention, adaptive), research provenance, build output, redirects, taxonomy generation, and new test suites for bloom, brand, visuals, generate, source verification, and knowledge-module SQI guards.
+AcaciaFund has **1070 Python tests across 45 modules** plus **106 JS tests across 4 files** — covering core modules, the cognitive architecture (schema builder, retention, adaptive), research provenance, build output, redirects, taxonomy generation, and new test suites for bloom, brand, visuals, generate, source verification, and knowledge-module SQI guards.
 
-> **Note:** Counts verified 2026-08-05 via `python3 -m pytest tests/ --co` (1066 collected across 45 modules) + 4 JS suites (62 tests). Full suite runs in ~28s.
+> **Note:** Counts verified 2026-08-05 via `python3 -m pytest tests/ --co` (1070 collected across 45 modules) + 4 JS suites (106 tests). Full suite runs in ~28s.
 
 ## Test Files
 
@@ -10,7 +10,7 @@ AcaciaFund has **1066 Python tests across 45 modules** plus **62 JS tests across
 
 | File | Tests | Covers |
 |------|-------|--------|
-| `tests/test_ingestion.py` | 64 | Content ingestion pipeline |
+| `tests/test_ingestion.py` | 67 | Content ingestion pipeline |
 | `tests/test_ontology.py` | 39 | Ontology models, manager, extraction, seeding |
 | `tests/test_urls.py` | 34 | URL helpers, pillar mapping, slug conversion |
 | `tests/test_metadata.py` | 28 | Manifest building, JSON utils, schema validation |
@@ -59,7 +59,7 @@ AcaciaFund has **1066 Python tests across 45 modules** plus **62 JS tests across
 
 | File | Tests | Covers |
 |------|-------|--------|
-| `tests/test_build_taxonomies.py` | 51 | Taxonomy generation (admin, search, tag, pillar, feed) |
+| `tests/test_build_taxonomies.py` | 52 | Taxonomy generation (admin, search, tag, pillar, feed) |
 | `tests/test_check_source_freshness.py` | 8 | Source freshness staleness computation |
 | `tests/test_check_entry_freshness.py` | 11 | Entry freshness validation (registry, review, verified dates) |
 | `tests/test_source_synthesis.py` | 19 | Tag extraction, synthesis description, key insights |
@@ -87,7 +87,7 @@ AcaciaFund has **1066 Python tests across 45 modules** plus **62 JS tests across
 | `tests/test_progressive_disclosure.js` | 8 | `parseSections`, `toggleSection` pure functions |
 | `tests/test_toc.js` | 12 | `createItems`, `linkClass` pure functions |
 | `tests/test_adaptive_ui.js` | 19 | Density modes, difficulty/modality helpers |
-| `tests/test_search_discovery.js` | 23 | `didYouMean`, `bestCorrection`, `buildVocabulary`, scoring |
+| `tests/test_search_discovery.js` | 67 | `didYouMean`, scoring, synonyms/aliases, category & tech facets, sorting |
 
 ## Test Configuration
 
