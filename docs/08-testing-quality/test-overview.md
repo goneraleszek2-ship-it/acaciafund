@@ -1,8 +1,8 @@
 # Testing Overview
 
-AcaciaFund has **1036 tests** — **1028 Python tests across 43 modules** plus **62 JS tests across 4 files** — covering core modules, the cognitive architecture (schema builder, retention, adaptive), research provenance, build output, redirects, taxonomy generation, and new test suites for bloom, brand, visuals, generate, and source verification.
+AcaciaFund has **1066 Python tests across 45 modules** plus **62 JS tests across 4 files** — covering core modules, the cognitive architecture (schema builder, retention, adaptive), research provenance, build output, redirects, taxonomy generation, and new test suites for bloom, brand, visuals, generate, source verification, and knowledge-module SQI guards.
 
-> **Note:** Counts verified 2026-08-03 via `python3 -m pytest tests/ --co` (1028 collected across 43 modules) + 4 JS suites (62 tests). Full suite runs in ~28s.
+> **Note:** Counts verified 2026-08-05 via `python3 -m pytest tests/ --co` (1066 collected across 45 modules) + 4 JS suites (62 tests). Full suite runs in ~28s.
 
 ## Test Files
 

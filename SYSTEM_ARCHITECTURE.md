@@ -9,9 +9,9 @@
 
 ### 1.1 Purpose
 
-AcaciaFund is a **static-first, cognitive learning platform** covering three financial domains — **Compliance** (AML/CTF), **Markets**, and **Data Engineering**. It converts a JSON content registry into a fully static, edge-deployed website (2,677 pages) enriched with:
+AcaciaFund is a **static-first, cognitive learning platform** covering three financial domains — **Compliance** (AML/CTF), **Markets**, and **Data Engineering**. It converts a JSON content registry into a fully static, edge-deployed website (2,780 pages) enriched with:
 
-- An **ontology-backed knowledge graph** (199 concepts, 449 relations)
+- An **ontology-backed knowledge graph** (199 concepts, 447 relations)
 - **Bloom-taxonomy** content classification (Remember → Create)
 - **Schema-built learning paths** (prerequisite DAGs)
 - **SM-2 spaced repetition** for durable retention
@@ -80,7 +80,7 @@ flowchart LR
     end
 
     subgraph Out["Static Output (dist/)"]
-        HTML[2,677 HTML pages]
+        HTML[2,780 HTML pages]
         IDX[search-index.json]
         GRAPH[graph-data.json]
         FEED[feed.xml · sitemap.xml]
@@ -157,8 +157,8 @@ flowchart LR
 
 | Metric | Value |
 |--------|-------|
-| Generated pages | 2,677 |
-| Registry items | 207 (98 research, 83 learn, 26 knowledge) |
+| Generated pages | 2,780 |
+| Registry items | 226 (102 research, 83 learn, 41 knowledge) |
 | Ontology concepts | 199 (58 compliance, 64 markets, 70 data, 7 cross-pillar) |
 | Ontology relations | 449 |
 | Relation types | 10 |

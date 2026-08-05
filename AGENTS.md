@@ -40,8 +40,8 @@ python3 scripts/generate_glossaries.py
 # Regenerate learn modules
 python3 scripts/generate_learn_modules.py
 
-# Backfill SQI for all items missing it
-python3 scripts/backfill_sqi.py
+# Link check + SQI audit (SQI backfill happens automatically at build time)
+python3 scripts/check_links_and_sqi.py --dist-dir dist
 
 # Slug migration (dry-run / apply / check)
 python3 scripts/migrate_slugs.py
@@ -122,7 +122,7 @@ This codebase has been built in sequential sprints. Understanding what came befo
 | Foundation fixes | Concept extraction word-boundary fix, alias expansion, full category remapping, knowledge-to-pillar mapping, description backfill |
 | Quality fixes | SQI backfill script, search recall improvement (threshold 0.35, body window 800), niche concept alias expansion |
 
-**Current state:** 226 registry items, 2,780 generated pages, 3 clean pillars, 199 ontology concepts (all with philosophical metadata, 447 canonical relations), 65 inspiration sources. Daily news pipeline: 23 live RSS feeds + Hacker News + GDELT (keyless). Quality gate: passing. 1057 tests passing (1036 + 21 category/news pipeline tests). Metrics verified 2026-08-04 — see `docs/08-testing-quality/test-overview.md` for the canonical reference.
+**Current state:** 226 registry items, 2,780 generated pages, 3 clean pillars, 199 ontology concepts (all with philosophical metadata, 447 canonical relations), 65 inspiration sources. Daily news pipeline: 23 live RSS feeds + Hacker News + GDELT (keyless). Quality gate: passing, all 2,780 pages SQI >= 0.65. 1066 Python tests across 45 modules (+ 62 JS tests in 4 suites). Metrics verified 2026-08-05 — see `docs/08-testing-quality/test-overview.md` for the canonical reference.
 
 ## Cognitive Architecture (Phase 4)
 
@@ -327,7 +327,7 @@ scripts/knowledge_ingester.py  →  registry.json  →  build.py  →  dist/
 | `scripts/backfill_categories.py` | Backfills canonical `category` on research items from tags (`--dry-run|--apply|--validate`) |
 | `scripts/generate_knowledge_modules.py` | Generates knowledge-module pages from 12 hand-authored templates (2 per previously empty category) |
 | `scripts/check_links_and_sqi.py` | Broken link checker + SQI audit + external reference inventory |
-| `scripts/backfill_sqi.py` | SQI backfill for all items missing quality scores |
+| `core/build_quality.py` | Build-time SQI computation/backfill (`_compute_sqi_for_item`) for items missing quality scores |
 | `scripts/knowledge_ingester.py` | Multi-pillar knowledge ingestion (arXiv, HN, PubMed) with ontology concept extraction |
 | `scripts/source_synthesis.py` | Source synthesis with inspiration source matching and concept provenance |
 | `scripts/source_verification.py` | Source verification with inspiration domain recognition |
@@ -336,7 +336,7 @@ scripts/knowledge_ingester.py  →  registry.json  →  build.py  →  dist/
 | `scripts/fetch_images.py` | Unsplash image fetching (imported by `core/build_taxonomies.py` as `CURATED_KNOWN`) |
 | `scripts/deploy_cloudflare.py` | Cloudflare Pages deployment trigger |
 | `etc/pillars.toml` | Pillar definitions + `[inspiration_sources]` (32 authoritative sources per pillar) |
-| `data/ontology.json` | Persisted ontology (199 concepts, 449 relations) |
+| `data/ontology.json` | Persisted ontology (199 concepts, 447 relations) |
 | `data/source_health.json` | Persistent freshness data (65 sources) |
 | `.github/workflows/source-refresh.yml` | Weekly Monday 04:00 UTC refresh — ontology, glossary, freshness, build, deploy |
 
@@ -513,6 +513,7 @@ result = df.filter(pl.col('price') > 100).collect()
 | `tests/test_extractors.py` | 18 | core/extractors.py: timeline, flow, comparison extraction from text |
 | `tests/test_data.py` | 17 | core/data.py: domain extraction, entity/theme extraction, DLQ writing, logging |
 | `tests/test_generate_learn_modules.py` | 17 | Learn module generation internals |
+| `tests/test_generate_knowledge_modules.py` | 5 | Knowledge module SQI guards: sections, bloom questions, citations, source breakdown, slug validity |
 | `tests/test_score.py` | 17 | core/score.py: SQI scoring, cross-pillar counting |
 | `tests/test_agent_tools.py` | 16 | Tool executor, risk levels, tool registry |
 | `tests/test_risk_engine.py` | 16 | Risk engine (tool approval, callback enforcement) |
@@ -536,7 +537,7 @@ result = df.filter(pl.col('price') > 100).collect()
 
 JS tests run via `node tests/test_*.js` for each file (no npm/playwright needed). `scripts/run_tests.sh` runs all 4 suites.
 
-**Total: 1057 passing tests (1036 + 21 in `tests/test_category_mapping.py` covering tag→subcategory mapping, category backfill, and the news/GDELT pipeline).** (Verified 2026-08-04: `python3 -m pytest tests/ --co` → 1049 collected across 44 modules; JS suites run via `run_tests.sh`.)
+**Total: 1066 Python tests collected across 45 modules, including 5 guard tests in `tests/test_generate_knowledge_modules.py` (knowledge-module SQI fields) and 21 in `tests/test_category_mapping.py` (tag→subcategory mapping, category backfill, news/GDELT pipeline).** (Verified 2026-08-05 via `python3 -m pytest tests/ --co`; JS suites run via `run_tests.sh`.)
 
 ### Phase 1.5 Files (Cognitive Load Amputation — July 2026)
 
