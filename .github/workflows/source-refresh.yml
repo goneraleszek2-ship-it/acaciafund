@@ -76,7 +76,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: source-health-report
-          path: dist/source_health.json
+          path: data/source_health.json
           retention-days: 30
 
       - name: Commit and push changes
@@ -89,4 +89,5 @@ jobs:
           else
             git commit -m "chore: weekly source refresh — ontology + glossary + freshness check"
             git push
+          fi
           
