@@ -40,6 +40,9 @@ jobs:
           mgr.save('data/ontology.json')
           "
 
+      - name: Re-apply philosophical foundations enrichment
+        run: python3 scripts/enrich_philosophy.py
+
       - name: Generate glossary pages
         run: python3 scripts/generate_glossaries.py
 
@@ -61,7 +64,7 @@ jobs:
           python3 build.py
 
       - name: Check links and SQI
-        run: python3 scripts/check_links_and_sqi.py --dist-dir dist || true
+        run: python3 scripts/check_links_and_sqi.py --dist-dir dist
 
       - name: Upload link-check report
         if: always()

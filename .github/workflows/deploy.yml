@@ -85,6 +85,10 @@ jobs:
       - name: Post-build smoke tests
         run: python3 scripts/deploy_checks.py
 
+      - name: Full test suite
+        timeout-minutes: 15
+        run: python -m pytest tests/ -q
+
       - name: Content structure audit
         run: python3 scripts/audit_content_structure.py --report dist/content-structure-report.json
 

@@ -233,5 +233,7 @@ class TestKnowledgeModules:
         for m in modules:
             body = generate_body(m)
             assert body.startswith("<h2>")
-            assert body.count("<h2>") == len(m["sections"])
+            # A References section is added when citations exist
+            expected = len(m["sections"]) + (1 if m.get("citations") else 0)
+            assert body.count("<h2>") == expected
             assert len(body) > 200
