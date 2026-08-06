@@ -520,6 +520,13 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
 
     env.filters["format_date"] = format_date
 
+    def md_to_html_filter(value):
+        from core.markdown_utils import md_to_html
+
+        return md_to_html(value or "")
+
+    env.filters["md_to_html"] = md_to_html_filter
+
     def sanitize_url(value):
         if not value:
             return ""
@@ -684,11 +691,24 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
             currency_tier as _tier_of,
             verification_anchor as _anchor_of,
         )
+        from core.content import provenance_of as _provenance_of  # noqa: I001
+
         for _c in all_content:
             _c.currency_tier = _tier_of(_c.__dict__)
             _c.freshness_status = _anchor_of(_c.__dict__)
+            _c.provenance = _provenance_of(_c.__dict__)
     except Exception as _fresh_err:
         print(f"  freshness badge data: skipped ({_fresh_err})")
+
+    # Editor's notes: human annotations merged into synthesized articles.
+    try:
+        from core.editor_notes import attach_editor_notes
+
+        _notes_attached = attach_editor_notes(all_content)
+        if _notes_attached:
+            print(f"  editor notes: attached to {_notes_attached} items")
+    except Exception as _note_err:
+        print(f"  editor notes: skipped ({_note_err})")
 
     # Backfill SQI for items missing it
     sqi_backfilled = 0
@@ -3548,6 +3568,8 @@ Sitemap: {SITE_URL}/sitemap.xml
         "/aml/signals/*  /compliance/signals/:splat  301",
         "/stock/signals/*  /markets/signals/:splat  301",
         "/stock/*  /markets/:splat  301",
+        "/data-engineering/*  /data/:splat  301",
+        "/data-engineering   /data/  301",
         "/science/*  /data/research/:splat  301",
         "/contact/*  /knowledge/contact/:splat  301",
     ]

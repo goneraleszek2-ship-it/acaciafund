@@ -1,0 +1,13 @@
+{#- Editor's note: human annotation on synthesized articles -#}
+{%- if content.editor_note -%}
+<div class="editor-note mt-4 mb-2 p-4 rounded-lg" style="border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);background:color-mix(in srgb, var(--color-accent) 7%, transparent)">
+  <div class="flex items-center gap-2 mb-2">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true" style="color:var(--color-accent)"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+    <span class="text-xs font-semibold uppercase tracking-wide" style="color:var(--color-accent)">Editor&rsquo;s Note</span>
+  </div>
+  <div class="text-sm leading-relaxed" style="color:var(--color-text)">{{ content.editor_note.note | md_to_html | safe }}</div>
+  <div class="mt-2 text-xs" style="color:var(--color-text-muted)">
+    &mdash; {{ content.editor_note.author | default("Editorial team") }}{% if content.editor_note.date %}, {{ content.editor_note.date }}{% endif %}
+  </div>
+</div>
+{%- endif -%}

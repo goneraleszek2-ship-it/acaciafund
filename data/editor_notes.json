@@ -1,0 +1,22 @@
+{
+  "2027-data-engineering-predictions": {
+    "note": "Prediction round-ups aggregate many individual signals, and a few of these items were already circulating before the original 2026 posts. Treat the specific timelines as directional rather than commitments — the *durable* takeaway is the batch/stream convergence and AI-augmented pipeline operations, which every major warehouse vendor is shipping toward.",
+    "author": "Editorial team",
+    "date": "2026-08-05"
+  },
+  "data-mesh-implementation": {
+    "note": "Data mesh is the rare architectural idea whose *governance* layer (domain ownership, federated compute) outlives its technology hype. If you are adopting it in a regulated environment, map the domain boundaries against your RACI chart first: data contracts work only when the owning domain also owns the SLO.",
+    "author": "Editorial team",
+    "date": "2026-08-05"
+  },
+  "feature-store-feast-vs-tecton": {
+    "note": "The vendor landscape here moves quickly — both projects have shifted their online/offline serving defaults since these comparisons were written. For a small team, a managed feature store often pays for itself in training-serving skew elimination alone; for a mature platform team, Feast on your own stack keeps the data plane under your control.",
+    "author": "Editorial team",
+    "date": "2026-08-05"
+  },
+  "data-observability-lineage": {
+    "note": "Lineage systems over-promise: most capture *syntactic* lineage (column-to-column) while the questions compliance teams ask are *semantic* (which business fact feeds this report). Budget for a manual semantic layer on top of automated discovery, or the DataOps investment will not satisfy an audit.",
+    "author": "Editorial team",
+    "date": "2026-08-05"
+  }
+}

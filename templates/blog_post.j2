@@ -50,6 +50,8 @@
 
     {% include 'partials/visual_abstract.j2' %}
 
+    {% include 'partials/editor_note.j2' %}
+
     <div class="prose-body">
       {{ page_body | default(content.body_html) | wrap_prose_sections | safe }}
     </div>

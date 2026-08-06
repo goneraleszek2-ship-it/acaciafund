@@ -136,6 +136,12 @@ class BuildCache:
                 file_hash = self.compute_file_hash(py_file)
                 combined.update(f"{py_file}:{file_hash}".encode())
 
+        # Editor's notes feed content rendering; include them so note edits
+        # invalidate the affected pages
+        notes_path = Path('data/editor_notes.json')
+        if notes_path.exists():
+            combined.update(f"editor_notes:{self.compute_file_hash(notes_path)}".encode())
+
         result = combined.hexdigest()
         if content_only:
             self.content_templates_hash = result

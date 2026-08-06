@@ -1,0 +1,19 @@
+{#- Provenance badge: verified / synthesized / curated -#}
+{%- set prov = content.provenance | default('curated') -%}
+{%- if prov == 'verified' -%}
+{%- set prov_label = 'Verified' -%}
+{%- set prov_color = '#22c55e' -%}
+{%- set prov_title = 'Reviewed by a human with a verification date' -%}
+{%- elif prov == 'synthesized' -%}
+{%- set prov_label = 'Synthesized' -%}
+{%- set prov_color = '#a78bfa' -%}
+{%- set prov_title = 'Summarized automatically from source feeds (arXiv, HN, PubMed, GDELT, SSRN)' -%}
+{%- else -%}
+{%- set prov_label = 'Curated' -%}
+{%- set prov_color = '#f59e0b' -%}
+{%- set prov_title = 'Hand-authored editorial content' -%}
+{%- endif -%}
+<span class="provenance-badge" title="{{ prov_title }}" style="display:inline-flex;align-items:center;gap:0.35rem;font-size:0.7rem;padding:0.15rem 0.5rem;border-radius:9999px;border:1px solid color-mix(in srgb, {{ prov_color }} 35%, transparent);color:{{ prov_color }};background:color-mix(in srgb, {{ prov_color }} 10%, transparent)">
+  <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+  {{ prov_label }}
+</span>

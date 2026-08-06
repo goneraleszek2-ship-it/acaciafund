@@ -5,6 +5,19 @@ from datetime import datetime
 from typing import Any, Dict, List, Optional
 
 
+def provenance_of(item: Dict[str, Any]) -> str:
+    """Classify an item's provenance for the UI badge.
+
+    Priority: verified (human review anchor present) > synthesized (built
+    from source feeds) > curated (hand-authored).
+    """
+    if item.get("last_reviewed") or item.get("last_verified"):
+        return "verified"
+    if item.get("source_breakdown"):
+        return "synthesized"
+    return "curated"
+
+
 @dataclass
 class Content:
     """Wrapper for content items from registry.json."""
@@ -60,6 +73,8 @@ class Content:
     use_cases: List[str] = field(default_factory=list)
     currency_tier: str = "timeless"
     freshness_status: str = "fresh"
+    provenance: str = "curated"
+    editor_note: Optional[Dict[str, Any]] = None
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "Content":

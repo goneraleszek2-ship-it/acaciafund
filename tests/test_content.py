@@ -82,3 +82,32 @@ class TestContentFields:
     def test_flashcards_default(self):
         c = Content(slug="s", title="T", pillar="aml", content_type="research")
         assert c.flashcards == []
+
+
+class TestProvenanceOf:
+    def test_curated_default(self):
+        from core.content import provenance_of
+
+        assert provenance_of({"slug": "x", "title": "T"}) == "curated"
+
+    def test_synthesized_from_source_breakdown(self):
+        from core.content import provenance_of
+
+        item = {"slug": "x", "source_breakdown": {"arxiv": 2, "hn": 1}}
+        assert provenance_of(item) == "synthesized"
+
+    def test_verified_beats_synthesized(self):
+        from core.content import provenance_of
+
+        item = {"slug": "x", "source_breakdown": {"arxiv": 2}, "last_reviewed": "2026-08-01"}
+        assert provenance_of(item) == "verified"
+
+    def test_verified_beats_curated(self):
+        from core.content import provenance_of
+
+        item = {"slug": "x", "last_verified": "2026-08-01"}
+        assert provenance_of(item) == "verified"
+
+    def test_content_default_provenance(self):
+        c = Content(slug="s", title="T", pillar="aml", content_type="research")
+        assert c.provenance == "curated"

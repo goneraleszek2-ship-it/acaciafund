@@ -95,6 +95,9 @@ jobs:
       - name: Enforce quality gate
         run: python3 scripts/enforce_quality_gate.py --build-meta dist/build-meta.json
 
+      - name: Check internal links and SQI
+        run: python3 scripts/check_links_and_sqi.py --dist-dir dist
+
       - name: Check external references
         timeout-minutes: 10
         run: python3 scripts/check_external_links.py --dist-dir dist
