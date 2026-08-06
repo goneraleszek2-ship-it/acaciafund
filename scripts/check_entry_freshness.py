@@ -29,14 +29,38 @@ DIST_PATH = REPOSITORY_ROOT / "dist" / "freshness.json"
 VALID_STATUSES = ("fresh", "stale", "outdated", "never")
 GROUP_KEYS = ("pillar", "type", "category")
 
+TIME_SENSITIVE_CATEGORIES = {"earnings-analysis", "industry-analysis", "market-analysis"}
+VALID_TIERS = ("time_sensitive", "timeless")
 
-def compute_freshness(last_verified: date | None, today: date | None = None) -> str:
+
+def currency_tier(item: dict[str, Any]) -> str:
+    """Classify an item as time_sensitive or timeless.
+
+    An explicit stored `currency_tier` wins; otherwise research items in
+    news-driven categories (earnings/industry/market analysis) are
+    time_sensitive, everything else is timeless (evergreen).
+    """
+    explicit = item.get("currency_tier")
+    if explicit in VALID_TIERS:
+        return explicit
+    if item.get("content_type") == "research" and (item.get("category") or "") in TIME_SENSITIVE_CATEGORIES:
+        return "time_sensitive"
+    return "timeless"
+
+
+def compute_freshness(last_verified: date | None, today: date | None = None, tier: str = "timeless") -> str:
     """Compute freshness status based on last_verified date.
+
+    Timeless (evergreen) items never degrade: verified at any point they
+    are 'fresh'; unverified is 'never'. Time-sensitive items decay through
+    the 30/90-day buckets.
 
     Returns one of: 'fresh', 'stale', 'outdated', 'never'.
     """
     if last_verified is None:
         return "never"
+    if tier == "timeless":
+        return "fresh"
     days = ((today or date.today()) - last_verified).days
     if days < 30:
         return "fresh"
@@ -61,6 +85,7 @@ def compute_freshness_with_review(
     last_verified: date | None,
     last_reviewed: date | None,
     today: date | None = None,
+    tier: str = "timeless",
 ) -> str:
     """Compute freshness using the most recent of last_verified/last_reviewed.
 
@@ -68,20 +93,22 @@ def compute_freshness_with_review(
     last_verified still wins when it is more recent.
     """
     anchor = last_reviewed if last_reviewed and (not last_verified or last_reviewed > last_verified) else last_verified
-    return compute_freshness(anchor, today=today)
+    return compute_freshness(anchor, today=today, tier=tier)
 
 
-def verification_anchor(item: dict[str, Any], today: date | None = None) -> str:
+def verification_anchor(item: dict[str, Any], today: date | None = None, tier: str | None = None) -> str:
     """Freshness status for a registry item.
 
     Anchors on the most recent of `date_str` (publication) and
     `last_verified` (explicit verification), then defers to a newer
-    `last_reviewed`.
+    `last_reviewed`. Tier-aware: timeless items never decay past fresh.
     """
+    if tier is None:
+        tier = currency_tier(item)
     published = parse_date(item.get("date_str"))
     verified = parse_date(item.get("last_verified"))
     anchor = verified if verified and (not published or verified > published) else published
-    return compute_freshness_with_review(anchor, parse_date(item.get("last_reviewed")), today=today)
+    return compute_freshness_with_review(anchor, parse_date(item.get("last_reviewed")), today=today, tier=tier)
 
 
 def load_registry(path: Path | None = None) -> dict[str, Any]:
@@ -102,22 +129,86 @@ def build_freshness_report(items: list[dict[str, Any]], today: date | None = Non
         "total_items": len(items),
         "entries": [],
         "summary": {s: 0 for s in VALID_STATUSES},
+        "tiers": {"time_sensitive": {s: 0 for s in VALID_STATUSES}, "timeless": {s: 0 for s in VALID_STATUSES}},
     }
     for item in items:
         slug = item.get("slug", "unknown")
         title = item.get("title", slug)
+        tier = currency_tier(item)
         last_verified = parse_date(item.get("date_str")) or parse_date(item.get("last_verified"))
         last_reviewed = parse_date(item.get("last_reviewed"))
-        freshness = verification_anchor(item, today=today)
+        freshness = verification_anchor(item, today=today, tier=tier)
         report["entries"].append({
             "slug": slug,
             "title": title,
+            "currency_tier": tier,
             "freshness": freshness,
             "last_verified": last_verified.isoformat() if last_verified else None,
             "last_reviewed": last_reviewed.isoformat() if last_reviewed else None,
         })
         report["summary"][freshness] += 1
+        report["tiers"][tier][freshness] += 1
     return report
+
+
+def build_topic_report(items: list[dict[str, Any]], today: date | None = None) -> dict[str, Any]:
+    """Aggregate freshness of time-sensitive items by category (topic).
+
+    A topic is:
+      - 'cold'   when it has >= 1 outdated or >= 2 stale time-sensitive items
+      - 'cooling' when it has >= 1 stale time-sensitive item
+      - 'current' otherwise
+
+    Timeless items never make a topic cold (evergreen content ages fine).
+    """
+    by_topic: dict[str, dict[str, Any]] = {}
+    for item in items:
+        tier = currency_tier(item)
+        status = verification_anchor(item, today=today, tier=tier)
+        topic = (item.get("category") or item.get("knowledge_category") or "uncategorized")
+        bucket = by_topic.setdefault(topic, {
+            "category": topic,
+            "total": 0,
+            "time_sensitive": 0,
+            "timeless": 0,
+            "fresh": 0, "stale": 0, "outdated": 0, "never": 0,
+            "oldest_slug": None,
+            "oldest_date": None,
+        })
+        bucket["total"] += 1
+        bucket[tier] += 1
+        bucket[status] += 1
+        if tier == "time_sensitive":
+            anchor = parse_date(item.get("date_str")) or parse_date(item.get("last_verified"))
+            if anchor and (bucket["oldest_date"] is None or anchor < bucket["oldest_date"]):
+                bucket["oldest_date"] = anchor
+                bucket["oldest_slug"] = item.get("slug")
+
+    topics: list[dict[str, Any]] = []
+    for bucket in by_topic.values():
+        if bucket["time_sensitive"] and (bucket["outdated"] >= 1 or bucket["stale"] >= 2):
+            bucket["status"] = "cold"
+        elif bucket["time_sensitive"] and bucket["stale"] >= 1:
+            bucket["status"] = "cooling"
+        else:
+            bucket["status"] = "current"
+        bucket.pop("oldest_date", None)
+        topics.append(bucket)
+
+    return {
+        "generated_at": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+        "total_topics": len(topics),
+        "cold_topics": [t for t in topics if t["status"] == "cold"],
+        "cooling_topics": [t for t in topics if t["status"] == "cooling"],
+        "topics": sorted(topics, key=lambda t: (t["status"] != "current", t["category"])),
+    }
+
+
+def topic_status_summary(topic_report: dict[str, Any]) -> str:
+    """Short human-readable summary line for a topic report."""
+    cold = len(topic_report["cold_topics"])
+    cooling = len(topic_report["cooling_topics"])
+    return f"{len(topic_report['topics'])} topics: {cold} cold, {cooling} cooling"
 
 
 def select_by_status(items: list[dict[str, Any]], statuses: list[str], today: date | None = None) -> list[dict[str, Any]]:
@@ -155,12 +246,37 @@ def run_report(today: date | None = None) -> int:
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8")
     s = report["summary"]
+    t = report["tiers"]
     print(f"Freshness check complete: {len(items)} items")
     print(f"  🟢 Fresh (<30d):   {s['fresh']}")
     print(f"  🟡 Stale (30-90d): {s['stale']}")
     print(f"  🔴 Outdated (>90d): {s['outdated']}")
     print(f"  ⚪ Never verified:  {s['never']}")
+    print(f"  time_sensitive: {t['time_sensitive']}")
+    print(f"  timeless:       {t['timeless']}")
     print(f"  Report: {DIST_PATH}")
+    return 0
+
+
+def run_topics(fail_on_cold: int, today: date | None = None) -> int:
+    """Aggregate time-sensitive freshness by topic; write dist/topic-currency.json."""
+    registry = load_registry()
+    items: list[dict[str, Any]] = registry.get("content", [])
+    report = build_topic_report(items, today=today)
+    DIST_PATH.parent.mkdir(parents=True, exist_ok=True)
+    TOPIC_PATH = REPOSITORY_ROOT / "dist" / "topic-currency.json"
+    TOPIC_PATH.write_text(json.dumps(report, indent=2, ensure_ascii=False), encoding="utf-8")
+    summary = topic_status_summary(report)
+    print(f"Topic currency: {summary}")
+    for topic in report["cold_topics"]:
+        print(f"  ❄️ COLD {topic['category']}: {topic['outdated']} outdated, {topic['stale']} stale "
+              f"(oldest: {topic['oldest_slug']})")
+    for topic in report["cooling_topics"]:
+        print(f"  🌬️ cooling {topic['category']}: {topic['stale']} stale")
+    print(f"  Report: {TOPIC_PATH}")
+    if len(report["cold_topics"]) > fail_on_cold:
+        print(f"FAIL: {len(report['cold_topics'])} cold topic(s) exceed fail-on-cold={fail_on_cold}")
+        return 1
     return 0
 
 
@@ -220,6 +336,9 @@ def main(argv: list[str] | None = None) -> int:
 
     sub.add_parser("report", help="compute and write freshness report (default)")
 
+    topics = sub.add_parser("topics", help="aggregate time-sensitive freshness by topic (dist/topic-currency.json)")
+    topics.add_argument("--fail-on-cold", type=int, default=0, help="exit 1 when more cold topics than this (default 0)")
+
     triage = sub.add_parser("triage", help="list items needing attention")
     triage.add_argument("--group", choices=GROUP_KEYS, default=None, help="group output by pillar/type/category")
     triage.add_argument(
@@ -245,6 +364,8 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.command in (None, "report"):
         return run_report()
+    if args.command == "topics":
+        return run_topics(args.fail_on_cold)
     if args.command == "triage":
         return run_triage(args.group, args.status)
     if args.command in ("mark-verified", "mark-reviewed"):

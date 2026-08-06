@@ -58,6 +58,8 @@ class Content:
     flashcards: List[Dict[str, Any]] = field(default_factory=list)
     technologies: List[str] = field(default_factory=list)
     use_cases: List[str] = field(default_factory=list)
+    currency_tier: str = "timeless"
+    freshness_status: str = "fresh"
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "Content":

@@ -6,6 +6,7 @@
 <details class="mt-6 ghost-card p-4">
   <summary class="text-sm font-semibold cursor-pointer select-none text-muted">Article Metadata</summary>
   <div class="mt-3 space-y-3">
+    {%- include 'partials/freshness_badge.j2' %}
     {%- if content.tags and content.tags | length > 0 %}
     <div class="flex flex-wrap gap-1.5">
       {%- for tag in content.tags %}

@@ -677,6 +677,19 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
         print("ERROR: No valid content items remaining after validation.")
         return 1
 
+    # Tier-aware freshness status for badge rendering (currency_tier +
+    # freshness_status mirror scripts/check_entry_freshness.py logic).
+    try:
+        from scripts.check_entry_freshness import (  # noqa: I001
+            currency_tier as _tier_of,
+            verification_anchor as _anchor_of,
+        )
+        for _c in all_content:
+            _c.currency_tier = _tier_of(_c.__dict__)
+            _c.freshness_status = _anchor_of(_c.__dict__)
+    except Exception as _fresh_err:
+        print(f"  freshness badge data: skipped ({_fresh_err})")
+
     # Backfill SQI for items missing it
     sqi_backfilled = 0
     for item in all_content:

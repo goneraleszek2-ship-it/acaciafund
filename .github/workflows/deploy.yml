@@ -95,6 +95,9 @@ jobs:
         timeout-minutes: 10
         run: python3 scripts/check_external_links.py --dist-dir dist
 
+      - name: Topic currency triage
+        run: python3 scripts/check_entry_freshness.py topics --fail-on-cold 0
+
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
