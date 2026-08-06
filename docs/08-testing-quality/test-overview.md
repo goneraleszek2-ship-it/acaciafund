@@ -1,8 +1,8 @@
 # Testing Overview
 
-AcaciaFund has **1118 Python tests across 48 modules** plus **106 JS tests across 4 files** — covering core modules, the cognitive architecture (schema builder, retention, adaptive), research provenance, build output, redirects, taxonomy generation, and new test suites for bloom, brand, visuals, generate, source verification, and knowledge-module SQI guards.
+AcaciaFund has **1132 Python tests across 49 modules** plus **106 JS tests across 4 files** — covering core modules, the cognitive architecture (schema builder, retention, adaptive), research provenance, build output, redirects, taxonomy generation, and test suites for bloom, brand, visuals, generate, source verification, knowledge-module SQI guards, content-structure audit, external-link liveness, SQI gates, and entry freshness/currency tiers.
 
-> **Note:** Counts verified 2026-08-05 via `python3 -m pytest tests/ --co` (1118 collected across 48 modules) + 4 JS suites (106 tests). Full suite runs in ~28s.
+> **Note:** Counts verified 2026-08-06 via `python3 -m pytest tests/ --co` (1132 collected across 49 modules) + 4 JS suites (106 tests). Full suite runs in the deploy pipeline after every build — all green (0 failures).
 
 ## Test Files
 
@@ -64,7 +64,7 @@ AcaciaFund has **1118 Python tests across 48 modules** plus **106 JS tests acros
 |------|-------|--------|
 | `tests/test_build_taxonomies.py` | 52 | Taxonomy generation (admin, search, tag, pillar, feed) |
 | `tests/test_check_source_freshness.py` | 8 | Source freshness staleness computation |
-| `tests/test_check_entry_freshness.py` | 11 | Entry freshness validation (registry, review, verified dates) |
+| `tests/test_check_entry_freshness.py` | 22 | Currency tiers (time_sensitive/timeless), 30/90-day buckets, topic cold/cooling detection, parse_date, anchor priority, mark/select helpers |
 | `tests/test_source_synthesis.py` | 19 | Tag extraction, synthesis description, key insights |
 | `tests/test_agent_tools.py` | 16 | Agent tool definitions |
 | `tests/test_agents.py` | 22 | Agent pipeline |
@@ -81,7 +81,6 @@ AcaciaFund has **1118 Python tests across 48 modules** plus **106 JS tests acros
 | `tests/test_visuals.py` | 29 | Topic icon registry, subtopic picking, topic words, color helpers, thumbnail/OG SVG |
 | `tests/test_generate.py` | 14 | Deep analysis, cross-pillar, classification confidence, trending sections |
 | `tests/test_source_verification.py` | 38 | Source classification, verification, scoring, domain extraction, article-level analysis |
-| `tests/test_check_entry_freshness.py` | 11 | Entry freshness validation (registry, review, verified dates) |
 
 ### JavaScript
 

@@ -44,6 +44,27 @@ The build enforces a quality gate at `SQI_THRESHOLD_MIN = 0.65`:
 - The build records `quality.gate_passed`; `scripts/enforce_quality_gate.py` turns it into a hard CI gate
 - Admin quality page displays the distribution and failing items
 
+## CI Quality Gates (deploy pipeline)
+
+Every deploy runs four gates after the build; any failure blocks the deploy:
+
+| Gate | Command | Fails when |
+|------|---------|------------|
+| Content structure audit | `scripts/audit_content_structure.py --report dist/content-structure-report.json` | Errors (min-h2=3 for research, empty sections, markdown residue, control chars) — warnings are non-blocking |
+| SQI gate | `scripts/enforce_quality_gate.py --build-meta dist/build-meta.json` | `low_sqi_count` exceeds `--fail-on-low-sqi` (default 0) |
+| External reference liveness | `scripts/check_external_links.py --dist-dir dist` | Definitive 4xx URLs (5xx = warning; quarantined hosts in `data/known_blocking_hosts.json` are skipped) |
+| Topic currency triage | `scripts/check_entry_freshness.py topics --fail-on-cold 0` | Cold topics (≥1 outdated or ≥2 stale time-sensitive items) |
+| Full test suite | `python -m pytest tests/ -q` | Any test failure (1132 Python tests) |
+
+## Entry Freshness & Currency Tiers
+
+`scripts/check_entry_freshness.py` classifies every registry item into a currency tier:
+
+- **time_sensitive** — explicit `currency_tier` field, or research items in `earnings-analysis` / `industry-analysis` / `market-analysis`. Decays fresh → stale (30 days) → outdated (90 days).
+- **timeless** (evergreen) — everything else. Never decays past `fresh`; missing dates are `never`.
+
+Pages render a freshness badge (Evergreen / Fresh / Stale / Outdated / Unverified) in the article metadata. Topic currency reports (`dist/topic-currency.json`) mark topics cold/cooling/current, with `--fail-on-cold N` gating CI.
+
 ## Backfill Script
 
 `scripts/backfill_sqi.py` recomputes SQI for items that are missing it:
