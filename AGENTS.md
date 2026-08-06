@@ -143,7 +143,7 @@ This codebase has been built in sequential sprints. Understanding what came befo
 | Foundation fixes | Concept extraction word-boundary fix, alias expansion, full category remapping, knowledge-to-pillar mapping, description backfill |
 | Quality fixes | SQI backfill script, search recall improvement (threshold 0.35, body window 800), niche concept alias expansion |
 
-**Current state:** 226 registry items, 2,827 generated pages, 3 clean pillars, 199 ontology concepts (all with philosophical metadata, 447 canonical relations), 65 inspiration sources. Daily news pipeline: 23 live RSS feeds + Hacker News + GDELT (keyless). Quality gate: passing, all 2,827 pages SQI >= 0.65. 1132 Python tests across 49 modules (+ 106 JS tests in 4 suites), all green in CI. Metrics verified 2026-08-06 — see `docs/08-testing-quality/test-overview.md` for the canonical reference.
+**Current state:** 226 registry items, 2,827 generated pages, 3 clean pillars, 199 ontology concepts (all with philosophical metadata, 447 canonical relations), 65 inspiration sources. Daily news pipeline: 23 live RSS feeds + Hacker News + GDELT (keyless). Quality gate: passing, all 2,827 pages SQI >= 0.65. 1173 Python tests across 52 modules (+ 106 JS tests in 4 suites), all green in CI. Metrics verified 2026-08-06 — see `docs/08-testing-quality/test-overview.md` for the canonical reference.
 
 ## Cognitive Architecture (Phase 4)
 
@@ -279,9 +279,9 @@ Navigation shows only: Compliance, Markets, Data.
 
 ### Content Categories
 
-**Research** (96): External content ingestion from arXiv, HN, PubMed
+**Research** (102): External content ingestion from arXiv, HN, PubMed
 **Learn** (83): Interactive modules with Bloom questions, flashcards, code examples
-**Knowledge** (16): Platform docs, glossary, tutorials, methodology
+**Knowledge** (41): Platform docs, glossary, tutorials, methodology
 
 ### Pillar Content Distribution
 
@@ -567,7 +567,7 @@ result = df.filter(pl.col('price') > 100).collect()
 
 JS tests run via `node tests/test_*.js` for each file (no npm/playwright needed). `scripts/run_tests.sh` runs all 4 suites.
 
-**Total: 1132 Python tests collected across 49 modules, including 5 guard tests in `tests/test_generate_knowledge_modules.py` (knowledge-module SQI fields), 21 in `tests/test_category_mapping.py` (tag→subcategory mapping, category backfill, news/GDELT pipeline), and 15 in `tests/test_check_entry_freshness.py` (currency tiers, topic currency).** (Verified 2026-08-06 via `python3 -m pytest tests/ --co`; JS suites run via `run_tests.sh`. Full suite runs in the deploy pipeline after every build — all green.)
+**Total: 1173 Python tests collected across 52 modules, including 5 guard tests in `tests/test_generate_knowledge_modules.py` (knowledge-module SQI fields), 21 in `tests/test_category_mapping.py` (tag→subcategory mapping, category backfill, news/GDELT pipeline), and 22 in `tests/test_check_entry_freshness.py` (currency tiers, topic currency, parse dates, marking).** (Verified 2026-08-06 via `python3 -m pytest tests/ --co`; JS suites run via `run_tests.sh`. Full suite runs in the deploy pipeline after every build — all green.)
 
 ### Phase 1.5 Files (Cognitive Load Amputation — July 2026)
 

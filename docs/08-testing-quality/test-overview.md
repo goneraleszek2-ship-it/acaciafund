@@ -1,8 +1,8 @@
 # Testing Overview
 
-AcaciaFund has **1132 Python tests across 49 modules** plus **106 JS tests across 4 files** — covering core modules, the cognitive architecture (schema builder, retention, adaptive), research provenance, build output, redirects, taxonomy generation, and test suites for bloom, brand, visuals, generate, source verification, knowledge-module SQI guards, content-structure audit, external-link liveness, SQI gates, and entry freshness/currency tiers.
+AcaciaFund has **1173 Python tests across 52 modules** plus **106 JS tests across 4 files** — covering core modules, the cognitive architecture (schema builder, retention, adaptive), research provenance, build output, redirects, taxonomy generation, and test suites for bloom, brand, visuals, generate, source verification, knowledge-module SQI guards, content-structure audit, external-link liveness, SQI gates, and entry freshness/currency tiers.
 
-> **Note:** Counts verified 2026-08-06 via `python3 -m pytest tests/ --co` (1132 collected across 49 modules) + 4 JS suites (106 tests). Full suite runs in the deploy pipeline after every build — all green (0 failures).
+> **Note:** Counts verified 2026-08-06 via `python3 -m pytest tests/ --co` (1173 collected across 52 modules) + 4 JS suites (106 tests). Full suite runs in the deploy pipeline after every build — all green (0 failures).
 
 ## Test Files
 
@@ -64,6 +64,10 @@ AcaciaFund has **1132 Python tests across 49 modules** plus **106 JS tests acros
 |------|-------|--------|
 | `tests/test_build_taxonomies.py` | 52 | Taxonomy generation (admin, search, tag, pillar, feed) |
 | `tests/test_check_source_freshness.py` | 8 | Source freshness staleness computation |
+| `tests/test_check_links_and_sqi.py` | 7 | scripts/check_links_and_sqi.py: internal-link extraction, broken-link detection, exit codes |
+| `tests/test_editor_notes.py` | 6 | core/editor_notes.py: load, malformed data, slug/topic matching, attach |
+| `tests/test_backfill_dois.py` | 7 | scripts/backfill_dois.py: arXiv DOI derivation, dry-run, no-overwrite |
+| `tests/test_citation_export.py` | 5 | citation_export.j2 partial: BibTeX/RIS rendering, DOI links |
 | `tests/test_check_entry_freshness.py` | 22 | Currency tiers (time_sensitive/timeless), 30/90-day buckets, topic cold/cooling detection, parse_date, anchor priority, mark/select helpers |
 | `tests/test_source_synthesis.py` | 19 | Tag extraction, synthesis description, key insights |
 | `tests/test_agent_tools.py` | 16 | Agent tool definitions |

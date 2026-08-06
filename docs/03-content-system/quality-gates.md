@@ -52,9 +52,10 @@ Every deploy runs four gates after the build; any failure blocks the deploy:
 |------|---------|------------|
 | Content structure audit | `scripts/audit_content_structure.py --report dist/content-structure-report.json` | Errors (min-h2=3 for research, empty sections, markdown residue, control chars) — warnings are non-blocking |
 | SQI gate | `scripts/enforce_quality_gate.py --build-meta dist/build-meta.json` | `low_sqi_count` exceeds `--fail-on-low-sqi` (default 0) |
+| Internal links | `scripts/check_links_and_sqi.py --dist-dir dist` | Any broken internal link (exit 1); also reports low-SQI pages |
 | External reference liveness | `scripts/check_external_links.py --dist-dir dist` | Definitive 4xx URLs (5xx = warning; quarantined hosts in `data/known_blocking_hosts.json` are skipped) |
 | Topic currency triage | `scripts/check_entry_freshness.py topics --fail-on-cold 0` | Cold topics (≥1 outdated or ≥2 stale time-sensitive items) |
-| Full test suite | `python -m pytest tests/ -q` | Any test failure (1132 Python tests) |
+| Full test suite | `python -m pytest tests/ -q` | Any test failure (Python tests) |
 
 ## Entry Freshness & Currency Tiers
 
@@ -64,6 +65,24 @@ Every deploy runs four gates after the build; any failure blocks the deploy:
 - **timeless** (evergreen) — everything else. Never decays past `fresh`; missing dates are `never`.
 
 Pages render a freshness badge (Evergreen / Fresh / Stale / Outdated / Unverified) in the article metadata. Topic currency reports (`dist/topic-currency.json`) mark topics cold/cooling/current, with `--fail-on-cold N` gating CI.
+
+## Provenance Badges
+
+Every article shows a provenance badge in its metadata, classifying how the content was produced:
+
+- **Verified** — carries `last_reviewed` / `last_verified` (human review anchor present)
+- **Synthesized** — built automatically from source feeds (non-empty `source_breakdown`; arXiv, HN, PubMed, GDELT, SSRN, NBER, SEC EDGAR, Semantic Scholar)
+- **Curated** — hand-authored editorial content (learn/knowledge templates, platform pages)
+
+Derivation lives in `core/content.py:provenance_of()` and is injected at build time; the badge is `templates/partials/provenance_badge.j2`.
+
+## Editor's Notes
+
+`data/editor_notes.json` holds human-written annotations keyed by slug (or topic segment). The build merges them via `core/editor_notes.py:attach_editor_notes()` and renders `templates/partials/editor_note.j2` as a callout on research pages — the human voice on synthesized articles. The file is hashed into the build cache so note edits invalidate the affected pages.
+
+## Citation Export
+
+Research pages with a DOI or source URL render `templates/partials/citation_export.j2`: a DOI deep link (`https://doi.org/…`) plus BibTeX and RIS copy buttons. DOIs are captured at ingestion (`core/fetch.py` extracts them from arXiv / PubMed / Semantic Scholar; arXiv items without one get the deterministic `10.48550/arXiv.<id>`) and backfilled for existing items via `scripts/backfill_dois.py`.
 
 ## Backfill Script
 

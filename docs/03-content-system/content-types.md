@@ -2,7 +2,7 @@
 
 AcaciaFund has three content types: **Research**, **Learn**, and **Knowledge**. Each type uses a different Jinja2 template and serves a distinct purpose in the content taxonomy.
 
-## Research (96 items)
+## Research (102 items)
 
 **Template:** `research.j2`
 **Purpose:** External content ingestion and synthesis from authoritative sources.
@@ -43,7 +43,7 @@ body_html → clean HTML → extract headings → inject section images
 
 **Generation:** Auto-generated via `scripts/generate_learn_modules.py`
 
-## Knowledge (16 items)
+## Knowledge (41 items)
 
 **Template:** `knowledge.j2`
 **Purpose:** Platform documentation, methodology, architecture decisions.

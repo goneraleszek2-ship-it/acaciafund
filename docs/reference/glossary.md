@@ -45,7 +45,7 @@ Domain-specific terminology used throughout the AcaciaFund codebase and document
 | **Pydantic v2** | Python data validation library used for registry schema (`schemas.py`) and ontology models (`core/ontology.py`). |
 | **Quality Gate** | SQI threshold at 0.65. Items below are flagged but don't block the build. |
 | **Relation** | Directed relationship between two ontology concepts. Types: part_of, enables, requires, influences, detects, regulates, supersedes, measures, implements, related_to. |
-| **Research** | Content type for external article ingestion from arXiv, HN, PubMed, etc. 96 items. |
+| **Research** | Content type for external article ingestion from arXiv, HN, PubMed, etc. 102 items. |
 | **SQI** | Semantic Quality Index (0.0–1.0). Composite score from readability, topicality, recency, and concept coverage. |
 
 ## T–Z
