@@ -196,7 +196,7 @@ MODULES: list[dict] = [
             {"level": "apply", "question": "Design an allocation rule that sizes positions by inverse volatility and re-tests strategy performance conditional on regime."},
         ],
         "citations": [
-            {"title": "Hamilton, Regime-Switching Models of the Term Structure", "url": "https://econweb.ucsd.edu/~jhamilto/regime.pdf", "type": "academic"},
+            {"title": "Hamilton, Regime-Switching Models of the Term Structure", "url": "https://econweb.ucsd.edu/~jhamilto/", "type": "academic"},
             {"title": "Ang & Timmermann, Regime Changes and Financial Markets", "url": "https://www.nber.org/papers/w11387", "type": "academic"},
             {"title": "Morgan Stanley — Volatility Regimes Research", "url": "https://www.morganstanley.com/", "type": "industry"},
         ],
@@ -227,7 +227,7 @@ MODULES: list[dict] = [
         "citations": [
             {"title": "Gatev, Goetzmann & Rouwenhorst, Pairs Trading: Performance of a Relative-Value Arbitrage Rule", "url": "https://www.nber.org/papers/w7032", "type": "academic"},
             {"title": "Vidyamurthy, Pairs Trading: Quantitative Methods and Analysis", "url": "https://www.wiley.com/en-us/Pairs+Trading%3A+Quantitative+Methods+and+Analysis-p-9780471460671", "type": "book"},
-            {"title": "statsmodels Documentation — Cointegration Tests", "url": "https://www.statsmodels.org/stable/examples/notebooks/generated/coint.html", "type": "official docs"},
+            {"title": "statsmodels Documentation — Cointegration Tests", "url": "https://www.statsmodels.org/stable/generated/statsmodels.tsa.stattools.coint.html", "type": "official docs"},
         ],
         "source_breakdown": {"academic": 1, "book": 1, "documentation": 1},
     },

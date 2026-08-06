@@ -265,9 +265,11 @@ def get_worker_pool() -> Optional[Any]:
     """Get multiprocessing pool with optimal worker count for ARM."""
     try:
         import multiprocessing
+        import os
         cpu_count = multiprocessing.cpu_count()
-        # Use 75% of CPUs for better responsiveness on mobile ARM
-        worker_count = max(1, int(cpu_count * 0.75))
+        # Use 75% of CPUs for better responsiveness on mobile ARM;
+        # ACACIA_BUILD_WORKERS overrides on memory-constrained hosts.
+        worker_count = int(os.environ.get("ACACIA_BUILD_WORKERS", max(1, int(cpu_count * 0.75))))
         return multiprocessing.Pool(processes=worker_count)
     except Exception:
         return None

@@ -40,8 +40,8 @@ def _compute_sqi_for_item(item):
 
 The build enforces a quality gate at `SQI_THRESHOLD_MIN = 0.65`:
 
-- Items below 0.65 are flagged in `build-meta.json` under `sqi_below_threshold`
-- The build does not fail — the gate is informational
+- Items below 0.65 are flagged in `build-meta.json` under `low_sqi_items`
+- The build records `quality.gate_passed`; `scripts/enforce_quality_gate.py` turns it into a hard CI gate
 - Admin quality page displays the distribution and failing items
 
 ## Backfill Script

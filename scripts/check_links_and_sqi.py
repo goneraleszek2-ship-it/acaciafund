@@ -1,10 +1,10 @@
-"""Check for broken internal links in generated HTML and report high-SQI items.
+"""Check for broken internal links in generated HTML and report low-SQI pages.
 
 Usage:
     python3 scripts/check_links_and_sqi.py [--dist-dir dist]
 
 Exit codes:
-    0 - all links OK, no high-SQI surprises
+    0 - all links OK, no pages below the SQI floor
     1 - broken links found
 """
 import argparse
@@ -66,21 +66,20 @@ def check_links(dist_dir: Path) -> list[str]:
     return broken
 
 
-def check_high_sqi(dist_dir: Path, threshold: float = 0.85) -> list[dict]:
-    """Find pages with very high SQI scores that should be verified."""
-    high_sqi = []
+def check_low_sqi(dist_dir: Path, threshold: float = 0.65) -> list[dict]:
+    """Find pages whose rendered SQI badge falls below the quality floor."""
+    low_sqi = []
     for f in dist_dir.rglob("index.html"):
         html = f.read_text(encoding="utf-8", errors="ignore")
-        # Look for SQI badge values
         for match in re.finditer(r'data-sqi="([\d.]+)"', html):
             sqi = float(match.group(1))
-            if sqi >= threshold:
+            if sqi < threshold:
                 rel = f.relative_to(dist_dir)
-                high_sqi.append({
+                low_sqi.append({
                     "file": str(rel),
                     "sqi": sqi,
                 })
-    return high_sqi
+    return low_sqi
 
 
 def check_external_references(dist_dir: Path) -> dict[str, list[str]]:
@@ -98,7 +97,7 @@ def check_external_references(dist_dir: Path) -> dict[str, list[str]]:
 def main():
     parser = argparse.ArgumentParser(description="Check links and SQI")
     parser.add_argument("--dist-dir", default="dist", help="Output directory")
-    parser.add_argument("--sqi-threshold", type=float, default=0.85)
+    parser.add_argument("--sqi-threshold", type=float, default=0.65)
     args = parser.parse_args()
 
     dist_dir = Path(args.dist_dir)
@@ -120,14 +119,14 @@ def main():
     else:
         print("\nAll internal links OK")
 
-    # Check high-SQI pages
-    high_sqi = check_high_sqi(dist_dir, args.sqi_threshold)
-    if high_sqi:
-        print(f"\nHIGH-SQI PAGES ({len(high_sqi)} found, threshold={args.sqi_threshold}):")
-        for item in sorted(high_sqi, key=lambda x: -x["sqi"])[:10]:
+    # Check low-SQI pages (below the quality floor)
+    low_sqi = check_low_sqi(dist_dir, args.sqi_threshold)
+    if low_sqi:
+        print(f"\nLOW-SQI PAGES ({len(low_sqi)} found, threshold={args.sqi_threshold}):")
+        for item in sorted(low_sqi, key=lambda x: x["sqi"])[:10]:
             print(f"  {item['file']}: SQI={item['sqi']:.3f}")
     else:
-        print(f"\nNo pages above SQI threshold {args.sqi_threshold}")
+        print(f"\nNo pages below SQI threshold {args.sqi_threshold}")
 
     # External reference stats
     external = check_external_references(dist_dir)
@@ -138,8 +137,8 @@ def main():
         "html_count": html_count,
         "broken_count": len(broken),
         "broken_links": broken[:50],
-        "high_sqi_count": len(high_sqi),
-        "high_sqi_pages": sorted(high_sqi, key=lambda x: -x["sqi"])[:20],
+        "low_sqi_count": len(low_sqi),
+        "low_sqi_pages": sorted(low_sqi, key=lambda x: x["sqi"])[:20],
         "external_url_count": len(external),
     }
     report_path = dist_dir / "link-check-report.json"

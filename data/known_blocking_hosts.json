@@ -1,0 +1,12 @@
+{
+  "_comment": "Hosts that return 401/403/405 to automated HEAD/GET requests (bot-blocking). Links to these hosts are skipped by scripts/check_external_links.py — not failed. Add a host here only after confirming it blocks bots, not when content is genuinely gone.",
+  "hosts": [
+    "www.reuters.com",
+    "www.wsj.com",
+    "www.bloomberg.com",
+    "www.spglobal.com",
+    "marquee.gs.com",
+    "www.citadelsecurities.com",
+    "www.fatf-gafi.org"
+  ]
+}

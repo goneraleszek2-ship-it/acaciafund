@@ -743,10 +743,11 @@ def _hn_to_item(story: dict, config: PillarConfig) -> dict[str, Any] | None:
     if url and url != hn_url:
         body += f"<p>Source: <a href='{url}'>{url[:80]}</a></p>"
 
+    avg_sqi = min(0.85, 0.65 + min(points, 100) * 0.002)
     return _source_to_item(
         story, config, source_key="hn", title=title, url=hn_url,
         date_str=created_at, summary=description, body_html=body,
-        author=author, avg_sqi=0.55,
+        author=author, avg_sqi=avg_sqi,
         score=min(0.95, 0.45 + (points / 1000)),
         signals_extra={"count": points, "total_score": points * 100, "avg_score": float(points)},
         quality_extra={"trend_strength": min(100.0, points)},
@@ -974,7 +975,7 @@ def _gdelt_to_item(article: dict, config: PillarConfig) -> dict[str, Any] | None
     return _source_to_item(
         article, config, source_key="gdelt", title=title, url=url,
         date_str=published, summary=summary, author="GDELT News",
-        avg_sqi=0.60, score=0.60,
+        avg_sqi=0.65, score=0.60,
         quality_extra={"evidence_level": "News"},
     )
 

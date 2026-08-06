@@ -88,6 +88,13 @@ jobs:
       - name: Content structure audit
         run: python3 scripts/audit_content_structure.py --report dist/content-structure-report.json
 
+      - name: Enforce quality gate
+        run: python3 scripts/enforce_quality_gate.py --build-meta dist/build-meta.json
+
+      - name: Check external references
+        timeout-minutes: 10
+        run: python3 scripts/check_external_links.py --dist-dir dist
+
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
