@@ -151,7 +151,7 @@ flowchart LR
 | Static output | dist/ HTML + JSON (Cloudflare Pages) |
 | Analytics | Plausible |
 | Lint / Typecheck | Ruff, Pyright |
-| Tests | Pytest (1118 Python + 106 JS), typeguard, anyio |
+| Tests | Pytest (1132 Python + 106 JS), typeguard, anyio |
 
 ### 2.4 Current Metrics (verified 2026-08-03)
 
@@ -167,7 +167,7 @@ flowchart LR
 | Inspiration sources | 32 |
 | SQI (avg / min / max) | 0.871 / 0.670 / 0.955 |
 | Full build time | ~93s |
-| Tests | 1224 |
+| Tests | 1238 |
 
 ---
 
@@ -455,7 +455,7 @@ bash scripts/run_tests.sh                       # full test suite wrapper
 
 ### 10.2 Testing
 
-- **1118 Python tests** across 48 modules + **106 JS tests** across 4 files (`test_progressive_disclosure.js`, `test_toc.js`, `test_adaptive_ui.js`, `test_search_discovery.js`).
+- **1132 Python tests** across 49 modules + **106 JS tests** across 4 files (`test_progressive_disclosure.js`, `test_toc.js`, `test_adaptive_ui.js`, `test_search_discovery.js`).
 - Coverage highlights: ontology (39), build_taxonomies (51), retention (38), contradiction (40), generate_pages (40), ingestion (64), adaptive (31), schema_builder (29).
 - Golden rules: use `python3`; tests import from `core/urls.py` (not `build.py`) to avoid heavy deps; timeout long runs.
 
