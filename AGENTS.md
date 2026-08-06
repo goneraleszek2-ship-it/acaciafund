@@ -143,9 +143,11 @@ This codebase has been built in sequential sprints. Understanding what came befo
 | Foundation fixes | Concept extraction word-boundary fix, alias expansion, full category remapping, knowledge-to-pillar mapping, description backfill |
 | Quality fixes | SQI backfill script, search recall improvement (threshold 0.35, body window 800), niche concept alias expansion |
 
-**Current state:** 226 registry items, 2,833 generated pages, 3 clean pillars, 199 ontology concepts (all with philosophical metadata, 447 canonical relations), 65 inspiration sources. Daily news pipeline: 23 live RSS feeds + Hacker News + GDELT (keyless). Quality gate: passing, all 2,833 pages SQI >= 0.65. 1203 Python tests across 55 modules (+ 139 JS tests in 6 suites), all green in CI. Metrics verified 2026-08-06 — see `docs/08-testing-quality/test-overview.md` for the canonical reference.
+**Current state:** 226 registry items, 2,833 generated pages, 3 clean pillars, 199 ontology concepts (all with philosophical metadata, 447 canonical relations), 65 inspiration sources. Daily news pipeline: 23 live RSS feeds + Hacker News + GDELT (keyless). Quality gate: passing, all 2,833 pages SQI >= 0.65. 1208 Python tests across 55 modules (+ 182 JS tests in 9 suites), all green in CI. Metrics verified 2026-08-06 — see `docs/08-testing-quality/test-overview.md` for the canonical reference.
 
 > **Master specification:** the reconciled execution plan (tier checklist with done/partial/pending status, verified metrics, quality gates) lives at `docs/00-system-architecture/master-spec.md`. Consult it before starting any new feature tier.
+>
+> **UI/UX specification:** the Atomic Design design system (v1.0, with adaptation notes) lives at `docs/00-system-architecture/ui-ux-spec.md`. Every UI change must map to a component in that spec; verify component naming by structure (`card`, `badge`, `ring`) not content (`aml-card`).
 
 ## Cognitive Architecture (Phase 4)
 
@@ -569,10 +571,15 @@ result = df.filter(pl.col('price') > 100).collect()
 | `tests/test_toc.js` | **12** | static/js/toc.js: createItems, linkClass pure functions |
 | `tests/test_adaptive_ui.js` | **19** | static/js/adaptive.js: density modes, difficulty/modality helpers |
 | `tests/test_search_discovery.js` | **67** | static/js/search.js: didYouMean, scoring, synonyms/aliases, category & tech facets, sorting |
+| `tests/test_diagnostic.js` | **15** | static/js/diagnostic.js: scoreDiagnostic, placement thresholds |
+| `tests/test_journeys.js` | **18** | static/js/journeys.js: prev/next linear navigation helpers |
+| `tests/test_pillar_rail.js` | **14** | static/js/pillar_rail.js: ringPath, masteryPct, dueEntries, nextDue |
+| `tests/test_study_dashboard.js` | **22** | static/js/study_dashboard.js: streakFromHistory, weekBars, nextUp, dueInLabel, weakConcepts |
+| `tests/test_learning_hub.js` | **7** | static/js/learning_hub.js: addToQueue seeding + DOM wiring integration checks |
 
-JS tests run via `node tests/test_*.js` for each file (no npm/playwright needed). `scripts/run_tests.sh` runs all 6 suites.
+JS tests run via `node tests/test_*.js` for each file (no npm/playwright needed). `scripts/run_tests.sh` runs all 9 suites (adds `test_diagnostic.js`, `test_journeys.js`, `test_pillar_rail.js`, `test_study_dashboard.js`, `test_learning_hub.js`).
 
-**Total: 1203 Python tests collected across 55 modules, including 5 guard tests in `tests/test_generate_knowledge_modules.py` (knowledge-module SQI fields), 21 in `tests/test_category_mapping.py` (tag→subcategory mapping, category backfill, news/GDELT pipeline), and 22 in `tests/test_check_entry_freshness.py` (currency tiers, topic currency, parse dates, marking).** (Verified 2026-08-06 via `python3 -m pytest tests/ --co`; JS suites run via `run_tests.sh`. Full suite runs in the deploy pipeline after every build — all green.)
+**Total: 1208 Python tests collected across 55 modules, including 5 guard tests in `tests/test_generate_knowledge_modules.py` (knowledge-module SQI fields), 21 in `tests/test_category_mapping.py` (tag→subcategory mapping, category backfill, news/GDELT pipeline), 22 in `tests/test_check_entry_freshness.py` (currency tiers, topic currency, parse dates, marking), and 27 in `tests/test_build_smoke.py` (incl. UI/UX spec assertions: pillar side rail, SM-2 CTA + prereq banner on learn pages, study dashboard sidebar, mobile tab bar).** (Verified 2026-08-06 via `python3 -m pytest tests/ --co`; JS suites run via `run_tests.sh`. Full suite runs in the deploy pipeline after every build — all green.)
 
 ### Phase 1.5 Files (Cognitive Load Amputation — July 2026)
 

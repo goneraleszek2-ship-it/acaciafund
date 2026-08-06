@@ -198,6 +198,10 @@ Execute in priority order; do not proceed to Tier N+1 until Tier N is stable.
 Follow the stage hierarchy in §2.6 for every UI change. Molecules must be
 context-agnostic; name patterns by structure (`card`, not `product-card`).
 
+> **Design reference:** the canonical UI/UX specification (v1.0 with adaptation
+> notes) is `docs/00-system-architecture/ui-ux-spec.md`. Check it before any
+> template/CSS change; new components must trace to an atom/molecule/organism there.
+
 ## 7. Testing & Quality Gates (per change)
 
 1. Full test suite: `bash scripts/run_tests.sh` — **1,173 Python + 106 JS must pass**
