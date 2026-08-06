@@ -1381,6 +1381,27 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
             quiz_json = _serialize_quiz(item)
             quality_score, quality_badge, quality_metrics = _compute_quality(quality_scores, item.slug)
 
+            # Resolve prerequisites (registry slugs may be pillar-relative)
+            from core.review_cards import backfill_flashcards_from_quizzes as _backfill_fc
+            prerequisite_links = []
+            try:
+                _content_by_slug = {c.slug: c for c in all_content}
+                for _pslug in (item.prerequisites or []):
+                    _candidate = _pslug if "/" in _pslug else f"{item.pillar}/{_pslug}"
+                    _pitem = _content_by_slug.get(_candidate) or _content_by_slug.get(_pslug)
+                    if _pitem:
+                        prerequisite_links.append({
+                            "slug": _candidate,
+                            "title": _pitem.title or _candidate,
+                            "url": f"/{slug_to_fspath(_candidate)}/",
+                        })
+            except Exception:
+                prerequisite_links = []
+            flashcard_ids = [
+                f"{item.slug}#{i}"
+                for i in range(len(_backfill_fc(item.__dict__, 3)))
+            ]
+
             bl_name = BLOOM_NAMES.get(item.highest_bloom or 0, "")
             layer_sub = f"Level {item.highest_bloom}: {bl_name}" if bl_name else ""
 
@@ -1426,6 +1447,8 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                 source_synthesis=source_synthesis.get(item.slug, []),
                 ontology_concepts=ontology_concepts,
                 external_references=external_references,
+                prerequisite_links=prerequisite_links,
+                flashcard_ids=flashcard_ids,
                 cross_pillar_items=find_cross_pillar(item, all_content, ontology, _concept_cache=_concept_cache),
                 is_index=False,
                 layer="learn",

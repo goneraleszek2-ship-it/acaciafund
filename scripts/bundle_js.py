@@ -41,6 +41,12 @@ BUNDLES = {
     "journeys.js": [
         "journeys.js",
     ],
+    "pillar_rail.js": [
+        "pillar_rail.js",
+    ],
+    "study_dashboard.js": [
+        "study_dashboard.js",
+    ],
 }
 
 

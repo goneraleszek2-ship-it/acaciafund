@@ -15,6 +15,14 @@
 
   {%- set pillar_color = pconf.color if pconf else 'var(--color-accent)' %}
 
+  <div class="diagnostic-cta mb-6">
+    <p><strong>Not sure where to start?</strong> Take the 2-minute diagnostic to be placed into a learning mode tuned to your level.</p>
+    <a href="/diagnostic/" class="btn btn-primary btn-sm shrink-0">Take the quiz &rarr;</a>
+  </div>
+
+  <div class="grid lg:grid-cols-3 gap-6">
+    <div class="lg:col-span-2 min-w-0">
+
   <div class="mb-6 flex flex-wrap items-center gap-3 text-xs text-muted">
     <span><strong class="text-default">{{ posts | length }}</strong> articles</span>
     <span>&middot;</span>
@@ -136,5 +144,11 @@
       Search this topic &rarr;
     </a>
   </div>
+
+    </div>
+
+    {% include 'partials/pillar_side_rail.j2' %}
+  </div>
 </section>
+<script src="{{ 'js/pillar_rail.js' | asset }}" defer></script>
 {% endblock %}

@@ -53,6 +53,39 @@ class TestComplianceContent:
         content = (dist_dir / "compliance" / "index.html").read_text(encoding="utf-8")
         assert "Compliance" in content
 
+    def test_pillar_page_has_diagnostic_cta(self, dist_dir):
+        content = (dist_dir / "compliance" / "index.html").read_text(encoding="utf-8")
+        assert 'class="diagnostic-cta' in content
+        assert "/diagnostic/" in content
+
+    def test_pillar_page_has_side_rail(self, dist_dir):
+        content = (dist_dir / "compliance" / "index.html").read_text(encoding="utf-8")
+        assert "pillar-rail" in content
+        assert "pillar_rail" in content and ".js" in content
+
+    def test_learn_page_has_sm2_cta_and_prereq_banner(self, dist_dir):
+        learn_pages = list((dist_dir / "compliance" / "learn").rglob("index.html"))
+        assert len(learn_pages) > 0
+        for page in learn_pages:
+            content = page.read_text(encoding="utf-8")
+            if "data-add-to-queue" in content:
+                assert "data-flashcard-ids" in content, f"{page} CTA missing card ids"
+                break
+        else:
+            raise AssertionError("No compliance learn page rendered the SM-2 CTA")
+
+    def test_study_page_has_dashboard_sidebar(self, dist_dir):
+        content = (dist_dir / "study" / "index.html").read_text(encoding="utf-8")
+        assert "study-dashboard" in content
+        assert "study_dashboard" in content and ".js" in content
+        assert "side-week" in content and "side-upcoming" in content and "side-weak" in content
+
+    def test_mobile_tabbar_present_on_all_layouts(self, dist_dir):
+        content = (dist_dir / "study" / "index.html").read_text(encoding="utf-8")
+        assert 'class="mobile-tabbar"' in content
+        assert "data-tab-badge" in content
+
+
     def test_knowledge_pages_exist(self, dist_dir):
         knowledge = dist_dir / "compliance" / "knowledge"
         pages = list(knowledge.iterdir())

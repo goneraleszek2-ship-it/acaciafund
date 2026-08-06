@@ -56,6 +56,12 @@
         badge.style.display = 'none';
       }
     });
+    document.querySelectorAll('[data-tab-badge]').forEach(function(el) {
+      el.classList.remove('hidden');
+      el.textContent = count > 99 ? '99+' : count;
+      el.classList.toggle('is-hot', count > 0);
+      if (count <= 0) el.classList.add('hidden');
+    });
   }
 
   document.addEventListener('DOMContentLoaded', function() {

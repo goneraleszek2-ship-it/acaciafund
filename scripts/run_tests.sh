@@ -99,6 +99,9 @@ JS_TESTS=(
     "tests/test_search_discovery.js"
     "tests/test_diagnostic.js"
     "tests/test_journeys.js"
+    "tests/test_pillar_rail.js"
+    "tests/test_study_dashboard.js"
+    "tests/test_learning_hub.js"
 )
 
 echo "=========================================

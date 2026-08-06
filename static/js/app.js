@@ -2718,6 +2718,19 @@
     return 'display:none;background:var(--color-accent,#818cf8);color:#fff;font-size:0.65rem;line-height:1;padding:2px 5px;border-radius:9999px;margin-left:4px;vertical-align:middle';
   }
 
+  function dueCountFor(store, entries, idField) {
+    var now = Date.now();
+    var due = 0;
+    for (var i = 0; i < entries.length; i++) {
+      var e = entries[i];
+      var st = store[e[idField]] || {};
+      var dueAt = st.due || 0;
+      var reps = st.reps || 0;
+      if (reps === 0 || (dueAt > 0 && dueAt <= now)) due++;
+    }
+    return due;
+  }
+
   function countDue() {
     var mastery = {};
     try { mastery = JSON.parse(localStorage.getItem('acacia_concept_mastery') || '{}'); } catch (_) {}
@@ -2727,27 +2740,21 @@
     var base = document.querySelector('script[src*="review_badge.js"]');
     var prefix = base ? base.src.replace(/js\/\w+\.js.*$/, '') : '';
 
-    fetch(prefix + 'static/review_concepts.json')
-      .then(function(r) { if (!r.ok) throw new Error(r.status); return r.json(); })
-      .then(function(data) {
-        var concepts = data.concepts || [];
-        var now = Date.now();
-        var due = 0;
-        for (var i = 0; i < concepts.length; i++) {
-          var c = concepts[i];
-          var m = mastery[c.id] || {};
-          var s = sm2[c.id] || {};
-          var conceptDue = m.due || s.due || 0;
-          var reps = (m.reps || 0) + (s.reps || 0);
-          if (reps === 0 || (conceptDue > 0 && conceptDue <= now)) due++;
-        }
+    Promise.all([
+      fetch(prefix + 'static/review_concepts.json').then(function(r) { if (!r.ok) throw new Error(r.status); return r.json(); }),
+      fetch(prefix + 'static/flashcard_index.json').then(function(r) { if (!r.ok) throw new Error(r.status); return r.json(); }),
+    ])
+      .then(function(results) {
+        var concepts = (results[0] && results[0].concepts) || [];
+        var cards = (results[1] && results[1].cards) || [];
+        var due = dueCountFor(mastery, concepts, 'id') + dueCountFor(sm2, cards, 'id');
         updateBadge(due);
       })
       .catch(function() {});
   }
 
   function updateBadge(count) {
-    document.querySelectorAll('a[href="/review/"]').forEach(function(link) {
+    document.querySelectorAll('a[href="/review/"], a[href="/study/"]').forEach(function(link) {
       var badge = link.querySelector('.review-badge');
       if (!badge) {
         badge = document.createElement('span');
@@ -2762,10 +2769,16 @@
         badge.style.display = 'none';
       }
     });
+    document.querySelectorAll('[data-tab-badge]').forEach(function(el) {
+      el.classList.remove('hidden');
+      el.textContent = count > 99 ? '99+' : count;
+      el.classList.toggle('is-hot', count > 0);
+      if (count <= 0) el.classList.add('hidden');
+    });
   }
 
   document.addEventListener('DOMContentLoaded', function() {
-    var link = document.querySelector('a[href="/review/"]');
+    var link = document.querySelector('a[href="/review/"], a[href="/study/"]');
     if (!link) return;
     var badge = document.createElement('span');
     badge.className = 'review-badge';

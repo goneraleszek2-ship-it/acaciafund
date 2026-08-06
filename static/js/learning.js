@@ -349,6 +349,21 @@
       return { total: ids.length, due, learning, mastered };
     }
 
+    /* Add cards to the queue without grading them (UI/UX spec §4.3 SM-2 CTA) */
+    addToQueue(ids) {
+      const now = Date.now();
+      let added = 0;
+      for (const id of ids) {
+        const c = this.getCard(id);
+        if (c.reps === 0 && c.lastReview === 0) {
+          c.due = now;
+          added++;
+        }
+      }
+      this.save();
+      return added;
+    }
+
     /* ── History / streak ── */
     _recordHistory(ts) {
       const day = new Date(ts).toISOString().slice(0, 10);
@@ -705,6 +720,39 @@
 
   /* ── Quiz auto-init on page load ────────────────────────────── */
   document.addEventListener('DOMContentLoaded', () => {
+    /* Prerequisite banner (dismissible, UI/UX spec §4.3) */
+    const prereqBanner = document.querySelector('[data-prereq-banner]');
+    if (prereqBanner) {
+      const key = 'acacia_prereq_dismissed_' + (location.pathname.replace(/\//g, '_') || 'page');
+      let dismissed = false;
+      try { dismissed = localStorage.getItem(key) === '1'; } catch (_) {}
+      if (dismissed) prereqBanner.remove();
+      const btn = prereqBanner.querySelector('[data-prereq-dismiss]');
+      if (btn) btn.addEventListener('click', () => {
+        try { localStorage.setItem(key, '1'); } catch (_) {}
+        prereqBanner.remove();
+      });
+    }
+
+    /* SM-2 "Add to Study Queue" CTA (UI/UX spec §4.3) */
+    const addBtn = document.querySelector('[data-add-to-queue]');
+    if (addBtn && window._acaciaSM2) {
+      addBtn.addEventListener('click', () => {
+        let ids = [];
+        try { ids = JSON.parse(addBtn.getAttribute('data-flashcard-ids') || '[]'); } catch (_) {}
+        const added = window._acaciaSM2.addToQueue(ids);
+        const feedback = document.querySelector('[data-queue-feedback]');
+        if (feedback) {
+          if (added > 0) {
+            feedback.textContent = `Added ${added} flashcard${added === 1 ? '' : 's'} to your study queue.`;
+            addBtn.disabled = true;
+          } else {
+            feedback.textContent = 'Already in your queue — they will appear when due.';
+          }
+        }
+        document.dispatchEvent(new CustomEvent('review-badge-update'));
+      });
+    }
     const quizSection = document.getElementById('quiz-section');
     if (quizSection) {
       try {

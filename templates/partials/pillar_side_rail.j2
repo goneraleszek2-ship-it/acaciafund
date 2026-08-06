@@ -1,0 +1,39 @@
+{# Pillar landing right rail (UI/UX spec §4.2): mastery rings, study-queue mini, popular concepts #}
+<aside class="pillar-rail" data-pillar="{{ pillar }}" aria-label="Pillar dashboard">
+  <div class="ghost-card rail-card">
+    <h2 class="rail-title">Mastery <span class="rail-count">this pillar</span></h2>
+    <div class="flex gap-4" id="rail-mastery">
+      <div class="progress-ring" data-mastery="flashcards" title="Flashcards reviewed">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle class="ring-track" cx="12" cy="12" r="9"></circle>
+          <circle class="ring-fill" cx="12" cy="12" r="9" data-ring-circle></circle>
+        </svg>
+        <span class="ring-label" data-ring-label>Flashcards</span>
+      </div>
+      <div class="progress-ring" data-mastery="concepts" title="Concepts reviewed">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle class="ring-track" cx="12" cy="12" r="9"></circle>
+          <circle class="ring-fill" cx="12" cy="12" r="9" data-ring-circle></circle>
+        </svg>
+        <span class="ring-label" data-ring-label>Concepts</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="ghost-card rail-card">
+    <h2 class="rail-title">Study Queue <span class="rail-count">next due</span></h2>
+    <div id="rail-queue" class="text-sm text-muted">Loading&hellip;</div>
+    <a href="/study/" class="btn btn-primary btn-sm mt-3 w-full text-center">Go to Study &rarr;</a>
+  </div>
+
+  {%- if concept_cloud and concept_cloud | length > 0 %}
+  <div class="ghost-card rail-card">
+    <h2 class="rail-title">Popular Concepts <span class="rail-count">top {{ [concept_cloud | length, 10] | min }}</span></h2>
+    <div class="flex flex-wrap gap-2">
+      {%- for concept in concept_cloud[:10] %}
+      <a href="/concepts/{{ concept.id }}/" class="px-3 py-1.5 text-xs rounded-full no-underline transition border-muted bg-surface text-default hover-accent">{{ concept.label }}</a>
+      {%- endfor %}
+    </div>
+  </div>
+  {%- endif %}
+</aside>

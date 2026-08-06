@@ -36,11 +36,38 @@
 
     {% include 'partials/visual_abstract.j2' %}
 
+    {%- if prerequisite_links and prerequisite_links | length > 0 %}
+    <div class="ghost-card p-4 mb-6 flex flex-wrap items-center gap-3 prerequisite-banner" data-prereq-banner>
+      <span aria-hidden="true" style="font-size:1.25rem">&#128221;</span>
+      <p class="text-sm text-secondary flex-1 min-w-0" style="margin:0">
+        <strong class="text-default">We recommend reading first:</strong>
+        {%- for p in prerequisite_links %}
+        <a href="{{ p.url }}" class="hover-accent transition text-default">{{ p.title }}</a>{% if not loop.last %}, {% endif %}
+        {%- endfor %}
+      </p>
+      <button type="button" class="btn btn-ghost btn-sm shrink-0" data-prereq-dismiss aria-label="Dismiss prerequisite reminder">Dismiss</button>
+    </div>
+    {%- endif %}
+
     <div class="prose-body">
       {{ page_body | default(content.body_html) | wrap_prose_sections | safe }}
     </div>
 
     {% include 'partials/article_metadata.j2' %}
+
+    {%- if flashcard_ids and flashcard_ids | length > 0 %}
+    <section class="mt-12 pt-8 border-t border-muted">
+      <h2 class="text-2xl font-bold mb-2 flex items-center gap-2 text-default">
+        <svg class="section-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>
+        Review with Spaced Repetition
+      </h2>
+      <p class="text-sm mb-4 text-muted">Add this lesson's {{ flashcard_ids | length }} flashcards to your SM-2 study queue. They will appear when due in the Study Queue.</p>
+      <button type="button" class="btn btn-primary" data-add-to-queue data-flashcard-ids="{{ flashcard_ids | tojson }}" aria-label="Add all lesson flashcards to the study queue">
+        Add to Study Queue &rarr;
+      </button>
+      <span class="text-xs text-muted ml-3" data-queue-feedback role="status"></span>
+    </section>
+    {%- endif %}
 
     {%- if ontology_concepts and ontology_concepts | length > 0 %}
     <section class="mt-12 pt-8 border-t border-muted">

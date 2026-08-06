@@ -128,7 +128,7 @@
       <span style="color:#ea580c">{{ stage_icons["wrench"] | safe }}</span>
       <span class="text-xs font-semibold uppercase tracking-wider" style="color:#ea580c">Create</span>
     </summary>
-    <div class="mt-2 p-3 rounded text-sm ml-2" style="background:color-mix(in srgb, #ea580c 6%, transparent);border:1px solid color-mix(in srgb, #ea580c 15%, transparent)">
+    <div class="mt-2 p-3 rounded text-sm ml-2" style="background:var(--feynman-build-bg);border:1px solid var(--feynman-build-border)">
       <p class="font-mono mb-2 text-default">{{ concept.build_exercise.prompt }}</p>
       {% if concept.build_exercise.type == "code" %}
       <textarea class="build-exercise-input w-full min-h-[120px] p-2 text-xs font-mono rounded border bg-bg border-default text-default" placeholder="Write your solution..." style="resize:vertical"></textarea>

@@ -13,10 +13,20 @@
   <p class="mt-1 text-sm text-muted">Due flashcards and concept reviews, ordered by due date. Space = flip, 1-4 = grade.</p>
 </header>
 
-<div class="flex items-center justify-between mb-6">
+<div class="flex items-center justify-between mb-6 flex-wrap gap-3">
   <div id="queue-progress" class="text-sm font-meta text-muted">0 / 0 reviewed</div>
-  <div id="queue-due" class="text-sm font-semibold text-accent">0 due</div>
+  <div class="flex items-center gap-4">
+    <div class="study-streak-card flex items-center gap-1.5 text-sm" title="Consecutive days with a review">
+      <span aria-hidden="true" style="font-size:1.1rem">&#128293;</span>
+      <span id="study-streak" class="font-bold text-default">0</span>
+      <span class="text-xs text-muted">day streak</span>
+    </div>
+    <div id="queue-due" class="text-sm font-semibold text-accent">0 due</div>
+  </div>
 </div>
+
+<div id="study-dashboard" class="grid lg:grid-cols-3 gap-6">
+  <div class="lg:col-span-2 min-w-0">
 
 <div id="queue-empty" class="hidden ghost-card p-8 text-center">
   <svg class="empty-state-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
@@ -38,8 +48,26 @@
   </div>
 </div>
 
+  </div>
+  <aside class="pillar-rail" aria-label="Study dashboard">
+    <div class="ghost-card rail-card">
+      <h2 class="rail-title">This Week <span class="rail-count">review days</span></h2>
+      <div id="side-week" class="flex items-end justify-between gap-1" style="height:5rem"></div>
+    </div>
+    <div class="ghost-card rail-card">
+      <h2 class="rail-title">Upcoming <span class="rail-count">next 5</span></h2>
+      <div id="side-upcoming" class="text-sm text-muted">Loading&hellip;</div>
+    </div>
+    <div class="ghost-card rail-card">
+      <h2 class="rail-title">Weak Cards <span class="rail-count">low ease</span></h2>
+      <div id="side-weak" class="text-sm text-muted">Loading&hellip;</div>
+    </div>
+  </aside>
+</div>
+
 <script src="{{ 'js/learning.js' | asset }}" defer></script>
 <script src="{{ 'js/retention.js' | asset }}" defer></script>
+<script src="{{ 'js/study_dashboard.js' | asset }}" defer></script>
 <script>
 (function() {
   const flashCards = {{ flashcard_cards | safe }};
@@ -99,6 +127,8 @@
       if (idx >= queue.length) {
         container.innerHTML = '<div class="ghost-card p-6 text-center"><p class="text-sm font-semibold text-default">Queue complete!</p></div>';
         navEl.classList.add('hidden');
+        container.setAttribute('role', 'region');
+        container.removeAttribute('aria-modal');
         return;
       }
 
@@ -106,6 +136,9 @@
       container.innerHTML = '';
       progressEl.textContent = `${reviewed} / ${queue.length} reviewed`;
       navEl.classList.remove('hidden');
+      container.setAttribute('role', 'dialog');
+      container.setAttribute('aria-modal', 'false');
+      container.setAttribute('aria-label', 'Study card — review and grade your recall');
 
       if (item.kind === 'flash') {
         const c = item.data;
