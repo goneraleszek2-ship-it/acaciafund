@@ -145,6 +145,8 @@ This codebase has been built in sequential sprints. Understanding what came befo
 
 **Current state:** 226 registry items, 2,827 generated pages, 3 clean pillars, 199 ontology concepts (all with philosophical metadata, 447 canonical relations), 65 inspiration sources. Daily news pipeline: 23 live RSS feeds + Hacker News + GDELT (keyless). Quality gate: passing, all 2,827 pages SQI >= 0.65. 1173 Python tests across 52 modules (+ 106 JS tests in 4 suites), all green in CI. Metrics verified 2026-08-06 — see `docs/08-testing-quality/test-overview.md` for the canonical reference.
 
+> **Master specification:** the reconciled execution plan (tier checklist with done/partial/pending status, verified metrics, quality gates) lives at `docs/00-system-architecture/master-spec.md`. Consult it before starting any new feature tier.
+
 ## Cognitive Architecture (Phase 4)
 
 The portal is being restructured from a *content repository* into a *schema-building engine* grounded in cognitive psychology:
