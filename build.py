@@ -2664,6 +2664,24 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     (study_dir / "index.html").write_text(study_html, encoding="utf-8")
     print(f"  study: study/index.html ({len(_review_cards)} flashcard entries)")
 
+    # --- Diagnostic placement quiz (Task 2.4) ---
+    from core.diagnostic import DIAGNOSTIC_QUESTIONS, build_payload
+    diagnostic_dir = OUTPUT_DIR / "diagnostic"
+    diagnostic_dir.mkdir(parents=True, exist_ok=True)
+    diagnostic_html = render_template(
+        "diagnostic.j2",
+        content=_dummy("Diagnostic Placement Quiz — AcaciaFund", "index", description="Per-pillar diagnostic quiz that places you into a learning mode."),
+        page_path="diagnostic/",
+        page_title="Diagnostic Placement Quiz",
+        **ctx_base,
+    )
+    (diagnostic_dir / "index.html").write_text(diagnostic_html, encoding="utf-8")
+    _diag_payload = build_payload(DIAGNOSTIC_QUESTIONS)
+    (STATIC_DST_DIR / "diagnostic_questions.json").write_text(
+        json.dumps(_diag_payload, ensure_ascii=False), encoding="utf-8"
+    )
+    print(f"  diagnostic: diagnostic/index.html ({len(DIAGNOSTIC_QUESTIONS)} questions)")
+
     # --- Concept review data for retention engine ---
     if ontology and ontology.concept_count() > 0:
         try:

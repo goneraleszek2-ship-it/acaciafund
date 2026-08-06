@@ -97,6 +97,7 @@ JS_TESTS=(
     "tests/test_toc.js"
     "tests/test_adaptive_ui.js"
     "tests/test_search_discovery.js"
+    "tests/test_diagnostic.js"
 )
 
 echo "=========================================

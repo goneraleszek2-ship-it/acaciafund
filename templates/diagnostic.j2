@@ -1,0 +1,35 @@
+{% extends "layout.j2" %}
+{% block main_content %}
+<nav aria-label="Breadcrumb" class="mb-4 text-xs text-muted">
+  <ol class="flex flex-wrap items-center gap-1.5">
+    <li><a href="/" class="hover-accent transition">Home</a></li>
+    <li aria-hidden="true">/</li>
+    <li aria-current="page">Diagnostic</li>
+  </ol>
+</nav>
+
+<header class="mb-6">
+  <h1 class="text-2xl font-extrabold text-default">Diagnostic Placement Quiz</h1>
+  <p class="mt-1 text-sm text-muted">
+    Nine questions — one beginner, intermediate and expert question per pillar.
+    Your score places you into a learning mode (<em>beginner</em>, <em>intermediate</em> or
+    <em>expert</em>) that tunes the site's mode toggle and your Study Queue.
+  </p>
+</header>
+
+<div id="diagnostic-app" class="ghost-card p-6 md:p-8">
+  <div id="diagnostic-status" class="text-xs text-muted mb-4" aria-live="polite"></div>
+  <div id="diagnostic-preamble" class="text-sm text-muted mb-6">
+    <p>How it works:</p>
+    <ul class="list-disc ml-6 mt-1 space-y-1">
+      <li>Answer all nine questions — there are no trick questions, and a guess is better than a skip.</li>
+      <li>You are placed by score: 0–3 correct → <strong>Beginner</strong>, 4–6 → <strong>Intermediate</strong>, 7–9 → <strong>Expert</strong>.</li>
+      <li>Your placement is stored locally and reused by the study queue and site-wide learning mode.</li>
+    </ul>
+  </div>
+  <div id="diagnostic-list" class="space-y-6"></div>
+  <button id="diagnostic-submit" class="btn btn-primary mt-8" type="button">Score my placement</button>
+</div>
+
+<script src="{{ 'js/diagnostic.js' | asset }}" defer></script>
+{% endblock %}

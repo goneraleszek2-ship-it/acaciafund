@@ -152,14 +152,14 @@ Execute in priority order; do not proceed to Tier N+1 until Tier N is stable.
 | 1.2 Build-time link/route checking | **Done** | `check_links_and_sqi.py`, CI gate, 7 tests |
 | 1.3 Content provenance badging | **Done** | `provenance` field + `provenance_badge.j2`; every article badged |
 
-### Tier 2: Pedagogical UX — IN PROGRESS
+### Tier 2: Pedagogical UX — DONE
 
 | Task | Status | Notes |
 |---|---|---|
-| 2.1 Surface SM-2 Study Queue | **In progress** | Header bell w/ due count, `/study/` merged queue (flashcards + concepts), fix broken flashcard dependency on queue pages; reuse existing `SM2Scheduler`/`RetentionEngine` |
-| 2.2 Auto-generate flashcards | **Pending** | Build-time backfill: learn items with quizzes but <3 flashcards get cards from `bloom_questions` |
+| 2.1 Surface SM-2 Study Queue | **Done** | Header bell w/ due count, `/study/` merged queue (flashcards + concepts), fix broken flashcard dependency on queue pages; reuse existing `SM2Scheduler`/`RetentionEngine` |
+| 2.2 Auto-generate flashcards | **Done** | Build-time backfill: learn items with quizzes but <3 flashcards get cards from `bloom_questions`; 5 hand-authored modules got a 3rd authored card — all 83 learn items yield ≥3 SM-2 cards |
 | 2.3 Progress tracking | **Done** | Learning-path progress bars + concept mastery dashboard (localStorage) |
-| 2.4 Diagnostic placement quiz | **Pending** | `/diagnostic/` page, per-pillar questions, placement → `acacia_learning_mode` |
+| 2.4 Diagnostic placement quiz | **Done** | `/diagnostic/` page, 9 per-pillar questions (1 B / 1 I / 1 E per pillar), local scoring → placement writes `acacia_learning_mode` + `acacia_diagnostic_done` |
 
 ### Tier 3: Knowledge Graph Visualization — PARTIAL
 

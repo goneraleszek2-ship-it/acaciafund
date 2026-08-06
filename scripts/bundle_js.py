@@ -35,6 +35,9 @@ BUNDLES = {
     "retention.js": [
         "retention_engine.js",
     ],
+    "diagnostic.js": [
+        "diagnostic.js",
+    ],
 }
 
 
