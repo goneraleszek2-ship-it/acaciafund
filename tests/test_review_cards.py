@@ -2,7 +2,11 @@
 
 import json
 
-from core.review_cards import collect_flashcards, write_flashcard_index
+from core.review_cards import (
+    backfill_flashcards_from_quizzes,
+    collect_flashcards,
+    write_flashcard_index,
+)
 
 
 class _Item:
@@ -75,3 +79,81 @@ def test_write_flashcard_index(tmp_path):
     assert payload["cards"][0]["id"] == "a#0"
     assert payload["cards"][0]["term"] == "T"
     assert "definition" not in payload["cards"][0]
+
+
+def _learn_item(slug="a/learn/x", flashcards=None, questions=None):
+    return {
+        "slug": slug,
+        "pillar": "aml",
+        "content_type": "learn",
+        "flashcards": flashcards or [],
+        "bloom_questions": questions or [],
+    }
+
+
+def test_no_backfill_when_already_min_cards():
+    item = _learn_item(flashcards=[{"term": "T1", "definition": "D1"}, {"term": "T2", "definition": "D2"}, {"term": "T3", "definition": "D3"}])
+    assert backfill_flashcards_from_quizzes(item) == item["flashcards"]
+
+
+def test_backfill_pads_to_three_from_quiz_correct():
+    item = _learn_item(
+        flashcards=[{"term": "T1", "definition": "D1"}],
+        questions=[{"question": "Q1?", "correct": "A1", "level": "remember"}],
+    )
+    cards = backfill_flashcards_from_quizzes(item)
+    assert len(cards) == 2
+    assert cards[1] == {"term": "Q1?", "definition": "A1"}
+
+
+def test_backfill_answer_text_from_options_index():
+    item = _learn_item(
+        flashcards=[{"term": "T1", "definition": "D1"}],
+        questions=[{
+            "type": "mc", "question": "Q1?",
+            "options": ["Wrong", "Right"], "answer": 1, "level": "analyze",
+        }],
+    )
+    cards = backfill_flashcards_from_quizzes(item)
+    assert cards[1]["definition"] == "Right"
+
+
+def test_backfill_stops_at_min_cards():
+    item = _learn_item(
+        flashcards=[{"term": "T1", "definition": "D1"}, {"term": "T2", "definition": "D2"}],
+        questions=[
+            {"question": "Q1?", "correct": "A1"},
+            {"question": "Q2?", "correct": "A2"},
+            {"question": "Q3?", "correct": "A3"},
+        ],
+    )
+    cards = backfill_flashcards_from_quizzes(item)
+    assert len(cards) == 3
+    assert cards[2] == {"term": "Q1?", "definition": "A1"}
+
+
+def test_backfill_skips_questions_without_answer():
+    item = _learn_item(
+        flashcards=[{"term": "T1", "definition": "D1"}],
+        questions=[{"question": "Q1?", "level": "remember"}, {"question": "Q2?", "correct": "A2"}],
+    )
+    cards = backfill_flashcards_from_quizzes(item)
+    assert len(cards) == 2
+    assert cards[1]["term"] == "Q2?"
+
+
+def test_backfill_only_applies_to_learn_items():
+    item = _learn_item(flashcards=[{"term": "T1", "definition": "D1"}])
+    item["content_type"] = "research"
+    assert backfill_flashcards_from_quizzes(item) == item["flashcards"]
+
+
+def test_collect_flashcards_includes_backfilled_cards():
+    items = [_learn_item(
+        flashcards=[{"term": "T1", "definition": "D1"}],
+        questions=[{"question": "Q1?", "correct": "A1"}, {"question": "Q2?", "correct": "A2"}],
+    )]
+    cards = collect_flashcards(items)
+    assert [c["id"] for c in cards] == ["a/learn/x#0", "a/learn/x#1", "a/learn/x#2"]
+    assert cards[1]["term"] == "Q1?"
+    assert cards[2]["term"] == "Q2?"

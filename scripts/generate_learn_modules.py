@@ -305,6 +305,7 @@ models:
         "flashcards": [
             {"front": "What does dbt stand for?", "back": "Data Build Tool — a SQL-based transformation framework for analytics engineering"},
             {"front": "What is dbt lineage?", "back": "The automatic graph of dependencies between models, showing how data flows from raw sources through transformations to final outputs"},
+            {"front": "What is the small file problem?", "back": "When too many small partition files create excessive metadata overhead and slow down query planning"},
         ],
     },
 
@@ -488,6 +489,7 @@ models:
         "flashcards": [
             {"front": "What is the OFAC SDN List?", "back": "Specially Designated Nationals and Blocked Persons List — maintained by OFAC, it identifies individuals and entities subject to US sanctions"},
             {"front": "What is strict liability in sanctions?", "back": "Legal doctrine where violations are penalized regardless of intent — even accidental sanctions breaches carry penalties"},
+            {"front": "What is a false positive in sanctions screening?", "back": "An alert matching a name or entity on a sanctions list that is actually a benign name-alike — screening tuning aims to reduce these without missing true matches"},
         ],
     },
 
@@ -626,6 +628,7 @@ ewma_vol = returns.ewm(span=21).std() * np.sqrt(252)</code></pre>"""
         "flashcards": [
             {"front": "What is implied volatility?", "back": "The volatility value that, when plugged into an option pricing model (e.g., Black-Scholes), yields the market price of the option"},
             {"front": "What is the volatility risk premium?", "back": "The historical tendency for implied volatility to exceed realized volatility — compensation for bearing uncertainty"},
+            {"front": "What is the VIX?", "back": "The CBOE Volatility Index — measures 30-day implied volatility of S&P 500 options, often called the market's 'fear gauge'"},
         ],
     },
     {
@@ -682,6 +685,7 @@ net_pnl = spread_income - inventory_cost - adverse_selection</code></pre>"""
         "flashcards": [
             {"front": "What is a limit order book?", "back": "An electronic record of all outstanding limit orders for a security, organized by price level, where market makers provide liquidity"},
             {"front": "What is adverse selection in market making?", "back": "The risk that market makers systematically lose to informed traders who trade on superior information about true value"},
+            {"front": "What is the bid-ask spread?", "back": "The difference between the highest price a buyer will pay (bid) and the lowest price a seller will accept (ask) — the market maker's compensation for providing liquidity"},
         ],
     },
 ]
