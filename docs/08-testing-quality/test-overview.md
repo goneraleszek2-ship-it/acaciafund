@@ -1,8 +1,8 @@
 # Testing Overview
 
-AcaciaFund has **1070 Python tests across 45 modules** plus **106 JS tests across 4 files** — covering core modules, the cognitive architecture (schema builder, retention, adaptive), research provenance, build output, redirects, taxonomy generation, and new test suites for bloom, brand, visuals, generate, source verification, and knowledge-module SQI guards.
+AcaciaFund has **1118 Python tests across 48 modules** plus **106 JS tests across 4 files** — covering core modules, the cognitive architecture (schema builder, retention, adaptive), research provenance, build output, redirects, taxonomy generation, and new test suites for bloom, brand, visuals, generate, source verification, and knowledge-module SQI guards.
 
-> **Note:** Counts verified 2026-08-05 via `python3 -m pytest tests/ --co` (1070 collected across 45 modules) + 4 JS suites (106 tests). Full suite runs in ~28s.
+> **Note:** Counts verified 2026-08-05 via `python3 -m pytest tests/ --co` (1118 collected across 48 modules) + 4 JS suites (106 tests). Full suite runs in ~28s.
 
 ## Test Files
 
@@ -21,6 +21,9 @@ AcaciaFund has **1070 Python tests across 45 modules** plus **106 JS tests acros
 | `tests/test_assets.py` | 15 | Asset pipeline |
 | `tests/test_score.py` | 17 | Content scoring |
 | `tests/test_smoke.py` | 9 | Registry validation, schema enforcement |
+| `tests/test_audit_content_structure.py` | 20 | Content structure audit: min-h2, empty sections, markdown residue, exit codes |
+| `tests/test_markdown_utils.py` | 14 | Markdown conversion + code-aware residue repair |
+| `tests/test_remediate_content_structure.py` | 14 | Sectionizing, title strip, registry remediation |
 | `tests/test_build_smoke.py` | 22 | Build output verification |
 | `tests/test_redirects.py` | 11 | Redirect rules validation |
 

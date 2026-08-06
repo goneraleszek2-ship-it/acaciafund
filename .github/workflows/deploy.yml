@@ -85,6 +85,9 @@ jobs:
       - name: Post-build smoke tests
         run: python3 scripts/deploy_checks.py
 
+      - name: Content structure audit
+        run: python3 scripts/audit_content_structure.py --report dist/content-structure-report.json
+
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:

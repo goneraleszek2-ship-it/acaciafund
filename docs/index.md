@@ -14,7 +14,7 @@ AcaciaFund is a **static-first content platform** that synthesizes research from
 | [05 — Search & Discovery](05-search-discovery/client-side-search.md) | Client-side fuzzy search, facets, concept boosting |
 | [06 — Admin & Observability](06-admin-observability/admin-dashboard.md) | 12 admin pages, quality, telemetry, Plausible events |
 | [07 — Deployment & Ops](07-deployment-ops/cloudflare-deploy.md) | Cloudflare Pages, weekly refresh, redirects, monitoring |
-| [08 — Testing & Quality](08-testing-quality/test-overview.md) | 1176 tests (1070 Python + 106 JS), pytest, ruff, pyright, CI integration |
+| [08 — Testing & Quality](08-testing-quality/test-overview.md) | 1224 tests (1118 Python + 106 JS), pytest, ruff, pyright, CI integration |
 | [Reference](reference/config-reference.md) | Config constants, CLI commands, templates, schemas |
 | [Diagrams](diagrams/architecture.mmd) | Mermaid architecture and flow diagrams |
 
@@ -30,7 +30,7 @@ AcaciaFund is a **static-first content platform** that synthesizes research from
 | Inspiration sources | 32 |
 | Learn modules | 83 |
 | Knowledge categories | 13 |
-| Tests | 1176 across 45 Python + 4 JS files |
+| Tests | 1224 across 48 Python + 4 JS files |
 | Deploy target | Cloudflare Pages (`https://www.acaciafund.org/`) |
 
 > **Note:** Metrics verified 2026-08-03 from `dist/build-meta.json` and `data/ontology.json`. See [`SYSTEM_ARCHITECTURE.md`](../SYSTEM_ARCHITECTURE.md) for the full system reference.

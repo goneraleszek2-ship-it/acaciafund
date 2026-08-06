@@ -25,6 +25,12 @@ python3 scripts/check_source_freshness.py --update-ontology
 # Link check + SQI audit
 python3 scripts/check_links_and_sqi.py --dist-dir dist
 
+# Content structure audit (CI gate)
+python3 scripts/audit_content_structure.py [--report dist/content-structure-report.json] [--fail-on-errors 0]
+
+# Remediate structure issues found by the audit (backup: registry.pre-audit-fix.json)
+python3 scripts/remediate_content_structure.py [--dry-run]
+
 # Regenerate ontology
 python3 -c "
 from core.ontology import OntologyManager
@@ -122,7 +128,7 @@ This codebase has been built in sequential sprints. Understanding what came befo
 | Foundation fixes | Concept extraction word-boundary fix, alias expansion, full category remapping, knowledge-to-pillar mapping, description backfill |
 | Quality fixes | SQI backfill script, search recall improvement (threshold 0.35, body window 800), niche concept alias expansion |
 
-**Current state:** 226 registry items, 2,827 generated pages, 3 clean pillars, 199 ontology concepts (all with philosophical metadata, 447 canonical relations), 65 inspiration sources. Daily news pipeline: 23 live RSS feeds + Hacker News + GDELT (keyless). Quality gate: passing, all 2,827 pages SQI >= 0.65. 1070 Python tests across 45 modules (+ 106 JS tests in 4 suites). Metrics verified 2026-08-05 — see `docs/08-testing-quality/test-overview.md` for the canonical reference.
+**Current state:** 226 registry items, 2,827 generated pages, 3 clean pillars, 199 ontology concepts (all with philosophical metadata, 447 canonical relations), 65 inspiration sources. Daily news pipeline: 23 live RSS feeds + Hacker News + GDELT (keyless). Quality gate: passing, all 2,827 pages SQI >= 0.65. 1118 Python tests across 48 modules (+ 106 JS tests in 4 suites). Metrics verified 2026-08-05 — see `docs/08-testing-quality/test-overview.md` for the canonical reference.
 
 ## Cognitive Architecture (Phase 4)
 
@@ -327,6 +333,9 @@ scripts/knowledge_ingester.py  →  registry.json  →  build.py  →  dist/
 | `scripts/backfill_categories.py` | Backfills canonical `category` on research items from tags (`--dry-run|--apply|--validate`) |
 | `scripts/generate_knowledge_modules.py` | Generates knowledge-module pages from 12 hand-authored templates (2 per previously empty category) |
 | `scripts/check_links_and_sqi.py` | Broken link checker + SQI audit + external reference inventory |
+| `scripts/audit_content_structure.py` | Content structure audit (min-h2, empty sections, markdown residue, control chars; CI-blocking via `--fail-on-errors`) |
+| `scripts/remediate_content_structure.py` | One-time/maintenance remediation: sectionize no-h2 bodies, convert markdown residue to HTML |
+| `core/markdown_utils.py` | Controlled markdown→HTML conversion (`md_to_html`) + code-aware residue repair (`fix_markdown_residue`) |
 | `core/build_quality.py` | Build-time SQI computation/backfill (`_compute_sqi_for_item`) for items missing quality scores |
 | `scripts/knowledge_ingester.py` | Multi-pillar knowledge ingestion (arXiv, HN, PubMed) with ontology concept extraction |
 | `scripts/source_synthesis.py` | Source synthesis with inspiration source matching and concept provenance |
@@ -485,6 +494,7 @@ result = df.filter(pl.col('price') > 100).collect()
 ### Warning
 - **`config.py` vs `build.py`** — `PILLAR_CONFIG`, `PILLAR_EMOJIS`, `PILLAR_NAMES`, `PILLAR_COLORS`, `PILLAR_FINGERPRINT_COLORS` all live in `config.py` now. `build.py` imports from config. **No duplication.**
 - **Concept extraction threshold**: `build.py` uses `>= 0.35` for concept cache and inline extraction. `extract_concepts_from_text()` default is `>= 0.5`. If extraction is too strict/loose, adjust these thresholds.
+- **Pre-existing test failures (2)**: `tests/test_category_mapping.py::TestKnowledgeModules::test_generate_body_handles_2_and_3_part_sections` (generate_body adds `<h2>References</h2>` when citations exist; test counts only sections) and `tests/test_philosophy_integration.py::TestOntologyPhilosophicalEnrichment::test_all_concepts_have_epistemic_status` (only 30/199 ontology concepts carry `epistemic_status`; `data/philosophy_metadata.json` covers 71). Fix pending in CI-hardening phase — full-suite CI is not enabled yet.
 
 ## Testing
 
@@ -528,6 +538,9 @@ result = df.filter(pl.col('price') > 100).collect()
 | `tests/test_redirects.py` | 11 | Redirect rules validation |
 | `tests/test_learning_paths.py` | 9 | core/learning_paths.py: cross-pillar synthesis, journey enrichment |
 | `tests/test_smoke.py` | 9 | Registry validation, schema enforcement |
+| `tests/test_audit_content_structure.py` | 20 | scripts/audit_content_structure.py: min-h2, empty sections, markdown residue, warnings, exit codes |
+| `tests/test_markdown_utils.py` | 14 | core/markdown_utils.py: md_to_html + fix_markdown_residue (code-aware) |
+| `tests/test_remediate_content_structure.py` | 14 | scripts/remediate_content_structure.py: sectionize, title strip, registry remediation |
 | `tests/test_check_source_freshness.py` | 8 | scripts/check_source_freshness.py: compute_staleness contract tests |
 | `tests/test_alpha_index.py` | 7 | Alphabetical index generation |
 | `tests/test_progressive_disclosure.js` | **8** | static/js/progressive_disclosure.js: parseSections, toggleSection pure functions |
@@ -537,7 +550,7 @@ result = df.filter(pl.col('price') > 100).collect()
 
 JS tests run via `node tests/test_*.js` for each file (no npm/playwright needed). `scripts/run_tests.sh` runs all 4 suites.
 
-**Total: 1070 Python tests collected across 45 modules, including 5 guard tests in `tests/test_generate_knowledge_modules.py` (knowledge-module SQI fields) and 21 in `tests/test_category_mapping.py` (tag→subcategory mapping, category backfill, news/GDELT pipeline).** (Verified 2026-08-05 via `python3 -m pytest tests/ --co`; JS suites run via `run_tests.sh`.)
+**Total: 1118 Python tests collected across 48 modules, including 5 guard tests in `tests/test_generate_knowledge_modules.py` (knowledge-module SQI fields) and 21 in `tests/test_category_mapping.py` (tag→subcategory mapping, category backfill, news/GDELT pipeline).** (Verified 2026-08-05 via `python3 -m pytest tests/ --co`; JS suites run via `run_tests.sh`. Known pre-existing failures tracked in Known Issues: `test_category_mapping.py::test_generate_body_handles_2_and_3_part_sections`, `test_philosophy_integration.py::test_all_concepts_have_epistemic_status`.)
 
 ### Phase 1.5 Files (Cognitive Load Amputation — July 2026)
 

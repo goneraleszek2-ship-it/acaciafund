@@ -20,6 +20,8 @@ import tomllib
 PROJECT_ROOT = Path(__file__).parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
+from core.markdown_utils import md_to_html  # noqa: E402
+
 ONTOLOGY_PATH = PROJECT_ROOT / "data" / "ontology.json"
 REGISTRY_PATH = PROJECT_ROOT / "registry.json"
 INSPIRATION_PATH = PROJECT_ROOT / "etc" / "pillars.toml"
@@ -175,7 +177,7 @@ def main():
             "date": now_str,
             "author": "AcaciaFund",
             "body_md": body,
-            "body_html": f"<p>{meta['description']}</p>\n\n{body.replace(chr(10)*2, '</p><p>').replace(chr(10), '<br>')}",
+            "body_html": f"<p>{meta['description']}</p>\n\n{md_to_html(body)}",
             "bloom_questions": [
                 {"level": "remember", "question": f"What are the core concepts in {meta['title'].replace(' Glossary', '')}?"},
                 {"level": "understand", "question": "How do the concepts in this glossary relate to each other?"},
