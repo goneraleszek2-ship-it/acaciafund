@@ -2619,26 +2619,10 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     print("  graph: graph/index.html")
 
     # --- Review pages (dashboard + queue) ---
-    _review_cards = []
-    for _ri_raw in registry.content:
-        _ri_dict = _ri_raw if isinstance(_ri_raw, dict) else (_ri_raw.model_dump() if hasattr(_ri_raw, 'model_dump') else {})
-        _ri_fcs = _ri_dict.get("flashcards", [])
-        if not _ri_fcs:
-            continue
-        _rpillar = _ri_dict.get("pillar", "aml")
-        _slug = _ri_dict.get("slug", "")
-        for _fi, _fc in enumerate(_ri_fcs):
-            _card_id = f"{_slug}#{_fi}"
-            _fc_term = _fc.get("term", "") or _fc.get("front", "")
-            _fc_def = _fc.get("definition", "") or _fc.get("back", "")
-            _review_cards.append({
-                "id": _card_id,
-                "term": _fc_term,
-                "definition": _fc_def,
-                "pillar": _rpillar,
-                "slug": _slug,
-            })
+    from core.review_cards import collect_flashcards, write_flashcard_index
+    _review_cards = collect_flashcards(registry.content)
     _review_cards_json = json.dumps(_review_cards, ensure_ascii=False)
+    write_flashcard_index(_review_cards, STATIC_DST_DIR / "flashcard_index.json")
 
     review_dir = OUTPUT_DIR / "review"
     review_dir.mkdir(parents=True, exist_ok=True)
@@ -2665,6 +2649,20 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     )
     (queue_dir / "index.html").write_text(queue_html, encoding="utf-8")
     print("  review: review/queue/index.html")
+
+    # --- Study Queue page (merged flashcards + concept cards) ---
+    study_dir = OUTPUT_DIR / "study"
+    study_dir.mkdir(parents=True, exist_ok=True)
+    study_html = render_template(
+        "study.j2",
+        content=_dummy("Study Queue — AcaciaFund", "index", description="Daily study queue with due flashcards and concept reviews."),
+        flashcard_cards=_review_cards_json,
+        page_path="study/",
+        page_title="Study Queue",
+        **ctx_base,
+    )
+    (study_dir / "index.html").write_text(study_html, encoding="utf-8")
+    print(f"  study: study/index.html ({len(_review_cards)} flashcard entries)")
 
     # --- Concept review data for retention engine ---
     if ontology and ontology.concept_count() > 0:
