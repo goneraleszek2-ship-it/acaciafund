@@ -63,6 +63,8 @@ class Content:
     enriched_at: Optional[str] = None
     signals: Optional[Dict[str, Any]] = None
     source_breakdown: Optional[Dict[str, Any]] = None
+    source_url: Optional[str] = None
+    doi: Optional[str] = None
     cross_pillar_html: Optional[str] = None
     updated_at: Optional[str] = None
     prerequisites: Optional[List[str]] = None
@@ -132,6 +134,8 @@ class Content:
             enriched_at=data.get("enriched_at"),
             signals=data.get("signals"),
             source_breakdown=data.get("source_breakdown"),
+            source_url=data.get("source_url"),
+            doi=data.get("doi"),
             cross_pillar_html=data.get("cross_pillar_html"),
             updated_at=data.get("updated_at"),
             prerequisites=data.get("prerequisites"),

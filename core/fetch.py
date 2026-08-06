@@ -258,6 +258,7 @@ def _parse_arxiv_xml(xml: str) -> list[dict]:
         summary_el = entry.find("atom:summary", ns)
         link_el = entry.find("atom:id", ns)
         published_el = entry.find("atom:published", ns)
+        doi_el = entry.find("arxiv:doi", ns)
         if title_el is None or link_el is None:
             continue
         categories = [c.get("term", "") for c in entry.findall("atom:category", ns)]
@@ -271,6 +272,7 @@ def _parse_arxiv_xml(xml: str) -> list[dict]:
                 "abstract": re.sub(r"\s+", " ", summary_text[:200].strip()),
                 "published": (published_el.text or "").strip() if published_el is not None else "",
                 "categories": categories,
+                "doi": (doi_el.text or "").strip() if doi_el is not None else "",
             }
         )
     return entries
@@ -319,6 +321,7 @@ def fetch_arxiv(since_hours: int = 72, max_results: int = 100) -> list[dict]:
                 "score": best[1],
                 "published": p["published"],
                 "categories": p["categories"],
+                "doi": p.get("doi", ""),
             }
         )
     papers.sort(key=lambda p: p["score"], reverse=True)
@@ -504,6 +507,13 @@ def _parse_pubmed_xml(xml: str) -> list[dict]:
             if len(authors) > 3:
                 author_str += " et al."
 
+            # Get DOI from ArticleId elements (IdType="doi")
+            doi = ""
+            for id_el in article.findall(".//ArticleId"):
+                if (id_el.get("IdType") or "").lower() == "doi" and id_el.text:
+                    doi = id_el.text.strip()
+                    break
+
             if not title or not url:
                 continue
 
@@ -515,6 +525,7 @@ def _parse_pubmed_xml(xml: str) -> list[dict]:
                     "published": published,
                     "author": author_str,
                     "source": "pubmed",
+                    "doi": doi,
                 }
             )
         except Exception:
@@ -547,7 +558,7 @@ def fetch_semantic_scholar(since_hours: int = 168, max_results: int = 50) -> lis
         "climate technology",
         "data engineering pipeline",
     ]
-    fields = "title,url,publicationDate,authors,venue,citationCount,abstract"
+    fields = "title,url,publicationDate,authors,venue,citationCount,abstract,externalIds"
     per_query = max(1, max_results // len(queries))
 
     for query in queries:
@@ -575,6 +586,7 @@ def fetch_semantic_scholar(since_hours: int = 168, max_results: int = 50) -> lis
                 title = paper.get("title", "")
                 if not title:
                     continue
+                ext_ids = paper.get("externalIds") or {}
                 papers.append(
                     {
                         "title": title,
@@ -587,6 +599,7 @@ def fetch_semantic_scholar(since_hours: int = 168, max_results: int = 50) -> lis
                         "venue": paper.get("venue", ""),
                         "citations": paper.get("citationCount", 0),
                         "source": "semantic_scholar",
+                        "doi": ext_ids.get("DOI", ""),
                     }
                 )
         except (json.JSONDecodeError, KeyError, TypeError) as e:

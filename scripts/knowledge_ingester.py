@@ -607,6 +607,7 @@ def _source_to_item(
     score: float = 0.70,
     signals_extra: dict | None = None,
     quality_extra: dict | None = None,
+    doi: str = "",
 ) -> dict[str, Any] | None:
     """Unified converter: source dict + pillar config → registry content item."""
     if not title:
@@ -671,6 +672,7 @@ def _source_to_item(
         "updated_at": now_iso,
         "author": author or "AcaciaFund",
         "source_url": url,
+        "doi": doi or None,
         "source_breakdown": {source_key: 1},
         "signals": signals,
         "quality_metrics": quality,
@@ -713,9 +715,15 @@ def _arxiv_to_item(paper: dict, config: PillarConfig) -> dict[str, Any] | None:
                     tags.append("computational-finance")
 
     registry_pillar = INGESTER_TO_PILLAR.get(config.slug_name, config.slug_name)
+    doi = (paper.get("doi") or "").strip()
+    if not doi:
+        # arXiv assigns a deterministic DOI to every paper
+        arxiv_id = (url or "").rstrip("/").rsplit("/", 1)[-1]
+        if arxiv_id:
+            doi = f"10.48550/arXiv.{arxiv_id}"
     return _source_to_item(
         paper, config, source_key="arxiv", title=title, url=url,
-        date_str=published, summary=abstract,
+        date_str=published, summary=abstract, doi=doi,
         body_html=_build_research_body(abstract, title, tags, _PILLAR_LABELS.get(registry_pillar, registry_pillar)),
         author="Leszek", tags=tags, avg_sqi=0.75, score=0.75,
     )
@@ -1050,7 +1058,7 @@ def _pubmed_to_item(paper: dict, config: PillarConfig) -> dict[str, Any] | None:
 
     return _source_to_item(
         paper, config, source_key="pubmed", title=title, url=url,
-        date_str=published, summary=abstract,
+        date_str=published, summary=abstract, doi=(paper.get("doi") or "").strip(),
         author=paper.get("author", "PubMed"),
         avg_sqi=0.70, score=0.70,
         quality_extra={"evidence_level": "Academic", "trend_strength": 40.0},
@@ -1131,7 +1139,7 @@ def _s2_to_item(paper: dict, config: PillarConfig) -> dict[str, Any] | None:
 
     return _source_to_item(
         paper, config, source_key="semantic-scholar", title=title, url=url,
-        date_str=published, summary=abstract,
+        date_str=published, summary=abstract, doi=(paper.get("doi") or "").strip(),
         author=paper.get("author", "Semantic Scholar"),
         avg_sqi=0.72, score=0.72,
         quality_extra={

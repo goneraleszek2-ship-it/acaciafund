@@ -52,6 +52,8 @@
 
     {% include 'partials/editor_note.j2' %}
 
+    {% include 'partials/citation_export.j2' %}
+
     <div class="prose-body">
       {{ page_body | default(content.body_html) | wrap_prose_sections | safe }}
     </div>

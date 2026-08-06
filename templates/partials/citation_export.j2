@@ -1,0 +1,73 @@
+{#- Citation export: BibTeX + RIS for research items -#}
+{%- if content.doi or content.source_url -%}
+{%- set cite_title = content.title | striptags | default('') -%}
+{%- set cite_author = content.author | default('AcaciaFund') -%}
+{%- set cite_year = (content.date_str or '')[:4] -%}
+{%- set cite_doi = content.doi | default('') -%}
+{%- set cite_url = content.source_url | default('') -%}
+{%- set cite_key = 'acacia' ~ (content.slug | default('item') | string | replace('/', '-')) -%}
+{%- set bibtex -%}
+@misc{ {{ cite_key }},
+  title = { {{ cite_title }} },
+  author = { {{ cite_author }} },
+  year = { {{ cite_year }} },
+{%- if cite_doi %}
+  doi = { {{ cite_doi }} },
+{%- endif %}
+{%- if cite_url %}
+  url = { {{ cite_url }} },
+{%- endif %}
+  note = {Summarized and classified by AcaciaFund}
+}
+{%- endset -%}
+{%- set ris -%}
+TY  - GEN
+TI  - {{ cite_title }}
+AU  - {{ cite_author }}
+PY  - {{ cite_year }}
+{%- if cite_doi %}
+DO  - {{ cite_doi }}
+{%- endif %}
+{%- if cite_url %}
+UR  - {{ cite_url }}
+{%- endif %}
+ER  -
+{%- endset -%}
+<div class="citation-export mt-4 p-4 rounded-lg" style="border:1px solid color-mix(in srgb, var(--color-accent) 20%, transparent)">
+  <div class="flex flex-wrap items-center gap-2">
+    <span class="text-xs font-semibold uppercase tracking-wide" style="color:var(--color-text-muted)">Cite this synthesis</span>
+    {%- if cite_doi %}
+    <a href="https://doi.org/{{ cite_doi }}" target="_blank" rel="noopener noreferrer" class="text-xs" style="color:var(--color-accent)">DOI: {{ cite_doi }} &nearr;</a>
+    {%- endif %}
+    <button type="button" class="cite-copy-btn text-xs px-2 py-1 rounded" data-cite-type="bibtex" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);cursor:pointer">Copy BibTeX</button>
+    <button type="button" class="cite-copy-btn text-xs px-2 py-1 rounded" data-cite-type="ris" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);cursor:pointer">Copy RIS</button>
+  </div>
+  <details class="mt-2">
+    <summary class="text-xs cursor-pointer select-none" style="color:var(--color-text-muted)">Show formatted citation</summary>
+    <pre class="mt-2 text-xs overflow-auto p-3 rounded" style="background:color-mix(in srgb, var(--color-text-muted) 8%, transparent)">{{ bibtex }}</pre>
+    <pre class="mt-1 text-xs overflow-auto p-3 rounded" style="background:color-mix(in srgb, var(--color-text-muted) 8%, transparent)">{{ ris }}</pre>
+  </details>
+  <template class="cite-template" data-cite-type="bibtex">{{ bibtex }}</template>
+  <template class="cite-template" data-cite-type="ris">{{ ris }}</template>
+</div>
+<script>
+(function () {
+  var btns = document.querySelectorAll('.cite-copy-btn');
+  btns.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var type = btn.getAttribute('data-cite-type');
+      var tpl = document.querySelector('.cite-template[data-cite-type="' + type + '"]');
+      if (!tpl) return;
+      var text = tpl.innerHTML.trim();
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(function () {
+          var prev = btn.textContent;
+          btn.textContent = 'Copied';
+          setTimeout(function () { btn.textContent = prev; }, 1500);
+        });
+      }
+    });
+  });
+})();
+</script>
+{%- endif -%}
