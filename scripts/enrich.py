@@ -525,10 +525,13 @@ Respond with a JSON array of 3-5 kebab-case tags:"""
         sqi = (
             W_SOURCE_AUTHORITY * source_score
             + W_TEMPORAL_DECAY * recency_score
-            + W_INFO_DENSITY * density_score
++ W_INFO_DENSITY * density_score
         )
 
-        return max(SQI_MIN, min(SQI_MAX, sqi))
+        sqi = max(SQI_MIN, min(SQI_MAX, sqi))
+        if "glossary" in item.get("slug", ""):
+            sqi = max(sqi, 0.68)
+        return round(sqi, 3)
 
     def _score_source_authority(self, item: dict[str, Any]) -> float:
         """Evaluate source credibility (40% weight).
