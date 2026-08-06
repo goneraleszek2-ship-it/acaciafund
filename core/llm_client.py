@@ -58,6 +58,10 @@ class AcaciaLLMClient:
             raise ImportError(
                 "aisuite is required. Install with: pip install aisuite"
             )
+        except Exception as exc:
+            raise ImportError(
+                "aisuite is required. Install with: pip install aisuite"
+            ) from exc
 
     def _build_provider_configs(self) -> dict[str, dict[str, str]]:
         configs: dict[str, dict[str, str]] = {}

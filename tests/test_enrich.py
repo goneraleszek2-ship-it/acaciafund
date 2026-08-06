@@ -51,6 +51,7 @@ class TestResearchEnricherInit:
         assert enricher.infer_mode is False
 
     def test_infer_mode_true_with_api_key_attempts_init(self) -> None:
+        pytest.importorskip("mem0")  # requires mem0 installed; falls back gracefully otherwise
         with (
             patch.dict("os.environ", {"NVIDIA_API_KEY": "test-key-123"}),
             patch("mem0.Memory", return_value=MagicMock()),
