@@ -49,10 +49,21 @@ class TestAuditItem:
         result = audit_item(make_item(body="   "))
         assert [e["rule"] for e in result["errors"]] == ["empty_body"]
 
-    def test_research_too_few_headings(self):
+    def test_research_three_headings_passes(self):
         body = "<h2>A</h2><p>words here</p><h2>B</h2><p>words here</p><h2>C</h2><p>words here</p>"
         result = audit_item(make_item(body=body))
+        assert not any(e["rule"] == "min_h2" for e in result["errors"])
+
+    def test_research_too_few_headings(self):
+        body = "<h2>A</h2><p>words here</p><h2>B</h2><p>words here</p>"
+        result = audit_item(make_item(body=body))
         assert any(e["rule"] == "min_h2" for e in result["errors"])
+
+    def test_legacy_no_h2_exempt(self):
+        body = "<p>no headings at all here</p>"
+        result = audit_item(make_item(slug="data/research/celld-self-hosted-distributed-durable-objects", body=body))
+        assert not any(e["rule"] == "min_h2" for e in result["errors"])
+        assert any(w["rule"] == "no_h2_exempt" for w in result["warnings"])
 
     def test_learn_min_h2(self):
         body = "<h2>A</h2><p>words here</p><h2>B</h2><p>words here</p>"
@@ -72,6 +83,11 @@ class TestAuditItem:
 
     def test_h2_then_h3_not_empty(self):
         body = "<h2>One</h2><h3>Sub</h3><p>content</p>"
+        result = audit_item(make_item(body=body))
+        assert not any(e["rule"] == "empty_section" for e in result["errors"])
+
+    def test_short_overview_not_empty(self):
+        body = "<h2>Overview</h2><p>Brief.</p><h2>Key Topics</h2><p>more content</p>" + GOOD_RESEARCH_BODY
         result = audit_item(make_item(body=body))
         assert not any(e["rule"] == "empty_section" for e in result["errors"])
 

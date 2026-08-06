@@ -734,7 +734,11 @@ def _hn_to_item(story: dict, config: PillarConfig) -> dict[str, Any] | None:
         return None
 
     description = f"HackerNews discussion ({points} points) about {title[:120]}."
-    body = f"<p>HackerNews discussion: <a href='{hn_url}'>{title}</a></p>"
+    body = _build_research_body(
+        description, title, ["hacker-news"],
+        _PILLAR_LABELS.get(config.slug_name, config.slug_name),
+    )
+    body += f"<p>HackerNews discussion: <a href='{hn_url}'>{title}</a></p>"
     body += f"<p>Score: {points} points by {author}.</p>"
     if url and url != hn_url:
         body += f"<p>Source: <a href='{url}'>{url[:80]}</a></p>"
