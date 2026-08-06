@@ -24,6 +24,8 @@ import logging
 import re
 import subprocess
 import sys
+import urllib.error
+import urllib.request
 import uuid
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass
@@ -292,6 +294,7 @@ PILLAR_CONFIGS: dict[str, PillarConfig] = {
 # Map ingester slug_name → registry pillar → URL segment
 INGESTER_TO_PILLAR = {"aml": "aml", "data": "data-engineering", "market": "stock"}
 from config import PILLAR_URL_MAP  # noqa: E402
+from core.data import USER_AGENT  # noqa: E402
 
 _PILLAR_LABELS = {
     "aml": "AML and compliance",
@@ -591,6 +594,52 @@ def category_from_tags(tags: list[str], pillar: str) -> str:
     return mapping.get(base_tag, "blog")
 
 
+def arxiv_doi_for_id(arxiv_id: str) -> str:
+    """Deterministic arXiv DOI for a paper ID (version suffix stripped).
+
+    arXiv registers DOIs only for the base ID (e.g. ``2608.04832v1`` ->
+    ``10.48550/arXiv.2608.04832``); versioned forms 404 at doi.org.
+    """
+    arxiv_id = re.sub(r"v\d+$", "", (arxiv_id or "").strip())
+    if not arxiv_id:
+        return ""
+    return f"10.48550/arXiv.{arxiv_id}"
+
+
+_doi_cache: dict[str, bool] = {}
+
+
+def _doi_is_registered(doi: str) -> bool:
+    """True if ``doi`` resolves at doi.org.
+
+    Conservative: only a definitive 404/410 drops the DOI; transient network
+    failures keep it (the external-reference gate re-checks at build time).
+    """
+    if not doi:
+        return False
+    cached = _doi_cache.get(doi)
+    if cached is not None:
+        return cached
+    registered = True
+    for method in ("HEAD", "GET"):
+        try:
+            req = urllib.request.Request(
+                f"https://doi.org/{doi}", method=method,
+                headers={"User-Agent": USER_AGENT},
+            )
+            with urllib.request.urlopen(req, timeout=5) as resp:
+                registered = resp.status < 400
+            break
+        except urllib.error.HTTPError as exc:
+            if exc.code in (404, 410):
+                registered = False
+            break
+        except (urllib.error.URLError, OSError, TimeoutError):
+            break
+    _doi_cache[doi] = registered
+    return registered
+
+
 def _source_to_item(
     source: dict,
     config: PillarConfig,
@@ -717,10 +766,13 @@ def _arxiv_to_item(paper: dict, config: PillarConfig) -> dict[str, Any] | None:
     registry_pillar = INGESTER_TO_PILLAR.get(config.slug_name, config.slug_name)
     doi = (paper.get("doi") or "").strip()
     if not doi:
-        # arXiv assigns a deterministic DOI to every paper
+        # arXiv assigns a deterministic DOI to every paper (no version suffix)
         arxiv_id = (url or "").rstrip("/").rsplit("/", 1)[-1]
-        if arxiv_id:
-            doi = f"10.48550/arXiv.{arxiv_id}"
+        doi = arxiv_doi_for_id(arxiv_id)
+    elif not doi.startswith("10.48550/") and not _doi_is_registered(doi):
+        # arXiv metadata may carry the publisher DOI (e.g. ACM) before it is
+        # registered with Crossref; drop it so the external-link gate stays green
+        doi = ""
     return _source_to_item(
         paper, config, source_key="arxiv", title=title, url=url,
         date_str=published, summary=abstract, doi=doi,
@@ -1056,9 +1108,13 @@ def _pubmed_to_item(paper: dict, config: PillarConfig) -> dict[str, Any] | None:
     if not title:
         return None
 
+    doi = (paper.get("doi") or "").strip()
+    if doi and not _doi_is_registered(doi):
+        doi = ""
+
     return _source_to_item(
         paper, config, source_key="pubmed", title=title, url=url,
-        date_str=published, summary=abstract, doi=(paper.get("doi") or "").strip(),
+        date_str=published, summary=abstract, doi=doi,
         author=paper.get("author", "PubMed"),
         avg_sqi=0.70, score=0.70,
         quality_extra={"evidence_level": "Academic", "trend_strength": 40.0},
@@ -1137,9 +1193,13 @@ def _s2_to_item(paper: dict, config: PillarConfig) -> dict[str, Any] | None:
     if not title:
         return None
 
+    doi = (paper.get("doi") or "").strip()
+    if doi and not _doi_is_registered(doi):
+        doi = ""
+
     return _source_to_item(
         paper, config, source_key="semantic-scholar", title=title, url=url,
-        date_str=published, summary=abstract, doi=(paper.get("doi") or "").strip(),
+        date_str=published, summary=abstract, doi=doi,
         author=paper.get("author", "Semantic Scholar"),
         avg_sqi=0.72, score=0.72,
         quality_extra={
