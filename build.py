@@ -2682,6 +2682,40 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     )
     print(f"  diagnostic: diagnostic/index.html ({len(DIAGNOSTIC_QUESTIONS)} questions)")
 
+    # --- Cross-pillar journeys (Task 3.3) ---
+    from core.journeys import build_journey_pages, build_journeys_index
+    journeys_dir = OUTPUT_DIR / "journeys"
+    journeys_dir.mkdir(parents=True, exist_ok=True)
+    _journey_pages = build_journey_pages(registry.content)
+    for _journey in _journey_pages:
+        _journey_html = render_template(
+            "journey.j2",
+            content=_dummy(
+                f"{_journey['title']} — Journey — AcaciaFund",
+                "index",
+                description=_journey["description"],
+            ),
+            **_journey,
+            **ctx_base,
+        )
+        _jdir = journeys_dir / _journey["slug"]
+        _jdir.mkdir(parents=True, exist_ok=True)
+        (_jdir / "index.html").write_text(_journey_html, encoding="utf-8")
+    _journey_index_html = render_template(
+        "journeys_index.j2",
+        content=_dummy(
+            "Cross-Pillar Journeys — AcaciaFund",
+            "index",
+            description="Three curated linear study journeys across Compliance, Markets and Data Engineering.",
+        ),
+        journeys=build_journeys_index(_journey_pages),
+        page_path="journeys/",
+        page_title="Cross-Pillar Journeys",
+        **ctx_base,
+    )
+    (journeys_dir / "index.html").write_text(_journey_index_html, encoding="utf-8")
+    print(f"  journeys: {len(_journey_pages)} journey pages + index")
+
     # --- Concept review data for retention engine ---
     if ontology and ontology.concept_count() > 0:
         try:

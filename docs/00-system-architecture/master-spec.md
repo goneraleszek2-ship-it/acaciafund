@@ -167,7 +167,7 @@ Execute in priority order; do not proceed to Tier N+1 until Tier N is stable.
 |---|---|---|
 | 3.1 Concept Hub pages | **Done** | 199 pages at `/concepts/{id}/` with related articles, prerequisites, Bloom distribution |
 | 3.2 Prerequisite path visualization | **Partial** | Cytoscape `/graph/` + per-page concept map exist; lightweight per-concept D3 graph pending |
-| 3.3 Cross-pillar journey paths | **Partial** | 15 learning-path pages + 3 pillar-synthesis pages; 3 formal journeys with linear nav pending |
+| 3.3 Cross-pillar journey paths | **Done** | 15 learning-path pages + 3 pillar-synthesis pages + `/journeys/` hub with 3 curated linear journeys (6 steps each, all 3 pillars) with localStorage progress + next-step nav |
 
 ### Tier 4: Hands-On Interactivity — PENDING
 

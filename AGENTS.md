@@ -143,7 +143,7 @@ This codebase has been built in sequential sprints. Understanding what came befo
 | Foundation fixes | Concept extraction word-boundary fix, alias expansion, full category remapping, knowledge-to-pillar mapping, description backfill |
 | Quality fixes | SQI backfill script, search recall improvement (threshold 0.35, body window 800), niche concept alias expansion |
 
-**Current state:** 226 registry items, 2,829 generated pages, 3 clean pillars, 199 ontology concepts (all with philosophical metadata, 447 canonical relations), 65 inspiration sources. Daily news pipeline: 23 live RSS feeds + Hacker News + GDELT (keyless). Quality gate: passing, all 2,829 pages SQI >= 0.65. 1196 Python tests across 54 modules (+ 121 JS tests in 5 suites), all green in CI. Metrics verified 2026-08-06 — see `docs/08-testing-quality/test-overview.md` for the canonical reference.
+**Current state:** 226 registry items, 2,833 generated pages, 3 clean pillars, 199 ontology concepts (all with philosophical metadata, 447 canonical relations), 65 inspiration sources. Daily news pipeline: 23 live RSS feeds + Hacker News + GDELT (keyless). Quality gate: passing, all 2,833 pages SQI >= 0.65. 1203 Python tests across 55 modules (+ 139 JS tests in 6 suites), all green in CI. Metrics verified 2026-08-06 — see `docs/08-testing-quality/test-overview.md` for the canonical reference.
 
 > **Master specification:** the reconciled execution plan (tier checklist with done/partial/pending status, verified metrics, quality gates) lives at `docs/00-system-architecture/master-spec.md`. Consult it before starting any new feature tier.
 
@@ -551,6 +551,7 @@ result = df.filter(pl.col('price') > 100).collect()
 | `tests/test_content.py` | 11 | core/content.py: Content dataclass construction, defaults, dict parsing |
 | `tests/test_review_cards.py` | 14 | core/review_cards.py: flashcard collection + quiz backfill, card ids, flashcard_index.json |
 | `tests/test_diagnostic.py` | 7 | core/diagnostic.py: placement quiz bank validity, scoring thresholds, payload shape |
+| `tests/test_journeys.py` | 7 | core/journeys.py: curated journeys, registry linkage, prev/next linearity, pillar span |
 | `tests/test_llm_client.py` | 11 | LLM client wrappers (aisuite ImportError handling) |
 | `tests/test_philosophy_integration.py` | 11 | Philosophy metadata: model fields, ontology enrichment, cross-pillar validation |
 | `tests/test_redirects.py` | 11 | Redirect rules validation |
@@ -569,9 +570,9 @@ result = df.filter(pl.col('price') > 100).collect()
 | `tests/test_adaptive_ui.js` | **19** | static/js/adaptive.js: density modes, difficulty/modality helpers |
 | `tests/test_search_discovery.js` | **67** | static/js/search.js: didYouMean, scoring, synonyms/aliases, category & tech facets, sorting |
 
-JS tests run via `node tests/test_*.js` for each file (no npm/playwright needed). `scripts/run_tests.sh` runs all 5 suites.
+JS tests run via `node tests/test_*.js` for each file (no npm/playwright needed). `scripts/run_tests.sh` runs all 6 suites.
 
-**Total: 1196 Python tests collected across 54 modules, including 5 guard tests in `tests/test_generate_knowledge_modules.py` (knowledge-module SQI fields), 21 in `tests/test_category_mapping.py` (tag→subcategory mapping, category backfill, news/GDELT pipeline), and 22 in `tests/test_check_entry_freshness.py` (currency tiers, topic currency, parse dates, marking).** (Verified 2026-08-06 via `python3 -m pytest tests/ --co`; JS suites run via `run_tests.sh`. Full suite runs in the deploy pipeline after every build — all green.)
+**Total: 1203 Python tests collected across 55 modules, including 5 guard tests in `tests/test_generate_knowledge_modules.py` (knowledge-module SQI fields), 21 in `tests/test_category_mapping.py` (tag→subcategory mapping, category backfill, news/GDELT pipeline), and 22 in `tests/test_check_entry_freshness.py` (currency tiers, topic currency, parse dates, marking).** (Verified 2026-08-06 via `python3 -m pytest tests/ --co`; JS suites run via `run_tests.sh`. Full suite runs in the deploy pipeline after every build — all green.)
 
 ### Phase 1.5 Files (Cognitive Load Amputation — July 2026)
 

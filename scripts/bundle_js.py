@@ -38,6 +38,9 @@ BUNDLES = {
     "diagnostic.js": [
         "diagnostic.js",
     ],
+    "journeys.js": [
+        "journeys.js",
+    ],
 }
 
 

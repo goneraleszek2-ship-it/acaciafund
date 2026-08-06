@@ -1,0 +1,60 @@
+{% extends "layout.j2" %}
+{% block main_content %}
+<nav aria-label="Breadcrumb" class="mb-4 text-xs text-muted">
+  <ol class="flex flex-wrap items-center gap-1.5">
+    <li><a href="/" class="hover-accent transition">Home</a></li>
+    <li aria-hidden="true">/</li>
+    <li><a href="/journeys/" class="hover-accent transition">Journeys</a></li>
+    <li aria-hidden="true">/</li>
+    <li aria-current="page">{{ title }}</li>
+  </ol>
+</nav>
+
+<header class="mb-6">
+  <h1 class="text-2xl font-extrabold text-default">{{ title }}</h1>
+  <p class="mt-1 text-sm text-accent">{{ tagline }}</p>
+  <p class="mt-2 text-sm text-secondary">{{ description }}</p>
+</header>
+
+<div class="ghost-card p-5 mb-6">
+  <div class="flex items-center justify-between text-xs text-muted mb-2">
+    <span>Journey progress</span>
+    <span id="journey-progress-pct">0%</span>
+  </div>
+  <div class="h-2 rounded-full bg-surface-alt overflow-hidden">
+    <div id="journey-progress-bar" class="h-full bg-accent transition-all" style="width:0%"></div>
+  </div>
+</div>
+
+<div id="journey-app" class="space-y-3" data-journey="{{ slug }}" data-total="{{ step_count }}">
+  {% for step in steps %}
+  <div class="ghost-card p-4 journey-step">
+    <div class="flex items-center gap-3">
+      <label class="flex items-center shrink-0 cursor-pointer" title="Mark complete">
+        <input type="checkbox" data-step="{{ step.position }}" class="accent-current">
+        <span class="sr-only">Mark step {{ step.position + 1 }} complete</span>
+      </label>
+      <div class="min-w-0 flex-1">
+        <div class="flex flex-wrap items-center gap-2">
+          <span class="text-xs font-meta text-muted">Step {{ step.position + 1 }} / {{ step.total }}</span>
+          <span class="text-xs font-meta" style="color: var(--color-accent, #818cf8)">{{ step.pillar }}</span>
+          {% if step.difficulty %}<span class="text-xs font-meta text-muted">{{ step.difficulty }}</span>{% endif %}
+        </div>
+        <a href="{{ step.url }}" class="text-sm font-bold text-default hover-accent transition">{{ step.title }}</a>
+        {% if step.description %}<p class="text-xs text-secondary mt-1 line-clamp-2">{{ step.description }}</p>{% endif %}
+      </div>
+      <span class="text-muted shrink-0">&rarr;</span>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+
+<div class="flex items-center justify-between mt-6">
+  <a href="/journeys/" class="btn btn-ghost btn-sm">&larr; All journeys</a>
+  <a id="journey-next" href="#" class="btn btn-primary btn-sm">Next step &rarr;</a>
+</div>
+
+<p id="journey-done" class="hidden mt-4 text-sm font-semibold text-accent">Journey complete — well done! Review your progress in the Study Queue.</p>
+
+<script src="{{ 'js/journeys.js' | asset }}" defer></script>
+{% endblock %}

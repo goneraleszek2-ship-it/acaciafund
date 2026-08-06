@@ -1,0 +1,29 @@
+{% extends "layout.j2" %}
+{% block main_content %}
+<nav aria-label="Breadcrumb" class="mb-4 text-xs text-muted">
+  <ol class="flex flex-wrap items-center gap-1.5">
+    <li><a href="/" class="hover-accent transition">Home</a></li>
+    <li aria-hidden="true">/</li>
+    <li aria-current="page">Journeys</li>
+  </ol>
+</nav>
+
+<header class="mb-6">
+  <h1 class="text-2xl font-extrabold text-default">Cross-Pillar Journeys</h1>
+  <p class="mt-1 text-sm text-muted">Three curated, linear study tracks — each crossing Compliance, Markets and Data Engineering. Work through the steps in order; your progress is saved locally.</p>
+</header>
+
+<div class="grid md:grid-cols-3 gap-4">
+  {% for journey in journeys %}
+  <a href="/journeys/{{ journey.slug }}/" class="ghost-card p-5 block hover-accent transition">
+    <div class="flex items-center justify-between mb-2">
+      <h2 class="text-base font-bold text-default">{{ journey.title }}</h2>
+    </div>
+    <p class="text-sm text-secondary">{{ journey.tagline }}</p>
+    <p class="text-xs mt-2 text-muted">{{ journey.step_count }} steps &middot; {{ journey.span_count }} pillars</p>
+    <span class="next-stage-btn mt-3 inline-block">Start journey &rarr;</span>
+  </a>
+  {% endfor %}
+</div>
+
+{% endblock %}
