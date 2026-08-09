@@ -123,7 +123,7 @@ not context.
 | 3 | SM-2 engine invisible | **Partial.** `/review/` dashboard + `/review/queue/` exist; queue page has a broken flashcard component dependency (fixed in Tier 2.1); no global Study Queue entry point |
 | 4 | Knowledge graph invisible | **Fixed/partial.** `/graph/` (Cytoscape), 199 `/concepts/{id}/` pages, per-concept concept-map partial exist; no per-page D3 prerequisite graph |
 | 5 | No progress tracking | **Fixed.** Learning-path progress bars (localStorage) + concept mastery dashboard |
-| 6 | Limited interactivity | **Pending.** No SQLite-wasm / Pyodide / simulations (Tier 4) |
+| 6 | Limited interactivity | **Done.** SQLite-wasm SQL exercises, Pyodide/Polars sandbox, KYC + SAR compliance simulators (Tier 4) |
 | 7 | Citation depth lacking | **Fixed/partial.** DOI links + BibTeX/RIS export + copy buttons shipped; OpenAlex "Cited by" pending |
 | 8 | Content provenance ambiguity | **Fixed.** Provenance badges (Verified / Synthesized / Curated) on all articles |
 
@@ -169,13 +169,14 @@ Execute in priority order; do not proceed to Tier N+1 until Tier N is stable.
 | 3.2 Prerequisite path visualization | **Partial** | Cytoscape `/graph/` + per-page concept map exist; lightweight per-concept D3 graph pending |
 | 3.3 Cross-pillar journey paths | **Done** | 15 learning-path pages + 3 pillar-synthesis pages + `/journeys/` hub with 3 curated linear journeys (6 steps each, all 3 pillars) with localStorage progress + next-step nav |
 
-### Tier 4: Hands-On Interactivity — PENDING
+### Tier 4: Hands-On Interactivity — DONE
 
 | Task | Notes |
 |---|---|
-| 4.1 SQLite-wasm SQL exercises | 3 beginner AML lessons to start |
-| 4.2 Pyodide Python/Polars exercises | Polars transaction-flow pipeline tutorial |
-| 4.3 Compliance simulation exercises | KYC workflow, SAR filing form (HTML/CSS/JS only) |
+| 4.1 SQLite-wasm SQL exercises | **Done** | 3 beginner AML lessons ship an in-browser SQLite sandbox (sql.js via CDN): CTR flagging (aml-basics), structuring detection (money-laundering-mechanisms), sanctions name screening (sanctions-screening-global-regimes). Shared `acacia_aml` dataset, answer checking + hints, zero data egress |
+| 4.2 Pyodide Python/Polars exercises | **Done** | Polars transaction-flow pipeline tutorial on sql-for-data-engineers (Pyodide + Polars via CDN, reference-output comparison) |
+| 4.3 Compliance simulation exercises | **Done** | KYC onboarding workflow simulator (kyc-cdd-workflows, 3-step decision flow with EDD rationale) + SAR filing form simulator (sar-filing-scenarios, red-flag checklist + narrative validation, HTML/CSS/JS only) |
+| 4.4 Exercise platform plumbing | **Done** | `data/exercises.json` + `core/exercises.py` slug-matched attachment; sandbox partials + CSS; build-cache hash now covers sandbox exercises and missing outputs force rebuild |
 
 ### Tier 5: Research Rigor & Reference — PARTIAL
 

@@ -189,6 +189,7 @@ def _get_content_hash(content_item: Any) -> str:
         "knowledge_category": getattr(content_item, "knowledge_category", ""),
         "difficulty": getattr(content_item, "difficulty", ""),
         "date_str": getattr(content_item, "date_str", ""),
+        "sandbox_exercises": getattr(content_item, "sandbox_exercises", []),
     }
 
     json_str = json.dumps(data, sort_keys=True, default=str)

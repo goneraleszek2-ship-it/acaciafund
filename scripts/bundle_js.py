@@ -50,6 +50,18 @@ BUNDLES = {
     "concept_tabs.js": [
         "concept_tabs.js",
     ],
+    "sql_sandbox.js": [
+        "sql_sandbox.js",
+    ],
+    "pyodide_sandbox.js": [
+        "pyodide_sandbox.js",
+    ],
+    "kyc_sim.js": [
+        "kyc_sim.js",
+    ],
+    "sar_sim.js": [
+        "sar_sim.js",
+    ],
 }
 
 

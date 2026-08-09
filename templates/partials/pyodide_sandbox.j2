@@ -1,0 +1,26 @@
+{# pyodide_sandbox.j2 — in-browser Python/Polars exercise (Tier 4.2, molecule: sandbox-card) #}
+{# Expects: ex (exercise dict with kind=polars) #}
+{%- set ex_json = ex | tojson %}
+<div class="sandbox-card ghost-card" data-py-sandbox data-ex='{{ ex_json }}'>
+  <div class="flex items-center justify-between gap-2 mb-3">
+    <h3 class="text-base font-bold text-default">{{ ex.title }}</h3>
+    <span class="sandbox-level">{{ ex.level }}</span>
+  </div>
+  <p class="text-sm mb-3 text-secondary">{{ ex.prompt }}</p>
+  <div class="sandbox-py-meta text-xs mb-3 text-muted">
+    <span data-py-engine-status>Pyodide not loaded yet</span>
+    &middot; Polars runs inside your browser via WebAssembly
+  </div>
+  <div class="sandbox-editor-wrap">
+    <textarea class="sandbox-editor" data-py-editor spellcheck="false" aria-label="Python editor">{{ ex.starter }}</textarea>
+  </div>
+  <div class="flex flex-wrap items-center gap-2 mt-3">
+    <button type="button" class="btn-primary-sm" data-py-run>Run Python</button>
+    <button type="button" class="btn-ghost-sm" data-py-hint>Hint</button>
+    <button type="button" class="btn-ghost-sm" data-py-reset>Reset</button>
+    <span class="text-xs text-muted" data-py-status></span>
+  </div>
+  <p class="sandbox-hint hidden" data-py-hint-text>{{ ex.hint }}</p>
+  <div class="mt-4" data-py-result></div>
+  <p class="text-xs mt-3 text-muted">Pyodide + Polars are loaded from a CDN (large first download). Code runs locally; no data leaves this page.</p>
+</div>

@@ -1,0 +1,13 @@
+{# kyc_sim.j2 — KYC onboarding workflow simulator (Tier 4.3, molecule: sandbox-card) #}
+{# Expects: ex (exercise dict with kind=sim, id=kyc-onboarding) #}
+{%- set ex_json = ex | tojson %}
+<div class="sandbox-card ghost-card" data-kyc-sim data-ex='{{ ex_json }}'>
+  <div class="flex items-center justify-between gap-2 mb-3">
+    <h3 class="text-base font-bold text-default">{{ ex.title }}</h3>
+    <span class="sandbox-level">{{ ex.level }}</span>
+  </div>
+  <p class="text-sm mb-4 text-secondary">{{ ex.scenario }}</p>
+  <div class="flex items-center gap-1.5 mb-4" data-sim-steps aria-label="Simulator steps"></div>
+  <div data-sim-body></div>
+  <div class="mt-5" data-sim-outcome></div>
+</div>

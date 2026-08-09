@@ -1,0 +1,22 @@
+{# sql_sandbox.j2 — in-browser SQLite exercise (Tier 4.1, molecule: sandbox-card) #}
+{# Expects: ex (exercise dict with kind=sql), ex.dataset = {schema, seed} #}
+{%- set ex_json = ex | tojson %}
+<div class="sandbox-card ghost-card" data-sql-sandbox data-ex='{{ ex_json }}'>
+  <div class="flex items-center justify-between gap-2 mb-3">
+    <h3 class="text-base font-bold text-default">{{ ex.title }}</h3>
+    <span class="sandbox-level">{{ ex.level }}</span>
+  </div>
+  <p class="text-sm mb-3 text-secondary">{{ ex.prompt }}</p>
+  <div class="sandbox-editor-wrap">
+    <textarea class="sandbox-editor" data-sql-editor spellcheck="false" aria-label="SQL editor">{{ ex.starter }}</textarea>
+  </div>
+  <div class="flex flex-wrap items-center gap-2 mt-3">
+    <button type="button" class="btn-primary-sm" data-sql-run>Run query</button>
+    <button type="button" class="btn-ghost-sm" data-sql-hint>Hint</button>
+    <button type="button" class="btn-ghost-sm" data-sql-reset>Reset</button>
+    <span class="text-xs text-muted" data-sql-status></span>
+  </div>
+  <p class="sandbox-hint hidden" data-sql-hint-text>{{ ex.hint }}</p>
+  <div class="mt-4" data-sql-result></div>
+  <p class="text-xs mt-3 text-muted">Runs entirely in your browser via SQLite (sql.js). No data leaves this page.</p>
+</div>

@@ -1,0 +1,109 @@
+{
+  "dataset": {
+    "name": "acacia_aml",
+    "schema": "CREATE TABLE customers (id INTEGER PRIMARY KEY, name TEXT NOT NULL, jurisdiction TEXT NOT NULL, risk_rating TEXT NOT NULL CHECK (risk_rating IN ('low','medium','high')), is_pep INTEGER NOT NULL DEFAULT 0);\nCREATE TABLE accounts (id INTEGER PRIMARY KEY, customer_id INTEGER NOT NULL REFERENCES customers(id), account_type TEXT NOT NULL CHECK (account_type IN ('checking','savings','business','foreign')));\nCREATE TABLE transactions (id INTEGER PRIMARY KEY, account_id INTEGER NOT NULL REFERENCES accounts(id), txn_type TEXT NOT NULL CHECK (txn_type IN ('cash_deposit','wire_in','wire_out','ach','transfer')), amount NUMERIC NOT NULL, currency TEXT NOT NULL DEFAULT 'USD', txn_date TEXT NOT NULL);",
+    "seed": "INSERT INTO customers (id, name, jurisdiction, risk_rating, is_pep) VALUES (1,'Ana Ruiz','Spain','low',0),(2,'Jean-Claude Moreau','France','low',0),(3,'Yusuf Demir','Turkey','medium',0),(4,'Elena Volkov','Russia','high',1),(5,'Chen Wei','China','medium',0),(6,'Grace Adeyemi','Nigeria','medium',0),(7,'Viktor Petrov','Cyprus','high',1),(8,'Sofia Bianchi','Italy','low',0),(9,'Omar Haddad','Lebanon','high',0),(10,'Lena Novak','Czechia','low',0),(11,'Marcus Weber','Germany','low',0),(12,'Priya Sharma','India','medium',0),(13,'Carlos Mendez','Mexico','high',0),(14,'Ahmed Al-Farsi','UAE','medium',0),(15,'Ivan Kuznetsov','Latvia','medium',0);\nINSERT INTO accounts (id, customer_id, account_type) VALUES (1,1,'checking'),(2,1,'savings'),(3,2,'checking'),(4,3,'checking'),(5,4,'foreign'),(6,5,'checking'),(7,6,'checking'),(8,7,'business'),(9,8,'checking'),(10,9,'foreign'),(11,10,'checking'),(12,11,'checking'),(13,12,'checking'),(14,13,'checking'),(15,14,'business'),(16,15,'checking'),(17,3,'savings'),(18,7,'checking'),(19,5,'savings'),(20,13,'foreign');\nINSERT INTO transactions (id, account_id, txn_type, amount, currency, txn_date) VALUES (1,1,'cash_deposit',12500,'USD','2026-06-02'),(2,2,'wire_in',8000,'USD','2026-06-03'),(3,3,'cash_deposit',9500,'USD','2026-06-04'),(4,3,'cash_deposit',9200,'USD','2026-06-05'),(5,3,'cash_deposit',9400,'USD','2026-06-06'),(6,3,'cash_deposit',9100,'USD','2026-06-08'),(7,3,'cash_deposit',9300,'USD','2026-06-09'),(8,4,'cash_deposit',6500,'USD','2026-06-03'),(9,4,'wire_out',50000,'USD','2026-06-05'),(10,5,'wire_in',250000,'USD','2026-06-01'),(11,5,'wire_out',240000,'USD','2026-06-02'),(12,6,'cash_deposit',11000,'USD','2026-06-04'),(13,7,'cash_deposit',3000,'USD','2026-06-06'),(14,7,'cash_deposit',2800,'USD','2026-06-07'),(15,7,'cash_deposit',3100,'USD','2026-06-08'),(16,8,'wire_in',90000,'USD','2026-06-05'),(17,8,'wire_out',89000,'USD','2026-06-06'),(18,9,'ach',4500,'USD','2026-06-07'),(19,10,'wire_in',60000,'USD','2026-06-08'),(20,10,'wire_out',59000,'USD','2026-06-09'),(21,11,'cash_deposit',15000,'USD','2026-06-10'),(22,12,'transfer',30000,'USD','2026-06-11'),(23,13,'cash_deposit',4500,'USD','2026-06-12'),(24,13,'cash_deposit',4600,'USD','2026-06-12'),(25,13,'cash_deposit',4400,'USD','2026-06-13'),(26,13,'cash_deposit',4700,'USD','2026-06-14'),(27,14,'cash_deposit',12000,'USD','2026-06-15'),(28,14,'cash_deposit',11800,'USD','2026-06-16'),(29,15,'cash_deposit',11500,'USD','2026-06-17'),(30,15,'cash_deposit',11200,'USD','2026-06-18'),(31,16,'transfer',2000,'USD','2026-06-18'),(32,17,'cash_deposit',9000,'USD','2026-06-19'),(33,18,'cash_deposit',7000,'USD','2026-06-20'),(34,19,'wire_in',15000,'USD','2026-06-21'),(35,20,'cash_deposit',13500,'USD','2026-06-22'),(36,5,'ach',12000,'USD','2026-06-23');"
+  },
+  "sql": [
+    {
+      "id": "ctr-flagging",
+      "lesson_slugs": ["aml/learn/aml-basics"],
+      "title": "Flag a Currency Transaction Report (CTR) trigger",
+      "level": "Beginner",
+      "prompt": "US regulations require a Currency Transaction Report (CTR) for cash deposits over $10,000. Write a query that lists the customer name, jurisdiction, and amount for every cash deposit strictly greater than $10,000, ordered by amount descending.",
+      "hint": "Join transactions to accounts to customers. Filter on txn_type = 'cash_deposit' and amount > 10000. Order by amount DESC.",
+      "starter": "SELECT\n  c.name,\n  c.jurisdiction,\n  t.amount\nFROM transactions t\nJOIN accounts a ON a.id = t.account_id\nJOIN customers c ON c.id = a.customer_id\nWHERE t.txn_type = 'cash_deposit'\n  AND t.amount > 10000;\n",
+      "expected": "SELECT c.name, c.jurisdiction, t.amount FROM transactions t JOIN accounts a ON a.id = t.account_id JOIN customers c ON c.id = a.customer_id WHERE t.txn_type = 'cash_deposit' AND t.amount > 10000 ORDER BY t.amount DESC;"
+    },
+    {
+      "id": "structuring-detection",
+      "lesson_slugs": ["aml/learn/money-laundering-mechanisms"],
+      "title": "Detect potential structuring",
+      "level": "Beginner",
+      "prompt": "Structuring means splitting deposits to stay just under the $10,000 CTR threshold. Find accounts with at least 3 cash deposits of $9,000–$9,999. Show the account id and the number of qualifying deposits, ordered by count descending.",
+      "hint": "Group by account_id, filter the deposits first, then use HAVING COUNT(*) >= 3.",
+      "starter": "SELECT\n  t.account_id,\n  COUNT(*) AS deposit_count\nFROM transactions t\nWHERE t.txn_type = 'cash_deposit'\n  AND t.amount BETWEEN 9000 AND 9999\nGROUP BY t.account_id\nHAVING COUNT(*) >= 3\nORDER BY deposit_count DESC;\n",
+      "expected": "SELECT t.account_id, COUNT(*) AS deposit_count FROM transactions t WHERE t.txn_type = 'cash_deposit' AND t.amount BETWEEN 9000 AND 9999 GROUP BY t.account_id HAVING COUNT(*) >= 3 ORDER BY deposit_count DESC;"
+    },
+    {
+      "id": "sanctions-name-screening",
+      "lesson_slugs": ["compliance/learn/sanctions-screening-global-regimes"],
+      "title": "Screen customers against a sanctions list",
+      "level": "Beginner",
+      "prompt": "A sanctions watchlist contains the names 'Viktor Petrov', 'Elena Volkov', and 'Omar Haddad'. Write a query that returns the customer name, jurisdiction, and risk rating of every customer whose name is on the list, using an IN check. Order by name.",
+      "hint": "Use WHERE name IN ('Viktor Petrov', 'Elena Volkov', 'Omar Haddad') and order by name.",
+      "starter": "SELECT\n  name,\n  jurisdiction,\n  risk_rating\nFROM customers\nWHERE name IN ('Viktor Petrov', 'Elena Volkov', 'Omar Haddad')\nORDER BY name;\n",
+      "expected": "SELECT name, jurisdiction, risk_rating FROM customers WHERE name IN ('Viktor Petrov', 'Elena Volkov', 'Omar Haddad') ORDER BY name;"
+    }
+  ],
+  "polars": [
+    {
+      "id": "polars-transaction-flow",
+      "lesson_slugs": ["data/learn/sql-for-data-engineers"],
+      "title": "Polars: cash-flow profile by risk rating",
+      "level": "Beginner",
+      "prompt": "The transactions table is exported to a CSV. Load it with polars and compute, for each risk_rating, the total USD cash-deposit volume. Print the result sorted by total descending.\n\nThe CSV columns are: id, account_id, txn_type, amount, currency, txn_date. Customer risk ratings are in a second CSV: id, name, jurisdiction, risk_rating, is_pep.\n\nComplete this pipeline: join transactions to customers via accounts, filter cash_deposit, group by risk_rating, and print.",
+      "hint": "pl.read_csv twice, join on account_id -> customers.id, filter, group_by('risk_rating').agg(pl.col('amount').sum()) then sort and print.",
+      "starter": "import polars as pl\n\ncustomers = pl.read_csv('customers.csv')\naccounts = pl.read_csv('accounts.csv')\ntransactions = pl.read_csv('transactions.csv')\n\n# join accounts -> customers, then transactions -> accounts\n",
+      "expected": "import polars as pl\ncustomers = pl.read_csv('customers.csv')\naccounts = pl.read_csv('accounts.csv')\ntransactions = pl.read_csv('transactions.csv')\nwith_cust = accounts.join(customers, on='id')\ntxn = transactions.join(with_cust, left_on='account_id', right_on='id')\ncash = txn.filter(pl.col('txn_type') == 'cash_deposit')\nsummary = cash.group_by('risk_rating').agg(pl.col('amount').sum().alias('total_usd')).sort('total_usd', descending=True)\nprint(summary)"
+    }
+  ],
+  "sims": [
+    {
+      "id": "kyc-onboarding",
+      "lesson_slugs": ["aml/learn/kyc-cdd-workflows"],
+      "title": "KYC Onboarding Simulator",
+      "level": "Intermediate",
+      "scenario": "You are a compliance officer onboarding a new corporate client: Alta Trading LLC, a Cyprus-registered trading company owned by a 22% shareholder who is a foreign PEP. Work through the KYC/CDD workflow and decide the risk rating and whether Enhanced Due Diligence (EDD) is required.",
+      "steps": [
+        {
+          "id": "identity",
+          "question": "Which documents are REQUIRED to complete basic Customer Due Diligence (CDD) for this client?",
+          "kind": "multi",
+          "options": ["Certificate of incorporation", "Beneficial ownership register (UBO)", "Passport copies of all UBOs with 25%+ ownership", "Company marketing brochure", "Articles of association", "Business plan"],
+          "correct": ["Certificate of incorporation", "Beneficial ownership register (UBO)", "Passport copies of all UBOs with 25%+ ownership"],
+          "feedback": "CDD for corporate clients requires proof of legal existence, ownership structure, and identity of beneficial owners. A marketing brochure and business plan are commercially useful but not identity documents."
+        },
+        {
+          "id": "ubo",
+          "question": "The client's ownership includes a 22% shareholder who is a foreign PEP. What does this mean for the CDD process?",
+          "kind": "single",
+          "options": [
+            "Nothing — only majority shareholders matter",
+            "The PEP is below the 25% UBO threshold, so no further checks apply",
+            "PEP status always triggers Enhanced Due Diligence regardless of ownership percentage",
+            "The PEP must be identified, verified, and subject to EDD; the client may be rated high-risk"
+          ],
+          "correct": "The PEP must be identified, verified, and subject to EDD; the client may be rated high-risk",
+          "feedback": "A PEP in the ownership structure — even below 25% — is a red flag. FATF Recommendation 12 requires EDD for PEPs, and the client's risk rating must reflect the association."
+        },
+        {
+          "id": "edd",
+          "question": "The initial risk assessment scores: jurisdiction Cyprus (medium), industry trading (medium), PEP association (high), transaction profile (medium). What risk rating and measures are appropriate?",
+          "kind": "single",
+          "options": [
+            "Low risk — proceed with basic CDD",
+            "Medium risk — standard monitoring",
+            "High risk — approve but apply EDD: source of funds evidence, senior sign-off, enhanced monitoring",
+            "High risk — refuse the client outright without further steps"
+          ],
+          "correct": "High risk — approve but apply EDD: source of funds evidence, senior sign-off, enhanced monitoring",
+          "feedback": "The PEP association elevates the aggregate score. EDD (not refusal) is the proportional response: document source of funds/wealth, obtain senior management approval, and apply enhanced ongoing monitoring."
+        }
+      ],
+      "outcome": {
+        "title": "Onboarding decision",
+        "text": "Record in the file: client accepted under EDD — senior sign-off obtained, source of funds documented, transaction monitoring set to enhanced, UBO (PEP) re-screened at least quarterly."
+      }
+    },
+    {
+      "id": "sar-filing",
+      "lesson_slugs": ["aml/learn/sar-filing-scenarios"],
+      "title": "SAR Filing Simulator",
+      "level": "Advanced",
+      "scenario": "You observe the following over 10 days on one business account: eight cash deposits of $9,000–$9,950 from different branches, immediately followed by wires to a shell-company account in a high-risk jurisdiction. Draft a Suspicious Activity Report (SAR).",
+      "required_flags": ["StructurSplitting deposits below the CTR threshold", "Wiring funds onward to a high-risk jurisdiction", "Rapid movement of cash out of the account"],
+      "narrative_min_words": 20
+    }
+  ]
+}

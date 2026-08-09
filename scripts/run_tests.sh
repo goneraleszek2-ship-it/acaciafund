@@ -64,6 +64,7 @@ TEST_GROUPS=(
     "tests/test_agents.py"
     "tests/test_risk_engine.py"
     "tests/test_llm_client.py"
+    "tests/test_exercises.py"
 
     # Content & enrichment
     "tests/test_enrich.py"
@@ -103,6 +104,10 @@ JS_TESTS=(
     "tests/test_study_dashboard.js"
     "tests/test_learning_hub.js"
     "tests/test_concept_tabs.js"
+    "tests/test_sql_sandbox.js"
+    "tests/test_pyodide_sandbox.js"
+    "tests/test_kyc_sim.js"
+    "tests/test_sar_sim.js"
 )
 
 echo "=========================================

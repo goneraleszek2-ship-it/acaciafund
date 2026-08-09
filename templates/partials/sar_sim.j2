@@ -1,0 +1,35 @@
+{# sar_sim.j2 — SAR filing form simulator (Tier 4.3, molecule: sandbox-card) #}
+{# Expects: ex (exercise dict with kind=sim, id=sar-filing) #}
+{%- set ex_json = ex | tojson %}
+<div class="sandbox-card ghost-card" data-sar-sim data-ex='{{ ex_json }}'>
+  <div class="flex items-center justify-between gap-2 mb-3">
+    <h3 class="text-base font-bold text-default">{{ ex.title }}</h3>
+    <span class="sandbox-level">{{ ex.level }}</span>
+  </div>
+  <p class="text-sm mb-4 text-secondary">{{ ex.scenario }}</p>
+  <form class="space-y-4" data-sar-form novalidate>
+    <div>
+      <label class="text-xs font-semibold text-secondary" for="sar-subject">Subject / Account name</label>
+      <input class="sandbox-input" id="sar-subject" type="text" data-sar-field="subject" value="Alta Trading LLC">
+    </div>
+    <div>
+      <label class="text-xs font-semibold text-secondary">Red flags observed</label>
+      <div class="flex flex-col gap-1.5 mt-1" data-sar-flags>
+        {%- for flag in ex.required_flags %}
+        <label class="sandbox-check"><input type="checkbox" data-sar-flag value="{{ flag }}">{{ flag }}</label>
+        {%- endfor %}
+      </div>
+      <p class="text-xs mt-1 text-muted" data-sar-flag-status></p>
+    </div>
+    <div>
+      <label class="text-xs font-semibold text-secondary" for="sar-narrative">Suspicious activity narrative</label>
+      <textarea class="sandbox-input" id="sar-narrative" rows="6" data-sar-field="narrative" placeholder="Describe what you observed, the timeline, and why it is suspicious…"></textarea>
+      <p class="text-xs mt-1 text-muted" data-sar-word-status></p>
+    </div>
+    <div class="flex flex-wrap items-center gap-2">
+      <button type="submit" class="btn-primary-sm" data-sar-submit>Validate &amp; file draft</button>
+      <span class="text-xs text-muted" data-sar-status></span>
+    </div>
+  </form>
+  <div class="mt-5" data-sar-result></div>
+</div>

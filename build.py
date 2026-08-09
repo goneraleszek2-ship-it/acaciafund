@@ -699,6 +699,16 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     except Exception as _note_err:
         print(f"  editor notes: skipped ({_note_err})")
 
+    # Sandbox exercises (Tier 4): SQL / Polars / compliance sims by slug.
+    try:
+        from core.exercises import attach_exercises as _attach_exercises
+
+        _ex_attached = _attach_exercises(all_content)
+        if _ex_attached:
+            print(f"  exercises: attached to {_ex_attached} items")
+    except Exception as _ex_err:
+        print(f"  exercises: skipped ({_ex_err})")
+
     # Backfill SQI for items missing it
     sqi_backfilled = 0
     for item in all_content:
@@ -856,7 +866,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
 
         # Use build cache for faster change detection
         # Pass the content hash (not the full JSON) for consistent comparison
-        if not cache.needs_rebuild(output_path, current_hash, is_content=True):
+        if output_path.exists() and not cache.needs_rebuild(output_path, current_hash, is_content=True):
             items_to_skip.add(slug)
             cache.update_entry(output_path, current_hash,
                              {"slug": slug, "content_type": getattr(item, "content_type", "")},
@@ -1439,6 +1449,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                 prerequisite_links=prerequisite_links,
                 flashcard_ids=flashcard_ids,
                 cross_pillar_items=find_cross_pillar(item, all_content, ontology, _concept_cache=_concept_cache),
+                sandbox_exercises=getattr(item, "sandbox_exercises", []),
                 is_index=False,
                 layer="learn",
                 layer_icon=LAYER_ICONS["learn"],

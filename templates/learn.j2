@@ -119,6 +119,24 @@
     </section>
     {%- endif %}
 
+    {%- if sandbox_exercises and sandbox_exercises | length > 0 %}
+    <section class="mt-12 pt-8 border-t border-muted" id="sandbox-section">
+      <h2 class="text-2xl font-bold mb-2 text-default">Hands-On Lab</h2>
+      <p class="text-sm mb-6 text-muted">Run code and work through compliance scenarios directly in your browser.</p>
+      {%- for ex in sandbox_exercises %}
+        {%- if ex.kind == "sql" %}
+          {%- include 'partials/sql_sandbox.j2' %}
+        {%- elif ex.kind == "polars" %}
+          {%- include 'partials/pyodide_sandbox.j2' %}
+        {%- elif ex.kind == "sim" and ex.id == "kyc-onboarding" %}
+          {%- include 'partials/kyc_sim.j2' %}
+        {%- elif ex.kind == "sim" and ex.id == "sar-filing" %}
+          {%- include 'partials/sar_sim.j2' %}
+        {%- endif %}
+      {%- endfor %}
+    </section>
+    {%- endif %}
+
     {%- if content.flashcards and content.flashcards | length > 0 %}
     <section class="mt-12 pt-8 border-t border-muted">
       <h2 class="text-2xl font-bold mb-6 inline-flex items-center gap-2 text-default">
@@ -240,5 +258,16 @@
   </article>
 
 <script src="{{ 'js/learning.js' | asset }}" defer></script>
+{%- set _kinds = sandbox_exercises | map(attribute='kind') | list if sandbox_exercises else [] %}
+{%- if 'sql' in _kinds %}
+<script src="{{ 'js/sql_sandbox.js' | asset }}" defer></script>
+{%- endif %}
+{%- if 'polars' in _kinds %}
+<script src="{{ 'js/pyodide_sandbox.js' | asset }}" defer></script>
+{%- endif %}
+{%- if 'sim' in _kinds %}
+<script src="{{ 'js/kyc_sim.js' | asset }}" defer></script>
+<script src="{{ 'js/sar_sim.js' | asset }}" defer></script>
+{%- endif %}
 {% include 'partials/newsletter.html' %}
 {% endblock %}
