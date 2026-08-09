@@ -1,0 +1,48 @@
+{# concept_dag.j2 — static SVG prerequisite DAG (molecule) #}
+{# Expects: concept_dag (layout dict from build_concept_dag), pillar_config, page pillar color #}
+{%- if concept_dag and concept_dag.nodes | length > 0 %}
+{%- set dag_pillar = concept_dag.center.pillar or 'aml' %}
+{%- set dag_color = pillar_config.get(dag_pillar, {}).get('color', '#6366f1') %}
+{%- set dag_muted = pillar_config.get(dag_pillar, {}).get('muted', '#94a3b8') %}
+<section class="concept-dag ghost-card p-5" data-concept-dag="{{ concept_dag.concept_id }}">
+  <h3 class="text-sm font-semibold mb-4 flex items-center gap-2 text-default">
+    <svg class="icon-inline" fill="none" stroke="{{ dag_color }}" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7"/></svg>
+    Prerequisite Graph
+  </h3>
+  <svg viewBox="0 0 {{ concept_dag.width }} {{ concept_dag.height }}" width="100%" height="auto" role="img" aria-label="Prerequisite graph for {{ concept_dag.center.label }}" class="dag-svg" preserveAspectRatio="xMidYMid meet">
+    {%- for edge in concept_dag.edges %}
+    <path d="{{ edge.d }}" fill="none" stroke="{{ dag_color }}" stroke-opacity="0.35" stroke-width="1.5" class="dag-edge" marker-end="url(#dag-arrow-{{ concept_dag.concept_id | replace('-', '_') }})"></path>
+    {%- endfor %}
+    {%- for node in concept_dag.nodes %}
+    {%- set node_pillar = node.pillar or 'aml' %}
+    {%- set node_color = pillar_config.get(node_pillar, {}).get('color', '#6366f1') %}
+    {%- set is_center = node.id == concept_dag.center.id %}
+    <g class="dag-node{% if is_center %} dag-node-center{% endif %}" role="link">
+      <a href="/concepts/{{ node.id }}/" class="dag-node-link">
+        <rect x="{{ node.x }}" y="{{ node.y }}" width="{{ node.w }}" height="{{ node.h }}" rx="8"
+              fill="{% if is_center %}{{ dag_color }}{% else %}{{ node_color }}0f{% endif %}"
+              stroke="{{ node_color }}" stroke-width="{{ '2' if is_center else '1.25' }}"></rect>
+        <text x="{{ node.x + node.w / 2 }}" y="{{ node.y + node.h / 2 }}" dominant-baseline="central" text-anchor="middle"
+              font-size="10.5" font-weight="{{ '700' if is_center else '500' }}"
+              fill="{{ '#ffffff' if is_center else node_color }}" style="pointer-events:none">{{ node.label | truncate(16, true, '…') }}</text>
+        <title>{{ node.label }}</title>
+      </a>
+    </g>
+    {%- endfor %}
+    <defs>
+      <marker id="dag-arrow-{{ concept_dag.concept_id | replace('-', '_') }}" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M 0 0 L 10 5 L 0 10 z" fill="{{ dag_color }}" fill-opacity="0.5"></path>
+      </marker>
+    </defs>
+  </svg>
+  {%- set hidden_count = concept_dag.truncated.values() | sum %}
+  {%- if hidden_count > 0 %}
+  <p class="mt-3 text-xs text-muted">{{ hidden_count }} more relations hidden —</p>
+  {%- endif %}
+  <a href="/graph/?concept={{ concept_dag.center.id }}" class="mt-2 inline-block text-xs font-semibold no-underline text-accent">View full graph &rarr;</a>
+  <div class="mt-4 pt-3 border-t border-muted text-[10px] flex gap-3 text-muted">
+    <span>← prerequisite (requires)</span>
+    <span>enables →</span>
+  </div>
+</section>
+{%- endif %}

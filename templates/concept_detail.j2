@@ -181,37 +181,7 @@
 <div class="space-y-6">
   {%- include 'partials/concept_map.j2' %}
 
-  {# --- Prerequisite / Dependent mini-graph --- #}
-  {%- if prerequisites or dependents %}
-  <section>
-    <h3 class="text-sm font-semibold mb-3 text-default">Prerequisite Graph</h3>
-    <div class="space-y-2">
-      {%- if prerequisites %}
-      <div>
-        <span class="text-xs font-semibold uppercase tracking-wider text-muted">Requires</span>
-        <div class="flex flex-wrap gap-1 mt-1">
-          {%- for prereq in prerequisites[:6] %}
-          <a href="/concepts/{{ prereq.id }}/" class="prereq-tag">{{ prereq.label }}</a>
-          {%- endfor %}
-        </div>
-      </div>
-      {%- endif %}
-      {%- if dependents %}
-      <div>
-        <span class="text-xs font-semibold uppercase tracking-wider text-muted">Enables</span>
-        <div class="flex flex-wrap gap-1 mt-1">
-          {%- for dep in dependents[:6] %}
-          <a href="/concepts/{{ dep.id }}/" class="dep-tag">{{ dep.label }}</a>
-          {%- endfor %}
-        </div>
-      </div>
-      {%- endif %}
-      {%- if (prerequisites | length) > 6 or (dependents | length) > 6 %}
-      <a href="/graph/?concept={{ concept.id }}" class="block text-xs font-semibold no-underline text-accent">View full graph &rarr;</a>
-      {%- endif %}
-    </div>
-  </section>
-  {%- endif %}
+  {%- include 'partials/concept_dag.j2' %}
 
   {# --- Primary action: what to do next --- #}
   <section>

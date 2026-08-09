@@ -93,6 +93,7 @@ from core.learning_paths import (
     generate_learning_path_context,
 )
 from core.schema_builder import (
+    build_concept_dag,
     compute_cross_pillar_feynman_paths,
     compute_feynman_learning_paths,
 )
@@ -2843,6 +2844,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                 _lp_ctx = _concept_to_paths.get(_concept.id, [])
                 _has_lp = _concept.id in _lp_journeys if _lp_journeys else False
                 _has_lp_ctx = len(_lp_ctx) > 0
+                _dag = build_concept_dag(ontology, _concept.id)
                 concept_html = render_template(
                     "concept_detail.j2",
                     content=_dummy(
@@ -2885,6 +2887,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                     related_concepts=_related_concepts,
                     prerequisites=_prereqs,
                     dependents=_deps,
+                    concept_dag=_dag,
                     page_path=f"concepts/{_concept.id}/",
                     **ctx_base,
                 )

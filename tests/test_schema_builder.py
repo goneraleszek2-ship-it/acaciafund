@@ -5,6 +5,7 @@ import pytest
 from core.ontology import Concept, OntologyManager, Relation
 from core.schema_builder import (
     LearningPath,
+    build_concept_dag,
     build_prerequisite_graph,
     categorize_by_bloom,
     compute_feynman_learning_paths,
@@ -345,3 +346,88 @@ class TestFeynmanLearningPaths:
         idx_a = eli5_stage.concept_ids.index("a")
         idx_b = eli5_stage.concept_ids.index("b")
         assert idx_a < idx_b, "Prerequisite should come before dependent"
+
+
+# ---------------------------------------------------------------------------
+# Concept DAG (Tier 3.2)
+# ---------------------------------------------------------------------------
+
+
+class TestBuildConceptDag:
+    def test_center_node_present(self, acyclic_manager):
+        dag = build_concept_dag(acyclic_manager, "etl")
+        assert dag is not None
+        assert dag["center"]["id"] == "etl"
+        assert any(n["id"] == "etl" for n in dag["nodes"])
+        assert dag["concept_id"] == "etl"
+
+    def test_prerequisites_upstream(self, acyclic_manager):
+        dag = build_concept_dag(acyclic_manager, "etl")
+        # etl requires foundations -> foundations is a prerequisite
+        assert "foundations" in [n["id"] for n in dag["nodes"]]
+        # the prerequisite must be positioned LEFT of the center
+        center_x = next(n["x"] for n in dag["nodes"] if n["id"] == "etl")
+        foundations_x = next(n["x"] for n in dag["nodes"] if n["id"] == "foundations")
+        assert foundations_x < center_x
+        assert dag["edges"]
+
+    def test_dependents_downstream(self, acyclic_manager):
+        dag = build_concept_dag(acyclic_manager, "etl")
+        center_x = next(n["x"] for n in dag["nodes"] if n["id"] == "etl")
+        # elt requires etl -> elt is a dependent of etl
+        elt_x = next(n["x"] for n in dag["nodes"] if n["id"] == "elt")
+        assert elt_x > center_x
+
+    def test_two_hop_depth(self, acyclic_manager):
+        dag = build_concept_dag(acyclic_manager, "apache-kafka", depth=2)
+        # apache-kafka requires streaming (hop 1); streaming requires foundations (hop 2)
+        node_ids = {n["id"]: n for n in dag["nodes"]}
+        assert "streaming" in node_ids
+        assert "foundations" in node_ids
+        assert node_ids["foundations"]["x"] < node_ids["streaming"]["x"] < node_ids["apache-kafka"]["x"]
+
+    def test_depth_limit_respected(self, acyclic_manager):
+        dag = build_concept_dag(acyclic_manager, "apache-kafka", depth=1)
+        # with depth=1, foundations (2 hops away) must not appear
+        assert "foundations" not in [n["id"] for n in dag["nodes"]]
+
+    def test_max_per_layer_cap_and_truncation(self):
+        mgr = OntologyManager()
+        for cid in [f"c{i}" for i in range(6)] + ["root"]:
+            mgr.add_concept(Concept(id=cid, label=f"Concept {cid}", pillar="aml"))
+        for i in range(6):
+            # root requires c{i} -> c{i} are prerequisites of root
+            mgr.add_relation(Relation(source_id="root", target_id=f"c{i}", relation_type="requires"))
+        dag = build_concept_dag(mgr, "root", depth=1, max_per_layer=2)
+        up1_ids = [n["id"] for n in dag["nodes"] if n["id"] != "root"]
+        assert len(up1_ids) == 2
+        assert dag["truncated"].get("up1", 0) == 4
+
+    def test_edges_follow_real_relations(self, acyclic_manager):
+        dag = build_concept_dag(acyclic_manager, "etl")
+        for edge in dag["edges"]:
+            # drawn edge (from -> to) means: the right-hand concept requires
+            # the left-hand one, i.e. relation source == edge["to"]
+            rel = next(
+                r for r in acyclic_manager._relations
+                if r.source_id == edge["to"] and r.target_id == edge["from"]
+                and r.relation_type == "requires"
+            )
+            assert rel is not None
+
+    def test_no_requires_relations_returns_none(self):
+        mgr = OntologyManager()
+        mgr.add_concept(Concept(id="solo", label="Solo", pillar="aml"))
+        assert build_concept_dag(mgr, "solo") is None
+
+    def test_missing_concept_returns_none(self, acyclic_manager):
+        assert build_concept_dag(acyclic_manager, "does-not-exist") is None
+
+    def test_svg_geometry_valid(self, acyclic_manager):
+        dag = build_concept_dag(acyclic_manager, "etl")
+        assert dag["width"] > 0 and dag["height"] > 0
+        for node in dag["nodes"]:
+            assert node["x"] >= 0 and node["y"] >= 0
+            assert node["w"] > 0 and node["h"] > 0
+        for edge in dag["edges"]:
+            assert edge["d"].startswith("M ") and "C " in edge["d"]
