@@ -125,29 +125,6 @@ def generate_knowledge_graph():
 
 
 # ── Content validation ──
-from core.validator import validate_content  # noqa: E402
-from core.visuals import (  # noqa: E402
-    _pick_subtopic,
-    generate_og_image,
-    generate_thumbnail_svg,
-    render_topic_icon,
-    resolve_topic_icon,
-)
-from schemas import RegistryData  # noqa: E402
-from seed_learn import CURATED_RELATIONS  # noqa: E402
-from seed_learn import PREREQUISITES as LEARN_PREREQUISITES  # noqa: E402
-
-# ── Mem0 integration for session context and deployment logging ──
-try:
-    from services.mem0 import (
-        log_deployment,  # pyright: ignore[reportMissingImports, reportAttributeAccessIssue]
-    )
-
-    MEM0_AVAILABLE = True
-except ImportError:
-    MEM0_AVAILABLE = False
-    log_deployment = None  # pyright: ignore[reportAssignmentType]
-
 # ── Build cache for incremental builds ──
 from core.build_cache import (  # noqa: E402
     get_cache,
@@ -162,6 +139,17 @@ from core.build_taxonomies import (  # noqa: E402
     generate_search_pages,
     generate_tag_pages,
 )
+from core.validator import validate_content  # noqa: E402
+from core.visuals import (  # noqa: E402
+    _pick_subtopic,
+    generate_og_image,
+    generate_thumbnail_svg,
+    render_topic_icon,
+    resolve_topic_icon,
+)
+from schemas import RegistryData  # noqa: E402
+from seed_learn import CURATED_RELATIONS  # noqa: E402
+from seed_learn import PREREQUISITES as LEARN_PREREQUISITES  # noqa: E402
 
 # ── Stop words loaded from external config ──
 STOP_WORDS = set(json.loads((Path(__file__).parent / "config" / "stop_words.json").read_text(encoding="utf-8")))
@@ -3777,29 +3765,6 @@ Sitemap: {SITE_URL}/sitemap.xml
     duration = time.time() - start_time
     duration_ms = int(duration * 1000)
     print(f"Generation complete. Total pages: {total} ({duration:.2f}s)")
-
-    # ── Mem0: Log deployment ──
-    if MEM0_AVAILABLE:
-        try:
-            commit_hash = subprocess.check_output(
-                ["git", "rev-parse", "HEAD"], cwd=str(PROJECT_ROOT), text=True, timeout=30
-            ).strip()[:8]
-            branch = subprocess.check_output(
-                ["git", "rev-parse", "--abbrev-ref", "HEAD"],
-                cwd=str(PROJECT_ROOT),
-                text=True,
-                timeout=30,
-            ).strip()
-            log_deployment(
-                commit_hash=commit_hash,
-                branch=branch,
-                status="success",
-                pages_generated=total,
-                build_duration_ms=duration_ms,
-            )
-            print(f"  mem0: logged deployment {commit_hash}")
-        except (OSError, ValueError) as e:
-            print(f"  mem0: logging failed ({e})")
 
     # ── Build metrics (build-meta.json) ──
     sqi_values = []
