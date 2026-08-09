@@ -2845,6 +2845,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                 _has_lp = _concept.id in _lp_journeys if _lp_journeys else False
                 _has_lp_ctx = len(_lp_ctx) > 0
                 _dag = build_concept_dag(ontology, _concept.id)
+                _dag_mini = build_concept_dag(ontology, _concept.id, depth=1)
                 concept_html = render_template(
                     "concept_detail.j2",
                     content=_dummy(
@@ -2888,6 +2889,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                     prerequisites=_prereqs,
                     dependents=_deps,
                     concept_dag=_dag,
+                    dag_mini=_dag_mini,
                     page_path=f"concepts/{_concept.id}/",
                     **ctx_base,
                 )

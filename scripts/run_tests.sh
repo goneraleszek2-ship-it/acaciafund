@@ -102,6 +102,7 @@ JS_TESTS=(
     "tests/test_pillar_rail.js"
     "tests/test_study_dashboard.js"
     "tests/test_learning_hub.js"
+    "tests/test_concept_tabs.js"
 )
 
 echo "=========================================

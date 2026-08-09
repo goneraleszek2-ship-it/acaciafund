@@ -212,13 +212,15 @@ def build_concept_dag(
     node_by_id[concept_id] = center
 
     columns = ["up2", "up1", "center", "down1", "down2"]
+    used_columns = [k for k in columns if k == "center" or k in layer_map]
+    col_pos = {key: col for col, key in enumerate(used_columns)}
     column_heights: Dict[str, int] = {}
     for key, ids in layer_map.items():
         column_heights[key] = len(ids)
     column_heights["center"] = 1
 
     nodes: List[Dict] = []
-    for col, key in enumerate(columns):
+    for key in used_columns:
         ids = layer_map.get(key, [])
         if key == "center":
             ids = [concept_id]
@@ -226,7 +228,7 @@ def build_concept_dag(
         for row, nid in enumerate(ids):
             node = dict(node_by_id[nid])
             total_h = count * DAG_NODE_H + (count - 1) * DAG_GAP_Y
-            node["x"] = DAG_PAD + col * (DAG_NODE_W + DAG_GAP_X)
+            node["x"] = DAG_PAD + col_pos[key] * (DAG_NODE_W + DAG_GAP_X)
             node["y"] = DAG_PAD + (DAG_PAD - total_h) // 2 + row * (DAG_NODE_H + DAG_GAP_Y)
             node["w"] = DAG_NODE_W
             node["h"] = DAG_NODE_H
@@ -234,9 +236,9 @@ def build_concept_dag(
 
     edges: List[Dict] = []
     pos_by_id = {n["id"]: n for n in nodes}
-    for col, key in enumerate(columns):
+    for col, key in enumerate(used_columns):
         ids = layer_map.get(key, [])
-        next_key = columns[col + 1] if col + 1 < len(columns) else None
+        next_key = used_columns[col + 1] if col + 1 < len(used_columns) else None
         if not next_key:
             continue
         next_ids = layer_map.get(next_key, [])
@@ -264,7 +266,7 @@ def build_concept_dag(
     height = DAG_PAD * 2 + max(column_heights.values()) * (DAG_NODE_H + DAG_GAP_Y) - DAG_GAP_Y
     if height < DAG_PAD * 2 + DAG_NODE_H:
         height = DAG_PAD * 2 + DAG_NODE_H
-    width = DAG_PAD * 2 + len(columns) * DAG_NODE_W + (len(columns) - 1) * DAG_GAP_X
+    width = DAG_PAD * 2 + len(used_columns) * DAG_NODE_W + (len(used_columns) - 1) * DAG_GAP_X
 
     return {
         "concept_id": concept_id,

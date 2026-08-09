@@ -9,219 +9,255 @@
 {%- set diff_label = "Beginner-friendly" if diff <= 2 else ("Intermediate" if diff == 3 else "Advanced") %}
 {%- set diff_class = "beginner" if diff <= 2 else ("intermediate" if diff == 3 else "advanced") %}
 
-<nav aria-label="Breadcrumb" class="mb-4 text-xs text-muted">
-  <ol class="flex flex-wrap items-center gap-1.5">
-    <li><a href="/" class="hover-accent transition">Home</a></li>
-    <li aria-hidden="true">/</li>
-    <li><a href="/{{ pillar_url }}/" class="hover-accent transition">{{ pillar_label }}</a></li>
-    <li aria-hidden="true">/</li>
-    <li aria-current="page">{{ concept.label }}</li>
-  </ol>
-</nav>
+{# ── Hero (spec §4.5): name + ELI5 + Graph Mini ── #}
+<div class="concept-hero" style="background:linear-gradient(135deg, {{ pillar_color }}14, transparent 65%)">
+  <nav aria-label="Breadcrumb" class="mb-4 text-xs text-muted">
+    <ol class="flex flex-wrap items-center gap-1.5">
+      <li><a href="/" class="hover-accent transition">Home</a></li>
+      <li aria-hidden="true">/</li>
+      <li><a href="/{{ pillar_url }}/" class="hover-accent transition">{{ pillar_label }}</a></li>
+      <li aria-hidden="true">/</li>
+      <li aria-current="page">{{ concept.label }}</li>
+    </ol>
+  </nav>
 
-<header class="mb-6">
-  <div class="flex items-center gap-2 mb-3 flex-wrap">
-    <span class="pillar-pill" style="background:color-mix(in srgb, {{ pillar_color }} 15%, transparent);color:{{ pillar_color }}">{{ pillar_label }}</span>
-    {%- if concept.category %}
-    <span class="inline-block text-xs px-2 py-0.5 rounded bg-surface border-muted text-secondary">{{ concept.category | replace('-', ' ') | title }}</span>
+  <header class="mb-4">
+    <div class="flex items-center gap-2 mb-3 flex-wrap">
+      <span class="pillar-pill" style="background:color-mix(in srgb, {{ pillar_color }} 15%, transparent);color:{{ pillar_color }}">{{ pillar_label }}</span>
+      {%- if concept.category %}
+      <span class="inline-block text-xs px-2 py-0.5 rounded bg-surface border-muted text-secondary">{{ concept.category | replace('-', ' ') | title }}</span>
+      {%- endif %}
+      <span class="difficulty-badge {{ diff_class }}">{{ diff_label }}</span>
+      <span class="meta-badge">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        ~{{ (concept.description | default('') | wordcount / 200 + 1) | round(0) | int }} min read
+      </span>
+    </div>
+    <h1 class="text-3xl font-extrabold text-default">{{ concept.label }}</h1>
+    {%- if concept.aliases and concept.aliases | length > 1 %}
+    <div class="mt-2 flex flex-wrap gap-1.5">
+      {%- for alias in concept.aliases[:6] %}
+      <span class="alias-tag">{{ alias }}</span>
+      {%- endfor %}
+    </div>
     {%- endif %}
-    <span class="difficulty-badge {{ diff_class }}">{{ diff_label }}</span>
-    <span class="meta-badge">
-      <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-      ~{{ (concept.description | default('') | wordcount / 200 + 1) | round(0) | int }} min read
-    </span>
+  </header>
+
+  <div class="nutshell-box" data-article-slug="{{ concept.id }}">
+    <div class="nutshell-label">In a Nutshell</div>
+    <p>{{ concept.eli5_explanation or concept.description or "No simple explanation yet." }}</p>
   </div>
-  <h1 class="text-3xl font-extrabold text-default">{{ concept.label }}</h1>
-  {%- if concept.aliases and concept.aliases | length > 1 %}
-  <div class="mt-2 flex flex-wrap gap-1.5">
-    {%- for alias in concept.aliases[:6] %}
-    <span class="alias-tag">{{ alias }}</span>
-    {%- endfor %}
+
+  {%- if dag_mini and dag_mini.nodes | length > 0 %}
+  <div class="hero-graph">
+    {%- with concept_dag = dag_mini %}
+    {%- include 'partials/concept_dag.j2' %}
+    {%- endwith %}
   </div>
   {%- endif %}
-</header>
-
-<div class="nutshell-box" data-article-slug="{{ concept.id }}">
-  <div class="nutshell-label">In a Nutshell</div>
-  <p>{{ concept.eli5_explanation or concept.description or "No simple explanation yet." }}</p>
-</div>
-
-<div class="mb-4 flex items-center gap-2" data-concept-progress="{{ concept.id }}">
-  <span class="text-xs text-muted">Mastery</span>
-  <div class="mastery-bar flex-1 max-w-[200px]">
-    <div class="mastery-bar-fill low" style="width:0%"></div>
-  </div>
-  <span class="text-xs text-muted"><span class="mastery-pct">0</span>%</span>
-</div>
-
-<button id="deep-dive-toggle" class="deep-dive-toggle" aria-expanded="false">
-  <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
-  Show philosophical foundations
-</button>
-<div id="deep-dive-content" style="display:none">
-  <div class="flex items-center gap-2 mb-4">
-    {% include 'partials/epistemic_badge.j2' %}
-    {%- if concept.normative_basis %}
-    {% include 'partials/normative_basis.j2' %}
-    {%- endif %}
-  </div>
-  {% include 'partials/philosophical_lineage.j2' %}
-  {% include 'partials/cross_pillar_philosophy.j2' %}
 </div>
 
 <div class="grid gap-8 lg:grid-cols-3">
-  <div class="lg:col-span-2">
-    {% include 'partials/feynman_card.j2' %}
-
-    {# --- Learning path flow for ALL concepts --- #}
-    {%- if learning_paths and learning_paths | length > 0 %}
-    <section class="mb-8">
-      <h2 class="text-lg font-semibold mb-4 text-default">Learning Path</h2>
-      {%- for lp in learning_paths[:3] %}
-      <div class="ghost-card p-3 mb-3">
-        <div class="flex items-center justify-between mb-2">
-          <a href="/learning-paths/{{ lp.journey_id }}/" class="text-xs font-semibold no-underline text-accent hover:opacity-80 transition">{{ lp.journey_label }}</a>
-          <span class="text-xs text-muted">Step {{ lp.position + 1 }} of {{ lp.total_in_path }}</span>
-        </div>
-        <div class="flex items-center gap-1 overflow-x-auto pb-1">
-          {%- if lp.prev_id %}
-          <a href="/concepts/{{ lp.prev_id }}/" class="badge-outline">{{ lp.prev_label }}</a>
-          <span class="text-xs text-muted">&rarr;</span>
-          {%- endif %}
-          <span class="badge-pill" style="background:color-mix(in srgb, {{ pillar_color }} 15%, transparent);color:{{ pillar_color }};border:1px solid {{ pillar_color }}">{{ concept.label }}</span>
-          {%- if lp.next_id %}
-          <span class="text-xs text-muted">&rarr;</span>
-          <a href="/concepts/{{ lp.next_id }}/" class="badge-outline">{{ lp.next_label }}</a>
-          {%- endif %}
-        </div>
-      </div>
-      {%- endfor %}
-
-      {# Prev / Next navigation buttons #}
-      {%- set first_lp = learning_paths[0] %}
-      <div class="flex items-center justify-between gap-2">
-        {%- if first_lp.prev_id %}
-        <a href="/concepts/{{ first_lp.prev_id }}/" class="btn-ghost-sm">
-          <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-          {{ first_lp.prev_label }}
-        </a>
-        {%- else %}
-        <div></div>
-        {%- endif %}
-        {%- if first_lp.next_id %}
-        <a href="/concepts/{{ first_lp.next_id }}/" class="btn-ghost-sm">
-          {{ first_lp.next_label }}
-          <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-        </a>
-        {%- else %}
-        <div></div>
-        {%- endif %}
-      </div>
-    </section>
-    {%- endif %}
-
-    {# --- Related Content with quality badges --- #}
-    <section class="mb-8">
-      <h2 class="text-lg font-semibold mb-4 text-default">Related Content</h2>
-    {%- if related_items and related_items | length > 0 %}
-    {%- set best = related_items[0] %}
-    {%- set best_pc = pillar_config.get(best.pillar or 'aml', pillar_config['aml']) %}
-    <div class="best-match-box" style="background:color-mix(in srgb, {{ pillar_color }} 8%, transparent);border:1px solid color-mix(in srgb, {{ pillar_color }} 25%, transparent)">
-      <div class="flex items-center gap-2 mb-2">
-        <span class="text-xs font-bold uppercase tracking-wider" style="color:{{ pillar_color }}">Best Match</span>
-        <span class="text-xs px-1.5 py-0.5 rounded" style="background:color-mix(in srgb, {{ pillar_color }} 15%, transparent);color:{{ pillar_color }}">{{ (best.score * 100) | round(0) }}%</span>
-      </div>
-      <a href="{{ slug_to_url(best.slug) }}" class="block no-underline text-default">
-        <h3 class="text-sm font-bold">{{ best.title | striptags }}</h3>
-        <p class="text-xs mt-1 line-clamp-2 text-secondary">{{ best.description }}</p>
-        <div class="flex items-center gap-2 mt-1.5 text-xs text-muted">
-          <span class="pillar-pill-sm" style="background:color-mix(in srgb, {{ best_pc.color | default('#6366f1') }} 15%, transparent);color:{{ best_pc.color | default('#6366f1') }}">{{ best_pc.label | default(best.pillar) }}</span>
-          <span>{{ best.content_type | capitalize }}</span>
-        </div>
-      </a>
+  <div class="lg:col-span-2" data-tabs>
+    <div class="tab-bar" role="tablist" aria-label="Concept sections">
+      <button class="tab-btn is-active" role="tab" aria-selected="true" data-tab="overview">Overview</button>
+      <button class="tab-btn" role="tab" aria-selected="false" tabindex="-1" data-tab="articles">Articles</button>
+      <button class="tab-btn" role="tab" aria-selected="false" tabindex="-1" data-tab="prerequisites">Prerequisites</button>
+      <button class="tab-btn" role="tab" aria-selected="false" tabindex="-1" data-tab="advanced">Advanced</button>
     </div>
 
-    {%- if related_items | length > 1 %}
-    <details class="ghost-card p-3" {% if related_items | length > 2 %}open{% endif %}>
-      <summary class="text-xs font-semibold cursor-pointer text-muted">All {{ related_items | length }} items</summary>
-      <div class="grid gap-3 mt-3 sm:grid-cols-2">
-        {%- for item in related_items[1:] %}
-        {%- set item_pillar = item.pillar or "aml" %}
-        {%- set pc = pillar_config.get(item_pillar, pillar_config["aml"]) %}
-        <a href="{{ slug_to_url(item.slug) }}" class="pillar-card ghost-card p-3 block transition text-decoration-none">
-          <div class="flex items-start gap-2">
-            <div class="shrink-0 mt-0.5">
-              <span class="pillar-pill-sm" style="background:color-mix(in srgb, {{ pc.color | default('#6366f1') }} 15%, transparent);color:{{ pc.color | default('#6366f1') }}">{{ pc.label | default(item_pillar) }}</span>
-            </div>
-            <div class="flex-1 min-w-0">
-              <h3 class="text-xs font-semibold truncate text-default">{{ item.title | striptags }}</h3>
-              <p class="mt-0.5 text-xs line-clamp-2 text-secondary">{{ item.description }}</p>
-              <div class="mt-1 flex items-center gap-2 text-xs text-muted">
-                <span>{{ item.content_type | capitalize }}</span>
-                {%- if item.score %}
-                <span class="font-semibold text-accent">{{ (item.score * 100) | round(0) }}%</span>
-                {%- endif %}
-                {%- if item.sqi %}
-                <span class="sqi-badge" style="background:color-mix(in srgb, {% if item.sqi >= 0.8 %}#22c55e{% elif item.sqi >= 0.5 %}#f59e0b{% else %}#ef4444{% endif %} 10%, transparent);color:{% if item.sqi >= 0.8 %}#22c55e{% elif item.sqi >= 0.5 %}#f59e0b{% else %}#ef4444{% endif %}">SQI {{ (item.sqi * 100) | round(0) }}</span>
-                {%- endif %}
-              </div>
-            </div>
-          </div>
-        </a>
+    {# ── Overview tab ── #}
+    <section class="tab-panel is-active" data-tabpanel="overview" role="tabpanel" aria-label="Overview">
+      {% include 'partials/feynman_card.j2' %}
+    </section>
+
+    {# ── Articles tab (filtered by content type) ── #}
+    <section class="tab-panel" data-tabpanel="articles" role="tabpanel" aria-label="Articles">
+      {%- if related_items and related_items | length > 0 %}
+      <div class="chip-bar" data-filter-bar>
+        <button class="chip-btn is-active" data-filter="all" type="button">All ({{ related_items | length }})</button>
+        {%- for t in ['research', 'learn', 'knowledge'] %}
+        {%- set count = related_items | selectattr('content_type', 'equalto', t) | list | length %}
+        {%- if count > 0 %}
+        <button class="chip-btn" data-filter="{{ t }}" type="button">{{ t | capitalize }} ({{ count }})</button>
+        {%- endif %}
         {%- endfor %}
       </div>
-    </details>
-    {%- endif %}
-    {%- else %}
-    <p class="text-sm ghost-card p-4 text-muted">No content references this concept yet.</p>
-    {%- endif %}
-  </section>
-</div>
 
-<div class="space-y-6">
-  {%- include 'partials/concept_map.j2' %}
+      {%- set best = related_items[0] %}
+      {%- set best_pc = pillar_config.get(best.pillar or 'aml', pillar_config['aml']) %}
+      <div class="best-match-box" data-filter-item data-content-type="{{ best.content_type }}" style="background:color-mix(in srgb, {{ pillar_color }} 8%, transparent);border:1px solid color-mix(in srgb, {{ pillar_color }} 25%, transparent)">
+        <div class="flex items-center gap-2 mb-2">
+          <span class="text-xs font-bold uppercase tracking-wider" style="color:{{ pillar_color }}">Best Match</span>
+          <span class="text-xs px-1.5 py-0.5 rounded" style="background:color-mix(in srgb, {{ pillar_color }} 15%, transparent);color:{{ pillar_color }}">{{ (best.score * 100) | round(0) }}%</span>
+        </div>
+        <a href="{{ slug_to_url(best.slug) }}" class="block no-underline text-default">
+          <h3 class="text-sm font-bold">{{ best.title | striptags }}</h3>
+          <p class="text-xs mt-1 line-clamp-2 text-secondary">{{ best.description }}</p>
+          <div class="flex items-center gap-2 mt-1.5 text-xs text-muted">
+            <span class="pillar-pill-sm" style="background:color-mix(in srgb, {{ best_pc.color | default('#6366f1') }} 15%, transparent);color:{{ best_pc.color | default('#6366f1') }}">{{ best_pc.label | default(best.pillar) }}</span>
+            <span>{{ best.content_type | capitalize }}</span>
+          </div>
+        </a>
+      </div>
 
-  {%- include 'partials/concept_dag.j2' %}
+      {%- if related_items | length > 1 %}
+      <details class="ghost-card p-3" {% if related_items | length > 2 %}open{% endif %}>
+        <summary class="text-xs font-semibold cursor-pointer text-muted">All {{ related_items | length }} items</summary>
+        <div class="grid gap-3 mt-3 sm:grid-cols-2">
+          {%- for item in related_items[1:] %}
+          {%- set item_pillar = item.pillar or "aml" %}
+          {%- set pc = pillar_config.get(item_pillar, pillar_config["aml"]) %}
+          <a href="{{ slug_to_url(item.slug) }}" class="pillar-card ghost-card p-3 block transition text-decoration-none" data-filter-item data-content-type="{{ item.content_type }}">
+            <div class="flex items-start gap-2">
+              <div class="shrink-0 mt-0.5">
+                <span class="pillar-pill-sm" style="background:color-mix(in srgb, {{ pc.color | default('#6366f1') }} 15%, transparent);color:{{ pc.color | default('#6366f1') }}">{{ pc.label | default(item_pillar) }}</span>
+              </div>
+              <div class="flex-1 min-w-0">
+                <h3 class="text-xs font-semibold truncate text-default">{{ item.title | striptags }}</h3>
+                <p class="mt-0.5 text-xs line-clamp-2 text-secondary">{{ item.description }}</p>
+                <div class="mt-1 flex items-center gap-2 text-xs text-muted">
+                  <span>{{ item.content_type | capitalize }}</span>
+                  {%- if item.score %}
+                  <span class="font-semibold text-accent">{{ (item.score * 100) | round(0) }}%</span>
+                  {%- endif %}
+                  {%- if item.sqi %}
+                  <span class="sqi-badge" style="background:color-mix(in srgb, {% if item.sqi >= 0.8 %}#22c55e{% elif item.sqi >= 0.5 %}#f59e0b{% else %}#ef4444{% endif %} 10%, transparent);color:{% if item.sqi >= 0.8 %}#22c55e{% elif item.sqi >= 0.5 %}#f59e0b{% else %}#ef4444{% endif %}">SQI {{ (item.sqi * 100) | round(0) }}</span>
+                  {%- endif %}
+                </div>
+              </div>
+            </div>
+          </a>
+          {%- endfor %}
+        </div>
+      </details>
+      {%- endif %}
+      {%- else %}
+      <p class="text-sm ghost-card p-4 text-muted">No content references this concept yet.</p>
+      {%- endif %}
+    </section>
+    <section class="tab-panel" data-tabpanel="prerequisites" role="tabpanel" aria-label="Prerequisites">
+      {%- include 'partials/concept_dag.j2' %}
 
-  {# --- Primary action: what to do next --- #}
-  <section>
-    {%- set concept_pillar = concept.pillar or "aml" %}
-    {%- set concept_pillar_url = pillar_config.get(concept_pillar, {}).get('url', concept_pillar) %}
-    {%- if has_lp_ctx %}
-    <a href="/learning-paths/{{ learning_paths[0].journey_id }}/" class="ghost-card p-3 block transition text-decoration-none hover:shadow-sm border-accent">
-      <span class="text-sm font-semibold text-accent">Full Learning Path &rarr;</span>
-      <span class="block text-xs text-muted mt-0.5">Follow this concept through the complete learning journey</span>
-    </a>
-    {%- elif has_learning_path %}
-    <a href="/{{ concept_pillar_url }}/learn/{{ concept.id }}/" class="ghost-card p-3 block transition text-decoration-none hover:shadow-sm border-accent">
-      <span class="text-sm font-semibold text-accent">Start Learning &rarr;</span>
-      <span class="block text-xs text-muted mt-0.5">Explore this concept with interactive lessons</span>
-    </a>
-    {%- else %}
-    <a href="/graph/" class="ghost-card p-3 block transition text-decoration-none hover:shadow-sm">
-      <span class="text-sm font-semibold text-default">Explore Connections</span>
-      <span class="block text-xs text-muted mt-0.5">See how this concept relates to others</span>
-    </a>
-    {%- endif %}
-  </section>
+      {# --- Learning path flow for ALL concepts --- #}
+      {%- if learning_paths and learning_paths | length > 0 %}
+      <section class="mt-8">
+        <h2 class="text-lg font-semibold mb-4 text-default">Learning Path</h2>
+        {%- for lp in learning_paths[:3] %}
+        <div class="ghost-card p-3 mb-3">
+          <div class="flex items-center justify-between mb-2">
+            <a href="/learning-paths/{{ lp.journey_id }}/" class="text-xs font-semibold no-underline text-accent hover:opacity-80 transition">{{ lp.journey_label }}</a>
+            <span class="text-xs text-muted">Step {{ lp.position + 1 }} of {{ lp.total_in_path }}</span>
+          </div>
+          <div class="flex items-center gap-1 overflow-x-auto pb-1">
+            {%- if lp.prev_id %}
+            <a href="/concepts/{{ lp.prev_id }}/" class="badge-outline">{{ lp.prev_label }}</a>
+            <span class="text-xs text-muted">&rarr;</span>
+            {%- endif %}
+            <span class="badge-pill" style="background:color-mix(in srgb, {{ pillar_color }} 15%, transparent);color:{{ pillar_color }};border:1px solid {{ pillar_color }}">{{ concept.label }}</span>
+            {%- if lp.next_id %}
+            <span class="text-xs text-muted">&rarr;</span>
+            <a href="/concepts/{{ lp.next_id }}/" class="badge-outline">{{ lp.next_label }}</a>
+            {%- endif %}
+          </div>
+        </div>
+        {%- endfor %}
 
-  {# --- Concept next-actions (Phase 5) --- #}
-  <section>
-    <h3 class="text-sm font-semibold mb-3 text-default">Next actions</h3>
-    <div data-concept-actions data-concept-id="{{ concept.id }}" data-concept-label="{{ concept.label }}" data-concept-pillar="{{ concept.pillar | default('aml') }}"></div>
-  </section>
+        {# Prev / Next navigation buttons #}
+        {%- set first_lp = learning_paths[0] %}
+        <div class="flex items-center justify-between gap-2">
+          {%- if first_lp.prev_id %}
+          <a href="/concepts/{{ first_lp.prev_id }}/" class="btn-ghost-sm">
+            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+            {{ first_lp.prev_label }}
+          </a>
+          {%- else %}
+          <div></div>
+          {%- endif %}
+          {%- if first_lp.next_id %}
+          <a href="/concepts/{{ first_lp.next_id }}/" class="btn-ghost-sm">
+            {{ first_lp.next_label }}
+            <svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </a>
+          {%- else %}
+          <div></div>
+          {%- endif %}
+        </div>
+      </section>
+      {%- endif %}
+    </section>
 
-  <div class="flex items-center gap-2" data-feedback="{{ concept.id }}">
-    <span class="text-xs text-muted">Was this helpful?</span>
-    <button class="feedback-btn" data-value="yes">
-      <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.500 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"/></svg>
-    </button>
-    <button class="feedback-btn" data-value="no">
-      <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.500 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5"/></svg>
-    </button>
+    {# ── Advanced tab: philosophy + next actions ── #}
+    <section class="tab-panel" data-tabpanel="advanced" role="tabpanel" aria-label="Advanced">
+      <button id="deep-dive-toggle" class="deep-dive-toggle" aria-expanded="false">
+        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+        Show philosophical foundations
+      </button>
+      <div id="deep-dive-content" style="display:none">
+        <div class="flex items-center gap-2 mb-4">
+          {% include 'partials/epistemic_badge.j2' %}
+          {%- if concept.normative_basis %}
+          {% include 'partials/normative_basis.j2' %}
+          {%- endif %}
+        </div>
+        {% include 'partials/philosophical_lineage.j2' %}
+        {% include 'partials/cross_pillar_philosophy.j2' %}
+      </div>
+
+      <div class="mt-6">
+        <h3 class="text-sm font-semibold mb-3 text-default">Next actions</h3>
+        <div data-concept-actions data-concept-id="{{ concept.id }}" data-concept-label="{{ concept.label }}" data-concept-pillar="{{ concept.pillar | default('aml') }}"></div>
+      </div>
+    </section>
   </div>
+
+  {# ── Right rail (spec §4.5): mastery, related concepts, CTA ── #}
+  <aside class="space-y-6">
+    <div class="mb-4 flex items-center gap-2" data-concept-progress="{{ concept.id }}">
+      <span class="text-xs text-muted">Mastery</span>
+      <div class="mastery-bar flex-1 max-w-[200px]">
+        <div class="mastery-bar-fill low" style="width:0%"></div>
+      </div>
+      <span class="text-xs text-muted"><span class="mastery-pct">0</span>%</span>
+    </div>
+
+    {%- include 'partials/concept_map.j2' %}
+
+    {# --- Primary action: what to do next --- #}
+    <section>
+      {%- set concept_pillar = concept.pillar or "aml" %}
+      {%- set concept_pillar_url = pillar_config.get(concept_pillar, {}).get('url', concept_pillar) %}
+      {%- if has_lp_ctx %}
+      <a href="/learning-paths/{{ learning_paths[0].journey_id }}/" class="ghost-card p-3 block transition text-decoration-none hover:shadow-sm border-accent">
+        <span class="text-sm font-semibold text-accent">Full Learning Path &rarr;</span>
+        <span class="block text-xs text-muted mt-0.5">Follow this concept through the complete learning journey</span>
+      </a>
+      {%- elif has_learning_path %}
+      <a href="/{{ concept_pillar_url }}/learn/{{ concept.id }}/" class="ghost-card p-3 block transition text-decoration-none hover:shadow-sm border-accent">
+        <span class="text-sm font-semibold text-accent">Start Learning &rarr;</span>
+        <span class="block text-xs text-muted mt-0.5">Explore this concept with interactive lessons</span>
+      </a>
+      {%- else %}
+      <a href="/graph/" class="ghost-card p-3 block transition text-decoration-none hover:shadow-sm">
+        <span class="text-sm font-semibold text-default">Explore Connections</span>
+        <span class="block text-xs text-muted mt-0.5">See how this concept relates to others</span>
+      </a>
+      {%- endif %}
+    </section>
+
+    <div class="flex items-center gap-2" data-feedback="{{ concept.id }}">
+      <span class="text-xs text-muted">Was this helpful?</span>
+      <button class="feedback-btn" data-value="yes">
+        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.500 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"/></svg>
+      </button>
+      <button class="feedback-btn" data-value="no">
+        <svg width="14" height="14" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14H5.236a2 2 0 01-1.789-2.894l3.5-7A2 2 0 018.736 3h4.018a2 2 0 01.485.06l3.76.94m-7 10v5a2 2 0 002 2h.096c.500 0 .905-.405.905-.904 0-.715.211-1.413.608-2.008L17 13V4m-7 10h2m5-10h2a2 2 0 012 2v6a2 2 0 01-2 2h-2.5"/></svg>
+      </button>
+    </div>
+  </aside>
 </div>
-</div>
+
+<script src="{{ 'js/concept_tabs.js' | asset }}" defer></script>
 
 {% include 'partials/newsletter.html' %}
 {% endblock %}

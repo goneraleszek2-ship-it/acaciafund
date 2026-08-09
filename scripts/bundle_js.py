@@ -47,6 +47,9 @@ BUNDLES = {
     "study_dashboard.js": [
         "study_dashboard.js",
     ],
+    "concept_tabs.js": [
+        "concept_tabs.js",
+    ],
 }
 
 
