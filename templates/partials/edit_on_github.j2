@@ -1,0 +1,9 @@
+{#- Edit-on-GitHub link molecule (Tier 6.1) -#}
+{%- if content.edit_link %}
+<p class="edit-on-github text-xs mt-2">
+  <a href="{{ content.edit_link.url }}" target="_blank" rel="noopener noreferrer" style="color:var(--color-text-muted);text-decoration:underline;text-underline-offset:2px">
+    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="vertical-align:-1px;margin-right:4px"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+    Edit on GitHub — {{ content.edit_link.path }}
+  </a>
+</p>
+{%- endif -%}

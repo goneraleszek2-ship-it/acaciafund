@@ -699,6 +699,26 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     except Exception as _note_err:
         print(f"  editor notes: skipped ({_note_err})")
 
+    # Structured extraction: key-variable tables + PRISMA trails (Tier 5.2).
+    try:
+        from core.extraction import attach_extraction
+
+        _extracted = attach_extraction(all_content)
+        if _extracted:
+            print(f"  extraction: attached to {_extracted} items")
+    except Exception as _extract_err:
+        print(f"  extraction: skipped ({_extract_err})")
+
+    # Edit-on-GitHub links (Tier 6.1): content file or registry line anchor.
+    try:
+        from core.edit_links import attach_edit_links
+
+        _links = attach_edit_links(all_content)
+        if _links:
+            print(f"  edit links: attached to {_links} items")
+    except Exception as _link_err:
+        print(f"  edit links: skipped ({_link_err})")
+
     # Sandbox exercises (Tier 4): SQL / Polars / compliance sims by slug.
     try:
         from core.exercises import attach_exercises as _attach_exercises
@@ -2705,6 +2725,19 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     )
     print(f"  diagnostic: diagnostic/index.html ({len(DIAGNOSTIC_QUESTIONS)} questions)")
 
+    # --- Public design-system gallery (Task 6.2) ---
+    design_dir = OUTPUT_DIR / "design-system"
+    design_dir.mkdir(parents=True, exist_ok=True)
+    design_html = render_template(
+        "design_system.j2",
+        content=_dummy("Design System — AcaciaFund", "index", description="Live Atomic Design component library: atoms, molecules, organisms."),
+        page_path="design-system/",
+        page_title="Design System",
+        **ctx_base,
+    )
+    (design_dir / "index.html").write_text(design_html, encoding="utf-8")
+    print("  design-system: design-system/index.html (live component gallery)")
+
     # --- Cross-pillar journeys (Task 3.3) ---
     from core.journeys import build_journey_pages, build_journeys_index
     journeys_dir = OUTPUT_DIR / "journeys"
@@ -3617,6 +3650,9 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     # Alpha index (A-Z browser)
     sm.append(
         f"  <url><loc>{SITE_URL}/letters/</loc><lastmod>{today}</lastmod><changefreq>weekly</changefreq><priority>0.6</priority></url>"
+    )
+    sm.append(
+        f"  <url><loc>{SITE_URL}/design-system/</loc><lastmod>{today}</lastmod><changefreq>monthly</changefreq><priority>0.3</priority></url>"
     )
     import string as _string
     for _letter in list(_string.ascii_lowercase) + ["digit"]:

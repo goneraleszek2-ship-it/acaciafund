@@ -77,6 +77,10 @@ class Content:
     freshness_status: str = "fresh"
     provenance: str = "curated"
     editor_note: Optional[Dict[str, Any]] = None
+    cited_by_count: Optional[int] = None
+    openalex_id: Optional[str] = None
+    extraction_data: Optional[Dict[str, Any]] = None
+    edit_link: Optional[Dict[str, Any]] = None
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "Content":
@@ -145,4 +149,12 @@ class Content:
             flashcards=data.get("flashcards", []),
             technologies=data.get("technologies", []),
             use_cases=data.get("use_cases", []),
+            currency_tier=data.get("currency_tier", "timeless"),
+            freshness_status=data.get("freshness_status", "fresh"),
+            provenance=data.get("provenance", "curated"),
+            editor_note=data.get("editor_note"),
+            cited_by_count=data.get("cited_by_count"),
+            openalex_id=data.get("openalex_id"),
+            extraction_data=data.get("extraction_data"),
+            edit_link=data.get("edit_link"),
         )

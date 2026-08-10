@@ -22,6 +22,9 @@ class ContentItem(BaseModel):
     enriched: bool = False
     enriched_at: Optional[str] = None
     citations: Optional[List[str]] = None
+    cited_by_count: Optional[int] = Field(None, ge=0)
+    openalex_id: Optional[str] = None
+    openalex_not_found: bool = False
 
     # MathWorld-inspired fields
     contributors: Optional[List[dict]] = None

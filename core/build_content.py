@@ -447,6 +447,17 @@ def _build_jsonld(item: Any, site_url: str, page_path: str = "") -> dict[str, An
     if sources:
         schema["citation"] = sources
 
+    cited = getattr(item, "cited_by_count", None)
+    if isinstance(cited, int) and cited > 0:
+        schema["citedByCount"] = cited
+        oa_id = getattr(item, "openalex_id", None)
+        citation_entry = {"@type": "CreativeWork", "name": "OpenAlex", "citedByCount": cited}
+        if oa_id:
+            citation_entry["url"] = oa_id
+        if "citation" not in schema or not isinstance(schema["citation"], list):
+            schema["citation"] = []
+        schema["citation"].append(citation_entry)
+
     enriched = getattr(item, "enriched", False)
     if enriched:
         schema["semanticEnrichment"] = "completed"

@@ -39,6 +39,11 @@ ER  -
     {%- if cite_doi %}
     <a href="https://doi.org/{{ cite_doi }}" target="_blank" rel="noopener noreferrer" class="text-xs" style="color:var(--color-accent)">DOI: {{ cite_doi }} &nearr;</a>
     {%- endif %}
+    {%- if content.cited_by_count is defined and content.cited_by_count %}
+    <a href="{{ content.openalex_id if content.openalex_id else 'https://openalex.org/works?filter=doi:' ~ cite_doi }}" target="_blank" rel="noopener noreferrer" class="text-xs" style="color:var(--color-accent)">Cited by {{ content.cited_by_count }} on OpenAlex &nearr;</a>
+    {%- elif content.openalex_id %}
+    <a href="{{ content.openalex_id }}" target="_blank" rel="noopener noreferrer" class="text-xs" style="color:var(--color-text-muted)">View on OpenAlex &nearr;</a>
+    {%- endif %}
     <button type="button" class="cite-copy-btn text-xs px-2 py-1 rounded" data-cite-type="bibtex" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);cursor:pointer">Copy BibTeX</button>
     <button type="button" class="cite-copy-btn text-xs px-2 py-1 rounded" data-cite-type="ris" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent);border:1px solid color-mix(in srgb, var(--color-accent) 25%, transparent);cursor:pointer">Copy RIS</button>
   </div>

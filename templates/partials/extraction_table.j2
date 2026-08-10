@@ -1,0 +1,48 @@
+{#- Structured extraction: key-variable table + PRISMA-style trail -#}
+{%- if content.extraction_data and (content.extraction_data.key_variables or content.extraction_data.prisma) -%}
+{%- set kv = content.extraction_data.key_variables | default([]) -%}
+{%- set prisma = content.extraction_data.prisma | default({}) -%}
+<section class="extraction-table mt-8 rounded-lg overflow-hidden" style="border:1px solid color-mix(in srgb, var(--color-accent) 20%, transparent)">
+  <h2 class="text-xl font-bold px-4 py-3 m-0" style="background:color-mix(in srgb, var(--color-accent) 8%, transparent)">Extracted Variables</h2>
+  <div class="p-4 text-sm space-y-4">
+    {%- if kv %}
+    <table class="w-full text-left border-collapse">
+      <thead>
+        <tr style="color:var(--color-text-muted)">
+          <th class="py-1 pr-3 font-semibold">Variable</th>
+          <th class="py-1 pr-3 font-semibold">Value</th>
+          <th class="py-1 font-semibold">Supporting passage</th>
+        </tr>
+      </thead>
+      <tbody>
+        {%- for v in kv %}
+        <tr style="border-top:1px solid color-mix(in srgb, var(--color-text-muted) 12%, transparent)">
+          <td class="py-2 pr-3 align-top font-medium">{{ v.name }}</td>
+          <td class="py-2 pr-3 align-top whitespace-nowrap" style="color:var(--color-accent)"><code>{{ v.value }}</code></td>
+          <td class="py-2 align-top" style="color:var(--color-text-muted)">{{ v.evidence }}</td>
+        </tr>
+        {%- endfor %}
+      </tbody>
+    </table>
+    {%- else %}
+    <p style="color:var(--color-text-muted)">No quantitative variables detected.</p>
+    {%- endif %}
+
+    {%- if prisma %}
+    <div class="pt-3" style="border-top:1px solid color-mix(in srgb, var(--color-text-muted) 12%, transparent)">
+      <h3 class="text-sm font-semibold uppercase tracking-wide mb-2" style="color:var(--color-text-muted)">Study flow (PRISMA-style)</h3>
+      <div class="flex flex-wrap items-center gap-2 text-xs">
+        {%- set order = ['identified', 'screened', 'eligible', 'excluded', 'included'] %}
+        {%- for stage in order if stage in prisma %}
+        {%- if not loop.first %}<span style="color:var(--color-text-muted)">→</span>{% endif %}
+        <span class="px-2 py-1 rounded" style="background:color-mix(in srgb, var(--color-accent) 10%, transparent);color:var(--color-accent)">
+          {{ stage }}: {{ "{:,}".format(prisma[stage] | int) }}
+        </span>
+        {%- endfor %}
+      </div>
+      <p class="text-xs mt-2" style="color:var(--color-text-muted)">Machine-extracted from the synthesis; review before citing.</p>
+    </div>
+    {%- endif %}
+  </div>
+</section>
+{%- endif -%}

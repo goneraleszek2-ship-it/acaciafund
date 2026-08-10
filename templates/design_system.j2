@@ -1,0 +1,187 @@
+{% extends "layout.j2" %}
+{% block main_content %}
+<article class="container py-6">
+  <header class="mb-8">
+    <p class="text-xs uppercase tracking-widest" style="color:var(--color-text-muted)">AcaciaFund</p>
+    <h1 class="text-3xl font-extrabold">Design System</h1>
+    <p class="text-sm mt-2" style="color:var(--color-text-muted);max-width:60ch">
+      Live component library, following Atomic Design (Frost, 2016). Components are
+      named by structure (<code>card</code>, <code>badge</code>, <code>ring</code>), never by
+      content (<code>aml-card</code>). Canonical spec:
+      <code>docs/00-system-architecture/ui-ux-spec.md</code>.
+    </p>
+  </header>
+
+  <section class="mb-10">
+    <h2 class="text-xl font-bold mb-3">1 · Design Principles</h2>
+    <div class="grid gap-3 sm:grid-cols-2">
+      <div class="card p-4"><strong>Cognitive Load Management</strong><p class="text-sm mt-1" style="color:var(--color-text-muted)">Progressive disclosure, reduced split attention, worked examples (Sweller, 1988).</p></div>
+      <div class="card p-4"><strong>Trust Through Transparency</strong><p class="text-sm mt-1" style="color:var(--color-text-muted)">Provenance badges, sentence-level citations, SQI scores visible by default.</p></div>
+      <div class="card p-4"><strong>Progress Over Perfection</strong><p class="text-sm mt-1" style="color:var(--color-text-muted)">Streaks, mastery rings, SM-2 queues celebrate incremental learning.</p></div>
+      <div class="card p-4"><strong>Context-Agnostic Naming</strong><p class="text-sm mt-1" style="color:var(--color-text-muted)">Structure over content: <code>card</code>, <code>badge</code>, <code>timeline</code>.</p></div>
+    </div>
+  </section>
+
+  <section class="mb-10">
+    <h2 class="text-xl font-bold mb-3">2 · Atoms</h2>
+
+    <div class="card p-4 mb-4">
+      <h3 class="text-sm font-semibold mb-2">Color Tokens</h3>
+      <div class="flex flex-wrap gap-3">
+        {%- set swatches = [
+            ('--color-accent', '#4f46e5', 'Accent'),
+            ('--color-aml', '#ea580c', 'Compliance'),
+            ('--color-markets', '#16a34a', 'Markets'),
+            ('--color-data-engineering', '#6366f1', 'Data'),
+            ('--color-text', '#1c1917', 'Text'),
+            ('--color-text-muted', '#78716c', 'Text muted'),
+            ('--color-bg', '#fafaf9', 'Background'),
+            ('--color-surface', '#ffffff', 'Surface'),
+            ('--color-border', '#e7e5e4', 'Border'),
+          ] %}
+        {%- for token, hex, label in swatches %}
+        <div>
+          <div class="rounded" style="width:64px;height:48px;background:{{ hex }};border:1px solid var(--color-border)"></div>
+          <code class="text-xs">{{ token }}</code><br>
+          <small style="color:var(--color-text-muted)">{{ label }} · {{ hex }}</small>
+        </div>
+        {%- endfor %}
+      </div>
+    </div>
+
+    <div class="card p-4 mb-4">
+      <h3 class="text-sm font-semibold mb-2">Typography</h3>
+      <p style="font-family:var(--font-display);font-size:1.5rem" class="mb-1">Fraunces — Display: "Invest in understanding, to build resilience."</p>
+      <p style="font-family:var(--font-body)" class="mb-1">Manrope — Body: Synthesis from 32+ authoritative sources, explained from first principles.</p>
+      <p style="font-family:var(--font-mono);font-size:0.85rem">JetBrains Mono — <code>n = 1,234 · p &lt; 0.05 · R² = 0.87</code></p>
+    </div>
+
+    <div class="card p-4 mb-4">
+      <h3 class="text-sm font-semibold mb-2">Buttons — <code>.btn</code> modifiers</h3>
+      <div class="flex flex-wrap items-center gap-2">
+        <button type="button" class="btn btn-primary">Primary</button>
+        <button type="button" class="btn btn-secondary">Secondary</button>
+        <button type="button" class="btn btn-outline">Outline</button>
+        <button type="button" class="btn btn-ghost">Ghost</button>
+        <button type="button" class="btn btn-success">Success</button>
+        <button type="button" class="btn btn-warning">Warning</button>
+        <button type="button" class="btn btn-danger">Danger</button>
+        <button type="button" class="btn btn-primary-sm">Primary small</button>
+      </div>
+    </div>
+
+    <div class="card p-4 mb-4">
+      <h3 class="text-sm font-semibold mb-2">Badges — <code>.badge-pill</code> / <code>.badge-outline</code> / <code>.badge-knowledge</code></h3>
+      <div class="flex flex-wrap items-center gap-2">
+        <span class="badge-pill" style="background:var(--color-aml);color:#fff">Compliance</span>
+        <span class="badge-pill" style="background:var(--color-markets);color:#fff">Markets</span>
+        <span class="badge-pill" style="background:var(--color-data-engineering);color:#fff">Data</span>
+        <span class="badge-outline">Verified</span>
+        <span class="badge-knowledge">Reference</span>
+        <span class="alias-tag">alias: KYC</span>
+      </div>
+    </div>
+
+    <div class="card p-4 mb-4">
+      <h3 class="text-sm font-semibold mb-2">Progress Ring — <code>.progress-ring</code></h3>
+      <div class="progress-ring" style="--ring-color:var(--color-markets);--ring-progress:72" data-progress="72">
+        <svg viewBox="0 0 36 36">
+          <circle class="ring-track" cx="18" cy="18" r="15.9" fill="none" stroke-width="3"/>
+          <circle class="ring-fill" cx="18" cy="18" r="15.9" fill="none" stroke-width="3" stroke-linecap="round" stroke-dasharray="100" stroke-dashoffset="{{ 100 - 72 }}"/>
+        </svg>
+        <span class="ring-label">72%</span>
+      </div>
+      <small style="color:var(--color-text-muted)">Driven by <code>--ring-progress</code>; used in mastery dashboards and cards.</small>
+    </div>
+  </section>
+
+  <section class="mb-10">
+    <h2 class="text-xl font-bold mb-3">3 · Molecules</h2>
+
+    <div class="card p-4 mb-4">
+      <h3 class="text-sm font-semibold mb-2">Article Card — <code>.card</code> / <code>.ghost-card</code></h3>
+      <div class="grid gap-3 sm:grid-cols-2">
+        <a href="/search/" class="ghost-card block text-decoration-none hover-lift p-4">
+          <span class="badge-pill" style="background:var(--color-aml);color:#fff">Compliance</span>
+          <span class="block mt-2 text-sm font-semibold">Transaction Monitoring Foundations</span>
+          <span class="block mt-1 text-xs" style="color:var(--color-text-muted)">Rule-based detection, SAR thresholds, and the regulatory stack behind CDD.</span>
+        </a>
+        <div class="card p-4">
+          <span class="badge-pill" style="background:var(--color-markets);color:#fff">Markets</span>
+          <span class="block mt-2 text-sm font-semibold">Vpin Toxicity Modeling</span>
+          <span class="block mt-1 text-xs" style="color:var(--color-text-muted)">Volume-synchronized probability of informed trading, explained from first principles.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card p-4 mb-4">
+      <h3 class="text-sm font-semibold mb-2">Filter Chips — <code>.chip-bar</code> / <code>.chip-btn</code></h3>
+      <div class="chip-bar">
+        <button type="button" class="chip-btn is-active">All</button>
+        <button type="button" class="chip-btn">Research</button>
+        <button type="button" class="chip-btn">Learn</button>
+        <button type="button" class="chip-btn">Knowledge</button>
+      </div>
+    </div>
+
+    <div class="card p-4 mb-4">
+      <h3 class="text-sm font-semibold mb-2">Citation Export — <code>.citation-export</code></h3>
+      <div class="citation-export p-3" style="border:1px solid color-mix(in srgb, var(--color-accent) 20%, transparent)">
+        <span class="text-xs font-semibold uppercase tracking-wide" style="color:var(--color-text-muted)">Cite this synthesis</span>
+        <div class="flex flex-wrap items-center gap-2 mt-1">
+          <a href="https://doi.org/10.48550/arXiv.2607.05307" class="text-xs" style="color:var(--color-accent)">DOI: 10.48550/arXiv.2607.05307 ↗</a>
+          <button type="button" class="btn btn-outline-sm">Copy BibTeX</button>
+          <button type="button" class="btn btn-outline-sm">Copy RIS</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mb-10">
+    <h2 class="text-xl font-bold mb-3">4 · Organisms</h2>
+
+    <div class="card p-4 mb-4">
+      <h3 class="text-sm font-semibold mb-2">Pillar Rail — <code>.pillar-rail</code> / <code>.rail-card</code></h3>
+      <div class="pillar-rail" style="display:flex;flex-direction:column;gap:0.5rem">
+        <div class="rail-card p-3">
+          <span class="rail-title" style="display:flex;justify-content:space-between"><strong>Compliance</strong><span class="rail-count" style="color:var(--color-text-muted)">57</span></span>
+          <div class="progress-ring" style="--ring-color:var(--color-aml);--ring-progress:55" data-progress="55">
+            <svg viewBox="0 0 36 36"><circle class="ring-track" cx="18" cy="18" r="15.9" fill="none" stroke-width="3"/><circle class="ring-fill" cx="18" cy="18" r="15.9" fill="none" stroke-width="3" stroke-linecap="round" stroke-dasharray="100" stroke-dashoffset="45"/></svg>
+            <span class="ring-label">55%</span>
+          </div>
+        </div>
+        <div class="rail-card p-3">
+          <span class="rail-title" style="display:flex;justify-content:space-between"><strong>Markets</strong><span class="rail-count" style="color:var(--color-text-muted)">73</span></span>
+          <div class="progress-ring" style="--ring-color:var(--color-markets);--ring-progress:68" data-progress="68">
+            <svg viewBox="0 0 36 36"><circle class="ring-track" cx="18" cy="18" r="15.9" fill="none" stroke-width="3"/><circle class="ring-fill" cx="18" cy="18" r="15.9" fill="none" stroke-width="3" stroke-linecap="round" stroke-dasharray="100" stroke-dashoffset="32"/></svg>
+            <span class="ring-label">68%</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card p-4 mb-4">
+      <h3 class="text-sm font-semibold mb-2">Extraction Table — Tier 5.2</h3>
+      <table class="w-full text-left border-collapse text-sm">
+        <thead><tr style="color:var(--color-text-muted)"><th class="py-1 pr-3 font-semibold">Variable</th><th class="py-1 pr-3 font-semibold">Value</th><th class="py-1 font-semibold">Supporting passage</th></tr></thead>
+        <tbody>
+          <tr style="border-top:1px solid var(--color-border)"><td class="py-2 pr-3">Accuracy</td><td class="py-2 pr-3" style="color:var(--color-accent)"><code>92.4%</code></td><td class="py-2" style="color:var(--color-text-muted)">"The model reached an accuracy of 92.4% on the held-out set."</td></tr>
+          <tr style="border-top:1px solid var(--color-border)"><td class="py-2 pr-3">p-value</td><td class="py-2 pr-3" style="color:var(--color-accent)"><code>p &lt; 0.05</code></td><td class="py-2" style="color:var(--color-text-muted)">"The effect was significant across all strata."</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="text-xl font-bold mb-3">5 · Tokens &amp; Invariants</h2>
+    <div class="card p-4">
+      <ul class="text-sm space-y-1" style="color:var(--color-text-muted)">
+        <li>· Name components by structure (<code>card</code>, <code>badge</code>, <code>ring</code>) — never by content.</li>
+        <li>· Admin templates must extend <code>admin/base.html</code>; site templates extend <code>layout.j2</code>.</li>
+        <li>· Every UI change must map to a component in <code>docs/00-system-architecture/ui-ux-spec.md</code>.</li>
+        <li>· Motion tokens, density modes, and focus mode live in <code>static/css/design-system.css</code>.</li>
+      </ul>
+    </div>
+  </section>
+</article>
+{% endblock %}

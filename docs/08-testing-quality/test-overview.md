@@ -1,8 +1,8 @@
 # Testing Overview
 
-AcaciaFund has **1173 Python tests across 52 modules** plus **106 JS tests across 4 files** — covering core modules, the cognitive architecture (schema builder, retention, adaptive), research provenance, build output, redirects, taxonomy generation, and test suites for bloom, brand, visuals, generate, source verification, knowledge-module SQI guards, content-structure audit, external-link liveness, SQI gates, and entry freshness/currency tiers.
+AcaciaFund has **1218 Python tests across 58 modules** plus **13 JS test suites** — covering core modules, the cognitive architecture (schema builder, retention, adaptive), research provenance, build output, redirects, taxonomy generation, and test suites for bloom, brand, visuals, generate, source verification, knowledge-module SQI guards, content-structure audit, external-link liveness, SQI gates, entry freshness/currency tiers, OpenAlex citations (Tier 5.1), structured extraction (Tier 5.2), and Edit-on-GitHub resolution (Tier 6.1).
 
-> **Note:** Counts verified 2026-08-06 via `python3 -m pytest tests/ --co` (1173 collected across 52 modules) + 4 JS suites (106 tests). Full suite runs in the deploy pipeline after every build — all green (0 failures).
+> **Note:** Counts verified 2026-08-10 via `bash scripts/run_tests.sh` (1218 Python, 0 failures) + 13 JS suites. Full suite runs in the deploy pipeline after every build — all green (0 failures).
 
 ## Test Files
 
@@ -47,6 +47,9 @@ AcaciaFund has **1173 Python tests across 52 modules** plus **106 JS tests acros
 | `tests/test_contradiction.py` | 40 | Negation/antonym/numeric detection, clustering |
 | `tests/test_evidence_grade.py` | 24 | GRADE-style evidence scoring |
 | `tests/test_export_research.py` | 14 | Research report export |
+| `tests/test_backfill_openalex.py` | 13 | OpenAlex Cited-by: URL shaping, fetch success/404/network error, apply + idempotency, dry-run |
+| `tests/test_extraction.py` | 18 | Key-variable extraction + PRISMA-style trail, false-positive guards, attach |
+| `tests/test_edit_links.py` | 12 | Content-file + registry-line resolution for Edit-on-GitHub links |
 
 ### Generation & Rendering
 
@@ -146,7 +149,7 @@ Target: 80% line coverage across `core/` and `scripts/`. Core modules are near t
 | Templates | Minimal (snapshot-like assertions) | String matching |
 | Content | Registry validation | Pydantic schema validation |
 | Scripts | Integration tests (where feasible) | Direct import + mock |
-| JS | Pure-function tests via Node (no npm/playwright) | `node tests/test_*.js` (all 4 suites via `run_tests.sh`) |
+| JS | Pure-function tests via Node (no npm/playwright) | `node tests/test_*.js` (all 13 suites via `run_tests.sh`) |
 
 ## Key Patterns
 

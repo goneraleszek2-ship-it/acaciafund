@@ -1,6 +1,6 @@
 # AcaciaFund Master Specification
 
-> **Version:** 1.1 (reconciled with live repo state on 2026-08-06)
+> **Version:** 1.2 (reconciled with live repo state on 2026-08-10)
 > **Original brief:** Research Agent Specification v1.0 (2026-08-06)
 > **Output target:** `https://www.acaciafund.org/` (static site, Cloudflare Pages)
 > **Canonical repo facts:** see `../../AGENTS.md` (current state) and `../../SYSTEM_ARCHITECTURE.md`
@@ -99,11 +99,11 @@ not context.
 
 | Metric | Value |
 |---|---|
-| Generated pages | 2,827 |
+| Generated pages | 2,834 (incl. `/design-system/`) |
 | Registry items | 226 (102 research / 83 learn / 41 knowledge) |
 | Ontology concepts / relations | 199 / 447 |
-| Tests | 1,273 total (1,173 Python / 52 modules + 106 JS / 4 suites) |
-| Build time | ~98–131 s full, incremental via content hashing |
+| Tests | 1,218 Python (verified 2026-08-10 full-suite run) + JS suites (13 files, all green) |
+| Build time | ~120–273 s full, incremental via content hashing |
 | Deploy target | Cloudflare Pages via GitHub Actions |
 
 ### 3.2 Strengths
@@ -124,7 +124,7 @@ not context.
 | 4 | Knowledge graph invisible | **Fixed/partial.** `/graph/` (Cytoscape), 199 `/concepts/{id}/` pages, per-concept concept-map partial exist; no per-page D3 prerequisite graph |
 | 5 | No progress tracking | **Fixed.** Learning-path progress bars (localStorage) + concept mastery dashboard |
 | 6 | Limited interactivity | **Done.** SQLite-wasm SQL exercises, Pyodide/Polars sandbox, KYC + SAR compliance simulators (Tier 4) |
-| 7 | Citation depth lacking | **Fixed/partial.** DOI links + BibTeX/RIS export + copy buttons shipped; OpenAlex "Cited by" pending |
+| 7 | Citation depth lacking | **Fixed.** DOI links + BibTeX/RIS export + copy buttons shipped; OpenAlex "Cited by" + "View on OpenAlex" links shipped (Tier 5.1, 2026-08-10) |
 | 8 | Content provenance ambiguity | **Fixed.** Provenance badges (Verified / Synthesized / Curated) on all articles |
 
 ## 4. Target State Vision
@@ -166,7 +166,7 @@ Execute in priority order; do not proceed to Tier N+1 until Tier N is stable.
 | Task | Status | Notes |
 |---|---|---|
 | 3.1 Concept Hub pages | **Done** | 199 pages at `/concepts/{id}/` with related articles, prerequisites, Bloom distribution |
-| 3.2 Prerequisite path visualization | **Partial** | Cytoscape `/graph/` + per-page concept map exist; lightweight per-concept D3 graph pending |
+| 3.2 Prerequisite path visualization | **Done** | Cytoscape `/graph/` + per-page concept map exist; lightweight per-concept prerequisite DAG shipped on concept pages (2026-08-09) |
 | 3.3 Cross-pillar journey paths | **Done** | 15 learning-path pages + 3 pillar-synthesis pages + `/journeys/` hub with 3 curated linear journeys (6 steps each, all 3 pillars) with localStorage progress + next-step nav |
 
 ### Tier 4: Hands-On Interactivity — DONE
@@ -178,20 +178,20 @@ Execute in priority order; do not proceed to Tier N+1 until Tier N is stable.
 | 4.3 Compliance simulation exercises | **Done** | KYC onboarding workflow simulator (kyc-cdd-workflows, 3-step decision flow with EDD rationale) + SAR filing form simulator (sar-filing-scenarios, red-flag checklist + narrative validation, HTML/CSS/JS only) |
 | 4.4 Exercise platform plumbing | **Done** | `data/exercises.json` + `core/exercises.py` slug-matched attachment; sandbox partials + CSS; build-cache hash now covers sandbox exercises and missing outputs force rebuild |
 
-### Tier 5: Research Rigor & Reference — PARTIAL
+### Tier 5: Research Rigor & Reference — DONE
 
 | Task | Status | Notes |
 |---|---|---|
-| 5.1 Citation enrichment | **Partial** | DOI + BibTeX/RIS shipped (incl. arXiv vN stripping + doi.org validation); OpenAlex "Cited by" pending |
-| 5.2 Structured extraction tables | **Pending** | Key-variable tables + PRISMA-style audit trail for systematic reviews |
+| 5.1 Citation enrichment | **Done** | DOI + BibTeX/RIS + arXiv vN stripping + doi.org validation + OpenAlex "Cited by N" / "View on OpenAlex" (keyless `scripts/backfill_openalex.py`, idempotent, data baked into registry; `citedByCount` in JSON-LD) |
+| 5.2 Structured extraction tables | **Done** | `core/extraction.py` rule-based key-variable tables (accuracy/AUC/R²/p-values/sample size/latency/…) with supporting-passage evidence + PRISMA-style screening flow, rendered via `extraction_table.j2` on research pages (2026-08-10) |
 | 5.3 Expert curation layer | **Done** | `data/editor_notes.json` + `editor_note.j2` (4 notes shipped) |
 
-### Tier 6: Community & Ecosystem — PARTIAL
+### Tier 6: Community & Ecosystem — DONE
 
 | Task | Status | Notes |
 |---|---|---|
-| 6.1 "Edit on GitHub" links | **Pending** | Link molecule per article |
-| 6.2 Public design-system docs | **Pending** | `/design-system/` with live component examples |
+| 6.1 "Edit on GitHub" links | **Done** | `edit_on_github.j2` molecule on research pages; resolves hand-authored `content/` files (pillar-constrained) or falls back to the item's `registry.json` line anchor (2026-08-10) |
+| 6.2 Public design-system docs | **Done** | `/design-system/` live Atomic Design gallery (atoms/molecules/organisms, color tokens, buttons, badges, rings, rails) built from `design_system.j2`; footer nav + sitemap entry |
 | 6.3 Structured data (Schema.org) | **Done** | JSON-LD injected via `layout.j2` (LearningResource / ScholarlyArticle / FAQPage) |
 
 ## 6. Atomic Design Task Mapping
@@ -222,13 +222,13 @@ internal links + SQI → external reference liveness → topic currency triage �
 
 ## 9. Success Metrics
 
-| Metric | Current (2026-08-06) | Target (6 months) |
+| Metric | Current (2026-08-10) | Target (6 months) |
 |---|---|---|
 | Pillar landing page uptime | 100% (3/3) | 100% |
 | Internal 404s | 0 | 0 |
 | SM-2 active users | 0 (hidden) | 30% of returning visitors |
 | Concept hub pages | 199 (100%) | 199 (100%) |
-| Interactive exercises | 0 | 15 (5 SQL + 5 Python + 5 Compliance sim) |
+| Interactive exercises | 6 shipped (3 SQL + 1 Python + 2 Compliance sim) | 15 (5 SQL + 5 Python + 5 Compliance sim) |
 | Avg. session duration | Baseline | +40% |
 | Return visitor rate | Baseline | +25% |
 | Study Queue entry point | 0 | 1 visible, with due-count badge |

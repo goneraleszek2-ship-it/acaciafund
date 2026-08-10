@@ -54,6 +54,10 @@
 
     {% include 'partials/citation_export.j2' %}
 
+    {% include 'partials/extraction_table.j2' %}
+
+    {% include 'partials/edit_on_github.j2' %}
+
     <div class="prose-body">
       {{ page_body | default(content.body_html) | wrap_prose_sections | safe }}
     </div>
