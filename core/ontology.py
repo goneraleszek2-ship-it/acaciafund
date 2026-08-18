@@ -1403,6 +1403,57 @@ def _extract_with_regex(
             sorted(seen.items(), key=lambda x: -x[1])]
 
 
+
+    def check_epistemic_boundary(self, source_id, target_id):
+        """Check if a relationship violates Salamucha's epistemic hierarchy.
+        
+        Empirical data (data-engineering) cannot directly derive normative rules (aml/stock)
+        without an explicit intermediate normative premise.
+        
+        Returns (passed, reason) tuple.
+        """
+        
+        source_concept = self._concepts.get(source_id)
+        target_concept = self._concepts.get(target_id)
+        
+        if not source_concept or not target_concept:
+            return True, "Unknown concept - boundary check skipped"
+        
+        source_pillar = source_concept.pillar
+        target_pillar = target_concept.pillar
+        
+        # Check if this is a data-engineering to normative flow
+        is_empirical_source = source_pillar == "data-engineering"
+        is_normative_target = (
+            target_pillar in ["aml", "stock"] 
+            and target_concept.epistemic_status in ["regulatory", "constitutive"]
+        )
+        
+        if is_empirical_source and is_normative_target:
+            # Check for explicit philosophical mediation
+            has_mediation = False
+            
+            # Check target concept's philosophical_mediation
+            if target_concept.philosophical_mediation:
+                has_mediation = True
+            
+            # Check source concept's raw data for mediation
+            source_raw = next(
+                (c for c in self._data["concepts"] if c["id"] == source_id), None
+            )
+            if source_raw and source_raw.get("philosophical_mediation"):
+                has_mediation = True
+            
+            if not has_mediation:
+                return False, (
+                    f"Epistemic boundary violation: Empirical data '{source_id}' "
+                    f"({source_concept.epistemic_status}) cannot directly derive "
+                    f"normative rule '{target_id}' ({target_concept.epistemic_status}) "
+                    f"without explicit normative premise. "
+                    f"Add philosophical_mediation field documenting the bridging premise."
+                )
+        
+        return True, "Boundary check passed"
 def _invalidate_matcher():
     """Force PhraseMatcher rebuild on next extraction (called when concepts change)."""
     global _MATCHER_REVISION

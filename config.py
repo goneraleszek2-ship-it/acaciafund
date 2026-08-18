@@ -34,6 +34,26 @@ SQI_BADGE_HIGH = 0.6  # SQI above this → green badge
 SQI_BADGE_MED = 0.35  # SQI above this → amber badge (below → red)
 SQI_DEFAULT = 0.5  # fallback when signal missing
 
+# Philosophy versioning — tracks deliberate philosophical configuration changes.
+# Bump this version when validation track weights, way_of_knowing defaults,
+# or any philosophical framing changes. Enables rollback and user awareness.
+PHILOSOPHY_VERSION: str = "v1.2-analytical-thomistic-2026-08"
+
+# Previous version (for change log):
+#   v0.9-empirical-primary — empirical fidelity weighted highest, other tracks minimal
+#   v1.0-pluralistic-2026-08 — equal weighting across all 5 validation tracks,
+#                             all 4 ways_of_knowing supported, provenance tracking enabled
+
+# Per-pillar validation track weights (pluralistic validation framework)
+# Each dict maps track name to weight (0.0-1.0); should approximately sum to 1.0.
+# Tracks: empirical_fidelity, coherence, philosophical_consistency, schema_validity, test_suite_validity
+# These weights determine how much each validation track influences accept/reject/review decisions.
+PILLAR_VALIDATION_WEIGHTS: Dict[str, Dict[str, float]] = {
+    "aml": {"empirical_fidelity": 0.3, "coherence": 0.2, "philosophical_consistency": 0.2, "schema_validity": 0.2, "test_suite_validity": 0.1},
+    "stock": {"empirical_fidelity": 0.3, "coherence": 0.2, "philosophical_consistency": 0.2, "schema_validity": 0.2, "test_suite_validity": 0.1},
+    "data-engineering": {"empirical_fidelity": 0.25, "coherence": 0.25, "philosophical_consistency": 0.2, "schema_validity": 0.2, "test_suite_validity": 0.1},
+}
+
 # Interest score weights
 INTEREST_SQI_WEIGHT = 0.6
 INTEREST_RECENCY_WEIGHT = 0.4
