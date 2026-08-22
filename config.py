@@ -4,6 +4,7 @@ All paths are relative to this file's directory (project root).
 Import this from build.py and anywhere else config values are needed.
 """
 
+from typing import Dict
 from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).parent
