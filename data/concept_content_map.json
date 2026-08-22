@@ -242,6 +242,7 @@
   ],
   "aml/research/fed-aml-program-reforms-2026": [
     "ai-aml-surveillance",
+    "aml-oracle",
     "aml-program",
     "aml-program-reform",
     "aml-regulatory-framework",
@@ -343,6 +344,7 @@
     "aml-case-management",
     "aml-compliance-basics",
     "aml-optimization",
+    "aml-oracle",
     "global-sanctions",
     "kyc",
     "research"
@@ -499,6 +501,9 @@
     "tbml",
     "trade-finance-aml"
   ],
+  "compliance/research/a-deployment-oriented-and-resource-efficient-neuro-symbolic": [],
+  "compliance/research/absence-of-critical-scaling-in-the-schelling-segregation-mod": [],
+  "compliance/research/anchoring-for-truthfulness-the-random-anchor-volume-mechanis": [],
   "compliance/research/bueche-2022-fatf-virtual-assets-crypto": [
     "aml-regulatory-framework",
     "cdd",
@@ -506,11 +511,16 @@
     "fatf-recommendations",
     "travel-rule"
   ],
+  "compliance/research/characterizing-agentic-flooding-of-government-services": [],
   "compliance/research/collier-2020-suspicious-activity-reports-uk": [
     "aml-effectiveness",
     "sar",
     "str",
     "transaction-monitoring"
+  ],
+  "compliance/research/cost-scales-with-change-not-corpus-size-incrementally-mainta": [],
+  "compliance/research/declining-modularity-of-intellectual-bases-during-the-emerge": [
+    "research"
   ],
   "compliance/research/drezner-2022-global-governance-aml": [
     "aml-effectiveness",
@@ -518,6 +528,14 @@
     "fatf-recommendations",
     "kyc"
   ],
+  "compliance/research/dsprompt-dynamic-soft-prompt-defense-against-m-rag-corruptio": [],
+  "compliance/research/eco-id-event-camera-based-optical-system-for-secure-multi-us": [
+    "high-frequency-trading"
+  ],
+  "compliance/research/geo-flag-detecting-and-measuring-geo-optimized-web-content": [],
+  "compliance/research/if-it-looks-like-a-user-measuring-real-time-moderation-effec": [],
+  "compliance/research/impression-share-prediction-an-offline-evaluation-task-for-r": [],
+  "compliance/research/learning-to-price-with-persuasion": [],
   "compliance/research/levi-reuter-2006-money-laundering-review": [
     "aml-effectiveness",
     "aml-regulatory-framework",
@@ -525,14 +543,28 @@
     "sar",
     "str"
   ],
+  "compliance/research/liquid-democracy-under-vote-correlation-on-the-fallacies-of": [],
+  "compliance/research/llms-for-zero-shot-threat-detection-via-structured-risk-indi": [],
   "compliance/research/naheem-2015-aml-transaction-monitoring-systems": [
     "aml-effectiveness",
     "transaction-monitoring"
   ],
+  "compliance/research/operationalizing-the-eu-ai-act-in-agile-software-development": [
+    "ai-act-high-risk"
+  ],
+  "compliance/research/physics-of-agents-statistical-mechanics-predicts-collective": [],
+  "compliance/research/rigorous-statements-and-proofs-of-the-lemmas-in-simons-algor": [],
+  "compliance/research/rough-volatility-across-assets": [
+    "infrastructure"
+  ],
+  "compliance/research/sahc-ns-structure-aware-and-hardness-calibrated-negative-sam": [],
+  "compliance/research/sample-complexity-of-peer-prediction": [],
+  "compliance/research/solving-streett-and-emerson-lei-games-with-universal-trees": [],
   "compliance/research/soudijn-2021-trade-based-money-laundering": [
     "aml-regulatory-framework",
     "tbml"
   ],
+  "compliance/research/steering-the-flow-inverting-face-recognition-models-via-grad": [],
   "compliance/research/takats-2007-crying-wolf-aml": [
     "aml-effectiveness",
     "sar",
@@ -540,10 +572,23 @@
     "transaction-monitoring",
     "transaction-monitoring-theory"
   ],
+  "compliance/research/the-new-mathematics-of-democracy": [],
+  "compliance/research/the-ultimate-carbon-cost-of-a-chatgpt-query": [],
+  "compliance/research/the-user-side-of-ai-model-lifecycles-evidence-from-the-keep4": [],
+  "compliance/research/this-is-so-claude-towards-a-theory-of-the-recognition-of-ai": [],
+  "compliance/research/tight-inapproximability-of-pacing-and-throttling-equilibria": [],
+  "compliance/research/unbiased-recommender-systems-with-implicit-feedback": [],
   "compliance/research/unger-2007-amounts-effects-money-laundering": [
     "aml-effectiveness",
     "aml-regulatory-framework"
   ],
+  "compliance/research/unidot-a-unified-network-for-sequence-modeling-and-feature-i": [],
+  "compliance/research/vantage-availability-graded-broadcast-for-signature-free-bft": [],
+  "compliance/research/what-to-remember-what-to-reveal-privacy-aware-memory-for-con": [],
+  "compliance/research/when-is-complex-chunking-worth-it-a-multi-objective-evaluati": [],
+  "compliance/research/when-ratios-fall-a-dynamic-approach-to-contingent-convertibl": [],
+  "compliance/research/when-tool-backed-skill-retrieval-fails-source-style-collapse": [],
+  "compliance/research/zlend-a-dual-scope-cash-flow-reconstruction-framework-for-on": [],
   "data-engineering/knowledge/data-engineering-timeline-2024-2026": [
     "apache-iceberg",
     "apache-kafka",
@@ -563,7 +608,6 @@
     "apache-iceberg",
     "arrow-parquet",
     "dataops",
-    "dbt",
     "research"
   ],
   "data/knowledge/bloom-self-study-framework": [],
@@ -592,7 +636,9 @@
     "law-markets-data-triangle",
     "regulatory-lag"
   ],
-  "data/knowledge/polars-pipeline-tutorial": [],
+  "data/knowledge/polars-pipeline-tutorial": [
+    "arrow-parquet"
+  ],
   "data/knowledge/sqi-scoring-explained": [
     "data-quality",
     "research"
@@ -608,6 +654,7 @@
     "dbt",
     "debiasing-pipeline",
     "elt",
+    "elt-pipeline",
     "etl",
     "hedge-funds",
     "lakehouse-architecture",
@@ -627,6 +674,7 @@
   "data/learn/data-contracts-lineage": [
     "data-contract-testing",
     "data-contracts",
+    "data-governance",
     "data-lineage",
     "data-observability",
     "data-pipeline",
@@ -671,7 +719,6 @@
     "batch-stream-merging",
     "dagster",
     "dataops",
-    "dbt",
     "debiasing-pipeline",
     "event-driven-trading",
     "hawkes-process",
@@ -686,6 +733,7 @@
     "batch-stream-merging",
     "data-pipeline",
     "elt",
+    "elt-pipeline",
     "etl",
     "infrastructure",
     "real-time-analytics",
@@ -697,6 +745,7 @@
     "data-platform-kpis",
     "data-quality",
     "data-quality-monitoring",
+    "data-quality-sla",
     "dataops"
   ],
   "data/learn/data-quality-engineering": [
@@ -755,7 +804,6 @@
     "data-pipeline",
     "data-quality",
     "dataops",
-    "dbt",
     "debiasing-pipeline",
     "etl",
     "hawkes-process",
@@ -822,13 +870,14 @@
     "real-time-analytics",
     "real-time-analytics-architecture"
   ],
-  "data/learn/partitioning-strategies": [],
+  "data/learn/partitioning-strategies": [
+    "arrow-parquet"
+  ],
   "data/learn/pipeline-cost-optimization": [
     "data-cost-intelligence",
     "data-pipeline",
     "data-platform-kpis",
     "dataops",
-    "dbt",
     "infrastructure",
     "metric-store",
     "pipeline-cost-optimization"
@@ -872,6 +921,7 @@
     "dataops",
     "dbt",
     "etl",
+    "feature-store",
     "ml-pipeline"
   ],
   "data/learn/sql-for-data-engineers": [
@@ -890,9 +940,9 @@
   "data/learn/what-is-data-engineering": [
     "data-pipeline",
     "dataops",
-    "dbt",
     "distributed-systems",
     "elt",
+    "elt-pipeline",
     "etl"
   ],
   "data/research/2027-data-engineering-predictions": [
@@ -927,8 +977,8 @@
   ],
   "data/research/analytics-engineering-rise": [
     "dataops",
-    "dbt",
     "elt",
+    "elt-pipeline",
     "etl",
     "orchestration",
     "real-time-analytics",
@@ -1036,7 +1086,6 @@
     "data-quality",
     "data-versioning",
     "dataops",
-    "dbt",
     "debiasing-pipeline",
     "fraud-detection",
     "payment-fraud",
@@ -1082,7 +1131,6 @@
     "data-warehouse",
     "data-warehouse-design",
     "dataops",
-    "dbt",
     "design",
     "etl",
     "gdpr-synthetic-data",
@@ -1102,6 +1150,7 @@
     "aml-training",
     "dataops",
     "debiasing-pipeline",
+    "feature-store",
     "ml-pipeline",
     "model-cards"
   ],
@@ -1110,7 +1159,6 @@
     "asset-pricing",
     "data-governance",
     "dataops",
-    "dbt",
     "enterprise-architecture",
     "infrastructure",
     "lakehouse",
@@ -1224,7 +1272,6 @@
     "aml-training",
     "dagster",
     "dataops",
-    "dbt",
     "debiasing-pipeline",
     "feature-store",
     "lob",
@@ -1237,7 +1284,6 @@
     "apache-iceberg",
     "dagster",
     "dataops",
-    "dbt",
     "infrastructure",
     "lakehouse-architecture",
     "network-analysis",
@@ -1255,6 +1301,7 @@
     "lakehouse",
     "lakehouse-architecture",
     "real-time-analytics-architecture",
+    "schema-migration",
     "schema-registry"
   ],
   "data/research/science-dataeng": [
@@ -1262,7 +1309,6 @@
     "dagster",
     "data-quality",
     "dataops",
-    "dbt",
     "debiasing-pipeline",
     "high-frequency-trading",
     "orchestration"
@@ -1299,7 +1345,6 @@
     "data-warehouse",
     "data-warehouse-design",
     "dataops",
-    "dbt",
     "design",
     "fraud-detection",
     "gdpr-synthetic-data",
@@ -1323,6 +1368,7 @@
     "lakehouse-architecture",
     "lakestream-architecture",
     "real-time-analytics",
+    "schema-migration",
     "schema-registry",
     "stream-processing-model",
     "streaming"
@@ -1333,7 +1379,6 @@
     "carry-trade",
     "dagster",
     "dataops",
-    "dbt",
     "etf-trading",
     "hedge-funds",
     "infrastructure",
@@ -1379,6 +1424,7 @@
     "data-observability",
     "dataops",
     "elt",
+    "elt-pipeline",
     "etl",
     "lakehouse-architecture",
     "research"
@@ -1390,7 +1436,6 @@
     "dagster",
     "data-lake",
     "dataops",
-    "dbt",
     "lakehouse",
     "lakehouse-architecture",
     "momentum-trading",
@@ -1435,6 +1480,7 @@
     "change-data-capture",
     "dagster",
     "elt",
+    "elt-pipeline",
     "orchestration"
   ],
   "knowledge/pillar-taxonomy": [
@@ -1479,8 +1525,10 @@
     "alternative-data",
     "asset-pricing",
     "behavioral-finance",
+    "capital-asset-pricing-model",
     "execution-algos",
     "factor-investing",
+    "high-frequency-trading",
     "research"
   ],
   "markets/knowledge/explainer-order-book": [
@@ -1653,6 +1701,7 @@
     "trading-venues"
   ],
   "markets/learn/introduction-to-risk": [
+    "cross-asset-trading",
     "equity-basics",
     "portfolio-optimization",
     "risk-parity"
@@ -1740,6 +1789,7 @@
     "market-participants",
     "order-book",
     "order-types",
+    "retail-trading",
     "trading-venues",
     "vpin"
   ],
@@ -1753,9 +1803,11 @@
   "markets/learn/quantitative-methods-intro": [
     "algorithmic-trading",
     "factor-investing",
+    "high-frequency-trading",
     "mean-reversion",
     "portfolio-optimization",
-    "risk-parity"
+    "risk-parity",
+    "statistical-arbitrage"
   ],
   "markets/learn/reading-financial-statements": [
     "earnings-analysis",
@@ -1803,6 +1855,7 @@
   ],
   "markets/learn/volatility-analysis": [
     "market-indices",
+    "volatility-arbitrage",
     "volatility-trading"
   ],
   "markets/learn/volatility-trading-vix": [
@@ -1878,6 +1931,7 @@
     "etf-trading",
     "event-driven-trading",
     "execution-algos",
+    "feature-store",
     "fraud-detection",
     "hawkes-process",
     "high-frequency-trading",
@@ -1911,6 +1965,7 @@
   ],
   "markets/research/fama-french-1993-three-factor-model": [
     "asset-pricing",
+    "capital-asset-pricing-model",
     "equity-basics",
     "factor-investing",
     "fama-french-model"
@@ -2038,7 +2093,6 @@
     "crypto-travel-rule",
     "dagster",
     "dataops",
-    "dbt",
     "debiasing-pipeline",
     "feature-store",
     "market-data",

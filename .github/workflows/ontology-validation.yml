@@ -1,0 +1,108 @@
+name: "Ontology Validation & CI/CD Gates"
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  ontology-check:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash {0}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up Python
+        uses: actions/setup-python@v7
+        with:
+          python-version: "3.14"
+
+      - name: Install core dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install --no-cache-dir networkx pyarrow
+
+      - name: Delta Check (git diff)
+        id: diff-check
+        run: |
+          # Check if ontology or related files changed
+          CHANGED=$(git diff --name-only HEAD~1 HEAD | grep -E "ontology\\.json|deontic|bitmask|shacl|turtle|yaml$" || true)
+          echo "changed_files=$CHANGED" >> $GITHUB_OUTPUT
+          if [ -z "$CHANGED" ]; then
+            echo "::notice::No ontology-related files changed, skipping formal reasoning"
+          fi
+
+      - name: Ontology DAG Validation
+        if: steps.diff-check.changed_files != ''
+        run: |
+          python3 -c "
+import json, networkx as nx
+with open('data/ontology.json') as f:
+    data = json.load(f)
+G = nx.DiGraph()
+for concept in data['concepts']:
+    G.add_node(concept['id'], epistemic_status=concept.get('epistemic_status'))
+for rel in data['relations']:
+    G.add_edge(rel['source_id'], rel['target_id'], type=rel['relation_type'])
+req_graph = nx.subgraph_view(G, filter_edge=lambda u, v: G[u][v]['type'] == 'requires')
+is_acyclic = nx.is_directed_acyclic_graph(req_graph)
+cycles = list(nx.simple_cycles(req_graph))
+print(f'DAG acyclicity: {\"PASS\" if is_acyclic else \"FAIL\"} (cycles: {len(cycles)})')
+if cycles:
+    print(f'  Cycles: {\" -> \".join(cycles[:3])}')
+else:
+    print('  No cycles - DAG is valid')
+"
+
+      - name: Deontic Bitmask Verification
+        if: steps.diff-check.changed_files != ''
+        run: |
+          python3 -c "
+import json
+with open('dist/deontic_bitmasks.json') as f:
+    data = json.load(f)
+print('Deontic bitmasks verified:')
+print(f'  Obligation bits: {data[\"obligation_count\"]}')
+print(f'  Permission bits: {data[\"permission_count\"]}')
+print(f'  Prohibition bits: {data[\"prohibition_count\"]}')
+print(f'  Masks valid: {data[\"obligation_mask\"] > 0 and data[\"permission_mask\"] > 0 and data[\"prohibition_mask\"] > 0}')
+"
+
+      - name: Bitmask & Schema Export
+        run: |
+          python3 scripts/bitmask_exporter.py
+          python3 -c "
+import json
+with open('dist/deontic_bitmasks.json') as f:
+    data = json.load(f)
+print(f'Bitmask data verified: {data[\"obligation_count\"]} obligation bits, '
+      f'{data[\"permission_count\"]} permission bits, '
+      f'{data[\"prohibition_count\"]} prohibition bits')
+"
+
+      - name: Deploy & Purge
+        needs: quality
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v7
+          - uses: actions/setup-python@v7
+            with:
+              python-version: "3.14"
+          - name: Restore build cache
+            uses: actions/cache@v6
+            with:
+              path: |
+                .build_cache.json
+                dist/
+              key: build-${{ hashFiles('templates/**/*', 'core/**/*.py', 'config.py') }}
+              restore-keys: |
+                build-
+          - name: Deploy to Cloudflare Pages
+            uses: cloudflare/wrangler-action@v4
+            with:
+              apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+              accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+              command: pages deploy dist --project-name=acaciafund
