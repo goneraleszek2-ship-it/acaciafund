@@ -1,10 +1,10 @@
 {
-  "checked_at": "2026-08-10T05:41:31.740763+00:00",
+  "checked_at": "2026-08-24T04:57:03.429302+00:00",
   "total": 63,
-  "active": 50,
+  "active": 47,
   "degraded": 12,
-  "error": 1,
-  "freshness_pct": 79,
+  "error": 4,
+  "freshness_pct": 75,
   "sources": [
     {
       "key": "aml.fatf",
@@ -14,11 +14,11 @@
       "frequency": "weekly",
       "relevance": 0.95,
       "http_status": 403,
-      "latency_ms": 188,
+      "latency_ms": 374,
       "error": "HTTP Error 403: Forbidden; GET: HTTP Error 403: Forbidden",
       "status": "degraded",
       "last_verified": "2026-08-02T13:55:45.331489+00:00",
-      "staleness_days": 7
+      "staleness_days": 21
     },
     {
       "key": "aml.acams",
@@ -28,11 +28,11 @@
       "frequency": "weekly",
       "relevance": 0.9,
       "http_status": 200,
-      "latency_ms": 430,
+      "latency_ms": 336,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "aml.fincen",
@@ -42,11 +42,11 @@
       "frequency": "daily",
       "relevance": 0.9,
       "http_status": 200,
-      "latency_ms": 48,
+      "latency_ms": 115,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "aml.ofac",
@@ -56,11 +56,11 @@
       "frequency": "daily",
       "relevance": 0.9,
       "http_status": 200,
-      "latency_ms": 148,
+      "latency_ms": 159,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "aml.ecb",
@@ -70,11 +70,11 @@
       "frequency": "weekly",
       "relevance": 0.8,
       "http_status": 200,
-      "latency_ms": 994,
+      "latency_ms": 1400,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "aml.fca",
@@ -84,11 +84,11 @@
       "frequency": "weekly",
       "relevance": 0.8,
       "http_status": 200,
-      "latency_ms": 229,
+      "latency_ms": 241,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "aml.fiu-nca",
@@ -97,12 +97,12 @@
       "url": "https://egmontgroup.org",
       "frequency": "monthly",
       "relevance": 0.75,
-      "http_status": 200,
-      "latency_ms": 1586,
-      "error": null,
-      "status": "active",
+      "http_status": null,
+      "latency_ms": 51124,
+      "error": "<urlopen error timed out>",
+      "status": "error",
       "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "staleness_days": 13
     },
     {
       "key": "aml.fintrac",
@@ -112,11 +112,11 @@
       "frequency": "weekly",
       "relevance": 0.8,
       "http_status": 200,
-      "latency_ms": 180,
+      "latency_ms": 701,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "aml.transact",
@@ -126,11 +126,11 @@
       "frequency": "monthly",
       "relevance": 0.7,
       "http_status": 200,
-      "latency_ms": 463,
+      "latency_ms": 697,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "aml.chainalysis",
@@ -140,11 +140,11 @@
       "frequency": "weekly",
       "relevance": 0.85,
       "http_status": 200,
-      "latency_ms": 95,
+      "latency_ms": 155,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "aml.aml-intelligence",
@@ -154,11 +154,11 @@
       "frequency": "daily",
       "relevance": 0.8,
       "http_status": 200,
-      "latency_ms": 829,
+      "latency_ms": 748,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "aml.amla",
@@ -168,11 +168,11 @@
       "frequency": "weekly",
       "relevance": 0.9,
       "http_status": 200,
-      "latency_ms": 1327,
+      "latency_ms": 1619,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "aml.eba",
@@ -182,11 +182,11 @@
       "frequency": "weekly",
       "relevance": 0.85,
       "http_status": 200,
-      "latency_ms": 480,
+      "latency_ms": 618,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "aml.gibsondunn",
@@ -196,11 +196,11 @@
       "frequency": "weekly",
       "relevance": 0.8,
       "http_status": 200,
-      "latency_ms": 1436,
+      "latency_ms": 1451,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "aml.mofo",
@@ -210,11 +210,11 @@
       "frequency": "monthly",
       "relevance": 0.8,
       "http_status": 200,
-      "latency_ms": 268,
+      "latency_ms": 382,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "aml.fincen-press",
@@ -224,11 +224,11 @@
       "frequency": "daily",
       "relevance": 0.95,
       "http_status": 200,
-      "latency_ms": 29,
+      "latency_ms": 2212,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "aml.wolfsberg",
@@ -238,11 +238,11 @@
       "frequency": "monthly",
       "relevance": 0.85,
       "http_status": 200,
-      "latency_ms": 1698,
+      "latency_ms": 1386,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "aml.europol",
@@ -252,11 +252,11 @@
       "frequency": "weekly",
       "relevance": 0.8,
       "http_status": 200,
-      "latency_ms": 766,
+      "latency_ms": 772,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "aml.basel-institute",
@@ -266,11 +266,11 @@
       "frequency": "monthly",
       "relevance": 0.8,
       "http_status": 200,
-      "latency_ms": 1616,
+      "latency_ms": 1272,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "aml.gfintegrity",
@@ -279,12 +279,12 @@
       "url": "https://gfintegrity.org",
       "frequency": "monthly",
       "relevance": 0.75,
-      "http_status": 200,
-      "latency_ms": 50,
-      "error": null,
-      "status": "active",
+      "http_status": null,
+      "latency_ms": 51363,
+      "error": "<urlopen error timed out>",
+      "status": "error",
       "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "staleness_days": 13
     },
     {
       "key": "aml.austrac",
@@ -294,11 +294,11 @@
       "frequency": "weekly",
       "relevance": 0.8,
       "http_status": null,
-      "latency_ms": 51748,
+      "latency_ms": 51606,
       "error": "The read operation timed out",
       "status": "error",
       "last_verified": "2026-08-05T04:45:04.971847+00:00",
-      "staleness_days": 5
+      "staleness_days": 19
     },
     {
       "key": "de.databricks",
@@ -308,11 +308,11 @@
       "frequency": "daily",
       "relevance": 0.9,
       "http_status": 200,
-      "latency_ms": 43,
+      "latency_ms": 117,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "de.apache-kafka",
@@ -322,11 +322,11 @@
       "frequency": "weekly",
       "relevance": 0.85,
       "http_status": 200,
-      "latency_ms": 147,
+      "latency_ms": 218,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "de.apache-flink",
@@ -336,11 +336,11 @@
       "frequency": "weekly",
       "relevance": 0.85,
       "http_status": 200,
-      "latency_ms": 270,
+      "latency_ms": 41,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "de.apache-iceberg",
@@ -350,11 +350,11 @@
       "frequency": "weekly",
       "relevance": 0.85,
       "http_status": 200,
-      "latency_ms": 144,
+      "latency_ms": 223,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "de.dbt",
@@ -364,11 +364,11 @@
       "frequency": "weekly",
       "relevance": 0.85,
       "http_status": 200,
-      "latency_ms": 123,
+      "latency_ms": 121,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "de.dagster",
@@ -378,11 +378,11 @@
       "frequency": "weekly",
       "relevance": 0.85,
       "http_status": 200,
-      "latency_ms": 153,
+      "latency_ms": 150,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "de.confluent",
@@ -392,11 +392,11 @@
       "frequency": "weekly",
       "relevance": 0.8,
       "http_status": 200,
-      "latency_ms": 404,
+      "latency_ms": 609,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "de.aws-big-data",
@@ -406,11 +406,11 @@
       "frequency": "weekly",
       "relevance": 0.75,
       "http_status": 200,
-      "latency_ms": 105,
+      "latency_ms": 143,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "de.gcp-data",
@@ -420,11 +420,11 @@
       "frequency": "weekly",
       "relevance": 0.75,
       "http_status": 200,
-      "latency_ms": 125,
+      "latency_ms": 406,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "de.meltano",
@@ -434,11 +434,11 @@
       "frequency": "monthly",
       "relevance": 0.7,
       "http_status": 200,
-      "latency_ms": 274,
+      "latency_ms": 370,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "de.snowflake",
@@ -448,11 +448,11 @@
       "frequency": "weekly",
       "relevance": 0.8,
       "http_status": 200,
-      "latency_ms": 155,
+      "latency_ms": 483,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "de.streamnative",
@@ -461,12 +461,12 @@
       "url": "https://streamnative.io/blog",
       "frequency": "weekly",
       "relevance": 0.85,
-      "http_status": 200,
-      "latency_ms": 94,
-      "error": null,
-      "status": "active",
+      "http_status": 500,
+      "latency_ms": 9207,
+      "error": "HTTP Error 500: Internal Server Error",
+      "status": "error",
       "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "staleness_days": 13
     },
     {
       "key": "de.data-engineer-things",
@@ -476,11 +476,11 @@
       "frequency": "weekly",
       "relevance": 0.8,
       "http_status": 403,
-      "latency_ms": 38,
+      "latency_ms": 128,
       "error": "HTTP Error 403: Forbidden; GET: HTTP Error 403: Forbidden",
       "status": "degraded",
       "last_verified": "2026-08-02T13:55:45.331489+00:00",
-      "staleness_days": 7
+      "staleness_days": 21
     },
     {
       "key": "de.dataverses",
@@ -490,11 +490,11 @@
       "frequency": "monthly",
       "relevance": 0.8,
       "http_status": 200,
-      "latency_ms": 133,
+      "latency_ms": 300,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "de.applydata",
@@ -504,11 +504,11 @@
       "frequency": "monthly",
       "relevance": 0.75,
       "http_status": 200,
-      "latency_ms": 825,
+      "latency_ms": 1135,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "de.lakeops",
@@ -518,11 +518,11 @@
       "frequency": "weekly",
       "relevance": 0.8,
       "http_status": 200,
-      "latency_ms": 226,
+      "latency_ms": 310,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "de.iceberg-blog",
@@ -532,11 +532,11 @@
       "frequency": "weekly",
       "relevance": 0.85,
       "http_status": 200,
-      "latency_ms": 134,
+      "latency_ms": 351,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "de.duckdb",
@@ -546,11 +546,11 @@
       "frequency": "weekly",
       "relevance": 0.8,
       "http_status": 200,
-      "latency_ms": 245,
+      "latency_ms": 151,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "de.clickhouse",
@@ -560,11 +560,11 @@
       "frequency": "weekly",
       "relevance": 0.8,
       "http_status": 200,
-      "latency_ms": 295,
+      "latency_ms": 353,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "de.trino",
@@ -574,11 +574,11 @@
       "frequency": "monthly",
       "relevance": 0.75,
       "http_status": 200,
-      "latency_ms": 146,
+      "latency_ms": 185,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "ms.sec",
@@ -588,11 +588,11 @@
       "frequency": "daily",
       "relevance": 0.9,
       "http_status": 200,
-      "latency_ms": 172,
+      "latency_ms": 154,
       "error": "HEAD blocked; verified via GET",
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "ms.bis",
@@ -602,11 +602,11 @@
       "frequency": "weekly",
       "relevance": 0.8,
       "http_status": 200,
-      "latency_ms": 492,
+      "latency_ms": 468,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "ms.imf",
@@ -616,11 +616,11 @@
       "frequency": "monthly",
       "relevance": 0.75,
       "http_status": 403,
-      "latency_ms": 111,
+      "latency_ms": 139,
       "error": "HTTP Error 403: Forbidden; GET: HTTP Error 403: Forbidden",
       "status": "degraded",
       "last_verified": "2026-08-02T13:55:45.331489+00:00",
-      "staleness_days": 7
+      "staleness_days": 21
     },
     {
       "key": "ms.msci",
@@ -630,11 +630,11 @@
       "frequency": "weekly",
       "relevance": 0.85,
       "http_status": 404,
-      "latency_ms": 327,
+      "latency_ms": 270,
       "error": "HTTP Error 404: Not Found",
       "status": "degraded",
       "last_verified": "2026-08-02T13:55:45.331489+00:00",
-      "staleness_days": 7
+      "staleness_days": 21
     },
     {
       "key": "ms.bloomberg",
@@ -644,11 +644,11 @@
       "frequency": "weekly",
       "relevance": 0.8,
       "http_status": 403,
-      "latency_ms": 178,
+      "latency_ms": 305,
       "error": "HTTP Error 403: Forbidden; GET: HTTP Error 403: Forbidden",
       "status": "degraded",
       "last_verified": "2026-07-24T07:49:55.527533+00:00",
-      "staleness_days": 16
+      "staleness_days": 30
     },
     {
       "key": "ms.spglobal",
@@ -658,11 +658,11 @@
       "frequency": "weekly",
       "relevance": 0.8,
       "http_status": 403,
-      "latency_ms": 238,
+      "latency_ms": 547,
       "error": "HTTP Error 403: Forbidden; GET: HTTP Error 403: Forbidden",
       "status": "degraded",
       "last_verified": "2026-08-02T13:55:45.331489+00:00",
-      "staleness_days": 7
+      "staleness_days": 21
     },
     {
       "key": "ms.man",
@@ -672,11 +672,11 @@
       "frequency": "monthly",
       "relevance": 0.75,
       "http_status": 200,
-      "latency_ms": 947,
+      "latency_ms": 1219,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "ms.aqr",
@@ -686,11 +686,11 @@
       "frequency": "monthly",
       "relevance": 0.8,
       "http_status": 200,
-      "latency_ms": 425,
+      "latency_ms": 863,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "ms.reuters",
@@ -700,11 +700,11 @@
       "frequency": "daily",
       "relevance": 0.7,
       "http_status": 401,
-      "latency_ms": 181,
+      "latency_ms": 229,
       "error": "HTTP Error 401: HTTP Forbidden; GET: HTTP Error 401: HTTP Forbidden",
       "status": "degraded",
       "last_verified": "2026-07-24T07:49:59.000911+00:00",
-      "staleness_days": 16
+      "staleness_days": 30
     },
     {
       "key": "ms.ft",
@@ -714,11 +714,11 @@
       "frequency": "daily",
       "relevance": 0.7,
       "http_status": 403,
-      "latency_ms": 138,
+      "latency_ms": 187,
       "error": "HTTP Error 403: Forbidden; GET: HTTP Error 403: Forbidden",
       "status": "degraded",
       "last_verified": "2026-08-02T13:55:45.331489+00:00",
-      "staleness_days": 7
+      "staleness_days": 21
     },
     {
       "key": "ms.quantocracy",
@@ -728,11 +728,11 @@
       "frequency": "weekly",
       "relevance": 0.75,
       "http_status": 200,
-      "latency_ms": 267,
+      "latency_ms": 377,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "ms.arxiv-math-fin",
@@ -742,11 +742,11 @@
       "frequency": "weekly",
       "relevance": 0.85,
       "http_status": 200,
-      "latency_ms": 64,
+      "latency_ms": 127,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "ms.ssrn",
@@ -756,11 +756,11 @@
       "frequency": "weekly",
       "relevance": 0.8,
       "http_status": 403,
-      "latency_ms": 207,
+      "latency_ms": 205,
       "error": "HTTP Error 403: Forbidden; GET: HTTP Error 403: Forbidden",
       "status": "degraded",
       "last_verified": "2026-08-02T13:55:45.331489+00:00",
-      "staleness_days": 7
+      "staleness_days": 21
     },
     {
       "key": "ms.nber",
@@ -770,11 +770,11 @@
       "frequency": "weekly",
       "relevance": 0.8,
       "http_status": 200,
-      "latency_ms": 226,
+      "latency_ms": 302,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "ms.quantmedia",
@@ -784,11 +784,11 @@
       "frequency": "weekly",
       "relevance": 0.8,
       "http_status": 200,
-      "latency_ms": 156,
+      "latency_ms": 238,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "ms.anannye",
@@ -798,11 +798,11 @@
       "frequency": "monthly",
       "relevance": 0.8,
       "http_status": 200,
-      "latency_ms": 202,
+      "latency_ms": 138,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "ms.citadel",
@@ -812,11 +812,11 @@
       "frequency": "semi-annual",
       "relevance": 0.85,
       "http_status": 403,
-      "latency_ms": 184,
+      "latency_ms": 183,
       "error": "HTTP Error 403: Forbidden; GET: HTTP Error 403: Forbidden",
       "status": "degraded",
       "last_verified": "2026-07-24T07:50:17.058010+00:00",
-      "staleness_days": 16
+      "staleness_days": 30
     },
     {
       "key": "ms.gs-marquee",
@@ -826,11 +826,11 @@
       "frequency": "monthly",
       "relevance": 0.8,
       "http_status": 401,
-      "latency_ms": 209,
+      "latency_ms": 479,
       "error": "HTTP Error 401: Unauthorized; GET: HTTP Error 401: Unauthorized",
       "status": "degraded",
       "last_verified": "2026-07-24T07:50:17.692967+00:00",
-      "staleness_days": 16
+      "staleness_days": 30
     },
     {
       "key": "ms.convextrade",
@@ -840,11 +840,11 @@
       "frequency": "daily",
       "relevance": 0.75,
       "http_status": 200,
-      "latency_ms": 213,
+      "latency_ms": 182,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "ms.cme",
@@ -854,11 +854,11 @@
       "frequency": "weekly",
       "relevance": 0.8,
       "http_status": 200,
-      "latency_ms": 85,
+      "latency_ms": 226,
       "error": "HEAD blocked; verified via GET",
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "ms.nasdaq",
@@ -868,11 +868,11 @@
       "frequency": "daily",
       "relevance": 0.8,
       "http_status": 200,
-      "latency_ms": 1059,
+      "latency_ms": 3086,
       "error": null,
       "status": "active",
-      "last_verified": "2026-08-10T05:39:57.825409+00:00",
-      "staleness_days": 5
+      "last_verified": "2026-08-24T04:53:30.725600+00:00",
+      "staleness_days": 13
     },
     {
       "key": "ms.oecd",
@@ -882,11 +882,11 @@
       "frequency": "monthly",
       "relevance": 0.75,
       "http_status": 403,
-      "latency_ms": 205,
+      "latency_ms": 105,
       "error": "HTTP Error 403: Forbidden; GET: HTTP Error 403: Forbidden",
       "status": "degraded",
       "last_verified": "2026-08-05T04:45:04.971847+00:00",
-      "staleness_days": 5
+      "staleness_days": 19
     }
   ]
 }
