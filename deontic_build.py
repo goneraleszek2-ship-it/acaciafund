@@ -1,9 +1,9 @@
 """Build script: Compile deontic states (O, P, F) into 64-bit integer bitmasks."""
 import json
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
 
-ROOT = Path("/root/acaciafund")
+ROOT = Path(__file__).resolve().parent
 ONT_PATH = ROOT / "data" / "ontology.json"
 KV_PATH = ROOT / "dist" / "deontic_bitmasks.json"
 

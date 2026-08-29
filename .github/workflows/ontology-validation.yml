@@ -5,6 +5,9 @@ on:
     branches: ["main"]
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   ontology-check:
     runs-on: ubuntu-latest
@@ -35,74 +38,78 @@ jobs:
             echo "::notice::No ontology-related files changed, skipping formal reasoning"
           fi
 
+      - name: Generate deontic bitmasks
+        if: steps.diff-check.changed_files != ''
+        run: python3 deontic_build.py
+
       - name: Ontology DAG Validation
         if: steps.diff-check.changed_files != ''
         run: |
-          python3 -c "
-import json, networkx as nx
-with open('data/ontology.json') as f:
-    data = json.load(f)
-G = nx.DiGraph()
-for concept in data['concepts']:
-    G.add_node(concept['id'], epistemic_status=concept.get('epistemic_status'))
-for rel in data['relations']:
-    G.add_edge(rel['source_id'], rel['target_id'], type=rel['relation_type'])
-req_graph = nx.subgraph_view(G, filter_edge=lambda u, v: G[u][v]['type'] == 'requires')
-is_acyclic = nx.is_directed_acyclic_graph(req_graph)
-cycles = list(nx.simple_cycles(req_graph))
-print(f'DAG acyclicity: {\"PASS\" if is_acyclic else \"FAIL\"} (cycles: {len(cycles)})')
-if cycles:
-    print(f'  Cycles: {\" -> \".join(cycles[:3])}')
-else:
-    print('  No cycles - DAG is valid')
-"
+          python3 - <<'PYEOF'
+          import json
+          import networkx as nx
+
+          with open('data/ontology.json') as f:
+              data = json.load(f)
+
+          G = nx.DiGraph()
+          for concept in data['concepts']:
+              G.add_node(concept['id'], epistemic_status=concept.get('epistemic_status'))
+          for rel in data['relations']:
+              G.add_edge(rel['source_id'], rel['target_id'], type=rel['relation_type'])
+
+          req_graph = nx.subgraph_view(G, filter_edge=lambda u, v: G[u][v]['type'] == 'requires')
+          is_acyclic = nx.is_directed_acyclic_graph(req_graph)
+          cycles = list(nx.simple_cycles(req_graph))
+
+          print('DAG acyclicity: {} (cycles: {})'.format('PASS' if is_acyclic else 'FAIL', len(cycles)))
+          if cycles:
+              print('  Cycles: {}'.format(' -> '.join(cycles[:3])))
+          else:
+              print('  No cycles - DAG is valid')
+
+          if not is_acyclic:
+              print('::error::Ontology requires-relation DAG contains cycles')
+              raise SystemExit(1)
+          PYEOF
 
       - name: Deontic Bitmask Verification
         if: steps.diff-check.changed_files != ''
         run: |
-          python3 -c "
-import json
-with open('dist/deontic_bitmasks.json') as f:
-    data = json.load(f)
-print('Deontic bitmasks verified:')
-print(f'  Obligation bits: {data[\"obligation_count\"]}')
-print(f'  Permission bits: {data[\"permission_count\"]}')
-print(f'  Prohibition bits: {data[\"prohibition_count\"]}')
-print(f'  Masks valid: {data[\"obligation_mask\"] > 0 and data[\"permission_mask\"] > 0 and data[\"prohibition_mask\"] > 0}')
-"
+          python3 - <<'PYEOF'
+          import json
+
+          with open('dist/deontic_bitmasks.json') as f:
+              data = json.load(f)
+
+          print('Deontic bitmasks verified:')
+          print('  Obligation bits: {}'.format(data['obligation_count']))
+          print('  Permission bits: {}'.format(data['permission_count']))
+          print('  Prohibition bits: {}'.format(data['prohibition_count']))
+          valid = (
+              data['obligation_mask'] > 0
+              and data['permission_mask'] > 0
+              and data['prohibition_mask'] > 0
+          )
+          print('  Masks valid: {}'.format(valid))
+          if not valid:
+              print('::error::Deontic bitmask masks invalid (zero-valued masked set)')
+              raise SystemExit(1)
+          PYEOF
 
       - name: Bitmask & Schema Export
+        if: steps.diff-check.changed_files != ''
         run: |
           python3 scripts/bitmask_exporter.py
-          python3 -c "
-import json
-with open('dist/deontic_bitmasks.json') as f:
-    data = json.load(f)
-print(f'Bitmask data verified: {data[\"obligation_count\"]} obligation bits, '
-      f'{data[\"permission_count\"]} permission bits, '
-      f'{data[\"prohibition_count\"]} prohibition bits')
-"
+          python3 - <<'PYEOF'
+          import json
 
-      - name: Deploy & Purge
-        needs: quality
-        runs-on: ubuntu-latest
-        steps:
-          - uses: actions/checkout@v7
-          - uses: actions/setup-python@v7
-            with:
-              python-version: "3.14"
-          - name: Restore build cache
-            uses: actions/cache@v6
-            with:
-              path: |
-                .build_cache.json
-                dist/
-              key: build-${{ hashFiles('templates/**/*', 'core/**/*.py', 'config.py') }}
-              restore-keys: |
-                build-
-          - name: Deploy to Cloudflare Pages
-            uses: cloudflare/wrangler-action@v4
-            with:
-              apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-              accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-              command: pages deploy dist --project-name=acaciafund
+          with open('dist/deontic_bitmasks.json') as f:
+              data = json.load(f)
+
+          print('Bitmask data verified: {} obligation bits, {} permission bits, {} prohibition bits'.format(
+              data['obligation_count'],
+              data['permission_count'],
+              data['prohibition_count'],
+          ))
+          PYEOF

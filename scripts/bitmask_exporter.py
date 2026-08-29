@@ -1,20 +1,21 @@
 """Bitmask Exporter: Export deontic bitmasks to JSON for Edge KV storage."""
 
 import json
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
+from typing import Optional
 
-ROOT = Path("/root/acaciafund")
+ROOT = Path(__file__).resolve().parent.parent
 BITMASK_PATH = ROOT / "dist" / "deontic_bitmasks.json"
 EXPORT_PATH = ROOT / "static" / "bitmask-data.json"
 
 
-def export_bitmasks(bitmask_path: Path = None, export_path: Path = None) -> dict:
+def export_bitmasks(bitmask_path: Optional[Path] = None, export_path: Optional[Path] = None) -> dict:
     """Export deontic bitmasks to static JSON for Edge KV lookup."""
     if bitmask_path is None:
-        bitmask_path = Path("/root/acaciafund/dist/deontic_bitmasks.json")
+        bitmask_path = ROOT / "dist" / "deontic_bitmasks.json"
     if export_path is None:
-        export_path = Path("/root/acaciafund/static/bitmask-data.json")
+        export_path = ROOT / "static" / "bitmask-data.json"
 
     with open(bitmask_path) as f:
         data = json.load(f)
@@ -66,8 +67,8 @@ def get_deontic_state(pillar: str, concept_id: str, bitmask_data: dict) -> str:
 
 def main():
     import sys
-    bitmask_path = Path(sys.argv[1]) if len(sys.argv) > 1 else Path("/root/acaciafund/dist/deontic_bitmasks.json")
-    export_path = Path(sys.argv[2]) if len(sys.argv) > 2 else Path("/root/acaciafund/static/bitmask-data.json")
+    bitmask_path = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "dist" / "deontic_bitmasks.json"
+    export_path = Path(sys.argv[2]) if len(sys.argv) > 2 else ROOT / "static" / "bitmask-data.json"
 
     result = export_bitmasks(bitmask_path, export_path)
     print(f"Exported bitmask data: {result['obligation_bit_count']} obligation bits, "
