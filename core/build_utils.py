@@ -31,7 +31,12 @@ DOMAIN_BREAKDOWN_RE = re.compile(
 
 
 def load_admin_credentials():
-    """Load admin credentials from .env file. Exits if not set."""
+    """Load admin credentials from environment or .env file.
+
+    Fail-closed: raises RuntimeError when credentials are not configured.
+    Never falls back to hardcoded defaults. Configure via ADMIN_USERNAME /
+    ADMIN_PASSWORD environment variables or a `.env` file (see `.env.example`).
+    """
     env_path = PROJECT_ROOT / ".env"
     username = os.environ.get("ADMIN_USERNAME")
     password = os.environ.get("ADMIN_PASSWORD")
@@ -56,10 +61,11 @@ def load_admin_credentials():
                 pass
 
     if not username or not password:
-        print("WARNING: ADMIN_USERNAME/ADMIN_PASSWORD not set. Using dev defaults (admin/admin).")
-        print("WARNING: Set these via environment variables or a .env file for production.")
-        username = "admin"
-        password = "admin"
+        raise RuntimeError(
+            "ADMIN_USERNAME/ADMIN_PASSWORD not set. Configure them via environment "
+            "variables or a `.env` file (see `.env.example`). Refusing to use "
+            "insecure defaults."
+        )
 
     return username, password
 

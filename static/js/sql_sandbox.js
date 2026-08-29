@@ -1,20 +1,5 @@
-
 /* sql_sandbox.js */
 
-/* sql_sandbox.js */
-
-/* sql_sandbox.js */
-
-/* sql_sandbox.js */
-
-/* sql_sandbox.js */
-
-/* sql_sandbox.js */
-/* sql_sandbox.js */
-
-/* sql_sandbox.js */
-
-/* sql_sandbox.js */
 (function () {
   'use strict';
 

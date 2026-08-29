@@ -30,8 +30,26 @@ jobs:
       - name: Lint
         run: ruff check .
 
-      - name: Type check
-        run: pyright || true
+      - name: Type check (baseline-gated)
+        run: |
+          set +e
+          pyright > /tmp/pyright.log 2>&1
+          STATUS=$?
+          ERRORS=$(grep -c "error:" /tmp/pyright.log || true)
+          BASELINE=68
+          echo "pyright errors: ${ERRORS} (baseline ${BASELINE})"
+          if [ "${ERRORS}" -gt "${BASELINE}" ]; then
+            echo "::error::pyright errors increased (${ERRORS} > baseline ${BASELINE}). Fix regressions before merging."
+            grep "error:" /tmp/pyright.log
+            exit 1
+          fi
+          # Exit non-zero when pyright exits with an unexpected fatal error.
+          if [ "${STATUS}" -ne 0 ] && [ "${ERRORS}" -eq 0 ]; then
+            echo "::error::pyright failed without reporting errors."
+            tail -50 /tmp/pyright.log
+            exit 1
+          fi
+          exit 0
 
   deploy:
     needs: quality

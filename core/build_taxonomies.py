@@ -8,7 +8,6 @@ aggregate state (tag maps, stats, etc.) that changes across builds.
 """
 
 import json
-import os
 import re
 from collections import defaultdict
 from datetime import datetime, timezone
@@ -557,13 +556,13 @@ def generate_admin_pages(
     pages_generated += 1
 
     # Credentials + index redirect
-    admin_username = "admin"
-    admin_password = "admin"
+    # NOTE: the admin login page is protected by Cloudflare Access and does
+    # not render credentials, so we never pass them to the template.
     if load_admin_credentials_fn:
-        admin_username, admin_password = load_admin_credentials_fn()
-    else:
-        admin_username = os.environ.get("ADMIN_USERNAME", "")
-        admin_password = os.environ.get("ADMIN_PASSWORD", "")
+        try:
+            load_admin_credentials_fn()
+        except Exception:
+            pass
 
     redirect_html = """<!DOCTYPE html>
 <html lang="en">
@@ -585,8 +584,6 @@ def generate_admin_pages(
     html = render_template(
         "admin/login.html",
         content=_dummy("Admin Login", "admin"),
-        admin_username=admin_username,
-        admin_password=admin_password,
         **ctx_base,
     )
     (admin_dir / "login.html").write_text(html, encoding="utf-8")

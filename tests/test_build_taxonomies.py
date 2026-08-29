@@ -4,6 +4,8 @@ import json
 from datetime import datetime, timezone
 from unittest.mock import ANY, MagicMock
 
+import pytest
+
 from core.build_taxonomies import (
     _compute_coverage_data,
     _compute_dashboard_stats,
@@ -500,7 +502,7 @@ class TestGenerateAdminPages:
         assert pages >= 1
         assert (output_dir / "admin" / "dashboard.html").exists()
 
-    def test_login_page_with_default_creds(self, tmp_path):
+    def test_login_page_does_not_embed_credentials(self, tmp_path):
         output_dir = tmp_path / "site"
         static_dir = tmp_path / "static"
         static_dir.mkdir(parents=True)
@@ -510,12 +512,25 @@ class TestGenerateAdminPages:
             output_dir, items, static_dir, render_template, {}, _dummy,
             load_admin_credentials_fn=lambda: ("admin", "admin"),
         )
+        # Credentials must never be passed to the static login template.
         render_template.assert_any_call(
             "admin/login.html",
             content=ANY,
-            admin_username="admin",
-            admin_password="admin",
         )
+        bad = [
+            c for c in render_template.call_args_list
+            if c.args and c.args[0] == "admin/login.html"
+            and ("admin_username" in c.kwargs or "admin_password" in c.kwargs)
+        ]
+        assert not bad, "credentials must not be embedded in admin/login.html"
+
+    def test_load_admin_credentials_raises_when_unset(self, tmp_path, monkeypatch):
+        from core.build_utils import load_admin_credentials
+        monkeypatch.delenv("ADMIN_USERNAME", raising=False)
+        monkeypatch.delenv("ADMIN_PASSWORD", raising=False)
+        monkeypatch.setattr("core.build_utils.PROJECT_ROOT", tmp_path)
+        with pytest.raises(RuntimeError):
+            load_admin_credentials()
 
     def test_quality_page(self, tmp_path):
         output_dir = tmp_path / "site"

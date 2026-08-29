@@ -1,20 +1,5 @@
-
 /* kyc_sim.js */
 
-/* kyc_sim.js */
-
-/* kyc_sim.js */
-
-/* kyc_sim.js */
-
-/* kyc_sim.js */
-
-/* kyc_sim.js */
-/* kyc_sim.js */
-
-/* kyc_sim.js */
-
-/* kyc_sim.js */
 (function () {
   'use strict';
 
