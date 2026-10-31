@@ -294,7 +294,7 @@ class TestOntologySeeding:
             "infrastructure",
             "kyle-model",
             "lakehouse-architecture",
-            "lakestream-architecture",
+            "streaming-first-lakehouse",
             "law-markets-data-triangle",
             "mapreduce",
             "prospect-theory",

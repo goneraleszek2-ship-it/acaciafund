@@ -2168,6 +2168,11 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
             per_pillar_recent.append(_p)
             _seen.add(_p.slug)
 
+    pillar_counts = {
+        _p: sum(1 for _c in all_content if _c.pillar == _p and _c.content_type == "research")
+        for _p in ("aml", "stock", "data-engineering")
+    }
+
     # --- news digest context (best-effort: empty list if data/news.json is missing) ---
     _news_data = _load_news_data()
     news_items = _news_data["items"]
@@ -2185,6 +2190,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
         og_image_url=home_og_url,
         featured_posts=featured,
         recent_posts=per_pillar_recent,
+        pillar_counts=pillar_counts,
         learn_items=_interleave_by_pillar(learn_items, 6),
         knowledge_items=knowledge_items[:6],
         hero_article=hero_article,

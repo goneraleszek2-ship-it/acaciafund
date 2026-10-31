@@ -74,7 +74,7 @@ def strip_comments(content: str) -> str:
 
 def bundle(dev: bool = True, out_dir: str | None = None) -> dict[str, Path]:
     if out_dir is None:
-        out_dir = str(STATIC_JS)
+        out_dir = str(STATIC_JS.parent / "dist" / "js")
     out_path = Path(out_dir)
     out_path.mkdir(parents=True, exist_ok=True)
 
@@ -111,8 +111,8 @@ def main():
     parser = argparse.ArgumentParser(description="Bundle JS files")
     parser.add_argument("--prod", action="store_true", help="Minify output")
     parser.add_argument(
-        "--out", default=str(STATIC_JS),
-        help="Output directory (default: static/js)"
+        "--out", default=str(STATIC_JS.parent / "dist" / "js"),
+        help="Output directory (default: static/dist/js)"
     )
     args = parser.parse_args()
 

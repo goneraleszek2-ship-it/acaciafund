@@ -41,7 +41,7 @@ weeks = [
             [E("2026-01-05", "2026 DE Trend Reports Drop",
                "Every January, the data engineering community publishes predictions. For 2026, the consensus was unusually specific: (1) AI-native pipelines where LLMs write and optimize ETL code, (2) data contracts as the standard for cross-team data sharing, and (3) streaming-first architectures replacing batch ETL as the default pattern.",
                "Like three restaurant critics all naming the same dish as 'the thing to eat this year' — except the dish is 'let AI build your data pipelines while streaming replaces your nightly batch jobs.'",
-               "This turned out to be remarkably prescient. By July, AI agents wrote 80%+ of new databases on Databricks, and Lakestream (streaming + lakehouse) became the dominant architecture pattern.")]),
+               "This turned out to be remarkably prescient. By July, AI agents wrote 80%+ of new databases on Databricks, and streaming-first lakehouse (streaming + lakehouse) became an emerging architecture pattern.")]),
     }),
 
     # ═══ W02 ═══
@@ -170,7 +170,7 @@ weeks = [
              E("2026-02-15", "Flink K8s Operator 1.14.0 Released",
                "The Flink Kubernetes Operator hit 1.14.0 with improved autoscaling, better checkpoint management, and enhanced monitoring. Streaming infrastructure continued its march toward production-grade operations.",
                "Like a car getting better suspension and brakes — the engine (Flink) was already great, but the operator makes it a smoother ride for operators.",
-               "Flink's operator maturity was critical for the Lakestream paradigm: if you can't run Flink reliably on Kubernetes, the Debezium→Kafka→Flink→Iceberg stack doesn't work in production.")]),
+               "Flink's operator maturity was critical for the streaming-first lakehouse paradigm: if you can't run Flink reliably on Kubernetes, the Debezium→Kafka→Flink→Iceberg stack doesn't work in production.")]),
     }),
 
     # ═══ W08 ═══
@@ -329,11 +329,11 @@ weeks = [
         "markets": pillar("🔄 Quiet week",
             "Markets digesting FinCEN reform and watching oil prices.",
             []),
-        "data-engineering": pillar("⚡⚡⚡ LAKESTREAM LAUNCH",
-            "StreamNative launched Lakestream architecture and Ursa for Kafka — the streaming-lakehouse unification product that would define 2026 data engineering.",
-            [E("2026-04-07", "StreamNative Launches Lakestream + Ursa for Kafka",
-               "StreamNative published the defining data engineering architecture of 2026: Lakestream — a single copy of data in Kafka topics that simultaneously serves real-time streaming and Iceberg table queries. Ursa for Kafka provides native Kafka on lakehouse storage with 95% cost reduction by eliminating separate streaming and batch storage.",
-               "Imagine having two refrigerators — one for tonight's dinner, one for next month's meal prep. Lakestream says: use one refrigerator for both. Same food, same fridge, same cost. The 95% cost reduction comes from not buying a second fridge.",
+        "data-engineering": pillar("⚡⚡⚡ STREAMING-FIRST LAKEHOUSE LAUNCH",
+            "StreamNative launched streaming-first lakehouse architecture and Ursa for Kafka — the streaming-lakehouse unification product that would define 2026 data engineering.",
+            [E("2026-04-07", "StreamNative Launches streaming-first lakehouse + Ursa for Kafka",
+               "StreamNative published an influential streaming-first lakehouse architecture: streaming-first lakehouse — a single copy of data in Kafka topics that simultaneously serves real-time streaming and Iceberg table queries. Ursa for Kafka provides native Kafka on lakehouse storage with workload-specific cost savings by eliminating separate streaming and batch storage.",
+               "Imagine having two refrigerators — one for tonight's dinner, one for next month's meal prep. streaming-first lakehouse says: use one refrigerator for both. Same food, same fridge, same cost. The workload-specific cost savings comes from not buying a second fridge.",
                "This wasn't just a product launch — it was a paradigm shift. The batch/streaming duality that had plagued data architecture for a decade was finally resolved. One copy of data, two access patterns.",
                links=[{"label": "StreamNative Blog", "url": "https://streamnative.io/blog"}]),
             ]),
@@ -579,7 +579,7 @@ weeks = [
             [E("2026-06-25", "Open Data Lakehouse Report: Iceberg is the Standard",
                "The 'Open Data Lakehouse in 2026' report confirmed what everyone suspected: Iceberg won the format war. Delta Lake and Hudi were viable alternatives for specific use cases, but Iceberg was the industry standard. The report also highlighted the convergence of streaming and batch on the lakehouse.",
                "This was the official 'yearbook' for data engineering — declaring Iceberg 'most likely to succeed' in the format class. The debate was over.",
-               "The report's streaming-lakehouse convergence theme was validated almost immediately by StreamNative's Lakestream architecture validation in July.")]),
+               "The report's streaming-lakehouse convergence theme was followed by StreamNative's July streaming-first lakehouse write-up.")]),
     }),
 
     # ═══ W27 ═══
@@ -623,16 +623,16 @@ weeks = [
                "The US-Iran ceasefire collapsed. Iran attacked 3 commercial vessels in the Strait of Hormuz. The US launched retaliatory strikes. President Trump declared the ceasefire 'over.' Oil surged from ~$71 to $78+ in 48 hours. The geopolitical premium returned with a vengeance.",
                "The brief peace was like a cease-fire that lasted just long enough for everyone to catch their breath before the next punch. Oil traders who thought the crisis was over got a brutal reminder: Hormuz is never 'safe.'",
                "This renewed volatility set the stage for the July 22 oil surge to $95+. The Hormuz crisis had a playbook now: ceasefire → spike → collapse → ceasefire collapse → spike again.")]),
-        "data-engineering": pillar("⚡⚡ Iceberg named industry standard + Lakestream validated",
-            "TechTarget: Iceberg named 'de facto industry standard.' Delta Lake concedes via UniForm. StreamNative publishes Lakestream architecture paper with 95% cost reduction.",
+        "data-engineering": pillar("⚡⚡ Iceberg named industry standard + streaming-first lakehouse validated",
+            "TechTarget: Iceberg named 'de facto industry standard.' Delta Lake concedes via UniForm. StreamNative publishes streaming-first lakehouse architecture paper with workload-specific cost savings.",
             [E("2026-07-09", "Iceberg Named 'De Facto Industry Standard'",
                "TechTarget published a landmark analysis declaring Apache Iceberg the 'de facto industry standard' for lakehouse table formats. The article noted that Delta Lake had effectively conceded via UniForm (which provides Iceberg compatibility). The format war was officially, finally over.",
                "Remember the Coke vs. Pepsi taste tests? Imagine Pepsi waving a white flag and saying 'our drink can now be served in Coke bottles.' That's Delta Lake adopting Iceberg compatibility — the format war ended with a merger, not a knockout.",
                "This declaration had real consequences: tool vendors stopped hedging bets, data teams standardized on Iceberg, and the community focused on v4 features rather than competition."),
-             E("2026-07-10", "Lakestream Architecture Validated: 95% Cost Reduction",
-               "StreamNative published the full Lakestream architecture paper, demonstrating how one copy of data in Kafka topics simultaneously serves real-time streaming and Iceberg table queries. Independent validation showed 95% cost reduction and simplified operations.",
-               "The first build (April) said Lakestream was possible. The July paper proved it worked. Independent validation turned a vision into an architecture pattern that every data platform team could adopt.",
-               "This was the third pillar of the 'streaming-lakehouse unification' trend. First Flink CDC 3.6.0 (March), then Lakestream launch (April), now validated architecture (July). The pattern was established.")]),
+             E("2026-07-10", "Streaming-First Lakehouse Patterns: Vendor-Reported Cost Savings",
+               "StreamNative published the full streaming-first lakehouse architecture paper, demonstrating how one copy of data in Kafka topics simultaneously serves real-time streaming and Iceberg table queries. Vendor-reported results suggest workload-specific cost savings and simplified operations.",
+               "The first build (April) said streaming-first lakehouse was possible. The July paper proved it worked. Independent validation turned a vision into an architecture pattern that every data platform team could adopt.",
+               "This was the third pillar of the 'streaming-lakehouse unification' trend. First Flink CDC 3.6.0 (March), then streaming-first lakehouse launch (April), now validated architecture (July). The pattern was established.")]),
     }),
 
     # ═══ W29 ═══
@@ -675,7 +675,7 @@ weeks = [
                "JPMorgan is saying the earnings party is over. The DJ is packing up, the lights are coming on, and it's time to call a taxi (buy defensive stocks). The PPI-CPI spread is the 'how much are input costs eating into profits' meter — and it's flashing red.",
                "This warning crystallized the macro narrative for H2 2026: earnings peaking, oil elevated, Fed unable to cut, and defensive rotation the only sane strategy.")]),
         "data-engineering": pillar("🔄 Quiet week",
-            "Data engineering teams focused on Lakestream adoption and Iceberg migration planning.",
+            "Data engineering teams focused on streaming-first lakehouse adoption and Iceberg migration planning.",
             []),
     }),
 ]

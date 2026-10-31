@@ -143,7 +143,7 @@ This codebase has been built in sequential sprints. Understanding what came befo
 | Foundation fixes | Concept extraction word-boundary fix, alias expansion, full category remapping, knowledge-to-pillar mapping, description backfill |
 | Quality fixes | SQI backfill script, search recall improvement (threshold 0.35, body window 800), niche concept alias expansion |
 
-**Current state:** 262 registry items, 2,960 generated pages (incl. `/design-system/`), 3 clean pillars, 199 ontology concepts (all with philosophical metadata, 447 canonical relations), 65 inspiration sources. Daily news pipeline: 23 live RSS feeds + Hacker News + GDELT (keyless). Quality gate: passing, all pages SQI >= 0.65. 1321 Python tests across 66 modules (+ 15 JS suites). Metrics verified 2026-10-31 — see `docs/08-testing-quality/test-overview.md` for the canonical reference. Tier 5/6 complete: OpenAlex "Cited by" (`scripts/backfill_openalex.py`), key-variable + PRISMA extraction (`core/extraction.py`), Edit-on-GitHub links (`core/edit_links.py`), public design system (`/design-system/`).
+**Current state:** 260 registry items, 2,929 generated pages (incl. `/design-system/`), 3 clean pillars, 199 ontology concepts (all with philosophical metadata, 447 canonical relations), 65 inspiration sources. Daily news pipeline: 23 live RSS feeds + Hacker News + GDELT (keyless). Quality gate: passing, all pages SQI >= 0.65. 1321 Python tests across 66 modules (+ 15 JS suites). Metrics verified 2026-10-31 — see `docs/08-testing-quality/test-overview.md` for the canonical reference. Tier 5/6 complete: OpenAlex "Cited by" (`scripts/backfill_openalex.py`), key-variable + PRISMA extraction (`core/extraction.py`), Edit-on-GitHub links (`core/edit_links.py`), public design system (`/design-system/`).
 
 > **Master specification:** the reconciled execution plan (tier checklist with done/partial/pending status, verified metrics, quality gates) lives at `docs/00-system-architecture/master-spec.md`. Consult it before starting any new feature tier.
 >
@@ -260,9 +260,9 @@ Three pillars with internal keys and URL segments:
 
 | Internal Key | URL Segment | Label | Items |
 |---|---|---|---|
-| `aml` | `compliance` | Compliance | 92 |
+| `aml` | `compliance` | Compliance | 91 |
 | `stock` | `markets` | Markets | 74 |
-| `data-engineering` | `data` | Data Engineering | 96 |
+| `data-engineering` | `data` | Data Engineering | 95 |
 
 **Single source of truth:** `config.py` → `PILLAR_URL_MAP`
 
@@ -340,7 +340,7 @@ scripts/knowledge_ingester.py  →  registry.json  →  build.py  →  dist/
 | `core/build_taxonomies.py` | Taxonomy generation: admin pages, search index, tag pages, pillar pages, feed, ontology admin |
 | `core/build_cache.py` | Incremental build cache with parallel_map support |
 | `schemas.py` | Pydantic models for registry validation (`RegistryData`) |
-| `registry.json` | Content registry (262 items) |
+| `registry.json` | Content registry (260 items) |
 | `core/schema_builder.py` | **NEW** Schema builder: prerequisite graphs, learning paths, Bloom categorization |
 | `static/js/progressive_disclosure.js` | **NEW** Collapsible article sections (Cognitive Load Theory) |
 | `templates/partials/visual_abstract.j2` | **NEW** Dual-coded article summary partial (visual abstract) |

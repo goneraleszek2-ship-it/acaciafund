@@ -130,11 +130,13 @@
     "transaction-monitoring"
   ],
   "aml/research/aml-1": [
+    "aml-model-validation",
     "ctr",
     "data-observability",
     "federated-learning",
     "fraud-detection",
     "machine-learning-markets",
+    "model-cards",
     "payment-fraud",
     "regime-detection",
     "transaction-monitoring"
@@ -156,7 +158,6 @@
     "regulatory-filing"
   ],
   "aml/research/aml-4": [
-    "aml-esg-risk",
     "aml-international",
     "aml-risk-scoring",
     "beneficial-ownership",
@@ -246,7 +247,6 @@
     "aml-program",
     "aml-program-reform",
     "aml-regulatory-framework",
-    "aml-risk-scoring",
     "bsa",
     "regulatory-filing",
     "risk-based-approach"
@@ -522,12 +522,6 @@
   "compliance/research/declining-modularity-of-intellectual-bases-during-the-emerge": [
     "research"
   ],
-  "compliance/research/drezner-2022-global-governance-aml": [
-    "aml-effectiveness",
-    "aml-regulatory-framework",
-    "fatf-recommendations",
-    "kyc"
-  ],
   "compliance/research/dsprompt-dynamic-soft-prompt-defense-against-m-rag-corruptio": [],
   "compliance/research/eco-id-event-camera-based-optical-system-for-secure-multi-us": [
     "high-frequency-trading"
@@ -596,8 +590,8 @@
     "etl",
     "lakehouse",
     "lakehouse-architecture",
-    "lakestream-architecture",
-    "streaming"
+    "streaming",
+    "streaming-first-lakehouse"
   ],
   "data/glossary": [
     "acid-transaction-management",
@@ -1294,6 +1288,7 @@
     "query-optimization"
   ],
   "data/research/schema-registry-avro-protobuf": [
+    "data-contracts",
     "data-governance",
     "dataops",
     "debiasing-pipeline",
@@ -1355,23 +1350,6 @@
   ],
   "data/research/stonebraker-2018-database-cycles": [
     "data-warehouse"
-  ],
-  "data/research/streaming-lakehouse-lakestream-2026": [
-    "apache-flink",
-    "apache-iceberg",
-    "apache-kafka",
-    "cdc",
-    "change-data-capture",
-    "dataops",
-    "etl",
-    "lakehouse",
-    "lakehouse-architecture",
-    "lakestream-architecture",
-    "real-time-analytics",
-    "schema-migration",
-    "schema-registry",
-    "stream-processing-model",
-    "streaming"
   ],
   "data/research/terraform-data-infrastructure": [
     "apache-iceberg",

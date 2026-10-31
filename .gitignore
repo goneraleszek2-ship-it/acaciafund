@@ -12,8 +12,11 @@ __pycache__/
 
 # Registry artifacts
 .registry-archive/
+data/registry_archive/
 registry.json.bak
 registry.pre-*.json
+registry.db
+registry.db-*
 
 # Cache directories
 .cache/

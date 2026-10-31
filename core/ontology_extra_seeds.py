@@ -454,7 +454,7 @@ PILLAR_EXTRA_CONCEPT_SEEDS: list[dict] = [{'aliases': ['acidtransactionmanagemen
               'lakehouse-architecture'],
   'category': 'architecture',
   'confidence_score': 1.0,
-  'cross_pillar_analogs': ['aml-data-sharing', 'lakestream-architecture'],
+  'cross_pillar_analogs': ['aml-data-sharing', 'streaming-first-lakehouse'],
   'description': 'The Lakehouse architecture, formalized by Armbrust et al. (2021), combines the flexibility of data '
                  'lakes (cheap object storage, diverse data types) with the reliability of data warehouses (ACID '
                  'transactions, schema enforcement, performance optimization). It achieves this through a new open '
@@ -475,34 +475,28 @@ PILLAR_EXTRA_CONCEPT_SEEDS: list[dict] = [{'aliases': ['acidtransactionmanagemen
                         "Warehousing and Advanced Analytics.' Proceedings of CIDR (2021).",
   'temporal_ontology': 'process_based',
   'uncertainty_class': 'measurable'},
- {'aliases': ['lakestream',
-              'StreamNative Lakestream',
-              'streaming-first lakehouse',
+ {'aliases': ['streaming-first lakehouse',
               'streaming-lakehouse',
               'stream batch unification'],
   'category': 'streaming',
   'confidence_score': 1.0,
   'cross_pillar_analogs': ['transaction-monitoring'],
-  'description': 'Lakestream Architecture represents the convergence of streaming and lakehouse paradigms, where a '
-                 'single copy of data in Kafka topics simultaneously serves real-time stream processing and Iceberg '
-                 'table reads. Formalized by StreamNative in 2026, it achieves 95% cost reduction by eliminating '
-                 'separate streaming and batch storage layers. The default 2026 stack is Debezium (CDC) → Kafka '
-                 '(transport) → Flink (processing) → Iceberg (storage). Extends the lakehouse architecture pioneered '
-                 'by Armbrust et al. (2021) with first-class streaming semantics.',
+  'description': 'An emerging architecture that keeps a single copy of data in a streaming log while exposing it '
+                 'as Iceberg tables for historical queries. It can reduce duplication between batch and streaming '
+                 'paths, but adoption and cost-savings claims are vendor- and workload-specific. The common stack is '
+                 'Debezium (CDC) → Kafka (transport) → Flink (processing) → Iceberg (storage).',
   'epistemic_status': 'constitutive',
   'governance_model': 'distributed',
-  'id': 'lakestream-architecture',
-  'label': 'Lakestream Architecture',
+  'id': 'streaming-first-lakehouse',
+  'label': 'Streaming-First Lakehouse',
   'normative_basis': 'utilitarian',
   'ontological_commitment': 'processual',
   'philosophical_lineage': ['event_logging', 'distributed_consensus', 'systems_theory'],
-  'philosophical_sources': ["StreamNative. 'Lakestream: One Copy for Streaming and Lakehouse.' (2026)",
-                            "Armbrust, Michael, et al. 'Lakehouse: A New Generation of Open Platforms.' CIDR (2021)",
+  'philosophical_sources': ["Armbrust, Michael, et al. 'Lakehouse: A New Generation of Open Platforms.' CIDR (2021)",
                             "Akidau, Tyler, et al. 'The Dataflow Model.' VLDB (2015)"],
   'pillar': 'data-engineering',
   'semantic_contract_type': 'technical',
-  'source_inspiration': 'StreamNative Lakestream architecture whitepaper (2026); Debezium + Kafka + Flink + Iceberg '
-                        'stack',
+  'source_inspiration': 'Debezium + Kafka + Flink + Iceberg stack; general streaming-lakehouse architecture',
   'temporal_ontology': 'event_based',
   'uncertainty_class': 'measurable'},
  {'aliases': ['three pillars', 'law markets data'],
@@ -658,7 +652,7 @@ PILLAR_EXTRA_CONCEPT_SEEDS: list[dict] = [{'aliases': ['acidtransactionmanagemen
               'stream processing theory'],
   'category': 'advanced-techniques',
   'confidence_score': 1.0,
-  'cross_pillar_analogs': ['transaction-monitoring', 'lakestream-architecture', 'entity-resolution'],
+  'cross_pillar_analogs': ['transaction-monitoring', 'streaming-first-lakehouse', 'entity-resolution'],
   'description': 'The Dataflow Model, introduced by Akidau et al. (2015), provides a unified framework for processing '
                  'both batch and streaming data. It defines a general approach to handling unbounded, out-of-order '
                  'data by separating the what (computation via operators), where (windowing), when (triggering), and '
@@ -862,11 +856,11 @@ PILLAR_EXTRA_RELATION_SEEDS: list[tuple] = [('adverse-media', 'kyc', 'requires',
  ('lakehouse-architecture', 'aml-data-governance', 'related_to', 'cross-pillar'),
  ('lakehouse-architecture', 'apache-iceberg', 'enables', 'data-engineering'),
  ('lakehouse-architecture', 'lakehouse', 'part_of', 'data-engineering'),
- ('lakestream-architecture', 'apache-flink', 'requires', 'data-engineering'),
- ('lakestream-architecture', 'apache-iceberg', 'requires', 'data-engineering'),
- ('lakestream-architecture', 'apache-kafka', 'requires', 'data-engineering'),
- ('lakestream-architecture', 'lakehouse-architecture', 'supersedes', 'data-engineering'),
- ('lakestream-architecture', 'stream-processing-model', 'enables', 'data-engineering'),
+ ('streaming-first-lakehouse', 'apache-flink', 'requires', 'data-engineering'),
+ ('streaming-first-lakehouse', 'apache-iceberg', 'requires', 'data-engineering'),
+ ('streaming-first-lakehouse', 'apache-kafka', 'requires', 'data-engineering'),
+ ('streaming-first-lakehouse', 'lakehouse-architecture', 'supersedes', 'data-engineering'),
+ ('streaming-first-lakehouse', 'stream-processing-model', 'enables', 'data-engineering'),
  ('law-markets-data-triangle', 'aml-regulatory-framework', 'influences', 'cross-pillar'),
  ('law-markets-data-triangle', 'data-governance', 'requires', 'cross-pillar'),
  ('law-markets-data-triangle', 'market-microstructure', 'influences', 'cross-pillar'),

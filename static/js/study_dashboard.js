@@ -1,5 +1,3 @@
-
-/* study_dashboard.js */
 /* study_dashboard.js */
 
 (function () {

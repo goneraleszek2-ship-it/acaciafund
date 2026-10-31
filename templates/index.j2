@@ -34,7 +34,7 @@
         {%- endfor %}
       </ul>
       <span class="bc-foot">
-        <span>{{ pillar_count }} articles</span>
+        <span>{{ pillar_counts.get(pillar_key, pillar_count) }} articles</span>
         <span class="bc-go">Explore &rarr;</span>
       </span>
     </a>

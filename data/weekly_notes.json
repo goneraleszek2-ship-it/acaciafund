@@ -45,7 +45,7 @@
               "title": "2026 DE Trend Reports Drop",
               "feynman": "Every January, the data engineering community publishes predictions. For 2026, the consensus was unusually specific: (1) AI-native pipelines where LLMs write and optimize ETL code, (2) data contracts as the standard for cross-team data sharing, and (3) streaming-first architectures replacing batch ETL as the default pattern.",
               "analogy": "Like three restaurant critics all naming the same dish as 'the thing to eat this year' — except the dish is 'let AI build your data pipelines while streaming replaces your nightly batch jobs.'",
-              "why_it_matters": "This turned out to be remarkably prescient. By July, AI agents wrote 80%+ of new databases on Databricks, and Lakestream (streaming + lakehouse) became the dominant architecture pattern."
+              "why_it_matters": "This turned out to be remarkably prescient. By July, AI agents wrote 80%+ of new databases on Databricks, and streaming-first lakehouse (streaming + lakehouse) became an emerging architecture pattern."
             }
           ]
         }
@@ -298,7 +298,7 @@
               "title": "Flink K8s Operator 1.14.0 Released",
               "feynman": "The Flink Kubernetes Operator hit 1.14.0 with improved autoscaling, better checkpoint management, and enhanced monitoring. Streaming infrastructure continued its march toward production-grade operations.",
               "analogy": "Like a car getting better suspension and brakes — the engine (Flink) was already great, but the operator makes it a smoother ride for operators.",
-              "why_it_matters": "Flink's operator maturity was critical for the Lakestream paradigm: if you can't run Flink reliably on Kubernetes, the Debezium→Kafka→Flink→Iceberg stack doesn't work in production."
+              "why_it_matters": "Flink's operator maturity was critical for the streaming-first lakehouse paradigm: if you can't run Flink reliably on Kubernetes, the Debezium→Kafka→Flink→Iceberg stack doesn't work in production."
             }
           ]
         }
@@ -612,14 +612,14 @@
           "events": []
         },
         "data-engineering": {
-          "vibe": "⚡⚡⚡ LAKESTREAM LAUNCH",
-          "feynman_takeaway": "StreamNative launched Lakestream architecture and Ursa for Kafka — the streaming-lakehouse unification product that would define 2026 data engineering.",
+          "vibe": "⚡⚡⚡ STREAMING-FIRST LAKEHOUSE LAUNCH",
+          "feynman_takeaway": "StreamNative launched streaming-first lakehouse architecture and Ursa for Kafka — the streaming-lakehouse unification product that would define 2026 data engineering.",
           "events": [
             {
               "date": "2026-04-07",
-              "title": "StreamNative Launches Lakestream + Ursa for Kafka",
-              "feynman": "StreamNative published the defining data engineering architecture of 2026: Lakestream — a single copy of data in Kafka topics that simultaneously serves real-time streaming and Iceberg table queries. Ursa for Kafka provides native Kafka on lakehouse storage with 95% cost reduction by eliminating separate streaming and batch storage.",
-              "analogy": "Imagine having two refrigerators — one for tonight's dinner, one for next month's meal prep. Lakestream says: use one refrigerator for both. Same food, same fridge, same cost. The 95% cost reduction comes from not buying a second fridge.",
+              "title": "StreamNative Launches streaming-first lakehouse + Ursa for Kafka",
+              "feynman": "StreamNative published an influential streaming-first lakehouse architecture: streaming-first lakehouse — a single copy of data in Kafka topics that simultaneously serves real-time streaming and Iceberg table queries. Ursa for Kafka provides native Kafka on lakehouse storage with workload-specific cost savings by eliminating separate streaming and batch storage.",
+              "analogy": "Imagine having two refrigerators — one for tonight's dinner, one for next month's meal prep. streaming-first lakehouse says: use one refrigerator for both. Same food, same fridge, same cost. The workload-specific cost savings comes from not buying a second fridge.",
               "why_it_matters": "This wasn't just a product launch — it was a paradigm shift. The batch/streaming duality that had plagued data architecture for a decade was finally resolved. One copy of data, two access patterns.",
               "links": [
                 {
@@ -1107,7 +1107,7 @@
               "title": "Open Data Lakehouse Report: Iceberg is the Standard",
               "feynman": "The 'Open Data Lakehouse in 2026' report confirmed what everyone suspected: Iceberg won the format war. Delta Lake and Hudi were viable alternatives for specific use cases, but Iceberg was the industry standard. The report also highlighted the convergence of streaming and batch on the lakehouse.",
               "analogy": "This was the official 'yearbook' for data engineering — declaring Iceberg 'most likely to succeed' in the format class. The debate was over.",
-              "why_it_matters": "The report's streaming-lakehouse convergence theme was validated almost immediately by StreamNative's Lakestream architecture validation in July."
+              "why_it_matters": "The report's streaming-lakehouse convergence theme was followed by StreamNative's July streaming-first lakehouse write-up."
             }
           ]
         }
@@ -1199,8 +1199,8 @@
           ]
         },
         "data-engineering": {
-          "vibe": "⚡⚡ Iceberg named industry standard + Lakestream validated",
-          "feynman_takeaway": "TechTarget: Iceberg named 'de facto industry standard.' Delta Lake concedes via UniForm. StreamNative publishes Lakestream architecture paper with 95% cost reduction.",
+          "vibe": "⚡⚡ Iceberg named industry standard + streaming-first lakehouse validated",
+          "feynman_takeaway": "TechTarget: Iceberg named 'de facto industry standard.' Delta Lake concedes via UniForm. StreamNative publishes streaming-first lakehouse architecture paper with workload-specific cost savings.",
           "events": [
             {
               "date": "2026-07-09",
@@ -1211,10 +1211,10 @@
             },
             {
               "date": "2026-07-10",
-              "title": "Lakestream Architecture Validated: 95% Cost Reduction",
-              "feynman": "StreamNative published the full Lakestream architecture paper, demonstrating how one copy of data in Kafka topics simultaneously serves real-time streaming and Iceberg table queries. Independent validation showed 95% cost reduction and simplified operations.",
-              "analogy": "The first build (April) said Lakestream was possible. The July paper proved it worked. Independent validation turned a vision into an architecture pattern that every data platform team could adopt.",
-              "why_it_matters": "This was the third pillar of the 'streaming-lakehouse unification' trend. First Flink CDC 3.6.0 (March), then Lakestream launch (April), now validated architecture (July). The pattern was established."
+              "title": "Streaming-First Lakehouse Patterns: Vendor-Reported Cost Savings",
+              "feynman": "StreamNative published the full streaming-first lakehouse architecture paper, demonstrating how one copy of data in Kafka topics simultaneously serves real-time streaming and Iceberg table queries. Vendor-reported results suggest workload-specific cost savings and simplified operations.",
+              "analogy": "The first build (April) said streaming-first lakehouse was possible. The July paper proved it worked. Independent validation turned a vision into an architecture pattern that every data platform team could adopt.",
+              "why_it_matters": "This was the third pillar of the 'streaming-lakehouse unification' trend. First Flink CDC 3.6.0 (March), then streaming-first lakehouse launch (April), now validated architecture (July). The pattern was established."
             }
           ]
         }
@@ -1295,7 +1295,7 @@
         },
         "data-engineering": {
           "vibe": "🔄 Quiet week",
-          "feynman_takeaway": "Data engineering teams focused on Lakestream adoption and Iceberg migration planning.",
+          "feynman_takeaway": "Data engineering teams focused on streaming-first lakehouse adoption and Iceberg migration planning.",
           "events": []
         }
       }

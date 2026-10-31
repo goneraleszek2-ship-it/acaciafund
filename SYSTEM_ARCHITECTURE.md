@@ -147,7 +147,7 @@ flowchart LR
 | Graph analysis | NetworkX (compliance/AML) |
 | Compliance NLP | spaCy, dedupe |
 | Market data | yfinance, polars |
-| SQL storage | SQLAlchemy, registry.db (SQLite cache) |
+| SQL storage | SQLAlchemy, optional `registry.db` SQLite cache (generated on demand) |
 | Static output | dist/ HTML + JSON (Cloudflare Pages) |
 | Analytics | Plausible |
 | Lint / Typecheck | Ruff, Pyright |

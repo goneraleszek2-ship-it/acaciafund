@@ -8,8 +8,8 @@ AcaciaFund is not a traditional content site. It is a schema-building engine gro
 
 | Metric | Value |
 |--------|-------|
-| Generated pages | 2,960 |
-| Content items | 262 (138 research, 83 learn, 41 knowledge) |
+| Generated pages | 2,929 |
+| Content items | 260 (136 research, 83 learn, 41 knowledge) |
 | Ontology concepts | 199 (58 compliance, 64 markets, 70 data, 7 cross-pillar) |
 | Ontology relations | 447 across 10 relation types |
 | Knowledge categories | 13 |
@@ -49,7 +49,7 @@ templates/                # Jinja2 templates (layout, content types, admin, part
 static/                   # CSS design system, JS modules, fonts, images
 scripts/                  # Ingestion, enrichment, generation, validation, CMS server
 content/                  # Source markdown (per-pillar)
-registry.json             # Content registry / data catalog (262 items)
+registry.json             # Content registry / data catalog (260 items)
 data/                     # Runtime JSON stores (ontology, graph, freshness, metadata)
 dist/                     # Build output (static site)
 docs/                     # Documentation (architecture, pipeline, testing, reference)

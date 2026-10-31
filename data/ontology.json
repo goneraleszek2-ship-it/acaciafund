@@ -10007,7 +10007,7 @@
       ],
       "cross_pillar_analogs": [
         "aml-data-sharing",
-        "lakestream-architecture"
+        "streaming-first-lakehouse"
       ],
       "philosophical_mediation": "",
       "eli5_explanation": "Lakehouse Architecture is a concept in architecture. In simple terms, The Lakehouse architecture, formalized by Armbrust et al. (2021), combines the flexibility of data lakes (cheap object storage, diverse data types) with the reliability of data warehouses (ACID transa",
@@ -10032,20 +10032,18 @@
       "updated_at": "2026-10-26T09:59:30.959256+00:00"
     },
     {
-      "id": "lakestream-architecture",
-      "label": "Lakestream Architecture",
-      "description": "Lakestream Architecture represents the convergence of streaming and lakehouse paradigms, where a single copy of data in Kafka topics simultaneously serves real-time stream processing and Iceberg table reads. Formalized by StreamNative in 2026, it achieves 95% cost reduction by eliminating separate streaming and batch storage layers. The default 2026 stack is Debezium (CDC) → Kafka (transport) → Flink (processing) → Iceberg (storage). Extends the lakehouse architecture pioneered by Armbrust et al. (2021) with first-class streaming semantics.",
+      "id": "streaming-first-lakehouse",
+      "label": "Streaming-First Lakehouse",
+      "description": "An emerging architecture that keeps a single copy of data in a streaming log while exposing it as Iceberg tables for historical queries. It can reduce duplication between batch and streaming paths, but adoption and cost-savings claims are vendor- and workload-specific. The common stack is Debezium (CDC) → Kafka (transport) → Flink (processing) → Iceberg (storage).",
       "pillar": "data-engineering",
       "category": "streaming",
       "aliases": [
-        "lakestream",
-        "StreamNative Lakestream",
         "streaming-first lakehouse",
         "streaming-lakehouse",
         "stream batch unification"
       ],
       "properties": {},
-      "source_inspiration": "StreamNative Lakestream architecture whitepaper (2026); Debezium + Kafka + Flink + Iceberg stack",
+      "source_inspiration": "Debezium + Kafka + Flink + Iceberg stack; general streaming-lakehouse architecture",
       "confidence_score": 1.0,
       "philosophical_lineage": [
         "event_logging",
@@ -10060,7 +10058,6 @@
       "governance_model": "distributed",
       "semantic_contract_type": "technical",
       "philosophical_sources": [
-        "StreamNative. 'Lakestream: One Copy for Streaming and Lakehouse.' (2026)",
         "Armbrust, Michael, et al. 'Lakehouse: A New Generation of Open Platforms.' CIDR (2021)",
         "Akidau, Tyler, et al. 'The Dataflow Model.' VLDB (2015)"
       ],
@@ -10068,21 +10065,21 @@
         "transaction-monitoring"
       ],
       "philosophical_mediation": "",
-      "eli5_explanation": "Lakestream Architecture is a concept in streaming. In simple terms, Lakestream Architecture represents the convergence of streaming and lakehouse paradigms, where a single copy of data in Kafka topics simultaneously serves real-time stream processing and Iceberg table",
-      "analogy": "Think of Lakestream Architecture like a specialized tool in a toolbox — it helps you handle streaming tasks more effectively.",
-      "concrete_example": "Consider a scenario where Lakestream Architecture applies: Lakestream Architecture represents the convergence of streaming and lakehouse paradigms, where a single copy of data in Kafka topics simultaneously serves real-time stream processing and Iceberg table...",
+      "eli5_explanation": "Streaming-First Lakehouse is a concept in streaming. In simple terms, An emerging architecture that keeps a single copy of data in a streaming log while exposing it as Iceberg tables for historical queries. It can reduce duplication between batch and streaming paths, bu",
+      "analogy": "Think of Streaming-First Lakehouse like a specialized tool in a toolbox — it helps you handle streaming tasks more effectively.",
+      "concrete_example": "Consider a scenario where Streaming-First Lakehouse applies: An emerging architecture that keeps a single copy of data in a streaming log while exposing it as Iceberg tables for historical queries. It can reduce duplication between batch and streaming paths, bu...",
       "feynman_diagram": null,
       "gap_questions": [
-        "What are the key components or steps involved in Lakestream Architecture?",
-        "Can you explain Lakestream Architecture without using jargon?",
-        "What happens if Lakestream Architecture is not applied correctly?",
-        "How does Lakestream Architecture relate to other concepts in streaming?"
+        "What are the key components or steps involved in Streaming-First Lakehouse?",
+        "Can you explain Streaming-First Lakehouse without using jargon?",
+        "What happens if Streaming-First Lakehouse is not applied correctly?",
+        "How does Streaming-First Lakehouse relate to other concepts in streaming?"
       ],
-      "teach_back_prompt": "Explain Lakestream Architecture as if teaching a colleague who is new to streaming. Cover: what it is, how it works, and why it matters.",
+      "teach_back_prompt": "Explain Streaming-First Lakehouse as if teaching a colleague who is new to streaming. Cover: what it is, how it works, and why it matters.",
       "build_exercise": {
         "type": "diagram",
-        "prompt": "Create a diagram that demonstrates Lakestream Architecture in a real-world streaming scenario. Walk through your design decisions.",
-        "solution": "A diagram for Lakestream Architecture should include: 1. The core components of lakestream architecture 2. How they interact 3. Expected outcomes or outputs"
+        "prompt": "Create a diagram that demonstrates Streaming-First Lakehouse in a real-world streaming scenario. Walk through your design decisions.",
+        "solution": "A diagram for Streaming-First Lakehouse should include: 1. The core components of streaming first lakehouse 2. How they interact 3. Expected outcomes or outputs"
       },
       "feynman_difficulty": 4,
       "explanation_quality": 0.6,
@@ -10465,7 +10462,7 @@
       ],
       "cross_pillar_analogs": [
         "transaction-monitoring",
-        "lakestream-architecture",
+        "streaming-first-lakehouse",
         "entity-resolution"
       ],
       "philosophical_mediation": "",
@@ -13940,7 +13937,7 @@
       "created_at": "2026-10-26T09:59:30.973120+00:00"
     },
     {
-      "source_id": "lakestream-architecture",
+      "source_id": "streaming-first-lakehouse",
       "target_id": "apache-flink",
       "relation_type": "requires",
       "strength": 1.0,
@@ -13949,7 +13946,7 @@
       "created_at": "2026-10-26T09:59:30.973227+00:00"
     },
     {
-      "source_id": "lakestream-architecture",
+      "source_id": "streaming-first-lakehouse",
       "target_id": "apache-iceberg",
       "relation_type": "requires",
       "strength": 1.0,
@@ -13958,7 +13955,7 @@
       "created_at": "2026-10-26T09:59:30.973299+00:00"
     },
     {
-      "source_id": "lakestream-architecture",
+      "source_id": "streaming-first-lakehouse",
       "target_id": "apache-kafka",
       "relation_type": "requires",
       "strength": 1.0,
@@ -13967,7 +13964,7 @@
       "created_at": "2026-10-26T09:59:30.973368+00:00"
     },
     {
-      "source_id": "lakestream-architecture",
+      "source_id": "streaming-first-lakehouse",
       "target_id": "lakehouse-architecture",
       "relation_type": "supersedes",
       "strength": 1.0,
@@ -13976,7 +13973,7 @@
       "created_at": "2026-10-26T09:59:30.973435+00:00"
     },
     {
-      "source_id": "lakestream-architecture",
+      "source_id": "streaming-first-lakehouse",
       "target_id": "stream-processing-model",
       "relation_type": "enables",
       "strength": 1.0,

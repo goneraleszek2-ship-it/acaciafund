@@ -1,5 +1,3 @@
-
-/* diagnostic.js */
 /* diagnostic.js */
 
 (function () {

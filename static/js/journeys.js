@@ -1,5 +1,3 @@
-
-/* journeys.js */
 /* journeys.js */
 
 (function () {

@@ -56,7 +56,7 @@ Key files:
 | Learn | 83 | Interactive lessons, tutorials, quizzes (Bloom-classified) |
 | Knowledge | 41 | Meta-content: glossaries, methodology, architecture docs |
 
-Registry total: **262 items** (92 aml / 74 stock / 96 data-engineering).
+Registry total: **260 items** (91 aml / 74 stock / 95 data-engineering).
 
 ### 2.3 Ontology & Taxonomy (verified)
 
@@ -88,7 +88,7 @@ and the deploy pipeline enforces the gate (all content pages ≥ 0.65).
 | Molecule | `templates/partials/` | Context-agnostic reusable components |
 | Organism | `templates/` (page sections) | Compose molecules (header, study queue) |
 | Template | `templates/layout.j2` etc. | Page skeletons |
-| Page | `dist/` | Generated instances (2,960) |
+| Page | `dist/` | Generated instances (2,929) |
 
 Invariant: never hardcode page-specific logic in molecules; name by structure,
 not context.
@@ -99,8 +99,8 @@ not context.
 
 | Metric | Value |
 |---|---|
-| Generated pages | 2,960 (incl. `/design-system/`) |
-| Registry items | 262 (138 research / 83 learn / 41 knowledge) |
+| Generated pages | 2,929 (incl. `/design-system/`) |
+| Registry items | 260 (136 research / 83 learn / 41 knowledge) |
 | Ontology concepts / relations | 199 / 447 |
 | Tests | 1,321 Python (verified 2026-10-31 full-suite run) + 15 JS suites (all green) |
 | Build time | ~120–273 s full, incremental via content hashing |
