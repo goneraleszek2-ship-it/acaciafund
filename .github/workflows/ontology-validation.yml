@@ -38,15 +38,15 @@ jobs:
           fi
 
       - name: Deontic unit tests
-        if: steps.diff-check.changed_files != ''
+        if: steps.diff-check.outputs.changed_files != ''
         run: python3 -m pytest tests/test_deontic.py -q
 
       - name: Generate deontic bitmasks
-        if: steps.diff-check.changed_files != ''
+        if: steps.diff-check.outputs.changed_files != ''
         run: python3 deontic_build.py
 
       - name: Ontology DAG Validation
-        if: steps.diff-check.changed_files != ''
+        if: steps.diff-check.outputs.changed_files != ''
         run: |
           python3 - <<'PYEOF'
           import json
@@ -77,7 +77,7 @@ jobs:
           PYEOF
 
       - name: Deontic Bitmask Verification
-        if: steps.diff-check.changed_files != ''
+        if: steps.diff-check.outputs.changed_files != ''
         run: |
           python3 - <<'PYEOF'
           import json
@@ -101,7 +101,7 @@ jobs:
           PYEOF
 
       - name: Bitmask & Schema Export
-        if: steps.diff-check.changed_files != ''
+        if: steps.diff-check.outputs.changed_files != ''
         run: |
           python3 scripts/bitmask_exporter.py
           python3 - <<'PYEOF'
