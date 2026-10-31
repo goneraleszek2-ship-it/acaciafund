@@ -8,10 +8,10 @@ AcaciaFund is not a traditional content site. It is a schema-building engine gro
 
 | Metric | Value |
 |--------|-------|
-| Generated pages | 2,958 |
+| Generated pages | 2,960 |
 | Content items | 262 (138 research, 83 learn, 41 knowledge) |
 | Ontology concepts | 199 (58 compliance, 64 markets, 70 data, 7 cross-pillar) |
-| Ontology relations | 435 across 10 relation types |
+| Ontology relations | 447 across 10 relation types |
 | Knowledge categories | 13 |
 | Pillars | 3 (Compliance, Markets, Data Engineering) |
 | Inspiration sources | 65 |

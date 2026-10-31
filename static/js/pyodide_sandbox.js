@@ -1,15 +1,5 @@
 
 /* pyodide_sandbox.js */
-
-/* pyodide_sandbox.js */
-
-/* pyodide_sandbox.js */
-
-/* pyodide_sandbox.js */
-
-/* pyodide_sandbox.js */
-
-/* pyodide_sandbox.js */
 /* pyodide_sandbox.js */
 
 (function () {

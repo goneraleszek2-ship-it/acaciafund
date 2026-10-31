@@ -5,9 +5,9 @@
 >
 > **Resolution update (2026-10-31):** repo-wide `ruff check` passes; 1,321
 > Python tests + 15 JS suites pass; docs metrics reconciled (262 items /
-> 2,958 pages / 199 concepts / 435 relations). The cold `earnings-analysis`
+> 2,960 pages / 199 concepts / 447 relations). The cold `earnings-analysis`
 > topic was refreshed with a current S-1 item and the dated digest was marked
-> timeless. Remaining known issues: 67 advisory pluralistic-validation rejects
+> timeless. Remaining known issues: 69 advisory pluralistic-validation rejects
 > and local branch divergence from `origin/main`.
 
 ---
@@ -18,10 +18,10 @@
 |---|---|---|
 | **Language (build)** | Python ≥3.10, **runtime 3.14.4** (system + `venv/`) | GitHub CI uses `3.14`; pyproject targets `py3.10` |
 | **Language (client)** | Vanilla ES (ES2022 target, `jsconfig.json`) | No framework; no npm build step for production JS |
-| **Static site generator** | Custom monolith **`build.py` (4,014 lines)** | Renders all 2,958 pages from `registry.json` + Jinja2 |
+| **Static site generator** | Custom monolith **`build.py` (4,014 lines)** | Renders all 2,960 pages from `registry.json` + Jinja2 |
 | **Templating** | Jinja2 (`*.j2`, `*.html` under `templates/`) | `layout.j2` base + `admin/base.html` admin layout |
 | **Data validation** | Pydantic v2 (`schemas.py`, `core/ontology.py`) | `RegistryData`, `Concept`, `Relation` models |
-| **Ontology graph** | NetworkX (transient) → `data/ontology.json` | 199 concepts, **435** relations, Cytoscape export |
+| **Ontology graph** | NetworkX (transient) → `data/ontology.json` | 199 concepts, **447** relations, Cytoscape export |
 | **Pillar-specific libs** | pandas, pyarrow, polars, yfinance, dedupe, spaCy, scikit-learn, sentence-transformers, torch | Heavy ML/data stack in `requirements-build.txt` |
 | **Pinned lockfile** | `requirements.lock` (pip freeze, 83 pkgs) | One source: `requirements.txt` → `-r requirements-build.txt` |
 | **Node toolchain** | Node **v22.22.1** | JS tests only (`node tests/test_*.js`); no package.json |
@@ -41,7 +41,7 @@ registry.json (262 items)  ← scripts/knowledge_ingester.py (arXiv/HN/PubMed)
       │                      scripts/fetch_news.py (23 RSS + HN + GDELT)
       │                      scripts/enrich.py
       ▼
-   build.py  ──▶  dist/   (2,958 HTML pages)
+   build.py  ──▶  dist/   (2,960 HTML pages)
       │            │
       ├─ core/build_taxonomies.py   (admin, search, tags, pilllar, feed)
       ├─ core/build_cache.py        (incremental cache + parallel_map)
@@ -63,7 +63,7 @@ registry.json (262 items)  ← scripts/knowledge_ingester.py (arXiv/HN/PubMed)
 
 Quality gates inside `deploy.yml`: pytest full suite, `audit_content_structure.py`, `enforce_quality_gate.py` (SQI), `check_links_and_sqi.py`, `check_external_links.py` (liveness), `check_entry_freshness.py topics --fail-on-cold 0`.
 
-**Runtime:** 97–155 s full build (measured 122 s, 2,958 pages, `dist/build_errors.log` = 0 bytes).
+**Runtime:** 97–155 s full build (measured 134 s, 2,960 pages, `dist/build_errors.log` = 0 bytes).
 
 ---
 
@@ -121,7 +121,7 @@ acaciafund/
 ├── registry.db / *.json.bak  ← 8 MB sqlite + snapshot backups (incl. pre-audit-fix copies)
 ├── core/                     ← 50 modules (build orchestration, ontology, retention, LLM client…)
 │   ├── urls.py               ← pure URL helpers (no heavy deps — safe for tests)
-│   ├── ontology.py           ← OntologyManager (199 concepts, 435 relations)
+│   ├── ontology.py           ← OntologyManager (199 concepts, 447 relations)
 │   ├── build_taxonomies.py   ← admin/search/tag/pillar/feed generators
 │   └── build_cache.py        ← incremental build cache
 ├── scripts/                  ← 64 active scripts (CI gates, ingestion, freshness, exports) +
@@ -167,7 +167,7 @@ acaciafund/
 ### Medium
 6. **Coverage is gated nowhere.** `run_tests.sh` emits coverage as informational only; targets (core 80%, scripts 22%) are unenforced — CI runs `pytest -q` with no `--cov` / fail-under.
 7. **Inconsistent test tooling.** CI uses `python -m pytest tests/ -q` directly; local canonical runner is `bash scripts/run_tests.sh` (stdlib `timeout`, per-group isolation). The two paths differ (isolation → timing/skip behavior), and `test_nav.js` is not in the runner's JS list.
-8. **Stale telemetry in AGENTS.md — resolved 2026-10-31.** Docs now report **262 items / 2,958 pages / 435 relations / 1,321 Python tests + 15 JS suites**.
+8. **Stale telemetry in AGENTS.md — resolved 2026-10-31.** Docs now report **262 items / 2,960 pages / 447 relations / 1,321 Python tests + 15 JS suites**.
 9. **Schema debt in registry — resolved 2026-10-31.** 0/262 items now lack `sqi`; `scripts/backfill_registry_sqi.py` persists the build-time fallback explicitly, and the 0.65 quality gate passes.
 
 ### Low

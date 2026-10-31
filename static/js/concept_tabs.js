@@ -1,15 +1,5 @@
 
 /* concept_tabs.js */
-
-/* concept_tabs.js */
-
-/* concept_tabs.js */
-
-/* concept_tabs.js */
-
-/* concept_tabs.js */
-
-/* concept_tabs.js */
 /* concept_tabs.js */
 
 (function () {

@@ -64,8 +64,8 @@ rubric (`empirical_fidelity`, `coherence`, `philosophical_consistency`,
 the build and CI do not gate on the decision because a large share of the
 catalog still lacks the evidence signals the rubric requires.
 
-Snapshot after the 2026-10-31 backfill (262 items): **170 accept / 25 review /
-67 reject**, average composite 0.657. Rejected items are concentrated in
+Snapshot after the 2026-10-31 backfill (262 items): **170 accept / 23 review /
+69 reject**, average composite 0.651. Rejected items are concentrated in
 unverified research digests and glossary/explainer pages; enforcing the rubric
 would require either content remediation or threshold calibration first.
 

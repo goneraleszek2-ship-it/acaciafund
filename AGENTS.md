@@ -143,7 +143,7 @@ This codebase has been built in sequential sprints. Understanding what came befo
 | Foundation fixes | Concept extraction word-boundary fix, alias expansion, full category remapping, knowledge-to-pillar mapping, description backfill |
 | Quality fixes | SQI backfill script, search recall improvement (threshold 0.35, body window 800), niche concept alias expansion |
 
-**Current state:** 262 registry items, 2,958 generated pages (incl. `/design-system/`), 3 clean pillars, 199 ontology concepts (all with philosophical metadata, 435 canonical relations), 65 inspiration sources. Daily news pipeline: 23 live RSS feeds + Hacker News + GDELT (keyless). Quality gate: passing, all pages SQI >= 0.65. 1321 Python tests across 66 modules (+ 15 JS suites). Metrics verified 2026-10-31 — see `docs/08-testing-quality/test-overview.md` for the canonical reference. Tier 5/6 complete: OpenAlex "Cited by" (`scripts/backfill_openalex.py`), key-variable + PRISMA extraction (`core/extraction.py`), Edit-on-GitHub links (`core/edit_links.py`), public design system (`/design-system/`).
+**Current state:** 262 registry items, 2,960 generated pages (incl. `/design-system/`), 3 clean pillars, 199 ontology concepts (all with philosophical metadata, 447 canonical relations), 65 inspiration sources. Daily news pipeline: 23 live RSS feeds + Hacker News + GDELT (keyless). Quality gate: passing, all pages SQI >= 0.65. 1321 Python tests across 66 modules (+ 15 JS suites). Metrics verified 2026-10-31 — see `docs/08-testing-quality/test-overview.md` for the canonical reference. Tier 5/6 complete: OpenAlex "Cited by" (`scripts/backfill_openalex.py`), key-variable + PRISMA extraction (`core/extraction.py`), Edit-on-GitHub links (`core/edit_links.py`), public design system (`/design-system/`).
 
 > **Master specification:** the reconciled execution plan (tier checklist with done/partial/pending status, verified metrics, quality gates) lives at `docs/00-system-architecture/master-spec.md`. Consult it before starting any new feature tier.
 >
@@ -336,7 +336,7 @@ scripts/knowledge_ingester.py  →  registry.json  →  build.py  →  dist/
 | `build.py` | Main build (~3726 lines) — content rendering, graph, admin, search, feed, cross-pillar synthesis |
 | `core/urls.py` | Pure URL helpers (`slug_to_path`, `slug_to_fspath`, `canonical_path`, `slug_to_url`, `pillar_to_url`, `url_to_pillar`) |
 | `core/ontology.py` | Ontology framework: Concept, Relation, ResourceLink, InspirationSource models; OntologyManager; concept extraction; Cytoscape export |
-| `core/ontology_extra_seeds.py` | **Codified extra ontology seeds** — 30 concepts + 211 relations beyond `PILLAR_CONCEPT_SEEDS` (markets theory, law–markets–data synthesis, data-engineering foundations). Folded into `seed_all_pillars()`/`seed_relations()` so refreshes are idempotent (reproduces exactly 199 concepts / 435 relations). |
+| `core/ontology_extra_seeds.py` | **Codified extra ontology seeds** — 30 concepts + 211 relations beyond `PILLAR_CONCEPT_SEEDS` (markets theory, law–markets–data synthesis, data-engineering foundations). Folded into `seed_all_pillars()`/`seed_relations()` so refreshes are idempotent (reproduces exactly 199 concepts / 447 relations). |
 | `core/build_taxonomies.py` | Taxonomy generation: admin pages, search index, tag pages, pillar pages, feed, ontology admin |
 | `core/build_cache.py` | Incremental build cache with parallel_map support |
 | `schemas.py` | Pydantic models for registry validation (`RegistryData`) |
@@ -364,7 +364,7 @@ scripts/knowledge_ingester.py  →  registry.json  →  build.py  →  dist/
 | `scripts/fetch_images.py` | Unsplash image fetching (imported by `core/build_taxonomies.py` as `CURATED_KNOWN`) |
 | `scripts/deploy_cloudflare.py` | Cloudflare Pages deployment trigger |
 | `etc/pillars.toml` | Pillar definitions + `[inspiration_sources]` (32 authoritative sources per pillar) |
-| `data/ontology.json` | Persisted ontology (199 concepts, 435 relations) |
+| `data/ontology.json` | Persisted ontology (199 concepts, 447 relations) |
 | `data/source_health.json` | Persistent freshness data (65 sources) |
 | `.github/workflows/source-refresh.yml` | Weekly Monday 04:00 UTC refresh — ontology, glossary, freshness, build, deploy |
 

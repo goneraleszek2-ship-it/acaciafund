@@ -60,7 +60,7 @@ Registry total: **262 items** (92 aml / 74 stock / 96 data-engineering).
 
 ### 2.3 Ontology & Taxonomy (verified)
 
-- **199 concepts**, **435 relations** across 10 relation types
+- **199 concepts**, **447 relations** across 10 relation types
 - Prerequisite learning paths (directed graph)
 - Cross-pillar bridges (e.g., Data Pipeline → enables → AML Surveillance)
 - All concepts carry philosophical metadata (epistemic status, lineage, etc.)
@@ -88,7 +88,7 @@ and the deploy pipeline enforces the gate (all content pages ≥ 0.65).
 | Molecule | `templates/partials/` | Context-agnostic reusable components |
 | Organism | `templates/` (page sections) | Compose molecules (header, study queue) |
 | Template | `templates/layout.j2` etc. | Page skeletons |
-| Page | `dist/` | Generated instances (2,958) |
+| Page | `dist/` | Generated instances (2,960) |
 
 Invariant: never hardcode page-specific logic in molecules; name by structure,
 not context.
@@ -99,9 +99,9 @@ not context.
 
 | Metric | Value |
 |---|---|
-| Generated pages | 2,958 (incl. `/design-system/`) |
+| Generated pages | 2,960 (incl. `/design-system/`) |
 | Registry items | 262 (138 research / 83 learn / 41 knowledge) |
-| Ontology concepts / relations | 199 / 435 |
+| Ontology concepts / relations | 199 / 447 |
 | Tests | 1,321 Python (verified 2026-10-31 full-suite run) + 15 JS suites (all green) |
 | Build time | ~120–273 s full, incremental via content hashing |
 | Deploy target | Cloudflare Pages via GitHub Actions |
