@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   quality:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04  # Pin to the GA image instead of the migrating ubuntu-latest label
     steps:
       - uses: actions/checkout@v7
 
@@ -53,7 +53,7 @@ jobs:
 
   deploy:
     needs: quality
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04  # Pin to the GA image instead of the migrating ubuntu-latest label
     steps:
       - uses: actions/checkout@v7
 

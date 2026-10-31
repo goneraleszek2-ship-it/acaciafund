@@ -10,7 +10,7 @@ permissions:
 
 jobs:
   ontology-check:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04  # Pin to the GA image instead of the migrating ubuntu-latest label
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
