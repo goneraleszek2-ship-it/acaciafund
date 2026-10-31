@@ -174,8 +174,7 @@ def generate_feynman_stub(
 
     return {
         "eli5_explanation": (
-            f"{label} is a concept in {cat_clean}. "
-            f"In simple terms, {desc_trunc[:200]}"
+            f"{label} is a {cat_clean} concept in the {pillar or 'AcaciaFund'} pillar."
         ),
         "analogy": (
             f"Think of {label} {analogy_base} — "

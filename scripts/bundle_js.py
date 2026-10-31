@@ -80,6 +80,14 @@ def bundle(dev: bool = True, out_dir: str | None = None) -> dict[str, Path]:
 
     result = {}
     for bundle_name, sources in BUNDLES.items():
+        # Single-file bundles whose source is also the output must not be
+        # rewritten: doing so prepends another header on every build.
+        if len(sources) == 1:
+            src_path = STATIC_JS / sources[0]
+            if src_path.resolve() == (out_path / bundle_name).resolve():
+                result[bundle_name] = src_path
+                print(f"  = {bundle_name} (source is already the bundle)")
+                continue
         parts: list[str] = []
         for src in sources:
             src_path = STATIC_JS / src
