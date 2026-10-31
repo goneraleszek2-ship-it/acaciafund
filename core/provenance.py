@@ -7,20 +7,9 @@ Western empirical philosophy commitment: make the evidentiary basis explicit
 and traceable, not assumed or invisible.
 """
 
-"""Evidence-provenance chain for AcaciaFund content items.
-
-Tracks the full lifecycle of each content item from source ingestion through
-validation to ontology mapping and publication.
-
-Western empirical philosophy commitment: make the evidentiary basis explicit
-and traceable, not assumed or invisible.
-"""
-
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict
 
 import config
-from config import PROJECT_ROOT, PHILOSOPHY_VERSION
-from schemas import ContentItem
 
 logger = __import__("logging").getLogger(__name__)
 

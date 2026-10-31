@@ -10,9 +10,9 @@ and no single track can gatekeep others.
 Configuration is in config.py per-pillar weights.
 """
 
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, List, Optional
 
-from config import PILLAR_URL_MAP, PILLAR_CONFIG, SQI_THRESHOLD_MIN
+from config import SQI_THRESHOLD_MIN
 
 logger = __import__("logging").getLogger(__name__)
 
@@ -25,6 +25,35 @@ DEFAULT_VALIDATION_WEIGHTS: Dict[str, Dict[str, float]] = {
     "stock": {"empirical_fidelity": 0.3, "coherence": 0.2, "philosophical": 0.2, "schema": 0.2, "tests": 0.1},
     "data-engineering": {"empirical_fidelity": 0.25, "coherence": 0.25, "philosophical": 0.2, "schema": 0.2, "tests": 0.1},
 }
+
+# Decision thresholds for the pluralistic rubric.
+#
+# These are *thresholds*, not weights. The earlier implementation conflated the
+# per-pillar track weights (0.1-0.3) with decision thresholds, which forced every
+# item into "review" and made the rubric incapable of accepting or rejecting.
+#
+# Calibration (over 261 registry items):
+#   composite = weighted mean of the 5 track scores using normalized pillar weights.
+#   * reject  : schema invalid, OR composite < REJECT_THRESHOLD,
+#               OR any track below HARD_FLOOR.
+#   * accept  : composite >= ACCEPT_THRESHOLD AND every track >= TRACK_FLOOR.
+#   * review  : otherwise.
+ACCEPT_THRESHOLD = 0.75  # composite at/above which an item may be accepted
+REJECT_THRESHOLD = 0.45  # composite below which an item is rejected
+TRACK_FLOOR = 0.30  # per-track minimum required for acceptance
+HARD_FLOOR = 0.10  # per-track level that forces rejection
+
+# Mapping of rubric track names to the per-item registry field names.
+TRACK_TO_FIELD: Dict[str, str] = {
+    "empirical_fidelity": "empirical_fidelity",
+    "coherence": "coherence_score",
+    "philosophical_consistency": "philosophical_consistency",
+    "schema_validity": "schema_validity",
+    "test_suite_validity": "test_suite_validity",
+}
+
+# Cached ontology manager (loading ontology.json per item is prohibitively slow).
+_ONTOLOGY_CACHE: Any = None
 
 
 def compute_empirical_fidelity(item: Dict[str, Any]) -> Optional[float]:
@@ -72,28 +101,49 @@ def compute_empirical_fidelity(item: Dict[str, Any]) -> Optional[float]:
     if not components:
         return None
 
-    # Weighted average
-    total = sum(weight for _, weight in components) if components else 1.0
-    # Simple average for now
+    # Simple average of the available components.
     score = sum(val for _, val in components) / len(components)
     return round(min(max(score, 0.0), 1.0), 3)
+
+
+def _load_ontology_manager(ontology: Optional[Any] = None) -> Any:
+    """Return an OntologyManager, using the passed object or a cached default.
+
+    Loading `data/ontology.json` on every item is prohibitively slow; the
+    manager is cached at module level.
+    """
+    global _ONTOLOGY_CACHE
+    if ontology is not None:
+        # Accept either an OntologyManager or a raw ontology dict.
+        if hasattr(ontology, "get_concept"):
+            return ontology
+        from core.ontology import OntologyManager
+
+        mgr = OntologyManager()
+        if isinstance(ontology, dict):
+            mgr.from_dict(ontology)
+        return mgr
+    if _ONTOLOGY_CACHE is None:
+        from core.ontology import OntologyManager
+
+        _ONTOLOGY_CACHE = OntologyManager.load("data/ontology.json")
+    return _ONTOLOGY_CACHE
 
 
 def compute_coherence_score(item: Dict[str, Any], ontology: Optional[Dict] = None) -> Optional[float]:
     """Track 2: Coherence score - ontological consistency.
 
-    Evaluates how well the content item fits within the 192-concept ontology
-    with 434 directed relations. High coherence = concept extraction aligns
-    with existing ontology structure.
+    Evaluates how well the content item fits within the ontology: the fraction
+    of the item's concept tags that resolve to ontology concepts which carry at
+    least one canonical relation. High coherence = extracted concepts align with
+    an existing, connected ontology structure.
     """
-    from core.ontology import OntologyManager
-
     concept_tags = item.get("tags", [])
     if not concept_tags:
         return None
 
     try:
-        m = OntologyManager.load("data/ontology.json")
+        m = _load_ontology_manager(ontology)
         extracted = 0
         aligned = 0
 
@@ -109,12 +159,7 @@ def compute_coherence_score(item: Dict[str, Any], ontology: Optional[Dict] = Non
         if extracted == 0:
             return None
 
-        coherence = aligned / extracted if extracted > 0 else 0.0
-        # If ontology provided, further refine
-        if ontology:
-            # Placeholder for future ontology-aware coherence
-            pass
-
+        coherence = aligned / extracted
         return round(min(max(coherence, 0.0), 1.0), 3)
     except Exception as e:
         logger.warning(f"Coherence score computation failed: {e}")
@@ -122,41 +167,73 @@ def compute_coherence_score(item: Dict[str, Any], ontology: Optional[Dict] = Non
 
 
 def compute_philosophical_consistency(item: Dict[str, Any]) -> Optional[float]:
-    """Track 3: Philosophical consistency - cross-tradition compatibility.
+    """Track 3: Philosophical consistency - metadata/evidence compatibility.
 
-    Evaluates how well the content item's epistemological status aligns
-    with multiple philosophical frameworks. Not a "truth" check but a
-    compatibility score.
+    This is *not* a truth check. It scores whether an item's own epistemic
+    claims are internally coherent and backed by the evidence those claims
+    require. Crucially, an item asserting ``empirically_verified`` knowledge
+    without any verifiable source is penalized: a claim that names an evidence
+    standard must meet it.
 
-    Returns a score in [0, 1] where 1 = compatible with all tracked traditions.
+    Returns a score in [0, 1], or None if the item carries no epistemic metadata.
     """
-    epistemic_status = item.get("epistemic_status", "empirically_verified")
-    way_of_knowing = item.get("way_of_knowing", "empirical")
+    epistemic_status = item.get("epistemic_status")
+    way_of_knowing = item.get("way_of_knowing")
+    verification_level = item.get("verification_level")
 
-    # Score based on internal consistency of the item's own metadata
-    consistency_factors = []
+    if not any([epistemic_status, way_of_knowing, verification_level]):
+        return None
 
-    # If epistemic_status and way_of_knowing are aligned
+    epistemic_status = epistemic_status or "empirically_verified"
+    way_of_knowing = way_of_knowing or "empirical"
+
     alignment_map = {
         ("empirically_verified", "empirical"): 1.0,
         ("theoretical", "empirical"): 0.7,
+        ("theoretical", "rational"): 1.0,
         ("contemplative", "contemplative"): 1.0,
+        ("contemplative", "intuitive"): 0.8,
         ("authority_based", "authority"): 1.0,
+        ("authority_based", "testimonial"): 0.8,
         ("empirically_verified", "contemplative"): 0.3,
+        ("pragmatic", "empirical"): 0.8,
     }
 
-    aligned = alignment_map.get((epistemic_status, way_of_knowing), 0.5)
-    consistency_factors.append(aligned)
+    factors: List[float] = []
+    factors.append(alignment_map.get((epistemic_status, way_of_knowing), 0.5))
 
-    # Check philosophical_lineage if present
-    lineage = item.get("philosophical_lineage")
-    if lineage:
-        consistency_factors.append(0.8)  # Lineage present = some structure
+    # Evidence backing: a claim to empirical verification must carry a source.
+    has_evidence = bool(item.get("source_verified")) and (
+        bool(item.get("source_breakdown")) or bool(item.get("citations"))
+    )
+    if epistemic_status == "empirically_verified":
+        factors.append(1.0 if has_evidence else 0.2)
+    elif epistemic_status in ("authority_based", "authority"):
+        has_sources = (
+            bool(item.get("citations"))
+            or bool(item.get("source_inspiration"))
+            or bool(item.get("philosophical_sources"))
+        )
+        factors.append(1.0 if has_sources else 0.4)
 
-    if not consistency_factors:
-        return None
+    # verification_level must cohere with the declared epistemic_status.
+    coherent_levels: Dict[str, set] = {
+        "empirically_verified": {"test_suite_passed", "source_verified", "peer_reviewed", "verified"},
+        "theoretical": {"formal_proof", "internal_consistency", "not_verified", "reasoned"},
+        "authority_based": {"cited", "not_verified", "attributed"},
+        "contemplative": {"introspective", "not_verified"},
+        "pragmatic": {"field_tested", "not_verified"},
+    }
+    if verification_level:
+        allowed = coherent_levels.get(epistemic_status)
+        if allowed is not None:
+            factors.append(1.0 if verification_level in allowed else 0.4)
 
-    score = sum(consistency_factors) / len(consistency_factors)
+    # Presence of a documented philosophical lineage indicates structured metadata.
+    if item.get("philosophical_lineage"):
+        factors.append(0.9)
+
+    score = sum(factors) / len(factors)
     return round(min(max(score, 0.0), 1.0), 3)
 
 
@@ -177,35 +254,86 @@ def compute_schema_validity(item: Dict[str, Any]) -> Optional[float]:
 
 
 def compute_test_suite_validity(item: Dict[str, Any]) -> Optional[float]:
-    """Track 5: Test suite validity - 855-test battery compliance.
+    """Track 5: Test suite validity - per-item testable artifacts.
 
-    Standard test suite validation. Returns 1.0 if item passes all relevant
-    tests, 0.0 if not. Preserved for backward compatibility.
+    The item's "test suite" is the set of generated testable artifacts the
+    cognitive architecture attaches to a page: Bloom questions (active-recall
+    checks) and flashcards (spaced-retrieval cards). An item without these has
+    no testable surface and scores low; SQI is included only as a supporting
+    signal.
+
+    Returns a score in [0, 1], or None if the item carries no testable signals.
     """
-    # This is a meta-signal: we check if the item has signals that would
-    # typically pass the test suite (SQI threshold, source verification)
-    sqi = item.get("sqi")
-    source_verified = item.get("source_verified", False)
+    signals: List[float] = []
 
-    scores = []
+    bloom_questions = item.get("bloom_questions")
+    if bloom_questions is not None:
+        signals.append(1.0 if bloom_questions else 0.0)
+
+    flashcards = item.get("flashcards")
+    if flashcards is not None:
+        signals.append(1.0 if flashcards else 0.0)
+
+    sqi = item.get("sqi")
     if sqi is not None:
         try:
             sqi_val = float(sqi)
-            scores.append(1.0 if 0.65 <= sqi_val <= 1.0 else 0.5)
+            if sqi_val >= SQI_THRESHOLD_MIN:
+                signals.append(1.0)
+            elif sqi_val > 0:
+                signals.append(0.5)
+            else:
+                signals.append(0.0)
         except (ValueError, TypeError):
-            scores.append(0.0)
+            signals.append(0.0)
 
-    if source_verified is not None:
-        scores.append(1.0 if source_verified else 0.0)
-
-    if not scores:
+    if not signals:
         return None
 
-    return round(sum(scores) / len(scores), 3)
+    return round(sum(signals) / len(signals), 3)
+
+
+def compute_composite_score(
+    track_values: Dict[str, float], weights: Dict[str, float]
+) -> float:
+    """Weighted mean of track scores using normalized weights.
+
+    Track values missing from `weights` (or with zero weight) are ignored.
+    Returns a value in [0, 1].
+    """
+    weight_sum = sum(weights.get(k, 0.0) for k in track_values)
+    if weight_sum <= 0:
+        return 0.0
+    composite = sum(track_values[k] * weights.get(k, 0.0) for k in track_values) / weight_sum
+    return round(min(max(composite, 0.0), 1.0), 3)
+
+
+def decide(composite: float, track_scores: Dict[str, float]) -> str:
+    """Aggregate a per-item decision from the composite and track scores.
+
+    A rubric that cannot reject is not a rubric: this function is what lets the
+    system register failure.
+    """
+    if track_scores.get("schema_validity", 1.0) < 1.0:
+        return "reject"
+    if composite < REJECT_THRESHOLD or any(s < HARD_FLOOR for s in track_scores.values()):
+        return "reject"
+    if composite >= ACCEPT_THRESHOLD and all(s >= TRACK_FLOOR for s in track_scores.values()):
+        return "accept"
+    return "review"
+
+
+def _track_decision(score: float) -> str:
+    """Per-track decision label, independent of the aggregate decision."""
+    if score >= ACCEPT_THRESHOLD:
+        return "accept"
+    if score < TRACK_FLOOR:
+        return "reject"
+    return "review"
 
 
 def validate_content_pluralistic(
-    content_items: List[Dict[str, Any]],
+    content_items: List[Any],
     ontology: Optional[Any] = None,
     *,
     strict: bool = False,
@@ -241,6 +369,8 @@ def validate_content_pluralistic(
 
     # Per-item decisions: {slug: {track: "accept"|"review"|"reject"}}
     item_decisions: Dict[str, Dict[str, str]] = {}
+    # Per-item composite score: {slug: float}
+    composite_scores: Dict[str, float] = {}
 
     errors: List[str] = []
     skipped_slugs: set[str] = set()
@@ -274,6 +404,7 @@ def validate_content_pluralistic(
 
         # Track 4: Schema validity
         schema_score = compute_schema_validity(item_dict)
+        schema_score = 0.0 if schema_score is None else schema_score
         track_scores["schema_validity"][slug] = schema_score
         slug_scores["schema_validity"] = schema_score
 
@@ -282,47 +413,16 @@ def validate_content_pluralistic(
         track_scores["test_suite_validity"][slug] = test_score if test_score is not None else 0.5
         slug_scores["test_suite_validity"] = test_score if test_score is not None else 0.5
 
-        # Make decisions per track using pillar weights
+        # Composite decision using normalized per-pillar weights.
         pillar = item_dict.get("pillar", "data-engineering")
-        weights = pillar_weights.get(pillar, DEFAULT_VALIDATION_WEIGHTS.get("data-engineering", DEFAULT_VALIDATION_WEIGHTS))
-
-        # Decision: accept if all track scores above pillar-specific thresholds
-        thresholds = {
-            "empirical_fidelity": weights.get("empirical_fidelity", 0.3),
-            "coherence": weights.get("coherence", 0.2),
-            "philosophical_consistency": weights.get("philosophical", 0.2),
-            "schema_validity": weights.get("schema", 0.2),
-            "test_suite_validity": weights.get("tests", 0.1),
-        }
-
-# Determine decision: if all scores >= threshold → accept, if any major
-        # failure → reject, otherwise review
-        all_pass = all(
-            isinstance(sg, (int, float)) and sg >= th
-            for sg, th in slug_scores.items()
-            if th > 0
+        weights = pillar_weights.get(
+            pillar, DEFAULT_VALIDATION_WEIGHTS.get(pillar, DEFAULT_VALIDATION_WEIGHTS["data-engineering"])
         )
-        any_fail = any(
-            isinstance(sg, (int, float)) and sg < 0.3
-            for sg, th in slug_scores.items()
-            if th > 0
-        )
+        composite = compute_composite_score(slug_scores, weights)
+        composite_scores[slug] = composite
 
-        if all_pass and not any_fail:
-            decision = "accept"
-        elif any_fail:
-            decision = "reject"
-        else:
-            decision = "review"
-
-        slug_decisions = {
-            "empirical_fidelity": decision if slug_scores.get("empirical_fidelity", 0) >= thresholds["empirical_fidelity"] else "review",
-            "coherence": decision if slug_scores.get("coherence", 0) >= thresholds["coherence"] else "review",
-            "philosophical_consistency": decision if slug_scores.get("philosophical_consistency", 0) >= thresholds["philosophical_consistency"] else "review",
-            "schema_validity": decision if slug_scores.get("schema_validity", 0) >= thresholds["schema_validity"] else "review",
-            "test_suite_validity": decision if slug_scores.get("test_suite_validity", 0) >= thresholds["test_suite_validity"] else "review",
-        }
-
+        slug_decisions = {track: _track_decision(score) for track, score in slug_scores.items()}
+        slug_decisions["overall"] = decide(composite, slug_scores)
         item_decisions[slug] = slug_decisions
 
         # Strict mode: if empirical fidelity below minimum, skip
@@ -330,11 +430,11 @@ def validate_content_pluralistic(
             skipped_slugs.add(slug)
             errors.append(f"Slug '{slug}': empirical fidelity {emp_score} below threshold {SQI_THRESHOLD_MIN}")
 
-    # Compute overall summary
+    # Compute overall summary from the aggregate decision.
     total_items = len(content_items)
-    accepted = sum(1 for d in item_decisions.values() if d.get("empirical_fidelity", "") == "accept")
-    reviewed = sum(1 for d in item_decisions.values() if d.get("empirical_fidelity", "") == "review")
-    rejected = sum(1 for d in item_decisions.values() if d.get("empirical_fidelity", "") == "reject")
+    accepted = sum(1 for d in item_decisions.values() if d.get("overall") == "accept")
+    reviewed = sum(1 for d in item_decisions.values() if d.get("overall") == "review")
+    rejected = sum(1 for d in item_decisions.values() if d.get("overall") == "reject")
 
     # Track average scores
     avg_scores = {}
@@ -342,15 +442,20 @@ def validate_content_pluralistic(
         scores = [s for s in track_scores[track].values() if s is not None]
         avg_scores[track] = round(sum(scores) / len(scores), 3) if scores else 0.0
 
+    composite_values = list(composite_scores.values())
+    avg_composite = round(sum(composite_values) / len(composite_values), 3) if composite_values else 0.0
+
     result = {
-        "is_valid": strict and accepted == total_items,  # strict: all must pass track 1
+        "is_valid": strict and rejected == 0 and accepted == total_items,
         "track_scores": track_scores,
         "item_decisions": item_decisions,
+        "composite_scores": composite_scores,
         "overall": {
             "total_items": total_items,
             "accepted": accepted,
             "reviewed": reviewed,
             "rejected": rejected,
+            "average_composite": avg_composite,
             "average_scores": avg_scores,
         },
     }
@@ -365,6 +470,40 @@ def validate_content_pluralistic(
 validate_content = validate_content_pluralistic  # type: ignore
 
 
+def apply_validation_fields(
+    content_items: List[Any], result: Dict[str, Any]
+) -> int:
+    """Persist rubric results onto registry item dicts, in place.
+
+    Writes the five track scores, the composite score, and the aggregate
+    decision onto each matching dict item. Object items are left untouched
+    (they are not the registry representation). Returns the number of items
+    updated.
+    """
+    track_scores = result.get("track_scores", {})
+    decisions = result.get("item_decisions", {})
+    composites = result.get("composite_scores", {})
+
+    updated = 0
+    for item in content_items:
+        if not isinstance(item, dict):
+            continue
+        slug = item.get("slug")
+        if not slug or slug not in decisions:
+            continue
+
+        item["empirical_fidelity"] = track_scores.get("empirical_fidelity", {}).get(slug)
+        item["coherence_score"] = track_scores.get("coherence", {}).get(slug)
+        item["philosophical_consistency"] = track_scores.get("philosophical_consistency", {}).get(slug)
+        item["schema_validity"] = track_scores.get("schema_validity", {}).get(slug)
+        item["test_suite_validity"] = track_scores.get("test_suite_validity", {}).get(slug)
+        item["validation_composite"] = composites.get(slug)
+        item["validation_decision"] = decisions.get(slug, {}).get("overall")
+        updated += 1
+
+    return updated
+
+
 def set_pillar_validation_weights(weights: Dict[str, Dict[str, float]]) -> None:
     """Set per-pillar validation track weights.
 
@@ -372,7 +511,6 @@ def set_pillar_validation_weights(weights: Dict[str, Dict[str, float]]) -> None:
         weights: Dict mapping internal key ("aml", "stock", "data-engineering")
                  to dict mapping track name to weight (0.0-1.0, should sum to ~1.0).
     """
-    from config import PILLAR_CONFIG
     global DEFAULT_VALIDATION_WEIGHTS
     DEFAULT_VALIDATION_WEIGHTS = weights
     logger.info(f"Updated validation weights for {len(weights)} pillars")
@@ -387,6 +525,13 @@ __all__ = [
     "compute_philosophical_consistency",
     "compute_schema_validity",
     "compute_test_suite_validity",
+    "compute_composite_score",
+    "apply_validation_fields",
+    "decide",
     "set_pillar_validation_weights",
     "DEFAULT_VALIDATION_WEIGHTS",
+    "ACCEPT_THRESHOLD",
+    "REJECT_THRESHOLD",
+    "TRACK_FLOOR",
+    "HARD_FLOOR",
 ]

@@ -2,6 +2,13 @@
 
 > **Audit method:** read-only inspection (no application logic modified).
 > **Date:** 2026-08-29 · **GIT HEAD:** `49981d83` (main)
+>
+> **Resolution update (2026-10-31):** repo-wide `ruff check` passes; 1,321
+> Python tests + 15 JS suites pass; docs metrics reconciled (262 items /
+> 2,958 pages / 199 concepts / 435 relations). The cold `earnings-analysis`
+> topic was refreshed with a current S-1 item and the dated digest was marked
+> timeless. Remaining known issues: 67 advisory pluralistic-validation rejects
+> and local branch divergence from `origin/main`.
 
 ---
 
@@ -11,7 +18,7 @@
 |---|---|---|
 | **Language (build)** | Python ≥3.10, **runtime 3.14.4** (system + `venv/`) | GitHub CI uses `3.14`; pyproject targets `py3.10` |
 | **Language (client)** | Vanilla ES (ES2022 target, `jsconfig.json`) | No framework; no npm build step for production JS |
-| **Static site generator** | Custom monolith **`build.py` (4,014 lines)** | Renders all 2,940 pages from `registry.json` + Jinja2 |
+| **Static site generator** | Custom monolith **`build.py` (4,014 lines)** | Renders all 2,958 pages from `registry.json` + Jinja2 |
 | **Templating** | Jinja2 (`*.j2`, `*.html` under `templates/`) | `layout.j2` base + `admin/base.html` admin layout |
 | **Data validation** | Pydantic v2 (`schemas.py`, `core/ontology.py`) | `RegistryData`, `Concept`, `Relation` models |
 | **Ontology graph** | NetworkX (transient) → `data/ontology.json` | 199 concepts, **435** relations, Cytoscape export |
@@ -30,11 +37,11 @@
 ```
 GraphQL/…  (external)
       │
-registry.json (261 items)  ← scripts/knowledge_ingester.py (arXiv/HN/PubMed)
+registry.json (262 items)  ← scripts/knowledge_ingester.py (arXiv/HN/PubMed)
       │                      scripts/fetch_news.py (23 RSS + HN + GDELT)
       │                      scripts/enrich.py
       ▼
-   build.py  ──▶  dist/   (2,940 HTML pages, 108 MB)
+   build.py  ──▶  dist/   (2,958 HTML pages)
       │            │
       ├─ core/build_taxonomies.py   (admin, search, tags, pilllar, feed)
       ├─ core/build_cache.py        (incremental cache + parallel_map)
@@ -56,7 +63,7 @@ registry.json (261 items)  ← scripts/knowledge_ingester.py (arXiv/HN/PubMed)
 
 Quality gates inside `deploy.yml`: pytest full suite, `audit_content_structure.py`, `enforce_quality_gate.py` (SQI), `check_links_and_sqi.py`, `check_external_links.py` (liveness), `check_entry_freshness.py topics --fail-on-cold 0`.
 
-**Runtime:** 97–124 s full build (measured 124 s, 2,940 pages, `dist/build_errors.log` = 0 bytes).
+**Runtime:** 97–155 s full build (measured 122 s, 2,958 pages, `dist/build_errors.log` = 0 bytes).
 
 ---
 
@@ -110,7 +117,7 @@ acaciafund/
 ├── build.py                  ← SSG entry point (4,014 lines)
 ├── config.py                 ← PILLAR_URL_MAP (single source of truth), subcategories (392 lines)
 ├── schemas.py                ← Pydantic RegistryData models (50 lines)
-├── registry.json             ← content store: 261 items (research 137 / learn 83 / knowledge 41)
+├── registry.json             ← content store: 262 items (research 138 / learn 83 / knowledge 41)
 ├── registry.db / *.json.bak  ← 8 MB sqlite + snapshot backups (incl. pre-audit-fix copies)
 ├── core/                     ← 50 modules (build orchestration, ontology, retention, LLM client…)
 │   ├── urls.py               ← pure URL helpers (no heavy deps — safe for tests)
@@ -160,8 +167,8 @@ acaciafund/
 ### Medium
 6. **Coverage is gated nowhere.** `run_tests.sh` emits coverage as informational only; targets (core 80%, scripts 22%) are unenforced — CI runs `pytest -q` with no `--cov` / fail-under.
 7. **Inconsistent test tooling.** CI uses `python -m pytest tests/ -q` directly; local canonical runner is `bash scripts/run_tests.sh` (stdlib `timeout`, per-group isolation). The two paths differ (isolation → timing/skip behavior), and `test_nav.js` is not in the runner's JS list.
-8. **Stale telemetry in AGENTS.md.** "226 registry items / 2,834 pages / 447 relations / 1218 tests" vs measured **261 items / 2,940 pages / 435 relations / 62 py + 15 js files**. Metrics drift for Agent/CI consumption.
-9. **Schema debt in registry.** 59/261 items lack `sqi` (0 below the 0.65 gate — quality gate passes, but coverage of records is incomplete; `core/build_quality.py` backfills at build time only).
+8. **Stale telemetry in AGENTS.md — resolved 2026-10-31.** Docs now report **262 items / 2,958 pages / 435 relations / 1,321 Python tests + 15 JS suites**.
+9. **Schema debt in registry — resolved 2026-10-31.** 0/262 items now lack `sqi`; `scripts/backfill_registry_sqi.py` persists the build-time fallback explicitly, and the 0.65 quality gate passes.
 
 ### Low
 10. **No `.gitignore` entry risk:** `.env`, `.coverage`, `registry.db`, cache JSONs live in repo root (`.gitignore` covers `.env`; confirm nothing sensitive is force-added — Phase 1 of prior audit scrubbed `.env`).

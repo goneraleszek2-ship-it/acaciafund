@@ -83,6 +83,7 @@
   ],
   "aml/learn/kyc-cdd-workflows": [
     "cdd",
+    "data-observability",
     "edd",
     "kyc"
   ],
@@ -114,7 +115,9 @@
     "design",
     "global-sanctions",
     "pep",
-    "sanctions-screening"
+    "regtech",
+    "sanctions-screening",
+    "transaction-monitoring"
   ],
   "aml/learn/sar-filing-scenarios": [
     "bsa",
@@ -347,6 +350,7 @@
     "aml-oracle",
     "global-sanctions",
     "kyc",
+    "regtech",
     "research"
   ],
   "compliance/knowledge/cdd-kyc-verification-checklist": [
@@ -533,8 +537,12 @@
     "high-frequency-trading"
   ],
   "compliance/research/geo-flag-detecting-and-measuring-geo-optimized-web-content": [],
-  "compliance/research/if-it-looks-like-a-user-measuring-real-time-moderation-effec": [],
-  "compliance/research/impression-share-prediction-an-offline-evaluation-task-for-r": [],
+  "compliance/research/if-it-looks-like-a-user-measuring-real-time-moderation-effec": [
+    "streaming"
+  ],
+  "compliance/research/impression-share-prediction-an-offline-evaluation-task-for-r": [
+    "data-observability"
+  ],
   "compliance/research/learning-to-price-with-persuasion": [],
   "compliance/research/levi-reuter-2006-money-laundering-review": [
     "aml-effectiveness",
@@ -555,6 +563,7 @@
   "compliance/research/physics-of-agents-statistical-mechanics-predicts-collective": [],
   "compliance/research/rigorous-statements-and-proofs-of-the-lemmas-in-simons-algor": [],
   "compliance/research/rough-volatility-across-assets": [
+    "dataops",
     "infrastructure"
   ],
   "compliance/research/sahc-ns-structure-aware-and-hardness-calibrated-negative-sam": [],
@@ -608,6 +617,7 @@
     "apache-iceberg",
     "arrow-parquet",
     "dataops",
+    "infrastructure",
     "research"
   ],
   "data/knowledge/bloom-self-study-framework": [],
@@ -619,7 +629,8 @@
   ],
   "data/knowledge/cybernetic-foundations": [
     "cyber-aml",
-    "dataops"
+    "dataops",
+    "design"
   ],
   "data/knowledge/exactly-once-streaming": [
     "apache-flink",
@@ -892,6 +903,7 @@
     "gdpr-synthetic-data"
   ],
   "data/learn/pyspark-fundamentals": [
+    "dataops",
     "lakehouse",
     "mapreduce"
   ],
@@ -1890,6 +1902,9 @@
   ],
   "markets/research/aml-1": [
     "momentum-trading"
+  ],
+  "markets/research/anthropic-s-1": [
+    "market-microstructure"
   ],
   "markets/research/barber-odean-2000-trading-hazardous-wealth": [
     "behavioral-finance",

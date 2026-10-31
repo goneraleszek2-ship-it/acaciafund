@@ -17,12 +17,12 @@ import sys
 from pathlib import Path
 
 from scripts.archive.backfill_sqi import (  # noqa: F401
+    compute_educational_quality,
+    compute_freshness,
+    compute_practical_value,
     compute_source_credibility,
     compute_technical_accuracy,
-    compute_practical_value,
-    compute_freshness,
     compute_trend_relevance,
-    compute_educational_quality,
 )
 
 PROJECT_ROOT = Path(__file__).parent.parent
@@ -68,15 +68,17 @@ def scenario_1_premise_stripping(props: list[dict]) -> dict:
     reason_codes = {"premise_stripping": 0}
 
     for prop in props:
-        pid = prop.get("id", "unknown")
         original_sqi = prop.get("quality_metrics", {}).get("sqi", 0.5) if "quality_metrics" in prop else 0.5
         premises = prop.get("premises", [])
 
         # Compute original sub-scores
         try:
             from scripts.archive.backfill_sqi import (
-                compute_source_credibility, compute_technical_accuracy,
-                compute_practical_value, compute_freshness, compute_trend_relevance,
+                compute_freshness,
+                compute_practical_value,
+                compute_source_credibility,
+                compute_technical_accuracy,
+                compute_trend_relevance,
             )
             orig_content = _make_content_from_prop(prop)
             orig_sub = {
@@ -163,15 +165,7 @@ def scenario_2_source_substitution(props: list[dict]) -> dict:
     failed = 0
     reason_codes = {}
 
-    # Source credibility mapping: lower the credibility score
-    source_cred_lower = {
-        "arxiv": 0.60,    # was 0.95
-        "pubmed": 0.55,   # was 0.95
-        "hn": 0.40,       # was 0.65
-    }
-
     for prop in props:
-        pid = prop.get("id", "unknown")
         original_sqi = prop.get("quality_metrics", {}).get("sqi", 0.5) if "quality_metrics" in prop else 0.5
 
         # Build content dict and compute original source credibility
@@ -190,8 +184,10 @@ def scenario_2_source_substitution(props: list[dict]) -> dict:
         # Recompute full SQI with degraded source credibility
         try:
             from scripts.archive.backfill_sqi import (
-                compute_technical_accuracy, compute_practical_value,
-                compute_freshness, compute_trend_relevance,
+                compute_freshness,
+                compute_practical_value,
+                compute_technical_accuracy,
+                compute_trend_relevance,
             )
             orig_content = _make_content_from_prop(prop)
             tech = compute_technical_accuracy(orig_content)
@@ -230,7 +226,6 @@ def scenario_2_source_substitution(props: list[dict]) -> dict:
                 WEIGHTS["trend_relevance"] * new_trend
             )
 
-            sqi_drop = orig_contrib - new_contrib
             original_passed = original_sqi >= 0.65
             new_passed = new_contrib >= 0.65
 
@@ -258,9 +253,6 @@ def scenario_2_source_substitution(props: list[dict]) -> dict:
     failed = 0
     reason_codes = {}
     for prop in props:
-        pid = prop.get("id", "unknown")
-        original_sqi = prop.get("quality_metrics", {}).get("sqi", 0.5) if "quality_metrics" in prop else 0.5
-
         try:
             from scripts.archive.backfill_sqi import compute_source_credibility
             orig_content = _make_content_from_prop(prop)
@@ -327,7 +319,6 @@ def scenario_2_source_substitution(props: list[dict]) -> dict:
     passed_count = 0
     failed_count = 0
     for prop in props:
-        original_sqi = prop.get("quality_metrics", {}).get("sqi", 0.5) if "quality_metrics" in prop else 0.5
         try:
             from scripts.archive.backfill_sqi import compute_source_credibility
             orig_content = _make_content_from_prop(prop)
@@ -373,7 +364,6 @@ def scenario_2_source_substitution(props: list[dict]) -> dict:
             elif not orig_passed and new_passed:
                 passed_count += 1
             else:
-                both_passed = True
                 passed_count += 1
         except Exception:
             passed_count += 1
@@ -404,13 +394,13 @@ def scenario_3_marker_spoofing(props: list[dict]) -> dict:
     reason_codes = {}
 
     for prop in props:
-        pid = prop.get("id", "unknown")
-        original_sqi = prop.get("quality_metrics", {}).get("sqi", 0.5) if "quality_metrics" in prop else 0.5
-
         try:
             from scripts.archive.backfill_sqi import (
-                compute_source_credibility, compute_technical_accuracy,
-                compute_practical_value, compute_freshness, compute_trend_relevance,
+                compute_freshness,
+                compute_practical_value,
+                compute_source_credibility,
+                compute_technical_accuracy,
+                compute_trend_relevance,
             )
             orig_content = _make_content_from_prop(prop)
             orig_tech = compute_technical_accuracy(orig_content)
@@ -513,28 +503,19 @@ def scenario_4_category_freshness(props: list[dict]) -> dict:
 
     Returns corpus-level robustness stats showing the differential decay effect.
     """
-    passed = 0
-    failed = 0
     reason_codes = {}
     foundational_robust = 0
     non_foundation_robust = 0
 
     for prop in props:
-        pid = prop.get("id", "unknown")
-        original_sqi = prop.get("quality_metrics", {}).get("sqi", 0.5) if "quality_metrics" in prop else 0.5
-
         try:
             from scripts.archive.backfill_sqi import compute_freshness
             orig_content = _make_content_from_prop(prop)
-            orig_fresh = compute_freshness(orig_content)
+            compute_freshness(orig_content)
             knowledge_cat = orig_content.get("knowledge_category", "")
 
             # Check if item is foundational
             is_foundational = knowledge_cat == "foundations"
-
-            # Compute freshness under BOTH regimes
-            # Standard decay (original)
-            std_fresh = orig_fresh  # already computed
 
             # Foundational regime: shallower decay, floor at 365 days = 0.6
             days_old = 365  # test at 365 days

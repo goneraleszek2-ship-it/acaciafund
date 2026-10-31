@@ -32,7 +32,7 @@ with ideas you can hold on to.
 
 ### 2.1 Build Pipeline
 
-Static site generator (`build.py`, 3,924 lines). No runtime backend.
+Static site generator (`build.py`, 4,014 lines). No runtime backend.
 
 ```
 Ingestion (32 sources) → registry.json → NLP Enrichment → Pydantic Validation → Jinja2 Templates → dist/ → Cloudflare Pages
@@ -48,19 +48,19 @@ Key files:
 - `data/` — runtime JSON stores (ontology, graph, freshness, metadata)
 - `content/` — source markdown (per-pillar)
 
-### 2.2 Content Types (verified 2026-08-06)
+### 2.2 Content Types (verified 2026-10-31)
 
 | Type | Count | Purpose |
 |---|---|---|
-| Research | 102 | Synthesized academic papers, SEC filings, news, arXiv preprints |
+| Research | 138 | Synthesized academic papers, SEC filings, news, arXiv preprints |
 | Learn | 83 | Interactive lessons, tutorials, quizzes (Bloom-classified) |
 | Knowledge | 41 | Meta-content: glossaries, methodology, architecture docs |
 
-Registry total: **226 items** (57 aml / 73 stock / 96 data-engineering).
+Registry total: **262 items** (92 aml / 74 stock / 96 data-engineering).
 
 ### 2.3 Ontology & Taxonomy (verified)
 
-- **199 concepts**, **447 relations** across 10 relation types
+- **199 concepts**, **435 relations** across 10 relation types
 - Prerequisite learning paths (directed graph)
 - Cross-pillar bridges (e.g., Data Pipeline → enables → AML Surveillance)
 - All concepts carry philosophical metadata (epistemic status, lineage, etc.)
@@ -69,7 +69,7 @@ Registry total: **226 items** (57 aml / 73 stock / 96 data-engineering).
 
 Composite score weighting authority 35%, freshness 25%, consensus 25%, relevance
 15%. Gate threshold **0.65** (`--fail-on-low-sqi 0`); the build backfills scores
-and the deploy pipeline enforces the gate (all 2,827 pages ≥ 0.65).
+and the deploy pipeline enforces the gate (all content pages ≥ 0.65).
 
 ### 2.5 Pedagogical Stack
 
@@ -88,21 +88,21 @@ and the deploy pipeline enforces the gate (all 2,827 pages ≥ 0.65).
 | Molecule | `templates/partials/` | Context-agnostic reusable components |
 | Organism | `templates/` (page sections) | Compose molecules (header, study queue) |
 | Template | `templates/layout.j2` etc. | Page skeletons |
-| Page | `dist/` | Generated instances (2,827) |
+| Page | `dist/` | Generated instances (2,958) |
 
 Invariant: never hardcode page-specific logic in molecules; name by structure,
 not context.
 
-## 3. Current State Assessment (verified 2026-08-06)
+## 3. Current State Assessment (verified 2026-10-31)
 
 ### 3.1 Metrics
 
 | Metric | Value |
 |---|---|
-| Generated pages | 2,834 (incl. `/design-system/`) |
-| Registry items | 226 (102 research / 83 learn / 41 knowledge) |
-| Ontology concepts / relations | 199 / 447 |
-| Tests | 1,218 Python (verified 2026-08-10 full-suite run) + JS suites (13 files, all green) |
+| Generated pages | 2,958 (incl. `/design-system/`) |
+| Registry items | 262 (138 research / 83 learn / 41 knowledge) |
+| Ontology concepts / relations | 199 / 435 |
+| Tests | 1,321 Python (verified 2026-10-31 full-suite run) + 15 JS suites (all green) |
 | Build time | ~120–273 s full, incremental via content hashing |
 | Deploy target | Cloudflare Pages via GitHub Actions |
 

@@ -143,7 +143,7 @@ This codebase has been built in sequential sprints. Understanding what came befo
 | Foundation fixes | Concept extraction word-boundary fix, alias expansion, full category remapping, knowledge-to-pillar mapping, description backfill |
 | Quality fixes | SQI backfill script, search recall improvement (threshold 0.35, body window 800), niche concept alias expansion |
 
-**Current state:** 226 registry items, 2,834 generated pages (incl. `/design-system/`), 3 clean pillars, 199 ontology concepts (all with philosophical metadata, 447 canonical relations), 65 inspiration sources. Daily news pipeline: 23 live RSS feeds + Hacker News + GDELT (keyless). Quality gate: passing, all pages SQI >= 0.65. 1218 Python tests across 58 modules (+ 13 JS suites), all green in CI. Metrics verified 2026-08-10 — see `docs/08-testing-quality/test-overview.md` for the canonical reference. Tier 5/6 complete: OpenAlex "Cited by" (`scripts/backfill_openalex.py`), key-variable + PRISMA extraction (`core/extraction.py`), Edit-on-GitHub links (`core/edit_links.py`), public design system (`/design-system/`).
+**Current state:** 262 registry items, 2,958 generated pages (incl. `/design-system/`), 3 clean pillars, 199 ontology concepts (all with philosophical metadata, 435 canonical relations), 65 inspiration sources. Daily news pipeline: 23 live RSS feeds + Hacker News + GDELT (keyless). Quality gate: passing, all pages SQI >= 0.65. 1321 Python tests across 66 modules (+ 15 JS suites). Metrics verified 2026-10-31 — see `docs/08-testing-quality/test-overview.md` for the canonical reference. Tier 5/6 complete: OpenAlex "Cited by" (`scripts/backfill_openalex.py`), key-variable + PRISMA extraction (`core/extraction.py`), Edit-on-GitHub links (`core/edit_links.py`), public design system (`/design-system/`).
 
 > **Master specification:** the reconciled execution plan (tier checklist with done/partial/pending status, verified metrics, quality gates) lives at `docs/00-system-architecture/master-spec.md`. Consult it before starting any new feature tier.
 >
@@ -260,8 +260,8 @@ Three pillars with internal keys and URL segments:
 
 | Internal Key | URL Segment | Label | Items |
 |---|---|---|---|
-| `aml` | `compliance` | Compliance | 57 |
-| `stock` | `markets` | Markets | 73 |
+| `aml` | `compliance` | Compliance | 92 |
+| `stock` | `markets` | Markets | 74 |
 | `data-engineering` | `data` | Data Engineering | 96 |
 
 **Single source of truth:** `config.py` → `PILLAR_URL_MAP`
@@ -271,7 +271,7 @@ Navigation shows only: Compliance, Markets, Data.
 ### URL Hierarchy
 
 ```
-/{pillar_url}/research/{topic}     # 102 items
+/{pillar_url}/research/{topic}     # 138 items
 /{pillar_url}/learn/{topic}        # 83 items
 /{pillar_url}/knowledge/{topic}    # 41 items
 /{pillar_url}/glossary             # Auto-generated from ontology
@@ -283,7 +283,7 @@ Navigation shows only: Compliance, Markets, Data.
 
 ### Content Categories
 
-**Research** (102): External content ingestion from arXiv, HN, PubMed
+**Research** (138): External content ingestion from arXiv, HN, PubMed
 **Learn** (83): Interactive modules with Bloom questions, flashcards, code examples
 **Knowledge** (41): Platform docs, glossary, tutorials, methodology
 
@@ -336,11 +336,11 @@ scripts/knowledge_ingester.py  →  registry.json  →  build.py  →  dist/
 | `build.py` | Main build (~3726 lines) — content rendering, graph, admin, search, feed, cross-pillar synthesis |
 | `core/urls.py` | Pure URL helpers (`slug_to_path`, `slug_to_fspath`, `canonical_path`, `slug_to_url`, `pillar_to_url`, `url_to_pillar`) |
 | `core/ontology.py` | Ontology framework: Concept, Relation, ResourceLink, InspirationSource models; OntologyManager; concept extraction; Cytoscape export |
-| `core/ontology_extra_seeds.py` | **Codified extra ontology seeds** — 30 concepts + 211 relations beyond `PILLAR_CONCEPT_SEEDS` (markets theory, law–markets–data synthesis, data-engineering foundations). Folded into `seed_all_pillars()`/`seed_relations()` so refreshes are idempotent (reproduces exactly 199 concepts / 447 relations). |
+| `core/ontology_extra_seeds.py` | **Codified extra ontology seeds** — 30 concepts + 211 relations beyond `PILLAR_CONCEPT_SEEDS` (markets theory, law–markets–data synthesis, data-engineering foundations). Folded into `seed_all_pillars()`/`seed_relations()` so refreshes are idempotent (reproduces exactly 199 concepts / 435 relations). |
 | `core/build_taxonomies.py` | Taxonomy generation: admin pages, search index, tag pages, pillar pages, feed, ontology admin |
 | `core/build_cache.py` | Incremental build cache with parallel_map support |
 | `schemas.py` | Pydantic models for registry validation (`RegistryData`) |
-| `registry.json` | Content registry (226 items) |
+| `registry.json` | Content registry (262 items) |
 | `core/schema_builder.py` | **NEW** Schema builder: prerequisite graphs, learning paths, Bloom categorization |
 | `static/js/progressive_disclosure.js` | **NEW** Collapsible article sections (Cognitive Load Theory) |
 | `templates/partials/visual_abstract.j2` | **NEW** Dual-coded article summary partial (visual abstract) |
@@ -364,7 +364,7 @@ scripts/knowledge_ingester.py  →  registry.json  →  build.py  →  dist/
 | `scripts/fetch_images.py` | Unsplash image fetching (imported by `core/build_taxonomies.py` as `CURATED_KNOWN`) |
 | `scripts/deploy_cloudflare.py` | Cloudflare Pages deployment trigger |
 | `etc/pillars.toml` | Pillar definitions + `[inspiration_sources]` (32 authoritative sources per pillar) |
-| `data/ontology.json` | Persisted ontology (199 concepts, 447 relations) |
+| `data/ontology.json` | Persisted ontology (199 concepts, 435 relations) |
 | `data/source_health.json` | Persistent freshness data (65 sources) |
 | `.github/workflows/source-refresh.yml` | Weekly Monday 04:00 UTC refresh — ontology, glossary, freshness, build, deploy |
 
@@ -580,9 +580,9 @@ result = df.filter(pl.col('price') > 100).collect()
 | `tests/test_study_dashboard.js` | **22** | static/js/study_dashboard.js: streakFromHistory, weekBars, nextUp, dueInLabel, weakConcepts |
 | `tests/test_learning_hub.js` | **7** | static/js/learning_hub.js: addToQueue seeding + DOM wiring integration checks |
 
-JS tests run via `node tests/test_*.js` for each file (no npm/playwright needed). `scripts/run_tests.sh` runs all 9 suites (adds `test_diagnostic.js`, `test_journeys.js`, `test_pillar_rail.js`, `test_study_dashboard.js`, `test_learning_hub.js`).
+JS tests run via `node tests/test_*.js` for each file (no npm/playwright needed). `scripts/run_tests.sh` runs all 15 suites, including `test_nav.js`.
 
-**Total: 1218 Python tests collected across 58 modules, including 5 guard tests in `tests/test_generate_knowledge_modules.py` (knowledge-module SQI fields), 21 in `tests/test_category_mapping.py` (tag→subcategory mapping, category backfill, news/GDELT pipeline), 22 in `tests/test_check_entry_freshness.py` (currency tiers, topic currency, parse dates, marking), 27 in `tests/test_build_smoke.py` (incl. UI/UX spec assertions: pillar side rail, SM-2 CTA + prereq banner on learn pages, study dashboard sidebar, mobile tab bar), 13 in `tests/test_backfill_openalex.py` (Tier 5.1: OpenAlex fetch/apply/idempotency), 18 in `tests/test_extraction.py` (Tier 5.2: key variables + PRISMA), and 12 in `tests/test_edit_links.py` (Tier 6.1: content-file + registry-line resolution).** (Verified 2026-08-10 via `bash scripts/run_tests.sh`; JS suites run via `run_tests.sh`. Full suite runs in the deploy pipeline after every build — all green.)
+**Total: 1321 Python tests collected across 66 modules, including 5 guard tests in `tests/test_generate_knowledge_modules.py` (knowledge-module SQI fields), 21 in `tests/test_category_mapping.py` (tag→subcategory mapping, category backfill, news/GDELT pipeline), 22 in `tests/test_check_entry_freshness.py` (currency tiers, topic currency, parse dates, marking), 27 in `tests/test_build_smoke.py` (incl. UI/UX spec assertions: pillar side rail, SM-2 CTA + prereq banner on learn pages, study dashboard sidebar, mobile tab bar), 13 in `tests/test_backfill_openalex.py` (Tier 5.1: OpenAlex fetch/apply/idempotency), 18 in `tests/test_extraction.py` (Tier 5.2: key variables + PRISMA), and 12 in `tests/test_edit_links.py` (Tier 6.1: content-file + registry-line resolution).** (Verified 2026-10-31 via a full pytest run plus all 15 JS suites. Full suite runs in the deploy pipeline after every build — all green.)
 
 ### Phase 1.5 Files (Cognitive Load Amputation — July 2026)
 

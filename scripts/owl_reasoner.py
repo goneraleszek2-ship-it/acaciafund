@@ -7,10 +7,9 @@ Usage:
 
 import json
 import sys
-import subprocess
 import tempfile
 from pathlib import Path
-from typing import Dict, List, Any
+from typing import Any, Dict
 
 import owlready2
 
@@ -137,7 +136,7 @@ def main(argv: list = None) -> int:
 
     # Load and reason with Pellet
     try:
-        onto = owlready2.get_ontology(str(base_path)).load()
+        owlready2.get_ontology(str(base_path)).load()
         owlready2.default_reasoner = owlready2.PelletReasoner
 
         # Repellet reason the ontology

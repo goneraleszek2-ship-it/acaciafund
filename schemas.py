@@ -33,7 +33,31 @@ class ContentItem(BaseModel):
     subject_classifications: Optional[List[List[str]]] = None
     last_verified: Optional[str] = None
 
+    # Pluralistic validation rubric fields (persisted by scripts/backfill_validation.py)
+    empirical_fidelity: Optional[float] = Field(None, ge=0.0, le=1.0)
+    coherence_score: Optional[float] = Field(None, ge=0.0, le=1.0)
+    philosophical_consistency: Optional[float] = Field(None, ge=0.0, le=1.0)
+    schema_validity: Optional[float] = Field(None, ge=0.0, le=1.0)
+    test_suite_validity: Optional[float] = Field(None, ge=0.0, le=1.0)
+    validation_composite: Optional[float] = Field(None, ge=0.0, le=1.0)
+    validation_decision: Optional[str] = None
+
     model_config = {"extra": "allow"}
+
+    @classmethod
+    def known_fields(cls) -> set:
+        """Names of fields declared on the schema (excluding extras)."""
+        return set(cls.model_fields.keys())
+
+
+def find_unknown_fields(item: dict) -> set:
+    """Return keys in `item` that are not declared on ContentItem.
+
+    Warn-mode helper for the eventual `extra="forbid"` migration: it reports
+    undeclared fields without rejecting the item.
+    """
+    known = ContentItem.known_fields()
+    return {k for k in item if not k.startswith("_") and k not in known}
 
 
 class RegistryData(BaseModel):

@@ -2,8 +2,6 @@
 
 import json
 import sys
-from pathlib import Path
-from typing import Dict, List, Any
 
 
 def encode_deontic_constraints(bitmask_data: dict) -> list:
@@ -12,7 +10,7 @@ def encode_deontic_constraints(bitmask_data: dict) -> list:
     Deontic states O (Obligation), P (Permission), F (Prohibition)
     are encoded as boolean variables over concept indices.
     """
-    from z3 import Ints, Bool, And, Or, Not, sat, solve
+    from z3 import And, Bool, Implies, Not
 
     obligation_mask = bitmask_data["obligation_mask"]
     permission_mask = bitmask_data["permission_mask"]
@@ -32,7 +30,7 @@ def encode_deontic_constraints(bitmask_data: dict) -> list:
             prohibition_indices.append(i)
 
     # Z3 variables: O_i, P_i, F_i for each concept index
-    O = [Bool(f"O_{i}") for i in obligation_indices]
+    Obl = [Bool(f"O_{i}") for i in obligation_indices]
     P = [Bool(f"P_{i}") for i in permission_indices]
     F = [Bool(f"F_{i}") for i in prohibition_indices]
 
@@ -44,7 +42,7 @@ def encode_deontic_constraints(bitmask_data: dict) -> list:
         for j_idx, j in enumerate(prohibition_indices):
             # Simplified: check if same index concept appears in both masks
             if i == j:
-                constraints.append(Implies(O[i_idx], Not(F[j_idx])))
+                constraints.append(Implies(Obl[i_idx], Not(F[j_idx])))
 
     # Constraint: A concept cannot have both Permission and Prohibition
     for i_idx, i in enumerate(permission_indices):
@@ -56,27 +54,28 @@ def encode_deontic_constraints(bitmask_data: dict) -> list:
     for i_idx in range(len(obligation_indices)):
         for j_idx in range(len(prohibition_indices)):
             if obligation_indices[i_idx] == prohibition_indices[j_idx]:
-                constraints.append(Not(And(Ob[i_idx], F[j_idx])))
+                constraints.append(Not(And(Obl[i_idx], F[j_idx])))
 
     return constraints
 
 
 def run_z3_verification(bitmask_data: dict) -> dict:
     """Run Z3 verification and return PNC violation report."""
-    from z3 import Implies, sat
+    from z3 import Solver, sat, unsat
 
     constraints = encode_deontic_constraints(bitmask_data)
 
     # Check satisfiability
-    s = sat()
+    solver = Solver()
     for c in constraints:
-        s.add(c)
+        solver.add(c)
 
-    result = sat
+    status = solver.check()
+    satisfiable = status == sat
 
     # If unsatisfiable, extract violations
     violations = []
-    if sat is False:
+    if status == unsat:
         # Extract minimal unsatisfiable subset (MUS)
         # For now, report all pairwise contradictions
         obligation_indices = []
@@ -116,7 +115,7 @@ def run_z3_verification(bitmask_data: dict) -> dict:
 
     return {
         "pnc_violations": violations,
-        "satisfiable": sat,
+        "satisfiable": satisfiable,
         "constraint_count": len(constraints),
     }
 

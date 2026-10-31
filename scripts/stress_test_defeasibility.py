@@ -16,12 +16,12 @@ import sys
 from pathlib import Path
 
 from scripts.archive.backfill_sqi import (  # noqa: F401
+    compute_educational_quality,
+    compute_freshness,
+    compute_practical_value,
     compute_source_credibility,
     compute_technical_accuracy,
-    compute_practical_value,
-    compute_freshness,
     compute_trend_relevance,
-    compute_educational_quality,
 )
 
 PROJECT_ROOT = Path(__file__).parent.parent
@@ -100,7 +100,6 @@ def recompute_sqi_with_deltas(premises: list[str], original_sqi: float,
         "trend_relevance": 0.10,
     }
     orig_contributions = {k: WEIGHTS[k] * sub_before[k] for k in WEIGHTS}
-    orig_sqi = sum(orig_contributions.values())
 
     # --- Simulate premise stripping: keep every other premise (adversarial) ---
     stripped_premises = premises[::2] if premises else []
@@ -176,7 +175,6 @@ def main() -> int:
     isolated_concepts = set()
     passed = 0
     failed = 0
-    details = []
     blame_report = []
 
     for prop in propositions:

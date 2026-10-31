@@ -4,8 +4,8 @@ All paths are relative to this file's directory (project root).
 Import this from build.py and anywhere else config values are needed.
 """
 
-from typing import Dict
 from pathlib import Path
+from typing import Dict
 
 PROJECT_ROOT = Path(__file__).parent
 
@@ -40,10 +40,15 @@ SQI_DEFAULT = 0.5  # fallback when signal missing
 # or any philosophical framing changes. Enables rollback and user awareness.
 PHILOSOPHY_VERSION: str = "v1.2-analytical-thomistic-2026-08"
 
-# Previous version (for change log):
+# Previous versions (for change log):
 #   v0.9-empirical-primary — empirical fidelity weighted highest, other tracks minimal
-#   v1.0-pluralistic-2026-08 — equal weighting across all 5 validation tracks,
-#                             all 4 ways_of_knowing supported, provenance tracking enabled
+#   v1.0-pluralistic-2026-08 — pluralistic validation framework introduced; all 4
+#                             ways_of_knowing supported; provenance tracking enabled
+#                             (weights are pillar-specific — see PILLAR_VALIDATION_WEIGHTS,
+#                              not equal; the current registry items still carry this value)
+#   v1.2-analytical-thomistic-2026-08 — current: analytical-Thomistic epistemic framing
+#                             (Four Causes, epistemic-boundary enforcement). Run
+#                             scripts/backfill_philosophy_version.py to re-pin items.
 
 # Per-pillar validation track weights (pluralistic validation framework)
 # Each dict maps track name to weight (0.0-1.0); should approximately sum to 1.0.

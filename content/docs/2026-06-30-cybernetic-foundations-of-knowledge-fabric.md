@@ -1,5 +1,5 @@
 ---
-title: Cybernetic Foundations of the Knowledge Fabric — Wienerian Feedback, Lem's Aintellectronics, and Bayesian SQI Revision
+title: Cybernetic Foundations of the Knowledge Fabric — Wienerian Feedback, Lem's Aintellectronics, and Signal-Quality Revision
 slug: docs/cybernetic-foundations
 category: knowledge
 pillar: data-engineering
@@ -9,9 +9,17 @@ date: 2026-06-30
 sqi: 0.95
 ---
 
-# Cybernetic Foundations of the Knowledge Fabric — Wienerian Feedback, Lem's Aintellectronics, and Bayesian SQI Revision
+# Cybernetic Foundations of the Knowledge Fabric — Wienerian Feedback, Lem's Aintellectronics, and Signal-Quality Revision
 
-This document establishes the mathematical and architectural framework binding cybernetic principles to the AcaciaFund DataOps pipeline. Every concept maps directly to a data engineering artifact: schemas, Git hooks, JSON registries, or telemetry streams. No abstraction exists without an operational implementation.
+This document establishes the mathematical and architectural framework binding cybernetic principles to the AcaciaFund DataOps pipeline. It describes a **proposed** cybernetic control layer; the subsections below distinguish what is implemented from what remains design intent.
+
+> **Implementation Status (added 2026-10).**
+>
+> **Implemented today:** the Signal Quality Index — a deterministic weighted marker sum, not a Bayesian posterior (see `docs/SQI_meaning_spec.md`); the content-structure audit (`scripts/audit_content_structure.py`); the external-link checker (`scripts/check_external_links.py`); and the SQI quality gate (`scripts/enforce_quality_gate.py`).
+>
+> **Described below but NOT implemented:** `scripts/governance_gate.py` (archived — its seven-layer moat, density/PID feedback controller, and telemetry stream are not executed by the build); `scripts/telemetry_schema.sql` (missing); `static/vocabulary.json` (missing); `scripts/update_vocabulary.py` (missing); `registry/human_corrections.json` (missing); and the Bayesian SQI update. The registry lives at the repo root (`registry.json`), not `registry/registry.json`.
+>
+> **Corrected thresholds.** The archived gate actually uses `WORD_ENTROPY_MAX = 8.6`, `ANALYTICAL_COVERAGE_MIN = 5`, and `DUPLICATE_SIMILARITY_MAX = 0.93` — not the 5.5 / 8 / 0.40 stated below. The "no abstraction without an implementation" claim in the original text was inaccurate.
 
 ## Wienerian Feedback Loops and Pipeline Homeostasis
 
@@ -61,11 +69,9 @@ For each article, compute the per-word entropy:
 
 Where `p(w)` is the probability of word `w` in the article's vocabulary relative to the reference corpus (all articles in `content/`). The reference corpus vocabulary is pre-computed and stored in `static/vocabulary.json`.
 
-The information horizon threshold is `H_max = 4.5 bits/word`. Articles with `H_word > 5.5` are flagged as "high entropy noise" — they contain too many rare words, which typically indicates either (1) hallucinated technical jargon, (2) synthetic prose that doesn't match the domain's linguistic patterns, or (3) copy-paste from external sources without integration.
+The information horizon is a design-intent threshold (not implemented). The original text specified `H_max = 4.5 bits/word` with articles above `H_word > 5.5` flagged as "high entropy noise" — too many rare words, indicating hallucinated jargon, synthetic prose, or unintegrated copy-paste. The archived `governance_gate.py` (not run by the build) actually computes word entropy by tokenizing the article body, counting word frequencies and calculating Shannon entropy, with `WORD_ENTROPY_MAX = 8.6`; unknown words (not in the domain vocabulary) contribute maximum surprise with a pseudocount of `1e-6`.
 
-The information horizon threshold is H_max = 4.5 bits/word. Articles with H_word > 5.5 are flagged as "high entropy noise" — they contain too many rare words, which typically indicates either (1) hallucinated technical jargon, (2) synthetic prose that doesn't match the domain's linguistic patterns, or (3) copy-paste from external sources without integration. The governance_gate.py implementation computes word entropy by tokenizing the article body, counting word frequencies, and calculating Shannon entropy. Unknown words (not in the domain vocabulary) contribute maximum surprise with a pseudocount of 1e-6.
-
-The `vocabulary.json` contains 15,000 domain-specific terms from the AML, data engineering, and energy sectors. Any word outside this set is treated as unknown, which increases entropy. This mechanism blocks LLM hallucinations that introduce non-existent technical terms (e.g., "quantum blockchain consensus" or "neural regulatory compliance").
+The intended `vocabulary.json` would hold ~15,000 domain-specific terms from the AML, data engineering, and energy sectors, treating any word outside this set as unknown and thereby inflating entropy. **This file does not exist**, so no such vocabulary-based hallucination guard is in effect.
 
 ### Phantomology and Synthetic Slop Detection
 
@@ -93,11 +99,11 @@ The "information moat" is the multi-layered defense against synthetic degradatio
 | L6 | Word entropy | ≤ 5.5 bits/word | Flag for review |
 | L7 | Duplicate detection | Jaccard > 0.40 | Block deployment |
 
-Layers 1-5 are hard gates (block deployment). Layer 6 is a soft gate (flag for manual review). Layer 7 is a cross-article gate (blocks near-duplicates). The moat is implemented as a pipeline in `scripts/governance_gate.py` where each layer runs sequentially and any failure short-circuits to `sys.exit(1)`.
+The moat as specified would implement layers 1-5 as hard gates (block deployment), layer 6 as a soft gate (flag for review) and layer 7 as a cross-article near-duplicate gate, all run sequentially in `scripts/governance_gate.py` short-circuiting to `sys.exit(1)`. **This gate is archived and not executed by the build**; the thresholds in the table above that differ from the archived script (word entropy, analytical coverage, duplicate similarity) are the design-intent values, not the implemented ones. The build's actual quality gates are SQI scoring, the content-structure audit and the SQI quality gate (see the Implementation Status note at the top).
 
-## Bayesian Prior Revision for registry.json
+## Signal-Quality Revision for registry.json
 
-The AcaciaFund registry (`registry/registry.json`) maintains a Signal Quality Index (SQI) for each content item. The SQI is a Bayesian posterior probability that the content is trustworthy, updated as new evidence arrives.
+The AcaciaFund registry (`registry.json` at the repo root) maintains a Signal Quality Index (SQI) for each content item. Contrary to the original framing below, the SQI is **not** a Bayesian posterior probability — it is a deterministic weighted sum of rule-based sub-scores (`core/build_quality.py`; canonical definitions in `docs/SQI_meaning_spec.md`). The Bayesian-update material in this section describes an earlier design that was never implemented.
 
 ### Bayesian Update Framework
 
@@ -144,17 +150,17 @@ The pipeline reads this file after the governance gate and applies the correctio
 
 ## Implementation Prerequisites
 
-The cybernetic framework requires three infrastructure components:
+The cybernetic framework specifies three infrastructure components. As of 2026-10, **none of the first two exist** in the repository; only SQI persistence is real:
 
-**1. Telemetry Store:** A time-series database (InfluxDB or TimescaleDB) storing governance gate metrics for each build. The retention period is 90 days. The schema is defined in `scripts/telemetry_schema.sql`.
+**1. Telemetry Store (NOT IMPLEMENTED):** A time-series database (InfluxDB or TimescaleDB) storing governance gate metrics for each build would be needed. Its schema file `scripts/telemetry_schema.sql` does not exist.
 
-**2. Vocabulary Registry:** A JSON file at `static/vocabulary.json` containing the domain vocabulary. This file is updated quarterly via manual cation. The update process is documented in `scripts/update_vocabulary.py`.
+**2. Vocabulary Registry (NOT IMPLEMENTED):** The JSON file `static/vocabulary.json` does not exist, and neither does `scripts/update_vocabulary.py`. Word-entropy gating against a domain vocabulary is therefore not active.
 
-**3. SQI Persistence Layer:** The `registry/registry.json` file must include the `sqi` field for each item. The SQI update algorithm runs as a post-build hook in `build.py`.
+**3. SQI Persistence Layer (implemented):** The `registry.json` file includes the `sqi` field for each item, computed by the build/backfill (`scripts/archive/backfill_sqi.py` and the fallback in `core/build_quality.py`). There is no separate "post-build hook" beyond the build itself.
 
 ## Regulatory Compliance Mapping
 
-The cybernetic framework satisfies three regulatory requirements:
+The mapping below describes design intent. Because most referenced components are not implemented (see the Implementation Status callout above), it should not be read as a statement of current compliance.
 
 | Requirement | Implementation |
 |---|---|

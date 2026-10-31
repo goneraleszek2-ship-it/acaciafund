@@ -28,6 +28,7 @@ def export_bitmasks(bitmask_path: Optional[Path] = None, export_path: Optional[P
         "obligation_bit_count": data["obligation_count"],
         "permission_bit_count": data["permission_count"],
         "prohibition_bit_count": data["prohibition_count"],
+        "index_map": data.get("index_map", {}),
         "generated": datetime.now().isoformat(),
         "source": "acaciafund_deontic_bitmasks",
     }
@@ -39,27 +40,37 @@ def export_bitmasks(bitmask_path: Optional[Path] = None, export_path: Optional[P
     return flattened
 
 
+def _mask_value(bitmask_data: dict, state: str) -> int:
+    """Read a mask from either the integer build artifact or the hex export."""
+    key = f"{state}_mask"
+    if key in bitmask_data:
+        return int(bitmask_data[key])
+    return int(bitmask_data[f"{key}_hex"], 16)
+
+
 def get_deontic_state(pillar: str, concept_id: str, bitmask_data: dict) -> str:
     """Look up deontic state for a specific pillar/concept combo via bitmask checks.
 
-    O(1) lookup using precomputed bitmasks.
+    O(1) lookup using precomputed bitmasks and the id→bit ``index_map`` built by
+    ``core.deontic.build_deontic_masks``. Accepts either the integer masks emitted
+    by ``deontic_build.py`` or the hex masks in ``static/bitmask-data.json``. A
+    concept absent from the map is neutral ("N").
     """
-    obligation_mask = bitmask_data["obligation_mask"]
-    permission_mask = bitmask_data["permission_mask"]
-    prohibition_mask = bitmask_data["prohibition_mask"]
+    index_map = bitmask_data.get("index_map", {})
+    if concept_id not in index_map:
+        return "N"
 
-    offset = sum(ord(c) for c in concept_id[:3]) % 60
-    bit = 1 << offset
+    bit = 1 << int(index_map[concept_id])
 
-    is_obligation = bool(obligation_mask & bit)
-    is_permission = bool(permission_mask & bit)
-    is_prohibition = bool(prohibition_mask & bit)
+    obligation_mask = _mask_value(bitmask_data, "obligation")
+    permission_mask = _mask_value(bitmask_data, "permission")
+    prohibition_mask = _mask_value(bitmask_data, "prohibition")
 
-    if is_prohibition:
+    if prohibition_mask & bit:
         return "F"  # Prohibition
-    elif is_obligation:
+    elif obligation_mask & bit:
         return "O"  # Obligation
-    elif is_permission:
+    elif permission_mask & bit:
         return "P"  # Permission
     else:
         return "N"  # Neutral

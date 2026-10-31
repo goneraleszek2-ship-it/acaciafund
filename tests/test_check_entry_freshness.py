@@ -159,17 +159,23 @@ def test_review_older_than_verified_uses_verified():
 
 
 def test_anchor_uses_most_recent_date():
-    assert verification_anchor({"date_str": "2026-08-01"}) == "fresh"
-    assert verification_anchor({"date_str": "2026-01-01", "currency_tier": "time_sensitive"}) == "outdated"
+    today = date(2026, 8, 10)
+    assert verification_anchor({"date_str": "2026-08-01"}, today=today) == "fresh"
+    assert (
+        verification_anchor({"date_str": "2026-01-01", "currency_tier": "time_sensitive"}, today=today)
+        == "outdated"
+    )
     assert (
         verification_anchor(
-            {"date_str": "2026-01-01", "currency_tier": "time_sensitive", "last_verified": "2026-08-01"}
+            {"date_str": "2026-01-01", "currency_tier": "time_sensitive", "last_verified": "2026-08-01"},
+            today=today,
         )
         == "fresh"
     )
     assert (
         verification_anchor(
-            {"date_str": "2026-01-01", "currency_tier": "time_sensitive", "last_reviewed": "2026-08-01"}
+            {"date_str": "2026-01-01", "currency_tier": "time_sensitive", "last_reviewed": "2026-08-01"},
+            today=today,
         )
         == "fresh"
     )

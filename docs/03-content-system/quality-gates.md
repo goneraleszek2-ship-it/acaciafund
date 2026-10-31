@@ -14,7 +14,7 @@ The Semantic Quality Index (SQI) is AcaciaFund's content quality metric. It scor
 
 ### Computation
 
-SQI is computed in `build.py:_compute_sqi_for_item()`:
+SQI is computed in `core/build_quality.py:_compute_sqi_for_item()` (canonical definitions in `docs/SQI_meaning_spec.md`):
 
 ```python
 def _compute_sqi_for_item(item):
@@ -57,6 +57,20 @@ Every deploy runs four gates after the build; any failure blocks the deploy:
 | Topic currency triage | `scripts/check_entry_freshness.py topics --fail-on-cold 0` | Cold topics (≥1 outdated or ≥2 stale time-sensitive items) |
 | Full test suite | `python -m pytest tests/ -q` | Any test failure (Python tests) |
 
+## Pluralistic Validation (advisory)
+
+`core/validation.py` and `scripts/backfill_validation.py` maintain a five-track
+rubric (`empirical_fidelity`, `coherence`, `philosophical_consistency`,
+`schema_validity`, `test_suite_validity`) and persist `validation_composite` /
+`validation_decision` on every registry item. It is intentionally **advisory**:
+the build and CI do not gate on the decision because a large share of the
+catalog still lacks the evidence signals the rubric requires.
+
+Snapshot after the 2026-10-31 backfill (262 items): **170 accept / 25 review /
+67 reject**, average composite 0.657. Rejected items are concentrated in
+unverified research digests and glossary/explainer pages; enforcing the rubric
+would require either content remediation or threshold calibration first.
+
 ## Entry Freshness & Currency Tiers
 
 `scripts/check_entry_freshness.py` classifies every registry item into a currency tier:
@@ -86,10 +100,10 @@ Research pages with a DOI or source URL render `templates/partials/citation_expo
 
 ## Backfill Script
 
-`scripts/backfill_sqi.py` recomputes SQI for items that are missing it:
+`scripts/backfill_registry_sqi.py` recomputes and persists SQI for items that are missing it (the original `scripts/archive/backfill_sqi.py` defines the canonical formula):
 
 ```bash
-python3 scripts/backfill_sqi.py
+python3 scripts/backfill_registry_sqi.py
 ```
 
 - Scans all registry items

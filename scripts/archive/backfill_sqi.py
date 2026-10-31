@@ -99,7 +99,12 @@ def compute_practical_value(article: dict) -> float:
 
 
 def compute_freshness(article: dict) -> float:
-    """Recency score with exponential decay over 180 days."""
+    """Recency score with linear decay over 360 days.
+
+    Foundational content (``knowledge_category == "foundations"`` or a
+    ``foundations`` tag) floors at 0.6 so durable references do not decay with
+    the same half-life as time-sensitive news (spec invariant I2).
+    """
     created = article.get("created_at", "")
     if not created:
         return 0.5
@@ -108,10 +113,16 @@ def compute_freshness(article: dict) -> float:
         pub_date = datetime.fromisoformat(created.replace("Z", "+00:00"))
         now = datetime.now(timezone.utc)
         days_old = (now - pub_date).days
-        # Exponential decay: 1.0 at day 0, ~0.5 at day 180
-        return max(0.2, 1.0 - (days_old / 360))
+        # Decay: 1.0 at day 0, ~0.5 at day 180, floor 0.2 at day 360
+        decay = max(0.2, 1.0 - (days_old / 360))
     except (ValueError, TypeError):
         return 0.5
+
+    category = article.get("knowledge_category", "")
+    tags = article.get("tags", []) or []
+    if category == "foundations" or "foundations" in tags:
+        return max(0.6, decay)
+    return decay
 
 
 def compute_trend_relevance(article: dict) -> float:

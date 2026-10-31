@@ -2,21 +2,21 @@
 
 A **static-first, cognitive learning platform** that synthesizes research from 32+ authoritative sources (arXiv, Hacker News, PubMed, SEC, FATF, Databricks, and more) into three pillar domains: **Compliance**, **Markets**, and **Data Engineering**.
 
-AcaciaFund is not a traditional content site. It is a schema-building engine grounded in cognitive psychology: every article is classified by Bloom's taxonomy, mapped into an ontology of 192 cross-pillar concepts, connected through prerequisite learning paths, and supported by SM-2 spaced repetition for durable retention.
+AcaciaFund is not a traditional content site. It is a schema-building engine grounded in cognitive psychology: every article is classified by Bloom's taxonomy, mapped into an ontology of 199 cross-pillar concepts, connected through prerequisite learning paths, and supported by SM-2 spaced repetition for durable retention.
 
 ## Quick Facts
 
 | Metric | Value |
 |--------|-------|
-| Generated pages | 2,505 |
-| Content items | 195 (96 research, 83 learn, 16 knowledge) |
-| Ontology concepts | 192 (58 compliance, 64 markets, 70 data) |
-| Ontology relations | 434 across 10 relation types |
+| Generated pages | 2,958 |
+| Content items | 262 (138 research, 83 learn, 41 knowledge) |
+| Ontology concepts | 199 (58 compliance, 64 markets, 70 data, 7 cross-pillar) |
+| Ontology relations | 435 across 10 relation types |
 | Knowledge categories | 13 |
 | Pillars | 3 (Compliance, Markets, Data Engineering) |
-| Inspiration sources | 32 |
-| Tests | 855 (847 Python + 8 JS) |
-| Build time | ~76s full, incremental via content hashing |
+| Inspiration sources | 65 |
+| Tests | 1,321 Python tests + 15 JS suites |
+| Build time | ~125–155s cached, incremental via content hashing |
 | Deploy target | Cloudflare Pages (`https://www.acaciafund.org/`) |
 
 ## Quick Start
@@ -42,18 +42,18 @@ python3 scripts/serve_cms.py
 ## Repository Layout
 
 ```
-build.py                  # Static site generator (~3,726 lines)
+build.py                  # Static site generator (~4,014 lines)
 config.py                 # Single source of truth (pillars, URLs, quality thresholds)
 core/                     # Business logic: ontology, schema builder, retention engine, etc.
 templates/                # Jinja2 templates (layout, content types, admin, partials)
 static/                   # CSS design system, JS modules, fonts, images
 scripts/                  # Ingestion, enrichment, generation, validation, CMS server
 content/                  # Source markdown (per-pillar)
-registry.json             # Content registry / data catalog (195 items)
+registry.json             # Content registry / data catalog (262 items)
 data/                     # Runtime JSON stores (ontology, graph, freshness, metadata)
 dist/                     # Build output (static site)
 docs/                     # Documentation (architecture, pipeline, testing, reference)
-tests/                    # 37 Python test modules + 8 JS tests
+tests/                    # 66 Python test modules + 15 JS test suites
 ```
 
 ## Documentation

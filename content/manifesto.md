@@ -19,21 +19,19 @@ For analysts navigating compliance obligations under AMLD6, market participants 
 
 ## Section 2: The Homeostatic Filter Loop
 
-Following Norbert Wiener's cybernetic control theory (1948), a homeostatic system maintains its critical variables within viability bounds through negative feedback. AcaciaFund implements this principle as a deterministic Bayesian filtering pipeline:
+Following Norbert Wiener's cybernetic control theory (1948), a homeostatic system maintains its critical variables within viability bounds through negative feedback. AcaciaFund's design goal is a deterministic signal-quality filtering pipeline:
 
-1. **Ingestion layer.** Raw signals are drawn from arXiv, HackerNews, and structured financial data sources. Each item carries source authority weight `S ∈ [0.50, 0.90]` (0.90 for arXiv, 0.50 for HN).
+1. **Ingestion layer.** Raw signals are drawn from arXiv, HackerNews, and structured financial data sources. Each item carries a source-authority weight derived from its domain (see `core/score.py:source_authority`).
 
-2. **Signal Quality Index (SQI).** For each item, the SQI is computed as:
-   `SQI = 0.40 × S + 0.30 × exp(-λt) + 0.30 × D`
-   where `λ = ln(2) / 90` (90-day temporal half-life), and `D` is the information density — the ratio of unique analytical tokens to total token count. Items with `SQI < 0.50` are flagged for deprecation.
+2. **Signal Quality Index (SQI).** For each item, the SQI is a deterministic weighted sum of six sub-scores (`core/build_quality.py`; canonical definitions in `docs/SQI_meaning_spec.md`):
+   `SQI = 0.25×source_credibility + 0.25×technical_accuracy + 0.20×practical_value + 0.15×freshness + 0.10×trend_relevance + 0.05×educational_quality`
+   Each sub-score is a rule-based marker sum in `[0, 1]` — there is no posterior estimation. Items with `SQI < 0.50` are flagged for deprecation.
 
-3. **Daily decay.** Each 24-hour cycle applies a deterministic `0.2%` SQI decrement across all items, implemented as:
-   `SQI_t = SQI_{t-1} × (1 - 0.002)^(1/1d)`
-   This produces a 345-day half-life for any item that receives no engagement-based reinforcement. Items whose SQI crosses the `0.50` threshold are excluded from the active knowledge graph but retained in cold storage for recomputation.
+3. **Daily decay (design intent — not yet implemented).** The intended deterministic `0.2%` daily SQI decrement is not currently applied by the build. Time-sensitivity is presently handled only by the `freshness` sub-score and the interest-recency term in `core/build_quality.py`.
 
 4. **Deterministic enrichment.** Before any semantic embedding or LLM-based augmentation, each item passes through a rule-based keyword extraction engine that maps concept patterns to canonical ontology tags. This ensures baseline analytical coverage even when GPU availability is nil — the pipeline degrades gracefully, never silently.
 
-The loop is homeostatic because it trades raw throughput for structural stability: increasing ingestion volume decreases the mean item lifespan through competitive SQI pressure, while decreasing volume extends lifespan. At equilibrium, the system maintains approximately 100-200 concurrently active items regardless of ingestion rate, bounded by the governance gate's seven-layer moat.
+The loop is homeostatic because it trades raw throughput for structural stability: increasing ingestion volume decreases the mean item lifespan through competitive SQI pressure, while decreasing volume extends lifespan. At equilibrium, the design targets roughly 100-200 concurrently active items regardless of ingestion rate (this equilibrium is a design goal, not currently enforced by a running governor).
 
 ## Section 3: Epistemic Anchors
 
@@ -53,7 +51,7 @@ The cybernetic site definition commits to three invariants:
 
 1. **No item enters the registry without passing the ingestion scorer.** Minimum relevance thresholds (0.15 for arXiv, 0.20 for HN) guarantee that every ingested item has a measurable signal above the noise floor.
 
-2. **No item is served without SQI scoring.** The governance gate's seven-layer moat (density, code ratio, boilerplate ratio, word entropy, analytical coverage, sentence variance, duplicate similarity) enforces a minimum quality surface before any item reaches the knowledge graph.
+2. **No item is served without SQI scoring.** Every item carries an SQI computed from the six sub-scores above, and the build runs the content-structure audit (`scripts/audit_content_structure.py`), the external-link check (`scripts/check_external_links.py`) and the SQI quality gate (`scripts/enforce_quality_gate.py`). (A separate seven-layer `governance_gate.py` was designed — density, code ratio, boilerplate ratio, word entropy, analytical coverage, sentence variance, duplicate similarity — but that script is archived and not executed by the build.)
 
 3. **The system degrades deterministically.** When NVIDIA endpoint is unavailable, enrich.py falls back to deterministic keyword extraction. When the cache is cold, build.py falls back to full regeneration. When SQI drops below threshold, the item is archived, not deleted — the data is preserved for retrospective analysis under adjusted parameters.
 

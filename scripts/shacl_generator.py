@@ -1,15 +1,20 @@
 """SHACL Schema Generator: Generate SHACL shape files from ontology for Edge validation."""
 
 import json
+import sys
 from pathlib import Path
-from datetime import datetime
 
-ROOT = Path("/root/acaciafund")
+ROOT = Path(__file__).resolve().parent.parent
 ONTOLOGY_PATH = ROOT / "data" / "ontology.json"
 SHACL_OUTPUT = ROOT / "static" / "shacl" / "shapes.ttl"
 
+sys.path.insert(0, str(ROOT))
+from core.deontic import classify_deontic  # noqa: E402
 
-def generate_shacl_shapes(ontology_path: Path = None, output_path: Path = None) -> str:
+
+def generate_shacl_shapes(
+    ontology_path: Path | None = None, output_path: Path | None = None
+) -> str:
     """Generate SHACL shape definitions from ontology concepts and relations.
 
     SHACL (Shapes Constraint Language) defines validation rules for RDF data.
@@ -45,7 +50,7 @@ def generate_shacl_shapes(ontology_path: Path = None, output_path: Path = None) 
 
         # Concept concepts for this pillar
         concepts = [c for c in data["concepts"] if c.get("pillar") == pillar]
-        ttl_lines.append(f"    sh:targetClass owl:Thing ;")
+        ttl_lines.append("    sh:targetClass owl:Thing ;")
 
         # Generate shape constraints based on deontic classification
         obligations = [c for c in concepts if classify_deontic(c) == "O"]
@@ -53,8 +58,8 @@ def generate_shacl_shapes(ontology_path: Path = None, output_path: Path = None) 
         prohibitions = [c for c in concepts if classify_deontic(c) == "F"]
 
         if obligations:
-            ttl_lines.append(f"    # Obligation constraints")
-            ttl_lines.append(f"    sh:annotatedProperty owl:Obligation ;")
+            ttl_lines.append("    # Obligation constraints")
+            ttl_lines.append("    sh:annotatedProperty owl:Obligation ;")
             for concept in obligations[:3]:  # Limit to first 3 for brevity
                 cid = concept["id"]
                 ttl_lines.append(f"    sh:includes <{cid}> ;")
@@ -62,8 +67,8 @@ def generate_shacl_shapes(ontology_path: Path = None, output_path: Path = None) 
                 ttl_lines.append(f"    # ... plus {len(obligations) - 3} more obligation concepts")
 
         if permissions:
-            ttl_lines.append(f"    # Permission constraints")
-            ttl_lines.append(f"    sh:annotatedProperty owl:Permission ;")
+            ttl_lines.append("    # Permission constraints")
+            ttl_lines.append("    sh:annotatedProperty owl:Permission ;")
             for concept in permissions[:3]:
                 cid = concept["id"]
                 ttl_lines.append(f"    sh:includes <{cid}> ;")
@@ -71,8 +76,8 @@ def generate_shacl_shapes(ontology_path: Path = None, output_path: Path = None) 
                 ttl_lines.append(f"    # ... plus {len(permissions) - 3} more permission concepts")
 
         if prohibitions:
-            ttl_lines.append(f"    # Prohibition constraints")
-            ttl_lines.append(f"    sh:annotatedProperty owl:Prohibition ;")
+            ttl_lines.append("    # Prohibition constraints")
+            ttl_lines.append("    sh:annotatedProperty owl:Prohibition ;")
             for concept in prohibitions[:3]:
                 cid = concept["id"]
                 ttl_lines.append(f"    sh:includes <{cid}> ;")
@@ -88,20 +93,7 @@ def generate_shacl_shapes(ontology_path: Path = None, output_path: Path = None) 
     return str(output_path)
 
 
-def classify_deontic(concept: dict) -> str:
-    """Classify a concept into deontic state O, P, or F."""
-    pillar = concept.get("pillar", "")
-    epistemic = concept.get("epistemic_status", "").lower()
-    if epistemic in ["regulatory", "constitutive"] and pillar in ["aml", "compliance"]:
-        return "O"
-    elif epistemic in ["instrumental", "pragmatic"] and pillar in ["stock", "market"]:
-        return "P"
-    elif epistemic == "ontological":
-        return "F"
-    return "N"
-
-
-def main(argv: list = None) -> int:
+def main(argv: list | None = None) -> int:
     import argparse
     parser = argparse.ArgumentParser(description="SHACL Schema Generator")
     parser.add_argument("--ontology", required=True, help="Path to ontology JSON")
@@ -109,10 +101,10 @@ def main(argv: list = None) -> int:
     args = parser.parse_args(argv) if argv else parser.parse_args()
 
     output_path = Path(args.output)
-    result = generate_shacl_shapes(Path(args.ontology), output_path)
+    generate_shacl_shapes(Path(args.ontology), output_path)
 
     print(f"SHACL shapes generated: {output_path}")
-    print(f"Shapes cover pillars: aml, stock, data-engineering")
+    print("Shapes cover pillars: aml, stock, data-engineering")
     return 0
 
 

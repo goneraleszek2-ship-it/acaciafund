@@ -415,3 +415,40 @@ class TestPillarSeedData:
         for src, tgt, rtype in CROSS_PILLAR_SEEDS:
             assert src in all_ids, f"Unknown cross-pillar source: {src}"
             assert tgt in all_ids, f"Unknown cross-pillar target: {tgt}"
+
+
+class TestEpistemicBoundary:
+    def test_method_is_exposed_on_manager(self):
+        assert callable(OntologyManager().check_epistemic_boundary)
+
+    def test_empirical_to_normative_without_mediation_fails(self):
+        manager = OntologyManager()
+        manager.add_concept(
+            Concept(id="raw-data", label="Raw Data", pillar="data-engineering",
+                    epistemic_status="instrumental")
+        )
+        manager.add_concept(
+            Concept(id="rule", label="Rule", pillar="aml", epistemic_status="regulatory")
+        )
+        passed, reason = manager.check_epistemic_boundary("raw-data", "rule")
+        assert passed is False
+        assert "without explicit normative premise" in reason
+
+    def test_empirical_to_normative_with_mediation_passes(self):
+        manager = OntologyManager()
+        manager.add_concept(
+            Concept(id="raw-data", label="Raw Data", pillar="data-engineering",
+                    epistemic_status="instrumental",
+                    philosophical_mediation="Normative premise supplied by policy layer")
+        )
+        manager.add_concept(
+            Concept(id="rule", label="Rule", pillar="aml", epistemic_status="regulatory")
+        )
+        passed, reason = manager.check_epistemic_boundary("raw-data", "rule")
+        assert passed is True
+        assert reason == "Boundary check passed"
+
+    def test_unknown_concepts_skip_check(self):
+        passed, reason = OntologyManager().check_epistemic_boundary("missing", "also-missing")
+        assert passed is True
+        assert "skipped" in reason

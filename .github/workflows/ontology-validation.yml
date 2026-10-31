@@ -11,9 +11,6 @@ permissions:
 jobs:
   ontology-check:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        shell: bash {0}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v7
@@ -26,17 +23,21 @@ jobs:
       - name: Install core dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install --no-cache-dir networkx pyarrow
+          pip install --no-cache-dir -r requirements-build.txt pytest
 
       - name: Delta Check (git diff)
         id: diff-check
         run: |
           # Check if ontology or related files changed
-          CHANGED=$(git diff --name-only HEAD~1 HEAD | grep -E "ontology\\.json|deontic|bitmask|shacl|turtle|yaml$" || true)
+          CHANGED=$(git diff --name-only HEAD~1 HEAD | grep -E "ontology\\.(json|py)|deontic|bitmask|shacl|turtle|yaml$" || true)
           echo "changed_files=$CHANGED" >> $GITHUB_OUTPUT
           if [ -z "$CHANGED" ]; then
             echo "::notice::No ontology-related files changed, skipping formal reasoning"
           fi
+
+      - name: Deontic unit tests
+        if: steps.diff-check.changed_files != ''
+        run: python3 -m pytest tests/test_deontic.py -q
 
       - name: Generate deontic bitmasks
         if: steps.diff-check.changed_files != ''

@@ -45,7 +45,13 @@ def generate_sqi_badge(sqi: float) -> str:
 
 
 def _compute_sqi_for_item(item) -> float:
-    """Lightweight SQI computation for items missing it (matches backfill_sqi.py)."""
+    """Fallback SQI for items missing a stored ``sqi``.
+
+    Mirrors ``scripts/archive/backfill_sqi.py`` (the module that produced most
+    stored SQI values and that ``tests/test_sqi_meaning.py`` exercises), including
+    the foundational freshness floor (spec invariant I2). ``docs/SQI_meaning_spec.md``
+    documents the canonical definitions.
+    """
     body = (item.body_html or "").lower()
     title = (item.title or "").lower()
     text = f"{title} {body}"
@@ -93,6 +99,12 @@ def _compute_sqi_for_item(item) -> float:
         try:
             days_old = (datetime.now(timezone.utc) - item.created_at).days
             fresh = max(0.2, 1.0 - (days_old / 360))
+            foundational = (
+                getattr(item, "knowledge_category", "") == "foundations"
+                or "foundations" in (getattr(item, "tags", None) or [])
+            )
+            if foundational:
+                fresh = max(0.6, fresh)
         except (ValueError, TypeError):
             pass
 
@@ -104,6 +116,8 @@ def _compute_sqi_for_item(item) -> float:
     edu = 0.3
     if item.bloom_questions:
         edu += 0.35
+    if item.flashcards:
+        edu += 0.2
     if item.content_type == "learn":
         edu += 0.15
     edu = min(1.0, edu)

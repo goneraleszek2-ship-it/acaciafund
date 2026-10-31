@@ -108,6 +108,7 @@ JS_TESTS=(
     "tests/test_pyodide_sandbox.js"
     "tests/test_kyc_sim.js"
     "tests/test_sar_sim.js"
+    "tests/test_nav.js"
 )
 
 echo "=========================================

@@ -11,14 +11,14 @@ Usage:
 """
 
 import json
-import os
 import sys
 from pathlib import Path
 
 # Ensure config is importable
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from config import PILLAR_VALIDATION_WEIGHTS
 import sys
+
+from config import PILLAR_VALIDATION_WEIGHTS
 
 PREFERENCES_DIR = Path.home() / ".acaciafund"
 PREFERENCES_FILE = PREFERENCES_DIR / "preferences.json"
@@ -75,7 +75,7 @@ def interactive_setup():
 
     # Philosophy version
     print("  Step 2: Philosophy version (for change-tracking).")
-    print(f"  Current: v1.0-pluralistic-2026-08")
+    print("  Current: v1.0-pluralistic-2026-08")
     print("  This version is tracked in every content item's metadata.")
     print("  Change it when you deliberately modify validation tracks or philosophical framing.")
     version = input("  Accept current version? (y/n, default y): ").strip().lower()
@@ -99,7 +99,6 @@ def interactive_setup():
     print("  These determine how the 5 validation tracks influence accept/reject/review")
     print("  decisions per pillar. Defaults are shown below.")
     print()
-    from config import PILLAR_VALIDATION_WEIGHTS
     for pillar, weights in PILLAR_VALIDATION_WEIGHTS.items():
         print(f"  {pillar}: empirical={weights['empirical_fidelity']}, "
               f"coherence={weights['coherence']}, philosophical={weights['philosophical_consistency']}, "
