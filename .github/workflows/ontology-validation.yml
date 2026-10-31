@@ -31,7 +31,7 @@ jobs:
         id: diff-check
         run: |
           # Check if ontology or related files changed
-          CHANGED=$(git show --first-parent --name-only --format= HEAD | grep -E "ontology\\.(json|py)|deontic|bitmask|shacl|turtle|ya?ml$" || true)
+          CHANGED=$(git show --first-parent --name-only --format= HEAD | grep -E "ontology\\.(json|py)|deontic|bitmask|shacl|turtle|ya?ml$" | xargs || true)
           echo "changed_files=$CHANGED" >> $GITHUB_OUTPUT
           if [ -z "$CHANGED" ]; then
             echo "::notice::No ontology-related files changed, skipping formal reasoning"
