@@ -1,29 +1,27 @@
 # Quality Gates (SQI)
 
-The Semantic Quality Index (SQI) is AcaciaFund's content quality metric. It scores every item from 0.0 to 1.0 based on content quality, readability, topical relevance, recency, and ontology concept coverage.
+The Signal Quality Index (SQI) is AcaciaFund's deterministic content-quality
+metric. It scores every item from 0.0 to 1.0 as a weighted sum of rule-based
+signals; it is not a Bayesian posterior.
 
 ## SQI Components
 
 | Component | Weight | Description |
 |-----------|--------|-------------|
-| `content_score` | 0.25 | Structure, length, heading hierarchy |
-| `readability_score` | 0.25 | Flesch reading ease, sentence complexity |
-| `topical_score` | 0.20 | Tag coherence, category match |
-| `recency_score` | 0.15 | Publication freshness (decays over days) |
-| `concept_overlap` | 0.15 | Ontology concept coverage in body text |
+| `source_credibility` | 0.25 | Source count and source-type authority |
+| `technical_accuracy` | 0.25 | Depth, code, and reference markers; long-form bonus |
+| `practical_value` | 0.20 | Practical/tool markers and learn-module bonus |
+| `freshness` | 0.15 | Publication age with a foundational-content floor |
+| `trend_relevance` | 0.10 | Ingested trend-strength signal |
+| `educational_quality` | 0.05 | Bloom questions, flashcards, learn content |
 
 ### Computation
 
-SQI is computed in `core/build_quality.py:_compute_sqi_for_item()` (canonical definitions in `docs/SQI_meaning_spec.md`):
-
-```python
-def _compute_sqi_for_item(item):
-    # 1. Readability: Flesch reading ease from body text
-    # 2. Topical: Tag overlap with body content keywords
-    # 3. Recency: Exponential decay based on days since publication
-    # 4. Concept: Extract ontology concepts from body, score by count
-    # 5. Aggregate: Weighted average → linear scale 0.0-1.0
-```
+SQI is computed in `core/build_quality.py:_compute_sqi_for_item()`; the
+canonical formula and invariants live in `docs/SQI_meaning_spec.md`. The
+archived `scripts/archive/backfill_sqi.py` defines the formula that produced
+most stored `sqi` values, and `scripts/backfill_registry_sqi.py` persists it for
+new or missing items.
 
 ## Thresholds
 
