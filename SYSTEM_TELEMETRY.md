@@ -3,7 +3,7 @@
 > **Audit method:** read-only inspection (no application logic modified).
 > **Date:** 2026-08-29 · **GIT HEAD:** `49981d83` (main)
 >
-> **Resolution update (2026-10-31):** repo-wide `ruff check` passes; 1,321
+> **Resolution update (2026-10-31):** repo-wide `ruff check` passes; 1,327
 > Python tests + 15 JS suites pass; docs metrics reconciled (260 items /
 > 2,929 pages / 199 concepts / 447 relations). The cold `earnings-analysis`
 > topic was refreshed with a current S-1 item and the dated digest was marked
@@ -167,7 +167,7 @@ acaciafund/
 ### Medium
 6. **Coverage is gated nowhere.** `run_tests.sh` emits coverage as informational only; targets (core 80%, scripts 22%) are unenforced — CI runs `pytest -q` with no `--cov` / fail-under.
 7. **Inconsistent test tooling.** CI uses `python -m pytest tests/ -q` directly; local canonical runner is `bash scripts/run_tests.sh` (stdlib `timeout`, per-group isolation). The two paths differ (isolation → timing/skip behavior), and `test_nav.js` is not in the runner's JS list.
-8. **Stale telemetry in AGENTS.md — resolved 2026-10-31.** Docs now report **260 items / 2,929 pages / 447 relations / 1,321 Python tests + 15 JS suites**.
+8. **Stale telemetry in AGENTS.md — resolved 2026-10-31.** Docs now report **260 items / 2,929 pages / 447 relations / 1,327 Python tests + 15 JS suites**.
 9. **Schema debt in registry — resolved 2026-10-31.** 0/260 items now lack `sqi`; `scripts/backfill_registry_sqi.py` persists the build-time fallback explicitly, and the 0.65 quality gate passes.
 
 ### Low

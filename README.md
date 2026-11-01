@@ -15,7 +15,7 @@ AcaciaFund is not a traditional content site. It is a schema-building engine gro
 | Knowledge categories | 13 |
 | Pillars | 3 (Compliance, Markets, Data Engineering) |
 | Inspiration sources | 65 |
-| Tests | 1,321 Python tests + 15 JS suites |
+| Tests | 1,327 Python tests + 15 JS suites |
 | Build time | ~125–155s cached, incremental via content hashing |
 | Deploy target | Cloudflare Pages (`https://www.acaciafund.org/`) |
 

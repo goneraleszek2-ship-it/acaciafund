@@ -102,7 +102,7 @@ not context.
 | Generated pages | 2,929 (incl. `/design-system/`) |
 | Registry items | 260 (136 research / 83 learn / 41 knowledge) |
 | Ontology concepts / relations | 199 / 447 |
-| Tests | 1,321 Python (verified 2026-10-31 full-suite run) + 15 JS suites (all green) |
+| Tests | 1,327 Python (verified 2026-10-31 full-suite run) + 15 JS suites (all green) |
 | Build time | ~120–273 s full, incremental via content hashing |
 | Deploy target | Cloudflare Pages via GitHub Actions |
 
