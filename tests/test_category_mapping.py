@@ -25,9 +25,13 @@ from scripts.fetch_news import (
     fetch_gdelt_items,
 )
 from scripts.knowledge_ingester import (
+    PILLAR_CONFIGS,
+    PILLAR_NEGATIVE_TAGS,
     TAG_TO_SUBCATEGORY,
     _PILLAR_BASE_TAGS,
     category_from_tags,
+    deduplicate,
+    score_pillar_relevance,
 )
 
 RSS_FIXTURE = """<?xml version="1.0" encoding="UTF-8"?>
@@ -237,3 +241,40 @@ class TestKnowledgeModules:
             expected = len(m["sections"]) + (1 if m.get("citations") else 0)
             assert body.count("<h2>") == expected
             assert len(body) > 200
+
+
+@pytest.mark.parametrize(
+    "title",
+    [
+        "TRACER, a time-to-event EHR foundation model for disease detection across health systems",
+        "Development of Reductive C-S Coupling for Preparing S-Aryl/alkyl Containing Peptides.",
+        "In Situ Active Site-Engineered Z-Scheme CMCN/Co3O4-ZIF-8 Heterostructure for Efficient Tetracycline Degradation.",
+        "The US added a record 20.2 GWh of battery storage in just 3 months",
+        "Gemini 4 Carbon is the new #1 on the Artificial Analysis Intelligence Index v5",
+    ],
+)
+def test_off_topic_titles_rejected_by_every_pillar(title):
+    for key, config in PILLAR_CONFIGS.items():
+        score, _ = score_pillar_relevance(
+            title, config, negative_tags=PILLAR_NEGATIVE_TAGS.get(key)
+        )
+        assert score < config.hn_min_score, (key, score)
+
+
+def test_cross_pillar_duplicate_titles_keep_highest_score():
+    title = "Exponential Convergence of the Lifted Gradient Flow of the Bass Functional"
+    low = {
+        "slug": "compliance/research/bass-functional",
+        "title": title,
+        "source_url": "https://example.com/bass",
+        "quality_metrics": {"score": 0.4},
+    }
+    high = {
+        "slug": "markets/research/bass-functional",
+        "title": title,
+        "source_url": "https://example.com/bass",
+        "quality_metrics": {"score": 0.9},
+    }
+    kept = deduplicate([low, high], {"content": []})
+    assert len(kept) == 1
+    assert kept[0] is high

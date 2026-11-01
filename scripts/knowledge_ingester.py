@@ -190,7 +190,18 @@ DATA_CATEGORY_BOOSTS: dict[str, float] = {
 }
 
 # ── Per-pillar negative keywords (penalize off-topic content) ────────────
-DATA_NEGATIVE_TAGS: list[str] = [
+# Domains that are outside all three pillars. Two or more matches reject an
+# item outright, regardless of how many finance keywords its abstract contains.
+OFF_TOPIC_PATTERNS: list[str] = [
+    r"\bpeptide", r"\bantibiotic", r"\btetracycline", r"\bphotocatalyst",
+    r"\bcatalys", r"\bchemistr", r"\bchemical\b", r"\bmolecule\b",
+    r"\behr\b", r"\bhealth.record", r"\bmedical\b", r"\bhealthcare\b",
+    r"\bpatient", r"\bclinical\b", r"\bdisease\b",
+    r"\bbattery", r"\benergy.storage", r"\bgwh\b", r"\bmwh\b",
+    r"\bgrid\b", r"\bsolar\b", r"\bwind.farm",
+    r"\bgemini\b", r"\bintelligence.index", r"\bllm.benchmark",
+]
+DATA_NEGATIVE_TAGS: list[str] = OFF_TOPIC_PATTERNS + [
     r"\bgenom", r"\bcrispr", r"\bprotein", r"\bdna\b", r"\brna\b", r"\bcell\b",
     r"\bbiology", r"\bbioinformatic", r"\bprotein", r"\bclinical.trial",
     r"\boncolog", r"\bpatient", r"\bdisease", r"\btherapy", r"\bdiagnos",
@@ -199,13 +210,13 @@ DATA_NEGATIVE_TAGS: list[str] = [
     r"\btranscranial", r"\bdopamine", r"\bneurolog", r"\bpsychiatr",
 ]
 
-AML_NEGATIVE_TAGS: list[str] = [
+AML_NEGATIVE_TAGS: list[str] = OFF_TOPIC_PATTERNS + [
     r"\bgenom", r"\bcrispr", r"\bcell\b", r"\bbiology", r"\bprotein",
     r"\bdifferential.geom", r"\btopolog", r"\bmanifold",
     r"\btranscranial", r"\bneurolog",
 ]
 
-MARKET_NEGATIVE_TAGS: list[str] = [
+MARKET_NEGATIVE_TAGS: list[str] = OFF_TOPIC_PATTERNS + [
     r"\bgenom", r"\bcrispr", r"\bcell\b", r"\bbiology", r"\bprotein",
     r"\bdifferential.geom", r"\btopolog", r"\bmanifold",
     r"\btranscranial", r"\bneurolog",
@@ -460,9 +471,13 @@ def score_pillar_relevance(
         score = kw_score * 1.5 + category_bonus
         score = min(1.0, score)
 
-    # Negative keyword penalty (off-topic content)
+    # Negative keyword penalty (off-topic content). Two independent off-topic
+    # signals are enough to reject: keyword density alone must not smuggle a
+    # chemistry/medical/energy item into a finance or data pillar.
     if negative_tags:
         negative_hits = sum(1 for p in negative_tags if re.search(p, lower))
+        if negative_hits >= 2:
+            return 0.0, []
         score += negative_hits * NEGATIVE_PENALTY
 
     return max(0.0, score), detected
@@ -1245,6 +1260,29 @@ def deduplicate(items: list[dict], registry_data: dict) -> list[dict]:
       3. Exact title match (set O(1))
       4. Word-overlap pre-check + Jaccard similarity >= 0.93 (near-duplicate title)
     """
+    # Collapse cross-pillar duplicates within this batch. The same paper can
+    # match more than one pillar; keep the version with the highest relevance
+    # score instead of publishing it under two pillars.
+    before_batch = len(items)
+    best_by_title: dict[str, dict] = {}
+    title_order: list[str] = []
+    for item in items:
+        title = (item.get("title") or "").strip().lower()
+        if not title:
+            title = f"_slug:{item.get('slug', '')}"
+        score = (item.get("quality_metrics") or {}).get("score", 0) or 0
+        previous = best_by_title.get(title)
+        if previous is None:
+            best_by_title[title] = item
+            title_order.append(title)
+        else:
+            previous_score = (previous.get("quality_metrics") or {}).get("score", 0) or 0
+            if score > previous_score:
+                best_by_title[title] = item
+    if len(best_by_title) < before_batch:
+        logger.info(f"  Collapsed {before_batch - len(best_by_title)} cross-pillar duplicate(s)")
+    items = [best_by_title[key] for key in title_order]
+
     existing_slugs_set = _existing_slugs(registry_data)
     existing_urls_set = _existing_urls(registry_data)
     existing_titles_list = _existing_titles(registry_data)
