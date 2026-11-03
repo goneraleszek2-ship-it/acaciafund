@@ -109,7 +109,7 @@
     </section>
 
     {%- if quiz_json %}
-    <section class="mt-12 pt-8 border-t border-muted" id="quiz-section" data-quiz='{{ quiz_json }}' data-quiz-lesson="{{ page_path }}">
+    <section class="mt-12 pt-8 border-t border-muted" id="quiz-section" data-quiz='{{ quiz_json | tojson }}' data-quiz-lesson="{{ page_path }}">
       <h2 class="text-2xl font-bold mb-4 text-default">Knowledge Check</h2>
       <p class="text-sm mb-4 text-muted">Test your understanding of this lesson.</p>
       <div id="quiz-score" class="mb-4 text-sm font-semibold text-secondary"></div>

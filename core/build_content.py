@@ -7,7 +7,6 @@ JSON-LD, quiz serialization, and content rendering for the AcaciaFund build pipe
 from __future__ import annotations
 
 import hashlib
-import json
 import logging
 import re
 import shutil
@@ -367,10 +366,10 @@ def _cleanup_partial_output(item):
         logger.warning(f"Cleanup failed for {slug}: {e}")
 
 
-def _serialize_quiz(item) -> str:
-    """Serialize bloom questions into a JSON string for the quiz JS."""
+def _serialize_quiz(item) -> dict:
+    """Build the quiz payload for the template; Jinja tojson handles escaping."""
     if not item.bloom_questions:
-        return ""
+        return {}
     quiz_data = {"questions": []}
     for bq in item.bloom_questions[:10]:
         if isinstance(bq, dict) and "question" in bq:
@@ -387,9 +386,7 @@ def _serialize_quiz(item) -> str:
             if qtype == "open-ended":
                 entry["answer_text"] = bq.get("correct", opts[raw] if opts else "")
             quiz_data["questions"].append(entry)
-    if quiz_data["questions"]:
-        return json.dumps(quiz_data, ensure_ascii=False)
-    return ""
+    return quiz_data if quiz_data["questions"] else {}
 
 
 def _build_jsonld(item: Any, site_url: str, page_path: str = "") -> dict[str, Any]:
