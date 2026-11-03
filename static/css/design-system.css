@@ -3,33 +3,10 @@
    Source files: theme.css · style.css · custom.css · feynman.css · weekly.css
    ═══════════════════════════════════════════════════════════════════════════ */
 
-/* ── Progressive Disclosure ── */
-@layer components {
-  .section-header::before {
-    content: '▶';
-    font-size: 0.75rem;
-    transition: transform 0.2s;
-  }
-  .section-header.is-expanded::before {
-    content: '▼';
-  }
-  .prose-section {
-    max-height: none;
-    transition: max-height 0.3s ease;
-  }
-  .prose-section.is-collapsed {
-    max-height: 3rem;
-    overflow: hidden;
-  }
-}
-
-/* ── Cascade Layer Declaration ── */
 @layer reset, tokens, base, components, utilities, overrides;
 
-/* ── Vendor: Pico CSS ── */
+/* ── Vendor: Pico CSS + type system (inlined at build time) ── */
 @import url('vendor/pico.min.css') layer(reset);
-
-/* ── Vendor: Type System (Fraunces + Manrope) ── */
 @import url('vendor/fonts.css') layer(tokens);
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -97,7 +74,6 @@
   --font-display: 'Fraunces', Georgia, 'Times New Roman', serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
   scroll-behavior: smooth;
-}
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
   --text-base: 1.0625rem;
@@ -842,6 +818,24 @@ section.mt-12 ul.space-y-2 { list-style: none; margin: 0; padding: 0; }
    LAYER: components — UI Parts
    ═══════════════════════════════════════════════════════════════════════════ */
 @layer components {
+
+  .section-header::before {
+    content: '▶';
+    font-size: 0.75rem;
+    transition: transform 0.2s;
+  }
+  .section-header.is-expanded::before {
+    content: '▼';
+  }
+  .prose-section {
+    max-height: none;
+    transition: max-height 0.3s ease;
+  }
+  .prose-section.is-collapsed {
+    max-height: 3rem;
+    overflow: hidden;
+  }
+
 
 /* ── Feynman Stage Progress Bar (from style.css) ── */
 .feynman-stages {

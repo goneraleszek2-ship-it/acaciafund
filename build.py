@@ -828,6 +828,17 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
 
     failed_count = 0
 
+    # --- CSS Bundling ---
+    # Inline vendor imports so the browser never processes runtime @imports.
+    _t0 = time.time()
+    try:
+        from scripts.bundle_css import bundle_css
+        bundle_css()
+        print("  CSS bundling complete")
+    except ImportError:
+        print("  CSS bundler not available, skipping")
+    _record_timing("css_bundling", time.time() - _t0)
+
     # --- JS Bundling ---
     # Concatenate JS files into entry points before asset pipeline
     _t0 = time.time()
