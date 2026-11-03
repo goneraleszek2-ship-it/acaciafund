@@ -97,7 +97,7 @@ def test_graph_renders(page, base_url):
     errors = _visit(page, base_url, "/graph/")
     if errors:
         pytest.fail("graph page errors:\n" + "\n".join(errors))
-    page.wait_for_selector("#cy canvas", timeout=30000)
+    page.wait_for_selector("#cy canvas", state="attached", timeout=30000)
     assert not errors, "\n".join(errors)
 
 
