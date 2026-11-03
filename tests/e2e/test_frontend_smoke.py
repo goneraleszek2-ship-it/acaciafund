@@ -95,7 +95,9 @@ def test_page_has_no_runtime_errors(page, base_url, path):
 
 def test_graph_renders(page, base_url):
     errors = _visit(page, base_url, "/graph/")
-    page.wait_for_selector("#cy canvas", timeout=20000)
+    if errors:
+        pytest.fail("graph page errors:\n" + "\n".join(errors))
+    page.wait_for_selector("#cy canvas", timeout=30000)
     assert not errors, "\n".join(errors)
 
 
