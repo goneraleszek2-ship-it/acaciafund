@@ -45,6 +45,7 @@ def allowed_404(url: str) -> str | None:
 
 def _visit(page, base: str, path: str) -> list[str]:
     errors: list[str] = []
+    page.add_init_script("try{localStorage.setItem('acacia_onboarding_seen','1')}catch(e){}")
 
     def on_console(msg):
         if msg.type != "error":
@@ -52,6 +53,11 @@ def _visit(page, base: str, path: str) -> list[str]:
         location = (msg.location or {}).get("url", "")
         if allowed_404(location):
             return
+        # External analytics/images may be unreachable in CI; only CSP/refusal
+        # messages for those are our problem.
+        if location.startswith(("http://", "https://")) and not location.startswith(base):
+            if "Content Security Policy" not in msg.text and "Refused to" not in msg.text:
+                return
         errors.append(f"console: {msg.text} ({location})")
 
     def on_pageerror(exc):
