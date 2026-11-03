@@ -50,4 +50,8 @@ exclude = ["dist", "venv", "tmp"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
-addopts = "-v --tb=short"
+addopts = "-v --tb=short -m 'not e2e'"
+markers = [
+    "e2e: Playwright frontend smoke tests (off by default)",
+    "slow: slow/network-dependent test",
+]
