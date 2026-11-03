@@ -34,8 +34,8 @@
         opts.nodeSep = 40;
         opts.rankSep = 60;
         opts.edgeSep = 10;
-      } else if (name === 'cose-bilkent') {
-        opts.name = window.cytoscapeCoseBilkent ? 'cose-bilkent' : 'cose';
+      } else if (name === 'cose' || name === 'cose-bilkent') {
+        opts.name = 'cose';
         opts.nodeRepulsion = function() { return 204800; };
         opts.idealEdgeLength = function() { return 80; };
         opts.gravity = 0.25;
@@ -173,7 +173,6 @@
 
     function initGraph(data) {
       rawData = data;
-      try { if (window.cytoscapeCoseBilkent) cytoscape.use(window.cytoscapeCoseBilkent); } catch (e) {}
       try { if (window.cytoscapeDagre) cytoscape.use(window.cytoscapeDagre); } catch (e) {}
 
       cy = cytoscape({
@@ -252,7 +251,7 @@
           },
         ],
         layout: {
-          name: window.cytoscapeCoseBilkent ? 'cose-bilkent' : 'cose',
+          name: 'cose',
           animate: false,
           fit: true,
           padding: 30,
@@ -366,9 +365,9 @@
         hideDetail();
         document.getElementById('graph-filter').value = 'all';
         document.getElementById('graph-relation-filter').value = 'all';
-        document.getElementById('graph-layout').value = 'cose-bilkent';
+        document.getElementById('graph-layout').value = 'cose';
         document.getElementById('graph-search').value = '';
-        runLayout('cose-bilkent');
+        runLayout('cose');
       }
     });
 
