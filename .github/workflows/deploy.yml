@@ -103,8 +103,7 @@ jobs:
       - name: Post-build smoke tests
         run: python3 scripts/deploy_checks.py
 
-      - name: Frontend smoke (non-blocking during P0)
-        continue-on-error: true
+      - name: Frontend smoke (blocking P0 gate)
         timeout-minutes: 15
         run: |
           python -m pip install --no-cache-dir -r requirements-e2e.txt
