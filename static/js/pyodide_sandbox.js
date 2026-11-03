@@ -3,8 +3,11 @@
 (function () {
   'use strict';
 
-  var PYODIDE_URL = 'https://cdn.jsdelivr.net/pyodide/v0.26.4/full/pyodide.js';
-  var POLARS_WHEEL = 'https://cdn.jsdelivr.net/pyodide/v0.26.4/full/polars-1.4.1-cp311-cp311-emscripten_3_1_45_wasm32.whl';
+  var _root = document.querySelector('[data-py-sandbox]');
+  var PYODIDE_VERSION = _root ? _root.getAttribute('data-pyodide-version') : '';
+  var PYODIDE_BASE = 'https://cdn.jsdelivr.net/pyodide/v' + PYODIDE_VERSION + '/full/';
+  var PYODIDE_URL = PYODIDE_BASE + 'pyodide.js';
+  var POLARS_WHEEL = PYODIDE_BASE + 'polars-1.4.1-cp311-cp311-emscripten_3_1_45_wasm32.whl';
   var _pyodidePromise = null;
 
   /* ── Pure helpers (unit-tested via tests/test_pyodide_sandbox.js) ── */
@@ -30,7 +33,7 @@
           reject(new Error('Pyodide loader unavailable.'));
           return;
         }
-        window.loadPyodide({ indexURL: 'https://cdn.jsdelivr.net/pyodide/v0.26.4/full/' })
+        window.loadPyodide({ indexURL: PYODIDE_BASE })
           .then(function (py) {
             return py.loadPackage(POLARS_WHEEL).then(function () { return py; });
           })

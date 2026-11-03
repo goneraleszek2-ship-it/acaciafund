@@ -78,13 +78,11 @@
   function init() {
     var app = document.getElementById('diagnostic-app');
     if (!app) return;
-    var script = document.querySelector('script[src*="diagnostic.js"]');
-    var prefix = script ? script.src.replace(/js\/\w+\.js.*$/, '') : '';
-    var list = document.createElement('div');
+        var list = document.createElement('div');
     list.id = 'diagnostic-list';
     app.appendChild(list);
 
-    var payloadPath = (prefix || '') + 'static/diagnostic_questions.json';
+    var payloadPath = '/static/diagnostic_questions.json';
     var answers = [];
     var questions = [];
     var submit = document.getElementById('diagnostic-submit');

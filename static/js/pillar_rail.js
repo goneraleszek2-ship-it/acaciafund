@@ -74,9 +74,7 @@
     var rail = document.querySelector('.pillar-rail');
     if (!rail) return;
     var pillar = rail.getAttribute('data-pillar');
-    var base = document.querySelector('script[src*="pillar_rail.js"]');
-    var prefix = base ? base.src.replace(/js\/\w+\.js.*$/, '') : '';
-
+    
     var sm2 = {};
     var mastery = {};
     try { sm2 = JSON.parse(localStorage.getItem('acacia_sm2') || '{}'); } catch (_) {}
@@ -86,8 +84,8 @@
     var queueEl = document.getElementById('rail-queue');
 
     Promise.all([
-      fetch(prefix + 'static/review_concepts.json').then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }),
-      fetch(prefix + 'static/flashcard_index.json').then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }),
+      fetch('/static/review_concepts.json').then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }),
+      fetch('/static/flashcard_index.json').then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); }),
     ])
       .then(function (results) {
         var concepts = (results[0] && results[0].concepts) || [];

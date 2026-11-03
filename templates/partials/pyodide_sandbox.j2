@@ -1,7 +1,7 @@
 {# pyodide_sandbox.j2 — in-browser Python/Polars exercise (Tier 4.2, molecule: sandbox-card) #}
 {# Expects: ex (exercise dict with kind=polars) #}
 {%- set ex_json = ex | tojson %}
-<div class="sandbox-card ghost-card" data-py-sandbox data-ex='{{ ex_json }}'>
+<div class="sandbox-card ghost-card" data-py-sandbox data-pyodide-version="{{ pyodide_version }}" data-ex='{{ ex_json }}'>
   <div class="flex items-center justify-between gap-2 mb-3">
     <h3 class="text-base font-bold text-default">{{ ex.title }}</h3>
     <span class="sandbox-level">{{ ex.level }}</span>

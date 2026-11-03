@@ -75,9 +75,7 @@
   function init() {
     var app = document.getElementById('study-dashboard');
     if (!app) return;
-    var base = document.querySelector('script[src*="study_dashboard.js"]');
-    var prefix = base ? base.src.replace(/js\/\w+\.js.*$/, '') : '';
-
+    
     var sm2 = {};
     var mastery = {};
     var history = [];
@@ -103,7 +101,7 @@
       }).join('');
     }
 
-    fetch(prefix + 'static/flashcard_index.json')
+    fetch('/static/flashcard_index.json')
       .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
       .then(function (data) {
         var cards = (data && data.cards) || [];

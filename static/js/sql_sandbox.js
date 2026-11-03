@@ -44,44 +44,35 @@
     };
   }
 
-  /* ── Engine loading (sql.js from CDN with fallbacks) ── */
+  /* ── Engine loading (self-hosted sql.js) ── */
 
-  var CDNS = [
-    'https://cdn.jsdelivr.net/npm/sql.js@1.10.3/dist/sql-wasm.js',
-    'https://unpkg.com/sql.js@1.10.3/dist/sql-wasm.js',
-  ];
-  var WASM = 'https://cdn.jsdelivr.net/npm/sql.js@1.10.3/dist/sql-wasm.wasm';
+  var SQL_JS = '/static/js/vendor/sql.js/sql-wasm.js';
+  var SQL_WASM_DIR = '/static/js/vendor/sql.js/';
   var _enginePromise = null;
 
   function loadSQLJS() {
-    if (typeof window.initSqlJs === 'function') {
-      return Promise.resolve(window.initSqlJs);
-    }
     if (_enginePromise) return _enginePromise;
     _enginePromise = new Promise(function (resolve, reject) {
-      var tried = 0;
-      var fail = function (e) {
-        tried++;
-        if (tried >= CDNS.length) {
-          reject(new Error('SQLite engine could not be loaded (network unavailable?).'));
-        } else {
-          loadFrom(CDNS[tried]);
+      var init = function () {
+        if (typeof window.initSqlJs !== 'function') {
+          reject(new Error('initSqlJs missing'));
+          return;
         }
+        window.initSqlJs({
+          locateFile: function (file) { return SQL_WASM_DIR + file; }
+        }).then(resolve).catch(reject);
       };
-      var loadFrom = function (src) {
-        var s = document.createElement('script');
-        s.src = src;
-        s.onload = function () {
-          if (typeof window.initSqlJs === 'function') {
-            resolve(window.initSqlJs);
-          } else {
-            fail(new Error('initSqlJs missing'));
-          }
-        };
-        s.onerror = fail;
-        document.head.appendChild(s);
+      if (typeof window.initSqlJs === 'function') {
+        init();
+        return;
+      }
+      var script = document.createElement('script');
+      script.src = SQL_JS;
+      script.onload = init;
+      script.onerror = function () {
+        reject(new Error('SQLite engine could not be loaded.'));
       };
-      loadFrom(CDNS[0]);
+      document.head.appendChild(script);
     });
     return _enginePromise;
   }
@@ -160,8 +151,8 @@
           return;
         }
         status.textContent = 'Loading SQLite…';
-        loadSQLJS().then(function () {
-          var db = new window.SQL.Database();
+        loadSQLJS().then(function (SQL) {
+          var db = new SQL.Database();
           try {
             db.exec(ex.dataset.schema);
             db.exec(ex.dataset.seed);

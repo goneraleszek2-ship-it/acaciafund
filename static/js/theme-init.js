@@ -1,0 +1,1 @@
+!function(){var t,d=document.documentElement;try{d.classList.add('js')}catch(e){}try{t=localStorage.getItem('acacia_theme')}catch(e){}if(t){d.classList.add(t);d.setAttribute('data-theme',t)}else if(window.matchMedia('(prefers-color-scheme:dark)').matches){d.classList.add('dark');d.setAttribute('data-theme','dark')}}();

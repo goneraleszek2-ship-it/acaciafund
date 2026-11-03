@@ -21,7 +21,7 @@
   </p>
 </header>
 
-<div id="lp-progress-bar" class="ghost-card p-3 mb-6">
+<div id="lp-progress-bar" class="ghost-card p-3 mb-6" data-start-concept="{{ start_concept_id }}" data-total-nodes="{{ total_nodes }}">
   <div class="flex items-center justify-between mb-1">
     <span class="text-xs font-semibold text-default">Progress</span>
     <span id="lp-progress-text" class="text-xs text-muted">0 / {{ total_nodes }} complete</span>
@@ -135,59 +135,7 @@
   </div>
 </section>
 
-<script>
-(function() {
-  var STORAGE_KEY = 'acacia_lp_progress_' + '{{ start_concept_id }}';
-  var totalNodes = {{ total_nodes }};
-
-  function loadProgress() {
-    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(e) { return []; }
-  }
-
-  function saveProgress(done) {
-    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(done)); } catch(e) {}
-  }
-
-  function updateUI(done) {
-    var fill = document.getElementById('lp-progress-fill');
-    var text = document.getElementById('lp-progress-text');
-    var pct = totalNodes > 0 ? Math.round((done.length / totalNodes) * 100) : 0;
-    if (fill) fill.style.width = pct + '%';
-    if (text) text.textContent = done.length + ' / ' + totalNodes + ' complete';
-
-    document.querySelectorAll('.lp-complete-btn').forEach(function(btn, i) {
-      var isDone = done.indexOf(i) !== -1;
-      if (isDone) {
-        btn.style.borderColor = '#22c55e';
-        btn.style.color = '#22c55e';
-        btn.style.background = 'color-mix(in srgb, #22c55e 10%, transparent)';
-        btn.innerHTML = '<svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Done';
-      } else {
-        btn.style.borderColor = '';
-        btn.style.color = '';
-        btn.style.background = '';
-        btn.innerHTML = '<svg class="icon-sm" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg> Mark Done';
-      }
-    });
-  }
-
-  var done = loadProgress();
-  updateUI(done);
-
-  document.querySelectorAll('.lp-complete-btn').forEach(function(btn, i) {
-    btn.addEventListener('click', function() {
-      var idx = parseInt(this.closest('.path-node').dataset.nodeIdx);
-      if (done.indexOf(idx) === -1) {
-        done.push(idx);
-      } else {
-        done = done.filter(function(d) { return d !== idx; });
-      }
-      saveProgress(done);
-      updateUI(done);
-    });
-  });
-})();
-</script>
+<script src="{{ 'js/learning_path.js' | asset }}" defer></script>
 
 {% include 'partials/newsletter.html' %}
 {% endblock %}

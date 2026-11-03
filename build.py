@@ -4,6 +4,7 @@ Build script for AcaciaFund: converts registry.json to static HTML using Jinja2 
 3-category taxonomy: research | learn | knowledge
 """
 
+import base64
 import hashlib
 import json
 import logging
@@ -33,6 +34,7 @@ from config import (
     PIPELINE_STATIC_DIR,
     PLAUSIBLE_DOMAIN,
     PROJECT_ROOT,
+    PYODIDE_VERSION,
     REGISTRY_PATH,
     SITE_DESCRIPTION,
     SITE_NAME,
@@ -104,6 +106,12 @@ from core.urls import (
     slug_to_path,
     slug_to_url,
 )
+
+THEME_INIT_JS = (PIPELINE_STATIC_DIR / "js" / "theme-init.js").read_text(encoding="utf-8")
+THEME_INIT_HASH = base64.b64encode(
+    hashlib.sha256(THEME_INIT_JS.encode("utf-8")).digest()
+).decode("ascii")
+
 
 
 # --- Knowledge Graph Generation ---
@@ -966,6 +974,8 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
         "site_url": SITE_URL,
         "now": now,
         "plausible_domain": PLAUSIBLE_DOMAIN,
+        "pyodide_version": PYODIDE_VERSION,
+        "theme_init_js": THEME_INIT_JS,
         "pillar_config": PILLAR_CONFIG,
         "pillar_emojis": PILLAR_EMOJIS,
         "pillar_names": PILLAR_NAMES,
@@ -2681,7 +2691,6 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     # --- Review pages (dashboard + queue) ---
     from core.review_cards import collect_flashcards, write_flashcard_index
     _review_cards = collect_flashcards(registry.content)
-    _review_cards_json = json.dumps(_review_cards, ensure_ascii=False)
     write_flashcard_index(_review_cards, STATIC_DST_DIR / "flashcard_index.json")
 
     review_dir = OUTPUT_DIR / "review"
@@ -2689,7 +2698,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     review_html = render_template(
         "review.j2",
         content=_dummy("Review Dashboard — AcaciaFund", "index", description="Spaced repetition review dashboard for AcaciaFund learn modules."),
-        flashcard_cards=_review_cards_json,
+        flashcard_cards=_review_cards,
         page_path="review/",
         page_title="Review Dashboard",
         **ctx_base,
@@ -2702,7 +2711,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     queue_html = render_template(
         "review_queue.j2",
         content=_dummy("Review Queue — AcaciaFund", "index", description="Review queue for spaced repetition flashcards."),
-        flashcard_cards=_review_cards_json,
+        flashcard_cards=_review_cards,
         page_path="review/queue/",
         page_title="Review Queue",
         **ctx_base,
@@ -2716,7 +2725,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     study_html = render_template(
         "study.j2",
         content=_dummy("Study Queue — AcaciaFund", "index", description="Daily study queue with due flashcards and concept reviews."),
-        flashcard_cards=_review_cards_json,
+        flashcard_cards=_review_cards,
         page_path="study/",
         page_title="Study Queue",
         **ctx_base,
@@ -3763,15 +3772,26 @@ Sitemap: {SITE_URL}/sitemap.xml
             dst.write_text(src.read_text(encoding="utf-8"), encoding="utf-8")
 
     # --- HEADERS ---
-
-    # --- HEADERS ---
+    csp = (
+        "default-src 'self'; "
+        "img-src 'self' https: data:; "
+        "style-src 'self' 'unsafe-inline'; "
+        "font-src 'self'; "
+        f"script-src 'self' 'sha256-{THEME_INIT_HASH}' 'wasm-unsafe-eval' "
+        "https://plausible.io/js/ https://static.cloudflareinsights.com "
+        f"https://cdn.jsdelivr.net/pyodide/v{PYODIDE_VERSION}/full/; "
+        "connect-src 'self' https://plausible.io/api/event https://cloudflareinsights.com "
+        f"https://cdn.jsdelivr.net/pyodide/v{PYODIDE_VERSION}/full/; "
+        "worker-src 'self' blob:; object-src 'none'; frame-ancestors 'none'; "
+        "base-uri 'self'; form-action 'self'"
+    )
     (OUTPUT_DIR / "_headers").write_text(
-        """/*
+        f"""/*
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=()
-  Content-Security-Policy: default-src 'self'; img-src 'self' https: data:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self'; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'
+  Content-Security-Policy: {csp}
   Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Resource-Policy: same-origin
@@ -3787,6 +3807,10 @@ Sitemap: {SITE_URL}/sitemap.xml
 
 /*.html
   Cache-Control: public, max-age=3600
+
+/static/js/vendor/sql.js/sql-wasm.wasm
+  Content-Type: application/wasm
+  Cache-Control: public, max-age=31536000, immutable
 
 /feed.xml
   Cache-Control: public, max-age=3600

@@ -102,9 +102,7 @@
 
   function fetchConcepts() {
     if (conceptsCache) return Promise.resolve(conceptsCache);
-    var base = document.querySelector('script[src*="app.js"], script[src*="search.js"]');
-    var prefix = base ? base.src.replace(/js\/[\w.-]+\.js.*$/, '') : '';
-    return fetch(prefix + 'static/review_concepts.json')
+    return fetch('/static/review_concepts.json')
       .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
       .then(function (data) {
         conceptsCache = data.concepts || [];

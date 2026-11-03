@@ -954,9 +954,7 @@
 
   function fetchConcepts() {
     if (conceptsCache) return Promise.resolve(conceptsCache);
-    var base = document.querySelector('script[src*="app.js"], script[src*="search.js"]');
-    var prefix = base ? base.src.replace(/js\/[\w.-]+\.js.*$/, '') : '';
-    return fetch(prefix + 'static/review_concepts.json')
+    return fetch('/static/review_concepts.json')
       .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
       .then(function (data) {
         conceptsCache = data.concepts || [];
@@ -2737,12 +2735,14 @@
     var sm2 = {};
     try { sm2 = JSON.parse(localStorage.getItem('acacia_sm2') || '{}'); } catch (_) {}
 
-    var base = document.querySelector('script[src*="review_badge.js"]');
-    var prefix = base ? base.src.replace(/js\/\w+\.js.*$/, '') : '';
+    if (!Object.keys(mastery).length && !Object.keys(sm2).length) {
+      updateBadge(0);
+      return;
+    }
 
     Promise.all([
-      fetch(prefix + 'static/review_concepts.json').then(function(r) { if (!r.ok) throw new Error(r.status); return r.json(); }),
-      fetch(prefix + 'static/flashcard_index.json').then(function(r) { if (!r.ok) throw new Error(r.status); return r.json(); }),
+      fetch('/static/review_concepts.json').then(function(r) { if (!r.ok) throw new Error(r.status); return r.json(); }),
+      fetch('/static/flashcard_index.json').then(function(r) { if (!r.ok) throw new Error(r.status); return r.json(); }),
     ])
       .then(function(results) {
         var concepts = (results[0] && results[0].concepts) || [];

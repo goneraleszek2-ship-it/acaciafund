@@ -18,6 +18,7 @@ SITE_DESCRIPTION = (
     "Static-first, privacy-preserving."
 )
 PLAUSIBLE_DOMAIN = "plausible.io"
+PYODIDE_VERSION = "0.26.4"
 
 # Paths (source)
 REGISTRY_PATH = PROJECT_ROOT / "registry.json"

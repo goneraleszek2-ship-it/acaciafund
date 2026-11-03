@@ -8,6 +8,7 @@ from core.content import Content
 def render_citation(item):
     env = Environment(loader=FileSystemLoader("templates"), undefined=StrictUndefined)
     env.filters["striptags"] = lambda v: str(v)
+    env.filters["asset"] = lambda p: "/static/" + p
     tmpl = env.get_template("partials/citation_export.j2")
     return tmpl.render(content=item)
 
