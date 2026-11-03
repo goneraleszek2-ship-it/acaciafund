@@ -97,7 +97,18 @@ def test_graph_renders(page, base_url):
     errors = _visit(page, base_url, "/graph/")
     if errors:
         pytest.fail("graph page errors:\n" + "\n".join(errors))
-    page.wait_for_selector("#cy canvas", state="attached", timeout=30000)
+    try:
+        page.wait_for_selector("#cy canvas", state="attached", timeout=30000)
+    except Exception:
+        diag = page.evaluate(
+            """() => ({
+                cytoscape: typeof window.cytoscape,
+                cose: typeof window.cytoscapeCoseBilkent,
+                dagre: typeof window.cytoscapeDagre,
+                html: (document.getElementById('cy') || {}).innerHTML || '',
+            })"""
+        )
+        pytest.fail(f"graph never initialized: {diag}")
     assert not errors, "\n".join(errors)
 
 

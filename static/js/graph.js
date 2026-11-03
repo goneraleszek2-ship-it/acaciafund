@@ -173,8 +173,8 @@
 
     function initGraph(data) {
       rawData = data;
-      if (window.cytoscapeCoseBilkent) cytoscape.use(window.cytoscapeCoseBilkent);
-      if (window.cytoscapeDagre) cytoscape.use(window.cytoscapeDagre);
+      try { if (window.cytoscapeCoseBilkent) cytoscape.use(window.cytoscapeCoseBilkent); } catch (e) {}
+      try { if (window.cytoscapeDagre) cytoscape.use(window.cytoscapeDagre); } catch (e) {}
 
       cy = cytoscape({
         container: document.getElementById('cy'),
