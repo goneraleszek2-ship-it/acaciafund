@@ -80,6 +80,8 @@
     try { sm2 = JSON.parse(localStorage.getItem('acacia_sm2') || '{}'); } catch (_) {}
     try { mastery = JSON.parse(localStorage.getItem('acacia_concept_mastery') || '{}'); } catch (_) {}
 
+    if (!Object.keys(sm2).length && !Object.keys(mastery).length) return;
+
     var ringEls = rail.querySelectorAll('[data-mastery]');
     var queueEl = document.getElementById('rail-queue');
 

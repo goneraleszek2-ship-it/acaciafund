@@ -191,3 +191,11 @@ Static host, no nonces.
 - Build succeeds with 0 errors; Python and JS tests pass.
 - The six corrected descriptions exactly match sentences in the corrected
   bodies, quoted in the commit message.
+
+## Implementation status (2026-11-03)
+
+P0 changes are implemented on `main`. The Playwright smoke gate is blocking in
+`deploy.yml`; the local proot/ARM environment cannot launch Chromium (SIGTRAP),
+so screenshots must be produced by CI or a supported Chromium host:
+`python scripts/capture_frontend_screens.py --out /tmp/frontend-p0-screens/after`
+(use `--base-url https://www.acaciafund.org` for a production capture).
