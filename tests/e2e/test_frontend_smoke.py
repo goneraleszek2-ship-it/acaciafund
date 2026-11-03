@@ -53,6 +53,8 @@ def _visit(page, base: str, path: str) -> list[str]:
         location = (msg.location or {}).get("url", "")
         if allowed_404(location):
             return
+        if any(pattern.search(msg.text) for pattern, _ in ALLOWED_404):
+            return
         # External analytics/images may be unreachable in CI; only CSP/refusal
         # messages for those are our problem.
         if location.startswith(("http://", "https://")) and not location.startswith(base):

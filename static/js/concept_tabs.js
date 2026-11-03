@@ -6,7 +6,7 @@
   /* ── Tab molecule (spec §3.3 Organisms / §4.5 Concept Hub) ── */
 
   function tabNames(panels) {
-    return (panels || []).map(function (p) {
+    return Array.prototype.map.call(panels || [], function (p) {
       return p.getAttribute('data-tabpanel');
     }).filter(Boolean);
   }

@@ -45,15 +45,12 @@ class AssetManager:
         return content
 
     def _minify_js(self, content: str) -> str:
-        """Minify JS by removing whitespace and comments."""
-        # Remove single-line comments (but not URLs or regex)
-        content = re.sub(r"//.*$", "", content, flags=re.MULTILINE)
-        # Remove multi-line comments
-        content = re.sub(r"/\*[\s\S]*?\*/", "", content)
-        # Remove whitespace around punctuation
-        content = re.sub(r"\s*([{};:,>+()[\].])\s*", r"\1", content)
-        # Remove leading/trailing whitespace
-        content = content.strip()
+        """Return JS unchanged.
+
+        A safe minifier must understand strings, template literals, regex
+        literals, and comments. The previous regex-based comment stripper broke
+        regexes containing ``//`` and URLs, so JS is intentionally not minified.
+        """
         return content
 
     def _get_minifier(self, ext: str):
@@ -94,7 +91,14 @@ class AssetManager:
                     continue
 
                 rel_path = str(file_path.relative_to(source_dir))
-                content_hash = self._compute_file_hash(file_path)
+
+                # Read and transform first: the cache key must describe the
+                # bytes we actually serve, not the pre-minification source.
+                content = file_path.read_text(encoding="utf-8")
+                minifier = self._get_minifier(file_path.suffix)
+                if minifier:
+                    content = minifier(content)
+                content_hash = hashlib.md5(content.encode("utf-8")).hexdigest()[:8]
                 hashed_name = self._get_hashed_filename(file_path.name, content_hash)
                 rel_parent = str(Path(rel_path).parent)
                 if rel_parent == ".":
@@ -103,12 +107,6 @@ class AssetManager:
 
                 # Ensure parent directory exists
                 hashed_path.parent.mkdir(parents=True, exist_ok=True)
-
-                # Read, minify, and write the file
-                content = file_path.read_text(encoding="utf-8")
-                minifier = self._get_minifier(file_path.suffix)
-                if minifier:
-                    content = minifier(content)
 
                 hashed_path.write_text(content, encoding="utf-8")
                 self.processed_files.append(hashed_path)

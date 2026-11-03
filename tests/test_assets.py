@@ -42,13 +42,14 @@ class TestMinifyCSS:
 
 
 class TestMinifyJS:
-    def test_removes_single_line_comments(self, asset_manager):
-        result = asset_manager._minify_js("// comment\nvar x = 1;")
-        assert "comment" not in result
+    def test_js_is_not_minified(self, asset_manager):
+        source = "// comment\nvar x = 1;"
+        assert asset_manager._minify_js(source) == source
+        assert asset_manager._get_minifier(".js") is not None
 
-    def test_removes_multi_line_comments(self, asset_manager):
-        result = asset_manager._minify_js("/* block */ var x = 1;")
-        assert "block" not in result
+    def test_js_preserves_regex_and_urls(self, asset_manager):
+        source = "const u = 'https://example.com'; const r = /\\/+$/;"
+        assert asset_manager._minify_js(source) == source
 
 
 class TestProcessDirectory:
