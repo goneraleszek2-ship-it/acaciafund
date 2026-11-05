@@ -66,8 +66,11 @@ def test_philosophical_penalizes_unsourced_empirical_claim():
         "source_breakdown": {"arxiv": 1},
         "verification_level": "test_suite_passed",
     }
-    assert compute_philosophical_consistency(unsourced) < compute_philosophical_consistency(sourced)
-    assert compute_philosophical_consistency(sourced) == 1.0
+    unsourced_score = compute_philosophical_consistency(unsourced)
+    sourced_score = compute_philosophical_consistency(sourced)
+    assert unsourced_score is not None and sourced_score is not None
+    assert unsourced_score < sourced_score
+    assert sourced_score == 1.0
 
 
 def test_philosophical_returns_none_without_metadata():

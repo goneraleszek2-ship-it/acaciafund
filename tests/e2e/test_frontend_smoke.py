@@ -30,7 +30,6 @@ PAGES = [
 
 # Known P1 regressions. Keep this list explicit and tied to the item that removes it.
 ALLOWED_404 = [
-    (re.compile(r"/favicon\.ico$"), "P1 favicon"),
     (re.compile(r"_(?:400|800)w\.(?:svg|webp|png|jpe?g)$"), "P1 responsive images"),
 ]
 

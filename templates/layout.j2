@@ -5,7 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ content.title | default(site_name) }}</title>
     <meta name="description" content="{{ content.description | default(site_description) }}">
-    <link rel="icon" href="/favicon.ico">
+{% set _meta_title = content.title if content is defined and content.title else site_name %}
+{% set _meta_desc = content.description if content is defined and content.description else site_description %}
+{% set _og_type = 'article' if page_type is defined and page_type in ['research', 'learn', 'knowledge'] else 'website' %}
+{% set _og_image = og_image_url if og_image_url is defined and og_image_url else site_url ~ '/static/images/og_default.svg' %}
+{% if page_path is defined %}
+    <link rel="canonical" href="{{ site_url }}/{{ page_path.lstrip('/') }}">
+{% elif robots_noindex is not defined or not robots_noindex %}
+    <meta name="robots" content="noindex,follow">
+{% endif %}
+{% if robots_noindex is defined and robots_noindex %}
+    <meta name="robots" content="noindex,follow">
+{% endif %}
+    <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48 64x64">
+    <link rel="manifest" href="/static/site.webmanifest">
+    <meta name="theme-color" content="#1e1b4b">
+    <meta property="og:site_name" content="{{ site_name }}">
+    <meta property="og:type" content="{{ _og_type }}">
+    <meta property="og:title" content="{{ _meta_title }}">
+    <meta property="og:description" content="{{ _meta_desc }}">
+{% if page_path is defined %}
+    <meta property="og:url" content="{{ site_url }}/{{ page_path.lstrip('/') }}">
+{% endif %}
+    <meta property="og:image" content="{{ _og_image }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ _meta_title }}">
+    <meta name="twitter:description" content="{{ _meta_desc }}">
+    <meta name="twitter:image" content="{{ _og_image }}">
     <link rel="search" type="application/opensearchdescription+xml" title="AcaciaFund Search" href="{{ 'opensearch.xml' | asset }}">
 
     <link rel="preload" href="{{ 'fonts/Fraunces-var.woff2' | asset }}" as="font" type="font/woff2" crossorigin>

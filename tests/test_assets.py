@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from core.assets import AssetManager, create_asset_manager
+from core.assets import AssetManager, create_asset_manager, generate_favicon_ico
 
 
 @pytest.fixture
@@ -170,6 +170,13 @@ class TestPruneStaleHashedFiles:
         assert asset_manager.pruned_count == 1
         assert not stale.exists()
         assert asset_manager.dist_static_dir / asset_manager.asset_map["app.js"] is not None
+
+
+class TestGenerateFavicon:
+    def test_writes_multisize_ico(self, tmp_path):
+        dest = generate_favicon_ico(tmp_path / "favicon.ico")
+        assert dest.exists()
+        assert dest.read_bytes()[:4] == b"\x00\x00\x01\x00"
 
 
 class TestCreateAssetManager:

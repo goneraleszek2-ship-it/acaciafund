@@ -457,6 +457,24 @@ class TestGenerateFeed:
         feed = (output_dir / "feed.xml").read_text()
         assert "Body content here" in feed
 
+    def test_feed_sorted_newest_first(self, tmp_path):
+        output_dir = tmp_path / "site"
+        output_dir.mkdir(parents=True, exist_ok=True)
+        items = [
+            _make_item(slug="old", title="Old Post",
+                       created_at=datetime(2026, 1, 1, tzinfo=timezone.utc)),
+            _make_item(slug="new", title="New Post",
+                       created_at=datetime(2026, 6, 1, tzinfo=timezone.utc)),
+            _make_item(slug="mid", title="Mid Post",
+                       created_at=datetime(2026, 3, 1, tzinfo=timezone.utc)),
+        ]
+        generate_feed(output_dir, items, MagicMock(), {},
+                      site_url="https://x.com", site_name="X",
+                      now=datetime(2026, 6, 15, tzinfo=timezone.utc))
+        feed = (output_dir / "feed.xml").read_text()
+        assert feed.index("New Post") < feed.index("Mid Post") < feed.index("Old Post")
+        assert "<updated>2026-06-01T00:00:00+00:00</updated>" in feed
+
     def test_html_stripped_from_feed_desc(self, tmp_path):
         output_dir = tmp_path / "site"
         output_dir.mkdir(parents=True, exist_ok=True)

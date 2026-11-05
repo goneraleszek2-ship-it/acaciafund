@@ -606,7 +606,9 @@ def category_from_tags(tags: list[str], pillar: str) -> str:
     for tag in tags:
         if tag in mapping and tag != base_tag:
             return mapping[tag]
-    return mapping.get(base_tag, "blog")
+    if base_tag:
+        return mapping.get(base_tag, "blog")
+    return "blog"
 
 
 def arxiv_doi_for_id(arxiv_id: str) -> str:

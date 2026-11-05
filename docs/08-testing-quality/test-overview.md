@@ -1,8 +1,8 @@
 # Testing Overview
 
-AcaciaFund has **1327 Python tests across 66 modules** plus **15 JS test suites** — covering core modules, the cognitive architecture (schema builder, retention, adaptive), research provenance, build output, redirects, taxonomy generation, and test suites for bloom, brand, visuals, generate, source verification, knowledge-module SQI guards, content-structure audit, external-link liveness, SQI gates, entry freshness/currency tiers, OpenAlex citations (Tier 5.1), structured extraction (Tier 5.2), and Edit-on-GitHub resolution (Tier 6.1).
+AcaciaFund has **1345 Python tests across 66 modules** plus **15 JS test suites** — covering core modules, the cognitive architecture (schema builder, retention, adaptive), research provenance, build output, redirects, taxonomy generation, and test suites for bloom, brand, visuals, generate, source verification, knowledge-module SQI guards, content-structure audit, external-link liveness, SQI gates, entry freshness/currency tiers, OpenAlex citations (Tier 5.1), structured extraction (Tier 5.2), and Edit-on-GitHub resolution (Tier 6.1).
 
-> **Note:** Counts verified 2026-10-31 via a full pytest run (1327 Python, 0 failures) + 15 JS suites. Full suite runs in the deploy pipeline after every build — all green (0 failures).
+> **Note:** Counts verified 2026-11-05 via a full pytest run (1345 Python, 0 failures, 1 skipped) + 15 JS suites. Full suite runs in the deploy pipeline after every build — all green (0 failures).
 
 ## Test Files
 
@@ -18,13 +18,13 @@ AcaciaFund has **1327 Python tests across 66 modules** plus **15 JS test suites*
 | `tests/test_data.py` | 17 | Domain extraction, entity/theme extraction |
 | `tests/test_content.py` | 11 | Content dataclass construction |
 | `tests/test_build_cache.py` | 14 | Build cache, incremental builds |
-| `tests/test_assets.py` | 15 | Asset pipeline |
+| `tests/test_assets.py` | 21 | Asset pipeline + favicon generation |
 | `tests/test_score.py` | 17 | Content scoring |
 | `tests/test_smoke.py` | 9 | Registry validation, schema enforcement |
 | `tests/test_audit_content_structure.py` | 20 | Content structure audit: min-h2, empty sections, markdown residue, exit codes |
 | `tests/test_markdown_utils.py` | 14 | Markdown conversion + code-aware residue repair |
 | `tests/test_remediate_content_structure.py` | 14 | Sectionizing, title strip, registry remediation |
-| `tests/test_build_smoke.py` | 22 | Build output verification |
+| `tests/test_build_smoke.py` | 34 | Build output verification (incl. SEO metadata) |
 | `tests/test_redirects.py` | 11 | Redirect rules validation |
 
 ### Cognitive Architecture
@@ -65,7 +65,7 @@ AcaciaFund has **1327 Python tests across 66 modules** plus **15 JS test suites*
 
 | File | Tests | Covers |
 |------|-------|--------|
-| `tests/test_build_taxonomies.py` | 52 | Taxonomy generation (admin, search, tag, pillar, feed) |
+| `tests/test_build_taxonomies.py` | 54 | Taxonomy generation (admin, search, tag, pillar, feed) |
 | `tests/test_check_source_freshness.py` | 8 | Source freshness staleness computation |
 | `tests/test_check_links_and_sqi.py` | 7 | scripts/check_links_and_sqi.py: internal-link extraction, broken-link detection, exit codes |
 | `tests/test_editor_notes.py` | 6 | core/editor_notes.py: load, malformed data, slug/topic matching, attach |
@@ -149,7 +149,7 @@ Target: 80% line coverage across `core/` and `scripts/`. Core modules are near t
 | Templates | Minimal (snapshot-like assertions) | String matching |
 | Content | Registry validation | Pydantic schema validation |
 | Scripts | Integration tests (where feasible) | Direct import + mock |
-| JS | Pure-function tests via Node (no npm/playwright) | `node tests/test_*.js` (all 13 suites via `run_tests.sh`) |
+| JS | Pure-function tests via Node (no npm/playwright) | `node tests/test_*.js` (all 15 suites via `run_tests.sh`) |
 
 ## Key Patterns
 

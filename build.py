@@ -46,7 +46,7 @@ from config import (
 )
 
 # ── Asset pipeline ──
-from core.assets import create_asset_manager
+from core.assets import create_asset_manager, generate_favicon_ico
 
 # ── Extracted utility modules ──
 from core.build_content import (
@@ -429,6 +429,11 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                 dest = STATIC_DST_DIR / rel
                 dest.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copy2(item, dest)
+
+    try:
+        generate_favicon_ico(OUTPUT_DIR / "favicon.ico")
+    except Exception as _fav_err:
+        print(f"  favicon: generation skipped ({_fav_err})")
 
     # Bytecode cache disabled for CI/CD compatibility
     # bytecode_cache = FileSystemBytecodeCache(str(PROJECT_ROOT / ".cache" / "jinja2"))
@@ -980,6 +985,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
         "pillar_emojis": PILLAR_EMOJIS,
         "pillar_names": PILLAR_NAMES,
         "site_description": SITE_DESCRIPTION,
+        "site_name": SITE_NAME,
         "resolve_card_image": resolve_card_image,
     }
 
@@ -1032,7 +1038,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                 continue
             # New format: slug contains pillar prefix (e.g. "aml/knowledge/topic")
             # Platform pages stay at "knowledge/page" (no pillar prefix)
-            page_path = canonical_path(slug_to_path(slug))
+            page_path = canonical_path(slug_to_fspath(slug_to_path(slug)))
             out_file = OUTPUT_DIR / slug_to_fspath(slug_to_path(slug))
             out_file.parent.mkdir(parents=True, exist_ok=True)
 
@@ -1347,7 +1353,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
             if slug in items_to_skip:
                 print(f"  learn: {slug} (skipped - unchanged)")
                 continue
-            page_path = canonical_path(slug_to_path(slug))
+            page_path = canonical_path(slug_to_fspath(slug_to_path(slug)))
             out_file = OUTPUT_DIR / slug_to_fspath(slug_to_path(slug))
 
             body, toc_items = _process_item_body(item, strip_emoji=False)
@@ -1492,6 +1498,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                 cross_pillar_items=find_cross_pillar(item, all_content, ontology, _concept_cache=_concept_cache),
                 sandbox_exercises=getattr(item, "sandbox_exercises", []),
                 is_index=False,
+                page_type="learn",
                 layer="learn",
                 layer_icon=LAYER_ICONS["learn"],
                 layer_sub=layer_sub,
@@ -1596,7 +1603,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
             if slug in items_to_skip:
                 print(f"  research: {slug} (skipped - unchanged)")
                 continue
-            page_path = canonical_path(slug_to_path(slug))
+            page_path = canonical_path(slug_to_fspath(slug_to_path(slug)))
             out_file = OUTPUT_DIR / slug_to_fspath(slug_to_path(slug))
 
             body, toc_items = _process_item_body(item, strip_emoji=True)
@@ -1690,6 +1697,8 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                 cross_pillar_items=find_cross_pillar(item, all_content, ontology, _concept_cache=_concept_cache),
                 ontology_concepts=ontology_concepts_r,
                 external_references=external_references_r,
+                is_index=False,
+                page_type="research",
                 **ctx_base,
             )
             out_file.parent.mkdir(parents=True, exist_ok=True)
@@ -1862,7 +1871,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
             pconf=pconf,
             posts=p_posts,
             is_index=False,
-            page_path=f"{pillar}/",
+            page_path=f"{pillar_to_url(pillar)}/",
             page_title=pconf["heading"],
             layer_sub=pconf["label"],
             page_description=pconf.get("description", ""),
@@ -2044,7 +2053,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
         recent_articles=sorted(stock_research, key=lambda x: x.date_str or "", reverse=True)[:10],
         learn_path=stock_learn,
         is_index=False,
-        page_path="stock/signals/",
+        page_path=f"{pillar_to_url('stock')}/signals/",
         page_title="Markets & Industry Signals Dashboard",
         thumbnail_base=f"{SITE_URL}/static/images",
         thumbnail_key=thumbnail_key,
@@ -2114,7 +2123,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
         recent_articles=sorted(de_research, key=lambda x: x.date_str or "", reverse=True)[:10],
         learn_path=de_learn,
         is_index=False,
-        page_path="data-engineering/signals/",
+        page_path=f"{pillar_to_url('data-engineering')}/signals/",
         page_title="Data Engineering Signals Dashboard",
         thumbnail_base=f"{SITE_URL}/static/images",
         thumbnail_key=thumbnail_key,
@@ -2542,6 +2551,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
         "AcaciaFund — Research Synthesis & Learning", "aml", {"sqi": 0.7}
     )
     (out_static / f"og_{home_og_key}.svg").write_text(home_og_svg, encoding="utf-8")
+    (out_static / "og_default.svg").write_text(home_og_svg, encoding="utf-8")
     print("  index: index.html")
 
     # --- /contact/ redirect to /knowledge/contact/ ---
@@ -2777,6 +2787,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                 "index",
                 description=_journey["description"],
             ),
+            page_path=f"journeys/{_journey['slug']}/",
             **_journey,
             **ctx_base,
         )
@@ -2983,6 +2994,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                         description=f"Structured learning path for {_lp_journey.start_label}.",
                     ),
                     pillar_url=_lp_pillar_url,
+                    page_path=f"learning-paths/{_lp_id}/",
                     **_lp_context,
                     **ctx_base,
                 )
@@ -3130,6 +3142,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                 pillar_label=_synth_pc.get("label", _synth_pillar),
                 pillar_color=_synth_pc.get("color", "#6366f1"),
                 synthesis=_synth,
+                page_path=f"{_synth_pillar_url}/synthesis/",
                 **ctx_base,
             )
             _synth_dir = OUTPUT_DIR / _synth_pillar_url / "synthesis"
@@ -3639,7 +3652,9 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     today = datetime.now(timezone.utc).date().isoformat()
     section_pages = [pillar_to_url(p) for p in PILLAR_CONFIG] + ["research", "learn", "knowledge", "search", "scholar"]
     tag_slugs = []
-    for tag_slug in sorted(tag_items.keys()):
+    for tag_slug, tag_posts in sorted(tag_items.items()):
+        if len(tag_posts) < 3:
+            continue  # thin tag pages are noindex
         slug_clean = re.sub(r"[^a-z0-9]+", "-", tag_slug).strip("-")
         if slug_clean:
             tag_slugs.append(slug_clean)
@@ -3685,8 +3700,49 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
         sm.append(
             f"  <url><loc>{SITE_URL}/letters/{_letter}/</loc><lastmod>{today}</lastmod><changefreq>weekly</changefreq><priority>0.4</priority></url>"
         )
+
+    # Include generated pages not covered above (concepts, journeys, learning
+    # paths, synthesis pages, tools, archives, weekly digests, ...). Skip
+    # admin, redirects, noindex pages, and future-dated content.
+    _sitemap_locs = {
+        m.group(1)
+        for line in sm
+        if (m := re.search(r"<loc>([^<]+)</loc>", line))
+    }
+    _future_urls = {slug_to_url(c.slug) for c in all_content if is_future_post(c)}
+    for _page in sorted(OUTPUT_DIR.rglob("*.html")):
+        _rel = _page.relative_to(OUTPUT_DIR)
+        if _rel.parts and _rel.parts[0] == "admin":
+            continue
+        if _rel.as_posix() == "404.html":
+            continue
+        if _rel.name == "index.html":
+            _dir = _rel.parent.as_posix()
+            _url = f"{SITE_URL}/{'' if _dir == '.' else _dir + '/'}"
+        else:
+            _url = f"{SITE_URL}/{_rel.as_posix()}"
+        if _url in _sitemap_locs or _url in _future_urls:
+            continue
+        _html = _page.read_text(encoding="utf-8", errors="ignore")
+        if 'name="robots" content="noindex' in _html or 'http-equiv="refresh"' in _html:
+            continue
+        _sitemap_locs.add(_url)
+        sm.append(
+            f"  <url><loc>{_url}</loc><lastmod>{today}</lastmod><changefreq>monthly</changefreq><priority>0.5</priority></url>"
+        )
     sm.append("</urlset>")
-    (OUTPUT_DIR / "sitemap.xml").write_text("\n".join(sm), encoding="utf-8")
+
+    # De-duplicate URLs while preserving order/priority of the first entry.
+    _seen_locs: set[str] = set()
+    _deduped_sm: list[str] = []
+    for _line in sm:
+        _loc_match = re.search(r"<loc>([^<]+)</loc>", _line)
+        if _loc_match:
+            if _loc_match.group(1) in _seen_locs:
+                continue
+            _seen_locs.add(_loc_match.group(1))
+        _deduped_sm.append(_line)
+    (OUTPUT_DIR / "sitemap.xml").write_text("\n".join(_deduped_sm), encoding="utf-8")
 
     # --- ROBOTS ---
     # NOTE: Cloudflare Pages injects its own robots.txt rules at CDN level.
@@ -3695,6 +3751,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     # "AI Scrapers and Crawlers" in Cloudflare Dashboard > Security > Bots.
     robots_txt = f"""User-agent: *
 Allow: /
+Disallow: /admin/
 
 Sitemap: {SITE_URL}/sitemap.xml
 """
@@ -3801,6 +3858,10 @@ Sitemap: {SITE_URL}/sitemap.xml
   Link: </llms.txt>; rel="service-doc"; title="LLM Overview"
   Link: </llms-full.txt>; rel="service-desc"; title="Full LLM Content"
   Link: </auth.md>; rel="auth-md"
+
+/admin/*
+  X-Robots-Tag: noindex, nofollow
+  Cache-Control: no-store
 
 /static/*
   Cache-Control: public, max-age=31536000, immutable

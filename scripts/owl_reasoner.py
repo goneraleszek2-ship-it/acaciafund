@@ -40,9 +40,9 @@ def compare_ontologies(
 
     # Export RDF for comparison
     with tempfile.NamedTemporaryFile(suffix=".ttl", mode="w", delete=False) as b_tmp:
-        export_rdf_turtle(onto_base, b_tmp.name)
+        export_rdf_turtle(onto_base, Path(b_tmp.name))
     with tempfile.NamedTemporaryFile(suffix=".ttl", mode="w", delete=False) as n_tmp:
-        export_rdf_turtle(onto_new, n_tmp.name)
+        export_rdf_turtle(onto_new, Path(n_tmp.name))
 
     try:
         # Use Pellet reasoner via reasoner API
@@ -113,7 +113,7 @@ def compare_ontologies(
     return results
 
 
-def main(argv: list = None) -> int:
+def main(argv: list[str] | None = None) -> int:
     """Entry point for CLI usage."""
     import argparse
 

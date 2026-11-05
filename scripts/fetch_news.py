@@ -64,7 +64,7 @@ FEEDS: list[dict[str, Any]] = [
     {"name": "Guardian Business", "pillar": "market", "url": "https://www.theguardian.com/business/rss"},
     {"name": "Financial Times", "pillar": "market", "url": "https://www.ft.com/rss/home"},
     {"name": "Seeking Alpha", "pillar": "market", "url": "https://seekingalpha.com/market_currents.xml"},
-    {"name": "Yahoo Finance", "pillar": "market", "url": "https://finance.yahoo.com/news/rssindex"},
+    {"name": "Dow Jones Markets", "pillar": "market", "url": "https://feeds.a.dj.com/rss/RSSMarketsMain.xml"},
     {"name": "ZeroHedge", "pillar": "market", "url": "https://feeds.feedburner.com/zerohedge/feed"},
 ]
 

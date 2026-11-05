@@ -3,7 +3,7 @@
 (function () {
   'use strict';
 
-  var _root = document.querySelector('[data-py-sandbox]');
+  var _root = typeof document !== 'undefined' ? document.querySelector('[data-py-sandbox]') : null;
   var PYODIDE_VERSION = _root ? _root.getAttribute('data-pyodide-version') : '';
   var PYODIDE_BASE = 'https://cdn.jsdelivr.net/pyodide/v' + PYODIDE_VERSION + '/full/';
   var PYODIDE_URL = PYODIDE_BASE + 'pyodide.js';

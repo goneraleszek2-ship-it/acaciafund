@@ -197,6 +197,34 @@ class AssetManager:
         return False
 
 
+def generate_favicon_ico(dest: Path) -> Path:
+    """Render a multi-size .ico matching static/favicon.svg (diamond mark)."""
+    from PIL import Image, ImageDraw
+
+    size = 64
+    img = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(img)
+    draw.rounded_rectangle((0, 0, size - 1, size - 1), radius=12, fill=(30, 27, 75, 255))
+
+    top = (99, 102, 241)
+    bottom = (245, 158, 11)
+    top_y, mid_y, bottom_y = 8, 32, 56
+    for y in range(top_y, bottom_y + 1):
+        if y <= mid_y:
+            half = (y - top_y) * 20 // (mid_y - top_y)
+            t = (y - top_y) / (bottom_y - top_y)
+        else:
+            half = (bottom_y - y) * 20 // (bottom_y - mid_y)
+            t = (y - top_y) / (bottom_y - top_y)
+        color = tuple(round(a + (b - a) * t) for a, b in zip(top, bottom)) + (230,)
+        draw.line((32 - half, y, 32 + half, y), fill=color)
+
+    draw.line((16, 16, 32, 8, 48, 16), fill=(226, 232, 240, 128), width=1)
+    dest.parent.mkdir(parents=True, exist_ok=True)
+    img.save(dest, format="ICO", sizes=[(16, 16), (32, 32), (48, 48), (64, 64)])
+    return dest
+
+
 def create_asset_manager(dist_static_dir: Path, build_hash: str) -> AssetManager:
     """Factory function to create an AssetManager.
 

@@ -363,6 +363,7 @@ class TestBuildConceptDag:
 
     def test_prerequisites_upstream(self, acyclic_manager):
         dag = build_concept_dag(acyclic_manager, "etl")
+        assert dag is not None
         # etl requires foundations -> foundations is a prerequisite
         assert "foundations" in [n["id"] for n in dag["nodes"]]
         # the prerequisite must be positioned LEFT of the center
@@ -373,6 +374,7 @@ class TestBuildConceptDag:
 
     def test_dependents_downstream(self, acyclic_manager):
         dag = build_concept_dag(acyclic_manager, "etl")
+        assert dag is not None
         center_x = next(n["x"] for n in dag["nodes"] if n["id"] == "etl")
         # elt requires etl -> elt is a dependent of etl
         elt_x = next(n["x"] for n in dag["nodes"] if n["id"] == "elt")
@@ -380,6 +382,7 @@ class TestBuildConceptDag:
 
     def test_two_hop_depth(self, acyclic_manager):
         dag = build_concept_dag(acyclic_manager, "apache-kafka", depth=2)
+        assert dag is not None
         # apache-kafka requires streaming (hop 1); streaming requires foundations (hop 2)
         node_ids = {n["id"]: n for n in dag["nodes"]}
         assert "streaming" in node_ids
@@ -388,6 +391,7 @@ class TestBuildConceptDag:
 
     def test_depth_limit_respected(self, acyclic_manager):
         dag = build_concept_dag(acyclic_manager, "apache-kafka", depth=1)
+        assert dag is not None
         # with depth=1, foundations (2 hops away) must not appear
         assert "foundations" not in [n["id"] for n in dag["nodes"]]
 
@@ -399,12 +403,14 @@ class TestBuildConceptDag:
             # root requires c{i} -> c{i} are prerequisites of root
             mgr.add_relation(Relation(source_id="root", target_id=f"c{i}", relation_type="requires"))
         dag = build_concept_dag(mgr, "root", depth=1, max_per_layer=2)
+        assert dag is not None
         up1_ids = [n["id"] for n in dag["nodes"] if n["id"] != "root"]
         assert len(up1_ids) == 2
         assert dag["truncated"].get("up1", 0) == 4
 
     def test_edges_follow_real_relations(self, acyclic_manager):
         dag = build_concept_dag(acyclic_manager, "etl")
+        assert dag is not None
         for edge in dag["edges"]:
             # drawn edge (from -> to) means: the right-hand concept requires
             # the left-hand one, i.e. relation source == edge["to"]
@@ -425,6 +431,7 @@ class TestBuildConceptDag:
 
     def test_svg_geometry_valid(self, acyclic_manager):
         dag = build_concept_dag(acyclic_manager, "etl")
+        assert dag is not None
         assert dag["width"] > 0 and dag["height"] > 0
         for node in dag["nodes"]:
             assert node["x"] >= 0 and node["y"] >= 0

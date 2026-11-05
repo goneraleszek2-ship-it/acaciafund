@@ -6,10 +6,13 @@ Configuration in `pyproject.toml`:
 
 ```toml
 [tool.ruff]
-line-length = 120
-target-version = "py314"
-select = ["E", "F", "I", "N", "W", "UP"]
-ignore = ["E501"]  # Line length (handled by formatter)
+target-version = "py310"
+line-length = 100
+exclude = ["scripts/archive", "tests", ".github"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I"]
+ignore = ["E501", "W291"]
 ```
 
 ### Run Linter
@@ -22,9 +25,7 @@ Common checks:
 - `E`: pycodestyle errors
 - `F`: pyflakes errors
 - `I`: isort import ordering
-- `N`: naming conventions
 - `W`: pycodestyle warnings
-- `UP`: pyupgrade (modern Python syntax)
 
 ## Pyright (Type Checker)
 
@@ -32,19 +33,11 @@ Configuration in `pyrightconfig.json`:
 
 ```json
 {
-    "typeCheckingMode": "standard",
-    "include": [
-        "build.py",
-        "config.py",
-        "core/",
-        "scripts/",
-        "schemas.py",
-        "seed_learn.py"
-    ],
-    "ignore": [
-        "scripts/archive/",
-        "venv/"
-    ]
+  "include": ["."],
+  "exclude": ["**/scripts/archive", "venv", ".venv-test", ".git", "dist", "static", "data", "docs"],
+  "extraPaths": ["services"],
+  "reportMissingImports": "none",
+  "typeCheckingMode": "standard"
 }
 ```
 
@@ -54,15 +47,8 @@ Configuration in `pyrightconfig.json`:
 pyright
 ```
 
-### Known Type Issues
-
-Some modules are excluded or have inline `pyright: ignore` comments:
-
-| Issue | Location | Reason |
-|-------|----------|--------|
-| Missing `services.mem0` | `build.py:105` | `reportMissingImports` — planned module |
-| Dynamic attributes | Various | `getattr` patterns for flexible item access |
-| Jinja2 template types | Template files | Not Python, no type info |
+Current status: **0 errors** with pyright 1.1.414 (verified 2026-11-05). CI enforces
+`BASELINE=0`, so any new type error fails the quality job.
 
 ## Pre-commit
 
@@ -81,7 +67,8 @@ python3 -m pytest tests/ -v --tb=short
 
 ## CI Integration
 
-Both `ruff check .` and `pyright` can be run in CI:
+Both `ruff check .` and `pyright` run in CI; the deploy workflow gates on zero
+new pyright errors:
 
 ```yaml
 lint:

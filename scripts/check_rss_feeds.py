@@ -13,6 +13,7 @@ Usage:
 import argparse
 import json
 import sys
+import urllib.error
 import urllib.request
 from pathlib import Path
 from typing import Any
@@ -40,12 +41,7 @@ def check_feed(feed: dict[str, Any]) -> dict[str, Any]:
             status = resp.status
             content_type = resp.headers.get("Content-Type", "")
     except Exception as e:
-        if hasattr(e, "code"):
-            status = e.code
-        elif isinstance(e, urllib.error.HTTPError):
-            status = e.code
-        else:
-            status = 0
+        status = int(getattr(e, "code", 0) or 0)
     raw = _http_get(url, timeout=15) if status != 200 else None
     ok_xml = False
     item_count = 0

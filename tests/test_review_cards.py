@@ -10,6 +10,8 @@ from core.review_cards import (
 
 
 class _Item:
+    _data: dict
+
     def __init__(self, data):
         self.__dict__["_data"] = data
 

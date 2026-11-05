@@ -157,15 +157,16 @@ Static host, no nonces.
 
 ## Deferred (must not be lost)
 
-- **SEO:** fix `page_path` (`build.py:1578`) to use `slug_to_fspath` before
-  emitting canonical/OG tags. Add a build assertion that every canonical URL
-  resolves to a file in `dist/`. Only 18 of 2,929 pages currently have canonical
-  URLs; 0 have Open Graph/Twitter tags.
-- **SEO:** render `robots_noindex` for thin tag pages
-  (`core/build_taxonomies.py:52`), add descriptions, fix sitemap coverage.
-- **Feed:** sort by date; current feed is unsorted and latest entry is
-  2026-08-03 (`core/build_taxonomies.py:1054-1056,1073`).
-- **Favicon/manifest:** `/favicon.ico` 404s; no manifest/theme-color.
+- **SEO:** ~~fix `page_path` to use `slug_to_fspath` before emitting canonical/OG
+  tags; add a build assertion that every canonical URL resolves in `dist/`;
+  Open Graph/Twitter tags; thin-tag `noindex`~~ — **done 2026-11-05**
+  (`scripts/deploy_checks.py` enforces canonical coverage/resolution).
+  Remaining: sitemap coverage audit and per-page description length.
+- **Feed:** ~~sort by date~~ — **done 2026-11-05** (newest first, feed
+  `updated` reflects newest entry).
+- **Favicon/manifest:** ~~`/favicon.ico` 404s; no manifest/theme-color~~ —
+  **done 2026-11-05** (generated multi-size ICO, SVG icon, web manifest,
+  theme-color).
 - **Performance:** review badge still fetches 410 KB + 104 KB for returning
   users; ship a due-count manifest next. Workspace page is 3.3 MB; scholar 671
   KB; review/study ~290 KB.
@@ -192,9 +193,9 @@ Static host, no nonces.
 - The six corrected descriptions exactly match sentences in the corrected
   bodies, quoted in the commit message.
 
-## Implementation status (2026-11-03)
+## Implementation status (2026-11-03, updated 2026-11-05)
 
-P0 changes are implemented on `main`. The Playwright smoke gate is blocking in
+P0 changes plus the SEO/feed/favicon follow-ups are implemented on `main`. The Playwright smoke gate is blocking in
 `deploy.yml`; the local proot/ARM environment cannot launch Chromium (SIGTRAP),
 so screenshots must be produced by CI or a supported Chromium host:
 `python scripts/capture_frontend_screens.py --out /tmp/frontend-p0-screens/after`

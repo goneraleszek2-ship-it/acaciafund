@@ -15,6 +15,7 @@ from __future__ import annotations
 import json
 import sys
 from pathlib import Path
+from typing import Any, cast
 
 from scripts.archive.backfill_sqi import (  # noqa: F401
     compute_educational_quality,
@@ -32,7 +33,7 @@ REPORT_PATH = PROJECT_ROOT / "dist" / "sqi_robustness_report.json"
 ISOLATED_PATH = PROJECT_ROOT / "data" / "ontology.isolated_reason.json"
 
 
-def load_json(path: Path) -> dict:
+def load_json(path: Path) -> Any:
     with open(path, encoding="utf-8") as f:
         return json.load(f)
 
@@ -73,13 +74,6 @@ def scenario_1_premise_stripping(props: list[dict]) -> dict:
 
         # Compute original sub-scores
         try:
-            from scripts.archive.backfill_sqi import (
-                compute_freshness,
-                compute_practical_value,
-                compute_source_credibility,
-                compute_technical_accuracy,
-                compute_trend_relevance,
-            )
             orig_content = _make_content_from_prop(prop)
             orig_sub = {
                 "source_credibility": compute_source_credibility(orig_content),
@@ -103,7 +97,7 @@ def scenario_1_premise_stripping(props: list[dict]) -> dict:
             tech_deg = 0.0
             prac_deg = 0.0
 
-        if orig_sub:
+        if orig_sub is not None:
             new_sub = {
                 "source_credibility": orig_sub["source_credibility"],  # unchanged
                 "technical_accuracy": max(0.0, orig_sub["technical_accuracy"] - tech_deg),
@@ -114,7 +108,7 @@ def scenario_1_premise_stripping(props: list[dict]) -> dict:
         else:
             new_sub = None
 
-        if new_sub:
+        if new_sub and orig_sub is not None:
             WEIGHTS = {
                 "source_credibility": 0.25,
                 "technical_accuracy": 0.25,
@@ -170,7 +164,6 @@ def scenario_2_source_substitution(props: list[dict]) -> dict:
 
         # Build content dict and compute original source credibility
         try:
-            from scripts.archive.backfill_sqi import compute_source_credibility
             orig_content = _make_content_from_prop(prop)
             orig_cred = compute_source_credibility(orig_content)
         except Exception:
@@ -183,12 +176,6 @@ def scenario_2_source_substitution(props: list[dict]) -> dict:
 
         # Recompute full SQI with degraded source credibility
         try:
-            from scripts.archive.backfill_sqi import (
-                compute_freshness,
-                compute_practical_value,
-                compute_technical_accuracy,
-                compute_trend_relevance,
-            )
             orig_content = _make_content_from_prop(prop)
             tech = compute_technical_accuracy(orig_content)
             prac = compute_practical_value(orig_content)
@@ -254,7 +241,6 @@ def scenario_2_source_substitution(props: list[dict]) -> dict:
     reason_codes = {}
     for prop in props:
         try:
-            from scripts.archive.backfill_sqi import compute_source_credibility
             orig_content = _make_content_from_prop(prop)
             orig_cred = compute_source_credibility(orig_content)
 
@@ -320,7 +306,6 @@ def scenario_2_source_substitution(props: list[dict]) -> dict:
     failed_count = 0
     for prop in props:
         try:
-            from scripts.archive.backfill_sqi import compute_source_credibility
             orig_content = _make_content_from_prop(prop)
             orig_cred = compute_source_credibility(orig_content)
             new_cred = max(0.0, orig_cred - 0.20)
@@ -395,13 +380,6 @@ def scenario_3_marker_spoofing(props: list[dict]) -> dict:
 
     for prop in props:
         try:
-            from scripts.archive.backfill_sqi import (
-                compute_freshness,
-                compute_practical_value,
-                compute_source_credibility,
-                compute_technical_accuracy,
-                compute_trend_relevance,
-            )
             orig_content = _make_content_from_prop(prop)
             orig_tech = compute_technical_accuracy(orig_content)
             orig_prac = compute_practical_value(orig_content)
@@ -509,7 +487,6 @@ def scenario_4_category_freshness(props: list[dict]) -> dict:
 
     for prop in props:
         try:
-            from scripts.archive.backfill_sqi import compute_freshness
             orig_content = _make_content_from_prop(prop)
             compute_freshness(orig_content)
             knowledge_cat = orig_content.get("knowledge_category", "")
@@ -559,7 +536,7 @@ def scenario_4_category_freshness(props: list[dict]) -> dict:
 
 
 def main() -> int:
-    propositions = load_json(PROPOSITIONS_PATH)
+    propositions = cast(list[dict], load_json(PROPOSITIONS_PATH))
 
     # Run all 4 scenarios
     s1 = scenario_1_premise_stripping(propositions)

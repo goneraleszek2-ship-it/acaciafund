@@ -34,7 +34,7 @@ def _inline(text: str) -> str:
     return text
 
 
-def md_to_html(md: str) -> str:
+def md_to_html(md: str | None) -> str:
     """Convert the controlled markdown dialect to HTML.
 
     Supports `##`/`###` headings, `-` bullet lists, blank-line separated
@@ -56,8 +56,11 @@ def md_to_html(md: str) -> str:
             continue
         if _BULLET_RE.match(line):
             items = []
-            while i < len(lines) and _BULLET_RE.match(lines[i]):
-                items.append(f"<li>{_inline(_BULLET_RE.match(lines[i]).group(1).strip())}</li>")
+            while i < len(lines):
+                bullet = _BULLET_RE.match(lines[i])
+                if not bullet:
+                    break
+                items.append(f"<li>{_inline(bullet.group(1).strip())}</li>")
                 i += 1
             out.append(f"<ul>{''.join(items)}</ul>")
             continue
@@ -90,7 +93,7 @@ def _replace_outside_code(html: str, pattern: re.Pattern, replacement) -> str:
     return result
 
 
-def fix_markdown_residue(html: str) -> str:
+def fix_markdown_residue(html: str | None) -> str:
     """Convert markdown artifacts embedded in HTML text nodes.
 
     Handles `## Heading` paragraphs (h2), `### Heading` (h3), `**bold**`,

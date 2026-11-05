@@ -1051,8 +1051,22 @@ def generate_feed(
         def _slug_to_path_fn(s): return s
         slug_to_path_fn = _slug_to_path_fn
 
-    published_for_feed = [p for p in all_content if not is_future_post_fn(p)]
-    feed_candidates = [p.created_at for p in published_for_feed[:30] if getattr(p, "created_at", None)]
+    def _feed_sort_key(post):
+        dt = getattr(post, "created_at", None)
+        if dt is None:
+            return datetime.min.replace(tzinfo=timezone.utc)
+        if getattr(dt, "tzinfo", None) is None:
+            return dt.replace(tzinfo=timezone.utc)
+        return dt
+
+    published_for_feed = sorted(
+        (p for p in all_content if not is_future_post_fn(p)),
+        key=_feed_sort_key,
+        reverse=True,
+    )
+    feed_candidates = [
+        _feed_sort_key(p) for p in published_for_feed if getattr(p, "created_at", None)
+    ]
     feed_updated = max(feed_candidates).isoformat() if feed_candidates else now.isoformat()
 
     def _clean_feed_desc(post):

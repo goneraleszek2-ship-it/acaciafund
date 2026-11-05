@@ -102,6 +102,35 @@ class TestComplianceContent:
         assert len(pages) >= 5, f"Expected >=5 research pages, got {len(pages)}"
 
 
+class TestSeoMetadata:
+    """Verify canonical, social metadata, and P1 asset fixes."""
+
+    def test_homepage_has_canonical(self, dist_dir):
+        content = (dist_dir / "index.html").read_text(encoding="utf-8")
+        assert '<link rel="canonical" href="https://www.acaciafund.org/">' in content
+
+    def test_content_page_has_canonical_and_social_tags(self, dist_dir):
+        page = dist_dir / "compliance" / "research" / "aml-1" / "index.html"
+        content = page.read_text(encoding="utf-8")
+        assert '<link rel="canonical" href="https://www.acaciafund.org/compliance/research/aml-1/">' in content
+        assert '<meta property="og:type" content="article">' in content
+        assert '<meta property="og:url" content="https://www.acaciafund.org/compliance/research/aml-1/">' in content
+        assert 'name="twitter:card"' in content
+
+    def test_favicon_and_manifest_exist(self, dist_dir):
+        assert (dist_dir / "favicon.ico").exists()
+        assert (dist_dir / "static" / "site.webmanifest").exists()
+
+    def test_thin_tag_pages_are_noindex(self, dist_dir):
+        tag_pages = list((dist_dir / "tags").glob("*/index.html"))
+        assert tag_pages, "expected tag pages"
+        thin = [
+            p for p in tag_pages
+            if '<meta name="robots" content="noindex,follow">' in p.read_text(encoding="utf-8")
+        ]
+        assert thin, "expected at least one thin tag page marked noindex"
+
+
 class TestSitemap:
     """Verify sitemap uses URL-form paths."""
 
@@ -120,6 +149,22 @@ class TestSitemap:
         # Invalid: /aml/research/foo/ (using internal key as path segment)
         bad = re.findall(r"<loc>https?://[^<]*/aml/(?:research|learn|knowledge|signals)/[^<]*</loc>", content)
         assert bad == [], f"Sitemap contains /aml/ pillar-prefixed URLs: {bad}"
+
+    def test_sitemap_covers_generated_routes(self, dist_dir):
+        content = (dist_dir / "sitemap.xml").read_text(encoding="utf-8")
+        for route in ("/concepts/", "/journeys/", "/learning-paths/", "/design-system/"):
+            assert f"{route}" in content, f"sitemap missing {route}"
+        assert content.count("<loc>") > 2000
+
+    def test_sitemap_excludes_admin_and_redirects(self, dist_dir):
+        content = (dist_dir / "sitemap.xml").read_text(encoding="utf-8")
+        assert "<loc>https://www.acaciafund.org/admin/" not in content
+        assert "/404.html" not in content
+        assert "<loc>https://www.acaciafund.org/contact/</loc>" not in content
+
+    def test_robots_disallows_admin(self, dist_dir):
+        content = (dist_dir / "robots.txt").read_text(encoding="utf-8")
+        assert "Disallow: /admin/" in content
 
 
 class TestFeed:

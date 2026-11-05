@@ -1,5 +1,7 @@
 {
-  "include": ["."],
+  "include": [
+    "."
+  ],
   "exclude": [
     "**/scripts/archive",
     "venv",
@@ -20,9 +22,9 @@
     ".registry_backups",
     ".cache"
   ],
-  "venvPath": "/root/acaciafund",
-  "venv": "venv",
-  "extraPaths": ["/root/services", "services"],
+  "extraPaths": [
+    "services"
+  ],
   "reportMissingImports": "none",
   "typeCheckingMode": "standard"
 }

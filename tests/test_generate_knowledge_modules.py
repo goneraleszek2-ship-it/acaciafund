@@ -17,6 +17,7 @@ SCRIPT_PATH = Path(__file__).resolve().parent.parent / "scripts" / "generate_kno
 
 def _load_modules() -> list[dict]:
     spec = importlib.util.spec_from_file_location("generate_knowledge_modules", SCRIPT_PATH)
+    assert spec is not None and spec.loader is not None
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)
     return mod.MODULES

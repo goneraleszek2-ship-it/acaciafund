@@ -56,7 +56,7 @@ class Handler(SimpleHTTPRequestHandler):
             self.send_header(key, value)
         super().end_headers()
 
-    def log_message(self, fmt: str, *args) -> None:  # noqa: A003
+    def log_message(self, format: str, *args: object) -> None:  # noqa: A002
         pass
 
 

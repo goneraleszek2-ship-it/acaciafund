@@ -36,7 +36,7 @@ jobs:
           pyright > /tmp/pyright.log 2>&1
           STATUS=$?
           ERRORS=$(grep -c "error:" /tmp/pyright.log || true)
-          BASELINE=68
+          BASELINE=0
           echo "pyright errors: ${ERRORS} (baseline ${BASELINE})"
           if [ "${ERRORS}" -gt "${BASELINE}" ]; then
             echo "::error::pyright errors increased (${ERRORS} > baseline ${BASELINE}). Fix regressions before merging."

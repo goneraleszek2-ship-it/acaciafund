@@ -105,6 +105,7 @@ class TestBackfillCategories:
         }
         new_cat, new_tags = categorize_item(item)
         assert new_cat == "transaction-monitoring"
+        assert new_tags is not None
         assert "aml" in new_tags and "transaction-monitoring" in new_tags
 
     def test_learn_and_knowledge_untouched(self):

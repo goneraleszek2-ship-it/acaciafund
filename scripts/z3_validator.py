@@ -120,7 +120,7 @@ def run_z3_verification(bitmask_data: dict) -> dict:
     }
 
 
-def main(argv: list = None) -> int:
+def main(argv: list[str] | None = None) -> int:
     import argparse
     parser = argparse.ArgumentParser(description="Z3 SMT-LIB2 Validator")
     parser.add_argument("--deontic-dist", required=True, help="Path to deontic bitmasks JSON")

@@ -1,6 +1,7 @@
 """Contract tests for scripts/check_external_links.py."""
 
 import json
+import email.message
 import urllib.error
 from pathlib import Path
 from unittest.mock import patch
@@ -71,7 +72,7 @@ def test_check_url_skips_quarantined_host():
 def test_check_url_get_fallback_after_head_405(monkeypatch):
     def fake_urlopen(req, timeout=8):
         if req.method == "HEAD":
-            raise urllib.error.HTTPError(req.full_url, 405, "Method Not Allowed", {}, None)
+            raise urllib.error.HTTPError(req.full_url, 405, "Method Not Allowed", email.message.Message(), None)
 
         class Resp:
             status = 200
@@ -92,7 +93,7 @@ def test_check_url_get_fallback_after_head_405(monkeypatch):
 def test_check_url_get_fallback_after_head_404(monkeypatch):
     def fake_urlopen(req, timeout=8):
         if req.method == "HEAD":
-            raise urllib.error.HTTPError(req.full_url, 404, "Not Found", {}, None)
+            raise urllib.error.HTTPError(req.full_url, 404, "Not Found", email.message.Message(), None)
 
         class Resp:
             status = 200
@@ -114,7 +115,7 @@ def test_check_url_error_status():
     class Resp:
         status = 404
 
-    with patch("urllib.request.urlopen", side_effect=urllib.error.HTTPError("u", 404, "nf", {}, None)):
+    with patch("urllib.request.urlopen", side_effect=urllib.error.HTTPError("u", 404, "nf", email.message.Message(), None)):
         result = check_url("https://gone.test/a", set())
     assert result["status"] == "error"
     assert result["http_status"] == 404
