@@ -169,16 +169,18 @@ Static host, no nonces.
   theme-color).
 - **Performance:** ~~review badge fetches 410 KB + 104 KB for returning users~~
   — **done 2026-11-05** (single compact `review_index.json`, 115 KB, shared by
-  the badge, pillar rail, and study dashboard). Remaining: workspace page is
-  3.3 MB; scholar 671 KB; review/study ~290 KB.
+  the badge, pillar rail, and study dashboard). ~~Workspace page 3.3 MB~~ —
+  **done 2026-11-05** (top 250 claims ranked by evidence, top 100
+  contradictions, full 1.5 MB dataset available as `workspace.json`; page is
+  now ~340 KB). Remaining: scholar 671 KB; review/study ~290 KB.
 - **Responsive images:** ~~remove `srcset` for SVGs and stop emitting variants
   that do not exist~~ — **done 2026-11-05** (`responsive_srcset` only emits
   URLs when both raster variants exist; e2e allowlist is empty). Existing
   raster images serve the original until re-fetched with variants.
 - **Accessibility:** ~~label newsletter/teachback/build inputs; add
   `aria-current`/`aria-modal`; graph fallback; fix multi-h1 pages~~ —
-  **done 2026-11-05**. Remaining: light-mode pillar-accent contrast and a
-  visible focus-mode exit.
+  **done 2026-11-05**. ~~light-mode pillar-accent contrast; visible focus-mode
+  exit~~ — **done 2026-11-05** (WCAG AA tokens + floating exit button).
 - **Admin:** externalize/hash admin inline scripts and confirm Access in front
   of `dist/admin/`.
 - **Tests later:** Lighthouse/axe/visual regression and HTML validation arrive

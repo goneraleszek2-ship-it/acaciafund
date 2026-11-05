@@ -33,9 +33,15 @@ def check_links(dist_dir: Path) -> list[str]:
     """Check all HTML files for broken internal links."""
     html_files = list(dist_dir.rglob("*.html"))
     existing_paths = {"/"}  # Root always exists
-    for f in html_files:
+    for f in dist_dir.rglob("*"):
+        if not f.is_file():
+            continue
         rel = f.relative_to(dist_dir)
-        path_str = "/" + str(rel).replace("/index.html", "").replace(".html", "")
+        path_str = "/" + str(rel)
+        if rel.name == "index.html":
+            path_str = path_str.replace("/index.html", "")
+        elif rel.suffix == ".html":
+            path_str = path_str.replace(".html", "")
         if path_str != "/":
             existing_paths.add(path_str)
         # Also register without trailing slash variations

@@ -7,6 +7,34 @@ import pytest
 from scripts import bundle_css as mod
 
 
+def _relative_luminance(hex_color: str) -> float:
+    channels = [int(hex_color[i : i + 2], 16) / 255 for i in (1, 3, 5)]
+    linear = [c / 12.92 if c <= 0.04045 else ((c + 0.055) / 1.055) ** 2.4 for c in channels]
+    return 0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2]
+
+
+def _contrast(a: str, b: str) -> float:
+    high, low = sorted((_relative_luminance(a), _relative_luminance(b)), reverse=True)
+    return (high + 0.05) / (low + 0.05)
+
+
+def test_light_mode_pillar_colors_meet_wcag_aa():
+    import re
+
+    css = (mod.STATIC / "css" / "design-system.css").read_text(encoding="utf-8")
+    light_root = next(
+        (m for m in re.finditer(r":root\s*\{([^}]*)\}", css) if "--color-aml" in m.group(1)),
+        None,
+    )
+    light_block = re.search(r"\.light\s*\{([^}]*)\}", css)
+    assert light_root is not None and light_block
+    for block in (light_root.group(1), light_block.group(1)):
+        tokens = dict(re.findall(r"--color-(aml|markets|data-engineering):\s*(#[0-9a-fA-F]{6});", block))
+        assert set(tokens) == {"aml", "markets", "data-engineering"}
+        for name, color in tokens.items():
+            assert _contrast(color, "#fafaf9") >= 4.5, f"{name} fails WCAG AA: {color}"
+
+
 def test_lint_valid_css():
     assert mod.lint_css("@layer a, b;\n@import url('x.css') layer(a);\n@layer a { .x { color: red; } }") == []
 

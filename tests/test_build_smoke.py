@@ -112,10 +112,33 @@ class TestAccessibility:
         assert 'for="newsletter-email"' in content
         assert 'id="newsletter-email"' in content
 
+    def test_focus_mode_has_visible_exit(self, dist_dir):
+        content = (dist_dir / "index.html").read_text(encoding="utf-8")
+        assert 'id="focus-exit"' in content
+        assert "Exit focus mode" in content
+        app_js = next((dist_dir / "static" / "js").glob("app.*.js"))
+        assert "focus-exit" in app_js.read_text(encoding="utf-8")
+
     def test_graph_has_noscript_fallback(self, dist_dir):
         content = (dist_dir / "graph" / "index.html").read_text(encoding="utf-8")
         assert "<noscript>" in content
         assert "/letters/" in content
+
+
+class TestResearchWorkspace:
+    def test_workspace_is_capped_and_publishes_full_dataset(self, dist_dir):
+        import json
+
+        page = dist_dir / "research" / "workspace" / "index.html"
+        data_path = dist_dir / "research" / "workspace" / "workspace.json"
+        assert page.stat().st_size < 600_000
+        assert data_path.exists()
+        data = json.loads(data_path.read_text(encoding="utf-8"))
+        assert data["totalClaims"] > 250
+        assert len(data["claims"]) == data["totalClaims"]
+        content = page.read_text(encoding="utf-8")
+        assert "Showing top 250 of" in content
+        assert "/research/workspace/workspace.json" in content
 
 
 class TestReviewIndex:

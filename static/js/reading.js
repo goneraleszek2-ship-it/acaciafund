@@ -104,6 +104,7 @@
   function initFocusMode() {
     var html = document.documentElement;
     var toggle = document.getElementById('focus-toggle');
+    var exitBtn = document.getElementById('focus-exit');
     var saved = storeGet(KEYS.focus) === 'true';
 
     function apply(on) {
@@ -112,10 +113,15 @@
         el.classList.toggle('focus-hide', on);
       });
       if (toggle) toggle.checked = on;
+      if (exitBtn) exitBtn.hidden = !on;
       storeSet(KEYS.focus, on ? 'true' : 'false');
     }
 
     if (toggle) toggle.addEventListener('change', function () { apply(toggle.checked); });
+    if (exitBtn) exitBtn.addEventListener('click', function () {
+      apply(false);
+      if (toggle) toggle.focus();
+    });
     apply(saved);
 
     window.addEventListener('storage', function (e) {

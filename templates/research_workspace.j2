@@ -24,6 +24,12 @@
       Hypothesis workspace with source trail analysis, contradiction detection, and evidence quality scoring.
       {%- endif %}
     </p>
+    {%- if total_claims is defined and total_claims > (claims | length) %}
+    <p class="text-xs text-muted mt-2">
+      Showing top {{ claims | length }} of {{ total_claims }} claims ranked by evidence quality and citation support.
+      <a href="{{ workspace_json_url }}" class="text-accent">Download the full dataset (JSON)</a>.
+    </p>
+    {%- endif %}
     {%- if hypothesis and hypothesis.concept_ids %}
     <div class="flex flex-wrap gap-1.5 mt-3">
       {%- for cid in hypothesis.concept_ids %}
@@ -41,7 +47,7 @@
 
   {# --- Claims Overview --- #}
   <section class="mb-8">
-    <h2 class="text-lg font-semibold mb-4 text-default">Claims ({{ claims | length }})</h2>
+    <h2 class="text-lg font-semibold mb-4 text-default">Claims ({{ total_claims | default(claims | length) }})</h2>
     <div class="grid gap-3">
       {%- for claim in claims %}
       {%- set score = evidence_map.get(claim.claim_text) if evidence_map else None %}
@@ -105,8 +111,11 @@
       Contradictions ({{ contradictions.total_pairs }})
       <span class="text-sm font-normal text-muted">&middot; {{ contradictions.by_severity.get('high', 0) }} high, {{ contradictions.by_severity.get('medium', 0) }} medium, {{ contradictions.by_severity.get('low', 0) }} low</span>
     </h2>
+    {%- if contradictions.total_pairs > (contradictions.pairs[:100] | length) %}
+    <p class="text-xs text-muted mb-3">Showing the top {{ contradictions.pairs[:100] | length }} by confidence. Full list in the JSON download above.</p>
+    {%- endif %}
     <div class="grid gap-3">
-      {%- for pair in contradictions.pairs %}
+      {%- for pair in contradictions.pairs[:100] %}
       <div class="ghost-card p-4 border-l-4 {% if pair.severity.value == 'high' %}border-red-500{% elif pair.severity.value == 'medium' %}border-yellow-500{% else %}border-gray-400{% endif %}">
         <div class="flex items-start gap-2 mb-2">
           <span class="contradiction-type-badge type-{{ pair.contradiction_type.value }}">{{ pair.contradiction_type.value | title }}</span>

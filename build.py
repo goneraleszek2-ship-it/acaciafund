@@ -3264,6 +3264,63 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                 for _claim in _trail.claims:
                     _ws_claims.append(_claim)
             _ws_evidence_map = {_s.claim: _s for _s in _scores}
+
+            def _ws_rank(claim):
+                evidence = _ws_evidence_map.get(claim.claim_text)
+                return (
+                    evidence.score if evidence else -1.0,
+                    len(claim.citations),
+                    len(claim.concept_ids),
+                )
+
+            # The full corpus is thousands of claims; render a ranked slice and
+            # publish the complete dataset as a downloadable JSON file.
+            _ws_claims_display = sorted(_ws_claims, key=_ws_rank, reverse=True)[:250]
+            _ws_payload_claims = []
+            for _claim in _ws_claims:
+                _evidence = _ws_evidence_map.get(_claim.claim_text)
+                _ws_payload_claims.append({
+                    "claimText": _claim.claim_text,
+                    "pillar": _claim.pillar,
+                    "conceptIds": _claim.concept_ids,
+                    "citations": [
+                        {
+                            "url": _cit.url,
+                            "title": _cit.title,
+                            "verified": _cit.verified,
+                            "credibility": _cit.credibility_score,
+                        }
+                        for _cit in _claim.citations
+                    ],
+                    "evidence": (
+                        {"score": _evidence.score, "level": _evidence.level.value}
+                        if _evidence
+                        else None
+                    ),
+                })
+            _ws_payload = {
+                "generatedAt": now.isoformat(),
+                "totalClaims": len(_ws_claims),
+                "totalContradictions": _contradiction_report.total_pairs,
+                "claims": _ws_payload_claims,
+                "contradictions": [
+                    {
+                        "claimA": _pair.claim_a,
+                        "claimB": _pair.claim_b,
+                        "type": _pair.contradiction_type.value,
+                        "severity": _pair.severity.value,
+                        "confidence": _pair.confidence,
+                        "conceptIds": _pair.concept_ids,
+                    }
+                    for _pair in _contradiction_report.pairs
+                ],
+            }
+            _ws_dir = OUTPUT_DIR / "research" / "workspace"
+            _ws_dir.mkdir(parents=True, exist_ok=True)
+            (_ws_dir / "workspace.json").write_text(
+                json.dumps(_ws_payload, separators=(",", ":"), ensure_ascii=False),
+                encoding="utf-8",
+            )
             _ws_html = render_template(
                 "research_workspace.j2",
                 content=_dummy(
@@ -3272,14 +3329,15 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
                     description="Hypothesis workspace with source trail analysis, contradiction detection, and evidence quality scoring.",
                 ),
                 hypothesis={},
-                claims=_ws_claims,
+                claims=_ws_claims_display,
+                total_claims=len(_ws_claims),
+                workspace_json_url="/research/workspace/workspace.json",
                 contradictions=_contradiction_report,
                 evidence_scores=_scores,
                 evidence_map=_ws_evidence_map,
                 page_path="research/workspace/",
                 **ctx_base,
             )
-            (_ws_dir := OUTPUT_DIR / "research" / "workspace").mkdir(parents=True, exist_ok=True)
             (_ws_dir / "index.html").write_text(_ws_html, encoding="utf-8")
             print(f"  research-workspace: /research/workspace/ ({len(_ws_claims)} claims)")
 

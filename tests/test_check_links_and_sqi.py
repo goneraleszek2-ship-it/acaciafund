@@ -46,6 +46,13 @@ def test_check_links_finds_broken(tmp_path):
     assert "/markets/research/missing" in broken[0]
 
 
+def test_check_links_allows_non_html_data_files(tmp_path):
+    write_page(tmp_path, "index.html", '<a href="/data/feed.json">data</a>')
+    (tmp_path / "data").mkdir()
+    (tmp_path / "data" / "feed.json").write_text("{}")
+    assert check_links(tmp_path) == []
+
+
 def test_check_links_ignores_admin_and_tag_specials(tmp_path):
     write_page(
         tmp_path,
