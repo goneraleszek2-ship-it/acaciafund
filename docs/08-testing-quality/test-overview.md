@@ -1,8 +1,8 @@
 # Testing Overview
 
-AcaciaFund has **1345 Python tests across 66 modules** plus **15 JS test suites** — covering core modules, the cognitive architecture (schema builder, retention, adaptive), research provenance, build output, redirects, taxonomy generation, and test suites for bloom, brand, visuals, generate, source verification, knowledge-module SQI guards, content-structure audit, external-link liveness, SQI gates, entry freshness/currency tiers, OpenAlex citations (Tier 5.1), structured extraction (Tier 5.2), and Edit-on-GitHub resolution (Tier 6.1).
+AcaciaFund has **1355 Python tests across 70 modules** plus **15 JS test suites** — covering core modules, the cognitive architecture (schema builder, retention, adaptive), research provenance, build output, redirects, taxonomy generation, and test suites for bloom, brand, visuals, generate, source verification, knowledge-module SQI guards, content-structure audit, external-link liveness, SQI gates, entry freshness/currency tiers, OpenAlex citations (Tier 5.1), structured extraction (Tier 5.2), and Edit-on-GitHub resolution (Tier 6.1).
 
-> **Note:** Counts verified 2026-11-05 via a full pytest run (1345 Python, 0 failures, 1 skipped) + 15 JS suites. Full suite runs in the deploy pipeline after every build — all green (0 failures).
+> **Note:** Counts verified 2026-11-05 via a full pytest run (1355 Python, 0 failures, 1 skipped) + 15 JS suites. Full suite runs in the deploy pipeline after every build — all green (0 failures).
 
 ## Test Files
 
@@ -19,12 +19,13 @@ AcaciaFund has **1345 Python tests across 66 modules** plus **15 JS test suites*
 | `tests/test_content.py` | 11 | Content dataclass construction |
 | `tests/test_build_cache.py` | 14 | Build cache, incremental builds |
 | `tests/test_assets.py` | 21 | Asset pipeline + favicon generation |
+| `tests/test_build_images.py` | 4 | Responsive srcset variant selection |
 | `tests/test_score.py` | 17 | Content scoring |
 | `tests/test_smoke.py` | 9 | Registry validation, schema enforcement |
 | `tests/test_audit_content_structure.py` | 20 | Content structure audit: min-h2, empty sections, markdown residue, exit codes |
 | `tests/test_markdown_utils.py` | 14 | Markdown conversion + code-aware residue repair |
 | `tests/test_remediate_content_structure.py` | 14 | Sectionizing, title strip, registry remediation |
-| `tests/test_build_smoke.py` | 34 | Build output verification (incl. SEO metadata) |
+| `tests/test_build_smoke.py` | 39 | Build output verification (SEO, accessibility, responsive images) |
 | `tests/test_redirects.py` | 11 | Redirect rules validation |
 
 ### Cognitive Architecture

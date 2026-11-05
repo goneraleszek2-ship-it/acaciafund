@@ -125,6 +125,23 @@ def get_topic_icons(tags: list[str]) -> list[str]:
     return matched
 
 
+_H1_RE = re.compile(r"<h1(\s[^>]*)?>(.*?)</h1>", re.IGNORECASE | re.DOTALL)
+_PRE_RE = re.compile(r"<pre\b[^>]*>.*?</pre>", re.IGNORECASE | re.DOTALL)
+
+
+def demote_stray_h1(html: str) -> str:
+    """Keep one h1 per page: demote body h1s and flatten h1s inside code blocks."""
+    if not html or "<h1" not in html.lower():
+        return html
+
+    def _flatten_pre(match: re.Match) -> str:
+        block = re.sub(r"<h1[^>]*>", "# ", match.group(0), flags=re.IGNORECASE)
+        return re.sub(r"</h1>", "", block, flags=re.IGNORECASE)
+
+    html = _PRE_RE.sub(_flatten_pre, html)
+    return _H1_RE.sub(lambda m: f"<h2{m.group(1) or ''}>{m.group(2)}</h2>", html)
+
+
 def add_lazy_loading(html: str) -> str:
     return re.sub(r"<img(?![^>]*loading=)", '<img loading="lazy" decoding="async"', html)
 

@@ -70,18 +70,18 @@
               <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
             </button>
             <ul id="primary-menu">
-                <li><a href="/start-here/" style="font-weight:500">Start Here</a></li>
-                <li><a href="/news/" style="font-weight:500">News</a></li>
-                <li><a href="/compliance/">Compliance</a></li>
-                <li><a href="/markets/">Markets</a></li>
-                <li><a href="/data/">Data</a></li>
+                <li><a href="/start-here/" style="font-weight:500"{% if page_path is defined and page_path == "start-here/" %} aria-current="page"{% endif %}>Start Here</a></li>
+                <li><a href="/news/" style="font-weight:500"{% if page_path is defined and page_path.startswith("news/") %} aria-current="page"{% endif %}>News</a></li>
+                <li><a href="/compliance/"{% if page_path is defined and page_path.startswith("compliance/") %} aria-current="page"{% endif %}>Compliance</a></li>
+                <li><a href="/markets/"{% if page_path is defined and page_path.startswith("markets/") %} aria-current="page"{% endif %}>Markets</a></li>
+                <li><a href="/data/"{% if page_path is defined and page_path.startswith("data/") %} aria-current="page"{% endif %}>Data</a></li>
                 <li><span class="nav-empty">|</span></li>
-                <li><a href="/study/" style="font-size:0.85rem" title="Study Queue (due flashcards & concepts)"><svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" style="display:inline-block;vertical-align:-2px;margin-right:3px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>Study</a></li>
-                <li><a href="/review/" style="font-size:0.85rem">Review</a></li>
-                <li><a href="/diagnostic/" style="font-size:0.85rem" title="Diagnostic placement quiz">Diagnostic</a></li>
-                <li><a href="/journeys/" style="font-size:0.85rem" title="Cross-pillar learning journeys">Journeys</a></li>
-                <li><a href="/scholar/" style="font-size:0.85rem;font-weight:600">Console</a></li>
-                <li><a href="/letters/" style="font-size:0.85rem">A-Z</a></li>
+                <li><a href="/study/" style="font-size:0.85rem" title="Study Queue (due flashcards & concepts)"{% if page_path is defined and page_path.startswith("study/") %} aria-current="page"{% endif %}><svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true" style="display:inline-block;vertical-align:-2px;margin-right:3px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"/></svg>Study</a></li>
+                <li><a href="/review/" style="font-size:0.85rem"{% if page_path is defined and page_path.startswith("review/") %} aria-current="page"{% endif %}>Review</a></li>
+                <li><a href="/diagnostic/" style="font-size:0.85rem" title="Diagnostic placement quiz"{% if page_path is defined and page_path.startswith("diagnostic/") %} aria-current="page"{% endif %}>Diagnostic</a></li>
+                <li><a href="/journeys/" style="font-size:0.85rem" title="Cross-pillar learning journeys"{% if page_path is defined and page_path.startswith("journeys/") %} aria-current="page"{% endif %}>Journeys</a></li>
+                <li><a href="/scholar/" style="font-size:0.85rem;font-weight:600"{% if page_path is defined and page_path.startswith("scholar/") %} aria-current="page"{% endif %}>Console</a></li>
+                <li><a href="/letters/" style="font-size:0.85rem"{% if page_path is defined and page_path.startswith("letters/") %} aria-current="page"{% endif %}>A-Z</a></li>
                 <li><a href="/search/" aria-label="Search" title="Search (press s)" class="btn-search" style="display:inline-flex;align-items:center;gap:0.35rem;font-size:0.85rem"><svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>Search</a></li>
                 <li>
                   <span class="mode-toggle-sm">
@@ -108,7 +108,7 @@
         </nav>
     </header>
 
-    <div id="settings-panel" class="settings-panel" aria-hidden="true" role="dialog" aria-label="Reading preferences">
+    <div id="settings-panel" class="settings-panel" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Reading preferences">
       <div class="settings-panel-inner">
         <button id="settings-close" class="settings-close" aria-label="Close settings">&times;</button>
         <div class="settings-section">

@@ -102,6 +102,22 @@ class TestComplianceContent:
         assert len(pages) >= 5, f"Expected >=5 research pages, got {len(pages)}"
 
 
+class TestAccessibility:
+    def test_nav_marks_current_pillar(self, dist_dir):
+        content = (dist_dir / "compliance" / "index.html").read_text(encoding="utf-8")
+        assert 'href="/compliance/" aria-current="page"' in content
+
+    def test_newsletter_input_has_label(self, dist_dir):
+        content = (dist_dir / "knowledge" / "glossary" / "index.html").read_text(encoding="utf-8")
+        assert 'for="newsletter-email"' in content
+        assert 'id="newsletter-email"' in content
+
+    def test_graph_has_noscript_fallback(self, dist_dir):
+        content = (dist_dir / "graph" / "index.html").read_text(encoding="utf-8")
+        assert "<noscript>" in content
+        assert "/letters/" in content
+
+
 class TestSeoMetadata:
     """Verify canonical, social metadata, and P1 asset fixes."""
 
@@ -120,6 +136,29 @@ class TestSeoMetadata:
     def test_favicon_and_manifest_exist(self, dist_dir):
         assert (dist_dir / "favicon.ico").exists()
         assert (dist_dir / "static" / "site.webmanifest").exists()
+
+    def test_svg_images_do_not_emit_width_srcset(self, dist_dir):
+        pages = [
+            dist_dir / "compliance" / "research" / "aml-1" / "index.html",
+            dist_dir / "data" / "research" / "2027-data-engineering-predictions" / "index.html",
+        ]
+        for page in pages:
+            if page.exists():
+                content = page.read_text(encoding="utf-8")
+                assert "_400w.svg" not in content
+                assert "_800w.svg" not in content
+
+    def test_no_public_page_has_multiple_h1(self, dist_dir):
+        import re
+
+        offenders = []
+        for page in dist_dir.rglob("*.html"):
+            if "admin" in page.parts:
+                continue
+            count = len(re.findall(r"<h1\b", page.read_text(encoding="utf-8", errors="ignore"), re.IGNORECASE))
+            if count > 1:
+                offenders.append(str(page.relative_to(dist_dir)))
+        assert not offenders, f"pages with multiple h1: {offenders[:10]}"
 
     def test_thin_tag_pages_are_noindex(self, dist_dir):
         tag_pages = list((dist_dir / "tags").glob("*/index.html"))

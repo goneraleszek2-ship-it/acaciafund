@@ -246,6 +246,15 @@ class TestExtractClaimsFromText:
         claims = extract_claims_from_text(text)
         assert all(len(c) >= 40 for c in claims)
 
+    def test_strips_html_markup(self):
+        text = (
+            "<h1>Schema Registry Patterns</h1>"
+            "<p>Schema registry architectures enable versioned contracts across pipelines.</p>"
+        )
+        claims = extract_claims_from_text(text)
+        assert claims
+        assert all("<" not in claim and ">" not in claim for claim in claims)
+
     def test_empty_text(self):
         assert extract_claims_from_text("") == []
         assert extract_claims_from_text(None) == []

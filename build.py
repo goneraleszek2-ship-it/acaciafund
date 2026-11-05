@@ -67,6 +67,7 @@ from core.build_images import (
     generate_card_thumbnail,
     pick_card_pictogram,
     resolve_section_image,
+    responsive_srcset,
     thumbnail_key,
 )
 from core.build_quality import (
@@ -450,6 +451,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     env.globals["_pick_subtopic"] = _pick_subtopic
     env.globals["slug_to_url"] = slug_to_url
     env.globals["pillar_to_url"] = pillar_to_url
+    env.globals["responsive_srcset"] = responsive_srcset
 
     def filter_entities(entities):
         result = []

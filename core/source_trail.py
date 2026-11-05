@@ -246,6 +246,8 @@ def extract_claims_from_text(
     if not text:
         return []
 
+    text = re.sub(r"<[^>]+>", " ", text)
+    text = re.sub(r"\s+", " ", text).strip()
     sentences = re.split(r"(?<=[.!?])\s+", text)
     claims: List[str] = []
 

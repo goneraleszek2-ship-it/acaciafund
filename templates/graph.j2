@@ -10,7 +10,7 @@
 
   <div class="graph-toolbar">
     <div class="graph-toolbar-group">
-      <label>Pillar</label>
+      <label for="graph-filter">Pillar</label>
       <select id="graph-filter">
         <option value="all">All</option>
         <option value="compliance">Compliance</option>
@@ -20,7 +20,7 @@
       </select>
     </div>
     <div class="graph-toolbar-group">
-      <label>Relation&nbsp;type</label>
+      <label for="graph-relation-filter">Relation&nbsp;type</label>
       <select id="graph-relation-filter">
         <option value="all">All</option>
         <option value="part_of">Part of</option>
@@ -36,7 +36,7 @@
       </select>
     </div>
     <div class="graph-toolbar-group">
-      <label>Layout</label>
+      <label for="graph-layout">Layout</label>
       <select id="graph-layout">
         <option value="cose">Force-directed</option>
         <option value="dagre">Hierarchical</option>
@@ -45,8 +45,8 @@
       </select>
     </div>
     <div class="graph-toolbar-group">
-      <label>Search</label>
-      <input type="text" id="graph-search" placeholder="Search nodes..." style="width:140px;font-size:0.8rem;padding:2px 6px;border-radius:4px;background:var(--color-bg);color:var(--color-text);border:1px solid var(--color-border)">
+      <label for="graph-search">Search</label>
+      <input type="text" id="graph-search" aria-label="Search graph nodes" placeholder="Search nodes..." style="width:140px;font-size:0.8rem;padding:2px 6px;border-radius:4px;background:var(--color-bg);color:var(--color-text);border:1px solid var(--color-border)">
     </div>
     <div class="graph-toolbar-group graph-toolbar-actions">
       <button id="btn-reset" class="outline" style="font-size:0.75rem;padding:2px 8px">Reset</button>
@@ -54,7 +54,8 @@
     </div>
   </div>
 
-  <div id="cy" class="graph-container"></div>
+  <div id="cy" class="graph-container" role="img" aria-label="Interactive knowledge graph"></div>
+  <noscript><p>JavaScript is required for the interactive graph. Browse the <a href="/letters/">A–Z index</a> instead.</p></noscript>
 
   <div id="graph-detail" class="graph-detail" style="display:none">
     <div class="graph-detail-header">

@@ -177,6 +177,35 @@ def resolve_section_image(url: str) -> str:
     return ""
 
 
+def responsive_srcset(url: str, roots: list[Path] | None = None) -> str:
+    """Return a srcset string only when real 400w/800w variants exist.
+
+    SVGs are resolution-independent, so they never get width variants. Raster
+    images get a srcset only if both variants are present; missing variants
+    would otherwise produce 404s on narrow viewports.
+    """
+    if not url:
+        return ""
+    clean = url.split("#", 1)[0].split("?", 1)[0]
+    if clean.startswith(SITE_URL):
+        clean = clean[len(SITE_URL):]
+    if not clean.startswith("/"):
+        clean = "/" + clean
+    if clean.lower().endswith(".svg"):
+        return ""
+
+    base, dot, ext = clean.rpartition(".")
+    if not dot:
+        return ""
+    search_roots = roots if roots is not None else [PROJECT_ROOT, PROJECT_ROOT / "dist"]
+    variants = [f"{base}_400w.{ext}", f"{base}_800w.{ext}"]
+    for variant in variants:
+        rel = variant.lstrip("/")
+        if not any((root / rel).is_file() for root in search_roots):
+            return ""
+    return f"{variants[0]} 400w, {variants[1]} 800w, {clean} 1200w"
+
+
 def generate_card_thumbnail(source_url: str, slug: str) -> str:
     """Generate a 200x150 card thumbnail from a featured image. Returns URL path or empty string."""
     if not source_url:

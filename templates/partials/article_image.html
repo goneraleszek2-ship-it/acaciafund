@@ -1,11 +1,9 @@
 {% if featured_image_url %}
-{% set base = featured_image_url.rsplit('.', 1)[0] %}
-{% set ext = featured_image_url.rsplit('.', 1)[1] %}
-{% set src_400 = base ~ '_400w.' ~ ext %}
-{% set src_800 = base ~ '_800w.' ~ ext %}
+{% set srcset = responsive_srcset(featured_image_url) %}
 <img src="{{ featured_image_url }}"
-     srcset="{{ src_400 }} 400w, {{ src_800 }} 800w, {{ featured_image_url }} 1200w"
-     sizes="(max-width: 400px) 400px, (max-width: 800px) 800px, 1200px"
+{%- if srcset %}
+     srcset="{{ srcset }}" sizes="(max-width: 400px) 400px, (max-width: 800px) 800px, 1200px"
+{%- endif %}
      alt="{{ title | striptags }}" width="1200" height="675" class="article-featured-image" loading="lazy" decoding="async">
 {% else %}
 <div class="placeholder-image" style="background:var(--color-bg);border:1px solid var(--color-border);height:400px;display:flex;align-items:center;justify-content:center;color:var(--color-text-muted)">

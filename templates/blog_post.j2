@@ -23,12 +23,9 @@
         {% include "macros/pillar_badge.html" %}
       </div>
       {%- if featured_image %}
-      {% set base = featured_image.rsplit('.', 1)[0] %}
-      {% set ext = featured_image.rsplit('.', 1)[1] %}
-      {% set src_400 = base ~ '_400w.' ~ ext %}
-      {% set src_800 = base ~ '_800w.' ~ ext %}
+      {% set srcset = responsive_srcset(featured_image) %}
       <div class="mb-4">
-        <img src="{{ featured_image }}" srcset="{{ src_400 }} 400w, {{ src_800 }} 800w, {{ featured_image }} 1200w" sizes="(max-width: 400px) 400px, (max-width: 800px) 800px, 1200px" alt="{{ content.title | striptags }}" class="w-full rounded-lg img-hero" loading="lazy" decoding="async">
+        <img src="{{ featured_image }}"{% if srcset %} srcset="{{ srcset }}" sizes="(max-width: 400px) 400px, (max-width: 800px) 800px, 1200px"{% endif %} alt="{{ content.title | striptags }}" class="w-full rounded-lg img-hero" loading="lazy" decoding="async">
         {%- if image_credit %}
         <span class="block text-xs mt-1 text-muted">{{ image_credit }}</span>
         {%- endif %}

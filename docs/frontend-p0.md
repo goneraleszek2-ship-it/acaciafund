@@ -170,11 +170,14 @@ Static host, no nonces.
 - **Performance:** review badge still fetches 410 KB + 104 KB for returning
   users; ship a due-count manifest next. Workspace page is 3.3 MB; scholar 671
   KB; review/study ~290 KB.
-- **Responsive images:** generate `_400w`/`_800w` variants or remove `srcset`
-  for SVGs; add width/height to blog hero images.
-- **Accessibility:** label newsletter/teachback/build inputs; add
-  `aria-pressed`/`aria-current`/`aria-modal`; graph fallback; fix multi-h1
-  pages; improve light-mode pillar-accent contrast; add focus-mode exit.
+- **Responsive images:** ~~remove `srcset` for SVGs and stop emitting variants
+  that do not exist~~ — **done 2026-11-05** (`responsive_srcset` only emits
+  URLs when both raster variants exist; e2e allowlist is empty). Existing
+  raster images serve the original until re-fetched with variants.
+- **Accessibility:** ~~label newsletter/teachback/build inputs; add
+  `aria-current`/`aria-modal`; graph fallback; fix multi-h1 pages~~ —
+  **done 2026-11-05**. Remaining: light-mode pillar-accent contrast and a
+  visible focus-mode exit.
 - **Admin:** externalize/hash admin inline scripts and confirm Access in front
   of `dist/admin/`.
 - **Tests later:** Lighthouse/axe/visual regression and HTML validation arrive

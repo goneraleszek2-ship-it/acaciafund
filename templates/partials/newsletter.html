@@ -2,7 +2,8 @@
   <h3 style="color:var(--color-text)">Stay Updated</h3>
   <p style="color:var(--color-text-muted)">Get the latest research summaries delivered to your inbox.</p>
   <form style="margin-top:1rem">
-    <input type="email" placeholder="Enter your email" style="padding:0.5rem;border:1px solid var(--color-border);border-radius:4px;width:100%;max-width:300px">
+    <label for="newsletter-email" class="sr-only">Email address</label>
+    <input id="newsletter-email" name="email" type="email" autocomplete="email" required placeholder="Enter your email" style="padding:0.5rem;border:1px solid var(--color-border);border-radius:4px;width:100%;max-width:300px">
     <button type="submit" style="margin-top:0.5rem;padding:0.5rem 1rem;background:var(--color-accent);color:#fff;border:none;border-radius:4px;cursor:pointer">Subscribe</button>
   </form>
 </div>

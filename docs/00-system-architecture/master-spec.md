@@ -205,7 +205,7 @@ context-agnostic; name patterns by structure (`card`, not `product-card`).
 
 ## 7. Testing & Quality Gates (per change)
 
-1. Full test suite: `bash scripts/run_tests.sh` — **1,345 Python tests + 15 JS suites must pass**
+1. Full test suite: `bash scripts/run_tests.sh` — **1,355 Python tests + 15 JS suites must pass**
 2. Build: `python3 build.py` completes without errors (`dist/build_errors.log` empty)
 3. Link check: zero internal 404s (`scripts/check_links_and_sqi.py --dist-dir dist`)
 4. Pydantic validation: `registry.json` passes schema
