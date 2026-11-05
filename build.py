@@ -2812,6 +2812,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     print(f"  journeys: {len(_journey_pages)} journey pages + index")
 
     # --- Concept review data for retention engine ---
+    _concept_review_items: list = []
     if ontology and ontology.concept_count() > 0:
         try:
             from core.retention_engine import generate_concept_review_json, save_concept_review_json
@@ -2830,6 +2831,24 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
             print("  retention: core.retention_engine not available — skipping")
         except Exception as _e_ret:
             print(f"  retention: error generating concept review data — {_e_ret}")
+
+    # Compact payload for the global badge + pillar rail (was 410KB + 104KB).
+    _review_index = {
+        "generatedAt": now.isoformat(),
+        "concepts": [
+            {"id": c.get("id"), "label": c.get("label"), "pillar": c.get("pillar")}
+            for c in _concept_review_items
+        ],
+        "cards": [
+            {"id": c.get("id"), "term": c.get("term"), "pillar": c.get("pillar")}
+            for c in _review_cards
+        ],
+    }
+    _review_index_path = STATIC_DST_DIR / "review_index.json"
+    _review_index_path.write_text(
+        json.dumps(_review_index, separators=(",", ":"), ensure_ascii=False), encoding="utf-8"
+    )
+    print(f"  review: static/review_index.json ({_review_index_path.stat().st_size:,} bytes)")
 
     # --- Concept detail pages ---
     if ontology and ontology.concept_count() > 0:

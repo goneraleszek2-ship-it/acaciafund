@@ -29,13 +29,11 @@
       return;
     }
 
-    Promise.all([
-      fetch('/static/review_concepts.json').then(function(r) { if (!r.ok) throw new Error(r.status); return r.json(); }),
-      fetch('/static/flashcard_index.json').then(function(r) { if (!r.ok) throw new Error(r.status); return r.json(); }),
-    ])
-      .then(function(results) {
-        var concepts = (results[0] && results[0].concepts) || [];
-        var cards = (results[1] && results[1].cards) || [];
+    fetch('/static/review_index.json')
+      .then(function(r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function(data) {
+        var concepts = (data && data.concepts) || [];
+        var cards = (data && data.cards) || [];
         var due = dueCountFor(mastery, concepts, 'id') + dueCountFor(sm2, cards, 'id');
         updateBadge(due);
       })

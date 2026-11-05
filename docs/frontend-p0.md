@@ -167,9 +167,10 @@ Static host, no nonces.
 - **Favicon/manifest:** ~~`/favicon.ico` 404s; no manifest/theme-color~~ —
   **done 2026-11-05** (generated multi-size ICO, SVG icon, web manifest,
   theme-color).
-- **Performance:** review badge still fetches 410 KB + 104 KB for returning
-  users; ship a due-count manifest next. Workspace page is 3.3 MB; scholar 671
-  KB; review/study ~290 KB.
+- **Performance:** ~~review badge fetches 410 KB + 104 KB for returning users~~
+  — **done 2026-11-05** (single compact `review_index.json`, 115 KB, shared by
+  the badge, pillar rail, and study dashboard). Remaining: workspace page is
+  3.3 MB; scholar 671 KB; review/study ~290 KB.
 - **Responsive images:** ~~remove `srcset` for SVGs and stop emitting variants
   that do not exist~~ — **done 2026-11-05** (`responsive_srcset` only emits
   URLs when both raster variants exist; e2e allowlist is empty). Existing

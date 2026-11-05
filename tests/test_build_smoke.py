@@ -118,6 +118,24 @@ class TestAccessibility:
         assert "/letters/" in content
 
 
+class TestReviewIndex:
+    def test_compact_review_index_exists(self, dist_dir):
+        import json
+
+        path = dist_dir / "static" / "review_index.json"
+        assert path.exists()
+        data = json.loads(path.read_text(encoding="utf-8"))
+        assert data["concepts"]
+        assert data["cards"]
+        assert set(data["concepts"][0]) == {"id", "label", "pillar"}
+        assert set(data["cards"][0]) == {"id", "term", "pillar"}
+
+    def test_review_index_is_much_smaller_than_full_payloads(self, dist_dir):
+        index_size = (dist_dir / "static" / "review_index.json").stat().st_size
+        full_size = (dist_dir / "static" / "review_concepts.json").stat().st_size
+        assert index_size < full_size / 3
+
+
 class TestSeoMetadata:
     """Verify canonical, social metadata, and P1 asset fixes."""
 

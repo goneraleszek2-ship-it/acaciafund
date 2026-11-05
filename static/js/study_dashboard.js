@@ -101,7 +101,7 @@
       }).join('');
     }
 
-    fetch('/static/flashcard_index.json')
+    fetch('/static/review_index.json')
       .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
       .then(function (data) {
         var cards = (data && data.cards) || [];
