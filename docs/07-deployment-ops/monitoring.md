@@ -107,7 +107,7 @@ outage does not fail deploys.
 ## Admin Access Gate
 
 `python3 scripts/verify_admin_access.py --base-url https://www.acaciafund.org`
-checks `/admin/` and `/admin/dashboard.html`. A `3xx` Access challenge or
-`401/403` is treated as protected; a `200` fails. The deploy workflow runs this
+checks `/admin/` and `/admin/dashboard.html`. A `3xx` Access challenge,
+`401/403`, or `404` (admin not published) is accepted; a `200` fails. The deploy workflow runs this
 advisory check after publishing (`continue-on-error: true` until Access is
 confirmed in the Cloudflare dashboard).

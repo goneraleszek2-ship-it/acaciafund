@@ -88,7 +88,7 @@ and the deploy pipeline enforces the gate (all content pages ≥ 0.65).
 | Molecule | `templates/partials/` | Context-agnostic reusable components |
 | Organism | `templates/` (page sections) | Compose molecules (header, study queue) |
 | Template | `templates/layout.j2` etc. | Page skeletons |
-| Page | `dist/` | Generated instances (2,929) |
+| Page | `dist/` | Generated instances (2,915) |
 
 Invariant: never hardcode page-specific logic in molecules; name by structure,
 not context.
@@ -99,7 +99,7 @@ not context.
 
 | Metric | Value |
 |---|---|
-| Generated pages | 2,929 (incl. `/design-system/`) |
+| Generated pages | 2,915 (incl. `/design-system/`) |
 | Registry items | 260 (136 research / 83 learn / 41 knowledge) |
 | Ontology concepts / relations | 199 / 447 |
 | Tests | 1,342 Python (verified 2026-11-05 full-suite run) + 15 JS suites (all green) |
@@ -205,7 +205,7 @@ context-agnostic; name patterns by structure (`card`, not `product-card`).
 
 ## 7. Testing & Quality Gates (per change)
 
-1. Full test suite: `bash scripts/run_tests.sh` — **1,385 Python tests + 15 JS suites must pass**
+1. Full test suite: `bash scripts/run_tests.sh` — **1,386 Python tests + 15 JS suites must pass**
 2. Build: `python3 build.py` completes without errors (`dist/build_errors.log` empty)
 3. Link check: zero internal 404s (`scripts/check_links_and_sqi.py --dist-dir dist`)
 4. Pydantic validation: `registry.json` passes schema

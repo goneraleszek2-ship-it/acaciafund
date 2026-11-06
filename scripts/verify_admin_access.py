@@ -27,7 +27,7 @@ def classify_response(status: int, location: str = "") -> str:
     if status == 200:
         return "unprotected"
     if status == 404:
-        return "missing"
+        return "absent"
     return "error"
 
 
@@ -51,7 +51,7 @@ def main(argv: list[str] | None = None) -> int:
     for path in DEFAULT_PATHS:
         result, status, url = check_path(args.base_url, path, args.timeout)
         print(f"  {result:11s} HTTP {status} {url}")
-        if result != "protected":
+        if result not in ("protected", "absent"):
             failures.append((url, result, status))
 
     if failures:

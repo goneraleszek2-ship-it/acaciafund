@@ -22,7 +22,7 @@ AcaciaFund is a **static-first content platform** that synthesizes research from
 
 | Metric | Value |
 |--------|-------|
-| Total pages | 2,929 |
+| Total pages | 2,915 |
 | Registry items | 260 (136 research, 83 learn, 41 knowledge) |
 | Pillars | 3 (Compliance, Markets, Data) |
 | Ontology concepts | 199 |

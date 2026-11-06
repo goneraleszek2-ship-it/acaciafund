@@ -1,8 +1,8 @@
 # Testing Overview
 
-AcaciaFund has **1385 Python tests across 71 modules** plus **15 JS test suites** — covering core modules, the cognitive architecture (schema builder, retention, adaptive), research provenance, build output, redirects, taxonomy generation, and test suites for bloom, brand, visuals, generate, source verification, knowledge-module SQI guards, content-structure audit, external-link liveness, SQI gates, entry freshness/currency tiers, OpenAlex citations (Tier 5.1), structured extraction (Tier 5.2), and Edit-on-GitHub resolution (Tier 6.1).
+AcaciaFund has **1386 Python tests across 71 modules** plus **15 JS test suites** — covering core modules, the cognitive architecture (schema builder, retention, adaptive), research provenance, build output, redirects, taxonomy generation, and test suites for bloom, brand, visuals, generate, source verification, knowledge-module SQI guards, content-structure audit, external-link liveness, SQI gates, entry freshness/currency tiers, OpenAlex citations (Tier 5.1), structured extraction (Tier 5.2), and Edit-on-GitHub resolution (Tier 6.1).
 
-> **Note:** Counts verified 2026-11-05 via a full pytest run (1385 Python, 0 failures, 1 skipped) + 15 JS suites, and the content structure audit at 0 warnings. Full suite runs in the deploy pipeline after every build — all green (0 failures).
+> **Note:** Counts verified 2026-11-05 via a full pytest run (1386 Python, 0 failures, 1 skipped) + 15 JS suites, and the content structure audit at 0 warnings. Full suite runs in the deploy pipeline after every build — all green (0 failures).
 
 ## Test Files
 
@@ -26,7 +26,7 @@ AcaciaFund has **1385 Python tests across 71 modules** plus **15 JS test suites*
 | `tests/test_audit_content_structure.py` | 20 | Content structure audit: min-h2, empty sections, markdown residue, exit codes |
 | `tests/test_markdown_utils.py` | 14 | Markdown conversion + code-aware residue repair |
 | `tests/test_remediate_content_structure.py` | 14 | Sectionizing, title strip, registry remediation |
-| `tests/test_build_smoke.py` | 46 | Build output verification (SEO, a11y, images, review index, workspace) |
+| `tests/test_build_smoke.py` | 47 | Build output verification (SEO, a11y, images, review index, workspace) |
 | `tests/test_redirects.py` | 11 | Redirect rules validation |
 
 ### Cognitive Architecture

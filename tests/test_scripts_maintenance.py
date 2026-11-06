@@ -43,8 +43,8 @@ class TestAdminAccess:
     def test_public_dashboard_is_unprotected(self):
         assert classify_response(200) == "unprotected"
 
-    def test_missing_and_server_errors(self):
-        assert classify_response(404) == "missing"
+    def test_absent_and_server_errors(self):
+        assert classify_response(404) == "absent"
         assert classify_response(503) == "error"
 
 

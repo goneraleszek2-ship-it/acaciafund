@@ -187,8 +187,9 @@ Static host, no nonces.
   exit~~ — **done 2026-11-05** (WCAG AA tokens + floating exit button).
 - **Admin:** ~~externalize/hash admin inline scripts~~ — **done 2026-11-05**
   (per-page inline scripts are hashed into a dedicated `/admin/*` CSP).
-  Remaining: confirm Cloudflare Access is enforced in front of `dist/admin/`
-  (`scripts/verify_admin_access.py` runs as an advisory post-deploy check).
+  **2026-11-06:** static `/admin/*` pages are no longer published by default
+  (`ACACIA_BUILD_ADMIN=1` opt-in) because production Access was not enforced.
+  `scripts/verify_admin_access.py` now accepts protected or absent admin surfaces.
 - **Tests later:** Lighthouse/axe/visual regression and HTML validation arrive
   with Node in Phase 4.
 

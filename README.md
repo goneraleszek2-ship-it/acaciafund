@@ -8,14 +8,14 @@ AcaciaFund is not a traditional content site. It is a schema-building engine gro
 
 | Metric | Value |
 |--------|-------|
-| Generated pages | 2,929 |
+| Generated pages | 2,915 |
 | Content items | 260 (136 research, 83 learn, 41 knowledge) |
 | Ontology concepts | 199 (58 compliance, 64 markets, 70 data, 7 cross-pillar) |
 | Ontology relations | 447 across 10 relation types |
 | Knowledge categories | 13 |
 | Pillars | 3 (Compliance, Markets, Data Engineering) |
 | Inspiration sources | 65 |
-| Tests | 1,385 Python tests + 15 JS suites |
+| Tests | 1,386 Python tests + 15 JS suites |
 | Build time | ~125–155s cached, incremental via content hashing |
 | Deploy target | Cloudflare Pages (`https://www.acaciafund.org/`) |
 

@@ -8,6 +8,7 @@ import base64
 import hashlib
 import json
 import logging
+import os
 import re
 import shutil
 import subprocess
@@ -3746,14 +3747,22 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     # --- ADMIN PANEL (via build_taxonomies) ---
     from core.images.manifest import load_manifest as _load_manifest
 
-    generate_admin_pages(
-        OUTPUT_DIR, all_content, STATIC_DST_DIR, render_template, ctx_base, _dummy,
-        load_admin_credentials_fn=load_admin_credentials,
-        load_manifest_fn=_load_manifest,
-        project_root=PROJECT_ROOT,
-        section_types=SECTION_TYPES,
-        ontology=ontology,
-    )
+    if os.environ.get("ACACIA_BUILD_ADMIN", "").lower() in {"1", "true", "yes"}:
+        generate_admin_pages(
+            OUTPUT_DIR, all_content, STATIC_DST_DIR, render_template, ctx_base, _dummy,
+            load_admin_credentials_fn=load_admin_credentials,
+            load_manifest_fn=_load_manifest,
+            project_root=PROJECT_ROOT,
+            section_types=SECTION_TYPES,
+            ontology=ontology,
+        )
+    else:
+        # Admin dashboards are intentionally local-only until Cloudflare Access
+        # is enforced. serve_cms.py renders them dynamically for local use.
+        _admin_dir = OUTPUT_DIR / "admin"
+        if _admin_dir.exists():
+            shutil.rmtree(_admin_dir)
+        print("  admin: skipped (set ACACIA_BUILD_ADMIN=1 to publish)")
 
     # --- SEARCH INDEX + PAGE (via build_taxonomies) ---
     generate_search_pages(

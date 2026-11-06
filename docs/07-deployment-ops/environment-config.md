@@ -17,6 +17,7 @@ ADMIN_PASSWORD=secure-password-here
 
 | Variable | Required | Default | Description |
 |----------|----------|---------|-------------|
+| `ACACIA_BUILD_ADMIN` | No | unset | Set to `1` to publish static `/admin/*` pages (local/authorized deploys only) |
 | `ADMIN_USERNAME` | Yes | `admin` | Admin dashboard login |
 | `ADMIN_PASSWORD` | Yes | `admin` | Admin dashboard password |
 | `PLAUSIBLE_DOMAIN` | No | `plausible.io` | Plausible analytics server |

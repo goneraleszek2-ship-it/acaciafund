@@ -180,6 +180,13 @@ class TestReviewPagesPayload:
             assert len(html) < 80_000
 
 
+class TestAdminDeployment:
+    def test_admin_pages_are_not_published_by_default(self, dist_dir):
+        assert not (dist_dir / "admin").exists()
+        console = (dist_dir / "scholar" / "index.html").read_text(encoding="utf-8")
+        assert 'href="/admin/"' not in console
+
+
 class TestAdminSecurity:
     def test_admin_csp_hashes_all_inline_scripts(self, dist_dir):
         import base64
@@ -191,8 +198,11 @@ class TestAdminSecurity:
         assert "Content-Security-Policy" in admin_block
         assert "X-Robots-Tag: noindex" in admin_block
 
+        admin_dir = dist_dir / "admin"
+        if not admin_dir.exists():
+            return
         hashes = set()
-        for page in (dist_dir / "admin").glob("*.html"):
+        for page in admin_dir.glob("*.html"):
             html = page.read_text(encoding="utf-8", errors="ignore")
             for match in re.finditer(r"<script(?![^>]*\\bsrc=)[^>]*>(.*?)</script>", html, re.S | re.I):
                 script = match.group(1).strip()

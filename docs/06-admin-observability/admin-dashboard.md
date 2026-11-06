@@ -1,6 +1,8 @@
 # Admin Dashboard
 
-The admin dashboard provides 12 pages at `/admin/*.html` for site management and observability. All pages extend `admin/base.html`.
+The admin dashboard provides 14 pages at `/admin/*.html` for site management and observability. All pages extend `admin/base.html`.
+
+> **Deployment note:** static admin pages are opt-in (`ACACIA_BUILD_ADMIN=1 python3 build.py`) and are excluded from the production build until Cloudflare Access is verified. `scripts/serve_cms.py` renders the same templates dynamically for local use.
 
 ## Template Hierarchy
 
