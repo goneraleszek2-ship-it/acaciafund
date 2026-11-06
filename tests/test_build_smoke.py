@@ -141,6 +141,26 @@ class TestResearchWorkspace:
         assert "/research/workspace/workspace.json" in content
 
 
+class TestReviewPagesPayload:
+    def test_review_pages_do_not_inline_all_cards(self, dist_dir):
+        import json
+
+        data_path = dist_dir / "static" / "flashcard_review.json"
+        assert data_path.exists()
+        data = json.loads(data_path.read_text(encoding="utf-8"))
+        assert data["total"] > 0
+        assert "definition" in data["cards"][0]
+        page_ids = {
+            "review/index.html": "review-cards-data",
+            "study/index.html": "study-cards-data",
+            "review/queue/index.html": "queue-cards-data",
+        }
+        for page, inline_id in page_ids.items():
+            html = (dist_dir / page).read_text(encoding="utf-8")
+            assert inline_id not in html
+            assert len(html) < 80_000
+
+
 class TestAdminSecurity:
     def test_admin_csp_hashes_all_inline_scripts(self, dist_dir):
         import base64

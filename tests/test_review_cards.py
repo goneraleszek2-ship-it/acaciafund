@@ -6,6 +6,7 @@ from core.review_cards import (
     backfill_flashcards_from_quizzes,
     collect_flashcards,
     write_flashcard_index,
+    write_flashcard_review,
 )
 
 
@@ -159,3 +160,14 @@ def test_collect_flashcards_includes_backfilled_cards():
     assert [c["id"] for c in cards] == ["a/learn/x#0", "a/learn/x#1", "a/learn/x#2"]
     assert cards[1]["term"] == "Q1?"
     assert cards[2]["term"] == "Q2?"
+
+
+def test_write_flashcard_review_includes_definitions(tmp_path):
+    cards = [
+        {"id": "data/learn/x#0", "term": "OLAP", "definition": "Analytical processing", "pillar": "data-engineering", "slug": "data/learn/x"},
+    ]
+    path = tmp_path / "flashcard_review.json"
+    write_flashcard_review(cards, path)
+    payload = json.loads(path.read_text())
+    assert payload["total"] == 1
+    assert payload["cards"][0]["definition"] == "Analytical processing"

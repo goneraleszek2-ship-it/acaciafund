@@ -1,5 +1,5 @@
 (function() {
-  const cards = JSON.parse(document.getElementById('review-cards-data').textContent);
+  function init(cards) {
   const SM2_KEY = 'acacia_sm2';
   const HIST_KEY = 'acacia_review_history';
 
@@ -58,6 +58,12 @@
     cell.setAttribute('aria-label', key + (active ? ' (reviewed)' : ''));
     heatmap.appendChild(cell);
   }
+  }
+
+  fetch('/static/flashcard_review.json')
+    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function (data) { init(data.cards || []); })
+    .catch(function () { init([]); });
 })();
 
 document.addEventListener('DOMContentLoaded', function() {

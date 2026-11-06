@@ -1,5 +1,5 @@
 (function() {
-  const flashCards = JSON.parse(document.getElementById('study-cards-data').textContent);
+  function init(flashCards) {
   const FLASH_SM2_KEY = 'acacia_sm2';
   const CONCEPT_SM2_KEY = 'acacia_concept_mastery';
 
@@ -126,4 +126,10 @@
       if (e.key === 'ArrowRight' || e.key === 'Escape') { idx++; renderCard(); }
     });
   }
+  }
+
+  fetch('/static/flashcard_review.json')
+    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function (data) { init(data.cards || []); })
+    .catch(function () { init([]); });
 })();

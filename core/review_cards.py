@@ -74,6 +74,28 @@ def collect_flashcards(registry_items: list[Any]) -> list[dict]:
     return cards
 
 
+def write_flashcard_review(cards: list[dict], path: Path) -> None:
+    """Write the full card payload fetched by the review/study pages."""
+    payload = {
+        "generatedAt": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
+        "total": len(cards),
+        "cards": [
+            {
+                "id": c["id"],
+                "term": c["term"],
+                "definition": c.get("definition", ""),
+                "pillar": c["pillar"],
+                "slug": c.get("slug", ""),
+            }
+            for c in cards
+        ],
+    }
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps(payload, ensure_ascii=False, separators=(",", ":")), encoding="utf-8"
+    )
+
+
 def write_flashcard_index(cards: list[dict], path: Path) -> None:
     """Write the lightweight card index consumed by the header due badge."""
     payload = {

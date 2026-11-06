@@ -172,7 +172,9 @@ Static host, no nonces.
   the badge, pillar rail, and study dashboard). ~~Workspace page 3.3 MB~~ —
   **done 2026-11-05** (top 250 claims ranked by evidence, top 100
   contradictions, full 1.5 MB dataset available as `workspace.json`; page is
-  now ~340 KB). Remaining: scholar 671 KB; review/study ~290 KB.
+  now ~340 KB). ~~review/study ~290 KB~~ — **done 2026-11-05** (cards load from
+  cached `flashcard_review.json`; review/study/queue HTML is 17–21 KB). Remaining:
+  scholar 671 KB.
 - **Responsive images:** ~~remove `srcset` for SVGs and stop emitting variants
   that do not exist~~ — **done 2026-11-05** (`responsive_srcset` only emits
   URLs when both raster variants exist; e2e allowlist is empty). Existing

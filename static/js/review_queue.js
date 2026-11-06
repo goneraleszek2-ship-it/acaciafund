@@ -1,5 +1,5 @@
 (function() {
-  const allCards = JSON.parse(document.getElementById('queue-cards-data').textContent);
+  function init(allCards) {
   const SM2_KEY = 'acacia_sm2';
 
   let sm2 = {};
@@ -78,4 +78,10 @@
       renderCard();
     }
   });
+  }
+
+  fetch('/static/flashcard_review.json')
+    .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+    .then(function (data) { init(data.cards || []); })
+    .catch(function () { init([]); });
 })();

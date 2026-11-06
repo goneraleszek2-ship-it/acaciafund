@@ -2701,9 +2701,15 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     print("  graph: graph/index.html")
 
     # --- Review pages (dashboard + queue) ---
-    from core.review_cards import collect_flashcards, write_flashcard_index
+    from core.review_cards import (
+        collect_flashcards,
+        write_flashcard_index,
+        write_flashcard_review,
+    )
     _review_cards = collect_flashcards(registry.content)
     write_flashcard_index(_review_cards, STATIC_DST_DIR / "flashcard_index.json")
+    write_flashcard_review(_review_cards, STATIC_DST_DIR / "flashcard_review.json")
+    print(f"  review: static/flashcard_review.json ({len(_review_cards)} cards)")
 
     review_dir = OUTPUT_DIR / "review"
     review_dir.mkdir(parents=True, exist_ok=True)
