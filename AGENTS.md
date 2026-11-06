@@ -143,7 +143,7 @@ This codebase has been built in sequential sprints. Understanding what came befo
 | Foundation fixes | Concept extraction word-boundary fix, alias expansion, full category remapping, knowledge-to-pillar mapping, description backfill |
 | Quality fixes | SQI backfill script, search recall improvement (threshold 0.35, body window 800), niche concept alias expansion |
 
-**Current state:** 260 registry items, 2,929 generated pages (incl. `/design-system/`), 3 clean pillars, 199 ontology concepts (all with philosophical metadata, 447 canonical relations), 65 inspiration sources. Daily news pipeline: 23 live RSS feeds + Hacker News + GDELT (keyless). Quality gate: passing, all pages SQI >= 0.65. 1364 Python tests across 70 modules (+ 15 JS suites). Metrics verified 2026-11-05 — see `docs/08-testing-quality/test-overview.md` for the canonical reference. Tier 5/6 complete: OpenAlex "Cited by" (`scripts/backfill_openalex.py`), key-variable + PRISMA extraction (`core/extraction.py`), Edit-on-GitHub links (`core/edit_links.py`), public design system (`/design-system/`).
+**Current state:** 260 registry items, 2,929 generated pages (incl. `/design-system/`), 3 clean pillars, 199 ontology concepts (all with philosophical metadata, 447 canonical relations), 65 inspiration sources. Daily news pipeline: 23 live RSS feeds + Hacker News + GDELT (keyless). Quality gate: passing, all pages SQI >= 0.65. 1378 Python tests across 71 modules (+ 15 JS suites). Metrics verified 2026-11-05 — see `docs/08-testing-quality/test-overview.md` for the canonical reference. Tier 5/6 complete: OpenAlex "Cited by" (`scripts/backfill_openalex.py`), key-variable + PRISMA extraction (`core/extraction.py`), Edit-on-GitHub links (`core/edit_links.py`), public design system (`/design-system/`).
 
 > **Master specification:** the reconciled execution plan (tier checklist with done/partial/pending status, verified metrics, quality gates) lives at `docs/00-system-architecture/master-spec.md`. Consult it before starting any new feature tier.
 >
@@ -549,6 +549,7 @@ result = df.filter(pl.col('price') > 100).collect()
 | `tests/test_agent_tools.py` | 16 | Tool executor, risk levels, tool registry |
 | `tests/test_risk_engine.py` | 16 | Risk engine (tool approval, callback enforcement) |
 | `tests/test_assets.py` | 21 | Asset manager, uploads, thumbnails, favicon |
+| `tests/test_scripts_maintenance.py` | 14 | Description trimming, CMS API, preview HTML, orphan-tag helpers |
 | `tests/test_build_cache.py` | 14 | Build cache, incremental builds |
 | `tests/test_export_research.py` | 14 | scripts/export_research.py: Markdown/JSON report generation from trails, contradictions, grades |
 | `tests/test_learn_generation.py` | 14 | Learn module generation pipeline |
@@ -582,7 +583,7 @@ result = df.filter(pl.col('price') > 100).collect()
 
 JS tests run via `node tests/test_*.js` for each file (no npm/playwright needed). `scripts/run_tests.sh` runs all 15 suites, including `test_nav.js`.
 
-**Total: 1364 Python tests collected across 70 modules, including 5 guard tests in `tests/test_generate_knowledge_modules.py` (knowledge-module SQI fields), 21 in `tests/test_category_mapping.py` (tag→subcategory mapping, category backfill, news/GDELT pipeline), 22 in `tests/test_check_entry_freshness.py` (currency tiers, topic currency, parse dates, marking), 45 in `tests/test_build_smoke.py` (incl. UI/UX spec assertions: pillar side rail, SM-2 CTA + prereq banner on learn pages, study dashboard sidebar, mobile tab bar, SEO metadata, accessibility, responsive images), 13 in `tests/test_backfill_openalex.py` (Tier 5.1: OpenAlex fetch/apply/idempotency), 18 in `tests/test_extraction.py` (Tier 5.2: key variables + PRISMA), and 12 in `tests/test_edit_links.py` (Tier 6.1: content-file + registry-line resolution).** (Verified 2026-11-05 via a full pytest run plus all 15 JS suites. Full suite runs in the deploy pipeline after every build — all green.)
+**Total: 1378 Python tests collected across 71 modules, including 5 guard tests in `tests/test_generate_knowledge_modules.py` (knowledge-module SQI fields), 21 in `tests/test_category_mapping.py` (tag→subcategory mapping, category backfill, news/GDELT pipeline), 22 in `tests/test_check_entry_freshness.py` (currency tiers, topic currency, parse dates, marking), 45 in `tests/test_build_smoke.py` (incl. UI/UX spec assertions: pillar side rail, SM-2 CTA + prereq banner on learn pages, study dashboard sidebar, mobile tab bar, SEO metadata, accessibility, responsive images), 13 in `tests/test_backfill_openalex.py` (Tier 5.1: OpenAlex fetch/apply/idempotency), 18 in `tests/test_extraction.py` (Tier 5.2: key variables + PRISMA), and 12 in `tests/test_edit_links.py` (Tier 6.1: content-file + registry-line resolution).** (Verified 2026-11-05 via a full pytest run plus all 15 JS suites. Full suite runs in the deploy pipeline after every build — all green.)
 
 ### Phase 1.5 Files (Cognitive Load Amputation — July 2026)
 

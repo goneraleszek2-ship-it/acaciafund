@@ -1,8 +1,8 @@
 # Testing Overview
 
-AcaciaFund has **1364 Python tests across 70 modules** plus **15 JS test suites** — covering core modules, the cognitive architecture (schema builder, retention, adaptive), research provenance, build output, redirects, taxonomy generation, and test suites for bloom, brand, visuals, generate, source verification, knowledge-module SQI guards, content-structure audit, external-link liveness, SQI gates, entry freshness/currency tiers, OpenAlex citations (Tier 5.1), structured extraction (Tier 5.2), and Edit-on-GitHub resolution (Tier 6.1).
+AcaciaFund has **1378 Python tests across 71 modules** plus **15 JS test suites** — covering core modules, the cognitive architecture (schema builder, retention, adaptive), research provenance, build output, redirects, taxonomy generation, and test suites for bloom, brand, visuals, generate, source verification, knowledge-module SQI guards, content-structure audit, external-link liveness, SQI gates, entry freshness/currency tiers, OpenAlex citations (Tier 5.1), structured extraction (Tier 5.2), and Edit-on-GitHub resolution (Tier 6.1).
 
-> **Note:** Counts verified 2026-11-05 via a full pytest run (1364 Python, 0 failures, 1 skipped) + 15 JS suites. Full suite runs in the deploy pipeline after every build — all green (0 failures).
+> **Note:** Counts verified 2026-11-05 via a full pytest run (1378 Python, 0 failures, 1 skipped) + 15 JS suites. Full suite runs in the deploy pipeline after every build — all green (0 failures).
 
 ## Test Files
 
@@ -19,6 +19,7 @@ AcaciaFund has **1364 Python tests across 70 modules** plus **15 JS test suites*
 | `tests/test_content.py` | 11 | Content dataclass construction |
 | `tests/test_build_cache.py` | 14 | Build cache, incremental builds |
 | `tests/test_assets.py` | 21 | Asset pipeline + favicon generation |
+| `tests/test_scripts_maintenance.py` | 14 | Description trimming, CMS API, preview HTML, orphan-tag helpers |
 | `tests/test_build_images.py` | 4 | Responsive srcset variant selection |
 | `tests/test_score.py` | 17 | Content scoring |
 | `tests/test_smoke.py` | 9 | Registry validation, schema enforcement |
