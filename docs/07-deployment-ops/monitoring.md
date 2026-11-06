@@ -93,3 +93,21 @@ Checks:
 - Redirect targets
 
 > **See also:** [Quality Gates](../03-content-system/quality-gates.md), [Source Freshness](../04-ontology-knowledge-graph/source-freshness.md)
+
+
+## External Link Triage
+
+`python3 scripts/check_external_links.py --dist-dir dist` writes
+`dist/external-link-report.json` and fails only on definitive `4xx` errors.
+Publisher hosts that consistently challenge automated requests with
+`401/403/405` are listed in `data/known_blocking_hosts.json` and reported as
+`skipped`; network-only `unreachable` results stay informational so a CI egress
+outage does not fail deploys.
+
+## Admin Access Gate
+
+`python3 scripts/verify_admin_access.py --base-url https://www.acaciafund.org`
+checks `/admin/` and `/admin/dashboard.html`. A `3xx` Access challenge or
+`401/403` is treated as protected; a `200` fails. The deploy workflow runs this
+advisory check after publishing (`continue-on-error: true` until Access is
+confirmed in the Cloudflare dashboard).

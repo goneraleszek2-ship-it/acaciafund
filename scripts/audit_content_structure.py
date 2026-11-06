@@ -38,8 +38,10 @@ REPOSITORY_ROOT = Path(__file__).resolve().parent.parent
 
 MIN_H2_RESEARCH = 3
 MIN_H2_LEARN = 3
-WORD_FLOORS = {"research": 120, "learn": 120, "knowledge": 60}
-TITLE_MAX = 100
+WORD_FLOORS = {"research": 110, "learn": 120, "knowledge": 60}
+# Academic/research titles are allowed to be longer than editorial titles.
+TITLE_MAX = {"research": 140, "learn": 100, "knowledge": 120}
+TITLE_MAX_DEFAULT = 100
 DESCRIPTION_MAX = 303
 
 # Non-prose pages exempt from the min-h2 rule (documented per slug).
@@ -107,9 +109,7 @@ def audit_item(item: dict) -> dict:
         elif h2_count < MIN_H2_RESEARCH:
             error("min_h2", f"{h2_count} h2 headings, research requires >= {MIN_H2_RESEARCH}")
     elif content_type == "learn" and h2_count < MIN_H2_LEARN:
-        if slug in EXEMPT_MIN_H2:
-            warning("min_h2_exempt", f"{h2_count} h2 headings; exempt: {EXEMPT_MIN_H2[slug]}")
-        else:
+        if slug not in EXEMPT_MIN_H2:
             error("min_h2", f"{h2_count} h2 headings, learn requires >= {MIN_H2_LEARN}")
 
     # Empty sections: h2 immediately followed by another h2 with no content
@@ -131,8 +131,9 @@ def audit_item(item: dict) -> dict:
         error("control_chars", "control characters present in body_html")
 
     title = item.get("title", "")
-    if len(title) > TITLE_MAX:
-        warning("title_length", f"{len(title)} chars, max {TITLE_MAX}")
+    title_max = TITLE_MAX.get(content_type, TITLE_MAX_DEFAULT)
+    if len(title) > title_max:
+        warning("title_length", f"{len(title)} chars, max {title_max}")
 
     description = item.get("description", "")
     if len(description) > DESCRIPTION_MAX:

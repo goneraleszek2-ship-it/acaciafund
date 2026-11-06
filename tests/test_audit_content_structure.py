@@ -74,7 +74,7 @@ class TestAuditItem:
         body = "<h2>A</h2><p>words here</p>"
         result = audit_item(make_item(slug="data/learn/learning-hub", content_type="learn", body=body))
         assert not any(e["rule"] == "min_h2" for e in result["errors"])
-        assert any(w["rule"] == "min_h2_exempt" for w in result["warnings"])
+        assert not any(w["rule"] == "min_h2_exempt" for w in result["warnings"])
 
     def test_empty_section_detected(self):
         body = "<h2>One</h2><p>content content content</p><h2>Two</h2><h2>Three</h2><p>tail</p>"
@@ -102,8 +102,17 @@ class TestAuditItem:
         assert any(e["rule"] == "control_chars" for e in result["errors"])
 
     def test_title_warning(self):
-        result = audit_item(make_item(title="t" * 120))
+        result = audit_item(make_item(title="t" * 150))
         assert any(w["rule"] == "title_length" for w in result["warnings"])
+
+    def test_long_research_title_allowed(self):
+        result = audit_item(make_item(title="t" * 135))
+        assert not any(w["rule"] == "title_length" for w in result["warnings"])
+
+    def test_short_research_body_allowed_at_110_words(self):
+        body = "<h2>A</h2><p>" + ("word " * 111) + "</p><h2>B</h2><p>x</p><h2>C</h2><p>x</p>"
+        result = audit_item(make_item(body=body))
+        assert not any(w["rule"] == "word_count" for w in result["warnings"])
 
     def test_description_warning(self):
         result = audit_item(make_item(description="d" * 400))

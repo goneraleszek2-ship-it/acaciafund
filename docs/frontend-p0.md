@@ -187,7 +187,8 @@ Static host, no nonces.
   exit~~ — **done 2026-11-05** (WCAG AA tokens + floating exit button).
 - **Admin:** ~~externalize/hash admin inline scripts~~ — **done 2026-11-05**
   (per-page inline scripts are hashed into a dedicated `/admin/*` CSP).
-  Remaining: confirm Cloudflare Access is enforced in front of `dist/admin/`.
+  Remaining: confirm Cloudflare Access is enforced in front of `dist/admin/`
+  (`scripts/verify_admin_access.py` runs as an advisory post-deploy check).
 - **Tests later:** Lighthouse/axe/visual regression and HTML validation arrive
   with Node in Phase 4.
 

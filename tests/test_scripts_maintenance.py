@@ -8,6 +8,7 @@ import scripts.cms_api as cms_api
 from scripts.fix_orphan_tags import levenshtein, normalize, slugify, title_case
 from scripts.serve_cms import build_preview_html
 from scripts.trim_descriptions import trim_description
+from scripts.verify_admin_access import classify_response
 
 
 class TestTrimDescription:
@@ -29,6 +30,22 @@ class TestTrimDescription:
     def test_never_exceeds_limit(self):
         text = "x" * 1000
         assert len(trim_description(text, 303)) <= 303
+
+
+class TestAdminAccess:
+    def test_redirect_is_protected(self):
+        assert classify_response(302, "https://acaciafund.cloudflareaccess.com/") == "protected"
+
+    def test_auth_errors_are_protected(self):
+        assert classify_response(401) == "protected"
+        assert classify_response(403) == "protected"
+
+    def test_public_dashboard_is_unprotected(self):
+        assert classify_response(200) == "unprotected"
+
+    def test_missing_and_server_errors(self):
+        assert classify_response(404) == "missing"
+        assert classify_response(503) == "error"
 
 
 class TestFixOrphanTags:
