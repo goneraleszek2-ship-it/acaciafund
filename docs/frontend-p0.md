@@ -181,8 +181,9 @@ Static host, no nonces.
   `aria-current`/`aria-modal`; graph fallback; fix multi-h1 pages~~ —
   **done 2026-11-05**. ~~light-mode pillar-accent contrast; visible focus-mode
   exit~~ — **done 2026-11-05** (WCAG AA tokens + floating exit button).
-- **Admin:** externalize/hash admin inline scripts and confirm Access in front
-  of `dist/admin/`.
+- **Admin:** ~~externalize/hash admin inline scripts~~ — **done 2026-11-05**
+  (per-page inline scripts are hashed into a dedicated `/admin/*` CSP).
+  Remaining: confirm Cloudflare Access is enforced in front of `dist/admin/`.
 - **Tests later:** Lighthouse/axe/visual regression and HTML validation arrive
   with Node in Phase 4.
 

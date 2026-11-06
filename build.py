@@ -3921,6 +3921,28 @@ Sitemap: {SITE_URL}/sitemap.xml
         "worker-src 'self' blob:; object-src 'none'; frame-ancestors 'none'; "
         "base-uri 'self'; form-action 'self'"
     )
+    # Hash inline scripts in admin pages so the stricter /admin/* CSP can run
+    # them without falling back to 'unsafe-inline'.
+    _admin_hashes: set[str] = set()
+    _admin_dir = OUTPUT_DIR / "admin"
+    if _admin_dir.exists():
+        for _admin_page in _admin_dir.glob("*.html"):
+            _admin_html = _admin_page.read_text(encoding="utf-8", errors="ignore")
+            for _match in re.finditer(
+                r"<script(?![^>]*\bsrc=)[^>]*>(.*?)</script>", _admin_html, re.S | re.I
+            ):
+                _script = _match.group(1).strip()
+                if _script:
+                    _admin_hashes.add(
+                        base64.b64encode(hashlib.sha256(_script.encode("utf-8")).digest()).decode("ascii")
+                    )
+    _admin_script_hashes = " ".join(f"'sha256-{_h}'" for _h in sorted(_admin_hashes))
+    _admin_csp = csp.replace(
+        f"script-src 'self' 'sha256-{THEME_INIT_HASH}'",
+        f"script-src 'self' 'sha256-{THEME_INIT_HASH}' {_admin_script_hashes}",
+        1,
+    )
+
     (OUTPUT_DIR / "_headers").write_text(
         f"""/*
   X-Content-Type-Options: nosniff
@@ -3941,6 +3963,7 @@ Sitemap: {SITE_URL}/sitemap.xml
 /admin/*
   X-Robots-Tag: noindex, nofollow
   Cache-Control: no-store
+  Content-Security-Policy: {_admin_csp}
 
 /static/*
   Cache-Control: public, max-age=31536000, immutable

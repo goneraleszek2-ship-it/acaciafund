@@ -141,6 +141,30 @@ class TestResearchWorkspace:
         assert "/research/workspace/workspace.json" in content
 
 
+class TestAdminSecurity:
+    def test_admin_csp_hashes_all_inline_scripts(self, dist_dir):
+        import base64
+        import hashlib
+        import re
+
+        headers = (dist_dir / "_headers").read_text(encoding="utf-8")
+        admin_block = headers.split("/admin/*", 1)[1].split("\n\n", 1)[0]
+        assert "Content-Security-Policy" in admin_block
+        assert "X-Robots-Tag: noindex" in admin_block
+
+        hashes = set()
+        for page in (dist_dir / "admin").glob("*.html"):
+            html = page.read_text(encoding="utf-8", errors="ignore")
+            for match in re.finditer(r"<script(?![^>]*\\bsrc=)[^>]*>(.*?)</script>", html, re.S | re.I):
+                script = match.group(1).strip()
+                if script:
+                    digest = hashlib.sha256(script.encode("utf-8")).digest()
+                    hashes.add(base64.b64encode(digest).decode("ascii"))
+        assert hashes
+        for digest in hashes:
+            assert f"'sha256-{digest}'" in admin_block
+
+
 class TestReviewIndex:
     def test_compact_review_index_exists(self, dist_dir):
         import json
