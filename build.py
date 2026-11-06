@@ -3412,6 +3412,45 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
             build_hash=build_hash,
             site_url=SITE_URL,
         )
+        _scholar_data = {
+            "pillars": _console_payload.get("pillar_data", []),
+            "content": [
+                {
+                    "url": _item.get("url", ""),
+                    "title": _item.get("title", ""),
+                    "pillar": _item.get("pillar", ""),
+                    "content_type": _item.get("content_type", ""),
+                    "difficulty": _item.get("difficulty", ""),
+                    "sqi": _item.get("sqi", 0.0),
+                }
+                for _item in _console_payload.get("items", [])
+            ],
+            "concepts": [
+                {
+                    "id": _concept.get("id", ""),
+                    "label": _concept.get("label", ""),
+                    "description": _concept.get("description", ""),
+                    "pillar": _concept.get("pillar", ""),
+                    "category": _concept.get("category", ""),
+                    "epistemic_status": _concept.get("epistemic_status", ""),
+                    "explanation_quality": _concept.get("explanation_quality", 0.0),
+                    "cross_pillar_analogs": len(_concept.get("cross_pillar_analogs") or []),
+                    "eli5_explanation": _concept.get("eli5_explanation", ""),
+                    "analogy": _concept.get("analogy", ""),
+                    "gap_questions": len(_concept.get("gap_questions") or []),
+                    "confidence_score": _concept.get("confidence_score", 0.0),
+                    "relations": len(_concept.get("relations") or []),
+                    "content_count": len(_concept.get("content_slugs") or []),
+                }
+                for _concept in _console_payload.get("concepts", [])
+            ],
+        }
+        _scholar_json_path = STATIC_DST_DIR / "scholar.json"
+        _scholar_json_path.write_text(
+            json.dumps(_scholar_data, ensure_ascii=False, separators=(",", ":")),
+            encoding="utf-8",
+        )
+        print(f"  scholar-data: static/scholar.json ({_scholar_json_path.stat().st_size:,} bytes)")
         _console_html = render_template(
             "console.j2",
             content=_dummy("Scholar Console — AcaciaFund", "index",

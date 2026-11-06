@@ -141,6 +141,25 @@ class TestResearchWorkspace:
         assert "/research/workspace/workspace.json" in content
 
 
+class TestScholarConsole:
+    def test_scholar_panels_load_from_compact_json(self, dist_dir):
+        import json
+
+        page = dist_dir / "scholar" / "index.html"
+        data_path = dist_dir / "static" / "scholar.json"
+        assert page.stat().st_size < 120_000
+        assert data_path.exists()
+        data = json.loads(data_path.read_text(encoding="utf-8"))
+        assert data["content"] and data["concepts"]
+        assert {"id", "label", "description", "pillar"} <= set(data["concepts"][0])
+        html = page.read_text(encoding="utf-8")
+        assert 'id="concept-list"' in html
+        assert 'id="content-list"' in html
+        assert 'id="feynman-list"' in html
+        assert "Loading concepts" in html
+        assert "Tests Passing" not in html
+
+
 class TestReviewPagesPayload:
     def test_review_pages_do_not_inline_all_cards(self, dist_dir):
         import json
