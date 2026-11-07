@@ -12,6 +12,7 @@ def test_pyodide_sandbox_runs(page, base_url):
     sandbox = page.query_selector("[data-py-sandbox]")
     if sandbox is None:
         pytest.skip("no Pyodide sandbox on this build")
+        return
     sandbox.query_selector("[data-py-run]").click()
     page.wait_for_function(
         "() => { const el = document.querySelector('[data-py-status]'); return el && el.textContent.trim().length > 0; }",
