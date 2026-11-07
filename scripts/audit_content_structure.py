@@ -11,8 +11,8 @@ Checks (hard errors, fail CI):
   - control characters in body_html
 
 Checks (warnings, report only):
-  - word count below per-content-type floor
-  - title over 100 chars
+  - word count below per-content-type floor (research 110, learn 120, knowledge 60)
+  - title over the per-content-type limit (research 140, knowledge 120, else 100)
   - description over 303 chars
   - consecutive duplicate heading text
 
