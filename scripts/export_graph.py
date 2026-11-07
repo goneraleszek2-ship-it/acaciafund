@@ -115,7 +115,7 @@ def build_graph() -> dict:
     edges: list[dict] = []
     for slug, tags in doc_tag_map.items():
         src_pillar = slug_domain.get(slug, "")
-        for t in tags:
+        for t in sorted(tags):
             edges.append(
                 {
                     "data": {
