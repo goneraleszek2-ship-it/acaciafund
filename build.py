@@ -145,10 +145,12 @@ from core.build_cache import (  # noqa: E402
 
 # ── Taxonomy generation (separate from core content) ──
 from core.build_taxonomies import (  # noqa: E402
+    admin_content_security_policy,
     generate_admin_pages,
     generate_feed,
     generate_search_pages,
     generate_tag_pages,
+    remove_admin_pages,
 )
 from core.validator import validate_content  # noqa: E402
 from core.visuals import (  # noqa: E402
@@ -3759,9 +3761,7 @@ def main():  # pyright: ignore[reportGeneralTypeIssues]
     else:
         # Admin dashboards are intentionally local-only until Cloudflare Access
         # is enforced. serve_cms.py renders them dynamically for local use.
-        _admin_dir = OUTPUT_DIR / "admin"
-        if _admin_dir.exists():
-            shutil.rmtree(_admin_dir)
+        remove_admin_pages(OUTPUT_DIR, STATIC_DST_DIR)
         print("  admin: skipped (set ACACIA_BUILD_ADMIN=1 to publish)")
 
     # --- SEARCH INDEX + PAGE (via build_taxonomies) ---
@@ -3977,25 +3977,7 @@ Sitemap: {SITE_URL}/sitemap.xml
     )
     # Hash inline scripts in admin pages so the stricter /admin/* CSP can run
     # them without falling back to 'unsafe-inline'.
-    _admin_hashes: set[str] = set()
-    _admin_dir = OUTPUT_DIR / "admin"
-    if _admin_dir.exists():
-        for _admin_page in _admin_dir.glob("*.html"):
-            _admin_html = _admin_page.read_text(encoding="utf-8", errors="ignore")
-            for _match in re.finditer(
-                r"<script(?![^>]*\bsrc=)[^>]*>(.*?)</script>", _admin_html, re.S | re.I
-            ):
-                _script = _match.group(1).strip()
-                if _script:
-                    _admin_hashes.add(
-                        base64.b64encode(hashlib.sha256(_script.encode("utf-8")).digest()).decode("ascii")
-                    )
-    _admin_script_hashes = " ".join(f"'sha256-{_h}'" for _h in sorted(_admin_hashes))
-    _admin_csp = csp.replace(
-        f"script-src 'self' 'sha256-{THEME_INIT_HASH}'",
-        f"script-src 'self' 'sha256-{THEME_INIT_HASH}' {_admin_script_hashes}",
-        1,
-    )
+    _admin_csp = admin_content_security_policy(csp, THEME_INIT_HASH, OUTPUT_DIR / "admin")
 
     (OUTPUT_DIR / "_headers").write_text(
         f"""/*

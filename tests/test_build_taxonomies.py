@@ -16,11 +16,14 @@ from core.build_taxonomies import (
     _compute_tag_telemetry,
     _compute_telemetry,
     _compute_velocity_telemetry,
+    admin_content_security_policy,
+    admin_script_hashes,
     generate_admin_pages,
     generate_feed,
     generate_pillar_pages,
     generate_search_pages,
     generate_tag_pages,
+    remove_admin_pages,
 )
 
 
@@ -583,3 +586,75 @@ class TestGenerateAdminPages:
                              project_root=tmp_path)
         # sources.html should have been generated
         assert (output_dir / "admin" / "sources.html").exists()
+
+
+class TestAdminCsp:
+    def test_hashes_inline_scripts_only(self, tmp_path):
+        admin_dir = tmp_path / "admin"
+        admin_dir.mkdir()
+        (admin_dir / "dashboard.html").write_text(
+            '<script>console.log("a")</script><script src="/app.js"></script>',
+            encoding="utf-8",
+        )
+        (admin_dir / "quality.html").write_text(
+            "<script>console.log('b')</script>", encoding="utf-8"
+        )
+        hashes = admin_script_hashes(admin_dir)
+        assert len(hashes) == 2
+        assert all(len(h) == 44 for h in hashes)
+
+    def test_csp_includes_theme_and_admin_hashes(self, tmp_path):
+        admin_dir = tmp_path / "admin"
+        admin_dir.mkdir()
+        (admin_dir / "dashboard.html").write_text(
+            "<script>console.log('admin')</script>", encoding="utf-8"
+        )
+        csp = (
+            "default-src 'self'; script-src 'self' 'sha256-themehash' 'wasm-unsafe-eval' "
+            "https://cdn.example; object-src 'none'"
+        )
+        result = admin_content_security_policy(csp, "themehash", admin_dir)
+        digest = next(iter(admin_script_hashes(admin_dir)))
+        assert f"'sha256-{digest}'" in result
+        assert "'sha256-themehash'" in result
+        assert result.count("script-src") == 1
+
+    def test_empty_admin_dir_adds_no_hashes(self, tmp_path):
+        csp = "script-src 'self' 'sha256-themehash' 'wasm-unsafe-eval'"
+        assert admin_content_security_policy(csp, "themehash", tmp_path / "admin") == csp
+
+    def test_missing_theme_hash_is_unchanged(self, tmp_path):
+        csp = "default-src 'self'"
+        assert admin_content_security_policy(csp, "themehash", tmp_path) == csp
+
+    def test_generated_admin_pages_are_hashed(self, tmp_path):
+        output_dir = tmp_path / "site"
+        static_dir = tmp_path / "static"
+        static_dir.mkdir(parents=True)
+        render_template = MagicMock(
+            return_value='<html><script>console.log("admin")</script></html>'
+        )
+        generate_admin_pages(output_dir, [], static_dir, render_template, {}, _dummy)
+        result = admin_content_security_policy(
+            "script-src 'self' 'sha256-themehash'", "themehash", output_dir / "admin"
+        )
+        hashes = admin_script_hashes(output_dir / "admin")
+        assert len(hashes) == 2
+        for digest in hashes:
+            assert f"'sha256-{digest}'" in result
+
+    def test_remove_admin_pages_clears_html_and_static(self, tmp_path):
+        output_dir = tmp_path / "dist"
+        static_dir = output_dir / "static"
+        (output_dir / "admin").mkdir(parents=True)
+        (output_dir / "admin" / "dashboard.html").write_text("x", encoding="utf-8")
+        (static_dir / "admin").mkdir(parents=True)
+        (static_dir / "admin" / "config.yml").write_text("x", encoding="utf-8")
+
+        remove_admin_pages(output_dir, static_dir)
+
+        assert not (output_dir / "admin").exists()
+        assert not (static_dir / "admin").exists()
+
+    def test_remove_admin_pages_is_idempotent(self, tmp_path):
+        remove_admin_pages(tmp_path / "dist", tmp_path / "dist" / "static")

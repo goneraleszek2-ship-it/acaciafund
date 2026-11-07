@@ -7,8 +7,11 @@ content hash system — they always regenerate since they depend on
 aggregate state (tag maps, stats, etc.) that changes across builds.
 """
 
+import base64
+import hashlib
 import json
 import re
+import shutil
 from collections import defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
@@ -920,6 +923,40 @@ def generate_admin_pages(
         "  admin: login, dashboard, gallery, articles, manifest, pipeline, quality, coverage, sources, curated-test, telemetry, ontology, feynman"
     )
     return pages_generated
+
+
+def admin_script_hashes(admin_dir: Path) -> set[str]:
+    """Return base64 SHA-256 hashes for inline scripts in generated admin pages."""
+    hashes: set[str] = set()
+    if not admin_dir.exists():
+        return hashes
+    for page in admin_dir.glob("*.html"):
+        html = page.read_text(encoding="utf-8", errors="ignore")
+        for match in re.finditer(
+            r"<script(?![^>]*\bsrc=)[^>]*>(.*?)</script>", html, re.S | re.I
+        ):
+            script = match.group(1).strip()
+            if script:
+                digest = hashlib.sha256(script.encode("utf-8")).digest()
+                hashes.add(base64.b64encode(digest).decode("ascii"))
+    return hashes
+
+
+def admin_content_security_policy(csp: str, theme_init_hash: str, admin_dir: Path) -> str:
+    """Extend the site CSP with hashes for inline scripts in admin pages."""
+    needle = f"script-src 'self' 'sha256-{theme_init_hash}'"
+    if needle not in csp:
+        return csp
+    extra = " ".join(f"'sha256-{h}'" for h in sorted(admin_script_hashes(admin_dir)))
+    suffix = f" {extra}" if extra else ""
+    return csp.replace(needle, f"{needle}{suffix}", 1)
+
+
+def remove_admin_pages(output_dir: Path, static_dst_dir: Path) -> None:
+    """Remove generated admin HTML and admin static assets from production output."""
+    for target in (output_dir / "admin", static_dst_dir / "admin"):
+        if target.exists():
+            shutil.rmtree(target)
 
 
 def generate_search_pages(

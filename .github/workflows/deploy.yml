@@ -138,5 +138,4 @@ jobs:
           command: pages deploy dist --project-name=acaciafund
 
       - name: Verify admin access gate
-        continue-on-error: true
         run: python3 scripts/verify_admin_access.py --base-url https://www.acaciafund.org

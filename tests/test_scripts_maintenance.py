@@ -1,14 +1,17 @@
 """Tests for maintenance scripts: description trimming, CMS API, previews, tags."""
 
 import json
+import threading
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 
 import pytest
 
 import scripts.cms_api as cms_api
+import scripts.verify_admin_access as verify_admin_access
 from scripts.fix_orphan_tags import levenshtein, normalize, slugify, title_case
 from scripts.serve_cms import build_preview_html
 from scripts.trim_descriptions import trim_description
-from scripts.verify_admin_access import classify_response
+from scripts.verify_admin_access import check_path, classify_response, main
 
 
 class TestTrimDescription:
@@ -32,9 +35,52 @@ class TestTrimDescription:
         assert len(trim_description(text, 303)) <= 303
 
 
+class _AdminRoutes(BaseHTTPRequestHandler):
+    ROUTES = {
+        "/admin/": (200, None),
+        "/admin/dashboard.html": (308, "/admin/dashboard"),
+        "/admin/dashboard": (404, None),
+        "/protected/": (302, "https://acaciafund.cloudflareaccess.com/"),
+        "/cross-host/": (302, "https://auth.example.com/login"),
+        "/forbidden/": (403, None),
+    }
+
+    def do_GET(self):
+        status, location = self.ROUTES.get(self.path, (404, None))
+        self.send_response(status)
+        if location:
+            self.send_header("Location", location)
+        self.end_headers()
+
+    def log_message(self, format, *args):
+        pass
+
+
+@pytest.fixture
+def admin_server():
+    server = ThreadingHTTPServer(("127.0.0.1", 0), _AdminRoutes)
+    thread = threading.Thread(target=server.serve_forever, daemon=True)
+    thread.start()
+    try:
+        yield f"http://127.0.0.1:{server.server_port}"
+    finally:
+        server.shutdown()
+        server.server_close()
+        thread.join(timeout=5)
+
+
 class TestAdminAccess:
     def test_redirect_is_protected(self):
         assert classify_response(302, "https://acaciafund.cloudflareaccess.com/") == "protected"
+
+    def test_access_path_redirect_is_protected(self):
+        assert classify_response(302, "/cdn-cgi/access/login?redirect_url=/admin/") == "protected"
+
+    def test_same_site_redirect_is_followed(self):
+        assert classify_response(302, "/admin/dashboard") == "redirect"
+
+    def test_redirect_without_location_is_error(self):
+        assert classify_response(302, "") == "error"
 
     def test_auth_errors_are_protected(self):
         assert classify_response(401) == "protected"
@@ -46,6 +92,31 @@ class TestAdminAccess:
     def test_absent_and_server_errors(self):
         assert classify_response(404) == "absent"
         assert classify_response(503) == "error"
+
+    def test_check_path_detects_unprotected_admin(self, admin_server):
+        assert check_path(admin_server, "/admin/")[0] == "unprotected"
+
+    def test_check_path_follows_same_site_redirect_to_absent(self, admin_server):
+        result, status, url = check_path(admin_server, "/admin/dashboard.html")
+        assert result == "absent"
+        assert status == 404
+        assert url.endswith("/admin/dashboard")
+
+    def test_check_path_accepts_access_redirect(self, admin_server):
+        assert check_path(admin_server, "/protected/")[0] == "protected"
+
+    def test_check_path_accepts_cross_host_redirect(self, admin_server):
+        assert check_path(admin_server, "/cross-host/")[0] == "protected"
+
+    def test_check_path_accepts_auth_error(self, admin_server):
+        assert check_path(admin_server, "/forbidden/")[0] == "protected"
+
+    def test_main_fails_on_public_admin(self, admin_server):
+        assert main(["--base-url", admin_server]) == 1
+
+    def test_main_passes_when_admin_absent(self, admin_server, monkeypatch):
+        monkeypatch.setattr(verify_admin_access, "DEFAULT_PATHS", ("/missing-a/", "/missing-b/"))
+        assert main(["--base-url", admin_server]) == 0
 
 
 class TestFixOrphanTags:

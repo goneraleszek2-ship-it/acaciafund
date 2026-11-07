@@ -200,6 +200,8 @@ class TestAdminSecurity:
 
         admin_dir = dist_dir / "admin"
         if not admin_dir.exists():
+            script_src = admin_block.split("script-src", 1)[1].split(";", 1)[0]
+            assert script_src.count("'sha256-") == 1
             return
         hashes = set()
         for page in admin_dir.glob("*.html"):
