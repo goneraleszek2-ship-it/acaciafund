@@ -1617,7 +1617,9 @@ def main() -> int:
     new_items = deduplicate(all_new_items, registry)
 
     before_dead = len(new_items)
-    new_items = filter_dead_items(new_items, url_key="source_url")
+    new_items = filter_dead_items(
+        new_items, url_key="source_url", html_key="body_html"
+    )
     if len(new_items) < before_dead:
         logger.info(f"  Dead source URLs: {before_dead - len(new_items)} item(s) dropped")
 

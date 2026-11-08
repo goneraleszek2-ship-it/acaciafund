@@ -4,7 +4,12 @@ import email.message
 import urllib.error
 from unittest.mock import patch
 
-from core.link_validation import filter_dead_items, is_dead_url, normalize_url
+from core.link_validation import (
+    extract_urls_from_html,
+    filter_dead_items,
+    is_dead_url,
+    normalize_url,
+)
 
 
 class _Response:
@@ -79,3 +84,26 @@ def test_filter_dead_items_source_url_key():
         kept = filter_dead_items(items, url_key="source_url")
 
     assert kept == [{"source_url": "https://example.com/live"}]
+
+
+def test_extract_urls_from_html_handles_quotes():
+    html = "<a href='https://example.com/a'>a</a><a href=\"https://example.com/b\">b</a>"
+    assert extract_urls_from_html(html) == ["https://example.com/a", "https://example.com/b"]
+
+
+def test_filter_dead_items_checks_body_html_links():
+    items = [
+        {
+            "source_url": "https://news.example.com/item",
+            "body_html": "<p>Source: <a href='https://example.com/dead'>article</a></p>",
+        },
+        {
+            "source_url": "https://news.example.com/live",
+            "body_html": "<p>Source: <a href='https://example.com/live'>article</a></p>",
+        },
+    ]
+
+    with patch("core.link_validation.dead_urls", return_value={"https://example.com/dead"}):
+        kept = filter_dead_items(items, url_key="source_url", html_key="body_html")
+
+    assert kept == [items[1]]

@@ -3,9 +3,12 @@
 from __future__ import annotations
 
 import concurrent.futures
+import re
 import urllib.error
 import urllib.request
 from typing import Any
+
+_HREF_RE = re.compile(r"""href\s*=\s*["']([^"']+)["']""", re.IGNORECASE)
 
 USER_AGENT = (
     "Mozilla/5.0 (X11; Linux x86_64) AcaciaFund-NewsBot/3.0 "
@@ -46,14 +49,33 @@ def dead_urls(urls: list[str], workers: int = 8) -> set[str]:
         return {url for url, dead in zip(unique, pool.map(is_dead_url, unique)) if dead}
 
 
+def extract_urls_from_html(html: str) -> list[str]:
+    return _HREF_RE.findall(html or "")
+
+
+def _item_urls(item: dict[str, Any], url_key: str, html_key: str | None) -> set[str]:
+    urls: set[str] = set()
+    raw = item.get(url_key)
+    if isinstance(raw, str) and raw:
+        urls.add(normalize_url(raw))
+    if html_key:
+        for href in extract_urls_from_html(str(item.get(html_key) or "")):
+            if href:
+                urls.add(normalize_url(href))
+    urls.discard("")
+    return urls
+
+
 def filter_dead_items(
-    items: list[dict[str, Any]], url_key: str = "url", workers: int = 8
+    items: list[dict[str, Any]],
+    url_key: str = "url",
+    html_key: str | None = None,
+    workers: int = 8,
 ) -> list[dict[str, Any]]:
-    dead = dead_urls([str(item.get(url_key, "")) for item in items], workers)
+    candidates: set[str] = set()
+    for item in items:
+        candidates.update(_item_urls(item, url_key, html_key))
+    dead = dead_urls(sorted(candidates), workers)
     if not dead:
         return items
-    return [
-        item
-        for item in items
-        if normalize_url(str(item.get(url_key, ""))) not in dead
-    ]
+    return [item for item in items if not (_item_urls(item, url_key, html_key) & dead)]
