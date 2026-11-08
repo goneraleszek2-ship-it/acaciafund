@@ -4,7 +4,9 @@ Scans dist/*.html for external http(s) hrefs (excluding the site's own
 origin), issues HEAD requests (GET fallback) with retries, and reports
 failures. Hosts listed in data/known_blocking_hosts.json are skipped
 (known to block automated HEAD/GET requests) and recorded as skipped,
-not failed.
+not failed. Auto-ingested news URLs from data/news.json are exempt from
+the blocking gate because the digest is volatile; ingestion validates
+them separately.
 
     python3 scripts/check_external_links.py [--dist-dir dist] [--fail-on 0]
 
@@ -27,6 +29,7 @@ from pathlib import Path
 EXTERNAL_RE = re.compile(r'href="(https?://[^"]+)"')
 OWN_ORIGINS = {"acaciafund.org", "www.acaciafund.org"}
 BLOCKING_HOSTS_PATH = Path("data/known_blocking_hosts.json")
+NEWS_PATH = Path("data/news.json")
 USER_AGENT = "AcaciaFundLinkCheck/1.0 (+https://www.acaciafund.org)"
 
 
@@ -35,6 +38,25 @@ def load_blocking_hosts() -> set[str]:
         data = json.loads(BLOCKING_HOSTS_PATH.read_text(encoding="utf-8"))
         return set(data.get("hosts", []))
     return set()
+
+
+def _normalize_url(url: str) -> str:
+    return url.split("#", 1)[0].split("?", 1)[0].rstrip("/")
+
+
+def load_news_urls(path: Path = NEWS_PATH) -> set[str]:
+    if not path.exists():
+        return set()
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (json.JSONDecodeError, OSError):
+        return set()
+    return {_normalize_url(item["url"]) for item in data.get("items", []) if item.get("url")}
+
+
+def exclude_urls(urls: list[str], exclude: set[str]) -> list[str]:
+    normalized = {_normalize_url(url) for url in exclude}
+    return [url for url in urls if _normalize_url(url) not in normalized]
 
 
 def _request(url: str, method: str) -> int:
@@ -96,10 +118,13 @@ def main() -> int:
     args = parser.parse_args()
 
     blocking_hosts = load_blocking_hosts()
-    urls = collect_external_urls(args.dist_dir)
+    news_urls = load_news_urls()
+    urls = exclude_urls(collect_external_urls(args.dist_dir), news_urls)
     if args.max_urls:
         urls = urls[: args.max_urls]
     print(f"[external-links] checking {len(urls)} unique external URLs")
+    if news_urls:
+        print(f"[external-links] exempting {len(news_urls)} auto-ingested news URL(s)")
 
     results: list[dict] = []
     with concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool:

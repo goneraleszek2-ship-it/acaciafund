@@ -9,7 +9,9 @@ from unittest.mock import patch
 from scripts.check_external_links import (
     check_url,
     collect_external_urls,
+    exclude_urls,
     load_blocking_hosts,
+    load_news_urls,
 )
 
 
@@ -128,3 +130,30 @@ def test_check_url_unreachable_after_retries(monkeypatch):
     monkeypatch.setattr("urllib.request.urlopen", fail)
     result = check_url("https://down.test/a", set(), retries=1)
     assert result["status"] == "unreachable"
+
+
+def test_load_news_urls_missing_file(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    assert load_news_urls() == set()
+
+
+def test_load_news_urls_reads_and_normalizes(tmp_path):
+    path = tmp_path / "news.json"
+    path.write_text(
+        json.dumps(
+            {
+                "items": [
+                    {"url": "https://example.com/a/?q=1#frag"},
+                    {"url": ""},
+                    {"title": "no url"},
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    assert load_news_urls(path) == {"https://example.com/a"}
+
+
+def test_exclude_urls_matches_normalized_news_urls():
+    urls = ["https://example.com/a", "https://example.com/b"]
+    assert exclude_urls(urls, {"https://example.com/a/"}) == ["https://example.com/b"]
