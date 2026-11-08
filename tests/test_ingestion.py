@@ -32,8 +32,10 @@ prune_and_archive_registry = _ki.prune_and_archive_registry
 _existing_slugs = _ki._existing_slugs
 _existing_titles = _ki._existing_titles
 _existing_urls = _ki._existing_urls
+_hn_to_item = _ki._hn_to_item
 
 from tests.fixtures.ingestion_mocks import (  # noqa: E402
+    MOCK_HN_STORY,
     MOCK_REGISTRY,
     make_mock_pillar_config,
 )
@@ -381,6 +383,18 @@ class TestSourceToItem:
         )
         assert result is not None
         assert result["date_str"] == "2026-06-15"
+
+    def test_hn_item_body_does_not_render_truncated_url_text(self) -> None:
+        config = make_mock_pillar_config("data")
+        long_url = (
+            "https://www.euronews.com/2026/11/04/"
+            "hungary-communist-era-files-opened-up-to-60000-former-agents-revealed"
+        )
+        story = dict(MOCK_HN_STORY, url=long_url)
+        result = _hn_to_item(story, config)
+        assert result is not None
+        assert f"href='{long_url}'" in result["body_html"]
+        assert f">{long_url[:80]}</a>" not in result["body_html"]
 
 
 # =========================================================================

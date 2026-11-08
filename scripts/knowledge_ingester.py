@@ -819,7 +819,7 @@ def _hn_to_item(story: dict, config: PillarConfig) -> dict[str, Any] | None:
     body += f"<p>HackerNews discussion: <a href='{hn_url}'>{title}</a></p>"
     body += f"<p>Score: {points} points by {author}.</p>"
     if url and url != hn_url:
-        body += f"<p>Source: <a href='{url}'>{url[:80]}</a></p>"
+        body += f"<p>Source: <a href='{url}'>Original article</a></p>"
 
     avg_sqi = min(0.85, 0.65 + min(points, 100) * 0.002)
     return _source_to_item(
