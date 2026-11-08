@@ -91,7 +91,11 @@ def resolve_zone_id(
     if configured:
         return configured
 
-    result = _api_request(f"/zones?name={zone_name}", token)
+    result: dict = {}
+    try:
+        result = _api_request(f"/zones?name={zone_name}", token)
+    except urllib.error.HTTPError:
+        result = {}
     zones = result.get("result") or []
     if zones:
         return str(zones[0]["id"])
