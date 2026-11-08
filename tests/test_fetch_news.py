@@ -1,10 +1,10 @@
-"""Contract tests for dead-link filtering in scripts/fetch_news.py."""
+"""Contract tests for shared dead-link filtering in ingestion pipelines."""
 
 import email.message
 import urllib.error
 from unittest.mock import patch
 
-from scripts.fetch_news import _filter_dead_items, _is_dead_url
+from core.link_validation import filter_dead_items, is_dead_url, normalize_url
 
 
 class _Response:
@@ -21,32 +21,36 @@ def _http_error(code: int) -> urllib.error.HTTPError:
 
 def test_is_dead_url_404():
     with patch("urllib.request.urlopen", side_effect=_http_error(404)):
-        assert _is_dead_url("https://example.com/a") is True
+        assert is_dead_url("https://example.com/a") is True
 
 
 def test_is_dead_url_410():
     with patch("urllib.request.urlopen", side_effect=_http_error(410)):
-        assert _is_dead_url("https://example.com/a") is True
+        assert is_dead_url("https://example.com/a") is True
 
 
 def test_is_dead_url_200():
     with patch("urllib.request.urlopen", return_value=_Response()):
-        assert _is_dead_url("https://example.com/a") is False
+        assert is_dead_url("https://example.com/a") is False
 
 
 def test_is_dead_url_blocked_is_not_dead():
     with patch("urllib.request.urlopen", side_effect=_http_error(403)):
-        assert _is_dead_url("https://example.com/a") is False
+        assert is_dead_url("https://example.com/a") is False
 
 
 def test_is_dead_url_transient_error_is_not_dead():
     with patch("urllib.request.urlopen", side_effect=urllib.error.URLError("down")):
-        assert _is_dead_url("https://example.com/a") is False
+        assert is_dead_url("https://example.com/a") is False
 
 
 def test_is_dead_url_get_success_after_head_404():
     with patch("urllib.request.urlopen", side_effect=[_http_error(404), _Response()]):
-        assert _is_dead_url("https://example.com/a") is False
+        assert is_dead_url("https://example.com/a") is False
+
+
+def test_normalize_url_strips_query_fragment_and_trailing_slash():
+    assert normalize_url("https://example.com/a/?q=1#frag") == "https://example.com/a"
 
 
 def test_filter_dead_items_preserves_order():
@@ -56,13 +60,22 @@ def test_filter_dead_items_preserves_order():
         {"url": "https://example.com/also-live"},
     ]
 
-    def fake_is_dead(url: str, timeout: int = 6) -> bool:
-        return url.endswith("/dead")
-
-    with patch("scripts.fetch_news._is_dead_url", side_effect=fake_is_dead):
-        kept = _filter_dead_items(items)
+    with patch("core.link_validation.dead_urls", return_value={"https://example.com/dead"}):
+        kept = filter_dead_items(items)
 
     assert kept == [
         {"url": "https://example.com/live"},
         {"url": "https://example.com/also-live"},
     ]
+
+
+def test_filter_dead_items_source_url_key():
+    items = [
+        {"source_url": "https://example.com/dead"},
+        {"source_url": "https://example.com/live"},
+    ]
+
+    with patch("core.link_validation.dead_urls", return_value={"https://example.com/dead"}):
+        kept = filter_dead_items(items, url_key="source_url")
+
+    assert kept == [{"source_url": "https://example.com/live"}]

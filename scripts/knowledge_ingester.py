@@ -41,6 +41,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 
 logger = logging.getLogger(__name__)
 
+from core.link_validation import filter_dead_items  # noqa: E402
 from core.ontology import (  # noqa: E402
     OntologyManager,
     extract_concepts_from_text,
@@ -1614,6 +1615,11 @@ def main() -> int:
     # 2. Deduplicate
     registry = load_registry()
     new_items = deduplicate(all_new_items, registry)
+
+    before_dead = len(new_items)
+    new_items = filter_dead_items(new_items, url_key="source_url")
+    if len(new_items) < before_dead:
+        logger.info(f"  Dead source URLs: {before_dead - len(new_items)} item(s) dropped")
 
     logger.info(f"New items to ingest: {len(new_items)}")
 
