@@ -81,15 +81,34 @@ def _api_request(
         return json.load(response)
 
 
-def resolve_zone_id(token: str, zone_name: str = DEFAULT_ZONE) -> str:
+def resolve_zone_id(
+    token: str,
+    zone_name: str = DEFAULT_ZONE,
+    account_id: str = "",
+    project: str = "acaciafund",
+) -> str:
     configured = os.environ.get("CLOUDFLARE_ZONE_ID", "").strip()
     if configured:
         return configured
+
     result = _api_request(f"/zones?name={zone_name}", token)
     zones = result.get("result") or []
-    if not zones:
-        raise RuntimeError(f"No Cloudflare zone found for {zone_name}")
-    return str(zones[0]["id"])
+    if zones:
+        return str(zones[0]["id"])
+
+    if account_id:
+        domains = _api_request(
+            f"/accounts/{account_id}/pages/projects/{project}/domains", token
+        ).get("result") or []
+        for domain in domains:
+            if zone_name in str(domain.get("name", "")):
+                zone_tag = domain.get("zone_tag") or domain.get("zone_id")
+                if zone_tag:
+                    return str(zone_tag)
+
+    errors = result.get("errors")
+    detail = f": {errors}" if errors else ""
+    raise RuntimeError(f"No Cloudflare zone found for {zone_name}{detail}")
 
 
 def purge_urls(
@@ -132,8 +151,9 @@ def main(argv: list[str] | None = None) -> int:
             print(f"  {url}")
         return 0
 
+    account_id = os.environ.get("CLOUDFLARE_ACCOUNT_ID", "").strip()
     try:
-        zone_id = resolve_zone_id(token, args.zone)
+        zone_id = resolve_zone_id(token, args.zone, account_id)
         purge_urls(token, zone_id, urls)
     except (urllib.error.HTTPError, urllib.error.URLError, RuntimeError, ValueError) as exc:
         print(f"Admin cache purge failed: {exc}", file=sys.stderr)

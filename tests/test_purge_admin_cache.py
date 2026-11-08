@@ -20,6 +20,25 @@ def test_resolve_zone_id_prefers_configured_value(monkeypatch):
     assert purge.resolve_zone_id("token") == "zone-123"
 
 
+def test_resolve_zone_id_falls_back_to_pages_domain(monkeypatch):
+    monkeypatch.delenv("CLOUDFLARE_ZONE_ID", raising=False)
+
+    def fake_api(path, *args, **kwargs):
+        if path.startswith("/zones"):
+            return {"success": True, "result": []}
+        if "/pages/projects/acaciafund/domains" in path:
+            return {
+                "success": True,
+                "result": [
+                    {"name": "www.acaciafund.org", "zone_tag": "zone-from-pages"},
+                ],
+            }
+        raise AssertionError(path)
+
+    monkeypatch.setattr(purge, "_api_request", fake_api)
+    assert purge.resolve_zone_id("token", "acaciafund.org", "account-1") == "zone-from-pages"
+
+
 def test_main_requires_token(monkeypatch, capsys):
     monkeypatch.delenv("CLOUDFLARE_API_TOKEN", raising=False)
     assert purge.main([]) == 1
