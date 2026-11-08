@@ -17,9 +17,11 @@ Usage:
 """
 
 import argparse
+import concurrent.futures
 import json
 import re
 import sys
+import urllib.error
 import urllib.request
 from datetime import datetime, timezone
 from pathlib import Path
@@ -91,6 +93,46 @@ def _http_get(url: str, timeout: int = 15) -> str | None:
             return resp.read().decode("utf-8", errors="replace")
     except Exception:
         return None
+
+
+def _is_dead_url(url: str, timeout: int = 6) -> bool:
+    """Return True only for definitive 404/410 responses (HEAD, then GET)."""
+    if not url.startswith(("http://", "https://")):
+        return False
+    last_code: int | None = None
+    for method in ("HEAD", "GET"):
+        try:
+            req = urllib.request.Request(
+                url,
+                method=method,
+                headers={
+                    "User-Agent": (
+                        "Mozilla/5.0 (X11; Linux x86_64) AcaciaFund-NewsBot/3.0 "
+                        "(https://www.acaciafund.org; admin@acaciafund.org)"
+                    ),
+                    "Accept": "*/*",
+                },
+            )
+            with urllib.request.urlopen(req, timeout=timeout):
+                return False
+        except urllib.error.HTTPError as exc:
+            last_code = exc.code
+        except Exception:
+            return False
+    return last_code in (404, 410)
+
+
+def _filter_dead_items(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    urls = sorted({it["url"] for it in items if it.get("url")})
+    if not urls:
+        return items
+    with concurrent.futures.ThreadPoolExecutor(max_workers=8) as pool:
+        dead = {url for url, is_dead in zip(urls, pool.map(_is_dead_url, urls)) if is_dead}
+    if not dead:
+        return items
+    kept = [it for it in items if it.get("url") not in dead]
+    print(f"  dropped {len(items) - len(kept)} dead news link(s)")
+    return kept
 
 
 def _parse_rss(raw: str) -> list[dict[str, Any]]:
@@ -331,6 +373,7 @@ def main() -> int:
         counts[it["pillar"]] = counts.get(it["pillar"], 0) + 1
         balanced.append(it)
     balanced = balanced[: args.limit]
+    balanced = _filter_dead_items(balanced)
 
     if not balanced and prior:
         print("  no fresh items; preserving previously fetched news")
