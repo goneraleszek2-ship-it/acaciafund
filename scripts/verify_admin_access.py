@@ -18,7 +18,23 @@ import urllib.error
 import urllib.request
 from urllib.parse import urljoin, urlsplit
 
-DEFAULT_PATHS = ("/admin/", "/admin/dashboard.html")
+DEFAULT_PATHS = (
+    "/admin/",
+    "/admin/dashboard",
+    "/admin/dashboard.html",
+    "/admin/gallery",
+    "/admin/articles",
+    "/admin/manifest",
+    "/admin/pipeline",
+    "/admin/quality",
+    "/admin/coverage",
+    "/admin/sources",
+    "/admin/curated-test",
+    "/admin/telemetry",
+    "/admin/ontology",
+    "/admin/feynman",
+    "/admin/login",
+)
 AUTH_STATUSES = {401, 403}
 REDIRECT_STATUSES = {301, 302, 303, 307, 308}
 MAX_REDIRECTS = 5
